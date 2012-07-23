@@ -1,0 +1,39 @@
+<RCC>
+    <qresource prefix="/Icons">
+        <file>PNG/articulos.png</file>
+        <file>PNG/clientes.png</file>
+        <file>PNG/usuarios.png</file>
+        <file>PNG/compras.png</file>
+        <file>PNG/eclipse.png</file>
+        <file>PNG/mantenim.png</file>
+        <file>PNG/proveedores.png</file>
+        <file>PNG/add.png</file>
+        <file>PNG/alert.png</file>
+        <file>PNG/configuration.png</file>
+        <file>PNG/datebase.png</file>
+        <file>PNG/down.png</file>
+        <file>PNG/error.png</file>
+        <file>PNG/file.png</file>
+        <file>PNG/internet.png</file>
+        <file>PNG/left.png</file>
+        <file>PNG/mail.png</file>
+        <file>PNG/usuario.png</file>
+        <file>PNG/up.png</file>
+        <file>PNG/statistic.png</file>
+        <file>PNG/star.png</file>
+        <file>PNG/search.png</file>
+        <file>PNG/right.png</file>
+        <file>PNG/remove.png</file>
+        <file>PNG/refresh.png</file>
+        <file>PNG/picture.png</file>
+        <file>PNG/paquete.png</file>
+        <file>PNG/notepad.png</file>
+        <file>PNG/ventas.png</file>
+        <file>PNG/terra.png</file>
+        <file>PNG/Fp.png</file>
+        <file>PNG/iva3.png</file>
+        <file>PNG/factura.png</file>
+        <file>PNG/albaran.png</file>
+        <file>PNG/pedidos.png</file>
+    </qresource>
+</RCC>
