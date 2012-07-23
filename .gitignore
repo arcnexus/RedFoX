@@ -21,3 +21,6 @@ Makefile*
 *.Debug
 *.Release
 
+## Archivos temporales kate
+*~
+
