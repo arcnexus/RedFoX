@@ -1,58 +1,58 @@
 #include "login.h"
 #include "ui_login.h"
 #include <QSqlDatabase>
-//#include "conexion.h"
 #include <QtSql>
 #include <QErrorMessage>
 #include <QMessageBox>
 #include<QSqlError>
 #include<mainwindow.h>
 #include <QDir>
+#include <QDebug>
+#include <configuracion.h>
 
-/*
- * Conexión postgres
-//QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL7");
-*/
-// Conexión SQLite3
-//QString privatePathQt(QApplication::applicationDirPath());
-//    QString path(privatePathQt);
-//    path.append(QDir::separator()).append("DB");
-//    path = QDir::toNativeSeparators(path);
 
-//#ifdef Q_WS_SIMULATOR
-//    path = "sqlite"
-//#endif
-
-//    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-//    qDebug() << path;
-//    db.setDatabaseName(path);
-//    bool ok = db.open();
-//    qDebug() << db.tables();
-QSqlDatabase dbTerra = QSqlDatabase::addDatabase("QSQLITE","terra");
-
-Login::Login(QWidget *parent) :
+Login::Login(Configuracion *m_config,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Login)
 {
-/* Datos conexión postGres
-   // db.setDatabaseName("postgres");
-    //db.setHostName("localhost");
-    //return db;
-   // QSqlDatabase db =createConnection();
-   // db.open("postgres","PatataBullida_99");
-   */
- // Conexión SQLite
-    dbTerra.setDatabaseName("/home/arcnexus/Informatica-Intelligent/programacio/Terra/DB/Terra.sqlite");
-    dbTerra.open();
+ /*   // Conectamos a la base de datos
+    QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(m_config->cDriverBDTerra,"terra");
+    if (m_config->cDriverBDTerra == "QSQLITE"){
+        dbTerra.setDatabaseName(m_config->cRutaBdTerra);
+    } else {
+        dbTerra.setDatabaseName(m_config->cNombreBDTerra);
+        dbTerra.setHostName(m_config->cHostBDTerra);
+        dbTerra.open(m_config->cUsuarioBDTerra,m_config->cPasswordBDTerra);
+
+    }
+    if (m_config->cDriverBDTerra == "QSQLITE") {
+        dbTerra.open();
+    } else {
+        dbTerra.open(m_config->cUsuarioBDTerra,m_config->cPasswordBDTerra);
+    }
+
     if (dbTerra.lastError().isValid())
         {
             QMessageBox::critical(0, "error:", dbTerra.lastError().text());
 
-        }
+        } */
     this->setWindowFlags(Qt::Dialog|Qt::CustomizeWindowHint|Qt::WindowTitleHint);
     ui->setupUi(this);
+    // TODO - Rellenar en base a fichero de empresas BD terra.
+    // Relleno combo empresas
+
+    qDebug() <<"fins aquí bé";
+    QSqlQuery *QryEmpresas = new QSqlQuery(QSqlDatabase::database("terra"));
+    QryEmpresas->prepare("Select * from empresas");
+    if(QryEmpresas->exec()) {
+
+        while (QryEmpresas->next()) {
+              ui->cboEmpresa->addItem(QryEmpresas->value(2).toString());
+        }
+    }
 
     this->ui->lineUsuario->setFocus();
+
 }
 
 Login::~Login()
@@ -60,7 +60,7 @@ Login::~Login()
 
     delete ui;
 
-    dbTerra.close();
+    //dbTerra.close();
 }
 
 const QString &Login::getUsuario() const
@@ -68,12 +68,19 @@ const QString &Login::getUsuario() const
     return ui->lineUsuario->text();
 }
 
+const QString &Login::getEmpresa() const
+{
+    return ui->cboEmpresa->currentText();
+}
+
+
 void Login::on_btnAcceder_clicked()
 {
 
     QSqlQuery qryUsers(QSqlDatabase::database("terra"));
-    qryUsers.prepare( "SELECT * FROM usuarios where nombre =:nombre" );
-    qryUsers.bindValue(":nombre",ui->lineUsuario->text());
+    qryUsers.prepare( "SELECT * FROM usuarios where nombre =:Nombre" );
+    qryUsers.bindValue(":Nombre",ui->lineUsuario->text());
+    //qryUsers.prepare("Select * from usuarios where nombre = '"+ui->lineUsuario->text.trimmed()+"'");
     if( !qryUsers.exec() ) {
         QMessageBox::critical(NULL, "error:", qryUsers.lastError().text());
     } else {
@@ -89,13 +96,22 @@ void Login::on_btnAcceder_clicked()
             }
 
         } else {
-            //ui->lineEdit->setText("No existe");
+
             QMessageBox::critical(0,"Error","No existe ningún usuario con este nombre");
             ui->lineUsuario->setText("");
-            //ui->lineEdit->setText("");
             ui->lineUsuario->setFocus();
         }
     }
-    qryUsers.clear();
-    qryUsers.finish();
+}
+
+void Login::on_Crearconfiguracin_clicked()
+{
+    QSettings settings("infint", "terra");
+    settings.setValue("cDriverBDTerra","QSQLITE");
+    settings.setValue("cRutaDBTerra","/home/arcnexus/project/terra/terra/DB/terra.sqlite");
+    settings.setValue("cHostBDTerra","localhost");
+    settings.setValue("cUserBDTerra","root");
+    settings.setValue("cPasswordBDTerra","PatataBullida_99");
+    settings.setValue("cPais","España");
+    settings.setValue("cEjercicioActivo","2012");
 }

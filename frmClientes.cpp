@@ -18,13 +18,12 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     ui(new Ui::frmClientes)
 {
     ui->setupUi(this);
-    qDebug() << "Config DB:" << oConfiguracion->cDriverBDTerra;
-    dbCliente = QSqlDatabase::addDatabase(oConfiguracion->cDriverBDTerra,"clientes");
+     /*dbCliente = QSqlDatabase::addDatabase(oConfiguracion->cDriverBDTerra,"clientes");
 
-    /* esto es para mysql y postgres
+    esto es para mysql y postgres
     dbCliente.setDatabaseName("emp0999");
     dbCliente.setHostName("localhost");
-    dbCliente.open("root","PatataBullida_99"); */
+    dbCliente.open("root","PatataBullida_99");
 
     dbCliente.setDatabaseName("/home/arcnexus/project/terra/terra/DB/emp0999.sqlite");
     dbCliente.open();
@@ -32,11 +31,11 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
         {
             QMessageBox::critical(0, "error:", dbCliente.lastError().text());
 
-        }
+        } */
 
     // Rellenar formas de pago
     modelFP = new QSqlQueryModel();
-    modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("clientes"));
+    modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("empresa"));
 
 
     ui->cbocFormaPago->setModel(modelFP);

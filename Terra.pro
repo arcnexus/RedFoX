@@ -31,8 +31,7 @@ SOURCES += main.cpp\
     pruebas.cpp \
     frmbuscarpoblacion.cpp \
     configuracion.cpp \
-    empresa.cpp \
-    conexionterra.cpp
+    empresa.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -48,8 +47,7 @@ HEADERS  += mainwindow.h \
     pruebas.h \
     frmbuscarpoblacion.h \
     configuracion.h \
-    empresa.h \
-    conexionterra.h
+    empresa.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \

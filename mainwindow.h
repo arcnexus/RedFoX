@@ -22,7 +22,7 @@ public:
     ~MainWindow();
     QString usuario;
     QString empresa;
-    QSqlDatabase dbConfiguracion;
+    //QSqlDatabase dbConfiguracion;
     QSqlQuery QryConfiguracion;
     Configuracion *m_config;
 

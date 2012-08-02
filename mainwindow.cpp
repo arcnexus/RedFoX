@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QSqlDatabase>
-#include "conexionterra.h"
 #include <QtSql>
 #include <QErrorMessage>
 #include<QSqlError>
@@ -16,6 +15,8 @@
 #include <QSqlQuery>
 
 QSettings settings("infint", "terra");
+QSqlDatabase dbEmp;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -32,20 +33,23 @@ MainWindow::MainWindow(QWidget *parent) :
     m_config->cEjercicio = settings.value("cEjercicioActivo").toString();
 
     // Abro Base de Datos
-
     QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(m_config->cDriverBDTerra,"terra");
+    //dbTerra.addDatabase(m_config->cDriverBDTerra,"terra");
+
     if (m_config->cDriverBDTerra == "QSQLITE"){
         dbTerra.setDatabaseName(m_config->cRutaBdTerra);
-    } else {
+      } else {
         dbTerra.setDatabaseName(m_config->cNombreBDTerra);
         dbTerra.setHostName(m_config->cHostBDTerra);
         dbTerra.open(m_config->cUsuarioBDTerra,m_config->cPasswordBDTerra);
 
     }
     if (m_config->cDriverBDTerra == "QSQLITE") {
+
         dbTerra.open();
     } else {
         dbTerra.open(m_config->cUsuarioBDTerra,m_config->cPasswordBDTerra);
+
     }
 
     if (dbTerra.lastError().isValid())
@@ -66,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
      gridLayout->addWidget(workspace, 0, 0);
      ui->widget->setLayout(gridLayout);
     // Identificación de usuario
-     dbTerra.removeDatabase("terra");
+
      Login *dlg = new Login(m_config);
      if ( dlg->exec()==QDialog::Accepted) {
          // capturo usuario
@@ -88,8 +92,26 @@ MainWindow::MainWindow(QWidget *parent) :
                m_config->cPasswordBDEmpresa = QryEmpresa.value(8).toString();
                m_config->cRutaBdEmpresa = QryEmpresa.value(5).toString();
                m_config->cUsuarioBDEmpresa = QryEmpresa.value(7).toString();
+
+               // Abro empresa activa
+               QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"empresa");
+               if (m_config->cDriverBDEmpresa =="QSQLITE") {
+                    dbEmpresa.setDatabaseName(m_config->cNombreBDEmpresa);
+                    dbEmpresa.setHostName(m_config->cHostBDEmpresa);
+                    dbEmpresa.open(m_config->cUsuarioBDEmpresa,m_config->cPasswordBDEmpresa);
+               } else {
+                    dbEmpresa.setDatabaseName(m_config->cRutaBdEmpresa);
+                    qDebug() << "Empresa" << m_config->cRutaBdEmpresa;
+                    dbEmpresa.open();
+              }
+              if (dbEmpresa.lastError().isValid())
+                  {
+                      QMessageBox::critical(0, "error:", dbEmpresa.lastError().text());
+
+                  }
          } else
              qDebug() <<"Fallo la conexión al fichero de empresas";
+
 
      } else
          exit(0);

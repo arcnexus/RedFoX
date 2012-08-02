@@ -5,7 +5,6 @@
 #include <QtCore>
 #include <QtGui>
 #include <configuracion.h>
-#include <conexionterra.h>
 #include <QSqlDatabase>
 
 namespace Ui {

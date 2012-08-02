@@ -20,10 +20,10 @@ frmFacturas::frmFacturas(Configuracion *m_config, QWidget *parent) :
 {
     ui->setupUi(this);
     // abro conexión según parametros.
-    dbEmp = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"emp");
+   // dbEmp = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"emp");
 
 
-    if(m_config->cDriverBDEmpresa == "QSQLITE") {
+  /*  if(m_config->cDriverBDEmpresa == "QSQLITE") {
         dbEmp.setDatabaseName(m_config->cRutaBdEmpresa);
         dbEmp.open();
     } else {
@@ -37,7 +37,9 @@ frmFacturas::frmFacturas(Configuracion *m_config, QWidget *parent) :
         {
             QMessageBox::critical(0, "error:", dbEmp.lastError().text());
 
-        }
+        }*/
+
+
     ui->lblContabilizada->setVisible(false);
     ui->lblFacturaCobrada->setVisible(false);
     ui->lblFacturaImpresa->setVisible(false);
