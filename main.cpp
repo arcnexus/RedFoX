@@ -4,6 +4,8 @@
 #include<QSqlDatabase>
 #include <QMessageBox>
 #include<QTextCodec>
+#include <QtSql>
+
 
 int main(int argc, char *argv[])
 {

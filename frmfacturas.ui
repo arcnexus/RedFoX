@@ -14,6 +14,295 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QFrame" name="frame_4">
+       <property name="minimumSize">
+        <size>
+         <width>700</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_10">
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QGridLayout" name="gridLayout_9">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>Código</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>Cantid.</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="label_19">
+              <property name="text">
+               <string>Descripción</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QLabel" name="label_30">
+              <property name="text">
+               <string>P.V.P.</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QLabel" name="label_31">
+              <property name="text">
+               <string>Sub.Tot.</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="5">
+             <widget class="QLabel" name="label_32">
+              <property name="text">
+               <string>%DTO</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="6">
+             <widget class="QLabel" name="label_33">
+              <property name="text">
+               <string>DTO</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="7">
+             <widget class="QLabel" name="label_34">
+              <property name="text">
+               <string>TOTAL</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLineEdit" name="lineEdit"/>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="lineEdit_2"/>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLineEdit" name="lineEdit_3">
+              <property name="minimumSize">
+               <size>
+                <width>170</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QLineEdit" name="lineEdit_4"/>
+            </item>
+            <item row="1" column="4">
+             <widget class="QLineEdit" name="lineEdit_5"/>
+            </item>
+            <item row="1" column="5">
+             <widget class="QLineEdit" name="lineEdit_6"/>
+            </item>
+            <item row="1" column="6">
+             <widget class="QLineEdit" name="lineEdit_7"/>
+            </item>
+            <item row="1" column="7">
+             <widget class="QLineEdit" name="lineEdit_8"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTableView" name="Lineas"/>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="AnadirLinea">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="terra.qrc">
+              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="terra.qrc">
+              <normaloff>:/Icons/PNG/configuration.png</normaloff>:/Icons/PNG/configuration.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_3">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="terra.qrc">
+              <normaloff>:/Icons/PNG/error.png</normaloff>:/Icons/PNG/error.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="frame_5">
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>350</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(191, 255, 191);
+border-right-color: rgb(220, 220, 220);</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QTabWidget" name="tabWidget_2">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(191, 255, 191);</string>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab_5">
+           <attribute name="title">
+            <string>Busqueda Rápida </string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_13">
+            <item row="0" column="2">
+             <widget class="QPushButton" name="btnBuscarArt">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="terra.qrc">
+                <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_60">
+              <property name="text">
+               <string>Artículo:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="txtcTextoBuscar">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="3">
+             <widget class="QTableView" name="tableView_2">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_6">
+           <attribute name="title">
+            <string>Coment. Fac.</string>
+           </attribute>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QTextEdit" name="txttComentario">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_3">
+           <attribute name="title">
+            <string>Gráfico gasto</string>
+           </attribute>
+           <widget class="QGraphicsView" name="graphicsView">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>256</width>
+              <height>151</height>
+             </rect>
+            </property>
+           </widget>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="2" column="0">
     <widget class="QFrame" name="frame_3">
      <property name="minimumSize">
@@ -138,7 +427,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnSalir">
+       <widget class="QPushButton" name="btnCerrar">
         <property name="text">
          <string>&amp;Salir</string>
         </property>
@@ -177,9 +466,9 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>30</y>
+          <y>28</y>
           <width>481</width>
-          <height>196</height>
+          <height>191</height>
          </rect>
         </property>
         <property name="tabPosition">
@@ -1421,200 +1710,6 @@ font: 12pt &quot;Times New Roman&quot;;</string>
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
-     <item>
-      <widget class="QFrame" name="frame_4">
-       <property name="minimumSize">
-        <size>
-         <width>700</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QTableView" name="Lineas"/>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="AnadirLinea">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="terra.qrc">
-              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_2">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="terra.qrc">
-              <normaloff>:/Icons/PNG/configuration.png</normaloff>:/Icons/PNG/configuration.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_3">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="terra.qrc">
-              <normaloff>:/Icons/PNG/error.png</normaloff>:/Icons/PNG/error.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QFrame" name="frame_5">
-       <property name="minimumSize">
-        <size>
-         <width>300</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>350</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(191, 255, 191);
-border-right-color: rgb(220, 220, 220);</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <widget class="QTabWidget" name="tabWidget_2">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(191, 255, 191);</string>
-          </property>
-          <property name="currentIndex">
-           <number>1</number>
-          </property>
-          <widget class="QWidget" name="tab_5">
-           <attribute name="title">
-            <string>Busqueda Rápida </string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_13">
-            <item row="1" column="0" colspan="3">
-             <widget class="QTableView" name="tableView_2">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QPushButton" name="btnBuscarArt">
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="terra.qrc">
-                <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_60">
-              <property name="text">
-               <string>Artículo:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="txtcTextoBuscar">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="tab_6">
-           <attribute name="title">
-            <string>Coment. Fac.</string>
-           </attribute>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QTextEdit" name="txttComentario">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="tab_3">
-           <attribute name="title">
-            <string>Gráfico gasto</string>
-           </attribute>
-           <widget class="QGraphicsView" name="graphicsView">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>10</y>
-              <width>256</width>
-              <height>151</height>
-             </rect>
-            </property>
-           </widget>
-          </widget>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </item>
   </layout>
  </widget>
  <resources>
@@ -1622,7 +1717,7 @@ border-right-color: rgb(220, 220, 220);</string>
  </resources>
  <connections>
   <connection>
-   <sender>btnSalir</sender>
+   <sender>btnCerrar</sender>
    <signal>clicked()</signal>
    <receiver>frmFacturas</receiver>
    <slot>close()</slot>

@@ -13,19 +13,20 @@
 
 
 Cliente *oCliente = new Cliente();
-frmClientes::frmClientes(QWidget *parent) :
+frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmClientes)
 {
     ui->setupUi(this);
-    dbCliente = QSqlDatabase::addDatabase("QSQLITE","clientes");
+    qDebug() << "Config DB:" << oConfiguracion->cDriverBDTerra;
+    dbCliente = QSqlDatabase::addDatabase(oConfiguracion->cDriverBDTerra,"clientes");
 
     /* esto es para mysql y postgres
     dbCliente.setDatabaseName("emp0999");
     dbCliente.setHostName("localhost");
     dbCliente.open("root","PatataBullida_99"); */
 
-    dbCliente.setDatabaseName("/home/arcnexus/Informatica-Intelligent/programacio/Terra/DB/emp0999.sqlite");
+    dbCliente.setDatabaseName("/home/arcnexus/project/terra/terra/DB/emp0999.sqlite");
     dbCliente.open();
     if (dbCliente.lastError().isValid())
         {
@@ -333,6 +334,38 @@ void frmClientes::on_txtcNombre_lostFocus()
 void frmClientes::on_txtcPoblacion_lostFocus()
 {
     ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
+    if (ui->txtcCp->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty()) {
+        FrmBuscarPoblacion BuscarPoblacion;
+        BuscarPoblacion.setcPoblacion(ui->txtcPoblacion->text(),1);
+       if(BuscarPoblacion.exec()) {
+        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+           int nId = BuscarPoblacion.DevolverID();
+           qDebug() <<nId;
+         if(nId > 0) {
+               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+               QString cId;
+               cId = QString::number(nId);
+               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+               qPoblacion.bindValue(":id",cId);
+               if(!qPoblacion.exec()) {
+                  /* qDebug() << qPoblacion.lastQuery();
+                   qDebug() << qPoblacion.value(0).toString(); */
+                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+               } else {
+                  // qDebug() << qPoblacion.lastQuery();
+                   if (qPoblacion.next()) {
+                        ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
+                        ui->txtcCp->setText(qPoblacion.value(1).toString());
+                        ui->txtcProvincia->setText(qPoblacion.value(2).toString());
+                        ui->txtcPais->setText("ESPAÑA");
+                   }
+               }
+
+           }
+       }
+      // BuscarPoblacion.close();
+    }
+
 }
 
 void frmClientes::on_txtcProvincia_lostFocus()
@@ -514,22 +547,24 @@ void frmClientes::on_txtcCp_lostFocus()
        if(BuscarPoblacion.exec()) {
         //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
            int nId = BuscarPoblacion.DevolverID();
-           qDebug() <<nId;
+           //qDebug() <<nId;
          if(nId > 0) {
                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
                QString cId;
                cId = QString::number(nId);
-               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP from poblaciones where col_1 = '"+cId+"'");
-               //qPoblacion.bindValue(":id",nId);
+               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+               qPoblacion.bindValue(":id",cId);
                if(!qPoblacion.exec()) {
-                   qDebug() << qPoblacion.lastQuery();
-                   qDebug() << qPoblacion.value(0).toString();
+                  /* qDebug() << qPoblacion.lastQuery();
+                   qDebug() << qPoblacion.value(0).toString(); */
                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                } else {
-                   qDebug() << qPoblacion.lastQuery();
+                   //qDebug() << qPoblacion.lastQuery();
                    if (qPoblacion.next()) {
                                         qDebug() << qPoblacion.value(0).toString();
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
+                        ui->txtcProvincia->setText(qPoblacion.value(2).toString());
+                        ui->txtcPais->setText("ESPAÑA");
                    }
                }
 
@@ -540,3 +575,147 @@ void frmClientes::on_txtcCp_lostFocus()
 
     }
 
+
+void frmClientes::on_txtcCPFactura_lostFocus()
+{
+    if (!ui->txtcCPFactura->text().isEmpty() and ui->txtcPoblacionFactura->text().isEmpty()) {
+        FrmBuscarPoblacion BuscarPoblacion;
+        BuscarPoblacion.setcPoblacion(ui->txtcCPFactura->text(),0);
+       if(BuscarPoblacion.exec()) {
+        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+           int nId = BuscarPoblacion.DevolverID();
+           //qDebug() <<nId;
+         if(nId > 0) {
+               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+               QString cId;
+               cId = QString::number(nId);
+
+               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP, col_6 as provincia from poblaciones where col_1 = :cId");
+               qPoblacion.bindValue(":id",cId);
+               if(!qPoblacion.exec()) {
+                  // qDebug() << qPoblacion.lastQuery();
+                  // qDebug() << qPoblacion.value(0).toString();
+                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+               } else {
+                   //qDebug() << qPoblacion.lastQuery();
+                   if (qPoblacion.next()) {
+                                        qDebug() << qPoblacion.value(0).toString();
+                        ui->txtcPoblacionFactura->setText(qPoblacion.value(0).toString());
+                        ui->txtcProvinciaFactura->setText(qPoblacion.value(2).toString());
+                        ui->txtcPaisFactura->setText("ESPAÑA");
+                   }
+               }
+
+           }
+       }
+      // BuscarPoblacion.close();
+    }
+
+}
+
+void frmClientes::on_txtcPoblacionFactura_lostFocus()
+{
+    ui->txtcPoblacionFactura->setText(ui->txtcPoblacionFactura->text().toUpper());
+    if (ui->txtcCPFactura->text().isEmpty() and !ui->txtcPoblacionFactura->text().isEmpty()) {
+        FrmBuscarPoblacion BuscarPoblacion;
+        BuscarPoblacion.setcPoblacion(ui->txtcPoblacionFactura->text(),1);
+       if(BuscarPoblacion.exec()) {
+        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+           int nId = BuscarPoblacion.DevolverID();
+           //qDebug() <<nId;
+         if(nId > 0) {
+               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+               QString cId;
+               cId = QString::number(nId);
+               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+               qPoblacion.bindValue(":id",cId);
+               if(!qPoblacion.exec()) {
+                  // qDebug() << qPoblacion.lastQuery();
+                   //qDebug() << qPoblacion.value(0).toString();
+                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+               } else {
+                  // qDebug() << qPoblacion.lastQuery();
+                   if (qPoblacion.next()) {
+                        ui->txtcPoblacionFactura->setText(qPoblacion.value(0).toString());
+                        ui->txtcCPFactura->setText(qPoblacion.value(1).toString());
+                        ui->txtcProvinciaFactura->setText(qPoblacion.value(2).toString());
+                        ui->txtcPaisFactura->setText("ESPAÑA");
+                   }
+               }
+
+           }
+       }
+      // BuscarPoblacion.close();
+    }
+}
+
+void frmClientes::on_txtcCpPoblacionAlmacen_lostFocus()
+{
+    if (!ui->txtcCpPoblacionAlmacen->text().isEmpty() and ui->txtcPoblacionAlmacen->text().isEmpty()) {
+        FrmBuscarPoblacion BuscarPoblacion;
+        BuscarPoblacion.setcPoblacion(ui->txtcCpPoblacionAlmacen->text(),0);
+       if(BuscarPoblacion.exec()) {
+        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+           int nId = BuscarPoblacion.DevolverID();
+          // qDebug() <<nId;
+         if(nId > 0) {
+               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+               QString cId;
+               cId = QString::number(nId);
+               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP, col_6 as provincia from poblaciones where col_1 = :cId");
+               qPoblacion.bindValue(":id",cId);
+               if(!qPoblacion.exec()) {
+                  /* qDebug() << qPoblacion.lastQuery();
+                   qDebug() << qPoblacion.value(0).toString(); */
+                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+               } else {
+                  // qDebug() << qPoblacion.lastQuery();
+                   if (qPoblacion.next()) {
+                                        qDebug() << qPoblacion.value(0).toString();
+                        ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());
+                        ui->txtcProvinciaAlmacen->setText(qPoblacion.value(2).toString());
+                        ui->txtcPaisAlmacen->setText("ESPAÑA");
+                   }
+               }
+
+           }
+       }
+      // BuscarPoblacion.close();
+    }
+}
+
+void frmClientes::on_txtcPoblacionAlmacen_lostFocus()
+{
+    ui->txtcPoblacionAlmacen->setText(ui->txtcPoblacionAlmacen->text().toUpper());
+    if (ui->txtcCpPoblacionAlmacen->text().isEmpty() and !ui->txtcPoblacionAlmacen->text().isEmpty()) {
+        FrmBuscarPoblacion BuscarPoblacion;
+        BuscarPoblacion.setcPoblacion(ui->txtcPoblacionAlmacen->text(),1);
+       if(BuscarPoblacion.exec()) {
+        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+           int nId = BuscarPoblacion.DevolverID();
+           qDebug() <<nId;
+         if(nId > 0) {
+               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+               QString cId;
+               cId = QString::number(nId);
+               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+               qPoblacion.bindValue(":id",cId);
+               if(!qPoblacion.exec()) {
+                  /* qDebug() << qPoblacion.lastQuery();
+                   qDebug() << qPoblacion.value(0).toString(); */
+                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+               } else {
+                  // qDebug() << qPoblacion.lastQuery();
+                   if (qPoblacion.next()) {
+                        ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());
+                        ui->txtcCpPoblacionAlmacen->setText(qPoblacion.value(1).toString());
+                        ui->txtcProvinciaAlmacen->setText(qPoblacion.value(2).toString());
+                        ui->txtcPaisAlmacen->setText("ESPAÑA");
+                   }
+               }
+
+           }
+       }
+      // BuscarPoblacion.close();
+    }
+}

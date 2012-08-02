@@ -6,6 +6,7 @@
 #include <QSqlQueryModel>
 #include <QHeaderView>
 #include <QItemDelegate>
+#include "configuracion.h"
 
 namespace Ui {
 class frmFacturas;
@@ -19,8 +20,10 @@ public slots:
     void LLenarCampos();
     void LLenarFactura();
     void VaciarCampos();
+    void BloquearCampos();
+    void DesbloquearCampos();
 public:
-    explicit frmFacturas(QWidget *parent = 0);
+    explicit frmFacturas(Configuracion *m_config, QWidget *parent = 0);
     ~frmFacturas();
     
 private slots:

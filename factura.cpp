@@ -1,7 +1,7 @@
 #include "factura.h"
 #include <QSqlQuery>
 #include <QSqlDatabase>
-#include "conexion.h"
+#include "conexionterra.h"
 #include <QtSql>
 #include <QErrorMessage>
 #include <QMessageBox>
@@ -92,11 +92,16 @@ void Factura::AnadirFactura() {
      cab_fac.bindValue(":cDCCuenta",this->cDCCuenta);
      cab_fac.bindValue(":cNumeroCuenta",this->cNumeroCuenta);
      cab_fac.bindValue(":cPedidoCliente",this->cPedidoCliente);
+     if(!cab_fac.exec()){
+         QMessageBox::critical(NULL,"error al guardar datos Factura:", cab_fac.lastError().text());
+     } else {
+         QMessageBox::information(NULL,"Guardar datos","Se ha creado una nueva factura correctamente:","Ok");
+     }
 
 }
-// Añadir nueva factura
+// Guardar la factura
 void Factura::GuardarFactura(int nId_Factura) {
-    QSqlQuery cab_fac;
+    QSqlQuery cab_fac(QSqlDatabase::database("emp"));
     cab_fac.prepare( "UPDATE cab_fac set "
                    "cCodigoCliente = :cCodigoCliente,"
                    "cFactura = :cFactura,"
@@ -224,7 +229,11 @@ void Factura::GuardarFactura(int nId_Factura) {
     cab_fac.bindValue(":cDCCuenta",this->cDCCuenta);
     cab_fac.bindValue(":cNumeroCuenta",this->cNumeroCuenta);
     cab_fac.bindValue(":cPedidoCliente",this->cPedidoCliente);
-
+    if(!cab_fac.exec()){
+        QMessageBox::critical(NULL,tr("error al guardar datos Factura:"), cab_fac.lastError().text());
+    } else {
+        QMessageBox::information(NULL,tr("Guardar datos","La Factura se ha guardado correctamente:"),"Ok");
+    }
 
 
 }

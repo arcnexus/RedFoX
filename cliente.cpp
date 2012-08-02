@@ -1,6 +1,6 @@
 #include "cliente.h"
 #include <QSqlDatabase>
-#include "conexion.h"
+#include "conexionterra.h"
 #include <QtSql>
 #include <QErrorMessage>
 #include <QSqlQuery>

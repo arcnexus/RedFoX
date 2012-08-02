@@ -14,20 +14,25 @@
 #include "pruebas.h"
 
 Factura *oFactura = new Factura();
-frmFacturas::frmFacturas(QWidget *parent) :
+frmFacturas::frmFacturas(Configuracion *m_config, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmFacturas)
 {
     ui->setupUi(this);
-    dbEmp = QSqlDatabase::addDatabase("QSQLITE","emp");
+    // abro conexión según parametros.
+    dbEmp = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"emp");
 
-    /* esto es para mysql y postgres
-    db.setDatabaseName("emp0999");
-    db.setHostName("localhost");
-    db.open("root","PatataBullida_99"); */
 
-    dbEmp.setDatabaseName("/home/arcnexus/Informatica-Intelligent/programacio/Terra/DB/emp0999.sqlite");
-    dbEmp.open();
+    if(m_config->cDriverBDEmpresa == "QSQLITE") {
+        dbEmp.setDatabaseName(m_config->cRutaBdEmpresa);
+        dbEmp.open();
+    } else {
+        // esto es para mysql y postgres
+        dbEmp.setDatabaseName(m_config->cNombreBDEmpresa);
+        dbEmp.setHostName(m_config->cHostBDEmpresa);
+        dbEmp.open(m_config->cUsuarioBDEmpresa,m_config->cPasswordBDEmpresa);
+    }
+
     if (dbEmp.lastError().isValid())
         {
             QMessageBox::critical(0, "error:", dbEmp.lastError().text());
@@ -271,6 +276,132 @@ void frmFacturas::VaciarCampos() {
     ui->txtcNumeroCuenta->setText("");
     ui->txtcPedidoCliente->setText("");
 }
+
+void frmFacturas::BloquearCampos()
+{
+    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
+    QLineEdit *lineEdit;
+    foreach (lineEdit, lineEditList) {
+        lineEdit->setReadOnly(true);
+        //qDebug() << lineEdit->objectName();
+    }
+    // ComboBox
+    QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
+    QComboBox *ComboBox;
+    foreach (ComboBox, ComboBoxList) {
+        ComboBox->setEnabled(false);
+        //qDebug() << lineEdit->objectName();
+    }
+    // SpinBox
+    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
+    QSpinBox *SpinBox;
+    foreach (SpinBox, SpinBoxList) {
+        SpinBox->setReadOnly(true);
+        //qDebug() << lineEdit->objectName();
+    }
+    // DoubleSpinBox
+    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
+    QDoubleSpinBox *DSpinBox;
+    foreach (DSpinBox, DSpinBoxList) {
+        DSpinBox->setReadOnly(true);
+        //qDebug() << lineEdit->objectName();
+    }
+    // CheckBox
+    QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
+    QCheckBox *CheckBox;
+    foreach (CheckBox, CheckBoxList) {
+        CheckBox->setEnabled(false);
+        //qDebug() << lineEdit->objectName();
+    }
+    // QTextEdit
+    QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
+    QTextEdit *TextEdit;
+    foreach (TextEdit,TextEditList) {
+        TextEdit->setReadOnly(true);
+        //qDebug() << lineEdit->objectName();
+    }
+    // QDateEdit
+    QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
+    QDateEdit *DateEdit;
+    foreach (DateEdit, DateEditList) {
+        DateEdit->setEnabled(false);
+        //qDebug() << lineEdit->objectName();
+    }
+
+    ui->btnAnadir->setEnabled(true);
+    ui->btnAnterior->setEnabled(true);
+   // ui->btnBorrar->setEnabled(true);
+    ui->btnBuscar->setEnabled(true);
+    ui->btnCerrar->setEnabled(true);
+    ui->btnDeshacer->setEnabled(false);
+    ui->btnEditar->setEnabled(true);
+    ui->btnGuardar->setEnabled(false);
+    ui->btnSiguiente->setEnabled(true);
+
+}
+
+void frmFacturas::DesbloquearCampos()
+{
+    // LineEdit
+    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
+    QLineEdit *lineEdit;
+    foreach (lineEdit, lineEditList) {
+        lineEdit->setReadOnly(false);
+        //qDebug() << lineEdit->objectName();
+    }
+    // ComboBox
+    QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
+    QComboBox *ComboBox;
+    foreach (ComboBox, ComboBoxList) {
+        ComboBox->setEnabled(true);
+        //qDebug() << lineEdit->objectName();
+    }
+    // SpinBox
+    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
+    QSpinBox *SpinBox;
+    foreach (SpinBox, SpinBoxList) {
+        SpinBox->setReadOnly(false);
+        //qDebug() << lineEdit->objectName();
+    }
+    // DoubleSpinBox
+    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
+    QDoubleSpinBox *DSpinBox;
+    foreach (DSpinBox, DSpinBoxList) {
+        DSpinBox->setReadOnly(false);
+        //qDebug() << lineEdit->objectName();
+    }
+    // CheckBox
+    QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
+    QCheckBox *CheckBox;
+    foreach (CheckBox, CheckBoxList) {
+        CheckBox->setEnabled(true);
+        //qDebug() << lineEdit->objectName();
+    }
+    // QTextEdit
+    QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
+    QTextEdit *TextEdit;
+    foreach (TextEdit,TextEditList) {
+        TextEdit->setReadOnly(false);
+        //qDebug() << lineEdit->objectName();
+    }
+    // QDateEdit
+    QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
+    QDateEdit *DateEdit;
+    foreach (DateEdit, DateEditList) {
+        DateEdit->setEnabled(true);
+        //qDebug() << lineEdit->objectName();
+    }
+    ui->btnAnadir->setEnabled(false);
+    ui->btnAnterior->setEnabled(false);
+   // ui->btnBorrar->setEnabled(false);
+    ui->btnBuscar->setEnabled(false);
+    ui->btnCerrar->setEnabled(false);
+    ui->btnDeshacer->setEnabled(true);
+    ui->btnEditar->setEnabled(false);
+    ui->btnGuardar->setEnabled(true);
+    ui->btnSiguiente->setEnabled(false);
+}
+
 void frmFacturas::LLenarFactura() {
     oFactura->setcCodigoCliente(ui->txtcCodigoCliente->text());
     oFactura->setcFactura(ui->txtcFactura->text());
@@ -345,8 +476,10 @@ void frmFacturas::on_btnGuardar_clicked()
 {
 
     LLenarFactura();
+    BloquearCampos();
     if(this->Altas) {
        this->Altas = false;
+       oFactura->NuevoNumeroFactura();
        oFactura->AnadirFactura();
     } else {
 
@@ -357,7 +490,8 @@ void frmFacturas::on_btnGuardar_clicked()
 
 void frmFacturas::on_btnAnadir_clicked()
 {
-    oFactura->NuevoNumeroFactura();
+    this->Altas = true;
+    DesbloquearCampos();
     VaciarCampos();
     ui->txtcCodigoCliente->setFocus();
 }

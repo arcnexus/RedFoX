@@ -7,6 +7,7 @@
 #include <QtGui>
 #include <QtSql>
 #include "frmbuscarpoblacion.h"
+#include "configuracion.h"
 
 
 namespace Ui {
@@ -18,7 +19,7 @@ class frmClientes : public QDialog
     Q_OBJECT
 
 public:
-    explicit frmClientes(QWidget *parent = 0);
+    explicit frmClientes(Configuracion *oConfiguracion, QWidget *parent = 0);
     ~frmClientes();
     bool Altas;
 
@@ -28,6 +29,7 @@ public slots:
     void VaciarCampos();
    // void SetId_Cliente(int id_Cliente);
 
+signals:
 
 private slots:
     void on_btnSiguiente_clicked();
@@ -62,6 +64,14 @@ private slots:
 
     void on_txtcCp_lostFocus();
 
+    void on_txtcCPFactura_lostFocus();
+
+    void on_txtcPoblacionFactura_lostFocus();
+
+    void on_txtcCpPoblacionAlmacen_lostFocus();
+
+    void on_txtcPoblacionAlmacen_lostFocus();
+
 private:
     Ui::frmClientes *ui;
     QSqlQueryModel *modelFP;
@@ -69,6 +79,7 @@ private:
     QSqlQueryModel *modelPoblaciones;
     QSqlDatabase dbCliente;
     FrmBuscarPoblacion BuscarPoblacion;
+
 
 };
 #endif

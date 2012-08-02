@@ -4,8 +4,10 @@
 #include <QMainWindow>
 #include <QtCore>
 #include <QtGui>
-#include <login.h>
 #include <QString>
+#include <QSqlDatabase>
+#include <QtSql>
+#include "configuracion.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,9 +20,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    Login frmLogin1;
     QString usuario;
     QString empresa;
+    QSqlDatabase dbConfiguracion;
+    QSqlQuery QryConfiguracion;
+    Configuracion *m_config;
+
     
 private slots:
 
@@ -29,6 +34,9 @@ private slots:
     void on_btnClientes_clicked();
 
     void on_btnFacturaCliente_clicked();
+
+    void on_toolButton_3_clicked();
+
 
 private:
     Ui::MainWindow *ui;

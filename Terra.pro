@@ -29,10 +29,12 @@ SOURCES += main.cpp\
     frmfacturas.cpp \
     factura.cpp \
     pruebas.cpp \
-    frmbuscarpoblacion.cpp
+    frmbuscarpoblacion.cpp \
+    configuracion.cpp \
+    empresa.cpp \
+    conexionterra.cpp
 
 HEADERS  += mainwindow.h \
-    conexion.h \
     frmClientes.h \
     login.h \
     frmproveedores.h \
@@ -44,7 +46,10 @@ HEADERS  += mainwindow.h \
     frmfacturas.h \
     factura.h \
     pruebas.h \
-    frmbuscarpoblacion.h
+    frmbuscarpoblacion.h \
+    configuracion.h \
+    empresa.h \
+    conexionterra.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
