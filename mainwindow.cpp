@@ -96,13 +96,14 @@ MainWindow::MainWindow(QWidget *parent) :
                // Abro empresa activa
                QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"empresa");
                if (m_config->cDriverBDEmpresa =="QSQLITE") {
-                    dbEmpresa.setDatabaseName(m_config->cNombreBDEmpresa);
-                    dbEmpresa.setHostName(m_config->cHostBDEmpresa);
-                    dbEmpresa.open(m_config->cUsuarioBDEmpresa,m_config->cPasswordBDEmpresa);
-               } else {
-                    dbEmpresa.setDatabaseName(m_config->cRutaBdEmpresa);
-                    qDebug() << "Empresa" << m_config->cRutaBdEmpresa;
+                   dbEmpresa.setDatabaseName(m_config->cRutaBdEmpresa);
+                    qDebug() << "Empresa:" << m_config->cRutaBdEmpresa;
                     dbEmpresa.open();
+               } else {
+                   dbEmpresa.setDatabaseName(m_config->cNombreBDEmpresa);
+                   dbEmpresa.setHostName(m_config->cHostBDEmpresa);
+                   dbEmpresa.open(m_config->cUsuarioBDEmpresa,m_config->cPasswordBDEmpresa);
+
               }
               if (dbEmpresa.lastError().isValid())
                   {

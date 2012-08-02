@@ -19,26 +19,6 @@ frmFacturas::frmFacturas(Configuracion *m_config, QWidget *parent) :
     ui(new Ui::frmFacturas)
 {
     ui->setupUi(this);
-    // abro conexión según parametros.
-   // dbEmp = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"emp");
-
-
-  /*  if(m_config->cDriverBDEmpresa == "QSQLITE") {
-        dbEmp.setDatabaseName(m_config->cRutaBdEmpresa);
-        dbEmp.open();
-    } else {
-        // esto es para mysql y postgres
-        dbEmp.setDatabaseName(m_config->cNombreBDEmpresa);
-        dbEmp.setHostName(m_config->cHostBDEmpresa);
-        dbEmp.open(m_config->cUsuarioBDEmpresa,m_config->cPasswordBDEmpresa);
-    }
-
-    if (dbEmp.lastError().isValid())
-        {
-            QMessageBox::critical(0, "error:", dbEmp.lastError().text());
-
-        }*/
-
 
     ui->lblContabilizada->setVisible(false);
     ui->lblFacturaCobrada->setVisible(false);
@@ -146,7 +126,7 @@ void frmFacturas::LLenarCampos() {
      cSQL ="select id,cCodigo,nCantidad,cDescripcion,rPvp,rSubtotal,nDto,rDto,rTotal from lin_fac "
              " where id_Cab = "+cId;
      ModelLin_fac = new QSqlQueryModel();
-     ModelLin_fac->setQuery(cSQL,QSqlDatabase::database("emp"));
+     ModelLin_fac->setQuery(cSQL,QSqlDatabase::database("empresa"));
      ui->Lineas->setModel(ModelLin_fac);
       //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
      Cabecera = new QHeaderView(Qt::Horizontal,this);
@@ -219,7 +199,7 @@ void frmFacturas::VaciarCampos() {
     ui->txtrBase2->setValue(0);
     ui->txtrBase3->setValue(0);
     ui->txtrbase4->setValue(0);
-    QSqlQuery tiposiva(QSqlDatabase::database("emp"));
+    QSqlQuery tiposiva(QSqlDatabase::database("empresa"));
     // IVA NORMAL
     tiposiva.prepare("Select nIva from tiposiva where cTipo = 'NORMAL'");
     if (!tiposiva.exec()) {

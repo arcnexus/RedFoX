@@ -41,7 +41,6 @@ Login::Login(Configuracion *m_config,QWidget *parent) :
     // TODO - Rellenar en base a fichero de empresas BD terra.
     // Relleno combo empresas
 
-    qDebug() <<"fins aquí bé";
     QSqlQuery *QryEmpresas = new QSqlQuery(QSqlDatabase::database("terra"));
     QryEmpresas->prepare("Select * from empresas");
     if(QryEmpresas->exec()) {

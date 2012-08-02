@@ -1,7 +1,6 @@
 #include "factura.h"
 #include <QSqlQuery>
 #include <QSqlDatabase>
-#include "conexionterra.h"
 #include <QtSql>
 #include <QErrorMessage>
 #include <QMessageBox>
@@ -17,7 +16,7 @@ Factura::Factura(QObject *parent) :
 
 // Metodos utilidad Clase
 void Factura::AnadirFactura() {
-    QSqlQuery cab_fac(QSqlDatabase::database("emp"));
+    QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
      cab_fac.prepare("INSERT INTO cab_fac (cCodigoCliente,cFactura,dFecha,dFechaCobro,iId_Cliente,cCliente,cDireccion,cDireccion2,"
                    "cCp,cPoblacion,cProvincia,cPais,cCif,lRecargoEquivalencia,rSubtotal,nDto,nDtoPP,rImporteDescuento,rImporteDescuentoPP,"
                    "rBase,nIva,rImporteIva,rTotal,lImpresa,lCobrada,lContabilizada,id_FormaPago,cFormaPago,tComentario,"
@@ -101,7 +100,7 @@ void Factura::AnadirFactura() {
 }
 // Guardar la factura
 void Factura::GuardarFactura(int nId_Factura) {
-    QSqlQuery cab_fac(QSqlDatabase::database("emp"));
+    QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
     cab_fac.prepare( "UPDATE cab_fac set "
                    "cCodigoCliente = :cCodigoCliente,"
                    "cFactura = :cFactura,"
@@ -239,7 +238,7 @@ void Factura::GuardarFactura(int nId_Factura) {
 }
 
 void Factura::RecuperarFactura(QString cSQL){
-        cab_fac = new QSqlQuery(QSqlDatabase::database("emp"));
+        cab_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
         cab_fac->prepare(cSQL);
         if( !cab_fac->exec() ) {
             QMessageBox::critical(NULL, "error:", cab_fac->lastError().text());
@@ -314,7 +313,7 @@ void Factura::RecuperarFactura(QString cSQL){
 }
 
 QString Factura::NuevoNumeroFactura() {
-    QSqlQuery cab_fac(QSqlDatabase::database("emp"));
+    QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
     QString cNum;
     QString cNumFac;
     int inum;
