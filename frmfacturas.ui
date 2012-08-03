@@ -482,77 +482,6 @@ border-right-color: rgb(220, 220, 220);</string>
           <string>Totales</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_8">
-          <item row="0" column="0" rowspan="2">
-           <layout class="QGridLayout" name="gridLayout_4">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_8">
-              <property name="text">
-               <string>SubTotal:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_10">
-              <property name="text">
-               <string>DtoPP:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1" colspan="2">
-             <widget class="QDoubleSpinBox" name="txtrSubtotal">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(0, 128, 0);</string>
-              </property>
-              <property name="maximum">
-               <double>999999999.000000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="2">
-             <widget class="QDoubleSpinBox" name="txtrImporteDescuentoPP">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(0, 128, 0);</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QDoubleSpinBox" name="txtrImporteDescuento">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(0, 128, 0);</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_9">
-              <property name="text">
-               <string>Dto:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QDoubleSpinBox" name="txtnDtoPP"/>
-            </item>
-            <item row="1" column="1">
-             <widget class="QDoubleSpinBox" name="txtnDto"/>
-            </item>
-           </layout>
-          </item>
-          <item row="0" column="1" rowspan="3" colspan="2">
-           <widget class="Line" name="line">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="2" rowspan="2">
            <layout class="QGridLayout" name="gridLayout_6">
             <item row="0" column="0" colspan="3">
@@ -611,6 +540,13 @@ border-right-color: rgb(220, 220, 220);</string>
             </item>
            </layout>
           </item>
+          <item row="0" column="1" rowspan="3" colspan="2">
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="0">
            <layout class="QGridLayout" name="gridLayout_5">
             <item row="3" column="0">
@@ -664,6 +600,86 @@ border-right-color: rgb(220, 220, 220);</string>
               </property>
               <property name="styleSheet">
                <string notr="true">color: rgb(0, 128, 0);</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="0" rowspan="2">
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_8">
+              <property name="text">
+               <string>SubTotal:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string>DtoPP:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QDoubleSpinBox" name="txtrImporteDescuentoPP">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(0, 128, 0);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QDoubleSpinBox" name="txtnDto"/>
+            </item>
+            <item row="2" column="2">
+             <widget class="QDoubleSpinBox" name="txtnDtoPP"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>Dto:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QLineEdit" name="txtrSubtotal">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>0,00</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QDoubleSpinBox" name="txtrImporteDescuento1">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(0, 128, 0);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QLineEdit" name="txtrImporteDescuento">
+              <property name="text">
+               <string>0,00</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>

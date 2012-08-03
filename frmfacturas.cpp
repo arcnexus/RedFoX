@@ -19,13 +19,13 @@ frmFacturas::frmFacturas(Configuracion *m_config, QWidget *parent) :
     ui(new Ui::frmFacturas)
 {
     ui->setupUi(this);
-
+    // Pongo valores por defecto
     ui->lblContabilizada->setVisible(false);
     ui->lblFacturaCobrada->setVisible(false);
     ui->lblFacturaImpresa->setVisible(false);
     // Rellenar formas de pago
     modelFP = new QSqlQueryModel();
-    modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("emp"));
+    modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("empresa"));
     ui->txtcFormaPago->setModel(modelFP);
     // valores edicion
     this->Altas = false;
@@ -37,6 +37,7 @@ frmFacturas::~frmFacturas()
 }
 void frmFacturas::LLenarCampos() {
     int lEstado;
+    Configuracion *m_config;
     ui->txtcCodigoCliente->setText(oFactura->getcCodigoCliente());
     ui->txtcFactura->setText(oFactura->getcFactura());
     ui->txtdFecha->setDate(oFactura->getdFecha());
@@ -55,10 +56,10 @@ void frmFacturas::LLenarCampos() {
     } else {
         ui->chklRecargoEquivalencia->setChecked(false);
     }
-    ui->txtrSubtotal->setValue(oFactura->getrSubtotal());
+    ui->txtrSubtotal->setText(m_config->FormatoNumerico( QString::number(oFactura->getrSubtotal(),'f',2)));
     ui->txtnDto->setValue(oFactura->getnDto());
     ui->txtnDtoPP->setValue(oFactura->getnDtoPP());
-    ui->txtrImporteDescuento->setValue(oFactura->getrImporteDescuento());
+    ui->txtrImporteDescuento->setText(m_config->FormatoNumerico(QString::number(oFactura->getrImporteDescuento(),'f',2)));
     ui->txtrImporteDescuentoPP->setValue(oFactura->getrImporteDescuentoPP());
     ui->txtrBase->setValue(oFactura->getrBase());
     ui->txtnIva_2->setValue(oFactura->getnIva());
@@ -142,7 +143,7 @@ void frmFacturas::LLenarCampos() {
      Cabecera->setResizeMode(3,QHeaderView::Fixed);
      Cabecera->resizeSection(3,253);
      Cabecera->setResizeMode(4,QHeaderView::Fixed);
-     Cabecera->resizeSection(4,100);
+     Cabecera->resizeSection(4,200);
      ModelLin_fac->setHeaderData(1, Qt::Horizontal, QObject::tr("CÓDIGO"));
      ModelLin_fac->setHeaderData(2, Qt::Horizontal, QObject::tr("CANTIDAD"));
      ModelLin_fac->setHeaderData(3, Qt::Horizontal, QObject::tr("DESCRIPCIÓN"));
@@ -180,10 +181,10 @@ void frmFacturas::VaciarCampos() {
     ui->txtcPais->setText("");
     ui->txtcCif->setText("");
     ui->chklRecargoEquivalencia->setChecked(false);
-    ui->txtrSubtotal->setValue(0);
+    ui->txtrSubtotal->setText(0);
     ui->txtnDto->setValue(0);
     ui->txtnDtoPP->setValue(0);
-    ui->txtrImporteDescuento->setValue(0);
+    ui->txtrImporteDescuento->setText("0,00");
     ui->txtrImporteDescuentoPP->setValue(0);
     ui->txtrBase->setValue(0);
     ui->txtnIva_2->setValue(0);
@@ -402,10 +403,10 @@ void frmFacturas::LLenarFactura() {
     } else {
         oFactura->setlRecargoEquivalencia(0);
     }
-    oFactura->setrSubtotal(ui->txtrSubtotal->value());
+    oFactura->setrSubtotal(ui->txtrSubtotal->text().toDouble());
     oFactura->setnDto(ui->txtnDto->value());
     oFactura->setnDtoPP(ui->txtnDtoPP->value());
-    oFactura->setrImporteDescuento(ui->txtrImporteDescuento->value());
+    oFactura->setrImporteDescuento(ui->txtrImporteDescuento->text().toDouble());
     oFactura->setrImporteDescuentoPP(ui->txtrImporteDescuentoPP->value());
     oFactura->setrBase(ui->txtrBase->value());
     oFactura->setrImporteIva(ui->txtrImporteIva->value());
@@ -477,6 +478,7 @@ void frmFacturas::on_btnAnadir_clicked()
     VaciarCampos();
     ui->txtcCodigoCliente->setFocus();
 }
+
 ColumnaGrid::ColumnaGrid(QObject *parent)
     :QItemDelegate(parent)
 {
@@ -488,25 +490,19 @@ void ColumnaGrid::paint(QPainter *painter,
 {
 
     QString text = index.model()->data(index, Qt::DisplayRole).toString();
-
+    Configuracion *m_config;
     /* Verificamos el Index */
     if (index.column() == 4 || index.column() == 5 || index.column() == 8)
-        if (text.length() >6) {
-            text.insert(1, ".");
-        }
 
-
+        text = m_config->FormatoNumerico(text);
 
     QStyleOptionViewItem myOption = option;
     myOption.displayAlignment = Qt::AlignRight | Qt::AlignVCenter;
-
     drawDisplay(painter, myOption, myOption.rect,text);
     drawFocus(painter, myOption, myOption.rect);
-
 }
 
 void frmFacturas::on_AnadirLinea_clicked()
 {
-    Pruebas *frmPrueba =new  Pruebas;
-    frmPrueba->exec();
+
 }

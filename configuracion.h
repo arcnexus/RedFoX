@@ -42,7 +42,7 @@ public:
     QFileDialog dialogo;
 
 public slots:
-
+    QString FormatoNumerico(QString texto);
 
     
 };
