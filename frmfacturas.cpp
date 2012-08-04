@@ -37,7 +37,7 @@ frmFacturas::~frmFacturas()
 }
 void frmFacturas::LLenarCampos() {
     int lEstado;
-    Configuracion *m_config;
+    Configuracion *m_config = new Configuracion();
     ui->txtcCodigoCliente->setText(oFactura->getcCodigoCliente());
     ui->txtcFactura->setText(oFactura->getcFactura());
     ui->txtdFecha->setDate(oFactura->getdFecha());

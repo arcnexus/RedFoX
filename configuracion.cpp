@@ -8,8 +8,8 @@
 
 QSettings fichConf("infint","terra");
 
-Configuracion::Configuracion(QObject *parent) :
-    QObject(parent)
+Configuracion::Configuracion()
+   // QObject(parent)
 {
 
 }

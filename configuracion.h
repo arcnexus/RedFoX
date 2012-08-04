@@ -1,17 +1,17 @@
 #ifndef CONFIGURACION_H
 #define CONFIGURACION_H
 
-#include <QObject>
+//#include <QObject>
 #include <QString>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QFileDialog>
 
-class Configuracion : public QObject
+class Configuracion
 {
-    Q_OBJECT
+    //Q_OBJECT
 public:
-    explicit Configuracion(QObject *parent = 0);
+    explicit Configuracion();
     QString cRutaBdTerra;
     QString cSerie;
     int nDigitosFactura;
