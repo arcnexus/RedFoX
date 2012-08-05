@@ -1,9 +1,9 @@
 #include <QtGui/QApplication>
 #include "mainwindow.h"
 #include <qsql.h>
-#include<QSqlDatabase>
+#include <QSqlDatabase>
 #include <QMessageBox>
-#include<QTextCodec>
+#include <QTextCodec>
 #include <QtSql>
 
 

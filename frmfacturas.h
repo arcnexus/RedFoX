@@ -39,6 +39,7 @@ private slots:
 private:
     Ui::frmFacturas *ui;
 
+    Configuracion *m_config;
     QSqlDatabase dbEmp;
     QSqlDatabase dbTerra;
     QSqlQueryModel *modelFP;

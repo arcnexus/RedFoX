@@ -10,7 +10,7 @@
 class Configuracion{
 
 public:
-    explicit Configuracion();
+    Configuracion();
     QString cRutaBdTerra;
     QString cSerie;
     int nDigitosFactura;
@@ -40,11 +40,9 @@ public:
     QSqlQuery *QryConfiguracion;
     QFileDialog dialogo;
 
-public slots:
     QString FormatoNumerico(QString texto);
 
     
-private slots:
 
 };
 

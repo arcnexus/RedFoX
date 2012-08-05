@@ -13,11 +13,11 @@
 #include <QHeaderView>
 
 Factura *oFactura = new Factura();
-Configuracion *m_config = new Configuracion();
 frmFacturas::frmFacturas(Configuracion *m_config, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmFacturas)
 {
+    m_config = new Configuracion();
     ui->setupUi(this);
     // Pongo valores por defecto
     ui->lblContabilizada->setVisible(false);
@@ -491,10 +491,11 @@ void ColumnaGrid::paint(QPainter *painter,
 
     QString text = index.model()->data(index, Qt::DisplayRole).toString();
 
+    Configuracion config;
     /* Verificamos el Index */
     if (index.column() == 4 || index.column() == 5 || index.column() == 8)
 
-        text = m_config->FormatoNumerico(text);
+        text = config.FormatoNumerico(text);
 
     QStyleOptionViewItem myOption = option;
     myOption.displayAlignment = Qt::AlignRight | Qt::AlignVCenter;

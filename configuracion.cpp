@@ -1,6 +1,6 @@
 #include "configuracion.h"
 #include <QMessageBox>
-#include<QSqlError>
+#include <QSqlError>
 #include <QSqlQuery>
 #include <QSettings>
 #include <QDebug>
