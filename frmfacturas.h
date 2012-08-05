@@ -23,7 +23,7 @@ public slots:
     void BloquearCampos();
     void DesbloquearCampos();
 public:
-    explicit frmFacturas(Configuracion *m_config, QWidget *parent = 0);
+    explicit frmFacturas(Configuracion *o_config, QWidget *parent = 0);
     ~frmFacturas();
     
 private slots:
@@ -38,8 +38,6 @@ private slots:
 
 private:
     Ui::frmFacturas *ui;
-
-    Configuracion *m_config;
     QSqlDatabase dbEmp;
     QSqlDatabase dbTerra;
     QSqlQueryModel *modelFP;
@@ -47,6 +45,7 @@ private:
     QSqlQueryModel *ModelLin_fac;
     QHeaderView *Cabecera;
     double importe;
+    Configuracion *o_configuracion;
 };
 
 class ColumnaGrid : public QItemDelegate

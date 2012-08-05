@@ -13,11 +13,11 @@
 #include <QHeaderView>
 
 Factura *oFactura = new Factura();
-frmFacturas::frmFacturas(Configuracion *m_config, QWidget *parent) :
+frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmFacturas)
 {
-    m_config = new Configuracion();
+    o_configuracion =o_config;
     ui->setupUi(this);
     // Pongo valores por defecto
     ui->lblContabilizada->setVisible(false);
@@ -37,7 +37,6 @@ frmFacturas::~frmFacturas()
 }
 void frmFacturas::LLenarCampos() {
     int lEstado;
-   //rc Configuracion *m_config = new Configuracion();
     ui->txtcCodigoCliente->setText(oFactura->getcCodigoCliente());
     ui->txtcFactura->setText(oFactura->getcFactura());
     ui->txtdFecha->setDate(oFactura->getdFecha());
@@ -56,10 +55,10 @@ void frmFacturas::LLenarCampos() {
     } else {
         ui->chklRecargoEquivalencia->setChecked(false);
     }
-    ui->txtrSubtotal->setText(m_config->FormatoNumerico( QString::number(oFactura->getrSubtotal(),'f',2)));
+    ui->txtrSubtotal->setText(o_configuracion->FormatoNumerico( QString::number(oFactura->getrSubtotal(),'f',2)));
     ui->txtnDto->setValue(oFactura->getnDto());
     ui->txtnDtoPP->setValue(oFactura->getnDtoPP());
-    ui->txtrImporteDescuento->setText(m_config->FormatoNumerico(QString::number(oFactura->getrImporteDescuento(),'f',2)));
+    ui->txtrImporteDescuento->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteDescuento(),'f',2)));
     ui->txtrImporteDescuentoPP->setValue(oFactura->getrImporteDescuentoPP());
     ui->txtrBase->setValue(oFactura->getrBase());
     ui->txtnIva_2->setValue(oFactura->getnIva());
@@ -477,11 +476,13 @@ void frmFacturas::on_btnAnadir_clicked()
     DesbloquearCampos();
     VaciarCampos();
     ui->txtcCodigoCliente->setFocus();
+
 }
 
 ColumnaGrid::ColumnaGrid(QObject *parent)
     :QItemDelegate(parent)
 {
+    Configuracion *o_configuracion = new Configuracion();
 }
 
 void ColumnaGrid::paint(QPainter *painter,
@@ -489,17 +490,54 @@ void ColumnaGrid::paint(QPainter *painter,
                  const QModelIndex & index) const
 {
 
-    QString text = index.model()->data(index, Qt::DisplayRole).toString();
-
-    Configuracion config;
+    QString texto = index.model()->data(index, Qt::DisplayRole).toString();
+    int tamano, posDec;
     /* Verificamos el Index */
     if (index.column() == 4 || index.column() == 5 || index.column() == 8)
+        tamano = texto.length();
+        posDec = tamano -3;
+        if (texto.midRef(posDec,1)==".") {
+            texto.replace(posDec,1,",");
+       }
+        //qDebug() << "Tamaño: " << tamano << "PosDec" <<posDec << texto.midRef(posDec,1);
 
-        text = config.FormatoNumerico(text);
+        if (texto.length()==14) {
+            texto.insert(2,".");
+            texto.insert(6,".");
+            texto.insert(10,".");
+        }
+        if (texto.length()==13) {
+            texto.insert(1,".");
+            texto.insert(5,".");
+            texto.insert(9,".");
+        }
+        if (texto.length()==12) {
+            texto.insert(3,".");
+            texto.insert(7,".");
+        }
+        if (texto.length()==11) {
+            texto.insert(2,".");
+            texto.insert(6,".");
+        }
+        if (texto.length()== 10) {
+            texto.insert(1,".");
+            texto.insert(5,".");
+        }
+        if (texto.length() == 9 ) {
 
+            texto.insert(3, ".");
+        }
+        if (texto.length() == 8 ) {
+
+            texto.insert(2, ".");
+        }
+        if (texto.length() == 7 ) {
+
+            texto.insert(1, ".");
+        }
     QStyleOptionViewItem myOption = option;
     myOption.displayAlignment = Qt::AlignRight | Qt::AlignVCenter;
-    drawDisplay(painter, myOption, myOption.rect,text);
+    drawDisplay(painter, myOption, myOption.rect,texto);
     drawFocus(painter, myOption, myOption.rect);
 }
 
