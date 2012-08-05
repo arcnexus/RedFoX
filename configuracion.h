@@ -7,9 +7,8 @@
 #include <QSqlQuery>
 #include <QFileDialog>
 
-class Configuracion
-{
-    //Q_OBJECT
+class Configuracion{
+
 public:
     explicit Configuracion();
     QString cRutaBdTerra;
@@ -45,6 +44,8 @@ public slots:
     QString FormatoNumerico(QString texto);
 
     
+private slots:
+
 };
 
 #endif // CONFIGURACION_H

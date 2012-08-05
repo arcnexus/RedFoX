@@ -14,15 +14,17 @@
 #include "configuracion.h"
 #include <QSqlQuery>
 
-QSettings settings("infint", "terra");
-QSqlDatabase dbEmp;
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QSqlDatabase dbEmp;
     m_config = new Configuracion();
+            QSettings settings("infint", "terra");
     // TODO - Cambiar por parametros fichero configuración.
     m_config->cDriverBDTerra = settings.value("cDriverBDTerra").toString();
     m_config->cRutaBdTerra = settings.value("cRutaDBTerra").toString();
@@ -147,6 +149,7 @@ void MainWindow::on_btnFacturaCliente_clicked()
 
 void MainWindow::on_toolButton_3_clicked()
 {
+    QSettings settings("infint", "terra");
     settings.setValue("cDriverBDTerra","QSQLITE");
     settings.setValue("cRutaDBTerra","/home/arcnexus/project/terra/terra/DB/terra.sqlite");
     settings.setValue("cHostBDTerra","localhost");

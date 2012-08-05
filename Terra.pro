@@ -28,7 +28,6 @@ SOURCES += main.cpp\
     frmdecision.cpp \
     frmfacturas.cpp \
     factura.cpp \
-    pruebas.cpp \
     frmbuscarpoblacion.cpp \
     configuracion.cpp \
     empresa.cpp
@@ -44,7 +43,6 @@ HEADERS  += mainwindow.h \
     frmdecision.h \
     frmfacturas.h \
     factura.h \
-    pruebas.h \
     frmbuscarpoblacion.h \
     configuracion.h \
     empresa.h

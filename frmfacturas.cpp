@@ -11,9 +11,9 @@
 #include "frmbuscarcliente.h"
 #include <QTableView>
 #include <QHeaderView>
-#include "pruebas.h"
 
 Factura *oFactura = new Factura();
+Configuracion *m_config = new Configuracion();
 frmFacturas::frmFacturas(Configuracion *m_config, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmFacturas)
@@ -37,7 +37,7 @@ frmFacturas::~frmFacturas()
 }
 void frmFacturas::LLenarCampos() {
     int lEstado;
-    Configuracion *m_config = new Configuracion();
+   //rc Configuracion *m_config = new Configuracion();
     ui->txtcCodigoCliente->setText(oFactura->getcCodigoCliente());
     ui->txtcFactura->setText(oFactura->getcFactura());
     ui->txtdFecha->setDate(oFactura->getdFecha());
@@ -490,7 +490,7 @@ void ColumnaGrid::paint(QPainter *painter,
 {
 
     QString text = index.model()->data(index, Qt::DisplayRole).toString();
-    Configuracion *m_config;
+
     /* Verificamos el Index */
     if (index.column() == 4 || index.column() == 5 || index.column() == 8)
 

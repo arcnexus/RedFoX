@@ -6,13 +6,11 @@
 #include <QDebug>
 #include <QFileDialog>
 
-QSettings fichConf("infint","terra");
 
 Configuracion::Configuracion()
-   // QObject(parent)
 {
-
 }
+
 
 QString Configuracion::FormatoNumerico(QString texto)
 {
@@ -61,6 +59,7 @@ QString Configuracion::FormatoNumerico(QString texto)
     }
     return texto;
 }
+
 
 
 
