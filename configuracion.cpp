@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QDebug>
 #include <QFileDialog>
+#include <QMessageBox>
 
 
 Configuracion::Configuracion()
@@ -18,6 +19,10 @@ QString Configuracion::FormatoNumerico(QString texto)
     int tamano = texto.length();
     int posDec;
     posDec = tamano -3;
+    if ((texto.midRef(posDec,1) !=".") && (texto.midRef(posDec,1) != ",")) {
+        texto.append(",00") ;
+    }
+
     if (texto.midRef(posDec,1)==".") {
         texto.replace(posDec,1,",");
    }
@@ -58,6 +63,23 @@ QString Configuracion::FormatoNumerico(QString texto)
         texto.insert(1, ".");
     }
     return texto;
+}
+
+bool Configuracion::EsNumero(QString texto)
+{
+    //Para buscar un caracter en una posición determinada de una cadena:
+    //str.indexOf(“caracter”,posicion);
+       int tamano = texto.size();
+       tamano --;
+       QString cadena = "-0123456789,.";
+       int i =0;
+       do {
+           if (!cadena.contains(texto.at(i), Qt::CaseInsensitive)) {
+               return false;
+           }
+           i++;
+       } while (i<=tamano);
+       return true;
 }
 
 

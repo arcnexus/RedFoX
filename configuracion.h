@@ -6,6 +6,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QFileDialog>
+#include <QLineEdit>
 
 class Configuracion{
 
@@ -41,6 +42,7 @@ public:
     QFileDialog dialogo;
 
     QString FormatoNumerico(QString texto);
+    bool EsNumero(QString texto);
 
     
 

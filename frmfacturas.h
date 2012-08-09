@@ -36,6 +36,14 @@ private slots:
 
     void on_AnadirLinea_clicked();
 
+    void on_btnEditar_clicked();
+
+    void on_txtPVPArticulo_lostFocus();
+
+
+
+    void on_txtCodigoArticulo_lostFocus();
+
 private:
     Ui::frmFacturas *ui;
     QSqlDatabase dbEmp;

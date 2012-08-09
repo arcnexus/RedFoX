@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     factura.cpp \
     frmbuscarpoblacion.cpp \
     configuracion.cpp \
-    empresa.cpp
+    empresa.cpp \
+    articulo.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -45,7 +46,8 @@ HEADERS  += mainwindow.h \
     factura.h \
     frmbuscarpoblacion.h \
     configuracion.h \
-    empresa.h
+    empresa.h \
+    articulo.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \

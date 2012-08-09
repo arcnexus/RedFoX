@@ -18,20 +18,6 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     ui(new Ui::frmClientes)
 {
     ui->setupUi(this);
-     /*dbCliente = QSqlDatabase::addDatabase(oConfiguracion->cDriverBDTerra,"clientes");
-
-    esto es para mysql y postgres
-    dbCliente.setDatabaseName("emp0999");
-    dbCliente.setHostName("localhost");
-    dbCliente.open("root","PatataBullida_99");
-
-    dbCliente.setDatabaseName("/home/arcnexus/project/terra/terra/DB/emp0999.sqlite");
-    dbCliente.open();
-    if (dbCliente.lastError().isValid())
-        {
-            QMessageBox::critical(0, "error:", dbCliente.lastError().text());
-
-        } */
 
     // Rellenar formas de pago
     modelFP = new QSqlQueryModel();

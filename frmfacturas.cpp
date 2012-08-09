@@ -59,11 +59,11 @@ void frmFacturas::LLenarCampos() {
     ui->txtnDto->setValue(oFactura->getnDto());
     ui->txtnDtoPP->setValue(oFactura->getnDtoPP());
     ui->txtrImporteDescuento->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteDescuento(),'f',2)));
-    ui->txtrImporteDescuentoPP->setValue(oFactura->getrImporteDescuentoPP());
-    ui->txtrBase->setValue(oFactura->getrBase());
+    ui->txtrImporteDescuentoPP->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteDescuentoPP(),'f',2)));
+    ui->txtrBase->setText(o_configuracion->FormatoNumerico(QString::number( oFactura->getrBase(),'f',2)));
     ui->txtnIva_2->setValue(oFactura->getnIva());
-    ui->txtrImporteIva->setValue(oFactura->getrImporteIva());
-    ui->txtrTotal->setValue(oFactura->getrTotal());
+    ui->txtrImporteIva->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteIva(),'f',2)));
+    ui->txtrTotal->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrTotal(),'f',2)));
     lEstado = oFactura->getlImpresa();
     if((lEstado == 1)) {
         ui->lblFacturaImpresa->setVisible(true);
@@ -112,8 +112,8 @@ void frmFacturas::LLenarCampos() {
     ui->txtrRecargoEq3->setValue(oFactura->getrRecargoEq3());
     ui->txtrRecargoEq4->setValue(oFactura->getrRecargoEq4());
     ui->txtrTotalRecargoEq->setValue(oFactura->getrTotalRecargoEq());
-    ui->txtrEntregadoaCuenta->setValue(oFactura->getrEntregadoaCuenta());
-    ui->txtrImportePendiente->setValue(oFactura->getrImportePendiente());
+    ui->txtrEntregadoaCuenta->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrEntregadoaCuenta(),'f',2)));
+    ui->txtrImportePendiente->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImportePendiente(),'f',2)));
     ui->txtcCodigoEntidad->setText(oFactura->getcCodigoEntidad());
     ui->txtcOficinaEntidad->setText(oFactura->getcOficinaEntidad());
     ui->txtcDCCuenta->setText(oFactura->getcDCCuenta());
@@ -184,11 +184,11 @@ void frmFacturas::VaciarCampos() {
     ui->txtnDto->setValue(0);
     ui->txtnDtoPP->setValue(0);
     ui->txtrImporteDescuento->setText("0,00");
-    ui->txtrImporteDescuentoPP->setValue(0);
-    ui->txtrBase->setValue(0);
+    ui->txtrImporteDescuentoPP->setText("0,00");
+    ui->txtrBase->setText("0,00");
     ui->txtnIva_2->setValue(0);
-    ui->txtrImporteIva->setValue(0);
-    ui->txtrTotal->setValue(0);
+    ui->txtrImporteIva->setText("0,00");
+    ui->txtrTotal->setText("0,00");
     ui->lblFacturaImpresa->setVisible(false);
     ui->lblFacturaCobrada->setVisible(false);
     ui->lblContabilizada->setVisible(false);
@@ -250,8 +250,8 @@ void frmFacturas::VaciarCampos() {
     ui->txtrRecargoEq3->setValue(0);
     ui->txtrRecargoEq4->setValue(0);
     ui->txtrTotalRecargoEq->setValue(0);
-    ui->txtrEntregadoaCuenta->setValue(0);
-    ui->txtrImportePendiente->setValue(0);
+    ui->txtrEntregadoaCuenta->setText("0,00");
+    ui->txtrImportePendiente->setText("0,00");
     ui->txtcCodigoEntidad->setText("");
     ui->txtcOficinaEntidad->setText("");
     ui->txtcDCCuenta->setText("");
@@ -406,10 +406,10 @@ void frmFacturas::LLenarFactura() {
     oFactura->setnDto(ui->txtnDto->value());
     oFactura->setnDtoPP(ui->txtnDtoPP->value());
     oFactura->setrImporteDescuento(ui->txtrImporteDescuento->text().toDouble());
-    oFactura->setrImporteDescuentoPP(ui->txtrImporteDescuentoPP->value());
-    oFactura->setrBase(ui->txtrBase->value());
-    oFactura->setrImporteIva(ui->txtrImporteIva->value());
-    oFactura->setrTotal(ui->txtrTotal->value());
+    oFactura->setrImporteDescuentoPP(ui->txtrImporteDescuentoPP->text().toDouble());
+    oFactura->setrBase(ui->txtrBase->text().toDouble());
+    oFactura->setrImporteIva(ui->txtrImporteIva->text().toDouble());
+    oFactura->setrTotal(ui->txtrTotal->text().toDouble());
     oFactura->setcFormaPago(ui->txtcFormaPago->currentText());
     oFactura->settComentario(ui->txttComentario->toPlainText());
     oFactura->setrBase1(ui->txtrBase1->value());
@@ -437,8 +437,8 @@ void frmFacturas::LLenarFactura() {
     oFactura->setrRecargoEq3(ui->txtrRecargoEq3->value());
     oFactura->setrRecargoEq4(ui->txtrRecargoEq4->value());
     oFactura->setrTotalRecargoEq(ui->txtrTotalRecargoEq->value());
-    oFactura->setrEntregadoaCuenta(ui->txtrEntregadoaCuenta->value());
-    oFactura->setrImportePendiente(ui->txtrImportePendiente->value());
+    oFactura->setrEntregadoaCuenta(ui->txtrEntregadoaCuenta->text().toDouble());
+    oFactura->setrImportePendiente(ui->txtrImportePendiente->text().toDouble());
     oFactura->setcCodigoEntidad(ui->txtcCodigoEntidad->text());
     oFactura->setcOficinaEntidad(ui->txtcOficinaEntidad->text());
     oFactura->setcDCCuenta(ui->txtcDCCuenta->text());
@@ -543,5 +543,34 @@ void ColumnaGrid::paint(QPainter *painter,
 
 void frmFacturas::on_AnadirLinea_clicked()
 {
+
+}
+
+void frmFacturas::on_btnEditar_clicked()
+{
+    DesbloquearCampos();
+}
+
+
+
+void frmFacturas::on_txtPVPArticulo_lostFocus()
+{
+    bool ok;
+    ok = o_configuracion->EsNumero(ui->txtPVPArticulo->text());
+    if(!ok) {
+       QMessageBox::critical(NULL,tr("Entrada de Importe"),
+                             tr("No puede entrar letras en un campo monetario. \n"
+                                "Sólo se aceptan los valores  (-)  (0123456789) (,)  (.)  "),tr("&Aceptar"));
+       ui->txtPVPArticulo->setText("0,00");
+       ui->txtPVPArticulo->setSelection(0,4);
+       ui->txtPVPArticulo->setFocus();
+     } else {
+        ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(ui->txtPVPArticulo->text()) );
+    }
+}
+
+void frmFacturas::on_txtCodigoArticulo_lostFocus()
+{
+    QSqlQuery qryArticulos(QSqlDatabase::database("empresa"));
 
 }
