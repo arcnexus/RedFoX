@@ -40,9 +40,11 @@ private slots:
 
     void on_txtPVPArticulo_lostFocus();
 
+    void on_txtcCodigoArticulo_lostFocus();
 
+    void on_txtcCantidadArticulo_lostFocus();
 
-    void on_txtCodigoArticulo_lostFocus();
+    void calcularTotalLinea();
 
 private:
     Ui::frmFacturas *ui;

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1028</width>
-    <height>499</height>
+    <width>1038</width>
+    <height>503</height>
    </rect>
   </property>
   <property name="baseSize">
@@ -88,7 +88,7 @@
               <x>9</x>
               <y>10</y>
               <width>100</width>
-              <height>376</height>
+              <height>392</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -947,7 +947,7 @@
              <widget class="QLineEdit" name="txtcFax">
               <property name="minimumSize">
                <size>
-                <width>0</width>
+                <width>100</width>
                 <height>27</height>
                </size>
               </property>
@@ -1085,7 +1085,7 @@
              <widget class="QLineEdit" name="txtcTelefono2">
               <property name="minimumSize">
                <size>
-                <width>0</width>
+                <width>100</width>
                 <height>27</height>
                </size>
               </property>
@@ -1109,7 +1109,14 @@
              </widget>
             </item>
             <item row="3" column="17">
-             <widget class="QLineEdit" name="txtcPersonaContacto"/>
+             <widget class="QLineEdit" name="txtcPersonaContacto">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>27</height>
+               </size>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>

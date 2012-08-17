@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1028</width>
-    <height>499</height>
+    <width>1024</width>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,7 +78,7 @@
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLineEdit" name="txtCodigoArticulo">
+             <widget class="QLineEdit" name="txtcCodigoArticulo">
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -171,7 +171,7 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="txtCantidadArticulo">
+             <widget class="QLineEdit" name="txtcCantidadArticulo">
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
@@ -385,8 +385,17 @@ border-right-color: rgb(220, 220, 220);</string>
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="topMargin">
+       <number>2</number>
+      </property>
       <item>
        <widget class="QPushButton" name="btnAnadir">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
         <property name="text">
          <string>&amp;Nueva</string>
         </property>
@@ -398,6 +407,12 @@ border-right-color: rgb(220, 220, 220);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnAnterior">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
         <property name="text">
          <string>&amp;Anterior</string>
         </property>
@@ -409,6 +424,12 @@ border-right-color: rgb(220, 220, 220);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnSiguiente">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
         <property name="text">
          <string>Siguient&amp;e</string>
         </property>
@@ -420,6 +441,12 @@ border-right-color: rgb(220, 220, 220);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnBuscar">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
         <property name="text">
          <string>Buscar</string>
         </property>
@@ -431,6 +458,12 @@ border-right-color: rgb(220, 220, 220);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnImprimir">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
         <property name="text">
          <string>imprimir</string>
         </property>
@@ -442,6 +475,12 @@ border-right-color: rgb(220, 220, 220);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnEditar">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
         <property name="text">
          <string>Editar</string>
         </property>
@@ -453,6 +492,12 @@ border-right-color: rgb(220, 220, 220);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnGuardar">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
         <property name="text">
          <string>Guardar</string>
         </property>
@@ -464,6 +509,12 @@ border-right-color: rgb(220, 220, 220);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnDeshacer">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
         <property name="text">
          <string>Deshacer</string>
         </property>
@@ -475,6 +526,12 @@ border-right-color: rgb(220, 220, 220);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnCobrar">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
         <property name="text">
          <string>Cobrar</string>
         </property>
@@ -486,6 +543,12 @@ border-right-color: rgb(220, 220, 220);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnCerrar">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
         <property name="text">
          <string>&amp;Salir</string>
         </property>
@@ -533,7 +596,7 @@ border-right-color: rgb(220, 220, 220);</string>
          <enum>QTabWidget::South</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -1800,6 +1863,96 @@ font: 12pt &quot;Times New Roman&quot;;</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>btnAnadir</tabstop>
+  <tabstop>btnAnterior</tabstop>
+  <tabstop>btnSiguiente</tabstop>
+  <tabstop>btnBuscar</tabstop>
+  <tabstop>btnImprimir</tabstop>
+  <tabstop>btnEditar</tabstop>
+  <tabstop>btnGuardar</tabstop>
+  <tabstop>btnDeshacer</tabstop>
+  <tabstop>btnCobrar</tabstop>
+  <tabstop>btnCerrar</tabstop>
+  <tabstop>txtcCodigoCliente</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>txtcCliente</tabstop>
+  <tabstop>txtcDireccion</tabstop>
+  <tabstop>txtcDireccion2</tabstop>
+  <tabstop>txtcCp</tabstop>
+  <tabstop>txtcPoblacion</tabstop>
+  <tabstop>txtcProvincia</tabstop>
+  <tabstop>txtcPais</tabstop>
+  <tabstop>txtcCif</tabstop>
+  <tabstop>chklRecargoEquivalencia</tabstop>
+  <tabstop>txtcCodigoArticulo</tabstop>
+  <tabstop>txtcCantidadArticulo</tabstop>
+  <tabstop>txtDescripcionArticulo</tabstop>
+  <tabstop>txtPVPArticulo</tabstop>
+  <tabstop>txtSubtotalArticulo</tabstop>
+  <tabstop>txtPorcDtoArticulo</tabstop>
+  <tabstop>txtDtoArticulo</tabstop>
+  <tabstop>txtTotalArticulo</tabstop>
+  <tabstop>AnadirLinea</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>pushButton_3</tabstop>
+  <tabstop>Lineas</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>txtcPedidoCliente</tabstop>
+  <tabstop>txtcCodigoEntidad</tabstop>
+  <tabstop>txtcOficinaEntidad</tabstop>
+  <tabstop>txtcDCCuenta</tabstop>
+  <tabstop>txtcNumeroCuenta</tabstop>
+  <tabstop>txtnDto</tabstop>
+  <tabstop>txtrImporteDescuento</tabstop>
+  <tabstop>txtrImporteDescuentoPP</tabstop>
+  <tabstop>txtrSubtotal</tabstop>
+  <tabstop>txtnDtoPP</tabstop>
+  <tabstop>txtrEntregadoaCuenta</tabstop>
+  <tabstop>txtrImportePendiente</tabstop>
+  <tabstop>anadirEntrega</tabstop>
+  <tabstop>txtrBase1</tabstop>
+  <tabstop>txtnPorcentajeIva1</tabstop>
+  <tabstop>txtrIVA1</tabstop>
+  <tabstop>txtrRecargoEq1</tabstop>
+  <tabstop>txtrTotal1</tabstop>
+  <tabstop>txtrBase2</tabstop>
+  <tabstop>txtnPorcentajeIva2</tabstop>
+  <tabstop>txtrIVA2</tabstop>
+  <tabstop>txtrRecargoEq2</tabstop>
+  <tabstop>txtrTotal2</tabstop>
+  <tabstop>txtrBase3</tabstop>
+  <tabstop>txtnPorcentajeIva3</tabstop>
+  <tabstop>txtrIVA3</tabstop>
+  <tabstop>txtrRecargoEq3</tabstop>
+  <tabstop>txtrTotal3</tabstop>
+  <tabstop>txtrbase4</tabstop>
+  <tabstop>txtnPorcentajeIva4</tabstop>
+  <tabstop>txtrIVA4</tabstop>
+  <tabstop>txtrRecargoEq4</tabstop>
+  <tabstop>txtrTotal4</tabstop>
+  <tabstop>txtrBase_2</tabstop>
+  <tabstop>txtnIva_2</tabstop>
+  <tabstop>txtrTotalRecargoEq</tabstop>
+  <tabstop>txtrTotal_2</tabstop>
+  <tabstop>txtnRec1</tabstop>
+  <tabstop>txtnRec2</tabstop>
+  <tabstop>txtnRec3</tabstop>
+  <tabstop>txtnRec4</tabstop>
+  <tabstop>txtcFactura</tabstop>
+  <tabstop>txtdFecha</tabstop>
+  <tabstop>tableView_2</tabstop>
+  <tabstop>txtrTotal</tabstop>
+  <tabstop>txtrBase</tabstop>
+  <tabstop>btnBuscarArt</tabstop>
+  <tabstop>txtdFechaCobro</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>txtcTextoBuscar</tabstop>
+  <tabstop>txtrImporteIva</tabstop>
+  <tabstop>graphicsView</tabstop>
+  <tabstop>txttComentario</tabstop>
+  <tabstop>txtcFormaPago</tabstop>
+ </tabstops>
  <resources>
   <include location="terra.qrc"/>
  </resources>

@@ -368,12 +368,6 @@ void Cliente::DescontarDeuda(int id_deuda, double rPagado){
 }
 void Cliente::Borrar(int id_cliente) {
     QSqlQuery qryCliente(QSqlDatabase::database("empresa"));
-   /* QMessageBox msgBox;
-    msgBox.setText("Está a punto de borrar la ficha de un cliente");
-    msgBox.setInformativeText("¿Desea continuar y proceder al borrado?");
-    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox.setDefaultButton(QMessageBox::No);
-    int elegido = msgBox.exec(); */
     frmDecision msgBox;
     msgBox.Inicializar("Borrar Ficha","Está apunto de borrar la ficha de un cliente","¿Desea continuar?","","Sí","No");
     int elegido = msgBox.exec();

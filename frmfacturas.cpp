@@ -11,6 +11,9 @@
 #include "frmbuscarcliente.h"
 #include <QTableView>
 #include <QHeaderView>
+#include "articulo.h"
+#include "cliente.h"
+
 
 Factura *oFactura = new Factura();
 frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
@@ -567,10 +570,50 @@ void frmFacturas::on_txtPVPArticulo_lostFocus()
      } else {
         ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(ui->txtPVPArticulo->text()) );
     }
+    calcularTotalLinea();
 }
 
-void frmFacturas::on_txtCodigoArticulo_lostFocus()
+
+
+void frmFacturas::on_txtcCodigoArticulo_lostFocus()
 {
-    QSqlQuery qryArticulos(QSqlDatabase::database("empresa"));
+    if (!ui->txtcCodigoArticulo->text().isEmpty()) {
+        Articulo *oArt =  new Articulo();
+        Cliente *oCliente = new Cliente();
+        oArt->Recuperar("Select * from articulos where cCodigo = '"+ui->txtcCodigoArticulo->text()+"'");
+        ui->txtcCodigoArticulo->setText(oArt->getcCodigo());
+        ui->txtDescripcionArticulo->setText(oArt->getcDescripcion());
+        ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrTarifa1(),'f',2)));
+        ui->txtcCantidadArticulo->setText("1");
+        ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrTarifa1(),'f',2)));
+        // Recupero datos cliente para determinar descuento en factura
+        oCliente->Recuperar("select * from clientes where id="+ QString::number(oFactura->getiId_Cliente()) );
+        ui->txtPorcDtoArticulo->setText(QString::number(oCliente->getnPorcDtoCliente(),'f',0));
+        // Asigno el descuento mayor seleccionando entre dto ficha artículo y descuento ficha cliente
+        if (oArt->getrDto() > oCliente->getnPorcDtoCliente()) {
+            ui->txtPorcDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrDto(),'f',0)));
+        }
+        calcularTotalLinea();
+    }
 
 }
+
+void frmFacturas::on_txtcCantidadArticulo_lostFocus()
+{
+    double nSubtotal;
+    nSubtotal = ui->txtcCantidadArticulo->text().toDouble() * ui->txtPVPArticulo->text().toDouble();
+    ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico( QString::number(nSubtotal,'f',2)));
+    calcularTotalLinea();
+}
+
+void frmFacturas::calcularTotalLinea()
+{
+    double impDto,impTot,impSubtotal;
+    impSubtotal = (ui->txtcCantidadArticulo->text().toDouble() * ui->txtPVPArticulo->text().toDouble());
+    ui->txtrSubtotal->setText(o_configuracion->FormatoNumerico(QString::number(impSubtotal,'f',2)));
+    impDto = (ui->txtSubtotalArticulo->text().toDouble() * ui->txtPorcDtoArticulo->text().toDouble())/100 ;
+    ui->txtDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impDto,'f',2)));
+    impTot = ui->txtSubtotalArticulo->text().toDouble() - ui->txtDtoArticulo->text().toDouble();
+    ui->txtTotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impTot,'f',2)));
+}
+
