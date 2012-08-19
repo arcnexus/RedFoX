@@ -89,6 +89,8 @@ public slots:
     void RecuperarFactura(QString cSQL);
     void GuardarFactura(int nId_Factura);
     QString NuevoNumeroFactura();
+    void AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
+                            double porcdto, double dto, double total, double nPorcIva);
 
     // getters
     int Getid();

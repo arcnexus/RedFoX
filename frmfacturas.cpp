@@ -32,11 +32,61 @@ frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     ui->txtcFormaPago->setModel(modelFP);
     // valores edicion
     this->Altas = false;
+    ui->txtcCodigoArticulo->setFocus();
 }
 
 frmFacturas::~frmFacturas()
 {
     delete ui;
+}
+
+void frmFacturas::lineasVentas()
+{
+    // lineas de ventas
+    QString cSQL;
+    QString cId;
+    cId = cId.number(oFactura->Getid());
+     cSQL ="select id,cCodigo,nCantidad,cDescripcion,rPvp,rSubtotal,nDto,rDto,rTotal, nPorcIva from lin_fac "
+             " where id_Cab = "+cId;
+     ModelLin_fac = new QSqlQueryModel();
+     ModelLin_fac->setQuery(cSQL,QSqlDatabase::database("empresa"));
+     ui->Lineas->setModel(ModelLin_fac);
+      //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
+     Cabecera = new QHeaderView(Qt::Horizontal,this);
+     // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+     ui->Lineas->setHorizontalHeader(Cabecera);
+     /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
+     Cabecera->setResizeMode(1,QHeaderView::Fixed);
+     Cabecera->resizeSection(0,0);
+     Cabecera->setResizeMode(1,QHeaderView::Fixed);
+     Cabecera->resizeSection(1,85);
+     Cabecera->setResizeMode(2,QHeaderView::Fixed);
+     Cabecera->resizeSection(2,65);
+     Cabecera->setResizeMode(3,QHeaderView::Fixed);
+     Cabecera->resizeSection(3,213);
+     Cabecera->setResizeMode(4,QHeaderView::Fixed);
+     Cabecera->resizeSection(4,140);
+     Cabecera->setResizeMode(9,QHeaderView::Fixed);
+     Cabecera->resizeSection(9,35);
+     ModelLin_fac->setHeaderData(1, Qt::Horizontal, QObject::tr("CÓDIGO"));
+     ModelLin_fac->setHeaderData(2, Qt::Horizontal, QObject::tr("CANTIDAD"));
+     ModelLin_fac->setHeaderData(3, Qt::Horizontal, QObject::tr("DESCRIPCIÓN"));
+     ModelLin_fac->setHeaderData(4, Qt::Horizontal, QObject::tr("PVP"));
+     ModelLin_fac->setHeaderData(5, Qt::Horizontal, QObject::tr("SUBTOTAL"));
+     ModelLin_fac->setHeaderData(6, Qt::Horizontal, QObject::tr("%DTO"));
+     ModelLin_fac->setHeaderData(7, Qt::Horizontal, QObject::tr("DTO"));
+     ModelLin_fac->setHeaderData(8, Qt::Horizontal, QObject::tr("TOTAL"));
+     ModelLin_fac->setHeaderData(9, Qt::Horizontal, QObject::tr("%IVA"));
+
+    // hacemos visible la cabecera
+     Cabecera->setVisible(true);
+     ui->Lineas->setItemDelegateForColumn(2, new ColumnaGrid(this));
+     ui->Lineas->setItemDelegateForColumn(4, new ColumnaGrid(this));
+     ui->Lineas->setItemDelegateForColumn(5, new ColumnaGrid(this));
+     ui->Lineas->setItemDelegateForColumn(6, new ColumnaGrid(this));
+     ui->Lineas->setItemDelegateForColumn(7, new ColumnaGrid(this));
+     ui->Lineas->setItemDelegateForColumn(8, new ColumnaGrid(this));
+
 }
 void frmFacturas::LLenarCampos() {
     int lEstado;
@@ -122,48 +172,8 @@ void frmFacturas::LLenarCampos() {
     ui->txtcDCCuenta->setText(oFactura->getcDCCuenta());
     ui->txtcNumeroCuenta->setText(oFactura->getcNumeroCuenta());
     ui->txtcPedidoCliente->setText(oFactura->getcPedidoCliente());
-    // lineas de ventas
-    QString cSQL;
-    QString cId;
-    cId = cId.number(oFactura->Getid());
-     cSQL ="select id,cCodigo,nCantidad,cDescripcion,rPvp,rSubtotal,nDto,rDto,rTotal from lin_fac "
-             " where id_Cab = "+cId;
-     ModelLin_fac = new QSqlQueryModel();
-     ModelLin_fac->setQuery(cSQL,QSqlDatabase::database("empresa"));
-     ui->Lineas->setModel(ModelLin_fac);
-      //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
-     Cabecera = new QHeaderView(Qt::Horizontal,this);
-     // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
-     ui->Lineas->setHorizontalHeader(Cabecera);
-     /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
-     Cabecera->setResizeMode(1,QHeaderView::Fixed);
-     Cabecera->resizeSection(0,0);
-     Cabecera->setResizeMode(1,QHeaderView::Fixed);
-     Cabecera->resizeSection(1,85);
-     Cabecera->setResizeMode(2,QHeaderView::Fixed);
-     Cabecera->resizeSection(2,65);
-     Cabecera->setResizeMode(3,QHeaderView::Fixed);
-     Cabecera->resizeSection(3,253);
-     Cabecera->setResizeMode(4,QHeaderView::Fixed);
-     Cabecera->resizeSection(4,200);
-     ModelLin_fac->setHeaderData(1, Qt::Horizontal, QObject::tr("CÓDIGO"));
-     ModelLin_fac->setHeaderData(2, Qt::Horizontal, QObject::tr("CANTIDAD"));
-     ModelLin_fac->setHeaderData(3, Qt::Horizontal, QObject::tr("DESCRIPCIÓN"));
-     ModelLin_fac->setHeaderData(4, Qt::Horizontal, QObject::tr("PVP"));
-     ModelLin_fac->setHeaderData(5, Qt::Horizontal, QObject::tr("SUBTOTAL"));
-     ModelLin_fac->setHeaderData(6, Qt::Horizontal, QObject::tr("%DTO"));
-     ModelLin_fac->setHeaderData(7, Qt::Horizontal, QObject::tr("DTO"));
-     ModelLin_fac->setHeaderData(8, Qt::Horizontal, QObject::tr("TOTAL"));
-
-    // hacemos visible la cabecera
-     Cabecera->setVisible(true);
-     ui->Lineas->setItemDelegateForColumn(2, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(4, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(5, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(6, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(7, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(8, new ColumnaGrid(this));
-
+    // cargamos líneas de ventas
+   lineasVentas();
 
 
 }
@@ -558,19 +568,21 @@ void frmFacturas::on_btnEditar_clicked()
 
 void frmFacturas::on_txtPVPArticulo_lostFocus()
 {
-    bool ok;
-    ok = o_configuracion->EsNumero(ui->txtPVPArticulo->text());
-    if(!ok) {
-       QMessageBox::critical(NULL,tr("Entrada de Importe"),
-                             tr("No puede entrar letras en un campo monetario. \n"
-                                "Sólo se aceptan los valores  (-)  (0123456789) (,)  (.)  "),tr("&Aceptar"));
-       ui->txtPVPArticulo->setText("0,00");
-       ui->txtPVPArticulo->setSelection(0,4);
-       ui->txtPVPArticulo->setFocus();
-     } else {
-        ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(ui->txtPVPArticulo->text()) );
+    if (!ui->txtPVPArticulo->text().isEmpty()) {
+        bool ok;
+        ok = o_configuracion->EsNumero(ui->txtPVPArticulo->text());
+        if(!ok) {
+           QMessageBox::critical(NULL,tr("Entrada de Importe"),
+                                 tr("No puede entrar letras en un campo monetario. \n"
+                                    "Sólo se aceptan los valores  (-)  (0123456789) (,)  (.)  "),tr("&Aceptar"));
+           ui->txtPVPArticulo->setText("0,00");
+           ui->txtPVPArticulo->setSelection(0,4);
+           ui->txtPVPArticulo->setFocus();
+         } else {
+            ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(ui->txtPVPArticulo->text()) );
+        }
+        calcularTotalLinea();
     }
-    calcularTotalLinea();
 }
 
 
@@ -578,20 +590,24 @@ void frmFacturas::on_txtPVPArticulo_lostFocus()
 void frmFacturas::on_txtcCodigoArticulo_lostFocus()
 {
     if (!ui->txtcCodigoArticulo->text().isEmpty()) {
-        Articulo *oArt =  new Articulo();
-        Cliente *oCliente = new Cliente();
-        oArt->Recuperar("Select * from articulos where cCodigo = '"+ui->txtcCodigoArticulo->text()+"'");
-        ui->txtcCodigoArticulo->setText(oArt->getcCodigo());
-        ui->txtDescripcionArticulo->setText(oArt->getcDescripcion());
-        ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrTarifa1(),'f',2)));
-        ui->txtcCantidadArticulo->setText("1");
-        ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrTarifa1(),'f',2)));
-        // Recupero datos cliente para determinar descuento en factura
-        oCliente->Recuperar("select * from clientes where id="+ QString::number(oFactura->getiId_Cliente()) );
-        ui->txtPorcDtoArticulo->setText(QString::number(oCliente->getnPorcDtoCliente(),'f',0));
-        // Asigno el descuento mayor seleccionando entre dto ficha artículo y descuento ficha cliente
-        if (oArt->getrDto() > oCliente->getnPorcDtoCliente()) {
-            ui->txtPorcDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrDto(),'f',0)));
+        if (ui->txtDescripcionArticulo->text().isEmpty()) {
+            Articulo *oArt =  new Articulo();
+            Cliente *oCliente = new Cliente();
+            oArt->Recuperar("Select * from articulos where cCodigo = '"+ui->txtcCodigoArticulo->text()+"'");
+            ui->txtcCodigoArticulo->setText(oArt->getcCodigo());
+            ui->txtDescripcionArticulo->setText(oArt->getcDescripcion());
+            ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrTarifa1(),'f',2)));
+            ui->txtcCantidadArticulo->setText("1");
+            ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrTarifa1(),'f',2)));
+            // Recupero datos cliente para determinar descuento en factura
+            oCliente->Recuperar("select * from clientes where id="+ QString::number(oFactura->getiId_Cliente()) );
+            ui->txtPorcDtoArticulo->setText(QString::number(oCliente->getnPorcDtoCliente(),'f',0));
+            // Asigno el descuento mayor seleccionando entre dto ficha artículo y descuento ficha cliente
+            if (oArt->getrDto() > oCliente->getnPorcDtoCliente()) {
+                ui->txtPorcDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrDto(),'f',0)));
+            }
+            ui->txtPorcIVAArticulo->setText(QString::number(oArt->MostrarTipoIVA(oArt->getid_TipoIva()),'f',0));
+
         }
         calcularTotalLinea();
     }
@@ -610,10 +626,28 @@ void frmFacturas::calcularTotalLinea()
 {
     double impDto,impTot,impSubtotal;
     impSubtotal = (ui->txtcCantidadArticulo->text().toDouble() * ui->txtPVPArticulo->text().toDouble());
-    ui->txtrSubtotal->setText(o_configuracion->FormatoNumerico(QString::number(impSubtotal,'f',2)));
+    ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impSubtotal,'f',2)));
     impDto = (ui->txtSubtotalArticulo->text().toDouble() * ui->txtPorcDtoArticulo->text().toDouble())/100 ;
     ui->txtDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impDto,'f',2)));
     impTot = ui->txtSubtotalArticulo->text().toDouble() - ui->txtDtoArticulo->text().toDouble();
     ui->txtTotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impTot,'f',2)));
 }
 
+
+void frmFacturas::on_txtPorcDtoArticulo_lostFocus()
+{
+    calcularTotalLinea();
+    ui->txtcCodigoArticulo->setFocus();
+}
+
+
+void frmFacturas::on_btnAnadirLinea_clicked()
+{
+    oFactura->AnadirLineaFactura(oFactura->Getid(),ui->txtcCodigoArticulo->text(),ui->txtcCantidadArticulo->text().toDouble(),
+                                 ui->txtDescripcionArticulo->text(),ui->txtPVPArticulo->text().toDouble(),
+                                 ui->txtSubtotalArticulo->text().toDouble(),ui->txtPorcDtoArticulo->text().toDouble(),
+                                 ui->txtDtoArticulo->text().toDouble(),ui->txtTotalArticulo->text().toDouble(),
+                                 ui->txtPorcIVAArticulo->text().toDouble());
+    lineasVentas();
+
+}

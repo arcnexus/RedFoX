@@ -14,6 +14,7 @@ public:
     void Borrar(int nId);
     void Vender(int id, int cantidad, double rPVP);
     void Devolucion(int id, int cantidad, double rImporte, QString cMotivo, QString dFechaDevolucion);
+    double MostrarTipoIVA(int id_tipoIva);
 
     // getters
     QString getId();
@@ -130,6 +131,10 @@ private:
     QString cDescripcionReducida;
     int id_Proveedor;
     QString cCodigoFamilia;
+    QString cFamilia;
+    int id_Seccion;
+    QString cSeccion;
+    int id_Subfamilia;
     int id_Familia;
     QString cSubfamilia;
     QString cCodigoIva;
@@ -172,11 +177,8 @@ private:
     int nEtiquetas;
     int nPaquetes;
     QString cLocalizacion;
-
-
-
     QSqlQuery qryArticulo;
-
+    QSqlQuery qryTipoIva;
 };
 
 #endif // ARTICULO_H

@@ -335,6 +335,30 @@ QString Factura::NuevoNumeroFactura() {
 
 }
 
+void Factura::AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
+                                 double porcdto, double dto, double total, double nPorcIva)
+{
+    QSqlQuery *Qlin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
+    Qlin_fac->prepare("INSERT INTO lin_fac (id_Cab,cCodigo,nCantidad,cDescripcion,rPvp,nDto,rDto,rSubTotal,rTotal,nPorcIva)"
+                      " VALUES(:id_cab,:cCodigo,:nCantidad,:cDescripcion,:rPvp,:nDto,:rDto,:rSubTotal,:rTotal,:nPorcIva)");
+    Qlin_fac->bindValue(":id_cab",id_cab);
+    Qlin_fac->bindValue(":cCodigo",cCodigo);
+    Qlin_fac->bindValue(":nCantidad",nCantidad);
+    Qlin_fac->bindValue(":cDescripcion",cDescripcion);
+    Qlin_fac->bindValue(":rPvp",pvp);
+    Qlin_fac->bindValue(":nDto",porcdto);
+    Qlin_fac->bindValue(":rDto",dto);
+    Qlin_fac->bindValue(":rSubTotal",subtotal);
+    Qlin_fac->bindValue(":rTotal",total);
+    Qlin_fac->bindValue(":nPorcIva",nPorcIva);
+    if (!Qlin_fac->exec()){
+       QMessageBox::critical(NULL,"error al guardar datos línea Factura:", Qlin_fac->lastError().text());
+    }
+
+
+
+}
+
 // getters
 int  Factura::Getid() {
    return this->id;

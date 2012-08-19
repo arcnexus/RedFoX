@@ -22,11 +22,13 @@ public slots:
     void VaciarCampos();
     void BloquearCampos();
     void DesbloquearCampos();
+
 public:
     explicit frmFacturas(Configuracion *o_config, QWidget *parent = 0);
     ~frmFacturas();
     
 private slots:
+    void lineasVentas();
 
     void on_btnSiguiente_clicked();
 
@@ -45,6 +47,10 @@ private slots:
     void on_txtcCantidadArticulo_lostFocus();
 
     void calcularTotalLinea();
+
+    void on_txtPorcDtoArticulo_lostFocus();
+
+    void on_btnAnadirLinea_clicked();
 
 private:
     Ui::frmFacturas *ui;

@@ -22,13 +22,61 @@ void Articulo::Recuperar(QString cSQL)
     qryArticulo.prepare(cSQL);
     if (qryArticulo.exec()) {
            if (qryArticulo.next()){
-            this->id = qryArticulo.value(0).toInt();
-            this->cCodigo = qryArticulo.value(1).toString();
-            this->cCodigoBarras = qryArticulo.value(2).toString();
-            this->cCodigoFabricante = qryArticulo.value(3).toString();
-            this->cDescripcion = qryArticulo.value(4).toString();
-
-            this->rTarifa1 = qryArticulo.value(17).toDouble();
+               this->id = qryArticulo.value(0).toInt();
+               this->cCodigo = qryArticulo.value(1).toString();
+               this->cCodigoBarras = qryArticulo.value(2).toString();
+               this->cCodigoFabricante = qryArticulo.value(3).toString();
+               this->cDescripcion = qryArticulo.value(4).toString();
+               this->cDescripcionReducida = qryArticulo.value(5).toString();
+               this->id_Proveedor = qryArticulo.value(6).toInt();
+               this->cCodigoFamilia = qryArticulo.value(7).toString();
+               this->id_Familia = qryArticulo.value(8).toInt();
+               this->cFamilia = qryArticulo.value(9).toString();
+               this->id_Seccion = qryArticulo.value(10).toInt();
+               this->cSeccion = qryArticulo.value(11).toString();
+               this->id_Subfamilia = qryArticulo.value(12).toInt();
+               this->cSubfamilia = qryArticulo.value(13).toString();
+               this->cCodigoIva = qryArticulo.value(14).toString();
+               this->id_TipoIva = qryArticulo.value(15).toInt();
+               this->rCoste = qryArticulo.value(16).toDouble();
+               this->rTarifa1 = qryArticulo.value(17).toDouble();
+               this->rTarifa2 = qryArticulo.value(18).toDouble();
+               this->rTarifa3 = qryArticulo.value(19).toDouble();
+               this->rDto = qryArticulo.value(20).toDouble();
+               this->nDtoProveedor = qryArticulo.value(21).toDouble();
+               this->nDtoProveedor2 = qryArticulo.value(22).toDouble();
+               this->nDtoProveedor3 = qryArticulo.value(23).toDouble();
+               this->dUltimaCompra = qryArticulo.value(24).toDate();
+               this->dUltimaVenta = qryArticulo.value(25).toDate();
+               this->nMargen1 = qryArticulo.value(26).toDouble();
+               this->nMargen2 = qryArticulo.value(27).toDouble();
+               this->nMargen3 = qryArticulo.value(28).toDouble();
+               this->rPrecioMedio = qryArticulo.value(29).toDouble();
+               this->nUnidadesCompradas = qryArticulo.value(30).toInt();
+               this->rPrecioMedio2 = qryArticulo.value(31).toDouble();
+               this->nUnidadesVendidas = qryArticulo.value(32).toInt();
+               this->rPrecioMedio3 = qryArticulo.value(33).toDouble();
+               this->rAcumuladoCompras = qryArticulo.value(34).toDouble();
+               this->rAcumuladoVentas = qryArticulo.value(35).toDouble();
+               //this->bImagen = qryArticulo.value(36).to....
+               this->tComentario = qryArticulo.value(37).toString();
+               this->nStockMaximo = qryArticulo.value(38).toInt();
+               this->nStockMinimo = qryArticulo.value(39).toInt();
+               this->nStockReal = qryArticulo.value(40).toInt();
+               this->cTipoUnidad = qryArticulo.value(41).toString();
+               this->lControlarStock = qryArticulo.value(42).toInt();
+               this->cModelo = qryArticulo.value(43).toString();
+               this->cTalla = qryArticulo.value(44).toString();
+               this->cColor = qryArticulo.value(45).toString();
+               this->cComposicion = qryArticulo.value(46).toString();
+               this->lPvpIncluyeIva = qryArticulo.value(47).toInt();
+               this->lPendienteRecibir = qryArticulo.value(48).toInt();
+               this->nCantidadPendienteRecibir = qryArticulo.value(49).toInt();
+               this->nReservados = qryArticulo.value(50).toInt();
+               this->lMostrarWeb = qryArticulo.value(51).toInt();
+               this->nEtiquetas = qryArticulo.value(52).toInt();
+               this->nPaquetes = qryArticulo.value(53).toInt();
+               this->cLocalizacion = qryArticulo.value(54).toString();
             } else {
                QMessageBox::critical(NULL,"Búsqueda de artículos", "No se encuentra ningún artículo con este código");
            }
@@ -40,21 +88,20 @@ void Articulo::Recuperar(QString cSQL)
 void Articulo::Borrar(int nId)
 {
     frmDecision *Decision = new frmDecision();
-    QSqlQuery *qryArticulo = new QSqlQuery(QSqlDatabase::database("emp"));
+    QSqlQuery qryArticulo(QSqlDatabase::database("empresa"));
     Decision->Inicializar(QObject::tr("Borrar Artículo"),QObject::tr("¿Desea realmente Borrar este artículo"),QObject::tr("Esta opción no se puede deshacer"),
                           "",QObject::tr("Borrar"),QObject::tr("Cancelar"));
     int elegido = Decision->exec();
    if(elegido == QMessageBox::Yes) {
-        qryArticulo->prepare("Delete from articulos where id = :nId");
-        qryArticulo->bindValue(":id",nId);
-        if(!qryArticulo->exec()){
+        qryArticulo.prepare("Delete from articulos where id = :nId");
+        qryArticulo.bindValue(":id",nId);
+        if(!qryArticulo.exec()){
            QMessageBox::critical(NULL,QObject::tr("Borrar Artíclo"),QObject::tr("Falló el borrado del Artículo"),QObject::tr("&Aceptar"));
         }
 
 
      }
    delete Decision;
-   delete qryArticulo;
 
 }
 
@@ -64,6 +111,25 @@ void Articulo::Vender(int id, int cantidad, double rPVP)
 
 void Articulo::Devolucion(int id, int cantidad, double rImporte, QString cMotivo, QString dFechaDevolucion)
 {
+}
+
+double Articulo::MostrarTipoIVA(int id_tipoIva)
+{
+    QSqlQuery qryTipoIva(QSqlDatabase::database("empresa"));
+    qryTipoIva.prepare("select nIVA from tiposiva where id = :id_tipoIva");
+    qryTipoIva.bindValue(":id_tipoIva",id_tipoIva);
+    if (qryTipoIva.exec()) {
+        if(qryTipoIva.next()) {
+            double dTipoIva = qryTipoIva.value(0).toDouble();
+            return dTipoIva;
+        } else {
+            return 18;
+        }
+    } else {
+        QMessageBox::critical(NULL,QObject::tr("Buscar Tipo IVA"),QObject::tr("No se puede recuperar el tipo de IVA"),QObject::tr("&Aceptar"));
+    }
+
+
 }
 
 

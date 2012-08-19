@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
-    <height>495</height>
+    <width>1020</width>
+    <height>491</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,109 +42,21 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
+            <item row="0" column="2">
              <widget class="QLabel" name="label_18">
               <property name="text">
                <string>Cantid.</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="2">
-             <widget class="QLabel" name="label_19">
-              <property name="text">
-               <string>Descripción</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3">
-             <widget class="QLabel" name="label_30">
-              <property name="text">
-               <string>P.V.P.</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="4">
-             <widget class="QLabel" name="label_31">
-              <property name="text">
-               <string>Sub.Tot.</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="5">
-             <widget class="QLabel" name="label_32">
-              <property name="text">
-               <string>%DTO</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLineEdit" name="txtcCodigoArticulo">
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="6">
+            <item row="0" column="7">
              <widget class="QLabel" name="label_33">
               <property name="text">
                <string>DTO</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="7">
-             <widget class="QLabel" name="label_34">
-              <property name="text">
-               <string>TOTAL</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QLineEdit" name="txtDescripcionArticulo">
-              <property name="minimumSize">
-               <size>
-                <width>170</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="3">
-             <widget class="QLineEdit" name="txtPVPArticulo">
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="4">
-             <widget class="QLineEdit" name="txtSubtotalArticulo">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="5">
-             <widget class="QLineEdit" name="txtPorcDtoArticulo">
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="6">
+            <item row="1" column="7">
              <widget class="QLineEdit" name="txtDtoArticulo">
               <property name="enabled">
                <bool>false</bool>
@@ -157,7 +69,107 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="7">
+            <item row="0" column="3">
+             <widget class="QLabel" name="label_19">
+              <property name="text">
+               <string>Descripción</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QLabel" name="label_30">
+              <property name="text">
+               <string>P.V.P.</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="5">
+             <widget class="QLabel" name="label_31">
+              <property name="text">
+               <string>Sub.Tot.</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="5">
+             <widget class="QLineEdit" name="txtSubtotalArticulo">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="6">
+             <widget class="QLineEdit" name="txtPorcDtoArticulo">
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="placeholderText">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="6">
+             <widget class="QLabel" name="label_32">
+              <property name="text">
+               <string>%DTO</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLineEdit" name="txtcCodigoArticulo">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="placeholderText">
+               <string>código Art</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="4">
+             <widget class="QLineEdit" name="txtPVPArticulo">
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="placeholderText">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="8">
+             <widget class="QLabel" name="label_34">
+              <property name="text">
+               <string>TOTAL</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QLineEdit" name="txtDescripcionArticulo">
+              <property name="minimumSize">
+               <size>
+                <width>170</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="placeholderText">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="8">
              <widget class="QLineEdit" name="txtTotalArticulo">
               <property name="enabled">
                <bool>false</bool>
@@ -170,13 +182,43 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
+            <item row="1" column="2">
              <widget class="QLineEdit" name="txtcCantidadArticulo">
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="readOnly">
                <bool>true</bool>
+              </property>
+              <property name="placeholderText">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPushButton" name="btnAnadirLinea">
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="terra.qrc">
+                <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="9">
+             <widget class="QLineEdit" name="txtPorcIVAArticulo"/>
+            </item>
+            <item row="0" column="9">
+             <widget class="QLabel" name="label_35">
+              <property name="text">
+               <string>%IVA</string>
               </property>
              </widget>
             </item>
@@ -201,17 +243,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="AnadirLinea">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="terra.qrc">
-              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-            </property>
-           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_2">
@@ -1886,6 +1917,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
   <tabstop>txtcCif</tabstop>
   <tabstop>chklRecargoEquivalencia</tabstop>
   <tabstop>txtcCodigoArticulo</tabstop>
+  <tabstop>btnAnadirLinea</tabstop>
   <tabstop>txtcCantidadArticulo</tabstop>
   <tabstop>txtDescripcionArticulo</tabstop>
   <tabstop>txtPVPArticulo</tabstop>
@@ -1893,11 +1925,9 @@ font: 12pt &quot;Times New Roman&quot;;</string>
   <tabstop>txtPorcDtoArticulo</tabstop>
   <tabstop>txtDtoArticulo</tabstop>
   <tabstop>txtTotalArticulo</tabstop>
-  <tabstop>AnadirLinea</tabstop>
   <tabstop>pushButton_2</tabstop>
   <tabstop>pushButton_3</tabstop>
   <tabstop>Lineas</tabstop>
-  <tabstop>tabWidget</tabstop>
   <tabstop>txtcPedidoCliente</tabstop>
   <tabstop>txtcCodigoEntidad</tabstop>
   <tabstop>txtcOficinaEntidad</tabstop>
@@ -1952,6 +1982,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
   <tabstop>graphicsView</tabstop>
   <tabstop>txttComentario</tabstop>
   <tabstop>txtcFormaPago</tabstop>
+  <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources>
   <include location="terra.qrc"/>
