@@ -643,11 +643,26 @@ void frmFacturas::on_txtPorcDtoArticulo_lostFocus()
 
 void frmFacturas::on_btnAnadirLinea_clicked()
 {
-    oFactura->AnadirLineaFactura(oFactura->Getid(),ui->txtcCodigoArticulo->text(),ui->txtcCantidadArticulo->text().toDouble(),
-                                 ui->txtDescripcionArticulo->text(),ui->txtPVPArticulo->text().toDouble(),
-                                 ui->txtSubtotalArticulo->text().toDouble(),ui->txtPorcDtoArticulo->text().toDouble(),
-                                 ui->txtDtoArticulo->text().toDouble(),ui->txtTotalArticulo->text().toDouble(),
-                                 ui->txtPorcIVAArticulo->text().toDouble());
+    if (!ui->txtDescripcionArticulo->text().isEmpty()) {
+        oFactura->AnadirLineaFactura(oFactura->Getid(),ui->txtcCodigoArticulo->text(),ui->txtcCantidadArticulo->text().toDouble(),
+                                     ui->txtDescripcionArticulo->text(),ui->txtPVPArticulo->text().toDouble(),
+                                     ui->txtSubtotalArticulo->text().toDouble(),ui->txtPorcDtoArticulo->text().toDouble(),
+                                     ui->txtDtoArticulo->text().toDouble(),ui->txtTotalArticulo->text().toDouble(),
+                                     ui->txtPorcIVAArticulo->text().toDouble());
+        ui->txtcCodigoArticulo->setText("");
+        ui->txtcCantidadArticulo->setText(0);
+        ui->txtDescripcionArticulo->setText("");
+        ui->txtPVPArticulo->setText(0);
+        ui->txtSubtotalArticulo->setText(0);
+        ui->txtPorcDtoArticulo->setText(0);
+        ui->txtDtoArticulo->setText(0);
+        ui->txtTotalArticulo->setText(0);
+        ui->txtPorcIVAArticulo->setText(0);
+        ui->txtcCodigoArticulo->setFocus();
+    } else {
+        QMessageBox::critical(NULL,tr("Insertar Línea"),tr("Debe especificar un artículo y una cantidad"),tr("&Aceptar"));
+        ui->txtcCodigoArticulo->setFocus();
+    }
     lineasVentas();
 
 }

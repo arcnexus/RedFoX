@@ -336,6 +336,7 @@ QString Factura::NuevoNumeroFactura() {
 }
 
 void Factura::AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
+
                                  double porcdto, double dto, double total, double nPorcIva)
 {
     QSqlQuery *Qlin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
@@ -354,6 +355,20 @@ void Factura::AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, 
     if (!Qlin_fac->exec()){
        QMessageBox::critical(NULL,"error al guardar datos línea Factura:", Qlin_fac->lastError().text());
     }
+    delete Qlin_fac;
+    QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
+    QArticulos->prepare("update articulos set "
+                        "dUltimaVenta = :dUltimaVenta,"
+                        "nUnidadesVendidas = nUnidadesVendidas +:nCantidad,"
+                        "nStockReal = nStockReal - :nCantidad2 "
+                        "where cCodigo= :cCodigo");
+    QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
+    QArticulos->bindValue(":nCantidad",nCantidad);
+    QArticulos->bindValue(":nCantidad2",nCantidad);
+    QArticulos->bindValue(":cCodigo",cCodigo);
+
+    QArticulos->exec();
+
 
 
 
