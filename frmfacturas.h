@@ -36,7 +36,7 @@ private slots:
 
     void on_btnAnadir_clicked();
 
-    void on_AnadirLinea_clicked();
+    //void on_AnadirLinea_clicked();
 
     void on_btnEditar_clicked();
 
@@ -51,6 +51,10 @@ private slots:
     void on_txtPorcDtoArticulo_lostFocus();
 
     void on_btnAnadirLinea_clicked();
+
+    void on_btnDeshacer_clicked();
+
+    void on_btnAnterior_clicked();
 
 private:
     Ui::frmFacturas *ui;

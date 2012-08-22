@@ -13,56 +13,58 @@ Configuracion::Configuracion()
 }
 
 
-QString Configuracion::FormatoNumerico(QString texto)
+QString Configuracion::FormatoNumerico(QString cTexto)
 {
     // Cambio . por , o por signo elegido por los usuarios
-    int tamano = texto.length();
+    int tamano = cTexto.length();
     int posDec;
     posDec = tamano -3;
-    if ((texto.midRef(posDec,1) !=".") && (texto.midRef(posDec,1) != ",")) {
-        texto.append(",00") ;
-    }
+    if ((cTexto.midRef(posDec,1) !=".") && (cTexto.midRef(posDec,1) != ",") &&  (cTexto.midRef((posDec+1),1) !=".")
+            &&  (cTexto.midRef((posDec+1),1) !=".")) {
 
-    if (texto.midRef(posDec,1)==".") {
-        texto.replace(posDec,1,",");
-   }
-    //qDebug() << "Tamaño: " << tamano << "PosDec" <<posDec << texto.midRef(posDec,1);
+        cTexto.append(",00") ;
+    } else {
+        if ((cTexto.midRef((posDec+1),1) =="."))
+            cTexto.append("0");
+    }
+    cTexto.replace(".",",");
+    //qDebug() << "Tamaño: " << tamano << "PosDec" <<posDec << cTexto.midRef(posDec,1);
 
-    if (texto.length()==14) {
-        texto.insert(2,".");
-        texto.insert(6,".");
-        texto.insert(10,".");
+    if (cTexto.length()==14) {
+        cTexto.insert(2,".");
+        cTexto.insert(6,".");
+        cTexto.insert(10,".");
     }
-    if (texto.length()==13) {
-        texto.insert(1,".");
-        texto.insert(5,".");
-        texto.insert(9,".");
+    if (cTexto.length()==13) {
+        cTexto.insert(1,".");
+        cTexto.insert(5,".");
+        cTexto.insert(9,".");
     }
-    if (texto.length()==12) {
-        texto.insert(3,".");
-        texto.insert(7,".");
+    if (cTexto.length()==12) {
+        cTexto.insert(3,".");
+        cTexto.insert(7,".");
     }
-    if (texto.length()==11) {
-        texto.insert(2,".");
-        texto.insert(6,".");
+    if (cTexto.length()==11) {
+        cTexto.insert(2,".");
+        cTexto.insert(6,".");
     }
-    if (texto.length()== 10) {
-        texto.insert(1,".");
-        texto.insert(5,".");
+    if (cTexto.length()== 10) {
+        cTexto.insert(1,".");
+        cTexto.insert(5,".");
     }
-    if (texto.length() == 9 ) {
+    if (cTexto.length() == 9 ) {
 
-        texto.insert(3, ".");
+        cTexto.insert(3, ".");
     }
-    if (texto.length() == 8 ) {
+    if (cTexto.length() == 8 ) {
 
-        texto.insert(2, ".");
+        cTexto.insert(2, ".");
     }
-    if (texto.length() == 7 ) {
+    if (cTexto.length() == 7 ) {
 
-        texto.insert(1, ".");
+        cTexto.insert(1, ".");
     }
-    return texto;
+    return cTexto;
 }
 
 bool Configuracion::EsNumero(QString texto)

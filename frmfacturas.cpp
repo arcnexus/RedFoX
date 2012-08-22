@@ -56,7 +56,7 @@ void frmFacturas::lineasVentas()
      // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
      ui->Lineas->setHorizontalHeader(Cabecera);
      /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
-     Cabecera->setResizeMode(1,QHeaderView::Fixed);
+     Cabecera->setResizeMode(0,QHeaderView::Fixed);
      Cabecera->resizeSection(0,0);
      Cabecera->setResizeMode(1,QHeaderView::Fixed);
      Cabecera->resizeSection(1,85);
@@ -65,7 +65,7 @@ void frmFacturas::lineasVentas()
      Cabecera->setResizeMode(3,QHeaderView::Fixed);
      Cabecera->resizeSection(3,213);
      Cabecera->setResizeMode(4,QHeaderView::Fixed);
-     Cabecera->resizeSection(4,140);
+     Cabecera->resizeSection(4,120);
      Cabecera->setResizeMode(9,QHeaderView::Fixed);
      Cabecera->resizeSection(9,35);
      ModelLin_fac->setHeaderData(1, Qt::Horizontal, QObject::tr("CÓDIGO"));
@@ -80,14 +80,94 @@ void frmFacturas::lineasVentas()
 
     // hacemos visible la cabecera
      Cabecera->setVisible(true);
+     ui->Lineas->setItemDelegateForColumn(1, new ColumnaGrid(this));
      ui->Lineas->setItemDelegateForColumn(2, new ColumnaGrid(this));
+     ui->Lineas->setItemDelegateForColumn(3, new ColumnaGrid(this));
      ui->Lineas->setItemDelegateForColumn(4, new ColumnaGrid(this));
      ui->Lineas->setItemDelegateForColumn(5, new ColumnaGrid(this));
      ui->Lineas->setItemDelegateForColumn(6, new ColumnaGrid(this));
      ui->Lineas->setItemDelegateForColumn(7, new ColumnaGrid(this));
      ui->Lineas->setItemDelegateForColumn(8, new ColumnaGrid(this));
-
+     ui->Lineas->setItemDelegateForColumn(9, new ColumnaGrid(this));
 }
+
+ColumnaGrid::ColumnaGrid(QObject *parent)
+    :QItemDelegate(parent)
+{
+    //Configuracion *o_configuracion = new Configuracion();
+}
+
+void ColumnaGrid::paint(QPainter *painter,
+                 const QStyleOptionViewItem & option,
+                 const QModelIndex & index) const
+{
+
+    QString texto = index.model()->data(index, Qt::DisplayRole).toString();
+    int tamano, posDec;
+    tamano = 0;
+    posDec = 0;
+    /* Verificamos el Index */
+    if (index.column() == 4 || index.column() == 5 || index.column() == 7 || index.column() == 8) {
+        QString cTexto = texto;
+        // Cambio . por , o por signo elegido por los usuarios
+        int tamano = cTexto.length();
+        int posDec;
+        posDec = tamano -3;
+        if ((cTexto.midRef(posDec,1) !=".") && (cTexto.midRef(posDec,1) != ",") &&  (cTexto.midRef((posDec+1),1) !=".")
+                &&  (cTexto.midRef((posDec+1),1) !=".")) {
+
+            cTexto.append(",00") ;
+        } else {
+            if ((cTexto.midRef((posDec+1),1) =="."))
+                cTexto.append("0");
+        }
+
+        cTexto.replace(".",",");
+        //qDebug() << "Tamaño: " << tamano << "PosDec" <<posDec << cTexto.midRef(posDec,1);
+
+        if (cTexto.length()==14) {
+            cTexto.insert(2,".");
+            cTexto.insert(6,".");
+            cTexto.insert(10,".");
+        }
+        if (cTexto.length()==13) {
+            cTexto.insert(1,".");
+            cTexto.insert(5,".");
+            cTexto.insert(9,".");
+        }
+        if (cTexto.length()==12) {
+            cTexto.insert(3,".");
+            cTexto.insert(7,".");
+        }
+        if (cTexto.length()==11) {
+            cTexto.insert(2,".");
+            cTexto.insert(6,".");
+        }
+        if (cTexto.length()== 10) {
+            cTexto.insert(1,".");
+            cTexto.insert(5,".");
+        }
+        if (cTexto.length() == 9 ) {
+
+            cTexto.insert(3, ".");
+        }
+        if (cTexto.length() == 8 ) {
+
+            cTexto.insert(2, ".");
+        }
+        if (cTexto.length() == 7 ) {
+
+            cTexto.insert(1, ".");
+        }
+        texto = cTexto;
+    }
+    QStyleOptionViewItem myOption = option;
+    myOption.displayAlignment = Qt::AlignRight | Qt::AlignVCenter;
+    drawDisplay(painter, myOption, myOption.rect,texto);
+    drawFocus(painter, myOption, myOption.rect);
+}
+
+
 void frmFacturas::LLenarCampos() {
     int lEstado;
     ui->txtcCodigoCliente->setText(oFactura->getcCodigoCliente());
@@ -466,6 +546,13 @@ void frmFacturas::on_btnSiguiente_clicked()
     LLenarCampos();
 
 }
+void frmFacturas::on_btnAnterior_clicked()
+{
+    QString cId = QString::number(oFactura->Getid());
+    oFactura->RecuperarFactura("Select * from cab_fac where id <"+cId+" order by id desc limit 0,1 ");
+    LLenarCampos();
+}
+
 
 void frmFacturas::on_btnGuardar_clicked()
 {
@@ -492,72 +579,6 @@ void frmFacturas::on_btnAnadir_clicked()
 
 }
 
-ColumnaGrid::ColumnaGrid(QObject *parent)
-    :QItemDelegate(parent)
-{
-    Configuracion *o_configuracion = new Configuracion();
-}
-
-void ColumnaGrid::paint(QPainter *painter,
-                 const QStyleOptionViewItem & option,
-                 const QModelIndex & index) const
-{
-
-    QString texto = index.model()->data(index, Qt::DisplayRole).toString();
-    int tamano, posDec;
-    /* Verificamos el Index */
-    if (index.column() == 4 || index.column() == 5 || index.column() == 8)
-        tamano = texto.length();
-        posDec = tamano -3;
-        if (texto.midRef(posDec,1)==".") {
-            texto.replace(posDec,1,",");
-       }
-        //qDebug() << "Tamaño: " << tamano << "PosDec" <<posDec << texto.midRef(posDec,1);
-
-        if (texto.length()==14) {
-            texto.insert(2,".");
-            texto.insert(6,".");
-            texto.insert(10,".");
-        }
-        if (texto.length()==13) {
-            texto.insert(1,".");
-            texto.insert(5,".");
-            texto.insert(9,".");
-        }
-        if (texto.length()==12) {
-            texto.insert(3,".");
-            texto.insert(7,".");
-        }
-        if (texto.length()==11) {
-            texto.insert(2,".");
-            texto.insert(6,".");
-        }
-        if (texto.length()== 10) {
-            texto.insert(1,".");
-            texto.insert(5,".");
-        }
-        if (texto.length() == 9 ) {
-
-            texto.insert(3, ".");
-        }
-        if (texto.length() == 8 ) {
-
-            texto.insert(2, ".");
-        }
-        if (texto.length() == 7 ) {
-
-            texto.insert(1, ".");
-        }
-    QStyleOptionViewItem myOption = option;
-    myOption.displayAlignment = Qt::AlignRight | Qt::AlignVCenter;
-    drawDisplay(painter, myOption, myOption.rect,texto);
-    drawFocus(painter, myOption, myOption.rect);
-}
-
-void frmFacturas::on_AnadirLinea_clicked()
-{
-
-}
 
 void frmFacturas::on_btnEditar_clicked()
 {
@@ -594,6 +615,8 @@ void frmFacturas::on_txtcCodigoArticulo_lostFocus()
             Articulo *oArt =  new Articulo();
             Cliente *oCliente = new Cliente();
             oArt->Recuperar("Select * from articulos where cCodigo = '"+ui->txtcCodigoArticulo->text()+"'");
+            ui->btnAnadirLinea->setToolTip("Código: "+ oArt->getcCodigo()+"<br>Descripción: "+oArt->getcDescripcion()+
+                                           "<br><b>Stock:</b><font color = 'red'>"+QString::number(oArt->getnStockReal())+"</color>");
             ui->txtcCodigoArticulo->setText(oArt->getcCodigo());
             ui->txtDescripcionArticulo->setText(oArt->getcDescripcion());
             ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrTarifa1(),'f',2)));
@@ -666,3 +689,12 @@ void frmFacturas::on_btnAnadirLinea_clicked()
     lineasVentas();
 
 }
+
+void frmFacturas::on_btnDeshacer_clicked()
+{
+    BloquearCampos();
+    QString cId = QString::number(oFactura->Getid());
+    oFactura->RecuperarFactura("Select * from cab_fac where id ="+cId+" order by id limit 0,1 ");
+    LLenarCampos();
+}
+

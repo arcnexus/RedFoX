@@ -360,17 +360,16 @@ void Factura::AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, 
     QArticulos->prepare("update articulos set "
                         "dUltimaVenta = :dUltimaVenta,"
                         "nUnidadesVendidas = nUnidadesVendidas +:nCantidad,"
-                        "nStockReal = nStockReal - :nCantidad2 "
+                        "nStockReal = nStockReal - :nCantidad2, "
+                        "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
                         "where cCodigo= :cCodigo");
     QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
     QArticulos->bindValue(":nCantidad",nCantidad);
     QArticulos->bindValue(":nCantidad2",nCantidad);
+    QArticulos->bindValue(":rTotal",total);
     QArticulos->bindValue(":cCodigo",cCodigo);
 
     QArticulos->exec();
-
-
-
 
 }
 

@@ -41,7 +41,7 @@ public:
     QSqlQuery *QryConfiguracion;
     QFileDialog dialogo;
 
-    QString FormatoNumerico(QString texto);
+    QString FormatoNumerico(QString cTexto);
     bool EsNumero(QString texto);
 
     
