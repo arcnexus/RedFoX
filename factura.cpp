@@ -373,6 +373,21 @@ void Factura::AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, 
 
 }
 
+void Factura::calcularFactura()
+{
+    QSqlQuery *Qlin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
+    Qlin_fac->prepare("Select * from lin_fac where id_cab = :nId");
+    Qlin_fac->bindValue(":nId",this->id);
+    if (Qlin_fac->exec()) {
+        while (Qlin_fac->next()) {
+            this->rTotal = this->rTotal + Qlin_fac->value(9).toDouble();
+            this->rSubtotal = this->rSubtotal + Qlin_fac->value(8).toDouble();
+            this->rImporteDescuento = this->rImporteDescuento + Qlin_fac->value(7).toDouble();
+
+        }
+    }
+}
+
 // getters
 int  Factura::Getid() {
    return this->id;

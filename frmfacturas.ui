@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1020</width>
-    <height>491</height>
+    <width>1018</width>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -627,7 +627,7 @@ border-right-color: rgb(220, 220, 220);</string>
          <enum>QTabWidget::South</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -770,20 +770,6 @@ border-right-color: rgb(220, 220, 220);</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="2">
-             <widget class="QDoubleSpinBox" name="txtnDto">
-              <property name="maximum">
-               <double>9999.989999999999782</double>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="2">
-             <widget class="QDoubleSpinBox" name="txtnDtoPP">
-              <property name="maximum">
-               <double>9999.989999999999782</double>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_9">
               <property name="text">
@@ -824,6 +810,26 @@ border-right-color: rgb(220, 220, 220);</string>
              <widget class="QLineEdit" name="txtrImporteDescuentoPP">
               <property name="text">
                <string>0,00</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLineEdit" name="txtnDto">
+              <property name="text">
+               <string>0.00</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLineEdit" name="txtnDtoPP">
+              <property name="text">
+               <string>0.00</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1017,104 +1023,6 @@ border-right-color: rgb(220, 220, 220);</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QDoubleSpinBox" name="txtrBase1">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 255);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QSpinBox" name="txtnPorcentajeIva1">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>45</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>45</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="maximum">
-             <number>9999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3" colspan="2">
-           <widget class="QDoubleSpinBox" name="txtrIVA1">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 255);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="6">
-           <widget class="QDoubleSpinBox" name="txtrRecargoEq1">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 255);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="7">
-           <widget class="QDoubleSpinBox" name="txtrTotal1">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 192);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_25">
             <property name="maximumSize">
@@ -1128,104 +1036,6 @@ border-right-color: rgb(220, 220, 220);</string>
             </property>
             <property name="text">
              <string>R:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QDoubleSpinBox" name="txtrBase2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 255);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QSpinBox" name="txtnPorcentajeIva2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>45</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>45</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="maximum">
-             <number>9999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3" colspan="2">
-           <widget class="QDoubleSpinBox" name="txtrIVA2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 255);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="6">
-           <widget class="QDoubleSpinBox" name="txtrRecargoEq2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 255);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="7">
-           <widget class="QDoubleSpinBox" name="txtrTotal2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 192);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -1245,104 +1055,6 @@ border-right-color: rgb(220, 220, 220);</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QDoubleSpinBox" name="txtrBase3">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 255);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QSpinBox" name="txtnPorcentajeIva3">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>45</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>45</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="maximum">
-             <number>9999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3" colspan="2">
-           <widget class="QDoubleSpinBox" name="txtrIVA3">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 255);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="6">
-           <widget class="QDoubleSpinBox" name="txtrRecargoEq3">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 255);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="7">
-           <widget class="QDoubleSpinBox" name="txtrTotal3">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 192);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="0">
            <widget class="QLabel" name="label_27">
             <property name="maximumSize">
@@ -1356,104 +1068,6 @@ border-right-color: rgb(220, 220, 220);</string>
             </property>
             <property name="text">
              <string>EX.:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QDoubleSpinBox" name="txtrbase4">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 255);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QSpinBox" name="txtnPorcentajeIva4">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>45</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>45</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="maximum">
-             <number>9999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="3" colspan="2">
-           <widget class="QDoubleSpinBox" name="txtrIVA4">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 255);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="6">
-           <widget class="QDoubleSpinBox" name="txtrRecargoEq4">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 255);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="7">
-           <widget class="QDoubleSpinBox" name="txtrTotal4">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 192);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -1473,25 +1087,6 @@ border-right-color: rgb(220, 220, 220);</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QDoubleSpinBox" name="txtrBase_2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 128, 0);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
           <item row="5" column="2">
            <spacer name="verticalSpacer_4">
             <property name="orientation">
@@ -1504,25 +1099,6 @@ border-right-color: rgb(220, 220, 220);</string>
              </size>
             </property>
            </spacer>
-          </item>
-          <item row="5" column="3" colspan="2">
-           <widget class="QDoubleSpinBox" name="txtnIva_2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 128, 0);</string>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
-            </property>
-           </widget>
           </item>
           <item row="5" column="5">
            <spacer name="verticalSpacer_5">
@@ -1537,141 +1113,429 @@ border-right-color: rgb(220, 220, 220);</string>
             </property>
            </spacer>
           </item>
-          <item row="5" column="6">
-           <widget class="QDoubleSpinBox" name="txtrTotalRecargoEq">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
-            </property>
+          <item row="5" column="7">
+           <widget class="QLineEdit" name="txtrTotal_2">
             <property name="styleSheet">
-             <string notr="true">color: rgb(0, 128, 0);</string>
+             <string notr="true">color: rgb(17, 82, 2);
+</string>
             </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="5" column="7">
-           <widget class="QDoubleSpinBox" name="txtrTotal_2">
-            <property name="enabled">
-             <bool>false</bool>
+          <item row="4" column="7">
+           <widget class="QLineEdit" name="txtrTotal4">
+            <property name="text">
+             <string>0,00</string>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>0</height>
-             </size>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="7">
+           <widget class="QLineEdit" name="txtrTotal3">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="7">
+           <widget class="QLineEdit" name="txtrTotal2">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="7">
+           <widget class="QLineEdit" name="txtrTotal1">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="6">
+           <widget class="QLineEdit" name="txtrRecargoEq1">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="6">
+           <widget class="QLineEdit" name="txtrRecargoEq2">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="6">
+           <widget class="QLineEdit" name="txtrRecargoEq3">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="6">
+           <widget class="QLineEdit" name="txtrRecargoEq4">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="6">
+           <widget class="QLineEdit" name="txtrTotalRecargoEq">
             <property name="styleSheet">
-             <string notr="true">color: rgb(0, 128, 0);</string>
+             <string notr="true">color: rgb(17, 82, 2);</string>
             </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item row="1" column="5">
-           <widget class="QDoubleSpinBox" name="txtnRec1">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
-            </property>
+           <widget class="QLineEdit" name="txtnRec1">
             <property name="maximumSize">
              <size>
-              <width>50</width>
+              <width>45</width>
               <height>16777215</height>
              </size>
             </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
+            <property name="text">
+             <string>0</string>
             </property>
-            <property name="value">
-             <double>0.000000000000000</double>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item row="2" column="5">
-           <widget class="QDoubleSpinBox" name="txtnRec2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
-            </property>
+           <widget class="QLineEdit" name="txtnRec2">
             <property name="maximumSize">
              <size>
-              <width>50</width>
+              <width>45</width>
               <height>16777215</height>
              </size>
             </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
+            <property name="text">
+             <string>0</string>
             </property>
-            <property name="value">
-             <double>0.000000000000000</double>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item row="3" column="5">
-           <widget class="QDoubleSpinBox" name="txtnRec3">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
-            </property>
+           <widget class="QLineEdit" name="txtnRec3">
             <property name="maximumSize">
              <size>
-              <width>50</width>
+              <width>45</width>
               <height>16777215</height>
              </size>
             </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
+            <property name="text">
+             <string>0</string>
             </property>
-            <property name="value">
-             <double>0.000000000000000</double>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item row="4" column="5">
-           <widget class="QDoubleSpinBox" name="txtnRec4">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
-            </property>
+           <widget class="QLineEdit" name="txtnRec4">
             <property name="maximumSize">
              <size>
-              <width>50</width>
+              <width>45</width>
               <height>16777215</height>
              </size>
             </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
+            <property name="text">
+             <string>0</string>
             </property>
-            <property name="value">
-             <double>0.000000000000000</double>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QLineEdit" name="txtrIVA1">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <widget class="QLineEdit" name="txtrIVA2">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="4">
+           <widget class="QLineEdit" name="txtrIVA3">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="4">
+           <widget class="QLineEdit" name="txtrIVA4">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="4">
+           <widget class="QLineEdit" name="txtnIva_2">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(17, 82, 2);</string>
+            </property>
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLineEdit" name="txtnPorcentajeIva1">
+            <property name="maximumSize">
+             <size>
+              <width>45</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLineEdit" name="txtnPorcentajeIva2">
+            <property name="maximumSize">
+             <size>
+              <width>45</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="txtnPorcentajeIva3">
+            <property name="maximumSize">
+             <size>
+              <width>45</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLineEdit" name="txtnPorcentajeIva4">
+            <property name="maximumSize">
+             <size>
+              <width>45</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="txtrBase1">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="txtrBase2">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="txtrBase3">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="txtrBase4">
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="txtrBaseTotal_2">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(17, 82, 2);
+font: 75 9pt &quot;Sans Serif&quot;;</string>
+            </property>
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1933,42 +1797,12 @@ font: 12pt &quot;Times New Roman&quot;;</string>
   <tabstop>txtcOficinaEntidad</tabstop>
   <tabstop>txtcDCCuenta</tabstop>
   <tabstop>txtcNumeroCuenta</tabstop>
-  <tabstop>txtnDto</tabstop>
   <tabstop>txtrImporteDescuento</tabstop>
   <tabstop>txtrImporteDescuentoPP</tabstop>
   <tabstop>txtrSubtotal</tabstop>
-  <tabstop>txtnDtoPP</tabstop>
   <tabstop>txtrEntregadoaCuenta</tabstop>
   <tabstop>txtrImportePendiente</tabstop>
   <tabstop>anadirEntrega</tabstop>
-  <tabstop>txtrBase1</tabstop>
-  <tabstop>txtnPorcentajeIva1</tabstop>
-  <tabstop>txtrIVA1</tabstop>
-  <tabstop>txtrRecargoEq1</tabstop>
-  <tabstop>txtrTotal1</tabstop>
-  <tabstop>txtrBase2</tabstop>
-  <tabstop>txtnPorcentajeIva2</tabstop>
-  <tabstop>txtrIVA2</tabstop>
-  <tabstop>txtrRecargoEq2</tabstop>
-  <tabstop>txtrTotal2</tabstop>
-  <tabstop>txtrBase3</tabstop>
-  <tabstop>txtnPorcentajeIva3</tabstop>
-  <tabstop>txtrIVA3</tabstop>
-  <tabstop>txtrRecargoEq3</tabstop>
-  <tabstop>txtrTotal3</tabstop>
-  <tabstop>txtrbase4</tabstop>
-  <tabstop>txtnPorcentajeIva4</tabstop>
-  <tabstop>txtrIVA4</tabstop>
-  <tabstop>txtrRecargoEq4</tabstop>
-  <tabstop>txtrTotal4</tabstop>
-  <tabstop>txtrBase_2</tabstop>
-  <tabstop>txtnIva_2</tabstop>
-  <tabstop>txtrTotalRecargoEq</tabstop>
-  <tabstop>txtrTotal_2</tabstop>
-  <tabstop>txtnRec1</tabstop>
-  <tabstop>txtnRec2</tabstop>
-  <tabstop>txtnRec3</tabstop>
-  <tabstop>txtnRec4</tabstop>
   <tabstop>txtcFactura</tabstop>
   <tabstop>txtdFecha</tabstop>
   <tabstop>tableView_2</tabstop>

@@ -91,6 +91,7 @@ public slots:
     QString NuevoNumeroFactura();
     void AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
                             double porcdto, double dto, double total, double nPorcIva);
+    void calcularFactura();
 
     // getters
     int Getid();
