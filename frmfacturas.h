@@ -56,6 +56,8 @@ private slots:
 
     void on_btnAnterior_clicked();
 
+    void on_botRecalcular_clicked();
+
 private:
     Ui::frmFacturas *ui;
     QSqlDatabase dbEmp;

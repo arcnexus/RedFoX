@@ -2,6 +2,7 @@
 #include <QSqlQuery>
 #include <QSqlDatabase>
 #include <QtSql>
+#include <QSqlRecord>
 #include <QErrorMessage>
 #include <QMessageBox>
 #include <frmdecision.h>
@@ -375,14 +376,62 @@ void Factura::AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, 
 
 void Factura::calcularFactura()
 {
+    // Reseteo valores
+    this->rSubtotal = 0;
+    this->rImporteDescuento =0;
+    this->rBase = 0;
+    this->rTotal = 0;
+    this->rBase1 =0;
+    this->rBase2 =0;
+    this->rBase3 = 0;
+    this->rBase4 = 0;
+    this->rIVA1 = 0;
+    this->rIVA2 = 0;
+    this->rIVA3 = 0;
+    this->rIVA4 = 0;
+    this->rTotal1 =0;
+    this->rTotal2 =0;
+    this->rTotal3 =0;
+    this->rTotal4 = 0;
+
     QSqlQuery *Qlin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
     Qlin_fac->prepare("Select * from lin_fac where id_cab = :nId");
     Qlin_fac->bindValue(":nId",this->id);
     if (Qlin_fac->exec()) {
+        QSqlRecord record = Qlin_fac->record();
         while (Qlin_fac->next()) {
-            this->rTotal = this->rTotal + Qlin_fac->value(9).toDouble();
-            this->rSubtotal = this->rSubtotal + Qlin_fac->value(8).toDouble();
-            this->rImporteDescuento = this->rImporteDescuento + Qlin_fac->value(7).toDouble();
+            record = Qlin_fac->record();
+
+            this->rSubtotal = this->rSubtotal + record.field("rSubtotal").value().toDouble();
+            this->rImporteDescuento = this->rImporteDescuento + record.field("rDto").value().toDouble();
+            this->rBase = (this->rSubtotal - this->rImporteDescuento) - this->rImporteDescuentoPP;
+            // IVA 1
+            if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA1) {
+                this->rBase1 = this->rBase1 + record.field("rTotal").value().toDouble();
+                this->rIVA1 = (this->rBase1 * this->nPorcentajeIVA1)/100;
+                this->rTotal1 = this->rBase1 + this->rIVA1;
+            }
+            // IVA 2
+            if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA2) {
+                this->rBase2 = this->rBase2 + record.field("rTotal").value().toDouble();
+                this->rIVA2 = (this->rBase2 * this->nPorcentajeIVA2)/100;
+                this->rTotal2 = this->rBase2 + this->rIVA2;
+            }
+            // IVA 3
+            if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA3) {
+                this->rBase3 = this->rBase3 + record.field("rTotal").value().toDouble();
+                this->rIVA3 = (this->rBase3 * this->nPorcentajeIVA3)/100;
+                this->rTotal3 = this->rBase3 + this->rIVA3;
+            }
+            // IVA 4
+            if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA4) {
+                this->rBase4 = this->rBase4 + record.field("rTotal").value().toDouble();
+                this->rIVA4 = (this->rBase4 * this->nPorcentajeIVA4)/100;
+                this->rTotal4 = this->rBase4 + this->rIVA4;
+
+            }
+            this->rImporteIva =  (this->rIVA1 +  this->rIVA2 + this->rIVA3 + this->rIVA4);
+            this->rTotal = this->rBase + this->rImporteIva;
 
         }
     }
@@ -449,7 +498,7 @@ double Factura::getrImporteDescuento() {
     return this->rImporteDescuento;
 }
 double Factura::getrImporteDescuentoPP() {
-    return this->rImporteDescuento;
+    return this->rImporteDescuentoPP;
 }
 double Factura::getrBase() {
     return this->rBase;

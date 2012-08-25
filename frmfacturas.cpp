@@ -75,7 +75,7 @@ void frmFacturas::lineasVentas()
      ModelLin_fac->setHeaderData(5, Qt::Horizontal, QObject::tr("SUBTOTAL"));
      ModelLin_fac->setHeaderData(6, Qt::Horizontal, QObject::tr("%DTO"));
      ModelLin_fac->setHeaderData(7, Qt::Horizontal, QObject::tr("DTO"));
-     ModelLin_fac->setHeaderData(8, Qt::Horizontal, QObject::tr("TOTAL"));
+     ModelLin_fac->setHeaderData(8, Qt::Horizontal, QObject::tr("BASE"));
      ModelLin_fac->setHeaderData(9, Qt::Horizontal, QObject::tr("%IVA"));
 
     // hacemos visible la cabecera
@@ -224,10 +224,10 @@ void frmFacturas::LLenarCampos() {
     ui->txtrBase2->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrBase2(),'f',2)));
     ui->txtrBase3->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrBase3(),'f',2)));
     ui->txtrBase4->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrBase4(),'f',2)));
-    ui->txtnPorcentajeIva1->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getnPorcentajeIVA1(),'f',2)));
-    ui->txtnPorcentajeIva2->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getnPorcentajeIVA2(),'f',2)));
-    ui->txtnPorcentajeIva3->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getnPorcentajeIVA3(),'f',2)));
-    ui->txtnPorcentajeIva4->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getnPorcentajeIVA4(),'f',2)));
+    ui->txtnPorcentajeIva1->setText(QString::number(oFactura->getnPorcentajeIVA1()));
+    ui->txtnPorcentajeIva2->setText(QString::number(oFactura->getnPorcentajeIVA2()));
+    ui->txtnPorcentajeIva3->setText(QString::number(oFactura->getnPorcentajeIVA3()));
+    ui->txtnPorcentajeIva4->setText(QString::number(oFactura->getnPorcentajeIVA4()));
     ui->txtrIVA1->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrIVA1(),'f',2)));
     ui->txtrIVA2->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrIVA2(),'f',2)));
     ui->txtrIVA3->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrIVA3(),'f',2)));
@@ -726,3 +726,33 @@ void frmFacturas::on_btnDeshacer_clicked()
     LLenarCampos();
 }
 
+
+void frmFacturas::on_botRecalcular_clicked()
+{
+    oFactura->calcularFactura();
+    ui->txtrSubtotal->setText(o_configuracion->FormatoNumerico( QString::number(oFactura->getrSubtotal(),'f',2)));
+    ui->txtrImporteDescuento->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteDescuento(),'f',2)));
+    ui->txtrImporteDescuentoPP->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteDescuentoPP(),'f',2)));
+    ui->txtrBase->setText(o_configuracion->FormatoNumerico(QString::number( oFactura->getrBase(),'f',2)));
+    ui->txtnIva_2->setText(o_configuracion->FormatoNumerico(QString::number( oFactura->getnIva(),'f',2)));
+    ui->txtrImporteIva->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteIva(),'f',2)));
+    ui->txtrTotal->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrTotal(),'f',2)));
+    ui->txtrBase1->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrBase1(),'f',2)));
+    ui->txtrBase2->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrBase2(),'f',2)));
+    ui->txtrBase3->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrBase3(),'f',2)));
+    ui->txtrBase4->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrBase4(),'f',2)));
+    ui->txtrIVA1->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrIVA1(),'f',2)));
+    ui->txtrIVA2->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrIVA2(),'f',2)));
+    ui->txtrIVA3->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrIVA3(),'f',2)));
+    ui->txtrIVA4->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrIVA4(),'f',2)));
+    ui->txtrTotal1->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrTotal1(),'f',2)));
+    ui->txtrTotal2->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrTotal2(),'f',2)));
+    ui->txtrTotal3->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrTotal3(),'f',2)));
+    ui->txtrTotal4->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrTotal4(),'f',2)));
+    ui->txtrRecargoEq1->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrRecargoEq1(),'f',2)));
+    ui->txtrRecargoEq2->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrRecargoEq2(),'f',2)));
+    ui->txtrRecargoEq3->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrRecargoEq3(),'f',2)));
+    ui->txtrRecargoEq4->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrRecargoEq4(),'f',2)));
+    ui->txtrTotalRecargoEq->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrTotalRecargoEq(),'f',2)));
+
+}
