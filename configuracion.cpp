@@ -84,6 +84,20 @@ bool Configuracion::EsNumero(QString texto)
        return true;
 }
 
+void Configuracion::CargarDatos()
+{
+    QSettings settings("infint", "terra");
+this->cDriverBDTerra = settings.value("cDriverBDTerra").toString();
+this->cRutaBdTerra = settings.value("cRutaDBTerra").toString();
+this->cHostBDTerra = settings.value("cHostBDTerra").toString();
+this->cUsuarioBDTerra  =   settings.value("cUserBDTerra").toString();
+this->cPasswordBDTerra = settings.value("cPasswordBDTerra").toString();
+this->cPais = settings.value("cPais").toString();
+this->cEjercicio = settings.value("cEjercicioActivo").toString();
+this->nDigitosFactura = settings.value(("nDigitosFactura")).toInt();
+
+}
+
 
 
 

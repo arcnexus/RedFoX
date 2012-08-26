@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_config->cPasswordBDTerra = settings.value("cPasswordBDTerra").toString();
     m_config->cPais = settings.value("cPais").toString();
     m_config->cEjercicio = settings.value("cEjercicioActivo").toString();
+    m_config->nDigitosFactura = settings.value(("nDigitosFactura")).toInt();
 
     // Abro Base de Datos
     QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(m_config->cDriverBDTerra,"terra");

@@ -18,6 +18,7 @@ class frmFacturas : public QDialog
     
 public slots:
     void LLenarCampos();
+    void LLenarCamposCliente();
     void LLenarFactura();
     void VaciarCampos();
     void BloquearCampos();
@@ -35,8 +36,6 @@ private slots:
     void on_btnGuardar_clicked();
 
     void on_btnAnadir_clicked();
-
-    //void on_AnadirLinea_clicked();
 
     void on_btnEditar_clicked();
 
@@ -57,6 +56,8 @@ private slots:
     void on_btnAnterior_clicked();
 
     void on_botRecalcular_clicked();
+
+    void on_botBuscarCliente_clicked();
 
 private:
     Ui::frmFacturas *ui;

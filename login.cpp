@@ -113,4 +113,5 @@ void Login::on_Crearconfiguracin_clicked()
     settings.setValue("cPasswordBDTerra","PatataBullida_99");
     settings.setValue("cPais","España");
     settings.setValue("cEjercicioActivo","2012");
+    settings.setValue("nDigitosFactura",5);
 }

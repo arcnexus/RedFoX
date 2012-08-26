@@ -43,6 +43,7 @@ public:
 
     QString FormatoNumerico(QString cTexto);
     bool EsNumero(QString texto);
+    void CargarDatos();
 
     
 

@@ -29,7 +29,7 @@ void FrmBuscarCliente::on_pushButton_clicked()
     QString  cSQL;
     cSQL ="Select id,cNombreFiscal,cCifNif,cPoblacion from clientes where cNombrefiscal like '%"+ui->txtBuscar->text().trimmed()+"%'";
     ModelClientes = new QSqlQueryModel();
-    ModelClientes->setQuery(cSQL,QSqlDatabase::database("clientes"));
+    ModelClientes->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->Grid->setModel(ModelClientes);
 
     // 2º - Creamos Objeto de la clase Cabecera

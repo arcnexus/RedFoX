@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1018</width>
-    <height>485</height>
+    <height>483</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1653,7 +1653,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
          </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="botBuscarCliente">
           <property name="text">
            <string>Buscar Cliente</string>
           </property>
@@ -1783,7 +1783,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
   <tabstop>btnCobrar</tabstop>
   <tabstop>btnCerrar</tabstop>
   <tabstop>txtcCodigoCliente</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>botBuscarCliente</tabstop>
   <tabstop>txtcCliente</tabstop>
   <tabstop>txtcDireccion</tabstop>
   <tabstop>txtcDireccion2</tabstop>

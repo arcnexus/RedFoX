@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <frmdecision.h>
 #include <QDebug>
+#include "configuracion.h"
 
 
 Factura::Factura(QObject *parent) :
@@ -22,14 +23,14 @@ void Factura::AnadirFactura() {
                    "cCp,cPoblacion,cProvincia,cPais,cCif,lRecargoEquivalencia,rSubtotal,nDto,nDtoPP,rImporteDescuento,rImporteDescuentoPP,"
                    "rBase,nIva,rImporteIva,rTotal,lImpresa,lCobrada,lContabilizada,id_FormaPago,cFormaPago,tComentario,"
                    "rBase1,rBase2,rBase3,rBase4,nPorcentajeIVA1,nPorcentajeIVA2,nPorcentajeIVA3,nPorcentajeIVA4,rIVA1,rIVA2,rIVA3,rIVA4,"
-                   "rTotal1,rTotal2,rTotal3,rTotal4,nRec1,nRec2,nRec3,nRec4,rRecargoEq1,nRecargoEq2,nRecargoEq3,nRecargoEq4,"
-                   "rTotalRecargoEq,rEntregadoaCuenta,rImportePendiente,cCodigoEntidad,cOfininaEntidad,cDCCuenta,cNumeroCuenta,cPedidoCliente"
-                   "VALUES (:cCodigoCliente,:cFactura,:dFecha,:dFechaCobro,:iId_Cliente,:cCliente,:cDireccion,:cDireccion2,"
+                   "rTotal1,rTotal2,rTotal3,rTotal4,nRec1,nRec2,nRec3,nRec4,rRecargoEq1,rRecargoEq2,rRecargoEq3,rRecargoEq4,"
+                   "rTotalRecargoEq,rEntregadoaCuenta,rImportePendiente,cCodigoEntidad,cOficinaEntidad,cDCCuenta,cNumeroCuenta,cPedidoCliente)"
+                   " VALUES (:cCodigoCliente,:cFactura,:dFecha,:dFechaCobro,:iId_Cliente,:cCliente,:cDireccion,:cDireccion2,"
                    ":cCp,:cPoblacion,:cProvincia,:cPais,:cCif,:lRecargoEquivalencia,:rSubtotal,:nDto,:nDtoPP,:rImporteDescuento,:rImporteDescuentoPP,"
                    ":rBase,:nIva,:rImporteIva,:rTotal,:lImpresa,:lCobrada,:lContabilizada,:id_FormaPago,:cFormaPago,:tComentario,"
                    ":rBase1,:rBase2,:rBase3,:rBase4,:nPorcentajeIVA1,:nPorcentajeIVA2,:nPorcentajeIVA3,:nPorcentajeIVA4,:rIVA1,:rIVA2,:rIVA3,:rIVA4,"
-                   ":rTotal1,:rTotal2,:rTotal3,:rTotal4,:nRec1,:nRec2,:nRec3,:nRec4,:rRecargoEq1,:nRecargoEq2,:nRecargoEq3,:nRecargoEq4,"
-                   ":rTotalRecargoEq,:rEntregadoaCuenta,:rImportePendiente,:cCodigoEntidad,:cOfininaEntidad,:cDCCuenta,:cNumeroCuenta,:cPedidoCliente");
+                   ":rTotal1,:rTotal2,:rTotal3,:rTotal4,:nRec1,:nRec2,:nRec3,:nRec4,:rRecargoEq1,:rRecargoEq2,:rRecargoEq3,:rRecargoEq4,"
+                   ":rTotalRecargoEq,:rEntregadoaCuenta,:rImportePendiente,:cCodigoEntidad,:cOficinaEntidad,:cDCCuenta,:cNumeroCuenta,:cPedidoCliente)");
 
      cab_fac.bindValue(":cCodigoCliente",this->cCodigoCliente);
      cab_fac.bindValue(":cFactura",this->cFactura);
@@ -84,11 +85,11 @@ void Factura::AnadirFactura() {
      cab_fac.bindValue(":rRecargoEq2",this->rRecargoEq2);
      cab_fac.bindValue(":rRecargoEq3",this->rRecargoEq3);
      cab_fac.bindValue(":rRecargoEq4",this->rRecargoEq4);
-     cab_fac.bindValue(":rTotalRecargo",this->rTotalRecargoEq);
+     cab_fac.bindValue(":rTotalRecargoEq",this->rTotalRecargoEq);
      cab_fac.bindValue(":rEntregadoaCuenta",this->rEntregadoaCuenta);
      cab_fac.bindValue(":rImportePendiente",this->rImportePendiente);
      cab_fac.bindValue(":cCodigoEntidad",this->cCodigoEntidad);
-     cab_fac.bindValue(":cOfininaEntidad",this->cOficinaEntidad);
+     cab_fac.bindValue(":cOficinaEntidad",this->cOficinaEntidad);
      cab_fac.bindValue(":cDCCuenta",this->cDCCuenta);
      cab_fac.bindValue(":cNumeroCuenta",this->cNumeroCuenta);
      cab_fac.bindValue(":cPedidoCliente",this->cPedidoCliente);
@@ -102,6 +103,7 @@ void Factura::AnadirFactura() {
 // Guardar la factura
 void Factura::GuardarFactura(int nId_Factura) {
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
+    this->cFactura = NuevoNumeroFactura();
     cab_fac.prepare( "UPDATE cab_fac set "
                    "cCodigoCliente = :cCodigoCliente,"
                    "cFactura = :cFactura,"
@@ -119,7 +121,7 @@ void Factura::GuardarFactura(int nId_Factura) {
                    "lRecargoEquivalencia = :lRecargoEquivalencia,"
                    "rSubtotal =:rSubtotal,"
                    "nDto =:nDto,"
-                   "nDtoPP =:nDtoPP"
+                   "nDtoPP =:nDtoPP,"
                    "rImporteDescuento =:rImporteDescuento,"
                    "rImporteDescuentoPP =:rImporteDescuentoPP,"
                    "rBase =:rBase,"
@@ -221,18 +223,21 @@ void Factura::GuardarFactura(int nId_Factura) {
     cab_fac.bindValue(":rRecargoEq2",this->rRecargoEq2);
     cab_fac.bindValue(":rRecargoEq3",this->rRecargoEq3);
     cab_fac.bindValue(":rRecargoEq4",this->rRecargoEq4);
-    cab_fac.bindValue(":rTotalRecargo",this->rTotalRecargoEq);
+    cab_fac.bindValue(":rTotalRecargoEq",this->rTotalRecargoEq);
     cab_fac.bindValue(":rEntregadoaCuenta",this->rEntregadoaCuenta);
     cab_fac.bindValue(":rImportePendiente",this->rImportePendiente);
     cab_fac.bindValue(":cCodigoEntidad",this->cCodigoEntidad);
-    cab_fac.bindValue(":cOfininaEntidad",this->cOficinaEntidad);
+    cab_fac.bindValue(":cOficinaEntidad",this->cOficinaEntidad);
     cab_fac.bindValue(":cDCCuenta",this->cDCCuenta);
     cab_fac.bindValue(":cNumeroCuenta",this->cNumeroCuenta);
     cab_fac.bindValue(":cPedidoCliente",this->cPedidoCliente);
     if(!cab_fac.exec()){
         QMessageBox::critical(NULL,tr("error al guardar datos Factura:"), cab_fac.lastError().text());
     } else {
-        QMessageBox::information(NULL,tr("Guardar datos","La Factura se ha guardado correctamente:"),"Ok");
+        QMessageBox::information(NULL,tr("Guardar datos"),tr("La Factura se ha guardado correctamente:"),tr("Ok"));
+        this->id = cab_fac.lastInsertId().toInt();
+        QString cSQL = "Select * from cab_fac where id ="+QString::number(this->id);
+        RecuperarFactura(cSQL);
     }
 
 
@@ -315,22 +320,28 @@ void Factura::RecuperarFactura(QString cSQL){
 
 QString Factura::NuevoNumeroFactura() {
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
-    QString cNum;
+    QString cNum,cSerie;
     QString cNumFac;
     int inum;
-
+    Configuracion *oConfig = new Configuracion();
+    oConfig->CargarDatos();
     cab_fac.prepare("Select cFactura from cab_fac  order by cFactura desc limit 0,1");
     if(cab_fac.exec()) {
         cab_fac.next();
         cNumFac = cab_fac.value(0).toString();
-        cNum = cNumFac.right(5);
+        cNum = cNumFac.right(oConfig->nDigitosFactura);
+        cSerie = cNumFac.left(oConfig->nDigitosFactura);
         inum = cNum.toInt();
         inum++;
         cNum = cNum.number(inum);
-        qDebug() << cNum;
+        while (cNum.length()< oConfig->nDigitosFactura) {
+            cNum.prepend("0");
+        }
     } else {
          QMessageBox::critical(NULL, "error:", cab_fac.lastError().text());
     }
+    delete oConfig;
+    cNumFac = cSerie + cNum;
     return cNumFac;
 
 

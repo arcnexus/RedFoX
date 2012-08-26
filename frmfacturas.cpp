@@ -16,6 +16,7 @@
 
 
 Factura *oFactura = new Factura();
+Cliente *oCliente1 = new Cliente();
 frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmFacturas)
@@ -38,6 +39,8 @@ frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
 frmFacturas::~frmFacturas()
 {
     delete ui;
+    delete oCliente1;
+    delete oFactura;
 }
 
 void frmFacturas::lineasVentas()
@@ -256,6 +259,26 @@ void frmFacturas::LLenarCampos() {
    lineasVentas();
 
 
+}
+
+void frmFacturas::LLenarCamposCliente()
+{
+    ui->txtcCodigoCliente->setText(oCliente1->getcCodigoCliente());
+    ui->txtcCliente->setText(oCliente1->getcNombreFiscal());
+    ui->txtcDireccion->setText(oCliente1->getcDireccion1());
+    ui->txtcDireccion2->setText(oCliente1->getcDireccion2());
+    ui->txtcCp->setText(oCliente1->getcCP());
+    ui->txtcPoblacion->setText(oCliente1->getcPoblacion());
+    ui->txtcProvincia->setText(oCliente1->getcProvincia());
+    ui->txtcPais->setText(oCliente1->getcPais());
+    ui->txtcCif->setText(oCliente1->getcCifNif());
+    int lEstado = 0;
+     lEstado = oCliente1->islRecargoEquivalencia();
+    if ((lEstado= 1)) {
+        ui->chklRecargoEquivalencia->setChecked(true);
+    } else {
+        ui->chklRecargoEquivalencia->setChecked(false);
+    }
 }
 
 void frmFacturas::VaciarCampos() {
@@ -561,13 +584,14 @@ void frmFacturas::on_btnGuardar_clicked()
     BloquearCampos();
     if(this->Altas) {
        this->Altas = false;
-       oFactura->NuevoNumeroFactura();
+       oFactura->setcFactura(oFactura->NuevoNumeroFactura());
        oFactura->AnadirFactura();
     } else {
 
         oFactura->GuardarFactura(oFactura->Getid());
     }
     //bloquearCampos();
+    LLenarCampos();
 }
 
 void frmFacturas::on_btnAnadir_clicked()
@@ -613,7 +637,6 @@ void frmFacturas::on_txtcCodigoArticulo_lostFocus()
     if (!ui->txtcCodigoArticulo->text().isEmpty()) {
         if (ui->txtDescripcionArticulo->text().isEmpty()) {
             Articulo *oArt =  new Articulo();
-            Cliente *oCliente = new Cliente();
             oArt->Recuperar("Select * from articulos where cCodigo = '"+ui->txtcCodigoArticulo->text()+"'");
             ui->btnAnadirLinea->setToolTip("Código: "+ oArt->getcCodigo()+"<br>Descripción: "+oArt->getcDescripcion()+
                                            "<br><b>Stock:</b><font color = 'red'>"+QString::number(oArt->getnStockReal())+"</color>");
@@ -623,10 +646,10 @@ void frmFacturas::on_txtcCodigoArticulo_lostFocus()
             ui->txtcCantidadArticulo->setText("1");
             ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrTarifa1(),'f',2)));
             // Recupero datos cliente para determinar descuento en factura
-            oCliente->Recuperar("select * from clientes where id="+ QString::number(oFactura->getiId_Cliente()) );
-            ui->txtPorcDtoArticulo->setText(QString::number(oCliente->getnPorcDtoCliente(),'f',0));
+            oCliente1->Recuperar("select * from clientes where id="+ QString::number(oFactura->getiId_Cliente()) );
+            ui->txtPorcDtoArticulo->setText(QString::number(oCliente1->getnPorcDtoCliente(),'f',0));
             // Asigno el descuento mayor seleccionando entre dto ficha artículo y descuento ficha cliente
-            if (oArt->getrDto() > oCliente->getnPorcDtoCliente()) {
+            if (oArt->getrDto() > oCliente1->getnPorcDtoCliente()) {
                 ui->txtPorcDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrDto(),'f',0)));
             }
             ui->txtPorcIVAArticulo->setText(QString::number(oArt->MostrarTipoIVA(oArt->getid_TipoIva()),'f',0));
@@ -755,4 +778,15 @@ void frmFacturas::on_botRecalcular_clicked()
     ui->txtrRecargoEq4->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrRecargoEq4(),'f',2)));
     ui->txtrTotalRecargoEq->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrTotalRecargoEq(),'f',2)));
 
+}
+
+void frmFacturas::on_botBuscarCliente_clicked()
+{
+    FrmBuscarCliente BuscarClientes;
+    BuscarClientes.exec();
+    int nId = BuscarClientes.DevolverID();
+    //qDebug() << nId;
+    QString cId = QString::number(nId);
+    oCliente1->Recuperar("Select * from clientes where id ="+cId+" order by id limit 0,1 ");
+    LLenarCamposCliente();
 }
