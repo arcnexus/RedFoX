@@ -40,6 +40,8 @@ public:
     QSqlDatabase dbConfiguracion;
     QSqlQuery *QryConfiguracion;
     QFileDialog dialogo;
+    double nIVA1,nIVA2,nIVA3,nIVA4,nRE1,nRE2,nRE3,nRE4;
+
 
     QString FormatoNumerico(QString cTexto);
     bool EsNumero(QString texto);

@@ -27,6 +27,7 @@ public slots:
 public:
     explicit frmFacturas(Configuracion *o_config, QWidget *parent = 0);
     ~frmFacturas();
+
     
 private slots:
     void lineasVentas();
@@ -59,11 +60,20 @@ private slots:
 
     void on_botBuscarCliente_clicked();
 
+    void on_btnBuscarArt_clicked();
+
+    void on_tablaBuscaArt_doubleClicked(const QModelIndex &index);
+
+    void on_chklRecargoEquivalencia_stateChanged(int arg1);
+
+    void on_btnBuscar_clicked();
+
 private:
     Ui::frmFacturas *ui;
     QSqlDatabase dbEmp;
     QSqlDatabase dbTerra;
     QSqlQueryModel *modelFP;
+    QSqlQueryModel *modArt;
     bool Altas;
     QSqlQueryModel *ModelLin_fac;
     QHeaderView *Cabecera;
@@ -76,8 +86,22 @@ class ColumnaGrid : public QItemDelegate
     Q_OBJECT
 
 public:
+    QString TextoNumero(QString cTexto);
+
 
     ColumnaGrid(QObject *parent);
+
+    void paint(QPainter *painter,
+               const QStyleOptionViewItem &option,
+               const QModelIndex &index) const;
+};
+class ColumnaGrid1 : public QItemDelegate
+{
+    Q_OBJECT
+
+public:
+
+    ColumnaGrid1(QObject *parent);
 
     void paint(QPainter *painter,
                const QStyleOptionViewItem &option,

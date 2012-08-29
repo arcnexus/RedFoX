@@ -87,14 +87,22 @@ bool Configuracion::EsNumero(QString texto)
 void Configuracion::CargarDatos()
 {
     QSettings settings("infint", "terra");
-this->cDriverBDTerra = settings.value("cDriverBDTerra").toString();
-this->cRutaBdTerra = settings.value("cRutaDBTerra").toString();
-this->cHostBDTerra = settings.value("cHostBDTerra").toString();
-this->cUsuarioBDTerra  =   settings.value("cUserBDTerra").toString();
-this->cPasswordBDTerra = settings.value("cPasswordBDTerra").toString();
-this->cPais = settings.value("cPais").toString();
-this->cEjercicio = settings.value("cEjercicioActivo").toString();
-this->nDigitosFactura = settings.value(("nDigitosFactura")).toInt();
+    this->cDriverBDTerra = settings.value("cDriverBDTerra").toString();
+    this->cRutaBdTerra = settings.value("cRutaDBTerra").toString();
+    this->cHostBDTerra = settings.value("cHostBDTerra").toString();
+    this->cUsuarioBDTerra  =   settings.value("cUserBDTerra").toString();
+    this->cPasswordBDTerra = settings.value("cPasswordBDTerra").toString();
+    this->cPais = settings.value("cPais").toString();
+    this->cEjercicio = settings.value("cEjercicioActivo").toString();
+    this->nDigitosFactura = settings.value(("nDigitosFactura")).toInt();
+    this->nIVA1 = settings.value("nIVA1").toDouble();
+    this->nIVA2 = settings.value("nIVA2").toDouble();
+    this->nIVA3 = settings.value("nIVA3").toDouble();
+    this->nIVA4 = settings.value("nIVA4").toDouble();
+    this->nRE1 = settings.value("nRE1").toDouble();
+    this->nRE2 = settings.value("nRE2").toDouble();
+    this->nRE3 = settings.value("nRE3").toDouble();
+    this->nRE4 = settings.value("nRE4").toDouble();
 
 }
 

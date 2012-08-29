@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1018</width>
-    <height>483</height>
+    <height>481</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -328,7 +328,7 @@ border-right-color: rgb(220, 220, 220);</string>
            <string notr="true">background-color: rgb(191, 255, 191);</string>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_5">
            <attribute name="title">
@@ -361,7 +361,7 @@ border-right-color: rgb(220, 220, 220);</string>
              </widget>
             </item>
             <item row="1" column="0" colspan="3">
-             <widget class="QTableView" name="tableView_2">
+             <widget class="QTableView" name="tablaBuscaArt">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
@@ -1818,7 +1818,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
   <tabstop>anadirEntrega</tabstop>
   <tabstop>txtcFactura</tabstop>
   <tabstop>txtdFecha</tabstop>
-  <tabstop>tableView_2</tabstop>
+  <tabstop>tablaBuscaArt</tabstop>
   <tabstop>txtrTotal</tabstop>
   <tabstop>txtrBase</tabstop>
   <tabstop>btnBuscarArt</tabstop>

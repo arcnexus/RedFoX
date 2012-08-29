@@ -18,6 +18,13 @@ Factura::Factura(QObject *parent) :
 
 // Metodos utilidad Clase
 void Factura::AnadirFactura() {
+    Configuracion *oConf =  new Configuracion();
+    oConf->CargarDatos();
+    this->nPorcentajeIVA1 = oConf->nIVA1;
+    this->nPorcentajeIVA2 = oConf->nIVA2;
+    this->nPorcentajeIVA3 = oConf->nIVA3;
+    this->nPorcentajeIVA4 = oConf->nIVA4 ;
+    delete oConf;
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
      cab_fac.prepare("INSERT INTO cab_fac (cCodigoCliente,cFactura,dFecha,dFechaCobro,iId_Cliente,cCliente,cDireccion,cDireccion2,"
                    "cCp,cPoblacion,cProvincia,cPais,cCif,lRecargoEquivalencia,rSubtotal,nDto,nDtoPP,rImporteDescuento,rImporteDescuentoPP,"
@@ -95,8 +102,6 @@ void Factura::AnadirFactura() {
      cab_fac.bindValue(":cPedidoCliente",this->cPedidoCliente);
      if(!cab_fac.exec()){
          QMessageBox::critical(NULL,"error al guardar datos Factura:", cab_fac.lastError().text());
-     } else {
-         QMessageBox::information(NULL,"Guardar datos","Se ha creado una nueva factura correctamente:","Ok");
      }
 
 }

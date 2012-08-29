@@ -9,6 +9,7 @@
 #include <QSqlQueryModel>
 #include <QDebug>
 #include "frmbuscarcliente.h"
+#include "frmBuscarFactura.h"
 #include <QTableView>
 #include <QHeaderView>
 #include "articulo.h"
@@ -22,6 +23,7 @@ frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     ui(new Ui::frmFacturas)
 {
     o_configuracion =o_config;
+    o_configuracion->CargarDatos();
     ui->setupUi(this);
     // Pongo valores por defecto
     ui->lblContabilizada->setVisible(false);
@@ -81,8 +83,9 @@ void frmFacturas::lineasVentas()
      ModelLin_fac->setHeaderData(8, Qt::Horizontal, QObject::tr("BASE"));
      ModelLin_fac->setHeaderData(9, Qt::Horizontal, QObject::tr("%IVA"));
 
-    // hacemos visible la cabecera
+    // Hacemos visible la cabecera
      Cabecera->setVisible(true);
+     // Delegamos el control contenido en las columnas al nuevo objeto ColumnaGrid
      ui->Lineas->setItemDelegateForColumn(1, new ColumnaGrid(this));
      ui->Lineas->setItemDelegateForColumn(2, new ColumnaGrid(this));
      ui->Lineas->setItemDelegateForColumn(3, new ColumnaGrid(this));
@@ -564,16 +567,17 @@ void frmFacturas::LLenarFactura() {
 
 void frmFacturas::on_btnSiguiente_clicked()
 {
-    QString cId = QString::number(oFactura->Getid());
-    oFactura->RecuperarFactura("Select * from cab_fac where id >"+cId+" order by id limit 0,1 ");
+    QString cFactura = oFactura->getcFactura();
+    oFactura->RecuperarFactura("Select * from cab_fac where cFactura >'"+cFactura+"' order by cFactura  limit 0,1 ");
     LLenarCampos();
-
+    //delete cFactura;
 }
 void frmFacturas::on_btnAnterior_clicked()
 {
-    QString cId = QString::number(oFactura->Getid());
-    oFactura->RecuperarFactura("Select * from cab_fac where id <"+cId+" order by id desc limit 0,1 ");
+    QString cFactura = oFactura->getcFactura();
+    oFactura->RecuperarFactura("Select * from cab_fac where cFactura <'"+cFactura+"' order by cFactura desc limit 0,1 ");
     LLenarCampos();
+    //delete cFactura;
 }
 
 
@@ -582,23 +586,20 @@ void frmFacturas::on_btnGuardar_clicked()
 
     LLenarFactura();
     BloquearCampos();
-    if(this->Altas) {
-       this->Altas = false;
-       oFactura->setcFactura(oFactura->NuevoNumeroFactura());
-       oFactura->AnadirFactura();
-    } else {
-
-        oFactura->GuardarFactura(oFactura->Getid());
-    }
+    oFactura->GuardarFactura(oFactura->Getid());
     //bloquearCampos();
     LLenarCampos();
 }
 
 void frmFacturas::on_btnAnadir_clicked()
 {
-    this->Altas = true;
+    oFactura->setcFactura(oFactura->NuevoNumeroFactura());
+    oFactura->AnadirFactura();
+    LLenarCampos();
     DesbloquearCampos();
-    VaciarCampos();
+    //VaciarCampos();
+;
+
     ui->txtcCodigoCliente->setFocus();
 
 }
@@ -789,4 +790,133 @@ void frmFacturas::on_botBuscarCliente_clicked()
     QString cId = QString::number(nId);
     oCliente1->Recuperar("Select * from clientes where id ="+cId+" order by id limit 0,1 ");
     LLenarCamposCliente();
+}
+
+void frmFacturas::on_btnBuscarArt_clicked()
+{
+    if(!ui->txtcTextoBuscar->text().isEmpty()) {
+        modArt = new QSqlQueryModel();
+        QString cSQL = "select cCodigo,cDescripcion,rTarifa1,rTarifa2,rTarifa3 from articulos where cDescripcion like '%" +
+                ui->txtcTextoBuscar->text().trimmed()+"%'";
+        modArt->setQuery(cSQL,QSqlDatabase::database("empresa"));
+        ui->tablaBuscaArt->setModel(modArt);
+        ui->tablaBuscaArt->setItemDelegateForColumn(2, new ColumnaGrid1(this));
+        ui->tablaBuscaArt->setItemDelegateForColumn(3, new ColumnaGrid1(this));
+        ui->tablaBuscaArt->setItemDelegateForColumn(4, new ColumnaGrid1(this));
+    } else {
+        QMessageBox::critical(this,tr("Buscar Artículos"),tr("Debe especificar algún criterio de búsqueda"),tr("OK"));
+    }
+    //delete modArt;
+
+}
+ColumnaGrid1::ColumnaGrid1(QObject *parent)
+    :QItemDelegate(parent)
+{
+}
+//void ColumnaGrid1::editorEvent(QEvent::MouseButtonDblClick,) {
+
+//}
+
+void ColumnaGrid1::paint(QPainter *painter,
+                 const QStyleOptionViewItem & option,
+                 const QModelIndex & index) const
+{
+
+    QString texto = index.model()->data(index, Qt::DisplayRole).toString();
+    int tamano, posDec;
+    tamano = 0;
+    posDec = 0;
+    /* Verificamos el Index */
+    if (index.column() == 2 || index.column() == 3 || index.column() == 4) {
+        QString ctexto = texto;
+        // Cambio . por , o por signo elegido por los usuarios
+        int tamano = ctexto.length();
+        int posDec;
+        posDec = tamano -3;
+        if ((ctexto.midRef(posDec,1) !=".") && (ctexto.midRef(posDec,1) != ",") &&  (ctexto.midRef((posDec+1),1) !=".")
+                &&  (ctexto.midRef((posDec+1),1) !=".")) {
+
+            ctexto.append(",00") ;
+        } else {
+            if ((ctexto.midRef((posDec+1),1) =="."))
+                ctexto.append("0");
+        }
+
+        ctexto.replace(".",",");
+        //qDebug() << "Tamaño: " << tamano << "PosDec" <<posDec << ctexto.midRef(posDec,1);
+
+        if (ctexto.length()==14) {
+            ctexto.insert(2,".");
+            ctexto.insert(6,".");
+            ctexto.insert(10,".");
+        }
+        if (ctexto.length()==13) {
+            ctexto.insert(1,".");
+            ctexto.insert(5,".");
+            ctexto.insert(9,".");
+        }
+        if (ctexto.length()==12) {
+            ctexto.insert(3,".");
+            ctexto.insert(7,".");
+        }
+        if (ctexto.length()==11) {
+            ctexto.insert(2,".");
+            ctexto.insert(6,".");
+        }
+        if (ctexto.length()== 10) {
+            ctexto.insert(1,".");
+            ctexto.insert(5,".");
+        }
+        if (ctexto.length() == 9 ) {
+
+            ctexto.insert(3, ".");
+        }
+        if (ctexto.length() == 8 ) {
+
+            ctexto.insert(2, ".");
+        }
+        if (ctexto.length() == 7 ) {
+
+            ctexto.insert(1, ".");
+        }
+        texto = ctexto;
+    }
+    QStyleOptionViewItem myOption = option;
+    myOption.displayAlignment = Qt::AlignRight | Qt::AlignVCenter;
+    drawDisplay(painter, myOption, myOption.rect,texto);
+    drawFocus(painter, myOption, myOption.rect);
+}
+
+void frmFacturas::on_tablaBuscaArt_doubleClicked(const QModelIndex &index)
+{
+    QString texto = index.model()->data(index, Qt::DisplayRole).toString();
+    ui->btnEditar->click();
+    ui->txtcCodigoArticulo->setText(texto);
+    ui->txtcCodigoArticulo->setFocus();
+}
+
+void frmFacturas::on_chklRecargoEquivalencia_stateChanged(int arg1)
+{
+    if(arg1==2){
+        ui->txtnRec1->setText(QString::number(o_configuracion->nRE1,'f',1));
+        ui->txtnRec2->setText(QString::number(o_configuracion->nRE2,'f',1));
+        ui->txtnRec3->setText(QString::number(o_configuracion->nRE3,'f',1));
+        ui->txtnRec4->setText(QString::number(o_configuracion->nRE4,'f',1));
+    } else {
+        ui->txtnRec1->setText("0");
+        ui->txtnRec2->setText("0");
+        ui->txtnRec3->setText("0");
+        ui->txtnRec4->setText("0");
+    }
+}
+
+void frmFacturas::on_btnBuscar_clicked()
+{
+    FrmBuscarFactura BuscarFactura;
+    BuscarFactura.exec();
+    int nId = BuscarFactura.DevolverID();
+    //qDebug() << nId;
+    QString cId = QString::number(nId);
+    oFactura->RecuperarFactura("Select * from cab_fac where Id ="+cId+" limit 0,1 ");
+    LLenarCampos();
 }

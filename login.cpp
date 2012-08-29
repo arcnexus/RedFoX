@@ -114,4 +114,12 @@ void Login::on_Crearconfiguracin_clicked()
     settings.setValue("cPais","España");
     settings.setValue("cEjercicioActivo","2012");
     settings.setValue("nDigitosFactura",5);
+    settings.setValue("nIVA1",21);
+    settings.setValue("nIVA2",10);
+    settings.setValue("nIVA3",4);
+    settings.setValue("nIVA4",0);
+    settings.setValue("nRE1",5.2);
+    settings.setValue("nRE2",1.4);
+    settings.setValue("nRE3",0.5);
+    settings.setValue("nRE4",0);
 }

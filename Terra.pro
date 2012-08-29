@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     frmbuscarpoblacion.cpp \
     configuracion.cpp \
     empresa.cpp \
-    articulo.cpp
+    articulo.cpp \
+    frmBuscarFactura.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -47,7 +48,8 @@ HEADERS  += mainwindow.h \
     frmbuscarpoblacion.h \
     configuracion.h \
     empresa.h \
-    articulo.h
+    articulo.h \
+    frmBuscarFactura.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -58,7 +60,8 @@ FORMS    += mainwindow.ui \
     frmdecision.ui \
     frmfacturas.ui \
     pruebas.ui \
-    frmbuscarpoblacion.ui
+    frmbuscarpoblacion.ui \
+    frmBuscarFactura.ui
 
 RESOURCES += \
     terra.qrc
