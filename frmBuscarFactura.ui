@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>767</width>
-    <height>469</height>
+    <width>1116</width>
+    <height>465</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,6 +28,9 @@
      </item>
      <item>
       <widget class="QDateEdit" name="FechaInicio">
+       <property name="displayFormat">
+        <string>dd/MM/yyyy</string>
+       </property>
        <property name="calendarPopup">
         <bool>true</bool>
        </property>
@@ -42,6 +45,9 @@
      </item>
      <item>
       <widget class="QDateEdit" name="FechaFin">
+       <property name="displayFormat">
+        <string>dd/MM/yyyy</string>
+       </property>
        <property name="calendarPopup">
         <bool>true</bool>
        </property>
@@ -135,6 +141,19 @@
    </item>
    <item row="0" column="1">
     <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0">
+    <spacer name="horizontalSpacer_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

@@ -24,6 +24,7 @@ void Factura::AnadirFactura() {
     this->nPorcentajeIVA2 = oConf->nIVA2;
     this->nPorcentajeIVA3 = oConf->nIVA3;
     this->nPorcentajeIVA4 = oConf->nIVA4 ;
+    this->lRecargoEquivalencia = 0;
     delete oConf;
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
      cab_fac.prepare("INSERT INTO cab_fac (cCodigoCliente,cFactura,dFecha,dFechaCobro,iId_Cliente,cCliente,cDireccion,cDireccion2,"
@@ -108,7 +109,6 @@ void Factura::AnadirFactura() {
 // Guardar la factura
 void Factura::GuardarFactura(int nId_Factura) {
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
-    this->cFactura = NuevoNumeroFactura();
     cab_fac.prepare( "UPDATE cab_fac set "
                    "cCodigoCliente = :cCodigoCliente,"
                    "cFactura = :cFactura,"
@@ -353,7 +353,6 @@ QString Factura::NuevoNumeroFactura() {
 }
 
 void Factura::AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
-
                                  double porcdto, double dto, double total, double nPorcIva)
 {
     QSqlQuery *Qlin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));

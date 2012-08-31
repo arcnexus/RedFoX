@@ -68,6 +68,9 @@ private slots:
 
     void on_btnBuscar_clicked();
 
+
+    void on_botEditarLinea_clicked();
+
 private:
     Ui::frmFacturas *ui;
     QSqlDatabase dbEmp;

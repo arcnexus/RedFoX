@@ -36,6 +36,7 @@ frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     // valores edicion
     this->Altas = false;
     ui->txtcCodigoArticulo->setFocus();
+    BloquearCampos();
 }
 
 frmFacturas::~frmFacturas()
@@ -298,7 +299,6 @@ void frmFacturas::VaciarCampos() {
     ui->txtcProvincia->setText("");
     ui->txtcPais->setText("");
     ui->txtcCif->setText("");
-    ui->chklRecargoEquivalencia->setChecked(false);
     ui->txtrSubtotal->setText(0);
     ui->txtnDto->setText(0);
     ui->txtnDtoPP->setText(0);
@@ -318,40 +318,14 @@ void frmFacturas::VaciarCampos() {
     ui->txtrBase2->setText(0);
     ui->txtrBase3->setText(0);
     ui->txtrBase4->setText(0);
-    QSqlQuery tiposiva(QSqlDatabase::database("empresa"));
-    // IVA NORMAL
-    tiposiva.prepare("Select nIva from tiposiva where cTipo = 'NORMAL'");
-    if (!tiposiva.exec()) {
-            QMessageBox::critical(0, "error:", tiposiva.lastError().text());
-    } else {
-        tiposiva.next();
-        ui->txtnPorcentajeIva1->setText(QString::number(tiposiva.value(0).toInt()));
-    }
-    // IVA REDUCIDO
-    tiposiva.prepare("Select nIva from tiposiva where cTipo = 'REDUCIDO'");
-    if (!tiposiva.exec()) {
-            QMessageBox::critical(0, "error:", tiposiva.lastError().text());
-    } else {
-        tiposiva.next();
-        ui->txtnPorcentajeIva2->setText(QString::number(tiposiva.value(0).toInt()));
-    }
-    // IVA SUPER-REDUCIDO
-    tiposiva.prepare("Select nIva from tiposiva where cTipo = 'SUPER-REDUCIDO'");
-    if (!tiposiva.exec()) {
-            QMessageBox::critical(0, "error:", tiposiva.lastError().text());
-    } else {
-        tiposiva.next();
-        ui->txtnPorcentajeIva3->setText(QString::number(tiposiva.value(0).toInt()));
-    }
-    // IVA EXCENTO
-    tiposiva.prepare("Select nIva from tiposiva where cTipo = 'EXENTO'");
-    if (!tiposiva.exec()) {
-            QMessageBox::critical(0, "error:", tiposiva.lastError().text());
-    } else {
-        tiposiva.next();
-        ui->txtnPorcentajeIva4->setText(QString::number(tiposiva.value(0).toInt()));
-    }
-
+    ui->txtnPorcentajeIva1->setText(QString::number(o_configuracion->nIVA1));
+    ui->txtnPorcentajeIva2->setText(QString::number(o_configuracion->nIVA2));
+    ui->txtnPorcentajeIva3->setText(QString::number(o_configuracion->nIVA3));
+    ui->txtnPorcentajeIva4->setText(QString::number(o_configuracion->nIVA4));
+    ui->txtnRec1->clear();
+    ui->txtnRec2->clear();
+    ui->txtnRec3->clear();
+    ui->txtnRec4->clear();
     ui->txtrIVA1->setText(0);
     ui->txtrIVA2->setText(0);
     ui->txtrIVA3->setText(0);
@@ -360,10 +334,6 @@ void frmFacturas::VaciarCampos() {
     ui->txtrTotal2->setText(0);
     ui->txtrTotal3->setText(0);
     ui->txtrTotal4->setText(0);
-    ui->txtnRec1->setText(0);
-    ui->txtnRec2->setText(0);
-    ui->txtnRec3->setText(0);
-    ui->txtnRec4->setText(0);
     ui->txtrRecargoEq1->setText(0);
     ui->txtrRecargoEq2->setText(0);
     ui->txtrRecargoEq3->setText(0);
@@ -376,6 +346,7 @@ void frmFacturas::VaciarCampos() {
     ui->txtcDCCuenta->setText("");
     ui->txtcNumeroCuenta->setText("");
     ui->txtcPedidoCliente->setText("");
+    ui->chklRecargoEquivalencia->setCheckState(Qt::Unchecked);
 }
 
 void frmFacturas::BloquearCampos()
@@ -393,6 +364,7 @@ void frmFacturas::BloquearCampos()
         ComboBox->setEnabled(false);
         //qDebug() << lineEdit->objectName();
     }
+    /*
 //    // SpinBox
 //    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
 //    QSpinBox *SpinBox;
@@ -406,7 +378,7 @@ void frmFacturas::BloquearCampos()
 //    foreach (DSpinBox, DSpinBoxList) {
 //        DSpinBox->setReadOnly(true);
 //        //qDebug() << lineEdit->objectName();
-//    }
+//    } */
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
@@ -583,20 +555,23 @@ void frmFacturas::on_btnAnterior_clicked()
 
 void frmFacturas::on_btnGuardar_clicked()
 {
-
+    int nId = oFactura->Getid();
     LLenarFactura();
     BloquearCampos();
-    oFactura->GuardarFactura(oFactura->Getid());
-    //bloquearCampos();
+    oFactura->GuardarFactura(nId);
+    oFactura->RecuperarFactura("Select * from cab_fac where Id="+QString::number(nId)+"  limit 0,1 ");
     LLenarCampos();
 }
 
 void frmFacturas::on_btnAnadir_clicked()
 {
+    VaciarCampos();
+    LLenarFactura();
     oFactura->setcFactura(oFactura->NuevoNumeroFactura());
     oFactura->AnadirFactura();
     LLenarCampos();
     DesbloquearCampos();
+    ui->chklRecargoEquivalencia->setCheckState(Qt::Unchecked);
     //VaciarCampos();
 ;
 
@@ -673,11 +648,11 @@ void frmFacturas::calcularTotalLinea()
 {
     // Calculo totales línea
     double impDto,impTot,impSubtotal;
-    impSubtotal = (ui->txtcCantidadArticulo->text().toDouble() * ui->txtPVPArticulo->text().toDouble());
+    impSubtotal = (ui->txtcCantidadArticulo->text().replace(".","").toDouble() * ui->txtPVPArticulo->text().replace(".","").toDouble());
     ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impSubtotal,'f',2)));
-    impDto = (ui->txtSubtotalArticulo->text().toDouble() * ui->txtPorcDtoArticulo->text().toDouble())/100 ;
+    impDto = (ui->txtSubtotalArticulo->text().replace(".","").toDouble() * ui->txtPorcDtoArticulo->text().toDouble())/100 ;
     ui->txtDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impDto,'f',2)));
-    impTot = ui->txtSubtotalArticulo->text().toDouble() - ui->txtDtoArticulo->text().toDouble();
+    impTot = ui->txtSubtotalArticulo->text().replace(".","").toDouble() - ui->txtDtoArticulo->text().replace(".","").toDouble();
     ui->txtTotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impTot,'f',2)));
 
 }
@@ -693,10 +668,11 @@ void frmFacturas::on_txtPorcDtoArticulo_lostFocus()
 void frmFacturas::on_btnAnadirLinea_clicked()
 {
     if (!ui->txtDescripcionArticulo->text().isEmpty()) {
+        double pvp =ui->txtPVPArticulo->text().replace(".","").toDouble();
         oFactura->AnadirLineaFactura(oFactura->Getid(),ui->txtcCodigoArticulo->text(),ui->txtcCantidadArticulo->text().toDouble(),
-                                     ui->txtDescripcionArticulo->text(),ui->txtPVPArticulo->text().toDouble(),
-                                     ui->txtSubtotalArticulo->text().toDouble(),ui->txtPorcDtoArticulo->text().toDouble(),
-                                     ui->txtDtoArticulo->text().toDouble(),ui->txtTotalArticulo->text().toDouble(),
+                                     ui->txtDescripcionArticulo->text(),ui->txtPVPArticulo->text().replace(".","").toDouble(),
+                                     ui->txtSubtotalArticulo->text().replace(".","").toDouble(),ui->txtPorcDtoArticulo->text().toDouble(),
+                                     ui->txtDtoArticulo->text().replace(".","").toDouble(),ui->txtTotalArticulo->text().replace(".","").toDouble(),
                                      ui->txtPorcIVAArticulo->text().toDouble());
         ui->txtcCodigoArticulo->setText("");
         ui->txtcCantidadArticulo->setText(0);
@@ -919,4 +895,15 @@ void frmFacturas::on_btnBuscar_clicked()
     QString cId = QString::number(nId);
     oFactura->RecuperarFactura("Select * from cab_fac where Id ="+cId+" limit 0,1 ");
     LLenarCampos();
+}
+
+
+void frmFacturas::on_botEditarLinea_clicked()
+{
+    QModelIndex celda=ui->Lineas->currentIndex();
+    QModelIndex index=ModelLin_fac->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+
+    QVariant pKey=ModelLin_fac->data(index,Qt::EditRole);
+    int Id_lin =  pKey.toInt();
+
 }

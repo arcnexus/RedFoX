@@ -15,6 +15,8 @@ FrmBuscarFactura::FrmBuscarFactura(QWidget *parent) :
     ui->setupUi(this);
    // this::connect(this,SIGNAL(enviar_id_Factura(int)),frmFacturas,SLOT(set_id_Factura(int)));
     ui->FechaFin->setDate(QDate::currentDate());
+    ui->FechaInicio->setDisplayFormat("dd/MM/yyyy");
+    ui->FechaFin->setDisplayFormat("dd/MM/yyyy");
 
 }
 
@@ -32,19 +34,20 @@ void FrmBuscarFactura::on_pushButton_clicked()
     QString cFecha1,cFecha2,cImporteMaximo;
     dFecha1 = ui->FechaInicio->date();
     dFecha2 = ui->FechaFin->date();
-    cFecha1 = dFecha1.toString("yyyy.MM.dd");
-    cFecha2 = dFecha2.toString("yyyy.MM.dd");
+    cFecha1 = dFecha1.toString("yyyy-MM-dd");
+    cFecha2 = dFecha2.toString("yyyy-MM-dd");
     cImporteMaximo = ui->ImporteMaximo->text();
     cImporteMaximo.replace(".","");
     QString  cSQL;
     cSQL ="Select Id,cFactura,cCliente,dFecha,dFechaCobro,rSubtotal,rImporteDescuento,rImporteDescuentoPP,"
-            "rBase,rImporteIva,rTotal from cab_fac where cCliente like '%"+ui->txtBuscar->text().trimmed()+"%' and "
-            "dFecha Between '"+cFecha1+"' and '"+cFecha2+"' and rTotal Between "+QString::number(ui->Importeminimo->text().toDouble(),'f',2)+
-            " and "+QString::number(cImporteMaximo.toDouble(),'f',2);
+          "rBase,rImporteIva,rTotal from cab_fac where cCliente like '%"+ui->txtBuscar->text().trimmed()+"%' and "
+          "dFecha >= '"+cFecha1+"' and dFecha <= '"+cFecha2+"' and rTotal >= "+QString::number(ui->Importeminimo->text().toDouble(),'f',2)+
+          " and rTotal <="+QString::number(cImporteMaximo.toDouble(),'f',2)+" order by cFactura";
 
     ModelFacturas = new QSqlQueryModel();
     ModelFacturas->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->Grid->setModel(ModelFacturas);
+    ui->Grid->setGridStyle(Qt::DotLine);
 
     // 2º - Creamos Objeto de la clase Cabecera
     Cabecera = new QHeaderView(Qt::Horizontal,this);
@@ -53,25 +56,25 @@ void FrmBuscarFactura::on_pushButton_clicked()
     Cabecera->setResizeMode(0,QHeaderView::Fixed);
     Cabecera->resizeSection(0,0);
     Cabecera->setResizeMode(1,QHeaderView::Fixed);
-    Cabecera->resizeSection(1,200);
+    Cabecera->resizeSection(1,100);
     Cabecera->setResizeMode(2,QHeaderView::Fixed);
-    Cabecera->resizeSection(2,300);
+    Cabecera->resizeSection(2,200);
     Cabecera->setResizeMode(3,QHeaderView::Fixed);
-    Cabecera->resizeSection(3,100);
+    Cabecera->resizeSection(3,90);
     Cabecera->setResizeMode(4,QHeaderView::Fixed);
-    Cabecera->resizeSection(4,100);
+    Cabecera->resizeSection(4,90);
     Cabecera->setResizeMode(5,QHeaderView::Fixed);
-    Cabecera->resizeSection(5,100);
+    Cabecera->resizeSection(5,90);
     Cabecera->setResizeMode(6,QHeaderView::Fixed);
-    Cabecera->resizeSection(6,100);
+    Cabecera->resizeSection(6,90);
     Cabecera->setResizeMode(7,QHeaderView::Fixed);
-    Cabecera->resizeSection(7,100);
+    Cabecera->resizeSection(7,90);
     Cabecera->setResizeMode(8,QHeaderView::Fixed);
-    Cabecera->resizeSection(8,100);
+    Cabecera->resizeSection(8,90);
     Cabecera->setResizeMode(9,QHeaderView::Fixed);
-    Cabecera->resizeSection(9,100);
+    Cabecera->resizeSection(9,90);
     Cabecera->setResizeMode(10,QHeaderView::Fixed);
-    Cabecera->resizeSection(10,100);
+    Cabecera->resizeSection(10,90);
     Cabecera->setVisible(true);
     // 4º - Defino cabecera Modelo
     ModelFacturas->setHeaderData(1,Qt::Horizontal,tr("Factura"));

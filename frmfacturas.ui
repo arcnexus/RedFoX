@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1018</width>
-    <height>481</height>
+    <height>475</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -238,7 +238,26 @@
            </layout>
           </item>
           <item>
-           <widget class="QTableView" name="Lineas"/>
+           <widget class="QTableView" name="Lineas">
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <property name="gridStyle">
+             <enum>Qt::DotLine</enum>
+            </property>
+            <attribute name="verticalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="verticalHeaderHighlightSections">
+             <bool>false</bool>
+            </attribute>
+           </widget>
           </item>
          </layout>
         </item>
@@ -258,7 +277,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="botEditarLinea">
             <property name="text">
              <string/>
             </property>
@@ -640,7 +659,7 @@ border-right-color: rgb(220, 220, 220);</string>
          <enum>QTabWidget::South</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -651,6 +670,9 @@ border-right-color: rgb(220, 220, 220);</string>
            <layout class="QGridLayout" name="gridLayout_6">
             <item row="1" column="2">
              <widget class="QDateEdit" name="txtdFechaCobro">
+              <property name="displayFormat">
+               <string>dd/MM/yyyy</string>
+              </property>
               <property name="calendarPopup">
                <bool>true</bool>
               </property>
@@ -1602,6 +1624,9 @@ font: 12pt &quot;Times New Roman&quot;;</string>
          </item>
          <item>
           <widget class="QDateEdit" name="txtdFecha">
+           <property name="displayFormat">
+            <string>dd/MM/yyyy</string>
+           </property>
            <property name="calendarPopup">
             <bool>true</bool>
            </property>
@@ -1755,6 +1780,12 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           <property name="text">
            <string>Recargo Equivalencia</string>
           </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
         <item row="5" column="2">
@@ -1802,7 +1833,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
   <tabstop>txtPorcDtoArticulo</tabstop>
   <tabstop>txtDtoArticulo</tabstop>
   <tabstop>txtTotalArticulo</tabstop>
-  <tabstop>pushButton_2</tabstop>
+  <tabstop>botEditarLinea</tabstop>
   <tabstop>pushButton_3</tabstop>
   <tabstop>Lineas</tabstop>
   <tabstop>txtcPedidoCliente</tabstop>
