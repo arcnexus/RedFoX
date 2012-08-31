@@ -14,6 +14,7 @@
 #include <QHeaderView>
 #include "articulo.h"
 #include "cliente.h"
+#include "frmmodificarlin_fac.h"
 
 
 Factura *oFactura = new Factura();
@@ -569,11 +570,10 @@ void frmFacturas::on_btnAnadir_clicked()
     LLenarFactura();
     oFactura->setcFactura(oFactura->NuevoNumeroFactura());
     oFactura->AnadirFactura();
+
     LLenarCampos();
     DesbloquearCampos();
     ui->chklRecargoEquivalencia->setCheckState(Qt::Unchecked);
-    //VaciarCampos();
-;
 
     ui->txtcCodigoCliente->setFocus();
 
@@ -799,9 +799,9 @@ void ColumnaGrid1::paint(QPainter *painter,
 {
 
     QString texto = index.model()->data(index, Qt::DisplayRole).toString();
-    int tamano, posDec;
-    tamano = 0;
-    posDec = 0;
+    //int tamano, posDec;
+    //tamano = 0;
+    //posDec = 0;
     /* Verificamos el Index */
     if (index.column() == 2 || index.column() == 3 || index.column() == 4) {
         QString ctexto = texto;
@@ -905,5 +905,23 @@ void frmFacturas::on_botEditarLinea_clicked()
 
     QVariant pKey=ModelLin_fac->data(index,Qt::EditRole);
     int Id_lin =  pKey.toInt();
+    frmModificarLin_fac *Modificar = new frmModificarLin_fac();
+    Modificar->ponerCampos(Id_lin);
+    if (Modificar->exec() == QDialog::Accepted)
 
+    {
+        lineasVentas();
+        oFactura->calcularFactura();
+    }
+    delete Modificar;
+}
+
+void frmFacturas::on_txtcCodigoCliente_lostFocus()
+{
+    if (!ui->txtcCodigoCliente->text().isEmpty() && ui->txtcCliente->text().isEmpty()) {
+        QString cSQL = "Select * from clientes where cCodigoCliente = '"+ui->txtcCodigoCliente->text().trimmed() +"' limit 0,1";
+        oCliente1->Recuperar(cSQL);
+        LLenarCamposCliente();
+        ui->txtcCodigoArticulo->setFocus();
+    }
 }

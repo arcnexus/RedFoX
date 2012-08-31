@@ -71,6 +71,8 @@ private slots:
 
     void on_botEditarLinea_clicked();
 
+    void on_txtcCodigoCliente_lostFocus();
+
 private:
     Ui::frmFacturas *ui;
     QSqlDatabase dbEmp;

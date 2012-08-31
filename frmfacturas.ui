@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1018</width>
-    <height>475</height>
+    <height>473</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -347,7 +347,7 @@ border-right-color: rgb(220, 220, 220);</string>
            <string notr="true">background-color: rgb(191, 255, 191);</string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="tab_5">
            <attribute name="title">
@@ -412,7 +412,7 @@ border-right-color: rgb(220, 220, 220);</string>
               <x>10</x>
               <y>10</y>
               <width>256</width>
-              <height>151</height>
+              <height>141</height>
              </rect>
             </property>
            </widget>

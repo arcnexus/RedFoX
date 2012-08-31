@@ -103,6 +103,10 @@ void Factura::AnadirFactura() {
      cab_fac.bindValue(":cPedidoCliente",this->cPedidoCliente);
      if(!cab_fac.exec()){
          QMessageBox::critical(NULL,"error al guardar datos Factura:", cab_fac.lastError().text());
+     } else {
+         this->id = cab_fac.lastInsertId().toInt();
+         QString cSQL = "Select * from cab_fac where id ="+QString::number(this->id);
+         RecuperarFactura(cSQL);
      }
 
 }
@@ -387,6 +391,78 @@ void Factura::AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, 
 
     QArticulos->exec();
 
+}
+
+void Factura::ModificarLineaFactura(int id_lin, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal, double porcdto, double dto, double total, double nPorcIva)
+{
+    // Borro valores anteriores registro Artículo (Los valores se sacan del registro de lin_fac ya que aun no se ha modificado)uhjmkk,kl,,
+    QSqlQuery *Lin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
+    Lin_fac->prepare("Select * from lin_fac where id =:nId");
+    Lin_fac->bindValue(":nId",id_lin);
+    if(Lin_fac->exec()) {
+        Lin_fac->next();
+        QSqlRecord record = Lin_fac->record();
+
+        QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
+        QArticulos->prepare("update articulos set "
+                            "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
+                            "nStockReal = nStockReal - :nCantidad2, "
+                            "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
+                            "where cCodigo= :cCodigo");
+        QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
+        QArticulos->bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
+        QArticulos->bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
+        QArticulos->bindValue(":rTotal",record.field("rTotal").value().toDouble());
+        QArticulos->bindValue(":cCodigo",record.field("cCodigo").value().toString());
+        delete QArticulos,Lin_fac;
+    }
+    // Actualizo Línea factura
+    QSqlQuery *Qlin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
+    Qlin_fac->prepare("update lin_fac  set "
+                      "cCodigo =:cCodigo,"
+                      "nCantidad =:nCantidad,"
+                      "cDescripcion =:cDescripcion,"
+                      "rPvp =:rPvp,"
+                      "nDto =:nDto,"
+                      "rDto =:rDto,"
+                      "rSubTotal =:rSubTotal,"
+                      "rTotal =:rTotal,"
+                      "nPorcIva =:nPorcIva where id = :id_lin");
+    Qlin_fac->bindValue(":id_lin",id_lin);
+    Qlin_fac->bindValue(":cCodigo",cCodigo);
+    Qlin_fac->bindValue(":nCantidad",nCantidad);
+    Qlin_fac->bindValue(":cDescripcion",cDescripcion);
+    Qlin_fac->bindValue(":rPvp",pvp);
+    Qlin_fac->bindValue(":nDto",porcdto);
+    Qlin_fac->bindValue(":rDto",dto);
+    Qlin_fac->bindValue(":rSubTotal",subtotal);
+    Qlin_fac->bindValue(":rTotal",total);
+    Qlin_fac->bindValue(":nPorcIva",nPorcIva);
+    if (!Qlin_fac->exec()){
+       QMessageBox::critical(NULL,"error al modificar datos línea Factura:", Qlin_fac->lastError().text());
+    }
+    delete Qlin_fac;
+    // Actualizo ficha artículo
+    QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
+    QArticulos->prepare("update articulos set "
+                        "dUltimaVenta = :dUltimaVenta,"
+                        "nUnidadesVendidas = nUnidadesVendidas +:nCantidad,"
+                        "nStockReal = nStockReal - :nCantidad2, "
+                        "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
+                        "where cCodigo= :cCodigo");
+    QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
+    QArticulos->bindValue(":nCantidad",nCantidad);
+    QArticulos->bindValue(":nCantidad2",nCantidad);
+    QArticulos->bindValue(":rTotal",total);
+    QArticulos->bindValue(":cCodigo",cCodigo);
+
+    QArticulos->exec();
+    delete QArticulos;
+
+}
+
+void Factura::BorrarLineaFactura(int id_lin)
+{
 }
 
 void Factura::calcularFactura()
