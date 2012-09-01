@@ -73,6 +73,12 @@ private slots:
 
     void on_txtcCodigoCliente_lostFocus();
 
+    void on_btnImprimir_clicked();
+
+    void RellenarDespuesCalculo();
+
+    void on_botBorrarLinea_clicked();
+
 private:
     Ui::frmFacturas *ui;
     QSqlDatabase dbEmp;

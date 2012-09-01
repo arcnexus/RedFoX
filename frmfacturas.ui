@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1018</width>
-    <height>473</height>
+    <height>471</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -278,6 +278,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="botEditarLinea">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -288,7 +291,10 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="botBorrarLinea">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -1834,7 +1840,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
   <tabstop>txtDtoArticulo</tabstop>
   <tabstop>txtTotalArticulo</tabstop>
   <tabstop>botEditarLinea</tabstop>
-  <tabstop>pushButton_3</tabstop>
+  <tabstop>botBorrarLinea</tabstop>
   <tabstop>Lineas</tabstop>
   <tabstop>txtcPedidoCliente</tabstop>
   <tabstop>txtcCodigoEntidad</tabstop>

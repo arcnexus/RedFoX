@@ -35,5 +35,6 @@
         <file>PNG/factura.png</file>
         <file>PNG/albaran.png</file>
         <file>PNG/pedidos.png</file>
+        <file>PNG/interrogantes.png</file>
     </qresource>
 </RCC>

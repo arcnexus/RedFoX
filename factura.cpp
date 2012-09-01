@@ -8,6 +8,7 @@
 #include <frmdecision.h>
 #include <QDebug>
 #include "configuracion.h"
+#include <frmdecision.h>
 
 
 Factura::Factura(QObject *parent) :
@@ -414,7 +415,10 @@ void Factura::ModificarLineaFactura(int id_lin, QString cCodigo, double nCantida
         QArticulos->bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
         QArticulos->bindValue(":rTotal",record.field("rTotal").value().toDouble());
         QArticulos->bindValue(":cCodigo",record.field("cCodigo").value().toString());
-        delete QArticulos,Lin_fac;
+        QArticulos->exec();
+        delete QArticulos;
+        delete Lin_fac;
+
     }
     // Actualizo Línea factura
     QSqlQuery *Qlin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
@@ -463,6 +467,39 @@ void Factura::ModificarLineaFactura(int id_lin, QString cCodigo, double nCantida
 
 void Factura::BorrarLineaFactura(int id_lin)
 {
+    QSqlQuery *qrylin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
+    frmDecision msgBox;
+    msgBox.Inicializar("Borrar línea","Está a punto de borrar la línea de la factura","¿Desea continuar?","","Sí","No");
+    int elegido = msgBox.exec();
+   if(elegido == 1) {
+       qrylin_fac->prepare("Select * from lin_fac where id = :id_lin");
+       qrylin_fac->bindValue(":id_lin",id_lin);
+       if (qrylin_fac->exec()) {
+           QSqlRecord record = qrylin_fac->record();
+           // Reponer Artículo
+           QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
+           QArticulos->prepare("update articulos set "
+                               "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
+                               "nStockReal = nStockReal - :nCantidad2, "
+                               "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
+                               "where cCodigo= :cCodigo");
+           QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
+           QArticulos->bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
+           QArticulos->bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
+           QArticulos->bindValue(":rTotal",record.field("rTotal").value().toDouble());
+           QArticulos->bindValue(":cCodigo",record.field("cCodigo").value().toString());
+           QArticulos->exec();
+           delete QArticulos;
+
+       }
+        qrylin_fac->prepare("Delete from lin_fac where id = :id_lin");
+        qrylin_fac->bindValue(":id_lin",id_lin);
+        if(!qrylin_fac->exec()){
+           QMessageBox::critical(NULL,tr("Borrar línea"),tr("Falló el borrado de la línea de factura"),tr("&Aceptar"));
+        }
+        delete qrylin_fac;
+        calcularFactura();
+     }
 }
 
 void Factura::calcularFactura()

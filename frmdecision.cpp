@@ -41,4 +41,8 @@ void frmDecision::Inicializar(QString titulo, QString linea1, QString linea2, QS
     ui->linea3->setText(linea3);
     ui->btnAceptar->setText(Boton1);
     ui->btnCancelar->setText(Boton2);
+    if(linea3.isEmpty()){
+        ui->linea3->close();
+    }
+    this->setWindowTitle(titulo);
 }
