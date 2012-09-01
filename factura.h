@@ -95,6 +95,7 @@ public slots:
                             double porcdto, double dto, double total, double nPorcIva);
     void BorrarLineaFactura(int id_lin);
     void calcularFactura();
+    void CobrarFactura();
 
     // getters
     int Getid();

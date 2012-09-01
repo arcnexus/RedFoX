@@ -11,6 +11,7 @@
 #include <frmdecision.h>
 
 
+
 Factura::Factura(QObject *parent) :
     QObject(parent)
 {
@@ -245,9 +246,54 @@ void Factura::GuardarFactura(int nId_Factura) {
         QMessageBox::critical(NULL,tr("error al guardar datos Factura:"), cab_fac.lastError().text());
     } else {
         QMessageBox::information(NULL,tr("Guardar datos"),tr("La Factura se ha guardado correctamente:"),tr("Ok"));
-        this->id = cab_fac.lastInsertId().toInt();
-        QString cSQL = "Select * from cab_fac where id ="+QString::number(this->id);
+        QString cSQL = "Select * from cab_fac where id ="+QString::number(nId_Factura);
         RecuperarFactura(cSQL);
+        frmDecision msgBox;
+        msgBox.Inicializar(tr("Guardar Factura"),"",tr("¿Desea cobrar la factura ahora o generar una deuda al cliente?"),"",
+                           tr("Cobrar"),tr("Generar deuda"));
+        int elegido = msgBox.exec();
+       if(elegido == 1) {
+           CobrarFactura();
+
+       } else {
+           // Busco ficha cliente
+           QSqlQuery *Cliente = new QSqlQuery(QSqlDatabase::database("empresa"));
+           Cliente->prepare("Select * from clientes where cCodigoCliente = :cCodCli");
+           Cliente->bindValue(":cCodCli",this->cCodigoCliente);
+           if (Cliente->exec()) {
+               Cliente->next();
+               QSqlRecord record = Cliente->record();
+
+
+               // Genero deuda cliente
+
+               QSqlQuery *Deudacliente = new QSqlQuery(QSqlDatabase::database("empresa"));
+               Deudacliente->prepare("Insert into clientes_deuda (id_Cliente,dFecha,dVencimiento,cDocumento,id_Ticket,id_Factura,nTipo,"
+                                     "rImporte,rPagado,rPendienteCobro,cEntidad,cOficina,cDC,cCuenta)"
+                                     " values (:id_cliente,:dFecha,:dVencimiento,:cDocumento,:id_tiquet,:id_factura,:nTipo,"
+                                     ":rImporte,:rPagado,:rPendienteCobro,:cEntidad,:cOficina,:cDC,:cCuenta)");
+               Deudacliente->bindValue(":id_cliente",record.field("Id").value().toInt());
+               Deudacliente->bindValue(":dFecha",QDate::currentDate());
+               Deudacliente->bindValue(":dVencimiento",QDate::currentDate());
+               //Deudacliente->bindValue(":dVencimiento",oConf->CalcularVencimiento());
+               Deudacliente->bindValue(":cDocumento",this->cFactura);
+               Deudacliente->bindValue(":id_tiquet",0);
+               Deudacliente->bindValue(":id_factura",nId_Factura);
+               Deudacliente->bindValue("nTipo",1);
+               Deudacliente->bindValue(":rImporte",this->rTotal);
+               Deudacliente->bindValue(":rPagado",0);
+               Deudacliente->bindValue(":rPendienteCobro",this->rTotal);
+               Deudacliente->bindValue(":cEntidad",record.field("cCEntidadBancaria").value().toString());
+               Deudacliente->bindValue(":cOficina",record.field("cOficinaBancaria").value().toString());
+               Deudacliente->bindValue(":cDC",record.field("cDC").value().toString());
+               Deudacliente->bindValue(":cCuenta",record.field("cCuentaCorriente").value().toString());
+               if(!Deudacliente->exec()) {
+                   qDebug() << Deudacliente->lastQuery();
+                   QMessageBox::warning(NULL,tr("Añadir deuda"),tr("No se ha podido añadir la deuda ")+Deudacliente->lastError().text() ,tr("OK"));
+               }
+               delete Deudacliente;
+               }
+       }
     }
 
 
@@ -467,39 +513,44 @@ void Factura::ModificarLineaFactura(int id_lin, QString cCodigo, double nCantida
 
 void Factura::BorrarLineaFactura(int id_lin)
 {
-    QSqlQuery *qrylin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
-    frmDecision msgBox;
-    msgBox.Inicializar("Borrar línea","Está a punto de borrar la línea de la factura","¿Desea continuar?","","Sí","No");
-    int elegido = msgBox.exec();
-   if(elegido == 1) {
-       qrylin_fac->prepare("Select * from lin_fac where id = :id_lin");
-       qrylin_fac->bindValue(":id_lin",id_lin);
-       if (qrylin_fac->exec()) {
-           QSqlRecord record = qrylin_fac->record();
-           // Reponer Artículo
-           QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
-           QArticulos->prepare("update articulos set "
-                               "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
-                               "nStockReal = nStockReal - :nCantidad2, "
-                               "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
-                               "where cCodigo= :cCodigo");
-           QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
-           QArticulos->bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
-           QArticulos->bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
-           QArticulos->bindValue(":rTotal",record.field("rTotal").value().toDouble());
-           QArticulos->bindValue(":cCodigo",record.field("cCodigo").value().toString());
-           QArticulos->exec();
-           delete QArticulos;
+    if (id_lin !=0) {
+        QSqlQuery *qrylin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
+        frmDecision msgBox;
+        msgBox.Inicializar(tr("Borrar línea"),tr("Está a punto de borrar la línea de la factura"),
+                           tr("¿Desea continuar?"),"",tr("Sí"),tr("No"));
+        int elegido = msgBox.exec();
+       if(elegido == 1) {
+           qrylin_fac->prepare("Select * from lin_fac where id = :id_lin");
+           qrylin_fac->bindValue(":id_lin",id_lin);
+           if (qrylin_fac->exec()) {
+               QSqlRecord record = qrylin_fac->record();
+               // Reponer Artículo
+               QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
+               QArticulos->prepare("update articulos set "
+                                   "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
+                                   "nStockReal = nStockReal - :nCantidad2, "
+                                   "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
+                                   "where cCodigo= :cCodigo");
+               QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
+               QArticulos->bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
+               QArticulos->bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
+               QArticulos->bindValue(":rTotal",record.field("rTotal").value().toDouble());
+               QArticulos->bindValue(":cCodigo",record.field("cCodigo").value().toString());
+               QArticulos->exec();
+               delete QArticulos;
 
-       }
-        qrylin_fac->prepare("Delete from lin_fac where id = :id_lin");
-        qrylin_fac->bindValue(":id_lin",id_lin);
-        if(!qrylin_fac->exec()){
-           QMessageBox::critical(NULL,tr("Borrar línea"),tr("Falló el borrado de la línea de factura"),tr("&Aceptar"));
-        }
-        delete qrylin_fac;
-        calcularFactura();
-     }
+           }
+            qrylin_fac->prepare("Delete from lin_fac where id = :id_lin");
+            qrylin_fac->bindValue(":id_lin",id_lin);
+            if(!qrylin_fac->exec()){
+               QMessageBox::critical(NULL,tr("Borrar línea"),tr("Falló el borrado de la línea de factura"),tr("&Aceptar"));
+            }
+            delete qrylin_fac;
+            calcularFactura();
+         }
+    } else {
+        QMessageBox::critical(NULL,tr("Borrar Línea factura"),tr("Debe seleccionar una línea para poder borrar"),tr("OK"));
+    }
 }
 
 void Factura::calcularFactura()
@@ -562,6 +613,20 @@ void Factura::calcularFactura()
             this->rTotal = this->rBase + this->rImporteIva;
 
         }
+    }
+}
+
+void Factura::CobrarFactura()
+{
+    // marcar factura como cobrada
+    this->lCobrada = true;
+    // descontar deuda ficha cliente
+    QSqlQuery *qryCliente = new QSqlQuery(QSqlDatabase::database("empresa"));
+    qryCliente->prepare("Update clientes set rDeudaActual = rDeudaActual -:deuda where cCodigoCliente = :cCodigoCliente");
+    qryCliente->bindValue(":deuda",this->rTotal);
+    qryCliente->bindValue(":cCodigoCliente",this->cCodigoCliente);
+    if(!qryCliente->exec()) {
+        QMessageBox::warning(NULL,tr("Descontar Deuda"),tr("Error al descontar deuda del cliente"),tr("OK"));
     }
 }
 

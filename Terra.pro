@@ -9,7 +9,7 @@ QT       += sql
 
 INCLUDEPATH += /Qwt/5.2.1/include
 DEPENDPATH += /Qwt/5.2.1/lib
-KDREPORTS_PATH += /home/arcnexus/project/kdReports/kdreports-1.4.0-source/bin
+#KDREPORTS_PATH += /home/arcnexus/project/kdReports/kdreports-1.4.0-source/bin
 
 LIBS += -LC:/Qt/Qwt/5.2.1/lib
 
