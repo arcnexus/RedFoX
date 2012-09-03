@@ -15,11 +15,12 @@
 #include "articulo.h"
 #include "cliente.h"
 #include "frmmodificarlin_fac.h"
-
+#include "columnamoneda.h"
 
 
 Factura *oFactura = new Factura();
 Cliente *oCliente1 = new Cliente();
+ColumnaMoneda *Columna = new ColumnaMoneda();
 frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmFacturas)
@@ -46,6 +47,7 @@ frmFacturas::~frmFacturas()
     delete ui;
     delete oCliente1;
     delete oFactura;
+    delete Columna;
 }
 
 void frmFacturas::lineasVentas()
@@ -53,6 +55,7 @@ void frmFacturas::lineasVentas()
     // lineas de ventas
     QString cSQL;
     QString cId;
+
     cId = cId.number(oFactura->Getid());
      cSQL ="select id,cCodigo,nCantidad,cDescripcion,rPvp,rSubtotal,nDto,rDto,rTotal, nPorcIva from lin_fac "
              " where id_Cab = "+cId;
@@ -89,91 +92,11 @@ void frmFacturas::lineasVentas()
     // Hacemos visible la cabecera
      Cabecera->setVisible(true);
      // Delegamos el control contenido en las columnas al nuevo objeto ColumnaGrid
-     ui->Lineas->setItemDelegateForColumn(1, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(2, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(3, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(4, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(5, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(6, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(7, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(8, new ColumnaGrid(this));
-     ui->Lineas->setItemDelegateForColumn(9, new ColumnaGrid(this));
-}
-
-ColumnaGrid::ColumnaGrid(QObject *parent)
-    :QItemDelegate(parent)
-{
-    //Configuracion *o_configuracion = new Configuracion();
-}
-
-void ColumnaGrid::paint(QPainter *painter,
-                 const QStyleOptionViewItem & option,
-                 const QModelIndex & index) const
-{
-
-    QString texto = index.model()->data(index, Qt::DisplayRole).toString();
-    int tamano, posDec;
-    tamano = 0;
-    posDec = 0;
-    /* Verificamos el Index */
-    if (index.column() == 4 || index.column() == 5 || index.column() == 7 || index.column() == 8) {
-        QString ctexto = texto;
-        // Cambio . por , o por signo elegido por los usuarios
-        int tamano = ctexto.length();
-        int posDec;
-        posDec = tamano -3;
-        if ((ctexto.midRef(posDec,1) !=".") && (ctexto.midRef(posDec,1) != ",") &&  (ctexto.midRef((posDec+1),1) !=".")
-                &&  (ctexto.midRef((posDec+1),1) !=".")) {
-
-            ctexto.append(",00") ;
-        } else {
-            if ((ctexto.midRef((posDec+1),1) =="."))
-                ctexto.append("0");
-        }
-
-        ctexto.replace(".",",");
-        //qDebug() << "Tamaño: " << tamano << "PosDec" <<posDec << ctexto.midRef(posDec,1);
-
-        if (ctexto.length()==14) {
-            ctexto.insert(2,".");
-            ctexto.insert(6,".");
-            ctexto.insert(10,".");
-        }
-        if (ctexto.length()==13) {
-            ctexto.insert(1,".");
-            ctexto.insert(5,".");
-            ctexto.insert(9,".");
-        }
-        if (ctexto.length()==12) {
-            ctexto.insert(3,".");
-            ctexto.insert(7,".");
-        }
-        if (ctexto.length()==11) {
-            ctexto.insert(2,".");
-            ctexto.insert(6,".");
-        }
-        if (ctexto.length()== 10) {
-            ctexto.insert(1,".");
-            ctexto.insert(5,".");
-        }
-        if (ctexto.length() == 9 ) {
-
-            ctexto.insert(3, ".");
-        }
-        if (ctexto.length() == 8 ) {
-
-            ctexto.insert(2, ".");
-        }
-        if (ctexto.length() == 7 ) {
-
-            ctexto.insert(1, ".");
-        }
-        texto = ctexto;
-    }
-    QStyleOptionViewItem myOption = option;
-    myOption.displayAlignment = Qt::AlignRight | Qt::AlignVCenter;
-    drawDisplay(painter, myOption, myOption.rect,texto);
-    drawFocus(painter, myOption, myOption.rect);
+     ui->Lineas->setItemDelegateForColumn(4, Columna);
+     ui->Lineas->setItemDelegateForColumn(5, Columna);
+     ui->Lineas->setItemDelegateForColumn(6, Columna);
+     ui->Lineas->setItemDelegateForColumn(7, Columna);
+     ui->Lineas->setItemDelegateForColumn(8, Columna);
 }
 
 
@@ -215,8 +138,10 @@ void frmFacturas::LLenarCampos() {
     lEstado = oFactura->getlCobrada();
     if ((lEstado == 1)) {
         ui->lblFacturaCobrada->setVisible(true);
+        ui->txtdFechaCobro->setVisible(true);
     } else {
         ui->lblFacturaCobrada->setVisible(false);
+        ui->txtdFechaCobro->setVisible(false);
     }
     lEstado = oFactura->getlContablilizada();
 
@@ -589,7 +514,12 @@ void frmFacturas::on_btnAnadir_clicked()
 
 void frmFacturas::on_btnEditar_clicked()
 {
-    DesbloquearCampos();
+    if (oFactura->getlCobrada() == 0) {
+        DesbloquearCampos();
+    } else {
+        QMessageBox::warning(NULL,tr("Editar Factura"),tr("No se puede editar una factura que ha sido <b>cobrada</b>")+
+                             tr("<p><b> Si necesita modificar algo genere una factura nueva y realice el abono correspondiente</b>"),tr("OK"));
+    }
 }
 
 
@@ -635,7 +565,7 @@ void frmFacturas::on_txtcCodigoArticulo_lostFocus()
             if (oArt->getrDto() > oCliente1->getnPorcDtoCliente()) {
                 ui->txtPorcDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrDto(),'f',0)));
             }
-            ui->txtPorcIVAArticulo->setText(QString::number(oArt->MostrarTipoIVA(oArt->getid_TipoIva()),'f',0));
+            ui->txtPorcIVAArticulo->setText(QString::number(oArt->getTipoIva(),'f',0));
 
         }
         calcularTotalLinea();
@@ -738,92 +668,16 @@ void frmFacturas::on_btnBuscarArt_clicked()
                 ui->txtcTextoBuscar->text().trimmed()+"%'";
         modArt->setQuery(cSQL,QSqlDatabase::database("empresa"));
         ui->tablaBuscaArt->setModel(modArt);
-        ui->tablaBuscaArt->setItemDelegateForColumn(2, new ColumnaGrid1(this));
-        ui->tablaBuscaArt->setItemDelegateForColumn(3, new ColumnaGrid1(this));
-        ui->tablaBuscaArt->setItemDelegateForColumn(4, new ColumnaGrid1(this));
+        ui->tablaBuscaArt->setItemDelegateForColumn(2, Columna);
+        ui->tablaBuscaArt->setItemDelegateForColumn(3, Columna);
+        ui->tablaBuscaArt->setItemDelegateForColumn(4, Columna);
     } else {
         QMessageBox::critical(this,tr("Buscar Artículos"),tr("Debe especificar algún criterio de búsqueda"),tr("OK"));
     }
     //delete modArt;
 
 }
-ColumnaGrid1::ColumnaGrid1(QObject *parent)
-    :QItemDelegate(parent)
-{
-}
-//void ColumnaGrid1::editorEvent(QEvent::MouseButtonDblClick,) {
 
-//}
-
-void ColumnaGrid1::paint(QPainter *painter,
-                 const QStyleOptionViewItem & option,
-                 const QModelIndex & index) const
-{
-
-    QString texto = index.model()->data(index, Qt::DisplayRole).toString();
-    //int tamano, posDec;
-    //tamano = 0;
-    //posDec = 0;
-    /* Verificamos el Index */
-    if (index.column() == 2 || index.column() == 3 || index.column() == 4) {
-        QString ctexto = texto;
-        // Cambio . por , o por signo elegido por los usuarios
-        int tamano = ctexto.length();
-        int posDec;
-        posDec = tamano -3;
-        if ((ctexto.midRef(posDec,1) !=".") && (ctexto.midRef(posDec,1) != ",") &&  (ctexto.midRef((posDec+1),1) !=".")
-                &&  (ctexto.midRef((posDec+1),1) !=".")) {
-
-            ctexto.append(",00") ;
-        } else {
-            if ((ctexto.midRef((posDec+1),1) =="."))
-                ctexto.append("0");
-        }
-
-        ctexto.replace(".",",");
-        //qDebug() << "Tamaño: " << tamano << "PosDec" <<posDec << ctexto.midRef(posDec,1);
-
-        if (ctexto.length()==14) {
-            ctexto.insert(2,".");
-            ctexto.insert(6,".");
-            ctexto.insert(10,".");
-        }
-        if (ctexto.length()==13) {
-            ctexto.insert(1,".");
-            ctexto.insert(5,".");
-            ctexto.insert(9,".");
-        }
-        if (ctexto.length()==12) {
-            ctexto.insert(3,".");
-            ctexto.insert(7,".");
-        }
-        if (ctexto.length()==11) {
-            ctexto.insert(2,".");
-            ctexto.insert(6,".");
-        }
-        if (ctexto.length()== 10) {
-            ctexto.insert(1,".");
-            ctexto.insert(5,".");
-        }
-        if (ctexto.length() == 9 ) {
-
-            ctexto.insert(3, ".");
-        }
-        if (ctexto.length() == 8 ) {
-
-            ctexto.insert(2, ".");
-        }
-        if (ctexto.length() == 7 ) {
-
-            ctexto.insert(1, ".");
-        }
-        texto = ctexto;
-    }
-    QStyleOptionViewItem myOption = option;
-    myOption.displayAlignment = Qt::AlignRight | Qt::AlignVCenter;
-    drawDisplay(painter, myOption, myOption.rect,texto);
-    drawFocus(painter, myOption, myOption.rect);
-}
 
 void frmFacturas::on_tablaBuscaArt_doubleClicked(const QModelIndex &index)
 {

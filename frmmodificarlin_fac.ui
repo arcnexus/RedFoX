@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>886</width>
-    <height>102</height>
+    <width>882</width>
+    <height>98</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -108,6 +108,12 @@
      </item>
      <item row="1" column="4">
       <widget class="QLineEdit" name="txtSubTotal">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(254, 255, 195);</string>
+       </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
@@ -125,6 +131,12 @@
      </item>
      <item row="1" column="6">
       <widget class="QLineEdit" name="txtDTO">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(254, 255, 195);</string>
+       </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
@@ -135,6 +147,12 @@
      </item>
      <item row="1" column="7">
       <widget class="QLineEdit" name="txtTotal">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(254, 255, 195);</string>
+       </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>

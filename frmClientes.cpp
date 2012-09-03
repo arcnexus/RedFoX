@@ -10,6 +10,9 @@
 #include <QDebug>
 #include "frmbuscarcliente.h"
 #include "frmbuscarpoblacion.h"
+#include <QString>
+#include "columnamoneda.h"
+#include "columnafecha.h"
 
 
 Cliente *oCliente = new Cliente();
@@ -118,6 +121,38 @@ void frmClientes::LLenarCampos() {
     ui->txtdFechaNacimiento->setDate(oCliente->getdFechaNacimiento());
     ui->txtcAccesoWeb->setText(oCliente->getcAccesoWeb());
     ui->txtcPasswordWeb->setText(oCliente->getcPasswordweb());
+
+    // Tablas
+    QSqlQueryModel *deudas = new QSqlQueryModel();
+    QString cSQL;
+    cSQL= "Select id,cDocumento,rPendienteCobro,dFecha,dVencimiento from clientes_deuda where Id_cliente =" + QString::number(oCliente->getId());
+    deudas->setQuery(cSQL,QSqlDatabase::database("empresa"));
+    ColumnaMoneda *columnaMoneda = new ColumnaMoneda();
+    ColumnaFecha *columnaFecha = new ColumnaFecha();
+    ui->TablaDeudas->setModel(deudas);
+        ui->TablaDeudas->setItemDelegateForColumn(2,columnaMoneda);
+        ui->TablaDeudas->setItemDelegateForColumn(3,columnaFecha);
+        ui->TablaDeudas->setItemDelegateForColumn(4,columnaFecha);
+    //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
+   QHeaderView *Cabecera = new QHeaderView(Qt::Horizontal,this);
+   // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+   ui->TablaDeudas->setHorizontalHeader(Cabecera);
+   /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
+   Cabecera->setResizeMode(0,QHeaderView::Fixed);
+   Cabecera->resizeSection(0,0);
+   Cabecera->setResizeMode(1,QHeaderView::Fixed);
+   Cabecera->resizeSection(1,85);
+   Cabecera->setResizeMode(2,QHeaderView::Fixed);
+   Cabecera->resizeSection(2,85);
+   Cabecera->setResizeMode(3,QHeaderView::Fixed);
+   Cabecera->resizeSection(3,85);
+   Cabecera->setResizeMode(4,QHeaderView::Fixed);
+   Cabecera->resizeSection(4,85);
+   deudas->setHeaderData(1, Qt::Horizontal, QObject::tr("DOCUMENTO"));
+   deudas->setHeaderData(2, Qt::Horizontal, QObject::tr("I.PENDIENTE"));
+   deudas->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA"));
+   deudas->setHeaderData(4, Qt::Horizontal, QObject::tr("VTO"));
+   Cabecera->setVisible(true);
 
 
 }
@@ -656,7 +691,6 @@ void frmClientes::on_txtcCpPoblacionAlmacen_lostFocus()
                } else {
                   // qDebug() << qPoblacion.lastQuery();
                    if (qPoblacion.next()) {
-                                        qDebug() << qPoblacion.value(0).toString();
                         ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());
                         ui->txtcProvinciaAlmacen->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisAlmacen->setText("ESPAÑA");
@@ -703,4 +737,9 @@ void frmClientes::on_txtcPoblacionAlmacen_lostFocus()
        }
       // BuscarPoblacion.close();
     }
+}
+
+void frmClientes::on_TablaDeudas_clicked(const QModelIndex &index)
+{
+    qDebug() << "SE ha hecho click en las deudas";
 }

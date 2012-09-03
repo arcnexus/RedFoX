@@ -73,7 +73,7 @@ void frmModificarLin_fac::on_txtCodigo_lostFocus()
             if (oArt->getrDto() > ui->txtPorcDto->text().toDouble()) {
                 ui->txtPorcDto->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrDto(),'f',0)));
             }
-            ui->txtPorcIVA->setText(QString::number(oArt->MostrarTipoIVA(oArt->getid_TipoIva()),'f',0));
+            ui->txtPorcIVA->setText(QString::number(oArt->getTipoIva(),'f',0));
             delete oArt,o_configuracion;
         }
         CalcularTotal();

@@ -90,32 +90,12 @@ private:
     QHeaderView *Cabecera;
     double importe;
     Configuracion *o_configuracion;
-};
 
-class ColumnaGrid : public QItemDelegate
-{
-    Q_OBJECT
+
 
 public:
     QString TextoNumero(QString cTexto);
 
-
-    ColumnaGrid(QObject *parent);
-
-    void paint(QPainter *painter,
-               const QStyleOptionViewItem &option,
-               const QModelIndex &index) const;
 };
-class ColumnaGrid1 : public QItemDelegate
-{
-    Q_OBJECT
 
-public:
-
-    ColumnaGrid1(QObject *parent);
-
-    void paint(QPainter *painter,
-               const QStyleOptionViewItem &option,
-               const QModelIndex &index) const;
-};
 #endif // FRMFACTURAS_H

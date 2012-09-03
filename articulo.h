@@ -14,7 +14,6 @@ public:
     void Borrar(int nId);
     void Vender(int id, int cantidad, double rPVP);
     void Devolucion(int id, int cantidad, double rImporte, QString cMotivo, QString dFechaDevolucion);
-    double MostrarTipoIVA(int id_tipoIva);
 
     // getters
     QString getId();
@@ -28,7 +27,7 @@ public:
     int getid_Familia();
     QString getcSubfamilia();
     QString getcCodigoIva();
-    int getid_TipoIva();
+    int getTipoIva();
     double getrCoste();
     double getrTarifa1();
     double getrTarifa2();
@@ -80,7 +79,7 @@ public:
     void setid_Familia(int id_Familia);
     void setcSubfamilia(QString cSubfamilia);
     void setcCodigoIva(QString cCodigoIva);
-    void setid_TipoIva(int id_TipoIva);
+    void setTipoIva(int TipoIva);
     void setrCoste(double rCoste);
     void setrTarifa1(double rTarifa1);
     void setrTarifa2(double rTarifa2);
@@ -138,7 +137,7 @@ private:
     int id_Familia;
     QString cSubfamilia;
     QString cCodigoIva;
-    int id_TipoIva;
+    int TipoIva;
     double rCoste;
     double rTarifa1;
     double rTarifa2;

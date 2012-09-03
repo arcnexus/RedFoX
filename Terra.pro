@@ -34,7 +34,9 @@ SOURCES += main.cpp\
     empresa.cpp \
     articulo.cpp \
     frmBuscarFactura.cpp \
-    frmmodificarlin_fac.cpp
+    frmmodificarlin_fac.cpp \
+    columnamoneda.cpp \
+    columnafecha.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -52,7 +54,9 @@ HEADERS  += mainwindow.h \
     empresa.h \
     articulo.h \
     frmBuscarFactura.h \
-    frmmodificarlin_fac.h
+    frmmodificarlin_fac.h \
+    columnamoneda.h \
+    columnafecha.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \

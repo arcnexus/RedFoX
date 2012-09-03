@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>432</width>
-    <height>189</height>
+    <width>430</width>
+    <height>147</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>40</height>
+         <height>27</height>
         </size>
        </property>
        <property name="text">
@@ -38,7 +38,7 @@
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>40</height>
+         <height>27</height>
         </size>
        </property>
        <property name="text">
@@ -51,7 +51,7 @@
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>40</height>
+         <height>27</height>
         </size>
        </property>
        <property name="text">
@@ -88,6 +88,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnExtra">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="btnAceptar">
@@ -128,12 +135,12 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>325</x>
-     <y>187</y>
+     <x>327</x>
+     <y>139</y>
     </hint>
     <hint type="destinationlabel">
      <x>163</x>
-     <y>238</y>
+     <y>146</y>
     </hint>
    </hints>
   </connection>
@@ -144,14 +151,33 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>430</x>
-     <y>187</y>
+     <x>422</x>
+     <y>139</y>
     </hint>
     <hint type="destinationlabel">
      <x>292</x>
-     <y>215</y>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnExtra</sender>
+   <signal>clicked()</signal>
+   <receiver>frmDecision</receiver>
+   <slot>Anular()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>62</x>
+     <y>110</y>
     </hint>
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>Anular()</slot>
+ </slots>
 </ui>

@@ -37,7 +37,7 @@ void Articulo::Recuperar(QString cSQL)
                this->id_Subfamilia = qryArticulo.value(12).toInt();
                this->cSubfamilia = qryArticulo.value(13).toString();
                this->cCodigoIva = qryArticulo.value(14).toString();
-               this->id_TipoIva = qryArticulo.value(15).toInt();
+               this->TipoIva = qryArticulo.value(15).toInt();
                this->rCoste = qryArticulo.value(16).toDouble();
                this->rTarifa1 = qryArticulo.value(17).toDouble();
                this->rTarifa2 = qryArticulo.value(18).toDouble();
@@ -113,24 +113,7 @@ void Articulo::Devolucion(int id, int cantidad, double rImporte, QString cMotivo
 {
 }
 
-double Articulo::MostrarTipoIVA(int id_tipoIva)
-{
-    QSqlQuery qryTipoIva(QSqlDatabase::database("empresa"));
-    qryTipoIva.prepare("select nIVA from tiposiva where id = :id_tipoIva");
-    qryTipoIva.bindValue(":id_tipoIva",id_tipoIva);
-    if (qryTipoIva.exec()) {
-        if(qryTipoIva.next()) {
-            double dTipoIva = qryTipoIva.value(0).toDouble();
-            return dTipoIva;
-        } else {
-            return 18;
-        }
-    } else {
-        QMessageBox::critical(NULL,QObject::tr("Buscar Tipo IVA"),QObject::tr("No se puede recuperar el tipo de IVA"),QObject::tr("&Aceptar"));
-    }
 
-
-}
 
 
 
@@ -189,9 +172,9 @@ QString Articulo::getcCodigoIva()
     return this->cCodigoIva;
 }
 
-int Articulo::getid_TipoIva()
+int Articulo::getTipoIva()
 {
-    return this->id_TipoIva;
+    return this->TipoIva;
 }
 
 double Articulo::getrCoste()
@@ -440,9 +423,9 @@ void Articulo::setcCodigoIva(QString cCodigoIva)
     this->cCodigoIva = this->cCodigoIva;
 }
 
-void Articulo::setid_TipoIva(int id_TipoIva)
+void Articulo::setTipoIva(int TipoIva)
 {
-    this->id_TipoIva = id_TipoIva;
+    this->TipoIva = TipoIva;
 }
 
 void Articulo::setrCoste(double rCoste)

@@ -34,6 +34,11 @@ void frmDecision::setBoton2(QString Boton2) {
     ui->btnCancelar->setText(Boton2);
 }
 
+void frmDecision::setBoton3(QString Boton3)
+{
+    ui->btnExtra->setText(Boton3);
+}
+
 void frmDecision::Inicializar(QString titulo, QString linea1, QString linea2, QString linea3, QString Boton1, QString Boton2){
 
     ui->linea1->setText(linea1);
@@ -45,4 +50,10 @@ void frmDecision::Inicializar(QString titulo, QString linea1, QString linea2, QS
         ui->linea3->close();
     }
     this->setWindowTitle(titulo);
+}
+
+void frmDecision::Anular()
+{
+  this->Salida = 3;
+  close();
 }

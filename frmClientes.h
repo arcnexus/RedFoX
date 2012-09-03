@@ -72,6 +72,8 @@ private slots:
 
     void on_txtcPoblacionAlmacen_lostFocus();
 
+    void on_TablaDeudas_clicked(const QModelIndex &index);
+
 private:
     Ui::frmClientes *ui;
     QSqlQueryModel *modelFP;
