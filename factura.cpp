@@ -113,7 +113,7 @@ void Factura::AnadirFactura() {
 
 }
 // Guardar la factura
-void Factura::GuardarFactura(int nId_Factura) {
+void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
     cab_fac.prepare( "UPDATE cab_fac set "
                    "cCodigoCliente = :cCodigoCliente,"
@@ -248,12 +248,12 @@ void Factura::GuardarFactura(int nId_Factura) {
         QMessageBox::information(NULL,tr("Guardar datos"),tr("La Factura se ha guardado correctamente:"),tr("Ok"));
         QString cSQL = "Select * from cab_fac where id ="+QString::number(nId_Factura);
         RecuperarFactura(cSQL);
-        frmDecision msgBox;
-        msgBox.Inicializar(tr("Guardar Factura"),"",tr("¿Desea cobrar la factura ahora o generar una deuda al cliente?"),"",
-                           tr("Cobrar"),tr("Generar deuda"));
-        msgBox.setBoton3(QObject::tr("No hacer nada"));
-        int elegido = msgBox.exec();
-        if (!msgBox.Salida ==3) {
+        if (FacturaLegal) {
+
+            frmDecision msgBox;
+            msgBox.Inicializar(tr("Guardar Factura"),"",tr("¿Desea cobrar la factura ahora o generar una deuda al cliente?"),"",
+                               tr("Cobrar"),tr("Generar deuda"));
+            int elegido = msgBox.exec();
            if(elegido == 1) {
                CobrarFactura();
 
@@ -311,9 +311,10 @@ void Factura::GuardarFactura(int nId_Factura) {
                        }
                    }
                    delete Deudacliente;
-                   }
+               }
+
+               }
            }
-        }
 
     }
 
@@ -402,7 +403,7 @@ QString Factura::NuevoNumeroFactura() {
     int inum;
     Configuracion *oConfig = new Configuracion();
     oConfig->CargarDatos();
-    cab_fac.prepare("Select cFactura from cab_fac  order by cFactura desc limit 0,1");
+    cab_fac.prepare("Select cFactura from cab_fac  where cFactura <> '"+QObject::tr("BORRADOR")+"' order by cFactura desc limit 0,1");
     if(cab_fac.exec()) {
         cab_fac.next();
         cNumFac = cab_fac.value(0).toString();

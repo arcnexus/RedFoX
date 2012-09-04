@@ -48,7 +48,7 @@ CREATE TABLE "Alb_pro" (
 
 
 
-CREATE TABLE "articulos" (
+CREATE TABLE "Articulos" (
   "Id" INTEGER PRIMARY KEY AUTOINCREMENT  ,
   "cCodigo" text    ,
   "cCodigoBarras" text    ,
@@ -56,15 +56,13 @@ CREATE TABLE "articulos" (
   "cDescripcion" text    ,
   "cDescripcionReducida" text    ,
   "id_Proveedor" int DEFAULT 0,
-  "cCodigoFamilia" text    ,
   "id_Familia" int DEFAULT 0,
   "cFamilia" text    ,
   "id_Seccion" int DEFAULT 0,
   "cSeccion" text    ,
   "id_Subfamilia" int DEFAULT 0,
   "cSubfamilia" text    ,
-  "cCodigoIva" text    ,
-  "id_TipoIva" int DEFAULT 0,
+  "cTipoIva" text    ,
   "rCoste" real DEFAULT 0,
   "rTarifa1" real DEFAULT 0,
   "rTarifa2" real DEFAULT 0,
@@ -79,10 +77,10 @@ CREATE TABLE "articulos" (
   "nMargen2" real DEFAULT 0,
   "nMargen3" real DEFAULT 0,
   "rPrecioMedio" real DEFAULT 0,
-  "nUnidadesCompradas" int DEFAULT 0,
   "rPrecioMedio2" real DEFAULT 0,
-  "nUnidadesVendidas" int DEFAULT 0,
   "rPrecioMedio3" real DEFAULT 0,
+  "nUnidadesCompradas" int DEFAULT 0,
+  "nUnidadesVendidas" int DEFAULT 0,
   "rAcumuladoCompras" real DEFAULT 0,
   "rAcumuladoVentas" real DEFAULT 0,
   "bImagen" blob,

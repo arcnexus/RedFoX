@@ -22,10 +22,8 @@ public slots:
     void setLinea3(QString linea3);
     void setBoton1(QString Boton1);
     void setBoton2(QString Boton2);
-    void setBoton3(QString Boton3);
     void Inicializar(QString titulo,QString linea1,QString linea2, QString linea3, QString Boton1,QString Boton2);
-private slots:
-    void Anular();
+
 private:
     Ui::frmDecision *ui;
 };

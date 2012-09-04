@@ -79,6 +79,8 @@ private slots:
 
     void on_botBorrarLinea_clicked();
 
+    void on_botBorrador_clicked();
+
 private:
     Ui::frmFacturas *ui;
     QSqlDatabase dbEmp;

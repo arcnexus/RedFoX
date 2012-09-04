@@ -38,6 +38,8 @@ private slots:
     void on_toolButton_3_clicked();
 
 
+    void on_btnArticulos_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWorkspace *workspace;

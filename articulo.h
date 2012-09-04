@@ -16,18 +16,18 @@ public:
     void Devolucion(int id, int cantidad, double rImporte, QString cMotivo, QString dFechaDevolucion);
 
     // getters
-    QString getId();
+    int getId();
     QString getcCodigo();
     QString getcCodigoBarras();
     QString getcCodigoFabricante();
     QString getcDescripcion();
     QString getcDescripcionReducida();
     int getid_Proveedor();
-    QString getcCodigoFamilia();
-    int getid_Familia();
+    QString getcSeccion();
+    QString getcFamilia();
     QString getcSubfamilia();
     QString getcCodigoIva();
-    int getTipoIva();
+    double getnTipoIva();
     double getrCoste();
     double getrTarifa1();
     double getrTarifa2();
@@ -75,11 +75,11 @@ public:
     void setcDescripcion(QString cDescripcion);
     void setcDescripcionReducida(QString cDescripcionReducida);
     void setid_Proveedor(int id_Proveedor);
-    void setcCodigoFamilia(QString cCodigoFamilia);
-    void setid_Familia(int id_Familia);
+    void setcSeccion(QString cSeccion);
+    void setcFamilia(QString cFamilia);
     void setcSubfamilia(QString cSubfamilia);
     void setcCodigoIva(QString cCodigoIva);
-    void setTipoIva(int TipoIva);
+    void setnTipoIva(double nTipoIva);
     void setrCoste(double rCoste);
     void setrTarifa1(double rTarifa1);
     void setrTarifa2(double rTarifa2);
@@ -131,13 +131,10 @@ private:
     int id_Proveedor;
     QString cCodigoFamilia;
     QString cFamilia;
-    int id_Seccion;
     QString cSeccion;
-    int id_Subfamilia;
-    int id_Familia;
     QString cSubfamilia;
     QString cCodigoIva;
-    int TipoIva;
+    double nTipoIva;
     double rCoste;
     double rTarifa1;
     double rTarifa2;

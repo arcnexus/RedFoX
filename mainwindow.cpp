@@ -6,6 +6,7 @@
 #include<QSqlError>
 #include "frmClientes.h"
 #include "frmfacturas.h"
+#include "frmarticulos.h"
 #include <login.h>
 #include <QWorkspace>
 #include <QFormLayout>
@@ -161,3 +162,11 @@ void MainWindow::on_toolButton_3_clicked()
 
 }
 
+
+void MainWindow::on_btnArticulos_clicked()
+{
+    FrmArticulos *frmArticulos1 = new FrmArticulos(m_config);
+    workspace->addWindow(frmArticulos1);
+    frmArticulos1->setWindowState(Qt::WindowMaximized);
+    frmArticulos1->setVisible(true);
+}

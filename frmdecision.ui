@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>430</width>
-    <height>147</height>
+    <width>428</width>
+    <height>145</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -90,13 +90,6 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="btnExtra">
-       <property name="text">
-        <string>PushButton</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="btnAceptar">
        <property name="text">
         <string>PushButton</string>
@@ -157,22 +150,6 @@
     <hint type="destinationlabel">
      <x>292</x>
      <y>146</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnExtra</sender>
-   <signal>clicked()</signal>
-   <receiver>frmDecision</receiver>
-   <slot>Anular()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>194</x>
-     <y>125</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>62</x>
-     <y>110</y>
     </hint>
    </hints>
   </connection>

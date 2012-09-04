@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1018</width>
-    <height>469</height>
+    <height>467</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -677,7 +677,7 @@ border-right-color: rgb(220, 220, 220);</string>
          <enum>QTabWidget::South</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -990,6 +990,13 @@ border-right-color: rgb(220, 220, 220);</string>
            <widget class="QPushButton" name="anadirEntrega">
             <property name="text">
              <string>Añadir Entrega</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QPushButton" name="botBorrador">
+            <property name="text">
+             <string>Guardar Borrador</string>
             </property>
            </widget>
           </item>

@@ -87,7 +87,7 @@ public slots:
     // Metodos de trabajo Clase Factura
     void AnadirFactura();
     void RecuperarFactura(QString cSQL);
-    void GuardarFactura(int nId_Factura);
+    void GuardarFactura(int nId_Factura, bool FacturaLegal);
     QString NuevoNumeroFactura();
     void AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
                             double porcdto, double dto, double total, double nPorcIva);

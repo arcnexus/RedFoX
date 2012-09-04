@@ -489,9 +489,11 @@ void frmFacturas::on_btnAnterior_clicked()
 void frmFacturas::on_btnGuardar_clicked()
 {
     int nId = oFactura->Getid();
+    if (ui->txtcFactura->text() == tr("BORRADOR"))
+        ui->txtcFactura->setText(oFactura->NuevoNumeroFactura());
     LLenarFactura();
     BloquearCampos();
-    oFactura->GuardarFactura(nId);
+    oFactura->GuardarFactura(nId,true);
     oFactura->RecuperarFactura("Select * from cab_fac where Id="+QString::number(nId)+"  limit 0,1 ");
     LLenarCampos();
 }
@@ -500,7 +502,7 @@ void frmFacturas::on_btnAnadir_clicked()
 {
     VaciarCampos();
     LLenarFactura();
-    oFactura->setcFactura(oFactura->NuevoNumeroFactura());
+    oFactura->setcFactura("BORRADOR");
     oFactura->AnadirFactura();
 
     LLenarCampos();
@@ -514,10 +516,10 @@ void frmFacturas::on_btnAnadir_clicked()
 
 void frmFacturas::on_btnEditar_clicked()
 {
-    if (oFactura->getlCobrada() == 0) {
+    if (oFactura->getcFactura() ==tr("BORRADOR")) {
         DesbloquearCampos();
     } else {
-        QMessageBox::warning(NULL,tr("Editar Factura"),tr("No se puede editar una factura que ha sido <b>cobrada</b>")+
+        QMessageBox::warning(NULL,tr("Editar Factura"),tr("No se puede editar una factura que ha sido numerada, solo los BORRADORES se pueden editar")+
                              tr("<p><b> Si necesita modificar algo genere una factura nueva y realice el abono correspondiente</b>"),tr("OK"));
     }
 }
@@ -565,7 +567,7 @@ void frmFacturas::on_txtcCodigoArticulo_lostFocus()
             if (oArt->getrDto() > oCliente1->getnPorcDtoCliente()) {
                 ui->txtPorcDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrDto(),'f',0)));
             }
-            ui->txtPorcIVAArticulo->setText(QString::number(oArt->getTipoIva(),'f',0));
+            ui->txtPorcIVAArticulo->setText(QString::number(oArt->getnTipoIva(),'f',0));
 
         }
         calcularTotalLinea();
@@ -791,3 +793,14 @@ void frmFacturas::on_botBorrarLinea_clicked()
 }
 
 
+
+void frmFacturas::on_botBorrador_clicked()
+{
+    int nId = oFactura->Getid();
+    LLenarFactura();
+    BloquearCampos();
+    oFactura->setcFactura("BORRADOR");
+    oFactura->GuardarFactura(nId,false);
+    oFactura->RecuperarFactura("Select * from cab_fac where Id="+QString::number(nId)+"  limit 0,1 ");
+    LLenarCampos();
+}
