@@ -11,6 +11,8 @@ public:
     Articulo();
     void Anadir();
     void Recuperar(QString cSQL);
+    void Guardar();
+    void Vaciar();
     void Borrar(int nId);
     void Vender(int id, int cantidad, double rPVP);
     void Devolucion(int id, int cantidad, double rImporte, QString cMotivo, QString dFechaDevolucion);
@@ -23,8 +25,11 @@ public:
     QString getcDescripcion();
     QString getcDescripcionReducida();
     int getid_Proveedor();
+    int getid_Seccion();
     QString getcSeccion();
+    int getid_Familia();
     QString getcFamilia();
+    int getid_SubFamilia();
     QString getcSubfamilia();
     QString getcCodigoIva();
     double getnTipoIva();
@@ -59,7 +64,7 @@ public:
     QString getcColor();
     QString getcComposicion();
     int getlPvpIncluyeIva();
-    int getlPendienteRecibir();
+    QDate getdFechaPrevistaRecepcion();
     int getnCantidadPendienteRecibir();
     int getnReservados();
     int getlMostrarWeb();
@@ -75,8 +80,11 @@ public:
     void setcDescripcion(QString cDescripcion);
     void setcDescripcionReducida(QString cDescripcionReducida);
     void setid_Proveedor(int id_Proveedor);
+    void setid_Seccion(int id_Seccion);
     void setcSeccion(QString cSeccion);
+    void setid_Familia(int id_familia);
     void setcFamilia(QString cFamilia);
+    void setid_SubFamilia(int id_SubFamilia);
     void setcSubfamilia(QString cSubfamilia);
     void setcCodigoIva(QString cCodigoIva);
     void setnTipoIva(double nTipoIva);
@@ -111,7 +119,7 @@ public:
     void setcColor(QString cColor);
     void setcComposicion(QString cComposicion);
     void setlPvpIncluyeIva(int lPvpIncluyeIva);
-    void setlPendienteRecibir(int lPendienteRecibir);
+    void setdFechaPrevistaRecepcion(QDate dFechaPrevistaRecepcion);
     void setnCantidadPendienteRecibir(int nCantidadPendienteRecibir);
     void setnReservados(int nReservados);
     void setlMostrarWeb(int lMostrarWeb);
@@ -129,9 +137,11 @@ private:
     QString cDescripcion;
     QString cDescripcionReducida;
     int id_Proveedor;
-    QString cCodigoFamilia;
+    int id_Familia;
     QString cFamilia;
+    int id_Seccion;
     QString cSeccion;
+    int id_SubFamilia;
     QString cSubfamilia;
     QString cCodigoIva;
     double nTipoIva;
@@ -166,7 +176,7 @@ private:
     QString cColor;
     QString cComposicion;
     int lPvpIncluyeIva;
-    int lPendienteRecibir;
+    QDate dFechaPrevistaRecepcion;
     int nCantidadPendienteRecibir;
     int nReservados;
     int lMostrarWeb;

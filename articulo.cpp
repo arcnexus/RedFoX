@@ -13,8 +13,86 @@ Articulo::Articulo()
 
 void Articulo::Anadir()
 {
+    QSqlQuery query(QSqlDatabase::database("empresa"));
+         query.prepare("INSERT INTO articulos (cCodigo,cCodigoBarras,cCodigoFabricante,cDescripcion,cDescripcionReducida,"
+                       "id_Proveedor,id_Familia,cFamilia,id_Seccion,cSeccion,id_Subfamilia,cSubfamilia,cTipoIva,rCoste,"
+                       "rTarifa1,rTarifa2,rTarifa3,rDto,nDtoProveedor,nDtoproveedor2,nDtoProveedor3,dUltimaCompra,"
+                       "dUltimaVenta,nMargen1,nMargen2,nMargen3,rPrecioMedio,rPrecioMedio2,rPrecioMedio3,nUnidadesCompradas,"
+                       "nUnidadesVendidas,rAcumuladoCompras,rAcumuladoVentas,tComentario,nStockMaximo,nStockMinimo,"
+                       "nStockReal,lControlarStock,cModelo,cTalla,cColor,cComposicion,lPvpIncluyeIva,"
+                       "dFechaPrevistaRecepcion,nCantidadPendienteRecibir,nReservados,lMostrarWeb,nEtiquetas,"
+                       "cLocalizacion)"
+                       " VALUES (:cCodigo,:cCodigoBarras,:cCodigoFabricante,:cDescripcion,:cDescripcionReducida,"
+                       ":id_Proveedor,:id_Familia,:cFamilia,:id_Seccion,:cSeccion,:id_Subfamilia,:cSubfamilia,:cTipoIva,:rCoste,"
+                       ":rTarifa1,:rTarifa2,:rTarifa3,:rDto,:nDtoProveedor,:nDtoproveedor2,:nDtoProveedor3,:dUltimaCompra,"
+                       ":dUltimaVenta,:nMargen1,:nMargen2,:nMargen3,:rPrecioMedio,:rPrecioMedio2,:rPrecioMedio3,:nUnidadesCompradas,"
+                       ":nUnidadesVendidas,:rAcumuladoCompras,:rAcumuladoVentas,:tComentario,:nStockMaximo,:nStockMinimo,"
+                       ":nStockReal,:lControlarStock,:cModelo,:cTalla,:cColor,:cComposicion,:lPvpIncluyeIva,"
+                       ":dFechaPrevistaRecepcion,:nCantidadPendienteRecibir,:nReservados,:lMostrarWeb,:nEtiquetas,"
+                       ":cLocalizacion)");
+
+         query.bindValue(":cCodigo",this->cCodigo);
+         query.bindValue(":cCodigoBarras",this->cCodigoBarras);
+         query.bindValue(":cCodigoFabricante",this->cCodigoFabricante);
+         query.bindValue(":cDescripcion",this->cDescripcion);
+         query.bindValue(":cDescripcionReducida",this->cDescripcionReducida);
+         query.bindValue(":id_Proveedor",this->id_Proveedor);
+         query.bindValue(":id_Familia",this->id_Familia);
+         query.bindValue(":cFamilia",this->cFamilia);
+         query.bindValue(":id_Seccion",this->id_Seccion);
+         query.bindValue(":cSeccion",this->cSeccion);
+         query.bindValue(":id_Subfamilia",this->id_SubFamilia);
+         query.bindValue(":cSubfamilia",this->cSubfamilia);
+         query.bindValue(":cTipoIva",this->cCodigoIva);
+         query.bindValue(":rCoste",this->rCoste);
+         query.bindValue(":rTarifa1",this->rTarifa1);
+         query.bindValue(":rTarifa2",this->rTarifa2);
+         query.bindValue(":rTarifa3",this->rTarifa3);
+         query.bindValue(":rDto",this->rDto);
+         query.bindValue(":nDtoProveedor",this->nDtoProveedor);
+         query.bindValue(":nDtoproveedor2",this->nDtoProveedor2);
+         query.bindValue(":nDtoProveedor3",this->nDtoProveedor3);
+         query.bindValue(":dUltimaCompra",this->dUltimaCompra);
+         query.bindValue(":dUltimaVenta",this->dUltimaVenta);
+         query.bindValue(":nMargen1",this->nMargen1);
+         query.bindValue(":nMargen2",this->nMargen2);
+         query.bindValue(":nMargen3",this->nMargen3);
+         query.bindValue(":rPrecioMedio",this->rPrecioMedio);
+         query.bindValue(":rPrecioMedio2",this->rPrecioMedio2);
+         query.bindValue(":rPrecioMedio3",this->rPrecioMedio3);
+         query.bindValue(":nUnidadesCompradas",this->nUnidadesCompradas);
+         query.bindValue(":nUnidadesVendidas",this->nUnidadesVendidas);
+         query.bindValue(":rAcumuladoCompras",this->rAcumuladoCompras);
+         query.bindValue(":rAcumuladoVentas",this->rAcumuladoVentas);
+         query.bindValue(":tComentario",this->tComentario);
+         query.bindValue(":nStockMaximo",this->nStockMaximo);
+         query.bindValue(":nStockMinimo",this->nStockMinimo);
+         query.bindValue(":nStockReal",this->nStockReal);
+         query.bindValue(":lControlarStock",this->lControlarStock);
+         query.bindValue(":cModelo",this->cModelo);
+         query.bindValue(":cTalla",this->cTalla);
+         query.bindValue(":cColor",this->cColor);
+         query.bindValue(":cComposicion",this->cComposicion);
+         query.bindValue(":lPvpIncluyeIva",this->lPvpIncluyeIva);
+         query.bindValue(":dFechaPrevistaRecepcion",this->dFechaPrevistaRecepcion);
+         query.bindValue(":nCantidadPendienteRecibir",this->nCantidadPendienteRecibir);
+         query.bindValue(":nReservados",this->nReservados);
+         query.bindValue(":lMostrarWeb",this->lMostrarWeb);
+         query.bindValue(":nEtiquetas",this->nEtiquetas);
+         query.bindValue(":cLocalizacion",this->cLocalizacion);
+
+         if(!query.exec()) {
+             QMessageBox::warning(NULL,QObject::tr("Añadir Artículo"),QObject::tr("Falló la inserción de un nuevo artículo"),
+                                  QObject::tr("Ok"));
+         } else {
+             QString cID = query.lastInsertId().toString();
+             QString cSQL = "Select * from articulos where id ="+cID;
+             Recuperar(cSQL);
+         }
+
 
 }
+
 
 void Articulo::Recuperar(QString cSQL)
 {
@@ -30,9 +108,11 @@ void Articulo::Recuperar(QString cSQL)
                this->cDescripcion = registro.field("cDescripcion").value().toString();
                this->cDescripcionReducida = registro.field("cDescripcionReducida").value().toString();
                this->id_Proveedor = registro.field("id_Proveedor").value().toInt();
-               this->cCodigoFamilia = registro.field("cCodigoFamilia").value().toString();
+               this->id_Familia = registro.field("id_Familia").value().toInt();
                this->cFamilia = registro.field("cFamilia").value().toString();
+               this->id_Seccion = registro.field("id_Seccion").value().toInt();
                this->cSeccion = registro.field("cSeccion").value().toString();
+               this->id_SubFamilia = registro.field("id_Subfamilia").value().toInt();
                this->cSubfamilia = registro.field("cSubFamila").value().toString();
                this->nTipoIva = registro.field("nTipoIva").value().toDouble();
                this->rCoste = registro.field("rCoste").value().toDouble();
@@ -67,7 +147,7 @@ void Articulo::Recuperar(QString cSQL)
                this->cColor = registro.field("cColor").value().toString();
                this->cComposicion = registro.field("cComposicion").value().toString();
                this->lPvpIncluyeIva = registro.field("lPvpIncluyeIva").value().toInt();
-               this->lPendienteRecibir = registro.field("lPendienteRecibir").value().toInt();
+               this->dFechaPrevistaRecepcion = registro.field("dFechaPrevistaRecepcion").value().toDate();
                this->nCantidadPendienteRecibir = registro.field("nCantidadPendienteRecibir").value().toInt();
                this->nReservados = registro.field("nReservados").value().toInt();
                this->lMostrarWeb = registro.field("lMostrarWeb").value().toInt();
@@ -80,6 +160,175 @@ void Articulo::Recuperar(QString cSQL)
     } else {
         QMessageBox::critical(NULL,"error al leer datos artículo:", qryArticulo.lastError().text());
     }
+}
+
+void Articulo::Guardar()
+{
+    QSqlQuery query(QSqlDatabase::database("empresa"));
+    query.prepare( "UPDATE articulos set "
+                   "cCodigo = :cCodigoCliente,"
+                   "cCodigoBarras=:cCodigoBarras,"
+                   "cCodigoFabricante =:cCodigoFabricante,"
+                   "cDescripcion=:cDescripcion,"
+                   "cDescripcionReducida=:cDescripcionReducida,"
+                   "id_Proveedor=:id_Proveedor,"
+                   "id_Familia=:id_Familia,"
+                   "cFamilia =:cFamilia,"
+                   "id_Seccion=:id_Seccion,"
+                   "cSeccion=:cSeccion,"
+                   "id_Subfamilia=:idSubfamilia,"
+                   "cSubfamilia=:cSubFamilia,"
+                   "cTipoIva =:cTipoIva,"
+                   "rCoste=:rCoste,"
+                   "rTarifa1=:rTarifa,"
+                   "rTarifa2=:rTarifa2,"
+                   "rTarifa3=:rTarifa3,"
+                   "rDto=:rDto,"
+                   "nDtoProveedor=:nDtoProveedor,"
+                   "nDtoproveedor2=:nDtoProveedor2,"
+                   "nDtoProveedor3=:nDtoProveedor3,"
+                   "dUltimaCompra=:dUltimaCompra,"
+                   "dUltimaVenta=:dUltimaVenta,"
+                   "nMargen1=:nMargen1,"
+                   "nMargen2=:nMargen2,"
+                   "nMargen3=:nMargen3,"
+                   "rPrecioMedio=:rPrecioMedio,"
+                   "rPrecioMedio2=:rPrecioMedio2,"
+                   "rPrecioMedio3=:rPrecioMedio3,"
+                   "nUnidadesCompradas=:nUnidadesCompradas,"
+                   "nUnidadesVendidas=:nUmidadesVendidas,"
+                   "rAcumuladoCompras=:rAcumuladoCompras,"
+                   "rAcumuladoVentas=:rAcumuladoVentas,"
+                   "tComentario=:tComentario,"
+                   "nStockMaximo=:nStockMaximo,"
+                   "nStockMinimo=:nStockMinimo,"
+                   "nStockReal=:nStockReal,"
+                   "lControlarStock=:lControlarStock,"
+                   "cModelo=:cModelo,"
+                   "cTalla=:cTalla,"
+                   "cColor=:cColor,"
+                   "cComposicion=:cComposicion,"
+                   "lPvpIncluyeIva=:lPvoIncluyeIva,"
+                   "dFechaPrevistaRecepcion=:dFechaPrevistaRecepcion,"
+                   "nCantidadPendienteRecibir=:nCantidadPendienteRecibir,"
+                   "nReservados=:nReservados,"
+                   "lMostrarWeb=:lMostrarWeb,"
+                   "nEtiquetas =:nEtiquetas,"
+                   "cLocalizacion =:cLocalizacion where id = :id");
+
+    query.bindValue(":cCodigo",this->cCodigo);
+    query.bindValue(":cCodigoBarras",this->cCodigoBarras);
+    query.bindValue(":cCodigoFabricante",this->cCodigoFabricante);
+    query.bindValue(":cDescripcion",this->cDescripcion);
+    query.bindValue(":cDescripcionReducida",this->cDescripcionReducida);
+    query.bindValue(":id_Proveedor",this->id_Proveedor);
+    query.bindValue(":id_Familia",this->id_Familia);
+    query.bindValue(":cFamilia",this->cFamilia);
+    query.bindValue(":id_Seccion",this->id_Seccion);
+    query.bindValue(":cSeccion",this->cSeccion);
+    query.bindValue(":id_Subfamilia",this->id_SubFamilia);
+    query.bindValue(":cSubfamilia",this->cSubfamilia);
+    query.bindValue(":cTipoIva",this->cCodigoIva);
+    query.bindValue(":rCoste",this->rCoste);
+    query.bindValue(":rTarifa1",this->rTarifa1);
+    query.bindValue(":rTarifa2",this->rTarifa2);
+    query.bindValue(":rTarifa3",this->rTarifa3);
+    query.bindValue(":rDto",this->rDto);
+    query.bindValue(":nDtoProveedor",this->nDtoProveedor);
+    query.bindValue(":nDtoproveedor2",this->nDtoProveedor2);
+    query.bindValue(":nDtoProveedor3",this->nDtoProveedor3);
+    query.bindValue(":dUltimaCompra",this->dUltimaCompra);
+    query.bindValue(":dUltimaVenta",this->dUltimaVenta);
+    query.bindValue(":nMargen1",this->nMargen1);
+    query.bindValue(":nMargen2",this->nMargen2);
+    query.bindValue(":nMargen3",this->nMargen3);
+    query.bindValue(":rPrecioMedio",this->rPrecioMedio);
+    query.bindValue(":rPrecioMedio2",this->rPrecioMedio2);
+    query.bindValue(":rPrecioMedio3",this->rPrecioMedio3);
+    query.bindValue(":nUnidadesCompradas",this->nUnidadesCompradas);
+    query.bindValue(":nUnidadesVendidas",this->nUnidadesVendidas);
+    query.bindValue(":rAcumuladoCompras",this->rAcumuladoCompras);
+    query.bindValue(":rAcumuladoVentas",this->rAcumuladoVentas);
+    query.bindValue(":tComentario",this->tComentario);
+    query.bindValue(":nStockMaximo",this->nStockMaximo);
+    query.bindValue(":nStockMinimo",this->nStockMinimo);
+    query.bindValue(":nStockReal",this->nStockReal);
+    query.bindValue(":lControlarStock",this->lControlarStock);
+    query.bindValue(":cModelo",this->cModelo);
+    query.bindValue(":cTalla",this->cTalla);
+    query.bindValue(":cColor",this->cColor);
+    query.bindValue(":cComposicion",this->cComposicion);
+    query.bindValue(":lPvpIncluyeIva",this->lPvpIncluyeIva);
+    query.bindValue(":dFechaPrevistaRecepcion",this->dFechaPrevistaRecepcion);
+    query.bindValue(":nCantidadPendienteRecibir",this->nCantidadPendienteRecibir);
+    query.bindValue(":nReservados",this->nReservados);
+    query.bindValue(":lMostrarWeb",this->lMostrarWeb);
+    query.bindValue(":nEtiquetas",this->nEtiquetas);
+    query.bindValue(":cLocalizacion",this->cLocalizacion);
+
+    if(!query.exec()) {
+        QMessageBox::warning(NULL,QObject::tr("Guardar Artículo"),QObject::tr("Falló el guardar un artículo"),
+                             QObject::tr("Ok"));
+    } else {
+        QMessageBox::information(NULL,QObject::tr("Guardar Artículo"),QObject::tr("Se ha guardado el artículo en la base de datos"),
+                                 QObject::tr("Ok"));
+    }
+
+}
+
+void Articulo::Vaciar()
+{
+    this->id = 0;
+    this->cCodigo = "";
+    this->cCodigoBarras="";
+    this->cCodigoFabricante = "";
+    this->cDescripcion = "";
+    this->cDescripcionReducida = "";
+    this->id_Proveedor = 0;
+    this->id_Familia = 0;
+    this->cFamilia = "";
+    this->id_Seccion = 0;
+    this->cSeccion = "";
+    this->id_SubFamilia =0;
+    this->cSubfamilia = "";
+    this->nTipoIva = 0;
+    this->rCoste = 0;
+    this->rTarifa1 = 0;
+    this->rTarifa2 = 0;
+    this->rTarifa3 = 0;
+    this->rDto = 0;
+    this->nDtoProveedor = 0;
+    this->nDtoProveedor2 = 0;
+    this->nDtoProveedor3 = 0;
+    this->dUltimaCompra = QDate::currentDate();
+    this->dUltimaVenta = QDate::currentDate();
+    this->nMargen1 = 0;
+    this->nMargen2 = 0;
+    this->nMargen3 = 0;
+    this->rPrecioMedio = 0;
+    this->nUnidadesCompradas = 0;
+    this->rPrecioMedio2 = 0;
+    this->nUnidadesVendidas = 0;
+    this->rPrecioMedio3 = 0;
+    this->rAcumuladoCompras = 0;
+    this->rAcumuladoVentas = 0;
+    //this->bImagen = registro.field(36).value().to....
+    this->tComentario = "";
+    this->nStockMaximo = 0;
+    this->nStockMinimo = 0;
+    this->nStockReal = 0;
+    this->lControlarStock = 0;
+    this->cModelo = "";
+    this->cTalla = "";
+    this->cColor = "";
+    this->cComposicion = "";
+    this->lPvpIncluyeIva = 0;
+    this->dFechaPrevistaRecepcion = QDate::currentDate();
+    this->nCantidadPendienteRecibir = 0;
+    this->nReservados = 0;
+    this->lMostrarWeb = 0;
+    this->nEtiquetas = 0;
+    this->cLocalizacion = "";
 }
 
 void Articulo::Borrar(int nId)
@@ -150,14 +399,29 @@ int Articulo::getid_Proveedor()
     return this->id_Proveedor;
 }
 
+int Articulo::getid_Seccion()
+{
+    return this->id_Seccion;
+}
+
 QString Articulo::getcFamilia()
 {
     return this->cFamilia;
 }
 
+int Articulo::getid_SubFamilia()
+{
+    return this->id_SubFamilia;
+}
+
 QString Articulo::getcSeccion()
 {
     return this->cSeccion;
+}
+
+int Articulo::getid_Familia()
+{
+    return this->id_Familia;
 }
 
 
@@ -327,10 +591,11 @@ int Articulo::getlPvpIncluyeIva()
     return this->lPvpIncluyeIva;
 }
 
-int Articulo::getlPendienteRecibir()
+QDate Articulo::getdFechaPrevistaRecepcion()
 {
-    return this->lPendienteRecibir;
+    return this->dFechaPrevistaRecepcion;
 }
+
 
 int Articulo::getnCantidadPendienteRecibir()
 {
@@ -398,14 +663,29 @@ void Articulo::setid_Proveedor(int id_Proveedor)
     this->id_Proveedor = id_Proveedor;
 }
 
+void Articulo::setid_Seccion(int id_Seccion)
+{
+    this->id_Seccion = id_Seccion;
+}
+
 void Articulo::setcSeccion(QString cSeccion)
 {
     this->cSeccion = cSeccion;
 }
 
+void Articulo::setid_Familia(int id_familia)
+{
+    this->id_Familia = id_familia;
+}
+
 void Articulo::setcFamilia(QString cFamilia)
 {
     this->cFamilia = cFamilia;
+}
+
+void Articulo::setid_SubFamilia(int id_SubFamilia)
+{
+    this->id_SubFamilia = id_SubFamilia;
 }
 
 
@@ -575,10 +855,11 @@ void Articulo::setlPvpIncluyeIva(int lPvpIncluyeIva)
     this->lPvpIncluyeIva = lPvpIncluyeIva;
 }
 
-void Articulo::setlPendienteRecibir(int lPendienteRecibir)
+void Articulo::setdFechaPrevistaRecepcion(QDate dFechaPrevistaRecepcion)
 {
-    this->lPendienteRecibir = lPendienteRecibir;
+    this->dFechaPrevistaRecepcion = dFechaPrevistaRecepcion;
 }
+
 
 void Articulo::setnCantidadPendienteRecibir(int nCantidadPendienteRecibir)
 {

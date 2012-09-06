@@ -95,7 +95,7 @@ CREATE TABLE "Articulos" (
   "cColor" text    ,
   "cComposicion" text  ,
   "lPvpIncluyeIva" int DEFAULT 0,
-  "lPendienteRecibir" int DEFAULT 0,
+  "dFechaPrevistaRecepcion" numeric,
   "nCantidadPendienteRecibir" int DEFAULT 0,
   "nReservados" int DEFAULT 0,
   "lMostrarWeb" int DEFAULT 0,

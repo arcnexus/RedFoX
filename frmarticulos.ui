@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1131</width>
-    <height>493</height>
+    <width>1129</width>
+    <height>491</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,10 @@
        <string>Artículo</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="0" colspan="2">
+       <item row="5" column="4">
+        <widget class="QLineEdit" name="txtcLocalizacion"/>
+       </item>
+       <item row="0" column="0" colspan="5">
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
           <widget class="QFrame" name="frame_13">
@@ -82,7 +85,6 @@
              </widget>
             </item>
            </layout>
-           <zorder>txtcDescripcionResumida</zorder>
            <zorder>txtcCodigoBarras</zorder>
            <zorder>label_3</zorder>
           </widget>
@@ -124,7 +126,7 @@
          </item>
         </layout>
        </item>
-       <item row="1" column="0" colspan="2">
+       <item row="1" column="0" colspan="5">
         <layout class="QGridLayout" name="gridLayout_9">
          <item row="0" column="0">
           <widget class="QLabel" name="label_6">
@@ -255,6 +257,16 @@ background-color: rgb(255, 255, 255);</string>
               </item>
              </layout>
             </item>
+            <item row="1" column="0">
+             <widget class="QCheckBox" name="chklMostrarWeb">
+              <property name="toolTip">
+               <string>Seleccionar si se desea que el artículo aparezca en la tienda virtual en su web</string>
+              </property>
+              <property name="text">
+               <string>Mostrar artículo en la web</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -263,7 +275,7 @@ background-color: rgb(255, 255, 255);</string>
          </item>
         </layout>
        </item>
-       <item row="2" column="0" colspan="2">
+       <item row="2" column="0" colspan="5">
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
           <widget class="QFrame" name="frame">
@@ -489,7 +501,50 @@ background-color: rgb(255, 255, 255);</string>
          </item>
         </layout>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="4">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="2">
+        <widget class="QLabel" name="label_47">
+         <property name="text">
+          <string>Localización en Almacen o tienda:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_46">
+         <property name="text">
+          <string>Cantidad etiquetas:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="txtnEtiquetas">
+         <property name="maximumSize">
+          <size>
+           <width>70</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" colspan="4">
         <widget class="QFrame" name="frame_10">
          <property name="maximumSize">
           <size>
@@ -516,19 +571,6 @@ background-color: rgb(255, 255, 255);</string>
           </item>
          </layout>
         </widget>
-       </item>
-       <item row="4" column="1">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -619,7 +661,7 @@ background-color: rgb(255, 255, 255);</string>
         <widget class="QFrame" name="frame_7">
          <property name="minimumSize">
           <size>
-           <width>241</width>
+           <width>233</width>
            <height>0</height>
           </size>
          </property>
@@ -685,14 +727,14 @@ background-color: rgb(255, 255, 255);</string>
          <layout class="QGridLayout" name="gridLayout_18">
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout">
-            <item row="0" column="0">
+            <item row="1" column="0">
              <widget class="QLabel" name="label_21">
               <property name="text">
                <string>Tarifa 1:</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
+            <item row="1" column="1">
              <widget class="QLineEdit" name="txtrTarifa1_2">
               <property name="maximumSize">
                <size>
@@ -711,14 +753,14 @@ background-color: rgb(255, 255, 255);</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="0">
+            <item row="2" column="0">
              <widget class="QLabel" name="label_22">
               <property name="text">
                <string>Tarifa 2:</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
+            <item row="2" column="1">
              <widget class="QLineEdit" name="txtrTarifa2">
               <property name="maximumSize">
                <size>
@@ -737,14 +779,14 @@ background-color: rgb(255, 255, 255);</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="0">
+            <item row="3" column="0">
              <widget class="QLabel" name="label_23">
               <property name="text">
                <string>Tarifa 3:</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="1">
+            <item row="3" column="1">
              <widget class="QLineEdit" name="txtrTarifa3">
               <property name="maximumSize">
                <size>
@@ -760,6 +802,16 @@ background-color: rgb(255, 255, 255);</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="2">
+             <widget class="QCheckBox" name="chklPvpIncluyeIva">
+              <property name="toolTip">
+               <string>Marcar si el PVP lleva el IVA incluido.</string>
+              </property>
+              <property name="text">
+               <string>El PVP Incluye IVA</string>
               </property>
              </widget>
             </item>
@@ -940,6 +992,16 @@ background-color: rgb(255, 255, 255);</string>
          <layout class="QGridLayout" name="gridLayout_7">
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout_3">
+            <item row="8" column="1">
+             <widget class="QLineEdit" name="txtnCantidadPendienteRecibir">
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
             <item row="5" column="0">
              <widget class="QLabel" name="label_30">
               <property name="autoFillBackground">
@@ -1043,14 +1105,14 @@ background-color: rgb(255, 255, 255);</string>
               </property>
              </widget>
             </item>
-            <item row="8" column="0">
+            <item row="11" column="0">
              <widget class="QLabel" name="label_33">
               <property name="text">
                <string>Fecha últ. Compra:</string>
               </property>
              </widget>
             </item>
-            <item row="8" column="1">
+            <item row="11" column="1">
              <widget class="QDateEdit" name="txtdFechaUltimaCompra">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -1070,14 +1132,14 @@ background-color: rgb(255, 255, 255);</string>
               </property>
              </widget>
             </item>
-            <item row="9" column="0">
+            <item row="12" column="0">
              <widget class="QLabel" name="label_34">
               <property name="text">
                <string>Fecha últ. Venta:</string>
               </property>
              </widget>
             </item>
-            <item row="9" column="1">
+            <item row="12" column="1">
              <widget class="QDateEdit" name="txtdFechaUltimaVenta">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -1134,6 +1196,57 @@ background-color: rgb(255, 255, 255);</string>
              <widget class="QLabel" name="label_43">
               <property name="text">
                <string>Acumulado Ventas:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="label_44">
+              <property name="text">
+               <string>Pendientes recibir:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="0">
+             <widget class="QLabel" name="lblFechaPrevistaRecepcion">
+              <property name="text">
+               <string>Fecha Prev. Recepc.:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="1">
+             <widget class="QDateEdit" name="txtdFechaPrevistaRecepcion">
+              <property name="maximumDateTime">
+               <datetime>
+                <hour>23</hour>
+                <minute>59</minute>
+                <second>59</second>
+                <year>7999</year>
+                <month>12</month>
+                <day>31</day>
+               </datetime>
+              </property>
+              <property name="displayFormat">
+               <string>dd/MM/yyyy</string>
+              </property>
+              <property name="calendarPopup">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="1">
+             <widget class="QLineEdit" name="txtnReservados">
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="0">
+             <widget class="QLabel" name="label_45">
+              <property name="text">
+               <string>Cantidad reservada:</string>
               </property>
              </widget>
             </item>
@@ -1420,7 +1533,7 @@ background-color: rgb(255, 255, 255);</string>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_10">
+      <widget class="QPushButton" name="botCerrar">
        <property name="minimumSize">
         <size>
          <width>115</width>
@@ -1453,12 +1566,81 @@ background-color: rgb(255, 255, 255);</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>txtcCodigo</tabstop>
+  <tabstop>txtcCodigoBarras</tabstop>
+  <tabstop>txtcCodigoFabricante</tabstop>
+  <tabstop>txtcDescripcion</tabstop>
+  <tabstop>txtcDescripcionResumida</tabstop>
+  <tabstop>txtcProveedor</tabstop>
+  <tabstop>txtrTarifa1</tabstop>
+  <tabstop>txtnStockReal</tabstop>
+  <tabstop>chklMostrarWeb</tabstop>
+  <tabstop>cboSeccion</tabstop>
+  <tabstop>cboFamilia</tabstop>
+  <tabstop>cboSubfamilia</tabstop>
+  <tabstop>txtrPrecioMedio1</tabstop>
+  <tabstop>txtrPrecioMedio2</tabstop>
+  <tabstop>txtrPrecioMedio3</tabstop>
+  <tabstop>cboModelo</tabstop>
+  <tabstop>cboTalla</tabstop>
+  <tabstop>cboColor</tabstop>
+  <tabstop>txttComentario</tabstop>
+  <tabstop>txtnEtiquetas</tabstop>
+  <tabstop>txtcLocalizacion</tabstop>
+  <tabstop>cboTipoIVA</tabstop>
+  <tabstop>txtrTarifa1_2</tabstop>
+  <tabstop>txtrTarifa2</tabstop>
+  <tabstop>txtrTarifa3</tabstop>
+  <tabstop>txtrDto</tabstop>
+  <tabstop>txtnMargen1</tabstop>
+  <tabstop>txtnMargen2</tabstop>
+  <tabstop>txtnMargen3</tabstop>
+  <tabstop>txtnDtoProveedor</tabstop>
+  <tabstop>txtnDtoProveedor2</tabstop>
+  <tabstop>txtnDtoProveedor3</tabstop>
+  <tabstop>txtrCoste</tabstop>
+  <tabstop>txtnUnidadesCompradas</tabstop>
+  <tabstop>txtrAcumuladoCompras</tabstop>
+  <tabstop>txtnUnidadesVendidas</tabstop>
+  <tabstop>txtrAcumuladoVentas</tabstop>
+  <tabstop>txtnStockMinimo</tabstop>
+  <tabstop>txtnStockMaximo</tabstop>
+  <tabstop>txtnStockReal_2</tabstop>
+  <tabstop>txtnCantidadPendienteRecibir</tabstop>
+  <tabstop>txtdFechaPrevistaRecepcion</tabstop>
+  <tabstop>txtnReservados</tabstop>
+  <tabstop>txtdFechaUltimaCompra</tabstop>
+  <tabstop>txtdFechaUltimaVenta</tabstop>
+  <tabstop>botAnadir</tabstop>
+  <tabstop>botSiguiente</tabstop>
+  <tabstop>botAnterior</tabstop>
+  <tabstop>botBuscar</tabstop>
+  <tabstop>botEditar</tabstop>
+  <tabstop>botGuardar</tabstop>
+  <tabstop>botDeshacer</tabstop>
+  <tabstop>botBorrar</tabstop>
+  <tabstop>botListados</tabstop>
+  <tabstop>botCerrar</tabstop>
+  <tabstop>txtBuscarArticulo</tabstop>
+  <tabstop>botBuscarArtRapido</tabstop>
+  <tabstop>radioButton_2</tabstop>
+  <tabstop>radioButton_3</tabstop>
+  <tabstop>radioButton</tabstop>
+  <tabstop>tableView_2</tabstop>
+  <tabstop>lineEdit_16</tabstop>
+  <tabstop>tableView</tabstop>
+  <tabstop>chklPvpIncluyeIva</tabstop>
+  <tabstop>chklControlarStock</tabstop>
+  <tabstop>tabWidget</tabstop>
+ </tabstops>
  <resources>
   <include location="terra.qrc"/>
  </resources>
  <connections>
   <connection>
-   <sender>pushButton_10</sender>
+   <sender>botCerrar</sender>
    <signal>clicked()</signal>
    <receiver>FrmArticulos</receiver>
    <slot>close()</slot>
