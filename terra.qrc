@@ -36,5 +36,15 @@
         <file>PNG/albaran.png</file>
         <file>PNG/pedidos.png</file>
         <file>PNG/interrogantes.png</file>
+        <file>PNG/Next.png</file>
+        <file>PNG/Previous.png</file>
+        <file>PNG/edit.png</file>
+        <file>PNG/Save.png</file>
+        <file>PNG/undo.png</file>
+        <file>PNG/delete.png</file>
+        <file>PNG/List.png</file>
+        <file>PNG/Print.png</file>
+        <file>PNG/Calendar.png</file>
+        <file>PNG/Pay.png</file>
     </qresource>
 </RCC>

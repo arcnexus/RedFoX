@@ -3,6 +3,8 @@
 #include <QString>
 #include <QSqlQuery>
 #include <QDate>
+#include <QLabel>
+
 
 
 class Articulo
@@ -11,11 +13,13 @@ public:
     Articulo();
     void Anadir();
     void Recuperar(QString cSQL);
+    void Recuperar(QString cSQL,int nProcede);
     void Guardar();
     void Vaciar();
     void Borrar(int nId);
     void Vender(int id, int cantidad, double rPVP);
     void Devolucion(int id, int cantidad, double rImporte, QString cMotivo, QString dFechaDevolucion);
+    void CargarImagen(QLabel *label);
 
     // getters
     int getId();
@@ -47,9 +51,9 @@ public:
     double getnMargen2();
     double getnMargen3();
     double getrPrecioMedio();
-    int getnUnidadesCompradas();
+    double getnUnidadesCompradas();
     double getrPrecioMedio2();
-    int getnUnidadesVendidas();
+    double getnUnidadesVendidas();
     double getrPrecioMedio3();
     double getrAcumuladoCompras();
     double getrAcumuladoVentas();
@@ -86,7 +90,6 @@ public:
     void setcFamilia(QString cFamilia);
     void setid_SubFamilia(int id_SubFamilia);
     void setcSubfamilia(QString cSubfamilia);
-    void setcCodigoIva(QString cCodigoIva);
     void setnTipoIva(double nTipoIva);
     void setrCoste(double rCoste);
     void setrTarifa1(double rTarifa1);
@@ -102,9 +105,9 @@ public:
     void setnMargen2(double nMargen2);
     void setnMargen3(double nMargen3);
     void setrPrecioMedio(double rPrecioMedio);
-    void setnUnidadesCompradas(int nUnidadesCompradas);
+    void setnUnidadesCompradas(double nUnidadesCompradas);
     void setrPrecioMedio2(double rPrecioMedio2);
-    void setnUnidadesVendidas( int nUnidadesVendidas);
+    void setnUnidadesVendidas(double nUnidadesVendidas);
     void setrPrecioMedio3(double rPrecioMedio3);
     void setrAcumuladoCompras(double rAcumuladoCompras);
     void setrAcumuladoVentas(double rAcumuladoVentas);
@@ -126,6 +129,7 @@ public:
     void setnEtiquetas(int nEtiquetas);
     void setnPaquetes(int nPaquetes);
     void setcLocalizacion(QString cLocalizacion);
+
 
 
 
@@ -159,9 +163,9 @@ private:
     double nMargen2;
     double nMargen3;
     double rPrecioMedio;
-    int nUnidadesCompradas;
+    double nUnidadesCompradas;
     double rPrecioMedio2;
-    int nUnidadesVendidas;
+    double nUnidadesVendidas;
     double rPrecioMedio3;
     double rAcumuladoCompras;
     double rAcumuladoVentas;
@@ -185,6 +189,7 @@ private:
     QString cLocalizacion;
     QSqlQuery qryArticulo;
     QSqlQuery qryTipoIva;
+
 };
 
 #endif // ARTICULO_H

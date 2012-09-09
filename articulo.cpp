@@ -5,6 +5,7 @@
 #include <QSqlRecord>
 #include <QMessageBox>
 #include "frmdecision.h"
+#include <QByteArray>
 
 Articulo::Articulo()
 {
@@ -81,6 +82,7 @@ void Articulo::Anadir()
          query.bindValue(":nEtiquetas",this->nEtiquetas);
          query.bindValue(":cLocalizacion",this->cLocalizacion);
 
+
          if(!query.exec()) {
              QMessageBox::warning(NULL,QObject::tr("Añadir Artículo"),QObject::tr("Falló la inserción de un nuevo artículo"),
                                   QObject::tr("Ok"));
@@ -135,7 +137,6 @@ void Articulo::Recuperar(QString cSQL)
                this->rPrecioMedio3 = registro.field("rPrecioMedio3").value().toDouble();
                this->rAcumuladoCompras = registro.field("rAcumuladoCompras").value().toDouble();
                this->rAcumuladoVentas = registro.field("rAcumuladoVentas").value().toDouble();
-               //this->bImagen = registro.field(36).value().to....
                this->tComentario = registro.field("tComentario").value().toString();
                this->nStockMaximo = registro.field("nStockMaximo").value().toInt();
                this->nStockMinimo = registro.field("nStockMinimo").value().toInt();
@@ -154,8 +155,80 @@ void Articulo::Recuperar(QString cSQL)
                this->nEtiquetas = registro.field("nEtiquetas").value().toInt();
                this->nPaquetes = registro.field("nPaquetes").value().toInt();
                this->cLocalizacion = registro.field("cLocalizacion").value().toString();
-            } else {
-               QMessageBox::critical(NULL,"Búsqueda de artículos", "No se encuentra ningún artículo con este código");
+
+           } else {
+               QMessageBox::critical(NULL,"Búsqueda de artículos", "No se encuentra el artículo");
+           }
+    } else {
+        QMessageBox::critical(NULL,"error al leer datos artículo:", qryArticulo.lastError().text());
+    }
+}
+
+void Articulo::Recuperar(QString cSQL, int nProcede)
+{
+    QSqlQuery qryArticulo(QSqlDatabase::database("empresa"));
+    qryArticulo.prepare(cSQL);
+    if (qryArticulo.exec()) {
+           if (qryArticulo.next()){
+               QSqlRecord registro =  qryArticulo.record();
+               this->id = registro.field("id").value().toInt();
+               this->cCodigo = registro.field("cCodigo").value().toString();
+               this->cCodigoBarras = registro.field("cCodigoBarras").value().toString();
+               this->cCodigoFabricante = registro.field("cCodigoFabricante").value().toString();
+               this->cDescripcion = registro.field("cDescripcion").value().toString();
+               this->cDescripcionReducida = registro.field("cDescripcionReducida").value().toString();
+               this->id_Proveedor = registro.field("id_Proveedor").value().toInt();
+               this->id_Familia = registro.field("id_Familia").value().toInt();
+               this->cFamilia = registro.field("cFamilia").value().toString();
+               this->id_Seccion = registro.field("id_Seccion").value().toInt();
+               this->cSeccion = registro.field("cSeccion").value().toString();
+               this->id_SubFamilia = registro.field("id_Subfamilia").value().toInt();
+               this->cSubfamilia = registro.field("cSubFamila").value().toString();
+               this->nTipoIva = registro.field("nTipoIva").value().toDouble();
+               this->rCoste = registro.field("rCoste").value().toDouble();
+               this->rTarifa1 = registro.field("rTarifa1").value().toDouble();
+               this->rTarifa2 = registro.field("rTarifa2").value().toDouble();
+               this->rTarifa3 = registro.field("rTarifa3").value().toDouble();
+               this->rDto = registro.field("rDto").value().toDouble();
+               this->nDtoProveedor = registro.field("nDtoProveedor").value().toDouble();
+               this->nDtoProveedor2 = registro.field("nDtoProveedor2").value().toDouble();
+               this->nDtoProveedor3 = registro.field("nDtoProveedor3").value().toDouble();
+               this->dUltimaCompra = registro.field("dUltimaCompra").value().toDate();
+               this->dUltimaVenta = registro.field("dUltimaVenta").value().toDate();
+               this->nMargen1 = registro.field("nMargen1").value().toDouble();
+               this->nMargen2 = registro.field("nMargen2").value().toDouble();
+               this->nMargen3 = registro.field("nMargen3").value().toDouble();
+               this->rPrecioMedio = registro.field("rPrecioMedio").value().toDouble();
+               this->nUnidadesCompradas = registro.field("nUnidadesCompradas").value().toInt();
+               this->rPrecioMedio2 = registro.field("rPrecioMedio2").value().toDouble();
+               this->nUnidadesVendidas = registro.field("nUnidadesVendidas").value().toInt();
+               this->rPrecioMedio3 = registro.field("rPrecioMedio3").value().toDouble();
+               this->rAcumuladoCompras = registro.field("rAcumuladoCompras").value().toDouble();
+               this->rAcumuladoVentas = registro.field("rAcumuladoVentas").value().toDouble();
+               this->tComentario = registro.field("tComentario").value().toString();
+               this->nStockMaximo = registro.field("nStockMaximo").value().toInt();
+               this->nStockMinimo = registro.field("nStockMinimo").value().toInt();
+               this->nStockReal = registro.field("nStockReal").value().toInt();
+               this->cTipoUnidad = registro.field("cTipoUnidad").value().toString();
+               this->lControlarStock = registro.field("lControlarStock").value().toInt();
+               this->cModelo = registro.field("cModelo").value().toString();
+               this->cTalla = registro.field("cTalla").value().toString();
+               this->cColor = registro.field("cColor").value().toString();
+               this->cComposicion = registro.field("cComposicion").value().toString();
+               this->lPvpIncluyeIva = registro.field("lPvpIncluyeIva").value().toInt();
+               this->dFechaPrevistaRecepcion = registro.field("dFechaPrevistaRecepcion").value().toDate();
+               this->nCantidadPendienteRecibir = registro.field("nCantidadPendienteRecibir").value().toInt();
+               this->nReservados = registro.field("nReservados").value().toInt();
+               this->lMostrarWeb = registro.field("lMostrarWeb").value().toInt();
+               this->nEtiquetas = registro.field("nEtiquetas").value().toInt();
+               this->nPaquetes = registro.field("nPaquetes").value().toInt();
+               this->cLocalizacion = registro.field("cLocalizacion").value().toString();
+
+           } else {
+               if (nProcede ==1)
+                   QMessageBox::critical(NULL,"Búsqueda de artículos", "Se ha llegado al final del fichero");
+               if (nProcede == 2)
+                   QMessageBox::critical(NULL,"Búsqueda de artículos", "Se ha llegado al inicio del fichero");
            }
     } else {
         QMessageBox::critical(NULL,"error al leer datos artículo:", qryArticulo.lastError().text());
@@ -166,7 +239,7 @@ void Articulo::Guardar()
 {
     QSqlQuery query(QSqlDatabase::database("empresa"));
     query.prepare( "UPDATE articulos set "
-                   "cCodigo = :cCodigoCliente,"
+                   "cCodigo =:cCodigo,"
                    "cCodigoBarras=:cCodigoBarras,"
                    "cCodigoFabricante =:cCodigoFabricante,"
                    "cDescripcion=:cDescripcion,"
@@ -176,11 +249,11 @@ void Articulo::Guardar()
                    "cFamilia =:cFamilia,"
                    "id_Seccion=:id_Seccion,"
                    "cSeccion=:cSeccion,"
-                   "id_Subfamilia=:idSubfamilia,"
-                   "cSubfamilia=:cSubFamilia,"
+                   "id_Subfamilia=:id_Subfamilia,"
+                   "cSubfamilia=:cSubfamilia,"
                    "cTipoIva =:cTipoIva,"
                    "rCoste=:rCoste,"
-                   "rTarifa1=:rTarifa,"
+                   "rTarifa1=:rTarifa1,"
                    "rTarifa2=:rTarifa2,"
                    "rTarifa3=:rTarifa3,"
                    "rDto=:rDto,"
@@ -196,7 +269,7 @@ void Articulo::Guardar()
                    "rPrecioMedio2=:rPrecioMedio2,"
                    "rPrecioMedio3=:rPrecioMedio3,"
                    "nUnidadesCompradas=:nUnidadesCompradas,"
-                   "nUnidadesVendidas=:nUmidadesVendidas,"
+                   "nUnidadesVendidas=:nUnidadesVendidas,"
                    "rAcumuladoCompras=:rAcumuladoCompras,"
                    "rAcumuladoVentas=:rAcumuladoVentas,"
                    "tComentario=:tComentario,"
@@ -208,13 +281,14 @@ void Articulo::Guardar()
                    "cTalla=:cTalla,"
                    "cColor=:cColor,"
                    "cComposicion=:cComposicion,"
-                   "lPvpIncluyeIva=:lPvoIncluyeIva,"
+                   "lPvpIncluyeIva=:lPvpIncluyeIva,"
                    "dFechaPrevistaRecepcion=:dFechaPrevistaRecepcion,"
                    "nCantidadPendienteRecibir=:nCantidadPendienteRecibir,"
                    "nReservados=:nReservados,"
                    "lMostrarWeb=:lMostrarWeb,"
                    "nEtiquetas =:nEtiquetas,"
-                   "cLocalizacion =:cLocalizacion where id = :id");
+                   "cLocalizacion =:cLocalizacion"
+                   " where id = :id");
 
     query.bindValue(":cCodigo",this->cCodigo);
     query.bindValue(":cCodigoBarras",this->cCodigoBarras);
@@ -235,7 +309,7 @@ void Articulo::Guardar()
     query.bindValue(":rTarifa3",this->rTarifa3);
     query.bindValue(":rDto",this->rDto);
     query.bindValue(":nDtoProveedor",this->nDtoProveedor);
-    query.bindValue(":nDtoproveedor2",this->nDtoProveedor2);
+    query.bindValue(":nDtoProveedor2",this->nDtoProveedor2);
     query.bindValue(":nDtoProveedor3",this->nDtoProveedor3);
     query.bindValue(":dUltimaCompra",this->dUltimaCompra);
     query.bindValue(":dUltimaVenta",this->dUltimaVenta);
@@ -259,16 +333,19 @@ void Articulo::Guardar()
     query.bindValue(":cColor",this->cColor);
     query.bindValue(":cComposicion",this->cComposicion);
     query.bindValue(":lPvpIncluyeIva",this->lPvpIncluyeIva);
-    query.bindValue(":dFechaPrevistaRecepcion",this->dFechaPrevistaRecepcion);
+    query.bindValue(":dFechaPrevistaRecepcion",dFechaPrevistaRecepcion);
     query.bindValue(":nCantidadPendienteRecibir",this->nCantidadPendienteRecibir);
     query.bindValue(":nReservados",this->nReservados);
     query.bindValue(":lMostrarWeb",this->lMostrarWeb);
     query.bindValue(":nEtiquetas",this->nEtiquetas);
     query.bindValue(":cLocalizacion",this->cLocalizacion);
+    query.bindValue(":id",this->id);
+
 
     if(!query.exec()) {
-        QMessageBox::warning(NULL,QObject::tr("Guardar Artículo"),QObject::tr("Falló el guardar un artículo"),
+        QMessageBox::warning(NULL,QObject::tr("Guardar Artículo"),QObject::tr("No se puede guardar el artículo "),
                              QObject::tr("Ok"));
+
     } else {
         QMessageBox::information(NULL,QObject::tr("Guardar Artículo"),QObject::tr("Se ha guardado el artículo en la base de datos"),
                                  QObject::tr("Ok"));
@@ -338,12 +415,20 @@ void Articulo::Borrar(int nId)
     Decision->Inicializar(QObject::tr("Borrar Artículo"),QObject::tr("¿Desea realmente Borrar este artículo"),QObject::tr("Esta opción no se puede deshacer"),
                           "",QObject::tr("Borrar"),QObject::tr("Cancelar"));
     int elegido = Decision->exec();
-   if(elegido == QMessageBox::Yes) {
+   if(elegido == 1) {
         qryArticulo.prepare("Delete from articulos where id = :nId");
         qryArticulo.bindValue(":id",nId);
         if(!qryArticulo.exec()){
            QMessageBox::critical(NULL,QObject::tr("Borrar Artíclo"),QObject::tr("Falló el borrado del Artículo"),QObject::tr("&Aceptar"));
-        }
+        } else {
+            // Busco el id más proximo
+            qryArticulo.prepare("select * from articulos where id <:nId");
+            qryArticulo.bindValue(":nId",this->id);
+            qryArticulo.exec();
+            QSqlRecord registro = qryArticulo.record();
+            this->id = registro.field("Id").value().toInt();
+
+         }
 
 
      }
@@ -357,6 +442,27 @@ void Articulo::Vender(int id, int cantidad, double rPVP)
 
 void Articulo::Devolucion(int id, int cantidad, double rImporte, QString cMotivo, QString dFechaDevolucion)
 {
+}
+
+void Articulo::CargarImagen(QLabel *label)
+{
+    QSqlQuery qryArticulo(QSqlDatabase::database("empresa"));
+    qryArticulo.prepare("Select bImagen from articulos where Id = :id");
+    qryArticulo.bindValue(":id",this->id);
+    if (qryArticulo.exec()) {
+           if (qryArticulo.next()){
+               QSqlRecord registro =  qryArticulo.record();
+
+
+
+               QByteArray ba1 = registro.field("bImagen").value().toByteArray();
+               QPixmap pm1;
+               pm1.loadFromData(ba1);
+               label->setPixmap(pm1);
+          } else
+               QMessageBox::warning(NULL,QObject::tr("Error al recuperar"),
+                                    QObject::tr("No se puede recuperar la imagen asociada al artículo"),QObject::tr("Ok"));
+    }
 }
 
 
@@ -506,7 +612,7 @@ double Articulo::getrPrecioMedio()
     return this->rPrecioMedio;
 }
 
-int Articulo::getnUnidadesCompradas()
+double Articulo::getnUnidadesCompradas()
 {
     return this->nUnidadesCompradas;
 }
@@ -516,7 +622,7 @@ double Articulo::getrPrecioMedio2()
     return this->rPrecioMedio2;
 }
 
-int Articulo::getnUnidadesVendidas()
+double Articulo::getnUnidadesVendidas()
 {
     return this->nUnidadesVendidas;
 }
@@ -626,6 +732,8 @@ QString Articulo::getcLocalizacion()
 {
     return this->cLocalizacion;
 }
+
+
 
 // setters
 void Articulo::setId(int nId)
@@ -770,7 +878,7 @@ void Articulo::setrPrecioMedio(double rPrecioMedio)
     this->rPrecioMedio = rPrecioMedio;
 }
 
-void Articulo::setnUnidadesCompradas(int nUnidadesCompradas)
+void Articulo::setnUnidadesCompradas(double nUnidadesCompradas)
 {
     this->nUnidadesCompradas = nUnidadesCompradas;
 }
@@ -780,7 +888,7 @@ void Articulo::setrPrecioMedio2(double rPrecioMedio2)
     this->rPrecioMedio = rPrecioMedio2;
 }
 
-void Articulo::setnUnidadesVendidas(int nUnidadesVendidas)
+void Articulo::setnUnidadesVendidas(double nUnidadesVendidas)
 {
     this->nUnidadesVendidas = nUnidadesVendidas;
 }
@@ -890,6 +998,9 @@ void Articulo::setcLocalizacion(QString cLocalizacion)
 {
     this->cLocalizacion = cLocalizacion;
 }
+
+
+
 
 
 

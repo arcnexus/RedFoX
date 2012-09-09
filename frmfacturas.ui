@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1018</width>
-    <height>467</height>
+    <height>465</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -567,7 +567,16 @@ border-right-color: rgb(220, 220, 220);</string>
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/configuration.png</normaloff>:/Icons/PNG/configuration.png</iconset>
+          <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+S</string>
         </property>
        </widget>
       </item>

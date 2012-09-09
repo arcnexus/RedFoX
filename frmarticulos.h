@@ -30,12 +30,29 @@ private slots:
 
     void on_botGuardar_clicked();
 
+    void on_botCambiarImagen_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_botDeshacer_clicked();
+
+    void on_txtrTarifa1_lostFocus();
+
+    void on_txtrCoste_lostFocus();
+
+    void on_txtrTarifa1_2_lostFocus();
+
+    void on_txtrTarifa2_lostFocus();
+
+    void on_txtrTarifa3_lostFocus();
+
 private:
     Ui::FrmArticulos *ui;
     bool Altas;
     void desbloquearCampos();
     void bloquearCampos();
     void LLenarCampos();
+    void CargarCamposEnArticulo();
     void VaciarCampos();
 };
 

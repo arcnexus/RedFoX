@@ -8,9 +8,12 @@
 #include <QtSql>
 #include <QSqlRecord>
 #include <QString>
+#include <QPixmap>
+#include <QtGui>
 
 
 Articulo *oArticulo = new Articulo();
+
 FrmArticulos::FrmArticulos(Configuracion *o_config,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmArticulos)
@@ -21,6 +24,7 @@ FrmArticulos::FrmArticulos(Configuracion *o_config,QWidget *parent) :
     ui->cboTipoIVA->addItem(QString::number(o_config->nIVA2));
     ui->cboTipoIVA->addItem(QString::number(o_config->nIVA3));
     ui->cboTipoIVA->addItem(QString::number(o_config->nIVA4));
+    bloquearCampos();
 }
 
 FrmArticulos::~FrmArticulos()
@@ -32,9 +36,9 @@ void FrmArticulos::on_botAnadir_clicked()
 {
     desbloquearCampos();
 
-   VaciarCampos();
-   oArticulo->Anadir();
-   LLenarCampos();
+    VaciarCampos();
+    oArticulo->Anadir();
+    LLenarCampos();
     ui->txtcCodigo->setFocus();
 
 
@@ -43,20 +47,21 @@ void FrmArticulos::on_botAnadir_clicked()
 void FrmArticulos::on_botGuardar_clicked()
 {
     bloquearCampos();
+    CargarCamposEnArticulo();
     oArticulo->Guardar();
 }
 
 void FrmArticulos::on_botSiguiente_clicked()
 {
     QString cId = QString::number(oArticulo->getId());
-    oArticulo->Recuperar("Select * from articulos where id >"+cId+" order by id limit 0,1 ");
+    oArticulo->Recuperar("Select * from articulos where id >"+cId+" order by id limit 0,1 ",1);
     LLenarCampos();
 
 }
 void FrmArticulos::on_botAnterior_clicked()
 {
     QString cId = QString::number(oArticulo->getId());
-    oArticulo->Recuperar("Select * from articulos where id <"+cId+" order by id desc limit 0,1 ");
+    oArticulo->Recuperar("Select * from articulos where id <"+cId+" order by id desc limit 0,1 ",2);
     LLenarCampos();
 }
 
@@ -254,6 +259,66 @@ void FrmArticulos::LLenarCampos()
     else
        ui->chklMostrarWeb->setChecked(false);
    ui->txtcLocalizacion->setText(oArticulo->getcLocalizacion());
+//    // Recuperamos imagen desde BD
+   oArticulo->CargarImagen(ui->lblImagenArticulo);
+
+}
+
+void FrmArticulos::CargarCamposEnArticulo()
+{
+    oArticulo->setcCodigo(ui->txtcCodigo->text());
+    oArticulo->setcCodigoBarras(ui->txtcCodigoBarras->text());
+    oArticulo->setcCodigoFabricante(ui->txtcCodigoFabricante->text());
+    oArticulo->setcDescripcion( ui->txtcDescripcion->text());
+    oArticulo->setcDescripcionReducida( ui->txtcDescripcionResumida->text());
+    oArticulo->setcFamilia(ui->cboFamilia->currentText());
+    oArticulo->setcSeccion(ui->cboSeccion->currentText());
+    oArticulo->setcSubfamilia(ui->cboSubfamilia->currentText());
+    oArticulo->setnTipoIva(ui->cboTipoIVA->currentText().toDouble());
+    oArticulo->setrCoste(ui->txtrCoste->text().toDouble());
+    oArticulo->setrTarifa1(ui->txtrTarifa1->text().toDouble());
+    oArticulo->setrTarifa2(ui->txtrTarifa1_2->text().toDouble());
+    oArticulo->setrTarifa3(ui->txtrDto->text().toDouble());
+    oArticulo->setnDtoProveedor(ui->txtnDtoProveedor->text().toDouble());
+    oArticulo->setnDtoProveedor2(ui->txtnDtoProveedor2->text().toDouble());
+    oArticulo->setnDtoProveedor3(ui->txtnDtoProveedor3->text().toDouble());
+    oArticulo->setdUltimaCompra( ui->txtdFechaUltimaCompra->date());
+    oArticulo->setdUltimaVenta( ui->txtdFechaUltimaVenta->date());
+    oArticulo->setnMargen1( ui->txtnMargen1->text().toDouble());
+    oArticulo->setnMargen2( ui->txtnMargen2->text().toDouble());
+    oArticulo->setnMargen3( ui->txtnMargen3->text().toDouble());
+    oArticulo->setrPrecioMedio( ui->txtrPrecioMedio1->text().toDouble());
+    oArticulo->setrPrecioMedio2( ui->txtrPrecioMedio2->text().toDouble());
+    oArticulo->setrPrecioMedio3( ui->txtrPrecioMedio3->text().toDouble());
+    oArticulo->setnUnidadesCompradas( ui->txtnUnidadesCompradas->text().toDouble());
+    oArticulo->setnUnidadesVendidas(ui->txtnUnidadesVendidas->text().toDouble());
+    oArticulo->setrAcumuladoCompras( ui->txtrAcumuladoCompras->text().toDouble());
+    oArticulo->setrAcumuladoVentas( ui->txtrAcumuladoVentas->text().toDouble());
+    oArticulo->settComentario( ui->txttComentario->toPlainText());
+    oArticulo->setnStockMaximo(ui->txtnStockMaximo->text().toInt());
+    oArticulo->setnStockMinimo( ui->txtnStockMinimo->text().toInt());
+    oArticulo->setnStockReal( ui->txtnStockReal->text().toInt());
+    if (ui->chklControlarStock->isChecked())
+        oArticulo->setlControlarStock(1);
+    else
+        oArticulo->setlControlarStock(0);
+
+    oArticulo->setcModelo(ui->cboModelo->currentText());
+    oArticulo->setcTalla(ui->cboTalla->currentText());
+    oArticulo->setcColor( ui->cboColor->currentText());
+    if(ui->chklPvpIncluyeIva->isChecked())
+        oArticulo->setlPvpIncluyeIva(1);
+    else
+        oArticulo->setlPvpIncluyeIva(0);
+    oArticulo->setnCantidadPendienteRecibir(ui->txtnCantidadPendienteRecibir->text().toInt());
+    oArticulo->setdFechaPrevistaRecepcion( ui->txtdFechaPrevistaRecepcion->date());
+    oArticulo->setnReservados( ui->txtnReservados->text().toInt());
+    oArticulo->setnEtiquetas( ui->txtnEtiquetas->text().toInt());
+    if (ui->chklMostrarWeb->isChecked())
+        oArticulo->setlMostrarWeb(1);
+    else
+        oArticulo->setlMostrarWeb(0);
+    oArticulo->setcLocalizacion( ui->txtcLocalizacion->text());
 
 }
 
@@ -305,6 +370,7 @@ void FrmArticulos::VaciarCampos()
    ui->txtnEtiquetas->clear();
    ui->chklMostrarWeb->setChecked(false);
    ui->txtcLocalizacion->clear();
+   ui->lblImagenArticulo->clear();
 
 }
 
@@ -316,11 +382,108 @@ void FrmArticulos::on_botEditar_clicked()
 
 void FrmArticulos::on_botBorrar_clicked()
 {
-    int id_Art = oArticulo->getId();
-    id_Art --;
-
     oArticulo->Borrar(oArticulo->getId());
-    VaciarCampos();
+    oArticulo->Recuperar("Select * from articulos where id = "+QString::number(oArticulo->getId()));
+    LLenarCampos();
 }
 
 
+
+void FrmArticulos::on_botCambiarImagen_clicked()
+{
+    QString ficheroImagen;
+    ficheroImagen = QFileDialog::getOpenFileName(this,tr("Abrir fichero de imagen"));
+    if (!ficheroImagen.isEmpty()) {
+
+        QImage imagen(ficheroImagen);
+
+        ui->lblImagenArticulo->setPixmap(QPixmap::fromImage(imagen));
+        ui->lblImagenArticulo->setScaledContents(true);
+        QByteArray ba;
+        QFile f(ficheroImagen);
+        if(f.open(QIODevice::ReadOnly)) {
+            ba = f.readAll();
+            f.close();
+        }
+        QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("empresa"));
+        Articulo->prepare("update articulos set bImagen =:imagen where Id = :nid");
+        Articulo->bindValue(":imagen",ba);
+        Articulo->bindValue(":nid",oArticulo->getId());
+        if (!Articulo->exec())
+            QMessageBox::warning(NULL,tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
+        delete Articulo;
+    }
+}
+
+void FrmArticulos::on_pushButton_clicked()
+{
+    // Create new rotatedPixmap that size is same as original
+    QPixmap pixmap; //(ui->lblImagenArticulo->pixmap());
+    QPixmap rotatedPixmap(pixmap.size());
+
+    // Create a QPainter for it
+    QPainter p(&rotatedPixmap);
+
+    // Set rotation origo into pixmap center
+    QSize size = pixmap.size();
+    p.translate(size.height()/2,size.height()/2);
+
+    // Rotate the painter 90 degrees
+    p.rotate(90);
+
+    // Set origo back to upper left corner
+    p.translate(-size.height()/2,-size.height()/2);
+
+    // Draw your original pixmap on it
+    p.drawPixmap(0, 0, pixmap);
+    p.end();
+
+    // Change original pixmap reference into new rotated pixmap
+    pixmap = rotatedPixmap;
+    ui->lblImagenArticulo->setPixmap(pixmap);
+}
+
+void FrmArticulos::on_botDeshacer_clicked()
+{
+    QString cSql = "Select * from articulos where Id =" +QString::number(oArticulo->getId());
+    oArticulo->Recuperar(cSql);
+    LLenarCampos();
+    bloquearCampos();
+}
+
+void FrmArticulos::on_txtrTarifa1_lostFocus()
+{
+    Configuracion *oConf = new Configuracion();
+    ui->txtrTarifa1->setText( oConf->FormatoNumerico(ui->txtrTarifa1->text()));
+    ui->txtrTarifa1_2->setText(ui->txtrTarifa1->text());
+    delete oConf;
+}
+
+void FrmArticulos::on_txtrCoste_lostFocus()
+{
+    Configuracion *oConf = new Configuracion();
+    ui->txtrCoste->setText( oConf->FormatoNumerico(ui->txtrCoste->text()));
+    delete oConf;
+}
+
+void FrmArticulos::on_txtrTarifa1_2_lostFocus()
+{
+    Configuracion *oConf = new Configuracion();
+    ui->txtrTarifa1_2->setText( oConf->FormatoNumerico(ui->txtrTarifa1_2->text()));
+    ui->txtrTarifa1->setText(ui->txtrTarifa1_2->text());
+    delete oConf;
+}
+
+void FrmArticulos::on_txtrTarifa2_lostFocus()
+{
+    Configuracion *oConf = new Configuracion();
+    ui->txtrTarifa2->setText( oConf->FormatoNumerico(ui->txtrTarifa2->text()));
+    delete oConf;
+}
+
+void FrmArticulos::on_txtrTarifa3_lostFocus()
+{
+    Configuracion *oConf = new Configuracion();
+    ui->txtrTarifa3->setText( oConf->FormatoNumerico(ui->txtrTarifa3->text()));
+    delete oConf;
+}
