@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1115</width>
-    <height>533</height>
+    <width>1185</width>
+    <height>661</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -283,7 +283,7 @@
       <attribute name="title">
        <string>Búsqueda Rápida</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_21">
+      <layout class="QGridLayout" name="gridLayout_19">
        <item row="0" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
@@ -291,10 +291,23 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1" colspan="3">
-        <widget class="QLineEdit" name="txtBuscarArticulo"/>
+       <item row="2" column="0" colspan="3">
+        <widget class="QTableView" name="TablaBuscarArt"/>
        </item>
-       <item row="0" column="4">
+       <item row="1" column="0">
+        <widget class="QRadioButton" name="radPrecio">
+         <property name="minimumSize">
+          <size>
+           <width>72</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Precio</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
         <widget class="QPushButton" name="botBuscarArtRapido">
          <property name="icon">
           <iconset resource="terra.qrc">
@@ -302,29 +315,34 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QRadioButton" name="radioButton">
-         <property name="text">
-          <string>Proveedor</string>
-         </property>
-        </widget>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="txtBuscarArticulo"/>
        </item>
-       <item row="1" column="2">
-        <widget class="QRadioButton" name="radioButton_2">
-         <property name="text">
-          <string>Precio</string>
+       <item row="1" column="1">
+        <widget class="QRadioButton" name="radDescripcion">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>0</height>
+          </size>
          </property>
-        </widget>
-       </item>
-       <item row="1" column="3" colspan="2">
-        <widget class="QRadioButton" name="radioButton_3">
          <property name="text">
           <string>Descripción</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="5">
-        <widget class="QTableView" name="tableView_2"/>
+       <item row="3" column="0" colspan="2">
+        <widget class="QLabel" name="lblMensajeRecuperar">
+         <property name="minimumSize">
+          <size>
+           <width>250</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realice&lt;span style=&quot; font-weight:600; color:#0000c0;&quot;&gt; dobleclick&lt;/span&gt; sobre el artículo&lt;/p&gt;&lt;p&gt;a recuperar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -440,10 +458,10 @@
                </size>
               </property>
               <property name="text">
-               <string>0</string>
+               <string/>
               </property>
               <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -606,40 +624,6 @@ background-color: rgb(254, 255, 205);</string>
        </item>
        <item row="2" column="0" colspan="5">
         <layout class="QGridLayout" name="gridLayout_14">
-         <item row="0" column="3">
-          <widget class="QLabel" name="lblImagenArticulo">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>255</horstretch>
-             <verstretch>255</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>150</width>
-             <height>150</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>256</width>
-             <height>256</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/PNG/paquete.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
           <widget class="QFrame" name="frame_14">
            <property name="frameShape">
@@ -769,48 +753,141 @@ color: rgb(0, 0, 0);</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <widget class="QWidget" name="layoutWidget">
-            <property name="geometry">
-             <rect>
-              <x>8</x>
-              <y>8</y>
-              <width>221</width>
-              <height>111</height>
-             </rect>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_10">
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_10">
-               <property name="text">
-                <string>Familia:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_11">
-               <property name="text">
-                <string>Subfamilia:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_9">
-               <property name="text">
-                <string>Sección:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QComboBox" name="cboSeccion"/>
-             </item>
-             <item row="1" column="1">
-              <widget class="QComboBox" name="cboFamilia"/>
-             </item>
-             <item row="2" column="1">
-              <widget class="QComboBox" name="cboSubfamilia"/>
-             </item>
-            </layout>
-           </widget>
+           <layout class="QGridLayout" name="gridLayout_20">
+            <item row="0" column="0">
+             <layout class="QGridLayout" name="gridLayout_10">
+              <item row="0" column="2">
+               <widget class="QPushButton" name="botBuscarSeccion">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLineEdit" name="txtcSubFamilia">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_10">
+                <property name="text">
+                 <string>Familia:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_11">
+                <property name="text">
+                 <string>Subfamilia:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_9">
+                <property name="text">
+                 <string>Sección:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="botBuscarFamilia">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="txtcSeccion">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="txtcFamilia">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QPushButton" name="botBuscarSubfamilia">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QPushButton" name="pushButton">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QPushButton" name="pushButton_2">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="3">
+               <widget class="QPushButton" name="pushButton_3">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </item>
          <item row="0" column="2">
@@ -822,9 +899,43 @@ Imagen.</string>
           </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="botRotarImagen90">
            <property name="text">
-            <string>PushButton</string>
+            <string>Rotar Img 90º</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3" rowspan="2">
+          <widget class="QLabel" name="lblImagenArticulo">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>255</horstretch>
+             <verstretch>255</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>150</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>256</width>
+             <height>256</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/PNG/paquete.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -832,14 +943,27 @@ Imagen.</string>
        </item>
        <item row="3" column="0">
         <layout class="QGridLayout" name="gridLayout_12">
-         <item row="2" column="1">
-          <widget class="QComboBox" name="cboColor"/>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="botBuscarTalla">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="terra.qrc">
+             <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+           </property>
+          </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QComboBox" name="cboTalla"/>
-         </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="cboModelo"/>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="botBuscarModelo">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="terra.qrc">
+             <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+           </property>
+          </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_16">
@@ -874,6 +998,92 @@ Imagen.</string>
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="txtcTalla">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="botBuscarColor">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="terra.qrc">
+             <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="txtcColor">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="txtcModelo">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="terra.qrc">
+             <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QPushButton" name="pushButton_5">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="terra.qrc">
+             <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QPushButton" name="pushButton_6">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="terra.qrc">
+             <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -1729,15 +1939,9 @@ color: rbg(0,0,0);</string>
   <tabstop>txtrTarifa1</tabstop>
   <tabstop>txtnStockReal</tabstop>
   <tabstop>chklMostrarWeb</tabstop>
-  <tabstop>cboSeccion</tabstop>
-  <tabstop>cboFamilia</tabstop>
-  <tabstop>cboSubfamilia</tabstop>
   <tabstop>txtrPrecioMedio1</tabstop>
   <tabstop>txtrPrecioMedio2</tabstop>
   <tabstop>txtrPrecioMedio3</tabstop>
-  <tabstop>cboModelo</tabstop>
-  <tabstop>cboTalla</tabstop>
-  <tabstop>cboColor</tabstop>
   <tabstop>txttComentario</tabstop>
   <tabstop>txtnEtiquetas</tabstop>
   <tabstop>txtcLocalizacion</tabstop>
@@ -1777,10 +1981,7 @@ color: rbg(0,0,0);</string>
   <tabstop>botCerrar</tabstop>
   <tabstop>txtBuscarArticulo</tabstop>
   <tabstop>botBuscarArtRapido</tabstop>
-  <tabstop>radioButton_2</tabstop>
-  <tabstop>radioButton_3</tabstop>
-  <tabstop>radioButton</tabstop>
-  <tabstop>tableView_2</tabstop>
+  <tabstop>TablaBuscarArt</tabstop>
   <tabstop>lineEdit_16</tabstop>
   <tabstop>tableView</tabstop>
   <tabstop>chklPvpIncluyeIva</tabstop>

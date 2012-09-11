@@ -10,20 +10,28 @@
 #include <QString>
 #include <QPixmap>
 #include <QtGui>
+#include "columnamoneda.h"
+
 
 
 Articulo *oArticulo = new Articulo();
-
-FrmArticulos::FrmArticulos(Configuracion *o_config,QWidget *parent) :
+QSqlQueryModel *modArt = new QSqlQueryModel();
+FrmArticulos::FrmArticulos(Configuracion *o_config, QToolButton *boton, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmArticulos)
 {
     ui->setupUi(this);
+    // Cargar valores IVA
     o_config->CargarDatos();
     ui->cboTipoIVA->addItem(QString::number(o_config->nIVA1));
     ui->cboTipoIVA->addItem(QString::number(o_config->nIVA2));
     ui->cboTipoIVA->addItem(QString::number(o_config->nIVA3));
     ui->cboTipoIVA->addItem(QString::number(o_config->nIVA4));
+    // Control objetos
+    ui->lblMensajeRecuperar->setVisible(false);
+    ui->botRotarImagen90->setVisible(false);
+    boton->setEnabled(true);
+
     bloquearCampos();
 }
 
@@ -39,6 +47,8 @@ void FrmArticulos::on_botAnadir_clicked()
     VaciarCampos();
     oArticulo->Anadir();
     LLenarCampos();
+
+    //ui->lblImagenArticulo->setPixmap(QPixmap::fromImage());
     ui->txtcCodigo->setFocus();
 
 
@@ -125,6 +135,12 @@ void FrmArticulos::bloquearCampos() {
     ui->botEditar->setEnabled(true);
     ui->botGuardar->setEnabled(false);
     ui->botSiguiente->setEnabled(true);
+    // activo controles que deben estar activos.
+
+    ui->radDescripcion->setEnabled(true);
+    ui->radPrecio->setEnabled(true);
+    ui->txtBuscarArticulo->setReadOnly(false);
+    ui->botBuscarArtRapido->setEnabled(true);
 
 
 }
@@ -211,9 +227,11 @@ void FrmArticulos::LLenarCampos()
        ui->txtcProveedor->setText(record.field("cProveedor").value().toString());
    }
    delete qryProveedor;
-   ui->cboFamilia->setEditText(oArticulo->getcFamilia());
-   ui->cboSeccion->setEditText(oArticulo->getcSeccion());
-   ui->cboSubfamilia->setEditText(oArticulo->getcSubfamilia());
+   //Busco index
+
+   ui->txtcFamilia->setText(oArticulo->getcFamilia());
+   ui->txtcSeccion->setText(oArticulo->getcSeccion());
+   ui->txtcSubFamilia->setText(oArticulo->getcSubfamilia());
    ui->cboTipoIVA->setEditText(QString::number(oArticulo->getnTipoIva()));
    ui->txtrCoste->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrCoste(),'f',2)));
    ui->txtrTarifa1->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrTarifa1(),'f',2)));
@@ -243,9 +261,9 @@ void FrmArticulos::LLenarCampos()
         ui->chklControlarStock->setChecked(true);
    else
        ui->chklControlarStock->setChecked(false);
-   ui->cboModelo->setEditText(oArticulo->getcModelo());
-   ui->cboTalla->setEditText(oArticulo->getcTalla());
-   ui->cboColor->setEditText(oArticulo->getcColor());
+   ui->txtcModelo->setText(oArticulo->getcModelo());
+   ui->txtcTalla->setText(oArticulo->getcTalla());
+   ui->txtcColor->setText(oArticulo->getcColor());
    if (oArticulo->getlPvpIncluyeIva()== 1)
         ui->chklPvpIncluyeIva->setChecked(true);
    else
@@ -271,9 +289,9 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->setcCodigoFabricante(ui->txtcCodigoFabricante->text());
     oArticulo->setcDescripcion( ui->txtcDescripcion->text());
     oArticulo->setcDescripcionReducida( ui->txtcDescripcionResumida->text());
-    oArticulo->setcFamilia(ui->cboFamilia->currentText());
-    oArticulo->setcSeccion(ui->cboSeccion->currentText());
-    oArticulo->setcSubfamilia(ui->cboSubfamilia->currentText());
+    oArticulo->setcFamilia(ui->txtcFamilia->text());
+    oArticulo->setcSeccion(ui->txtcSeccion->text());
+    oArticulo->setcSubfamilia(ui->txtcSubFamilia->text());
     oArticulo->setnTipoIva(ui->cboTipoIVA->currentText().toDouble());
     oArticulo->setrCoste(ui->txtrCoste->text().toDouble());
     oArticulo->setrTarifa1(ui->txtrTarifa1->text().toDouble());
@@ -303,9 +321,9 @@ void FrmArticulos::CargarCamposEnArticulo()
     else
         oArticulo->setlControlarStock(0);
 
-    oArticulo->setcModelo(ui->cboModelo->currentText());
-    oArticulo->setcTalla(ui->cboTalla->currentText());
-    oArticulo->setcColor( ui->cboColor->currentText());
+    oArticulo->setcModelo(ui->txtcModelo->text());
+    oArticulo->setcTalla(ui->txtcTalla->text());
+    oArticulo->setcColor( ui->txtcColor->text());
     if(ui->chklPvpIncluyeIva->isChecked())
         oArticulo->setlPvpIncluyeIva(1);
     else
@@ -331,10 +349,10 @@ void FrmArticulos::VaciarCampos()
    ui->txtcDescripcion->clear();
    ui->txtcDescripcionResumida->clear();
    ui->txtcProveedor->clear();
-   ui->cboFamilia->clear();
-   ui->cboSeccion->clear();
-   ui->cboSubfamilia->clear();
-   ui->cboTipoIVA->clear();
+   ui->txtcFamilia->clear();
+   ui->txtcSeccion->clear();
+   ui->txtcSubFamilia->clear();
+   ui->cboTipoIVA->setEditText("");
    ui->txtrCoste->clear();
    ui->txtrTarifa1->clear();
    ui->txtrTarifa1_2->clear();
@@ -360,9 +378,9 @@ void FrmArticulos::VaciarCampos()
    ui->txtnStockReal->clear();
    ui->txtnStockReal_2->clear();
    ui->chklControlarStock->setChecked(false);
-   ui->cboModelo->clear();
-   ui->cboTalla->clear();
-   ui->cboColor->clear();
+   ui->txtcModelo->clear();
+   ui->txtcTalla->clear();
+   ui->txtcColor->clear();
    ui->chklPvpIncluyeIva->setChecked(false);
    ui->txtnCantidadPendienteRecibir->clear();
    ui->txtdFechaPrevistaRecepcion->clear();
@@ -392,7 +410,7 @@ void FrmArticulos::on_botBorrar_clicked()
 void FrmArticulos::on_botCambiarImagen_clicked()
 {
     QString ficheroImagen;
-    ficheroImagen = QFileDialog::getOpenFileName(this,tr("Abrir fichero de imagen"));
+    ficheroImagen = QFileDialog::getOpenFileName(this,tr("Abrir fichero de imagen"),"","Imagenes (*.bmp *.png *.xpm *.jpg)");
     if (!ficheroImagen.isEmpty()) {
 
         QImage imagen(ficheroImagen);
@@ -415,10 +433,12 @@ void FrmArticulos::on_botCambiarImagen_clicked()
     }
 }
 
-void FrmArticulos::on_pushButton_clicked()
+void FrmArticulos::on_botRotarImagen90_clicked()
 {
+    ui->lblImagenArticulo->setScaledContents(false);
     // Create new rotatedPixmap that size is same as original
-    QPixmap pixmap; //(ui->lblImagenArticulo->pixmap());
+    //QPixmap img(*ui->nombre_del_qlabel->pixmap());
+    QPixmap pixmap(*ui->lblImagenArticulo->pixmap());
     QPixmap rotatedPixmap(pixmap.size());
 
     // Create a QPainter for it
@@ -440,7 +460,25 @@ void FrmArticulos::on_pushButton_clicked()
 
     // Change original pixmap reference into new rotated pixmap
     pixmap = rotatedPixmap;
+
+//    // Guardamos la imagen una vez rotada
+  //  QPixmap pixmap;
+    // Preparation of our QPixmap
+
+    QByteArray bArray;
+   QBuffer buffer( &bArray );
+    buffer.open( QIODevice::WriteOnly );
+    pixmap.save( &buffer, "PNG" );
+
+    QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("empresa"));
+    Articulo->prepare("update articulos set bImagen =:imagen where Id = :nid");
+   Articulo->bindValue(":imagen",bArray);
+    Articulo->bindValue(":nid",oArticulo->getId());
+   if (!Articulo->exec())
+        QMessageBox::warning(NULL,tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
+    delete Articulo;
     ui->lblImagenArticulo->setPixmap(pixmap);
+    ui->lblImagenArticulo->setScaledContents(true);
 }
 
 void FrmArticulos::on_botDeshacer_clicked()
@@ -486,4 +524,76 @@ void FrmArticulos::on_txtrTarifa3_lostFocus()
     Configuracion *oConf = new Configuracion();
     ui->txtrTarifa3->setText( oConf->FormatoNumerico(ui->txtrTarifa3->text()));
     delete oConf;
+}
+
+void FrmArticulos::on_botBuscarArtRapido_clicked()
+{
+    ColumnaMoneda *Columna = new ColumnaMoneda();
+    if(!ui->txtBuscarArticulo->text().isEmpty()) {
+        ui->lblMensajeRecuperar->setVisible(true);
+        modArt = new QSqlQueryModel();
+        QString cSQL;
+        if(ui->radDescripcion->isChecked())
+            cSQL = "select id,cDescripcion,rTarifa from articulos where cDescripcion like '%" +
+                    ui->txtBuscarArticulo->text().trimmed()+"%' order by cDescripcion";
+       else
+            cSQL = "select id,cDescripcion,rTarifa1 from articulos where cDescripcion like '%" +
+                    ui->txtBuscarArticulo->text().trimmed()+"%' order by rTarifa1";
+
+        modArt->setQuery(cSQL,QSqlDatabase::database("empresa"));
+        ui->TablaBuscarArt->setModel(modArt);
+        QHeaderView *Cabecera = new QHeaderView(Qt::Horizontal,this);
+        // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+        ui->TablaBuscarArt->setHorizontalHeader(Cabecera);
+        /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
+        Cabecera->setResizeMode(0,QHeaderView::Fixed);
+        Cabecera->resizeSection(0,0);
+        Cabecera->setResizeMode(1,QHeaderView::Fixed);
+        Cabecera->resizeSection(1,155);
+        Cabecera->setResizeMode(2,QHeaderView::Fixed);
+        Cabecera->resizeSection(2,65);
+        Cabecera->setVisible(true);
+        modArt->setHeaderData(1, Qt::Horizontal, QObject::tr("DESCRIPCIÓN"));
+        modArt->setHeaderData(2, Qt::Horizontal, QObject::tr("PVP"));
+
+        ui->TablaBuscarArt->setItemDelegateForColumn(2, Columna);
+    } else {
+        QMessageBox::critical(this,tr("Buscar Artículos"),tr("Debe especificar algún criterio de búsqueda"),tr("OK"));
+    }
+}
+
+void FrmArticulos::on_TablaBuscarArt_doubleClicked(const QModelIndex &index)
+{
+    QModelIndex celda=ui->TablaBuscarArt->currentIndex();
+    QModelIndex index1=modArt->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+
+    QVariant pKey=modArt->data(index1,Qt::EditRole);
+    QString cSQL = "Select * from articulos where id = "+pKey.toString();
+    oArticulo->Recuperar(cSQL);
+    LLenarCampos();
+}
+
+
+
+void FrmArticulos::on_botBuscarSeccion_clicked()
+{
+    QDialog *ventana = new QDialog(this);
+    ventana->setMinimumWidth(500);
+    ventana->setMinimumHeight(400);
+    QListView *lista = new QListView(ventana);
+    QGridLayout *layout = new QGridLayout(ventana);
+    QPushButton *botAceptar = new QPushButton("Aceptar");
+    QPushButton *botCancelar = new QPushButton("Cancelar");
+    layout->addWidget(lista,0,0,1,2);
+    layout->addWidget(botAceptar,1,0);
+    layout->addWidget(botCancelar,1,1);
+    ventana->setLayout(layout);
+    ventana->setWindowTitle("Buscar Seccion");
+    connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusqueda()));
+    ventana->show();
+}
+
+void FrmArticulos::CerrarBusqueda()
+{
+    //ventana->close();
 }

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "configuracion.h"
+#include <QToolButton>
 
 namespace Ui {
 class FrmArticulos;
@@ -13,7 +14,7 @@ class FrmArticulos : public QDialog
     Q_OBJECT
     
 public:
-    explicit FrmArticulos(Configuracion *o_config, QWidget *parent = 0);
+    explicit FrmArticulos(Configuracion *o_config, QToolButton *boton, QWidget *parent = 0);
     ~FrmArticulos();
 
     
@@ -32,7 +33,7 @@ private slots:
 
     void on_botCambiarImagen_clicked();
 
-    void on_pushButton_clicked();
+    void on_botRotarImagen90_clicked();
 
     void on_botDeshacer_clicked();
 
@@ -45,6 +46,15 @@ private slots:
     void on_txtrTarifa2_lostFocus();
 
     void on_txtrTarifa3_lostFocus();
+
+    void on_botBuscarArtRapido_clicked();
+
+    void on_TablaBuscarArt_doubleClicked(const QModelIndex &index);
+
+    void on_botBuscarSeccion_clicked();
+
+public slots:
+    void CerrarBusqueda();
 
 private:
     Ui::FrmArticulos *ui;
