@@ -592,7 +592,7 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
     layout->addWidget(botCancelar,1,1);
     ventana->setLayout(layout);
     ventana->setWindowTitle(tr("Seleccione una Sección"));
-    connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusquedaOK()));
+    connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusquedaOKSeccion()));
     connect(botCancelar,SIGNAL(clicked()),this, SLOT(CerrarBusqueda()));
     ventana->show();
 }
@@ -600,7 +600,13 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
 void FrmArticulos::CerrarBusquedaOKSeccion()
 {
     ui->txtcSeccion->setText(lista->currentIndex().data().toString());
-
+    QSqlQuery Secciones = QSqlQuery(QSqlDatabase::database("empresa"));
+    Secciones.prepare("Select id from Secciones where cSeccion =':cSeccion'");
+    Secciones.bindValue(":cSeccion",lista->currentIndex().data().toString());
+    if(Secciones.exec()){
+        Secciones.next();
+        oArticulo->setid_Seccion(Secciones.value(0).toInt());
+    }
     ventana->close();
 
 
@@ -625,9 +631,10 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
     ventana->setMinimumHeight(350);
     lista = new QListView(ventana);
     QSqlQueryModel *modelo = new QSqlQueryModel(this);
-    modelo->setQuery("Select cFamilia from Familias where id_Seccion = "+QString::number(oArticulo->getid_Seccion())
+    modelo->setQuery("Select cFamilia from Familias where Id_Seccion = "+QString::number(oArticulo->getid_Seccion())
                      ,QSqlDatabase::database("empresa"));
     lista->setModel(modelo);
+    qDebug() <<   "Select cFamilia from Familias where Id_Seccion = "+QString::number(oArticulo->getid_Seccion());
     QGridLayout *layout = new QGridLayout(ventana);
     QPushButton *botAceptar = new QPushButton("Aceptar");
     QPushButton *botCancelar = new QPushButton("Cancelar");
@@ -636,7 +643,7 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
     layout->addWidget(botCancelar,1,1);
     ventana->setLayout(layout);
     ventana->setWindowTitle(tr("Seleccione una família"));
-    connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusquedaOK()));
+    connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusquedaOKFamilia()));
     connect(botCancelar,SIGNAL(clicked()),this, SLOT(CerrarBusqueda()));
     ventana->show();
 }

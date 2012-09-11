@@ -54,8 +54,11 @@ private slots:
 
     void on_botBuscarSeccion_clicked();
 
+    void on_botBuscarFamilia_clicked();
+
 public slots:
-    void CerrarBusquedaOK();
+    void CerrarBusquedaOKSeccion();
+    void CerrarBusquedaOKFamilia();
     void CerrarBusqueda();
 
 private:
