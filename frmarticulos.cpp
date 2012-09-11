@@ -141,6 +141,13 @@ void FrmArticulos::bloquearCampos() {
     ui->radPrecio->setEnabled(true);
     ui->txtBuscarArticulo->setReadOnly(false);
     ui->botBuscarArtRapido->setEnabled(true);
+    // Botones artículos
+    ui->botBuscarSeccion->setEnabled(false);
+    ui->botBuscarFamilia->setEnabled(false);
+    ui->botBuscarSubfamilia->setEnabled(false);
+    ui->botBuscarModelo->setEnabled(false);
+    ui->botBuscarTalla->setEnabled(false);
+    ui->botBuscarColor->setEnabled(false);
 
 
 }
@@ -203,6 +210,13 @@ void FrmArticulos::desbloquearCampos() {
     ui->botEditar->setEnabled(false);
     ui->botGuardar->setEnabled(true);
     ui->botSiguiente->setEnabled(false);
+    // Botones artículos
+    ui->botBuscarSeccion->setEnabled(true);
+    ui->botBuscarFamilia->setEnabled(true);
+    ui->botBuscarSubfamilia->setEnabled(true);
+    ui->botBuscarModelo->setEnabled(true);
+    ui->botBuscarTalla->setEnabled(true);
+    ui->botBuscarColor->setEnabled(true);
 }
 
 void FrmArticulos::LLenarCampos()
@@ -601,12 +615,12 @@ void FrmArticulos::CerrarBusquedaOKSeccion()
 {
     ui->txtcSeccion->setText(lista->currentIndex().data().toString());
     QSqlQuery Secciones = QSqlQuery(QSqlDatabase::database("empresa"));
-    Secciones.prepare("Select id from Secciones where cSeccion =':cSeccion'");
-    Secciones.bindValue(":cSeccion",lista->currentIndex().data().toString());
-    if(Secciones.exec()){
+    if(Secciones.exec("Select id from Secciones where cSeccion ='"+ui->txtcSeccion->text()+"'")){
         Secciones.next();
         oArticulo->setid_Seccion(Secciones.value(0).toInt());
-    }
+    } else
+        QMessageBox::warning(NULL, tr("Seleccionar Sección"),tr("No se puede recuperar correctamente la sección")+
+                             Secciones.lastError().text(),tr("Ok"));
     ventana->close();
 
 
@@ -615,8 +629,21 @@ void FrmArticulos::CerrarBusquedaOKSeccion()
 void FrmArticulos::CerrarBusquedaOKFamilia()
 {
     ui->txtcFamilia->setText(lista->currentIndex().data().toString());
+    QSqlQuery Familia = QSqlQuery(QSqlDatabase::database("empresa"));
+    if(Familia.exec("Select id from familias where cFamilia ='"+ui->txtcFamilia->text()+"'")){
+        Familia.next();
+        oArticulo->setid_Familia(Familia.value(0).toInt());
+    } else
+        QMessageBox::warning(NULL, tr("Seleccionar Familia / Error devuelto: "),tr("No se puede recuperar correctamente la Familia")+
+                             Familia.lastError().text(),tr("Ok"));
     ventana->close();
 
+}
+
+void FrmArticulos::CerrarBusquedaOKSubFamilia()
+{
+    ui->txtcSubFamilia->setText(lista->currentIndex().data().toString());
+    ventana->close();
 }
 
 void FrmArticulos::CerrarBusqueda()
@@ -644,6 +671,29 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
     ventana->setLayout(layout);
     ventana->setWindowTitle(tr("Seleccione una família"));
     connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusquedaOKFamilia()));
+    connect(botCancelar,SIGNAL(clicked()),this, SLOT(CerrarBusqueda()));
+    ventana->show();
+}
+
+void FrmArticulos::on_botBuscarSubfamilia_clicked()
+{
+    ventana = new QDialog(this);
+    ventana->setMinimumWidth(300);
+    ventana->setMinimumHeight(350);
+    lista = new QListView(ventana);
+    QSqlQueryModel *modelo = new QSqlQueryModel(this);
+    modelo->setQuery("Select cSubfamilia from subfamilias where Id_Familia = "+QString::number(oArticulo->getid_Familia())
+                     ,QSqlDatabase::database("empresa"));
+    lista->setModel(modelo);
+    QGridLayout *layout = new QGridLayout(ventana);
+    QPushButton *botAceptar = new QPushButton("Aceptar");
+    QPushButton *botCancelar = new QPushButton("Cancelar");
+    layout->addWidget(lista,0,0,1,2);
+    layout->addWidget(botAceptar,1,0);
+    layout->addWidget(botCancelar,1,1);
+    ventana->setLayout(layout);
+    ventana->setWindowTitle(tr("Seleccione una Subfamília"));
+    connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusquedaOKSubFamilia()));
     connect(botCancelar,SIGNAL(clicked()),this, SLOT(CerrarBusqueda()));
     ventana->show();
 }
