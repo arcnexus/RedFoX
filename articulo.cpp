@@ -115,7 +115,7 @@ void Articulo::Recuperar(QString cSQL)
                this->id_Seccion = registro.field("id_Seccion").value().toInt();
                this->cSeccion = registro.field("cSeccion").value().toString();
                this->id_SubFamilia = registro.field("id_Subfamilia").value().toInt();
-               this->cSubfamilia = registro.field("cSubFamila").value().toString();
+               this->cSubfamilia = registro.field("cSubfamilia").value().toString();
                this->nTipoIva = registro.field("nTipoIva").value().toDouble();
                this->rCoste = registro.field("rCoste").value().toDouble();
                this->rTarifa1 = registro.field("rTarifa1").value().toDouble();
@@ -183,7 +183,7 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->id_Seccion = registro.field("id_Seccion").value().toInt();
                this->cSeccion = registro.field("cSeccion").value().toString();
                this->id_SubFamilia = registro.field("id_Subfamilia").value().toInt();
-               this->cSubfamilia = registro.field("cSubFamila").value().toString();
+               this->cSubfamilia = registro.field("cSubfamilia").value().toString();
                this->nTipoIva = registro.field("nTipoIva").value().toDouble();
                this->rCoste = registro.field("rCoste").value().toDouble();
                this->rTarifa1 = registro.field("rTarifa1").value().toDouble();

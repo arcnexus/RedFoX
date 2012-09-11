@@ -643,6 +643,13 @@ void FrmArticulos::CerrarBusquedaOKFamilia()
 void FrmArticulos::CerrarBusquedaOKSubFamilia()
 {
     ui->txtcSubFamilia->setText(lista->currentIndex().data().toString());
+    QSqlQuery SubFamilia = QSqlQuery(QSqlDatabase::database("empresa"));
+    if(SubFamilia.exec("Select id from subfamilias where cSubfamilia ='"+ui->txtcSubFamilia->text()+"'")){
+        SubFamilia.next();
+        oArticulo->setid_SubFamilia(SubFamilia.value(0).toInt());
+    } else
+        QMessageBox::warning(NULL, tr("Seleccionar SubFamilia / Error devuelto: "),tr("No se puede recuperar correctamente la SubFamilia")+
+                             SubFamilia.lastError().text(),tr("Ok"));
     ventana->close();
 }
 
