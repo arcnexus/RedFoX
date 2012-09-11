@@ -166,8 +166,11 @@ void MainWindow::on_toolButton_3_clicked()
 void MainWindow::on_btnArticulos_clicked()
 {
     ui->btnArticulos->setEnabled(false);
-    FrmArticulos *frmArticulos1 = new FrmArticulos(m_config,ui->btnArticulos,this);
+    FrmArticulos *frmArticulos1 = new FrmArticulos(m_config);
     workspace->addWindow(frmArticulos1);
+    //frmArticulos1->showNormal();
     frmArticulos1->setWindowState(Qt::WindowMaximized);
-    frmArticulos1->setVisible(true);
+    frmArticulos1->exec();
+    ui->btnArticulos->setEnabled(true);
 }
+

@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "configuracion.h"
 #include <QToolButton>
+#include <QListWidget>
 
 namespace Ui {
 class FrmArticulos;
@@ -14,7 +15,7 @@ class FrmArticulos : public QDialog
     Q_OBJECT
     
 public:
-    explicit FrmArticulos(Configuracion *o_config, QToolButton *boton, QWidget *parent = 0);
+    explicit FrmArticulos(Configuracion *o_config, QWidget *parent = 0);
     ~FrmArticulos();
 
     
@@ -54,6 +55,7 @@ private slots:
     void on_botBuscarSeccion_clicked();
 
 public slots:
+    void CerrarBusquedaOK();
     void CerrarBusqueda();
 
 private:
@@ -64,6 +66,10 @@ private:
     void LLenarCampos();
     void CargarCamposEnArticulo();
     void VaciarCampos();
+
+    QListView *lista;
+    QDialog *ventana;
+    QString *Devolucion;
 };
 
 #endif // FRMARTICULOS_H

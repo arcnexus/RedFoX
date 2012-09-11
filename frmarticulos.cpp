@@ -11,12 +11,13 @@
 #include <QPixmap>
 #include <QtGui>
 #include "columnamoneda.h"
+#include <QListView>
 
 
 
 Articulo *oArticulo = new Articulo();
 QSqlQueryModel *modArt = new QSqlQueryModel();
-FrmArticulos::FrmArticulos(Configuracion *o_config, QToolButton *boton, QWidget *parent) :
+FrmArticulos::FrmArticulos(Configuracion *o_config, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmArticulos)
 {
@@ -30,7 +31,6 @@ FrmArticulos::FrmArticulos(Configuracion *o_config, QToolButton *boton, QWidget 
     // Control objetos
     ui->lblMensajeRecuperar->setVisible(false);
     ui->botRotarImagen90->setVisible(false);
-    boton->setEnabled(true);
 
     bloquearCampos();
 }
@@ -577,10 +577,13 @@ void FrmArticulos::on_TablaBuscarArt_doubleClicked(const QModelIndex &index)
 
 void FrmArticulos::on_botBuscarSeccion_clicked()
 {
-    QDialog *ventana = new QDialog(this);
-    ventana->setMinimumWidth(500);
-    ventana->setMinimumHeight(400);
-    QListView *lista = new QListView(ventana);
+    ventana = new QDialog(this);
+    ventana->setMinimumWidth(300);
+    ventana->setMinimumHeight(350);
+    lista = new QListView(ventana);
+    QSqlQueryModel *modelo = new QSqlQueryModel(this);
+    modelo->setQuery("Select cSeccion from Secciones",QSqlDatabase::database("empresa"));
+    lista->setModel(modelo);
     QGridLayout *layout = new QGridLayout(ventana);
     QPushButton *botAceptar = new QPushButton("Aceptar");
     QPushButton *botCancelar = new QPushButton("Cancelar");
@@ -588,12 +591,52 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
     layout->addWidget(botAceptar,1,0);
     layout->addWidget(botCancelar,1,1);
     ventana->setLayout(layout);
-    ventana->setWindowTitle("Buscar Seccion");
-    connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusqueda()));
+    ventana->setWindowTitle(tr("Seleccione una Sección"));
+    connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusquedaOK()));
+    connect(botCancelar,SIGNAL(clicked()),this, SLOT(CerrarBusqueda()));
     ventana->show();
+}
+
+void FrmArticulos::CerrarBusquedaOKSeccion()
+{
+    ui->txtcSeccion->setText(lista->currentIndex().data().toString());
+
+    ventana->close();
+
+
+}
+
+void FrmArticulos::CerrarBusquedaOKFamilia()
+{
+    ui->txtcFamilia->setText(lista->currentIndex().data().toString());
+    ventana->close();
+
 }
 
 void FrmArticulos::CerrarBusqueda()
 {
-    //ventana->close();
+    ventana->close();
+}
+
+void FrmArticulos::on_botBuscarFamilia_clicked()
+{
+    ventana = new QDialog(this);
+    ventana->setMinimumWidth(300);
+    ventana->setMinimumHeight(350);
+    lista = new QListView(ventana);
+    QSqlQueryModel *modelo = new QSqlQueryModel(this);
+    modelo->setQuery("Select cFamilia from Familias where id_Seccion = "+QString::number(oArticulo->getid_Seccion())
+                     ,QSqlDatabase::database("empresa"));
+    lista->setModel(modelo);
+    QGridLayout *layout = new QGridLayout(ventana);
+    QPushButton *botAceptar = new QPushButton("Aceptar");
+    QPushButton *botCancelar = new QPushButton("Cancelar");
+    layout->addWidget(lista,0,0,1,2);
+    layout->addWidget(botAceptar,1,0);
+    layout->addWidget(botCancelar,1,1);
+    ventana->setLayout(layout);
+    ventana->setWindowTitle(tr("Seleccione una família"));
+    connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusquedaOK()));
+    connect(botCancelar,SIGNAL(clicked()),this, SLOT(CerrarBusqueda()));
+    ventana->show();
 }
