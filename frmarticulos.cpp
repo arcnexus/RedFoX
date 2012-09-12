@@ -81,7 +81,6 @@ void FrmArticulos::bloquearCampos() {
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
         lineEdit->setReadOnly(true);
-        //qDebug() << lineEdit->objectName();
     }
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
@@ -148,7 +147,7 @@ void FrmArticulos::bloquearCampos() {
     ui->botBuscarModelo->setEnabled(false);
     ui->botBuscarTalla->setEnabled(false);
     ui->botBuscarColor->setEnabled(false);
-
+    ui->botCambiarImagen->setEnabled(false);
 
 }
 void FrmArticulos::desbloquearCampos() {
@@ -217,6 +216,7 @@ void FrmArticulos::desbloquearCampos() {
     ui->botBuscarModelo->setEnabled(true);
     ui->botBuscarTalla->setEnabled(true);
     ui->botBuscarColor->setEnabled(true);
+    ui->botCambiarImagen->setEnabled(true);
 }
 
 void FrmArticulos::LLenarCampos()
@@ -668,7 +668,7 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
     modelo->setQuery("Select cFamilia from Familias where Id_Seccion = "+QString::number(oArticulo->getid_Seccion())
                      ,QSqlDatabase::database("empresa"));
     lista->setModel(modelo);
-    qDebug() <<   "Select cFamilia from Familias where Id_Seccion = "+QString::number(oArticulo->getid_Seccion());
+
     QGridLayout *layout = new QGridLayout(ventana);
     QPushButton *botAceptar = new QPushButton("Aceptar");
     QPushButton *botCancelar = new QPushButton("Cancelar");

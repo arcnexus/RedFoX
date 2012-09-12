@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1029</width>
-    <height>767</height>
+    <width>1027</width>
+    <height>765</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -742,7 +742,7 @@ border-color: rgba(0, 0, 0, 0);</string>
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <property name="tabsClosable">
           <bool>false</bool>
@@ -1085,17 +1085,17 @@ border-color: rgba(0, 0, 0, 0);</string>
           <attribute name="title">
            <string>Administrador</string>
           </attribute>
-          <widget class="QToolButton" name="toolButton_3">
+          <widget class="QToolButton" name="botEmpresas">
            <property name="geometry">
             <rect>
              <x>10</x>
              <y>10</y>
-             <width>51</width>
+             <width>71</width>
              <height>51</height>
             </rect>
            </property>
            <property name="text">
-            <string>F.C</string>
+            <string>Empresas</string>
            </property>
            <property name="icon">
             <iconset resource="terra.qrc">
@@ -1134,8 +1134,8 @@ border-color: rgba(0, 0, 0, 0);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1029</width>
-     <height>20</height>
+     <width>1027</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>

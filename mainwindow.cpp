@@ -14,6 +14,7 @@
 #include <QSettings>
 #include "configuracion.h"
 #include <QSqlQuery>
+#include <frmempresas.h>
 
 
 
@@ -174,3 +175,13 @@ void MainWindow::on_btnArticulos_clicked()
     ui->btnArticulos->setEnabled(true);
 }
 
+
+void MainWindow::on_botEmpresas_clicked()
+{
+    ui->botEmpresas->setEnabled(false);
+    FrmEmpresas *frmEmpresa1 = new FrmEmpresas();
+    workspace->addWindow(frmEmpresa1);
+    frmEmpresa1->setWindowState(Qt::WindowMaximized);
+    frmEmpresa1->exec();
+    ui->botEmpresas->setEnabled(true);
+}
