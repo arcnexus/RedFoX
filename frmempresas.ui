@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>773</width>
-    <height>499</height>
+    <width>771</width>
+    <height>497</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -116,13 +116,13 @@
        <string>Ruta BD:</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>8</x>
         <y>8</y>
         <width>117</width>
-        <height>405</height>
+        <height>406</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -351,6 +351,19 @@
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>70</y>
+        <width>89</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PushButton</string>
+      </property>
      </widget>
     </widget>
    </item>

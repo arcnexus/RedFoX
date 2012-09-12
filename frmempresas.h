@@ -15,6 +15,9 @@ public:
     explicit FrmEmpresas(QWidget *parent = 0);
     ~FrmEmpresas();
     
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::FrmEmpresas *ui;
 };
