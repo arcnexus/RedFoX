@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1027</width>
-    <height>765</height>
+    <width>1025</width>
+    <height>763</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -742,7 +742,7 @@ border-color: rgba(0, 0, 0, 0);</string>
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <property name="tabsClosable">
           <bool>false</bool>
@@ -1134,7 +1134,7 @@ border-color: rgba(0, 0, 0, 0);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1027</width>
+     <width>1025</width>
      <height>21</height>
     </rect>
    </property>

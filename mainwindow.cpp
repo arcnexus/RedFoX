@@ -150,18 +150,6 @@ void MainWindow::on_btnFacturaCliente_clicked()
     frmFacturas1->setVisible(true);
 }
 
-void MainWindow::on_toolButton_3_clicked()
-{
-    QSettings settings("infint", "terra");
-    settings.setValue("cDriverBDTerra","QSQLITE");
-    settings.setValue("cRutaDBTerra","/home/arcnexus/project/terra/terra/DB/terra.sqlite");
-    settings.setValue("cHostBDTerra","localhost");
-    settings.setValue("cUserBDTerra","root");
-    settings.setValue("cPasswordBDTerra","PatataBullida_99");
-    settings.setValue("cPais","España");
-    settings.setValue("cEjercicioActivo","2012");
-
-}
 
 
 void MainWindow::on_btnArticulos_clicked()
