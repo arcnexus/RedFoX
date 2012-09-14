@@ -1,7 +1,7 @@
 CREATE TABLE "Agenda" (
   "Id" INTEGER PRIMARY KEY AUTOINCREMENT  ,
   "dFecha" numeric  ,
-  "dHora" text    ,
+  "cHora" text    ,
   "id_Usuario" int DEFAULT 0,
   "cInicio" text  ,
   "cFin" text  ,
@@ -134,7 +134,7 @@ CREATE TABLE "cab_alb" (
   "id_Cliente" int DEFAULT 0,
   "cCodigoCliente" text    ,
   "cCliente" text    ,
-  "dDireccion" text    ,
+  "CDireccion" text    ,
   "cDireccion2" text    ,
   "cPoblacion" text    ,
   "cProvincia" text    ,
@@ -389,7 +389,7 @@ CREATE TABLE "cab_tpv" (
 CREATE TABLE "cajaabierta" (
 "id" integer primary key  autoincrement,
   "dFechaAbertura" numeric  ,
-  "dHoraAbertura" text    ,
+  "cHoraAbertura" text    ,
   "nCaja" int DEFAULT 0,
   "id_UsuarioAbertura" int DEFAULT 0,
   "cUsuarioAbertura" text    ,

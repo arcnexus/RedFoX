@@ -326,6 +326,7 @@ void frmClientes::on_btnAnadir_clicked()
    VaciarCampos();
    this->Altas = true;
 
+    ui->txtcCodigoCliente->setFocus();
 }
 
 void frmClientes::on_txtPrimerApellido_lostFocus()

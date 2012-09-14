@@ -9,7 +9,7 @@
 Empresa::Empresa(QObject *parent) :
     QObject(parent)
 {
-    this->id=1;
+    this->id=0;
 }
 
 void Empresa::Anadir()
@@ -106,7 +106,7 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->cComentarioTicket = registro.field("comentarioticket").value().toString();
             this->nEjercicio = registro.field("ejercicio").value().toInt();
         } else {
-            if (nProcede = 1)
+            if (nProcede == 1)
                 QMessageBox::information(NULL,QObject::tr("Gestión Empresas"),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
             else
                 QMessageBox::information(NULL, QObject::tr("Gestión Empresas"),QObject::tr("No hay más empresas: se ha llegado al inicio del fichero"));
@@ -129,7 +129,7 @@ void Empresa::Guardar()
                      "contrasena =:cContrasena,"
                      "puerto=:cPuerto,"
                      "nombreBD=:cNombreBD,"
-                     "driverBD=:cDriverBD "
+                     "driverBD=:cDriverBD, "
                      "Direccion=:cDireccion,"
                      "cp=:cCP,"
                      "poblacion=:cPoblacion,"
@@ -216,6 +216,7 @@ void Empresa::Vaciar()
     this->cTelefono2 = "";
     this->cWeb  = "";
     this->cCif = "";
+    this->nEjercicio = 2000;
 }
 
 void Empresa::Borrar(int nId)
