@@ -5,6 +5,7 @@
 #include "configuracion.h"
 #include <QToolButton>
 #include <QListWidget>
+#include <QGridLayout>
 
 namespace Ui {
 class FrmArticulos;
@@ -63,6 +64,7 @@ public slots:
     void CerrarBusquedaOKFamilia();
     void CerrarBusquedaOKSubFamilia();
     void CerrarBusqueda();
+    void AnadirSeccion();
 
 private:
     Ui::FrmArticulos *ui;
@@ -76,6 +78,7 @@ private:
     QListView *lista;
     QDialog *ventana;
     QString *Devolucion;
+    QGridLayout *layout;
 };
 
 #endif // FRMARTICULOS_H

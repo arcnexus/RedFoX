@@ -599,9 +599,11 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
     modelo->setQuery("Select cSeccion from Secciones",QSqlDatabase::database("empresa"));
     lista->setModel(modelo);
     QGridLayout *layout = new QGridLayout(ventana);
-    QPushButton *botAceptar = new QPushButton("Aceptar");
-    QPushButton *botCancelar = new QPushButton("Cancelar");
-    layout->addWidget(lista,0,0,1,2);
+    QPushButton *botAceptar = new QPushButton(tr("Aceptar"));
+    QPushButton *botCancelar = new QPushButton(tr("Cancelar"));
+    QPushButton *botAnadir = new QPushButton(tr("Añadir"));
+    layout->addWidget(lista,0,0,1,1);
+    layout->addWidget(botAnadir,0,1,2,1);
     layout->addWidget(botAceptar,1,0);
     layout->addWidget(botCancelar,1,1);
     ventana->setLayout(layout);
@@ -656,6 +658,13 @@ void FrmArticulos::CerrarBusquedaOKSubFamilia()
 void FrmArticulos::CerrarBusqueda()
 {
     ventana->close();
+}
+
+void FrmArticulos::AnadirSeccion()
+{
+    QLineEdit *txtcSeccionNueva = new QLineEdit(ventana);
+    layout->addWidget(txtcSeccionNueva,2,1,2,1);
+
 }
 
 void FrmArticulos::on_botBuscarFamilia_clicked()
