@@ -46,5 +46,6 @@
         <file>PNG/Print.png</file>
         <file>PNG/Calendar.png</file>
         <file>PNG/Pay.png</file>
+        <file>PNG/Exit.png</file>
     </qresource>
 </RCC>

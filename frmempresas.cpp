@@ -32,8 +32,7 @@ void FrmEmpresas::LLenarCampos()
     int indice=ui->txtcDriver->findText(oEmpresa.getcDriverBD());
 
     if(indice!=-1)
-     ui->txtcDriver->setCurrentIndex(indice);
-
+       ui->txtcDriver->setCurrentIndex(indice);
     ui->txtcDriver->setEditText(oEmpresa.getcDriverBD());
     ui->txtcDireccion->setText(oEmpresa.getcDireccion());
     ui->txtcCP->setText(oEmpresa.getcCp());

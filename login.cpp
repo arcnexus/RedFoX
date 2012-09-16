@@ -122,4 +122,5 @@ void Login::on_Crearconfiguracin_clicked()
     settings.setValue("nRE2",1.4);
     settings.setValue("nRE3",0.5);
     settings.setValue("nRE4",0);
+    settings.setValue("lProfesional",1);
 }

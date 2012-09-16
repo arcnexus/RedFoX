@@ -103,6 +103,10 @@ void Configuracion::CargarDatos()
     this->nRE2 = settings.value("nRE2").toDouble();
     this->nRE3 = settings.value("nRE3").toDouble();
     this->nRE4 = settings.value("nRE4").toDouble();
+    if(settings.value("lProfesional").toInt()==1)
+        this->lProfesional = true;
+    else
+        this->lProfesional = false;
 
 }
 

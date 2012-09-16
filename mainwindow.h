@@ -42,6 +42,8 @@ private slots:
 
     void on_botEmpresas_clicked();
 
+    void on_btnProveedores_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWorkspace *workspace;

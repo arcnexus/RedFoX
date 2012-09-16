@@ -207,6 +207,8 @@ CREATE TABLE "cab_fac" (
   "rImporteDescuento" real DEFAULT 0,
   "rImporteDescuentoPP" real DEFAULT 0,
   "rBase" real DEFAULT 0,
+  "nIRPF" real DEFAULT 0,
+  "rImporteIRPF" real DEFAULT 0,
   "nIva" real DEFAULT 0,
   "rImporteIva" real DEFAULT 0,
   "rTotal" real DEFAULT 0,

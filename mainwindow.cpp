@@ -14,7 +14,8 @@
 #include <QSettings>
 #include "configuracion.h"
 #include <QSqlQuery>
-#include <frmempresas.h>
+#include "frmempresas.h"
+#include "frmproveedores.h"
 
 
 
@@ -172,4 +173,16 @@ void MainWindow::on_botEmpresas_clicked()
     frmEmpresa1->setWindowState(Qt::WindowMaximized);
     frmEmpresa1->exec();
     ui->botEmpresas->setEnabled(true);
+}
+
+void MainWindow::on_btnProveedores_clicked()
+{
+    ui->btnProveedores->setEnabled(false);
+    frmProveedores *frmProveedores1 = new frmProveedores();
+    workspace->addWindow(frmProveedores1);
+    //frmArticulos1->showNormal();
+    frmProveedores1->setWindowState(Qt::WindowMaximized);
+    frmProveedores1->exec();
+    ui->btnProveedores->setEnabled(true);
+
 }

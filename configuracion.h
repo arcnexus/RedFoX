@@ -41,6 +41,7 @@ public:
     QSqlQuery *QryConfiguracion;
     QFileDialog dialogo;
     double nIVA1,nIVA2,nIVA3,nIVA4,nRE1,nRE2,nRE3,nRE4;
+    bool lProfesional;
 
 
     QString FormatoNumerico(QString cTexto);

@@ -28,6 +28,22 @@ frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     o_configuracion =o_config;
     o_configuracion->CargarDatos();
     ui->setupUi(this);
+    // Escondo/muestro campos según configuración
+    if(o_configuracion->lProfesional) {
+        ui->txtnIRPF->setVisible(true);
+        ui->txtrImporteIRPF->setVisible(true);
+        ui->txtrImporteIRPF_2->setVisible(true);
+        ui->lblIRPF->setVisible(true);
+        ui->lblIRPF_2->setVisible(true);
+    } else {
+        ui->txtnIRPF->setVisible(false);
+        ui->txtrImporteIRPF->setVisible(false);
+        ui->txtrImporteIRPF_2->setVisible(false);
+        ui->lblIRPF->setVisible(false);
+        ui->lblIRPF_2->setVisible(false);
+    }
+
+
     // Pongo valores por defecto
     ui->lblContabilizada->setVisible(false);
     ui->lblFacturaCobrada->setVisible(false);
