@@ -15,27 +15,6 @@ Login::Login(Configuracion *m_config,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Login)
 {
- /*   // Conectamos a la base de datos
-    QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(m_config->cDriverBDTerra,"terra");
-    if (m_config->cDriverBDTerra == "QSQLITE"){
-        dbTerra.setDatabaseName(m_config->cRutaBdTerra);
-    } else {
-        dbTerra.setDatabaseName(m_config->cNombreBDTerra);
-        dbTerra.setHostName(m_config->cHostBDTerra);
-        dbTerra.open(m_config->cUsuarioBDTerra,m_config->cPasswordBDTerra);
-
-    }
-    if (m_config->cDriverBDTerra == "QSQLITE") {
-        dbTerra.open();
-    } else {
-        dbTerra.open(m_config->cUsuarioBDTerra,m_config->cPasswordBDTerra);
-    }
-
-    if (dbTerra.lastError().isValid())
-        {
-            QMessageBox::critical(0, "error:", dbTerra.lastError().text());
-
-        } */
     this->setWindowFlags(Qt::Dialog|Qt::CustomizeWindowHint|Qt::WindowTitleHint);
     ui->setupUi(this);
     // TODO - Rellenar en base a fichero de empresas BD terra.
@@ -123,4 +102,6 @@ void Login::on_Crearconfiguracin_clicked()
     settings.setValue("nRE3",0.5);
     settings.setValue("nRE4",0);
     settings.setValue("lProfesional",1);
+    settings.setValue("nIRPF",21);
+    settings.setValue("cSerie","2012");
 }

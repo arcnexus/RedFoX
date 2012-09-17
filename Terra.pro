@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     frmmodificarlin_fac.cpp \
     columnamoneda.cpp \
     columnafecha.cpp \
-    frmempresas.cpp
+    frmempresas.cpp \
+    frmconfiguracion.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -58,7 +59,8 @@ HEADERS  += mainwindow.h \
     frmmodificarlin_fac.h \
     columnamoneda.h \
     columnafecha.h \
-    frmempresas.h
+    frmempresas.h \
+    frmconfiguracion.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -72,7 +74,8 @@ FORMS    += mainwindow.ui \
     frmbuscarpoblacion.ui \
     frmBuscarFactura.ui \
     frmmodificarlin_fac.ui \
-    frmempresas.ui
+    frmempresas.ui \
+    frmconfiguracion.ui
 
 RESOURCES += \
     terra.qrc

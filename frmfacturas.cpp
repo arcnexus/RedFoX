@@ -202,6 +202,21 @@ void frmFacturas::LLenarCampos() {
     ui->txtcDCCuenta->setText(oFactura->getcDCCuenta());
     ui->txtcNumeroCuenta->setText(oFactura->getcNumeroCuenta());
     ui->txtcPedidoCliente->setText(oFactura->getcPedidoCliente());
+    if(oFactura->getnIRPF()!=0)
+        ui->lblIRPF_3->setVisible(true);
+    else
+        ui->lblIRPF_3->setVisible(false);
+    if(oFactura->getlCobrada()==1){
+        ui->lblFacturaCobrada->setVisible(true);
+        ui->txtdFechaCobro->setVisible(true);
+    } else {
+        ui->lblFacturaCobrada->setVisible(false);
+        ui->txtdFechaCobro->setVisible(false);
+    }
+    ui->txtnIRPF->setText(QString::number(oFactura->getnIRPF()));
+    ui->txtrImporteIRPF->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteIRPF(),'f',2)));
+    ui->txtrImporteIRPF_2->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteIRPF(),'f',2)));
+
     // cargamos líneas de ventas
    lineasVentas();
 
@@ -226,6 +241,16 @@ void frmFacturas::LLenarCamposCliente()
     } else {
         ui->chklRecargoEquivalencia->setChecked(false);
     }
+    if (oCliente1->getlIRPF() == true) {
+        ui->lblIRPF_3->setVisible(true);
+        ui->txtnIRPF->setText(QString::number(o_configuracion->nIRPF));
+        oFactura->setnIRPF(o_configuracion->nIRPF);
+    } else {
+        ui->lblIRPF_3->setVisible(false);
+        ui->txtnIRPF->setText("0,00");
+        oFactura->setnIRPF(o_configuracion->nIRPF);
+    }
+
 }
 
 void frmFacturas::VaciarCampos() {
@@ -484,6 +509,8 @@ void frmFacturas::LLenarFactura() {
     oFactura->setcDCCuenta(ui->txtcDCCuenta->text());
     oFactura->setcNumeroCuenta(ui->txtcNumeroCuenta->text());
     oFactura->setcPedidoCliente(ui->txtcPedidoCliente->text());
+    oFactura->setnIRPF(ui->txtnIRPF->text().toDouble());
+    oFactura->setrImporteIRPF(ui->txtrImporteIRPF->text().toDouble());
 }
 
 void frmFacturas::on_btnSiguiente_clicked()
@@ -793,6 +820,8 @@ void frmFacturas::RellenarDespuesCalculo()
     ui->txtrRecargoEq3->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrRecargoEq3(),'f',2)));
     ui->txtrRecargoEq4->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrRecargoEq4(),'f',2)));
     ui->txtrTotalRecargoEq->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrTotalRecargoEq(),'f',2)));
+    ui->txtrImporteIRPF->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteIRPF(),'f',2)));
+    ui->txtrImporteIRPF_2->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteIRPF(),'f',2)));
 }
 
 void frmFacturas::on_botBorrarLinea_clicked()

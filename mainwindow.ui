@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1025</width>
-    <height>763</height>
+    <width>1024</width>
+    <height>761</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -742,7 +742,7 @@ border-color: rgba(0, 0, 0, 0);</string>
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <property name="tabsClosable">
           <bool>false</bool>
@@ -1105,6 +1105,26 @@ border-color: rgba(0, 0, 0, 0);</string>
             <enum>Qt::ToolButtonTextUnderIcon</enum>
            </property>
           </widget>
+          <widget class="QToolButton" name="botConfiguracion">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>10</y>
+             <width>91</width>
+             <height>51</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Configuración</string>
+           </property>
+           <property name="icon">
+            <iconset resource="terra.qrc">
+             <normaloff>:/Icons/PNG/configuration.png</normaloff>:/Icons/PNG/configuration.png</iconset>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonTextUnderIcon</enum>
+           </property>
+          </widget>
          </widget>
         </widget>
        </item>
@@ -1134,7 +1154,7 @@ border-color: rgba(0, 0, 0, 0);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1025</width>
+     <width>1024</width>
      <height>21</height>
     </rect>
    </property>

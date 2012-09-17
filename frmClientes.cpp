@@ -26,7 +26,15 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     modelFP = new QSqlQueryModel();
     modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("empresa"));
 
+    // Ocultar campos según configuración
 
+    oConfiguracion->CargarDatos();
+    if(oConfiguracion->nIRPF)
+        ui->chkClienteEmpresa->setVisible(true);
+    else
+        ui->chkClienteEmpresa->setVisible(false);
+
+    //FP
     ui->cbocFormaPago->setModel(modelFP);
     //ui->tableView_5->setModel(model);
 
@@ -49,6 +57,7 @@ frmClientes::~frmClientes()
     dbCliente.close();
 }
 void frmClientes::LLenarCampos() {
+    Configuracion *o_Configuracion = new Configuracion();
     ui->txtcCodigoCliente->setText(oCliente->getcCodigoCliente());
     ui->txtPrimerApellido->setText(oCliente->getcApellido1());
     ui->txtSegundoApellido->setText(oCliente->getcApellido2());
@@ -83,10 +92,10 @@ void frmClientes::LLenarCampos() {
     ui->txtcPaisAlmacen->setText(oCliente->getcPaisAlmacen());
     ui->txtdFechaAlta->setDate(oCliente->getdFechaAlta());
     ui->txtdFechaUltimaCompra->setDate(oCliente->getdFechaUltimaCompra());
-    ui->txtrImporteAcumulado->setValue(oCliente->getrAcumuladoVentas());
-    ui->txtrVentasEjercicio->setValue(oCliente->getrVentasEjercicio());
-    ui->txtrRiesgoPermitido->setValue(oCliente->getrRiesgoMaximo());
-    ui->txtrDeudaActual->setValue(oCliente->getrDeudaActual());
+    ui->txtrImporteAcumulado->setText(o_Configuracion->FormatoNumerico(QString::number( oCliente->getrAcumuladoVentas(),'f',2)));
+    ui->txtrVentasEjercicio->setText(o_Configuracion->FormatoNumerico(QString::number(oCliente->getrVentasEjercicio(),'f',2)));
+    ui->txtrRiesgoPermitido->setText(o_Configuracion->FormatoNumerico(QString::number(oCliente->getrRiesgoMaximo(),'f',2)));
+    ui->txtrDeudaActual->setText(o_Configuracion->FormatoNumerico(QString::number(oCliente->getrDeudaActual(),'f',2)));
     ui->txttComentarios->setText(oCliente->gettComentarios());
     if(oCliente->islBloqueado()) {
         ui->chklBloqueoCliente->setChecked(true);
@@ -112,8 +121,8 @@ void frmClientes::LLenarCampos() {
     ui->txtnDiaPago1->setValue(oCliente->getnDiaPago1());
     ui->txtnDiaPago2->setValue(oCliente->getnDiaPago2());
    // ui->cbonTarifaCliente->lineEdit()->setText(oCliente->getnTarifaCliente());
-    ui->txtrImporteACuenta->setValue(oCliente->getrImporteACuenta());
-    ui->txtrVales->setValue(oCliente->getrVales());
+    ui->txtrImporteACuenta->setText( o_Configuracion->FormatoNumerico(QString::number(oCliente->getrImporteACuenta(),'f',2)));
+    ui->txtrVales->setText(o_Configuracion->FormatoNumerico(QString::number(oCliente->getrVales(),'f',2)));
     ui->txtcEntidadBancaria->setText(oCliente->getcEntidadBancaria());
     ui->txtcOficinaBancaria->setText(oCliente->getcOficinaBancaria());
     ui->txtcDc->setText(oCliente->getcDC());
@@ -121,6 +130,10 @@ void frmClientes::LLenarCampos() {
     ui->txtdFechaNacimiento->setDate(oCliente->getdFechaNacimiento());
     ui->txtcAccesoWeb->setText(oCliente->getcAccesoWeb());
     ui->txtcPasswordWeb->setText(oCliente->getcPasswordweb());
+    if (oCliente->getlIRPF())
+        ui->chkClienteEmpresa->setChecked(true);
+    else
+        ui->chkClienteEmpresa->setChecked(false);
 
     // Tablas
     QSqlQueryModel *deudas = new QSqlQueryModel();
@@ -192,10 +205,10 @@ void frmClientes::VaciarCampos() {
     ui->txtcPaisAlmacen->setText("");
     ui->txtdFechaAlta->setDate(dFecha.currentDate());
     ui->txtdFechaUltimaCompra->setDate(dFecha.currentDate());
-    ui->txtrImporteAcumulado->setValue(0);
-    ui->txtrVentasEjercicio->setValue(0);
-    ui->txtrRiesgoPermitido->setValue(0);
-    ui->txtrDeudaActual->setValue(0);
+    ui->txtrImporteAcumulado->setText("");
+    ui->txtrVentasEjercicio->setText("");
+    ui->txtrRiesgoPermitido->setText("");
+    ui->txtrDeudaActual->setText("");
     ui->txttComentarios->setText("");
     ui->chklBloqueoCliente->setChecked(false);
     ui->txttComentarioBloqueo->setText( "");
@@ -211,8 +224,8 @@ void frmClientes::VaciarCampos() {
     ui->txtnDiaPago1->setValue(0);
     ui->txtnDiaPago2->setValue(0);
    // ui->cbonTarifaCliente->lineEdit()->setText(oCliente->getnTarifaCliente());
-    ui->txtrImporteACuenta->setValue(0);
-    ui->txtrVales->setValue(0);
+    ui->txtrImporteACuenta->setText("");
+    ui->txtrVales->setText("");
     ui->txtcEntidadBancaria->setText("");
     ui->txtcOficinaBancaria->setText("");
     ui->txtcDc->setText("");
@@ -221,6 +234,7 @@ void frmClientes::VaciarCampos() {
     ui->txtcAccesoWeb->setText("");
     ui->txtcPasswordWeb->setText("");
     ui->txtPrimerApellido->setFocus();
+    ui->chkClienteEmpresa->setChecked(false);
 
 }
 
@@ -259,10 +273,10 @@ void frmClientes::LLenarCliente() {
     oCliente->setcPaisAlmacen(ui->txtcPaisAlmacen->text());
     oCliente->setdFechaAlta(ui->txtdFechaAlta->date());
     oCliente->setdFechaUltimaCompra(ui->txtdFechaUltimaCompra->date());
-    oCliente->setrAcumuladoVentas(ui->txtrImporteAcumulado->value());
-    oCliente->setrVentasEjercicio(ui->txtrVentasEjercicio->value());
-    oCliente->setrRiesgoMaximo(ui->txtrRiesgoPermitido->value());
-    oCliente->setrDeudaActual(ui->txtrDeudaActual->value());
+    oCliente->setrAcumuladoVentas(ui->txtrImporteAcumulado->text().toDouble());
+    oCliente->setrVentasEjercicio(ui->txtrVentasEjercicio->text().toDouble());
+    oCliente->setrRiesgoMaximo(ui->txtrRiesgoPermitido->text().toDouble());
+    oCliente->setrDeudaActual(ui->txtrDeudaActual->text().toDouble());
     oCliente->settComentarios(ui->txttComentarios->toPlainText());
     oCliente->setisBloqueado(ui->chklBloqueoCliente->isChecked());
     oCliente->settComentarioBloqueo(ui->txttComentarioBloqueo->toPlainText());
@@ -276,16 +290,20 @@ void frmClientes::LLenarCliente() {
     oCliente->setnDiaPago1(ui->txtnDiaPago1->value());
     oCliente->setnDiaPago2(ui->txtnDiaPago2->value());
     oCliente->setnTarifaCliente(ui->cbonTarifaCliente->currentText().toDouble());
-    oCliente->setrImporteaCuenta(ui->txtrImporteACuenta->value());
-    oCliente->setrVales( ui->txtrVales->value());
+    oCliente->setrImporteaCuenta(ui->txtrImporteACuenta->text().toDouble());
+    oCliente->setrVales( ui->txtrVales->text().toDouble());
     oCliente->setcEntidadBancaria(ui->txtcEntidadBancaria->text());
     oCliente->setcOficinaBancaria(ui->txtcOficinaBancaria->text());
     oCliente->setcDC(ui->txtcDc->text());
     oCliente->setcCuentaCorriente(ui->txtcCuentaCorriente->text());
     oCliente->setdFechaNacimiento(ui->txtdFechaNacimiento->date());
-    oCliente->setrImportePendiente(ui->txtrImporteAcumulado->value());
+    oCliente->setrImportePendiente(ui->txtrImporteAcumulado->text().toDouble());
     oCliente->setcAccesoWeb(ui->txtcAccesoWeb->text());
     oCliente->setcPasswordWeb(ui->txtcPasswordWeb->text());
+    if (ui->chkClienteEmpresa)
+        oCliente->setlIRPF(true);
+    else
+        oCliente->setlIRPF(false);
 }
 
 

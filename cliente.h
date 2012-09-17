@@ -76,6 +76,7 @@ private:
     double rImportePendiente;
     QString cAccesoWeb;
     QString cPasswordWeb;
+    bool lIRPF;
 
     QSqlDatabase db;
     QSqlQuery *qryCliente;
@@ -160,6 +161,7 @@ public slots:
     double getrImportePendiente();
     QString getcAccesoWeb();
     QString getcPasswordweb();
+    bool getlIRPF();
 
 
 
@@ -226,6 +228,7 @@ public slots:
     void setrImportePendiente(double rImportePendiente);
     void setcAccesoWeb(QString cAccesoWeb);
     void setcPasswordWeb(QString cPasswordWeb);
+    void setlIRPF(bool lIRPF);
 };
 
 #endif // CLIENTE_H

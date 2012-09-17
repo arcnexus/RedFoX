@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1018</width>
-    <height>463</height>
+    <height>461</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -749,6 +749,21 @@ border-right-color: rgb(220, 220, 220);</string>
               </property>
               <property name="text">
                <string>FACTURA CONTABILIZADA</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="lblIRPF_3">
+              <property name="styleSheet">
+               <string notr="true">color: rgb(255, 255, 255);
+font: 75 12pt &quot;Nimbus Mono L&quot;;
+background-color: rgb(253, 0, 4);</string>
+              </property>
+              <property name="text">
+               <string>IRPF</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>

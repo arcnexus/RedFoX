@@ -107,6 +107,8 @@ void Configuracion::CargarDatos()
         this->lProfesional = true;
     else
         this->lProfesional = false;
+    this->nIRPF = settings.value("nIRPF").toInt();
+    this->cSerie = settings.value("cSerie").toString();
 
 }
 

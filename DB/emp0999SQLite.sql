@@ -1,4 +1,4 @@
-CREATE TABLE "Agenda" (
+CREATE TABLE "agenda" (
   "Id" INTEGER PRIMARY KEY AUTOINCREMENT  ,
   "dFecha" numeric  ,
   "cHora" text    ,
@@ -14,7 +14,7 @@ CREATE TABLE "Agenda" (
 )  ;
 
 
-CREATE TABLE "Alb_pro" (
+CREATE TABLE "alb_pro" (
   "Id" INTEGER PRIMARY KEY AUTOINCREMENT  ,
   "cAlbaran" text    ,
   "dFecha" numeric  ,
@@ -48,7 +48,7 @@ CREATE TABLE "Alb_pro" (
 
 
 
-CREATE TABLE "Articulos" (
+CREATE TABLE "articulos" (
   "Id" INTEGER PRIMARY KEY AUTOINCREMENT  ,
   "cCodigo" text    ,
   "cCodigoBarras" text    ,
@@ -499,7 +499,8 @@ CREATE TABLE "clientes" (
   "rImportePendiente" real DEFAULT 0,
   "cTipoCliente" text  ,
   "cAccesoWeb" text    ,
-  "cPasswordWeb" text 
+  "cPasswordWeb" text ,
+  "nIRPF" int DEFAULT 0
   ) ;
   
   

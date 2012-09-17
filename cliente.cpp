@@ -74,7 +74,8 @@ void Cliente::Guardar() {
                    "dFechaNacimiento=:dFechaNacimiento,"
                    "rImportePendiente=:rImportePendiente,"
                    "cAccesoWeb =:cAccesoWeb,"
-                   "cPasswordWeb=:cPasswordWeb"
+                   "cPasswordWeb=:cPasswordWeb,"
+                   "nIRPF=:nIRPF"
 
                    " WHERE id =:id" );
     query.bindValue(":cCodigoCliente", this->cCodigoCliente);
@@ -138,7 +139,11 @@ void Cliente::Guardar() {
     query.bindValue(":rImportePendiente",this->rImportePendiente);
     query.bindValue(":cAccesoWeb",this->cAccesoWeb);
     query.bindValue(":cPasswordWeb",this->cPasswordWeb);
-       query.bindValue(":id",this->id);
+    if (this->lIRPF)
+        query.bindValue(":nIRPF",1);
+    else
+        query.bindValue(":nIRPF",0);
+    query.bindValue(":id",this->id);
 
 
     if(!query.exec()){
@@ -158,7 +163,7 @@ void Cliente::Anadir() {
                        "cPaisAlmacen,dFechaAlta,dFechaUltimaCompra,rAcumuladoVentas,rVentasEjercicio,rRiesgoMaximo,rDeudaActual,"
                        "tComentarios,lBloqueado,tComentarioBloqueo,nPorcDtoCliente,lRecargoEquivalencia,cCuentaContable,cCuentaIvaRepercutido,"
                        "cCuentaDeudas,cCuentaCobros,cFormaPago,nDiapago1,nDiaPago2,nTarifaCliente,rImporteACuenta,rVales,"
-                       "cCentidadBancaria,cOficinaBancaria,cDC,cCuentaCorriente,dFechaNacimiento,rImportePendiente,cAccesoWeb,cPasswordWeb) "
+                       "cCentidadBancaria,cOficinaBancaria,cDC,cCuentaCorriente,dFechaNacimiento,rImportePendiente,cAccesoWeb,cPasswordWeb,nIRPF) "
                        "VALUES (:cCodigoCliente, :cApellido, :cApellido2,:cNombre,:cNombreFiscal,:cNombreComercial,:cPersonaContacto,"
                        ":cCifNif,:cDireccion1,:cDireccion2,:cCP,:cPoblacion,:cProvincia,:cPais,:cTelefono1,:cTelefono2,:cFax,"
                        ":cMovil,:cEmail,:cWeb,:cDireccionFactura1,:cDireccionFactura2,:cCPFactura,:cPoblacionFactura,:cProvinciaFactura,"
@@ -166,7 +171,7 @@ void Cliente::Anadir() {
                        ":cPaisAlmacen,:dFechaAlta,:dFechaUltimaCompra,:rAcumuladoVentas,:rVentasEjercicio,:rRiesgoMaximo,:rDeudaActual,"
                        ":tComentarios,:lBloqueado,:tComentarioBloqueo,:nPorcDtoCliente,:lRecargoEquivalencia,:cCuentaContable,:cCuentaIvaRepercutido,"
                        ":cCuentaDeudas,:cCuentaCobros,:cFormaPago,:nDiapago1,:nDiaPago2,:nTarifaCliente,:rImporteACuenta,:rVales,"
-                       ":cCentidadBancaria,:cOficinaBancaria,:cDC,:cCuentaCorriente,:dFechaNacimiento,:rImportePendiente,"
+                       ":cCentidadBancaria,:cOficinaBancaria,:cDC,:cCuentaCorriente,:dFechaNacimiento,:rImportePendiente,:nIRPF"
                        ":cAccesoWeb,:cPasswordWeb)");
          query.bindValue(":cCodigoCliente", this->cCodigoCliente);
          query.bindValue(":cApellido1", this->cApellido1);
@@ -229,6 +234,10 @@ void Cliente::Anadir() {
          query.bindValue(":rImportePendiente",this->rImportePendiente);
          query.bindValue(":cAccesoWeb",this->cAccesoWeb);
          query.bindValue(":cPasswordWeb",this->cPasswordWeb);
+         if (this->lIRPF)
+             query.bindValue(":nIRPF",1);
+         else
+             query.bindValue(":nIRPF",0);
 
          if(!query.exec()){
              QMessageBox::critical(NULL,"error al insertar:", query.lastError().text());
@@ -245,74 +254,78 @@ void Cliente::Recuperar(QString cSQL) {
         QMessageBox::critical(NULL, "error:", qryCliente->lastError().text());
     } else {
         if (qryCliente->next()) {
-            this->id = qryCliente->value(0).toInt();
-            this->cCodigoCliente= qryCliente->value(1).toString();
-            this->cApellido1 = qryCliente->value(2).toString();
-            this->cApellido2 = qryCliente->value(3).toString();
-            this->cNombre = qryCliente->value(4).toString();
-            this->cNombreFiscal = qryCliente->value(5).toString();
-            this->cNombreComercial = qryCliente->value(6).toString();
-            this->cPersonaContacto = qryCliente->value(7).toString();
-            this->cCifNif = qryCliente->value(8).toString();
-            this->cDireccion1 = qryCliente->value(9).toString();
-            this->cDireccion2 = qryCliente->value(10).toString();
-            this->cCp = qryCliente->value(11).toString();
-            this->cPoblacion = qryCliente->value(12).toString();
-            this->cProvincia = qryCliente->value(13).toString();
-            this->cPais = qryCliente->value(14).toString();
-            this->cTelefono1 = qryCliente->value(15).toString();
-            this->cTelefono2 = qryCliente->value(16).toString();
-            this->cFax =qryCliente->value(17).toString();
-            this->cMovil = qryCliente->value(18).toString();
-            this->cEmail = qryCliente->value(19).toString();
-            this->cWeb = qryCliente->value(20).toString();
-            this->cDireccionFactura1 = qryCliente->value(21).toString();
-            this->cDireccionFactura2 = qryCliente->value(22).toString();
-            this->cCPFactura = qryCliente->value(23).toString();
-            this->cPoblacionFactura = qryCliente->value(24).toString();
-            this->cProvinciaFactura = qryCliente->value(25).toString();
-            this->cPaisFactura = qryCliente->value(26).toString();
-            this->cDireccionAlmacen = qryCliente->value(27).toString();
-            this->cDireccionAlmacen2 = qryCliente->value(28).toString();
-            this->cCPAlmacen = qryCliente->value(29).toString();
-            this->cPoblacionAlmacen = qryCliente->value(30).toString();
-            this->cProvinciaAlmacen = qryCliente->value(31).toString();
-            this->cPaisAlmacen = qryCliente->value(32).toString();
-            this->dFechaalta = qryCliente->value(33).toDate();
-            this->dFechaCompra = qryCliente->value(34).toDate();
-            this->rAcumuladoVentas = qryCliente->value(35).toDouble();
-            this->rVentasEjercicio = qryCliente->value(36).toDouble();
-            this->rRiesgoMaximo = qryCliente->value(37).toDouble();
-            this->rDeudaActual = qryCliente->value(38).toDouble();
-            this->tComentarios = qryCliente->value(39).toString();
-            this->lBloqueado = qryCliente->value(40).toInt();
-            this->tComentarioBloqueo = qryCliente->value(41).toString();
-            this->nPorcDtoCliente = qryCliente->value(42).toDouble();
-            this->lRecargoEquivalencia = qryCliente->value(43).toInt();
-            this->cCuentaContable = qryCliente->value(44).toString();
-            this->cCuentaIvaRepercutido = qryCliente->value(45).toString();
-            this->cCuentaDeudas = qryCliente->value(46).toString();
-            this->cCuentaCobros = qryCliente->value(47).toString();
-            this->cFormaPago = qryCliente->value(48).toString();
-            this->nDiaPago1 = qryCliente->value(49).toInt();
-            this->nDiaPago2 = qryCliente->value(50).toInt();
-            this->nTarifaCliente = qryCliente->value(51).toInt();
-            this->rImporteACuenta = qryCliente->value(52).toDouble();
-            this->rVales = qryCliente->value(53).toDouble();
-            this->cEntidadBancaria = qryCliente->value(54).toString();
-            this->cOficinaBancaria = qryCliente->value(55).toString();
-            this->cDc = qryCliente->value(56).toString();
-            this->cCuentaCorriente = qryCliente->value(57).toString();
-            this->dFechaNacimiento = qryCliente->value(58).toDate();
-            this->rImportePendiente = qryCliente->value(59).toDouble();
-            this->cAccesoWeb = qryCliente->value(60).toString();
-            this->cPasswordWeb = qryCliente->value(61).toString();
-
+            QSqlRecord registro = qryCliente->record();
+            this->id = registro.field("id").value().toInt();
+            this->cCodigoCliente= registro.field("cCodigoCliente").value().toString();
+            this->cApellido1 = registro.field("cApellido1").value().toString();
+            this->cApellido2 = registro.field("cApellido2").value().toString();
+            this->cNombre = registro.field("cNombre").value().toString();
+            this->cNombreFiscal = registro.field("cNombreFiscal").value().toString();
+            this->cNombreComercial = registro.field("cNombreComercial").value().toString();
+            this->cPersonaContacto = registro.field("cPersonaContacto").value().toString();
+            this->cCifNif = registro.field("cCifNif").value().toString();
+            this->cDireccion1 = registro.field("cDireccion1").value().toString();
+            this->cDireccion2 = registro.field("cDireccion2").value().toString();
+            this->cCp = registro.field("cCP").value().toString();
+            this->cPoblacion = registro.field("cPoblacion").value().toString();
+            this->cProvincia = registro.field("cProvincia").value().toString();
+            this->cPais = registro.field("cPais").value().toString();
+            this->cTelefono1 = registro.field("cTelefono1").value().toString();
+            this->cTelefono2 = registro.field("cTelefono2").value().toString();
+            this->cFax =registro.field("cFax").value().toString();
+            this->cMovil = registro.field("cMovil").value().toString();
+            this->cEmail = registro.field("cEmail").value().toString();
+            this->cWeb = registro.field("cWeb").value().toString();
+            this->cDireccionFactura1 = registro.field("cDireccionFactura1").value().toString();
+            this->cDireccionFactura2 = registro.field("cDireccionFactura2").value().toString();
+            this->cCPFactura = registro.field("cCPFactura").value().toString();
+            this->cPoblacionFactura = registro.field("cPoblacionFactura").value().toString();
+            this->cProvinciaFactura = registro.field("cProvinciaFactura").value().toString();
+            this->cPaisFactura = registro.field("cPaisFactura").value().toString();
+            this->cDireccionAlmacen = registro.field("cDireccionAlmacen").value().toString();
+            this->cDireccionAlmacen2 = registro.field("cDireccionAlmacen").value().toString();
+            this->cCPAlmacen = registro.field("cCPAlmacen").value().toString();
+            this->cPoblacionAlmacen = registro.field("cPoblacionAlmacen").value().toString();
+            this->cProvinciaAlmacen = registro.field("cProvinciaAlmacen").value().toString();
+            this->cPaisAlmacen = registro.field("cPaisAlmacen").value().toString();
+            this->dFechaalta = registro.field("dFechaAlta").value().toDate();
+            this->dFechaCompra = registro.field("dFechaCompra").value().toDate();
+            this->rAcumuladoVentas = registro.field("rAcumuladoVentas").value().toDouble();
+            this->rVentasEjercicio = registro.field("rVentasEjercicio").value().toDouble();
+            this->rRiesgoMaximo = registro.field("rRiesgoMaximo").value().toDouble();
+            this->rDeudaActual = registro.field("rDeudaActual").value().toDouble();
+            this->tComentarios = registro.field("tComentarios").value().toString();
+            this->lBloqueado = registro.field("lBloqueado").value().toInt();
+            this->tComentarioBloqueo = registro.field("tComentarioBloqueo").value().toString();
+            this->nPorcDtoCliente = registro.field("nPorcDtoCliente").value().toDouble();
+            this->lRecargoEquivalencia = registro.field("lRecargoEquivalencia").value().toInt();
+            this->cCuentaContable = registro.field("cCuentaContable").value().toString();
+            this->cCuentaIvaRepercutido = registro.field("cCuentaIvaRepercutido").value().toString();
+            this->cCuentaDeudas = registro.field("cCuentaDeudas").value().toString();
+            this->cCuentaCobros = registro.field("cCuentaCobros").value().toString();
+            this->cFormaPago = registro.field("cFormaPago").value().toString();
+            this->nDiaPago1 = registro.field("nDiaPago1").value().toInt();
+            this->nDiaPago2 = registro.field("nDiaPago2").value().toInt();
+            this->nTarifaCliente = registro.field("nTarifaCliente").value().toInt();
+            this->rImporteACuenta = registro.field("rImporteACuenta").value().toDouble();
+            this->rVales = registro.field("rVales").value().toDouble();
+            this->cEntidadBancaria = registro.field("cCEntidadBancaria").value().toString();
+            this->cOficinaBancaria = registro.field("cOficinaBancaria").value().toString();
+            this->cDc = registro.field("cDC").value().toString();
+            this->cCuentaCorriente = registro.field("cCuentaCorriente").value().toString();
+            this->dFechaNacimiento = registro.field("dFechaNacimiento").value().toDate();
+            this->rImportePendiente = registro.field("rImportePendiente").value().toDouble();
+            this->cAccesoWeb = registro.field("cAccesoWeb").value().toString();
+            this->cPasswordWeb = registro.field("cPasswordWeb").value().toString();
+            int nIRPF =registro.field("nIRPF").value().toInt();
+            if (nIRPF==1)
+                this->lIRPF = true;
+            else
+                this->lIRPF = false;
 
             }
 
-    qryCliente->clear();
-    qryCliente->finish();
+    delete qryCliente;
 
     }
 
@@ -634,6 +647,11 @@ void Cliente::setcPasswordWeb(QString cPasswordWeb) {
     this->cPasswordWeb = cPasswordWeb;
 }
 
+void Cliente::setlIRPF(bool lIRPF)
+{
+    this->lIRPF = lIRPF;
+}
+
 
 
 
@@ -880,6 +898,11 @@ QString Cliente::getcAccesoWeb() {
 QString Cliente::getcPasswordweb() {
     return this->cPasswordWeb;
 
+}
+
+bool Cliente::getlIRPF()
+{
+    return this->lIRPF;
 }
 
 

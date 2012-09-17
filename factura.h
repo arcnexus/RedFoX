@@ -35,6 +35,8 @@ private:
     double rImporteDescuento;
     double rImporteDescuentoPP;
     double rBase;
+    int nIRPF;
+    double rImporteIRPF;
     int nIva;
     double rImporteIva;
     double rTotal;
@@ -160,6 +162,8 @@ public slots:
     QString getcDCCuenta();
     QString getcNumeroCuenta();
     QString getcPedidoCliente();
+    int getnIRPF();
+    double getrImporteIRPF();
 
 
     // setters
@@ -225,6 +229,8 @@ public slots:
     void setcDCCuenta(QString cDCCuenta);
     void setcNumeroCuenta(QString cNumeroCuenta);
     void setcPedidoCliente(QString cPedidoCliente);
+    void setnIRPF(int nIRPF);
+    void setrImporteIRPF(double rImporteIRPF);
     
 };
 

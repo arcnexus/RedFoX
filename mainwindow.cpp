@@ -16,6 +16,7 @@
 #include <QSqlQuery>
 #include "frmempresas.h"
 #include "frmproveedores.h"
+#include "frmconfiguracion.h"
 
 
 
@@ -28,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QSqlDatabase dbEmp;
     m_config = new Configuracion();
             QSettings settings("infint", "terra");
-    // TODO - Cambiar por parametros fichero configuración.
+    // Cambiar por parametros fichero configuración.
     m_config->cDriverBDTerra = settings.value("cDriverBDTerra").toString();
     m_config->cRutaBdTerra = settings.value("cRutaDBTerra").toString();
     m_config->cHostBDTerra = settings.value("cHostBDTerra").toString();
@@ -92,12 +93,14 @@ MainWindow::MainWindow(QWidget *parent) :
          QryEmpresa.bindValue(":nombre",Empresa.trimmed());
          if (QryEmpresa.exec()) {
                 QryEmpresa.next();
-               m_config->cDriverBDEmpresa = QryEmpresa.value(11).toString();
-               m_config->cHostBDEmpresa = QryEmpresa.value(6).toString();
-               m_config->cNombreBDEmpresa = QryEmpresa.value(9).toString();
-               m_config->cPasswordBDEmpresa = QryEmpresa.value(8).toString();
-               m_config->cRutaBdEmpresa = QryEmpresa.value(5).toString();
-               m_config->cUsuarioBDEmpresa = QryEmpresa.value(7).toString();
+                QSqlRecord record = QryEmpresa.record();
+               m_config->cDriverBDEmpresa = record.field("driverBD").value().toString();
+               m_config->cHostBDEmpresa = record.field("host").value().toString();
+               m_config->cNombreBDEmpresa =record.field("nombreBD").value().toString();
+               m_config->cPasswordBDEmpresa =record.field("contrasena").value().toString();
+               m_config->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
+               m_config->cUsuarioBDEmpresa = record.field("user").value().toString();
+               m_config->cSerie = record.field("serie").value().toString();
 
                // Abro empresa activa
                QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"empresa");
@@ -185,4 +188,14 @@ void MainWindow::on_btnProveedores_clicked()
     frmProveedores1->exec();
     ui->btnProveedores->setEnabled(true);
 
+}
+
+void MainWindow::on_botConfiguracion_clicked()
+{
+    ui->botConfiguracion->setEnabled(false);
+    FrmConfiguracion *frmConfiguracion1 = new FrmConfiguracion();
+    workspace->addWindow(frmConfiguracion1);
+    frmConfiguracion1->setWindowState(Qt::WindowMaximized);
+    frmConfiguracion1->exec();
+    ui->botConfiguracion->setEnabled(true);
 }

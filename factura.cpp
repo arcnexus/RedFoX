@@ -176,7 +176,9 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
                    "cOficinaEntidad =:cOficinaEntidad,"
                    "cDCCuenta =:cDCCuenta,"
                    "cNumeroCuenta =:cNumeroCuenta,"
-                   "cPedidoCliente =:cPedidoCliente"
+                   "cPedidoCliente =:cPedidoCliente,"
+                   "nIRPF =:nIRPF,"
+                   "rImporteIRPF =:rImporteIRPF"
                    " where Id=:Id");
 
     // Pasamos valores reales a la Select
@@ -242,6 +244,8 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
     cab_fac.bindValue(":cDCCuenta",this->cDCCuenta);
     cab_fac.bindValue(":cNumeroCuenta",this->cNumeroCuenta);
     cab_fac.bindValue(":cPedidoCliente",this->cPedidoCliente);
+    cab_fac.bindValue(":nIRPF",this->nIRPF);
+    cab_fac.bindValue(":rImporteIRPF",this->rImporteIRPF);
     if(!cab_fac.exec()){
         QMessageBox::critical(NULL,tr("error al guardar datos Factura:"), cab_fac.lastError().text());
     } else {
@@ -328,69 +332,71 @@ void Factura::RecuperarFactura(QString cSQL){
             QMessageBox::critical(NULL, "error:", cab_fac->lastError().text());
         } else {
             if (cab_fac->next()) {
-                this->id = cab_fac->value(0).toInt();
-                this->cCodigoCliente= cab_fac->value(1).toString();
-                this->cFactura = cab_fac->value(2).toString();
-                this->dFecha = cab_fac->value(3).toDate();
-                this->dFechaCobro = cab_fac->value(4).toDate();
-                this->iId_Cliente = cab_fac->value(5).toInt();
-                this->cCliente = cab_fac->value(6).toString();
-                this->cDireccion = cab_fac->value(7).toString();
-                this->cDireccion2 = cab_fac->value(8).toString();
-                this->cCp = cab_fac->value(9).toString();
-                this->cPoblacion = cab_fac->value(10).toString();
-                this->cProvincia = cab_fac->value(11).toString();
-                this->cPais = cab_fac->value(12).toString();
-                this->cCif = cab_fac->value(13).toString();
-                this->lRecargoEquivalencia = cab_fac->value(14).toInt();
-                this->rSubtotal = cab_fac->value(15).toDouble();
-                this->nDto = cab_fac->value(16).toInt();
-                this->nDtoPP = cab_fac->value(17).toInt();
-                this->rImporteDescuento = cab_fac->value(18).toDouble();
-                this->rImporteDescuentoPP = cab_fac->value(19).toDouble();
-                this->rBase = cab_fac->value(20).toDouble();
-                this->nIva = cab_fac->value(21).toInt();
-                this->rImporteIva = cab_fac->value(22).toDouble();
-                this->rTotal = cab_fac->value(23).toDouble();
-                this->lImpresa = cab_fac->value(24).toInt();
-                this->lCobrada = cab_fac->value(25).toInt();
-                this->lContablilizada = cab_fac->value(26).toInt();
-                this->id_FormaPago = cab_fac->value(27).toInt();
-                this->cFormaPago = cab_fac->value(28).toString();
-                this->tComentario = cab_fac->value(29).toString();
-                this->rBase1 = cab_fac->value(30).toDouble();
-                this->rBase2 = cab_fac->value(31).toDouble();
-                this->rBase3 = cab_fac->value(32).toDouble();
-                this->rBase4 = cab_fac->value(33).toDouble();
-                this->nPorcentajeIVA1 = cab_fac->value(34).toInt();
-                this->nPorcentajeIVA2 = cab_fac->value(35).toInt();
-                this->nPorcentajeIVA3 = cab_fac->value(36).toInt();
-                this->nPorcentajeIVA4 = cab_fac->value(37).toInt();
-                this->rIVA1 = cab_fac->value(38).toDouble();
-                this->rIVA2 = cab_fac->value(39).toDouble();
-                this->rIVA3 = cab_fac->value(40).toDouble();
-                this->rIVA4 = cab_fac->value(41).toDouble();
-                this->rTotal1 = cab_fac->value(42).toDouble();
-                this->rTotal2 = cab_fac->value(43).toDouble();
-                this->rTotal3 = cab_fac->value(44).toDouble();
-                this->rTotal4 = cab_fac->value(45).toDouble();
-                this->nRec1 = cab_fac->value(46).toDouble();
-                this->nRec2 = cab_fac->value(47).toDouble();
-                this->nRec3 = cab_fac->value(48).toDouble();
-                this->nRec4 = cab_fac->value(49).toDouble();
-                this->rRecargoEq1 = cab_fac->value(50).toDouble();
-                this->rRecargoEq2 = cab_fac->value(51).toDouble();
-                this->rRecargoEq3 = cab_fac->value(52).toDouble();
-                this->rRecargoEq4 = cab_fac->value(53).toDouble();
-                this->rTotalRecargoEq = cab_fac->value(54).toDouble();
-                this->rEntregadoaCuenta = cab_fac->value(55).toDouble();
-                this->rImportePendiente = cab_fac->value(56).toDouble();
-                this->cCodigoEntidad = cab_fac->value(57).toString();
-                this->cOficinaEntidad = cab_fac->value(58).toString();
-                this->cDCCuenta = cab_fac->value(59).toString();
-                this->cNumeroCuenta = cab_fac->value(60).toString();
-                this->cPedidoCliente = cab_fac->value(61).toString();
-
+                QSqlRecord registro = cab_fac->record();
+                this->id = registro.field("id").value().toInt();
+                this->cCodigoCliente= registro.field("cCodigoCliente").value().toString();
+                this->cFactura = registro.field("cFactura").value().toString();
+                this->dFecha = registro.field("dFecha").value().toDate();
+                this->dFechaCobro = registro.field("dFechaCobro").value().toDate();
+                this->iId_Cliente = registro.field("iId_Cliente").value().toInt();
+                this->cCliente = registro.field("cCliente").value().toString();
+                this->cDireccion = registro.field("cDireccion").value().toString();
+                this->cDireccion2 = registro.field("cDireccion2").value().toString();
+                this->cCp = registro.field("cCp").value().toString();
+                this->cPoblacion = registro.field("cPoblacion").value().toString();
+                this->cProvincia = registro.field("cProvincia").value().toString();
+                this->cPais = registro.field("cPais").value().toString();
+                this->cCif =registro.field("cCif").value().toString();
+                this->lRecargoEquivalencia = registro.field("lRecargoEquivalencia").value().toInt();
+                this->rSubtotal = registro.field("rSubtotal").value().toDouble();
+                this->nDto = registro.field("nDto").value().toInt();
+                this->nDtoPP = registro.field("nDtoPP").value().toInt();
+                this->rImporteDescuento = registro.field("rImporteDescuento").value().toDouble();
+                this->rImporteDescuentoPP = registro.field("rImporteDescuentoPP").value().toDouble();
+                this->rBase = registro.field("rBase").value().toDouble();
+                this->nIva = registro.field("nIva").value().toInt();
+                this->rImporteIva = registro.field("rImporteIva").value().toDouble();
+                this->rTotal = registro.field("rTotal").value().toDouble();
+                this->lImpresa = registro.field("lImpresa").value().toInt();
+                this->lCobrada = registro.field("lCobrada").value().toInt();
+                this->lContablilizada = registro.field("lContabilizada").value().toInt();
+                this->id_FormaPago = registro.field("id_FormaPago").value().toInt();
+                this->cFormaPago = registro.field("cFormaPago").value().toString();
+                this->tComentario = registro.field("tComentario").value().toString();
+                this->rBase1 = registro.field("rBase1").value().toDouble();
+                this->rBase2 = registro.field("rBase2").value().toDouble();
+                this->rBase3 = registro.field("rBase3").value().toDouble();
+                this->rBase4 = registro.field("rBase4").value().toDouble();
+                this->nPorcentajeIVA1 = registro.field("nPorcentajeIVA1").value().toInt();
+                this->nPorcentajeIVA2 = registro.field("nPorcentajeIVA2").value().toInt();
+                this->nPorcentajeIVA3 = registro.field("nPorcentajeIVA3").value().toInt();
+                this->nPorcentajeIVA4 = registro.field("nPorcentajeIVA4").value().toInt();
+                this->rIVA1 = registro.field("rIVA1").value().toDouble();
+                this->rIVA2 = registro.field("rIVA3").value().toDouble();
+                this->rIVA3 = registro.field("rIVA3").value().toDouble();
+                this->rIVA4 = registro.field("rIVA4").value().toDouble();
+                this->rTotal1 = registro.field("rTotal1").value().toDouble();
+                this->rTotal2 = registro.field("rTotal2").value().toDouble();
+                this->rTotal3 = registro.field("rTotal3").value().toDouble();
+                this->rTotal4 = registro.field("rTotal4").value().toDouble();
+                this->nRec1 = registro.field("nRec1").value().toDouble();
+                this->nRec2 = registro.field("nRec2").value().toDouble();
+                this->nRec3 = registro.field("nRec3").value().toDouble();
+                this->nRec4 = registro.field("nRec4").value().toDouble();
+                this->rRecargoEq1 = registro.field("rRecargoEq1").value().toDouble();
+                this->rRecargoEq2 = registro.field("rRecargoEq2").value().toDouble();
+                this->rRecargoEq3 = registro.field("nRecargoEq3").value().toDouble();
+                this->rRecargoEq4 = registro.field("rRecargoEq4").value().toDouble();
+                this->rTotalRecargoEq = registro.field("rTotalRecargoEq").value().toDouble();
+                this->rEntregadoaCuenta = registro.field("rEntregadoaCuenta").value().toDouble();
+                this->rImportePendiente = registro.field("rImportePendiente").value().toDouble();
+                this->cCodigoEntidad = registro.field("cCodigoEntidad").value().toString();
+                this->cOficinaEntidad = registro.field("cOficinaEntidad").value().toString();
+                this->cDCCuenta = registro.field("cDCCuenta").value().toString();
+                this->cNumeroCuenta = registro.field("cNumeroCuenta").value().toString();
+                this->cPedidoCliente = registro.field("cPedidoCliente").value().toString();
+                this->nIRPF = registro.field("nIRPF").value().toInt();
+                this->rImporteIRPF = registro.field("rImporteIRPF").value().toDouble();
 
                }
         }
@@ -408,7 +414,7 @@ QString Factura::NuevoNumeroFactura() {
         cab_fac.next();
         cNumFac = cab_fac.value(0).toString();
         cNum = cNumFac.right(oConfig->nDigitosFactura);
-        cSerie = cNumFac.left(oConfig->nDigitosFactura);
+        cSerie = oConfig->cSerie;
         inum = cNum.toInt();
         inum++;
         cNum = cNum.number(inum);
@@ -577,6 +583,8 @@ void Factura::BorrarLineaFactura(int id_lin)
 
 void Factura::calcularFactura()
 {
+    Configuracion *o_config = new Configuracion();
+    o_config->CargarDatos();
     // Reseteo valores
     this->rSubtotal = 0;
     this->rImporteDescuento =0;
@@ -594,6 +602,7 @@ void Factura::calcularFactura()
     this->rTotal2 =0;
     this->rTotal3 =0;
     this->rTotal4 = 0;
+    this->rImporteIRPF = 0;
 
     QSqlQuery *Qlin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
     Qlin_fac->prepare("Select * from lin_fac where id_cab = :nId");
@@ -606,6 +615,10 @@ void Factura::calcularFactura()
             this->rSubtotal = this->rSubtotal + record.field("rSubtotal").value().toDouble();
             this->rImporteDescuento = this->rImporteDescuento + record.field("rDto").value().toDouble();
             this->rBase = (this->rSubtotal - this->rImporteDescuento) - this->rImporteDescuentoPP;
+            if (this->nIRPF !=0) {
+                this->rImporteIRPF = (this->rBase * this->nIRPF)/100;
+            }
+
             // IVA 1
             if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA1) {
                 this->rBase1 = this->rBase1 + record.field("rTotal").value().toDouble();
@@ -632,8 +645,10 @@ void Factura::calcularFactura()
 
             }
             this->rImporteIva =  (this->rIVA1 +  this->rIVA2 + this->rIVA3 + this->rIVA4);
-            this->rTotal = this->rBase + this->rImporteIva;
-
+            if (o_config->lProfesional==1 and this->nIRPF != 0)
+                this->rTotal = this->rBase - this->rImporteIRPF + this->rImporteIva;
+            else
+                this->rTotal = this->rBase + this->rImporteIva;
         }
     }
 }
@@ -858,6 +873,16 @@ QString Factura::getcPedidoCliente() {
     return this->cPedidoCliente;
 }
 
+int Factura::getnIRPF()
+{
+    return this->nIRPF;
+}
+
+double Factura::getrImporteIRPF()
+{
+    return this->rImporteIRPF;
+}
+
 
 // setters
 void Factura::setid( int iID_Factura) {
@@ -1044,4 +1069,14 @@ void Factura::setcNumeroCuenta(QString cNumeroCuenta) {
 }
 void Factura::setcPedidoCliente(QString cPedidoCliente) {
     this->cPedidoCliente = cPedidoCliente;
+}
+
+void Factura::setnIRPF(int nIRPF)
+{
+    this->nIRPF = nIRPF;
+}
+
+void Factura::setrImporteIRPF(double rImporteIRPF)
+{
+    this->rImporteIRPF = rImporteIRPF;
 }
