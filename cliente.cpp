@@ -5,6 +5,7 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include <frmdecision.h>
+#include "configuracion.h"
 
 
 Cliente::Cliente(QObject *parent) :
@@ -75,9 +76,9 @@ void Cliente::Guardar() {
                    "rImportePendiente=:rImportePendiente,"
                    "cAccesoWeb =:cAccesoWeb,"
                    "cPasswordWeb=:cPasswordWeb,"
-                   "nIRPF=:nIRPF"
-
+                   "nIRPF =:nIRPF"
                    " WHERE id =:id" );
+
     query.bindValue(":cCodigoCliente", this->cCodigoCliente);
     query.bindValue(":cApellido1", this->cApellido1);
     query.bindValue(":cApellido2",this->cApellido2);
@@ -147,7 +148,7 @@ void Cliente::Guardar() {
 
 
     if(!query.exec()){
-        QMessageBox::critical(NULL,"error al guardar datos cliente:", query.lastError().text());
+        QMessageBox::critical(NULL,"error al guardar datos cliente. Descripción Error: ", query.lastError().text());
     } else {
         QMessageBox::information(NULL,"Guardar datos","Los datos se han guardado correctamente:","Ok");
     }
@@ -163,7 +164,8 @@ void Cliente::Anadir() {
                        "cPaisAlmacen,dFechaAlta,dFechaUltimaCompra,rAcumuladoVentas,rVentasEjercicio,rRiesgoMaximo,rDeudaActual,"
                        "tComentarios,lBloqueado,tComentarioBloqueo,nPorcDtoCliente,lRecargoEquivalencia,cCuentaContable,cCuentaIvaRepercutido,"
                        "cCuentaDeudas,cCuentaCobros,cFormaPago,nDiapago1,nDiaPago2,nTarifaCliente,rImporteACuenta,rVales,"
-                       "cCentidadBancaria,cOficinaBancaria,cDC,cCuentaCorriente,dFechaNacimiento,rImportePendiente,cAccesoWeb,cPasswordWeb,nIRPF) "
+                       "cCentidadBancaria,cOficinaBancaria,cDC,cCuentaCorriente,dFechaNacimiento,rImportePendiente,cAccesoWeb,"
+                       "cPasswordWeb,nIRPF) "
                        "VALUES (:cCodigoCliente, :cApellido, :cApellido2,:cNombre,:cNombreFiscal,:cNombreComercial,:cPersonaContacto,"
                        ":cCifNif,:cDireccion1,:cDireccion2,:cCP,:cPoblacion,:cProvincia,:cPais,:cTelefono1,:cTelefono2,:cFax,"
                        ":cMovil,:cEmail,:cWeb,:cDireccionFactura1,:cDireccionFactura2,:cCPFactura,:cPoblacionFactura,:cProvinciaFactura,"
@@ -171,8 +173,8 @@ void Cliente::Anadir() {
                        ":cPaisAlmacen,:dFechaAlta,:dFechaUltimaCompra,:rAcumuladoVentas,:rVentasEjercicio,:rRiesgoMaximo,:rDeudaActual,"
                        ":tComentarios,:lBloqueado,:tComentarioBloqueo,:nPorcDtoCliente,:lRecargoEquivalencia,:cCuentaContable,:cCuentaIvaRepercutido,"
                        ":cCuentaDeudas,:cCuentaCobros,:cFormaPago,:nDiapago1,:nDiaPago2,:nTarifaCliente,:rImporteACuenta,:rVales,"
-                       ":cCentidadBancaria,:cOficinaBancaria,:cDC,:cCuentaCorriente,:dFechaNacimiento,:rImportePendiente,:nIRPF"
-                       ":cAccesoWeb,:cPasswordWeb)");
+                       ":cCentidadBancaria,:cOficinaBancaria,:cDC,:cCuentaCorriente,:dFechaNacimiento,:rImportePendiente,"
+                       ":cAccesoWeb,:cPasswordWeb,:nIRPF)");
          query.bindValue(":cCodigoCliente", this->cCodigoCliente);
          query.bindValue(":cApellido1", this->cApellido1);
          query.bindValue(":cApellido2",this->cApellido2);
@@ -244,7 +246,7 @@ void Cliente::Anadir() {
          } else{
              QMessageBox::information(NULL,"NuevoCliente","Cliente insertado Correctamente");
          }
-             ;
+
 
 }
 void Cliente::Recuperar(QString cSQL) {
@@ -392,7 +394,36 @@ void Cliente::Borrar(int id_cliente) {
         }
 
 
-     }
+   }
+}
+
+QString Cliente::NuevoCodigoCliente()
+{
+    Configuracion *oConfig = new Configuracion();
+    oConfig->CargarDatos();
+    QString cCodigo;
+    QString cNum;
+    int nCodigo;
+    QSqlQuery *qClientes = new QSqlQuery(QSqlDatabase::database("empresa"));
+    if(qClientes->exec("select cCodigoCliente from clientes  order by cCodigoCliente desc limit 0,1")) {
+        if (qClientes->next()) {
+            QSqlRecord registro = qClientes->record();
+            cCodigo = registro.field("cCodigoCliente").value().toString();
+            nCodigo = cCodigo.toInt();
+            nCodigo ++;
+            cCodigo = QString::number(nCodigo);
+        }
+   }
+   if (nCodigo == 0 || nCodigo == 1) {
+        cNum = "1";
+        while (cNum.length()< (oConfig->nDigitosCuentasContables - oConfig->cCuentaClientes.length()) ) {
+            cNum.prepend("0");
+        }
+        cCodigo = oConfig->cCuentaClientes + cNum;
+
+}
+
+   return cCodigo;
 }
 
 // Setters

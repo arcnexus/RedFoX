@@ -59,6 +59,10 @@ void Empresa::Recuperar(QString cSQL)
             this->cComentarioFactura = registro.field("comentariofactura").value().toString();
             this->cComentarioTicket = registro.field("comentarioticket").value().toString();
             this->nEjercicio = registro.field("ejercicio").value().toInt();
+            this->nDigitosCuentas = registro.field("ndigitoscuenta").value().toInt();
+            this->cCuentaClientes = registro.field("codigocuentaclientes").value().toString();
+            this->cCuentaAcreeedores = registro.field("codigocuentaacreedores").value().toString();
+            this->cCuentaProveedores = registro.field("codigocuentaproveedores").value().toString();
 
         } else {
             QMessageBox::information(NULL,QObject::tr("Gestión Empresas"),QObject::tr("No se ha podido encontrar la ficha de empresa"));
@@ -105,6 +109,10 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->cComentarioFactura = registro.field("comentariofactura").value().toString();
             this->cComentarioTicket = registro.field("comentarioticket").value().toString();
             this->nEjercicio = registro.field("ejercicio").value().toInt();
+            this->nDigitosCuentas = registro.field("ndigitoscuenta").value().toInt();
+            this->cCuentaClientes = registro.field("codigocuentaclientes").value().toString();
+            this->cCuentaAcreeedores = registro.field("codigocuentaacreedores").value().toString();
+            this->cCuentaProveedores = registro.field("codigocuentaproveedores").value().toString();
         } else {
             if (nProcede == 1)
                 QMessageBox::information(NULL,QObject::tr("Gestión Empresas"),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
@@ -145,7 +153,11 @@ void Empresa::Guardar()
                      "comentarioalbaran=:cComentarioAlbaran,"
                      "comentariofactura=:cComentarioFactura,"
                      "comentarioticket=:cComentarioTicket,"
-                     "ejercicio=:ejercicio "
+                     "ejercicio=:ejercicio, "
+                     "ndigitoscuenta =:ndigitoscuentas,"
+                     "codigocuentaclientes =:codigocuentaclientes,"
+                     "codigocuentaproveedores =:codigocuentaproveedores,"
+                     "codigocuentaacreedores =:codigocuentaacreedores "
                      "where id=:nID");
     qEmpresa.bindValue(":cCodigo",this->cCodigo);
     qEmpresa.bindValue(":cNombre",this->cNombre);
@@ -174,6 +186,10 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":cComentarioFactura",this->cComentarioFactura);
     qEmpresa.bindValue(":cComentarioTicket",this->cComentarioTicket);
     qEmpresa.bindValue(":ejercicio ",this->nEjercicio);
+    qEmpresa.bindValue(":ndigitoscuenta",this->nDigitosCuentas);
+    qEmpresa.bindValue(":codigocuentaclientes",this->cCuentaClientes);
+    qEmpresa.bindValue(":codigocuentaproveedores",this->cCuentaProveedores);
+    qEmpresa.bindValue(":codigocuentaacreedores",this->cCuentaAcreeedores);
     qEmpresa.bindValue(":nID",this->id);
     if (!qEmpresa.exec())
         QMessageBox::warning(NULL,QObject::tr("Gestión de Empresas"),QObject::tr("No se ha podido modificar la ficha de la empresa")+
@@ -217,6 +233,10 @@ void Empresa::Vaciar()
     this->cWeb  = "";
     this->cCif = "";
     this->nEjercicio = 2000;
+    this->nDigitosCuentas = 0;
+    this->cCuentaAcreeedores = "410";
+    this->cCuentaClientes = "430";
+    this->cCuentaProveedores= "400";
 }
 
 void Empresa::Borrar(int nId)
@@ -383,6 +403,26 @@ QString Empresa::getcComentarioTicket()
     return this->cComentarioTicket;
 }
 
+int Empresa::getnDigitosCuentas()
+{
+    return this->nDigitosCuentas;
+}
+
+QString Empresa::getcCuentaClientes()
+{
+    return this->cCuentaClientes;
+}
+
+QString Empresa::getcCuentaProveedores()
+{
+    return this->cCuentaProveedores;
+}
+
+QString Empresa::getcCuentaAcreedores()
+{
+    return this->cCuentaAcreeedores;
+}
+
 
 void Empresa::setid(int id)
 {
@@ -524,6 +564,27 @@ void Empresa::setcComentarioTicket(QString cComentarioTicket)
 {
     this->cComentarioTicket = cComentarioTicket;
 }
+
+void Empresa::setnDigitosCuentas(int nDigitosCuentas)
+{
+    this->nDigitosCuentas = nDigitosCuentas;
+}
+
+void Empresa::setcCodigoCuentaClientes(QString cCuentaClientes)
+{
+    this->cCuentaClientes = cCuentaClientes;
+}
+
+void Empresa::setcCodigoCuentaProveedor(QString cCuentaProveedores)
+{
+    this->cCuentaProveedores = cCuentaProveedores;
+}
+
+void Empresa::setcCodigoCuentaAcreedores(QString cCuentaAcreeedores)
+{
+    this->cCuentaAcreeedores = cCuentaAcreeedores;
+}
+
 
 
 

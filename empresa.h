@@ -46,6 +46,10 @@ public:
     QString getcComentarioFactura();
     QString getcComentarioAlbaran();
     QString getcComentarioTicket();
+    int getnDigitosCuentas();
+    QString getcCuentaClientes();
+    QString getcCuentaProveedores();
+    QString getcCuentaAcreedores();
 
     // Setters
 
@@ -77,7 +81,11 @@ public:
     void setcComentarioFactura(QString cComentarioFactura);
     void setcComemtarioAlbaran(QString cComentarioAlbaran);
     void setcComentarioTicket(QString cComentarioTicket);
-    
+    void setnDigitosCuentas(int nDigitosCuentas);
+    void setcCodigoCuentaClientes(QString cCuentaClientes);
+    void setcCodigoCuentaProveedor(QString cCuentaProveedores);
+    void setcCodigoCuentaAcreedores(QString cCuentaAcreeedores);
+
 signals:
     
 public slots:
@@ -118,6 +126,11 @@ private:
     QString cNombreBD;
     QString cPuerto;
     QString cDriverBD;
+    // Contabilidad
+    int nDigitosCuentas;
+    QString cCuentaClientes;
+    QString cCuentaProveedores;
+    QString cCuentaAcreeedores;
 
 
 

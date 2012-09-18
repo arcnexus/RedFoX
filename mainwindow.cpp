@@ -101,7 +101,17 @@ MainWindow::MainWindow(QWidget *parent) :
                m_config->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
                m_config->cUsuarioBDEmpresa = record.field("user").value().toString();
                m_config->cSerie = record.field("serie").value().toString();
-
+               m_config->nDigitosCuentasContables = record.field("ndigitoscuenta").value().toInt();
+               m_config->cCuentaAcreedores = record.field("codigocuentaacreedores").value().toString();
+               m_config->cCuentaClientes = record.field("codigocuentaclientes").value().toString();
+               m_config->cCuentaProveedores = record.field("codigocuentaproveedores").value().toString();
+               // Guardo preferencias
+               QSettings settings("infint", "terra");
+               settings.setValue("cSerie",m_config->cSerie);
+               settings.setValue("nDigitosCuentas",m_config->nDigitosCuentasContables);
+               settings.setValue("cCuentaClientes",m_config->cCuentaClientes);
+               settings.setValue("cCuentaProveedores",m_config->cCuentaProveedores);
+               settings.setValue("cCuentaAcreedores",m_config->cCuentaAcreedores);
                // Abro empresa activa
                QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"empresa");
                if (m_config->cDriverBDEmpresa =="QSQLITE") {

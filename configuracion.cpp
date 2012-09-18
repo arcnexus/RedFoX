@@ -109,6 +109,10 @@ void Configuracion::CargarDatos()
         this->lProfesional = false;
     this->nIRPF = settings.value("nIRPF").toInt();
     this->cSerie = settings.value("cSerie").toString();
+    this->nDigitosCuentasContables = settings.value("nDigitosCuentas").toInt();
+    this->cCuentaClientes = settings.value("cCuentaClientes").toString();
+    this->cCuentaAcreedores = settings.value("cCuentaAcreedores").toString();
+    this->cCuentaProveedores = settings.value("cCuentaProveedores").toString();
 
 }
 

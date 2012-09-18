@@ -103,7 +103,7 @@ void frmClientes::LLenarCampos() {
         ui->chklBloqueoCliente->setChecked(false);
     }
     ui->txttComentarioBloqueo->setText(oCliente->gettComentarioBloqueo());
-    ui->txtnPorcDtoCliente->setValue(oCliente->getnPorcDtoCliente());
+    ui->txtnPorcDtoCliente->setText(QString::number(oCliente->getnPorcDtoCliente()));
     if(oCliente->islRecargoEquivalencia()) {
         ui->chklRecargoEquivalencia->setChecked(true);
     } else {
@@ -136,6 +136,10 @@ void frmClientes::LLenarCampos() {
         ui->chkClienteEmpresa->setChecked(false);
 
     // Tablas
+    /********************************************************************
+     * DEUDAS
+     *******************************************************************/
+
     QSqlQueryModel *deudas = new QSqlQueryModel();
     QString cSQL;
     cSQL= "Select id,cDocumento,rPendienteCobro,dFecha,dVencimiento from clientes_deuda where Id_cliente =" + QString::number(oCliente->getId());
@@ -147,25 +151,189 @@ void frmClientes::LLenarCampos() {
         ui->TablaDeudas->setItemDelegateForColumn(3,columnaFecha);
         ui->TablaDeudas->setItemDelegateForColumn(4,columnaFecha);
     //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
-   QHeaderView *Cabecera = new QHeaderView(Qt::Horizontal,this);
+   QHeaderView *CabeceraDeu = new QHeaderView(Qt::Horizontal,this);
    // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
-   ui->TablaDeudas->setHorizontalHeader(Cabecera);
+   ui->TablaDeudas->setHorizontalHeader(CabeceraDeu);
    /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
-   Cabecera->setResizeMode(0,QHeaderView::Fixed);
-   Cabecera->resizeSection(0,0);
-   Cabecera->setResizeMode(1,QHeaderView::Fixed);
-   Cabecera->resizeSection(1,85);
-   Cabecera->setResizeMode(2,QHeaderView::Fixed);
-   Cabecera->resizeSection(2,85);
-   Cabecera->setResizeMode(3,QHeaderView::Fixed);
-   Cabecera->resizeSection(3,85);
-   Cabecera->setResizeMode(4,QHeaderView::Fixed);
-   Cabecera->resizeSection(4,85);
+   CabeceraDeu->setResizeMode(0,QHeaderView::Fixed);
+   CabeceraDeu->resizeSection(0,0);
+   CabeceraDeu->setResizeMode(1,QHeaderView::Fixed);
+   CabeceraDeu->resizeSection(1,85);
+   CabeceraDeu->setResizeMode(2,QHeaderView::Fixed);
+   CabeceraDeu->resizeSection(2,85);
+   CabeceraDeu->setResizeMode(3,QHeaderView::Fixed);
+   CabeceraDeu->resizeSection(3,85);
+   CabeceraDeu->setResizeMode(4,QHeaderView::Fixed);
+   CabeceraDeu->resizeSection(4,85);
    deudas->setHeaderData(1, Qt::Horizontal, QObject::tr("DOCUMENTO"));
    deudas->setHeaderData(2, Qt::Horizontal, QObject::tr("I.PENDIENTE"));
    deudas->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA"));
    deudas->setHeaderData(4, Qt::Horizontal, QObject::tr("VTO"));
-   Cabecera->setVisible(true);
+   CabeceraDeu->setVisible(true);
+
+   /********************************************************************
+    * ALBARANES
+    *******************************************************************/
+
+   QSqlQueryModel *Albaranes = new QSqlQueryModel();
+   cSQL= "Select id,nAlbaran,dFecha,nFactura,rTotalAlbaran from cab_alb where id_Cliente =" + QString::number(oCliente->getId());
+   Albaranes->setQuery(cSQL,QSqlDatabase::database("empresa"));
+   ui->TablaAlbaranes->setModel(Albaranes);
+       ui->TablaAlbaranes->setItemDelegateForColumn(2,columnaFecha);
+       ui->TablaAlbaranes->setItemDelegateForColumn(4,columnaMoneda);
+   //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
+  QHeaderView *CabeceraAlb = new QHeaderView(Qt::Horizontal,this);
+  // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+  ui->TablaAlbaranes->setHorizontalHeader(CabeceraAlb);
+  /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
+  CabeceraAlb->setResizeMode(0,QHeaderView::Fixed);
+  CabeceraAlb->resizeSection(0,0);
+  CabeceraAlb->setResizeMode(1,QHeaderView::Fixed);
+  CabeceraAlb->resizeSection(1,85);
+  CabeceraAlb->setResizeMode(2,QHeaderView::Fixed);
+  CabeceraAlb->resizeSection(2,85);
+  CabeceraAlb->setResizeMode(3,QHeaderView::Fixed);
+  CabeceraAlb->resizeSection(3,85);
+  CabeceraAlb->setResizeMode(4,QHeaderView::Fixed);
+  CabeceraAlb->resizeSection(4,85);
+  Albaranes->setHeaderData(1, Qt::Horizontal, QObject::tr("ALBARAN"));
+  Albaranes->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
+  Albaranes->setHeaderData(3, Qt::Horizontal, QObject::tr("FACTURA"));
+  Albaranes->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
+  CabeceraAlb->setVisible(true);
+
+  /********************************************************************
+   * FACTURAS
+   *******************************************************************/
+
+  QSqlQueryModel *Facturas = new QSqlQueryModel(this);
+
+  cSQL= "Select id,cFactura,dFecha,dFechaCobro,rTotal from cab_fac where iId_Cliente =" + QString::number(oCliente->getId());
+  Facturas->setQuery(cSQL,QSqlDatabase::database("empresa"));
+  ui->tablaFacturas->setModel(Facturas);
+      ui->tablaFacturas->setItemDelegateForColumn(2,columnaFecha);
+      ui->tablaFacturas->setItemDelegateForColumn(3,columnaFecha);
+      ui->tablaFacturas->setItemDelegateForColumn(4,columnaMoneda);
+  //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
+ QHeaderView *CabeceraFac = new QHeaderView(Qt::Horizontal,this);
+ // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+ ui->tablaFacturas->setHorizontalHeader(CabeceraFac);
+ /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
+ CabeceraFac->setResizeMode(0,QHeaderView::Fixed);
+ CabeceraFac->resizeSection(0,0);
+ CabeceraFac->setResizeMode(1,QHeaderView::Fixed);
+ CabeceraFac->resizeSection(1,85);
+ CabeceraFac->setResizeMode(2,QHeaderView::Fixed);
+ CabeceraFac->resizeSection(2,85);
+ CabeceraFac->setResizeMode(3,QHeaderView::Fixed);
+ CabeceraFac->resizeSection(3,85);
+ CabeceraFac->setResizeMode(4,QHeaderView::Fixed);
+ CabeceraFac->resizeSection(4,85);
+ Facturas->setHeaderData(1, Qt::Horizontal, QObject::tr("FACTURA"));
+ Facturas->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
+ Facturas->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA COBRO"));
+ Facturas->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
+ CabeceraFac->setVisible(true);
+
+ /********************************************************************
+  * PRESUPUESTOS
+  *******************************************************************/
+
+ QSqlQueryModel *Presupuestos = new QSqlQueryModel(this);
+
+ cSQL= "Select id,nPresupuesto,dFecha,dValidoHasta,rTotal from cab_pre where id_Cliente =" + QString::number(oCliente->getId());
+ Presupuestos->setQuery(cSQL,QSqlDatabase::database("empresa"));
+ ui->tablaPresupuestos->setModel(Presupuestos);
+ ui->tablaPresupuestos->setItemDelegateForColumn(2,columnaFecha);
+ ui->tablaPresupuestos->setItemDelegateForColumn(3,columnaFecha);
+ ui->tablaPresupuestos->setItemDelegateForColumn(4,columnaMoneda);
+ //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
+QHeaderView *CabeceraPre = new QHeaderView(Qt::Horizontal,this);
+// Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+ui->tablaPresupuestos->setHorizontalHeader(CabeceraPre);
+/*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
+CabeceraPre->setResizeMode(0,QHeaderView::Fixed);
+CabeceraPre->resizeSection(0,0);
+CabeceraPre->setResizeMode(1,QHeaderView::Fixed);
+CabeceraPre->resizeSection(1,85);
+CabeceraPre->setResizeMode(2,QHeaderView::Fixed);
+CabeceraPre->resizeSection(2,85);
+CabeceraPre->setResizeMode(3,QHeaderView::Fixed);
+CabeceraPre->resizeSection(3,85);
+CabeceraPre->setResizeMode(4,QHeaderView::Fixed);
+CabeceraPre->resizeSection(4,85);
+Presupuestos->setHeaderData(1, Qt::Horizontal, QObject::tr("PRES"));
+Presupuestos->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
+Presupuestos->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA APRO."));
+Presupuestos->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
+CabeceraPre->setVisible(true);
+
+
+/********************************************************************
+ * VALES
+ *******************************************************************/
+
+QSqlQueryModel *Vales = new QSqlQueryModel(this);
+
+cSQL= "Select id,nNumero,dFecha,dVto,rImporte from vales where id_Cliente =" + QString::number(oCliente->getId());
+Vales->setQuery(cSQL,QSqlDatabase::database("empresa"));
+ui->tablaVales->setModel(Vales);
+ui->tablaVales->setItemDelegateForColumn(2,columnaFecha);
+ui->tablaVales->setItemDelegateForColumn(3,columnaFecha);
+ui->tablaVales->setItemDelegateForColumn(4,columnaMoneda);
+//Creamos Objeto de la clase Cabecera para las cabeceras horizontales
+QHeaderView *CabeceraVal = new QHeaderView(Qt::Horizontal,this);
+// Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+ui->tablaVales->setHorizontalHeader(CabeceraVal);
+/*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
+CabeceraVal->setResizeMode(0,QHeaderView::Fixed);
+CabeceraVal->resizeSection(0,0);
+CabeceraVal->setResizeMode(1,QHeaderView::Fixed);
+CabeceraVal->resizeSection(1,85);
+CabeceraVal->setResizeMode(2,QHeaderView::Fixed);
+CabeceraVal->resizeSection(2,85);
+CabeceraVal->setResizeMode(3,QHeaderView::Fixed);
+CabeceraVal->resizeSection(3,85);
+CabeceraVal->setResizeMode(4,QHeaderView::Fixed);
+CabeceraVal->resizeSection(4,85);
+Vales->setHeaderData(1, Qt::Horizontal, QObject::tr("VALE"));
+Vales->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
+Vales->setHeaderData(3, Qt::Horizontal, QObject::tr("VTO."));
+Vales->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
+CabeceraVal->setVisible(true);
+
+/********************************************************************
+ * TICKETS
+ *******************************************************************/
+
+QSqlQueryModel *Tickets = new QSqlQueryModel(this);
+
+cSQL= "Select id,nTicket,dFecha,cHora,rImporte from cab_tpv where id_Cliente =" + QString::number(oCliente->getId());
+Tickets->setQuery(cSQL,QSqlDatabase::database("empresa"));
+ui->tablaTickets->setModel(Tickets);
+ui->tablaTickets->setItemDelegateForColumn(2,columnaFecha);
+ui->tablaTickets->setItemDelegateForColumn(3,columnaFecha);
+ui->tablaTickets->setItemDelegateForColumn(4,columnaMoneda);
+//Creamos Objeto de la clase Cabecera para las cabeceras horizontales
+QHeaderView *CabeceraTic = new QHeaderView(Qt::Horizontal,this);
+// Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+ui->tablaTickets->setHorizontalHeader(CabeceraTic);
+/*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
+CabeceraTic->setResizeMode(0,QHeaderView::Fixed);
+CabeceraTic->resizeSection(0,0);
+CabeceraTic->setResizeMode(1,QHeaderView::Fixed);
+CabeceraTic->resizeSection(1,85);
+CabeceraTic->setResizeMode(2,QHeaderView::Fixed);
+CabeceraTic->resizeSection(2,85);
+CabeceraTic->setResizeMode(3,QHeaderView::Fixed);
+CabeceraTic->resizeSection(3,85);
+CabeceraTic->setResizeMode(4,QHeaderView::Fixed);
+CabeceraTic->resizeSection(4,85);
+Tickets->setHeaderData(1, Qt::Horizontal, QObject::tr("TICKET"));
+Tickets->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
+Tickets->setHeaderData(3, Qt::Horizontal, QObject::tr("HORA"));
+Tickets->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
+CabeceraTic->setVisible(true);
 
 
 }
@@ -212,7 +380,7 @@ void frmClientes::VaciarCampos() {
     ui->txttComentarios->setText("");
     ui->chklBloqueoCliente->setChecked(false);
     ui->txttComentarioBloqueo->setText( "");
-    ui->txtnPorcDtoCliente->setValue(0);
+    ui->txtnPorcDtoCliente->setText("0");
     ui->chklRecargoEquivalencia->setChecked(false);
     ui->txtcCuentaContable->setText("");
     ui->txtcCuentaIvaRepercutido->setText("");
@@ -280,7 +448,7 @@ void frmClientes::LLenarCliente() {
     oCliente->settComentarios(ui->txttComentarios->toPlainText());
     oCliente->setisBloqueado(ui->chklBloqueoCliente->isChecked());
     oCliente->settComentarioBloqueo(ui->txttComentarioBloqueo->toPlainText());
-    oCliente->setnPorcDtoCliente(ui->txtnPorcDtoCliente->value());
+    oCliente->setnPorcDtoCliente(ui->txtnPorcDtoCliente->text().toInt());
     oCliente->setislRecargoEquivalencia(ui->chklRecargoEquivalencia->isChecked());
     oCliente->setcCuentaContable(ui->txtcCuentaContable->text());
     oCliente->setcCuentaIvaRepercutido(ui->txtcCuentaIvaRepercutido->text());
@@ -343,7 +511,7 @@ void frmClientes::on_btnAnadir_clicked()
 
    VaciarCampos();
    this->Altas = true;
-
+    ui->txtcCodigoCliente->setText(oCliente->NuevoCodigoCliente());
     ui->txtcCodigoCliente->setFocus();
 }
 
@@ -420,7 +588,8 @@ void frmClientes::on_txtcCifNif_lostFocus()
 void frmClientes::on_btnEditar_clicked()
 {
         desbloquearCampos();
-        ui->txtcCodigoCliente->setFocus();
+        ui->txtcCodigoCliente->setEnabled(false);
+        ui->txtcCifNif->setFocus();
 
 
 }

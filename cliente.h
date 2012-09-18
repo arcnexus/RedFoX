@@ -81,8 +81,8 @@ private:
     QSqlDatabase db;
     QSqlQuery *qryCliente;
 
+public:
 
-    
 signals:
     
 public slots:
@@ -95,7 +95,7 @@ public slots:
                      QString cEntidad, QString cOficina,QString cDC ,QString cCuenta);
     void DescontarDeuda(int id_deuda,double rPagado);
     void Borrar(int id_cliente);
-
+    QString NuevoCodigoCliente();
 
 
     // Gets

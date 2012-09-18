@@ -701,6 +701,7 @@ void frmFacturas::on_botBuscarCliente_clicked()
     int nId = BuscarClientes.DevolverID();
     //qDebug() << nId;
     QString cId = QString::number(nId);
+    oFactura->setiId_Cliente(nId);
     oCliente1->Recuperar("Select * from clientes where id ="+cId+" order by id limit 0,1 ");
     LLenarCamposCliente();
 }

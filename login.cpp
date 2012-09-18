@@ -104,4 +104,11 @@ void Login::on_Crearconfiguracin_clicked()
     settings.setValue("lProfesional",1);
     settings.setValue("nIRPF",21);
     settings.setValue("cSerie","2012");
+    settings.setValue("nDigitosCuentas",0);
+    settings.setValue("cCuentaClientes","430");
+    settings.setValue("cCuentaProveedores","400");
+    settings.setValue("cCuentaAcreedores","410");
+
+
+
 }

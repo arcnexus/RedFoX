@@ -52,6 +52,10 @@ void FrmEmpresas::LLenarCampos()
     ui->txtnEjercicio->setValue(oEmpresa.getnEjercicio());
     ui->txtnDigitosFactura->setText(QString::number(oEmpresa.getnDigitosFactura()));
     ui->txtcSerieFactura->setText(oEmpresa.getcSerie());
+    ui->txtnDigitosCuentas->setText(QString::number(oEmpresa.getnDigitosCuentas()));
+    ui->txtcCuentaCliente->setText(oEmpresa.getcCuentaClientes());
+    ui->txtcCuentaProveedores->setText(oEmpresa.getcCuentaProveedores());
+    ui->txtcCuentaAcreedores->setText(oEmpresa.getcCuentaAcreedores());
 
 
 
@@ -85,6 +89,10 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.setcComentarioFactura(ui->txtcComentarioFactura->toPlainText());
     oEmpresa.setcComentarioTicket(ui->txtcComentarioTicket->toPlainText());
     oEmpresa.setnEjercicio(ui->txtnEjercicio->text().toInt());
+    oEmpresa.setnDigitosCuentas(ui->txtnDigitosCuentas->text().toInt());
+    oEmpresa.setcCodigoCuentaClientes(ui->txtcCuentaCliente->text());
+    oEmpresa.setcCodigoCuentaProveedor(ui->txtcCuentaProveedores->text());
+    oEmpresa.setcCodigoCuentaAcreedores(ui->txtcCuentaAcreedores->text());
 }
 
 void FrmEmpresas::on_pushButton_clicked()
