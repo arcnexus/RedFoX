@@ -1050,7 +1050,7 @@ CREATE TABLE "proveedores" (
   "cEMail" text    ,
   "cWeb" text    ,
   "cPersonaContacto" text    ,
-  "cDiaCobro" int DEFAULT 0,
+  "nDiaCobro" int DEFAULT 0,
   "cDireccionAlmacen" text    ,
   "cCPAlmacen" text    ,
   "cPoblacionAlmacen" text    ,
@@ -1059,7 +1059,7 @@ CREATE TABLE "proveedores" (
   "cTelefonoAlmacen" text    ,
   "cFaxAlmacen" text    ,
   "cCodigoFormaPago" text    ,
-  "cFechaUltimaCompra" numeric  ,
+  "dFechaUltimaCompra" numeric  ,
   "rAcumuladoCompras" real DEFAULT 0,
   "cEntidadBancariaProveedor" text    ,
   "cOficinaBancariaProveedor" text    ,
@@ -1080,7 +1080,8 @@ CREATE TABLE "proveedores" (
   "rDeudaMaxima" real DEFAULT 0,
   "rDeudaActual" real DEFAULT 0,
   "lRecargoEquivalencia" int DEFAULT 0,
-  "tTextoparaPedidos" text  
+  "tTextoparaPedidos" text,  
+  "rEntregadoaCuenta" real DEFAULT 0
    
 ) ;
 

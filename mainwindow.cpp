@@ -151,32 +151,32 @@ void MainWindow::on_btnCerrarSesion_clicked()
 }
 void MainWindow::on_btnClientes_clicked()
 {
+    ui->btnClientes->setEnabled(false);
     frmClientes *frmClientes1 = new frmClientes(m_config);
     workspace->addWindow(frmClientes1);
     frmClientes1->setWindowState(Qt::WindowMaximized);
-    frmClientes1->setVisible(true);
+    frmClientes1->exec();
+    ui->btnClientes->setEnabled(true);
 }
 void MainWindow::on_btnFacturaCliente_clicked()
 {
+    ui->btnFacturaCliente->setEnabled(false);
     frmFacturas *frmFacturas1 = new frmFacturas(m_config);
     workspace->addWindow(frmFacturas1);
     frmFacturas1->setWindowState(Qt::WindowMaximized);
-    frmFacturas1->setVisible(true);
+    frmFacturas1->exec();
+    ui->btnFacturaCliente->setEnabled(true);
 }
-
-
 
 void MainWindow::on_btnArticulos_clicked()
 {
     ui->btnArticulos->setEnabled(false);
     FrmArticulos *frmArticulos1 = new FrmArticulos(m_config);
     workspace->addWindow(frmArticulos1);
-    //frmArticulos1->showNormal();
     frmArticulos1->setWindowState(Qt::WindowMaximized);
     frmArticulos1->exec();
     ui->btnArticulos->setEnabled(true);
 }
-
 
 void MainWindow::on_botEmpresas_clicked()
 {
@@ -193,7 +193,6 @@ void MainWindow::on_btnProveedores_clicked()
     ui->btnProveedores->setEnabled(false);
     frmProveedores *frmProveedores1 = new frmProveedores();
     workspace->addWindow(frmProveedores1);
-    //frmArticulos1->showNormal();
     frmProveedores1->setWindowState(Qt::WindowMaximized);
     frmProveedores1->exec();
     ui->btnProveedores->setEnabled(true);
