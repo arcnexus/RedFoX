@@ -14,6 +14,11 @@ class frmProveedores : public QDialog
 public:
     explicit frmProveedores(QWidget *parent = 0);
     ~frmProveedores();
+public slots:
+    void DesbloquerCampos();
+    void BloquearCampos();
+    void LLenarCampos();
+    void CargarCamposEnProveedor();
     
 private:
     Ui::frmProveedores *ui;

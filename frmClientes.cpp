@@ -63,6 +63,7 @@ void frmClientes::LLenarCampos() {
     ui->txtSegundoApellido->setText(oCliente->getcApellido2());
     ui->txtcNombre->setText(oCliente->getcNombre());
     ui->txtcNombreFiscal->setText(oCliente->getcNombreFiscal());
+    ui->txtNombreFiscal->setText(oCliente->getcNombreFiscal());
     ui->txtcNombreComercial->setText(oCliente->getcNombreComercial());
     ui->txtcPersonaContacto->setText(oCliente->getcPersonaContacto());
     ui->txtcCifNif->setText(oCliente->getcCifNif());
@@ -441,10 +442,10 @@ void frmClientes::LLenarCliente() {
     oCliente->setcPaisAlmacen(ui->txtcPaisAlmacen->text());
     oCliente->setdFechaAlta(ui->txtdFechaAlta->date());
     oCliente->setdFechaUltimaCompra(ui->txtdFechaUltimaCompra->date());
-    oCliente->setrAcumuladoVentas(ui->txtrImporteAcumulado->text().toDouble());
-    oCliente->setrVentasEjercicio(ui->txtrVentasEjercicio->text().toDouble());
-    oCliente->setrRiesgoMaximo(ui->txtrRiesgoPermitido->text().toDouble());
-    oCliente->setrDeudaActual(ui->txtrDeudaActual->text().toDouble());
+    oCliente->setrAcumuladoVentas(ui->txtrImporteAcumulado->text().replace(".","").toDouble());
+    oCliente->setrVentasEjercicio(ui->txtrVentasEjercicio->text().replace(".","").toDouble());
+    oCliente->setrRiesgoMaximo(ui->txtrRiesgoPermitido->text().replace(".","").toDouble());
+    oCliente->setrDeudaActual(ui->txtrDeudaActual->text().replace(".","").toDouble());
     oCliente->settComentarios(ui->txttComentarios->toPlainText());
     oCliente->setisBloqueado(ui->chklBloqueoCliente->isChecked());
     oCliente->settComentarioBloqueo(ui->txttComentarioBloqueo->toPlainText());
@@ -459,7 +460,7 @@ void frmClientes::LLenarCliente() {
     oCliente->setnDiaPago2(ui->txtnDiaPago2->value());
     oCliente->setnTarifaCliente(ui->cbonTarifaCliente->currentText().toDouble());
     oCliente->setrImporteaCuenta(ui->txtrImporteACuenta->text().toDouble());
-    oCliente->setrVales( ui->txtrVales->text().toDouble());
+    oCliente->setrVales( ui->txtrVales->text().replace(".","").toDouble());
     oCliente->setcEntidadBancaria(ui->txtcEntidadBancaria->text());
     oCliente->setcOficinaBancaria(ui->txtcOficinaBancaria->text());
     oCliente->setcDC(ui->txtcDc->text());
@@ -519,14 +520,18 @@ void frmClientes::on_txtPrimerApellido_lostFocus()
 {
     ui->txtPrimerApellido->setText(ui->txtPrimerApellido->text().toUpper());
     if(!ui->txtPrimerApellido->text().isEmpty() and !ui->txtSegundoApellido->text().isEmpty() and !ui->txtcNombre->text().isEmpty()) {
-    ui->txtcNombreFiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtcNombre->text()); }
+        ui->txtcNombreFiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtcNombre->text());
+        ui->txtNombreFiscal->setText(ui->txtcNombreFiscal->text());
+    }
 }
 
 void frmClientes::on_txtSegundoApellido_lostFocus()
 {
     ui->txtSegundoApellido->setText(ui->txtSegundoApellido->text().toUpper());
     if(!ui->txtPrimerApellido->text().isEmpty() and !ui->txtSegundoApellido->text().isEmpty() and !ui->txtcNombre->text().isEmpty()) {
-    ui->txtcNombreFiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtcNombre->text()); }
+        ui->txtcNombreFiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtcNombre->text());
+        ui->txtNombreFiscal->setText(ui->txtcNombreFiscal->text());
+    }
 
 }
 
@@ -534,7 +539,9 @@ void frmClientes::on_txtcNombre_lostFocus()
 {
     ui->txtcNombre->setText(ui->txtcNombre->text().toUpper());
     if(!ui->txtPrimerApellido->text().isEmpty() and !ui->txtSegundoApellido->text().isEmpty() and !ui->txtcNombre->text().isEmpty()) {
-    ui->txtcNombreFiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtcNombre->text()); }
+        ui->txtcNombreFiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtcNombre->text());
+        ui->txtNombreFiscal->setText(ui->txtcNombreFiscal->text());
+    }
 
 }
 
@@ -715,6 +722,9 @@ void frmClientes::desbloquearCampos() {
     ui->btnEditar->setEnabled(false);
     ui->btnGuardar->setEnabled(true);
     ui->btnSiguiente->setEnabled(false);
+    ui->txtrDeudaActual->setEnabled(false);
+    ui->txtrImporteAcumulado->setEnabled(false);
+    ui->txtrVentasEjercicio->setEnabled(false);
 }
 
 void frmClientes::on_btnDeshacer_clicked()
@@ -930,4 +940,11 @@ void frmClientes::on_txtcPoblacionAlmacen_lostFocus()
 void frmClientes::on_TablaDeudas_clicked(const QModelIndex &index)
 {
     qDebug() << "SE ha hecho click en las deudas";
+}
+
+void frmClientes::on_txtrRiesgoPermitido_lostFocus()
+{
+    Configuracion *o_conf = new Configuracion;
+    ui->txtrRiesgoPermitido->setText(o_conf->FormatoNumerico(ui->txtrRiesgoPermitido->text()));
+    delete o_conf;
 }

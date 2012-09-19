@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1061</width>
-    <height>497</height>
+    <width>1059</width>
+    <height>495</height>
    </rect>
   </property>
   <property name="baseSize">
@@ -33,7 +33,7 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
-   <item row="0" column="0">
+   <item row="1" column="0">
     <widget class="QFrame" name="frame_3">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -226,7 +226,7 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item row="1" column="1">
     <widget class="QSplitter" name="splitter">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -1151,14 +1151,14 @@
         <string>Direcciones</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="0">
+        <item row="1" column="0">
          <widget class="QLabel" name="label_6">
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Direccion de facturación:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item row="2" column="0">
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
            <widget class="QLabel" name="label_7">
@@ -1291,14 +1291,14 @@
           </item>
          </layout>
         </item>
-        <item row="2" column="0">
+        <item row="3" column="0">
          <widget class="QLabel" name="label_26">
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Dirección Almacen:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
+        <item row="4" column="0">
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="1" column="1" colspan="3">
            <widget class="QLineEdit" name="txtcDireccionAlmacen2">
@@ -1883,8 +1883,15 @@
              </item>
              <item row="1" column="2">
               <widget class="QLineEdit" name="txtrImporteACuenta">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(252, 252, 248);</string>
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 249, 173);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1896,8 +1903,15 @@
              </item>
              <item row="2" column="2">
               <widget class="QLineEdit" name="txtrVales">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 249, 173);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -2186,6 +2200,9 @@ border-color: rgb(48, 48, 48);</string>
              </item>
              <item row="2" column="1">
               <widget class="QLineEdit" name="txtrImporteAcumulado">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(252, 252, 216);
 color: rgb(0, 0, 0);</string>
@@ -2200,6 +2217,9 @@ color: rgb(0, 0, 0);</string>
              </item>
              <item row="1" column="4">
               <widget class="QLineEdit" name="txtrDeudaActual">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(252, 252, 216);
 color: rgb(0, 0, 0);</string>
@@ -2216,6 +2236,9 @@ color: rgb(0, 0, 0);</string>
               <widget class="QLineEdit" name="txtrVentasEjercicio">
                <property name="enabled">
                 <bool>false</bool>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(252, 252, 216);
@@ -2775,7 +2798,7 @@ color: rgb(0, 0, 0);</string>
      </widget>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
+   <item row="0" column="0" colspan="2">
     <widget class="QFrame" name="frame_4">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -3219,14 +3242,18 @@ color: rgb(0, 0, 0);</string>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_20"/>
+     <layout class="QGridLayout" name="gridLayout_20">
+      <item row="0" column="0">
+       <widget class="QLineEdit" name="txtNombreFiscal">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
-  <zorder>frame_4</zorder>
-  <zorder>frame_3</zorder>
-  <zorder>frame</zorder>
-  <zorder>splitter</zorder>
  </widget>
  <tabstops>
   <tabstop>txtcCodigoCliente</tabstop>

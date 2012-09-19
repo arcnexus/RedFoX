@@ -467,50 +467,50 @@ void frmFacturas::LLenarFactura() {
     } else {
         oFactura->setlRecargoEquivalencia(0);
     }
-    oFactura->setrSubtotal(ui->txtrSubtotal->text().toDouble());
-    oFactura->setnDto(ui->txtnDto->text().toDouble());
-    oFactura->setnDtoPP(ui->txtnDtoPP->text().toDouble());
-    oFactura->setrImporteDescuento(ui->txtrImporteDescuento->text().toDouble());
-    oFactura->setrImporteDescuentoPP(ui->txtrImporteDescuentoPP->text().toDouble());
-    oFactura->setrBase(ui->txtrBase->text().toDouble());
-    oFactura->setrImporteIva(ui->txtrImporteIva->text().toDouble());
-    oFactura->setrTotal(ui->txtrTotal->text().toDouble());
+    oFactura->setrSubtotal(ui->txtrSubtotal->text().replace(".","").toDouble());
+    oFactura->setnDto(ui->txtnDto->text().replace(".","").toDouble());
+    oFactura->setnDtoPP(ui->txtnDtoPP->text().replace(".","").toDouble());
+    oFactura->setrImporteDescuento(ui->txtrImporteDescuento->text().replace(".","").toDouble());
+    oFactura->setrImporteDescuentoPP(ui->txtrImporteDescuentoPP->text().replace(".","").toDouble());
+    oFactura->setrBase(ui->txtrBase->text().replace(".","").toDouble());
+    oFactura->setrImporteIva(ui->txtrImporteIva->text().replace(".","").toDouble());
+    oFactura->setrTotal(ui->txtrTotal->text().replace(".","").toDouble());
     oFactura->setcFormaPago(ui->txtcFormaPago->currentText());
     oFactura->settComentario(ui->txttComentario->toPlainText());
-    oFactura->setrBase1(ui->txtrBase1->text().toDouble());
-    oFactura->setrBase2(ui->txtrBase2->text().toDouble());
-    oFactura->setrBase3(ui->txtrBase3->text().toDouble());
-    oFactura->setrBase4(ui->txtrBase4->text().toDouble());
-    oFactura->setnPorcentajeIVA1(ui->txtnPorcentajeIva1->text().toDouble());
-    oFactura->setnPorcentajeIVA2(ui->txtnPorcentajeIva2->text().toDouble());
-    oFactura->setnPorcentajeIVA3(ui->txtnPorcentajeIva3->text().toDouble());
-    oFactura->setnPorcentajeIVA4(ui->txtnPorcentajeIva4->text().toDouble());
-    oFactura->setrIVA1(ui->txtrIVA1->text().toDouble());
-    oFactura->setrIVA2(ui->txtrIVA2->text().toDouble());
-    oFactura->setrIVA3(ui->txtrIVA3->text().toDouble());
-    oFactura->setrIVA4(ui->txtrIVA4->text().toDouble());
-    oFactura->setrTotal1(ui->txtrTotal1->text().toDouble());
-    oFactura->setrTotal2(ui->txtrTotal2->text().toDouble());
-    oFactura->setrTotal3(ui->txtrTotal3->text().toDouble());
-    oFactura->setrTotal4(ui->txtrTotal4->text().toDouble());
-    oFactura->setnRec1(ui->txtnRec1->text().toDouble());
-    oFactura->setnRec2(ui->txtnRec2->text().toDouble());
-    oFactura->setnRec3(ui->txtnRec3->text().toDouble());
-    oFactura->setnRec4(ui->txtnRec4->text().toDouble());
-    oFactura->setrRecargoEq1(ui->txtrRecargoEq1->text().toDouble());
-    oFactura->setrRecargoEq2(ui->txtrRecargoEq2->text().toDouble());
-    oFactura->setrRecargoEq3(ui->txtrRecargoEq3->text().toDouble());
-    oFactura->setrRecargoEq4(ui->txtrRecargoEq4->text().toDouble());
-    oFactura->setrTotalRecargoEq(ui->txtrTotalRecargoEq->text().toDouble());
-    oFactura->setrEntregadoaCuenta(ui->txtrEntregadoaCuenta->text().toDouble());
-    oFactura->setrImportePendiente(ui->txtrImportePendiente->text().toDouble());
+    oFactura->setrBase1(ui->txtrBase1->text().replace(".","").toDouble());
+    oFactura->setrBase2(ui->txtrBase2->text().replace(".","").toDouble());
+    oFactura->setrBase3(ui->txtrBase3->text().replace(".","").toDouble());
+    oFactura->setrBase4(ui->txtrBase4->text().replace(".","").toDouble());
+    oFactura->setnPorcentajeIVA1(ui->txtnPorcentajeIva1->text().replace(".","").toDouble());
+    oFactura->setnPorcentajeIVA2(ui->txtnPorcentajeIva2->text().replace(".","").toDouble());
+    oFactura->setnPorcentajeIVA3(ui->txtnPorcentajeIva3->text().replace(".","").toDouble());
+    oFactura->setnPorcentajeIVA4(ui->txtnPorcentajeIva4->text().replace(".","").toDouble());
+    oFactura->setrIVA1(ui->txtrIVA1->text().replace(".","").toDouble());
+    oFactura->setrIVA2(ui->txtrIVA2->text().replace(".","").toDouble());
+    oFactura->setrIVA3(ui->txtrIVA3->text().replace(".","").toDouble());
+    oFactura->setrIVA4(ui->txtrIVA4->text().replace(".","").toDouble());
+    oFactura->setrTotal1(ui->txtrTotal1->text().replace(".","").toDouble());
+    oFactura->setrTotal2(ui->txtrTotal2->text().replace(".","").toDouble());
+    oFactura->setrTotal3(ui->txtrTotal3->text().replace(".","").toDouble());
+    oFactura->setrTotal4(ui->txtrTotal4->text().replace(".","").toDouble());
+    oFactura->setnRec1(ui->txtnRec1->text().replace(".","").toDouble());
+    oFactura->setnRec2(ui->txtnRec2->text().replace(".","").toDouble());
+    oFactura->setnRec3(ui->txtnRec3->text().replace(".","").toDouble());
+    oFactura->setnRec4(ui->txtnRec4->text().replace(".","").toDouble());
+    oFactura->setrRecargoEq1(ui->txtrRecargoEq1->text().replace(".","").toDouble());
+    oFactura->setrRecargoEq2(ui->txtrRecargoEq2->text().replace(".","").toDouble());
+    oFactura->setrRecargoEq3(ui->txtrRecargoEq3->text().replace(".","").toDouble());
+    oFactura->setrRecargoEq4(ui->txtrRecargoEq4->text().replace(".","").toDouble());
+    oFactura->setrTotalRecargoEq(ui->txtrTotalRecargoEq->text().replace(".","").toDouble());
+    oFactura->setrEntregadoaCuenta(ui->txtrEntregadoaCuenta->text().replace(".","").toDouble());
+    oFactura->setrImportePendiente(ui->txtrImportePendiente->text().replace(".","").toDouble());
     oFactura->setcCodigoEntidad(ui->txtcCodigoEntidad->text());
     oFactura->setcOficinaEntidad(ui->txtcOficinaEntidad->text());
     oFactura->setcDCCuenta(ui->txtcDCCuenta->text());
     oFactura->setcNumeroCuenta(ui->txtcNumeroCuenta->text());
     oFactura->setcPedidoCliente(ui->txtcPedidoCliente->text());
-    oFactura->setnIRPF(ui->txtnIRPF->text().toDouble());
-    oFactura->setrImporteIRPF(ui->txtrImporteIRPF->text().toDouble());
+    oFactura->setnIRPF(ui->txtnIRPF->text().replace(".","").toDouble());
+    oFactura->setrImporteIRPF(ui->txtrImporteIRPF->text().replace(".","").toDouble());
 }
 
 void frmFacturas::on_btnSiguiente_clicked()
@@ -621,7 +621,7 @@ void frmFacturas::on_txtcCodigoArticulo_lostFocus()
 void frmFacturas::on_txtcCantidadArticulo_lostFocus()
 {
     double nSubtotal;
-    nSubtotal = ui->txtcCantidadArticulo->text().toDouble() * ui->txtPVPArticulo->text().toDouble();
+    nSubtotal = ui->txtcCantidadArticulo->text().replace(".","").toDouble() * ui->txtPVPArticulo->text().replace(".","").toDouble();
     ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico( QString::number(nSubtotal,'f',2)));
     calcularTotalLinea();
 }
@@ -632,7 +632,7 @@ void frmFacturas::calcularTotalLinea()
     double impDto,impTot,impSubtotal;
     impSubtotal = (ui->txtcCantidadArticulo->text().replace(".","").toDouble() * ui->txtPVPArticulo->text().replace(".","").toDouble());
     ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impSubtotal,'f',2)));
-    impDto = (ui->txtSubtotalArticulo->text().replace(".","").toDouble() * ui->txtPorcDtoArticulo->text().toDouble())/100 ;
+    impDto = (ui->txtSubtotalArticulo->text().replace(".","").toDouble() * ui->txtPorcDtoArticulo->text().replace(".","").toDouble())/100 ;
     ui->txtDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impDto,'f',2)));
     impTot = ui->txtSubtotalArticulo->text().replace(".","").toDouble() - ui->txtDtoArticulo->text().replace(".","").toDouble();
     ui->txtTotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impTot,'f',2)));
@@ -651,11 +651,11 @@ void frmFacturas::on_btnAnadirLinea_clicked()
 {
     if (!ui->txtDescripcionArticulo->text().isEmpty()) {
         double pvp =ui->txtPVPArticulo->text().replace(".","").toDouble();
-        oFactura->AnadirLineaFactura(oFactura->Getid(),ui->txtcCodigoArticulo->text(),ui->txtcCantidadArticulo->text().toDouble(),
+        oFactura->AnadirLineaFactura(oFactura->Getid(),ui->txtcCodigoArticulo->text(),ui->txtcCantidadArticulo->text().replace(".","").toDouble(),
                                      ui->txtDescripcionArticulo->text(),ui->txtPVPArticulo->text().replace(".","").toDouble(),
-                                     ui->txtSubtotalArticulo->text().replace(".","").toDouble(),ui->txtPorcDtoArticulo->text().toDouble(),
+                                     ui->txtSubtotalArticulo->text().replace(".","").toDouble(),ui->txtPorcDtoArticulo->text().replace(".","").toDouble(),
                                      ui->txtDtoArticulo->text().replace(".","").toDouble(),ui->txtTotalArticulo->text().replace(".","").toDouble(),
-                                     ui->txtPorcIVAArticulo->text().toDouble());
+                                     ui->txtPorcIVAArticulo->text().replace(".","").toDouble());
         ui->txtcCodigoArticulo->setText("");
         ui->txtcCantidadArticulo->setText(0);
         ui->txtDescripcionArticulo->setText("");

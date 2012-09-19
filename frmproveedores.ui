@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1020</width>
+    <width>1014</width>
     <height>493</height>
    </rect>
   </property>
@@ -32,7 +32,7 @@
       <item row="0" column="0">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="btnAnadir">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -55,7 +55,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="btnSiguiente">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -78,7 +78,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QPushButton" name="btnAnterior">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -101,7 +101,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_5">
+         <widget class="QPushButton" name="btnBuscar">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -124,7 +124,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_6">
+         <widget class="QPushButton" name="btnEditar">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -147,7 +147,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_7">
+         <widget class="QPushButton" name="btnGuardar">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -170,7 +170,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_8">
+         <widget class="QPushButton" name="btnDeshacer">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -193,7 +193,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_9">
+         <widget class="QPushButton" name="btnBorrar">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -216,7 +216,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_10">
+         <widget class="QPushButton" name="btnCerrar">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -272,7 +272,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="lineEdit_37">
+          <widget class="QLineEdit" name="txtcCuentaIvaSoportado">
            <property name="maximumSize">
             <size>
              <width>150</width>
@@ -292,7 +292,7 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit_38">
+          <widget class="QLineEdit" name="txtcCuentaAplicacion">
            <property name="maximumSize">
             <size>
              <width>150</width>
@@ -312,7 +312,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="lineEdit_39">
+          <widget class="QLineEdit" name="txtcCuentaPagoProveedor_2">
            <property name="maximumSize">
             <size>
              <width>150</width>
@@ -346,7 +346,7 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QTextEdit" name="textEdit_4">
+           <widget class="QTextEdit" name="tablaAsientos">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -363,7 +363,7 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_12">
        <item row="0" column="0">
-        <widget class="QTabWidget" name="tabWidget_4">
+        <widget class="QTabWidget" name="tablaColumnasAlbaranes">
          <property name="tabPosition">
           <enum>QTabWidget::West</enum>
          </property>
@@ -376,7 +376,7 @@
           </attribute>
           <layout class="QGridLayout" name="gridLayout_17">
            <item row="0" column="0">
-            <widget class="QColumnView" name="columnView">
+            <widget class="QColumnView" name="tablacolumnasFacturas">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
              </property>
@@ -404,7 +404,7 @@
           </attribute>
           <layout class="QGridLayout" name="gridLayout_19">
            <item row="0" column="0">
-            <widget class="QColumnView" name="columnView_3">
+            <widget class="QColumnView" name="tablaColumnasPedidos">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
              </property>
@@ -422,7 +422,7 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_15">
        <item row="0" column="0">
-        <widget class="QTableView" name="tableView">
+        <widget class="QTableView" name="tablaArticulos">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -432,25 +432,18 @@
      </widget>
      <widget class="QWidget" name="tab_11">
       <attribute name="title">
-       <string>Comentarios</string>
+       <string>T.Pedidos</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_9">
        <item row="0" column="0">
-        <widget class="QTextEdit" name="textEdit_2">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
         <widget class="QLabel" name="label_29">
          <property name="text">
           <string>Texto para pedidos:</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QTextEdit" name="textEdit_3">
+       <item row="1" column="0">
+        <widget class="QTextEdit" name="tTextoparaPedidos">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -471,7 +464,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QDateEdit" name="dateEdit_2">
+        <widget class="QDateEdit" name="txtcFechaUltimaCompra">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -498,7 +491,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit_36">
+        <widget class="QLineEdit" name="txtrAcumuladoCompras">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -545,12 +538,12 @@ color: rgb(0, 0, 0);</string>
          <item>
           <widget class="QLabel" name="label_40">
            <property name="text">
-            <string>Día Pago:</string>
+            <string>Día cobro proveedor:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_45">
+          <widget class="QLineEdit" name="txtDiaCobro">
            <property name="maximumSize">
             <size>
              <width>60</width>
@@ -570,7 +563,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_46">
+          <widget class="QLineEdit" name="txtnDto">
            <property name="maximumSize">
             <size>
              <width>60</width>
@@ -597,7 +590,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="0" column="1" colspan="2">
-          <widget class="QLineEdit" name="lineEdit_40">
+          <widget class="QLineEdit" name="txtrDeudaActual">
            <property name="maximumSize">
             <size>
              <width>99</width>
@@ -620,7 +613,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit_42">
+          <widget class="QLineEdit" name="txtrEntregadoaCuenta">
            <property name="maximumSize">
             <size>
              <width>99</width>
@@ -636,7 +629,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="1" column="2" colspan="3">
-          <widget class="QCheckBox" name="checkBox_2">
+          <widget class="QCheckBox" name="chklRecargoEquivalencia">
            <property name="text">
             <string>Recargo Equivalencia</string>
            </property>
@@ -682,6 +675,29 @@ color: rgb(0, 0, 0);</string>
            </property>
           </widget>
          </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_14">
+           <property name="text">
+            <string>Riesgo Permitido:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLineEdit" name="txtrDeudaMaxima">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>0,00</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
@@ -693,15 +709,15 @@ color: rgb(0, 0, 0);</string>
       <layout class="QGridLayout" name="gridLayout_10">
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout_8">
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="QLabel" name="label_42">
            <property name="text">
             <string>Población:</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="lineEdit_47">
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="txtcCPAlmacen">
            <property name="maximumSize">
             <size>
              <width>100</width>
@@ -710,8 +726,8 @@ color: rgb(0, 0, 0);</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="2" colspan="2">
-          <widget class="QLineEdit" name="lineEdit_48">
+         <item row="1" column="2" colspan="2">
+          <widget class="QLineEdit" name="txtcPoblacionAlmacen">
            <property name="minimumSize">
             <size>
              <width>273</width>
@@ -720,15 +736,15 @@ color: rgb(0, 0, 0);</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label_43">
            <property name="text">
             <string>Provincia:</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit_49">
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="txtcProvinciaAmacen">
            <property name="maximumSize">
             <size>
              <width>120</width>
@@ -737,7 +753,7 @@ color: rgb(0, 0, 0);</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="2">
+         <item row="2" column="2">
           <widget class="QLabel" name="label_44">
            <property name="text">
             <string>País:</string>
@@ -747,8 +763,18 @@ color: rgb(0, 0, 0);</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="3">
-          <widget class="QComboBox" name="comboBox_4"/>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Dirección</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="3">
+          <widget class="QLineEdit" name="txtcDireccionAlmacen"/>
+         </item>
+         <item row="2" column="3">
+          <widget class="QLineEdit" name="txtcPaisAlmacen"/>
          </item>
         </layout>
        </item>
@@ -762,7 +788,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_50">
+          <widget class="QLineEdit" name="txtcTelefonoAlmacen">
            <property name="maximumSize">
             <size>
              <width>120</width>
@@ -779,7 +805,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_51">
+          <widget class="QLineEdit" name="txtcFaxAlmacen">
            <property name="maximumSize">
             <size>
              <width>120</width>
@@ -798,7 +824,7 @@ color: rgb(0, 0, 0);</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_11">
        <item row="0" column="0">
-        <widget class="QTextEdit" name="textEdit_5"/>
+        <widget class="QTextEdit" name="txttComentarios"/>
        </item>
       </layout>
      </widget>
@@ -813,7 +839,7 @@ color: rgb(0, 0, 0);</string>
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
@@ -830,10 +856,10 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBox_2"/>
+          <widget class="QComboBox" name="txtcCodigoFormaPago"/>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_22"/>
+          <widget class="QLineEdit" name="txtcFormaPago"/>
          </item>
         </layout>
        </item>
@@ -845,7 +871,7 @@ color: rgb(0, 0, 0);</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_6">
        <item row="1" column="3">
-        <widget class="QLabel" name="label_26">
+        <widget class="QLabel" name="lblCuenta1Valida">
          <property name="styleSheet">
           <string notr="true">color: rgb(0, 85, 0);</string>
          </property>
@@ -857,12 +883,12 @@ color: rgb(0, 0, 0);</string>
        <item row="0" column="0" colspan="4">
         <widget class="QLabel" name="label_20">
          <property name="text">
-          <string>Cuenta Transferencias:</string>
+          <string>Cuenta del  Proveedor para Transferencias:</string>
          </property>
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLineEdit" name="lineEdit_28">
+        <widget class="QLineEdit" name="txtcEntidadBancariaProveedor">
          <property name="maximumSize">
           <size>
            <width>70</width>
@@ -872,7 +898,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLineEdit" name="lineEdit_29">
+        <widget class="QLineEdit" name="txtcOficinaBancariaProveedor">
          <property name="maximumSize">
           <size>
            <width>70</width>
@@ -882,7 +908,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="2" column="2">
-        <widget class="QLineEdit" name="lineEdit_30">
+        <widget class="QLineEdit" name="txtcDCProveedor">
          <property name="maximumSize">
           <size>
            <width>50</width>
@@ -892,10 +918,10 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="2" column="3" colspan="3">
-        <widget class="QLineEdit" name="lineEdit_31"/>
+        <widget class="QLineEdit" name="txtcCCProveedor"/>
        </item>
        <item row="6" column="0">
-        <widget class="QLineEdit" name="lineEdit_32">
+        <widget class="QLineEdit" name="txtcEntidadPagoProveedor">
          <property name="maximumSize">
           <size>
            <width>70</width>
@@ -912,7 +938,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="6" column="1">
-        <widget class="QLineEdit" name="lineEdit_33">
+        <widget class="QLineEdit" name="txtcOficinaPagoProveedor">
          <property name="maximumSize">
           <size>
            <width>70</width>
@@ -922,7 +948,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="6" column="2">
-        <widget class="QLineEdit" name="lineEdit_34">
+        <widget class="QLineEdit" name="txtcDCPagoProveedor">
          <property name="maximumSize">
           <size>
            <width>50</width>
@@ -932,10 +958,10 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="6" column="3" colspan="3">
-        <widget class="QLineEdit" name="lineEdit_35"/>
+        <widget class="QLineEdit" name="txtcCuentaPagoProveedor"/>
        </item>
        <item row="5" column="3">
-        <widget class="QLabel" name="label_28">
+        <widget class="QLabel" name="lblcuenta2Valida">
          <property name="styleSheet">
           <string notr="true">color: rgb(0, 85, 0);</string>
          </property>
@@ -973,7 +999,7 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="1" column="1" colspan="2">
-         <widget class="QLineEdit" name="lineEdit_3">
+         <widget class="QLineEdit" name="txtcCif">
           <property name="maximumSize">
            <size>
             <width>120</width>
@@ -983,10 +1009,10 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="0" column="5" colspan="6">
-         <widget class="QLineEdit" name="lineEdit_2"/>
+         <widget class="QLineEdit" name="txtcProveedor"/>
         </item>
         <item row="0" column="1" colspan="2">
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QLineEdit" name="txtcCodigo">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -1003,7 +1029,7 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="6" column="6" colspan="5">
-         <widget class="QLineEdit" name="lineEdit_11">
+         <widget class="QLineEdit" name="txtcTelefono3">
           <property name="maximumSize">
            <size>
             <width>120</width>
@@ -1020,7 +1046,7 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="1" column="9" colspan="2">
-         <widget class="QDateEdit" name="dateEdit">
+         <widget class="QDateEdit" name="txtdFechaAlta">
           <property name="displayFormat">
            <string>dd/MM/yyyy</string>
           </property>
@@ -1037,10 +1063,10 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="2" column="1" colspan="10">
-         <widget class="QLineEdit" name="lineEdit_5"/>
+         <widget class="QLineEdit" name="txtcDireccion1"/>
         </item>
         <item row="3" column="1" colspan="10">
-         <widget class="QLineEdit" name="lineEdit_6"/>
+         <widget class="QLineEdit" name="txtcDireccion2"/>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_6">
@@ -1050,7 +1076,7 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QLineEdit" name="lineEdit_7">
+         <widget class="QLineEdit" name="txtcCP">
           <property name="maximumSize">
            <size>
             <width>80</width>
@@ -1067,7 +1093,7 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="6" column="1" colspan="3">
-         <widget class="QLineEdit" name="lineEdit_9">
+         <widget class="QLineEdit" name="txtcTelefono1">
           <property name="maximumSize">
            <size>
             <width>120</width>
@@ -1077,7 +1103,7 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="6" column="4" colspan="2">
-         <widget class="QLineEdit" name="lineEdit_10">
+         <widget class="QLineEdit" name="txtcTelefono2">
           <property name="maximumSize">
            <size>
             <width>120</width>
@@ -1094,7 +1120,7 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="7" column="1" colspan="2">
-         <widget class="QLineEdit" name="lineEdit_12">
+         <widget class="QLineEdit" name="txtcMovil">
           <property name="minimumSize">
            <size>
             <width>82</width>
@@ -1110,7 +1136,7 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="7" column="3" colspan="2">
-         <widget class="QLabel" name="label_10">
+         <widget class="QLabel" name="txtcEmail">
           <property name="text">
            <string>eMail:</string>
           </property>
@@ -1130,10 +1156,10 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="8" column="1" colspan="9">
-         <widget class="QLineEdit" name="lineEdit_14"/>
+         <widget class="QLineEdit" name="txtcWeb"/>
         </item>
         <item row="8" column="10">
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="btnAbrirWeb">
           <property name="text">
            <string/>
           </property>
@@ -1151,7 +1177,7 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="9" column="2" colspan="9">
-         <widget class="QLineEdit" name="lineEdit_15"/>
+         <widget class="QLineEdit" name="txtcPersonaContacto"/>
         </item>
         <item row="0" column="4">
          <widget class="QLabel" name="label_2">
@@ -1160,18 +1186,28 @@ color: rgb(0, 0, 0);</string>
           </property>
          </widget>
         </item>
+        <item row="4" column="2" colspan="9">
+         <widget class="QLineEdit" name="txtcPoblacion"/>
+        </item>
         <item row="5" column="0">
+         <widget class="QLabel" name="label_13">
+          <property name="text">
+           <string>Provincia:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="6">
          <widget class="QLabel" name="label_7">
           <property name="text">
            <string>País:</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="2" colspan="9">
-         <widget class="QLineEdit" name="lineEdit_8"/>
+        <item row="5" column="7" colspan="4">
+         <widget class="QLineEdit" name="txtcPais"/>
         </item>
         <item row="5" column="1" colspan="4">
-         <widget class="QLineEdit" name="lineEdit_4"/>
+         <widget class="QLineEdit" name="txtcProvincia"/>
         </item>
        </layout>
       </item>
@@ -1185,7 +1221,7 @@ color: rgb(0, 0, 0);</string>
  </resources>
  <connections>
   <connection>
-   <sender>pushButton_10</sender>
+   <sender>btnCerrar</sender>
    <signal>clicked()</signal>
    <receiver>frmProveedores</receiver>
    <slot>close()</slot>

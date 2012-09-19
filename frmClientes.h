@@ -74,6 +74,8 @@ private slots:
 
     void on_TablaDeudas_clicked(const QModelIndex &index);
 
+    void on_txtrRiesgoPermitido_lostFocus();
+
 private:
     Ui::frmClientes *ui;
     QSqlQueryModel *modelFP;
