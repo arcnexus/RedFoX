@@ -130,6 +130,10 @@ void Cliente::Guardar() {
     query.bindValue(":nDiaPago1",this->nDiaPago1);
     query.bindValue(":nDiaPago2",this->nDiaPago2);
     query.bindValue(":nTarifaCliente",this->nTarifaCliente);
+    QString rImporteACuenta;
+    rImporteACuenta = QString::number(this->rImporteACuenta);
+    rImporteACuenta = rImporteACuenta.replace(".","");
+    this->rImporteACuenta = rImporteACuenta.toDouble();
     query.bindValue(":rImporteACuenta",this->rImporteACuenta);
     query.bindValue(":rVales",this->rVales);
     query.bindValue(":cEntidadBancaria", this->cEntidadBancaria);
