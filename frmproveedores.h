@@ -35,6 +35,10 @@ private slots:
 
     void on_txtcCP_lostFocus();
 
+    void on_btnBorrar_clicked();
+
+    void on_btnDeshacer_clicked();
+
 private:
     Ui::frmProveedores *ui;
 };

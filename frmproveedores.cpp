@@ -3,6 +3,7 @@
 #include "proveedor.h"
 #include "configuracion.h"
 #include "frmbuscarpoblacion.h"
+#include <QDebug>
 
 Proveedor *oProveedor = new Proveedor();
 
@@ -323,6 +324,7 @@ void frmProveedores::on_txtcPoblacion_lostFocus()
            }
        }
     }
+    ui->txtcTelefono1->setFocus();
 
 }
 
@@ -355,9 +357,36 @@ void frmProveedores::on_txtcCP_lostFocus()
     delete oConfig;
        }
       }
+    ui->txtcTelefono1->setFocus();
 }
 
 
 
 
 
+
+void frmProveedores::on_btnBorrar_clicked()
+{
+   int ndev = QMessageBox::question(NULL,tr("Gestión de proveedores"),tr("Está seguro/a de borrar el proveedor?\n"
+                                                               "se borrarán todos los historiales de ese proveedor.\n"
+                                                                " Esta opción no se puede deshacer"),
+                          tr("Borrar"),tr("Cancelar Borrado"));
+   if(ndev ==0) {
+        oProveedor->Borrar(oProveedor->id);
+        oProveedor->Vaciar();
+        LLenarCampos();
+   }
+}
+
+void frmProveedores::on_btnDeshacer_clicked()
+{
+    int ndev = QMessageBox::question(NULL,tr("Gestión de proveedores"),tr("Se perderán los cambios realizados en la ficha\n"
+                                                                           " Esta opción no se puede deshacer\n\n"
+                                                                          "¿ Desea anular los cambios o continuar la edición?"),
+                                     tr("Continuar Edición"),tr("Anular cambios"));
+    if(ndev==1) {
+        oProveedor->Recuperar("Select * from proveedores where id = "+QString::number(oProveedor->id));
+        LLenarCampos();
+        BloquearCampos();
+    }
+}

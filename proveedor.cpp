@@ -328,6 +328,15 @@ void Proveedor::Vaciar()
 
 void Proveedor::Borrar(int nId)
 {
+    QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("empresa"));
+    qProveedor->prepare("delete from proveedores where Id = "+QString::number(nId));
+    if(qProveedor->exec())
+        QMessageBox::information(NULL,QObject::tr("Gestión de Proveedores"),QObject::tr("Se ha borrado la ficha del proveedor"),
+                                 QObject::tr("Aceptar"));
+   else
+        QMessageBox::warning(NULL,QObject::tr("Gestión de Proveedores"),QObject::tr("No Se ha borrado la ficha del proveedor ERROR: ")+
+                             qProveedor->lastError().text(),QObject::tr("Aceptar"));
+    delete qProveedor;
 }
 
 int Proveedor::getid()
