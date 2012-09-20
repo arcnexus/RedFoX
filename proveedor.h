@@ -50,7 +50,7 @@ public:
     QString cCuentaPagoProveedor;
     QString cCuentaIvaSoportado;
     double rRetencionIRPF;
-    QString nTipoRetencion;
+    int nTipoRetencion;
     QString cCuentaAplicacion;
     QString cCuentaPagos;
     QString tComentarios;
@@ -60,10 +60,18 @@ public:
     double rDeudaActual;
     int lRecargoEquivalencia;
     QString tTextoparaPedidos;
+    double rEntregadoaCuenta;
 
 signals:
     
 public slots:
+    // Funcionamiento Base
+    void Anadir();
+    void Recuperar(QString cSQL);
+    void Recuperar(QString cSQL,int nProcede);
+    void Guardar();
+    void Vaciar();
+    void Borrar(int nId);
     // GETS
     int getid();
     QString getcCodigo();
@@ -104,7 +112,7 @@ public slots:
     QString getcCuentaPagoProveedor();
     QString getcCuentaIvaSoportado();
     double getrRetencionIRPF();
-    QString getnTipoRetencion();
+    int getnTipoRetencion();
     QString getcCuentaAplicacion();
     QString getcCuentaPagos();
     QString gettComentarios();
@@ -114,6 +122,7 @@ public slots:
     double getrDeudaActual();
     int getlRecargoEquivalencia();
     QString gettTextoparaPedidos();
+    double getrEntregadoaCuenta();
     
     // SETTERS
 
@@ -135,7 +144,7 @@ public slots:
     void setcEMail(QString cEMail);
     void setcWeb(QString cWeb);
     void setcPersonaContacto(QString cPersonaContacto);
-    void setnDiaCoro(int nDiaCobro);
+    void setnDiaCobro(int nDiaCobro);
     void setcDireccionAlmacen(QString cDireccionAlmacen);
     void setcCPAlmacen(QString cCPAlmacen);
     void setcPoblacionAlmacen(QString cPoblacionAlmacen);
@@ -156,7 +165,7 @@ public slots:
     void setcCuentaPagoProveedor(QString cCuentaPagoProveedor);
     void setcCuentaIvaSoportado(QString cCuentaIvaSoportado);
     void setrRetencion(double rRetencionIRPF);
-    void setnTipoRetencion(QString nTipoRetencion);
+    void setnTipoRetencion(int nTipoRetencion);
     void setcCuentaAplicacion(QString cCuentaAplicacion);
     void setcCuentaPagos(QString cCuentaPagos);
     void settComentarios(QString tComentarios);
@@ -166,7 +175,7 @@ public slots:
     void setrDeudaActual(double rDeudaActual);
     void setlRecargoEquivalencia(int lRecargoEquivalencia);
     void settTextoparaPedidos(QString tTextoparaPedidos);
-
+    void setrEntregadoaCuenta(double rEntregadoaCuenta);
 
 
 };

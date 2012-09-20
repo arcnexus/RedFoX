@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1014</width>
+    <width>1010</width>
     <height>493</height>
    </rect>
   </property>
@@ -312,7 +312,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="txtcCuentaPagoProveedor_2">
+          <widget class="QLineEdit" name="txtcCuentaPagos">
            <property name="maximumSize">
             <size>
              <width>150</width>
@@ -382,6 +382,13 @@
              </property>
             </widget>
            </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton">
+             <property name="text">
+              <string>Añadir Factura Proveedor/Acreedor</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="tab_9">
@@ -443,7 +450,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QTextEdit" name="tTextoparaPedidos">
+        <widget class="QTextEdit" name="txttTextoparaPedidos">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -464,7 +471,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QDateEdit" name="txtcFechaUltimaCompra">
+        <widget class="QDateEdit" name="txtdFechaUltimaCompra">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -477,6 +484,9 @@
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 251, 202);
 color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="displayFormat">
+          <string>dd/MM/yyyy</string>
          </property>
          <property name="calendarPopup">
           <bool>true</bool>
@@ -526,7 +536,7 @@ color: rgb(0, 0, 0);</string>
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_14">
       <attribute name="title">
@@ -543,7 +553,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtDiaCobro">
+          <widget class="QLineEdit" name="txtnDiaCobro">
            <property name="maximumSize">
             <size>
              <width>60</width>
@@ -591,11 +601,18 @@ color: rgb(0, 0, 0);</string>
          </item>
          <item row="0" column="1" colspan="2">
           <widget class="QLineEdit" name="txtrDeudaActual">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="maximumSize">
             <size>
              <width>99</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 249, 186);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -614,11 +631,18 @@ color: rgb(0, 0, 0);</string>
          </item>
          <item row="1" column="1">
           <widget class="QLineEdit" name="txtrEntregadoaCuenta">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="maximumSize">
             <size>
              <width>99</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 249, 186);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>                  0,00</string>
@@ -643,7 +667,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="lineEdit_43">
+          <widget class="QLineEdit" name="txtnTipoRetencionIRPF">
            <property name="maximumSize">
             <size>
              <width>50</width>
@@ -660,12 +684,19 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="2" column="4">
-          <widget class="QLineEdit" name="lineEdit_44">
+          <widget class="QLineEdit" name="txtrRetencionIRPF">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="maximumSize">
             <size>
              <width>100</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 249, 186);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -747,7 +778,7 @@ color: rgb(0, 0, 0);</string>
           <widget class="QLineEdit" name="txtcProvinciaAmacen">
            <property name="maximumSize">
             <size>
-             <width>120</width>
+             <width>100</width>
              <height>16777215</height>
             </size>
            </property>
@@ -839,7 +870,7 @@ color: rgb(0, 0, 0);</string>
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
@@ -998,28 +1029,8 @@ color: rgb(0, 0, 0);</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1" colspan="2">
-         <widget class="QLineEdit" name="txtcCif">
-          <property name="maximumSize">
-           <size>
-            <width>120</width>
-            <height>16777215</height>
-           </size>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="5" colspan="6">
          <widget class="QLineEdit" name="txtcProveedor"/>
-        </item>
-        <item row="0" column="1" colspan="2">
-         <widget class="QLineEdit" name="txtcCodigo">
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>27</height>
-           </size>
-          </property>
-         </widget>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label">
@@ -1119,46 +1130,20 @@ color: rgb(0, 0, 0);</string>
           </property>
          </widget>
         </item>
-        <item row="7" column="1" colspan="2">
-         <widget class="QLineEdit" name="txtcMovil">
-          <property name="minimumSize">
-           <size>
-            <width>82</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>120</width>
-            <height>16777215</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="3" colspan="2">
-         <widget class="QLabel" name="txtcEmail">
-          <property name="text">
-           <string>eMail:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
         <item row="7" column="5" colspan="6">
-         <widget class="QLineEdit" name="lineEdit_13"/>
+         <widget class="QLineEdit" name="txtcEmail"/>
         </item>
-        <item row="8" column="0">
+        <item row="9" column="0">
          <widget class="QLabel" name="label_11">
           <property name="text">
            <string>Web:</string>
           </property>
          </widget>
         </item>
-        <item row="8" column="1" colspan="9">
+        <item row="9" column="1" colspan="9">
          <widget class="QLineEdit" name="txtcWeb"/>
         </item>
-        <item row="8" column="10">
+        <item row="9" column="10">
          <widget class="QPushButton" name="btnAbrirWeb">
           <property name="text">
            <string/>
@@ -1169,14 +1154,14 @@ color: rgb(0, 0, 0);</string>
           </property>
          </widget>
         </item>
-        <item row="9" column="0" colspan="2">
+        <item row="10" column="0" colspan="2">
          <widget class="QLabel" name="label_12">
           <property name="text">
            <string>Persona de contacto:</string>
           </property>
          </widget>
         </item>
-        <item row="9" column="2" colspan="9">
+        <item row="10" column="2" colspan="9">
          <widget class="QLineEdit" name="txtcPersonaContacto"/>
         </item>
         <item row="0" column="4">
@@ -1187,7 +1172,14 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item row="4" column="2" colspan="9">
-         <widget class="QLineEdit" name="txtcPoblacion"/>
+         <widget class="QLineEdit" name="txtcPoblacion">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label_13">
@@ -1209,6 +1201,62 @@ color: rgb(0, 0, 0);</string>
         <item row="5" column="1" colspan="4">
          <widget class="QLineEdit" name="txtcProvincia"/>
         </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="label_15">
+          <property name="text">
+           <string>Fax:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" colspan="3">
+         <widget class="QLineEdit" name="txtcCif">
+          <property name="maximumSize">
+           <size>
+            <width>120</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1" colspan="3">
+         <widget class="QLineEdit" name="txtcFax"/>
+        </item>
+        <item row="0" column="1" colspan="3">
+         <widget class="QLineEdit" name="txtcCodigo">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>27</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="4">
+         <widget class="QLabel" name="lblEmail">
+          <property name="text">
+           <string>eMail:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1" colspan="3">
+         <widget class="QLineEdit" name="txtcMovil">
+          <property name="minimumSize">
+           <size>
+            <width>82</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>120</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>
@@ -1216,6 +1264,77 @@ color: rgb(0, 0, 0);</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>txtcCodigo</tabstop>
+  <tabstop>txtcProveedor</tabstop>
+  <tabstop>txtcCif</tabstop>
+  <tabstop>txtdFechaAlta</tabstop>
+  <tabstop>txtcDireccion1</tabstop>
+  <tabstop>txtcDireccion2</tabstop>
+  <tabstop>txtcCP</tabstop>
+  <tabstop>txtcPoblacion</tabstop>
+  <tabstop>txtcProvincia</tabstop>
+  <tabstop>txtcPais</tabstop>
+  <tabstop>txtcTelefono1</tabstop>
+  <tabstop>txtcTelefono2</tabstop>
+  <tabstop>txtcTelefono3</tabstop>
+  <tabstop>txtcMovil</tabstop>
+  <tabstop>txtcEmail</tabstop>
+  <tabstop>txtcFax</tabstop>
+  <tabstop>txtcWeb</tabstop>
+  <tabstop>btnAbrirWeb</tabstop>
+  <tabstop>txtcPersonaContacto</tabstop>
+  <tabstop>txtnDiaCobro</tabstop>
+  <tabstop>txtnDto</tabstop>
+  <tabstop>txtrDeudaActual</tabstop>
+  <tabstop>txtrDeudaMaxima</tabstop>
+  <tabstop>txtrEntregadoaCuenta</tabstop>
+  <tabstop>chklRecargoEquivalencia</tabstop>
+  <tabstop>txtnTipoRetencionIRPF</tabstop>
+  <tabstop>txtrRetencionIRPF</tabstop>
+  <tabstop>txtcEntidadBancariaProveedor</tabstop>
+  <tabstop>txtcOficinaBancariaProveedor</tabstop>
+  <tabstop>txtcDCProveedor</tabstop>
+  <tabstop>txtcCCProveedor</tabstop>
+  <tabstop>txtcEntidadPagoProveedor</tabstop>
+  <tabstop>txtcOficinaPagoProveedor</tabstop>
+  <tabstop>txtcDCPagoProveedor</tabstop>
+  <tabstop>txtcCuentaPagoProveedor</tabstop>
+  <tabstop>txtcCodigoFormaPago</tabstop>
+  <tabstop>txtcFormaPago</tabstop>
+  <tabstop>tablaArticulos</tabstop>
+  <tabstop>txttTextoparaPedidos</tabstop>
+  <tabstop>txtdFechaUltimaCompra</tabstop>
+  <tabstop>txtrAcumuladoCompras</tabstop>
+  <tabstop>txtcDireccionAlmacen</tabstop>
+  <tabstop>txtcCPAlmacen</tabstop>
+  <tabstop>txtcPoblacionAlmacen</tabstop>
+  <tabstop>txtcProvinciaAmacen</tabstop>
+  <tabstop>txtcPaisAlmacen</tabstop>
+  <tabstop>txtcTelefonoAlmacen</tabstop>
+  <tabstop>txtcFaxAlmacen</tabstop>
+  <tabstop>txttComentarios</tabstop>
+  <tabstop>btnAnadir</tabstop>
+  <tabstop>btnSiguiente</tabstop>
+  <tabstop>btnAnterior</tabstop>
+  <tabstop>btnBuscar</tabstop>
+  <tabstop>btnEditar</tabstop>
+  <tabstop>btnGuardar</tabstop>
+  <tabstop>btnDeshacer</tabstop>
+  <tabstop>btnBorrar</tabstop>
+  <tabstop>btnCerrar</tabstop>
+  <tabstop>tabWidget_5</tabstop>
+  <tabstop>tabWidget_3</tabstop>
+  <tabstop>txtcCuentaAplicacion</tabstop>
+  <tabstop>txtcCuentaPagos</tabstop>
+  <tabstop>tablaColumnasAlbaranes</tabstop>
+  <tabstop>tablacolumnasFacturas</tabstop>
+  <tabstop>columnView_2</tabstop>
+  <tabstop>txtcCuentaIvaSoportado</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>tablaColumnasPedidos</tabstop>
+  <tabstop>tablaAsientos</tabstop>
+ </tabstops>
  <resources>
   <include location="terra.qrc"/>
  </resources>

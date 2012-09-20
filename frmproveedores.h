@@ -20,6 +20,21 @@ public slots:
     void LLenarCampos();
     void CargarCamposEnProveedor();
     
+private slots:
+    void on_btnSiguiente_clicked();
+
+    void on_btnGuardar_clicked();
+
+    void on_btnEditar_clicked();
+
+    void on_btnAnadir_clicked();
+
+    void on_btnAnterior_clicked();
+
+    void on_txtcPoblacion_lostFocus();
+
+    void on_txtcCP_lostFocus();
+
 private:
     Ui::frmProveedores *ui;
 };
