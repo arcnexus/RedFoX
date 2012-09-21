@@ -39,6 +39,14 @@ private slots:
 
     void on_btnDeshacer_clicked();
 
+    void on_txtcEntidadBancariaProveedor_lostFocus();
+
+    void on_txtcOficinaBancariaProveedor_lostFocus();
+
+    void on_txtcDCProveedor_lostFocus();
+
+    void on_txtcCCProveedor_lostFocus();
+
 private:
     Ui::frmProveedores *ui;
 };

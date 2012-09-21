@@ -8,6 +8,7 @@
 #include <QFileDialog>
 #include <QLineEdit>
 
+
 class Configuracion{
 
 public:
@@ -52,6 +53,8 @@ public:
     QString FormatoNumerico(QString cTexto);
     bool EsNumero(QString texto);
     void CargarDatos();
+    QString ValidarCC(QString Entidad,QString Oficina, QString DC, QString CC);
+    QString ValidarCC(QString Entidad, QString Oficina, QString CC);
 
     
 

@@ -116,6 +116,96 @@ void Configuracion::CargarDatos()
 
 }
 
+QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString DC, QString CC)
+{
+    // Código Entidad & Código Oficina
+    QString cEntidadOficina = Entidad + Oficina;
+    int longitud = cEntidadOficina.length();
+    if (longitud != 8)
+        QMessageBox::warning(NULL,QObject::tr("Verificación cuenta bancaria"),
+                             QObject::tr("El Codigo  de Entidad más  el  Codigo  de Oficina debe tener 8 dígitos."),
+                        QObject::tr("Aceptar"));
+    int suma = 0;
+    suma = (cEntidadOficina.mid(0, 1).toInt() * 4);
+    suma = suma + (cEntidadOficina.mid(1, 1).toInt() * 8);
+    suma = suma + (cEntidadOficina.mid(2, 1).toInt() * 5);
+    suma = suma + (cEntidadOficina.mid(3, 1).toInt() * 10);
+    suma = suma + (cEntidadOficina.mid(4, 1).toInt() * 9);
+    suma = suma + (cEntidadOficina.mid(5, 1).toInt() * 7);
+    suma = suma + (cEntidadOficina.mid(6, 1).toInt() * 3);
+    suma = suma + (cEntidadOficina.mid(7, 1).toInt() * 6);
+    int resto = suma % 11;
+    int primerdigito = 11 - resto;
+    if (primerdigito == 10)
+            primerdigito = 1;
+    if (primerdigito == 11)
+        primerdigito = 0;
+
+    longitud = CC.length();
+    if(longitud != 10)
+        QMessageBox::warning(NULL,QObject::tr("Verificación cuenta bancaria"),
+                             QObject::tr("El  numero de cuenta debe tener 10 dígitos."),
+                        QObject::tr("Aceptar"));
+    suma = CC.mid( 0, 1).toInt() * 1 + CC.mid( 1, 1).toInt() * 2 + CC.mid( 2, 1).toInt() * 4 + CC.mid(3, 1).toInt() * 8;
+    suma = suma + CC.mid(4, 1).toInt() * 5 + CC.mid(5, 1).toInt() * 10 + CC.mid(6, 1).toInt() * 9 + CC.mid( 7, 1).toInt() * 7;
+    suma = suma + CC.mid(8, 1).toInt() * 3 + CC.mid(9, 1).toInt() * 6;
+    resto = suma%11;
+    int segundodigito = 11 - resto;
+    if (segundodigito == 10)
+        segundodigito = 1;
+    if (segundodigito == 11)
+        segundodigito = 0;
+
+    //Digitos de Control
+    QString cdc = QString::number(primerdigito) + QString::number(segundodigito);
+    if(cdc == DC)
+        return "1";
+    else
+        return "0";
+
+}
+
+QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
+{
+    // Código Entidad & Código Oficina
+    QString cEntidadOficina = Entidad + Oficina;
+    int longitud = cEntidadOficina.length();
+    if (longitud != 8)
+        QMessageBox::warning(NULL,QObject::tr("Verificación cuenta bancaria"),
+                             QObject::tr("El Codigo  de Entidad más  el  Codigo  de Oficina debe tener 8 dígitos."),
+                        QObject::tr("Aceptar"));
+    int suma;
+    suma = cEntidadOficina.mid(1, 1).toInt() * 4 + cEntidadOficina.mid(2, 1).toInt() * 8 + cEntidadOficina.mid(3, 1).toInt() * 5 +
+            cEntidadOficina.mid(4, 1).toInt() * 10;
+    suma = suma + cEntidadOficina.mid(5, 1).toInt() * 9 + cEntidadOficina.mid(6, 1).toInt() * 7 + cEntidadOficina.mid(7, 1).toInt() * 3 +
+            cEntidadOficina.mid(8, 1).toInt() * 6;
+    int resto = suma % 11;
+    int primerdigito = 11 - resto;
+    if (primerdigito == 10)
+            primerdigito = 1;
+    if (primerdigito = 11)
+        primerdigito = 0;
+
+    longitud = CC.length();
+    if(longitud != 10)
+        QMessageBox::warning(NULL,QObject::tr("Verificación cuenta bancaria"),
+                             QObject::tr("El  numero de cuenta debe tener 10 dígitos."),
+                        QObject::tr("Aceptar"));
+    suma = CC.mid( 1, 1).toInt() * 1 + CC.mid( 2, 1).toInt() * 2 + CC.mid( 3, 1).toInt() * 4 + CC.mid(4, 1).toInt() * 8;
+    suma = suma + CC.mid(5, 1).toInt() * 5 + CC.mid(6, 1).toInt() * 10 + CC.mid(7, 1).toInt() * 9 + CC.mid( 8, 1).toInt() * 7;
+    suma = suma + CC.mid(9, 1).toInt() * 3 + CC.mid(10, 1).toInt() * 6;
+    resto = suma%11;
+    int segundodigito = 11 - resto;
+    if (segundodigito == 10)
+        segundodigito = 1;
+    if (segundodigito == 11)
+        segundodigito = 0;
+
+    //Digitos de Control
+    QString cdc = QString::number(primerdigito) + QString::number(segundodigito);
+    return cdc;
+}
+
 
 
 

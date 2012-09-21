@@ -16,6 +16,8 @@ frmProveedores::frmProveedores(QWidget *parent) :
     BloquearCampos();
     ui->txtdFechaAlta->setDate(QDate::currentDate());
     ui->txtdFechaUltimaCompra->setDate(QDate::currentDate());
+    ui->lblCuenta1Valida->setVisible(false);
+    ui->lblcuenta2Valida->setVisible(false);
 }
 
 frmProveedores::~frmProveedores()
@@ -389,4 +391,66 @@ void frmProveedores::on_btnDeshacer_clicked()
         LLenarCampos();
         BloquearCampos();
     }
+}
+
+void frmProveedores::on_txtcEntidadBancariaProveedor_lostFocus()
+{
+    Configuracion *oConfig = new Configuracion();
+    QString cOk;
+    if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
+            !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
+        cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
+                              ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+    if(cOk == "1")
+        ui->lblCuenta1Valida->setVisible(true);
+    else
+        ui->lblCuenta1Valida->setVisible(false);
+    delete oConfig;
+}
+
+void frmProveedores::on_txtcOficinaBancariaProveedor_lostFocus()
+{
+    Configuracion *oConfig = new Configuracion();
+    QString cOk;
+    if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
+            !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
+        cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
+                              ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+    if(cOk == "1")
+        ui->lblCuenta1Valida->setVisible(true);
+    else
+        ui->lblCuenta1Valida->setVisible(false);
+    delete oConfig;
+}
+
+void frmProveedores::on_txtcDCProveedor_lostFocus()
+{
+    Configuracion *oConfig = new  Configuracion();
+    QString cOk;
+    if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
+            !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
+        cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
+                              ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+    if(cOk == "1")
+        ui->lblCuenta1Valida->setVisible(true);
+    else
+        ui->lblCuenta1Valida->setVisible(false);
+    delete oConfig;
+}
+
+
+
+void frmProveedores::on_txtcCCProveedor_lostFocus()
+{
+    Configuracion *oConfig = new Configuracion();
+    QString cOk;
+    if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
+            !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
+        cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
+                              ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+    if(cOk == "1")
+        ui->lblCuenta1Valida->setVisible(true);
+    else
+        ui->lblCuenta1Valida->setVisible(false);
+    delete oConfig;
 }

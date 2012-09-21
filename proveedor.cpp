@@ -4,6 +4,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QMessageBox>
+#include "configuracion.h"
 
 Proveedor::Proveedor(QObject *parent) :
     QObject(parent)
@@ -21,6 +22,8 @@ void Proveedor::Anadir()
     else {
         int nId  = QProveedor->lastInsertId().toInt();
         Recuperar( "Select * from proveedores where id = "+QString::number(nId));
+        this->cCodigo = NuevoCodigoProveedor();
+        this->cCuentaAplicacion = this->cCodigo;
     }
 }
 
@@ -337,6 +340,33 @@ void Proveedor::Borrar(int nId)
         QMessageBox::warning(NULL,QObject::tr("Gestión de Proveedores"),QObject::tr("No Se ha borrado la ficha del proveedor ERROR: ")+
                              qProveedor->lastError().text(),QObject::tr("Aceptar"));
     delete qProveedor;
+}
+
+QString Proveedor::NuevoCodigoProveedor()
+{
+    Configuracion *oConfig = new Configuracion();
+    oConfig->CargarDatos();
+    QString cCodigo;
+    QString cNum;
+    int nCodigo;
+    QSqlQuery *qProveedores = new QSqlQuery(QSqlDatabase::database("empresa"));
+    if(qProveedores->exec("select cCodigo from proveedores  order by cCodigo desc limit 0,1")) {
+        if (qProveedores->next()) {
+            QSqlRecord registro = qProveedores->record();
+            cCodigo = registro.field("cCodigo").value().toString();
+            nCodigo = cCodigo.toInt();
+            nCodigo ++;
+            cCodigo = QString::number(nCodigo);
+        }
+   }
+   if (nCodigo == 0 || nCodigo == 1) {
+        cNum = "1";
+        while (cNum.length()< (oConfig->nDigitosCuentasContables - oConfig->cCuentaProveedores.length()) ) {
+            cNum.prepend("0");
+        }
+        cCodigo = oConfig->cCuentaProveedores + cNum;
+    }
+   return cCodigo;
 }
 
 int Proveedor::getid()
