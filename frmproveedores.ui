@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1008</width>
+    <width>1002</width>
     <height>493</height>
    </rect>
   </property>
@@ -255,7 +255,7 @@
       <string notr="true">background-color: rgb(255, 217, 133);</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_13">
       <attribute name="title">
@@ -870,7 +870,7 @@ color: rgb(0, 0, 0);</string>
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
@@ -907,7 +907,7 @@ color: rgb(0, 0, 0);</string>
           <string notr="true">color: rgb(0, 85, 0);</string>
          </property>
          <property name="text">
-          <string>Es valida</string>
+          <string>La cuenta no es válida</string>
          </property>
         </widget>
        </item>
@@ -997,7 +997,7 @@ color: rgb(0, 0, 0);</string>
           <string notr="true">color: rgb(0, 85, 0);</string>
          </property>
          <property name="text">
-          <string>Es valida</string>
+          <string>La cuenta no es válida</string>
          </property>
         </widget>
        </item>
@@ -1020,7 +1020,7 @@ color: rgb(0, 0, 0);</string>
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_20">
-      <item row="0" column="0">
+      <item row="1" column="0">
        <layout class="QGridLayout" name="gridLayout">
         <item row="1" column="0">
          <widget class="QLabel" name="label_3">
@@ -1258,6 +1258,13 @@ color: rgb(0, 0, 0);</string>
          </widget>
         </item>
        </layout>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_16">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; color:#ff8000;&quot;&gt;GESTIÓN DE PROVEEDORES&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

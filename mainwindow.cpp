@@ -17,7 +17,7 @@
 #include "frmempresas.h"
 #include "frmproveedores.h"
 #include "frmconfiguracion.h"
-
+#include "frmalbaran.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -207,4 +207,14 @@ void MainWindow::on_botConfiguracion_clicked()
     frmConfiguracion1->setWindowState(Qt::WindowMaximized);
     frmConfiguracion1->exec();
     ui->botConfiguracion->setEnabled(true);
+}
+
+void MainWindow::on_btnAlbaran_clientes_clicked()
+{
+    ui->btnAlbaran_clientes->setEnabled(false);
+    FrmAlbaran *frmAlbaran1 = new FrmAlbaran();
+    workspace->addWindow(frmAlbaran1);
+    frmAlbaran1->setWindowState(Qt::WindowMaximized);
+    frmAlbaran1->exec();
+    ui->btnAlbaran_clientes->setEnabled(true);
 }

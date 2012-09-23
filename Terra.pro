@@ -38,7 +38,9 @@ SOURCES += main.cpp\
     columnamoneda.cpp \
     columnafecha.cpp \
     frmempresas.cpp \
-    frmconfiguracion.cpp
+    frmconfiguracion.cpp \
+    albaran.cpp \
+    frmalbaran.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -60,7 +62,9 @@ HEADERS  += mainwindow.h \
     columnamoneda.h \
     columnafecha.h \
     frmempresas.h \
-    frmconfiguracion.h
+    frmconfiguracion.h \
+    albaran.h \
+    frmalbaran.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -75,7 +79,8 @@ FORMS    += mainwindow.ui \
     frmBuscarFactura.ui \
     frmmodificarlin_fac.ui \
     frmempresas.ui \
-    frmconfiguracion.ui
+    frmconfiguracion.ui \
+    frmalbaran.ui
 
 RESOURCES += \
     terra.qrc

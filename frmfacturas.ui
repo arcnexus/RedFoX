@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>1018</width>
-    <height>461</height>
+    <height>459</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="1" column="0">
+   <item row="2" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
       <widget class="QFrame" name="frame_4">
@@ -442,7 +442,7 @@ border-right-color: rgb(220, 220, 220);</string>
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QFrame" name="frame_3">
      <property name="minimumSize">
       <size>
@@ -651,7 +651,7 @@ border-right-color: rgb(220, 220, 220);</string>
      </layout>
     </widget>
    </item>
-   <item row="0" column="0">
+   <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
       <widget class="QFrame" name="frame">
@@ -1912,6 +1912,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_36">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE FACTURAS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

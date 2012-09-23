@@ -9,6 +9,7 @@
 #include <QtSql>
 #include "configuracion.h"
 
+
 namespace Ui {
 class MainWindow;
 }
@@ -45,6 +46,8 @@ private slots:
     void on_btnProveedores_clicked();
 
     void on_botConfiguracion_clicked();
+
+    void on_btnAlbaran_clientes_clicked();
 
 private:
     Ui::MainWindow *ui;

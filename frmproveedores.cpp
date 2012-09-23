@@ -16,8 +16,11 @@ frmProveedores::frmProveedores(QWidget *parent) :
     BloquearCampos();
     ui->txtdFechaAlta->setDate(QDate::currentDate());
     ui->txtdFechaUltimaCompra->setDate(QDate::currentDate());
-    ui->lblCuenta1Valida->setVisible(false);
-    ui->lblcuenta2Valida->setVisible(false);
+    // cargar datos forma de pago.
+    QSqlQueryModel *qmFormaPago = new QSqlQueryModel(this);
+    qmFormaPago->setQuery("select cCodigo, cFormapago from FormPago",QSqlDatabase::database("empresa"));
+
+    ui->txtcCodigoFormaPago->setModel(qmFormaPago);
 }
 
 frmProveedores::~frmProveedores()
@@ -81,6 +84,24 @@ void frmProveedores::LLenarCampos()
     else
         ui->chklRecargoEquivalencia->setChecked(false);
     ui->txttTextoparaPedidos->setPlainText(oProveedor->gettTextoparaPedidos());
+
+    QString cOk;
+    if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
+            !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
+        cOk = oConf->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
+                              ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+    if(cOk == "1")
+        ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
+    else
+        ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
+    if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
+            !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
+        cOk = oConf->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
+                              ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+    if(cOk == "1")
+        ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
+    else
+        ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
 
 }
 
@@ -297,7 +318,7 @@ void frmProveedores::on_btnAnadir_clicked()
 void frmProveedores::on_txtcPoblacion_lostFocus()
 {
     ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
-    if (ui->txtcCP->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty()) {
+    if (ui->txtcCP->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty() and !ui->txtcCP->isReadOnly()) {
         FrmBuscarPoblacion BuscarPoblacion;
         Configuracion *oConfig = new Configuracion();
         oConfig->CargarDatos();
@@ -332,7 +353,7 @@ void frmProveedores::on_txtcPoblacion_lostFocus()
 
 void frmProveedores::on_txtcCP_lostFocus()
 {
-    if (!ui->txtcCP->text().isEmpty() and ui->txtcPoblacion->text().isEmpty()) {
+    if (!ui->txtcCP->text().isEmpty() and ui->txtcPoblacion->text().isEmpty() and !ui->txtcCP->isReadOnly()){
         FrmBuscarPoblacion BuscarPoblacion;
         Configuracion *oConfig = new Configuracion();
         oConfig->CargarDatos();
@@ -402,9 +423,9 @@ void frmProveedores::on_txtcEntidadBancariaProveedor_lostFocus()
         cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
                               ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
-        ui->lblCuenta1Valida->setVisible(true);
+        ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
-        ui->lblCuenta1Valida->setVisible(false);
+        ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
     delete oConfig;
 }
 
@@ -417,9 +438,9 @@ void frmProveedores::on_txtcOficinaBancariaProveedor_lostFocus()
         cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
                               ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
-        ui->lblCuenta1Valida->setVisible(true);
+        ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
-        ui->lblCuenta1Valida->setVisible(false);
+        ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
     delete oConfig;
 }
 
@@ -432,9 +453,9 @@ void frmProveedores::on_txtcDCProveedor_lostFocus()
         cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
                               ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
-        ui->lblCuenta1Valida->setVisible(true);
+        ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
-        ui->lblCuenta1Valida->setVisible(false);
+        ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
     delete oConfig;
 }
 
@@ -449,8 +470,102 @@ void frmProveedores::on_txtcCCProveedor_lostFocus()
         cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
                               ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
-        ui->lblCuenta1Valida->setVisible(true);
+        ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
-        ui->lblCuenta1Valida->setVisible(false);
+        ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
     delete oConfig;
+}
+
+void frmProveedores::on_txtcEntidadPagoProveedor_lostFocus()
+{
+    Configuracion *oConfig = new Configuracion();
+    QString cOk;
+    if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
+            !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
+        cOk = oConfig->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
+                              ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+    if(cOk == "1")
+        ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
+    else
+        ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
+    delete oConfig;
+}
+
+void frmProveedores::on_txtcOficinaPagoProveedor_lostFocus()
+{
+    Configuracion *oConfig = new Configuracion();
+    QString cOk;
+    if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
+            !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
+        cOk = oConfig->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
+                              ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+    if(cOk == "1")
+        ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
+    else
+        ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
+    delete oConfig;
+}
+
+void frmProveedores::on_txtcDCPagoProveedor_lostFocus()
+{
+    Configuracion *oConfig = new Configuracion();
+    QString cOk;
+    if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
+            !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
+        cOk = oConfig->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
+                              ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+    if(cOk == "1")
+        ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
+    else
+        ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
+    delete oConfig;
+}
+
+void frmProveedores::on_txtcCuentaPagoProveedor_lostFocus()
+{
+    Configuracion *oConfig = new Configuracion();
+    QString cOk;
+    if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
+            !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
+        cOk = oConfig->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
+                              ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+    if(cOk == "1")
+        ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
+    else
+        ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
+    delete oConfig;
+}
+
+void frmProveedores::on_txtcCPAlmacen_editingFinished()
+{
+    if (!ui->txtcCPAlmacen->isReadOnly()) {
+        if (!ui->txtcCPAlmacen->text().isEmpty() and ui->txtcPoblacionAlmacen->text().isEmpty()) {
+            FrmBuscarPoblacion BuscarPoblacion;
+            Configuracion *oConfig = new Configuracion();
+            oConfig->CargarDatos();
+            BuscarPoblacion.setcPoblacion(ui->txtcCPAlmacen->text(),0);
+           if(BuscarPoblacion.exec()) {
+               int nId = BuscarPoblacion.DevolverID();
+             if(nId > 0) {
+                   QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                   QString cId;
+                   cId = QString::number(nId);
+                   qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+                   qPoblacion.bindValue(":id",cId);
+                   if(!qPoblacion.exec()) {
+                       QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                   } else {
+                       if (qPoblacion.next()) {
+                            ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());
+                            ui->txtcProvinciaAmacen->setText(qPoblacion.value(2).toString());
+                            ui->txtcPaisAlmacen->setText(oConfig->cPais);
+                       }
+                   }
+
+               }
+        delete oConfig;
+           }
+        }
+        ui->txtcTelefonoAlmacen->setFocus();
+    }
 }

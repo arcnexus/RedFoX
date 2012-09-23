@@ -47,6 +47,16 @@ private slots:
 
     void on_txtcCCProveedor_lostFocus();
 
+    void on_txtcEntidadPagoProveedor_lostFocus();
+
+    void on_txtcOficinaPagoProveedor_lostFocus();
+
+    void on_txtcDCPagoProveedor_lostFocus();
+
+    void on_txtcCuentaPagoProveedor_lostFocus();
+
+    void on_txtcCPAlmacen_editingFinished();
+
 private:
     Ui::frmProveedores *ui;
 };
