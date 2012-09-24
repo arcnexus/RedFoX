@@ -144,7 +144,7 @@ CREATE TABLE "cab_alb" (
   "lRecargoEquivalencia" int DEFAULT 0,
   "rSubtotal" real DEFAULT 0,
   "rDto" real DEFAULT 0,
-  "nPorcentajeDto" real DEFAULT 0,
+  "nDto" real DEFAULT 0,
   "rBase1" real DEFAULT 0,
   "rBase2" real DEFAULT 0,
   "rBase3" real DEFAULT 0,
@@ -175,8 +175,7 @@ CREATE TABLE "cab_alb" (
   "rTotalAlbaran" real DEFAULT 0,
   "lImpreso" int DEFAULT 0,
   "lFacturado" int DEFAULT 0,
-  "nFactura" int DEFAULT 0,
-  "cSerieFactura" text    ,
+  "cFactura" text    ,
   "dFechaFactura" numeric  ,
   "tComentario" text  ,
   "rACuenta" real DEFAULT 0
@@ -717,8 +716,8 @@ CREATE TABLE "lin_alb" (
   "cDescripcion" text  ,
   "rPvp" real DEFAULT 0,
   "rSubTotal" real DEFAULT 0,
-  "nPorcDto" real DEFAULT 0,
   "nDto" real DEFAULT 0,
+  "rDto" real DEFAULT 0,
   "nPorcIva" real DEFAULT 0,
   "nTotal" real DEFAULT 0
    

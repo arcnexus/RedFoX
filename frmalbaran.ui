@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1013</width>
-    <height>500</height>
+    <width>1011</width>
+    <height>498</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -712,14 +712,14 @@
       <item row="0" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
-         <widget class="QLabel" name="lblnumfac">
+         <widget class="QLabel" name="lblnumalb">
           <property name="text">
            <string>Albarán:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="txtcFactura">
+         <widget class="QLineEdit" name="txtcAlbaran">
           <property name="styleSheet">
            <string notr="true">color: rgb(0, 0, 128);
 font: 12pt &quot;Times New Roman&quot;;</string>
@@ -764,14 +764,14 @@ font: 12pt &quot;Times New Roman&quot;;</string>
          <enum>QTabWidget::South</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
           <string>Totales</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_8">
-          <item row="1" column="2" rowspan="2">
+          <item row="1" column="1" rowspan="2">
            <layout class="QGridLayout" name="gridLayout_6">
             <item row="4" column="0" colspan="3">
              <widget class="Line" name="line_2">
@@ -781,7 +781,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
              </widget>
             </item>
             <item row="2" column="0" rowspan="2">
-             <widget class="QLabel" name="lblContabilizada">
+             <widget class="QLabel" name="lblNumFactura">
               <property name="styleSheet">
                <string notr="true">color: rgb(255, 128, 0);</string>
               </property>
@@ -791,7 +791,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
              </widget>
             </item>
             <item row="0" column="0" colspan="3">
-             <widget class="QLabel" name="lblFacturaImpresa">
+             <widget class="QLabel" name="lblImpreso">
               <property name="styleSheet">
                <string notr="true">color: rgb(255, 0, 0);</string>
               </property>
@@ -801,7 +801,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
              </widget>
             </item>
             <item row="1" column="0" colspan="2">
-             <widget class="QLabel" name="lblFacturaCobrada">
+             <widget class="QLabel" name="lblFacturado">
               <property name="styleSheet">
                <string notr="true">color: rgb(0, 128, 0);</string>
               </property>
@@ -814,7 +814,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
              <widget class="QLineEdit" name="txtcNumFra"/>
             </item>
             <item row="1" column="2">
-             <widget class="QDateEdit" name="txtdFechaCobro">
+             <widget class="QDateEdit" name="txtdFechaFactura">
               <property name="displayFormat">
                <string>dd/MM/yyyy</string>
               </property>
@@ -981,13 +981,6 @@ font: 12pt &quot;Times New Roman&quot;;</string>
             </item>
            </layout>
           </item>
-          <item row="0" column="1" rowspan="3" colspan="2">
-           <widget class="Line" name="line">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="tab_4">
@@ -995,29 +988,20 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           <string>Estado</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_7">
-          <item row="4" column="0">
-           <widget class="QLineEdit" name="txtcCodigoEntidad"/>
-          </item>
-          <item row="4" column="2">
-           <widget class="QLineEdit" name="txtcDCCuenta"/>
-          </item>
-          <item row="0" column="5">
-           <widget class="QLineEdit" name="txtcPedidoCliente"/>
-          </item>
-          <item row="4" column="3" colspan="2">
-           <widget class="QLineEdit" name="txtcNumeroCuenta"/>
-          </item>
-          <item row="3" column="0" colspan="3">
-           <widget class="QLabel" name="label_23">
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="txtrACuenta">
             <property name="text">
-             <string>Datos entidad bancaria</string>
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="txtcOficinaEntidad"/>
+          <item row="0" column="3">
+           <widget class="QLineEdit" name="txtcPedidoCliente"/>
           </item>
-          <item row="0" column="4">
+          <item row="0" column="2">
            <widget class="QLabel" name="label_24">
             <property name="text">
              <string>Pedido Cliente:</string>
@@ -1036,6 +1020,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>Entregado a Cuenta:</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -1635,6 +1626,16 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
              <string>IVA</string>
             </property>
            </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_3">
+         <attribute name="title">
+          <string>Comentarios</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_11">
+          <item row="0" column="0">
+           <widget class="QTextEdit" name="txttComentario"/>
           </item>
          </layout>
         </widget>

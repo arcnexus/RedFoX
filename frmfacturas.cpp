@@ -219,8 +219,6 @@ void frmFacturas::LLenarCampos() {
 
     // cargamos líneas de ventas
    lineasVentas();
-
-
 }
 
 void frmFacturas::LLenarCamposCliente()

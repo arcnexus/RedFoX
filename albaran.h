@@ -16,9 +16,9 @@ public:
 private:
     int id;
     QString cCodigoCliente;
-    QString cAlbaran;
+    int nAlbaran;
     QDate dFecha;
-    QDate dFechaCobro;
+    QDate dFechaFactura;
     int iId_Cliente;
     QString cCliente;
     QString cDireccion;
@@ -31,20 +31,14 @@ private:
     int lRecargoEquivalencia;
     double rSubtotal;
     int nDto;
-    int nDtoPP;
     double rImporteDescuento;
-    double rImporteDescuentoPP;
     double rBase;
-    int nIRPF;
-    double rImporteIRPF;
     int nIva;
     double rImporteIva;
     double rTotal;
-    int lImpresa;
-    int lCobrada;
-    int lContablilizada;
-    int id_FormaPago;
-    QString cFormaPago;
+    int lImpreso;
+    int lFacturado;
+    QString cFactura;
     QString tComentario;
     double rBase1;
     double rBase2;
@@ -70,16 +64,12 @@ private:
     double rRecargoEq2;
     double rRecargoEq3;
     double rRecargoEq4;
-    double rTotalRecargoEq;
-    double rEntregadoaCuenta;
+    double rRecargoEqTotal;
+    double rACuenta;
     double rImportePendiente;
-    QString cCodigoEntidad;
-    QString cOficinaEntidad;
-    QString cDCCuenta;
-    QString cNumeroCuenta;
-    QString cPedidoCliente;
+    QString cPedidoCli;
     QSqlDatabase db;
-    QSqlQuery *cab_fac;
+    QSqlQuery *cab_alb;
 
 
     
@@ -89,8 +79,8 @@ public slots:
     // Metodos de trabajo Clase Albaran
     void AnadirAlbaran();
     void RecuperarAlbaran(QString cSQL);
-    void GuardarAlbaran(int nId_Albaran, bool AlbaranLegal);
-    QString NuevoNumeroAlbaran();
+    void GuardarAlbaran(int nId_Albaran);
+    int NuevoNumeroAlbaran();
     void AnadirLineaAlbaran(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
                             double porcdto, double dto, double total, double nPorcIva);
     void ModificarLineaAlbaran(int id_lin, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
@@ -102,9 +92,10 @@ public slots:
     // getters
     int Getid();
     QString getcCodigoCliente();
-    QString getcAlbaran();
+    int getnAlbaran();
     QDate getdFecha();
-    QDate getdFechaCobro();
+    QDate getdFechaFactura();
+    QString getcFactura();
     int getiId_Cliente();
     QString getcCliente();
     QString getcDireccion();
@@ -117,18 +108,13 @@ public slots:
     int getlRecargoEquivalencia();
     double getrSubtotal();
     int getnDto();
-    int getnDtoPP();
     double getrImporteDescuento();
-    double getrImporteDescuentoPP();
     double getrBase();
     int getnIva();
     double getrImporteIva();
     double getrTotal();
-    int getlImpresa();
-    int getlCobrada();
-    int getlContablilizada();
-    int getid_FormaPago();
-    QString getcFormaPago();
+    int getlImpreso();
+    int getlFacturado();
     QString gettComentario();
     double getrBase1();
     double getrBase2();
@@ -154,24 +140,19 @@ public slots:
     double getrRecargoEq2();
     double getrRecargoEq3();
     double getrRecargoEq4();
-    double getrTotalRecargoEq();
-    double getrEntregadoaCuenta();
+    double getrRecargoEqTotal();
+    double getrACuenta();
     double getrImportePendiente();
-    QString getcCodigoEntidad();
-    QString getcOficinaEntidad();
-    QString getcDCCuenta();
-    QString getcNumeroCuenta();
-    QString getcPedidoCliente();
-    int getnIRPF();
-    double getrImporteIRPF();
+    QString getcPedidoCli();
 
 
     // setters
     void setid( int iID_Albaran);
     void setcCodigoCliente(QString cCodigoCliente);
-    void setcAlbaran( QString cAlbaran);
+    void setnAlbaran( int nAlbaran);
     void setdFecha(QDate dFecha);
-    void setdFechaCobro(QDate dFechaCobro);
+    void setdFechaFactura(QDate dFechaFactura);
+    void setcFactura(QString cFactura);
     void setiId_Cliente(int iId_Cliente);
     void setcCliente(QString cCliente);
     void setcDireccion(QString cDireccion);
@@ -181,21 +162,15 @@ public slots:
     void setcProvincia(QString cProvincia);
     void setcPais(QString cPais);
     void setcCif(QString cCif);
-    void setlRecargoEquivalencia(int lRecargoEquivalencia);
     void setrSubtotal(double rSubtotal);
     void setnDto(int nDto);
-    void setnDtoPP(int nDtoPP);
     void setrImporteDescuento(double rImporteDescuento);
-    void setrImporteDescuentoPP(double rImporteDescuentoPP);
     void setrBase(double rBase);
     void setnIva(int nIva);
     void setrImporteIva(double rImporteIva);
     void setrTotal(double rTotal);
-    void setlImpresa(int lImpresa);
-    void setlCobrada(int lCobrada);
-    void setlContablilizada(int lContablilizada);
-    void setid_FormaPago(int id_FormaPago);
-    void setcFormaPago(QString cFormaPago);
+    void setlImpreso(int lImpreso);
+    void setlFacturado(int lFacturado);
     void settComentario(QString tComentario);
     void setrBase1(double rBase1);
     void setrBase2(double rBase2);
@@ -221,17 +196,9 @@ public slots:
     void setrRecargoEq2(double rRecargoEq2);
     void setrRecargoEq3(double rRecargoEq3);
     void setrRecargoEq4(double rRecargoEq4);
-    void setrTotalRecargoEq(double rTotalRecargoEq);
-    void setrEntregadoaCuenta(double rEntregadoaCuenta);
-    void setrImportePendiente(double rImportePendiente);
-    void setcCodigoEntidad(QString cCodigoEntidad);
-    void setcOficinaEntidad(QString cOficinaEntidad);
-    void setcDCCuenta(QString cDCCuenta);
-    void setcNumeroCuenta(QString cNumeroCuenta);
-    void setcPedidoCliente(QString cPedidoCliente);
-    void setnIRPF(int nIRPF);
-    void setrImporteIRPF(double rImporteIRPF);
-    
+    void setrRecargoEqTotal(double rRecargoEqTotal);
+    void setcPedidoCli(QString cPedidoCli);
+    void setrACuenta(double rACuenta);
 };
 
 #endif // ALBARAN_H

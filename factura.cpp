@@ -5,7 +5,6 @@
 #include <QSqlRecord>
 #include <QErrorMessage>
 #include <QMessageBox>
-#include <frmdecision.h>
 #include <QDebug>
 #include "configuracion.h"
 #include <frmdecision.h>
@@ -121,9 +120,9 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
                    "dFecha = :dFecha,"
                    "dFechaCobro = :dFechaCobro,"
                    "iId_Cliente = :iId_Cliente,"
-                   "cCliente =:cCliente,"
-                   "cDireccion =:cDireccion,"
-                   "cDireccion2 =:cDireccion2,"
+                   "cCliente = :cCliente,"
+                   "cDireccion = :cDireccion,"
+                   "cDireccion2 = :cDireccion2,"
                    "cCp=:cCp,"
                    "cPoblacion =:cPoblacion,"
                    "cProvincia =:cProvincia,"
