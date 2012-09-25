@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1011</width>
-    <height>498</height>
+    <width>1007</width>
+    <height>494</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -195,7 +195,7 @@
          </size>
         </property>
         <property name="text">
-         <string>Cobrar</string>
+         <string>Facturar</string>
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
@@ -300,6 +300,9 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="1" colspan="3">
+       <widget class="QLineEdit" name="txtcCliente"/>
+      </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label_6">
         <property name="text">
@@ -307,18 +310,15 @@
         </property>
        </widget>
       </item>
+      <item row="5" column="3">
+       <widget class="QLineEdit" name="txtcPais"/>
+      </item>
       <item row="4" column="0">
        <widget class="QLabel" name="label_7">
         <property name="text">
          <string>Población:</string>
         </property>
        </widget>
-      </item>
-      <item row="1" column="1" colspan="3">
-       <widget class="QLineEdit" name="txtcCliente"/>
-      </item>
-      <item row="5" column="3">
-       <widget class="QLineEdit" name="txtcPais"/>
       </item>
       <item row="4" column="1">
        <widget class="QLineEdit" name="txtcCp">
@@ -364,6 +364,13 @@
        <widget class="QLabel" name="label_14">
         <property name="text">
          <string>Pais:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="2">
+       <widget class="QCheckBox" name="chklRecargoEq">
+        <property name="text">
+         <string>Recargo de equivalencia</string>
         </property>
        </widget>
       </item>
@@ -579,22 +586,6 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="botRecalcular">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </item>
         <item>
@@ -764,152 +755,19 @@ font: 12pt &quot;Times New Roman&quot;;</string>
          <enum>QTabWidget::South</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
           <string>Totales</string>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_8">
-          <item row="1" column="1" rowspan="2">
-           <layout class="QGridLayout" name="gridLayout_6">
-            <item row="4" column="0" colspan="3">
-             <widget class="Line" name="line_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0" rowspan="2">
-             <widget class="QLabel" name="lblNumFactura">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 128, 0);</string>
-              </property>
-              <property name="text">
-               <string>NUM FRA:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0" colspan="3">
-             <widget class="QLabel" name="lblImpreso">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 0, 0);</string>
-              </property>
-              <property name="text">
-               <string>IMPRESO</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0" colspan="2">
-             <widget class="QLabel" name="lblFacturado">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(0, 128, 0);</string>
-              </property>
-              <property name="text">
-               <string>FACTURADO:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1" rowspan="2" colspan="2">
-             <widget class="QLineEdit" name="txtcNumFra"/>
-            </item>
-            <item row="1" column="2">
-             <widget class="QDateEdit" name="txtdFechaFactura">
-              <property name="displayFormat">
-               <string>dd/MM/yyyy</string>
-              </property>
-              <property name="calendarPopup">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="2" column="0">
-           <layout class="QGridLayout" name="gridLayout_5">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_16">
-              <property name="text">
-               <string>Base Imp:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0" rowspan="2">
-             <widget class="QLabel" name="label_11">
-              <property name="text">
-               <string>Iva:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="txtrBase">
-              <property name="text">
-               <string>0,00</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_12">
-              <property name="text">
-               <string>Total</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QLineEdit" name="txtrTotal">
-              <property name="text">
-               <string>0,00</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1" rowspan="2">
-             <widget class="QLineEdit" name="txtrImporteIva">
-              <property name="text">
-               <string>0,00</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2" rowspan="2">
-             <widget class="QLabel" name="lblIRPF_2">
-              <property name="text">
-               <string>IRPF</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="3" rowspan="2">
-             <widget class="QLineEdit" name="txtrImporteIRPF_2">
-              <property name="text">
-               <string>0,00</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="0" column="0" rowspan="2">
+         <layout class="QGridLayout" name="gridLayout_13">
+          <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout_4">
             <item row="0" column="0">
              <widget class="QLabel" name="label_8">
               <property name="text">
                <string>SubTotal:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_10">
-              <property name="text">
-               <string>DtoPP:</string>
               </property>
              </widget>
             </item>
@@ -928,6 +786,12 @@ font: 12pt &quot;Times New Roman&quot;;</string>
                 <height>0</height>
                </size>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>120</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="text">
                <string>0,00</string>
               </property>
@@ -941,16 +805,12 @@ font: 12pt &quot;Times New Roman&quot;;</string>
             </item>
             <item row="1" column="3">
              <widget class="QLineEdit" name="txtrImporteDescuento">
-              <property name="text">
-               <string>0,00</string>
+              <property name="maximumSize">
+               <size>
+                <width>120</width>
+                <height>16777215</height>
+               </size>
               </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="3">
-             <widget class="QLineEdit" name="txtrImporteDescuentoPP">
               <property name="text">
                <string>0,00</string>
               </property>
@@ -961,6 +821,12 @@ font: 12pt &quot;Times New Roman&quot;;</string>
             </item>
             <item row="1" column="1" colspan="2">
              <widget class="QLineEdit" name="txtnDto">
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="text">
                <string>0.00</string>
               </property>
@@ -969,10 +835,180 @@ font: 12pt &quot;Times New Roman&quot;;</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="1" colspan="2">
-             <widget class="QLineEdit" name="txtnDtoPP">
+           </layout>
+          </item>
+          <item row="0" column="1" rowspan="2">
+           <widget class="QFrame" name="frame_2">
+            <property name="minimumSize">
+             <size>
+              <width>221</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>221</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="0" column="0">
+              <layout class="QGridLayout" name="gridLayout_6">
+               <item row="4" column="0" colspan="3">
+                <widget class="Line" name="line_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0" rowspan="2">
+                <widget class="QLabel" name="lblNumFactura">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 128, 0);</string>
+                 </property>
+                 <property name="text">
+                  <string>NUM FRA:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0" colspan="3">
+                <widget class="QLabel" name="lblImpreso">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 0, 0);</string>
+                 </property>
+                 <property name="text">
+                  <string>IMPRESO</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" colspan="2">
+                <widget class="QLabel" name="lblFacturado">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(0, 128, 0);</string>
+                 </property>
+                 <property name="text">
+                  <string>FACTURADO:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1" rowspan="2" colspan="2">
+                <widget class="QLineEdit" name="txtcNumFra"/>
+               </item>
+               <item row="1" column="2">
+                <widget class="QDateEdit" name="txtdFechaFactura">
+                 <property name="displayFormat">
+                  <string>dd/MM/yyyy</string>
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <layout class="QGridLayout" name="gridLayout_5">
+            <property name="horizontalSpacing">
+             <number>65</number>
+            </property>
+            <property name="verticalSpacing">
+             <number>-1</number>
+            </property>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_12">
               <property name="text">
-               <string>0.00</string>
+               <string>Total</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" rowspan="2">
+             <widget class="QLabel" name="label_11">
+              <property name="text">
+               <string>Iva:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" rowspan="2">
+             <widget class="QLineEdit" name="txtrImporteIva">
+              <property name="maximumSize">
+               <size>
+                <width>120</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>0,00</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_16">
+              <property name="text">
+               <string>Base Imp:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLineEdit" name="txtrTotal">
+              <property name="maximumSize">
+               <size>
+                <width>120</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>0,00</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="txtrBase">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>120</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>0,00</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string>R.E.:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="txtrTotalRecargoEq">
+              <property name="text">
+               <string>0,00</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1075,7 +1111,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
            </widget>
           </item>
           <item row="5" column="6">
-           <widget class="QLineEdit" name="txtrTotalRecargoEq">
+           <widget class="QLineEdit" name="txtrTotalRecargoEq_2">
             <property name="styleSheet">
              <string notr="true">color: rgb(17, 82, 2);</string>
             </property>
@@ -1271,7 +1307,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
            </widget>
           </item>
           <item row="5" column="4">
-           <widget class="QLineEdit" name="txtnIva_2">
+           <widget class="QLineEdit" name="txtrTotalIVA_2">
             <property name="styleSheet">
              <string notr="true">color: rgb(17, 82, 2);</string>
             </property>
@@ -1653,6 +1689,82 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>txtcCodigoCliente</tabstop>
+  <tabstop>botBuscarCliente</tabstop>
+  <tabstop>txtcCliente</tabstop>
+  <tabstop>txtcDireccion</tabstop>
+  <tabstop>txtcDireccion2</tabstop>
+  <tabstop>txtcCp</tabstop>
+  <tabstop>txtcPoblacion</tabstop>
+  <tabstop>txtcProvincia</tabstop>
+  <tabstop>txtcPais</tabstop>
+  <tabstop>txtcCif</tabstop>
+  <tabstop>chklRecargoEq</tabstop>
+  <tabstop>txtcCodigoArticulo</tabstop>
+  <tabstop>btnAnadirLinea</tabstop>
+  <tabstop>txtcCantidadArticulo</tabstop>
+  <tabstop>txtDescripcionArticulo</tabstop>
+  <tabstop>txtPVPArticulo</tabstop>
+  <tabstop>txtSubtotalArticulo</tabstop>
+  <tabstop>txtPorcDtoArticulo</tabstop>
+  <tabstop>txtDtoArticulo</tabstop>
+  <tabstop>txtTotalArticulo</tabstop>
+  <tabstop>txtPorcIVAArticulo</tabstop>
+  <tabstop>botEditarLinea</tabstop>
+  <tabstop>botBorrarLinea</tabstop>
+  <tabstop>btnSiguiente</tabstop>
+  <tabstop>btnCobrar</tabstop>
+  <tabstop>btnAnterior</tabstop>
+  <tabstop>btnDeshacer</tabstop>
+  <tabstop>btnCerrar</tabstop>
+  <tabstop>btnImprimir</tabstop>
+  <tabstop>btnGuardar</tabstop>
+  <tabstop>btnAnadir</tabstop>
+  <tabstop>btnBuscar</tabstop>
+  <tabstop>Lineas</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>btnEditar</tabstop>
+  <tabstop>txtcAlbaran</tabstop>
+  <tabstop>txtdFecha</tabstop>
+  <tabstop>txtrBase</tabstop>
+  <tabstop>txtrTotal</tabstop>
+  <tabstop>txtrImporteIva</tabstop>
+  <tabstop>txtrSubtotal</tabstop>
+  <tabstop>txtrImporteDescuento</tabstop>
+  <tabstop>txtnDto</tabstop>
+  <tabstop>txtrACuenta</tabstop>
+  <tabstop>txtcPedidoCliente</tabstop>
+  <tabstop>txtrBase1</tabstop>
+  <tabstop>txtrTotalRecargoEq_2</tabstop>
+  <tabstop>txtnRec1</tabstop>
+  <tabstop>txtrTotal1</tabstop>
+  <tabstop>txtrTotal4</tabstop>
+  <tabstop>txtnPorcentajeIva2</tabstop>
+  <tabstop>txtnPorcentajeIva1</tabstop>
+  <tabstop>txtrRecargoEq3</tabstop>
+  <tabstop>txtrIVA1</tabstop>
+  <tabstop>txtnRec3</tabstop>
+  <tabstop>txtrTotalIVA_2</tabstop>
+  <tabstop>txtrTotal2</tabstop>
+  <tabstop>txtrRecargoEq1</tabstop>
+  <tabstop>txtnRec2</tabstop>
+  <tabstop>txtrIVA3</tabstop>
+  <tabstop>txtrTotal_2</tabstop>
+  <tabstop>txtrBase3</tabstop>
+  <tabstop>txtrBase2</tabstop>
+  <tabstop>txtrTotal3</tabstop>
+  <tabstop>txtrRecargoEq4</tabstop>
+  <tabstop>txtrIVA2</tabstop>
+  <tabstop>txtnRec4</tabstop>
+  <tabstop>txtnPorcentajeIva3</tabstop>
+  <tabstop>txtrBase4</tabstop>
+  <tabstop>txtrRecargoEq2</tabstop>
+  <tabstop>txtrBaseTotal_2</tabstop>
+  <tabstop>txtrIVA4</tabstop>
+  <tabstop>txtnPorcentajeIva4</tabstop>
+  <tabstop>txttComentario</tabstop>
+ </tabstops>
  <resources>
   <include location="terra.qrc"/>
  </resources>
@@ -1668,7 +1780,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
      <y>473</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1010</x>
+     <x>1008</x>
      <y>443</y>
     </hint>
    </hints>

@@ -16,7 +16,7 @@ void Articulo::Anadir()
 {
     QSqlQuery query(QSqlDatabase::database("empresa"));
          query.prepare("INSERT INTO articulos (cCodigo,cCodigoBarras,cCodigoFabricante,cDescripcion,cDescripcionReducida,"
-                       "id_Proveedor,id_Familia,cFamilia,id_Seccion,cSeccion,id_Subfamilia,cSubfamilia,cTipoIva,rCoste,"
+                       "id_Proveedor,id_Familia,cFamilia,id_Seccion,cSeccion,id_Subfamilia,cSubfamilia,nTipoIva,rCoste,"
                        "rTarifa1,rTarifa2,rTarifa3,rDto,nDtoProveedor,nDtoproveedor2,nDtoProveedor3,dUltimaCompra,"
                        "dUltimaVenta,nMargen1,nMargen2,nMargen3,rPrecioMedio,rPrecioMedio2,rPrecioMedio3,nUnidadesCompradas,"
                        "nUnidadesVendidas,rAcumuladoCompras,rAcumuladoVentas,tComentario,nStockMaximo,nStockMinimo,"
@@ -24,7 +24,7 @@ void Articulo::Anadir()
                        "dFechaPrevistaRecepcion,nCantidadPendienteRecibir,nReservados,lMostrarWeb,nEtiquetas,"
                        "cLocalizacion)"
                        " VALUES (:cCodigo,:cCodigoBarras,:cCodigoFabricante,:cDescripcion,:cDescripcionReducida,"
-                       ":id_Proveedor,:id_Familia,:cFamilia,:id_Seccion,:cSeccion,:id_Subfamilia,:cSubfamilia,:cTipoIva,:rCoste,"
+                       ":id_Proveedor,:id_Familia,:cFamilia,:id_Seccion,:cSeccion,:id_Subfamilia,:cSubfamilia,:nTipoIva,:rCoste,"
                        ":rTarifa1,:rTarifa2,:rTarifa3,:rDto,:nDtoProveedor,:nDtoproveedor2,:nDtoProveedor3,:dUltimaCompra,"
                        ":dUltimaVenta,:nMargen1,:nMargen2,:nMargen3,:rPrecioMedio,:rPrecioMedio2,:rPrecioMedio3,:nUnidadesCompradas,"
                        ":nUnidadesVendidas,:rAcumuladoCompras,:rAcumuladoVentas,:tComentario,:nStockMaximo,:nStockMinimo,"
@@ -44,7 +44,7 @@ void Articulo::Anadir()
          query.bindValue(":cSeccion",this->cSeccion);
          query.bindValue(":id_Subfamilia",this->id_SubFamilia);
          query.bindValue(":cSubfamilia",this->cSubfamilia);
-         query.bindValue(":cTipoIva",this->cCodigoIva);
+         query.bindValue(":nTipoIva",this->nTipoIva);
          query.bindValue(":rCoste",this->rCoste);
          query.bindValue(":rTarifa1",this->rTarifa1);
          query.bindValue(":rTarifa2",this->rTarifa2);
@@ -251,7 +251,7 @@ void Articulo::Guardar()
                    "cSeccion=:cSeccion,"
                    "id_Subfamilia=:id_Subfamilia,"
                    "cSubfamilia=:cSubfamilia,"
-                   "cTipoIva =:cTipoIva,"
+                   "nTipoIva =:nTipoIva,"
                    "rCoste=:rCoste,"
                    "rTarifa1=:rTarifa1,"
                    "rTarifa2=:rTarifa2,"
@@ -302,7 +302,7 @@ void Articulo::Guardar()
     query.bindValue(":cSeccion",this->cSeccion);
     query.bindValue(":id_Subfamilia",this->id_SubFamilia);
     query.bindValue(":cSubfamilia",this->cSubfamilia);
-    query.bindValue(":cTipoIva",this->cCodigoIva);
+    query.bindValue(":nTipoIva",this->nTipoIva);
     query.bindValue(":rCoste",this->rCoste);
     query.bindValue(":rTarifa1",this->rTarifa1);
     query.bindValue(":rTarifa2",this->rTarifa2);

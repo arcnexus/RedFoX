@@ -87,7 +87,7 @@ public slots:
                             double porcdto, double dto, double total, double nPorcIva);
     void BorrarLineaAlbaran(int id_lin);
     void calcularAlbaran();
-    void CobrarAlbaran();
+    void FacturarAlbaran();
 
     // getters
     int Getid();
@@ -162,6 +162,7 @@ public slots:
     void setcProvincia(QString cProvincia);
     void setcPais(QString cPais);
     void setcCif(QString cCif);
+    void setlRecargoEquivalencia(int lRecargoEquivalencia);
     void setrSubtotal(double rSubtotal);
     void setnDto(int nDto);
     void setrImporteDescuento(double rImporteDescuento);

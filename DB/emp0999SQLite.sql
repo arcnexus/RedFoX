@@ -62,7 +62,7 @@ CREATE TABLE "articulos" (
   "cSeccion" text    ,
   "id_Subfamilia" int DEFAULT 0,
   "cSubfamilia" text    ,
-  "cTipoIva" text    ,
+  "nTipoIva" real DEFAULT 0,
   "rCoste" real DEFAULT 0,
   "rTarifa1" real DEFAULT 0,
   "rTarifa2" real DEFAULT 0,
@@ -719,7 +719,7 @@ CREATE TABLE "lin_alb" (
   "nDto" real DEFAULT 0,
   "rDto" real DEFAULT 0,
   "nPorcIva" real DEFAULT 0,
-  "nTotal" real DEFAULT 0
+  "rTotal" real DEFAULT 0
    
 )  ;
 

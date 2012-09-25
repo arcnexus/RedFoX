@@ -5,6 +5,7 @@
 #include <QHeaderView>
 #include <QSqlQueryModel>
 #include "frmbuscarcliente.h"
+#include "configuracion.h"
 
 namespace Ui {
 class FrmAlbaran;
@@ -24,6 +25,8 @@ public:
     void BloquearCampos();
     void DesbloquearCampos();
     void LLenarAlbaran();
+    void calcularTotalLinea();
+    void RellenarDespuesCalculo();
 private slots:
     void on_btnSiguiente_clicked();
 
@@ -37,9 +40,21 @@ private slots:
 
     void on_btnGuardar_clicked();
 
+    void on_txtcCodigoArticulo_editingFinished();
+
+    void on_txtcCantidadArticulo_editingFinished();
+
+    void on_txtPVPArticulo_editingFinished();
+
+    void on_txtPorcDtoArticulo_editingFinished();
+
+
+    void on_btnAnadirLinea_clicked();
+
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;
+    Configuracion *o_configuracion;
 };
 
 #endif // FRMALBARAN_H

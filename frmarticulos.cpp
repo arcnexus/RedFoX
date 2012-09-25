@@ -246,7 +246,9 @@ void FrmArticulos::LLenarCampos()
    ui->txtcFamilia->setText(oArticulo->getcFamilia());
    ui->txtcSeccion->setText(oArticulo->getcSeccion());
    ui->txtcSubFamilia->setText(oArticulo->getcSubfamilia());
-   ui->cboTipoIVA->setEditText(QString::number(oArticulo->getnTipoIva()));
+   int nIndex = ui->cboTipoIVA->findText(QString::number(oArticulo->getnTipoIva()));
+   if (nIndex !=-1)
+           ui->cboTipoIVA->setCurrentIndex(nIndex);
    ui->txtrCoste->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrCoste(),'f',2)));
    ui->txtrTarifa1->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrTarifa1(),'f',2)));
    ui->txtrTarifa1_2->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrTarifa1(),'f',2)));
