@@ -24,6 +24,8 @@
 #include <QMessageBox>
 #include <QTextCodec>
 #include <QtSql>
+ #include <QWindowsStyle>
+
 
 
 int main(int argc, char *argv[])
@@ -33,7 +35,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(linuxCodec);
     QTextCodec::setCodecForCStrings(linuxCodec);
     QTextCodec::setCodecForLocale(linuxCodec);
-
+    QApplication::setStyle(new QPlastiqueStyle);
     MainWindow w;
     w.setVisible(true);
     w.setWindowState(Qt::WindowMaximized );

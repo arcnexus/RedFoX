@@ -5,6 +5,7 @@
 #include "columnamoneda.h"
 #include "configuracion.h"
 #include "articulo.h"
+#include "frmmodificarlin_alb.h"
 
 Albaran *oAlbaran = new Albaran();
 Cliente *oCliente2 = new Cliente();
@@ -42,7 +43,7 @@ void FrmAlbaran::lineasVentas()
     cId = cId.number(oAlbaran->Getid());
      cSQL ="select id,cCodigo,nCantidad,cDescripcion,rPvp,rSubtotal,nDto,rDto,rTotal, nPorcIva from lin_alb "
              " where Id_Cab = "+cId;
-     QSqlQueryModel *ModelLin_alb = new QSqlQueryModel();
+     ModelLin_alb = new QSqlQueryModel();
      ModelLin_alb->setQuery(cSQL,QSqlDatabase::database("empresa"));
      ui->Lineas->setModel(ModelLin_alb);
       //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
@@ -209,6 +210,7 @@ void FrmAlbaran::VaciarCampos() {
     ui->txtrBase2->setText(0);
     ui->txtrBase3->setText(0);
     ui->txtrBase4->setText(0);
+    o_configuracion->CargarDatos();
     ui->txtnPorcentajeIva1->setText(QString::number(o_configuracion->nIVA1));
     ui->txtnPorcentajeIva2->setText(QString::number(o_configuracion->nIVA2));
     ui->txtnPorcentajeIva3->setText(QString::number(o_configuracion->nIVA3));
@@ -232,6 +234,11 @@ void FrmAlbaran::VaciarCampos() {
     ui->txtrTotalRecargoEq->setText(0);
     ui->txtrACuenta->setText("0,00");
     ui->txtcPedidoCliente->setText("");
+    ui->txtrTotalIVA_2->setText("0,00");
+    ui->txtrBaseTotal_2->setText("0,00");
+    ui->txtrTotalRecargoEq_2->setText("0,00");
+    ui->txtrTotal_2->setText("0,00");
+    ui->txtrSubtotal->setText("0,00");
 }
 
 void FrmAlbaran::BloquearCampos()
@@ -298,6 +305,7 @@ void FrmAlbaran::BloquearCampos()
     ui->botBorrarLinea->setEnabled(false);
     ui->botEditarLinea->setEnabled(false);
     ui->botBuscarCliente->setEnabled(false);
+    ui->btnFacturar->setEnabled(false);
 
 }
 
@@ -364,6 +372,7 @@ void FrmAlbaran::DesbloquearCampos()
     ui->botBorrarLinea->setEnabled(true);
     ui->botEditarLinea->setEnabled(true);
     ui->botBuscarCliente->setEnabled(true);
+    ui->btnFacturar->setEnabled(true);
 }
 
 void FrmAlbaran::LLenarAlbaran() {
@@ -612,6 +621,70 @@ void FrmAlbaran::on_btnAnadirLinea_clicked()
     lineasVentas();
     // Calculo totales Albaran
     oAlbaran->calcularAlbaran();
+    RellenarDespuesCalculo();
+
+}
+
+void FrmAlbaran::on_btnDeshacer_clicked()
+{
+    BloquearCampos();
+    QString cId = QString::number(oAlbaran->Getid());
+    oAlbaran->RecuperarAlbaran("Select * from cab_alb where id ="+cId+" order by id limit 0,1 ");
+    LLenarCampos();
+}
+
+void FrmAlbaran::on_pushButton_clicked()
+{
+    int Salida = QMessageBox::question(NULL,tr("Gestión Albaranes"),tr("¿Está seguro/a de borrar el albarán?"),tr("Borrar"),tr("No Borrar"));
+    if (Salida ==0) {
+        QSqlQuery *qCab_alb = new QSqlQuery(QSqlDatabase::database("empresa"));
+        QSqlQuery *qLin_alb = new QSqlQuery(QSqlDatabase::database("empresa"));
+        qLin_alb->prepare("delete from lin_alb where Id_Cab = :id_cab");
+        qCab_alb->prepare("delete from cab_alb where id =:nId");
+        QSqlDatabase::database("empresa").transaction();
+        qCab_alb->bindValue(":nId",oAlbaran->Getid());
+        qLin_alb->bindValue(":id_cab",oAlbaran->Getid());
+        if (!qCab_alb->exec() || !qLin_alb->exec()){
+            QMessageBox::warning(NULL,tr("Gestión de Albaranes"),tr("Error al borrar albarán :")+qCab_alb->lastError().text()+ tr("\n No se Borrará"),tr("Aceptar"));
+            QSqlDatabase::database("empresa").rollback();
+        } else {
+            QSqlDatabase::database("empresa").commit();
+            VaciarCampos();
+        }
+        delete qCab_alb;
+        delete qLin_alb;
+    } else
+        QMessageBox::information(NULL,tr("Gestión de Albaranes"),tr("No se borrará el albarán"),tr("Aceptar"));
+}
+
+void FrmAlbaran::on_botEditarLinea_clicked()
+{
+    QModelIndex celda=ui->Lineas->currentIndex();
+    QModelIndex index= ModelLin_alb->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+
+    QVariant pKey=ModelLin_alb->data(index,Qt::EditRole);
+    int Id_lin =  pKey.toInt();
+    FrmModificarLin_alb *Modificar = new FrmModificarLin_alb();
+    Modificar->PonerCampos(Id_lin);
+    if (Modificar->exec() == QDialog::Accepted)
+
+    {
+        lineasVentas();
+        oAlbaran->calcularAlbaran();
+        RellenarDespuesCalculo();
+    }
+    delete Modificar;
+}
+
+void FrmAlbaran::on_botBorrarLinea_clicked()
+{
+    QModelIndex celda=ui->Lineas->currentIndex();
+    QModelIndex index=ModelLin_alb->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+
+    QVariant pKey=ModelLin_alb->data(index,Qt::EditRole);
+    int Id_lin =  pKey.toInt();
+    oAlbaran->BorrarLineaAlbaran(Id_lin);
+    lineasVentas();
     RellenarDespuesCalculo();
 
 }

@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     frmempresas.cpp \
     frmconfiguracion.cpp \
     albaran.cpp \
-    frmalbaran.cpp
+    frmalbaran.cpp \
+    frmmodificarlin_alb.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -64,7 +65,8 @@ HEADERS  += mainwindow.h \
     frmempresas.h \
     frmconfiguracion.h \
     albaran.h \
-    frmalbaran.h
+    frmalbaran.h \
+    frmmodificarlin_alb.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -80,7 +82,8 @@ FORMS    += mainwindow.ui \
     frmmodificarlin_fac.ui \
     frmempresas.ui \
     frmconfiguracion.ui \
-    frmalbaran.ui
+    frmalbaran.ui \
+    frmmodificarlin_alb.ui
 
 RESOURCES += \
     terra.qrc

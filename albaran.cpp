@@ -267,6 +267,9 @@ int Albaran::NuevoNumeroAlbaran() {
 void Albaran::AnadirLineaAlbaran(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
                                  double porcdto, double dto, double total, double nPorcIva)
 {
+    QSqlDatabase::database("empresa").transaction();
+    bool lCorrecto;
+    lCorrecto = true;
     QSqlQuery *Qlin_alb = new QSqlQuery(QSqlDatabase::database("empresa"));
     Qlin_alb->prepare("INSERT INTO lin_alb (Id_Cab,cCodigo,nCantidad,cDescripcion,rPvp,nDto,rDto,rSubTotal,rTotal,nPorcIva)"
                       " VALUES(:id_cab,:cCodigo,:nCantidad,:cDescripcion,:rPvp,:nDto,:rDto,:rSubTotal,:rTotal,:nPorcIva)");
@@ -282,6 +285,7 @@ void Albaran::AnadirLineaAlbaran(int id_cab, QString cCodigo, double nCantidad, 
     Qlin_alb->bindValue(":nPorcIva",nPorcIva);
     if (!Qlin_alb->exec()){
        QMessageBox::critical(NULL,"error al guardar datos línea Albaran:", Qlin_alb->lastError().text());
+       lCorrecto = false;
     }
     delete Qlin_alb;
     QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
@@ -297,8 +301,17 @@ void Albaran::AnadirLineaAlbaran(int id_cab, QString cCodigo, double nCantidad, 
     QArticulos->bindValue(":rTotal",total);
     QArticulos->bindValue(":cCodigo",cCodigo);
 
-    QArticulos->exec();
-
+    if (!QArticulos->exec()) {
+        QMessageBox::warning(NULL,QObject::tr("Gestión de Albaranes"),QObject::tr("No se puede actualizar la ficha del artículo")+
+                             QArticulos->lastError().text(),QObject::tr("Aceptar"));
+        lCorrecto = false;
+    }
+    if(lCorrecto) {
+        QSqlDatabase::database("empresa").commit();
+    } else {
+        QMessageBox::warning(NULL,QObject::tr("Gestión de Albaranes"),QObject::tr("Se desharán los últimos cambios"));
+        QSqlDatabase::database("empresa").rollback();
+    }
 }
 
 void Albaran::ModificarLineaAlbaran(int id_lin, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal, double porcdto, double dto, double total, double nPorcIva)

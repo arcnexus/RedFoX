@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1007</width>
-    <height>494</height>
+    <width>1093</width>
+    <height>486</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,6 +56,12 @@
          <iconset resource="terra.qrc">
           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
        </widget>
       </item>
       <item>
@@ -71,7 +77,13 @@
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/left.png</normaloff>:/Icons/PNG/left.png</iconset>
+          <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -88,7 +100,13 @@
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/right.png</normaloff>:/Icons/PNG/right.png</iconset>
+          <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -107,6 +125,12 @@
          <iconset resource="terra.qrc">
           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
        </widget>
       </item>
       <item>
@@ -122,7 +146,13 @@
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/mail.png</normaloff>:/Icons/PNG/mail.png</iconset>
+          <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -165,7 +195,13 @@
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/datebase.png</normaloff>:/Icons/PNG/datebase.png</iconset>
+          <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -182,12 +218,41 @@
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/refresh.png</normaloff>:/Icons/PNG/refresh.png</iconset>
+          <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnCobrar">
+       <widget class="QPushButton" name="pushButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Borrar</string>
+        </property>
+        <property name="icon">
+         <iconset resource="terra.qrc">
+          <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnFacturar">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -199,7 +264,13 @@
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/notepad.png</normaloff>:/Icons/PNG/notepad.png</iconset>
+          <normaloff>:/Icons/PNG/factura.png</normaloff>:/Icons/PNG/factura.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -216,7 +287,13 @@
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/error.png</normaloff>:/Icons/PNG/error.png</iconset>
+          <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -640,7 +717,13 @@
           </property>
           <property name="icon">
            <iconset resource="terra.qrc">
-            <normaloff>:/Icons/PNG/configuration.png</normaloff>:/Icons/PNG/configuration.png</iconset>
+            <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -657,7 +740,13 @@
           </property>
           <property name="icon">
            <iconset resource="terra.qrc">
-            <normaloff>:/Icons/PNG/error.png</normaloff>:/Icons/PNG/error.png</iconset>
+            <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -755,7 +844,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
          <enum>QTabWidget::South</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -1099,6 +1188,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="1" column="1">
            <widget class="QLineEdit" name="txtrBase1">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1112,8 +1208,12 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="5" column="6">
            <widget class="QLineEdit" name="txtrTotalRecargoEq_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
-             <string notr="true">color: rgb(17, 82, 2);</string>
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
             </property>
             <property name="text">
              <string>0,00</string>
@@ -1128,11 +1228,18 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="1" column="5">
            <widget class="QLineEdit" name="txtnRec1">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maximumSize">
              <size>
               <width>45</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
             </property>
             <property name="text">
              <string>0</string>
@@ -1163,6 +1270,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="1" column="7">
            <widget class="QLineEdit" name="txtrTotal1">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1186,6 +1300,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="4" column="7">
            <widget class="QLineEdit" name="txtrTotal4">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1199,11 +1320,18 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="2" column="2">
            <widget class="QLineEdit" name="txtnPorcentajeIva2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maximumSize">
              <size>
               <width>45</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
             </property>
             <property name="text">
              <string>0</string>
@@ -1218,11 +1346,18 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="1" column="2">
            <widget class="QLineEdit" name="txtnPorcentajeIva1">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maximumSize">
              <size>
               <width>45</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
             </property>
             <property name="text">
              <string>0</string>
@@ -1237,6 +1372,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="3" column="6">
            <widget class="QLineEdit" name="txtrRecargoEq3">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1266,6 +1408,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="1" column="4">
            <widget class="QLineEdit" name="txtrIVA1">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1289,11 +1438,18 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="3" column="5">
            <widget class="QLineEdit" name="txtnRec3">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maximumSize">
              <size>
               <width>45</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
             </property>
             <property name="text">
              <string>0</string>
@@ -1308,8 +1464,12 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="5" column="4">
            <widget class="QLineEdit" name="txtrTotalIVA_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
-             <string notr="true">color: rgb(17, 82, 2);</string>
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
             </property>
             <property name="text">
              <string>0,00</string>
@@ -1324,6 +1484,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="2" column="7">
            <widget class="QLineEdit" name="txtrTotal2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1337,6 +1504,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="1" column="6">
            <widget class="QLineEdit" name="txtrRecargoEq1">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1350,11 +1524,18 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="2" column="5">
            <widget class="QLineEdit" name="txtnRec2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maximumSize">
              <size>
               <width>45</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
             </property>
             <property name="text">
              <string>0</string>
@@ -1369,6 +1550,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="3" column="4">
            <widget class="QLineEdit" name="txtrIVA3">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1382,9 +1570,12 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="5" column="7">
            <widget class="QLineEdit" name="txtrTotal_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
-             <string notr="true">color: rgb(17, 82, 2);
-</string>
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
             </property>
             <property name="text">
              <string>0,00</string>
@@ -1441,6 +1632,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="3" column="1">
            <widget class="QLineEdit" name="txtrBase3">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1454,6 +1652,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="2" column="1">
            <widget class="QLineEdit" name="txtrBase2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1467,6 +1672,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="3" column="7">
            <widget class="QLineEdit" name="txtrTotal3">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1480,6 +1692,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="4" column="6">
            <widget class="QLineEdit" name="txtrRecargoEq4">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1493,6 +1712,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="2" column="4">
            <widget class="QLineEdit" name="txtrIVA2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1506,11 +1732,18 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="4" column="5">
            <widget class="QLineEdit" name="txtnRec4">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maximumSize">
              <size>
               <width>45</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
             </property>
             <property name="text">
              <string>0</string>
@@ -1525,11 +1758,18 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="3" column="2">
            <widget class="QLineEdit" name="txtnPorcentajeIva3">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maximumSize">
              <size>
               <width>45</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
             </property>
             <property name="text">
              <string>0</string>
@@ -1544,6 +1784,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="4" column="1">
            <widget class="QLineEdit" name="txtrBase4">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1567,6 +1814,13 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="2" column="6">
            <widget class="QLineEdit" name="txtrRecargoEq2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1590,9 +1844,12 @@ font: 12pt &quot;Times New Roman&quot;;</string>
           </item>
           <item row="5" column="1">
            <widget class="QLineEdit" name="txtrBaseTotal_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
-             <string notr="true">color: rgb(17, 82, 2);
-font: 75 9pt &quot;Sans Serif&quot;;</string>
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
             </property>
             <property name="text">
              <string>0,00</string>
@@ -1623,6 +1880,13 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
           </item>
           <item row="4" column="4">
            <widget class="QLineEdit" name="txtrIVA4">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1636,11 +1900,18 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
           </item>
           <item row="4" column="2">
            <widget class="QLineEdit" name="txtnPorcentajeIva4">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maximumSize">
              <size>
               <width>45</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
             </property>
             <property name="text">
              <string>0</string>
@@ -1714,7 +1985,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
   <tabstop>botEditarLinea</tabstop>
   <tabstop>botBorrarLinea</tabstop>
   <tabstop>btnSiguiente</tabstop>
-  <tabstop>btnCobrar</tabstop>
+  <tabstop>btnFacturar</tabstop>
   <tabstop>btnAnterior</tabstop>
   <tabstop>btnDeshacer</tabstop>
   <tabstop>btnCerrar</tabstop>
@@ -1776,8 +2047,8 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>976</x>
-     <y>473</y>
+     <x>1070</x>
+     <y>477</y>
     </hint>
     <hint type="destinationlabel">
      <x>1008</x>

@@ -51,10 +51,19 @@ private slots:
 
     void on_btnAnadirLinea_clicked();
 
+    void on_btnDeshacer_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_botEditarLinea_clicked();
+
+    void on_botBorrarLinea_clicked();
+
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;
     Configuracion *o_configuracion;
+    QSqlQueryModel *ModelLin_alb;
 };
 
 #endif // FRMALBARAN_H
