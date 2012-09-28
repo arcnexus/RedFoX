@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1018</width>
-    <height>459</height>
+    <height>473</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -295,7 +295,13 @@
             </property>
             <property name="icon">
              <iconset resource="terra.qrc">
-              <normaloff>:/Icons/PNG/configuration.png</normaloff>:/Icons/PNG/configuration.png</iconset>
+              <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -312,7 +318,13 @@
             </property>
             <property name="icon">
              <iconset resource="terra.qrc">
-              <normaloff>:/Icons/PNG/error.png</normaloff>:/Icons/PNG/error.png</iconset>
+              <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -484,6 +496,12 @@ border-right-color: rgb(220, 220, 220);</string>
          <iconset resource="terra.qrc">
           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
        </widget>
       </item>
       <item>
@@ -499,7 +517,13 @@ border-right-color: rgb(220, 220, 220);</string>
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/left.png</normaloff>:/Icons/PNG/left.png</iconset>
+          <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -516,7 +540,13 @@ border-right-color: rgb(220, 220, 220);</string>
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/right.png</normaloff>:/Icons/PNG/right.png</iconset>
+          <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -535,6 +565,12 @@ border-right-color: rgb(220, 220, 220);</string>
          <iconset resource="terra.qrc">
           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
        </widget>
       </item>
       <item>
@@ -550,7 +586,13 @@ border-right-color: rgb(220, 220, 220);</string>
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/mail.png</normaloff>:/Icons/PNG/mail.png</iconset>
+          <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -593,7 +635,13 @@ border-right-color: rgb(220, 220, 220);</string>
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/datebase.png</normaloff>:/Icons/PNG/datebase.png</iconset>
+          <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -610,7 +658,13 @@ border-right-color: rgb(220, 220, 220);</string>
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/refresh.png</normaloff>:/Icons/PNG/refresh.png</iconset>
+          <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -627,7 +681,13 @@ border-right-color: rgb(220, 220, 220);</string>
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/notepad.png</normaloff>:/Icons/PNG/notepad.png</iconset>
+          <normaloff>:/Icons/PNG/Fp.png</normaloff>:/Icons/PNG/Fp.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -644,7 +704,13 @@ border-right-color: rgb(220, 220, 220);</string>
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/error.png</normaloff>:/Icons/PNG/error.png</iconset>
+          <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -1993,8 +2059,8 @@ font: 12pt &quot;Times New Roman&quot;;</string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>954</x>
-     <y>472</y>
+     <x>1003</x>
+     <y>462</y>
     </hint>
     <hint type="destinationlabel">
      <x>705</x>

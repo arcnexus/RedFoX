@@ -49,6 +49,8 @@ private slots:
 
     void on_btnAlbaran_clientes_clicked();
 
+    void on_btn_Pedido_cliente_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWorkspace *workspace;

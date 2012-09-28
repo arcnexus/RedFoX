@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1057</width>
-    <height>493</height>
+    <width>1055</width>
+    <height>491</height>
    </rect>
   </property>
   <property name="baseSize">
@@ -77,6 +77,12 @@
            <iconset resource="terra.qrc">
             <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
           </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
          </widget>
         </item>
         <item>
@@ -93,6 +99,12 @@
           <property name="icon">
            <iconset resource="terra.qrc">
             <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -111,6 +123,12 @@
            <iconset resource="terra.qrc">
             <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
           </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
          </widget>
         </item>
         <item>
@@ -128,6 +146,12 @@
            <iconset resource="terra.qrc">
             <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
           </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
          </widget>
         </item>
         <item>
@@ -144,6 +168,12 @@
           <property name="icon">
            <iconset resource="terra.qrc">
             <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -165,6 +195,12 @@
            <iconset resource="terra.qrc">
             <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
           </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
          </widget>
         </item>
         <item>
@@ -185,6 +221,12 @@
            <iconset resource="terra.qrc">
             <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
           </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
          </widget>
         </item>
         <item>
@@ -202,6 +244,12 @@
            <iconset resource="terra.qrc">
             <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
           </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
          </widget>
         </item>
         <item>
@@ -218,6 +266,12 @@
           <property name="icon">
            <iconset resource="terra.qrc">
             <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
           </property>
          </widget>
         </item>

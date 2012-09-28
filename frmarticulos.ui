@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1181</width>
-    <height>657</height>
+    <width>1179</width>
+    <height>655</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -339,7 +339,13 @@
        </property>
        <property name="icon">
         <iconset resource="terra.qrc">
-         <normaloff>:/Icons/PNG/alert.png</normaloff>:/Icons/PNG/alert.png</iconset>
+         <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
        </property>
       </widget>
      </item>

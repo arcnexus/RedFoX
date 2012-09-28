@@ -24,7 +24,8 @@
 #include <QMessageBox>
 #include <QTextCodec>
 #include <QtSql>
- #include <QWindowsStyle>
+#include <QWindowsStyle>
+#include <QStyleFactory>
 
 
 
@@ -35,7 +36,8 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(linuxCodec);
     QTextCodec::setCodecForCStrings(linuxCodec);
     QTextCodec::setCodecForLocale(linuxCodec);
-    QApplication::setStyle(new QPlastiqueStyle);
+    QStyle *style = QStyleFactory::create("oxygen");
+    QApplication::setStyle(style);
     MainWindow w;
     w.setVisible(true);
     w.setWindowState(Qt::WindowMaximized );

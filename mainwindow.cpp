@@ -18,6 +18,7 @@
 #include "frmproveedores.h"
 #include "frmconfiguracion.h"
 #include "frmalbaran.h"
+#include "frmpedidos.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -217,4 +218,14 @@ void MainWindow::on_btnAlbaran_clientes_clicked()
     frmAlbaran1->setWindowState(Qt::WindowMaximized);
     frmAlbaran1->exec();
     ui->btnAlbaran_clientes->setEnabled(true);
+}
+
+void MainWindow::on_btn_Pedido_cliente_clicked()
+{
+    ui->btn_Pedido_cliente->setEnabled(false);
+    FrmPedidos *frmPedidos1 = new FrmPedidos();
+    workspace->addWindow(frmPedidos1);
+    frmPedidos1->setWindowState(Qt::WindowMaximized);
+    frmPedidos1->exec();
+    ui->btn_Pedido_cliente->setEnabled(true);
 }
