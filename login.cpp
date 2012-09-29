@@ -9,6 +9,8 @@
 #include <QDir>
 #include <QDebug>
 #include <configuracion.h>
+#include <QSqlRecord>
+#include <QSqlField>
 
 
 Login::Login(Configuracion *m_config,QWidget *parent) :
@@ -63,8 +65,12 @@ void Login::on_btnAcceder_clicked()
         QMessageBox::critical(NULL, "error:", qryUsers.lastError().text());
     } else {
         if (qryUsers.next()) {
+            QSqlRecord rUsuario = qryUsers.record();
             if (ui->linePassword->text()==qryUsers.value(2).toString()) {
-               //MainWindow.ui.lineEdit->setText(qryUsers.value(1).toString());
+                QSettings settings("infint", "terra");
+                settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
+                settings.setValue("nNivelAcceso",rUsuario.field("nivelacceso").value().toInt());
+                settings.setValue("cCategoria",rUsuario.field("categoria").value().toString());
                 Login::done( QDialog::Accepted);
 
             } else {
@@ -108,6 +114,9 @@ void Login::on_Crearconfiguracin_clicked()
     settings.setValue("cCuentaClientes","430");
     settings.setValue("cCuentaProveedores","400");
     settings.setValue("cCuentaAcreedores","410");
+    settings.setValue("cUsuarioActivo","");
+    settings.setValue("nNivelAcceso",0);
+    settings.setValue("cCategoria","");
 
 
 

@@ -51,6 +51,8 @@ private slots:
 
     void on_btn_Pedido_cliente_clicked();
 
+    void on_btnPresup_clientes_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWorkspace *workspace;

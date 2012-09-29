@@ -47,5 +47,6 @@
         <file>PNG/Calendar.png</file>
         <file>PNG/Pay.png</file>
         <file>PNG/Exit.png</file>
+        <file>PNG/Stethoscope.png</file>
     </qresource>
 </RCC>

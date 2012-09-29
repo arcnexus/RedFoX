@@ -19,6 +19,7 @@
 #include "frmconfiguracion.h"
 #include "frmalbaran.h"
 #include "frmpedidos.h"
+#include "frmpresupuestoscli.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -70,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Fin TODO
 
 
-    ui->tabWidget->setStyleSheet("background-color: rgb(255, 227, 171);;border-bottom-color: #000000");
+    ui->barraHerramientas->setStyleSheet("background-color: rgb(255, 227, 171);;border-bottom-color: #000000");
 
     // Preparo espacio de trabajo para poder acojer ventanas dentro de él
     workspace = new QWorkspace(ui->widget);
@@ -85,6 +86,17 @@ MainWindow::MainWindow(QWidget *parent) :
          QString usuario = dlg->getUsuario();
          ui->lineUsuarioActivo->setText(usuario);
          m_config->cUsuarioActivo = ui->lineUsuarioActivo->text();
+         QSettings settings("infint", "terra");
+         ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
+         ui->txtcCategoria->setText(settings.value("cCategoria").toString());
+        // Oculto controles según categoría
+
+         if(ui->txtnNivel->text()=="9")
+            ui->barraHerramientas->setTabEnabled(3,true);
+         else
+            ui->barraHerramientas->setTabEnabled(3,false);
+         ui->barraHerramientas->setCurrentIndex(1);
+
         // capturo empresa
          QString Empresa = dlg->getEmpresa();
          ui->lineEmpresaActiva->setText(Empresa);
@@ -228,4 +240,14 @@ void MainWindow::on_btn_Pedido_cliente_clicked()
     frmPedidos1->setWindowState(Qt::WindowMaximized);
     frmPedidos1->exec();
     ui->btn_Pedido_cliente->setEnabled(true);
+}
+
+void MainWindow::on_btnPresup_clientes_clicked()
+{
+    ui->btnPresup_clientes->setEnabled(false);
+    FrmPresupuestosCli *frmPresupcli = new FrmPresupuestosCli();
+    workspace->addWindow(frmPresupcli);
+    frmPresupcli->setWindowState(Qt::WindowMaximized);
+    frmPresupcli->exec();
+    ui->btnPresup_clientes->setEnabled(true);
 }

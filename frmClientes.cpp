@@ -13,6 +13,7 @@
 #include <QString>
 #include "columnamoneda.h"
 #include "columnafecha.h"
+#include <QSettings>
 
 
 Cliente *oCliente = new Cliente();
@@ -27,7 +28,13 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("empresa"));
 
     // Ocultar campos según configuración
-
+    QSettings settings("infint", "terra");
+    int nNivel = settings.value("nNivelAcceso").toInt();
+    //QString cCategoria = settings.value("cCategoria").toString();
+    if (nNivel >7)
+        ui->btnFichaPaciente->setVisible(true);
+    else
+        ui->btnFichaPaciente->setVisible(false);
     oConfiguracion->CargarDatos();
     if(oConfiguracion->nIRPF)
         ui->chkClienteEmpresa->setVisible(true);
