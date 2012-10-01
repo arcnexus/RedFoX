@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1098</width>
-    <height>486</height>
+    <width>1094</width>
+    <height>522</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,160 +19,6 @@
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE PRESUPUESTOS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QFrame" name="frame_5">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="1" colspan="3">
-       <widget class="QLineEdit" name="txtcDireccion"/>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Código cliente:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="botBuscarCliente">
-        <property name="text">
-         <string>Buscar Cliente</string>
-        </property>
-        <property name="icon">
-         <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="txtcCodigoCliente">
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2" colspan="2">
-       <widget class="QLineEdit" name="txtcPoblacion">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>Dirección:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <widget class="QLineEdit" name="txtcCif">
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLineEdit" name="txtcProvincia">
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1" colspan="3">
-       <widget class="QLineEdit" name="txtcCliente"/>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Dirección 2:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="3">
-       <widget class="QLineEdit" name="txtcPais"/>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_7">
-        <property name="text">
-         <string>Población:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="txtcCp">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>70</width>
-          <height>16777215</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Cliente:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="label_13">
-        <property name="text">
-         <string>Provincia:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1" colspan="3">
-       <widget class="QLineEdit" name="txtcDireccion2"/>
-      </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="label_15">
-        <property name="text">
-         <string>Cif/Nif/Nie:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="2">
-       <widget class="QLabel" name="label_14">
-        <property name="text">
-         <string>Pais:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="2">
-       <widget class="QCheckBox" name="chklRecargoEq">
-        <property name="text">
-         <string>Recargo de equivalencia</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
    </item>
    <item row="1" column="1" colspan="2">
@@ -199,14 +45,14 @@
       <item row="0" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_7">
         <item>
-         <widget class="QLabel" name="lblnumalb_2">
+         <widget class="QLabel" name="lblnumalb">
           <property name="text">
            <string>Presupuesto</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="txtcAlbaran_2">
+         <widget class="QLineEdit" name="txtnPresupuesto">
           <property name="styleSheet">
            <string notr="true">color: rgb(0, 0, 128);
 font: 12pt &quot;Times New Roman&quot;;</string>
@@ -214,7 +60,7 @@ font: 12pt &quot;Times New Roman&quot;;</string>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="lblImpreso_2">
+         <widget class="QLabel" name="lblImpreso">
           <property name="minimumSize">
            <size>
             <width>80</width>
@@ -241,7 +87,7 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item>
-         <widget class="QDateEdit" name="txtdFecha_2">
+         <widget class="QDateEdit" name="txtdFecha">
           <property name="displayFormat">
            <string>dd/MM/yyyy</string>
           </property>
@@ -254,11 +100,17 @@ color: rgb(255, 255, 255);</string>
       </item>
       <item row="1" column="0">
        <widget class="QTabWidget" name="tabWidget_2">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
         <property name="tabPosition">
          <enum>QTabWidget::South</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tab_5">
          <attribute name="title">
@@ -282,7 +134,10 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item row="0" column="3">
-             <widget class="QLineEdit" name="txtrSubtotal_2">
+             <widget class="QLineEdit" name="txtrSubtotal">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -294,6 +149,10 @@ color: rgb(255, 255, 255);</string>
                 <width>120</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 64, 64);</string>
               </property>
               <property name="text">
                <string>0,00</string>
@@ -307,12 +166,19 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item row="1" column="3">
-             <widget class="QLineEdit" name="txtrImporteDescuento_2">
+             <widget class="QLineEdit" name="txtrDescuento">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>120</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 64, 64);</string>
               </property>
               <property name="text">
                <string>0,00</string>
@@ -323,7 +189,7 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item row="1" column="1" colspan="2">
-             <widget class="QLineEdit" name="txtnDto_2">
+             <widget class="QLineEdit" name="txtnDto">
               <property name="maximumSize">
                <size>
                 <width>60</width>
@@ -364,7 +230,14 @@ color: rgb(255, 255, 255);</string>
              <item row="0" column="0">
               <layout class="QGridLayout" name="gridLayout_18">
                <item row="3" column="1" colspan="2">
-                <widget class="QLineEdit" name="lineEdit"/>
+                <widget class="QLineEdit" name="txtrImporteFactura">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 192);</string>
+                 </property>
+                </widget>
                </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="label_70">
@@ -404,13 +277,34 @@ color: rgb(255, 255, 255);</string>
                 </widget>
                </item>
                <item row="1" column="1" rowspan="2" colspan="2">
-                <widget class="QLineEdit" name="txtcNumFra_2"/>
+                <widget class="QLineEdit" name="txtcFactura">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 192);</string>
+                 </property>
+                </widget>
                </item>
                <item row="4" column="1" colspan="2">
-                <widget class="QLineEdit" name="txtnNumAlb"/>
+                <widget class="QLineEdit" name="txtnAlbaran">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 192);</string>
+                 </property>
+                </widget>
                </item>
                <item row="5" column="1" colspan="2">
-                <widget class="QLineEdit" name="txtnNumPed"/>
+                <widget class="QLineEdit" name="txtnPedido">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 192);</string>
+                 </property>
+                </widget>
                </item>
                <item row="4" column="0">
                 <widget class="QLabel" name="label_41">
@@ -422,9 +316,6 @@ color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1" colspan="2">
-                <widget class="QComboBox" name="cboFormaPago"/>
-               </item>
                <item row="5" column="0">
                 <widget class="QLabel" name="label_69">
                  <property name="styleSheet">
@@ -432,6 +323,16 @@ color: rgb(255, 255, 255);</string>
                  </property>
                  <property name="text">
                   <string>Pedido:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" colspan="2">
+                <widget class="QComboBox" name="cboFormaPago">
+                 <property name="minimumSize">
+                  <size>
+                   <width>120</width>
+                   <height>0</height>
+                  </size>
                  </property>
                 </widget>
                </item>
@@ -463,12 +364,19 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item row="1" column="1" rowspan="2">
-             <widget class="QLineEdit" name="txtrImporteIva_2">
+             <widget class="QLineEdit" name="txtrImporteIva">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>120</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 64, 64);</string>
               </property>
               <property name="text">
                <string>0,00</string>
@@ -486,12 +394,19 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QLineEdit" name="txtrTotal_3">
+             <widget class="QLineEdit" name="txtrTotal">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>120</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 64, 64);</string>
               </property>
               <property name="text">
                <string>0,00</string>
@@ -502,7 +417,10 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="txtrBase_2">
+             <widget class="QLineEdit" name="txtrBase">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -514,6 +432,10 @@ color: rgb(255, 255, 255);</string>
                 <width>120</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 64, 64);</string>
               </property>
               <property name="text">
                <string>0,00</string>
@@ -531,7 +453,14 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLineEdit" name="txtrTotalRecargoEq_3">
+             <widget class="QLineEdit" name="txtrTotalRecargoEq">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 64, 64);</string>
+              </property>
               <property name="text">
                <string>0,00</string>
               </property>
@@ -556,12 +485,8 @@ color: rgb(255, 255, 255);</string>
               <property name="text">
                <string>Aprovado</string>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="chklCompleto">
-              <property name="text">
-               <string>Completo</string>
+              <property name="tristate">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -573,7 +498,24 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="txtcPedidoCliente_2"/>
+             <widget class="QLineEdit" name="txtcPedidoCliente"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Validez hasta:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDateEdit" name="txtdValidoHasta">
+              <property name="displayFormat">
+               <string>dd/MM/yyyy</string>
+              </property>
+              <property name="calendarPopup">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -587,7 +529,7 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="txtrACuenta_2">
+             <widget class="QLineEdit" name="txtrACuenta">
               <property name="text">
                <string>0,00</string>
               </property>
@@ -620,12 +562,12 @@ color: rgb(255, 255, 255);</string>
             <item>
              <widget class="QLabel" name="label_40">
               <property name="text">
-               <string>Datos lugar /modo de entrega</string>
+               <string>Comentarios sobre lugar  y modo de entrega</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QTextEdit" name="textEdit"/>
+             <widget class="QTextEdit" name="txttLugarEntrega"/>
             </item>
            </layout>
           </item>
@@ -663,7 +605,7 @@ color: rgb(255, 255, 255);</string>
            </spacer>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="txtrBase1_2">
+           <widget class="QLineEdit" name="txtrBase1">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -683,7 +625,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="5" column="6">
-           <widget class="QLineEdit" name="txtrTotalRecargoEq_4">
+           <widget class="QLineEdit" name="txtrTotalRecargoEq_2">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -703,7 +645,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="1" column="5">
-           <widget class="QLineEdit" name="txtnRec1_2">
+           <widget class="QLineEdit" name="txtnRec1">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -745,7 +687,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="1" column="7">
-           <widget class="QLineEdit" name="txtrTotal1_2">
+           <widget class="QLineEdit" name="txtrTotal1">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -775,7 +717,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="4" column="7">
-           <widget class="QLineEdit" name="txtrTotal4_2">
+           <widget class="QLineEdit" name="txtrTotal4">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -795,7 +737,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QLineEdit" name="txtnPorcentajeIva2_2">
+           <widget class="QLineEdit" name="txtnPorcentajeIva2">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -821,7 +763,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QLineEdit" name="txtnPorcentajeIva1_2">
+           <widget class="QLineEdit" name="txtnPorcentajeIva1">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -847,7 +789,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="3" column="6">
-           <widget class="QLineEdit" name="txtrRecargoEq3_2">
+           <widget class="QLineEdit" name="txtrRecargoEq3">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -883,7 +825,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="1" column="4">
-           <widget class="QLineEdit" name="txtrIVA1_2">
+           <widget class="QLineEdit" name="txtrIVA1">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -913,7 +855,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="3" column="5">
-           <widget class="QLineEdit" name="txtnRec3_2">
+           <widget class="QLineEdit" name="txtnRec3">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -939,7 +881,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="5" column="4">
-           <widget class="QLineEdit" name="txtrTotalIVA_3">
+           <widget class="QLineEdit" name="txtrTotalIVA">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -959,7 +901,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="2" column="7">
-           <widget class="QLineEdit" name="txtrTotal2_2">
+           <widget class="QLineEdit" name="txtrTotal2">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -979,7 +921,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="1" column="6">
-           <widget class="QLineEdit" name="txtrRecargoEq1_2">
+           <widget class="QLineEdit" name="txtrRecargoEq1">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -999,7 +941,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="2" column="5">
-           <widget class="QLineEdit" name="txtnRec2_2">
+           <widget class="QLineEdit" name="txtnRec2">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1025,7 +967,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="3" column="4">
-           <widget class="QLineEdit" name="txtrIVA3_2">
+           <widget class="QLineEdit" name="txtrIVA3">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1045,7 +987,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="5" column="7">
-           <widget class="QLineEdit" name="txtrTotal_4">
+           <widget class="QLineEdit" name="txtrTotal_2">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1107,7 +1049,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QLineEdit" name="txtrBase3_2">
+           <widget class="QLineEdit" name="txtrBase3">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1127,7 +1069,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLineEdit" name="txtrBase2_2">
+           <widget class="QLineEdit" name="txtrBase2">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1147,7 +1089,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="3" column="7">
-           <widget class="QLineEdit" name="txtrTotal3_2">
+           <widget class="QLineEdit" name="txtrTotal3">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1167,7 +1109,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="4" column="6">
-           <widget class="QLineEdit" name="txtrRecargoEq4_2">
+           <widget class="QLineEdit" name="txtrRecargoEq4">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1187,7 +1129,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="2" column="4">
-           <widget class="QLineEdit" name="txtrIVA2_2">
+           <widget class="QLineEdit" name="txtrIVA2">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1207,7 +1149,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="4" column="5">
-           <widget class="QLineEdit" name="txtnRec4_2">
+           <widget class="QLineEdit" name="txtnRec4">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1233,7 +1175,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="3" column="2">
-           <widget class="QLineEdit" name="txtnPorcentajeIva3_2">
+           <widget class="QLineEdit" name="txtnPorcentajeIva3">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1259,7 +1201,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QLineEdit" name="txtrBase4_2">
+           <widget class="QLineEdit" name="txtrBase4">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1289,7 +1231,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="2" column="6">
-           <widget class="QLineEdit" name="txtrRecargoEq2_2">
+           <widget class="QLineEdit" name="txtrRecargoEq2">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1319,7 +1261,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QLineEdit" name="txtrBaseTotal_3">
+           <widget class="QLineEdit" name="txtrBaseTotal">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1355,7 +1297,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="4" column="4">
-           <widget class="QLineEdit" name="txtrIVA4_2">
+           <widget class="QLineEdit" name="txtrIVA4">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1375,7 +1317,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="4" column="2">
-           <widget class="QLineEdit" name="txtnPorcentajeIva4_2">
+           <widget class="QLineEdit" name="txtnPorcentajeIva4">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1418,7 +1360,7 @@ color: rgb(0, 64, 64);</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_22">
           <item row="0" column="0">
-           <widget class="QTextEdit" name="txttComentario_2"/>
+           <widget class="QTextEdit" name="txttComentario"/>
           </item>
          </layout>
         </widget>
@@ -1470,7 +1412,7 @@ color: rgb(0, 64, 64);</string>
              </widget>
             </item>
             <item row="1" column="7">
-             <widget class="QLineEdit" name="txtDtoArticulo_2">
+             <widget class="QLineEdit" name="txtDtoArticulo">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -1504,7 +1446,7 @@ color: rgb(0, 64, 64);</string>
              </widget>
             </item>
             <item row="1" column="5">
-             <widget class="QLineEdit" name="txtSubtotalArticulo_2">
+             <widget class="QLineEdit" name="txtSubtotalArticulo">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -1517,7 +1459,7 @@ color: rgb(0, 64, 64);</string>
              </widget>
             </item>
             <item row="1" column="6">
-             <widget class="QLineEdit" name="txtPorcDtoArticulo_2">
+             <widget class="QLineEdit" name="txtPorcDtoArticulo">
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
@@ -1537,7 +1479,7 @@ color: rgb(0, 64, 64);</string>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLineEdit" name="txtcCodigoArticulo_2">
+             <widget class="QLineEdit" name="txtcCodigoArticulo">
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -1547,7 +1489,7 @@ color: rgb(0, 64, 64);</string>
              </widget>
             </item>
             <item row="1" column="4">
-             <widget class="QLineEdit" name="txtPVPArticulo_2">
+             <widget class="QLineEdit" name="txtPVPArticulo">
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
@@ -1567,7 +1509,7 @@ color: rgb(0, 64, 64);</string>
              </widget>
             </item>
             <item row="1" column="3">
-             <widget class="QLineEdit" name="txtDescripcionArticulo_2">
+             <widget class="QLineEdit" name="txtDescripcionArticulo">
               <property name="minimumSize">
                <size>
                 <width>170</width>
@@ -1583,7 +1525,7 @@ color: rgb(0, 64, 64);</string>
              </widget>
             </item>
             <item row="1" column="8">
-             <widget class="QLineEdit" name="txtTotalArticulo_2">
+             <widget class="QLineEdit" name="txtTotalArticulo">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -1596,7 +1538,7 @@ color: rgb(0, 64, 64);</string>
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QLineEdit" name="txtcCantidadArticulo_2">
+             <widget class="QLineEdit" name="txtcCantidadArticulo">
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
@@ -1609,7 +1551,7 @@ color: rgb(0, 64, 64);</string>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QPushButton" name="btnAnadirLinea_2">
+             <widget class="QPushButton" name="btnAnadirLinea">
               <property name="maximumSize">
                <size>
                 <width>20</width>
@@ -1629,7 +1571,7 @@ color: rgb(0, 64, 64);</string>
              </widget>
             </item>
             <item row="1" column="9">
-             <widget class="QLineEdit" name="txtPorcIVAArticulo_2"/>
+             <widget class="QLineEdit" name="txtPorcIVAArticulo"/>
             </item>
             <item row="0" column="9">
              <widget class="QLabel" name="label_66">
@@ -1641,7 +1583,7 @@ color: rgb(0, 64, 64);</string>
            </layout>
           </item>
           <item>
-           <widget class="QTableView" name="Lineas_2">
+           <widget class="QTableView" name="Lineas">
             <property name="alternatingRowColors">
              <bool>true</bool>
             </property>
@@ -1680,7 +1622,7 @@ color: rgb(0, 64, 64);</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="botEditarLinea_2">
+           <widget class="QPushButton" name="botEditarLinea">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1703,7 +1645,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="botBorrarLinea_2">
+           <widget class="QPushButton" name="botBorrarLinea">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1782,7 +1724,7 @@ color: rgb(0, 64, 64);</string>
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QPushButton" name="btnPedido">
           <property name="text">
            <string>Pedido</string>
           </property>
@@ -1799,7 +1741,7 @@ color: rgb(0, 64, 64);</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="btnAlbaran">
           <property name="text">
            <string>Albarán</string>
           </property>
@@ -1816,7 +1758,7 @@ color: rgb(0, 64, 64);</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btnFacturar_2">
+         <widget class="QPushButton" name="btnFacturar">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -1922,7 +1864,7 @@ color: rgb(0, 64, 64);</string>
        <number>2</number>
       </property>
       <item>
-       <widget class="QPushButton" name="btnAnadir_2">
+       <widget class="QPushButton" name="btnAnadir">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -1945,7 +1887,7 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnAnterior_2">
+       <widget class="QPushButton" name="btnAnterior">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -1968,7 +1910,7 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnSiguiente_2">
+       <widget class="QPushButton" name="btnSiguiente">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -1991,7 +1933,7 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnBuscar_2">
+       <widget class="QPushButton" name="btnBuscar">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2014,7 +1956,7 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnImprimir_2">
+       <widget class="QPushButton" name="btnImprimir">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2037,7 +1979,7 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnEditar_2">
+       <widget class="QPushButton" name="btnEditar">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2063,7 +2005,7 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnGuardar_2">
+       <widget class="QPushButton" name="btnGuardar">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2086,7 +2028,7 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnDeshacer_2">
+       <widget class="QPushButton" name="btnDeshacer">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2109,7 +2051,7 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="btnBorrar">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2132,7 +2074,7 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnCerrar_2">
+       <widget class="QPushButton" name="btnCerrar">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2157,14 +2099,398 @@ color: rgb(0, 64, 64);</string>
      </layout>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QFrame" name="frame_5">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Código cliente:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="txtcCodigoCliente">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Dirección:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="txtcCif">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="txtcProvincia">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Dirección 2:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QLineEdit" name="txtcPais">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Población:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="txtcCp">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>70</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Cliente:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_13">
+        <property name="text">
+         <string>Provincia:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_15">
+        <property name="text">
+         <string>Cif/Nif/Nie:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QLabel" name="label_14">
+        <property name="text">
+         <string>Pais:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="4">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Movil:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1" colspan="3">
+       <widget class="QCheckBox" name="chklRecargoEq">
+        <property name="text">
+         <string>Recargo de equivalencia</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Teléfono:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>A la Atención de:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="4">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Fax:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" colspan="2">
+       <widget class="QPushButton" name="botBuscarCliente">
+        <property name="text">
+         <string>Buscar Cliente</string>
+        </property>
+        <property name="icon">
+         <iconset resource="terra.qrc">
+          <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="5" colspan="2">
+       <widget class="QLineEdit" name="txtcFax">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="5" colspan="2">
+       <widget class="QLineEdit" name="txtcMovil">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="5" colspan="2">
+       <widget class="QLineEdit" name="txtcTelefono">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1" colspan="3">
+       <widget class="QLineEdit" name="txtcAtencionde">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="4">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>eMail:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="5" colspan="2">
+       <widget class="QLineEdit" name="txtcEmail">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2" colspan="5">
+       <widget class="QLineEdit" name="txtcPoblacion">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" colspan="6">
+       <widget class="QLineEdit" name="txtcDireccion2">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" colspan="6">
+       <widget class="QLineEdit" name="txtcDireccion">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="6">
+       <widget class="QLineEdit" name="txtcCliente">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>txtcCodigoCliente</tabstop>
+  <tabstop>botBuscarCliente</tabstop>
+  <tabstop>txtcCliente</tabstop>
+  <tabstop>txtcDireccion</tabstop>
+  <tabstop>txtcDireccion2</tabstop>
+  <tabstop>txtcCp</tabstop>
+  <tabstop>txtcPoblacion</tabstop>
+  <tabstop>txtcProvincia</tabstop>
+  <tabstop>txtcPais</tabstop>
+  <tabstop>txtcCif</tabstop>
+  <tabstop>chklRecargoEq</tabstop>
+  <tabstop>txtcAtencionde</tabstop>
+  <tabstop>txtcTelefono</tabstop>
+  <tabstop>txtcMovil</tabstop>
+  <tabstop>txtcFax</tabstop>
+  <tabstop>txtdFecha</tabstop>
+  <tabstop>txtnDto</tabstop>
+  <tabstop>cboFormaPago</tabstop>
+  <tabstop>txtcCodigoArticulo</tabstop>
+  <tabstop>btnAnadirLinea</tabstop>
+  <tabstop>txtcCantidadArticulo</tabstop>
+  <tabstop>txtDescripcionArticulo</tabstop>
+  <tabstop>txtPVPArticulo</tabstop>
+  <tabstop>txtSubtotalArticulo</tabstop>
+  <tabstop>txtPorcDtoArticulo</tabstop>
+  <tabstop>txtDtoArticulo</tabstop>
+  <tabstop>txtTotalArticulo</tabstop>
+  <tabstop>txtPorcIVAArticulo</tabstop>
+  <tabstop>botEditarLinea</tabstop>
+  <tabstop>botBorrarLinea</tabstop>
+  <tabstop>btnPedido</tabstop>
+  <tabstop>btnAlbaran</tabstop>
+  <tabstop>btnFacturar</tabstop>
+  <tabstop>btnAnadir</tabstop>
+  <tabstop>btnAnterior</tabstop>
+  <tabstop>btnSiguiente</tabstop>
+  <tabstop>btnBuscar</tabstop>
+  <tabstop>btnImprimir</tabstop>
+  <tabstop>btnEditar</tabstop>
+  <tabstop>btnGuardar</tabstop>
+  <tabstop>btnDeshacer</tabstop>
+  <tabstop>btnBorrar</tabstop>
+  <tabstop>btnCerrar</tabstop>
+  <tabstop>txtnRec3</tabstop>
+  <tabstop>chklAprovado</tabstop>
+  <tabstop>txtcPedidoCliente</tabstop>
+  <tabstop>txtdValidoHasta</tabstop>
+  <tabstop>txtrACuenta</tabstop>
+  <tabstop>txtdFechaAprovacion</tabstop>
+  <tabstop>txttLugarEntrega</tabstop>
+  <tabstop>txtrTotalIVA</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>txttComentario</tabstop>
+  <tabstop>txtrRecargoEq1</tabstop>
+  <tabstop>txtnRec2</tabstop>
+  <tabstop>txtrIVA3</tabstop>
+  <tabstop>txtrTotal_2</tabstop>
+  <tabstop>txtrBase3</tabstop>
+  <tabstop>txtrBase2</tabstop>
+  <tabstop>txtrTotal3</tabstop>
+  <tabstop>txtrRecargoEq4</tabstop>
+  <tabstop>txtrIVA2</tabstop>
+  <tabstop>txtnRec4</tabstop>
+  <tabstop>txtnPorcentajeIva3</tabstop>
+  <tabstop>txtrBase4</tabstop>
+  <tabstop>txtrRecargoEq2</tabstop>
+  <tabstop>txtrBaseTotal</tabstop>
+  <tabstop>txtrIVA4</tabstop>
+  <tabstop>txtnPorcentajeIva4</tabstop>
+  <tabstop>txtrImporteIva</tabstop>
+  <tabstop>txtrImporteFactura</tabstop>
+  <tabstop>txtnRec1</tabstop>
+  <tabstop>txtrTotal1</tabstop>
+  <tabstop>txtrTotal4</tabstop>
+  <tabstop>txtrTotalRecargoEq</tabstop>
+  <tabstop>txtcFactura</tabstop>
+  <tabstop>txtrBase</tabstop>
+  <tabstop>txtrTotal</tabstop>
+  <tabstop>txtnPedido</tabstop>
+  <tabstop>Lineas</tabstop>
+  <tabstop>txtrBase1</tabstop>
+  <tabstop>txtnPresupuesto</tabstop>
+  <tabstop>txtnAlbaran</tabstop>
+  <tabstop>txtrSubtotal</tabstop>
+  <tabstop>txtrDescuento</tabstop>
+  <tabstop>txtrTotal2</tabstop>
+  <tabstop>txtrIVA1</tabstop>
+  <tabstop>txtrTotalRecargoEq_2</tabstop>
+  <tabstop>txtnPorcentajeIva1</tabstop>
+  <tabstop>txtrRecargoEq3</tabstop>
+  <tabstop>txtnPorcentajeIva2</tabstop>
+ </tabstops>
  <resources>
   <include location="terra.qrc"/>
  </resources>
  <connections>
   <connection>
-   <sender>btnCerrar_2</sender>
+   <sender>btnCerrar</sender>
    <signal>clicked()</signal>
    <receiver>FrmPresupuestosCli</receiver>
    <slot>close()</slot>

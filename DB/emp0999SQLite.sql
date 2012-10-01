@@ -283,11 +283,11 @@ CREATE TABLE "cab_pre" (
   "rDescuento" real DEFAULT 0,
   "rTotal" real DEFAULT 0,
   "lImpreso" int DEFAULT 0,
-  "lAprovado" int DEFAULT 0,
+  "lAprobado" int DEFAULT 0,
   "dFechaAprobacion" numeric  ,
   "rImporteFactura" real DEFAULT 0,
   "rImportePendiente" real DEFAULT 0,
-  "nFactura" int DEFAULT 0,
+  "cFactura" text,
   "nAlbaran" int DEFAULT 0,
   "nPedido" int DEFAULT 0,
   "id_FormaPago" int DEFAULT 0,
@@ -309,7 +309,7 @@ CREATE TABLE "cab_pre" (
   "rIva4" real DEFAULT 0,
   "nRecargoEquivalencia1" real DEFAULT 0,
   "nRecargoEquivalencia2" real DEFAULT 0,
-  "nRegargoEquivalencia3" real DEFAULT 0,
+  "nRecargoEquivalencia3" real DEFAULT 0,
   "nRecargoEquivalencia4" real DEFAULT 0,
   "rRec1" real DEFAULT 0,
   "rRec2" real DEFAULT 0,
@@ -318,7 +318,11 @@ CREATE TABLE "cab_pre" (
   "rTotal1" real DEFAULT 0,
   "rTotal2" real DEFAULT 0,
   "rTotal3" real DEFAULT 0,
-  "rTotal4" real DEFAULT 0
+  "rTotal4" real DEFAULT 0,
+  "lRecargoEquivalencia" int DEFAULT 0,
+  "cEmail" text,
+  "rTotalIva" real DEFAULT 0,
+  "rTotalRec" real DEFAULT 0
    
 )  ;
 
@@ -834,7 +838,7 @@ CREATE TABLE "lin_pre" (
   "cDescripcion" text  ,
   "nCantidad" real DEFAULT 0,
   "rPvp" real DEFAULT 0,
-  "rSubotal" real DEFAULT 0,
+  "rSubTotal" real DEFAULT 0,
   "nPorcDto" real DEFAULT 0,
   "rDto" real DEFAULT 0,
   "rTotal" real DEFAULT 0,

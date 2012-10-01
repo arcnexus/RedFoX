@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1053</width>
-    <height>489</height>
+    <width>1051</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="baseSize">
@@ -1668,7 +1668,7 @@ background-color: rgb(255, 255, 192);</string>
             </property>
             <property name="icon">
              <iconset resource="terra.qrc">
-              <normaloff>:/Icons/PNG/Stethoscope.png</normaloff>:/Icons/PNG/Stethoscope.png</iconset>
+              <normaloff>:/Icons/PNG/medic.png</normaloff>:/Icons/PNG/medic.png</iconset>
             </property>
             <property name="iconSize">
              <size>
