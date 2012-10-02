@@ -20,6 +20,7 @@
 #include "frmalbaran.h"
 #include "frmpedidos.h"
 #include "frmpresupuestoscli.h"
+#include "frmcajaminuta.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -250,4 +251,14 @@ void MainWindow::on_btnPresup_clientes_clicked()
     frmPresupcli->setWindowState(Qt::WindowMaximized);
     frmPresupcli->exec();
     ui->btnPresup_clientes->setEnabled(true);
+}
+
+void MainWindow::on_btnCajaMinuta_clicked()
+{
+    ui->btnCajaMinuta->setEnabled(false);
+    FrmCajaMinuta *frmCajaMinuta = new FrmCajaMinuta();
+    workspace->addWindow(frmCajaMinuta);
+    frmCajaMinuta->setWindowState(Qt::WindowMaximized);
+    frmCajaMinuta->exec();
+    ui->btnCajaMinuta->setEnabled(true);
 }

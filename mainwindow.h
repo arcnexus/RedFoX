@@ -53,6 +53,8 @@ private slots:
 
     void on_btnPresup_clientes_clicked();
 
+    void on_btnCajaMinuta_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWorkspace *workspace;

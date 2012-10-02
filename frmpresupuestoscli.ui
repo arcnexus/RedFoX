@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1094</width>
+    <width>1090</width>
     <height>522</height>
    </rect>
   </property>
@@ -110,7 +110,7 @@ color: rgb(255, 255, 255);</string>
          <enum>QTabWidget::South</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab_5">
          <attribute name="title">
@@ -491,14 +491,17 @@ color: rgb(0, 64, 64);</string>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_72">
-              <property name="text">
-               <string>Pedido Cliente:</string>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="txtcPedidoCliente"/>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
             <item>
              <widget class="QLabel" name="label">
@@ -1991,7 +1994,7 @@ color: rgb(0, 64, 64);</string>
         </property>
         <property name="icon">
          <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+          <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2437,8 +2440,6 @@ color: rgb(0, 64, 64);</string>
   <tabstop>btnBorrar</tabstop>
   <tabstop>btnCerrar</tabstop>
   <tabstop>txtnRec3</tabstop>
-  <tabstop>chklAprovado</tabstop>
-  <tabstop>txtcPedidoCliente</tabstop>
   <tabstop>txtdValidoHasta</tabstop>
   <tabstop>txtrACuenta</tabstop>
   <tabstop>txtdFechaAprovacion</tabstop>
@@ -2496,11 +2497,11 @@ color: rgb(0, 64, 64);</string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1040</x>
-     <y>466</y>
+     <x>1075</x>
+     <y>511</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1094</x>
+     <x>1089</x>
      <y>445</y>
     </hint>
    </hints>

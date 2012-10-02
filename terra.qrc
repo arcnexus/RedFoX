@@ -50,5 +50,6 @@
         <file>PNG/Stethoscope.png</file>
         <file>terra.qrc</file>
         <file>PNG/medic.png</file>
+        <file>PNG/tpv.png</file>
     </qresource>
 </RCC>

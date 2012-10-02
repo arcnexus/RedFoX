@@ -451,78 +451,61 @@ void Presupuesto::AnadirLineaPresupuesto(int id_cab, QString cCodigo, double nCa
     }
 }
 
-void Presupuesto::ModificarLineaPresupuesto(int id_lin, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal, double porcdto, double dto, double total, double nPorcIva)
+void Presupuesto::ModificarLineaPresupuesto(int id_lin, QString cCodigo, double nCantidad, QString cDescripcion, double pvp,
+                                            double subtotal, double porcdto, double dto, double total, double nPorcIva)
 {
-    // Borro valores anteriores registro Artículo (Los valores se sacan del registro de lin_pre ya que aun no se ha modificado)uhjmkk,kl,,
-    QSqlQuery *lin_pre = new QSqlQuery(QSqlDatabase::database("empresa"));
-    lin_pre->prepare("Select * from lin_pre where id =:nId");
-    lin_pre->bindValue(":nId",id_lin);
-    if(lin_pre->exec()) {
-        lin_pre->next();
-        QSqlRecord record = lin_pre->record();
-
-        QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
-        QArticulos->prepare("update articulos set "
-                            "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
-                            "nStockReal = nStockReal - :nCantidad2, "
-                            "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
-                            "where cCodigo= :cCodigo");
-        QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
-        QArticulos->bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
-        QArticulos->bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
-        QArticulos->bindValue(":rTotal",record.field("rTotal").value().toDouble());
-        QArticulos->bindValue(":cCodigo",record.field("cCodigo").value().toString());
-        QArticulos->exec();
-        delete QArticulos;
-        delete lin_pre;
-    }
     // Actualizo Línea Pedido
     QSqlQuery *Qlin_pre = new QSqlQuery(QSqlDatabase::database("empresa"));
-    Qlin_pre->prepare("update lin_pre  set "
-                      "cCodigo =:cCodigo,"
-                      "nCantidad =:nCantidad,"
-                      "cDescripcion =:cDescripcion,"
-                      "rPvp =:rPvp,"
-                      "nPorcDto =:nDto,"
+
+    Qlin_pre->prepare("update lin_pre set "
+                      "cCodigo = :cCodigo,"
+                      "cDescripcion = :cDescripcion,"
+                      "nCantidad = :nCantidad,"
+                      "nPorcDto = :nPorcDto,"
+                      "nPorcIVA = :nPorcIVA,"
                       "rDto =:rDto,"
-                      "rSubTotal =:rSubTotal,"
-                      "rTotal =:rTotal,"
-                      "nPorcIVA =:nPorcIva where id = :id_lin");
-    Qlin_pre->bindValue(":id_lin",id_lin);
+                      "rPvp = :rPvp,"
+                      "rSubTotal = :rSubTotal,"
+                      "rTotal = :rTotal where id = :id_lin");
     Qlin_pre->bindValue(":cCodigo",cCodigo);
-    Qlin_pre->bindValue(":nCantidad",nCantidad);
     Qlin_pre->bindValue(":cDescripcion",cDescripcion);
-    Qlin_pre->bindValue(":rPvp",pvp);
+    Qlin_pre->bindValue(":nCantidad",nCantidad);
     Qlin_pre->bindValue(":nPorcDto",porcdto);
+    Qlin_pre->bindValue(":nPorcIVA",nPorcIva);
     Qlin_pre->bindValue(":rDto",dto);
+    Qlin_pre->bindValue(":rPvp",pvp);
     Qlin_pre->bindValue(":rSubTotal",subtotal);
-    Qlin_pre->bindValue(":rTotal",total);
-    Qlin_pre->bindValue(":nPorcIva",nPorcIva);
+    Qlin_pre->bindValue(":rTotal", total);
+    Qlin_pre->bindValue(":id_lin",id_lin);
     if (!Qlin_pre->exec()){
        QMessageBox::critical(NULL,"error al modificar datos línea Pedido:", Qlin_pre->lastError().text());
     }
     delete Qlin_pre;
-    // Actualizo ficha artículo
-    QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
-    QArticulos->prepare("update articulos set "
-                        "dUltimaVenta = :dUltimaVenta,"
-                        "nUnidadesVendidas = nUnidadesVendidas +:nCantidad,"
-                        "nStockReal = nStockReal - :nCantidad2, "
-                        "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
-                        "where cCodigo= :cCodigo");
-    QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
-    QArticulos->bindValue(":nCantidad",nCantidad);
-    QArticulos->bindValue(":nCantidad2",nCantidad);
-    QArticulos->bindValue(":rTotal",total);
-    QArticulos->bindValue(":cCodigo",cCodigo);
-
-    QArticulos->exec();
-    delete QArticulos;
 
 }
 
 void Presupuesto::BorrarLineaPresupuesto(int id_lin)
 {
+    if (id_lin !=0) {
+        QSqlQuery *qrylin_pre = new QSqlQuery(QSqlDatabase::database("empresa"));
+        frmDecision msgBox;
+        msgBox.Inicializar(QObject::tr("Borrar línea"),QObject::tr("Está a punto de borrar la línea del Presupuesto"),
+                           QObject::tr("¿Desea continuar?"),"",QObject::tr("Sí"),QObject::tr("No"));
+        int elegido = msgBox.exec();
+       if(elegido == 1) {
+            qrylin_pre->prepare("Delete from lin_pre where id = :id_lin");
+            qrylin_pre->bindValue(":id_lin",id_lin);
+            if(!qrylin_pre->exec()){
+               QMessageBox::critical(NULL,QObject::tr("Borrar línea"),QObject::tr("Falló el borrado de la línea de Presupuesto"),
+                                     QObject::tr("&Aceptar"));
+            }
+            delete qrylin_pre;
+            calcularPresupuesto();
+         }
+    } else {
+        QMessageBox::critical(NULL,QObject::tr("Borrar línea"),QObject::tr("Debe seleccionar una línea para poder borrar"),
+                              QObject::tr("OK"));
+    }
 }
 
 void Presupuesto::calcularPresupuesto()

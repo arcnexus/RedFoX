@@ -47,7 +47,8 @@ SOURCES += main.cpp\
     frmmodificarlin_ped.cpp \
     frmpresupuestoscli.cpp \
     presupuesto.cpp \
-    frmmodificarlin_precli.cpp
+    frmmodificarlin_precli.cpp \
+    frmcajaminuta.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -78,7 +79,8 @@ HEADERS  += mainwindow.h \
     frmmodificarlin_ped.h \
     frmpresupuestoscli.h \
     presupuesto.h \
-    frmmodificarlin_precli.h
+    frmmodificarlin_precli.h \
+    frmcajaminuta.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -99,7 +101,8 @@ FORMS    += mainwindow.ui \
     frmpedidos.ui \
     frmmodificarlin_ped.ui \
     frmpresupuestoscli.ui \
-    frmmodificarlin_precli.ui
+    frmmodificarlin_precli.ui \
+    frmcajaminuta.ui
 
 RESOURCES += \
     terra.qrc

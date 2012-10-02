@@ -51,6 +51,8 @@ private slots:
 
     void on_botEditarLinea_clicked();
 
+    void on_botBorrarLinea_clicked();
+
 private:
     Ui::FrmPresupuestosCli *ui;
     QSqlQueryModel *model;

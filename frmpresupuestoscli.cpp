@@ -410,31 +410,44 @@ void FrmPresupuestosCli::CalcularTotalLinea()
 
 void FrmPresupuestosCli::RellenarDespuesCalculo()
 {
-    Configuracion *o_configuracion = new Configuracion();
-    ui->txtrSubtotal->setText(o_configuracion->FormatoNumerico( QString::number(oPres->getrSubTotal(),'f',2)));
-    ui->txtrDescuento->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrDescuento(),'f',2)));
-    ui->txtrBase->setText(o_configuracion->FormatoNumerico(QString::number( oPres->getrImporte(),'f',2)));
-    ui->txtrImporteIva->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrTotalIva(),'f',2)));
-    ui->txtrTotal->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrTotal(),'f',2)));
-
-    ui->txtrBase1->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrBase1(),'f',2)));
-    ui->txtrBase2->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrBase2(),'f',2)));
-    ui->txtrBase3->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrBase3(),'f',2)));
-    ui->txtrBase4->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrBase4(),'f',2)));
-    ui->txtrIVA1->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrIva1(),'f',2)));
-    ui->txtrIVA2->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrIva2(),'f',2)));
-    ui->txtrIVA3->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrIva3(),'f',2)));
-    ui->txtrIVA4->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrIva4(),'f',2)));
-    ui->txtrTotal1->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrTotal1(),'f',2)));
-    ui->txtrTotal2->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrTotal2(),'f',2)));
-    ui->txtrTotal3->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrTotal3(),'f',2)));
-    ui->txtrTotal4->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrTotal4(),'f',2)));
-    ui->txtrRecargoEq1->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrRec1(),'f',2)));
-    ui->txtrRecargoEq2->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrRec2(),'f',2)));
-    ui->txtrRecargoEq3->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrRec3(),'f',2)));
-    ui->txtrRecargoEq4->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrRec4(),'f',2)));
-    ui->txtrTotalRecargoEq->setText(o_configuracion->FormatoNumerico(QString::number(oPres->getrTotalRec(),'f',2)));
-    delete o_configuracion;
+    Configuracion *o_conf = new Configuracion();
+    ui->txtnDto->setText(QString::number(oPres->getnDto()));
+    ui->txtrBase->setText(o_conf->FormatoNumerico(QString::number(oPres->getrImporte(),'f',2)));
+    ui->txtrSubtotal->setText(o_conf->FormatoNumerico(QString::number(oPres->getrSubTotal(),'f',2)));
+    ui->txtrDescuento->setText(o_conf->FormatoNumerico(QString::number(oPres->getrDescuento(),'f',2)));
+    ui->txtrTotal->setText(o_conf->FormatoNumerico(QString::number(oPres->getrTotal(),'f',2)));
+    ui->txtrImporteFactura->setText(o_conf->FormatoNumerico(QString::number(oPres->getrImporteFactura(),'f',2)));
+    ui->txtrBase1->setText(o_conf->FormatoNumerico(QString::number(oPres->getrBase1(),'f',2)));
+    ui->txtrBase2->setText(o_conf->FormatoNumerico(QString::number(oPres->getrBase2(),'f',2)));
+    ui->txtrBase3->setText(o_conf->FormatoNumerico(QString::number(oPres->getrBase3(),'f',2)));
+    ui->txtrBase4->setText(o_conf->FormatoNumerico(QString::number(oPres->getrBase4(),'f',2)));
+    ui->txtrBaseTotal->setText(o_conf->FormatoNumerico(QString::number(oPres->getrImporte(),'f',2)));
+    ui->txtnPorcentajeIva1->setText(QString::number(oPres->getnIva1()));
+    ui->txtnPorcentajeIva2->setText(QString::number(oPres->getnIva2()));
+    ui->txtnPorcentajeIva3->setText(QString::number(oPres->getnIva3()));
+    ui->txtnPorcentajeIva4->setText(QString::number(oPres->getnIva4()));
+    ui->txtrIVA1->setText(o_conf->FormatoNumerico(QString::number(oPres->getrIva1(),'f',2)));
+    ui->txtrIVA2->setText(o_conf->FormatoNumerico(QString::number(oPres->getrIva2(),'f',2)));
+    ui->txtrIVA3->setText(o_conf->FormatoNumerico(QString::number(oPres->getrIva3(),'f',2)));
+    ui->txtrIVA4->setText(o_conf->FormatoNumerico(QString::number(oPres->getrIva4(),'f',2)));
+    ui->txtrTotalIVA->setText(o_conf->FormatoNumerico(QString::number(oPres->getrTotalIva(),'f',2)));
+    ui->txtrImporteIva->setText(o_conf->FormatoNumerico(QString::number(oPres->getrTotalIva(),'f',2)));
+    ui->txtnRec1->setText(QString::number(oPres->getnRecargoEquivalencia1()));
+    ui->txtnRec2->setText(QString::number(oPres->getnRecargoEquivalencia2()));
+    ui->txtnRec3->setText(QString::number(oPres->getnRecargoEquivalencia3()));
+    ui->txtnRec4->setText(QString::number(oPres->getnRecargoEquivalencia4()));
+    ui->txtrTotalRecargoEq->setText(o_conf->FormatoNumerico(QString::number(oPres->getrTotalRec(),'f',2)));
+    ui->txtrTotalRecargoEq_2->setText(o_conf->FormatoNumerico(QString::number(oPres->getrTotalRec(),'f',2)));
+    ui->txtrRecargoEq1->setText(o_conf->FormatoNumerico(QString::number(oPres->getrRec1(),'f',2)));
+    ui->txtrRecargoEq2->setText(o_conf->FormatoNumerico(QString::number(oPres->getrRec2(),'f',2)));
+    ui->txtrRecargoEq3->setText(o_conf->FormatoNumerico(QString::number(oPres->getrRec3(),'f',2)));
+    ui->txtrRecargoEq4->setText(o_conf->FormatoNumerico(QString::number(oPres->getrRec4(),'f',2)));
+    ui->txtrTotal1->setText(o_conf->FormatoNumerico(QString::number(oPres->getrTotal1(),'f',2)));
+    ui->txtrTotal2->setText(o_conf->FormatoNumerico(QString::number(oPres->getrTotal2(),'f',2)));
+    ui->txtrTotal3->setText(o_conf->FormatoNumerico(QString::number(oPres->getrTotal3(),'f',2)));
+    ui->txtrTotal4->setText(o_conf->FormatoNumerico(QString::number(oPres->getrTotal4(),'f',2)));
+    ui->txtrTotal_2->setText(o_conf->FormatoNumerico(QString::number(oPres->getrTotal(),'f',2)));
+    delete o_conf;
 }
 
 void FrmPresupuestosCli::LineasVentas()
@@ -637,4 +650,16 @@ void FrmPresupuestosCli::on_botEditarLinea_clicked()
         RellenarDespuesCalculo();
     }
     delete Modificar;
+}
+
+void FrmPresupuestosCli::on_botBorrarLinea_clicked()
+{
+    QModelIndex celda=ui->Lineas->currentIndex();
+    QModelIndex index=ModelLin_pre->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+
+    QVariant pKey=ModelLin_pre->data(index,Qt::EditRole);
+    int Id_lin =  pKey.toInt();
+    oPres->BorrarLineaPresupuesto(Id_lin);
+    LineasVentas();
+    RellenarDespuesCalculo();
 }
