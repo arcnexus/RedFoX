@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>749</height>
+    <height>747</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1028,7 +1028,7 @@ border-color: rgba(0, 0, 0, 0);</string>
               </size>
              </property>
              <property name="text">
-              <string>Presupuestos</string>
+              <string>Presup.</string>
              </property>
              <property name="icon">
               <iconset resource="terra.qrc">
@@ -1118,6 +1118,26 @@ border-color: rgba(0, 0, 0, 0);</string>
             </widget>
            </item>
            <item>
+            <widget class="QToolButton" name="btnAbreCaja">
+             <property name="text">
+              <string>Abre Caja</string>
+             </property>
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/abrecaja.png</normaloff>:/Icons/PNG/abrecaja.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextUnderIcon</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QToolButton" name="btnCajaMinuta">
              <property name="minimumSize">
               <size>
@@ -1131,6 +1151,26 @@ border-color: rgba(0, 0, 0, 0);</string>
              <property name="icon">
               <iconset resource="terra.qrc">
                <normaloff>:/Icons/PNG/tpv.png</normaloff>:/Icons/PNG/tpv.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextUnderIcon</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="btnCierreCaja">
+             <property name="text">
+              <string>Cierre Caja</string>
+             </property>
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/cierrecaja.png</normaloff>:/Icons/PNG/cierrecaja.png</iconset>
              </property>
              <property name="iconSize">
               <size>

@@ -14,6 +14,7 @@
 #include "columnamoneda.h"
 #include "columnafecha.h"
 #include <QSettings>
+#include "frmfichapaciente.h"
 
 
 Cliente *oCliente = new Cliente();
@@ -946,7 +947,7 @@ void frmClientes::on_txtcPoblacionAlmacen_lostFocus()
 
 void frmClientes::on_TablaDeudas_clicked(const QModelIndex &index)
 {
-    qDebug() << "SE ha hecho click en las deudas";
+
 }
 
 void frmClientes::on_txtrRiesgoPermitido_lostFocus()
@@ -954,4 +955,11 @@ void frmClientes::on_txtrRiesgoPermitido_lostFocus()
     Configuracion *o_conf = new Configuracion;
     ui->txtrRiesgoPermitido->setText(o_conf->FormatoNumerico(ui->txtrRiesgoPermitido->text()));
     delete o_conf;
+}
+
+void frmClientes::on_btnFichaPaciente_clicked()
+{
+    FrmFichaPaciente *frmPaciente = new FrmFichaPaciente(this);
+    frmPaciente->setWindowState(Qt::WindowMaximized);
+    frmPaciente->exec();
 }

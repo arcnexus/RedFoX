@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1051</width>
+    <width>1047</width>
     <height>500</height>
    </rect>
   </property>
@@ -1664,7 +1664,7 @@ background-color: rgb(255, 255, 192);</string>
              </size>
             </property>
             <property name="text">
-             <string>Ver ficha general paciente</string>
+             <string>Historial Clínico del Paciente</string>
             </property>
             <property name="icon">
              <iconset resource="terra.qrc">

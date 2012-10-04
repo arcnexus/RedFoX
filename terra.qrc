@@ -51,5 +51,13 @@
         <file>terra.qrc</file>
         <file>PNG/medic.png</file>
         <file>PNG/tpv.png</file>
+        <file>PNG/cierrecaja.png</file>
+        <file>PNG/abrecaja.png</file>
+        <file>PNG/XRay.png</file>
+        <file>PNG/Pills.png</file>
+        <file>PNG/QualityControl.png</file>
+        <file>PNG/TestTubes.png</file>
+        <file>PNG/importar.png</file>
+        <file>jpg/rx.jpg</file>
     </qresource>
 </RCC>

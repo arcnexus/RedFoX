@@ -6,6 +6,8 @@
 
 QT       += core gui
 QT       += sql
+QT       += network
+QT       += xml
 
 INCLUDEPATH += /Qwt/5.2.1/include
 DEPENDPATH += /Qwt/5.2.1/lib
@@ -48,7 +50,8 @@ SOURCES += main.cpp\
     frmpresupuestoscli.cpp \
     presupuesto.cpp \
     frmmodificarlin_precli.cpp \
-    frmcajaminuta.cpp
+    frmcajaminuta.cpp \
+    frmfichapaciente.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -80,7 +83,8 @@ HEADERS  += mainwindow.h \
     frmpresupuestoscli.h \
     presupuesto.h \
     frmmodificarlin_precli.h \
-    frmcajaminuta.h
+    frmcajaminuta.h \
+    frmfichapaciente.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -102,7 +106,8 @@ FORMS    += mainwindow.ui \
     frmmodificarlin_ped.ui \
     frmpresupuestoscli.ui \
     frmmodificarlin_precli.ui \
-    frmcajaminuta.ui
+    frmcajaminuta.ui \
+    frmfichapaciente.ui
 
 RESOURCES += \
     terra.qrc

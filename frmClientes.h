@@ -76,6 +76,8 @@ private slots:
 
     void on_txtrRiesgoPermitido_lostFocus();
 
+    void on_btnFichaPaciente_clicked();
+
 private:
     Ui::frmClientes *ui;
     QSqlQueryModel *modelFP;
