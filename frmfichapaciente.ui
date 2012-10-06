@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1099</width>
+    <width>1294</width>
     <height>539</height>
    </rect>
   </property>
@@ -14,13 +14,612 @@
    <string>Historia clínica</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="0">
+    <widget class="QToolBox" name="toolBox">
+     <property name="maximumSize">
+      <size>
+       <width>214</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="page">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>208</width>
+        <height>307</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>GENERAL</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Añadir Episodio</string>
+         </property>
+         <property name="icon">
+          <iconset resource="terra.qrc">
+           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>Editar Episodio</string>
+         </property>
+         <property name="icon">
+          <iconset resource="terra.qrc">
+           <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_5">
+         <property name="text">
+          <string>Minutar Visita</string>
+         </property>
+         <property name="icon">
+          <iconset resource="terra.qrc">
+           <normaloff>:/Icons/PNG/tpv.png</normaloff>:/Icons/PNG/tpv.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>193</width>
+        <height>333</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>ANTECEDENTES</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_40">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_64">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 192, 192);</string>
+         </property>
+         <property name="text">
+          <string>ANTECEDENTES FAMILIARES</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QTextEdit" name="textEdit_10">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 250, 189);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_65">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 192, 192);</string>
+         </property>
+         <property name="text">
+          <string>ENFERMEDADES CONOCIDAS</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QTextEdit" name="textEdit_11">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 250, 189);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_66">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 192, 192);</string>
+         </property>
+         <property name="text">
+          <string>CIRUGÍAS PREVIAS</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QTextEdit" name="textEdit_12">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 250, 189);</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_9">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>208</width>
+        <height>307</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>D. ADMINISTRATIVOS</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_36">
+       <item row="0" column="0">
+        <widget class="QFrame" name="frame_12">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>91</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>128</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_24">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_38">
+            <property name="text">
+             <string>Numero S.S.:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_13">
+            <property name="maximumSize">
+             <size>
+              <width>180</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_39">
+            <property name="text">
+             <string>Mutua:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="comboBox_4">
+            <property name="maximumSize">
+             <size>
+              <width>180</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_40">
+            <property name="text">
+             <string>Num. Filiación:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="lineEdit_14">
+            <property name="maximumSize">
+             <size>
+              <width>180</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_10">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>208</width>
+        <height>307</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>D. ANTROPOMÉTRICOS</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_41">
+       <item row="0" column="0">
+        <widget class="QFrame" name="frame_13">
+         <property name="maximumSize">
+          <size>
+           <width>251</width>
+           <height>156</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_26">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_9">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_13">
+              <property name="text">
+               <string>Talla:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_14">
+              <property name="text">
+               <string>Peso:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_15">
+              <property name="text">
+               <string>T.A.:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLineEdit" name="lineEdit_10">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>21</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0" colspan="2">
+             <widget class="QLabel" name="label_16">
+              <property name="text">
+               <string>Perimetro Craneal:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QLineEdit" name="lineEdit_7">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>21</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLineEdit" name="lineEdit_4">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>21</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLineEdit" name="lineEdit_5">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>21</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="lineEdit_6">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>21</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_29">
+              <property name="text">
+               <string>I.M.C:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="2">
+             <widget class="QLineEdit" name="lineEdit_11">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>21</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pgeVademecum">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>208</width>
+        <height>307</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>VADEMÉCUM</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_37">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButton_11">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>44</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Vademecum </string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="pushButton_13">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>44</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Medicina Tradicional China</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="pushButton_14">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>44</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Medicina Ayurveda</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pushButton_12">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>44</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Naturopatía</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="pushButton_15">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>44</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Homeopatía</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QPushButton" name="btnCerrar">
+     <property name="text">
+      <string>Cerrar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="terra.qrc">
+       <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>PACIENTE:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit"/>
+     </item>
+     <item>
+      <widget class="QFrame" name="frame">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QRadioButton" name="radioButton">
+          <property name="text">
+           <string>HOMBRE</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioButton_2">
+          <property name="text">
+           <string>MUJER</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="2" column="1">
     <widget class="QTabWidget" name="tabWidget">
      <property name="tabPosition">
       <enum>QTabWidget::West</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab_7">
       <attribute name="title">
@@ -61,7 +660,7 @@
                <string notr="true">background-color: rgb(0, 192, 192);</string>
               </property>
               <property name="text">
-               <string>ENFERMEDADES CONOCIDAS</string>
+               <string>ALERGIAS CONOCIDAS</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -150,7 +749,7 @@
                <string notr="true">background-color: rgb(0, 192, 192);</string>
               </property>
               <property name="text">
-               <string>ALERGIAS CONOCIDAS</string>
+               <string>ENFERMEDADES CONOCIDAS</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -309,41 +908,7 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_21">
-          <item row="3" column="1" colspan="2">
-           <widget class="QLineEdit" name="lineEdit_12">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="1" colspan="2">
-           <widget class="QComboBox" name="comboBox_3">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_32">
-            <property name="text">
-             <string>Nivel Estudios:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1" colspan="2">
+          <item row="5" column="3">
            <widget class="QFrame" name="frame_11">
             <property name="minimumSize">
              <size>
@@ -375,24 +940,10 @@
             </layout>
            </widget>
           </item>
-          <item row="1" column="2">
-           <widget class="QSpinBox" name="spinBox">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_35">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_32">
             <property name="text">
-             <string>Trabaja:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_33">
-            <property name="text">
-             <string>Profesión:</string>
+             <string>Nivel Estudios:</string>
             </property>
            </widget>
           </item>
@@ -400,6 +951,53 @@
            <widget class="QLabel" name="label_31">
             <property name="text">
              <string>Hijos:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2" colspan="2">
+           <widget class="QLineEdit" name="lineEdit_12">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="2" colspan="2">
+           <widget class="QComboBox" name="comboBox_3">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QSpinBox" name="spinBox">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" colspan="2">
+           <widget class="QPlainTextEdit" name="plainTextEdit">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>31</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
@@ -412,14 +1010,24 @@
              </size>
             </property>
             <property name="text">
-             <string>Familia nuclear</string>
+             <string>Familia nuclear:</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1" colspan="2">
-           <widget class="QPlainTextEdit" name="plainTextEdit">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+          <item row="5" column="2">
+           <widget class="QLabel" name="label_35">
+            <property name="text">
+             <string>Trabaja:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_33">
+            <property name="text">
+             <string>Profesión:</string>
             </property>
            </widget>
           </item>
@@ -512,23 +1120,53 @@
           <item row="0" column="0">
            <widget class="QToolBox" name="toolBox_2">
             <property name="currentIndex">
-             <number>0</number>
+             <number>5</number>
             </property>
             <widget class="QWidget" name="page_3">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>479</width>
-               <height>247</height>
+               <width>323</width>
+               <height>229</height>
               </rect>
              </property>
              <attribute name="label">
               <string>Episodio</string>
              </attribute>
-             <layout class="QGridLayout" name="gridLayout_3">
+             <layout class="QGridLayout" name="gridLayout_39">
+              <item row="0" column="0">
+               <widget class="QPushButton" name="pushButton_4">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>episodio no visible para otros profesionales</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/cierrecaja.png</normaloff>:/Icons/PNG/cierrecaja.png</iconset>
+                </property>
+               </widget>
+              </item>
               <item row="1" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <spacer name="horizontalSpacer_6">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                 <item>
                  <widget class="QLabel" name="label_5">
                   <property name="text">
@@ -548,16 +1186,16 @@
                 </item>
                </layout>
               </item>
-              <item row="1" column="1">
-               <layout class="QHBoxLayout" name="horizontalLayout_6">
-                <item>
+              <item row="2" column="0">
+               <layout class="QGridLayout" name="gridLayout_38">
+                <item row="0" column="0">
                  <widget class="QLabel" name="label_7">
                   <property name="text">
                    <string>CIE:</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item row="0" column="1">
                  <widget class="QPushButton" name="pushButton_3">
                   <property name="text">
                    <string/>
@@ -568,43 +1206,80 @@
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item row="0" column="2">
                  <widget class="QLineEdit" name="txtCIE"/>
                 </item>
                </layout>
               </item>
-              <item row="2" column="0" colspan="2">
+              <item row="3" column="0">
                <widget class="QTextEdit" name="txtEpisodio"/>
               </item>
-              <item row="0" column="0">
-               <widget class="QPushButton" name="pushButton_4">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>episodio no visible para otros profesionales</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="terra.qrc">
-                  <normaloff>:/Icons/PNG/cierrecaja.png</normaloff>:/Icons/PNG/cierrecaja.png</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <spacer name="horizontalSpacer_6">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
+              <item row="4" column="0">
+               <layout class="QGridLayout" name="gridLayout_3">
+                <item row="0" column="0">
+                 <widget class="QPushButton" name="pushButton_17">
+                  <property name="text">
+                   <string>Guardar</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QPushButton" name="pushButton_16">
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Editar</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QPushButton" name="pushButton_18">
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Deshacer</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
@@ -876,8 +1551,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>391</width>
-               <height>193</height>
+               <width>448</width>
+               <height>247</height>
               </rect>
              </property>
              <attribute name="label">
@@ -947,7 +1622,7 @@
                 <item row="3" column="0">
                  <widget class="QToolButton" name="toolButton_8">
                   <property name="toolTip">
-                   <string>Añadir tratamiento</string>
+                   <string>Añadir prueba de imagen</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -961,7 +1636,7 @@
                 <item row="3" column="1">
                  <widget class="QToolButton" name="toolButton_9">
                   <property name="toolTip">
-                   <string>Borrar Tratamiento (Requiere contraseña de administrador)</string>
+                   <string>Borrar prueba (Requiere contraseña de administrador)</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -989,7 +1664,7 @@
                 <item row="3" column="3">
                  <widget class="QToolButton" name="toolButton_11">
                   <property name="toolTip">
-                   <string>Importar Analisis</string>
+                   <string>Importar Imagen</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -1009,85 +1684,15 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>360</width>
-               <height>298</height>
+               <width>489</width>
+               <height>371</height>
               </rect>
              </property>
              <attribute name="label">
               <string>Interconsulta</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_15">
-              <item row="0" column="0" colspan="2">
-               <widget class="QFrame" name="frame_8">
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_14">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_22">
-                   <property name="text">
-                    <string>Derivar a Dr/a:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1" colspan="3">
-                  <widget class="QLineEdit" name="lineEdit_8"/>
-                 </item>
-                 <item row="1" column="0" colspan="2">
-                  <widget class="QLabel" name="label_23">
-                   <property name="text">
-                    <string>Motivo interconsulta:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="2">
-                  <widget class="QComboBox" name="comboBox"/>
-                 </item>
-                 <item row="1" column="3">
-                  <widget class="QToolButton" name="toolButton_16">
-                   <property name="toolTip">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Añadir motivo interconsulta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="terra.qrc">
-                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <layout class="QVBoxLayout" name="verticalLayout_2">
-                <item>
-                 <widget class="QLabel" name="label_20">
-                  <property name="text">
-                   <string>Petición</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QTextEdit" name="textEdit_2"/>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_21">
-                  <property name="text">
-                   <string>Respuesta</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QTextEdit" name="textEdit_3"/>
-                </item>
-               </layout>
-              </item>
-              <item row="1" column="1">
+              <item row="2" column="1">
                <layout class="QGridLayout" name="gridLayout_13">
                 <item row="3" column="0">
                  <widget class="QToolButton" name="toolButton_12">
@@ -1195,6 +1800,142 @@
                 </item>
                </layout>
               </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QFrame" name="frame_8">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_14">
+                 <item row="2" column="3">
+                  <widget class="QToolButton" name="toolButton_16">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Añadir motivo interconsulta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="terra.qrc">
+                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_23">
+                   <property name="text">
+                    <string>Motivo interconsulta:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_22">
+                   <property name="text">
+                    <string>Derivar a Dr/a:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1" colspan="2">
+                  <widget class="QComboBox" name="comboBox"/>
+                 </item>
+                 <item row="2" column="4">
+                  <widget class="QPushButton" name="pushButton_20">
+                   <property name="text">
+                    <string>Documentos</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1" colspan="4">
+                  <widget class="QLineEdit" name="lineEdit_8"/>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <layout class="QVBoxLayout" name="verticalLayout_2">
+                <item>
+                 <widget class="QLabel" name="label_20">
+                  <property name="text">
+                   <string>Petición</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextEdit" name="textEdit_2"/>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_21">
+                  <property name="text">
+                   <string>Respuesta</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextEdit" name="textEdit_3"/>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="0" colspan="2">
+               <widget class="QFrame" name="frame_24">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>67</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_45">
+                 <item row="1" column="3">
+                  <widget class="QToolButton" name="toolButton_31">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Añadir motivo interconsulta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="terra.qrc">
+                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_70">
+                   <property name="text">
+                    <string>Referido de:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="4">
+                  <widget class="QPushButton" name="pushButton_19">
+                   <property name="text">
+                    <string>Documentos</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1" colspan="4">
+                  <widget class="QLineEdit" name="lineEdit_23"/>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_84">
+                   <property name="text">
+                    <string>Motivo interconsulta:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1" colspan="2">
+                  <widget class="QComboBox" name="comboBox_2"/>
+                 </item>
+                </layout>
+               </widget>
+              </item>
              </layout>
             </widget>
             <widget class="QWidget" name="page_8">
@@ -1202,8 +1943,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>301</width>
-               <height>169</height>
+               <width>504</width>
+               <height>247</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1260,20 +2001,20 @@
               </item>
               <item row="0" column="1">
                <layout class="QGridLayout" name="gridLayout_17">
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="lineEdit_9"/>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_27">
+                  <property name="text">
+                   <string>Texto Aviso:</string>
+                  </property>
+                 </widget>
+                </item>
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_25">
                   <property name="text">
                    <string>Motivo aviso:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLineEdit" name="lineEdit_9"/>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_26">
-                  <property name="text">
-                   <string>Avisar desde:</string>
                   </property>
                  </widget>
                 </item>
@@ -1291,15 +2032,36 @@
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_27">
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_26">
                   <property name="text">
-                   <string>Texto Aviso:</string>
+                   <string>Avisar desde:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QPushButton" name="pushButton_22">
+                  <property name="text">
+                   <string>Guardar</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="1">
+                 <widget class="QPushButton" name="pushButton_23">
+                  <property name="text">
+                   <string>Deshacer</string>
                   </property>
                  </widget>
                 </item>
                 <item row="3" column="0" colspan="2">
                  <widget class="QTextEdit" name="textEdit_4"/>
+                </item>
+                <item row="5" column="0" rowspan="2">
+                 <widget class="QPushButton" name="pushButton_21">
+                  <property name="text">
+                   <string>Editar</string>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -1623,49 +2385,6 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_32">
-             <item row="1" column="0" colspan="2">
-              <widget class="QLabel" name="label_54">
-               <property name="text">
-                <string>Dosificación:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0" colspan="2">
-              <widget class="QLabel" name="label_59">
-               <property name="text">
-                <string>Laboratorio:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2" colspan="7">
-              <widget class="QLineEdit" name="lineEdit_19">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 0, 0);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2" colspan="7">
-              <widget class="QLineEdit" name="lineEdit_17">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 0, 0);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="2">
-              <widget class="QLabel" name="label_53">
-               <property name="text">
-                <string>DENOMINACIÓN:</string>
-               </property>
-              </widget>
-             </item>
              <item row="4" column="4" colspan="3">
               <widget class="QLabel" name="label_63">
                <property name="text">
@@ -1673,10 +2392,28 @@ color: rgb(0, 0, 0);</string>
                </property>
               </widget>
              </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="label_58">
+             <item row="9" column="0" colspan="2">
+              <widget class="QLabel" name="label_61">
                <property name="text">
-                <string>P.A.:</string>
+                <string>Indicaciones:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2" colspan="7">
+              <widget class="QLineEdit" name="lineEdit_18">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 0, 0);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="6" colspan="2">
+              <widget class="QRadioButton" name="radioButton_18">
+               <property name="text">
+                <string>Si</string>
                </property>
               </widget>
              </item>
@@ -1684,6 +2421,20 @@ color: rgb(0, 0, 0);</string>
               <widget class="QLabel" name="label_60">
                <property name="text">
                 <string>Comercializado:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="2" colspan="3">
+              <widget class="QLineEdit" name="lineEdit_20">
+               <property name="minimumSize">
+                <size>
+                 <width>181</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 0, 0);</string>
                </property>
               </widget>
              </item>
@@ -1701,38 +2452,30 @@ color: rgb(0, 0, 0);</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_62">
+             <item row="5" column="0" colspan="2">
+              <widget class="QLabel" name="label_59">
                <property name="text">
-                <string>Fecha Alta:</string>
+                <string>Laboratorio:</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_55">
-               <property name="text">
-                <string>Paquete:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="8">
-              <widget class="QRadioButton" name="radioButton_19">
-               <property name="text">
-                <string>No</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="2" colspan="3">
-              <widget class="QLineEdit" name="lineEdit_22">
+             <item row="10" column="2" colspan="3">
+              <widget class="QToolButton" name="toolButton_29">
                <property name="minimumSize">
                 <size>
-                 <width>181</width>
+                 <width>152</width>
                  <height>0</height>
                 </size>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 0, 0);</string>
+               <property name="text">
+                <string>Mostrar Interacciones</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="2">
+              <widget class="QLabel" name="label_53">
+               <property name="text">
+                <string>DENOMINACIÓN:</string>
                </property>
               </widget>
              </item>
@@ -1796,38 +2539,17 @@ color: rgb(0, 0, 0);</string>
                </layout>
               </widget>
              </item>
-             <item row="1" column="2" colspan="7">
-              <widget class="QLineEdit" name="lineEdit_18">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 0, 0);</string>
+             <item row="6" column="8">
+              <widget class="QRadioButton" name="radioButton_19">
+               <property name="text">
+                <string>No</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="7" colspan="2">
-              <widget class="QDateEdit" name="dateEdit_7">
+             <item row="2" column="2" colspan="7">
+              <widget class="QLineEdit" name="lineEdit_19">
                <property name="enabled">
                 <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 0, 0);</string>
-               </property>
-               <property name="displayFormat">
-                <string>dd/MM/yyyy</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="2" colspan="3">
-              <widget class="QLineEdit" name="lineEdit_21">
-               <property name="minimumSize">
-                <size>
-                 <width>181</width>
-                 <height>0</height>
-                </size>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 192);
@@ -1848,22 +2570,74 @@ color: rgb(0, 0, 0);</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="6" colspan="2">
-              <widget class="QRadioButton" name="radioButton_18">
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_58">
                <property name="text">
-                <string>Si</string>
+                <string>P.A.:</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="0" colspan="2">
-              <widget class="QLabel" name="label_57">
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_55">
                <property name="text">
-                <string>GRUPO ATC:</string>
+                <string>Paquete:</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="2" colspan="3">
-              <widget class="QLineEdit" name="lineEdit_20">
+             <item row="7" column="2" colspan="3">
+              <widget class="QLineEdit" name="lineEdit_22">
+               <property name="minimumSize">
+                <size>
+                 <width>181</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 0, 0);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QToolButton" name="toolButton_28">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Prospecto</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <widget class="QLabel" name="label_54">
+               <property name="text">
+                <string>Dosificación:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2" colspan="7">
+              <widget class="QLineEdit" name="lineEdit_17">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 0, 0);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_62">
+               <property name="text">
+                <string>Fecha Alta:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="2" colspan="3">
+              <widget class="QLineEdit" name="lineEdit_21">
                <property name="minimumSize">
                 <size>
                  <width>181</width>
@@ -1884,36 +2658,31 @@ color: rgb(0, 0, 0);</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="0">
-              <widget class="QToolButton" name="toolButton_28">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
+             <item row="6" column="0" colspan="2">
+              <widget class="QLabel" name="label_57">
                <property name="text">
-                <string>Prospecto</string>
+                <string>GRUPO ATC:</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="2" colspan="3">
-              <widget class="QToolButton" name="toolButton_29">
-               <property name="minimumSize">
-                <size>
-                 <width>152</width>
-                 <height>0</height>
-                </size>
+             <item row="4" column="7" colspan="3">
+              <widget class="QDateEdit" name="dateEdit_7">
+               <property name="enabled">
+                <bool>false</bool>
                </property>
-               <property name="text">
-                <string>Mostrar Interacciones</string>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 0, 0);</string>
+               </property>
+               <property name="displayFormat">
+                <string>dd/MM/yyyy</string>
                </property>
               </widget>
              </item>
-             <item row="9" column="0" colspan="2">
-              <widget class="QLabel" name="label_61">
+             <item row="0" column="9">
+              <widget class="QLabel" name="label_85">
                <property name="text">
-                <string>Indicaciones:</string>
+                <string>TextLabel</string>
                </property>
               </widget>
              </item>
@@ -1952,39 +2721,6 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
       </layout>
-     </widget>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_36">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;HISTORIAL CLÍNICO&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2">
-    <widget class="QFrame" name="frame_2">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <widget class="QLabel" name="label_6">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>57</width>
-        <height>14</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
      </widget>
     </widget>
    </item>
@@ -2031,7 +2767,14 @@ color: rgb(0, 0, 0);</string>
       </widget>
      </item>
      <item>
-      <widget class="QDateTimeEdit" name="dateTimeEdit"/>
+      <widget class="QDateTimeEdit" name="dateTimeEdit">
+       <property name="displayFormat">
+        <string>dd/MM/yyyy HH:mm</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_3">
@@ -2052,499 +2795,413 @@ color: rgb(0, 0, 0);</string>
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
-    <widget class="QToolBox" name="toolBox">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_36">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;HISTORIAL CLÍNICO&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QFrame" name="frame_2">
      <property name="maximumSize">
       <size>
-       <width>214</width>
+       <width>90</width>
        <height>16777215</height>
       </size>
      </property>
-     <property name="currentIndex">
-      <number>2</number>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <widget class="QWidget" name="page">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>208</width>
-        <height>307</height>
-       </rect>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_44">
+      <property name="leftMargin">
+       <number>4</number>
       </property>
-      <attribute name="label">
-       <string>GENERAL</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Añadir Episodio</string>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>Editar Episodio</string>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_5">
-         <property name="text">
-          <string>Minutar Visita</string>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/tpv.png</normaloff>:/Icons/PNG/tpv.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="page_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>208</width>
-        <height>307</height>
-       </rect>
+      <property name="rightMargin">
+       <number>4</number>
       </property>
-      <attribute name="label">
-       <string>IMAGENES</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="page_9">
-      <attribute name="label">
-       <string>D. ADMINISTRATIVOS</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_36">
-       <item row="0" column="0">
-        <widget class="QFrame" name="frame_12">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>91</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>128</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_24">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_38">
-            <property name="text">
-             <string>Numero S.S.:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit_13">
-            <property name="maximumSize">
-             <size>
-              <width>180</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_39">
-            <property name="text">
-             <string>Mutua:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="comboBox_4">
-            <property name="maximumSize">
-             <size>
-              <width>180</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_40">
-            <property name="text">
-             <string>Num. Filiación:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="lineEdit_14">
-            <property name="maximumSize">
-             <size>
-              <width>180</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="page_10">
-      <attribute name="label">
-       <string>D. ANTROPOMÉTRICOS</string>
-      </attribute>
-      <widget class="QFrame" name="frame_13">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>185</width>
-         <height>156</height>
-        </rect>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>251</width>
-         <height>156</height>
-        </size>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_26">
-        <item row="0" column="0">
-         <layout class="QGridLayout" name="gridLayout_9">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>Talla:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_14">
-            <property name="text">
-             <string>Peso:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>T.A.:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QLineEdit" name="lineEdit_10">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>21</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>60</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>Perimetro Craneal:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="lineEdit_7">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>21</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>60</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QLineEdit" name="lineEdit_4">
-            <property name="minimumSize">
-             <size>
-              <width>60</width>
-              <height>21</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>60</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLineEdit" name="lineEdit_5">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>21</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>60</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="lineEdit_6">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>21</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>60</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_29">
-            <property name="text">
-             <string>I.M.C:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QLineEdit" name="lineEdit_11">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>21</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>60</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="pgeVademecum">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>208</width>
-        <height>307</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>VADEMÉCUM</string>
-      </attribute>
-      <widget class="QPushButton" name="pushButton_11">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>181</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Vademecum </string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_12">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>181</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Naturopatía</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_13">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>70</y>
-         <width>181</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Medicina Tradicional China</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_14">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>100</y>
-         <width>181</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Medicina Ayurveda</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_15">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>130</y>
-         <width>181</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Homeopatía</string>
-       </property>
-      </widget>
-     </widget>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>PACIENTE:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEdit"/>
-     </item>
-     <item>
-      <widget class="QFrame" name="frame">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QRadioButton" name="radioButton">
-          <property name="text">
-           <string>HOMBRE</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="radioButton_2">
-          <property name="text">
-           <string>MUJER</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="0" column="2">
-    <widget class="QPushButton" name="btnCerrar">
-     <property name="text">
-      <string>Cerrar</string>
-     </property>
-     <property name="icon">
-      <iconset resource="terra.qrc">
-       <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_74">
+        <property name="minimumSize">
+         <size>
+          <width>78</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>15</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 192, 192);</string>
+        </property>
+        <property name="text">
+         <string>EPISODIO</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QFrame" name="frame_22">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(197, 205, 255);</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_43">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/PNG/Pills.png</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_67">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/PNG/TestTubes.png</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_68">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/PNG/XRay.png</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_69">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/PNG/usuarios.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_75">
+        <property name="minimumSize">
+         <size>
+          <width>78</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>15</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 192, 192);
+font: 7pt &quot;Sans Serif&quot;;</string>
+        </property>
+        <property name="text">
+         <string>FARMACOLOGÍA</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QFrame" name="frame_23">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(228, 211, 255);</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_42">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_71">
+           <property name="maximumSize">
+            <size>
+             <width>21</width>
+             <height>21</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/GIF/capacidad_conducir.gif</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_73">
+           <property name="maximumSize">
+            <size>
+             <width>21</width>
+             <height>21</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/GIF/fotosensibilidada.gif</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_76">
+           <property name="maximumSize">
+            <size>
+             <width>21</width>
+             <height>21</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Lactancia (permitido)</string>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/GIF/lactancia.gif</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_83">
+           <property name="maximumSize">
+            <size>
+             <width>21</width>
+             <height>21</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/GIF/capacidad_conducir.gif</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_72">
+           <property name="maximumSize">
+            <size>
+             <width>21</width>
+             <height>21</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Lactancia (Precaución</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/GIF/lactancia_indefinido.gif</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="label_81">
+           <property name="maximumSize">
+            <size>
+             <width>21</width>
+             <height>21</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/GIF/lactancia_precaucion.gif</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_82">
+           <property name="maximumSize">
+            <size>
+             <width>21</width>
+             <height>21</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Lactancia (Prohibido)</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/GIF/lactancia_evitar.gif</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLabel" name="label_79">
+           <property name="maximumSize">
+            <size>
+             <width>21</width>
+             <height>21</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/GIF/categoria_B.gif</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_80">
+           <property name="maximumSize">
+            <size>
+             <width>21</width>
+             <height>21</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/GIF/categoria_C.gif</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLabel" name="label_77">
+           <property name="maximumSize">
+            <size>
+             <width>21</width>
+             <height>21</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/GIF/categoria_D.gif</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_78">
+           <property name="maximumSize">
+            <size>
+             <width>21</width>
+             <height>21</height>
+            </size>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/GIF/prohibido_determinados_deportes.gif</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

@@ -59,5 +59,17 @@
         <file>PNG/TestTubes.png</file>
         <file>PNG/importar.png</file>
         <file>jpg/rx.jpg</file>
+        <file>PNG/avisos.png</file>
+        <file>GIF/capacidad_conducir.gif</file>
+        <file>GIF/categoria_D.gif</file>
+        <file>GIF/categoria_indefinido.gif</file>
+        <file>GIF/fotosensibilidada.gif</file>
+        <file>GIF/lactancia_indefinido.gif</file>
+        <file>GIF/lactancia_precaucion.gif</file>
+        <file>GIF/prohibido_determinados_deportes.gif</file>
+        <file>GIF/categoria_C.gif</file>
+        <file>GIF/categoria_B.gif</file>
+        <file>GIF/lactancia.gif</file>
+        <file>GIF/lactancia_evitar.gif</file>
     </qresource>
 </RCC>
