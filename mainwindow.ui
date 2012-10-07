@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>747</height>
+    <height>743</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -54,27 +54,27 @@
          <colorrole role="Button">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
+            <red>31</red>
+            <green>60</green>
+            <blue>117</blue>
            </color>
           </brush>
          </colorrole>
          <colorrole role="Base">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
+            <red>31</red>
+            <green>60</green>
+            <blue>117</blue>
            </color>
           </brush>
          </colorrole>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
+            <red>31</red>
+            <green>60</green>
+            <blue>117</blue>
            </color>
           </brush>
          </colorrole>
@@ -83,27 +83,27 @@
          <colorrole role="Button">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
+            <red>31</red>
+            <green>60</green>
+            <blue>117</blue>
            </color>
           </brush>
          </colorrole>
          <colorrole role="Base">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
+            <red>31</red>
+            <green>60</green>
+            <blue>117</blue>
            </color>
           </brush>
          </colorrole>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
+            <red>31</red>
+            <green>60</green>
+            <blue>117</blue>
            </color>
           </brush>
          </colorrole>
@@ -112,27 +112,27 @@
          <colorrole role="Button">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
+            <red>31</red>
+            <green>60</green>
+            <blue>117</blue>
            </color>
           </brush>
          </colorrole>
          <colorrole role="Base">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
+            <red>31</red>
+            <green>60</green>
+            <blue>117</blue>
            </color>
           </brush>
          </colorrole>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
+            <red>31</red>
+            <green>60</green>
+            <blue>117</blue>
            </color>
           </brush>
          </colorrole>
@@ -140,7 +140,7 @@
        </palette>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(0, 0, 0);</string>
+       <string notr="true">background-color: rgb(31, 60, 117);</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -181,9 +181,9 @@
               <colorrole role="Button">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
@@ -208,18 +208,18 @@
               <colorrole role="Base">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Window">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
@@ -237,9 +237,9 @@
               <colorrole role="Button">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
@@ -264,18 +264,18 @@
               <colorrole role="Base">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Window">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
@@ -293,9 +293,9 @@
               <colorrole role="Button">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
@@ -320,18 +320,18 @@
               <colorrole role="Base">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Window">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
@@ -382,9 +382,9 @@
               <colorrole role="Button">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
@@ -409,18 +409,18 @@
               <colorrole role="Base">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Window">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
@@ -438,9 +438,9 @@
               <colorrole role="Button">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
@@ -465,18 +465,18 @@
               <colorrole role="Base">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Window">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
@@ -494,9 +494,9 @@
               <colorrole role="Button">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
@@ -521,18 +521,18 @@
               <colorrole role="Base">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Window">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
+                 <red>31</red>
+                 <green>60</green>
+                 <blue>117</blue>
                 </color>
                </brush>
               </colorrole>
@@ -780,7 +780,7 @@ border-color: rgba(0, 0, 0, 0);</string>
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <property name="tabsClosable">
           <bool>false</bool>
@@ -790,6 +790,9 @@ border-color: rgba(0, 0, 0, 0);</string>
            <string>Mantenimientos</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_2">
+           <property name="topMargin">
+            <number>5</number>
+           </property>
            <item row="0" column="1">
             <widget class="QToolButton" name="btnProveedores">
              <property name="sizePolicy">
@@ -797,6 +800,12 @@ border-color: rgba(0, 0, 0, 0);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
              </property>
              <property name="text">
               <string>Proveedores</string>
@@ -824,6 +833,12 @@ border-color: rgba(0, 0, 0, 0);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
              <property name="text">
               <string>Artículos</string>
              </property>
@@ -850,6 +865,12 @@ border-color: rgba(0, 0, 0, 0);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
              <property name="text">
               <string>Clientes</string>
              </property>
@@ -870,6 +891,12 @@ border-color: rgba(0, 0, 0, 0);</string>
            </item>
            <item row="0" column="3">
             <widget class="QToolButton" name="toolButton">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
              <property name="text">
               <string>F. Pago</string>
              </property>
@@ -903,6 +930,12 @@ border-color: rgba(0, 0, 0, 0);</string>
            </item>
            <item row="0" column="4">
             <widget class="QToolButton" name="toolButton_2">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
              <property name="text">
               <string>T.Iva</string>
              </property>
@@ -1019,12 +1052,15 @@ border-color: rgba(0, 0, 0, 0);</string>
            <string>Ventas</string>
           </attribute>
           <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="topMargin">
+            <number>3</number>
+           </property>
            <item>
             <widget class="QToolButton" name="btnPresup_clientes">
              <property name="minimumSize">
               <size>
                <width>80</width>
-               <height>0</height>
+               <height>52</height>
               </size>
              </property>
              <property name="text">
@@ -1050,7 +1086,7 @@ border-color: rgba(0, 0, 0, 0);</string>
              <property name="minimumSize">
               <size>
                <width>80</width>
-               <height>0</height>
+               <height>52</height>
               </size>
              </property>
              <property name="text">
@@ -1073,6 +1109,12 @@ border-color: rgba(0, 0, 0, 0);</string>
            </item>
            <item>
             <widget class="QToolButton" name="btnAlbaran_clientes">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>52</height>
+              </size>
+             </property>
              <property name="text">
               <string>Albaranes</string>
              </property>
@@ -1096,7 +1138,7 @@ border-color: rgba(0, 0, 0, 0);</string>
              <property name="minimumSize">
               <size>
                <width>80</width>
-               <height>0</height>
+               <height>52</height>
               </size>
              </property>
              <property name="text">
@@ -1119,6 +1161,12 @@ border-color: rgba(0, 0, 0, 0);</string>
            </item>
            <item>
             <widget class="QToolButton" name="btnAbreCaja">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>52</height>
+              </size>
+             </property>
              <property name="text">
               <string>Abre Caja</string>
              </property>
@@ -1142,7 +1190,7 @@ border-color: rgba(0, 0, 0, 0);</string>
              <property name="minimumSize">
               <size>
                <width>80</width>
-               <height>0</height>
+               <height>52</height>
               </size>
              </property>
              <property name="text">
@@ -1165,6 +1213,12 @@ border-color: rgba(0, 0, 0, 0);</string>
            </item>
            <item>
             <widget class="QToolButton" name="btnCierreCaja">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>52</height>
+              </size>
+             </property>
              <property name="text">
               <string>Cierre Caja</string>
              </property>
@@ -1203,50 +1257,53 @@ border-color: rgba(0, 0, 0, 0);</string>
            <string>Compras</string>
           </attribute>
          </widget>
-         <widget class="QWidget" name="tab">
+         <widget class="QWidget" name="tabadministrador">
           <attribute name="title">
            <string>Administrador</string>
           </attribute>
-          <widget class="QToolButton" name="botEmpresas">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>10</y>
-             <width>71</width>
-             <height>51</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Empresas</string>
-           </property>
-           <property name="icon">
-            <iconset resource="terra.qrc">
-             <normaloff>:/Icons/PNG/configuration.png</normaloff>:/Icons/PNG/configuration.png</iconset>
-           </property>
-           <property name="toolButtonStyle">
-            <enum>Qt::ToolButtonTextUnderIcon</enum>
-           </property>
-          </widget>
-          <widget class="QToolButton" name="botConfiguracion">
-           <property name="geometry">
-            <rect>
-             <x>80</x>
-             <y>10</y>
-             <width>91</width>
-             <height>51</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Configuración</string>
-           </property>
-           <property name="icon">
-            <iconset resource="terra.qrc">
-             <normaloff>:/Icons/PNG/configuration.png</normaloff>:/Icons/PNG/configuration.png</iconset>
-           </property>
-           <property name="toolButtonStyle">
-            <enum>Qt::ToolButtonTextUnderIcon</enum>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QToolButton" name="botEmpresas">
+             <property name="text">
+              <string>Empresas</string>
+             </property>
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/configuration.png</normaloff>:/Icons/PNG/configuration.png</iconset>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextUnderIcon</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="botConfiguracion">
+             <property name="text">
+              <string>Configuración</string>
+             </property>
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/configuration.png</normaloff>:/Icons/PNG/configuration.png</iconset>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextUnderIcon</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </widget>
         </widget>
        </item>

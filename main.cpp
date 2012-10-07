@@ -25,6 +25,7 @@
 #include <QTextCodec>
 #include <QtSql>
 #include <QWindowsStyle>
+#include <QWindowsVistaStyle>
 #include <QStyleFactory>
 
 
@@ -36,7 +37,8 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(linuxCodec);
     QTextCodec::setCodecForCStrings(linuxCodec);
     QTextCodec::setCodecForLocale(linuxCodec);
-    QStyle *style = QStyleFactory::create("oxygen");
+     //QStyle *style = QStyleFactory::create("oxygen");
+    QStyle *style = QStyleFactory::create("plastique");
     QApplication::setStyle(style);
     MainWindow w;
     w.setVisible(true);

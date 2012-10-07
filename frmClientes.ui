@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1047</width>
-    <height>500</height>
+    <height>519</height>
    </rect>
   </property>
   <property name="baseSize">
@@ -732,7 +732,8 @@
         </property>
         <property name="styleSheet">
          <string notr="true">color: rgb(29, 0, 255);
-background-color: rgb(255, 255, 192);</string>
+background-color: rgb(255, 255, 192);
+border-width: 1px</string>
         </property>
        </widget>
       </item>
@@ -1662,6 +1663,9 @@ background-color: rgb(255, 255, 192);</string>
               <width>0</width>
               <height>45</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"> border-radius: 10px;</string>
             </property>
             <property name="text">
              <string>Historial Clínico del Paciente</string>
