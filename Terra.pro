@@ -51,7 +51,8 @@ SOURCES += main.cpp\
     presupuesto.cpp \
     frmmodificarlin_precli.cpp \
     frmcajaminuta.cpp \
-    frmfichapaciente.cpp
+    frmfichapaciente.cpp \
+    frmagenda.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -84,7 +85,8 @@ HEADERS  += mainwindow.h \
     presupuesto.h \
     frmmodificarlin_precli.h \
     frmcajaminuta.h \
-    frmfichapaciente.h
+    frmfichapaciente.h \
+    frmagenda.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -107,7 +109,8 @@ FORMS    += mainwindow.ui \
     frmpresupuestoscli.ui \
     frmmodificarlin_precli.ui \
     frmcajaminuta.ui \
-    frmfichapaciente.ui
+    frmfichapaciente.ui \
+    frmagenda.ui
 
 RESOURCES += \
     terra.qrc

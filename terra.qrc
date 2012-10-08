@@ -71,5 +71,6 @@
         <file>GIF/categoria_B.gif</file>
         <file>GIF/lactancia.gif</file>
         <file>GIF/lactancia_evitar.gif</file>
+        <file>PNG/fondoterra.png</file>
     </qresource>
 </RCC>

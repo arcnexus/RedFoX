@@ -960,6 +960,7 @@ void frmClientes::on_txtrRiesgoPermitido_lostFocus()
 void frmClientes::on_btnFichaPaciente_clicked()
 {
     FrmFichaPaciente *frmPaciente = new FrmFichaPaciente(this);
+    frmPaciente->setWindowModality(Qt::WindowModal);
     frmPaciente->setWindowState(Qt::WindowMaximized);
-    frmPaciente->exec();
+    frmPaciente->show();
 }

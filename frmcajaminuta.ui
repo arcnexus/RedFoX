@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1084</width>
-    <height>576</height>
+    <width>1082</width>
+    <height>610</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,7 +59,7 @@
           <item row="0" column="2" colspan="2">
            <widget class="QPushButton" name="botBuscarCliente">
             <property name="text">
-             <string>Buscar Cliente</string>
+             <string>Buscar Paciente</string>
             </property>
             <property name="icon">
              <iconset resource="terra.qrc">
@@ -363,8 +363,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>591</width>
-          <height>215</height>
+          <width>196</width>
+          <height>64</height>
          </rect>
         </property>
         <attribute name="label">
@@ -406,8 +406,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">

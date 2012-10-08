@@ -28,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     QSqlDatabase dbEmp;
     m_config = new Configuracion();
             QSettings settings("infint", "terra");
@@ -72,8 +71,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // Fin TODO
 
 
-    ui->barraHerramientas->setStyleSheet("background-color: rgb(255, 227, 171);;border-bottom-color: #000000");
-
+    //ui->barraHerramientas->setStyleSheet("background-color: rgb(255, 227, 171);;border-bottom-color: #000000");
+    ui->barraHerramientas->setCurrentIndex(0);
     // Preparo espacio de trabajo para poder acojer ventanas dentro de él
     workspace = new QWorkspace(ui->widget);
     QGridLayout *gridLayout = new QGridLayout;

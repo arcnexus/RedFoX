@@ -26,6 +26,9 @@ private slots:
     void on_pushButton_3_clicked();
     void finishedSlot(QNetworkReply* reply);
 
+
+    void on_btnAgenda_clicked();
+
 private:
     Ui::FrmFichaPaciente *ui;
     QNetworkAccessManager* nam;

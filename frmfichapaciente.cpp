@@ -9,13 +9,15 @@
 #include <QDebug>
 #include <QXmlStreamReader>
 #include <QXmlStreamAttributes>
-# include <QtXml/QtXml>
+#include <QtXml/QtXml>
+#include <frmagenda.h>
 
 FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmFichaPaciente)
 {
     ui->setupUi(this);
+    this->setWindowState(Qt::WindowMaximized);
 }
 
 FrmFichaPaciente::~FrmFichaPaciente()
@@ -85,5 +87,16 @@ void FrmFichaPaciente::finishedSlot(QNetworkReply* reply)
          }
 */
 
+
+}
+
+
+void FrmFichaPaciente::on_btnAgenda_clicked()
+{
+    ui->btnAgenda->setEnabled(false);
+    frmAgenda *Agenda = new frmAgenda(this);
+    Agenda->setWindowState(Qt::WindowMaximized);
+    Agenda->show();
+    ui->btnAgenda->setEnabled(true);
 
 }
