@@ -55,6 +55,8 @@ private slots:
 
     void on_btnCajaMinuta_clicked();
 
+    void on_btnAgenda_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWorkspace *workspace;

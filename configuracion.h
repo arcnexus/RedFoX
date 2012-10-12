@@ -27,6 +27,13 @@ public:
     QString cPasswordBDEmpresa;
     QString cNombreBDEmpresa;
     QString cPuertoBDEmpresa;
+    QString cRutaBdMedica;
+    QString cDriverBDMedica;
+    QString cHostBDMedica;
+    QString cUsuarioBDMedica;
+    QString cPasswordBDMedica;
+    QString cNombreBDMedica;
+    QString cPuertoBDMedica;
     QString cDriverBDTerra;
     QString cHostBDTerra;
     QString cUsuarioBDTerra;

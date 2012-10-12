@@ -21,6 +21,7 @@
 #include "frmpedidos.h"
 #include "frmpresupuestoscli.h"
 #include "frmcajaminuta.h"
+#include "frmagendavisitas.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -72,7 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     //ui->barraHerramientas->setStyleSheet("background-color: rgb(255, 227, 171);;border-bottom-color: #000000");
-    ui->barraHerramientas->setCurrentIndex(0);
+    ui->barraHerramientas->setCurrentIndex(3);
     // Preparo espacio de trabajo para poder acojer ventanas dentro de él
     workspace = new QWorkspace(ui->widget);
     QGridLayout *gridLayout = new QGridLayout;
@@ -107,12 +108,20 @@ MainWindow::MainWindow(QWidget *parent) :
          if (QryEmpresa.exec()) {
                 QryEmpresa.next();
                 QSqlRecord record = QryEmpresa.record();
+                // DBEMpresa
                m_config->cDriverBDEmpresa = record.field("driverBD").value().toString();
                m_config->cHostBDEmpresa = record.field("host").value().toString();
                m_config->cNombreBDEmpresa =record.field("nombreBD").value().toString();
                m_config->cPasswordBDEmpresa =record.field("contrasena").value().toString();
                m_config->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
                m_config->cUsuarioBDEmpresa = record.field("user").value().toString();
+               //DBMedica
+               m_config->cDriverBDMedica = record.field("driverBDMedica").value().toString();
+               m_config->cHostBDMedica = record.field("hostBDMedica").value().toString();
+               m_config->cNombreBDMedica =record.field("nombreBDMedica").value().toString();
+               m_config->cPasswordBDMedica =record.field("contrasenaBDMedica").value().toString();
+               m_config->cRutaBdMedica = record.field("RutaBDMedicaSqLite").value().toString();
+               m_config->cUsuarioBDMedica = record.field("userBDMedica").value().toString();
                m_config->cSerie = record.field("serie").value().toString();
                m_config->nDigitosCuentasContables = record.field("ndigitoscuenta").value().toInt();
                m_config->cCuentaAcreedores = record.field("codigocuentaacreedores").value().toString();
@@ -137,13 +146,25 @@ MainWindow::MainWindow(QWidget *parent) :
                    dbEmpresa.open(m_config->cUsuarioBDEmpresa,m_config->cPasswordBDEmpresa);
 
               }
-              if (dbEmpresa.lastError().isValid())
+               // Abro bdmedica activa
+               QSqlDatabase dbMedica = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"bdMedica");
+               if (m_config->cDriverBDMedica =="QSQLITE") {
+                   dbMedica.setDatabaseName(m_config->cRutaBdMedica);
+                   // qDebug() << "Medica:" << m_config->cRutaBdMedica;
+                    dbMedica.open();
+               } else {
+                   dbMedica.setDatabaseName(m_config->cNombreBDMedica);
+                   dbMedica.setHostName(m_config->cHostBDMedica);
+                   dbMedica.open(m_config->cUsuarioBDMedica,m_config->cPasswordBDMedica);
+
+              }
+              if (dbMedica.lastError().isValid())
                   {
-                      QMessageBox::critical(0, "error:", dbEmpresa.lastError().text());
+                      QMessageBox::critical(0, "error:", dbMedica.lastError().text());
 
                   }
          } else
-             qDebug() <<"Fallo la conexión al fichero de empresas";
+             qDebug() <<"Fallo la conexión al fichero Medico";
 
 
      } else
@@ -260,4 +281,13 @@ void MainWindow::on_btnCajaMinuta_clicked()
     frmCajaMinuta->setWindowState(Qt::WindowMaximized);
     frmCajaMinuta->exec();
     ui->btnCajaMinuta->setEnabled(true);
+}
+
+void MainWindow::on_btnAgenda_clicked()
+{
+    ui->btnAgenda->setEnabled(false);
+    frmAgendaVisitas *frmAgenda1 = new frmAgendaVisitas();
+    frmAgenda1->setWindowState(Qt::WindowMaximized);
+    frmAgenda1->exec();
+    ui->btnAgenda->setEnabled(true);
 }

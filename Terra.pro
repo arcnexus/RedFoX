@@ -9,14 +9,21 @@ QT       += sql
 QT       += network
 QT       += xml
 
+
+
+
 INCLUDEPATH += /Qwt/5.2.1/include
+INCLUDEPATH += /usr/local/Qxt/include/qxt/QxtCore
 DEPENDPATH += /Qwt/5.2.1/lib
 
 
 LIBS += -LC:/Qt/Qwt/5.2.1/lib
-
+LIBS += -L/usr/local/Qxt/lib
 TARGET = Terra
 TEMPLATE = app
+
+ CONFIG  += qxt
+ QXT     += core gui
 
 
 SOURCES += main.cpp\
@@ -52,7 +59,9 @@ SOURCES += main.cpp\
     frmmodificarlin_precli.cpp \
     frmcajaminuta.cpp \
     frmfichapaciente.cpp \
-    frmagenda.cpp
+    frmagenda.cpp \
+    frmagendavisitas.cpp \
+    sqlcalls.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -86,7 +95,9 @@ HEADERS  += mainwindow.h \
     frmmodificarlin_precli.h \
     frmcajaminuta.h \
     frmfichapaciente.h \
-    frmagenda.h
+    frmagenda.h \
+    frmagendavisitas.h \
+    sqlcalls.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -110,7 +121,8 @@ FORMS    += mainwindow.ui \
     frmmodificarlin_precli.ui \
     frmcajaminuta.ui \
     frmfichapaciente.ui \
-    frmagenda.ui
+    frmagenda.ui \
+    frmagendavisitas.ui
 
 RESOURCES += \
     terra.qrc

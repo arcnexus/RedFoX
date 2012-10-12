@@ -8,6 +8,7 @@
 #include <QtNetwork/QNetworkReply>
 #include <QXmlStreamAttribute>
 #include <QXmlStreamReader>
+#include <QtSql>
 
 
 namespace Ui {
@@ -29,11 +30,15 @@ private slots:
 
     void on_btnAgenda_clicked();
 
+
+    void on_tablaEpisodios_clicked(const QModelIndex &index);
+
 private:
     Ui::FrmFichaPaciente *ui;
     QNetworkAccessManager* nam;
     //QXmlStreamReader *xmlReader;
     QXmlStreamAttributes attrib;
+    QSqlQuery paciente;
 };
 
 #endif // FRMFICHAPACIENTE_H

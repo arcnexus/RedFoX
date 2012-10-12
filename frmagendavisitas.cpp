@@ -1,11 +1,11 @@
-#include "frmagenda.h"
-#include "ui_frmagenda.h"
-#include "QxtScheduleView"
+#include "frmagendavisitas.h"
+#include "ui_frmagendavisitas.h"
 #include "QtSql"
+#include "QxtScheduleView"
 
-frmAgenda::frmAgenda(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::frmAgenda)
+frmAgendaVisitas::frmAgendaVisitas(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::frmAgendaVisitas)
 {
     ui->setupUi(this);
     QSqlQueryModel *prueba = new QSqlQueryModel(this);
@@ -19,7 +19,7 @@ frmAgenda::frmAgenda(QWidget *parent) :
 
 }
 
-frmAgenda::~frmAgenda()
+frmAgendaVisitas::~frmAgendaVisitas()
 {
     delete ui;
 }

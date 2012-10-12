@@ -12,6 +12,7 @@ Cliente *oCliente2 = new Cliente();
 ColumnaMoneda *Columna1 = new ColumnaMoneda();
 
 
+
 FrmAlbaran::FrmAlbaran(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmAlbaran)

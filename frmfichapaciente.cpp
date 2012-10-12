@@ -10,7 +10,8 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamAttributes>
 #include <QtXml/QtXml>
-#include <frmagenda.h>
+#include <frmagendavisitas.h>
+#include <sqlcalls.h>
 
 FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     QDialog(parent),
@@ -94,9 +95,17 @@ void FrmFichaPaciente::finishedSlot(QNetworkReply* reply)
 void FrmFichaPaciente::on_btnAgenda_clicked()
 {
     ui->btnAgenda->setEnabled(false);
-    frmAgenda *Agenda = new frmAgenda(this);
+    frmAgendaVisitas *Agenda = new frmAgendaVisitas(this);
     Agenda->setWindowState(Qt::WindowMaximized);
     Agenda->show();
     ui->btnAgenda->setEnabled(true);
 
+}
+
+
+
+void FrmFichaPaciente::on_tablaEpisodios_clicked(const QModelIndex &index)
+{
+    SqlCalls *bd = new SqlCalls();
+    paciente = bd->RecuperarPaciente(1);
 }

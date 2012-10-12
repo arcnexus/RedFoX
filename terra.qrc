@@ -72,5 +72,6 @@
         <file>GIF/lactancia.gif</file>
         <file>GIF/lactancia_evitar.gif</file>
         <file>PNG/fondoterra.png</file>
+        <file>PNG/Calendar2.png</file>
     </qresource>
 </RCC>

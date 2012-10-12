@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>739</height>
+    <height>735</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -774,188 +774,17 @@ background-color: rgb(255, 255, 255);</string>
 border-color: rgba(0, 0, 0, 0);</string>
          </property>
          <property name="tabPosition">
-          <enum>QTabWidget::North</enum>
+          <enum>QTabWidget::South</enum>
          </property>
          <property name="tabShape">
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <property name="tabsClosable">
           <bool>false</bool>
          </property>
-         <widget class="QWidget" name="tabMantenimientos">
-          <attribute name="title">
-           <string>Mantenimientos</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_2">
-           <property name="topMargin">
-            <number>5</number>
-           </property>
-           <item row="0" column="1">
-            <widget class="QToolButton" name="btnProveedores">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Proveedores</string>
-             </property>
-             <property name="icon">
-              <iconset resource="terra.qrc">
-               <normaloff>:/Icons/PNG/proveedores.png</normaloff>:/Icons/PNG/proveedores.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>24</width>
-               <height>24</height>
-              </size>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QToolButton" name="btnArticulos">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>78</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Artículos</string>
-             </property>
-             <property name="icon">
-              <iconset resource="terra.qrc">
-               <normaloff>:/Icons/PNG/articulos.png</normaloff>:/Icons/PNG/articulos.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>24</width>
-               <height>24</height>
-              </size>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QToolButton" name="btnClientes">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>78</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Pacientes</string>
-             </property>
-             <property name="icon">
-              <iconset resource="terra.qrc">
-               <normaloff>:/Icons/PNG/clientes.png</normaloff>:/Icons/PNG/clientes.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>24</width>
-               <height>24</height>
-              </size>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QToolButton" name="toolButton">
-             <property name="minimumSize">
-              <size>
-               <width>78</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>F. Pago</string>
-             </property>
-             <property name="icon">
-              <iconset resource="terra.qrc">
-               <normaloff>:/Icons/PNG/Fp.png</normaloff>:/Icons/PNG/Fp.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>24</width>
-               <height>24</height>
-              </size>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="5">
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="4">
-            <widget class="QToolButton" name="toolButton_2">
-             <property name="minimumSize">
-              <size>
-               <width>78</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>T.Iva</string>
-             </property>
-             <property name="icon">
-              <iconset resource="terra.qrc">
-               <normaloff>:/Icons/PNG/iva3.png</normaloff>:/Icons/PNG/iva3.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>24</width>
-               <height>24</height>
-              </size>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
          <widget class="QWidget" name="tabVentas">
           <property name="palette">
            <palette>
@@ -1249,6 +1078,203 @@ border-color: rgba(0, 0, 0, 0);</string>
               </size>
              </property>
             </spacer>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tabMantenimientos">
+          <attribute name="title">
+           <string>Mantenimientos</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <property name="topMargin">
+            <number>5</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QToolButton" name="btnClientes">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>78</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Pacientes</string>
+             </property>
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/clientes.png</normaloff>:/Icons/PNG/clientes.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextUnderIcon</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QToolButton" name="btnProveedores">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Proveedores</string>
+             </property>
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/proveedores.png</normaloff>:/Icons/PNG/proveedores.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextUnderIcon</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QToolButton" name="btnArticulos">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>78</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Artículos</string>
+             </property>
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/articulos.png</normaloff>:/Icons/PNG/articulos.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextUnderIcon</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QToolButton" name="toolButton">
+             <property name="minimumSize">
+              <size>
+               <width>78</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>F. Pago</string>
+             </property>
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/Fp.png</normaloff>:/Icons/PNG/Fp.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextUnderIcon</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="6">
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="4">
+            <widget class="QToolButton" name="toolButton_2">
+             <property name="minimumSize">
+              <size>
+               <width>78</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>T.Iva</string>
+             </property>
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/iva3.png</normaloff>:/Icons/PNG/iva3.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextUnderIcon</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QToolButton" name="btnAgenda">
+             <property name="minimumSize">
+              <size>
+               <width>78</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Agenda</string>
+             </property>
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/Calendar2.png</normaloff>:/Icons/PNG/Calendar2.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextUnderIcon</enum>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
