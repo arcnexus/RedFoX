@@ -9,6 +9,7 @@ public:
     SqlCalls();
     ~SqlCalls();
     QSqlQuery RecuperarPaciente(int idCliente);
+    int CrearPaciente(int idCliente);
 };
 
 #endif // SQLCALLS_H

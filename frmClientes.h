@@ -85,6 +85,7 @@ private:
     QSqlQueryModel *modelPoblaciones;
     QSqlDatabase dbCliente;
     FrmBuscarPoblacion BuscarPoblacion;
+    QSqlQuery tbpaciente;
 
 
 };

@@ -147,11 +147,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
               }
                // Abro bdmedica activa
-               QSqlDatabase dbMedica = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"bdMedica");
+               QSqlDatabase dbMedica = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"dbmedica");
                if (m_config->cDriverBDMedica =="QSQLITE") {
                    dbMedica.setDatabaseName(m_config->cRutaBdMedica);
                    // qDebug() << "Medica:" << m_config->cRutaBdMedica;
-                    dbMedica.open();
+                    if(!dbMedica.open())
+                        QMessageBox::warning(NULL,tr("ERROR DB"),tr("No se ha podido abrir la BD medica"),
+                                             tr("Aceptar"));
                } else {
                    dbMedica.setDatabaseName(m_config->cNombreBDMedica);
                    dbMedica.setHostName(m_config->cHostBDMedica);

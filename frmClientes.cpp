@@ -15,9 +15,11 @@
 #include "columnafecha.h"
 #include <QSettings>
 #include "frmfichapaciente.h"
+#include <sqlcalls.h>
 
 
 Cliente *oCliente = new Cliente();
+SqlCalls *llamadasSQL = new SqlCalls();
 frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmClientes)
@@ -959,6 +961,18 @@ void frmClientes::on_txtrRiesgoPermitido_lostFocus()
 
 void frmClientes::on_btnFichaPaciente_clicked()
 {
+    int idPaciente;
+    //if not patient record in database, create it now.
+    tbpaciente = llamadasSQL->RecuperarPaciente(oCliente->getId());
+    if(!tbpaciente.next()){
+        int idCliente = oCliente->getId();
+        idPaciente = llamadasSQL->CrearPaciente(idCliente);
+    }
+    if(idPaciente == 0)
+        QMessageBox::warning(NULL,tr("Error Pacientes"),tr("No se puede crear una nueva ficha de pacientes"),
+                             tr("Aceptar"));
+
+    // open patient form
     FrmFichaPaciente *frmPaciente = new FrmFichaPaciente(this);
     frmPaciente->setWindowModality(Qt::WindowModal);
     frmPaciente->setWindowState(Qt::WindowMaximized);

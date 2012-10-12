@@ -61,7 +61,8 @@ SOURCES += main.cpp\
     frmfichapaciente.cpp \
     frmagenda.cpp \
     frmagendavisitas.cpp \
-    sqlcalls.cpp
+    sqlcalls.cpp \
+    paciente.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -97,7 +98,8 @@ HEADERS  += mainwindow.h \
     frmfichapaciente.h \
     frmagenda.h \
     frmagendavisitas.h \
-    sqlcalls.h
+    sqlcalls.h \
+    paciente.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \

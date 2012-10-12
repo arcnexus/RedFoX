@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1334</width>
+    <width>1332</width>
     <height>584</height>
    </rect>
   </property>
@@ -1068,7 +1068,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>468</width>
+               <width>467</width>
                <height>292</height>
               </rect>
              </property>
@@ -2741,7 +2741,7 @@ color: rgb(0, 0, 0);</string>
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="geometry">
