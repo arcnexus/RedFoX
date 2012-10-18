@@ -13,7 +13,7 @@ QT       += xml
 
 
 INCLUDEPATH += /Qwt/5.2.1/include
-INCLUDEPATH += /usr/local/Qxt/include/qxt/QxtCore
+INCLUDEPATH += /usr/local/Qxt/include/QxtCore
 DEPENDPATH += /Qwt/5.2.1/lib
 
 

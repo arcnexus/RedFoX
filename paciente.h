@@ -9,6 +9,10 @@ class Paciente
 public:
     Paciente();
 public slots:
+    // Funciones varias
+
+
+    // Getters
     int getalcohol();
     QString getalergiasConocidas();
     QString getantecedentesFamiliares();
@@ -38,6 +42,7 @@ public slots:
     double gettalla();
     int gettrabaja();
 
+    // setters
     void setalcohol(int alcohol);
     void setalergiasConocidas(QString alergiasConocidas);
     void setantecedentesFamiliares(QString antecedentesFamiliares);
@@ -57,14 +62,14 @@ public slots:
     void setnacimiento(QDate nacimiento);
     void setnivelEstudios(QString nivelEstudios);
     void setnumSS(QString numSS);
-    void setotrasDrogas(Qstring otrasDrogas);
+    void setotrasDrogas(QString otrasDrogas);
     void setperimetroCraneal(double perimetroCraneal);
     void setpeso(double peso);
     void setprofesion(QString profesion);
     void setsexo(QString sexo);
-    void setsistole(QString sistole );
+    void setsistole(double sistole );
     void settabaco(int tabaco);
-    void settalla(QString talla);
+    void settalla(double talla);
     void settrabaja(int trabaja);
 
 private:

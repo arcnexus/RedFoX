@@ -1061,15 +1061,15 @@ font: 7pt &quot;Sans Serif&quot;;</string>
           <item row="0" column="0">
            <widget class="QToolBox" name="toolBox_2">
             <property name="currentIndex">
-             <number>0</number>
+             <number>4</number>
             </property>
             <widget class="QWidget" name="page_3">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>467</width>
-               <height>292</height>
+               <width>459</width>
+               <height>303</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1239,8 +1239,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>354</width>
-               <height>169</height>
+               <width>504</width>
+               <height>303</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1272,7 +1272,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="terra.qrc">
+                   <iconset>
                     <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
                   </property>
                  </widget>
@@ -1376,8 +1376,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>419</width>
-               <height>185</height>
+               <width>459</width>
+               <height>303</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1417,7 +1417,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="terra.qrc">
+                 <iconset>
                   <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
                 </property>
                </widget>
@@ -1502,15 +1502,15 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>248</width>
-               <height>187</height>
+               <width>459</width>
+               <height>303</height>
               </rect>
              </property>
              <attribute name="label">
               <string>Pruebas de Imagen</string>
              </attribute>
-             <layout class="QGridLayout" name="gridLayout_12">
-              <item row="0" column="0">
+             <layout class="QGridLayout" name="gridLayout_11">
+              <item row="0" column="0" rowspan="3">
                <widget class="QLabel" name="label_18">
                 <property name="text">
                  <string/>
@@ -1520,113 +1520,125 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <layout class="QGridLayout" name="gridLayout_11">
-                <item row="0" column="0" colspan="4">
-                 <widget class="QLabel" name="label_17">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(0, 192, 192);</string>
-                  </property>
-                  <property name="text">
-                   <string>REGISTRO DE PRUEBAS DE IMÁGEN</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0" colspan="4">
-                 <widget class="QFrame" name="frame_6">
-                  <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_8">
-                   <item>
-                    <widget class="QRadioButton" name="radioButton_8">
-                     <property name="text">
-                      <string>Vistos</string>
-                     </property>
-                     <property name="checked">
-                      <bool>false</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QRadioButton" name="radioButton_9">
-                     <property name="text">
-                      <string>Pendientes de ver</string>
-                     </property>
-                     <property name="checked">
-                      <bool>false</bool>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item row="2" column="0" colspan="4">
-                 <widget class="QColumnView" name="columnView_2"/>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QToolButton" name="toolButton_8">
-                  <property name="toolTip">
-                   <string>Añadir prueba de imagen</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <widget class="QToolButton" name="toolButton_9">
-                  <property name="toolTip">
-                   <string>Borrar prueba (Requiere contraseña de administrador)</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="2">
-                 <widget class="QToolButton" name="toolButton_10">
-                  <property name="toolTip">
-                   <string>Ver Imagen</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="3">
-                 <widget class="QToolButton" name="toolButton_11">
-                  <property name="toolTip">
-                   <string>Importar Imagen</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/importar.png</normaloff>:/Icons/PNG/importar.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+              <item row="0" column="1" colspan="4">
+               <widget class="QLabel" name="label_17">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(0, 192, 192);</string>
+                </property>
+                <property name="text">
+                 <string>REGISTRO DE PRUEBAS DE IMÁGEN</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" colspan="4">
+               <widget class="QFrame" name="frame_6">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                 <item>
+                  <widget class="QRadioButton" name="radioButton_8">
+                   <property name="text">
+                    <string>Evaluada</string>
+                   </property>
+                   <property name="checked">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="radioButton_9">
+                   <property name="text">
+                    <string>Pendiente</string>
+                   </property>
+                   <property name="checked">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="2" column="1" rowspan="3" colspan="4">
+               <widget class="QColumnView" name="columnView_2"/>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_87">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(0, 192, 192);</string>
+                </property>
+                <property name="text">
+                 <string>COMENTARIOS IMAGEN</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0" rowspan="2">
+               <widget class="QPlainTextEdit" name="plainTextEdit_3"/>
+              </item>
+              <item row="5" column="1">
+               <widget class="QToolButton" name="toolButton_8">
+                <property name="toolTip">
+                 <string>Añadir prueba de imagen</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="2">
+               <widget class="QToolButton" name="toolButton_9">
+                <property name="toolTip">
+                 <string>Borrar prueba (Requiere contraseña de administrador)</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="3">
+               <widget class="QToolButton" name="toolButton_10">
+                <property name="toolTip">
+                 <string>Ver Imagen</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="4">
+               <widget class="QToolButton" name="toolButton_11">
+                <property name="toolTip">
+                 <string>Importar Imagen</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/importar.png</normaloff>:/Icons/PNG/importar.png</iconset>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -1634,9 +1646,9 @@ font: 7pt &quot;Sans Serif&quot;;</string>
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>0</y>
-               <width>378</width>
-               <height>371</height>
+               <y>-5</y>
+               <width>487</width>
+               <height>342</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1744,7 +1756,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="terra.qrc">
+                   <iconset>
                     <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
                   </property>
                  </widget>
@@ -1894,8 +1906,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>301</width>
-               <height>227</height>
+               <width>287</width>
+               <height>210</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1916,7 +1928,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="terra.qrc">
+                   <iconset>
                     <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
                   </property>
                  </widget>
@@ -2748,8 +2760,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>208</width>
-        <height>352</height>
+        <width>204</width>
+        <height>359</height>
        </rect>
       </property>
       <attribute name="label">
@@ -2844,8 +2856,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>208</width>
-        <height>352</height>
+        <width>204</width>
+        <height>359</height>
        </rect>
       </property>
       <attribute name="label">
@@ -2934,8 +2946,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>208</width>
-        <height>352</height>
+        <width>204</width>
+        <height>178</height>
        </rect>
       </property>
       <attribute name="label">
@@ -3033,8 +3045,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>208</width>
-        <height>352</height>
+        <width>204</width>
+        <height>359</height>
        </rect>
       </property>
       <attribute name="label">
@@ -3201,8 +3213,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>208</width>
-        <height>352</height>
+        <width>204</width>
+        <height>359</height>
        </rect>
       </property>
       <attribute name="label">
