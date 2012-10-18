@@ -43,8 +43,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>262</width>
-        <height>336</height>
+        <width>283</width>
+        <height>319</height>
        </rect>
       </property>
       <attribute name="label">
@@ -163,6 +163,13 @@ color: rgb(0, 128, 128);</string>
          </property>
         </widget>
        </item>
+       <item row="7" column="0">
+        <widget class="QPushButton" name="pushButton_4">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="page_2">
@@ -170,8 +177,8 @@ color: rgb(0, 128, 128);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>262</width>
-        <height>241</height>
+        <width>100</width>
+        <height>30</height>
        </rect>
       </property>
       <attribute name="label">
