@@ -510,7 +510,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
       <enum>QTabWidget::West</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab_7">
       <attribute name="title">
@@ -1068,7 +1068,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>334</width>
+               <width>329</width>
                <height>257</height>
               </rect>
              </property>
@@ -1239,7 +1239,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>347</width>
+               <width>340</width>
                <height>156</height>
               </rect>
              </property>
@@ -1502,7 +1502,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>375</width>
+               <width>376</width>
                <height>287</height>
               </rect>
              </property>
@@ -1647,7 +1647,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>487</width>
+               <width>374</width>
                <height>342</height>
               </rect>
              </property>
@@ -2648,13 +2648,6 @@ color: rgb(0, 0, 0);</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="9">
-              <widget class="QLabel" name="label_85">
-               <property name="text">
-                <string>TextLabel</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
@@ -2759,14 +2752,14 @@ color: rgb(0, 0, 0);</string>
       </size>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>161</width>
+        <width>158</width>
         <height>156</height>
        </rect>
       </property>
@@ -2862,7 +2855,7 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>183</width>
+        <width>185</width>
         <height>298</height>
        </rect>
       </property>
@@ -2952,7 +2945,7 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>193</width>
+        <width>199</width>
         <height>99</height>
        </rect>
       </property>
@@ -3051,7 +3044,7 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>204</width>
+        <width>202</width>
         <height>359</height>
        </rect>
       </property>
@@ -3219,8 +3212,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>198</width>
-        <height>248</height>
+        <width>204</width>
+        <height>359</height>
        </rect>
       </property>
       <attribute name="label">
