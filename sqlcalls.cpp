@@ -95,7 +95,7 @@ QSqlQuery SqlCalls::query(const QString &stament,
 
 QSqlQuery SqlCalls::RecuperarPaciente(int idCliente)
 {
-    QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbpacientes"));
+    QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     paciente->prepare(queryPaciente);
 
     paciente->bindValue(":idCliente",idCliente);
