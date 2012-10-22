@@ -93,6 +93,49 @@ QSqlQuery SqlCalls::query(const QString &stament,
     return query;
 }
 
+QSqlQueryModel SqlCalls::queryModel(const QString statment, const QString &connection) const
+{
+    QString cSql = statment;
+    QSqlQueryModel *qModel = new QSqlQueryModel();
+    qModel->setQuery(cSql,QSqlDatabase::database(connection));
+    return &qModel;
+}
+
+
+int SqlCalls::addRec(const QString &statment, const QString &connection)
+{
+    QString cSQL = statment;
+    QSqlQuery *tInsert = new QSqlQuery(QSqlDatabase::database(connection));
+    tInsert->prepare(statment);
+    if (tInsert->exec()) {
+        return tInsert->lastInsertId().toInt();
+    }
+    else {
+        QMessageBox::warning(NULL,QObject::tr("Error"),QObject::tr("Ha ocurrido un fallo al insertar el registro"),
+                   QObject::tr("Aceptar"));
+
+        return NULL;
+    }
+}
+
+int SqlCalls::addRec(const QString &statment, const QStringList &parameters, const QString &connection)
+{
+    QString cSQL = statment;
+    QSqlQuery *tInsert = new QSqlQuery(QSqlDatabase::database(connection));
+    tInsert->prepare(statment);
+    for (int i = 0; i < parameters.count(); i++)
+        tInsert->bindValue(i,parameters.at(i));
+
+    if(!tInsert->exec())
+        qDebug() << tInsert->lastError().text();
+
+    else
+        return tInsert->lastInsertId().toInt();
+
+}
+
+
+
 QSqlQuery SqlCalls::RecuperarPaciente(int idCliente)
 {
     QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));

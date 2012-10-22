@@ -10,10 +10,14 @@ public:
     Paciente();
 public slots:
     // Funciones varias
+    void nuevoEpisodio();
+    Paciente RecuperarPaciente(int idCliente);
 
 
     // Getters
     int getalcohol();
+    bool getalcoholbool();
+    int getnumHistoria();
     QString getalergiasConocidas();
     QString getantecedentesFamiliares();
     QString getcirugiasPrevias();
@@ -29,7 +33,7 @@ public slots:
     int getidCliente();
     int getidMutua();
     double getIMC();
-    QDate getnacimiento();
+    QDateTime getnacimiento();
     QString getnivelEstudios();
     QString getnumSS();
     QString getotrasDrogas();
@@ -39,11 +43,14 @@ public slots:
     QString getsexo();
     double getsistole();
     int gettabaco();
+    bool gettabacobool();
     double gettalla();
     int gettrabaja();
+    bool gettrabajabool();
 
     // setters
     void setalcohol(int alcohol);
+    void setnumHistoria(int numhistoria);
     void setalergiasConocidas(QString alergiasConocidas);
     void setantecedentesFamiliares(QString antecedentesFamiliares);
     void setcirugiasPrevias(QString cirugiasPrevias);
@@ -59,7 +66,7 @@ public slots:
     void setidCliente(int idCliente);
     void setidMutua(int idMutua);
     void setIMC(double IMC);
-    void setnacimiento(QDate nacimiento);
+    void setnacimiento(QDateTime nacimiento);
     void setnivelEstudios(QString nivelEstudios);
     void setnumSS(QString numSS);
     void setotrasDrogas(QString otrasDrogas);
@@ -75,6 +82,7 @@ public slots:
 private:
 
     int alcohol;
+    int numhistoria;
     QString alergiasConocidas;
     QString antecedentesFamiliares;
     QString cirugiasPrevias;
@@ -87,10 +95,10 @@ private:
     int hijos;
     QString historial;
     int id;
-    int idCliente;
+        int idCliente;
     int idMutua;
     double IMC;
-    QDate nacimiento;
+    QDateTime nacimiento;
     QString nivelEstudios;
     QString numSS;
     QString otrasDrogas;

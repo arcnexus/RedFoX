@@ -22,6 +22,7 @@ public:
 
     QStringList connections() const;
 
+    // Generic Querys
     QSqlQuery query(const QString &stament) const;
     QSqlQuery query(const QString &stament,
                     const QString &connection) const;
@@ -29,6 +30,13 @@ public:
                     const QStringList &arguments,
                     const QString &connection) const;
 
+    // Generic QueryModels
+    QSqlQueryModel queryModel(const QString statment,
+                              const QString &connection) const;
+
+    // generic Inserts
+    int addRec(const QString &statment,const QString &connection);
+    int addRec(const QString &statment,const QStringList &parameters,const QString &connection);
     QSqlQuery RecuperarPaciente(int idCliente);
 
     int CrearPaciente(int idCliente);
