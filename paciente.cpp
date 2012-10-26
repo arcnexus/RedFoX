@@ -1,12 +1,83 @@
 #include "paciente.h"
+#include "sqlcalls.h"
+#include <QtSql>
+#include <QSqlRecord>
 
 Paciente::Paciente()
 {
+
+}
+
+void Paciente::nuevoEpisodio()
+{
+    SqlCalls *llamadas = new SqlCalls();
+    QStringList parametros;
+    QString id =QString::number(this->id);
+    parametros.append(id);
+    llamadas->addRec("insert into episodios (idpaciente) values(?)",parametros,"dbmedica");
+
+}
+
+Paciente Paciente::RecuperarPaciente(int idCliente)
+{
+    SqlCalls *llamadas = new SqlCalls();
+    QStringList parametros;
+    parametros.append(QString::number(idCliente));
+    QSqlQuery qpaciente = llamadas->RecuperarPaciente(idCliente);
+    if (qpaciente.next()) {
+        QSqlRecord rPaciente = qpaciente.record();
+
+        Paciente *oPaciente = new Paciente();
+        oPaciente->id = rPaciente.field("id").value().toInt();
+        oPaciente->idCliente = rPaciente.field("idcliente").value().toInt();
+        oPaciente->numhistoria = rPaciente.field("numhistoria").value().toInt();
+        oPaciente->alcohol = rPaciente.field("alcohol").value().toInt();
+        oPaciente->alergiasConocidas = rPaciente.field("alergiasConocidas").value().toString();
+        oPaciente->antecedentesFamiliares = rPaciente.field("antecedentesFamiliares").value().toString();
+        oPaciente->cirugiasPrevias = rPaciente.field("cirugiasPrevias").value().toString();
+        oPaciente->diastole = rPaciente.field("diastole").value().toDouble();
+        oPaciente->enfermedadesConocidas = rPaciente.field("enfermedadesConocidas").value().toString();
+        oPaciente->familia = rPaciente.field("familia").value().toString();
+        oPaciente->fechaAlta = rPaciente.field("fechaAlta").value().toDate();
+        oPaciente->filiacion = rPaciente.field("filiacion").value().toString();
+        oPaciente->habitosDrogas = rPaciente.field("habitosDrogas").value().toString();
+        oPaciente->hijos = rPaciente.field("hijos").value().toInt();
+        oPaciente->historial = rPaciente.field("historial").value().toString();
+        oPaciente->idMutua = rPaciente.field("idMutua").value().toInt();
+        oPaciente->IMC = rPaciente.field("IMC").value().toDouble();
+        oPaciente->nacimiento = rPaciente.field("nacimiento").value().toDateTime();
+        oPaciente->nivelEstudios = rPaciente.field("nivelEstudios").value().toString();
+        oPaciente->numSS = rPaciente.field("numSS").value().toString();
+        oPaciente->otrasDrogas = rPaciente.field("otrasDrogas").value().toString();
+        oPaciente->perimetroCraneal = rPaciente.field("perimetroCraneal").value().toDouble();
+        oPaciente->peso = rPaciente.field("peso").value().toDouble();
+        oPaciente->profesion = rPaciente.field("profesion").value().toString();
+        oPaciente->sexo = rPaciente.field("sexo").value().toString();
+        oPaciente->sistole = rPaciente.field("sistole").value().toDouble();
+        oPaciente->tabaco = rPaciente.field("tabaco").value().toInt();
+        oPaciente->talla = rPaciente.field("talla").value().toDouble();
+        oPaciente->trabaja = rPaciente.field("trabaja").value().toInt();
+
+        return *oPaciente;
+    }
 }
 
 int Paciente::getalcohol()
 {
     return this->alcohol;
+}
+
+bool Paciente::getalcoholbool()
+{
+    if(this->alcohol == 0)
+        return FALSE;
+    else
+        return TRUE;
+}
+
+int Paciente::getnumHistoria()
+{
+    return this->numhistoria;
 }
 
 QString Paciente::getalergiasConocidas()
@@ -86,7 +157,7 @@ double Paciente::getIMC()
 
 }
 
-QDate Paciente::getnacimiento()
+QDateTime Paciente::getnacimiento()
 {
     return this->nacimiento;
 }
@@ -110,7 +181,7 @@ QString Paciente::getotrasDrogas()
 
 double Paciente::getperimetroCraneal()
 {
-    this->perimetroCraneal;
+    return this->perimetroCraneal;
 }
 
 double Paciente::getpeso()
@@ -138,6 +209,15 @@ int Paciente::gettabaco()
     return this->tabaco;
 }
 
+bool Paciente::gettabacobool()
+{
+    if (this->tabaco==1)
+        return TRUE;
+    else
+        return FALSE;
+
+}
+
 double Paciente::gettalla()
 {
     return this->tabaco;
@@ -148,9 +228,22 @@ int Paciente::gettrabaja()
     return this->trabaja;
 }
 
+bool Paciente::gettrabajabool()
+{
+    if(this->trabaja ==1)
+        return TRUE;
+    else
+        return FALSE;
+}
+
 void Paciente::setalcohol(int alcohol)
 {
     this->alcohol = alcohol;
+}
+
+void Paciente::setnumHistoria(int numhistoria)
+{
+    this->numhistoria = numhistoria;
 }
 
 void Paciente::setalergiasConocidas(QString alergiasConocidas)
@@ -228,7 +321,7 @@ void Paciente::setIMC(double IMC)
     this->IMC = IMC;
 }
 
-void Paciente::setnacimiento(QDate nacimiento)
+void Paciente::setnacimiento(QDateTime nacimiento)
 {
     this->nacimiento = nacimiento;
 }

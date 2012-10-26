@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1018</width>
+    <width>1076</width>
     <height>473</height>
    </rect>
   </property>
@@ -318,7 +318,7 @@
             </property>
             <property name="icon">
              <iconset resource="terra.qrc">
-              <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+              <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
             </property>
             <property name="iconSize">
              <size>

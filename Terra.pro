@@ -57,7 +57,6 @@ SOURCES += main.cpp\
     frmmodificarlin_precli.cpp \
     frmcajaminuta.cpp \
     frmfichapaciente.cpp \
-    frmagenda.cpp \
     frmagendavisitas.cpp \
     sqlcalls.cpp \
     paciente.cpp
@@ -94,7 +93,6 @@ HEADERS  += mainwindow.h \
     frmmodificarlin_precli.h \
     frmcajaminuta.h \
     frmfichapaciente.h \
-    frmagenda.h \
     frmagendavisitas.h \
     sqlcalls.h \
     paciente.h
@@ -121,7 +119,6 @@ FORMS    += mainwindow.ui \
     frmmodificarlin_precli.ui \
     frmcajaminuta.ui \
     frmfichapaciente.ui \
-    frmagenda.ui \
     frmagendavisitas.ui
 
 RESOURCES += \

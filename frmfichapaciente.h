@@ -9,6 +9,7 @@
 #include <QXmlStreamAttribute>
 #include <QXmlStreamReader>
 #include <QtSql>
+#include "paciente.h"
 
 
 namespace Ui {
@@ -22,9 +23,9 @@ class FrmFichaPaciente : public QDialog
 public:
     explicit FrmFichaPaciente(QWidget *parent = 0);
     ~FrmFichaPaciente();
+    void cargarDatos(Paciente oPaciente);
     
 private slots:
-    void on_pushButton_3_clicked();
     void finishedSlot(QNetworkReply* reply);
 
 
@@ -32,6 +33,10 @@ private slots:
 
 
     void on_tablaEpisodios_clicked(const QModelIndex &index);
+
+    void on_btnAnadirEpisodio_clicked();
+
+    void on_btnBuscarCIE_clicked();
 
 private:
     Ui::FrmFichaPaciente *ui;
