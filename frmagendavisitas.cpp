@@ -1,7 +1,7 @@
 #include "frmagendavisitas.h"
 #include "ui_frmagendavisitas.h"
 #include "QtSql"
-#include "QxtScheduleView"
+
 
 frmAgendaVisitas::frmAgendaVisitas(QWidget *parent) :
     QDialog(parent),
@@ -10,12 +10,12 @@ frmAgendaVisitas::frmAgendaVisitas(QWidget *parent) :
     ui->setupUi(this);
     QSqlQueryModel *prueba = new QSqlQueryModel(this);
     prueba->setQuery("Select * from agenda",QSqlDatabase::database("empresa"));
-    QxtScheduleView  *Calendar = new QxtScheduleView(this);
+//    QxtScheduleView  *Calendar = new QxtScheduleView(this);
 
-    Calendar->setDateRange(QDate::currentDate(),QDate::currentDate().addDays(2));
-    Calendar->setModel(prueba);
+//    Calendar->setDateRange(QDate::currentDate(),QDate::currentDate().addDays(2));
+//    Calendar->setModel(prueba);
     ;
-    ui->FrameCalendar->layout()->addWidget(Calendar);
+//    ui->FrameCalendar->layout()->addWidget(Calendar);
 
 }
 
