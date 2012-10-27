@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1093</width>
+    <width>1184</width>
     <height>484</height>
    </rect>
   </property>
@@ -240,7 +240,7 @@
          <string>Borrar</string>
         </property>
         <property name="icon">
-         <iconset resource="terra.qrc">
+         <iconset>
           <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
         </property>
         <property name="iconSize">
@@ -263,7 +263,7 @@
          <string>Facturar</string>
         </property>
         <property name="icon">
-         <iconset resource="terra.qrc">
+         <iconset>
           <normaloff>:/Icons/PNG/factura.png</normaloff>:/Icons/PNG/factura.png</iconset>
         </property>
         <property name="iconSize">
@@ -740,7 +740,7 @@
           </property>
           <property name="icon">
            <iconset resource="terra.qrc">
-            <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+            <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
           </property>
           <property name="iconSize">
            <size>
