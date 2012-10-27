@@ -118,8 +118,8 @@ FORMS    += mainwindow.ui \
     frmpresupuestoscli.ui \
     frmmodificarlin_precli.ui \
     frmcajaminuta.ui \
-    frmfichapaciente.ui \
-    frmagendavisitas.ui
+    frmagendavisitas.ui \
+    frmfichapaciente.ui
 
 RESOURCES += \
     terra.qrc

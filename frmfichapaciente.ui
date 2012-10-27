@@ -67,7 +67,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDateTimeEdit" name="txtFechaNacimiento">
+      <widget class="QDateTimeEdit" name="dateTimeEdit">
        <property name="displayFormat">
         <string>dd/MM/yyyy HH:mm</string>
        </property>
@@ -84,7 +84,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtdEdad">
+      <widget class="QLineEdit" name="lineEdit_2">
        <property name="maximumSize">
         <size>
          <width>50</width>
@@ -557,14 +557,14 @@ font: 7pt &quot;Sans Serif&quot;;</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
-              <widget class="QRadioButton" name="radSiTrabaja">
+              <widget class="QRadioButton" name="radioButton_12">
                <property name="text">
                 <string>Sí</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="radNoTrabaja">
+              <widget class="QRadioButton" name="radioButton_13">
                <property name="text">
                 <string>No</string>
                </property>
@@ -588,7 +588,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
            </widget>
           </item>
           <item row="3" column="2" colspan="2">
-           <widget class="QLineEdit" name="txtProfesion">
+           <widget class="QLineEdit" name="lineEdit_12">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -615,14 +615,14 @@ font: 7pt &quot;Sans Serif&quot;;</string>
            </widget>
           </item>
           <item row="1" column="3">
-           <widget class="QSpinBox" name="txthijos">
+           <widget class="QSpinBox" name="spinBox">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
           <item row="0" column="2" colspan="2">
-           <widget class="QPlainTextEdit" name="txtFamilia">
+           <widget class="QPlainTextEdit" name="plainTextEdit">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -681,7 +681,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
         </widget>
        </item>
        <item row="6" column="2">
-        <widget class="QPushButton" name="btnEditarEpisodio">
+        <widget class="QPushButton" name="pushButton_8">
          <property name="text">
           <string>Editar</string>
          </property>
@@ -720,7 +720,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QDateEdit" name="txtFechaAlta">
+           <widget class="QDateEdit" name="dateEdit_4">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -763,24 +763,24 @@ font: 7pt &quot;Sans Serif&quot;;</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_20">
           <item row="0" column="0">
-           <widget class="QCheckBox" name="chkTabaco">
+           <widget class="QCheckBox" name="checkBox">
             <property name="text">
              <string>Tabaco</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1" rowspan="4">
-           <widget class="QPlainTextEdit" name="txtHabitosDrogas"/>
+           <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
           </item>
           <item row="1" column="0">
-           <widget class="QCheckBox" name="chkAlcohol">
+           <widget class="QCheckBox" name="checkBox_2">
             <property name="text">
              <string>Alcohol</string>
             </property>
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QCheckBox" name="chkOtrasdrogas">
+           <widget class="QCheckBox" name="checkBox_3">
             <property name="text">
              <string>Otras Drogas</string>
             </property>
@@ -831,7 +831,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QTextEdit" name="txtAlergiasConocidas">
+           <widget class="QTextEdit" name="textEdit_5">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -841,7 +841,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QTextEdit" name="txtCirugiasPrevias">
+           <widget class="QTextEdit" name="textEdit_6">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -854,7 +854,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
         </widget>
        </item>
        <item row="6" column="3">
-        <widget class="QPushButton" name="btnGuardarEpisodio">
+        <widget class="QPushButton" name="pushButton_6">
          <property name="text">
           <string>Guardar</string>
          </property>
@@ -936,7 +936,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QTextEdit" name="txtAntecedentesFamiliares">
+           <widget class="QTextEdit" name="textEdit_7">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -946,7 +946,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QTextEdit" name="txtEnfermedadesConocidas">
+           <widget class="QTextEdit" name="textEdit_8">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -959,7 +959,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
         </widget>
        </item>
        <item row="6" column="4">
-        <widget class="QPushButton" name="btnDeshacerEpisodio">
+        <widget class="QPushButton" name="pushButton_7">
          <property name="text">
           <string>Deshacer</string>
          </property>
@@ -1014,7 +1014,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QRadioButton" name="radEpisodiosAbiertos">
+           <widget class="QRadioButton" name="radioButton_3">
             <property name="text">
              <string>Abiertos</string>
             </property>
@@ -1024,14 +1024,14 @@ font: 7pt &quot;Sans Serif&quot;;</string>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radEpisodiosCerrados">
+           <widget class="QRadioButton" name="radioButton_4">
             <property name="text">
              <string>Cerrados</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radEpisodiosTodos">
+           <widget class="QRadioButton" name="radioButton_5">
             <property name="text">
              <string>Todos</string>
             </property>
@@ -1061,23 +1061,15 @@ font: 7pt &quot;Sans Serif&quot;;</string>
           <item row="0" column="0">
            <widget class="QToolBox" name="toolBox_2">
             <property name="currentIndex">
-<<<<<<< HEAD
              <number>5</number>
-=======
-<<<<<<< HEAD
-             <number>5</number>
-=======
-             <number>0</number>
->>>>>>> 9929dfb644d9aa523904b23524159f7abd0b048f
->>>>>>> a08d15a00dfaba54bdf7db6d61a32b5ee3c49159
             </property>
             <widget class="QWidget" name="page_3">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>334</width>
-               <height>257</height>
+               <width>339</width>
+               <height>260</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1085,9 +1077,19 @@ font: 7pt &quot;Sans Serif&quot;;</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_39">
               <item row="0" column="0">
-               <widget class="QCheckBox" name="chkEpisodioinvisible">
+               <widget class="QPushButton" name="pushButton_4">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>26</height>
+                 </size>
+                </property>
                 <property name="text">
-                 <string>Episodio inivisible para otros doctores</string>
+                 <string>episodio no visible para otros profesionales</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/cierrecaja.png</normaloff>:/Icons/PNG/cierrecaja.png</iconset>
                 </property>
                </widget>
               </item>
@@ -1114,7 +1116,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QDateEdit" name="txtFechaEpisodio">
+                 <widget class="QDateEdit" name="dateEdit">
                   <property name="displayFormat">
                    <string>dd/MM/yyyy</string>
                   </property>
@@ -1135,7 +1137,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QPushButton" name="btnBuscarCIE">
+                 <widget class="QPushButton" name="pushButton_3">
                   <property name="text">
                    <string/>
                   </property>
@@ -1146,29 +1148,23 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </widget>
                 </item>
                 <item row="0" column="2">
-                 <widget class="QLineEdit" name="txtCie"/>
+                 <widget class="QLineEdit" name="txtCIE"/>
                 </item>
                </layout>
               </item>
               <item row="7" column="0">
-               <widget class="QTextEdit" name="txtHistorial"/>
+               <widget class="QTextEdit" name="txtEpisodio"/>
               </item>
               <item row="8" column="0">
                <layout class="QGridLayout" name="gridLayout_3">
-                <item row="0" column="3">
-                 <widget class="QPushButton" name="btnDeshacerEpisodio_2">
-                  <property name="maximumSize">
-                   <size>
-                    <width>150</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
+                <item row="0" column="0">
+                 <widget class="QPushButton" name="pushButton_17">
                   <property name="text">
-                   <string>Deshacer</string>
+                   <string>Guardar</string>
                   </property>
                   <property name="icon">
                    <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+                    <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1178,8 +1174,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="2">
-                 <widget class="QPushButton" name="btnEditarEpisodio_3">
+                <item row="0" column="1">
+                 <widget class="QPushButton" name="pushButton_16">
                   <property name="maximumSize">
                    <size>
                     <width>150</width>
@@ -1201,31 +1197,20 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="btnGuardarEpisodio_2">
-                  <property name="text">
-                   <string>Guardar</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
-                  </property>
-                  <property name="iconSize">
+                <item row="0" column="2">
+                 <widget class="QPushButton" name="pushButton_18">
+                  <property name="maximumSize">
                    <size>
-                    <width>24</width>
-                    <height>24</height>
+                    <width>150</width>
+                    <height>16777215</height>
                    </size>
                   </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="btnAnadirEpisodio">
                   <property name="text">
-                   <string>Nuevo</string>
+                   <string>Deshacer</string>
                   </property>
                   <property name="icon">
                    <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                    <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1245,7 +1230,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QComboBox" name="cboDoctorTerapeuta"/>
+               <widget class="QComboBox" name="comboBox_5"/>
               </item>
              </layout>
             </widget>
@@ -1254,16 +1239,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-<<<<<<< HEAD
-               <width>347</width>
-=======
-<<<<<<< HEAD
-               <width>347</width>
-=======
-               <width>340</width>
->>>>>>> 9929dfb644d9aa523904b23524159f7abd0b048f
->>>>>>> a08d15a00dfaba54bdf7db6d61a32b5ee3c49159
-               <height>156</height>
+               <width>355</width>
+               <height>159</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1273,7 +1250,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <item row="0" column="0">
                <layout class="QGridLayout" name="gridLayout_6">
                 <item row="2" column="2">
-                 <widget class="QToolButton" name="btnVerenVademecum">
+                 <widget class="QToolButton" name="toolButton_3">
                   <property name="toolTip">
                    <string>Documentación Fármaco</string>
                   </property>
@@ -1287,7 +1264,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </widget>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QToolButton" name="btnBorrarMedicamento">
+                 <widget class="QToolButton" name="toolButton_2">
                   <property name="toolTip">
                    <string>Borrar Farmacología</string>
                   </property>
@@ -1295,13 +1272,13 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+                   <iconset>
+                    <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
                   </property>
                  </widget>
                 </item>
                 <item row="2" column="0">
-                 <widget class="QToolButton" name="btnAnadirMedicamento">
+                 <widget class="QToolButton" name="toolButton">
                   <property name="toolTip">
                    <string>Nuevo fármaco</string>
                   </property>
@@ -1328,7 +1305,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </spacer>
                 </item>
                 <item row="1" column="0" colspan="4">
-                 <widget class="QListWidget" name="listaMedicamentos"/>
+                 <widget class="QListWidget" name="listWidget"/>
                 </item>
                 <item row="0" column="0" colspan="4">
                  <widget class="QLabel" name="label_11">
@@ -1355,7 +1332,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QDateEdit" name="txtInicioTratamiento">
+                 <widget class="QDateEdit" name="dateEdit_2">
                   <property name="displayFormat">
                    <string>dd/MM/yyyy</string>
                   </property>
@@ -1372,7 +1349,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QLineEdit" name="txtPosologia"/>
+                 <widget class="QLineEdit" name="lineEdit_3"/>
                 </item>
                 <item row="2" column="0">
                  <widget class="QLabel" name="label_10">
@@ -1388,7 +1365,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </widget>
                 </item>
                 <item row="3" column="0" colspan="2">
-                 <widget class="QTextEdit" name="txtComentariosMedicacion"/>
+                 <widget class="QTextEdit" name="textEdit"/>
                 </item>
                </layout>
               </item>
@@ -1400,15 +1377,25 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                <x>0</x>
                <y>0</y>
                <width>415</width>
-               <height>170</height>
+               <height>171</height>
               </rect>
              </property>
              <attribute name="label">
               <string>Analítica Episodio</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_8">
+              <item row="2" column="0" colspan="4">
+               <widget class="QColumnView" name="columnView">
+                <property name="minimumSize">
+                 <size>
+                  <width>407</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
               <item row="3" column="0">
-               <widget class="QToolButton" name="btnAnadirAnalisis">
+               <widget class="QToolButton" name="toolButton_4">
                 <property name="toolTip">
                  <string>Añadir tratamiento</string>
                 </property>
@@ -1422,7 +1409,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                </widget>
               </item>
               <item row="3" column="1">
-               <widget class="QToolButton" name="btnBorrarAnalisis">
+               <widget class="QToolButton" name="toolButton_5">
                 <property name="toolTip">
                  <string>Borrar Tratamiento (Requiere contraseña de administrador)</string>
                 </property>
@@ -1430,13 +1417,13 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="terra.qrc">
-                  <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+                 <iconset>
+                  <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
                 </property>
                </widget>
               </item>
               <item row="3" column="2">
-               <widget class="QToolButton" name="btnVerAnalisis">
+               <widget class="QToolButton" name="toolButton_6">
                 <property name="toolTip">
                  <string>Ver Analisis</string>
                 </property>
@@ -1450,7 +1437,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                </widget>
               </item>
               <item row="3" column="3">
-               <widget class="QToolButton" name="btnImportarAnalisis">
+               <widget class="QToolButton" name="toolButton_7">
                 <property name="toolTip">
                  <string>Importar Analisis</string>
                 </property>
@@ -1463,30 +1450,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="4">
-               <spacer name="horizontalSpacer_7">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="2" column="0" colspan="5">
-               <widget class="QColumnView" name="listaAnalisis">
-                <property name="minimumSize">
-                 <size>
-                  <width>407</width>
-                  <height>0</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0" colspan="5">
+              <item row="1" column="0" colspan="4">
                <widget class="QFrame" name="frame_5">
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
@@ -1496,7 +1460,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_19">
                  <item row="0" column="0">
-                  <widget class="QRadioButton" name="radAnaliticaVista">
+                  <widget class="QRadioButton" name="radioButton_6">
                    <property name="text">
                     <string>Vistos</string>
                    </property>
@@ -1506,7 +1470,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                   </widget>
                  </item>
                  <item row="0" column="1">
-                  <widget class="QRadioButton" name="radAnaliticaPendiente">
+                  <widget class="QRadioButton" name="radioButton_7">
                    <property name="text">
                     <string>Pendientes de ver</string>
                    </property>
@@ -1518,7 +1482,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                 </layout>
                </widget>
               </item>
-              <item row="0" column="0" colspan="5">
+              <item row="0" column="0" colspan="4">
                <widget class="QLabel" name="label_12">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(0, 192, 192);</string>
@@ -1538,16 +1502,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-<<<<<<< HEAD
-               <width>375</width>
-=======
-<<<<<<< HEAD
-               <width>375</width>
-=======
-               <width>376</width>
->>>>>>> 9929dfb644d9aa523904b23524159f7abd0b048f
->>>>>>> a08d15a00dfaba54bdf7db6d61a32b5ee3c49159
-               <height>287</height>
+               <width>388</width>
+               <height>288</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1555,7 +1511,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_11">
               <item row="0" column="0" rowspan="3">
-               <widget class="QLabel" name="lblImagenDiagnostico">
+               <widget class="QLabel" name="label_18">
                 <property name="text">
                  <string/>
                 </property>
@@ -1563,6 +1519,54 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  <pixmap resource="terra.qrc">:/Icons/jpg/rx.jpg</pixmap>
                 </property>
                </widget>
+              </item>
+              <item row="0" column="1" colspan="4">
+               <widget class="QLabel" name="label_17">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(0, 192, 192);</string>
+                </property>
+                <property name="text">
+                 <string>REGISTRO DE PRUEBAS DE IMÁGEN</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" colspan="4">
+               <widget class="QFrame" name="frame_6">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                 <item>
+                  <widget class="QRadioButton" name="radioButton_8">
+                   <property name="text">
+                    <string>Evaluada</string>
+                   </property>
+                   <property name="checked">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="radioButton_9">
+                   <property name="text">
+                    <string>Pendiente</string>
+                   </property>
+                   <property name="checked">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="2" column="1" rowspan="3" colspan="4">
+               <widget class="QColumnView" name="columnView_2"/>
               </item>
               <item row="3" column="0">
                <widget class="QLabel" name="label_87">
@@ -1578,10 +1582,10 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                </widget>
               </item>
               <item row="4" column="0" rowspan="2">
-               <widget class="QPlainTextEdit" name="txtComentariosImagen"/>
+               <widget class="QPlainTextEdit" name="plainTextEdit_3"/>
               </item>
               <item row="5" column="1">
-               <widget class="QToolButton" name="btnAnadirImagen">
+               <widget class="QToolButton" name="toolButton_8">
                 <property name="toolTip">
                  <string>Añadir prueba de imagen</string>
                 </property>
@@ -1595,7 +1599,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                </widget>
               </item>
               <item row="5" column="2">
-               <widget class="QToolButton" name="btnBorrarImagen">
+               <widget class="QToolButton" name="toolButton_9">
                 <property name="toolTip">
                  <string>Borrar prueba (Requiere contraseña de administrador)</string>
                 </property>
@@ -1603,13 +1607,13 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="terra.qrc">
-                  <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+                 <iconset>
+                  <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
                 </property>
                </widget>
               </item>
               <item row="5" column="3">
-               <widget class="QToolButton" name="btnVerEditarImagen">
+               <widget class="QToolButton" name="toolButton_10">
                 <property name="toolTip">
                  <string>Ver Imagen</string>
                 </property>
@@ -1623,7 +1627,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                </widget>
               </item>
               <item row="5" column="4">
-               <widget class="QToolButton" name="btnImportarImgen">
+               <widget class="QToolButton" name="toolButton_11">
                 <property name="toolTip">
                  <string>Importar Imagen</string>
                 </property>
@@ -1636,67 +1640,6 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="5">
-               <spacer name="horizontalSpacer_8">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="2" column="1" rowspan="3" colspan="5">
-               <widget class="QColumnView" name="listaImagenes"/>
-              </item>
-              <item row="1" column="1" colspan="5">
-               <widget class="QFrame" name="frame_6">
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_8">
-                 <item>
-                  <widget class="QRadioButton" name="radImagenEvaluada">
-                   <property name="text">
-                    <string>Evaluada</string>
-                   </property>
-                   <property name="checked">
-                    <bool>false</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QRadioButton" name="radImagenPendienteEvaluar">
-                   <property name="text">
-                    <string>Pendiente</string>
-                   </property>
-                   <property name="checked">
-                    <bool>false</bool>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="0" column="1" colspan="5">
-               <widget class="QLabel" name="label_17">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 192, 192);</string>
-                </property>
-                <property name="text">
-                 <string>REGISTRO DE PRUEBAS DE IMÁGEN</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
              </layout>
             </widget>
             <widget class="QWidget" name="page_7">
@@ -1704,15 +1647,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a08d15a00dfaba54bdf7db6d61a32b5ee3c49159
-               <width>487</width>
-=======
-               <width>375</width>
->>>>>>> 9929dfb644d9aa523904b23524159f7abd0b048f
-               <height>342</height>
+               <width>387</width>
+               <height>345</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1786,7 +1722,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_9">
                    <item>
-                    <widget class="QRadioButton" name="radRecibidoInterconsulta">
+                    <widget class="QRadioButton" name="radioButton_10">
                      <property name="text">
                       <string>Recibido</string>
                      </property>
@@ -1796,7 +1732,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QRadioButton" name="radRecibidoPendientesdeRecibir">
+                    <widget class="QRadioButton" name="radioButton_11">
                      <property name="text">
                       <string>Pendientes de recibir</string>
                      </property>
@@ -1809,7 +1745,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </widget>
                 </item>
                 <item row="2" column="0" colspan="4">
-                 <widget class="QColumnView" name="listaInterconsultas"/>
+                 <widget class="QColumnView" name="columnView_3"/>
                 </item>
                 <item row="3" column="1">
                  <widget class="QToolButton" name="toolButton_13">
@@ -1837,7 +1773,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_14">
                  <item row="2" column="3">
-                  <widget class="QToolButton" name="btnbtnAnadirMotivoInterconsulta">
+                  <widget class="QToolButton" name="toolButton_16">
                    <property name="toolTip">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Añadir motivo interconsulta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
@@ -1865,17 +1801,17 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                   </widget>
                  </item>
                  <item row="2" column="1" colspan="2">
-                  <widget class="QComboBox" name="cboMotivoInterconsultaDerivacion"/>
+                  <widget class="QComboBox" name="comboBox"/>
                  </item>
                  <item row="2" column="4">
-                  <widget class="QPushButton" name="btnDocumentosDerivados">
+                  <widget class="QPushButton" name="pushButton_20">
                    <property name="text">
                     <string>Documentos</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="1" colspan="4">
-                  <widget class="QLineEdit" name="txtDerivara"/>
+                  <widget class="QLineEdit" name="lineEdit_8"/>
                  </item>
                 </layout>
                </widget>
@@ -1890,7 +1826,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextEdit" name="txtPeticionInterconsulta"/>
+                 <widget class="QTextEdit" name="textEdit_2"/>
                 </item>
                 <item>
                  <widget class="QLabel" name="label_21">
@@ -1900,7 +1836,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextEdit" name="txtRespuestaInterconsulta"/>
+                 <widget class="QTextEdit" name="textEdit_3"/>
                 </item>
                </layout>
               </item>
@@ -1920,7 +1856,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_45">
                  <item row="1" column="3">
-                  <widget class="QToolButton" name="btnAnadirMotivos">
+                  <widget class="QToolButton" name="toolButton_31">
                    <property name="toolTip">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Añadir motivo interconsulta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
@@ -1941,14 +1877,14 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                   </widget>
                  </item>
                  <item row="1" column="4">
-                  <widget class="QPushButton" name="btnDocumentosReferidos">
+                  <widget class="QPushButton" name="pushButton_19">
                    <property name="text">
                     <string>Documentos</string>
                    </property>
                   </widget>
                  </item>
                  <item row="0" column="1" colspan="4">
-                  <widget class="QLineEdit" name="txtReferidode"/>
+                  <widget class="QLineEdit" name="lineEdit_23"/>
                  </item>
                  <item row="1" column="0">
                   <widget class="QLabel" name="label_84">
@@ -1958,7 +1894,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                   </widget>
                  </item>
                  <item row="1" column="1" colspan="2">
-                  <widget class="QComboBox" name="cboMotivoInterconsulta"/>
+                  <widget class="QComboBox" name="comboBox_2"/>
                  </item>
                 </layout>
                </widget>
@@ -1970,8 +1906,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>504</width>
-               <height>303</height>
+               <width>528</width>
+               <height>295</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1981,10 +1917,10 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <item row="0" column="0">
                <layout class="QGridLayout" name="gridLayout_16">
                 <item row="1" column="0" colspan="3">
-                 <widget class="QColumnView" name="listaAvisos"/>
+                 <widget class="QColumnView" name="columnView_4"/>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QToolButton" name="btnBorrarAviso">
+                 <widget class="QToolButton" name="toolButton_20">
                   <property name="toolTip">
                    <string>Borrar Tratamiento (Requiere contraseña de administrador)</string>
                   </property>
@@ -1992,8 +1928,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+                   <iconset>
+                    <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -2011,7 +1947,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </widget>
                 </item>
                 <item row="2" column="0">
-                 <widget class="QToolButton" name="btnNuevoAviso">
+                 <widget class="QToolButton" name="toolButton_17">
                   <property name="toolTip">
                    <string>Añadir tratamiento</string>
                   </property>
@@ -2029,14 +1965,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               <item row="0" column="1">
                <layout class="QGridLayout" name="gridLayout_17">
                 <item row="0" column="1">
-<<<<<<< HEAD
                  <widget class="QLineEdit" name="lineEdit_9"/>
-<<<<<<< HEAD
-=======
-=======
-                 <widget class="QLineEdit" name="txtMotivoAviso"/>
->>>>>>> 9929dfb644d9aa523904b23524159f7abd0b048f
->>>>>>> a08d15a00dfaba54bdf7db6d61a32b5ee3c49159
                 </item>
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_25">
@@ -2053,116 +1982,26 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                  </widget>
                 </item>
                 <item row="7" column="1">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a08d15a00dfaba54bdf7db6d61a32b5ee3c49159
                  <widget class="QPushButton" name="pushButton_22">
-=======
-                 <widget class="QPushButton" name="btnGuardarAviso">
->>>>>>> 9929dfb644d9aa523904b23524159f7abd0b048f
                   <property name="text">
                    <string>Guardar</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
                   </property>
                  </widget>
                 </item>
                 <item row="8" column="1">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a08d15a00dfaba54bdf7db6d61a32b5ee3c49159
                  <widget class="QPushButton" name="pushButton_23">
-=======
-                 <widget class="QPushButton" name="btnDeshacer">
->>>>>>> 9929dfb644d9aa523904b23524159f7abd0b048f
                   <property name="text">
                    <string>Deshacer</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
                   </property>
                  </widget>
                 </item>
                 <item row="5" column="0" colspan="2">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a08d15a00dfaba54bdf7db6d61a32b5ee3c49159
                  <widget class="QTextEdit" name="textEdit_4"/>
                 </item>
                 <item row="7" column="0" rowspan="2">
                  <widget class="QPushButton" name="pushButton_21">
-=======
-                 <widget class="QTextEdit" name="txtTextodelAviso"/>
-                </item>
-                <item row="7" column="0" rowspan="2">
-                 <widget class="QPushButton" name="btnEditarAviso">
->>>>>>> 9929dfb644d9aa523904b23524159f7abd0b048f
                   <property name="text">
                    <string>Editar</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_88">
-                  <property name="text">
-                   <string>Avisar hasta:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QDateTimeEdit" name="txtAvisarDesde"/>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QDateTimeEdit" name="txtAvisarHasta"/>
-                </item>
-                <item row="3" column="0" colspan="2">
-                 <widget class="QLabel" name="label_27">
-                  <property name="text">
-                   <string>Texto Aviso:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="0" colspan="2">
-                 <widget class="QCheckBox" name="chkAvisoCerrado">
-                  <property name="text">
-                   <string>Aviso cerrado</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_88">
-                  <property name="text">
-                   <string>Avisar hasta:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QDateTimeEdit" name="dateTimeEdit_2"/>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QDateTimeEdit" name="dateTimeEdit_3"/>
-                </item>
-                <item row="3" column="0" colspan="2">
-                 <widget class="QLabel" name="label_27">
-                  <property name="text">
-                   <string>Texto Aviso:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="0" colspan="2">
-                 <widget class="QCheckBox" name="checkBox_4">
-                  <property name="text">
-                   <string>Aviso cerrado</string>
                   </property>
                  </widget>
                 </item>
@@ -2219,7 +2058,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QDateEdit" name="txtInicioTratamiento_2">
+          <widget class="QDateEdit" name="dateEdit_5">
            <property name="displayFormat">
             <string>dd/MM/yyyy</string>
            </property>
@@ -2236,7 +2075,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="txtPosologiaIndicada_2"/>
+          <widget class="QLineEdit" name="lineEdit_15"/>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_47">
@@ -2252,7 +2091,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
           </widget>
          </item>
          <item row="3" column="0" colspan="2">
-          <widget class="QTextEdit" name="txtComentarios"/>
+          <widget class="QTextEdit" name="textEdit_9"/>
          </item>
         </layout>
        </item>
@@ -2272,7 +2111,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
           </spacer>
          </item>
          <item row="1" column="0" colspan="3">
-          <widget class="QListWidget" name="txtListaMedicamentos"/>
+          <widget class="QListWidget" name="listWidget_2"/>
          </item>
          <item row="0" column="0" colspan="3">
           <widget class="QLabel" name="label_48">
@@ -2288,7 +2127,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QToolButton" name="btnVerEnVademecum">
+          <widget class="QToolButton" name="toolButton_18">
            <property name="toolTip">
             <string>Documentación Fármaco</string>
            </property>
@@ -2315,6 +2154,20 @@ font: 7pt &quot;Sans Serif&quot;;</string>
        <string>D. Imagen</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_31">
+       <item row="3" column="0">
+        <widget class="QToolButton" name="toolButton_22">
+         <property name="toolTip">
+          <string>Ver Imagen</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="terra.qrc">
+           <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="0">
         <widget class="QFrame" name="frame_17">
          <property name="frameShape">
@@ -2325,7 +2178,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_10">
           <item>
-           <widget class="QRadioButton" name="radImagenVista">
+           <widget class="QRadioButton" name="radioButton_14">
             <property name="text">
              <string>Vistos</string>
             </property>
@@ -2335,7 +2188,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radImagenPendienteVer">
+           <widget class="QRadioButton" name="radioButton_15">
             <property name="text">
              <string>Pendientes de ver</string>
             </property>
@@ -2361,10 +2214,59 @@ font: 7pt &quot;Sans Serif&quot;;</string>
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QColumnView" name="ListaImagenesGeneral"/>
+        <widget class="QColumnView" name="columnView_5"/>
        </item>
        <item row="4" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <item>
+          <widget class="QToolButton" name="toolButton_19">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton_21">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton_23">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton_24">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton_25">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton_26">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton_27">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <spacer name="horizontalSpacer_5">
            <property name="orientation">
@@ -2379,7 +2281,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="btnguardarImagenGeneral">
+          <widget class="QPushButton" name="pushButton_9">
            <property name="text">
             <string>Guardar</string>
            </property>
@@ -2388,7 +2290,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
         </layout>
        </item>
        <item row="0" column="1" rowspan="3">
-        <widget class="QLabel" name="lblImagenGeneral">
+        <widget class="QLabel" name="label_50">
          <property name="text">
           <string/>
          </property>
@@ -2397,20 +2299,6 @@ font: 7pt &quot;Sans Serif&quot;;</string>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QToolButton" name="btnVerImagenGeneral">
-         <property name="toolTip">
-          <string>Ver Imagen</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
          </property>
         </widget>
        </item>
@@ -2471,9 +2359,6 @@ font: 7pt &quot;Sans Serif&quot;;</string>
                <property name="text">
                 <string>Fecha Baja:</string>
                </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
               </widget>
              </item>
              <item row="9" column="0" colspan="2">
@@ -2484,7 +2369,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
               </widget>
              </item>
              <item row="1" column="2" colspan="7">
-              <widget class="QLineEdit" name="txtDosificacionMedicamento">
+              <widget class="QLineEdit" name="lineEdit_18">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2495,7 +2380,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="6" column="6" colspan="2">
-              <widget class="QRadioButton" name="radComercializadoMedicamento">
+              <widget class="QRadioButton" name="radioButton_18">
                <property name="text">
                 <string>Si</string>
                </property>
@@ -2509,7 +2394,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="5" column="2" colspan="3">
-              <widget class="QLineEdit" name="txtLaboratioMedicamento">
+              <widget class="QLineEdit" name="lineEdit_20">
                <property name="minimumSize">
                 <size>
                  <width>181</width>
@@ -2523,7 +2408,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="4" column="1" colspan="3">
-              <widget class="QDateEdit" name="txtFechaAltaMedicamento">
+              <widget class="QDateEdit" name="dateEdit_6">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2544,7 +2429,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="10" column="2" colspan="3">
-              <widget class="QToolButton" name="btnMostrarIndicacionesMedicamento">
+              <widget class="QToolButton" name="toolButton_29">
                <property name="minimumSize">
                 <size>
                  <width>152</width>
@@ -2590,7 +2475,7 @@ color: rgb(0, 0, 0);</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="txtAltaMedicamento">
+                 <widget class="QRadioButton" name="radioButton_16">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
@@ -2607,7 +2492,7 @@ color: rgb(0, 0, 0);</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="txtBajaMedicamento">
+                 <widget class="QRadioButton" name="radioButton_17">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
@@ -2624,14 +2509,14 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="6" column="8">
-              <widget class="QRadioButton" name="radNoComercializadoMedicamento">
+              <widget class="QRadioButton" name="radioButton_19">
                <property name="text">
                 <string>No</string>
                </property>
               </widget>
              </item>
              <item row="2" column="2" colspan="7">
-              <widget class="QLineEdit" name="txtPaqueteMedicamento">
+              <widget class="QLineEdit" name="lineEdit_19">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2642,7 +2527,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="10" column="5">
-              <widget class="QToolButton" name="btnEquivalenciasInternacionalesMedicamento">
+              <widget class="QToolButton" name="toolButton_30">
                <property name="minimumSize">
                 <size>
                  <width>208</width>
@@ -2669,7 +2554,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="7" column="2" colspan="3">
-              <widget class="QLineEdit" name="txtPAMedicamento">
+              <widget class="QLineEdit" name="lineEdit_22">
                <property name="minimumSize">
                 <size>
                  <width>181</width>
@@ -2683,7 +2568,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="10" column="0">
-              <widget class="QToolButton" name="btnProspectoMedicamento">
+              <widget class="QToolButton" name="toolButton_28">
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -2703,7 +2588,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="0" column="2" colspan="7">
-              <widget class="QLineEdit" name="txtDenominacionMedicamento">
+              <widget class="QLineEdit" name="lineEdit_17">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2721,7 +2606,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="6" column="2" colspan="3">
-              <widget class="QLineEdit" name="txtGrupoATCMedicamento">
+              <widget class="QLineEdit" name="lineEdit_21">
                <property name="minimumSize">
                 <size>
                  <width>181</width>
@@ -2735,7 +2620,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="8" column="2" rowspan="2" colspan="7">
-              <widget class="QTextBrowser" name="txtIndicacionesMedicamento">
+              <widget class="QTextBrowser" name="textBrowser">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 192);
 color: rgb(0, 0, 0);</string>
@@ -2750,7 +2635,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="4" column="7" colspan="3">
-              <widget class="QDateEdit" name="txtFechaBajaMedicamento">
+              <widget class="QDateEdit" name="dateEdit_7">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2760,6 +2645,13 @@ color: rgb(0, 0, 0);</string>
                </property>
                <property name="displayFormat">
                 <string>dd/MM/yyyy</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="9">
+              <widget class="QLabel" name="label_85">
+               <property name="text">
+                <string>TextLabel</string>
                </property>
               </widget>
              </item>
@@ -2779,7 +2671,7 @@ color: rgb(0, 0, 0);</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_35">
           <item row="1" column="0">
-           <widget class="QListView" name="listaMedicamentosGeneral"/>
+           <widget class="QListView" name="listView"/>
           </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_52">
@@ -2828,7 +2720,7 @@ color: rgb(0, 0, 0);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtNombre"/>
+      <widget class="QLineEdit" name="lineEdit"/>
      </item>
      <item>
       <widget class="QFrame" name="frame">
@@ -2840,14 +2732,14 @@ color: rgb(0, 0, 0);</string>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QRadioButton" name="radHombre">
+         <widget class="QRadioButton" name="radioButton">
           <property name="text">
            <string>HOMBRE</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="radMujer">
+         <widget class="QRadioButton" name="radioButton_2">
           <property name="text">
            <string>MUJER</string>
           </property>
@@ -2867,15 +2759,15 @@ color: rgb(0, 0, 0);</string>
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>161</width>
-        <height>156</height>
+        <width>198</width>
+        <height>352</height>
        </rect>
       </property>
       <attribute name="label">
@@ -2883,7 +2775,41 @@ color: rgb(0, 0, 0);</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QPushButton" name="btnMunitarVisita">
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Añadir Episodio</string>
+         </property>
+         <property name="icon">
+          <iconset resource="terra.qrc">
+           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>Editar Episodio</string>
+         </property>
+         <property name="icon">
+          <iconset resource="terra.qrc">
+           <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_5">
          <property name="text">
           <string>Minutar Visita</string>
          </property>
@@ -2936,24 +2862,14 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-<<<<<<< HEAD
-        <width>183</width>
-        <height>298</height>
-=======
-<<<<<<< HEAD
-        <width>183</width>
-        <height>298</height>
-=======
-        <width>187</width>
-        <height>396</height>
->>>>>>> 9929dfb644d9aa523904b23524159f7abd0b048f
->>>>>>> a08d15a00dfaba54bdf7db6d61a32b5ee3c49159
+        <width>198</width>
+        <height>352</height>
        </rect>
       </property>
       <attribute name="label">
        <string>ANTECEDENTES</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_12">
+      <layout class="QGridLayout" name="gridLayout_40">
        <item row="0" column="0">
         <widget class="QLabel" name="label_64">
          <property name="styleSheet">
@@ -2968,7 +2884,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QTextEdit" name="txtAntecedentesBarra">
+        <widget class="QTextEdit" name="textEdit_10">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -2991,7 +2907,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QTextEdit" name="txtEnfermedadesConocidasBarra">
+        <widget class="QTextEdit" name="textEdit_11">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -3001,35 +2917,6 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="label_85">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(0, 192, 192);</string>
-         </property>
-         <property name="text">
-          <string>ALERGIAS CONOCIDAS</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QTextEdit" name="txtAlergiasConocidasBarra">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 250, 189);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
         <widget class="QLabel" name="label_66">
          <property name="maximumSize">
           <size>
@@ -3048,8 +2935,8 @@ color: rgb(0, 0, 0);</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QTextEdit" name="txtCirugiasPreviasBarra">
+       <item row="5" column="0">
+        <widget class="QTextEdit" name="textEdit_12">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -3065,16 +2952,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-<<<<<<< HEAD
-        <width>193</width>
-=======
-<<<<<<< HEAD
-        <width>193</width>
-=======
-        <width>199</width>
->>>>>>> 9929dfb644d9aa523904b23524159f7abd0b048f
->>>>>>> a08d15a00dfaba54bdf7db6d61a32b5ee3c49159
-        <height>99</height>
+        <width>203</width>
+        <height>157</height>
        </rect>
       </property>
       <attribute name="label">
@@ -3110,7 +2989,7 @@ color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="txtNumSS">
+           <widget class="QLineEdit" name="lineEdit_13">
             <property name="maximumSize">
              <size>
               <width>180</width>
@@ -3130,7 +3009,7 @@ color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="cboMutua">
+           <widget class="QComboBox" name="comboBox_4">
             <property name="maximumSize">
              <size>
               <width>180</width>
@@ -3147,7 +3026,7 @@ color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLineEdit" name="txtNumFiliacion">
+           <widget class="QLineEdit" name="lineEdit_14">
             <property name="maximumSize">
              <size>
               <width>180</width>
@@ -3172,8 +3051,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>204</width>
-        <height>359</height>
+        <width>198</width>
+        <height>352</height>
        </rect>
       </property>
       <attribute name="label">
@@ -3219,7 +3098,7 @@ color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item row="2" column="2">
-             <widget class="QLineEdit" name="txtDiastole">
+             <widget class="QLineEdit" name="lineEdit_10">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -3242,7 +3121,7 @@ color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item row="3" column="2">
-             <widget class="QLineEdit" name="TxtPerimetroCraneal">
+             <widget class="QLineEdit" name="lineEdit_7">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -3258,7 +3137,7 @@ color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item row="0" column="2">
-             <widget class="QLineEdit" name="txtTalla">
+             <widget class="QLineEdit" name="lineEdit_4">
               <property name="minimumSize">
                <size>
                 <width>60</width>
@@ -3274,7 +3153,7 @@ color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QLineEdit" name="txtPeso">
+             <widget class="QLineEdit" name="lineEdit_5">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -3290,7 +3169,7 @@ color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLineEdit" name="txtSistole">
+             <widget class="QLineEdit" name="lineEdit_6">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -3313,7 +3192,7 @@ color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item row="4" column="2">
-             <widget class="QLineEdit" name="txtIMC">
+             <widget class="QLineEdit" name="lineEdit_11">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -3340,8 +3219,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>198</width>
-        <height>248</height>
+        <width>200</width>
+        <height>335</height>
        </rect>
       </property>
       <attribute name="label">
@@ -3349,7 +3228,7 @@ color: rgb(0, 0, 0);</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_37">
        <item row="0" column="0">
-        <widget class="QPushButton" name="btnVademecum">
+        <widget class="QPushButton" name="pushButton_11">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -3362,7 +3241,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QPushButton" name="btnMTC">
+        <widget class="QPushButton" name="pushButton_13">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -3375,7 +3254,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QPushButton" name="btnAyuerveda">
+        <widget class="QPushButton" name="pushButton_14">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -3388,7 +3267,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QPushButton" name="btnNaturopatia">
+        <widget class="QPushButton" name="pushButton_12">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -3401,7 +3280,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QPushButton" name="btnHomeopatia">
+        <widget class="QPushButton" name="pushButton_15">
          <property name="minimumSize">
           <size>
            <width>0</width>

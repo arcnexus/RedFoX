@@ -95,10 +95,10 @@ QSqlQuery SqlCalls::query(const QString &stament,
 
 QSqlQueryModel SqlCalls::queryModel(const QString statment, const QString &connection) const
 {
-    QString cSql = statment;
-    QSqlQueryModel *qModel = new QSqlQueryModel();
-    qModel->setQuery(cSql,QSqlDatabase::database(connection));
-    return &qModel;
+//    QString cSql = statment;
+//    QSqlQueryModel *qModel = new QSqlQueryModel();
+//    qModel->setQuery(cSql,QSqlDatabase::database(connection));
+//    return &qModel;
 }
 
 

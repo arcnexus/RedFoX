@@ -24,7 +24,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     this->setWindowState(Qt::WindowMaximized);
     // Rellenar combos
     SqlCalls *llamada = new SqlCalls();
-    ui->cboNivelEstudios->setModel(<QAbstractItemModel> llamada->queryModel("Select * from NivelEstudios ","dbmedica"));
+    //ui->cboNivelEstudios->setModel(<QAbstractItemModel> llamada->queryModel("Select * from NivelEstudios ","dbmedica"));
     delete llamada;
 }
 
@@ -37,43 +37,43 @@ void FrmFichaPaciente::cargarDatos(Paciente oPaciente)
 {
     ui->txtnHistoriaClinica->setText(QString::number(oPaciente.getnumHistoria()));
     bool Alc = oPaciente.getalcoholbool();
-    ui->chkAlcohol->setChecked(Alc);
-    ui->txtAlergiasConocidas->setPlainText(oPaciente.getalergiasConocidas());
-    ui->txtAlergiasConocidasBarra->setPlainText(oPaciente.getalergiasConocidas());
-    ui->txtAntecedentesFamiliares->setPlainText(oPaciente.getantecedentesFamiliares());
-    ui->txtAntecedentesBarra->setPlainText(oPaciente.getantecedentesFamiliares());
-    ui->txtCirugiasPrevias->setPlainText(oPaciente.getcirugiasPrevias());
-    ui->txtCirugiasPreviasBarra->setPlainText(oPaciente.getcirugiasPrevias());
-    ui->txtDiastole->setText(QString::number(oPaciente.getdiastole(),'f',2));
-    ui->txtEnfermedadesConocidas->setPlainText(oPaciente.getenfermedadesConocidas());
-    ui->txtEnfermedadesConocidasBarra->setPlainText(oPaciente.getenfermedadesConocidas());
-    ui->txtFamilia->setPlainText(oPaciente.getfamilia());
-    ui->txtFechaAlta->setDate(oPaciente.getfechaAlta());
-    ui->txtNumFiliacion->setText(oPaciente.getfiliacion());
-    ui->txtHabitosDrogas->setPlainText(oPaciente.gethabitosDrogas());
-    ui->txthijos->setValue(oPaciente.gethijos());
-    ui->txtHistorial->setPlainText(oPaciente.gethistorial());
-    ui->txtIMC->setText(QString::number(oPaciente.getIMC()));
-    ui->txtFechaNacimiento->setDateTime(oPaciente.getnacimiento());
+//    ui->chkAlcohol->setChecked(Alc);
+//    ui->txtAlergiasConocidas->setPlainText(oPaciente.getalergiasConocidas());
+//    ui->txtAlergiasConocidasBarra->setPlainText(oPaciente.getalergiasConocidas());
+//    ui->txtAntecedentesFamiliares->setPlainText(oPaciente.getantecedentesFamiliares());
+//    ui->txtAntecedentesBarra->setPlainText(oPaciente.getantecedentesFamiliares());
+//    ui->txtCirugiasPrevias->setPlainText(oPaciente.getcirugiasPrevias());
+//    ui->txtCirugiasPreviasBarra->setPlainText(oPaciente.getcirugiasPrevias());
+//    ui->txtDiastole->setText(QString::number(oPaciente.getdiastole(),'f',2));
+//    ui->txtEnfermedadesConocidas->setPlainText(oPaciente.getenfermedadesConocidas());
+//    ui->txtEnfermedadesConocidasBarra->setPlainText(oPaciente.getenfermedadesConocidas());
+//    ui->txtFamilia->setPlainText(oPaciente.getfamilia());
+//    ui->txtFechaAlta->setDate(oPaciente.getfechaAlta());
+//    ui->txtNumFiliacion->setText(oPaciente.getfiliacion());
+//    ui->txtHabitosDrogas->setPlainText(oPaciente.gethabitosDrogas());
+//    ui->txthijos->setValue(oPaciente.gethijos());
+//    ui->txtHistorial->setPlainText(oPaciente.gethistorial());
+//    ui->txtIMC->setText(QString::number(oPaciente.getIMC()));
+//    ui->txtFechaNacimiento->setDateTime(oPaciente.getnacimiento());
     int nNivel = ui->cboNivelEstudios->findText(oPaciente.getnivelEstudios());
     if (!nNivel==-1)
         ui->cboNivelEstudios->setCurrentIndex(nNivel);
 
-    ui->txtNumSS->setText(oPaciente.getnumSS());
-    ui->txtHabitosDrogas->setPlainText(oPaciente.gethabitosDrogas());
-    ui->TxtPerimetroCraneal->setText(QString::number(oPaciente.getperimetroCraneal(),'f',2));
-    ui->txtPeso->setText(QString::number(oPaciente.getpeso(),'f',2));
-    ui->txtProfesion->setText(oPaciente.getprofesion());
-    if(oPaciente.getsexo()=="H")
-        ui->radHombre->setChecked(true);
-    else
-        ui->radMujer->setChecked(true);
-    ui->chkTabaco->setChecked(oPaciente.gettabacobool());
-    ui->txtTalla->setText(QString::number(oPaciente.gettalla(),'f',2));
-    if (oPaciente.gettrabajabool())
-        ui->radSiTrabaja->setChecked(true);
-    else
-        ui->radNoTrabaja->setChecked(true);
+//    ui->txtNumSS->setText(oPaciente.getnumSS());
+//    ui->txtHabitosDrogas->setPlainText(oPaciente.gethabitosDrogas());
+//    ui->TxtPerimetroCraneal->setText(QString::number(oPaciente.getperimetroCraneal(),'f',2));
+//    ui->txtPeso->setText(QString::number(oPaciente.getpeso(),'f',2));
+//    ui->txtProfesion->setText(oPaciente.getprofesion());
+//    if(oPaciente.getsexo()=="H")
+//        ui->radHombre->setChecked(true);
+//    else
+//        ui->radMujer->setChecked(true);
+//    ui->chkTabaco->setChecked(oPaciente.gettabacobool());
+//    ui->txtTalla->setText(QString::number(oPaciente.gettalla(),'f',2));
+//    if (oPaciente.gettrabajabool())
+//        ui->radSiTrabaja->setChecked(true);
+//    else
+//        ui->radNoTrabaja->setChecked(true);
 }
 
 
@@ -81,7 +81,7 @@ void FrmFichaPaciente::finishedSlot(QNetworkReply* reply)
 {
  //   qDebug()<<reply->readAll();
      QString data=(QString)reply->readAll();
-     ui->txtHistorial->setPlainText(data);
+//     ui->txtHistorial->setPlainText(data);
 //     QDomDocument medicamento;
 //     QXmlStreamReader xmlReader(data) = new QXmlStreamReader();
 //     while(!xmlReader->atEnd() && !xmlReader->hasError()) {
