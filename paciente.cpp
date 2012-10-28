@@ -2,6 +2,7 @@
 #include "sqlcalls.h"
 #include <QtSql>
 #include <QSqlRecord>
+#include <QMessageBox>
 
 Paciente::Paciente()
 {
@@ -60,6 +61,78 @@ Paciente Paciente::RecuperarPaciente(int idCliente)
 
         return *oPaciente;
     }
+}
+
+void Paciente::GuardarPaciente()
+{
+    QString cSql;
+    cSql = "UPDATE pacientes SET "
+            "idcliente = :idcliente,"
+            "alcohol = :alcohol,"
+            "alergiasConocidas = :alergiasConocidas,"
+            "antecedentesFamiliares = :antecedentesFamiliares,"
+            "cirugiasPrevias =:cirugiasPrevias,"
+            "diastole = :diastole,"
+            "enfermedadesConocidas= :enfermedadesConocidas,"
+            "familia =:familia,"
+            "fechaAlta =:fechaAlta,"
+            "filiacion = :filiacion,"
+            "habitosDrogas = :habitosDrogas,"
+            "hijos = :hijos,"
+            "historial = :historial"
+            "idMutua =:idMutua,"
+            "IMC =:IMC,"
+            "nacimiento =:nacimiento,"
+            "nivelEstudios =:nivelEstudios"
+            "numSS = :numSS"
+            "otrasDrogas = :otrasDrogas,"
+            "perimetroCraneal = perimetroCraneal,"
+            "peso = :peso,"
+            "profesion = :profesion,"
+            "sexo = :sexo,"
+            "sistole= :sistole,"
+            "tabaco = :tabaco,"
+            "talla = :talla,"
+            "trabaja = :trabaja "
+            "WHERE id = :id";
+    QSqlQuery *qPaciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    qPaciente->prepare(cSql);
+    qPaciente->bindValue(":idcliente",this->idCliente);
+    qPaciente->bindValue(":alcohol",this->alcohol);
+    qPaciente->bindValue(":alergiasConocidas",this->alergiasConocidas);
+    qPaciente->bindValue(":antecedentesFamiliares",this->antecedentesFamiliares);
+    qPaciente->bindValue(":cirugiasPrevias",this->cirugiasPrevias);
+    qPaciente->bindValue(":diastole",this->diastole);
+    qPaciente->bindValue(":enfermedadesConocidas",this->enfermedadesConocidas);
+    qPaciente->bindValue(":familia",this->familia);
+    qPaciente->bindValue(":fechaAlta",this->fechaAlta);
+    qPaciente->bindValue(":filiacion",this->filiacion);
+    qPaciente->bindValue(":habitosDrogas",this->habitosDrogas);
+    qPaciente->bindValue(":hijos",this->hijos);
+    qPaciente->bindValue(":historial",this->historial);
+    qPaciente->bindValue(":idMutua", this->idMutua);
+    qPaciente->bindValue(":IMC",this->IMC);
+    qPaciente->bindValue(":nacimiento",this->nacimiento);
+    qPaciente->bindValue(":nivelEstudios",this->nivelEstudios);
+    qPaciente->bindValue(":numSS",this->numSS);
+    qPaciente->bindValue(":otrasDrogas",this->otrasDrogas);
+    qPaciente->bindValue(":perimetroCraneal", this->perimetroCraneal);
+    qPaciente->bindValue(":peso",this->peso);
+    qPaciente->bindValue(":profesion",this->profesion);
+    qPaciente->bindValue(":sexo",this->sexo);
+    qPaciente->bindValue(":sistole",this->sistole);
+    qPaciente->bindValue(":tabaco", this->tabaco);
+    qPaciente->bindValue(":talla",this->talla);
+    qPaciente->bindValue(":trabaja",this->trabaja);
+    qPaciente->bindValue(":id",this->id);
+    if(!qPaciente->exec())
+        QMessageBox::warning(NULL,QObject::tr("ERROR PACIENTE"),QObject::tr("No se ha podido guardar el paciente"),
+                             QObject::tr("Aceptar"));
+    else
+        QMessageBox::information(NULL,QObject::tr("PACIENTE"),QObject::tr("Los datos del paciente han sido guardados"),
+                             QObject::tr("Aceptar"));
+
+
 }
 
 int Paciente::getalcohol()
@@ -220,7 +293,7 @@ bool Paciente::gettabacobool()
 
 double Paciente::gettalla()
 {
-    return this->tabaco;
+    return this->talla;
 }
 
 int Paciente::gettrabaja()

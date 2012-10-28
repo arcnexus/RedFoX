@@ -12,7 +12,7 @@ public slots:
     // Funciones varias
     void nuevoEpisodio();
     Paciente RecuperarPaciente(int idCliente);
-
+    void GuardarPaciente();
 
     // Getters
     int getalcohol();

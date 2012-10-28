@@ -34,6 +34,9 @@ public:
     QSqlQueryModel queryModel(const QString statment,
                               const QString &connection) const;
 
+    QStringList queryList(const QString statment,
+                              const QString &connection) const;
+
     // generic Inserts
     int addRec(const QString &statment,const QString &connection);
     int addRec(const QString &statment,const QStringList &parameters,const QString &connection);

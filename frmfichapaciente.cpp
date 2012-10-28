@@ -24,8 +24,10 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     this->setWindowState(Qt::WindowMaximized);
     // Rellenar combos
     SqlCalls *llamada = new SqlCalls();
-    //ui->cboNivelEstudios->setModel(<QAbstractItemModel> llamada->queryModel("Select * from NivelEstudios ","dbmedica"));
+    QStringList lista = llamada->queryList("Select nivel from nivelestudios","dbmedica");
     delete llamada;
+    ui->cboNivelEstudios->addItems(lista);
+
 }
 
 FrmFichaPaciente::~FrmFichaPaciente()
@@ -35,45 +37,46 @@ FrmFichaPaciente::~FrmFichaPaciente()
 
 void FrmFichaPaciente::cargarDatos(Paciente oPaciente)
 {
-    ui->txtnHistoriaClinica->setText(QString::number(oPaciente.getnumHistoria()));
+    ui->txtNumHistoriaClinica->setText(QString::number(oPaciente.getnumHistoria()));
     bool Alc = oPaciente.getalcoholbool();
-//    ui->chkAlcohol->setChecked(Alc);
-//    ui->txtAlergiasConocidas->setPlainText(oPaciente.getalergiasConocidas());
-//    ui->txtAlergiasConocidasBarra->setPlainText(oPaciente.getalergiasConocidas());
-//    ui->txtAntecedentesFamiliares->setPlainText(oPaciente.getantecedentesFamiliares());
-//    ui->txtAntecedentesBarra->setPlainText(oPaciente.getantecedentesFamiliares());
-//    ui->txtCirugiasPrevias->setPlainText(oPaciente.getcirugiasPrevias());
-//    ui->txtCirugiasPreviasBarra->setPlainText(oPaciente.getcirugiasPrevias());
-//    ui->txtDiastole->setText(QString::number(oPaciente.getdiastole(),'f',2));
-//    ui->txtEnfermedadesConocidas->setPlainText(oPaciente.getenfermedadesConocidas());
-//    ui->txtEnfermedadesConocidasBarra->setPlainText(oPaciente.getenfermedadesConocidas());
-//    ui->txtFamilia->setPlainText(oPaciente.getfamilia());
-//    ui->txtFechaAlta->setDate(oPaciente.getfechaAlta());
-//    ui->txtNumFiliacion->setText(oPaciente.getfiliacion());
-//    ui->txtHabitosDrogas->setPlainText(oPaciente.gethabitosDrogas());
-//    ui->txthijos->setValue(oPaciente.gethijos());
-//    ui->txtHistorial->setPlainText(oPaciente.gethistorial());
-//    ui->txtIMC->setText(QString::number(oPaciente.getIMC()));
-//    ui->txtFechaNacimiento->setDateTime(oPaciente.getnacimiento());
+    ui->chkAlcohol->setChecked(Alc);
+    ui->txtAlergiasConocidas->setPlainText(oPaciente.getalergiasConocidas());
+    ui->txtAlergiasConocidasBarra->setPlainText(oPaciente.getalergiasConocidas());
+    ui->txtAntecedentesFamiliares->setPlainText(oPaciente.getantecedentesFamiliares());
+    ui->txtAntecedentesFamiliaresBarra->setPlainText(oPaciente.getantecedentesFamiliares());
+    ui->txtCirugiasPrevias->setPlainText(oPaciente.getcirugiasPrevias());
+    ui->txtCirugiasPreviasBarra->setPlainText(oPaciente.getcirugiasPrevias());
+    ui->txtDiastole->setText(QString::number(oPaciente.getdiastole(),'f',2));
+    ui->txtSistole->setText(QString::number(oPaciente.getsistole(),'f',2));
+    ui->txtEnfermedadesConocidas->setPlainText(oPaciente.getenfermedadesConocidas());
+    ui->txtEnfermedadesConocidasBarra->setPlainText(oPaciente.getenfermedadesConocidas());
+    ui->txtFamiliaNuclear->setPlainText(oPaciente.getfamilia());
+    ui->txtFechaAlta->setDate(oPaciente.getfechaAlta());
+    ui->txtFiliacion->setText(oPaciente.getfiliacion());
+    ui->txtOtrasDrogas->setPlainText(oPaciente.gethabitosDrogas());
+    ui->txtHijos->setValue(oPaciente.gethijos());
+    ui->txtHistorial->setPlainText(oPaciente.gethistorial());
+    ui->txtIMC->setText(QString::number(oPaciente.getIMC()));
+    ui->txtNacimiento->setDateTime(oPaciente.getnacimiento());
     int nNivel = ui->cboNivelEstudios->findText(oPaciente.getnivelEstudios());
-    if (!nNivel==-1)
+    if (nNivel>-1)
         ui->cboNivelEstudios->setCurrentIndex(nNivel);
 
-//    ui->txtNumSS->setText(oPaciente.getnumSS());
-//    ui->txtHabitosDrogas->setPlainText(oPaciente.gethabitosDrogas());
-//    ui->TxtPerimetroCraneal->setText(QString::number(oPaciente.getperimetroCraneal(),'f',2));
-//    ui->txtPeso->setText(QString::number(oPaciente.getpeso(),'f',2));
-//    ui->txtProfesion->setText(oPaciente.getprofesion());
-//    if(oPaciente.getsexo()=="H")
-//        ui->radHombre->setChecked(true);
-//    else
-//        ui->radMujer->setChecked(true);
-//    ui->chkTabaco->setChecked(oPaciente.gettabacobool());
-//    ui->txtTalla->setText(QString::number(oPaciente.gettalla(),'f',2));
-//    if (oPaciente.gettrabajabool())
-//        ui->radSiTrabaja->setChecked(true);
-//    else
-//        ui->radNoTrabaja->setChecked(true);
+    ui->txtNumeroSS->setText(oPaciente.getnumSS());
+    ui->txtOtrasDrogas->setPlainText(oPaciente.gethabitosDrogas());
+    ui->txtPermietroCraneal->setText(QString::number(oPaciente.getperimetroCraneal(),'f',2));
+    ui->txtPeso->setText(QString::number(oPaciente.getpeso(),'f',2));
+    ui->txtProfesion->setText(oPaciente.getprofesion());
+    if(oPaciente.getsexo()=="H")
+        ui->radHombre->setChecked(true);
+    else
+        ui->radMujer->setChecked(true);
+    ui->chkTabaco->setChecked(oPaciente.gettabacobool());
+    ui->txtTalla->setText(QString::number(oPaciente.gettalla(),'f',2));
+    if (oPaciente.gettrabajabool())
+        ui->radTrabaja->setChecked(true);
+    else
+        ui->radNoTrabaja->setChecked(true);
 }
 
 
@@ -146,7 +149,7 @@ void FrmFichaPaciente::on_btnAgenda_clicked()
 void FrmFichaPaciente::on_tablaEpisodios_clicked(const QModelIndex &index)
 {
     SqlCalls *bd = new SqlCalls();
-    paciente = bd->RecuperarPaciente(1);
+    paciente = bd->RecuperarPaciente(oPaciente->getid());
 }
 
 void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
@@ -161,4 +164,101 @@ void FrmFichaPaciente::on_btnBuscarCIE_clicked()
             this, SLOT(finishedSlot(QNetworkReply*)));
 
     manager->get(QNetworkRequest(QUrl("http://demo.vademecumdata.es/vweb/xml/ws_drug/SearchByName?value=frenadol")));
+}
+
+void FrmFichaPaciente::BloquearCamposPaciente()
+{
+    ui->BtnDeshacerPaciente->setEnabled(false);
+    ui->btnGuardarPaciente->setEnabled(false);
+    ui->btnEditarPaciente->setEnabled(true);
+    ui->chkAlcohol->setEnabled(false);
+    ui->chkTabaco->setEnabled(false);
+    ui->chkOtrasDrogas->setEnabled(false);
+    ui->txtOtrasDrogas->setEnabled(false);
+    ui->txtNacimiento->setEnabled(false);
+    ui->txtFechaAlta->setEnabled(false);
+    ui->txtFamiliaNuclear->setEnabled(false);
+    ui->txtAlergiasConocidas->setEnabled(false);
+    ui->txtAntecedentesFamiliares->setEnabled(false);
+    ui->txtCirugiasPrevias->setEnabled(false);
+    ui->txtDiastole->setEnabled(false);
+    ui->txtEnfermedadesConocidas->setEnabled(false);
+    ui->txtFiliacion->setEnabled(false);
+    ui->txtHijos->setEnabled(false);
+    ui->txtIMC->setEnabled(false);
+    ui->txtCirugiasPrevias->setEnabled(false);
+    ui->txtMutua->setEnabled(false);
+    ui->txtNumeroSS->setEnabled(false);
+    ui->txtPermietroCraneal->setEnabled(false);
+    ui->txtPeso->setEnabled(false);
+    ui->txtProfesion->setEnabled(false);
+    ui->txtSistole->setEnabled(false);
+    ui->txtTalla->setEnabled(false);
+    ui->cboNivelEstudios->setEnabled(false);
+    ui->radHombre->setEnabled(false);
+    ui->radMujer->setEnabled(false);
+    ui->radTrabaja->setEnabled(false);
+    ui->radNoTrabaja->setEnabled(false);
+
+
+
+}
+
+
+void FrmFichaPaciente::DesbloquearCamposPaciente()
+{
+    ui->BtnDeshacerPaciente->setEnabled(true);
+    ui->btnGuardarPaciente->setEnabled(true);
+    ui->btnEditarPaciente->setEnabled(false);
+    ui->chkAlcohol->setEnabled(true);
+    ui->chkTabaco->setEnabled(true);
+    ui->chkOtrasDrogas->setEnabled(true);
+    ui->txtOtrasDrogas->setEnabled(true);
+    ui->txtNacimiento->setEnabled(true);
+    ui->txtFechaAlta->setEnabled(true);
+    ui->txtFamiliaNuclear->setEnabled(true);
+    ui->txtAlergiasConocidas->setEnabled(true);
+    ui->txtAntecedentesFamiliares->setEnabled(true);
+    ui->txtCirugiasPrevias->setEnabled(true);
+    ui->txtDiastole->setEnabled(true);
+    ui->txtEnfermedadesConocidas->setEnabled(true);
+    ui->txtFiliacion->setEnabled(true);
+    ui->txtHijos->setEnabled(true);
+    ui->txtIMC->setEnabled(true);
+    ui->txtCirugiasPrevias->setEnabled(true);
+    ui->txtMutua->setEnabled(true);
+    ui->txtNumeroSS->setEnabled(true);
+    ui->txtPermietroCraneal->setEnabled(true);
+    ui->txtPeso->setEnabled(true);
+    ui->txtProfesion->setEnabled(true);
+    ui->txtSistole->setEnabled(true);
+    ui->txtTalla->setEnabled(true);
+    ui->cboNivelEstudios->setEnabled(true);
+    ui->radHombre->setEnabled(true);
+    ui->radMujer->setEnabled(true);
+    ui->radTrabaja->setEnabled(true);
+    ui->radNoTrabaja->setEnabled(true);
+}
+
+
+void FrmFichaPaciente::BloquearCamposEpisodio()
+{
+}
+
+void FrmFichaPaciente::DesbloquearCamposEpisodio()
+{
+}
+
+void FrmFichaPaciente::on_btnEditarPaciente_clicked()
+{
+    DesbloquearCamposPaciente();
+    ui->txtFamiliaNuclear->setFocus();
+}
+
+void FrmFichaPaciente::on_btnGuardarPaciente_clicked()
+{
+    BloquearCamposPaciente();
+    oPaciente->GuardarPaciente();
+
+
 }

@@ -98,7 +98,16 @@ QSqlQueryModel SqlCalls::queryModel(const QString statment, const QString &conne
 //    QString cSql = statment;
 //    QSqlQueryModel *qModel = new QSqlQueryModel();
 //    qModel->setQuery(cSql,QSqlDatabase::database(connection));
-//    return &qModel;
+    //    return &qModel;
+}
+
+QStringList SqlCalls::queryList(const QString statment, const QString &connection) const
+{
+    QSqlQuery *query = new QSqlQuery(statment,QSqlDatabase::database(connection));
+    QStringList lista;
+    while (query->next())
+        lista.append(query->value(0).toString());
+    return lista;
 }
 
 

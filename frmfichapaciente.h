@@ -38,12 +38,21 @@ private slots:
 
     void on_btnBuscarCIE_clicked();
 
+    void on_btnEditarPaciente_clicked();
+
+
+    void on_btnGuardarPaciente_clicked();
+
 private:
     Ui::FrmFichaPaciente *ui;
     QNetworkAccessManager* nam;
     //QXmlStreamReader *xmlReader;
     QXmlStreamAttributes attrib;
     QSqlQuery paciente;
+    void BloquearCamposPaciente();
+    void DesbloquearCamposPaciente();
+    void BloquearCamposEpisodio();
+    void DesbloquearCamposEpisodio();
 };
 
 #endif // FRMFICHAPACIENTE_H
