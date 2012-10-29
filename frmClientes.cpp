@@ -965,16 +965,17 @@ void frmClientes::on_btnFichaPaciente_clicked()
     int idPaciente;
     //if not patient record in database, create it now.
     Paciente oPaciente;
-    oPaciente= oPaciente.RecuperarPaciente(oCliente->getId());
+    oPaciente.RecuperarPaciente(oCliente->getId());
     if(oPaciente.getid()==0){
         int idCliente = oCliente->getId();
         idPaciente = llamadasSQL->CrearPaciente(idCliente);
-        oPaciente = oPaciente.RecuperarPaciente(idPaciente);
+        if (idPaciente!=0)
+            oPaciente.RecuperarPaciente(idCliente);
     }
     // open patient form
     FrmFichaPaciente *frmPaciente = new FrmFichaPaciente(this);
     frmPaciente->setWindowModality(Qt::WindowModal);
     frmPaciente->setWindowState(Qt::WindowMaximized);
-    frmPaciente->cargarDatos(oPaciente);
+    frmPaciente->cargarDatos(oCliente->getId());
     frmPaciente->show();
 }

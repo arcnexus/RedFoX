@@ -35,48 +35,95 @@ FrmFichaPaciente::~FrmFichaPaciente()
     delete ui;
 }
 
-void FrmFichaPaciente::cargarDatos(Paciente oPaciente)
+void FrmFichaPaciente::cargarDatos(int idcliente)
 {
-    ui->txtNumHistoriaClinica->setText(QString::number(oPaciente.getnumHistoria()));
-    bool Alc = oPaciente.getalcoholbool();
+    oPaciente->RecuperarPaciente(idcliente);
+    ui->txtNumHistoriaClinica->setText(QString::number(oPaciente->getnumHistoria()));
+    bool Alc = oPaciente->getalcoholbool();
     ui->chkAlcohol->setChecked(Alc);
-    ui->txtAlergiasConocidas->setPlainText(oPaciente.getalergiasConocidas());
-    ui->txtAlergiasConocidasBarra->setPlainText(oPaciente.getalergiasConocidas());
-    ui->txtAntecedentesFamiliares->setPlainText(oPaciente.getantecedentesFamiliares());
-    ui->txtAntecedentesFamiliaresBarra->setPlainText(oPaciente.getantecedentesFamiliares());
-    ui->txtCirugiasPrevias->setPlainText(oPaciente.getcirugiasPrevias());
-    ui->txtCirugiasPreviasBarra->setPlainText(oPaciente.getcirugiasPrevias());
-    ui->txtDiastole->setText(QString::number(oPaciente.getdiastole(),'f',2));
-    ui->txtSistole->setText(QString::number(oPaciente.getsistole(),'f',2));
-    ui->txtEnfermedadesConocidas->setPlainText(oPaciente.getenfermedadesConocidas());
-    ui->txtEnfermedadesConocidasBarra->setPlainText(oPaciente.getenfermedadesConocidas());
-    ui->txtFamiliaNuclear->setPlainText(oPaciente.getfamilia());
-    ui->txtFechaAlta->setDate(oPaciente.getfechaAlta());
-    ui->txtFiliacion->setText(oPaciente.getfiliacion());
-    ui->txtOtrasDrogas->setPlainText(oPaciente.gethabitosDrogas());
-    ui->txtHijos->setValue(oPaciente.gethijos());
-    ui->txtHistorial->setPlainText(oPaciente.gethistorial());
-    ui->txtIMC->setText(QString::number(oPaciente.getIMC()));
-    ui->txtNacimiento->setDateTime(oPaciente.getnacimiento());
-    int nNivel = ui->cboNivelEstudios->findText(oPaciente.getnivelEstudios());
+    ui->txtAlergiasConocidas->setPlainText(oPaciente->getalergiasConocidas());
+    ui->txtAlergiasConocidasBarra->setPlainText(oPaciente->getalergiasConocidas());
+    ui->txtAntecedentesFamiliares->setPlainText(oPaciente->getantecedentesFamiliares());
+    ui->txtAntecedentesFamiliaresBarra->setPlainText(oPaciente->getantecedentesFamiliares());
+    ui->txtCirugiasPrevias->setPlainText(oPaciente->getcirugiasPrevias());
+    ui->txtCirugiasPreviasBarra->setPlainText(oPaciente->getcirugiasPrevias());
+    ui->txtDiastole->setText(QString::number(oPaciente->getdiastole(),'f',2));
+    ui->txtSistole->setText(QString::number(oPaciente->getsistole(),'f',2));
+    ui->txtEnfermedadesConocidas->setPlainText(oPaciente->getenfermedadesConocidas());
+    ui->txtEnfermedadesConocidasBarra->setPlainText(oPaciente->getenfermedadesConocidas());
+    ui->txtFamiliaNuclear->setPlainText(oPaciente->getfamilia());
+    ui->txtFechaAlta->setDate(oPaciente->getfechaAlta());
+    ui->txtFiliacion->setText(oPaciente->getfiliacion());
+;
+    ui->txtHijos->setValue(oPaciente->gethijos());
+    ui->txtHistorial->setPlainText(oPaciente->gethistorial());
+    ui->txtIMC->setText(QString::number(oPaciente->getIMC()));
+    ui->txtNacimiento->setDateTime(oPaciente->getnacimiento());
+    int nNivel = ui->cboNivelEstudios->findText(oPaciente->getnivelEstudios());
     if (nNivel>-1)
         ui->cboNivelEstudios->setCurrentIndex(nNivel);
 
-    ui->txtNumeroSS->setText(oPaciente.getnumSS());
-    ui->txtOtrasDrogas->setPlainText(oPaciente.gethabitosDrogas());
-    ui->txtPermietroCraneal->setText(QString::number(oPaciente.getperimetroCraneal(),'f',2));
-    ui->txtPeso->setText(QString::number(oPaciente.getpeso(),'f',2));
-    ui->txtProfesion->setText(oPaciente.getprofesion());
-    if(oPaciente.getsexo()=="H")
+    ui->txtNumeroSS->setText(oPaciente->getnumSS());
+    ui->txtOtrasDrogas->setPlainText(oPaciente->gethabitosDrogas());
+    ui->txtPermietroCraneal->setText(QString::number(oPaciente->getperimetroCraneal(),'f',2));
+    ui->txtPeso->setText(QString::number(oPaciente->getpeso(),'f',2));
+    ui->txtProfesion->setText(oPaciente->getprofesion());
+    if(oPaciente->getsexo()=="H")
         ui->radHombre->setChecked(true);
     else
         ui->radMujer->setChecked(true);
-    ui->chkTabaco->setChecked(oPaciente.gettabacobool());
-    ui->txtTalla->setText(QString::number(oPaciente.gettalla(),'f',2));
-    if (oPaciente.gettrabajabool())
+    ui->chkTabaco->setChecked(oPaciente->gettabacobool());
+    ui->chkOtrasDrogas->setChecked(oPaciente->getotrasDrogasbool());
+    ui->txtTalla->setText(QString::number(oPaciente->gettalla(),'f',2));
+    if (oPaciente->gettrabajabool())
         ui->radTrabaja->setChecked(true);
     else
         ui->radNoTrabaja->setChecked(true);
+}
+
+void FrmFichaPaciente::guardarDatosPaciente()
+{
+    oPaciente->setnumHistoria(ui->txtNumHistoriaClinica->text().toInt());
+    if(ui->chkAlcohol->isChecked())
+        oPaciente->setalcohol(1);
+    else
+        oPaciente->setalcohol(0);
+    oPaciente->setalergiasConocidas(ui->txtAlergiasConocidas->toPlainText());
+    oPaciente->setantecedentesFamiliares(ui->txtAntecedentesFamiliares->toPlainText());
+    oPaciente->setcirugiasPrevias(ui->txtCirugiasPrevias->toPlainText());
+    oPaciente->setdiastole(ui->txtDiastole->text().toDouble());
+    oPaciente->setsistole(ui->txtSistole->text().toDouble());
+    oPaciente->setenfermedadesConocidas(ui->txtEnfermedadesConocidas->toPlainText());
+    oPaciente->setfamilia(ui->txtFamiliaNuclear->toPlainText());
+    oPaciente->setfechaAlta(ui->txtFechaAlta->date());
+    oPaciente->setfiliacion(ui->txtFiliacion->text());
+    oPaciente->sethabitosDrogas(ui->txtOtrasDrogas->toPlainText());
+    oPaciente->sethijos(ui->txtHijos->text().toInt());
+    oPaciente->sethistorial(ui->txtHistorial->toPlainText());
+    oPaciente->setIMC(ui->txtIMC->text().toDouble());
+    oPaciente->setnacimiento(ui->txtNacimiento->dateTime());
+    oPaciente->setnivelEstudios(ui->cboNivelEstudios->currentText());
+    oPaciente->setnumSS(ui->txtNumeroSS->text());
+    oPaciente->setperimetroCraneal(ui->txtPermietroCraneal->text().toDouble());
+    oPaciente->setpeso(ui->txtPeso->text().toDouble());
+    oPaciente->setprofesion(ui->txtProfesion->text());
+    if(ui->radHombre->isChecked())
+        oPaciente->setsexo("H");
+    else
+        oPaciente->setsexo("M");
+    if(ui->chkTabaco->isChecked())
+        oPaciente->settabaco(1);
+    else
+        oPaciente->settabaco(0);
+    oPaciente->settalla(ui->txtTalla->text().toDouble());
+    if (ui->radTrabaja->isChecked())
+        oPaciente->settrabaja(1);
+    else
+        oPaciente->settrabaja(0);
+    if (ui->chkOtrasDrogas->isChecked())
+            oPaciente->setotrasDrogas(1);
+    else
+            oPaciente->setotrasDrogas(0);
 }
 
 
@@ -258,6 +305,7 @@ void FrmFichaPaciente::on_btnEditarPaciente_clicked()
 void FrmFichaPaciente::on_btnGuardarPaciente_clicked()
 {
     BloquearCamposPaciente();
+    guardarDatosPaciente();
     oPaciente->GuardarPaciente();
 
 

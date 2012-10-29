@@ -11,7 +11,7 @@ public:
 public slots:
     // Funciones varias
     void nuevoEpisodio();
-    Paciente RecuperarPaciente(int idCliente);
+    void RecuperarPaciente(int idCliente);
     void GuardarPaciente();
 
     // Getters
@@ -37,6 +37,7 @@ public slots:
     QString getnivelEstudios();
     QString getnumSS();
     QString getotrasDrogas();
+    bool getotrasDrogasbool();
     double getperimetroCraneal();
     double getpeso();
     QString getprofesion();
@@ -69,7 +70,7 @@ public slots:
     void setnacimiento(QDateTime nacimiento);
     void setnivelEstudios(QString nivelEstudios);
     void setnumSS(QString numSS);
-    void setotrasDrogas(QString otrasDrogas);
+    void setotrasDrogas(int otrasDrogas);
     void setperimetroCraneal(double perimetroCraneal);
     void setpeso(double peso);
     void setprofesion(QString profesion);

@@ -23,7 +23,8 @@ class FrmFichaPaciente : public QDialog
 public:
     explicit FrmFichaPaciente(QWidget *parent = 0);
     ~FrmFichaPaciente();
-    void cargarDatos(Paciente oPaciente);
+    void cargarDatos(int idcliente);
+    void guardarDatosPaciente();
     
 private slots:
     void finishedSlot(QNetworkReply* reply);

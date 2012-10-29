@@ -3,6 +3,7 @@
 #include <QtSql>
 #include <QSqlRecord>
 #include <QMessageBox>
+#include <QDebug>
 
 Paciente::Paciente()
 {
@@ -19,49 +20,62 @@ void Paciente::nuevoEpisodio()
 
 }
 
-Paciente Paciente::RecuperarPaciente(int idCliente)
+void Paciente::RecuperarPaciente(int idCliente)
 {
-    SqlCalls *llamadas = new SqlCalls();
-    QStringList parametros;
-    parametros.append(QString::number(idCliente));
-    QSqlQuery qpaciente = llamadas->RecuperarPaciente(idCliente);
-    if (qpaciente.next()) {
-        QSqlRecord rPaciente = qpaciente.record();
+//    SqlCalls *llamadas = new SqlCalls();
+//    QStringList parametros;
+//    parametros.append(QString::number(idCliente));
+//    QSqlQuery qpaciente = llamadas->RecuperarPaciente(idCliente);
+//    if (qpaciente.next()) {
+//        QSqlRecord rPaciente = qpaciente.record();
 
-        Paciente *oPaciente = new Paciente();
-        oPaciente->id = rPaciente.field("id").value().toInt();
-        oPaciente->idCliente = rPaciente.field("idcliente").value().toInt();
-        oPaciente->numhistoria = rPaciente.field("numhistoria").value().toInt();
-        oPaciente->alcohol = rPaciente.field("alcohol").value().toInt();
-        oPaciente->alergiasConocidas = rPaciente.field("alergiasConocidas").value().toString();
-        oPaciente->antecedentesFamiliares = rPaciente.field("antecedentesFamiliares").value().toString();
-        oPaciente->cirugiasPrevias = rPaciente.field("cirugiasPrevias").value().toString();
-        oPaciente->diastole = rPaciente.field("diastole").value().toDouble();
-        oPaciente->enfermedadesConocidas = rPaciente.field("enfermedadesConocidas").value().toString();
-        oPaciente->familia = rPaciente.field("familia").value().toString();
-        oPaciente->fechaAlta = rPaciente.field("fechaAlta").value().toDate();
-        oPaciente->filiacion = rPaciente.field("filiacion").value().toString();
-        oPaciente->habitosDrogas = rPaciente.field("habitosDrogas").value().toString();
-        oPaciente->hijos = rPaciente.field("hijos").value().toInt();
-        oPaciente->historial = rPaciente.field("historial").value().toString();
-        oPaciente->idMutua = rPaciente.field("idMutua").value().toInt();
-        oPaciente->IMC = rPaciente.field("IMC").value().toDouble();
-        oPaciente->nacimiento = rPaciente.field("nacimiento").value().toDateTime();
-        oPaciente->nivelEstudios = rPaciente.field("nivelEstudios").value().toString();
-        oPaciente->numSS = rPaciente.field("numSS").value().toString();
-        oPaciente->otrasDrogas = rPaciente.field("otrasDrogas").value().toString();
-        oPaciente->perimetroCraneal = rPaciente.field("perimetroCraneal").value().toDouble();
-        oPaciente->peso = rPaciente.field("peso").value().toDouble();
-        oPaciente->profesion = rPaciente.field("profesion").value().toString();
-        oPaciente->sexo = rPaciente.field("sexo").value().toString();
-        oPaciente->sistole = rPaciente.field("sistole").value().toDouble();
-        oPaciente->tabaco = rPaciente.field("tabaco").value().toInt();
-        oPaciente->talla = rPaciente.field("talla").value().toDouble();
-        oPaciente->trabaja = rPaciente.field("trabaja").value().toInt();
+//        Paciente *oPaciente = new Paciente();
+        QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+        QString queryPaciente = "select * from pacientes where idcliente = :idcliente";
+        paciente->prepare(queryPaciente);
 
-        return *oPaciente;
-    }
+        paciente->bindValue(":idcliente",idCliente);
+        if (paciente->exec()) {
+            paciente->next();
+            QSqlRecord rPaciente = paciente->record();
+            this->id = rPaciente.field("id").value().toInt();
+            this->idCliente = rPaciente.field("idcliente").value().toInt();
+            this->numhistoria = rPaciente.field("numhistoria").value().toInt();
+            this->alcohol = rPaciente.field("alcohol").value().toInt();
+            this->alergiasConocidas = rPaciente.field("alergiasConocidas").value().toString();
+            this->antecedentesFamiliares = rPaciente.field("antecedentesFamiliares").value().toString();
+            this->cirugiasPrevias = rPaciente.field("cirugiasPrevias").value().toString();
+            this->diastole = rPaciente.field("diastole").value().toDouble();
+            this->enfermedadesConocidas = rPaciente.field("enfermedadesConocidas").value().toString();
+            this->familia = rPaciente.field("familia").value().toString();
+            this->fechaAlta = rPaciente.field("fechaAlta").value().toDate();
+            this->filiacion = rPaciente.field("filiacion").value().toString();
+            this->habitosDrogas = rPaciente.field("habitosDrogas").value().toString();
+            this->hijos = rPaciente.field("hijos").value().toInt();
+            this->historial = rPaciente.field("historial").value().toString();
+            this->idMutua = rPaciente.field("idMutua").value().toInt();
+            this->IMC = rPaciente.field("IMC").value().toDouble();
+            this->nacimiento = rPaciente.field("nacimiento").value().toDateTime();
+            this->nivelEstudios = rPaciente.field("nivelEstudios").value().toString();
+            this->numSS = rPaciente.field("numSS").value().toString();
+            this->otrasDrogas = rPaciente.field("otrasDrogas").value().toInt();
+            this->perimetroCraneal = rPaciente.field("perimetroCraneal").value().toDouble();
+            this->peso = rPaciente.field("peso").value().toDouble();
+            this->profesion = rPaciente.field("profesion").value().toString();
+            this->sexo = rPaciente.field("sexo").value().toString();
+            this->sistole = rPaciente.field("sistole").value().toDouble();
+            this->tabaco = rPaciente.field("tabaco").value().toInt();
+            this->talla = rPaciente.field("talla").value().toDouble();
+            this->trabaja = rPaciente.field("trabaja").value().toInt();
+          }
+
+        else {
+            QMessageBox::warning(NULL,QObject::tr("Error Pacientes"),
+                                 QObject::tr("No se puede recuperar el paciente"),
+                                 QObject::tr("Aceptar"));
+        }
 }
+
 
 void Paciente::GuardarPaciente()
 {
@@ -79,22 +93,22 @@ void Paciente::GuardarPaciente()
             "filiacion = :filiacion,"
             "habitosDrogas = :habitosDrogas,"
             "hijos = :hijos,"
-            "historial = :historial"
+            "historial = :historial,"
             "idMutua =:idMutua,"
             "IMC =:IMC,"
             "nacimiento =:nacimiento,"
-            "nivelEstudios =:nivelEstudios"
-            "numSS = :numSS"
+            "nivelEstudios =:nivelEstudios,"
+            "numSS = :numSS,"
             "otrasDrogas = :otrasDrogas,"
-            "perimetroCraneal = perimetroCraneal,"
+            "perimetroCraneal = :perimetroCraneal,"
             "peso = :peso,"
             "profesion = :profesion,"
             "sexo = :sexo,"
             "sistole= :sistole,"
             "tabaco = :tabaco,"
             "talla = :talla,"
-            "trabaja = :trabaja "
-            "WHERE id = :id";
+            "trabaja = :trabaja"
+            " WHERE id = :id";
     QSqlQuery *qPaciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     qPaciente->prepare(cSql);
     qPaciente->bindValue(":idcliente",this->idCliente);
@@ -125,13 +139,17 @@ void Paciente::GuardarPaciente()
     qPaciente->bindValue(":talla",this->talla);
     qPaciente->bindValue(":trabaja",this->trabaja);
     qPaciente->bindValue(":id",this->id);
-    if(!qPaciente->exec())
+    if(!qPaciente->exec()) {
+        qDebug() << cSql;
+        qDebug() <<qPaciente->lastQuery();
+        qDebug()  << qPaciente->lastError().text();
         QMessageBox::warning(NULL,QObject::tr("ERROR PACIENTE"),QObject::tr("No se ha podido guardar el paciente"),
                              QObject::tr("Aceptar"));
-    else
+    }
+    else {
         QMessageBox::information(NULL,QObject::tr("PACIENTE"),QObject::tr("Los datos del paciente han sido guardados"),
                              QObject::tr("Aceptar"));
-
+    }
 
 }
 
@@ -250,6 +268,14 @@ QString Paciente::getotrasDrogas()
     return this->otrasDrogas;
 
 
+}
+
+bool Paciente::getotrasDrogasbool()
+{
+    if (this->otrasDrogas == 0)
+        return false;
+    else
+        return true;
 }
 
 double Paciente::getperimetroCraneal()
@@ -409,7 +435,7 @@ void Paciente::setnumSS(QString numSS)
     this->numSS = numSS;
 }
 
-void Paciente::setotrasDrogas(QString otrasDrogas)
+void Paciente::setotrasDrogas(int otrasDrogas)
 {
     this->otrasDrogas = otrasDrogas;
 
