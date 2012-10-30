@@ -32,9 +32,6 @@ private slots:
 
     void on_btnAgenda_clicked();
 
-
-    void on_tablaEpisodios_clicked(const QModelIndex &index);
-
     void on_btnAnadirEpisodio_clicked();
 
     void on_btnBuscarCIE_clicked();

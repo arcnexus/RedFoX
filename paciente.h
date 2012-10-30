@@ -3,14 +3,18 @@
 #include <QtSql>
 #include <QString>
 #include <QDate>
+#include "episodio.h"
+
 
 class Paciente
 {
 public:
     Paciente();
+    QSqlQuery *qepisodio;
 public slots:
     // Funciones varias
-    void nuevoEpisodio();
+    int nuevoEpisodio();
+    Episodio recuperarEpisodio(int nIdEpisodio);
     void RecuperarPaciente(int idCliente);
     void GuardarPaciente();
 
@@ -36,7 +40,7 @@ public slots:
     QDateTime getnacimiento();
     QString getnivelEstudios();
     QString getnumSS();
-    QString getotrasDrogas();
+    int getotrasDrogas();
     bool getotrasDrogasbool();
     double getperimetroCraneal();
     double getpeso();
@@ -102,7 +106,7 @@ private:
     QDateTime nacimiento;
     QString nivelEstudios;
     QString numSS;
-    QString otrasDrogas;
+    int otrasDrogas;
     double perimetroCraneal;
     double peso;
     QString profesion;

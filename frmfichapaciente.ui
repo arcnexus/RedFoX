@@ -525,7 +525,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
       <enum>QTabWidget::West</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_7">
       <attribute name="title">
@@ -3009,7 +3009,7 @@ color: rgb(0, 0, 0);</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-51</y>
+        <y>0</y>
         <width>197</width>
         <height>400</height>
        </rect>
@@ -3134,7 +3134,7 @@ color: rgb(0, 0, 0);</string>
         <x>0</x>
         <y>0</y>
         <width>203</width>
-        <height>344</height>
+        <height>162</height>
        </rect>
       </property>
       <attribute name="label">
@@ -3251,7 +3251,7 @@ color: rgb(0, 0, 0);</string>
         <x>0</x>
         <y>0</y>
         <width>198</width>
-        <height>361</height>
+        <height>178</height>
        </rect>
       </property>
       <attribute name="label">

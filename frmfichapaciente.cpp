@@ -12,7 +12,8 @@
 #include <QtXml/QtXml>
 #include <frmagendavisitas.h>
 #include <sqlcalls.h>
-#include <paciente.h>
+#include "paciente.h"
+#include "episodio.h"
 
 Paciente *oPaciente = new Paciente();
 
@@ -192,16 +193,12 @@ void FrmFichaPaciente::on_btnAgenda_clicked()
 }
 
 
-
-void FrmFichaPaciente::on_tablaEpisodios_clicked(const QModelIndex &index)
-{
-    SqlCalls *bd = new SqlCalls();
-    paciente = bd->RecuperarPaciente(oPaciente->getid());
-}
-
 void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
 {
-   oPaciente->nuevoEpisodio();
+   int nIdEpisodio = oPaciente->nuevoEpisodio();
+   Episodio *oEpisodio = new Episodio();
+   *oEpisodio = oPaciente->recuperarEpisodio(nIdEpisodio);
+  ui->txtCIE->setText(oEpisodio->getCIE());
 }
 
 void FrmFichaPaciente::on_btnBuscarCIE_clicked()
