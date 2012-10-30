@@ -16,6 +16,7 @@
 #include "episodio.h"
 
 Paciente *oPaciente = new Paciente();
+Episodio *oEpisodio = new Episodio();
 
 FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     QDialog(parent),
@@ -25,9 +26,12 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     this->setWindowState(Qt::WindowMaximized);
     // Rellenar combos
     SqlCalls *llamada = new SqlCalls();
-    QStringList lista = llamada->queryList("Select nivel from nivelestudios","dbmedica");
+    QStringList listaEstudios = llamada->queryList("Select nivel from nivelestudios","dbmedica");
+    QStringList listaDoctores = llamada->queryList("Select doctor from doctores ","dbmedica");
     delete llamada;
-    ui->cboNivelEstudios->addItems(lista);
+    ui->cboNivelEstudios->addItems(listaEstudios);
+    ui->cboDoctorEpisodio->addItems(listaDoctores);
+
 
 }
 
@@ -80,6 +84,11 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
         ui->radTrabaja->setChecked(true);
     else
         ui->radNoTrabaja->setChecked(true);
+    // cargar datos Episodios
+    QSqlQueryModel *EpisodiosModelo = new QSqlQueryModel(this);
+    EpisodiosModelo->setQuery("Select descripcion from episodios where idpaciente = "+QString::number(oPaciente->getid()),QSqlDatabase::database("dbmedica"));
+    ui->listaEpisodios->setModel(EpisodiosModelo);
+
 }
 
 void FrmFichaPaciente::guardarDatosPaciente()
@@ -195,10 +204,9 @@ void FrmFichaPaciente::on_btnAgenda_clicked()
 
 void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
 {
-   int nIdEpisodio = oPaciente->nuevoEpisodio();
-   Episodio *oEpisodio = new Episodio();
-   *oEpisodio = oPaciente->recuperarEpisodio(nIdEpisodio);
-  ui->txtCIE->setText(oEpisodio->getCIE());
+   int idEpisodio = oEpisodio->NuevoEpisodio(oPaciente->getid());
+   oEpisodio->RecuperarEpisodio(idEpisodio);
+
 }
 
 void FrmFichaPaciente::on_btnBuscarCIE_clicked()
@@ -304,6 +312,4 @@ void FrmFichaPaciente::on_btnGuardarPaciente_clicked()
     BloquearCamposPaciente();
     guardarDatosPaciente();
     oPaciente->GuardarPaciente();
-
-
 }

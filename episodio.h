@@ -9,7 +9,7 @@ class Episodio
 public:
     Episodio();
     int NuevoEpisodio(int idPaciente);
-    QSqlQuery RecuperarEpisodio(int idEpisodio);
+    void RecuperarEpisodio(int idEpisodio);
     int getid();
     int getidPaciente();
     int getcerrado();

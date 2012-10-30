@@ -13,8 +13,6 @@ public:
     QSqlQuery *qepisodio;
 public slots:
     // Funciones varias
-    int nuevoEpisodio();
-    Episodio recuperarEpisodio(int nIdEpisodio);
     void RecuperarPaciente(int idCliente);
     void GuardarPaciente();
 

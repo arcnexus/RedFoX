@@ -10,7 +10,7 @@
 #include <QXmlStreamReader>
 #include <QtSql>
 #include "paciente.h"
-
+#include "episodio.h"
 
 namespace Ui {
 class FrmFichaPaciente;

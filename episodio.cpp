@@ -16,15 +16,27 @@ int Episodio::NuevoEpisodio(int idPaciente)
 
 }
 
-QSqlQuery Episodio::RecuperarEpisodio(int idEpisodio)
+void Episodio::RecuperarEpisodio(int idEpisodio)
 {
     SqlCalls *llamadas = new SqlCalls();
     QStringList parametros;
     parametros.append(QString::number(idEpisodio));
     QSqlQuery qEpisodio = llamadas->query("select * from episodios where id =?",parametros,"dbmedica");
-    if (qEpisodio.next())
+    if (qEpisodio.next()) {
+        QSqlRecord rEpisodio = qEpisodio.record();
+        this->setid(rEpisodio.field("id").value().toInt());
+        this->setidPaciente(rEpisodio.field("idpaciente").value().toInt());
+        this->setcerrado(rEpisodio.field("cerrado").value().toInt());
+        this->setCIE(rEpisodio.field("cie").value().toString());
+        this->setdescripcion(rEpisodio.field("descripcion").value().toString());
+        this->setdoctor(rEpisodio.field("doctor").value().toString());
+        this->setfecha(rEpisodio.field("fecha").value().toDate());
+        this->sethistorial(rEpisodio.field("historial").value().toString());
+        this->setprivado(rEpisodio.field("privado").value().toInt());
 
-        return qEpisodio;
+    }
+
+
 
 }
 

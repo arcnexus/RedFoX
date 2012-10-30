@@ -10,37 +10,6 @@ Paciente::Paciente()
 {
 
 }
-int Paciente::nuevoEpisodio()
-{
-    Episodio *oEpisodio = new Episodio();
-    int idEpisodio = oEpisodio->NuevoEpisodio(this->id);
-    return idEpisodio;
-}
-
-Episodio Paciente::recuperarEpisodio(int nIdEpisodio)
-{
-    QStringList args;
-    args.append(QString::number(nIdEpisodio));
-    SqlCalls *llamadas = new SqlCalls();
-    *qepisodio = llamadas->query("select * from episodios where id= ?",args,"dbmedica");
-    if(qepisodio->next()) {
-        QSqlRecord rEpisodio = qepisodio->record();
-        Episodio *oEpisodio = new Episodio();
-        oEpisodio->setid(rEpisodio.field("id").value().toInt());
-        oEpisodio->setidPaciente(rEpisodio.field("idpaciente").value().toInt());
-        oEpisodio->setcerrado(rEpisodio.field("cerrado").value().toInt());
-        oEpisodio->setCIE(rEpisodio.field("cie").value().toString());
-        oEpisodio->setdescripcion(rEpisodio.field("descripcion").value().toString());
-        oEpisodio->setdoctor(rEpisodio.field("doctor").value().toString());
-        oEpisodio->setfecha(rEpisodio.field("fecha").value().toDate());
-        oEpisodio->sethistorial(rEpisodio.field("historial").value().toString());
-        oEpisodio->setprivado(rEpisodio.field("privado").value().toInt());
-        return *oEpisodio;
-     }
-
-
-}
-
 void Paciente::RecuperarPaciente(int idCliente)
 {
 //    SqlCalls *llamadas = new SqlCalls();
