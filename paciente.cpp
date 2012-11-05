@@ -140,7 +140,6 @@ void Paciente::GuardarPaciente()
         QMessageBox::information(NULL,QObject::tr("PACIENTE"),QObject::tr("Los datos del paciente han sido guardados"),
                              QObject::tr("Aceptar"));
     }
-
 }
 
 int Paciente::getalcohol()
