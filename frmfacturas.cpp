@@ -514,14 +514,14 @@ void frmFacturas::LLenarFactura() {
 void frmFacturas::on_btnSiguiente_clicked()
 {
     QString cFactura = oFactura->getcFactura();
-    oFactura->RecuperarFactura("Select * from cab_fac where cFactura >'"+cFactura+"' order by cFactura  limit 0,1 ");
+    oFactura->RecuperarFactura("Select * from cab_fac where cFactura >'"+cFactura+"' order by cFactura  limit 1 ");
     LLenarCampos();
     //delete cFactura;
 }
 void frmFacturas::on_btnAnterior_clicked()
 {
     QString cFactura = oFactura->getcFactura();
-    oFactura->RecuperarFactura("Select * from cab_fac where cFactura <'"+cFactura+"' order by cFactura desc limit 0,1 ");
+    oFactura->RecuperarFactura("Select * from cab_fac where cFactura <'"+cFactura+"' order by cFactura desc limit 1 ");
     LLenarCampos();
     //delete cFactura;
 }
@@ -535,7 +535,7 @@ void frmFacturas::on_btnGuardar_clicked()
     LLenarFactura();
     BloquearCampos();
     oFactura->GuardarFactura(nId,true);
-    oFactura->RecuperarFactura("Select * from cab_fac where Id="+QString::number(nId)+"  limit 0,1 ");
+    oFactura->RecuperarFactura("Select * from cab_fac where Id="+QString::number(nId)+"  limit 1 ");
     LLenarCampos();
 }
 
@@ -679,7 +679,7 @@ void frmFacturas::on_btnDeshacer_clicked()
 {
     BloquearCampos();
     QString cId = QString::number(oFactura->Getid());
-    oFactura->RecuperarFactura("Select * from cab_fac where id ="+cId+" order by id limit 0,1 ");
+    oFactura->RecuperarFactura("Select * from cab_fac where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
 }
 
@@ -700,7 +700,7 @@ void frmFacturas::on_botBuscarCliente_clicked()
     //qDebug() << nId;
     QString cId = QString::number(nId);
     oFactura->setiId_Cliente(nId);
-    oCliente1->Recuperar("Select * from clientes where id ="+cId+" order by id limit 0,1 ");
+    oCliente1->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
     LLenarCamposCliente();
 }
 
@@ -753,7 +753,7 @@ void frmFacturas::on_btnBuscar_clicked()
     int nId = BuscarFactura.DevolverID();
     //qDebug() << nId;
     QString cId = QString::number(nId);
-    oFactura->RecuperarFactura("Select * from cab_fac where Id ="+cId+" limit 0,1 ");
+    oFactura->RecuperarFactura("Select * from cab_fac where Id ="+cId+" limit 1 ");
     LLenarCampos();
 }
 
@@ -780,7 +780,7 @@ void frmFacturas::on_botEditarLinea_clicked()
 void frmFacturas::on_txtcCodigoCliente_lostFocus()
 {
     if (!ui->txtcCodigoCliente->text().isEmpty() && ui->txtcCliente->text().isEmpty()) {
-        QString cSQL = "Select * from clientes where cCodigoCliente = '"+ui->txtcCodigoCliente->text().trimmed() +"' limit 0,1";
+        QString cSQL = "Select * from clientes where cCodigoCliente = '"+ui->txtcCodigoCliente->text().trimmed() +"' limit 1";
         oCliente1->Recuperar(cSQL);
         LLenarCamposCliente();
         ui->txtcCodigoArticulo->setFocus();
@@ -845,6 +845,6 @@ void frmFacturas::on_botBorrador_clicked()
     BloquearCampos();
     oFactura->setcFactura("BORRADOR");
     oFactura->GuardarFactura(nId,false);
-    oFactura->RecuperarFactura("Select * from cab_fac where Id="+QString::number(nId)+"  limit 0,1 ");
+    oFactura->RecuperarFactura("Select * from cab_fac where Id="+QString::number(nId)+"  limit 1 ");
     LLenarCampos();
 }

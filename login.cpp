@@ -11,6 +11,7 @@
 #include <configuracion.h>
 #include <QSqlRecord>
 #include <QSqlField>
+#include "frmempresas.h"
 
 
 Login::Login(Configuracion *m_config,QWidget *parent) :
@@ -27,7 +28,8 @@ Login::Login(Configuracion *m_config,QWidget *parent) :
     if(QryEmpresas->exec()) {
 
         while (QryEmpresas->next()) {
-              ui->cboEmpresa->addItem(QryEmpresas->value(2).toString());
+              QSqlRecord rEmpresa = QryEmpresas->record();
+              ui->cboEmpresa->addItem(rEmpresa.field("nombre").value().toString());
         }
     }
 
@@ -95,7 +97,7 @@ void Login::on_Crearconfiguracin_clicked()
 {
     QSettings settings("infint", "terra");
     settings.setValue("cDriverBDTerra","QSQLITE");
-    settings.setValue("cRutaDBTerra","/home/arcnexus/project/terra/terra/DB/terra.sqlite");
+    settings.setValue("cRutaDBTerra","/home/arcnexus/project/terra/DB/terra.sqlite");
     settings.setValue("cHostBDTerra","localhost");
     settings.setValue("cUserBDTerra","root");
     settings.setValue("cPasswordBDTerra","PatataBullida_99");
@@ -123,4 +125,18 @@ void Login::on_Crearconfiguracin_clicked()
 
 
 
+}
+
+void Login::on_btnEmpresa_clicked()
+{
+    FrmEmpresas *formEmpresa = new FrmEmpresas();
+    formEmpresa->setWindowState(Qt::WindowMaximized);
+    formEmpresa->exec();
+
+    delete formEmpresa;
+}
+
+void Login::on_pushButton_clicked()
+{
+    exit(0);
 }

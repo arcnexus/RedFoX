@@ -550,14 +550,14 @@ void FrmPedidos::RellenarDespuesCalculo()
 void FrmPedidos::on_btnSiguiente_clicked()
 {
     int nPedido = oPedido->getnPedido();
-    oPedido->RecuperarPedido("Select * from ped_cli where nPedido >'"+QString::number(nPedido)+"' order by nPedido  limit 0,1 ");
+    oPedido->RecuperarPedido("Select * from ped_cli where nPedido >'"+QString::number(nPedido)+"' order by nPedido  limit 1 ");
     LLenarCampos();
 }
 
 void FrmPedidos::on_btnAnterior_clicked()
 {
     int nPedido = oPedido->getnPedido();
-    oPedido->RecuperarPedido("Select * from ped_cli where nPedido <'"+QString::number(nPedido)+"' order by nPedido desc limit 0,1 ");
+    oPedido->RecuperarPedido("Select * from ped_cli where nPedido <'"+QString::number(nPedido)+"' order by nPedido desc limit 1 ");
     LLenarCampos();
 }
 
@@ -592,7 +592,7 @@ void FrmPedidos::on_btnGuardar_clicked()
     LLenarPedido();
     BloquearCampos();
     oPedido->GuardarPedido(nId);
-    oPedido->RecuperarPedido("Select * from ped_cli where id="+QString::number(nId)+"  limit 0,1 ");
+    oPedido->RecuperarPedido("Select * from ped_cli where id="+QString::number(nId)+"  limit 1 ");
     LLenarCampos();
 }
 
@@ -603,7 +603,7 @@ void FrmPedidos::on_botBuscarCliente_clicked()
     int nId = BuscarClientes.DevolverID();
     QString cId = QString::number(nId);
     oPedido->setiId_Cliente(cId.toInt());
-    oCliente3->Recuperar("Select * from clientes where id ="+cId+" order by id limit 0,1 ");
+    oCliente3->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
     LLenarCamposCliente();
 }
 
@@ -688,7 +688,7 @@ void FrmPedidos::on_btnDeshacer_clicked()
 {
     BloquearCampos();
     QString cId = QString::number(oPedido->Getid());
-    oPedido->RecuperarPedido("Select * from ped_cli where id ="+cId+" order by id limit 0,1 ");
+    oPedido->RecuperarPedido("Select * from ped_cli where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
 }
 

@@ -30,6 +30,15 @@ public:
     QString getcNombreBD();
     QString getcPuerto();
     QString getcDriverBD();
+
+    QString getcRutaBDSqLiteMed();
+    QString getcHostMed();
+    QString getcUserMed();
+    QString getcContrasenaMed();
+    QString getcNombreBDMed();
+    QString getcPuertoMed();
+    QString getcDriverBDMed();
+
     QString getcDireccion();
     QString getcCp();
     QString getcPoblacion();
@@ -65,6 +74,16 @@ public:
     void setcNombreBD(QString cNombreBD);
     void setcPuerto(QString cPuerto);
     void setcDriverBD(QString cDriverBD);
+
+    void setcRutaBDSqLiteMed(QString cRutaBDSqLiteMed);
+    void setcHostMed(QString cHostMed);
+    void setcUserMed(QString cUserMed);
+    void setcContrasenaMed(QString cContrasenaMed);
+    void setcNombreBDMed(QString cNombreBDMed);
+    void setcPuertoMed(QString cPuertoMed);
+    void setcDriverBDMed(QString cDriverBDMed);
+
+
     void setcDireccion(QString cDireccion);
     void setcCP(QString cCp);
     void setcPoblacion(QString cPoblacion);
@@ -126,6 +145,14 @@ private:
     QString cNombreBD;
     QString cPuerto;
     QString cDriverBD;
+    QString cRutaBDSqLiteMed;
+    QString cHostMed;
+    QString cUserMed;
+    QString cContrasenaMed;
+    QString cNombreBDMed;
+    QString cPuertoMed;
+    QString cDriverBDMed;
+
     // Contabilidad
     int nDigitosCuentas;
     QString cCuentaClientes;

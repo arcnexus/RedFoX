@@ -474,14 +474,14 @@ void FrmAlbaran::RellenarDespuesCalculo()
 void FrmAlbaran::on_btnSiguiente_clicked()
 {
     int nAlbaran = oAlbaran->getnAlbaran();
-    oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran >'"+QString::number(nAlbaran)+"' order by nAlbaran  limit 0,1 ");
+    oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran >'"+QString::number(nAlbaran)+"' order by nAlbaran  limit 1 ");
     LLenarCampos();
 }
 
 void FrmAlbaran::on_btnAnterior_clicked()
 {
     int nAlbaran = oAlbaran->getnAlbaran();
-    oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran <'"+QString::number(nAlbaran)+"' order by nAlbaran desc limit 0,1 ");
+    oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran <'"+QString::number(nAlbaran)+"' order by nAlbaran desc limit 1 ");
     LLenarCampos();
 }
 
@@ -502,7 +502,7 @@ void FrmAlbaran::on_botBuscarCliente_clicked()
     int nId = BuscarClientes.DevolverID();
     QString cId = QString::number(nId);
     oAlbaran->setiId_Cliente(cId.toInt());
-    oCliente2->Recuperar("Select * from clientes where id ="+cId+" order by id limit 0,1 ");
+    oCliente2->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
     LLenarCamposCliente();
 }
 
@@ -528,7 +528,7 @@ void FrmAlbaran::on_btnGuardar_clicked()
     LLenarAlbaran();
     BloquearCampos();
     oAlbaran->GuardarAlbaran(nId);
-    oAlbaran->RecuperarAlbaran("Select * from cab_alb where Id="+QString::number(nId)+"  limit 0,1 ");
+    oAlbaran->RecuperarAlbaran("Select * from cab_alb where Id="+QString::number(nId)+"  limit 1 ");
     LLenarCampos();
 }
 
@@ -630,7 +630,7 @@ void FrmAlbaran::on_btnDeshacer_clicked()
 {
     BloquearCampos();
     QString cId = QString::number(oAlbaran->Getid());
-    oAlbaran->RecuperarAlbaran("Select * from cab_alb where id ="+cId+" order by id limit 0,1 ");
+    oAlbaran->RecuperarAlbaran("Select * from cab_alb where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
 }
 

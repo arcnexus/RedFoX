@@ -514,7 +514,7 @@ void FrmPresupuestosCli::on_btnSiguiente_clicked()
 {
     int nPresupuesto = oPres->getnPresupuesto();
     oPres->RecuperarPresupuesto("Select * from cab_pre where nPresupuesto >'"+
-                                QString::number(nPresupuesto)+"' order by nPresupuesto  limit 0,1 ",0);
+                                QString::number(nPresupuesto)+"' order by nPresupuesto  limit 1 ",0);
     LLenarCampos();
 }
 
@@ -522,7 +522,7 @@ void FrmPresupuestosCli::on_btnAnterior_clicked()
 {
     int nPresupuesto = oPres->getnPresupuesto();
     oPres->RecuperarPresupuesto("Select * from cab_pre where nPresupuesto <'"+QString::number(nPresupuesto)+
-                                "' order by nPresupuesto desc limit 0,1 ",1);
+                                "' order by nPresupuesto desc limit 1 ",1);
     LLenarCampos();
 }
 
@@ -555,7 +555,7 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
     LLenarPresupuesto();
     BloquearCampos();
     oPres->GuardarPres(nId);
-    oPres->RecuperarPresupuesto("Select * from cab_pre where id="+QString::number(nId)+"  limit 0,1 ");
+    oPres->RecuperarPresupuesto("Select * from cab_pre where id="+QString::number(nId)+"  limit 1 ");
     LLenarCampos();
 }
 
@@ -571,7 +571,7 @@ void FrmPresupuestosCli::on_botBuscarCliente_clicked()
     int nId = BuscarClientes.DevolverID();
     QString cId = QString::number(nId);
     oPres->setidCliente(cId.toInt());
-    oClientePres->Recuperar("Select * from clientes where id ="+cId+" order by id limit 0,1 ");
+    oClientePres->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
     LLenarCamposCliente();
 }
 

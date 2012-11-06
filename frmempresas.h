@@ -17,8 +17,6 @@ public:
     void LLenarCampos();
     void CargarCamposEnEmpresa();
 private slots:
-    void on_pushButton_clicked();
-
     void on_botSiguiente_clicked();
 
     void on_botAnterior_clicked();

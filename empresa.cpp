@@ -42,7 +42,18 @@ void Empresa::Recuperar(QString cSQL)
             this->cContrasena = registro.field("contrasena").value().toString();
             this->cPuerto = registro.field("puerto").value().toString();
             this->cNombreBD = registro.field("nombreBD").value().toString();
-            this->cDriverBD = registro.field("driverBD").value().toString();
+            this->cHostMed = registro.field("hostBDMedica").value().toString();
+            this->cUserMed = registro.field("userBDMedica").value().toString();
+            this->cContrasenaMed = registro.field("contrasenaBDMedica").value().toString();
+            this->cPuertoMed = registro.field("puertoBDMedica").value().toString();
+            this->cNombreBDMed = registro.field("nombreBDMedica").value().toString();
+            this->cDriverBDMed = registro.field("driverBDMedica").value().toString();
+            this->cHostMed = registro.field("hostBDMedica").value().toString();
+            this->cUserMed = registro.field("userBDMedica").value().toString();
+            this->cContrasenaMed = registro.field("contrasenaBDMedica").value().toString();
+            this->cPuertoMed = registro.field("puertoBDMedica").value().toString();
+            this->cNombreBDMed = registro.field("nombreBDMedica").value().toString();
+            this->cDriverBDMed = registro.field("driverBDMedica").value().toString();
             this->cDireccion = registro.field("Direccion").value().toString();
             this->cCp = registro.field("cp").value().toString();
             this->cPoblacion = registro.field("poblacion").value().toString();
@@ -93,6 +104,14 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->cPuerto = registro.field("puerto").value().toString();
             this->cNombreBD = registro.field("nombreBD").value().toString();
             this->cDriverBD = registro.field("driverBD").value().toString();
+
+            this->cHostMed = registro.field("hostBDMedica").value().toString();
+            this->cUserMed = registro.field("userBDMedica").value().toString();
+            this->cContrasenaMed = registro.field("contrasenaBDMedica").value().toString();
+            this->cPuertoMed = registro.field("puertoBDMedica").value().toString();
+            this->cNombreBDMed = registro.field("nombreBDMedica").value().toString();
+            this->cDriverBDMed = registro.field("driverBDMedica").value().toString();
+
             this->cDireccion = registro.field("Direccion").value().toString();
             this->cCp = registro.field("cp").value().toString();
             this->cPoblacion = registro.field("poblacion").value().toString();
@@ -138,6 +157,12 @@ void Empresa::Guardar()
                      "puerto=:cPuerto,"
                      "nombreBD=:cNombreBD,"
                      "driverBD=:cDriverBD, "
+                     "hostBDMedica =:cHostDBMedica,"
+                     "userBDMedica =:cUserDBMedica,"
+                     "contrasenaBDMedica =:cContrasenaDBMedica,"
+                     "puertoBDMedica=:cPuertoDBMedica,"
+                     "nombreBDMedica=:cNombreBDMedica,"
+                     "driverBDMedica=:cDriverBDMedica,"
                      "Direccion=:cDireccion,"
                      "cp=:cCP,"
                      "poblacion=:cPoblacion,"
@@ -159,9 +184,10 @@ void Empresa::Guardar()
                      "codigocuentaproveedores =:codigocuentaproveedores,"
                      "codigocuentaacreedores =:codigocuentaacreedores "
                      "where id=:nID");
+
     qEmpresa.bindValue(":cCodigo",this->cCodigo);
     qEmpresa.bindValue(":cNombre",this->cNombre);
-    qEmpresa.bindValue(":nDigitosFactura",this->nDigitosFactura);
+    qEmpresa.bindValue(":nDigitosFactura", this->nDigitosFactura);
     qEmpresa.bindValue(":cSerie",this->cSerie);
     qEmpresa.bindValue(":cRutaBDSqLite",this->cRutaBDSqLite);
     qEmpresa.bindValue(":cHost",this->cHost);
@@ -169,7 +195,13 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":cContrasena",this->cContrasena);
     qEmpresa.bindValue(":cPuerto",this->cPuerto);
     qEmpresa.bindValue(":cNombreBD",this->cNombreBD);
-    qEmpresa.bindValue(":cDriverBD",this->cDriverBD);
+    qEmpresa.bindValue(":cDriverBD ", this->cDriverBD);
+    qEmpresa.bindValue(":cHostDBMedica",this->cHostMed);
+    qEmpresa.bindValue(":cUserDBMedica",this->cUserMed);
+    qEmpresa.bindValue(":cContrasenaDBMedica",this->cContrasenaMed);
+    qEmpresa.bindValue(":cPuertoDBMedica",this->cPuertoMed);
+    qEmpresa.bindValue(":cNombreBDMedica",this->cNombreBDMed);
+    qEmpresa.bindValue(":cDriverBDMedica",this->cDriverBDMed);
     qEmpresa.bindValue(":cDireccion",this->cDireccion);
     qEmpresa.bindValue(":cCP",this->cCp);
     qEmpresa.bindValue(":cPoblacion",this->cPoblacion);
@@ -179,18 +211,20 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":cTelefono2",this->cTelefono2);
     qEmpresa.bindValue(":cFax",this->cFax);
     qEmpresa.bindValue(":cMail",this->cMail);
-    qEmpresa.bindValue(":cWeb",this->cWeb);
+    qEmpresa.bindValue(":cWeb", this->cWeb);
     qEmpresa.bindValue(":cCif",this->cCif);
-    qEmpresa.bindValue(":cInscripcion",this->cInscripcion);
+    qEmpresa.bindValue(":cInscripcion", this->cInscripcion);
     qEmpresa.bindValue(":cComentarioAlbaran",this->cComentarioAlbaran);
-    qEmpresa.bindValue(":cComentarioFactura",this->cComentarioFactura);
+    qEmpresa.bindValue(":cComentarioFactura", this->cComentarioFactura);
     qEmpresa.bindValue(":cComentarioTicket",this->cComentarioTicket);
-    qEmpresa.bindValue(":ejercicio ",this->nEjercicio);
-    qEmpresa.bindValue(":ndigitoscuenta",this->nDigitosCuentas);
-    qEmpresa.bindValue(":codigocuentaclientes",this->cCuentaClientes);
-    qEmpresa.bindValue(":codigocuentaproveedores",this->cCuentaProveedores);
-    qEmpresa.bindValue(":codigocuentaacreedores",this->cCuentaAcreeedores);
+    qEmpresa.bindValue(":ejercicio",this->nEjercicio);
+    qEmpresa.bindValue(":ndigitoscuentas",this->nDigitosCuentas);
+    qEmpresa.bindValue(":codigocuentaclientes", this->cCuentaClientes);
+    qEmpresa.bindValue(":codigocuentaproveedores", this->cCuentaProveedores);
+    qEmpresa.bindValue(":codigocuentaacreedores", this->cCuentaAcreeedores);
     qEmpresa.bindValue(":nID",this->id);
+
+
     if (!qEmpresa.exec())
         QMessageBox::warning(NULL,QObject::tr("Gestión de Empresas"),QObject::tr("No se ha podido modificar la ficha de la empresa")+
                              qEmpresa.lastError().text(), QObject::tr("Ok"));
@@ -321,6 +355,41 @@ QString Empresa::getcPuerto()
 QString Empresa::getcDriverBD()
 {
     return this->cDriverBD;
+}
+
+QString Empresa::getcRutaBDSqLiteMed()
+{
+    return this->cRutaBDSqLiteMed;
+}
+
+QString Empresa::getcHostMed()
+{
+    return this->cHostMed;
+}
+
+QString Empresa::getcUserMed()
+{
+    return this->cUserMed;
+}
+
+QString Empresa::getcContrasenaMed()
+{
+    return this->cContrasenaMed;
+}
+
+QString Empresa::getcNombreBDMed()
+{
+    return this->cNombreBDMed;
+}
+
+QString Empresa::getcPuertoMed()
+{
+    return this->cPuertoMed;
+}
+
+QString Empresa::getcDriverBDMed()
+{
+    return this->cDriverBDMed;
 }
 
 QString Empresa::getcDireccion()
@@ -482,6 +551,41 @@ void Empresa::setcPuerto(QString cPuerto)
 void Empresa::setcDriverBD(QString cDriverBD)
 {
     this->cDriverBD = cDriverBD;
+}
+
+void Empresa::setcRutaBDSqLiteMed(QString cRutaBDSqLiteMed)
+{
+    this->cRutaBDSqLiteMed = cRutaBDSqLiteMed;
+}
+
+void Empresa::setcHostMed(QString cHostMed)
+{
+    this->cHostMed = cHostMed;
+}
+
+void Empresa::setcUserMed(QString cUserMed)
+{
+    this->cUserMed = cUserMed;
+}
+
+void Empresa::setcContrasenaMed(QString cContrasenaMed)
+{
+    this->cContrasenaMed = cContrasenaMed;
+}
+
+void Empresa::setcNombreBDMed(QString cNombreBDMed)
+{
+    this->cNombreBDMed = cNombreBDMed;
+}
+
+void Empresa::setcPuertoMed(QString cPuertoMed)
+{
+    this->cPuertoMed = cPuertoMed;
+}
+
+void Empresa::setcDriverBDMed(QString cDriverBDMed)
+{
+    this->cDriverBDMed = cDriverBDMed;
 }
 
 void Empresa::setcDireccion(QString cDireccion)

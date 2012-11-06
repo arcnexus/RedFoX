@@ -27,6 +27,10 @@ private slots:
 
     void on_Crearconfiguracin_clicked();
 
+    void on_btnEmpresa_clicked();
+
+    void on_pushButton_clicked();
+
 private:
     Ui::Login *ui;
     QString path;

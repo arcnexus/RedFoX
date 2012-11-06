@@ -251,7 +251,7 @@ void Albaran::RecuperarAlbaran(QString cSQL){
 int Albaran::NuevoNumeroAlbaran() {
     QSqlQuery cab_alb(QSqlDatabase::database("empresa"));
     int nAlbaran;
-    cab_alb.prepare("Select nAlbaran from cab_alb order by nAlbaran desc limit 0,1");
+    cab_alb.prepare("Select nAlbaran from cab_alb order by nAlbaran desc limit 1");
     if(cab_alb.exec()) {
         cab_alb.next();
         nAlbaran= cab_alb.value(0).toInt();

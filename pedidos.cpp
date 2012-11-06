@@ -291,7 +291,7 @@ void Pedidos::RecuperarPedido(QString cSQL){
 int Pedidos::NuevoNumeroPedido() {
 QSqlQuery cab_ped(QSqlDatabase::database("empresa"));
 int nPedido;
-cab_ped.prepare("Select nPedido from ped_cli order by nPedido desc limit 0,1");
+cab_ped.prepare("Select nPedido from ped_cli order by nPedido desc limit 1");
 if(cab_ped.exec()) {
     cab_ped.next();
     nPedido= cab_ped.value(0).toInt();

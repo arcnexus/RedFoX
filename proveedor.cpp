@@ -350,7 +350,7 @@ QString Proveedor::NuevoCodigoProveedor()
     QString cNum;
     int nCodigo;
     QSqlQuery *qProveedores = new QSqlQuery(QSqlDatabase::database("empresa"));
-    if(qProveedores->exec("select cCodigo from proveedores  order by cCodigo desc limit 0,1")) {
+    if(qProveedores->exec("select cCodigo from proveedores  order by cCodigo desc limit 1")) {
         if (qProveedores->next()) {
             QSqlRecord registro = qProveedores->record();
             cCodigo = registro.field("cCodigo").value().toString();

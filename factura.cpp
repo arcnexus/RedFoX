@@ -408,7 +408,7 @@ QString Factura::NuevoNumeroFactura() {
     int inum;
     Configuracion *oConfig = new Configuracion();
     oConfig->CargarDatos();
-    cab_fac.prepare("Select cFactura from cab_fac  where cFactura <> '"+QObject::tr("BORRADOR")+"' order by cFactura desc limit 0,1");
+    cab_fac.prepare("Select cFactura from cab_fac  where cFactura <> '"+QObject::tr("BORRADOR")+"' order by cFactura desc limit 1");
     if(cab_fac.exec()) {
         cab_fac.next();
         cNumFac = cab_fac.value(0).toString();

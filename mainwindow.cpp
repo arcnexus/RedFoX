@@ -122,6 +122,7 @@ MainWindow::MainWindow(QWidget *parent) :
                m_config->cPasswordBDMedica =record.field("contrasenaBDMedica").value().toString();
                m_config->cRutaBdMedica = record.field("RutaBDMedicaSqLite").value().toString();
                m_config->cUsuarioBDMedica = record.field("userBDMedica").value().toString();
+               // Varios
                m_config->cSerie = record.field("serie").value().toString();
                m_config->nDigitosCuentasContables = record.field("ndigitoscuenta").value().toInt();
                m_config->cCuentaAcreedores = record.field("codigocuentaacreedores").value().toString();

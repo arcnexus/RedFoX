@@ -491,7 +491,7 @@ void frmClientes::on_btnSiguiente_clicked()
 {
 
     QString cId = QString::number(oCliente->getId());
-    oCliente->Recuperar("Select * from clientes where id >"+cId+" order by id limit 0,1 ");
+    oCliente->Recuperar("Select * from clientes where id >"+cId+" order by id limit 1 ");
     LLenarCampos();
 
 }
@@ -499,7 +499,7 @@ void frmClientes::on_btnSiguiente_clicked()
 void frmClientes::on_btnAnterior_clicked()
 {
     QString cId = QString::number(oCliente->getId());
-    oCliente->Recuperar("Select * from clientes where id <"+cId+" order by id desc limit 0,1 ");
+    oCliente->Recuperar("Select * from clientes where id <"+cId+" order by id desc limit 1 ");
     LLenarCampos();
 }
 
@@ -741,7 +741,7 @@ void frmClientes::desbloquearCampos() {
 void frmClientes::on_btnDeshacer_clicked()
 {
     QString cId = QString::number(oCliente->getId());
-    oCliente->Recuperar("Select * from clientes where id ="+cId+" order by id limit 0,1 ");
+    oCliente->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
     bloquearCampos();
 }
@@ -764,7 +764,7 @@ void frmClientes::on_btnBuscar_clicked()
     qDebug() << nId;
     QString cId = QString::number(nId);
 
-    oCliente->Recuperar("Select * from clientes where id ="+cId+" order by id limit 0,1 ");
+    oCliente->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
 }
 

@@ -28,12 +28,21 @@ void FrmEmpresas::LLenarCampos()
     ui->txtcUser->setText(oEmpresa.getcUser());
     ui->txtcPassword->setText(oEmpresa.getcContrasena());
     ui->txtcPuerto->setText(oEmpresa.getcPuerto());
-    //muestra el Driver en el combobox
     int indice=ui->txtcDriver->findText(oEmpresa.getcDriverBD());
-
     if(indice!=-1)
        ui->txtcDriver->setCurrentIndex(indice);
-    ui->txtcDriver->setEditText(oEmpresa.getcDriverBD());
+
+    ui->txtRutaBd->setText(oEmpresa.getcRutaBDSqLite());
+    ui->txtcHostmedic->setText(oEmpresa.getcHostMed());
+    ui->txtcNombreBdMedic->setText(oEmpresa.getcNombreBDMed());
+    ui->txtcUserMedic->setText(oEmpresa.getcUserMed());
+    ui->txtcPasswordBdMedic->setText(oEmpresa.getcContrasenaMed());
+    ui->txtcPuertoMedic->setText(oEmpresa.getcPuertoMed());
+    indice=ui->txtcDriverMedica->findText(oEmpresa.getcDriverBDMed());
+    if(indice!=-1)
+       ui->txtcDriverMedica->setCurrentIndex(indice);
+
+
     ui->txtcDireccion->setText(oEmpresa.getcDireccion());
     ui->txtcCP->setText(oEmpresa.getcCp());
     ui->txtcPoblacion->setText(oEmpresa.getcPoblacion());
@@ -72,6 +81,16 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.setcContrasena(ui->txtcPassword->text());
     oEmpresa.setcPuerto(ui->txtcPuerto->text());
     oEmpresa.setcDriverBD(ui->txtcDriver->currentText());
+
+    oEmpresa.setcHostMed(ui->txtcHostmedic->text());
+    oEmpresa.setcNombreBDMed(ui->txtcNombreBdMedic->text());
+    oEmpresa.setcUserMed(ui->txtcUserMedic->text());
+    oEmpresa.setcContrasenaMed(ui->txtcPasswordBdMedic ->text());
+    oEmpresa.setcPuertoMed(ui->txtcPuertoMedic->text());
+    oEmpresa.setcDriverBDMed(ui->txtcDriverMedica->currentText());
+
+
+
     oEmpresa.setcSerie(ui->txtcSerieFactura->text());
     oEmpresa.setcDireccion(ui->txtcDireccion->text());
     oEmpresa.setcCP(ui->txtcCP->text());
@@ -95,18 +114,6 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.setcCodigoCuentaAcreedores(ui->txtcCuentaAcreedores->text());
 }
 
-void FrmEmpresas::on_pushButton_clicked()
-{
-    QSqlQuery *Empresa = new QSqlQuery(QSqlDatabase::database("terra"));
-    Empresa->prepare("insert into empresas (codigo,nombre,digitosfactura,serie,RutaBDSqLite,driverBD) "
-                     "Values('04','Empresa Julian',5,'2012','/home/dismet/Dismet/Programming/terra/DB/emp0999.sqlite','QSQLITE')");
-    if(Empresa->exec())
-        QMessageBox::information(NULL,"Empresas","Enhorabuena, su empresa ha sido creada\n "
-                                 "Debe salir y volver a entrar del programa para poder acceder a ella","Ok");
-    else
-        QMessageBox::warning(NULL,"Empresas","Ha ocurrido un error :" +Empresa->lastError().text());
-
-}
 
 void FrmEmpresas::on_botSiguiente_clicked()
 {

@@ -64,14 +64,14 @@ void FrmArticulos::on_botGuardar_clicked()
 void FrmArticulos::on_botSiguiente_clicked()
 {
     QString cId = QString::number(oArticulo->getId());
-    oArticulo->Recuperar("Select * from articulos where id >"+cId+" order by id limit 0,1 ",1);
+    oArticulo->Recuperar("Select * from articulos where id >"+cId+" order by id limit 1 ",1);
     LLenarCampos();
 
 }
 void FrmArticulos::on_botAnterior_clicked()
 {
     QString cId = QString::number(oArticulo->getId());
-    oArticulo->Recuperar("Select * from articulos where id <"+cId+" order by id desc limit 0,1 ",2);
+    oArticulo->Recuperar("Select * from articulos where id <"+cId+" order by id desc limit 1 ",2);
     LLenarCampos();
 }
 

@@ -387,7 +387,7 @@ int Presupuesto::NuevoNumeroPresupuesto()
 {
     QSqlQuery cab_pre(QSqlDatabase::database("empresa"));
     int nPresupuesto;
-    cab_pre.prepare("Select nPresupuesto from cab_pre order by nPresupuesto desc limit 0,1");
+    cab_pre.prepare("Select nPresupuesto from cab_pre order by nPresupuesto desc limit 1");
     if(cab_pre.exec()) {
         cab_pre.next();
         nPresupuesto= cab_pre.value(0).toInt();

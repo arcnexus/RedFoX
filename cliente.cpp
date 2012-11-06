@@ -409,7 +409,7 @@ QString Cliente::NuevoCodigoCliente()
     QString cNum;
     int nCodigo;
     QSqlQuery *qClientes = new QSqlQuery(QSqlDatabase::database("empresa"));
-    if(qClientes->exec("select cCodigoCliente from clientes  order by cCodigoCliente desc limit 0,1")) {
+    if(qClientes->exec("select cCodigoCliente from clientes  order by cCodigoCliente desc limit 1")) {
         if (qClientes->next()) {
             QSqlRecord registro = qClientes->record();
             cCodigo = registro.field("cCodigoCliente").value().toString();
