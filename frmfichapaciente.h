@@ -34,7 +34,7 @@ private slots:
 
     void on_btnAnadirEpisodio_clicked();
 
-    void on_btnBuscarCIE_clicked();
+    void on_btnBuscarCIEEpisodio_clicked();
 
     void on_btnEditarPaciente_clicked();
 

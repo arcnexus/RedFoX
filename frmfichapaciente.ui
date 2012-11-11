@@ -435,15 +435,15 @@ font: 7pt &quot;Sans Serif&quot;;</string>
       </size>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>198</width>
-        <height>361</height>
+        <width>204</width>
+        <height>367</height>
        </rect>
       </property>
       <attribute name="label">
@@ -504,8 +504,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>197</width>
-        <height>400</height>
+        <width>187</width>
+        <height>396</height>
        </rect>
       </property>
       <attribute name="label">
@@ -627,8 +627,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>203</width>
-        <height>162</height>
+        <width>204</width>
+        <height>181</height>
        </rect>
       </property>
       <attribute name="label">
@@ -744,8 +744,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>198</width>
-        <height>361</height>
+        <width>204</width>
+        <height>367</height>
        </rect>
       </property>
       <attribute name="label">
@@ -954,8 +954,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>200</width>
-        <height>344</height>
+        <width>204</width>
+        <height>367</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1705,21 +1705,14 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>675</width>
-               <height>304</height>
+               <width>676</width>
+               <height>311</height>
               </rect>
              </property>
              <attribute name="label">
               <string>Episodio</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_39">
-              <item row="0" column="0" colspan="2">
-               <widget class="QCheckBox" name="chkEpisodioprivado">
-                <property name="text">
-                 <string>Episodio no visible para otros terapeutas</string>
-                </property>
-               </widget>
-              </item>
               <item row="1" column="0">
                <widget class="QLabel" name="label_18">
                 <property name="text">
@@ -1727,20 +1720,39 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="lineEdit"/>
+              <item row="6" column="1">
+               <layout class="QGridLayout" name="gridLayout_38">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_7">
+                  <property name="text">
+                   <string>CIE:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QPushButton" name="btnBuscarCIEEpisodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLineEdit" name="txtCIEEpisiodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
-              <item row="2" column="0" colspan="2">
-               <widget class="QLabel" name="label_86">
-                <property name="text">
-                 <string>Doctor/Terapeuta:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0" colspan="2">
-               <widget class="QComboBox" name="cboDoctorEpisodio"/>
-              </item>
-              <item row="4" column="0" colspan="2">
+              <item row="5" column="0" colspan="2">
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <item>
                  <spacer name="horizontalSpacer_6">
@@ -1764,6 +1776,12 @@ color: rgb(0, 0, 0);</string>
                 </item>
                 <item>
                  <widget class="QDateEdit" name="txtFechaEpisodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0, 0);</string>
+                  </property>
                   <property name="displayFormat">
                    <string>dd/MM/yyyy</string>
                   </property>
@@ -1774,38 +1792,34 @@ color: rgb(0, 0, 0);</string>
                 </item>
                </layout>
               </item>
-              <item row="5" column="1">
-               <layout class="QGridLayout" name="gridLayout_38">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_7">
-                  <property name="text">
-                   <string>CIE:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="btnBuscarCIE">
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QLineEdit" name="txtCIE"/>
-                </item>
-               </layout>
+              <item row="7" column="0" colspan="2">
+               <widget class="QTextEdit" name="txtHistorialEpisodio">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
               </item>
-              <item row="6" column="0" colspan="2">
-               <widget class="QTextEdit" name="txtHistorial"/>
+              <item row="3" column="0" colspan="2">
+               <widget class="QLabel" name="label_86">
+                <property name="text">
+                 <string>Doctor/Terapeuta:</string>
+                </property>
+               </widget>
               </item>
-              <item row="7" column="1">
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="txtDescripcionEpisodio">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
                <layout class="QGridLayout" name="gridLayout_3">
                 <item row="0" column="1">
                  <widget class="QPushButton" name="btnGuardarEpisodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="text">
                    <string>Guardar</string>
                   </property>
@@ -1823,6 +1837,9 @@ color: rgb(0, 0, 0);</string>
                 </item>
                 <item row="0" column="2">
                  <widget class="QPushButton" name="btnEditarEpisodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="maximumSize">
                    <size>
                     <width>150</width>
@@ -1846,6 +1863,9 @@ color: rgb(0, 0, 0);</string>
                 </item>
                 <item row="0" column="3">
                  <widget class="QPushButton" name="btnDeshacerEpisodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="maximumSize">
                    <size>
                     <width>150</width>
@@ -1886,6 +1906,26 @@ color: rgb(0, 0, 0);</string>
                 </item>
                </layout>
               </item>
+              <item row="4" column="0" colspan="2">
+               <widget class="QComboBox" name="cboDoctorEpisodio">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QCheckBox" name="chkEpisodioprivado">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Episodio no visible para otros terapeutas</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
             <widget class="QWidget" name="page_4">
@@ -1893,8 +1933,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>355</width>
-               <height>159</height>
+               <width>319</width>
+               <height>156</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2031,7 +2071,7 @@ color: rgb(0, 0, 0);</string>
                <x>0</x>
                <y>0</y>
                <width>415</width>
-               <height>171</height>
+               <height>170</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2169,8 +2209,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>388</width>
-               <height>288</height>
+               <width>371</width>
+               <height>287</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2327,8 +2367,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>387</width>
-               <height>345</height>
+               <width>339</width>
+               <height>342</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2599,8 +2639,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>313</width>
-               <height>267</height>
+               <width>285</width>
+               <height>261</height>
               </rect>
              </property>
              <attribute name="label">
@@ -3576,6 +3616,156 @@ color: rgb(0, 0, 0);</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>paginadorprincipal</tabstop>
+  <tabstop>txtFamiliaNuclear</tabstop>
+  <tabstop>txtHijos</tabstop>
+  <tabstop>cboNivelEstudios</tabstop>
+  <tabstop>txtProfesion</tabstop>
+  <tabstop>radTrabaja</tabstop>
+  <tabstop>radNoTrabaja</tabstop>
+  <tabstop>txtFechaAlta</tabstop>
+  <tabstop>chkTabaco</tabstop>
+  <tabstop>chkAlcohol</tabstop>
+  <tabstop>chkOtrasDrogas</tabstop>
+  <tabstop>txtOtrasDrogas</tabstop>
+  <tabstop>txtAntecedentesFamiliares</tabstop>
+  <tabstop>txtEnfermedadesConocidas</tabstop>
+  <tabstop>txtAlergiasConocidas</tabstop>
+  <tabstop>txtCirugiasPrevias</tabstop>
+  <tabstop>btnEditarPaciente</tabstop>
+  <tabstop>btnGuardarPaciente</tabstop>
+  <tabstop>BtnDeshacerPaciente</tabstop>
+  <tabstop>btnEpisodioAbierto</tabstop>
+  <tabstop>btnEpisodioCerrado</tabstop>
+  <tabstop>radEpisodioTodos</tabstop>
+  <tabstop>listaEpisodios</tabstop>
+  <tabstop>btnAnadirEpisodio</tabstop>
+  <tabstop>btnGuardarEpisodio</tabstop>
+  <tabstop>btnEditarEpisodio</tabstop>
+  <tabstop>btnDeshacerEpisodio</tabstop>
+  <tabstop>txtDescripcionEpisodio</tabstop>
+  <tabstop>chkEpisodioprivado</tabstop>
+  <tabstop>cboDoctorEpisodio</tabstop>
+  <tabstop>txtFechaEpisodio</tabstop>
+  <tabstop>btnBuscarCIEEpisodio</tabstop>
+  <tabstop>txtCIEEpisiodio</tabstop>
+  <tabstop>txtHistorialEpisodio</tabstop>
+  <tabstop>dateEdit_5</tabstop>
+  <tabstop>lineEdit_15</tabstop>
+  <tabstop>textEdit_9</tabstop>
+  <tabstop>listWidget_2</tabstop>
+  <tabstop>toolButton_18</tabstop>
+  <tabstop>pushButton_9</tabstop>
+  <tabstop>radioButton_14</tabstop>
+  <tabstop>radioButton_15</tabstop>
+  <tabstop>columnView_5</tabstop>
+  <tabstop>toolButton_22</tabstop>
+  <tabstop>lineEdit_17</tabstop>
+  <tabstop>lineEdit_18</tabstop>
+  <tabstop>lineEdit_19</tabstop>
+  <tabstop>dateEdit_6</tabstop>
+  <tabstop>dateEdit_7</tabstop>
+  <tabstop>lineEdit_20</tabstop>
+  <tabstop>lineEdit_21</tabstop>
+  <tabstop>lineEdit_22</tabstop>
+  <tabstop>radioButton_18</tabstop>
+  <tabstop>radioButton_19</tabstop>
+  <tabstop>textBrowser</tabstop>
+  <tabstop>toolButton_28</tabstop>
+  <tabstop>toolButton_29</tabstop>
+  <tabstop>toolButton_30</tabstop>
+  <tabstop>txtHistorialGeneralPaciente</tabstop>
+  <tabstop>btnMinutar</tabstop>
+  <tabstop>btnAgenda</tabstop>
+  <tabstop>txtPaciente</tabstop>
+  <tabstop>txtNumHistoriaClinica</tabstop>
+  <tabstop>radHombre</tabstop>
+  <tabstop>radMujer</tabstop>
+  <tabstop>btnCerrar</tabstop>
+  <tabstop>txtNacimiento</tabstop>
+  <tabstop>txtEdadActual</tabstop>
+  <tabstop>radPendienteVerAnalitica</tabstop>
+  <tabstop>btnImportarimagen</tabstop>
+  <tabstop>txtComentariosImagen</tabstop>
+  <tabstop>btnAnadirImagen</tabstop>
+  <tabstop>btnBorrarImagen</tabstop>
+  <tabstop>btnVerImagen</tabstop>
+  <tabstop>listaImagenes</tabstop>
+  <tabstop>radImagenEvaluada</tabstop>
+  <tabstop>txtImagenPendiente</tabstop>
+  <tabstop>btnAnadirInterconsulta</tabstop>
+  <tabstop>btnImportarInterconsulta</tabstop>
+  <tabstop>btnVerInterconsulta</tabstop>
+  <tabstop>btnBorrarInterconsulta</tabstop>
+  <tabstop>listaInterconsultas</tabstop>
+  <tabstop>radRecibidoInterconsulta</tabstop>
+  <tabstop>radPendienteRecibirInterconsulta</tabstop>
+  <tabstop>btnAnadirMotivosDerivacionInterconsulta</tabstop>
+  <tabstop>cboMotivoDerivacionInterconsulta</tabstop>
+  <tabstop>btnDocumentosDerivadosInterconsulta</tabstop>
+  <tabstop>txtDerivaraInterconsulta</tabstop>
+  <tabstop>txtPeticionInterconsulta</tabstop>
+  <tabstop>txtRespuestaInterconsulta</tabstop>
+  <tabstop>btnAnadirMotivosInterconsulta</tabstop>
+  <tabstop>btnDocumentosReferidosInterconsulta</tabstop>
+  <tabstop>btnReferidodeInterconsultas</tabstop>
+  <tabstop>cboMotivoInterconsultas</tabstop>
+  <tabstop>columnView_4</tabstop>
+  <tabstop>toolButton_20</tabstop>
+  <tabstop>toolButton_17</tabstop>
+  <tabstop>lineEdit_9</tabstop>
+  <tabstop>pushButton_22</tabstop>
+  <tabstop>pushButton_23</tabstop>
+  <tabstop>textEdit_4</tabstop>
+  <tabstop>pushButton_21</tabstop>
+  <tabstop>dateTimeEdit_2</tabstop>
+  <tabstop>dateTimeEdit_3</tabstop>
+  <tabstop>checkBox_4</tabstop>
+  <tabstop>txtPeso</tabstop>
+  <tabstop>txtSistole</tabstop>
+  <tabstop>pushButton_11</tabstop>
+  <tabstop>txtPermietroCraneal</tabstop>
+  <tabstop>txtTalla</tabstop>
+  <tabstop>txtEnfermedadesConocidasBarra</tabstop>
+  <tabstop>pushButton_15</tabstop>
+  <tabstop>pushButton_14</tabstop>
+  <tabstop>pushButton_12</tabstop>
+  <tabstop>toolButton_19</tabstop>
+  <tabstop>toolButton_21</tabstop>
+  <tabstop>toolButton_23</tabstop>
+  <tabstop>toolButton_24</tabstop>
+  <tabstop>toolButton_25</tabstop>
+  <tabstop>toolButton_26</tabstop>
+  <tabstop>toolButton_27</tabstop>
+  <tabstop>pushButton_13</tabstop>
+  <tabstop>lineEdit_16</tabstop>
+  <tabstop>pushButton_10</tabstop>
+  <tabstop>btnImportarAnalitica</tabstop>
+  <tabstop>txtPosologiaFarma</tabstop>
+  <tabstop>txtMutua</tabstop>
+  <tabstop>txtNumeroSS</tabstop>
+  <tabstop>btnBorrarFarma</tabstop>
+  <tabstop>radioButton_16</tabstop>
+  <tabstop>radioButton_17</tabstop>
+  <tabstop>txtInicioTratamientoFarma</tabstop>
+  <tabstop>txtAlergiasConocidasBarra</tabstop>
+  <tabstop>btnAnadirFarma</tabstop>
+  <tabstop>txtAntecedentesFamiliaresBarra</tabstop>
+  <tabstop>btnVerFarma</tabstop>
+  <tabstop>txtIMC</tabstop>
+  <tabstop>txtFiliacion</tabstop>
+  <tabstop>txtCirugiasPreviasBarra</tabstop>
+  <tabstop>txtDiastole</tabstop>
+  <tabstop>listView</tabstop>
+  <tabstop>listaTratamientosFarma</tabstop>
+  <tabstop>btnAnadirAnalitica</tabstop>
+  <tabstop>listaAnaliticas</tabstop>
+  <tabstop>radVistoAnalitica</tabstop>
+  <tabstop>txtComentariosFarma</tabstop>
+  <tabstop>btnBorrarAnalitica</tabstop>
+  <tabstop>btnVerAnalitica</tabstop>
+ </tabstops>
  <resources>
   <include location="terra.qrc"/>
  </resources>

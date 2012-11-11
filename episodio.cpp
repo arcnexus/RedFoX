@@ -1,5 +1,6 @@
 #include "episodio.h"
 #include "sqlcalls.h"
+#include <QMessageBox>
 
 Episodio::Episodio()
 {
@@ -7,24 +8,28 @@ Episodio::Episodio()
 
 int Episodio::NuevoEpisodio(int idPaciente)
 {
-    SqlCalls *llamadas = new SqlCalls();
-    QStringList parametros;
-    QString id =QString::number(this->id);
-    parametros.append(QString::number(idPaciente));
-    int nid = llamadas->addRec("insert into episodios (idpaciente) values(?)",parametros,"dbmedica");
-    return nid;
-
+    QSqlQuery *qEpisodio = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    qEpisodio->prepare("insert into episodios (idpaciente) values(:idpaciente)");
+    qEpisodio->bindValue(":idPaciente",idPaciente);
+    if(qEpisodio->exec()) {
+        int nid;
+        nid =qEpisodio->lastInsertId().toInt();
+        return nid;
+    } else {
+        QMessageBox::warning(NULL,QObject::tr("ERROR: Inserción de Episodios"),QObject::tr("Falló la inserción de episodios, error servidor:")+
+                             qEpisodio->lastError().text());
+        return 0;
+    }
 }
 
 void Episodio::RecuperarEpisodio(int idEpisodio)
 {
-    SqlCalls *llamadas = new SqlCalls();
-    QStringList parametros;
-    parametros.append(QString::number(idEpisodio));
-    QSqlQuery qEpisodio = llamadas->query("select * from episodios where id =?",parametros,"dbmedica");
-    if (qEpisodio.next()) {
-        QSqlRecord rEpisodio = qEpisodio.record();
-        this->setid(rEpisodio.field("id").value().toInt());
+    QSqlQuery *qEpisodio = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    qEpisodio->prepare("Select * from episodios where id = :idEpisodio");
+    qEpisodio->bindValue(":idEpisodio",idEpisodio);
+    if(qEpisodio->exec()) {
+        QSqlRecord rEpisodio = qEpisodio->record();
+        this->id =rEpisodio.field("id").value().toInt();
         this->setidPaciente(rEpisodio.field("idpaciente").value().toInt());
         this->setcerrado(rEpisodio.field("cerrado").value().toInt());
         this->setCIE(rEpisodio.field("cie").value().toString());
@@ -34,6 +39,9 @@ void Episodio::RecuperarEpisodio(int idEpisodio)
         this->sethistorial(rEpisodio.field("historial").value().toString());
         this->setprivado(rEpisodio.field("privado").value().toInt());
 
+    } else {
+        QMessageBox::warning(NULL,QObject::tr("ERROR: Recuperar episodio"),QObject::tr("No se pudo recuperar el episodio. ERROR servidor:")+
+                             qEpisodio->lastError().text(),QObject::tr("Aceptar"));
     }
 
 

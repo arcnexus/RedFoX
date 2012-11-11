@@ -14,6 +14,7 @@
 #include <sqlcalls.h>
 #include "paciente.h"
 #include "episodio.h"
+# include <QMessageBox>
 
 Paciente *oPaciente = new Paciente();
 Episodio *oEpisodio = new Episodio();
@@ -61,7 +62,7 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
     ui->txtFiliacion->setText(oPaciente->getfiliacion());
 ;
     ui->txtHijos->setValue(oPaciente->gethijos());
-    ui->txtHistorial->setPlainText(oPaciente->gethistorial());
+    ui->txtHistorialEpisodio->setPlainText(oPaciente->gethistorial());
     ui->txtIMC->setText(QString::number(oPaciente->getIMC()));
     ui->txtNacimiento->setDateTime(oPaciente->getnacimiento());
     int nNivel = ui->cboNivelEstudios->findText(oPaciente->getnivelEstudios());
@@ -109,7 +110,7 @@ void FrmFichaPaciente::guardarDatosPaciente()
     oPaciente->setfiliacion(ui->txtFiliacion->text());
     oPaciente->sethabitosDrogas(ui->txtOtrasDrogas->toPlainText());
     oPaciente->sethijos(ui->txtHijos->text().toInt());
-    oPaciente->sethistorial(ui->txtHistorial->toPlainText());
+    oPaciente->sethistorial(ui->txtHistorialEpisodio->toPlainText());
     oPaciente->setIMC(ui->txtIMC->text().toDouble());
     oPaciente->setnacimiento(ui->txtNacimiento->dateTime());
     oPaciente->setnivelEstudios(ui->cboNivelEstudios->currentText());
@@ -206,10 +207,43 @@ void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
 {
    int idEpisodio = oEpisodio->NuevoEpisodio(oPaciente->getid());
    oEpisodio->RecuperarEpisodio(idEpisodio);
+   if (oEpisodio->getid() >0) {
+       // Activo campos y botones
+        ui->chkEpisodioprivado->setEnabled(true);
+        ui->cboDoctorEpisodio->setEnabled(true);
+        ui->txtFechaEpisodio->setEnabled(true);
+        ui->txtDescripcionEpisodio->setEnabled(true);
+        ui->txtHistorialEpisodio->setEnabled(true);
+        ui->txtCIEEpisiodio->setEnabled(true);
+        ui->btnBuscarCIEEpisodio->setEnabled(true);
+        ui->btnAnadirEpisodio->setEnabled(false);
+        ui->btnEditarEpisodio->setEnabled(false);
+        ui->btnGuardarEpisodio->setEnabled(true);
+        ui->btnDeshacerEpisodio->setEnabled(true);
+        ui->btnEpisodioAbierto->setEnabled(true);
+        ui->btnEpisodioCerrado->setEnabled(true);
+        ui->txtDescripcionEpisodio->setFocus();
+   } else {
+       QMessageBox::warning(NULL,tr("Nuevo episodio"),tr("No se ha podido recuperar el nuevo episodio"),tr("Aceptar"));
+       // Activo campos
+        ui->chkEpisodioprivado->setEnabled(false);
+        ui->cboDoctorEpisodio->setEnabled(false);
+        ui->txtFechaEpisodio->setEnabled(false);
+        ui->txtDescripcionEpisodio->setEnabled(false);
+        ui->txtHistorialEpisodio->setEnabled(false);
+        ui->txtCIEEpisiodio->setEnabled(false);
+        ui->btnBuscarCIEEpisodio->setEnabled(false);
+        ui->btnAnadirEpisodio->setEnabled(true);
+        ui->btnEditarEpisodio->setEnabled(true);
+        ui->btnGuardarEpisodio->setEnabled(false);
+        ui->btnDeshacerEpisodio->setEnabled(false);
+        ui->btnEpisodioAbierto->setEnabled(false);
+        ui->btnEpisodioCerrado->setEnabled(false);
+   }
 
 }
 
-void FrmFichaPaciente::on_btnBuscarCIE_clicked()
+void FrmFichaPaciente::on_btnBuscarCIEEpisodio_clicked()
 {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     connect(manager, SIGNAL(finished(QNetworkReply*)),
