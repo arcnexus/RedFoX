@@ -24,6 +24,7 @@ public:
     explicit FrmFichaPaciente(QWidget *parent = 0);
     ~FrmFichaPaciente();
     void cargarDatos(int idcliente);
+    void cargarEpisodio(int control);
     void guardarDatosPaciente();
     
 private slots:
@@ -41,6 +42,12 @@ private slots:
 
     void on_btnGuardarPaciente_clicked();
 
+    void on_btnGuardarEpisodio_clicked();
+
+    void on_listaEpisodios_clicked(const QModelIndex &index);
+
+    void on_listaEpisodios_pressed(const QModelIndex &index);
+
 private:
     Ui::FrmFichaPaciente *ui;
     QNetworkAccessManager* nam;
@@ -51,6 +58,7 @@ private:
     void DesbloquearCamposPaciente();
     void BloquearCamposEpisodio();
     void DesbloquearCamposEpisodio();
+    void LLenarEpisodio();
 };
 
 #endif // FRMFICHAPACIENTE_H

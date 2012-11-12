@@ -28,6 +28,8 @@ void Episodio::RecuperarEpisodio(int idEpisodio)
     qEpisodio->prepare("Select * from episodios where id = :idEpisodio");
     qEpisodio->bindValue(":idEpisodio",idEpisodio);
     if(qEpisodio->exec()) {
+        qEpisodio->next();
+
         QSqlRecord rEpisodio = qEpisodio->record();
         this->id =rEpisodio.field("id").value().toInt();
         this->setidPaciente(rEpisodio.field("idpaciente").value().toInt());
@@ -44,6 +46,34 @@ void Episodio::RecuperarEpisodio(int idEpisodio)
                              qEpisodio->lastError().text(),QObject::tr("Aceptar"));
     }
 
+
+
+}
+
+void Episodio::GuardarEpisodio()
+{
+    QSqlQuery *qEpisodio = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    qEpisodio->prepare("UPDATE episodios SET "
+                       "idpaciente = :idpaciente,"
+                       "cerrado = :cerrado,"
+                       "privado = :privado,"
+                       "doctor = :doctor,"
+                       "fecha = :fecha,"
+                       "cie = :cie,"
+                       "descripcion = :descripcion "
+                       "WHERE id =:id");
+    qEpisodio->bindValue(":idpaciente",this->idPaciente);
+    qEpisodio->bindValue(":cerrado",this->cerrado);
+    qEpisodio->bindValue(":privado",this->privado);
+    qEpisodio->bindValue(":doctor",this->doctor);
+    qEpisodio->bindValue(":fecha",this->fecha);
+    qEpisodio->bindValue(":cie",this->cie);
+    qEpisodio->bindValue(":descripcion",this->descripcion);
+    qEpisodio->bindValue(":id",this->id);
+    if (!qEpisodio->exec())
+        QMessageBox::warning(NULL,QObject::tr("ERROR: Modificación Episodios"),QObject::tr("No se puede modificar el episodio:")+
+                                                                                           qEpisodio->lastError().text(),
+                             QObject::tr("Aceptar"));
 
 
 }

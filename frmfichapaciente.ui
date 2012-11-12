@@ -1695,8 +1695,11 @@ color: rgb(0, 0, 0);</string>
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
-          <item row="0" column="0">
+          <item row="1" column="0">
            <widget class="QToolBox" name="toolBox_2">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="currentIndex">
              <number>0</number>
             </property>
@@ -1713,46 +1716,7 @@ color: rgb(0, 0, 0);</string>
               <string>Episodio</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_39">
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_18">
-                <property name="text">
-                 <string>Descripción:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="1">
-               <layout class="QGridLayout" name="gridLayout_38">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_7">
-                  <property name="text">
-                   <string>CIE:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="btnBuscarCIEEpisodio">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QLineEdit" name="txtCIEEpisiodio">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="5" column="0" colspan="2">
+              <item row="5" column="0" colspan="3">
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <item>
                  <spacer name="horizontalSpacer_6">
@@ -1792,28 +1756,7 @@ color: rgb(0, 0, 0);</string>
                 </item>
                </layout>
               </item>
-              <item row="7" column="0" colspan="2">
-               <widget class="QTextEdit" name="txtHistorialEpisodio">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0" colspan="2">
-               <widget class="QLabel" name="label_86">
-                <property name="text">
-                 <string>Doctor/Terapeuta:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="txtDescripcionEpisodio">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="1">
+              <item row="8" column="1" colspan="2">
                <layout class="QGridLayout" name="gridLayout_3">
                 <item row="0" column="1">
                  <widget class="QPushButton" name="btnGuardarEpisodio">
@@ -1906,6 +1849,51 @@ color: rgb(0, 0, 0);</string>
                 </item>
                </layout>
               </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="txtIdentificadorEpisodio">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 0, 128);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0" colspan="2">
+               <widget class="QLabel" name="label_86">
+                <property name="text">
+                 <string>Doctor/Terapeuta:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" colspan="2">
+               <widget class="QLineEdit" name="txtDescripcionEpisodio">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0" colspan="3">
+               <widget class="QTextEdit" name="txtHistorialEpisodio">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_90">
+                <property name="text">
+                 <string>Identificador:</string>
+                </property>
+               </widget>
+              </item>
               <item row="4" column="0" colspan="2">
                <widget class="QComboBox" name="cboDoctorEpisodio">
                 <property name="enabled">
@@ -1913,7 +1901,46 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_18">
+                <property name="text">
+                 <string>Descripción:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2" rowspan="2">
+               <widget class="QFrame" name="frame_25">
+                <property name="minimumSize">
+                 <size>
+                  <width>318</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <item>
+                  <widget class="QRadioButton" name="radEpisodioAbierto">
+                   <property name="text">
+                    <string>Abierto</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="radEpisodioCerrado">
+                   <property name="text">
+                    <string>Cerrado</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="2" column="1">
                <widget class="QCheckBox" name="chkEpisodioprivado">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1925,6 +1952,38 @@ color: rgb(0, 0, 0);</string>
                  <string>Episodio no visible para otros terapeutas</string>
                 </property>
                </widget>
+              </item>
+              <item row="6" column="0" colspan="3">
+               <layout class="QGridLayout" name="gridLayout_38">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_7">
+                  <property name="text">
+                   <string>CIE:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QPushButton" name="btnBuscarCIEEpisodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLineEdit" name="txtCIEEpisiodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
@@ -3645,7 +3704,6 @@ color: rgb(0, 0, 0);</string>
   <tabstop>btnEditarEpisodio</tabstop>
   <tabstop>btnDeshacerEpisodio</tabstop>
   <tabstop>txtDescripcionEpisodio</tabstop>
-  <tabstop>chkEpisodioprivado</tabstop>
   <tabstop>cboDoctorEpisodio</tabstop>
   <tabstop>txtFechaEpisodio</tabstop>
   <tabstop>btnBuscarCIEEpisodio</tabstop>
