@@ -95,25 +95,12 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
 void FrmFichaPaciente::cargarEpisodio(int control)
 {
     if(control==1) {
-        // Activo campos y botones
-         ui->chkEpisodioprivado->setEnabled(true);
-         ui->cboDoctorEpisodio->setEnabled(true);
-         ui->txtFechaEpisodio->setEnabled(true);
-         ui->txtDescripcionEpisodio->setEnabled(true);
-         ui->txtHistorialEpisodio->setEnabled(true);
-         ui->txtCIEEpisiodio->setEnabled(true);
-         ui->btnBuscarCIEEpisodio->setEnabled(true);
-         ui->btnAnadirEpisodio->setEnabled(false);
-         ui->btnEditarEpisodio->setEnabled(false);
-         ui->btnGuardarEpisodio->setEnabled(true);
-         ui->btnDeshacerEpisodio->setEnabled(true);
-         ui->btnEpisodioAbierto->setEnabled(true);
-         ui->btnEpisodioCerrado->setEnabled(true);
-         ui->txtDescripcionEpisodio->setFocus();
+        DesbloquearCamposEpisodio();
     }
     // Cargo valores en pantalla
     ui->txtIdentificadorEpisodio->setText(QString::number(oEpisodio->getid()));
     ui->txtDescripcionEpisodio->setText(oEpisodio->getdescripcion());
+    ui->txtDescrpicionEpisodio_2->setText(oEpisodio->getdescripcion());
     if(oEpisodio->getprivado() == 1)
         ui->chkEpisodioprivado->setChecked(true);
     else
@@ -245,6 +232,7 @@ void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
    if (oEpisodio->getid() >0) {
 
         cargarEpisodio(1);
+        ui->radEpisodioAbierto->setChecked(true);
 
    } else {
        QMessageBox::warning(NULL,tr("Nuevo episodio"),tr("No se ha podido recuperar el nuevo episodio"),tr("Aceptar"));
@@ -339,10 +327,38 @@ void FrmFichaPaciente::DesbloquearCamposPaciente()
 
 void FrmFichaPaciente::BloquearCamposEpisodio()
 {
+    // Desactivo campos
+     ui->chkEpisodioprivado->setEnabled(false);
+     ui->cboDoctorEpisodio->setEnabled(false);
+     ui->txtFechaEpisodio->setEnabled(false);
+     ui->txtDescripcionEpisodio->setEnabled(false);
+     ui->txtHistorialEpisodio->setEnabled(false);
+     ui->txtCIEEpisiodio->setEnabled(false);
+     ui->btnBuscarCIEEpisodio->setEnabled(false);
+     ui->btnAnadirEpisodio->setEnabled(true);
+     ui->btnEditarEpisodio->setEnabled(true);
+     ui->btnGuardarEpisodio->setEnabled(false);
+     ui->btnDeshacerEpisodio->setEnabled(false);
+     ui->btnEpisodioAbierto->setEnabled(false);
+     ui->btnEpisodioCerrado->setEnabled(false);
 }
 
 void FrmFichaPaciente::DesbloquearCamposEpisodio()
 {
+    // Activo campos
+     ui->chkEpisodioprivado->setEnabled(true);
+     ui->cboDoctorEpisodio->setEnabled(true);
+     ui->txtFechaEpisodio->setEnabled(true);
+     ui->txtDescripcionEpisodio->setEnabled(true);
+     ui->txtHistorialEpisodio->setEnabled(true);
+     ui->txtCIEEpisiodio->setEnabled(true);
+     ui->btnBuscarCIEEpisodio->setEnabled(true);
+     ui->btnAnadirEpisodio->setEnabled(false);
+     ui->btnEditarEpisodio->setEnabled(false);
+     ui->btnGuardarEpisodio->setEnabled(true);
+     ui->btnDeshacerEpisodio->setEnabled(true);
+     ui->btnEpisodioAbierto->setEnabled(true);
+     ui->btnEpisodioCerrado->setEnabled(true);
 }
 
 void FrmFichaPaciente::LLenarEpisodio()
@@ -361,20 +377,7 @@ void FrmFichaPaciente::LLenarEpisodio()
         oEpisodio->setprivado(1);
     else
         oEpisodio->setprivado(0);
-    // Activo campos
-     ui->chkEpisodioprivado->setEnabled(false);
-     ui->cboDoctorEpisodio->setEnabled(false);
-     ui->txtFechaEpisodio->setEnabled(false);
-     ui->txtDescripcionEpisodio->setEnabled(false);
-     ui->txtHistorialEpisodio->setEnabled(false);
-     ui->txtCIEEpisiodio->setEnabled(false);
-     ui->btnBuscarCIEEpisodio->setEnabled(false);
-     ui->btnAnadirEpisodio->setEnabled(true);
-     ui->btnEditarEpisodio->setEnabled(true);
-     ui->btnGuardarEpisodio->setEnabled(false);
-     ui->btnDeshacerEpisodio->setEnabled(false);
-     ui->btnEpisodioAbierto->setEnabled(false);
-     ui->btnEpisodioCerrado->setEnabled(false);
+    //DesbloquearCamposEpisodio();
 }
 
 void FrmFichaPaciente::on_btnEditarPaciente_clicked()
@@ -398,6 +401,7 @@ void FrmFichaPaciente::on_btnGuardarEpisodio_clicked()
     QSqlQueryModel *EpisodiosModelo = new QSqlQueryModel(this);
     EpisodiosModelo->setQuery("Select descripcion from episodios where idpaciente = "+QString::number(oPaciente->getid()),QSqlDatabase::database("dbmedica"));
     ui->listaEpisodios->setModel(EpisodiosModelo);
+    BloquearCamposEpisodio();
 
 }
 
@@ -418,17 +422,15 @@ void FrmFichaPaciente::on_listaEpisodios_clicked(const QModelIndex &index)
 }
 
 
-void FrmFichaPaciente::on_listaEpisodios_pressed(const QModelIndex &index)
+
+void FrmFichaPaciente::on_btnEditarEpisodio_clicked()
 {
-    QString cDescripcion = ui->listaEpisodios->model()->data(index).toString();
-    QSqlQuery *qEpisodio = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qEpisodio->prepare("select id from episodios where descripcion =:descripcion and idpaciente = :idpaciente");
-    qEpisodio->bindValue(":descripcion",cDescripcion);
-    qEpisodio->bindValue(":idpaciente",oPaciente->getid());
-    if (qEpisodio->exec()) {
-        qEpisodio->next();
-        oEpisodio->RecuperarEpisodio(qEpisodio->value(0).toInt());
-        cargarEpisodio(0);
-        ui->btnEditarEpisodio->setEnabled(true);
-    }
+    DesbloquearCamposEpisodio();
+    ui->txtDescripcionEpisodio->setFocus();
+}
+
+void FrmFichaPaciente::on_btnDeshacerEpisodio_clicked()
+{
+    cargarEpisodio(0);
+    BloquearCamposEpisodio();
 }

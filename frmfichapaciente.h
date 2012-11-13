@@ -46,7 +46,9 @@ private slots:
 
     void on_listaEpisodios_clicked(const QModelIndex &index);
 
-    void on_listaEpisodios_pressed(const QModelIndex &index);
+    void on_btnEditarEpisodio_clicked();
+
+    void on_btnDeshacerEpisodio_clicked();
 
 private:
     Ui::FrmFichaPaciente *ui;

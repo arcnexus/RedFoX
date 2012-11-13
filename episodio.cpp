@@ -9,7 +9,7 @@ Episodio::Episodio()
 int Episodio::NuevoEpisodio(int idPaciente)
 {
     QSqlQuery *qEpisodio = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qEpisodio->prepare("insert into episodios (idpaciente) values(:idpaciente)");
+    qEpisodio->prepare("insert into episodios (idpaciente,cerrado) values(:idpaciente,0)");
     qEpisodio->bindValue(":idPaciente",idPaciente);
     if(qEpisodio->exec()) {
         int nid;
@@ -59,6 +59,7 @@ void Episodio::GuardarEpisodio()
                        "privado = :privado,"
                        "doctor = :doctor,"
                        "fecha = :fecha,"
+                       "historial = :historial,"
                        "cie = :cie,"
                        "descripcion = :descripcion "
                        "WHERE id =:id");
@@ -67,6 +68,7 @@ void Episodio::GuardarEpisodio()
     qEpisodio->bindValue(":privado",this->privado);
     qEpisodio->bindValue(":doctor",this->doctor);
     qEpisodio->bindValue(":fecha",this->fecha);
+    qEpisodio->bindValue(":historial",this->historial);
     qEpisodio->bindValue(":cie",this->cie);
     qEpisodio->bindValue(":descripcion",this->descripcion);
     qEpisodio->bindValue(":id",this->id);

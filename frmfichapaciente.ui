@@ -1708,8 +1708,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>676</width>
-               <height>311</height>
+               <width>658</width>
+               <height>304</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1756,99 +1756,6 @@ color: rgb(0, 0, 0);</string>
                 </item>
                </layout>
               </item>
-              <item row="8" column="1" colspan="2">
-               <layout class="QGridLayout" name="gridLayout_3">
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="btnGuardarEpisodio">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string>Guardar</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>24</width>
-                    <height>24</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QPushButton" name="btnEditarEpisodio">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>150</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Editar</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>24</width>
-                    <height>24</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="3">
-                 <widget class="QPushButton" name="btnDeshacerEpisodio">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>150</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Deshacer</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>24</width>
-                    <height>24</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="btnAnadirEpisodio">
-                  <property name="text">
-                   <string>Nuevo</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>24</width>
-                    <height>24</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
               <item row="0" column="1">
                <widget class="QLineEdit" name="txtIdentificadorEpisodio">
                 <property name="enabled">
@@ -1878,12 +1785,20 @@ color: rgb(0, 0, 128);</string>
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+                </property>
                </widget>
               </item>
               <item row="7" column="0" colspan="3">
                <widget class="QTextEdit" name="txtHistorialEpisodio">
                 <property name="enabled">
                  <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
@@ -1912,7 +1827,7 @@ color: rgb(0, 0, 128);</string>
                <widget class="QFrame" name="frame_25">
                 <property name="minimumSize">
                  <size>
-                  <width>318</width>
+                  <width>198</width>
                   <height>0</height>
                  </size>
                 </property>
@@ -1981,6 +1896,120 @@ color: rgb(0, 0, 128);</string>
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="8" column="0" colspan="3">
+               <layout class="QGridLayout" name="gridLayout_3">
+                <item row="0" column="2">
+                 <widget class="QPushButton" name="btnGuardarEpisodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Guardar</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="5">
+                 <widget class="QPushButton" name="btnImprimirEpisodio">
+                  <property name="text">
+                   <string>Imprimir</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QPushButton" name="btnAnadirEpisodio">
+                  <property name="text">
+                   <string>Nuevo</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="4">
+                 <widget class="QPushButton" name="btnDeshacerEpisodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Deshacer</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QPushButton" name="btnEditarEpisodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Editar</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -1992,8 +2021,8 @@ color: rgb(0, 0, 128);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>319</width>
-               <height>156</height>
+               <width>675</width>
+               <height>285</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2030,6 +2059,19 @@ color: rgb(0, 0, 128);</string>
                   </property>
                  </widget>
                 </item>
+                <item row="2" column="4">
+                 <spacer name="horizontalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                 <item row="2" column="0">
                  <widget class="QToolButton" name="btnAnadirFarma">
                   <property name="toolTip">
@@ -2044,23 +2086,10 @@ color: rgb(0, 0, 128);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="3">
-                 <spacer name="horizontalSpacer_2">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="1" column="0" colspan="4">
+                <item row="1" column="0" colspan="5">
                  <widget class="QListWidget" name="listaTratamientosFarma"/>
                 </item>
-                <item row="0" column="0" colspan="4">
+                <item row="0" column="0" colspan="5">
                  <widget class="QLabel" name="label_11">
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(0, 192, 192);</string>
@@ -2070,6 +2099,32 @@ color: rgb(0, 0, 128);</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="3">
+                 <widget class="QPushButton" name="btnImprimirMedicamentosEpisiodio">
+                  <property name="maximumSize">
+                   <size>
+                    <width>26</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Imprimir Historial Medicamentos episodio</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/print2.png</normaloff>:/Icons/PNG/print2.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>16</width>
+                    <height>15</height>
+                   </size>
                   </property>
                  </widget>
                 </item>
@@ -2129,8 +2184,8 @@ color: rgb(0, 0, 128);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>415</width>
-               <height>170</height>
+               <width>675</width>
+               <height>311</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2268,8 +2323,8 @@ color: rgb(0, 0, 128);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>371</width>
-               <height>287</height>
+               <width>675</width>
+               <height>311</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2828,6 +2883,14 @@ color: rgb(0, 0, 128);</string>
               </item>
              </layout>
             </widget>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="txtDescrpicionEpisodio_2">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(255, 0, 0);</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -3701,8 +3764,6 @@ color: rgb(0, 0, 0);</string>
   <tabstop>listaEpisodios</tabstop>
   <tabstop>btnAnadirEpisodio</tabstop>
   <tabstop>btnGuardarEpisodio</tabstop>
-  <tabstop>btnEditarEpisodio</tabstop>
-  <tabstop>btnDeshacerEpisodio</tabstop>
   <tabstop>txtDescripcionEpisodio</tabstop>
   <tabstop>cboDoctorEpisodio</tabstop>
   <tabstop>txtFechaEpisodio</tabstop>

@@ -73,5 +73,6 @@
         <file>PNG/Factura.png</file>
         <file>PNG/Delete.png</file>
         <file>PNG/logo.png</file>
+        <file>PNG/print2.png</file>
     </qresource>
 </RCC>
