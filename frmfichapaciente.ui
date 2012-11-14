@@ -443,7 +443,7 @@ font: 7pt &quot;Sans Serif&quot;;</string>
         <x>0</x>
         <y>0</y>
         <width>204</width>
-        <height>367</height>
+        <height>359</height>
        </rect>
       </property>
       <attribute name="label">
@@ -628,7 +628,7 @@ color: rgb(0, 0, 0);</string>
         <x>0</x>
         <y>0</y>
         <width>204</width>
-        <height>181</height>
+        <height>177</height>
        </rect>
       </property>
       <attribute name="label">
@@ -745,7 +745,7 @@ color: rgb(0, 0, 0);</string>
         <x>0</x>
         <y>0</y>
         <width>204</width>
-        <height>367</height>
+        <height>359</height>
        </rect>
       </property>
       <attribute name="label">
@@ -955,7 +955,7 @@ color: rgb(0, 0, 0);</string>
         <x>0</x>
         <y>0</y>
         <width>204</width>
-        <height>367</height>
+        <height>359</height>
        </rect>
       </property>
       <attribute name="label">
@@ -2021,8 +2021,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>675</width>
-               <height>285</height>
+               <width>344</width>
+               <height>156</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2184,8 +2184,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>675</width>
-               <height>311</height>
+               <width>415</width>
+               <height>170</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2323,8 +2323,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>675</width>
-               <height>311</height>
+               <width>371</width>
+               <height>287</height>
               </rect>
              </property>
              <attribute name="label">
@@ -3589,6 +3589,57 @@ color: rgb(0, 0, 0);</string>
      </item>
      <item>
       <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_92">
+       <property name="maximumSize">
+        <size>
+         <width>90</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="terra.qrc">:/Icons/PNG/logo.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_91">
+       <property name="maximumSize">
+        <size>
+         <width>90</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_10">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
