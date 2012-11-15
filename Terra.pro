@@ -60,7 +60,8 @@ SOURCES += main.cpp\
     frmagendavisitas.cpp \
     sqlcalls.cpp \
     paciente.cpp \
-    episodio.cpp
+    episodio.cpp \
+    frmanadirmedicamento.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -97,7 +98,8 @@ HEADERS  += mainwindow.h \
     frmagendavisitas.h \
     sqlcalls.h \
     paciente.h \
-    episodio.h
+    episodio.h \
+    frmanadirmedicamento.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -121,7 +123,8 @@ FORMS    += mainwindow.ui \
     frmmodificarlin_precli.ui \
     frmcajaminuta.ui \
     frmagendavisitas.ui \
-    frmfichapaciente.ui
+    frmfichapaciente.ui \
+    frmanadirmedicamento.ui
 
 RESOURCES += \
     terra.qrc

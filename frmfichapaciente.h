@@ -50,6 +50,8 @@ private slots:
 
     void on_btnDeshacerEpisodio_clicked();
 
+    void on_btnAnadirFarma_clicked();
+
 private:
     Ui::FrmFichaPaciente *ui;
     QNetworkAccessManager* nam;

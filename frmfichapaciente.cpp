@@ -15,6 +15,7 @@
 #include "paciente.h"
 #include "episodio.h"
 # include <QMessageBox>
+#include "frmanadirmedicamento.h"
 
 Paciente *oPaciente = new Paciente();
 Episodio *oEpisodio = new Episodio();
@@ -433,4 +434,10 @@ void FrmFichaPaciente::on_btnDeshacerEpisodio_clicked()
 {
     cargarEpisodio(0);
     BloquearCamposEpisodio();
+}
+
+void FrmFichaPaciente::on_btnAnadirFarma_clicked()
+{
+    FrmAnadirMedicamento *nuevomed = new FrmAnadirMedicamento();
+    nuevomed->show();
 }
