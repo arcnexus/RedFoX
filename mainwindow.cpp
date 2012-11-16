@@ -135,6 +135,9 @@ MainWindow::MainWindow(QWidget *parent) :
                settings.setValue("cCuentaClientes",m_config->cCuentaClientes);
                settings.setValue("cCuentaProveedores",m_config->cCuentaProveedores);
                settings.setValue("cCuentaAcreedores",m_config->cCuentaAcreedores);
+               settings.setValue("Clave1",record.field("clave1").value().toString());
+               settings.setValue("Clave2",record.field("clave2").value().toString());
+
                // Abro empresa activa
                QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"empresa");
                if (m_config->cDriverBDEmpresa =="QSQLITE") {

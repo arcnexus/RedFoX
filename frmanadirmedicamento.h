@@ -19,7 +19,6 @@ public:
     
 private slots:
     void on_pushButton_clicked();
-    void finishedSlot(QNetworkReply* reply);
 private:
     Ui::FrmAnadirMedicamento *ui;
     QXmlStreamAttributes attrib;

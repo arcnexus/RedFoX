@@ -6,6 +6,8 @@
 #include <QUrl>
 #include <QDebug>
 #include <QXmlStreamReader>
+#include <QtSql>
+#include "vademecum.h"
 
 FrmAnadirMedicamento::FrmAnadirMedicamento(QWidget *parent) :
     QWidget(parent),
@@ -21,23 +23,14 @@ FrmAnadirMedicamento::~FrmAnadirMedicamento()
 
 void FrmAnadirMedicamento::on_pushButton_clicked()
 {
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-        connect(manager, SIGNAL(finished(QNetworkReply*)),
-                this, SLOT(finishedSlot(QNetworkReply*)));
-    QString URL;
-    URL = "http://demo.vademecumdata.es/vweb/xml/ws_drug/SearchByName?value="+
-            ui->txtBuscar->text().trimmed() + "&id_ent=MARC";
-        manager->get(QNetworkRequest(QUrl(URL)));
+    vademecum *vConexionVademecum = new vademecum();
+    QString cURL = "http://demo.vademecumdata.es/vweb/xml/ws_drug/SearchByName?value="+
+            ui->txtBuscar->text().trimmed();
+    QString cResultado;
+    cResultado = vConexionVademecum->recuperar(cURL);
+    ui->textEdit->setText(cResultado);
+    delete vConexionVademecum;
 
 }
 
-void FrmAnadirMedicamento::finishedSlot(QNetworkReply* reply)
-{
-    //qDebug()<<reply->readAll();
-     QString data=(QString)reply->readAll();
-     ui->textEdit->setText(data);
 
-
-
-
-}

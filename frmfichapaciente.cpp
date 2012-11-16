@@ -163,54 +163,9 @@ void FrmFichaPaciente::guardarDatosPaciente()
 
 void FrmFichaPaciente::finishedSlot(QNetworkReply* reply)
 {
- //   qDebug()<<reply->readAll();
+    //qDebug()<<reply->readAll();
      QString data=(QString)reply->readAll();
-//     ui->txtHistorial->setPlainText(data);
-//     QDomDocument medicamento;
-//     QXmlStreamReader xmlReader(data) = new QXmlStreamReader();
-//     while(!xmlReader->atEnd() && !xmlReader->hasError()) {
-//             // Read next element
-//             QXmlStreamReader::TokenType token = xmlReader->readNext();
-//             //If token is just StartDocument - go to next
-//             if(token == QXmlStreamReader::StartDocument) {
-//                     continue;
-//             }
-//             //If token is StartElement - read it
-//             if(token == QXmlStreamReader::StartElement) {
-
-//                     if(xmlReader->name() == "name") {
-//                             continue;
-//                     }
-
-//                     if(xmlReader->name() == "dosage_form") {
-//                         qDebug() << xmlReader->readElementText();
-//                     }
-//             }
-//     }
-
-
-
-
-
-/*
-     QXmlStreamReader xmlStream(data);
-         while(!xmlStream.atEnd())
-         {
-             xmlStream.readNext();
-             if(xmlStream.isStartElement())
-             {
-                 // Read the tag name.
-                 QString sec(xmlStream.name().toString());
-                 // Check in settings map, whether there's already an entry. If not, insert.
-                 if(sec=="drug") {
-                     attrib=xmlStream.attributes();
-                     QString nombre = xmlStream.attributes().value("drug","dosage_form").toString();
-                     ui->txtCIE->setText(nombre);
-                 }
-             }
-         }
-*/
-
+     ui->txtHistorialEpisodio->setPlainText(data);
 
 }
 
@@ -244,11 +199,19 @@ void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
 
 void FrmFichaPaciente::on_btnBuscarCIEEpisodio_clicked()
 {
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    connect(manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(finishedSlot(QNetworkReply*)));
+//    // Recupero valores conexión Vademecum
+//    QSettings settings("infint", "terra");
+//    QString cClave1 = settings.value("Clave1").toString();
+//    QString cClave2 = settings.value("Clave2").toString();
 
-    manager->get(QNetworkRequest(QUrl("http://demo.vademecumdata.es/vweb/xml/ws_drug/SearchByName?value=frenadol")));
+//    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+//        connect(manager, SIGNAL(finished(QNetworkReply*)),
+//                this, SLOT(finishedSlot(QNetworkReply*)));
+//    QString URL;
+//    URL = "http://demo.vademecumdata.es/vweb/xml/ws_drug/SearchByName?value="+
+//            ui->txtBuscar->text().trimmed() + "&id_ent=" + cClave1;
+//        manager->get(QNetworkRequest(QUrl(URL)));
+
 }
 
 void FrmFichaPaciente::BloquearCamposPaciente()

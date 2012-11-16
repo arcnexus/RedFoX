@@ -122,7 +122,8 @@ void Login::on_Crearconfiguracin_clicked()
     settings.setValue("cUsuarioActivo","");
     settings.setValue("nNivelAcceso",0);
     settings.setValue("cCategoria","");
-
+    settings.setValue("Clave1","");
+    settings.setValue("Clave2","");
 
 
 }

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Pruebas</class>
- <widget class="QDialog" name="Pruebas">
+ <class>FrmBuscarCIE</class>
+ <widget class="QWidget" name="FrmBuscarCIE">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>300</height>
+    <width>703</width>
+    <height>402</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Form</string>
   </property>
  </widget>
  <resources/>
