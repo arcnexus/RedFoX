@@ -4,7 +4,8 @@
 # y por ArcNexus
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core \
+gui
 QT       += sql
 QT       += network
 QT       += xml

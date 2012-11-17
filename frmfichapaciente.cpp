@@ -16,6 +16,7 @@
 #include "episodio.h"
 # include <QMessageBox>
 #include "frmanadirmedicamento.h"
+#include "vademecum.h"
 
 Paciente *oPaciente = new Paciente();
 Episodio *oEpisodio = new Episodio();
@@ -199,19 +200,9 @@ void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
 
 void FrmFichaPaciente::on_btnBuscarCIEEpisodio_clicked()
 {
-//    // Recupero valores conexión Vademecum
-//    QSettings settings("infint", "terra");
-//    QString cClave1 = settings.value("Clave1").toString();
-//    QString cClave2 = settings.value("Clave2").toString();
-
-//    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-//        connect(manager, SIGNAL(finished(QNetworkReply*)),
-//                this, SLOT(finishedSlot(QNetworkReply*)));
-//    QString URL;
-//    URL = "http://demo.vademecumdata.es/vweb/xml/ws_drug/SearchByName?value="+
-//            ui->txtBuscar->text().trimmed() + "&id_ent=" + cClave1;
-//        manager->get(QNetworkRequest(QUrl(URL)));
-
+    vademecum *recuperar = new vademecum(this);
+    QStringList cDatos;
+    cDatos = recuperar->recuperarLista("http://wslatam.vademecum.es/MX/vweb/xml/ws_indication/SearchByName?value=ane");
 }
 
 void FrmFichaPaciente::BloquearCamposPaciente()

@@ -6,6 +6,7 @@
 #include <QNetworkRequest>
 #include <QSettings>
 #include <QUrl>
+#include <QDebug>
 
 
 QString cXML;
@@ -33,17 +34,24 @@ QString vademecum::recuperar(QString cUrl)
 
 QStringList vademecum::recuperarLista(QString cUrl)
 {
-    // Recupero valores conexión Vademecum
-    QSettings settings("infint", "terra");
-    QString cClave1 = settings.value("Clave1").toString();
-    QString cClave2 = settings.value("Clave2").toString();
+        // Recupero valores conexión Vademecum
+        QSettings settings("infint", "terra");
+        QString cClave1 = settings.value("Clave1").toString();
+        QString cClave2 = settings.value("Clave2").toString();
 
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-        connect(manager, SIGNAL(finished(QNetworkReply*)),
-                this, SLOT(finishedSlot(QNetworkReply*)));
-    cUrl = cUrl + "&id_ent=" + cClave1;
-        manager->get(QNetworkRequest(QUrl(cUrl)));
+    //    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    //        connect(manager, SIGNAL(finished(QNetworkReply*)),
+    //                this, SLOT(finishedSlot(QNetworkReply*)));
+        cUrl = cUrl + "&id_ent=" + cClave1;
+    //        manager->get(QNetworkRequest(QUrl(cUrl)));
+
+
+            QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+            connect(manager, SIGNAL(finished(QNetworkReply*)),
+                    this, SLOT(finishedSlot(QNetworkReply*)));
+           manager->get(QNetworkRequest(QUrl(cUrl)));
     // procesar cXML
+           qDebug() << cXML;
     QStringList cDatos;
     // Devolver Resultado
 
