@@ -80,12 +80,10 @@ void FrmAnadirMedicamento::finishedSlot(QNetworkReply* reply)
      while (!n.isNull()) {
          if (n.isElement()) {
              QDomNodeList attributes = n.childNodes();
-             //QString s;
 
              for (int i = 0; i < attributes.count(); i ++) {
                  QDomElement e = attributes.at(i).toElement();
-               //  s.append(e.text());
-               //  s.append("\n");
+
                  if (e.tagName() == "name_speciality")
                      forms.append(e.text());
              }
@@ -95,6 +93,7 @@ void FrmAnadirMedicamento::finishedSlot(QNetworkReply* reply)
      }
      // Muestro elementos
      ui->textEdit->setText((cXML));
+     ui->listamedicamentos->clear();
      ui->listamedicamentos->addItems(forms);
 }
 
