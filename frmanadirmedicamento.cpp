@@ -79,6 +79,8 @@ void FrmAnadirMedicamento::finishedSlot(QNetworkReply* reply)
 
      QStringList medicamentos;
      QStringList id;
+     ui->tablamedicamentos->setColumnCount(2);
+     ui->tablamedicamentos->setRowCount(100);
     int nrow = 0;
      while (!n.isNull()) {
          if (n.isElement()) {
@@ -87,8 +89,15 @@ void FrmAnadirMedicamento::finishedSlot(QNetworkReply* reply)
              for (int i = 0; i < attributes.count(); i ++) {
                  QDomElement e = attributes.at(i).toElement();
 
-                 if (e.tagName() == "name_speciality")
+                 if (e.tagName() == "name_speciality") {
                      medicamentos.append(e.text());
+
+                     QTableWidgetItem *newItem = new QTableWidgetItem(e.text());
+                     // para que los elementos no sean editables
+                     newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
+                     newItem->setTextColor(Qt::blue); // color de los items
+                     ui->tablamedicamentos->setItem(0,i,newItem);
+                 }
                  if (e.tagName() == "id_speciality") {
                      id.append(e.text());
                      nrow++;
@@ -99,21 +108,19 @@ void FrmAnadirMedicamento::finishedSlot(QNetworkReply* reply)
          n = n.nextSibling();
      }
 
-     int ncol=2;
-     QStandardItemModel *model = new QStandardItemModel(nrow, ncol, this);
-     model->setHorizontalHeaderItem(0, new QStandardItem(QString("ID")));
-     model->setHorizontalHeaderItem(1, new QStandardItem(QString("Nombre")));
-     // Manteniendo el ancho de columna al tamaño de los contenidos y del TableView
-     TableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-     // Llenado de los valores del modelo para ID
-     while(!id.end())
-         model->setItem(n);
-     model->setItem(0, 0, new QStandardItem(QString::fromUtf8("Inspección")));
-     model->setItem(1, 0, new QStandardItem(QString::fromUtf8("IVA")));
-     model->setItem(2, 0, new QStandardItem(QString::fromUtf8("Viaticos")));
-     model->setItem(3, 0, new QStandardItem(QString::fromUtf8("TOTAL")));
-     // Asignando el modelo al TableView
-     TableView->setModel(model);
+//     int ncol=2;
+//     QStandardItemModel *model = new QStandardItemModel(nrow, ncol, this);
+//     model->setHorizontalHeaderItem(0, new QStandardItem(QString("ID")));
+//     model->setHorizontalHeaderItem(1, new QStandardItem(QString("Nombre")));
+//     // Manteniendo el ancho de columna al tamaño de los contenidos y del TableView
+//    model->sethorizontalHeader()->setResizeMode(QHeaderView::Stretch);
+//    // Llenado de los valores del modelo para ID
+//    QList<QString>::iterator i;
+//        for (i = id.begin(); i != id.end(); ++i) {
+//            model->setItem(i, 0, new QStandardItem(QString(id.at(i).toUtf8())));
+//     }
+//     // Asignando el modelo al TableView
+//     ui->tablaMedicamentos->setModel(*model);
 
 
 

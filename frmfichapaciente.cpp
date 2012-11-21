@@ -200,9 +200,9 @@ void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
 
 void FrmFichaPaciente::on_btnBuscarCIEEpisodio_clicked()
 {
-    vademecum *recuperar = new vademecum(this);
-    QStringList cDatos;
-    cDatos = recuperar->recuperarLista("http://wslatam.vademecum.es/MX/vweb/xml/ws_indication/SearchByName?value=ane");
+//    vademecum *recuperar = new vademecum(this);
+//    QStringList cDatos;
+//    cDatos = recuperar->recuperarLista("http://wslatam.vademecum.es/MX/vweb/xml/ws_indication/SearchByName?value=ane");
 }
 
 void FrmFichaPaciente::BloquearCamposPaciente()

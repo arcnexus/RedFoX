@@ -31,15 +31,15 @@ void vademecum::recuperar(QString cUrl)
 
 void vademecum::finishedSlot(QNetworkReply* reply)
 {
-    QString data=(QString)reply->readAll();error=(reply->error()!= QNetworkReply::NoError);
-    cXML = data;
-    QString replyString = QString(reply->readAll());
-    QString errorString=reply->errorString();
-    reply->deleteLater();
-    //int iMaxError=m_pref.maxError;
-    if (!error) {
-        emit procesandoEvent(false,false,data);
-    }else{
-        emit procesandoEvent(false,true,"");
-    }
+    //QString data=(QString)reply->readAll();error=(reply->error()!= QNetworkReply::NoError);
+//    cXML = data;
+//    QString replyString = QString(reply->readAll());
+//    QString errorString=reply->errorString();
+//    reply->deleteLater();
+//    //int iMaxError=m_pref.maxError;
+//    if (!error) {
+//        emit procesandoEvent(false,false,data);
+//    }else{
+//        emit procesandoEvent(false,true,"");
+ //   }
 }

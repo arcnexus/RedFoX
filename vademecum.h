@@ -11,7 +11,8 @@ class vademecum : public QObject
     Q_OBJECT
 public:
     explicit vademecum(QObject *parent = 0);
-    QString recuperar(QString cUrl);
+   // QString recuperar(QString cUrl);
+    void recuperar(QString cUrl);
     QStringList recuperarLista(QString cUrl);
 
 private:
