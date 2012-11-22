@@ -79,9 +79,16 @@ void FrmAnadirMedicamento::finishedSlot(QNetworkReply* reply)
 
      QStringList medicamentos;
      QStringList id;
-     ui->tablamedicamentos->setColumnCount(2);
-     ui->tablamedicamentos->setRowCount(100);
+     ui->tablamedicamentos->setColumnCount(4);
+     ui->tablamedicamentos->setColumnWidth(0,400);
+     ui->tablamedicamentos->setColumnWidth(1,0);
+     ui->tablamedicamentos->setColumnWidth(2,450);
+     ui->tablamedicamentos->setColumnWidth(3,200);
+
+
+
     int nrow = 0;
+    int pos = 0;
      while (!n.isNull()) {
          if (n.isElement()) {
              QDomNodeList attributes = n.childNodes();
@@ -90,19 +97,49 @@ void FrmAnadirMedicamento::finishedSlot(QNetworkReply* reply)
                  QDomElement e = attributes.at(i).toElement();
 
                  if (e.tagName() == "name_speciality") {
-                     medicamentos.append(e.text());
-
+                     //medicamentos.append(e.text());
+                     ui->tablamedicamentos->setRowCount(pos+1);
                      QTableWidgetItem *newItem = new QTableWidgetItem(e.text());
                      // para que los elementos no sean editables
                      newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
                      newItem->setTextColor(Qt::blue); // color de los items
-                     ui->tablamedicamentos->setItem(0,i,newItem);
+
+                     ui->tablamedicamentos->setItem(pos,0,newItem);
+
+
                  }
                  if (e.tagName() == "id_speciality") {
-                     id.append(e.text());
-                     nrow++;
+                     //id.append(e.text());
+                     QTableWidgetItem *newItem = new QTableWidgetItem(e.text());
+                     // para que los elementos no sean editables
+                     newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
+                     newItem->setTextColor(Qt::red); // color de los items
+                     ui->tablamedicamentos->setItem(pos,1,newItem);
                  }
+                 if (e.tagName() == "dosage_form") {
+                     QTableWidgetItem *newItem = new QTableWidgetItem(e.text());
+                     // para que los elementos no sean editables
+                     newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
+                     newItem->setTextColor(Qt::red); // color de los items
+                     ui->tablamedicamentos->setItem(pos,2,newItem);
+                 }
+                 if (e.tagName() == "package") {
+                     QTableWidgetItem *newItem = new QTableWidgetItem(e.text());
+                     // para que los elementos no sean editables
+                     newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
+                     newItem->setTextColor(Qt::green); // color de los items
+                     ui->tablamedicamentos->setItem(pos,3,newItem);
+                 }
+
+
+
+
+
+
              }
+
+             pos++;
+
              //data.append(s);
          }
          n = n.nextSibling();
@@ -126,11 +163,7 @@ void FrmAnadirMedicamento::finishedSlot(QNetworkReply* reply)
 
      // Muestro elementos
      ui->textEdit->setText((cXML));
-     ui->listamedicamentos->clear();
 
-
-
-     ui->listamedicamentos->addItems(medicamentos);
 }
 
 
