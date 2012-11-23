@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Busqueda de Medicamentos</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="terra.qrc">
+    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="1">
@@ -44,7 +48,7 @@
    <item row="0" column="0" colspan="3">
     <widget class="QToolBox" name="toolBox">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="geometry">
@@ -52,13 +56,19 @@
         <x>0</x>
         <y>0</y>
         <width>849</width>
-        <height>273</height>
+        <height>300</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Buscar por nombre de medicamento.</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
+       <item row="3" column="0" colspan="5">
+        <widget class="QTableWidget" name="tablamedicamentos"/>
+       </item>
+       <item row="2" column="0">
+        <layout class="QFormLayout" name="formLayout"/>
+       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
@@ -78,28 +88,6 @@
           </size>
          </property>
         </spacer>
-       </item>
-       <item row="0" column="1" colspan="4">
-        <widget class="QLineEdit" name="txtBuscar"/>
-       </item>
-       <item row="1" column="4">
-        <widget class="QLabel" name="label_3">
-         <property name="maximumSize">
-          <size>
-           <width>111</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
        </item>
        <item row="1" column="0" colspan="2">
         <widget class="QFrame" name="frame">
@@ -154,7 +142,29 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0" colspan="5">
+       <item row="0" column="1" colspan="4">
+        <widget class="QLineEdit" name="txtBuscar"/>
+       </item>
+       <item row="1" column="4">
+        <widget class="QLabel" name="label_3">
+         <property name="maximumSize">
+          <size>
+           <width>111</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="5">
         <widget class="QTextEdit" name="textEdit">
          <property name="maximumSize">
           <size>
@@ -164,23 +174,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="5">
-        <widget class="QTableWidget" name="tablamedicamentos"/>
-       </item>
       </layout>
-     </widget>
-     <widget class="QWidget" name="page_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>849</width>
-        <height>273</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Buscar por ATC.</string>
-      </attribute>
      </widget>
      <widget class="QWidget" name="patologia">
       <property name="geometry">
@@ -188,12 +182,155 @@
         <x>0</x>
         <y>0</y>
         <width>849</width>
-        <height>273</height>
+        <height>300</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Buscar por Patología.</string>
       </attribute>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="1" colspan="3">
+        <widget class="QLineEdit" name="txtBuscarPatologia"/>
+       </item>
+       <item row="4" column="0" colspan="5">
+        <widget class="QTextEdit" name="textEditPatologia">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QFrame" name="frame_2">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Criterios de Búsqueda:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_3">
+            <property name="text">
+             <string>Empieza por</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_4">
+            <property name="text">
+             <string>Contiene</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QPushButton" name="btnBuscarPatologia">
+         <property name="text">
+          <string>Buscar Patología</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Patología a buscar:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QLabel" name="label_5">
+         <property name="maximumSize">
+          <size>
+           <width>111</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" colspan="4">
+        <widget class="QTableWidget" name="tablamedicamentosPatologia"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QTableWidget" name="tablaPatologias"/>
+       </item>
+       <item row="1" column="2">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>208</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="3">
+        <widget class="QPushButton" name="btnBuscarMedicamentoporPatologia">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Consultar BD</string>
+         </property>
+         <property name="icon">
+          <iconset resource="terra.qrc">
+           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(192, 192, 255);</string>
+         </property>
+         <property name="text">
+          <string>Patologías</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="4">
+        <widget class="QLabel" name="label_8">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(192, 192, 255);</string>
+         </property>
+         <property name="text">
+          <string>Medicamentos asociados a la Patología indicada</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="page_3">
       <property name="geometry">
@@ -201,7 +338,7 @@
         <x>0</x>
         <y>0</y>
         <width>849</width>
-        <height>273</height>
+        <height>300</height>
        </rect>
       </property>
       <attribute name="label">
@@ -214,7 +351,7 @@
         <x>0</x>
         <y>0</y>
         <width>849</width>
-        <height>273</height>
+        <height>300</height>
        </rect>
       </property>
       <attribute name="label">

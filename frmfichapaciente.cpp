@@ -26,7 +26,6 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     ui(new Ui::FrmFichaPaciente)
 {
     ui->setupUi(this);
-    this->setWindowState(Qt::WindowMaximized);
     // Rellenar combos
     SqlCalls *llamada = new SqlCalls();
     QStringList listaEstudios = llamada->queryList("Select nivel from nivelestudios","dbmedica");
@@ -393,5 +392,6 @@ void FrmFichaPaciente::on_btnDeshacerEpisodio_clicked()
 void FrmFichaPaciente::on_btnAnadirFarma_clicked()
 {
     FrmAnadirMedicamento *nuevomed = new FrmAnadirMedicamento();
+    nuevomed->setWindowState(Qt::WindowMaximized);
     nuevomed->show();
 }

@@ -19,7 +19,15 @@ public:
     
 private slots:
     void on_pushButton_clicked();
-    void finishedSlot(QNetworkReply* reply);
+    void finishedSlotMedicamento(QNetworkReply* reply);
+    void finishedSlotBuscarMedicamentoPorPatologia(QNetworkReply* reply);
+    void finishedSlotBuscarPatologia(QNetworkReply* reply);
+
+
+    void on_btnBuscarMedicamentoporPatologia_clicked();
+
+    void on_btnBuscarPatologia_clicked();
+
 private:
     Ui::FrmAnadirMedicamento *ui;
     QXmlStreamAttributes attrib;
