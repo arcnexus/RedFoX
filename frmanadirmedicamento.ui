@@ -21,22 +21,74 @@
    <item row="0" column="0" colspan="3">
     <widget class="QToolBox" name="toolBox">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>849</width>
-        <height>300</height>
+        <width>832</width>
+        <height>302</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Buscar por nombre de medicamento.</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="0" colspan="2">
+       <item row="1" column="5">
+        <widget class="QLabel" name="label_3">
+         <property name="maximumSize">
+          <size>
+           <width>111</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <layout class="QFormLayout" name="formLayout"/>
+       </item>
+       <item row="3" column="1" colspan="5">
+        <widget class="QLabel" name="label_4">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(192, 192, 255);</string>
+         </property>
+         <property name="text">
+          <string>Medicamentos en vademécum (pulse Click para cargar prospecto)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QPushButton" name="pushButton">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Consultar BD</string>
+         </property>
+         <property name="icon">
+          <iconset resource="terra.qrc">
+           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2" colspan="4">
+        <widget class="QLineEdit" name="txtBuscar"/>
+       </item>
+       <item row="1" column="1" colspan="2">
         <widget class="QFrame" name="frame">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -72,69 +124,14 @@
          </layout>
         </widget>
        </item>
-       <item row="1" column="3">
-        <widget class="QPushButton" name="pushButton">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Consultar BD</string>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="4">
-        <widget class="QLineEdit" name="txtBuscar"/>
-       </item>
-       <item row="4" column="0" colspan="5">
-        <widget class="QTableWidget" name="tablamedicamentos"/>
-       </item>
-       <item row="1" column="4">
-        <widget class="QLabel" name="label_3">
-         <property name="maximumSize">
-          <size>
-           <width>111</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0" colspan="5">
-        <widget class="QTextEdit" name="textEdit">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>200</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <layout class="QFormLayout" name="formLayout"/>
-       </item>
-       <item row="0" column="0">
+       <item row="0" column="1">
         <widget class="QLabel" name="label">
          <property name="text">
           <string>Nombre a buscar:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
+       <item row="1" column="3">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -147,17 +144,17 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="0" colspan="5">
-        <widget class="QLabel" name="label_4">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(192, 192, 255);</string>
-         </property>
-         <property name="text">
-          <string>Medicamentos en vademécum (pulse Click para cargar prospecto)</string>
+       <item row="6" column="0" colspan="6">
+        <widget class="QTextEdit" name="textEdit">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>200</height>
+          </size>
          </property>
         </widget>
        </item>
-       <item row="5" column="0" colspan="5">
+       <item row="5" column="0" colspan="6">
         <widget class="QLabel" name="label_11">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(192, 192, 255);</string>
@@ -167,22 +164,32 @@
          </property>
         </widget>
        </item>
+       <item row="4" column="0" colspan="6">
+        <widget class="QTableWidget" name="tablamedicamentos"/>
+       </item>
+       <item row="7" column="5">
+        <widget class="QPushButton" name="btnAceptar1">
+         <property name="text">
+          <string>Aceptar</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="patologia">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>862</width>
-        <height>348</height>
+        <x>-34</x>
+        <y>-93</y>
+        <width>866</width>
+        <height>376</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Buscar por Patología.</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
+       <item row="0" column="1">
         <widget class="QTabWidget" name="tabBuscarporPatologia">
          <property name="tabPosition">
           <enum>QTabWidget::West</enum>
@@ -354,13 +361,33 @@
          </widget>
         </widget>
        </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="pushButton_4">
+         <property name="text">
+          <string>Aceptar</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="page_3">
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-35</y>
         <width>832</width>
         <height>335</height>
        </rect>
@@ -369,6 +396,22 @@
        <string>Buscar por Molécula.</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="maximumSize">
+          <size>
+           <width>346</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(192, 192, 255);</string>
+         </property>
+         <property name="text">
+          <string>Moléculas (dbl Click para mostrar med. asoc)</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="label_15">
          <property name="maximumSize">
@@ -447,22 +490,6 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_12">
-         <property name="maximumSize">
-          <size>
-           <width>346</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(192, 192, 255);</string>
-         </property>
-         <property name="text">
-          <string>Moléculas (dbl Click para mostrar med. asoc)</string>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="1">
         <widget class="QLabel" name="label_16">
          <property name="styleSheet">
@@ -509,7 +536,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="0" colspan="2">
+       <item row="8" column="0" colspan="2">
         <widget class="QTextEdit" name="textProspectoMolecula">
          <property name="maximumSize">
           <size>
@@ -519,13 +546,20 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0" colspan="2">
+       <item row="7" column="0" colspan="2">
         <widget class="QLabel" name="label_17">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(192, 192, 255);</string>
          </property>
          <property name="text">
           <string>Prospecto</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QPushButton" name="pushButton_5">
+         <property name="text">
+          <string>Aceptar</string>
          </property>
         </widget>
        </item>
@@ -536,13 +570,182 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>849</width>
-        <height>300</height>
+        <width>832</width>
+        <height>335</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Busqueda por principio activo.</string>
       </attribute>
+      <layout class="QGridLayout" name="gridLayout_7">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_18">
+         <property name="maximumSize">
+          <size>
+           <width>169</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Principio activo a buscar</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="txtBuscarPrincipioActivo">
+         <property name="maximumSize">
+          <size>
+           <width>346</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="label_20">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string>Información sumunistrada por:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="btnBuscarPrincipiosActivos">
+         <property name="maximumSize">
+          <size>
+           <width>346</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Buscar Principios Activos.</string>
+         </property>
+         <property name="icon">
+          <iconset resource="terra.qrc">
+           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_21">
+         <property name="maximumSize">
+          <size>
+           <width>176</width>
+           <height>47</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_23">
+         <property name="maximumSize">
+          <size>
+           <width>346</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(192, 192, 255);</string>
+         </property>
+         <property name="text">
+          <string>P. Activos (dbl Click para mostrar med. asoc)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_22">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(192, 192, 255);</string>
+         </property>
+         <property name="text">
+          <string>Medicamentos asociados al P.Activo indicado (click muestra prospecto)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QTableWidget" name="tablaPrincipiosActivos">
+         <property name="maximumSize">
+          <size>
+           <width>346</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QTableWidget" name="tablamedicamentospactivos"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QPushButton" name="btnBuscarMedicamentoporPA">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>346</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Consultar medicamentos molécula señalada</string>
+         </property>
+         <property name="icon">
+          <iconset resource="terra.qrc">
+           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="2">
+        <widget class="QLabel" name="label_19">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(192, 192, 255);</string>
+         </property>
+         <property name="text">
+          <string>Prospecto</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0" colspan="2">
+        <widget class="QTextEdit" name="textProspectopa">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>200</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QPushButton" name="pushButton_6">
+         <property name="text">
+          <string>Aceptar</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
@@ -559,15 +762,8 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="pushButton_2">
-     <property name="text">
-      <string>Aceptar</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="2">
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="btnCerrar">
      <property name="text">
       <string>Cerrar</string>
      </property>
@@ -578,22 +774,5 @@
  <resources>
   <include location="terra.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>pushButton_3</sender>
-   <signal>clicked()</signal>
-   <receiver>FrmAnadirMedicamento</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>823</x>
-     <y>434</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>865</x>
-     <y>381</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

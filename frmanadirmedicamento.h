@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QNetworkReply>
 #include <QXmlStreamAttributes>
+#include <QStringList>
 
 namespace Ui {
 class FrmAnadirMedicamento;
@@ -16,10 +17,12 @@ class FrmAnadirMedicamento : public QWidget
 public:
     explicit FrmAnadirMedicamento(QWidget *parent = 0);
     ~FrmAnadirMedicamento();
-    
+    int idMedicamento;
+    QString cRetMedicamento;
+    QStringList cMedicList;
 
-
-
+signals:
+    void datos(int, QString);
 
 private slots:
     void on_pushButton_clicked();
@@ -31,7 +34,9 @@ private slots:
     void finishedSlotBuscarMedicamentoPorMolecula(QNetworkReply *reply);
     void finishedSlotBuscarProspectoMolecula(QNetworkReply *reply);
     void on_btnBuscarMedicamentoporPatologia_clicked();
-
+    void finishedSlotBuscarPrincipioActivo(QNetworkReply *reply);
+    void finishedSlotBuscarMedicamentoPorPActivo(QNetworkReply *reply);
+    void finishedSlotBuscarProspectoPrincAct(QNetworkReply *reply);
     void on_btnBuscarPatologia_clicked();
 
     void on_btnVerProspecto_clicked();
@@ -45,6 +50,15 @@ private slots:
     void on_btnBuscarMedicamentoporMolecula_clicked();
 
     void on_tablamedicamentosMolecula_clicked();
+
+    void on_btnBuscarPrincipiosActivos_clicked();
+
+    void on_btnBuscarMedicamentoporPA_clicked();
+
+    void on_tablamedicamentospactivos_clicked();
+
+
+    void on_btnAceptar1_clicked();
 
 private:
     Ui::FrmAnadirMedicamento *ui;

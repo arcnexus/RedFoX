@@ -157,7 +157,28 @@ void FrmFichaPaciente::guardarDatosPaciente()
     if (ui->chkOtrasDrogas->isChecked())
             oPaciente->setotrasDrogas(1);
     else
-            oPaciente->setotrasDrogas(0);
+        oPaciente->setotrasDrogas(0);
+}
+
+void FrmFichaPaciente::leerDatosMedicamento(int id, QString nombre)
+{
+    qDebug()  <<id;
+    qDebug() <<nombre;
+    QSqlQuery *qTratamientos = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QSqlQueryModel *qTratamientosM = new QSqlQueryModel();
+
+    qTratamientos->prepare("insert into histofarma (idmedicamento,medicamento,idepisodio) values (:idmedicamento,:medicamento,:idepisodio)");
+    qTratamientos->bindValue(":idmedicamento",id);
+    qTratamientos->bindValue(":medicamento",nombre);
+    qTratamientos->bindValue(":idepisodios",oEpisodio->getid());
+    if (qTratamientos->exec()) {
+
+        QString cSQL = "Select * from histofarma where id ="+QString::number(oEpisodio->getid());
+        qTratamientosM->setQuery(cSQL,QSqlDatabase::database("dbmedica"));
+    }
+    delete qTratamientos;
+    ui->listaTratamientosFarma->setModel(qTratamientosM);
+
 }
 
 
@@ -393,5 +414,8 @@ void FrmFichaPaciente::on_btnAnadirFarma_clicked()
 {
     FrmAnadirMedicamento *nuevomed = new FrmAnadirMedicamento();
     nuevomed->setWindowState(Qt::WindowMaximized);
+    connect(nuevomed, SIGNAL(datos(int, QString)), this, SLOT(leerDatosMedicamento(int, QString)));
     nuevomed->show();
+
+
 }

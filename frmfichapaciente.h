@@ -26,6 +26,8 @@ public:
     void cargarDatos(int idcliente);
     void cargarEpisodio(int control);
     void guardarDatosPaciente();
+public slots:
+    void leerDatosMedicamento(int id, QString nombre);
     
 private slots:
     void finishedSlot(QNetworkReply* reply);
