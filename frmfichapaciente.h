@@ -54,6 +54,8 @@ private slots:
 
     void on_btnAnadirFarma_clicked();
 
+    void BuscarCIE();
+
 private:
     Ui::FrmFichaPaciente *ui;
     QNetworkAccessManager* nam;

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>867</width>
-    <height>454</height>
+    <width>1210</width>
+    <height>569</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,19 +17,39 @@
    <iconset resource="terra.qrc">
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout_6">
-   <item row="0" column="0" colspan="3">
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="1" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="btnCerrar">
+     <property name="text">
+      <string>Cerrar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
     <widget class="QToolBox" name="toolBox">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>832</width>
-        <height>302</height>
+        <width>1192</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -179,17 +199,17 @@
      <widget class="QWidget" name="patologia">
       <property name="geometry">
        <rect>
-        <x>-34</x>
-        <y>-93</y>
-        <width>866</width>
-        <height>376</height>
+        <x>0</x>
+        <y>0</y>
+        <width>1192</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Buscar por Patología.</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="1">
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="2" column="0">
         <widget class="QTabWidget" name="tabBuscarporPatologia">
          <property name="tabPosition">
           <enum>QTabWidget::West</enum>
@@ -202,23 +222,6 @@
            <string>Selección</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_4">
-           <item row="5" column="0" colspan="3">
-            <widget class="QPushButton" name="btnBuscarMedicamentoporPatologia">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Consultar medicamentos patologia señalada</string>
-             </property>
-             <property name="icon">
-              <iconset resource="terra.qrc">
-               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-             </property>
-            </widget>
-           </item>
            <item row="3" column="0" colspan="3">
             <widget class="QLabel" name="label_7">
              <property name="styleSheet">
@@ -277,7 +280,7 @@
              </property>
             </widget>
            </item>
-           <item row="6" column="0" colspan="6">
+           <item row="8" column="0" colspan="6">
             <widget class="QLabel" name="label_10">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(192, 192, 255);</string>
@@ -320,7 +323,7 @@
            <item row="4" column="0" colspan="3">
             <widget class="QTableWidget" name="tablaPatologias"/>
            </item>
-           <item row="7" column="0" colspan="6">
+           <item row="9" column="0" colspan="6">
             <widget class="QTextEdit" name="textProspecto">
              <property name="maximumSize">
               <size>
@@ -347,6 +350,34 @@
              </property>
             </widget>
            </item>
+           <item row="7" column="5">
+            <widget class="QPushButton" name="pushButton_4">
+             <property name="text">
+              <string>Aceptar</string>
+             </property>
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0" colspan="3">
+            <widget class="QPushButton" name="btnBuscarMedicamentoporPatologia">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Consultar medicamentos patologia señalada</string>
+             </property>
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="tab_2">
@@ -355,31 +386,19 @@
           </attribute>
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="0" column="0">
-            <widget class="QTextEdit" name="textEdit_2"/>
+            <widget class="QTextEdit" name="textProspectoPato">
+             <property name="html">
+              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Bitstream Vera Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
         </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="pushButton_4">
-         <property name="text">
-          <string>Aceptar</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -387,9 +406,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-35</y>
-        <width>832</width>
-        <height>335</height>
+        <y>0</y>
+        <width>1192</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -570,8 +589,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>832</width>
-        <height>335</height>
+        <width>1192</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -747,26 +766,6 @@
        </item>
       </layout>
      </widget>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="2">
-    <widget class="QPushButton" name="btnCerrar">
-     <property name="text">
-      <string>Cerrar</string>
-     </property>
     </widget>
    </item>
   </layout>

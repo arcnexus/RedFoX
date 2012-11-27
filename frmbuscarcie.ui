@@ -1,19 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>FrmBuscarCIE</class>
- <widget class="QWidget" name="FrmBuscarCIE">
+ <widget class="QDialog" name="FrmBuscarCIE">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>703</width>
-    <height>402</height>
+    <width>588</width>
+    <height>336</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Buscar CIE</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="terra.qrc">
+    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>CIE a Buscar:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="txtCIE">
+     <property name="minimumSize">
+      <size>
+       <width>363</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2" colspan="2">
+    <widget class="QPushButton" name="btnBuscar">
+     <property name="text">
+      <string>Buscar CIE</string>
+     </property>
+     <property name="icon">
+      <iconset resource="terra.qrc">
+       <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="4">
+    <widget class="QTableWidget" name="tablaCIE"/>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="QPushButton" name="btnAceptar">
+     <property name="text">
+      <string>Aceptar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="terra.qrc">
+       <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QPushButton" name="btnCancelar">
+     <property name="text">
+      <string>Cancelar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="terra.qrc">
+       <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="terra.qrc"/>
+ </resources>
  <connections/>
 </ui>

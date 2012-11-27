@@ -9,13 +9,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1395</width>
-    <height>584</height>
+    <width>1298</width>
+    <height>648</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
-    <width>16777215</width>
+    <width>1300</width>
     <height>16777215</height>
    </size>
   </property>
@@ -30,6 +30,77 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_36">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;HISTORIAL CLÍNICO&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>PACIENTE:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtPaciente">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 0, 0);</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="frame">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QRadioButton" name="radHombre">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">
+color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>HOMBRE</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radMujer">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">
+color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>MUJER</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="2" column="2">
     <widget class="QFrame" name="frame_2">
      <property name="maximumSize">
@@ -448,8 +519,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>198</width>
-        <height>354</height>
+        <width>200</width>
+        <height>418</height>
        </rect>
       </property>
       <attribute name="label">
@@ -510,8 +581,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>197</width>
-        <height>400</height>
+        <width>200</width>
+        <height>418</height>
        </rect>
       </property>
       <attribute name="label">
@@ -634,7 +705,7 @@ color: rgb(0, 0, 0);</string>
         <x>0</x>
         <y>0</y>
         <width>203</width>
-        <height>158</height>
+        <height>190</height>
        </rect>
       </property>
       <attribute name="label">
@@ -750,8 +821,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>198</width>
-        <height>354</height>
+        <width>200</width>
+        <height>418</height>
        </rect>
       </property>
       <attribute name="label">
@@ -961,7 +1032,7 @@ color: rgb(0, 0, 0);</string>
         <x>0</x>
         <y>0</y>
         <width>200</width>
-        <height>337</height>
+        <height>418</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1052,6 +1123,12 @@ color: rgb(0, 0, 0);</string>
    </item>
    <item row="2" column="1">
     <widget class="QTabWidget" name="paginadorprincipal">
+     <property name="maximumSize">
+      <size>
+       <width>976</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="tabPosition">
       <enum>QTabWidget::West</enum>
      </property>
@@ -1721,21 +1798,21 @@ color: rgb(255, 0, 0);</string>
              <bool>true</bool>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="page_3">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>559</width>
-               <height>329</height>
+               <width>576</width>
+               <height>334</height>
               </rect>
              </property>
              <attribute name="label">
               <string>Episodio</string>
              </attribute>
-             <layout class="QGridLayout" name="gridLayout_39">
+             <layout class="QGridLayout" name="gridLayout_60">
               <item row="0" column="0">
                <widget class="QLabel" name="label_90">
                 <property name="text">
@@ -1743,7 +1820,7 @@ color: rgb(255, 0, 0);</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
+              <item row="0" column="1" colspan="2">
                <widget class="QLineEdit" name="txtIdentificadorEpisodio">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1760,21 +1837,164 @@ color: rgb(0, 0, 128);</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
+              <item row="0" column="3">
                <widget class="QLabel" name="label_18">
                 <property name="text">
                  <string>Descripción:</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="0">
+              <item row="0" column="4">
+               <widget class="QLineEdit" name="txtDescripcionEpisodio">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="4">
+               <widget class="QCheckBox" name="chkEpisodioprivado">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Episodio no visible para otros terapeutas</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="4">
+               <widget class="QFrame" name="frame_25">
+                <property name="minimumSize">
+                 <size>
+                  <width>198</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <item>
+                  <widget class="QRadioButton" name="radEpisodioAbierto">
+                   <property name="text">
+                    <string>Abierto</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="radEpisodioCerrado">
+                   <property name="text">
+                    <string>Cerrado</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="2" column="0" colspan="2">
                <widget class="QLabel" name="label_86">
                 <property name="text">
                  <string>Doctor/Terapeuta:</string>
                 </property>
                </widget>
               </item>
-              <item row="8" column="0" colspan="3">
+              <item row="3" column="0" colspan="3">
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <spacer name="horizontalSpacer_6">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_5">
+                  <property name="text">
+                   <string>Fecha:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDateEdit" name="txtFechaEpisodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0, 0);</string>
+                  </property>
+                  <property name="displayFormat">
+                   <string>dd/MM/yyyy</string>
+                  </property>
+                  <property name="calendarPopup">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="3" column="3" colspan="2">
+               <layout class="QGridLayout" name="gridLayout_38">
+                <item row="0" column="1">
+                 <widget class="QPushButton" name="btnBuscarCIEEpisodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLineEdit" name="txtCIEEpisiodio">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_7">
+                  <property name="text">
+                   <string>CIE:</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="4" column="0" colspan="5">
+               <widget class="QTextEdit" name="txtHistorialEpisodio">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0" colspan="5">
                <layout class="QGridLayout" name="gridLayout_3">
                 <item row="0" column="2">
                  <widget class="QPushButton" name="btnGuardarEpisodio">
@@ -1884,153 +2104,10 @@ color: rgb(0, 0, 128);</string>
                 </item>
                </layout>
               </item>
-              <item row="7" column="0" colspan="2">
-               <widget class="QTextEdit" name="txtHistorialEpisodio">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0" colspan="2">
-               <layout class="QGridLayout" name="gridLayout_38">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_7">
-                  <property name="text">
-                   <string>CIE:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="btnBuscarCIEEpisodio">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QLineEdit" name="txtCIEEpisiodio">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="5" column="0" colspan="2">
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
-                <item>
-                 <spacer name="horizontalSpacer_6">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_5">
-                  <property name="text">
-                   <string>Fecha:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QDateEdit" name="txtFechaEpisodio">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(0, 0, 0);</string>
-                  </property>
-                  <property name="displayFormat">
-                   <string>dd/MM/yyyy</string>
-                  </property>
-                  <property name="calendarPopup">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="4" column="0" colspan="2">
+              <item row="2" column="2" colspan="3">
                <widget class="QComboBox" name="cboDoctorEpisodio">
                 <property name="enabled">
                  <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QCheckBox" name="chkEpisodioprivado">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0, 0);</string>
-                </property>
-                <property name="text">
-                 <string>Episodio no visible para otros terapeutas</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QFrame" name="frame_25">
-                <property name="minimumSize">
-                 <size>
-                  <width>198</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_4">
-                 <item>
-                  <widget class="QRadioButton" name="radEpisodioAbierto">
-                   <property name="text">
-                    <string>Abierto</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QRadioButton" name="radEpisodioCerrado">
-                   <property name="text">
-                    <string>Cerrado</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="txtDescripcionEpisodio">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
@@ -2042,7 +2119,7 @@ color: rgb(0, 0, 0);</string>
                <x>0</x>
                <y>0</y>
                <width>576</width>
-               <height>270</height>
+               <height>334</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2191,8 +2268,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>415</width>
-               <height>171</height>
+               <width>576</width>
+               <height>334</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2330,8 +2407,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>388</width>
-               <height>288</height>
+               <width>576</width>
+               <height>334</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2488,7 +2565,7 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>386</width>
+               <width>559</width>
                <height>345</height>
               </rect>
              </property>
@@ -2760,8 +2837,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>313</width>
-               <height>267</height>
+               <width>576</width>
+               <height>334</height>
               </rect>
              </property>
              <attribute name="label">
@@ -3583,6 +3660,23 @@ color: rgb(0, 0, 0);</string>
      </widget>
     </widget>
    </item>
+   <item row="0" column="2">
+    <widget class="QPushButton" name="btnCerrar">
+     <property name="text">
+      <string>Cerrar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="terra.qrc">
+       <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
@@ -3716,94 +3810,6 @@ color: rgb(0, 0, 0);</string>
        <property name="styleSheet">
         <string notr="true">color: rgb(0, 0, 0);</string>
        </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_36">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;HISTORIAL CLÍNICO&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QPushButton" name="btnCerrar">
-     <property name="text">
-      <string>Cerrar</string>
-     </property>
-     <property name="icon">
-      <iconset resource="terra.qrc">
-       <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>PACIENTE:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="txtPaciente">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QFrame" name="frame">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QRadioButton" name="radHombre">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">
-color: rgb(0, 0, 0);</string>
-          </property>
-          <property name="text">
-           <string>HOMBRE</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="radMujer">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">
-color: rgb(0, 0, 0);</string>
-          </property>
-          <property name="text">
-           <string>MUJER</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
       </widget>
      </item>
     </layout>

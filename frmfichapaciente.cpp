@@ -17,6 +17,7 @@
 # include <QMessageBox>
 #include "frmanadirmedicamento.h"
 #include "vademecum.h"
+#include "frmbuscarcie.h"
 
 Paciente *oPaciente = new Paciente();
 Episodio *oEpisodio = new Episodio();
@@ -33,6 +34,8 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     delete llamada;
     ui->cboNivelEstudios->addItems(listaEstudios);
     ui->cboDoctorEpisodio->addItems(listaDoctores);
+    connect(ui->btnCerrar, SIGNAL(clicked()), this, SLOT(close()));
+    connect(ui->btnBuscarCIEEpisodio,SIGNAL(clicked()),this,SLOT(BuscarCIE()));
 
 
 }
@@ -417,5 +420,12 @@ void FrmFichaPaciente::on_btnAnadirFarma_clicked()
     connect(nuevomed, SIGNAL(datos(int, QString)), this, SLOT(leerDatosMedicamento(int, QString)));
     nuevomed->show();
 
+
+}
+
+void FrmFichaPaciente::BuscarCIE()
+{
+    FrmBuscarCIE *BuscarCIE = new FrmBuscarCIE();
+    BuscarCIE->show();
 
 }

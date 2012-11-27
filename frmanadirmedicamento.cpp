@@ -410,8 +410,9 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspecto(QNetworkReply* reply)
                                  QDomElement e2 = attributes.at(i).toElement();
 
                                  if (e2.tagName() == "body") {
-                                     ui->textEdit_2->setText(e.text());
-                                     ui->textProspecto->setText(e.text());
+                                     ui->textProspecto->setText(e.text().replace("/images_prospectos","http://svad.es/documentos/images_prospectos"));
+                                     ui->textProspectoPato->setText(e.text().replace("/images_prospectos","http://svad.espat/documentos/images_prospectos"));
+
                                  }
                              }
 
