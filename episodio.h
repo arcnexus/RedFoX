@@ -20,6 +20,8 @@ public:
     QString getCIE();
     QString getdescripcion();
     QString gethistorial();
+    int getidcie();
+    QString getcodigocie();
 
     void setid(int id);
     void setidPaciente(int idPaciente);
@@ -30,16 +32,25 @@ public:
     void setCIE(QString CIE);
     void setdescripcion(QString descripcion);
     void sethistorial(QString historial);
+    void setidcie(int id);
+    void setcodigocie(QString codigo);
+
+
 private:
     int id;
     int idPaciente;
     int cerrado;
     int privado;
+    int idcie;
     QString doctor;
     QDate fecha;
     QString cie;
     QString descripcion;
     QString historial;
+    QString codigocie;
+
+
+
 
 
 

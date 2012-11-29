@@ -20,7 +20,10 @@ private:
     Ui::FrmBuscarCIE *ui;
 private slots:
     void sltBuscarCie();
+    void sltDevolverValores();
     void finishedSlotCIE(QNetworkReply*);
+signals:
+    void emitirCIE(int,QString,QString );
 };
 
 #endif // FRMBUSCARCIE_H

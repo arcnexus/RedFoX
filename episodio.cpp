@@ -125,6 +125,16 @@ QString Episodio::gethistorial()
     return this->historial;
 }
 
+int Episodio::getidcie()
+{
+    return this->idcie;
+}
+
+QString Episodio::getcodigocie()
+{
+    return this->codigocie;
+}
+
 void Episodio::setid(int id)
 {
     this->id = id;
@@ -168,5 +178,15 @@ void Episodio::setdescripcion(QString descripcion)
 void Episodio::sethistorial(QString historial)
 {
     this->historial = historial;
+}
+
+void Episodio::setidcie(int id)
+{
+    this->idcie = id;
+}
+
+void Episodio::setcodigocie(QString codigo)
+{
+    this->codigocie = codigo;
 }
 

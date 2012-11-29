@@ -31,30 +31,20 @@ public slots:
     
 private slots:
     void finishedSlot(QNetworkReply* reply);
-
-
     void on_btnAgenda_clicked();
-
     void on_btnAnadirEpisodio_clicked();
-
     void on_btnBuscarCIEEpisodio_clicked();
-
     void on_btnEditarPaciente_clicked();
-
-
     void on_btnGuardarPaciente_clicked();
-
     void on_btnGuardarEpisodio_clicked();
-
     void on_listaEpisodios_clicked(const QModelIndex &index);
-
     void on_btnEditarEpisodio_clicked();
-
     void on_btnDeshacerEpisodio_clicked();
-
     void on_btnAnadirFarma_clicked();
-
     void BuscarCIE();
+    void RecuperarCIE(int,QString,QString);
+    void ActivarControlesFarmacologia();
+    void GuardarDatosFarmacologia();
 
 private:
     Ui::FrmFichaPaciente *ui;

@@ -9,11 +9,13 @@ gui
 QT       += sql
 QT       += network
 QT       += xml
+QT       += webkit
 
 
 INCLUDEPATH += /Qwt/5.2.1/include
 INCLUDEPATH += /usr/local/Qxt/include/QxtCore
 DEPENDPATH += /Qwt/5.2.1/lib
+
 
 
 LIBS += -LC:/Qt/Qwt/5.2.1/lib
@@ -64,7 +66,8 @@ SOURCES += main.cpp\
     episodio.cpp \
     frmanadirmedicamento.cpp \
     frmbuscarcie.cpp \
-    vademecum.cpp
+    vademecum.cpp \
+    farmacologia.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -104,7 +107,8 @@ HEADERS  += mainwindow.h \
     episodio.h \
     frmanadirmedicamento.h \
     frmbuscarcie.h \
-    vademecum.h
+    vademecum.h \
+    farmacologia.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \

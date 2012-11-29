@@ -10,8 +10,14 @@
     <x>0</x>
     <y>0</y>
     <width>1045</width>
-    <height>517</height>
+    <height>526</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>526</height>
+   </size>
   </property>
   <property name="baseSize">
    <size>
@@ -241,7 +247,7 @@
            <string>B&amp;orrar</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset>
             <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
           </property>
           <property name="iconSize">

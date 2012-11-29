@@ -11,6 +11,7 @@ FrmBuscarCIE::FrmBuscarCIE(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->btnCancelar,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->btnBuscar,SIGNAL(clicked()),this,SLOT(sltBuscarCie()));
+    connect(ui->btnAceptar,SIGNAL(clicked()),this,SLOT(sltDevolverValores()));
 }
 
 FrmBuscarCIE::~FrmBuscarCIE()
@@ -39,6 +40,14 @@ void FrmBuscarCIE::sltBuscarCie()
 
 
 }
+
+void FrmBuscarCIE::sltDevolverValores()
+{
+    emit emitirCIE(ui->tablaCIE->item(ui->tablaCIE->currentRow(),0)->text().toInt(),
+                   ui->tablaCIE->item(ui->tablaCIE->currentRow(),1)->text(),
+                   ui->tablaCIE->item(ui->tablaCIE->currentRow(),2)->text());
+    close();
+}
 void FrmBuscarCIE::finishedSlotCIE(QNetworkReply* reply)
 {
     //qDebug()<<reply->readAll();
@@ -63,7 +72,8 @@ void FrmBuscarCIE::finishedSlotCIE(QNetworkReply* reply)
      ui->tablaCIE->setColumnCount(3);
      ui->tablaCIE->setColumnWidth(0,0);
      ui->tablaCIE->setColumnWidth(1,120);
-     ui->tablaCIE->setColumnWidth(2,450);
+     ui->tablaCIE->setColumnWidth(2,350);
+     ui->tablaCIE->setSelectionBehavior(QAbstractItemView::SelectRows);
      ui->tablaCIE->setHorizontalHeaderLabels(list);
 
 
@@ -115,5 +125,6 @@ void FrmBuscarCIE::finishedSlotCIE(QNetworkReply* reply)
      }
 
 }
+
 // FIN BUSCAR CIE
 

@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1298</width>
+    <width>1300</width>
     <height>648</height>
    </rect>
   </property>
@@ -160,12 +160,15 @@ color: rgb(0, 0, 0);</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_43">
          <item row="0" column="0">
-          <widget class="QLabel" name="label_6">
+          <widget class="QLabel" name="itemFarma">
            <property name="maximumSize">
             <size>
              <width>32</width>
              <height>32</height>
             </size>
+           </property>
+           <property name="toolTip">
+            <string>Este episodio contiene historial de farmacología</string>
            </property>
            <property name="text">
             <string/>
@@ -183,6 +186,9 @@ color: rgb(0, 0, 0);</string>
              <height>32</height>
             </size>
            </property>
+           <property name="toolTip">
+            <string>Este episodio contiene analíticas</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -198,6 +204,9 @@ color: rgb(0, 0, 0);</string>
              <width>32</width>
              <height>32</height>
             </size>
+           </property>
+           <property name="toolTip">
+            <string>Este episodio contiene imagenes</string>
            </property>
            <property name="text">
             <string/>
@@ -215,279 +224,14 @@ color: rgb(0, 0, 0);</string>
              <height>32</height>
             </size>
            </property>
+           <property name="toolTip">
+            <string>Este episodio contiene información de interconsultas</string>
+           </property>
            <property name="text">
             <string/>
            </property>
            <property name="pixmap">
             <pixmap resource="terra.qrc">:/Icons/PNG/usuarios.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_75">
-        <property name="minimumSize">
-         <size>
-          <width>78</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>15</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 192, 192);
-font: 7pt &quot;Sans Serif&quot;;</string>
-        </property>
-        <property name="text">
-         <string>FARMACOLOGÍA</string>
-        </property>
-        <property name="scaledContents">
-         <bool>false</bool>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QFrame" name="frame_23">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(228, 211, 255);</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_42">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_71">
-           <property name="maximumSize">
-            <size>
-             <width>21</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/GIF/capacidad_conducir.gif</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_73">
-           <property name="maximumSize">
-            <size>
-             <width>21</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/GIF/fotosensibilidada.gif</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_76">
-           <property name="maximumSize">
-            <size>
-             <width>21</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Lactancia (permitido)</string>
-           </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/GIF/lactancia.gif</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_83">
-           <property name="maximumSize">
-            <size>
-             <width>21</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/GIF/capacidad_conducir.gif</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_72">
-           <property name="maximumSize">
-            <size>
-             <width>21</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Lactancia (Precaución</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/GIF/lactancia_indefinido.gif</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_81">
-           <property name="maximumSize">
-            <size>
-             <width>21</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/GIF/lactancia_precaucion.gif</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_82">
-           <property name="maximumSize">
-            <size>
-             <width>21</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Lactancia (Prohibido)</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/GIF/lactancia_evitar.gif</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLabel" name="label_79">
-           <property name="maximumSize">
-            <size>
-             <width>21</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/GIF/categoria_B.gif</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_80">
-           <property name="maximumSize">
-            <size>
-             <width>21</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/GIF/categoria_C.gif</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QLabel" name="label_77">
-           <property name="maximumSize">
-            <size>
-             <width>21</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/GIF/categoria_D.gif</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="label_78">
-           <property name="maximumSize">
-            <size>
-             <width>21</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/GIF/prohibido_determinados_deportes.gif</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -519,8 +263,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>200</width>
-        <height>418</height>
+        <width>208</width>
+        <height>388</height>
        </rect>
       </property>
       <attribute name="label">
@@ -581,8 +325,8 @@ font: 7pt &quot;Sans Serif&quot;;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>200</width>
-        <height>418</height>
+        <width>207</width>
+        <height>492</height>
        </rect>
       </property>
       <attribute name="label">
@@ -704,8 +448,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>203</width>
-        <height>190</height>
+        <width>216</width>
+        <height>372</height>
        </rect>
       </property>
       <attribute name="label">
@@ -821,8 +565,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>200</width>
-        <height>418</height>
+        <width>209</width>
+        <height>372</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1031,8 +775,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>200</width>
-        <height>418</height>
+        <width>208</width>
+        <height>388</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1798,15 +1542,15 @@ color: rgb(255, 0, 0);</string>
              <bool>true</bool>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="page_3">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>334</height>
+               <width>562</width>
+               <height>302</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2118,17 +1862,117 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>334</height>
+               <width>578</width>
+               <height>287</height>
               </rect>
              </property>
              <attribute name="label">
               <string>Tratamiento farmacológico</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_7">
-              <item row="0" column="0">
-               <layout class="QGridLayout" name="gridLayout_6">
+              <item row="1" column="1">
+               <widget class="QPushButton" name="btnEditarFarmacologia">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Editar</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="btnGuardarFarmacologia">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Guardar</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QPushButton" name="btnDeshacerFarmacologia">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Deshacer</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" colspan="3">
+               <layout class="QGridLayout" name="gridLayout_5">
+                <item row="0" column="1">
+                 <widget class="QLabel" name="label_8">
+                  <property name="text">
+                   <string>Inicio tratamiento:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QDateEdit" name="txtInicioTratamientoFarma">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="displayFormat">
+                   <string>dd/MM/yyyy</string>
+                  </property>
+                  <property name="calendarPopup">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLabel" name="label_9">
+                  <property name="text">
+                   <string>Posología indicada:</string>
+                  </property>
+                 </widget>
+                </item>
                 <item row="1" column="2">
+                 <widget class="QLineEdit" name="txtPosologiaFarma">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLabel" name="label_10">
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>15</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Comentarios:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1" colspan="2">
+                 <widget class="QTextEdit" name="txtComentariosFarma">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="0" rowspan="2">
+               <layout class="QGridLayout" name="gridLayout_6">
+                <item row="1" column="3">
                  <widget class="QToolButton" name="btnVerFarma">
                   <property name="toolTip">
                    <string>Documentación Fármaco</string>
@@ -2142,7 +1986,7 @@ color: rgb(0, 0, 0);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="3">
+                <item row="1" column="4">
                  <widget class="QPushButton" name="btnImprimirMedicamentosEpisiodio">
                   <property name="maximumSize">
                    <size>
@@ -2168,7 +2012,7 @@ color: rgb(0, 0, 0);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="1">
+                <item row="1" column="2">
                  <widget class="QToolButton" name="btnBorrarFarma">
                   <property name="toolTip">
                    <string>Borrar Farmacología</string>
@@ -2182,7 +2026,7 @@ color: rgb(0, 0, 0);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="4">
+                <item row="1" column="5">
                  <spacer name="horizontalSpacer_2">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -2195,7 +2039,7 @@ color: rgb(0, 0, 0);</string>
                   </property>
                  </spacer>
                 </item>
-                <item row="1" column="0">
+                <item row="1" column="1">
                  <widget class="QToolButton" name="btnAnadirFarma">
                   <property name="toolTip">
                    <string>Nuevo fármaco</string>
@@ -2210,54 +2054,7 @@ color: rgb(0, 0, 0);</string>
                  </widget>
                 </item>
                 <item row="0" column="0" colspan="6">
-                 <widget class="QTableView" name="listaTratamientosFarma"/>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="1">
-               <layout class="QGridLayout" name="gridLayout_5">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_8">
-                  <property name="text">
-                   <string>Inicio tratamiento:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QDateEdit" name="txtInicioTratamientoFarma">
-                  <property name="displayFormat">
-                   <string>dd/MM/yyyy</string>
-                  </property>
-                  <property name="calendarPopup">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_9">
-                  <property name="text">
-                   <string>Posología indicada:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLineEdit" name="txtPosologiaFarma"/>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_10">
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>15</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Comentarios:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="0" colspan="2">
-                 <widget class="QTextEdit" name="txtComentariosFarma"/>
+                 <widget class="QTableWidget" name="listaTratamientosFarma"/>
                 </item>
                </layout>
               </item>
@@ -2268,8 +2065,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>334</height>
+               <width>578</width>
+               <height>287</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2407,8 +2204,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>334</height>
+               <width>404</width>
+               <height>223</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2565,8 +2362,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>559</width>
-               <height>345</height>
+               <width>393</width>
+               <height>420</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2837,8 +2634,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>334</height>
+               <width>347</width>
+               <height>312</height>
               </rect>
              </property>
              <attribute name="label">
