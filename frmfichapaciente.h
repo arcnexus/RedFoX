@@ -27,8 +27,9 @@ public:
     void cargarEpisodio(int control);
     void guardarDatosPaciente();
 public slots:
-    void leerDatosMedicamento(int id, QString nombre);
-    
+    void AnadirDatosMedicamento(int id, QString nombre);
+    void cargarDatosMedicamento(int, int);
+
 private slots:
     void finishedSlot(QNetworkReply* reply);
     void on_btnAgenda_clicked();
@@ -45,6 +46,8 @@ private slots:
     void RecuperarCIE(int,QString,QString);
     void ActivarControlesFarmacologia();
     void GuardarDatosFarmacologia();
+    void llenartablahistorialfarmacologiaepisodio();
+    void BorrarDatosMedicamento();
 
 private:
     Ui::FrmFichaPaciente *ui;

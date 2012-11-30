@@ -38,7 +38,7 @@ private:
     int activo;
  public slots:
     void AnadirFarmaco();
-    void modificarFarmaco();
+    void modificarFarmaco(int id);
     void cargarDatos(QString cSQL);
 };
 

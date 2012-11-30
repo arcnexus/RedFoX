@@ -42,6 +42,11 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->btnBuscarCIEEpisodio,SIGNAL(clicked()),this,SLOT(BuscarCIE()));
     connect(ui->btnEditarFarmacologia,SIGNAL(clicked()), this, SLOT(ActivarControlesFarmacologia()));
     connect(ui->btnGuardarFarmacologia,SIGNAL(clicked()),this,SLOT(GuardarDatosFarmacologia()));
+    connect(ui->listaTratamientosFarma,SIGNAL(cellClicked(int ,int )),this, SLOT(cargarDatosMedicamento(int ,int)));
+    connect(ui->radvertodosfarmacologia,SIGNAL(clicked()),this,SLOT(llenartablahistorialfarmacologiaepisodio()));
+    connect(ui->radversoloactivosfarmacologia,SIGNAL(clicked()),this,SLOT(llenartablahistorialfarmacologiaepisodio()));
+    connect(ui->btnBorrarFarma,SIGNAL(clicked()),this,SLOT(BorrarDatosMedicamento()));
+
 
     // Ocultar Iconos imagenes
     ui->itemFarma->setVisible(false);
@@ -124,50 +129,7 @@ void FrmFichaPaciente::cargarEpisodio(int control)
     ui->txtFechaEpisodio->setDate(oEpisodio->getfecha());
     ui->txtHistorialEpisodio->setPlainText(oEpisodio->gethistorial());
     ui->txtCIEEpisiodio->setText(oEpisodio->getCIE());
-
-    // Cargar farmacología episodio
-    QStringList list;
-    list <<"NOMBRE"<<"ID";
-
-  ui->listaTratamientosFarma->setColumnCount(2);
-  ui->listaTratamientosFarma->setColumnWidth(0,ui->listaTratamientosFarma->width()-20);
-  ui->listaTratamientosFarma->setColumnWidth(1,0);
-  ui->listaTratamientosFarma->setHorizontalHeaderLabels(list);
-
-    QSqlQuery *qFarma = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    QString cSQL = " Select medicamento, id from histofarma where idepisodio = :id ";
-    qFarma->prepare(cSQL);
-    qFarma->bindValue(":id",oEpisodio->getid());
-    int pos = 0;
-    QSqlRecord reg ;
-    if (qFarma->exec()) {
-        while (qFarma->next()) {
-            // Nombre Medicamento
-            reg = qFarma->record();
-            ui->listaTratamientosFarma->setRowCount(pos+1);
-            QTableWidgetItem *newItem = new QTableWidgetItem(reg.field("medicamento").value().toString());
-            // para que los elementos no sean editables
-            newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
-            newItem->setTextColor(Qt::blue); // color de los items
-            ui->listaTratamientosFarma->setItem(pos,0,newItem);
-            pos++;
-
-            // id Medicamento
-            QTableWidgetItem *newItem1 = new QTableWidgetItem(QString::number(reg.field("id").value().toInt()));
-            // para que los elementos no sean editables
-            newItem1->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
-            newItem1->setTextColor(Qt::blue); // color de los items
-            ui->listaTratamientosFarma->setItem(pos,1,newItem1);
-
-        }
-    }
-    if(pos >0) {
-        ui->itemFarma->setVisible(true);
-        ui->btnEditarFarmacologia->setEnabled(true);
-    } else {
-        ui->itemFarma->setVisible(false);
-        ui->btnEditarFarmacologia->setEnabled(false);
-    }
+    llenartablahistorialfarmacologiaepisodio();
 
 }
 
@@ -216,57 +178,24 @@ void FrmFichaPaciente::guardarDatosPaciente()
         oPaciente->setotrasDrogas(0);
 }
 
-void FrmFichaPaciente::leerDatosMedicamento(int id, QString nombre)
+void FrmFichaPaciente::AnadirDatosMedicamento(int id, QString nombre)
 {
     QSqlQuery *qTratamientos = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    QSqlQueryModel *qTratamientosM = new QSqlQueryModel();
+    //QSqlQueryModel *qTratamientosM = new QSqlQueryModel();
 
-    qTratamientos->prepare("insert into histofarma (idmedicamento,medicamento,idepisodio) values (:idmedicamento,:medicamento,:idepisodio)");
+    qTratamientos->prepare("insert into histofarma (idmedicamento,medicamento,idepisodio,iniciotratamiento)"
+                           " values (:idmedicamento,:medicamento,:idepisodio,:iniciotratamiento)");
     qTratamientos->bindValue(":idmedicamento",id);
     qTratamientos->bindValue(":medicamento",nombre);
     qTratamientos->bindValue(":idepisodios",oEpisodio->getid());
+    qTratamientos->bindValue(":iniciotratamiento",QDate::currentDate());
     if (!qTratamientos->exec()) {
         QMessageBox::warning(NULL,"ERROR","No se pudo crear el registro del historial de farmacología, Error:"+
                              qTratamientos->lastError().text(),tr("Aceptar"));
     } else {
-
-        // Cargar farmacología episodio
-        QSqlQuery *qFarma = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-        QString cSQL = " Select medicamento, id from histofarma where idepisodio = :id ";
-        qFarma->prepare(cSQL);
-        qFarma->bindValue(":id",oEpisodio->getid());
-        int pos = 0;
-        QSqlRecord reg ;
-        if (qFarma->exec()) {
-            while (qFarma->next()) {
-                // Nombre Medicamento
-                reg = qFarma->record();
-                QTableWidgetItem *newItem = new QTableWidgetItem(reg.field("medicamento").value().toString());
-                // para que los elementos no sean editables
-                newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
-                newItem->setTextColor(Qt::blue); // color de los items
-                ui->listaTratamientosFarma->setItem(pos,0,newItem);
-                pos++;
-
-                // id Medicamento
-                QTableWidgetItem *newItem1 = new QTableWidgetItem(QString::number(reg.field("id").value().toInt()));
-                // para que los elementos no sean editables
-                newItem1->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
-                newItem1->setTextColor(Qt::blue); // color de los items
-                ui->listaTratamientosFarma->setItem(pos,1,newItem1);
-
-            }
-        }
-        if(pos >0) {
-            ui->itemFarma->setVisible(true);
-            ui->btnEditarFarmacologia->setEnabled(true);
-        } else {
-            ui->itemFarma->setVisible(false);
-            ui->btnEditarFarmacologia->setEnabled(false);
-        }
+        llenartablahistorialfarmacologiaepisodio();
     }
     delete qTratamientos;
-    // CAmbiar ui->listaTratamientosFarma->setModel(qTratamientosM);
      ui->itemFarma->setVisible(true);
 
 }
@@ -504,7 +433,7 @@ void FrmFichaPaciente::on_btnAnadirFarma_clicked()
 {
     FrmAnadirMedicamento *nuevomed = new FrmAnadirMedicamento();
     nuevomed->setWindowState(Qt::WindowMaximized);
-    connect(nuevomed, SIGNAL(datos(int, QString)), this, SLOT(leerDatosMedicamento(int, QString)));
+    connect(nuevomed, SIGNAL(datos(int, QString)), this, SLOT(AnadirDatosMedicamento(int, QString)));
     nuevomed->show();
 
 
@@ -534,6 +463,7 @@ void FrmFichaPaciente::ActivarControlesFarmacologia()
     ui->txtInicioTratamientoFarma->setEnabled(true);
     ui->txtPosologiaFarma->setEnabled(true);
     ui->txtComentariosFarma->setEnabled(true);
+    ui->chkactivo->setEnabled(true);
     ui->txtInicioTratamientoFarma->setFocus();
 }
 
@@ -545,17 +475,103 @@ void FrmFichaPaciente::GuardarDatosFarmacologia()
     ui->txtInicioTratamientoFarma->setEnabled(false);
     ui->txtPosologiaFarma->setEnabled(false);
     ui->txtComentariosFarma->setEnabled(false);
+    ui->chkactivo->setEnabled(false);
+
     Farmacologia *oFarmacologia = new Farmacologia();
     oFarmacologia->setidepisodio(oEpisodio->getid());
-    if(ui->chkEpisodioprivado->isChecked())
+    if(ui->chkactivo->isChecked())
         oFarmacologia->setactivo(true);
     else
         oFarmacologia->setactivo(false);
     oFarmacologia->setcomentarios(ui->txtComentariosFarma->toPlainText());
-    oFarmacologia->setindicacionposologia(ui->txtPosologiaFarma->text());
+    oFarmacologia->setindicacionposologia(ui->txtPosologiaFarma->toPlainText());
     oFarmacologia->setiniciotratamiento(ui->txtInicioTratamientoFarma->date());
-    oFarmacologia->modificarFarmaco();
+    oFarmacologia->setmedicamento(ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),0)->text());
+    oFarmacologia->modificarFarmaco(ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),1)->text().toInt());
+    llenartablahistorialfarmacologiaepisodio();
     delete oFarmacologia;
+
+}
+
+void FrmFichaPaciente::llenartablahistorialfarmacologiaepisodio()
+{
+    // Cargar farmacología episodio
+    QStringList list;
+    list <<"NOMBRE"<<"ID";
+    QSqlQuery *qFarma = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QString cSQL = " Select medicamento, id,activo from histofarma where idepisodio = :id ";
+    qFarma->prepare(cSQL);
+    qFarma->bindValue(":id",oEpisodio->getid());
+    ui->listaTratamientosFarma->setRowCount(0);
+    ui->listaTratamientosFarma->setColumnCount(2);
+    ui->listaTratamientosFarma->setColumnWidth(0,ui->listaTratamientosFarma->width()-30);
+    ui->listaTratamientosFarma->setColumnWidth(1,0);
+    ui->listaTratamientosFarma->setHorizontalHeaderLabels(list);
+    int pos = 0;
+    QSqlRecord reg ;
+    // Relleno la tabla
+    if (qFarma->exec()) {
+        while (qFarma->next()) {
+            // Nombre Medicamento
+            reg = qFarma->record();
+            if ((ui->radversoloactivosfarmacologia->isChecked() && reg.field("activo").value().toInt()==1)
+                    || ui->radvertodosfarmacologia->isChecked() ) {
+
+                ui->listaTratamientosFarma->setRowCount(pos+1);
+                QTableWidgetItem *newItem = new QTableWidgetItem(reg.field("medicamento").value().toString());
+                // para que los elementos no sean editables
+                newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
+                if (reg.field("activo").value().toInt() ==1)
+                    newItem->setTextColor(Qt::blue); // color de los Medicamentos activos
+                else
+                    newItem->setTextColor(Qt::darkGray); // color de los Medicamentos NO activos
+                ui->listaTratamientosFarma->setItem(pos,0,newItem);
+
+
+                // id Medicamento
+                QTableWidgetItem *newItem1 = new QTableWidgetItem(QString::number(reg.field("id").value().toInt()));
+                // para que los elementos no sean editables
+                newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
+                newItem1->setTextColor(Qt::blue); // color de los items
+                ui->listaTratamientosFarma->setItem(pos,1,newItem1);
+                pos++;
+            }
+        }
+    }
+    if(pos >0) {
+        ui->itemFarma->setVisible(true);
+        ui->btnEditarFarmacologia->setEnabled(true);
+    } else {
+        ui->itemFarma->setVisible(false);
+        ui->btnEditarFarmacologia->setEnabled(false);
+    }
+}
+
+void FrmFichaPaciente::BorrarDatosMedicamento()
+{
+     if(QMessageBox::warning(this,tr("Borrar medicamento historial"),tr("Va a proceder a borrar un medicamento del historial,")+
+                         tr("¿Desea continuar?"),tr("Borrar"),tr("Cancelar")) ==QMessageBox::Accepted) {
+         int patata = 0;
+
+    }
+
+}
+
+void FrmFichaPaciente::cargarDatosMedicamento(int crow, int ccol)
+{
+    Farmacologia *oFarmacologia = new Farmacologia();
+    QString cSQL;
+    QString id = ui->listaTratamientosFarma->item(crow,1)->text();
+   // ui->tablamedicamentos->item(ui->tablamedicamentos->currentRow(),0)->text());
+    cSQL = "Select * from histofarma where id="+id;
+    oFarmacologia->cargarDatos(cSQL);
+    ui->txtInicioTratamientoFarma->setDate(oFarmacologia->getiniciotratamiento());
+    if (oFarmacologia->getactivo()==1)
+        ui->chkactivo->setChecked(true);
+    else
+        ui->chkactivo->setChecked(false);
+    ui->txtComentariosFarma->setPlainText(oFarmacologia->getcomentarios());
+    ui->txtPosologiaFarma->setPlainText(oFarmacologia->getindicacionposologia());
 
 }
 

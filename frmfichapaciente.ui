@@ -1542,7 +1542,7 @@ color: rgb(255, 0, 0);</string>
              <bool>true</bool>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="page_3">
              <property name="geometry">
@@ -1862,8 +1862,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>578</width>
-               <height>287</height>
+               <width>562</width>
+               <height>293</height>
               </rect>
              </property>
              <attribute name="label">
@@ -1914,6 +1914,19 @@ color: rgb(0, 0, 0);</string>
               </item>
               <item row="0" column="1" colspan="3">
                <layout class="QGridLayout" name="gridLayout_5">
+                <item row="3" column="1">
+                 <widget class="QCheckBox" name="chkactivo">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0, 0);</string>
+                  </property>
+                  <property name="text">
+                   <string>Activo</string>
+                  </property>
+                 </widget>
+                </item>
                 <item row="0" column="1">
                  <widget class="QLabel" name="label_8">
                   <property name="text">
@@ -1941,14 +1954,14 @@ color: rgb(0, 0, 0);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="2">
-                 <widget class="QLineEdit" name="txtPosologiaFarma">
+                <item row="5" column="1" colspan="2">
+                 <widget class="QTextEdit" name="txtComentariosFarma">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="1">
+                <item row="4" column="1">
                  <widget class="QLabel" name="label_10">
                   <property name="maximumSize">
                    <size>
@@ -1961,10 +1974,13 @@ color: rgb(0, 0, 0);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="1" colspan="2">
-                 <widget class="QTextEdit" name="txtComentariosFarma">
-                  <property name="enabled">
-                   <bool>false</bool>
+                <item row="1" column="2">
+                 <widget class="QPlainTextEdit" name="txtPosologiaFarma">
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>63</height>
+                   </size>
                   </property>
                  </widget>
                 </item>
@@ -1972,7 +1988,21 @@ color: rgb(0, 0, 0);</string>
               </item>
               <item row="0" column="0" rowspan="2">
                <layout class="QGridLayout" name="gridLayout_6">
-                <item row="1" column="3">
+                <item row="2" column="1">
+                 <widget class="QToolButton" name="btnAnadirFarma">
+                  <property name="toolTip">
+                   <string>Nuevo fármaco</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="3">
                  <widget class="QToolButton" name="btnVerFarma">
                   <property name="toolTip">
                    <string>Documentación Fármaco</string>
@@ -1986,7 +2016,7 @@ color: rgb(0, 0, 0);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="4">
+                <item row="2" column="4">
                  <widget class="QPushButton" name="btnImprimirMedicamentosEpisiodio">
                   <property name="maximumSize">
                    <size>
@@ -2012,7 +2042,30 @@ color: rgb(0, 0, 0);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="2">
+                <item row="1" column="0" colspan="8">
+                 <widget class="QTableWidget" name="listaTratamientosFarma"/>
+                </item>
+                <item row="2" column="5">
+                 <widget class="QLabel" name="label_6">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0, 127);</string>
+                  </property>
+                  <property name="text">
+                   <string>Activo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="6">
+                 <widget class="QLabel" name="label_11">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(150, 150, 150);</string>
+                  </property>
+                  <property name="text">
+                   <string>historico</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="2">
                  <widget class="QToolButton" name="btnBorrarFarma">
                   <property name="toolTip">
                    <string>Borrar Farmacología</string>
@@ -2026,7 +2079,7 @@ color: rgb(0, 0, 0);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="5">
+                <item row="2" column="7">
                  <spacer name="horizontalSpacer_2">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -2039,22 +2092,40 @@ color: rgb(0, 0, 0);</string>
                   </property>
                  </spacer>
                 </item>
-                <item row="1" column="1">
-                 <widget class="QToolButton" name="btnAnadirFarma">
-                  <property name="toolTip">
-                   <string>Nuevo fármaco</string>
+                <item row="0" column="0" colspan="8">
+                 <widget class="QFrame" name="frame_23">
+                  <property name="minimumSize">
+                   <size>
+                    <width>52</width>
+                    <height>31</height>
+                   </size>
                   </property>
-                  <property name="text">
-                   <string/>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
                   </property>
-                  <property name="icon">
-                   <iconset resource="terra.qrc">
-                    <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
                   </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_6">
+                   <item>
+                    <widget class="QRadioButton" name="radvertodosfarmacologia">
+                     <property name="text">
+                      <string>ver todos</string>
+                     </property>
+                     <property name="checked">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QRadioButton" name="radversoloactivosfarmacologia">
+                     <property name="text">
+                      <string>ver solo activos</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </widget>
-                </item>
-                <item row="0" column="0" colspan="6">
-                 <widget class="QTableWidget" name="listaTratamientosFarma"/>
                 </item>
                </layout>
               </item>
@@ -2065,8 +2136,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>578</width>
-               <height>287</height>
+               <width>425</width>
+               <height>223</height>
               </rect>
              </property>
              <attribute name="label">
@@ -3735,7 +3806,6 @@ color: rgb(0, 0, 0);</string>
   <tabstop>lineEdit_16</tabstop>
   <tabstop>pushButton_10</tabstop>
   <tabstop>btnImportarAnalitica</tabstop>
-  <tabstop>txtPosologiaFarma</tabstop>
   <tabstop>txtMutua</tabstop>
   <tabstop>txtNumeroSS</tabstop>
   <tabstop>btnBorrarFarma</tabstop>

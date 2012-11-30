@@ -115,7 +115,7 @@ void Farmacologia::AnadirFarmaco()
 
 }
 
-void Farmacologia::modificarFarmaco()
+void Farmacologia::modificarFarmaco(int id)
 {
     QSqlQuery *qFarma = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     QString cSQL;
@@ -126,7 +126,7 @@ void Farmacologia::modificarFarmaco()
     "indicacionposologia = :indicacionposologia,"
     "comentarios = :comentarios,"
     "idepisodio = :idepisodio,"
-    "activo = :activo,"
+    "activo = :activo"
     " WHERE id = :id";
 
     qFarma->prepare(cSQL);
@@ -137,7 +137,7 @@ void Farmacologia::modificarFarmaco()
     qFarma->bindValue(":comentarios",this->comentarios);
     qFarma->bindValue(":idepisodio",this->idepisodio);
     qFarma->bindValue(":activo",this->activo);
-    qFarma->bindValue(":id",this->id);
+    qFarma->bindValue(":id",id);
     if(!qFarma->exec())
         QMessageBox::warning(NULL,QObject::tr("Historial Farmacología"),
                       QObject::tr("No se ha podido guardar el registro del historial;ERROR: ")+qFarma->lastError().text(),
@@ -151,13 +151,13 @@ void Farmacologia::cargarDatos(QString cSQL)
     if (qFarma->exec(cSQL)) {
         qFarma->next();
         QSqlRecord rFarma = qFarma->record();
+        this->id = rFarma.field("id").value().toInt();
         this->idmedicamento = rFarma.field("idmedicamento").value().toInt();
         this->medicamento = rFarma.field("medicamento").value().toString();
         this->iniciotratamiento = rFarma.field("iniciotratamiento").value().toDate();
         this->indicacionposologia = rFarma.field("indicacionposologia").value().toString();
         this->comentarios = rFarma.field("comentarios").value().toString();
         this->idepisodio = rFarma.field("idepisodio").value().toInt();
-        this->id = rFarma.field("id").value().toInt();
         this->activo = rFarma.field("activo").value().toInt();
     } else
         QMessageBox::warning(NULL,QObject::tr("ERROR"),QObject::tr("No se ha podido recuperar el registro de farmacología"),
