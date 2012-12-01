@@ -22,7 +22,7 @@ public:
     QStringList cMedicList;
 
 signals:
-    void datos(int, QString);
+    void datos(int, QString,QString);
 
 private slots:
     void on_pushButton_clicked();

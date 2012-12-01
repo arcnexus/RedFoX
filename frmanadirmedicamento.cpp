@@ -72,13 +72,14 @@ void FrmAnadirMedicamento::finishedSlotMedicamento(QNetworkReply* reply)
      QDomNode n = drugList.firstChild();
 
        QStringList list;
-       list <<"NOMBRE"<<"ID"<<"DOSIFICACIÓN"<<"EMPAQUETADO";
+       list <<"NOMBRE"<<"ID"<<"DOSIFICACIÓN"<<"EMPAQUETADO"<<"CODIGO NACIONAL";
 
-     ui->tablamedicamentos->setColumnCount(4);
-     ui->tablamedicamentos->setColumnWidth(0,400);
+     ui->tablamedicamentos->setColumnCount(5);
+     ui->tablamedicamentos->setColumnWidth(0,350);
      ui->tablamedicamentos->setColumnWidth(1,0);
-     ui->tablamedicamentos->setColumnWidth(2,450);
+     ui->tablamedicamentos->setColumnWidth(2,400);
      ui->tablamedicamentos->setColumnWidth(3,200);
+     ui->tablamedicamentos->setColumnWidth(4,100);
      ui->tablamedicamentos->setHorizontalHeaderLabels(list);
 
 
@@ -125,6 +126,13 @@ void FrmAnadirMedicamento::finishedSlotMedicamento(QNetworkReply* reply)
                      newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
                      newItem->setTextColor(Qt::green); // color de los items
                      ui->tablamedicamentos->setItem(pos,3,newItem);
+                 }
+                 if (e.tagName() == "national_code") {
+                     QTableWidgetItem *newItem = new QTableWidgetItem(e.text());
+                     // para que los elementos no sean editables
+                     newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
+                     newItem->setTextColor(Qt::green); // color de los items
+                     ui->tablamedicamentos->setItem(pos,4,newItem);
                  }
              }
 
@@ -1026,7 +1034,8 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspectoPrincAct(QNetworkReply* re
 void FrmAnadirMedicamento::on_btnAceptar1_clicked()
 {
     emit datos(ui->tablamedicamentos->item(ui->tablamedicamentos->currentRow(),1)->text().toInt(),
-               ui->tablamedicamentos->item(ui->tablamedicamentos->currentRow(),0)->text());
+               ui->tablamedicamentos->item(ui->tablamedicamentos->currentRow(),0)->text(),
+               ui->tablamedicamentos->item(ui->tablamedicamentos->currentRow(),4)->text());
     close();
 
 }

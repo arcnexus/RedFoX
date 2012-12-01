@@ -27,7 +27,7 @@ public:
     void cargarEpisodio(int control);
     void guardarDatosPaciente();
 public slots:
-    void AnadirDatosMedicamento(int id, QString nombre);
+    void AnadirDatosMedicamento(int id, QString nombre,QString codigo_nacional);
     void cargarDatosMedicamento(int, int);
 
 private slots:
@@ -48,6 +48,9 @@ private slots:
     void GuardarDatosFarmacologia();
     void llenartablahistorialfarmacologiaepisodio();
     void BorrarDatosMedicamento();
+    void MostrarFichaMedicamento();
+signals:
+    void pasaid(QString);
 
 private:
     Ui::FrmFichaPaciente *ui;

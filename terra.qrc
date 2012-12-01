@@ -77,5 +77,6 @@
         <file>jpg/Vademecum DataSolutions.jpg</file>
         <file>PNG/DefineControls.png</file>
         <file>PNG/Prescription.png</file>
+        <file>PNG/OK.png</file>
     </qresource>
 </RCC>

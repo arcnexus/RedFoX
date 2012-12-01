@@ -17,6 +17,7 @@ public:
     QString getcomentarios();
     int getidepisodio();
     int getactivo();
+    QString getcodigonacional();
 
     void setidFarmacologia(int id);
     void setidmedicamento(int idmedicamento);
@@ -26,6 +27,7 @@ public:
     void setcomentarios(QString comentarios);
     void setidepisodio(int idepisodio);
     void setactivo(int activo);
+    void setcodigonacional(QString codigonacional);
 
 private:
     int id;
@@ -36,9 +38,11 @@ private:
     QString comentarios;
     int idepisodio;
     int activo;
+    QString codigonacional;
  public slots:
     void AnadirFarmaco();
     void modificarFarmaco(int id);
+    void borrarFarmaco(int id);
     void cargarDatos(QString cSQL);
 };
 
