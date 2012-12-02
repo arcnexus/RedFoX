@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QDomDocument>
 #include <QSettings>
+#include <QDate>
+#include <QUrl>
 
 FrmInformacionFarmaco::FrmInformacionFarmaco(QWidget *parent) :
     QDialog(parent),
@@ -54,6 +56,8 @@ void FrmInformacionFarmaco::capturarid(QString ccodigonacional)
       QDomNode drugList = root.firstChild();
 
       QDomNode n = drugList.firstChild();
+      QDomNode n2 = n.firstChild();
+      QDomNode n3 = n2.firstChild();
       while (!n.isNull()) {
           if (n.isElement()) {
               QDomNodeList attributes = n.childNodes();
@@ -91,6 +95,119 @@ void FrmInformacionFarmaco::capturarid(QString ccodigonacional)
                   if (e.tagName() == "TLD") {
                         ui->txtTLD->setText(e.text());
                   }
+                  if (e.tagName() == "RECETA") {
+                        ui->txtReceta->setText(e.text());
+                  }
+                  if (e.tagName() == "FINAN") {
+                        ui->txtFinanciado->setText(e.text());
+                  }
+                  if (e.tagName() == "fecha_alta") {
+                      QDate alta;
+                      int ano,mes,dia;
+                      ano = e.text().left(4).toInt();
+                      mes = e.text().mid(5,2).toInt();
+                      dia = e.text().mid(8,2).toInt();
+                      alta.setDate(ano,mes,dia);
+                      ui->txtFechaAlta->setDate(alta);
+                  }
+                  if (e.tagName() == "fecha_baja") {
+                      if (e.text()!="0") {
+                          QDate alta;
+                          int ano,mes,dia;
+                          ano = e.text().left(4).toInt();
+                          mes = e.text().mid(5,2).toInt();
+                          dia = e.text().mid(8,2).toInt();
+                          alta.setDate(ano,mes,dia);
+                          ui->txtFechaBaja->setVisible(true);
+                          ui->lblfechabaja->setVisible(true);
+                          ui->txtFechaBaja->setDate(alta);
+                      }
+                        ui->txtFechaBaja->setVisible(false);
+                        ui->lblfechabaja->setVisible(false);
+                  }
+                  if (e.tagName() == "baja") {
+                        if(e.text()=="1")
+                            ui->lblDadodeBaja->setVisible(true);
+                        else
+                            ui->lblDadodeBaja->setVisible(false);
+                  }
+
+                  if (e.tagName() == "id_laboratory") {
+                      QUrl  uUrl;
+                      QString cUrl = "http://svadcf.es/documentos/image/fotos/laboratorio/"+e.text().trimmed()+".gif";
+                      uUrl.setUrl(cUrl);
+                      ui->webLogoLaboratorio->setUrl(uUrl);
+                  }
+
+                  if (e.tagName() == "id_speciality") {
+                      QUrl  uUrl;
+                      QString cUrl = "http://svadcf.es/documentos/image/fotos/medicamento/"+e.text().trimmed()+"_1.jpg";
+                      uUrl.setUrl(cUrl);
+                      ui->webimagen1->setUrl(uUrl);
+                      cUrl = "http://svadcf.es/documentos/image/fotos/medicamento/"+e.text().trimmed()+"_2.jpg";
+                      uUrl.setUrl(cUrl);
+                      ui->webimagen2->setUrl(uUrl);
+                      cUrl = "http://svadcf.es/documentos/image/fotos/medicamento/"+e.text().trimmed()+"_3.jpg";
+                      uUrl.setUrl(cUrl);
+                      ui->webimagen3->setUrl(uUrl);
+                  }
+
+                  //----------------------------
+                  // Llenar tabla indicaciones
+                  //----------------------------
+
+                  if (e.tagName() == "Indications") {
+                      ui->listaIndicaciones->setColumnCount(2);
+                      ui->listaIndicaciones->setColumnWidth(0,200);
+                      ui->listaIndicaciones->setColumnWidth(1,0);
+
+                     int nrow = 0;
+                     int pos = 0;
+                      while (!n2.isNull()) {
+                          if (n2.isElement()) {
+                              QDomNodeList attributes = n2.childNodes();
+
+                              for (int i = 0; i < attributes.count(); i ++) {
+                                  QDomElement e2 = attributes.at(i).toElement();
+                                  if (e2.tagName() == "Indications")
+                                      while (!n3.isNull()) {
+                                          if (n3.isElement()) {
+                                              QDomNodeList attributes = n3.childNodes();
+
+                                              for (int i = 0; i < attributes.count(); i ++) {
+                                                  QDomElement e3 = attributes.at(i).toElement();
+                                                  if (e3.tagName() == "ID_IND") {
+                                                      ui->listaIndicaciones->setRowCount(pos+1);
+                                                      QTableWidgetItem *newItem = new QTableWidgetItem(e3.text());
+                                                      // para que los elementos no sean editables
+                                                      newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
+                                                      newItem->setTextColor(Qt::blue); // color de los items
+
+                                                      ui->listaIndicaciones->setItem(pos,1,newItem);
+                                                  }
+                                                  if (e3.tagName() == "TITINDMIN") {
+                                                      ui->listaIndicaciones->setRowCount(pos+1);
+                                                      QTableWidgetItem *newItem = new QTableWidgetItem(e3.text());
+                                                      // para que los elementos no sean editables
+                                                      newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
+                                                      newItem->setTextColor(Qt::blue); // color de los items
+
+                                                      ui->listaIndicaciones->setItem(pos,0,newItem);
+                                                  }
+
+                                              }
+
+                                              pos++;
+
+                                              //data.append(s);
+                                          }
+                                          n3 = n3.nextSibling();
+                                      }
+
+                                }
+                                n2 = n2.nextSibling();
+                        }
+                  }
 
               }
 
@@ -98,3 +215,4 @@ void FrmInformacionFarmaco::capturarid(QString ccodigonacional)
           n = n.nextSibling();
       }
  }
+}

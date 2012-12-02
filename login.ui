@@ -480,19 +480,6 @@ border-color: rgb(0, 0, 0);</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="3">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item row="3" column="3">
        <widget class="QComboBox" name="cboEmpresa">
         <property name="minimumSize">
@@ -889,6 +876,19 @@ color: rgb(255, 0, 0);</string>
         </widget>
        </widget>
       </item>
+      <item row="2" column="3">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
      <zorder>label_5</zorder>
      <zorder>label_2</zorder>
@@ -899,8 +899,8 @@ color: rgb(255, 0, 0);</string>
      <zorder>Crearconfiguracin</zorder>
      <zorder>cboEmpresa</zorder>
      <zorder>label</zorder>
-     <zorder>verticalSpacer</zorder>
      <zorder>frame</zorder>
+     <zorder>verticalSpacer</zorder>
     </widget>
    </item>
   </layout>

@@ -25,15 +25,22 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="8" colspan="2">
-    <widget class="QLabel" name="label_2">
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_11">
      <property name="text">
-      <string>Dosificación:</string>
+      <string>Receta:</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="10" colspan="2">
-    <widget class="QLineEdit" name="txtDosificacion">
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_14">
+     <property name="text">
+      <string>Financiado:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="6" colspan="4">
+    <widget class="QLineEdit" name="txtLaboratorio">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -42,14 +49,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Código nacional:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2" colspan="2">
+   <item row="2" column="2" colspan="2">
     <widget class="QLineEdit" name="txtCodigoNacional">
      <property name="enabled">
       <bool>false</bool>
@@ -59,57 +59,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="4" colspan="2">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Laboratorio:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="10" rowspan="3" colspan="2">
-    <widget class="QWebView" name="webLogoLaboratorio">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="url">
-      <url>
-       <string>about:blank</string>
-      </url>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Nombre ATC:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2" colspan="2">
-    <widget class="QLineEdit" name="txtNombreATC">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 0, 127);</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="4" colspan="2">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Tipo Med:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>Caja:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2" colspan="2">
+   <item row="5" column="2" colspan="2">
     <widget class="QLineEdit" name="txtCaja">
      <property name="enabled">
       <bool>false</bool>
@@ -119,61 +69,14 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="4" colspan="3">
-    <widget class="QLabel" name="label_8">
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_7">
      <property name="text">
-      <string>Precio laboratorio:</string>
+      <string>Caja:</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="7">
-    <widget class="QLineEdit" name="txtPVC">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 0, 127);</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="8">
-    <widget class="QLabel" name="label_9">
-     <property name="text">
-      <string>Precio:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="9">
-    <widget class="QLineEdit" name="txtPVP">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>92</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 0, 127);</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="3">
-    <widget class="QLabel" name="label_10">
-     <property name="text">
-      <string>Tratamiento larga duración:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" colspan="2">
-    <widget class="QLabel" name="label_12">
-     <property name="text">
-      <string>Fecha Alta:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2" colspan="2">
+   <item row="9" column="2" colspan="2">
     <widget class="QDateEdit" name="txtFechaAlta">
      <property name="enabled">
       <bool>false</bool>
@@ -189,14 +92,171 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="5" colspan="2">
-    <widget class="QLabel" name="label_13">
+   <item row="2" column="0" colspan="2">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Código nacional:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0" colspan="2">
+    <widget class="QLabel" name="label_12">
+     <property name="text">
+      <string>Fecha Alta:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Nombre ATC:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="5" colspan="2">
+    <widget class="QLabel" name="lblfechabaja">
      <property name="text">
       <string>Fecha Baja: </string>
      </property>
     </widget>
    </item>
    <item row="5" column="7">
+    <widget class="QLineEdit" name="txtPVC">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 0, 127);</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="5" colspan="6">
+    <widget class="QLabel" name="label_16">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(170, 170, 255)</string>
+     </property>
+     <property name="text">
+      <string>Imagenes Medicamento</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" colspan="8">
+    <widget class="QLineEdit" name="txtDosificacion">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 0, 127);</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0" rowspan="2" colspan="5">
+    <widget class="QTableWidget" name="listaIndicaciones">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 0, 127);</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2" colspan="8">
+    <widget class="QLineEdit" name="txtTipoMedicamento">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 0, 127);</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="3">
+    <widget class="QLabel" name="label_10">
+     <property name="text">
+      <string>Tratamiento larga duración:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Dosificación:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2" colspan="8">
+    <widget class="QLineEdit" name="txtNombre">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 0, 127);</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="9">
+    <widget class="QLineEdit" name="txtPVP">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>92</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 0, 127);</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="3" colspan="7">
+    <widget class="QLineEdit" name="txtFinanciado">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>313</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(170, 0, 0);</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2" colspan="8">
+    <widget class="QLineEdit" name="txtNombreATC">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 0, 127);</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="7">
     <widget class="QDateEdit" name="txtFechaBaja">
      <property name="enabled">
       <bool>false</bool>
@@ -212,26 +272,17 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="11">
-    <widget class="QLabel" name="label_17">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
+   <item row="7" column="3" colspan="7">
+    <widget class="QLineEdit" name="txtReceta">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(170, 170, 255)</string>
-     </property>
-     <property name="text">
-      <string>Posibles Interacciones</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <string notr="true">color: rgb(0, 0, 127);</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="11">
+   <item row="11" column="11" colspan="2">
     <widget class="QTableWidget" name="listaInteracciones">
      <property name="enabled">
       <bool>false</bool>
@@ -241,26 +292,35 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="5" colspan="6">
-    <widget class="QLabel" name="label_16">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(170, 170, 255)</string>
-     </property>
+   <item row="5" column="8">
+    <widget class="QLabel" name="label_9">
      <property name="text">
-      <string>Prospecto</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <string>Precio:</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="0" colspan="5">
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Tipo Med:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4" colspan="2">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Laboratorio:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="4" colspan="3">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Precio laboratorio:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0" colspan="5">
     <widget class="QLabel" name="label_15">
      <property name="font">
       <font>
@@ -279,37 +339,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="6" colspan="4">
-    <widget class="QLineEdit" name="txtTipoMedicamento">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 0, 127);</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="6" colspan="4">
-    <widget class="QLineEdit" name="txtLaboratorio">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 0, 127);</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" colspan="7">
-    <widget class="QLineEdit" name="txtNombre">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 0, 127);</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="8" colspan="3">
+   <item row="9" column="8">
     <widget class="QLabel" name="lblDadodeBaja">
      <property name="font">
       <font>
@@ -325,11 +355,52 @@
 color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
-      <string>DADO DE BAJA</string>
+      <string> BAJA</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="11">
+   <item row="10" column="11" colspan="2">
+    <widget class="QLabel" name="label_17">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(170, 170, 255)</string>
+     </property>
+     <property name="text">
+      <string>Posibles Interacciones</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="3" colspan="7">
+    <widget class="QLineEdit" name="txtTLD">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 0, 127);</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="10" rowspan="4" colspan="3">
+    <widget class="QWebView" name="webLogoLaboratorio">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="url">
+      <url>
+       <string>about:blank</string>
+      </url>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="11" colspan="2">
     <widget class="QPushButton" name="btnAceptar">
      <property name="text">
       <string>Aceptar</string>
@@ -346,28 +417,8 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="8">
-    <widget class="QLabel" name="label_11">
-     <property name="text">
-      <string>Receta:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="9" colspan="3">
-    <widget class="QLineEdit" name="txtReceta">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 0, 127);</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="5" rowspan="2" colspan="6">
-    <widget class="QWebView" name="webProspecto">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
+   <item row="11" column="5" rowspan="2">
+    <widget class="QWebView" name="webimagen1">
      <property name="url">
       <url>
        <string>about:blank</string>
@@ -375,23 +426,21 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="0" rowspan="2" colspan="5">
-    <widget class="QTableWidget" name="listaIndicaciones">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 0, 127);</string>
+   <item row="11" column="6" rowspan="2" colspan="2">
+    <widget class="QWebView" name="webimagen2">
+     <property name="url">
+      <url>
+       <string>about:blank</string>
+      </url>
      </property>
     </widget>
    </item>
-   <item row="4" column="3" colspan="5">
-    <widget class="QLineEdit" name="txtTLD">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 0, 127);</string>
+   <item row="11" column="8" rowspan="2" colspan="2">
+    <widget class="QWebView" name="webimagen3">
+     <property name="url">
+      <url>
+       <string>about:blank</string>
+      </url>
      </property>
     </widget>
    </item>
