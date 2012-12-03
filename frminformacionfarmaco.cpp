@@ -11,6 +11,13 @@ FrmInformacionFarmaco::FrmInformacionFarmaco(QWidget *parent) :
     ui(new Ui::FrmInformacionFarmaco)
 {
     ui->setupUi(this);
+    ui->webimagen1->setVisible(false);
+    ui->webimagen2->setVisible(false);
+    ui->webimagen3->setVisible(false);
+    ui->webLogoLaboratorio->setVisible(false);
+    ui->txtFechaBaja->setVisible(false);
+    ui->lblfechabaja->setVisible(false);
+
     connect(ui->btnAceptar,SIGNAL(clicked()),this,SLOT(close()));
 }
 
@@ -31,11 +38,11 @@ void FrmInformacionFarmaco::capturarid(QString ccodigonacional)
      cUrl = cUrl + "&id_ent=" + cClave1;
 
 
-         QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-         connect(manager, SIGNAL(finished(QNetworkReply*)),
-                 this, SLOT(finishedSlotBuscarMedicamento(QNetworkReply*)));
+     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+     connect(manager, SIGNAL(finished(QNetworkReply*)),
+             this, SLOT(finishedSlotBuscarMedicamento(QNetworkReply*)));
 
-        manager->get(QNetworkRequest(QUrl(cUrl)));
+    manager->get(QNetworkRequest(QUrl(cUrl)));
 
  }
 
@@ -111,19 +118,20 @@ void FrmInformacionFarmaco::capturarid(QString ccodigonacional)
                       ui->txtFechaAlta->setDate(alta);
                   }
                   if (e.tagName() == "fecha_baja") {
-                      if (e.text()!="0") {
-                          QDate alta;
+                      if (e.text()!="0" && !e.text().isEmpty()) {
+                          QDate baja;
                           int ano,mes,dia;
                           ano = e.text().left(4).toInt();
                           mes = e.text().mid(5,2).toInt();
                           dia = e.text().mid(8,2).toInt();
-                          alta.setDate(ano,mes,dia);
+                          baja.setDate(ano,mes,dia);
                           ui->txtFechaBaja->setVisible(true);
                           ui->lblfechabaja->setVisible(true);
-                          ui->txtFechaBaja->setDate(alta);
-                      }
+                          ui->txtFechaBaja->setDate(baja);
+                      } else {
                         ui->txtFechaBaja->setVisible(false);
                         ui->lblfechabaja->setVisible(false);
+                      }
                   }
                   if (e.tagName() == "baja") {
                         if(e.text()=="1")
@@ -136,27 +144,32 @@ void FrmInformacionFarmaco::capturarid(QString ccodigonacional)
                       QUrl  uUrl;
                       QString cUrl = "http://svadcf.es/documentos/image/fotos/laboratorio/"+e.text().trimmed()+".gif";
                       uUrl.setUrl(cUrl);
-                      ui->webLogoLaboratorio->setUrl(uUrl);
+                      ui->webLogoLaboratorio->load(uUrl);
                   }
 
                   if (e.tagName() == "id_speciality") {
+                      connect(ui->webimagen1,SIGNAL(loadFinished(bool)),this, SLOT(cargaFinalizada1(bool)));
+                      connect(ui->webimagen2,SIGNAL(loadFinished(bool)),this, SLOT(cargaFinalizada2(bool)));
+                      connect(ui->webimagen3,SIGNAL(loadFinished(bool)),this, SLOT(cargaFinalizada3(bool)));
+                      connect(ui->webLogoLaboratorio,SIGNAL(loadFinished(bool)),this, SLOT(cargaFinalizadaLogo(bool)));
                       QUrl  uUrl;
                       QString cUrl = "http://svadcf.es/documentos/image/fotos/medicamento/"+e.text().trimmed()+"_1.jpg";
                       uUrl.setUrl(cUrl);
-                      ui->webimagen1->setUrl(uUrl);
+                      ui->webimagen1->load(uUrl);
+
                       cUrl = "http://svadcf.es/documentos/image/fotos/medicamento/"+e.text().trimmed()+"_2.jpg";
                       uUrl.setUrl(cUrl);
-                      ui->webimagen2->setUrl(uUrl);
+                      ui->webimagen2->load(uUrl);
                       cUrl = "http://svadcf.es/documentos/image/fotos/medicamento/"+e.text().trimmed()+"_3.jpg";
                       uUrl.setUrl(cUrl);
-                      ui->webimagen3->setUrl(uUrl);
+                      ui->webimagen3->load(uUrl);
                   }
 
                   //----------------------------
                   // Llenar tabla indicaciones
                   //----------------------------
 
-                  if (e.tagName() == "Indications") {
+                  if (e.tagName() == "Indications_set") {
                       ui->listaIndicaciones->setColumnCount(2);
                       ui->listaIndicaciones->setColumnWidth(0,200);
                       ui->listaIndicaciones->setColumnWidth(1,0);
@@ -169,7 +182,7 @@ void FrmInformacionFarmaco::capturarid(QString ccodigonacional)
 
                               for (int i = 0; i < attributes.count(); i ++) {
                                   QDomElement e2 = attributes.at(i).toElement();
-                                  if (e2.tagName() == "Indications")
+                                  if (e2.tagName() == "")
                                       while (!n3.isNull()) {
                                           if (n3.isElement()) {
                                               QDomNodeList attributes = n3.childNodes();
@@ -214,5 +227,38 @@ void FrmInformacionFarmaco::capturarid(QString ccodigonacional)
           }
           n = n.nextSibling();
       }
+      }
  }
-}
+
+ void FrmInformacionFarmaco::cargaFinalizada1(bool estado)
+ {
+
+     if(ui->webimagen1->findText("Not Found"))
+        ui->webimagen1->setVisible(false);
+     else
+         ui->webimagen1->setVisible(true);
+ }
+ void FrmInformacionFarmaco::cargaFinalizada2(bool estado)
+ {
+
+     if(ui->webimagen2->findText("Not Found"))
+        ui->webimagen2->setVisible(false);
+     else
+         ui->webimagen2->setVisible(true);
+ }
+ void FrmInformacionFarmaco::cargaFinalizada3(bool estado)
+ {
+
+     if(ui->webimagen3->findText("Not Found"))
+        ui->webimagen3->setVisible(false);
+     else
+         ui->webimagen3->setVisible(true);
+ }
+ void FrmInformacionFarmaco::cargaFinalizadaLogo(bool estado)
+ {
+
+     if(ui->webLogoLaboratorio->findText("Not Found"))
+        ui->webLogoLaboratorio->setVisible(false);
+     else
+         ui->webLogoLaboratorio->setVisible(true);
+ }

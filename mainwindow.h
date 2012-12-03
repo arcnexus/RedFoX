@@ -57,6 +57,8 @@ private slots:
 
     void on_btnAgenda_clicked();
 
+    void cambiarEstilo(int);
+
 private:
     Ui::MainWindow *ui;
     QWorkspace *workspace;

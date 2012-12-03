@@ -21,6 +21,10 @@ public:
     QString cRetMedicamento;
     QStringList cMedicList;
 
+
+
+
+
 signals:
     void datos(int, QString,QString);
 
@@ -38,7 +42,7 @@ private slots:
     void finishedSlotBuscarMedicamentoPorPActivo(QNetworkReply *reply);
     void finishedSlotBuscarProspectoPrincAct(QNetworkReply *reply);
     void on_btnBuscarPatologia_clicked();
-
+    void finishedSlotBuscarProspectoMedicamento(QNetworkReply *reply);
     void on_btnVerProspecto_clicked();
 
     void on_tablamedicamentosPatologia_clicked();
@@ -57,8 +61,12 @@ private slots:
 
     void on_tablamedicamentospactivos_clicked();
 
+    void BuscarProspectoMedicamento(int, int);
 
     void on_btnAceptar1_clicked();
+    void Aceptarporpatologia();
+    void Aceptarpormolecula();
+    void AceptarporPA();
 
 private:
     Ui::FrmAnadirMedicamento *ui;

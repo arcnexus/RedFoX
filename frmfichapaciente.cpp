@@ -587,7 +587,10 @@ void FrmFichaPaciente::MostrarFichaMedicamento()
         FrmInformacionFarmaco *frmFarmaco = new FrmInformacionFarmaco();
         connect(this,SIGNAL(pasaid(QString)),frmFarmaco,SLOT(capturarid(QString)));
         emit pasaid(cCodigoNacional);
+        frmFarmaco->setModal(true);
+        frmFarmaco->setWindowModality(Qt::WindowModal);
         frmFarmaco->show();
+
 
     }
 

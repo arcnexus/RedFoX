@@ -22,6 +22,10 @@ FrmAnadirMedicamento::FrmAnadirMedicamento(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->btnCerrar, SIGNAL(clicked()), this, SLOT(close()));
+    connect(ui->tablamedicamentos,SIGNAL(cellClicked(int,int)),this, SLOT(BuscarProspectoMedicamento(int,int)));
+    connect(ui->pushButton_Aceptarporpatologia,SIGNAL(clicked()),this, SLOT(Aceptarporpatologia()));
+    connect(ui->pushButton_AceptarPorMolecula,SIGNAL(clicked()),this,SLOT(Aceptarpormolecula()));
+    connect(ui->pushButton_AceptarPorPA,SIGNAL(clicked()),this,SLOT(AceptarporPA()));
 
 }
 
@@ -143,11 +147,105 @@ void FrmAnadirMedicamento::finishedSlotMedicamento(QNetworkReply* reply)
          n = n.nextSibling();
      }
 
-
-     ui->textEdit->setText((cXML));
-
 }
 // FIN BUSCAR MEDICAMENTO POR SU NOMBRE
+
+// BUSCAR EL PROSPECTO
+void FrmAnadirMedicamento::BuscarProspectoMedicamento(int irow, int icol)
+{
+    icol = 4;
+    QString cUrl = "http://demo.vademecumdata.es/vweb/xml/ws_prospecto/get_prospecto?national_code="+
+
+            ui->tablamedicamentos->item(irow,icol)->text();
+
+
+    // Recupero valores conexión Vademecum
+    QSettings settings("infint", "terra");
+    QString cClave1 = settings.value("Clave1").toString();
+    QString cClave2 = settings.value("Clave2").toString();
+
+    cUrl = cUrl + "&id_ent=" + cClave1;
+
+
+        QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+        connect(manager, SIGNAL(finished(QNetworkReply*)),
+                this, SLOT(finishedSlotBuscarProspectoMedicamento(QNetworkReply*)));
+
+       manager->get(QNetworkRequest(QUrl(cUrl)));
+}
+
+
+void FrmAnadirMedicamento::finishedSlotBuscarProspectoMedicamento(QNetworkReply* reply)
+{
+    //qDebug()<<reply->readAll();
+     QString data=(QString)reply->readAll();
+     QString cXML = data;
+
+     // Extract values from XML
+     QDomDocument document("XmlDoc");
+     document.setContent(cXML);
+
+     QDomElement root = document.documentElement();
+     if (root .tagName() != "object")
+         qDebug("Bad root element.");
+
+     QDomNode drugList = root.firstChild();
+
+     QDomNode n = drugList.firstChild();
+     QDomNode n2 = n.firstChild();
+
+
+
+    int nrow = 0;
+    int pos = 0;
+     while (!n.isNull()) {
+         if (n.isElement()) {
+             QDomNodeList attributes = n.childNodes();
+
+             for (int i = 0; i < attributes.count(); i ++) {
+                 QDomElement e = attributes.at(i).toElement();
+
+                 if (e.tagName() == "prospecto") {
+
+                     while (!n2.isNull()) {
+                         if (n2.isElement()) {
+                             QDomNodeList attributes = n2.childNodes();
+
+                             for (int i = 0; i < attributes.count(); i ++) {
+                                 QDomElement e2 = attributes.at(i).toElement();
+
+                                 if (e2.tagName() == "body") {
+                                     ui->webView_ProspectoBuscarPorMedicamento->setHtml(e.text().replace("/images_prospectos","http://svad.es/documentos/images_prospectos"));
+
+                                 }
+                             }
+
+                             pos++;
+
+                             //data.append(s);
+                         }
+                         n2 = n2.nextSibling();
+                     }
+
+                 }
+             }
+
+             pos++;
+
+             //data.append(s);
+         }
+         n = n.nextSibling();
+     }
+
+
+     //ui->textProspecto->setText((cXML));
+
+}
+// FIN BUSCAR EL PROSPECTO
+
+
+
+
 
 // BUSCAR MEDICAMENTO POR PATOLOGÍA
 
@@ -659,7 +757,7 @@ void FrmAnadirMedicamento::on_tablamedicamentosMolecula_clicked()
 {
     QString cUrl = "http://demo.vademecumdata.es/vweb/xml/ws_prospecto/get_prospecto?national_code="+
     ui->tablamedicamentosMolecula->item(ui->tablamedicamentosMolecula->currentRow(),3)->text();
-    ui->textProspectoMolecula->setText("");
+    ui->textProspectoMolecula->setHtml("");
 
     // Recupero valores conexión Vademecum
     QSettings settings("infint", "terra");
@@ -717,7 +815,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspectoMolecula(QNetworkReply* re
                                  QDomElement e2 = attributes.at(i).toElement();
 
                                  if (e2.tagName() == "body") {
-                                     ui->textProspectoMolecula->setText(e.text());
+                                     ui->textProspectoMolecula->setHtml(e.text().replace("/images_prospectos","http://svad.es/documentos/images_prospectos"));
                                  }
                              }
 
@@ -946,7 +1044,7 @@ void FrmAnadirMedicamento::on_tablamedicamentospactivos_clicked()
 {
     QString cUrl = "http://demo.vademecumdata.es/vweb/xml/ws_prospecto/get_prospecto?national_code="+
     ui->tablamedicamentospactivos->item(ui->tablamedicamentospactivos->currentRow(),3)->text();
-    ui->textProspectopa->setText("");
+    ui->textProspectopa->setHtml("");
 
     // Recupero valores conexión Vademecum
     QSettings settings("infint", "terra");
@@ -1004,7 +1102,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspectoPrincAct(QNetworkReply* re
                                  QDomElement e2 = attributes.at(i).toElement();
 
                                  if (e2.tagName() == "body") {
-                                     ui->textProspectopa->setText(e.text());
+                                     ui->textProspectopa->setHtml(e.text().replace("/images_prospectos","http://svad.es/documentos/images_prospectos"));
                                  }
                              }
 
@@ -1036,6 +1134,31 @@ void FrmAnadirMedicamento::on_btnAceptar1_clicked()
     emit datos(ui->tablamedicamentos->item(ui->tablamedicamentos->currentRow(),1)->text().toInt(),
                ui->tablamedicamentos->item(ui->tablamedicamentos->currentRow(),0)->text(),
                ui->tablamedicamentos->item(ui->tablamedicamentos->currentRow(),4)->text());
+    close();
+
+}
+void FrmAnadirMedicamento::Aceptarporpatologia()
+{
+    emit datos(ui->tablamedicamentosPatologia->item(ui->tablamedicamentosPatologia->currentRow(),1)->text().toInt(),
+               ui->tablamedicamentosPatologia->item(ui->tablamedicamentosPatologia->currentRow(),0)->text(),
+               ui->tablamedicamentosPatologia->item(ui->tablamedicamentosPatologia->currentRow(),3)->text());
+    close();
+
+}
+
+void FrmAnadirMedicamento::Aceptarpormolecula()
+{
+    emit datos(ui->tablamedicamentosMolecula->item(ui->tablamedicamentosMolecula->currentRow(),1)->text().toInt(),
+               ui->tablamedicamentosMolecula->item(ui->tablamedicamentosMolecula->currentRow(),0)->text(),
+               ui->tablamedicamentosMolecula->item(ui->tablamedicamentosMolecula->currentRow(),3)->text());
+    close();
+
+}
+void FrmAnadirMedicamento::AceptarporPA()
+{
+    emit datos(ui->tablamedicamentospactivos->item(ui->tablamedicamentospactivos->currentRow(),1)->text().toInt(),
+               ui->tablamedicamentospactivos->item(ui->tablamedicamentospactivos->currentRow(),0)->text(),
+               ui->tablamedicamentospactivos->item(ui->tablamedicamentospactivos->currentRow(),3)->text());
     close();
 
 }

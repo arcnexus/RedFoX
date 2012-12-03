@@ -29,6 +29,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    // Conexiones
+    connect(ui->checkBox_kde,SIGNAL(stateChanged(int)),this, SLOT(cambiarEstilo(int)));
+
     QSqlDatabase dbEmp;
     m_config = new Configuracion();
             QSettings settings("infint", "terra");
@@ -296,4 +299,15 @@ void MainWindow::on_btnAgenda_clicked()
     frmAgenda1->setWindowState(Qt::WindowMaximized);
     frmAgenda1->exec();
     ui->btnAgenda->setEnabled(true);
+}
+
+void MainWindow::cambiarEstilo(int estado)
+{
+    QStyle *style;
+    if (estado ==2)
+        style = QStyleFactory::create("oxygen");
+    else
+        style = QStyleFactory::create("plastique");
+
+   QApplication::setStyle(style);
 }

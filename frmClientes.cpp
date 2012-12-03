@@ -790,7 +790,6 @@ void frmClientes::on_txtcCp_lostFocus()
                } else {
                    //qDebug() << qPoblacion.lastQuery();
                    if (qPoblacion.next()) {
-                                        qDebug() << qPoblacion.value(0).toString();
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
                         ui->txtcProvincia->setText(qPoblacion.value(2).toString());
                         ui->txtcPais->setText("ESPAÑA");

@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>FrmInformacionFarmaco</class>
  <widget class="QDialog" name="FrmInformacionFarmaco">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -118,6 +121,9 @@
      <property name="text">
       <string>Fecha Baja: </string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
     </widget>
    </item>
    <item row="5" column="7">
@@ -135,6 +141,12 @@
    </item>
    <item row="10" column="5" colspan="6">
     <widget class="QLabel" name="label_16">
+     <property name="minimumSize">
+      <size>
+       <width>512</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="font">
       <font>
        <weight>75</weight>
@@ -311,12 +323,18 @@
      <property name="text">
       <string>Laboratorio:</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
     </widget>
    </item>
    <item row="5" column="4" colspan="3">
     <widget class="QLabel" name="label_8">
      <property name="text">
       <string>Precio laboratorio:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
@@ -336,26 +354,6 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="8">
-    <widget class="QLabel" name="lblDadodeBaja">
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
-       <weight>75</weight>
-       <italic>false</italic>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 85, 0);
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string> BAJA</string>
      </property>
     </widget>
    </item>
@@ -393,6 +391,12 @@ color: rgb(255, 255, 255);</string>
      <property name="enabled">
       <bool>false</bool>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>175</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="url">
       <url>
        <string>about:blank</string>
@@ -428,6 +432,12 @@ color: rgb(255, 255, 255);</string>
    </item>
    <item row="11" column="6" rowspan="2" colspan="2">
     <widget class="QWebView" name="webimagen2">
+     <property name="minimumSize">
+      <size>
+       <width>164</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="url">
       <url>
        <string>about:blank</string>
@@ -437,10 +447,36 @@ color: rgb(255, 255, 255);</string>
    </item>
    <item row="11" column="8" rowspan="2" colspan="2">
     <widget class="QWebView" name="webimagen3">
+     <property name="minimumSize">
+      <size>
+       <width>110</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="url">
       <url>
        <string>about:blank</string>
       </url>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="8" colspan="2">
+    <widget class="QLabel" name="lblDadodeBaja">
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 85, 0);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>MEDICAMENTO DADO DE BAJA</string>
      </property>
     </widget>
    </item>
