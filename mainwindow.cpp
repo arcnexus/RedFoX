@@ -75,7 +75,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // Fin TODO
 
 
-    //ui->barraHerramientas->setStyleSheet("background-color: rgb(255, 227, 171);;border-bottom-color: #000000");
     ui->barraHerramientas->setCurrentIndex(3);
     // Preparo espacio de trabajo para poder acojer ventanas dentro de él
     workspace = new QWorkspace(ui->widget);
@@ -99,7 +98,7 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->barraHerramientas->setTabEnabled(3,true);
          else
             ui->barraHerramientas->setTabEnabled(3,false);
-         ui->barraHerramientas->setCurrentIndex(1);
+         ui->barraHerramientas->setCurrentIndex(0);
 
         // capturo empresa
          QString Empresa = dlg->getEmpresa();

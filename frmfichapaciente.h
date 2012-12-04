@@ -49,6 +49,7 @@ private slots:
     void llenartablahistorialfarmacologiaepisodio();
     void BorrarDatosMedicamento();
     void MostrarFichaMedicamento();
+    void AnadirImagenDiagnostico();
 signals:
     void pasaid(QString);
 

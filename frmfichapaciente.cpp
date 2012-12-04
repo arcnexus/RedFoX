@@ -20,6 +20,8 @@
 #include "frmbuscarcie.h"
 #include "farmacologia.h"
 #include "frminformacionfarmaco.h"
+#include "frmanadirimagen.h"
+#include <QDesktopWidget>
 
 Paciente *oPaciente = new Paciente();
 Episodio *oEpisodio = new Episodio();
@@ -48,6 +50,8 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->radversoloactivosfarmacologia,SIGNAL(clicked()),this,SLOT(llenartablahistorialfarmacologiaepisodio()));
     connect(ui->btnBorrarFarma,SIGNAL(clicked()),this,SLOT(BorrarDatosMedicamento()));
     connect(ui->btnVerFarma,SIGNAL(clicked()),this,SLOT(MostrarFichaMedicamento()));
+    connect(ui->btnAnadirImagen,SIGNAL(clicked()), this, SLOT(AnadirImagenDiagnostico()));
+
 
 
     // Ocultar Iconos imagenes
@@ -594,6 +598,16 @@ void FrmFichaPaciente::MostrarFichaMedicamento()
 
     }
 
+}
+
+void FrmFichaPaciente::AnadirImagenDiagnostico()
+{
+    FrmAnadirImagen *imagen = new FrmAnadirImagen();
+    connect(this,SIGNAL(pasaid(QString)),imagen,SLOT(RecuperarId(QString)));
+    emit pasaid(QString::number(oEpisodio->getid()));
+    imagen->adjustSize();
+    imagen->move(QApplication::desktop()->screen()->rect().center() - imagen->rect().center());
+    imagen->show();
 }
 
 void FrmFichaPaciente::cargarDatosMedicamento(int crow, int ccol)

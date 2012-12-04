@@ -68,7 +68,9 @@ SOURCES += main.cpp\
     frmbuscarcie.cpp \
     vademecum.cpp \
     farmacologia.cpp \
-    frminformacionfarmaco.cpp
+    frminformacionfarmaco.cpp \
+    frmanadirimagen.cpp \
+    imagenesdiagnostico.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -110,7 +112,9 @@ HEADERS  += mainwindow.h \
     frmbuscarcie.h \
     vademecum.h \
     farmacologia.h \
-    frminformacionfarmaco.h
+    frminformacionfarmaco.h \
+    frmanadirimagen.h \
+    imagenesdiagnostico.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -137,7 +141,8 @@ FORMS    += mainwindow.ui \
     frmfichapaciente.ui \
     frmanadirmedicamento.ui \
     frmbuscarcie.ui \
-    frminformacionfarmaco.ui
+    frminformacionfarmaco.ui \
+    frmanadirimagen.ui
 
 RESOURCES += \
     terra.qrc
