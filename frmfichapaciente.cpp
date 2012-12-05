@@ -589,8 +589,8 @@ void FrmFichaPaciente::MostrarFichaMedicamento()
         qFarma->next();
         QString cCodigoNacional = qFarma->value(0).toString();
         FrmInformacionFarmaco *frmFarmaco = new FrmInformacionFarmaco();
-        connect(this,SIGNAL(pasaid(QString)),frmFarmaco,SLOT(capturarid(QString)));
-        emit pasaid(cCodigoNacional);
+        connect(this,SIGNAL(pasaCodigoNacional(QString)),frmFarmaco,SLOT(capturarid(QString)));
+        emit pasaCodigoNacional(cCodigoNacional);
         frmFarmaco->setModal(true);
         frmFarmaco->setWindowModality(Qt::WindowModal);
         frmFarmaco->show();
@@ -604,7 +604,7 @@ void FrmFichaPaciente::AnadirImagenDiagnostico()
 {
     FrmAnadirImagen *imagen = new FrmAnadirImagen();
     connect(this,SIGNAL(pasaid(QString)),imagen,SLOT(RecuperarId(QString)));
-    emit pasaid(QString::number(oEpisodio->getid()));
+    emit pasaid(oEpisodio->getid());
     imagen->adjustSize();
     imagen->move(QApplication::desktop()->screen()->rect().center() - imagen->rect().center());
     imagen->show();

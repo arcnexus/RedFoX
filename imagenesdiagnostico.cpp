@@ -3,7 +3,10 @@
 #include <QSqlRecord>
 #include <QMessageBox>
 
-ImagenesDiagnostico::ImagenesDiagnostico()
+
+
+ImagenesDiagnostico::ImagenesDiagnostico(QObject *parent) :
+    QObject(parent)
 {
 }
 
@@ -31,5 +34,25 @@ void ImagenesDiagnostico::llenarObjetoconDatosDB()
 
 void ImagenesDiagnostico::guardarDatosDB()
 {
+    emit ui_ponerDatosEnObjetoImagen();
+    QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    qImagen->prepare("INSERT INTO imagenes "
+                    "idepisodio,localizacionimagen,comentarios,evaluada,descripcion,fechaimagen,"
+                    "tipoimagen) VALUES (:idepisodio,:localizacionimagen,:comentarios,:evaluada,"
+                    ":descripcion,:fechaimagen,:tipoimagen)");
+    qImagen->bindValue(":idepisodio",this->idEpisodio);
+    qImagen->bindValue(":localizacionimagen",this->LocalizacionImagen);
+    qImagen->bindValue(":comentarios",this->Comentarios);
+    qImagen->bindValue(":evaluada",this->Evaluada);
+    qImagen->bindValue(":descripcion",this->Descripcion);
+    qImagen->bindValue(":fechaimagen",this->FechaImagen);
+    qImagen->bindValue(":tipoimagen",this->TipoImagen);
+    if(qImagen->exec())
+        QMessageBox::information(NULL,QObject::tr("Insertar Imagenes"),QObject::tr("La imagen ha sido insertada correctamente"),
+                                 QObject::tr("Aceptar"));
+    else
+        QMessageBox::information(NULL,QObject::tr("Insertar Imagenes"),QObject::tr("Ocurrió un error al insertar la imagen en el episodio:")+
+                                 qImagen->lastError().text(),
+                                 QObject::tr("Aceptar"));
 
 }

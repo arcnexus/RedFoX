@@ -51,7 +51,8 @@ private slots:
     void MostrarFichaMedicamento();
     void AnadirImagenDiagnostico();
 signals:
-    void pasaid(QString);
+    void pasaid(int);
+    void pasaCodigoNacional(QString);
 
 private:
     Ui::FrmFichaPaciente *ui;

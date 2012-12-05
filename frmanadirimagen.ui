@@ -21,51 +21,15 @@
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1" colspan="5">
-    <widget class="QLineEdit" name="txtDescripcion"/>
-   </item>
-   <item row="1" column="4" rowspan="5" colspan="2">
-    <widget class="QWebView" name="webView_imagen">
-     <property name="url">
-      <url>
-       <string>about:blank</string>
-      </url>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Descripción:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QDateEdit" name="dateEdit_FechaImagen">
-     <property name="displayFormat">
-      <string>dd/MM/yyyy</string>
-     </property>
-     <property name="calendarPopup">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" colspan="2">
-    <widget class="QComboBox" name="comboBox_TipoImagen"/>
-   </item>
-   <item row="6" column="4">
-    <widget class="QPushButton" name="pushButton_Cancelar">
-     <property name="text">
-      <string>Cancelar</string>
-     </property>
-     <property name="icon">
-      <iconset resource="terra.qrc">
-       <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+      <string>Fecha imagen:</string>
      </property>
     </widget>
    </item>
    <item row="1" column="3">
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="pushButton_BuscarImagen">
      <property name="toolTip">
       <string>Vincular imagen</string>
      </property>
@@ -84,14 +48,38 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QLabel" name="label_3">
+   <item row="0" column="1" colspan="5">
+    <widget class="QLineEdit" name="txtDescripcion"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Fecha imagen:</string>
+      <string>Descripción:</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="5">
+   <item row="5" column="4">
+    <widget class="QPushButton" name="pushButton_Cancelar">
+     <property name="text">
+      <string>Cancelar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="terra.qrc">
+       <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Comentarios</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="QComboBox" name="comboBox_TipoImagen"/>
+   </item>
+   <item row="5" column="5">
     <widget class="QPushButton" name="pushButton__Anadir">
      <property name="text">
       <string>Añadir</string>
@@ -99,6 +87,13 @@
      <property name="icon">
       <iconset resource="terra.qrc">
        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Tipo imagen:</string>
      </property>
     </widget>
    </item>
@@ -122,32 +117,49 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Tipo imagen:</string>
-     </property>
-    </widget>
-   </item>
    <item row="4" column="0" colspan="4">
     <widget class="QTextEdit" name="textEdit_ComentariosImagen"/>
    </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QLabel" name="label_2">
+   <item row="1" column="2">
+    <widget class="QDateEdit" name="dateEdit_FechaImagen">
+     <property name="displayFormat">
+      <string>dd/MM/yyyy</string>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4" rowspan="4" colspan="2">
+    <widget class="QLabel" name="label_Imagen">
      <property name="text">
-      <string>Comentarios</string>
+      <string>Sin imagen asociada</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QCheckBox" name="checkBox_ImagenEvaluada">
+     <property name="text">
+      <string>Imagen evaluada</string>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKit/QWebView</header>
-  </customwidget>
- </customwidgets>
+ <tabstops>
+  <tabstop>txtDescripcion</tabstop>
+  <tabstop>dateEdit_FechaImagen</tabstop>
+  <tabstop>comboBox_TipoImagen</tabstop>
+  <tabstop>textEdit_ComentariosImagen</tabstop>
+  <tabstop>checkBox_ImagenEvaluada</tabstop>
+  <tabstop>pushButton_BuscarImagen</tabstop>
+  <tabstop>pushButton_4</tabstop>
+  <tabstop>pushButton_Cancelar</tabstop>
+  <tabstop>pushButton__Anadir</tabstop>
+ </tabstops>
  <resources>
   <include location="terra.qrc"/>
  </resources>

@@ -3,8 +3,13 @@
 #include <QString>
 #include <QDate>
 
-class ImagenesDiagnostico
+#include <QObject>
+
+class ImagenesDiagnostico : public QObject
 {
+    Q_OBJECT
+
+
 private:
     int id;
     int idEpisodio;
@@ -13,9 +18,10 @@ private:
     QString TipoImagen;
     QString Comentarios;
     QString LocalizacionImagen;
+    int Evaluada;
 
 public:
-    ImagenesDiagnostico();
+    explicit ImagenesDiagnostico(QObject *parent =0);
     void setId(int id) {this->id = id;}
     void setIdEpisodio(int idEpisodio) {this->idEpisodio = idEpisodio;}
     void setDescripcion(QString Descripcion) {this->Descripcion = Descripcion;}
@@ -23,6 +29,7 @@ public:
     void setTipoImagen(QString TipoImagen) {this->TipoImagen = TipoImagen;}
     void setComentarios(QString Comentarios) {this->Comentarios = Comentarios;}
     void setLocalizacionImagen(QString LocalizacionImagen) {this->LocalizacionImagen = LocalizacionImagen;}
+    void setEvaluada(int Evaluada) {this->Evaluada = Evaluada;}
 
     int getId() {return this->id;}
     int getIdEpisodio() {return this->idEpisodio;}
@@ -31,10 +38,13 @@ public:
     QString getTipoImagen() {return this->TipoImagen;}
     QString getComentarios() {return this->Comentarios;}
     QString getLocalizacionImagen() {return this->LocalizacionImagen;}
+    int getEvaluada() {return this->Evaluada;}
 
-    void llenarObjetoconDatosDB();
+public slots:
     void guardarDatosDB();
-
+    void llenarObjetoconDatosDB();
+signals:
+    void ui_ponerDatosEnObjetoImagen();
 };
 
 #endif // IMAGENESDIAGNOSTICO_H

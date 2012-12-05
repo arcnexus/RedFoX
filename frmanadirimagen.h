@@ -18,7 +18,12 @@ public:
 private:
     Ui::FrmAnadirImagen *ui;
 private slots:
-    void RecuperarId(QString);
+    void RecuperarId(int cIDEpisodio);
+    void AnadirImagen();
+    void GuardarDatosEnObjetoImagen();
+signals:
+
+
 };
 
 #endif // FRMANADIRIMAGEN_H
