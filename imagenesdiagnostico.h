@@ -43,8 +43,11 @@ public:
 public slots:
     void guardarDatosDB();
     void llenarObjetoconDatosDB();
+    void llenarObjetoconDatosDB(int nid);
+
 signals:
     void ui_ponerDatosEnObjetoImagen();
+    void cerrarventana();
 };
 
 #endif // IMAGENESDIAGNOSTICO_H

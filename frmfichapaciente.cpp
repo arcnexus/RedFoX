@@ -22,6 +22,7 @@
 #include "frminformacionfarmaco.h"
 #include "frmanadirimagen.h"
 #include <QDesktopWidget>
+#include "imagenesdiagnostico.h"
 
 Paciente *oPaciente = new Paciente();
 Episodio *oEpisodio = new Episodio();
@@ -51,6 +52,9 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->btnBorrarFarma,SIGNAL(clicked()),this,SLOT(BorrarDatosMedicamento()));
     connect(ui->btnVerFarma,SIGNAL(clicked()),this,SLOT(MostrarFichaMedicamento()));
     connect(ui->btnAnadirImagen,SIGNAL(clicked()), this, SLOT(AnadirImagenDiagnostico()));
+    connect(ui->radImagenEvaluada,SIGNAL(clicked()),this,SLOT(llenartablahistorialimagenesepisodio()));
+    connect(ui->radImagenPendiente, SIGNAL(clicked()),this,SLOT(llenartablahistorialimagenesepisodio()));
+    connect(ui->listaImagenes,SIGNAL(cellClicked(int,int)),this,SLOT(cargarDatosImagenes(int,int)));
 
 
 
@@ -136,6 +140,7 @@ void FrmFichaPaciente::cargarEpisodio(int control)
     ui->txtHistorialEpisodio->setPlainText(oEpisodio->gethistorial());
     ui->txtCIEEpisiodio->setText(oEpisodio->getCIE());
     llenartablahistorialfarmacologiaepisodio();
+    llenartablahistorialimagenesepisodio();
 
 }
 
@@ -566,6 +571,70 @@ void FrmFichaPaciente::llenartablahistorialfarmacologiaepisodio()
     }
 }
 
+void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
+{
+    // Cargar imagenes episodio
+    QStringList list;
+    list <<QObject::tr("DESCRIPCIÓN")<< QObject::tr("FECHA") <<QObject::tr("TIPO") <<"ID";
+    QSqlQuery *qImagenes = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QString cSQL = " Select descripcion, id,fechaimagen, tipoimagen,evaluada from imagenes where idepisodio = :id ";
+    qImagenes->prepare(cSQL);
+    qImagenes->bindValue(":id",oEpisodio->getid());
+    ui->listaImagenes->setRowCount(0);
+    ui->listaImagenes->setColumnCount(4);
+    ui->listaImagenes->setColumnWidth(0,250);
+    ui->listaImagenes->setColumnWidth(1,170);
+    ui->listaImagenes->setColumnWidth(2,100);
+    ui->listaImagenes->setColumnWidth(3,0);
+    ui->listaImagenes->setHorizontalHeaderLabels(list);
+    int pos = 0;
+    QSqlRecord reg ;
+    // Relleno la tabla
+    if (qImagenes->exec()) {
+        while (qImagenes->next()) {
+            // Nombre Medicamento
+            reg = qImagenes->record();
+            if ((ui->radImagenEvaluada->isChecked() && reg.field("evaluada").value().toInt()==1)
+                    || !ui->radImagenEvaluada->isChecked() ) {
+
+                ui->listaImagenes->setRowCount(pos+1);
+                QTableWidgetItem *newItem = new QTableWidgetItem(reg.field("descripcion").value().toString());
+                // para que los elementos no sean editables
+                newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
+                if (reg.field("evaluada").value().toInt() ==1)
+                    newItem->setTextColor(Qt::blue); // color de las imagenes evaluados
+                else
+                    newItem->setTextColor(Qt::darkGray); // color de las imagenes NO evaluadas
+                ui->listaImagenes->setItem(pos,0,newItem);
+
+                // fecha
+                QTableWidgetItem *newItem1 = new QTableWidgetItem(reg.field("fechaimagen").value().toDateTime().toString());
+                // para que los elementos no sean editables
+                newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
+                newItem1->setTextColor(Qt::blue); // color de los items
+                ui->listaTratamientosFarma->setItem(pos,1,newItem1);
+
+                // tipo
+                QTableWidgetItem *newItem2 = new QTableWidgetItem(reg.field("tipoimagen").value().toString());
+                // para que los elementos no sean editables
+                newItem2->setFlags(newItem2->flags() & (~Qt::ItemIsEditable));
+                newItem2->setTextColor(Qt::blue); // color de los items
+                ui->listaImagenes->setItem(pos,2,newItem2);
+
+                // id
+                QTableWidgetItem *newItem3 = new QTableWidgetItem(reg.field("id").value().toString());
+                // para que los elementos no sean editables
+                newItem3->setFlags(newItem3->flags() & (~Qt::ItemIsEditable));
+                newItem3->setTextColor(Qt::blue); // color de los items
+                ui->listaImagenes->setItem(pos,3,newItem3);
+
+                pos++;
+            }
+        }
+    }
+
+}
+
 void FrmFichaPaciente::BorrarDatosMedicamento()
 {
      if(QMessageBox::question(this,tr("Borrar medicamento historial"),tr("Va a proceder a borrar un medicamento del historial,")+
@@ -602,12 +671,17 @@ void FrmFichaPaciente::MostrarFichaMedicamento()
 
 void FrmFichaPaciente::AnadirImagenDiagnostico()
 {
-    FrmAnadirImagen *imagen = new FrmAnadirImagen();
-    connect(this,SIGNAL(pasaid(QString)),imagen,SLOT(RecuperarId(QString)));
-    emit pasaid(oEpisodio->getid());
-    imagen->adjustSize();
-    imagen->move(QApplication::desktop()->screen()->rect().center() - imagen->rect().center());
-    imagen->show();
+    if (oEpisodio->getid() >0) {
+
+        FrmAnadirImagen *imagen = new FrmAnadirImagen();
+        connect(this,SIGNAL(pasaid(int)),imagen,SLOT(RecuperarId(int)));
+        emit pasaid(oEpisodio->getid());
+        imagen->adjustSize();
+        imagen->move(QApplication::desktop()->screen()->rect().center() - imagen->rect().center());
+        imagen->show();
+    } else
+        QMessageBox::warning(this,tr("Añadir imagenes a episodio"),
+                             tr("Debe seleccionar o crear un episodio antes de añadir una nueva imagen diagnostica"),tr("Aceptar"));
 }
 
 void FrmFichaPaciente::cargarDatosMedicamento(int crow, int ccol)
@@ -624,6 +698,29 @@ void FrmFichaPaciente::cargarDatosMedicamento(int crow, int ccol)
         ui->chkactivo->setChecked(false);
     ui->txtComentariosFarma->setPlainText(oFarmacologia->getcomentarios());
     ui->txtPosologiaFarma->setPlainText(oFarmacologia->getindicacionposologia());
+    delete oFarmacologia;
+
+}
+
+void FrmFichaPaciente::cargarDatosImagenes(int crow, int ccol)
+{
+    QString id = ui->listaImagenes->item(crow,3)->text();
+    ImagenesDiagnostico *oImagenes = new ImagenesDiagnostico(this);
+    oImagenes->llenarObjetoconDatosDB(id.toInt());
+    ui->txtComentariosImagen->setPlainText(oImagenes->getComentarios());
+    ui->lineEdit_descripcionimagen->setText(oImagenes->getDescripcion());
+    ui->dateEdit_fechaimagen->setDate(oImagenes->getFechaImagen());
+    int nindex = ui->comboBox_tipoImagen->findText(oImagenes->getTipoImagen());
+    if (nindex >-1)
+        ui->comboBox_tipoImagen->setCurrentIndex(nindex);
+    else
+        ui->comboBox_tipoImagen->clear();
+
+    if (!oImagenes->getLocalizacionImagen().isEmpty()) {
+        QImage imagen(oImagenes->getLocalizacionImagen());
+        ui->lblImagenDiagnostico->setScaledContents(true);
+        ui->lblImagenDiagnostico->setPixmap(QPixmap::fromImage(imagen));
+    }
 
 }
 

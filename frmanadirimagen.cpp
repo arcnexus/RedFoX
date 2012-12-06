@@ -15,6 +15,7 @@ FrmAnadirImagen::FrmAnadirImagen(QWidget *parent) :
     connect(ui->pushButton_BuscarImagen,SIGNAL(clicked()),this,SLOT(AnadirImagen()));
     connect(oImagenesDiagnostico,SIGNAL(ui_ponerDatosEnObjetoImagen()),this,SLOT(GuardarDatosEnObjetoImagen()));
     connect(ui->pushButton__Anadir,SIGNAL(clicked()),oImagenesDiagnostico,SLOT(guardarDatosDB()));
+    connect(oImagenesDiagnostico,SIGNAL(cerrarventana()),this,SLOT(close()));
 }
 
 FrmAnadirImagen::~FrmAnadirImagen()
@@ -30,7 +31,7 @@ void FrmAnadirImagen::RecuperarId(int cIDEpisodio)
 void FrmAnadirImagen::AnadirImagen()
 {
     QString ficheroImagen;
-    ficheroImagen = QFileDialog::getOpenFileName(this,tr("Abrir fichero de imagen"),"","Imagenes (*.bmp *.png *.xpm *.jpg)");
+    ficheroImagen = QFileDialog::getOpenFileName(this,tr("Abrir fichero de imagen"),"",tr("Imágenes (*.bmp *.png *.xpm *.jpg)"));
     if (!ficheroImagen.isEmpty()) {
         QImage imagen(ficheroImagen);
         ui->label_Imagen->setPixmap(QPixmap::fromImage(imagen));

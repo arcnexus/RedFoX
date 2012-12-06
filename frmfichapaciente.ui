@@ -263,8 +263,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>216</width>
-        <height>372</height>
+        <width>224</width>
+        <height>401</height>
        </rect>
       </property>
       <attribute name="label">
@@ -342,8 +342,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>207</width>
-        <height>492</height>
+        <width>204</width>
+        <height>418</height>
        </rect>
       </property>
       <attribute name="label">
@@ -465,8 +465,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>216</width>
-        <height>372</height>
+        <width>204</width>
+        <height>207</height>
        </rect>
       </property>
       <attribute name="label">
@@ -582,8 +582,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>209</width>
-        <height>372</height>
+        <width>204</width>
+        <height>418</height>
        </rect>
       </property>
       <attribute name="label">
@@ -792,8 +792,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>208</width>
-        <height>388</height>
+        <width>204</width>
+        <height>418</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1713,15 +1713,15 @@ color: rgb(255, 0, 0);</string>
              <bool>true</bool>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="page_3">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>562</width>
-               <height>302</height>
+               <width>576</width>
+               <height>334</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2033,8 +2033,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>562</width>
-               <height>293</height>
+               <width>576</width>
+               <height>334</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2302,13 +2302,13 @@ color: rgb(0, 0, 0);</string>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="page_5">
+            <widget class="QWidget" name="page_Imagenes">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>425</width>
-               <height>223</height>
+               <width>576</width>
+               <height>334</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2446,30 +2446,22 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>404</width>
-               <height>223</height>
+               <width>576</width>
+               <height>334</height>
               </rect>
              </property>
              <attribute name="label">
               <string>Pruebas de Imagen</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_11">
-              <item row="5" column="4">
-               <widget class="QToolButton" name="btnImportarimagen">
-                <property name="toolTip">
-                 <string>Importar Imagen</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset resource="terra.qrc">
-                  <normaloff>:/Icons/PNG/importar.png</normaloff>:/Icons/PNG/importar.png</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0" rowspan="3">
+              <item row="0" column="0" rowspan="9">
                <widget class="QLabel" name="lblImagenDiagnostico">
+                <property name="maximumSize">
+                 <size>
+                  <width>149</width>
+                  <height>183</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string/>
                 </property>
@@ -2478,7 +2470,14 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="0">
+              <item row="0" column="1" colspan="3">
+               <widget class="QLabel" name="label_51">
+                <property name="text">
+                 <string>Descripción</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="6" rowspan="2" colspan="2">
                <widget class="QLabel" name="label_87">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(0, 192, 192);</string>
@@ -2491,10 +2490,37 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="0" rowspan="2">
+              <item row="1" column="1" rowspan="2" colspan="5">
+               <widget class="QLineEdit" name="lineEdit_descripcionimagen"/>
+              </item>
+              <item row="2" column="6" rowspan="5" colspan="2">
                <widget class="QPlainTextEdit" name="txtComentariosImagen"/>
               </item>
-              <item row="5" column="1">
+              <item row="3" column="1" colspan="2">
+               <widget class="QLabel" name="label_52">
+                <property name="text">
+                 <string>Fecha</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1" colspan="5">
+               <widget class="QDateTimeEdit" name="dateEdit_fechaimagen">
+                <property name="displayFormat">
+                 <string>dd/MM/yyyy HH:mm</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1" colspan="3">
+               <widget class="QLabel" name="label_53">
+                <property name="text">
+                 <string>Tipo imagen</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1" colspan="5">
+               <widget class="QComboBox" name="comboBox_tipoImagen"/>
+              </item>
+              <item row="7" column="1" rowspan="2">
                <widget class="QToolButton" name="btnAnadirImagen">
                 <property name="toolTip">
                  <string>Añadir prueba de imagen</string>
@@ -2508,7 +2534,7 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="2">
+              <item row="7" column="2" rowspan="2">
                <widget class="QToolButton" name="btnBorrarImagen">
                 <property name="toolTip">
                  <string>Borrar prueba (Requiere contraseña de administrador)</string>
@@ -2522,7 +2548,7 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="3">
+              <item row="7" column="3" rowspan="2">
                <widget class="QToolButton" name="btnVerImagen">
                 <property name="toolTip">
                  <string>Ver Imagen</string>
@@ -2536,7 +2562,21 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="5">
+              <item row="7" column="4" rowspan="2">
+               <widget class="QToolButton" name="btnImportarimagen">
+                <property name="toolTip">
+                 <string>Importar Imagen</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="terra.qrc">
+                  <normaloff>:/Icons/PNG/importar.png</normaloff>:/Icons/PNG/importar.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="5" rowspan="2" colspan="2">
                <spacer name="horizontalSpacer_7">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -2549,10 +2589,7 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </spacer>
               </item>
-              <item row="2" column="1" rowspan="3" colspan="5">
-               <widget class="QColumnView" name="listaImagenes"/>
-              </item>
-              <item row="1" column="1" colspan="5">
+              <item row="8" column="7" rowspan="2">
                <widget class="QFrame" name="frame_6">
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
@@ -2572,19 +2609,19 @@ color: rgb(0, 0, 0);</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QRadioButton" name="txtImagenPendiente">
+                  <widget class="QRadioButton" name="radImagenPendiente">
                    <property name="text">
-                    <string>Pendiente</string>
+                    <string>Todas</string>
                    </property>
                    <property name="checked">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
                 </layout>
                </widget>
               </item>
-              <item row="0" column="1" colspan="5">
+              <item row="9" column="0" colspan="7">
                <widget class="QLabel" name="label_17">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(0, 192, 192);</string>
@@ -2597,6 +2634,9 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
+              <item row="10" column="0" colspan="8">
+               <widget class="QTableWidget" name="listaImagenes"/>
+              </item>
              </layout>
             </widget>
             <widget class="QWidget" name="page_7">
@@ -2604,8 +2644,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>393</width>
-               <height>420</height>
+               <width>386</width>
+               <height>345</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2876,8 +2916,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>347</width>
-               <height>312</height>
+               <width>313</width>
+               <height>267</height>
               </rect>
              </property>
              <attribute name="label">
@@ -3350,9 +3390,8 @@ color: rgb(0, 0, 0);</string>
   <tabstop>btnAnadirImagen</tabstop>
   <tabstop>btnBorrarImagen</tabstop>
   <tabstop>btnVerImagen</tabstop>
-  <tabstop>listaImagenes</tabstop>
   <tabstop>radImagenEvaluada</tabstop>
-  <tabstop>txtImagenPendiente</tabstop>
+  <tabstop>radImagenPendiente</tabstop>
   <tabstop>btnAnadirInterconsulta</tabstop>
   <tabstop>btnImportarInterconsulta</tabstop>
   <tabstop>btnVerInterconsulta</tabstop>

@@ -29,6 +29,7 @@ public:
 public slots:
     void AnadirDatosMedicamento(int id, QString nombre,QString codigo_nacional);
     void cargarDatosMedicamento(int, int);
+    void cargarDatosImagenes(int ,int);
 
 private slots:
     void finishedSlot(QNetworkReply* reply);
@@ -47,6 +48,7 @@ private slots:
     void ActivarControlesFarmacologia();
     void GuardarDatosFarmacologia();
     void llenartablahistorialfarmacologiaepisodio();
+    void llenartablahistorialimagenesepisodio();
     void BorrarDatosMedicamento();
     void MostrarFichaMedicamento();
     void AnadirImagenDiagnostico();
