@@ -14,7 +14,7 @@ FrmAnadirImagen::FrmAnadirImagen(QWidget *parent) :
     connect(ui->pushButton_Cancelar,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->pushButton_BuscarImagen,SIGNAL(clicked()),this,SLOT(AnadirImagen()));
     connect(oImagenesDiagnostico,SIGNAL(ui_ponerDatosEnObjetoImagen()),this,SLOT(GuardarDatosEnObjetoImagen()));
-    connect(ui->pushButton__Anadir,SIGNAL(clicked()),oImagenesDiagnostico,SLOT(guardarDatosDB()));
+    connect(ui->pushButton__Anadir,SIGNAL(clicked()),oImagenesDiagnostico,SLOT(anadirDatosDB()));
     connect(oImagenesDiagnostico,SIGNAL(cerrarventana()),this,SLOT(close()));
 }
 

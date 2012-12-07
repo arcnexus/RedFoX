@@ -29,7 +29,8 @@ public:
 public slots:
     void AnadirDatosMedicamento(int id, QString nombre,QString codigo_nacional);
     void cargarDatosMedicamento(int, int);
-    void cargarDatosImagenes(int ,int);
+    void cargarDatosImagenes(int,int);
+    void guardarDatosImagenes();
 
 private slots:
     void finishedSlot(QNetworkReply* reply);
@@ -52,6 +53,8 @@ private slots:
     void BorrarDatosMedicamento();
     void MostrarFichaMedicamento();
     void AnadirImagenDiagnostico();
+    void BorrarImagenDiagnostico();
+    void EditarImagenDiagnostico();
 signals:
     void pasaid(int);
     void pasaCodigoNacional(QString);
@@ -67,6 +70,7 @@ private:
     void BloquearCamposEpisodio();
     void DesbloquearCamposEpisodio();
     void LLenarEpisodio();
+    void BloquearCamposImagen();
 };
 
 #endif // FRMFICHAPACIENTE_H

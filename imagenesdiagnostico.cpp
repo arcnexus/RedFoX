@@ -11,6 +11,38 @@ ImagenesDiagnostico::ImagenesDiagnostico(QObject *parent) :
 {
 }
 
+void ImagenesDiagnostico::guardarDatosDB()
+{
+        //emit ui_ponerDatosEnObjetoImagen();
+        QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+        qImagen->prepare("UPDATE imagenes SET "
+                         "localizacionimagen =:localizacionimagen,"
+                         "comentarios = :comentarios,"
+                         "evaluada =:evaluada,"
+                         "descripcion = :descripcion,"
+                         "fechaimagen = :fechaimagen,"
+                         "tipoimagen = :tipoimagen "
+                         "WHERE id =:id");
+
+        qImagen->bindValue(":localizacionimagen",this->LocalizacionImagen);
+        qImagen->bindValue(":comentarios",this->Comentarios);
+        qImagen->bindValue(":evaluada",this->Evaluada);
+        qImagen->bindValue(":descripcion",this->Descripcion);
+        qImagen->bindValue(":fechaimagen",this->FechaImagen);
+        qImagen->bindValue(":tipoimagen",this->TipoImagen);
+        qImagen->bindValue(":id",this->id);
+
+        if(qImagen->exec()){
+            QMessageBox::information(NULL,QObject::tr("Modificar Imagenes"),QObject::tr("La imagen ha sido modificada correctamente"),
+                                     QObject::tr("Aceptar"));
+            emit refrescarlista();
+        } else
+            QMessageBox::information(NULL,QObject::tr("Modificar Imagenes"),QObject::tr("Ocurrió un error al modificar la imagen en el episodio:")+
+                                     qImagen->lastError().text(),
+                                     QObject::tr("Aceptar"));
+}
+
+
 void ImagenesDiagnostico::llenarObjetoconDatosDB()
 {
     QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
@@ -55,8 +87,23 @@ void ImagenesDiagnostico::llenarObjetoconDatosDB(int nid)
     }
 }
 
+void ImagenesDiagnostico::BorrarImagen(int nid)
+{
+    if(QMessageBox::question(NULL,QObject::tr("Borrar imagen del historial"),
+                             QObject::tr("Va a proceder a borrar una imagen del historial, ¿Desea continuar?"),
+                             QObject::tr("Cancelar"),QObject::tr("Borrar")) ==QMessageBox::Accepted) {
+        QSqlQuery *qImagenes = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+        qImagenes->prepare("delete from imagenes where id = :nid");
+        qImagenes->bindValue(":nid",nid);
+        if(!qImagenes->exec())
+            QMessageBox::warning(NULL,QObject::tr("Borrar Imagen"),tr("Atención::No se puede borrar la imagen :")+
+                                 qImagenes->lastError().text(),tr("Aceptar"));
 
-void ImagenesDiagnostico::guardarDatosDB()
+
+    }
+}
+
+void ImagenesDiagnostico::anadirDatosDB()
 {
     emit ui_ponerDatosEnObjetoImagen();
     QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));

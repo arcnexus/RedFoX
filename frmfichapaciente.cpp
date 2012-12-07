@@ -26,6 +26,7 @@
 
 Paciente *oPaciente = new Paciente();
 Episodio *oEpisodio = new Episodio();
+ImagenesDiagnostico *oImagenes = new ImagenesDiagnostico();
 
 FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     QDialog(parent),
@@ -55,6 +56,10 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->radImagenEvaluada,SIGNAL(clicked()),this,SLOT(llenartablahistorialimagenesepisodio()));
     connect(ui->radImagenPendiente, SIGNAL(clicked()),this,SLOT(llenartablahistorialimagenesepisodio()));
     connect(ui->listaImagenes,SIGNAL(cellClicked(int,int)),this,SLOT(cargarDatosImagenes(int,int)));
+    connect(ui->btnBorrarImagen,SIGNAL(clicked()),this,SLOT(BorrarImagenDiagnostico()));
+    connect(ui->pushButton_editarimagen,SIGNAL(clicked()), this, SLOT(EditarImagenDiagnostico()));
+    connect(ui->pushButton_GuardarImagen,SIGNAL(clicked()),this,SLOT(guardarDatosImagenes()));
+    connect(oImagenes,SIGNAL(refrescarlista()),this,SLOT(llenartablahistorialimagenesepisodio()));
 
 
 
@@ -386,6 +391,17 @@ void FrmFichaPaciente::LLenarEpisodio()
     //DesbloquearCamposEpisodio();
 }
 
+void FrmFichaPaciente::BloquearCamposImagen()
+{
+    ui->lineEdit_descripcionimagen->setEnabled(false);
+    ui->txtComentariosImagen->setEnabled(false);
+    ui->dateEdit_fechaimagen->setEnabled(false);
+    ui->pushButton_GuardarImagen->setEnabled(false);
+    ui->pushButton_editarimagen->setEnabled(true);
+    ui->pushButton_DeshacerImagen->setEnabled(false);
+    ui->comboBox_tipoImagen->setEnabled(false);
+}
+
 void FrmFichaPaciente::on_btnEditarPaciente_clicked()
 {
     DesbloquearCamposPaciente();
@@ -679,10 +695,31 @@ void FrmFichaPaciente::AnadirImagenDiagnostico()
         imagen->adjustSize();
         imagen->move(QApplication::desktop()->screen()->rect().center() - imagen->rect().center());
         imagen->show();
+        llenartablahistorialimagenesepisodio();
     } else
         QMessageBox::warning(this,tr("Añadir imagenes a episodio"),
                              tr("Debe seleccionar o crear un episodio antes de añadir una nueva imagen diagnostica"),tr("Aceptar"));
 }
+
+void FrmFichaPaciente::BorrarImagenDiagnostico()
+{
+    oImagenes->BorrarImagen(ui->listaImagenes->item(ui->listaImagenes->currentRow(),3)->text().toInt());
+    llenartablahistorialimagenesepisodio();
+
+}
+
+void FrmFichaPaciente::EditarImagenDiagnostico()
+{
+    ui->lineEdit_descripcionimagen->setEnabled(true);
+    ui->comboBox_tipoImagen->setEnabled(true);
+    ui->dateEdit_fechaimagen->setEnabled(true);
+    ui->txtComentariosImagen->setEnabled(true);
+    ui->pushButton_editarimagen->setEnabled(false);
+    ui->pushButton_GuardarImagen->setEnabled(true);
+    ui->pushButton_DeshacerImagen->setEnabled(true);
+    ui->lineEdit_descripcionimagen->setFocus();
+}
+
 
 void FrmFichaPaciente::cargarDatosMedicamento(int crow, int ccol)
 {
@@ -705,7 +742,7 @@ void FrmFichaPaciente::cargarDatosMedicamento(int crow, int ccol)
 void FrmFichaPaciente::cargarDatosImagenes(int crow, int ccol)
 {
     QString id = ui->listaImagenes->item(crow,3)->text();
-    ImagenesDiagnostico *oImagenes = new ImagenesDiagnostico(this);
+
     oImagenes->llenarObjetoconDatosDB(id.toInt());
     ui->txtComentariosImagen->setPlainText(oImagenes->getComentarios());
     ui->lineEdit_descripcionimagen->setText(oImagenes->getDescripcion());
@@ -718,9 +755,29 @@ void FrmFichaPaciente::cargarDatosImagenes(int crow, int ccol)
 
     if (!oImagenes->getLocalizacionImagen().isEmpty()) {
         QImage imagen(oImagenes->getLocalizacionImagen());
-        ui->lblImagenDiagnostico->setScaledContents(true);
-        ui->lblImagenDiagnostico->setPixmap(QPixmap::fromImage(imagen));
+
+        QPixmap qpmImagen = QPixmap::fromImage(imagen);
+        ui->lblImagenDiagnostico->setPixmap(qpmImagen.scaled(ui->lblImagenDiagnostico->size(), Qt::KeepAspectRatio));
+
     }
+
+}
+
+void FrmFichaPaciente::guardarDatosImagenes()
+{
+    QString cId = ui->listaImagenes->item(ui->listaImagenes->currentRow(),3)->text();
+    oImagenes->setId(cId.toInt());
+    oImagenes->setComentarios(ui->txtComentariosImagen->toPlainText());
+    oImagenes->setDescripcion(ui->lineEdit_descripcionimagen->text());
+    oImagenes->setFechaImagen(ui->dateEdit_fechaimagen->date());
+    if(ui->checkBox_evaluada->isChecked())
+        oImagenes->setEvaluada(true);
+   else
+        oImagenes->setEvaluada(false);
+    oImagenes->setTipoImagen(ui->comboBox_tipoImagen->currentText());
+    oImagenes->guardarDatosDB();
+    BloquearCamposImagen();
+
 
 }
 

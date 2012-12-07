@@ -41,13 +41,19 @@ public:
     int getEvaluada() {return this->Evaluada;}
 
 public slots:
+    void anadirDatosDB();
     void guardarDatosDB();
     void llenarObjetoconDatosDB();
     void llenarObjetoconDatosDB(int nid);
+    void BorrarImagen(int nid);
+
+private slots:
+
 
 signals:
     void ui_ponerDatosEnObjetoImagen();
     void cerrarventana();
+    void refrescarlista();
 };
 
 #endif // IMAGENESDIAGNOSTICO_H
