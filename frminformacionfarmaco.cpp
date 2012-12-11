@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QDate>
 #include <QUrl>
+#include <QWebView>
 
 FrmInformacionFarmaco::FrmInformacionFarmaco(QWidget *parent) :
     QDialog(parent),

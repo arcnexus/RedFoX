@@ -7,6 +7,7 @@
 #include <QString>
 #include <QSqlDatabase>
 #include <QtSql>
+#include <QMdiArea>
 #include "configuracion.h"
 
 
@@ -61,7 +62,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QWorkspace *workspace;
+    QMdiArea *workspace;
 };
 
 #endif // MAINWINDOW_H

@@ -2,6 +2,8 @@
 #define COLUMNAMONEDA_H
 
 #include <QtGui>
+#include <QStyleOptionViewItem>
+#include <QItemDelegate>
 /*
  * columnamoneda.h
  *

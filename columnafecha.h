@@ -1,6 +1,9 @@
 #ifndef COLUMNAFECHA_H
 #define COLUMNAFECHA_H
 #include <QtGui>
+#include <QModelIndex>
+#include <QStyleOptionViewItem>
+#include <QItemDelegate>
 /*
  * columnafecha.h
  *

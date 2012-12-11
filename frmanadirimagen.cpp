@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include "imagenesdiagnostico.h"
+#include <QtSql>
 
 ImagenesDiagnostico *oImagenesDiagnostico = new ImagenesDiagnostico(NULL);
 
@@ -16,6 +17,10 @@ FrmAnadirImagen::FrmAnadirImagen(QWidget *parent) :
     connect(oImagenesDiagnostico,SIGNAL(ui_ponerDatosEnObjetoImagen()),this,SLOT(GuardarDatosEnObjetoImagen()));
     connect(ui->pushButton__Anadir,SIGNAL(clicked()),oImagenesDiagnostico,SLOT(anadirDatosDB()));
     connect(oImagenesDiagnostico,SIGNAL(cerrarventana()),this,SLOT(close()));
+
+    QSqlQueryModel *qTipos = new QSqlQueryModel(this);
+    qTipos->setQuery("Select descripcion from tiposimagen",QSqlDatabase::database("dbmedica"));
+    ui->comboBox_TipoImagen->setModel(qTipos);
 }
 
 FrmAnadirImagen::~FrmAnadirImagen()
@@ -34,8 +39,9 @@ void FrmAnadirImagen::AnadirImagen()
     ficheroImagen = QFileDialog::getOpenFileName(this,tr("Abrir fichero de imagen"),"",tr("Imágenes (*.bmp *.png *.xpm *.jpg)"));
     if (!ficheroImagen.isEmpty()) {
         QImage imagen(ficheroImagen);
-        ui->label_Imagen->setPixmap(QPixmap::fromImage(imagen));
         oImagenesDiagnostico->setLocalizacionImagen(ficheroImagen);
+        QPixmap qpmImagen = QPixmap::fromImage(imagen);
+        ui->label_Imagen->setPixmap(qpmImagen.scaled(ui->label_Imagen->size(),Qt::KeepAspectRatio));
 
     }
 }
@@ -50,4 +56,5 @@ void FrmAnadirImagen::GuardarDatosEnObjetoImagen()
         oImagenesDiagnostico->setEvaluada(true);
     oImagenesDiagnostico->setFechaImagen(ui->dateEdit_FechaImagen->date());
     oImagenesDiagnostico->setTipoImagen(ui->comboBox_TipoImagen->currentText());
+
 }

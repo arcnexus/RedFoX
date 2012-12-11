@@ -5,6 +5,7 @@
 #include <QNetworkReply>
 #include <QXmlStreamAttributes>
 #include <QStringList>
+#include <QWebView>
 
 namespace Ui {
 class FrmAnadirMedicamento;

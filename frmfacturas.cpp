@@ -83,17 +83,17 @@ void frmFacturas::lineasVentas()
      // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
      ui->Lineas->setHorizontalHeader(Cabecera);
      /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
-     Cabecera->setResizeMode(0,QHeaderView::Fixed);
+    // Cabecera->setResizeMode(0,QHeaderView::Fixed);
      Cabecera->resizeSection(0,0);
-     Cabecera->setResizeMode(1,QHeaderView::Fixed);
+    // Cabecera->setResizeMode(1,QHeaderView::Fixed);
      Cabecera->resizeSection(1,85);
-     Cabecera->setResizeMode(2,QHeaderView::Fixed);
+    // Cabecera->setResizeMode(2,QHeaderView::Fixed);
      Cabecera->resizeSection(2,65);
-     Cabecera->setResizeMode(3,QHeaderView::Fixed);
+    // Cabecera->setResizeMode(3,QHeaderView::Fixed);
      Cabecera->resizeSection(3,213);
-     Cabecera->setResizeMode(4,QHeaderView::Fixed);
+    // Cabecera->setResizeMode(4,QHeaderView::Fixed);
      Cabecera->resizeSection(4,120);
-     Cabecera->setResizeMode(9,QHeaderView::Fixed);
+    // Cabecera->setResizeMode(9,QHeaderView::Fixed);
      Cabecera->resizeSection(9,35);
      ModelLin_fac->setHeaderData(1, Qt::Horizontal, QObject::tr("CÓDIGO"));
      ModelLin_fac->setHeaderData(2, Qt::Horizontal, QObject::tr("CANTIDAD"));

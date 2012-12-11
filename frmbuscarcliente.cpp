@@ -36,11 +36,11 @@ void FrmBuscarCliente::on_pushButton_clicked()
     Cabecera = new QHeaderView(Qt::Horizontal,this);
     // 3º - La vinculamos a QTableView
     ui->Grid->setHorizontalHeader(Cabecera);
-    Cabecera->setResizeMode(1,QHeaderView::Fixed);
+   // Cabecera->setResizeMode(1,QHeaderView::Fixed);
     Cabecera->resizeSection(1,300);
-    Cabecera->setResizeMode(2,QHeaderView::Fixed);
+   // Cabecera->setResizeMode(2,QHeaderView::Fixed);
     Cabecera->resizeSection(2,100);
-    Cabecera->setResizeMode(3,QHeaderView::Fixed);
+   // Cabecera->setResizeMode(3,QHeaderView::Fixed);
     Cabecera->resizeSection(3,200);
     Cabecera->setVisible(true);
     // 4º - Defino cabecera Modelo

@@ -8,7 +8,7 @@
 #include "frmfacturas.h"
 #include "frmarticulos.h"
 #include <login.h>
-#include <QWorkspace>
+#include <QMdiArea>
 #include <QFormLayout>
 #include <QDebug>
 #include <QSettings>
@@ -22,6 +22,8 @@
 #include "frmpresupuestoscli.h"
 #include "frmcajaminuta.h"
 #include "frmagendavisitas.h"
+#include <QStyleFactory>
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -72,12 +74,9 @@ MainWindow::MainWindow(QWidget *parent) :
         }
 
 
-    // Fin TODO
-
-
     ui->barraHerramientas->setCurrentIndex(3);
     // Preparo espacio de trabajo para poder acojer ventanas dentro de él
-    workspace = new QWorkspace(ui->widget);
+    workspace = new QMdiArea(ui->widget);
     QGridLayout *gridLayout = new QGridLayout;
      gridLayout->addWidget(workspace, 0, 0);
      ui->widget->setLayout(gridLayout);
@@ -195,7 +194,7 @@ void MainWindow::on_btnClientes_clicked()
 {
     ui->btnClientes->setEnabled(false);
     frmClientes *frmClientes1 = new frmClientes(m_config);
-    workspace->addWindow(frmClientes1);
+    workspace->addSubWindow(frmClientes1);
     frmClientes1->setWindowState(Qt::WindowMaximized);
     frmClientes1->exec();
     ui->btnClientes->setEnabled(true);
@@ -204,7 +203,7 @@ void MainWindow::on_btnFacturaCliente_clicked()
 {
     ui->btnFacturaCliente->setEnabled(false);
     frmFacturas *frmFacturas1 = new frmFacturas(m_config);
-    workspace->addWindow(frmFacturas1);
+    workspace->addSubWindow(frmFacturas1);
     frmFacturas1->setWindowState(Qt::WindowMaximized);
     frmFacturas1->exec();
     ui->btnFacturaCliente->setEnabled(true);
@@ -214,7 +213,7 @@ void MainWindow::on_btnArticulos_clicked()
 {
     ui->btnArticulos->setEnabled(false);
     FrmArticulos *frmArticulos1 = new FrmArticulos(m_config);
-    workspace->addWindow(frmArticulos1);
+    workspace->addSubWindow(frmArticulos1);
     frmArticulos1->setWindowState(Qt::WindowMaximized);
     frmArticulos1->exec();
     ui->btnArticulos->setEnabled(true);
@@ -224,7 +223,7 @@ void MainWindow::on_botEmpresas_clicked()
 {
     ui->botEmpresas->setEnabled(false);
     FrmEmpresas *frmEmpresa1 = new FrmEmpresas();
-    workspace->addWindow(frmEmpresa1);
+    workspace->addSubWindow(frmEmpresa1);
     frmEmpresa1->setWindowState(Qt::WindowMaximized);
     frmEmpresa1->exec();
     ui->botEmpresas->setEnabled(true);
@@ -234,7 +233,7 @@ void MainWindow::on_btnProveedores_clicked()
 {
     ui->btnProveedores->setEnabled(false);
     frmProveedores *frmProveedores1 = new frmProveedores();
-    workspace->addWindow(frmProveedores1);
+    workspace->addSubWindow(frmProveedores1);
     frmProveedores1->setWindowState(Qt::WindowMaximized);
     frmProveedores1->exec();
     ui->btnProveedores->setEnabled(true);
@@ -245,7 +244,7 @@ void MainWindow::on_botConfiguracion_clicked()
 {
     ui->botConfiguracion->setEnabled(false);
     FrmConfiguracion *frmConfiguracion1 = new FrmConfiguracion();
-    workspace->addWindow(frmConfiguracion1);
+    workspace->addSubWindow(frmConfiguracion1);
     frmConfiguracion1->setWindowState(Qt::WindowMaximized);
     frmConfiguracion1->exec();
     ui->botConfiguracion->setEnabled(true);
@@ -255,7 +254,7 @@ void MainWindow::on_btnAlbaran_clientes_clicked()
 {
     ui->btnAlbaran_clientes->setEnabled(false);
     FrmAlbaran *frmAlbaran1 = new FrmAlbaran();
-    workspace->addWindow(frmAlbaran1);
+    workspace->addSubWindow(frmAlbaran1);
     frmAlbaran1->setWindowState(Qt::WindowMaximized);
     frmAlbaran1->exec();
     ui->btnAlbaran_clientes->setEnabled(true);
@@ -265,7 +264,7 @@ void MainWindow::on_btn_Pedido_cliente_clicked()
 {
     ui->btn_Pedido_cliente->setEnabled(false);
     FrmPedidos *frmPedidos1 = new FrmPedidos();
-    workspace->addWindow(frmPedidos1);
+    workspace->addSubWindow(frmPedidos1);
     frmPedidos1->setWindowState(Qt::WindowMaximized);
     frmPedidos1->exec();
     ui->btn_Pedido_cliente->setEnabled(true);
@@ -275,7 +274,7 @@ void MainWindow::on_btnPresup_clientes_clicked()
 {
     ui->btnPresup_clientes->setEnabled(false);
     FrmPresupuestosCli *frmPresupcli = new FrmPresupuestosCli();
-    workspace->addWindow(frmPresupcli);
+    workspace->addSubWindow(frmPresupcli);
     frmPresupcli->setWindowState(Qt::WindowMaximized);
     frmPresupcli->exec();
     ui->btnPresup_clientes->setEnabled(true);
@@ -285,7 +284,7 @@ void MainWindow::on_btnCajaMinuta_clicked()
 {
     ui->btnCajaMinuta->setEnabled(false);
     FrmCajaMinuta *frmCajaMinuta = new FrmCajaMinuta();
-    workspace->addWindow(frmCajaMinuta);
+    workspace->addSubWindow(frmCajaMinuta);
     frmCajaMinuta->setWindowState(Qt::WindowMaximized);
     frmCajaMinuta->exec();
     ui->btnCajaMinuta->setEnabled(true);
@@ -306,7 +305,7 @@ void MainWindow::cambiarEstilo(int estado)
     if (estado ==2)
         style = QStyleFactory::create("oxygen");
     else
-        style = QStyleFactory::create("plastique");
+        style = QStyleFactory::create("fusion");
 
    QApplication::setStyle(style);
 }

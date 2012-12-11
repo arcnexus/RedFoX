@@ -167,15 +167,15 @@ void frmClientes::LLenarCampos() {
    // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
    ui->TablaDeudas->setHorizontalHeader(CabeceraDeu);
    /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
-   CabeceraDeu->setResizeMode(0,QHeaderView::Fixed);
+   //CabeceraDeu->setResizeMode(0,QHeaderView::Fixed);
    CabeceraDeu->resizeSection(0,0);
-   CabeceraDeu->setResizeMode(1,QHeaderView::Fixed);
+   //CabeceraDeu->setResizeMode(1,QHeaderView::Fixed);
    CabeceraDeu->resizeSection(1,85);
-   CabeceraDeu->setResizeMode(2,QHeaderView::Fixed);
+   //CabeceraDeu->setResizeMode(2,QHeaderView::Fixed);
    CabeceraDeu->resizeSection(2,85);
-   CabeceraDeu->setResizeMode(3,QHeaderView::Fixed);
+   //CabeceraDeu->setResizeMode(3,QHeaderView::Fixed);
    CabeceraDeu->resizeSection(3,85);
-   CabeceraDeu->setResizeMode(4,QHeaderView::Fixed);
+   //CabeceraDeu->setResizeMode(4,QHeaderView::Fixed);
    CabeceraDeu->resizeSection(4,85);
    deudas->setHeaderData(1, Qt::Horizontal, QObject::tr("DOCUMENTO"));
    deudas->setHeaderData(2, Qt::Horizontal, QObject::tr("I.PENDIENTE"));
@@ -198,15 +198,15 @@ void frmClientes::LLenarCampos() {
   // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
   ui->TablaAlbaranes->setHorizontalHeader(CabeceraAlb);
   /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
-  CabeceraAlb->setResizeMode(0,QHeaderView::Fixed);
+ // CabeceraAlb->setResizeMode(0,QHeaderView::Fixed);
   CabeceraAlb->resizeSection(0,0);
-  CabeceraAlb->setResizeMode(1,QHeaderView::Fixed);
+ //  CabeceraAlb->setResizeMode(1,QHeaderView::Fixed);
   CabeceraAlb->resizeSection(1,85);
-  CabeceraAlb->setResizeMode(2,QHeaderView::Fixed);
+ // CabeceraAlb->setResizeMode(2,QHeaderView::Fixed);
   CabeceraAlb->resizeSection(2,85);
-  CabeceraAlb->setResizeMode(3,QHeaderView::Fixed);
+ // CabeceraAlb->setResizeMode(3,QHeaderView::Fixed);
   CabeceraAlb->resizeSection(3,85);
-  CabeceraAlb->setResizeMode(4,QHeaderView::Fixed);
+ // CabeceraAlb->setResizeMode(4,QHeaderView::Fixed);
   CabeceraAlb->resizeSection(4,85);
   Albaranes->setHeaderData(1, Qt::Horizontal, QObject::tr("ALBARAN"));
   Albaranes->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
@@ -231,15 +231,15 @@ void frmClientes::LLenarCampos() {
  // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
  ui->tablaFacturas->setHorizontalHeader(CabeceraFac);
  /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
- CabeceraFac->setResizeMode(0,QHeaderView::Fixed);
+// CabeceraFac->setResizeMode(0,QHeaderView::Fixed);
  CabeceraFac->resizeSection(0,0);
- CabeceraFac->setResizeMode(1,QHeaderView::Fixed);
+// CabeceraFac->setResizeMode(1,QHeaderView::Fixed);
  CabeceraFac->resizeSection(1,85);
- CabeceraFac->setResizeMode(2,QHeaderView::Fixed);
+// CabeceraFac->setResizeMode(2,QHeaderView::Fixed);
  CabeceraFac->resizeSection(2,85);
- CabeceraFac->setResizeMode(3,QHeaderView::Fixed);
+// CabeceraFac->setResizeMode(3,QHeaderView::Fixed);
  CabeceraFac->resizeSection(3,85);
- CabeceraFac->setResizeMode(4,QHeaderView::Fixed);
+// CabeceraFac->setResizeMode(4,QHeaderView::Fixed);
  CabeceraFac->resizeSection(4,85);
  Facturas->setHeaderData(1, Qt::Horizontal, QObject::tr("FACTURA"));
  Facturas->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
@@ -264,16 +264,17 @@ QHeaderView *CabeceraPre = new QHeaderView(Qt::Horizontal,this);
 // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
 ui->tablaPresupuestos->setHorizontalHeader(CabeceraPre);
 /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
-CabeceraPre->setResizeMode(0,QHeaderView::Fixed);
+//CabeceraPre->setResizeMode(0,QHeaderView::Fixed);
 CabeceraPre->resizeSection(0,0);
-CabeceraPre->setResizeMode(1,QHeaderView::Fixed);
+//CabeceraPre->setResizeMode(1,QHeaderView::Fixed);
 CabeceraPre->resizeSection(1,85);
-CabeceraPre->setResizeMode(2,QHeaderView::Fixed);
+//CabeceraPre->setResizeMode(2,QHeaderView::Fixed);
 CabeceraPre->resizeSection(2,85);
-CabeceraPre->setResizeMode(3,QHeaderView::Fixed);
+//CabeceraPre->setResizeMode(3,QHeaderView::Fixed);
 CabeceraPre->resizeSection(3,85);
-CabeceraPre->setResizeMode(4,QHeaderView::Fixed);
+//CabeceraPre->setResizeMode(4,QHeaderView::Fixed);
 CabeceraPre->resizeSection(4,85);
+//CabeceraPre->set
 Presupuestos->setHeaderData(1, Qt::Horizontal, QObject::tr("PRES"));
 Presupuestos->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
 Presupuestos->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA APRO."));
@@ -298,15 +299,15 @@ QHeaderView *CabeceraVal = new QHeaderView(Qt::Horizontal,this);
 // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
 ui->tablaVales->setHorizontalHeader(CabeceraVal);
 /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
-CabeceraVal->setResizeMode(0,QHeaderView::Fixed);
+//CabeceraVal->setResizeMode(0,QHeaderView::Fixed);
 CabeceraVal->resizeSection(0,0);
-CabeceraVal->setResizeMode(1,QHeaderView::Fixed);
+//CabeceraVal->setResizeMode(1,QHeaderView::Fixed);
 CabeceraVal->resizeSection(1,85);
-CabeceraVal->setResizeMode(2,QHeaderView::Fixed);
+//CabeceraVal->setResizeMode(2,QHeaderView::Fixed);
 CabeceraVal->resizeSection(2,85);
-CabeceraVal->setResizeMode(3,QHeaderView::Fixed);
+//CabeceraVal->setResizeMode(3,QHeaderView::Fixed);
 CabeceraVal->resizeSection(3,85);
-CabeceraVal->setResizeMode(4,QHeaderView::Fixed);
+//CabeceraVal->setResizeMode(4,QHeaderView::Fixed);
 CabeceraVal->resizeSection(4,85);
 Vales->setHeaderData(1, Qt::Horizontal, QObject::tr("VALE"));
 Vales->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
@@ -331,15 +332,15 @@ QHeaderView *CabeceraTic = new QHeaderView(Qt::Horizontal,this);
 // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
 ui->tablaTickets->setHorizontalHeader(CabeceraTic);
 /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
-CabeceraTic->setResizeMode(0,QHeaderView::Fixed);
+//CabeceraTic->setResizeMode(0,QHeaderView::Fixed);
 CabeceraTic->resizeSection(0,0);
-CabeceraTic->setResizeMode(1,QHeaderView::Fixed);
+//CabeceraTic->setResizeMode(1,QHeaderView::Fixed);
 CabeceraTic->resizeSection(1,85);
-CabeceraTic->setResizeMode(2,QHeaderView::Fixed);
+//CabeceraTic->setResizeMode(2,QHeaderView::Fixed);
 CabeceraTic->resizeSection(2,85);
-CabeceraTic->setResizeMode(3,QHeaderView::Fixed);
+//CabeceraTic->setResizeMode(3,QHeaderView::Fixed);
 CabeceraTic->resizeSection(3,85);
-CabeceraTic->setResizeMode(4,QHeaderView::Fixed);
+//CabeceraTic->setResizeMode(4,QHeaderView::Fixed);
 CabeceraTic->resizeSection(4,85);
 Tickets->setHeaderData(1, Qt::Horizontal, QObject::tr("TICKET"));
 Tickets->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));

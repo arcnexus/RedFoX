@@ -1,7 +1,7 @@
 #ifndef CONFIGURACION_H
 #define CONFIGURACION_H
 
-//#include <QObject>
+#include <QObject>
 #include <QString>
 #include <QSqlDatabase>
 #include <QSqlQuery>

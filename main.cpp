@@ -24,9 +24,9 @@
 #include <QMessageBox>
 #include <QTextCodec>
 #include <QtSql>
-#include <QWindowsStyle>
-#include <QWindowsVistaStyle>
+//#include <QWindowsStyle>
 #include <QStyleFactory>
+#include <QApplication>
 
 
 
@@ -34,11 +34,11 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
-    QTextCodec::setCodecForTr(linuxCodec);
-    QTextCodec::setCodecForCStrings(linuxCodec);
+   // QTextCodec::setCodecForTr(linuxCodec);
+   // QTextCodec::setCodecForCStrings(linuxCodec);
     QTextCodec::setCodecForLocale(linuxCodec);
      //QStyle *style = QStyleFactory::create("oxygen");
-    QStyle *style = QStyleFactory::create("plastique");
+    QStyle *style = QStyleFactory::create("fusion");
     QApplication::setStyle(style);
     MainWindow w;
     w.setVisible(true);

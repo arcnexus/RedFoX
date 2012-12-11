@@ -41,6 +41,10 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     ui->cboNivelEstudios->addItems(listaEstudios);
     ui->cboDoctorEpisodio->addItems(listaDoctores);
 
+    QSqlQueryModel *qTipos = new QSqlQueryModel(this);
+    qTipos->setQuery("Select descripcion from tiposimagen",QSqlDatabase::database("dbmedica"));
+    ui->comboBox_tipoImagen->setModel(qTipos);
+
     // Conexiones
 
     connect(ui->btnCerrar, SIGNAL(clicked()), this, SLOT(close()));
@@ -695,10 +699,11 @@ void FrmFichaPaciente::AnadirImagenDiagnostico()
         imagen->adjustSize();
         imagen->move(QApplication::desktop()->screen()->rect().center() - imagen->rect().center());
         imagen->show();
-        llenartablahistorialimagenesepisodio();
+
     } else
         QMessageBox::warning(this,tr("Añadir imagenes a episodio"),
                              tr("Debe seleccionar o crear un episodio antes de añadir una nueva imagen diagnostica"),tr("Aceptar"));
+   llenartablahistorialimagenesepisodio();
 }
 
 void FrmFichaPaciente::BorrarImagenDiagnostico()
