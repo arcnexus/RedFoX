@@ -59,6 +59,7 @@ void ImagenesDiagnostico::llenarObjetoconDatosDB()
         this->FechaImagen = rImagen.field("fechaimagen").value().toDate();
         this->LocalizacionImagen = rImagen.field("localizacionimagen").value().toString();
         this->TipoImagen = rImagen.field("tipoimagen").value().toString();
+        this->Evaluada =rImagen.field("evaluada").value().toInt();
     } else {
         QMessageBox::warning(NULL,QObject::tr("Imagenes Diagnóstico"),QObject::tr("No se ha podido recuperar el registro de imagen"),
                              QObject::tr("Aceptar"));
@@ -81,6 +82,7 @@ void ImagenesDiagnostico::llenarObjetoconDatosDB(int nid)
         this->FechaImagen = rImagen.field("fechaimagen").value().toDate();
         this->LocalizacionImagen = rImagen.field("localizacionimagen").value().toString();
         this->TipoImagen = rImagen.field("tipoimagen").value().toString();
+        this->Evaluada =rImagen.field("evaluada").value().toInt();
     } else {
         QMessageBox::warning(NULL,QObject::tr("Imagenes Diagnóstico"),QObject::tr("No se ha podido recuperar el registro de imagen"),
                              QObject::tr("Aceptar"));

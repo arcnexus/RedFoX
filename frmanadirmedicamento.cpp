@@ -12,9 +12,19 @@
 #include <QDomElement>
 #include <QStandardItemModel>
 #include <QtWebKit>
-#include <QWebView>
+#include <qwebview.h>
 
-
+#include "qwebkitglobal.h"
+#include "qwebpage.h"
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+    #include <QtWidgets/qwidget.h>
+#else
+    #include <QtGui/qwidget.h>
+#endif
+#include <QtGui/qicon.h>
+#include <QtGui/qpainter.h>
+#include <QtCore/qurl.h>
+#include <QtNetwork/qnetworkaccessmanager.h>
 
 FrmAnadirMedicamento::FrmAnadirMedicamento(QWidget *parent) :
     QWidget(parent),
@@ -796,7 +806,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspectoMolecula(QNetworkReply* re
 
 
 
-    int nrow = 0;
+
     int pos = 0;
      while (!n.isNull()) {
          if (n.isElement()) {

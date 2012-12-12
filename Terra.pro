@@ -12,17 +12,17 @@ QT       += xml
 QT       += webkit
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
 INCLUDEPATH += /Qwt/5.2.1/include
 INCLUDEPATH += /usr/local/Qxt/include/QxtCore
 DEPENDPATH += /Qwt/5.2.1/lib
-INCLUDEPATH +=/home/arcnexus/Qt5.0.0-rc1/5.0.0-rc1/Src/qtwebkit/
-INCLUDEPATH += /home/arcnexus/Qt5.0.0-rc1/5.0.0-rc1/gcc_64/include/QtWebKitWidgets
+greaterThan(QT_MAJOR_VERSION, 4):INCLUDEPATH +=/home/arcnexus/Qt5.0.0-rc1/Tools/QtCreator/bin/QtWebKit/
+greaterThan(QT_MAJOR_VERSION, 4):INCLUDEPATH += /home/arcnexus/Qt5.0.0-rc1/5.0.0-rc1/gcc_64/include/QtWebKitWidgets
 
 
 
 LIBS += -LC:/Qt/Qwt/5.2.1/lib
 LIBS += -L/usr/local/Qxt/lib
+greaterThan(QT_MAJOR_VERSION, 4):LIBS += -L/home/arcnexus/Qt5.0.0-rc1/5.0.0-rc1/Src/qtwebkit/WebKitLibraries/
 TARGET = Terra
 TEMPLATE = app
 

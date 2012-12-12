@@ -404,6 +404,7 @@ void FrmFichaPaciente::BloquearCamposImagen()
     ui->pushButton_editarimagen->setEnabled(true);
     ui->pushButton_DeshacerImagen->setEnabled(false);
     ui->comboBox_tipoImagen->setEnabled(false);
+    ui->checkBox_evaluada->setEnabled(false);
 }
 
 void FrmFichaPaciente::on_btnEditarPaciente_clicked()
@@ -604,12 +605,13 @@ void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
     ui->listaImagenes->setColumnCount(4);
     ui->listaImagenes->setColumnWidth(0,250);
     ui->listaImagenes->setColumnWidth(1,170);
-    ui->listaImagenes->setColumnWidth(2,100);
+    ui->listaImagenes->setColumnWidth(2,120);
     ui->listaImagenes->setColumnWidth(3,0);
     ui->listaImagenes->setHorizontalHeaderLabels(list);
     int pos = 0;
     QSqlRecord reg ;
     // Relleno la tabla
+     QString cFecha;
     if (qImagenes->exec()) {
         while (qImagenes->next()) {
             // Nombre Medicamento
@@ -628,11 +630,12 @@ void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
                 ui->listaImagenes->setItem(pos,0,newItem);
 
                 // fecha
-                QTableWidgetItem *newItem1 = new QTableWidgetItem(reg.field("fechaimagen").value().toDateTime().toString());
+                cFecha = reg.field("fechaimagen").value().toDateTime().toString("dd/MM/yyyy : hh:mm");
+                QTableWidgetItem *newItem1 = new QTableWidgetItem(cFecha);
                 // para que los elementos no sean editables
                 newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
                 newItem1->setTextColor(Qt::blue); // color de los items
-                ui->listaTratamientosFarma->setItem(pos,1,newItem1);
+                ui->listaImagenes->setItem(pos,1,newItem1);
 
                 // tipo
                 QTableWidgetItem *newItem2 = new QTableWidgetItem(reg.field("tipoimagen").value().toString());
@@ -722,7 +725,14 @@ void FrmFichaPaciente::EditarImagenDiagnostico()
     ui->pushButton_editarimagen->setEnabled(false);
     ui->pushButton_GuardarImagen->setEnabled(true);
     ui->pushButton_DeshacerImagen->setEnabled(true);
+    ui->checkBox_evaluada->setEnabled(true);
     ui->lineEdit_descripcionimagen->setFocus();
+}
+
+void FrmFichaPaciente::recibedatospaciente(int historia, QString Nombre)
+{
+    ui->txtNumHistoriaClinica->setText(QString::number(historia));
+    ui->txtPaciente->setText(Nombre);
 }
 
 
@@ -765,6 +775,10 @@ void FrmFichaPaciente::cargarDatosImagenes(int crow, int ccol)
         ui->lblImagenDiagnostico->setPixmap(qpmImagen.scaled(ui->lblImagenDiagnostico->size(), Qt::KeepAspectRatio));
 
     }
+    if (oImagenes->getEvaluada()==1)
+        ui->checkBox_evaluada->setChecked(true);
+    else
+        ui->checkBox_evaluada->setChecked(false);
 
 }
 

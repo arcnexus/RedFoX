@@ -30,6 +30,7 @@ public slots:
    // void SetId_Cliente(int id_Cliente);
 
 signals:
+    void enviahistoriaynombre(int,QString);
 
 private slots:
     void on_btnSiguiente_clicked();

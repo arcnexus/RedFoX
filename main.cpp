@@ -34,8 +34,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
-   // QTextCodec::setCodecForTr(linuxCodec);
-   // QTextCodec::setCodecForCStrings(linuxCodec);
+    QTextCodec::setCodecForTr(linuxCodec);
+    QTextCodec::setCodecForCStrings(linuxCodec);
     QTextCodec::setCodecForLocale(linuxCodec);
      //QStyle *style = QStyleFactory::create("oxygen");
     QStyle *style = QStyleFactory::create("fusion");

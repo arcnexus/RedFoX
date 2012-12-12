@@ -59,6 +59,7 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     bloquearCampos();
     this->Altas = false;
 
+
 }
 
 frmClientes::~frmClientes()
@@ -976,6 +977,10 @@ void frmClientes::on_btnFichaPaciente_clicked()
     FrmFichaPaciente *frmPaciente = new FrmFichaPaciente(this);
     frmPaciente->setWindowModality(Qt::WindowModal);
     frmPaciente->setWindowState(Qt::WindowMaximized);
+    // conexiones
+    connect(this,SIGNAL(enviahistoriaynombre(int,QString)),frmPaciente,SLOT(recibedatospaciente(int ,QString)));
+    emit enviahistoriaynombre(oCliente->getId(),oCliente->getcNombreFiscal());
     frmPaciente->cargarDatos(oCliente->getId());
+
     frmPaciente->show();
 }
