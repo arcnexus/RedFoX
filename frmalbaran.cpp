@@ -2,16 +2,12 @@
 #include "ui_frmalbaran.h"
 #include "albaran.h"
 #include "cliente.h"
-#include "columnamoneda.h"
 #include "configuracion.h"
 #include "articulo.h"
 #include "frmmodificarlin_alb.h"
 
 Albaran *oAlbaran = new Albaran();
 Cliente *oCliente2 = new Cliente();
-ColumnaMoneda *Columna1 = new ColumnaMoneda();
-
-
 
 FrmAlbaran::FrmAlbaran(QWidget *parent) :
     QDialog(parent),
@@ -77,11 +73,11 @@ void FrmAlbaran::lineasVentas()
     // Hacemos visible la cabecera
      Cabecera->setVisible(true);
      // Delegamos el control contenido en las columnas al nuevo objeto ColumnaGrid
-     ui->Lineas->setItemDelegateForColumn(4, Columna1);
-     ui->Lineas->setItemDelegateForColumn(5, Columna1);
-     ui->Lineas->setItemDelegateForColumn(6, Columna1);
-     ui->Lineas->setItemDelegateForColumn(7, Columna1);
-     ui->Lineas->setItemDelegateForColumn(8, Columna1);
+     //ui->Lineas->setItemDelegateForColumn(4, Columna1);
+     //ui->Lineas->setItemDelegateForColumn(5, Columna1);
+     //ui->Lineas->setItemDelegateForColumn(6, Columna1);
+     //ui->Lineas->setItemDelegateForColumn(7, Columna1);
+     //ui->Lineas->setItemDelegateForColumn(8, Columna1);
 }
 
 void FrmAlbaran::LLenarCampos() {

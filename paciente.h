@@ -15,6 +15,7 @@ public slots:
     // Funciones varias
     void RecuperarPaciente(int idCliente);
     void GuardarPaciente();
+    int AnadirPaciente(int idCliente);
 
     // Getters
     int getalcohol();

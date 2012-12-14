@@ -263,8 +263,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>214</width>
-        <height>398</height>
+        <width>224</width>
+        <height>401</height>
        </rect>
       </property>
       <attribute name="label">
@@ -342,8 +342,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>200</width>
-        <height>400</height>
+        <width>204</width>
+        <height>418</height>
        </rect>
       </property>
       <attribute name="label">
@@ -465,8 +465,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>214</width>
-        <height>398</height>
+        <width>204</width>
+        <height>207</height>
        </rect>
       </property>
       <attribute name="label">
@@ -582,8 +582,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>214</width>
-        <height>398</height>
+        <width>204</width>
+        <height>418</height>
        </rect>
       </property>
       <attribute name="label">
@@ -792,8 +792,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>214</width>
-        <height>398</height>
+        <width>204</width>
+        <height>418</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1720,8 +1720,8 @@ color: rgb(255, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>497</width>
-               <height>263</height>
+               <width>576</width>
+               <height>334</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2033,8 +2033,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>513</width>
-               <height>267</height>
+               <width>541</width>
+               <height>253</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2307,8 +2307,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>425</width>
-               <height>185</height>
+               <width>415</width>
+               <height>171</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2446,8 +2446,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>569</width>
-               <height>338</height>
+               <width>576</width>
+               <height>334</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2607,7 +2607,20 @@ color: rgb(0, 0, 0);</string>
                </widget>
               </item>
               <item row="10" column="0" colspan="10">
-               <widget class="QTableWidget" name="listaImagenes"/>
+               <widget class="QTableWidget" name="listaImagenes">
+                <property name="styleSheet">
+                 <string notr="true">selection-background-color: rgb(37, 129, 4);
+border-color: rgb(212, 255, 230);
+alternate-background-color: rgb(113, 255, 153);
+background-color: rgb(219, 255, 208);</string>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+               </widget>
               </item>
               <item row="4" column="1">
                <widget class="QLabel" name="label_52">
@@ -2714,8 +2727,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>368</width>
-               <height>359</height>
+               <width>559</width>
+               <height>345</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2986,8 +2999,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>307</width>
-               <height>285</height>
+               <width>313</width>
+               <height>267</height>
               </rect>
              </property>
              <attribute name="label">

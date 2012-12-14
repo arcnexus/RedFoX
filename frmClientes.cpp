@@ -11,7 +11,6 @@
 #include "frmbuscarcliente.h"
 #include "frmbuscarpoblacion.h"
 #include <QString>
-#include "columnamoneda.h"
 #include "columnafecha.h"
 #include <QSettings>
 #include "frmfichapaciente.h"
@@ -157,10 +156,9 @@ void frmClientes::LLenarCampos() {
     QString cSQL;
     cSQL= "Select id,cDocumento,rPendienteCobro,dFecha,dVencimiento from clientes_deuda where Id_cliente =" + QString::number(oCliente->getId());
     deudas->setQuery(cSQL,QSqlDatabase::database("empresa"));
-    ColumnaMoneda *columnaMoneda = new ColumnaMoneda();
     ColumnaFecha *columnaFecha = new ColumnaFecha();
     ui->TablaDeudas->setModel(deudas);
-        ui->TablaDeudas->setItemDelegateForColumn(2,columnaMoneda);
+      //  ui->TablaDeudas->setItemDelegateForColumn(2,columnaMoneda);
         ui->TablaDeudas->setItemDelegateForColumn(3,columnaFecha);
         ui->TablaDeudas->setItemDelegateForColumn(4,columnaFecha);
     //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
@@ -193,7 +191,7 @@ void frmClientes::LLenarCampos() {
    Albaranes->setQuery(cSQL,QSqlDatabase::database("empresa"));
    ui->TablaAlbaranes->setModel(Albaranes);
        ui->TablaAlbaranes->setItemDelegateForColumn(2,columnaFecha);
-       ui->TablaAlbaranes->setItemDelegateForColumn(4,columnaMoneda);
+     //  ui->TablaAlbaranes->setItemDelegateForColumn(4,columnaMoneda);
    //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
   QHeaderView *CabeceraAlb = new QHeaderView(Qt::Horizontal,this);
   // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
@@ -226,7 +224,7 @@ void frmClientes::LLenarCampos() {
   ui->tablaFacturas->setModel(Facturas);
       ui->tablaFacturas->setItemDelegateForColumn(2,columnaFecha);
       ui->tablaFacturas->setItemDelegateForColumn(3,columnaFecha);
-      ui->tablaFacturas->setItemDelegateForColumn(4,columnaMoneda);
+    //  ui->tablaFacturas->setItemDelegateForColumn(4,columnaMoneda);
   //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
  QHeaderView *CabeceraFac = new QHeaderView(Qt::Horizontal,this);
  // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
@@ -259,7 +257,7 @@ void frmClientes::LLenarCampos() {
  ui->tablaPresupuestos->setModel(Presupuestos);
  ui->tablaPresupuestos->setItemDelegateForColumn(2,columnaFecha);
  ui->tablaPresupuestos->setItemDelegateForColumn(3,columnaFecha);
- ui->tablaPresupuestos->setItemDelegateForColumn(4,columnaMoneda);
+ //ui->tablaPresupuestos->setItemDelegateForColumn(4,columnaMoneda);
  //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
 QHeaderView *CabeceraPre = new QHeaderView(Qt::Horizontal,this);
 // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
@@ -294,7 +292,7 @@ Vales->setQuery(cSQL,QSqlDatabase::database("empresa"));
 ui->tablaVales->setModel(Vales);
 ui->tablaVales->setItemDelegateForColumn(2,columnaFecha);
 ui->tablaVales->setItemDelegateForColumn(3,columnaFecha);
-ui->tablaVales->setItemDelegateForColumn(4,columnaMoneda);
+//ui->tablaVales->setItemDelegateForColumn(4,columnaMoneda);
 //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
 QHeaderView *CabeceraVal = new QHeaderView(Qt::Horizontal,this);
 // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
@@ -327,7 +325,7 @@ Tickets->setQuery(cSQL,QSqlDatabase::database("empresa"));
 ui->tablaTickets->setModel(Tickets);
 ui->tablaTickets->setItemDelegateForColumn(2,columnaFecha);
 ui->tablaTickets->setItemDelegateForColumn(3,columnaFecha);
-ui->tablaTickets->setItemDelegateForColumn(4,columnaMoneda);
+//ui->tablaTickets->setItemDelegateForColumn(4,columnaMoneda);
 //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
 QHeaderView *CabeceraTic = new QHeaderView(Qt::Horizontal,this);
 // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
@@ -969,9 +967,9 @@ void frmClientes::on_btnFichaPaciente_clicked()
     oPaciente.RecuperarPaciente(oCliente->getId());
     if(oPaciente.getid()==0){
         int idCliente = oCliente->getId();
-        idPaciente = llamadasSQL->CrearPaciente(idCliente);
+        idPaciente = oPaciente.AnadirPaciente(idCliente);
         if (idPaciente!=0)
-            oPaciente.RecuperarPaciente(idCliente);
+            oPaciente.RecuperarPaciente(idPaciente);
     }
     // open patient form
     FrmFichaPaciente *frmPaciente = new FrmFichaPaciente(this);

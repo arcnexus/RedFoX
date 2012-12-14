@@ -15,12 +15,12 @@
 #include "articulo.h"
 #include "cliente.h"
 #include "frmmodificarlin_fac.h"
-#include "columnamoneda.h"
+
 
 
 Factura *oFactura = new Factura();
 Cliente *oCliente1 = new Cliente();
-ColumnaMoneda *Columna = new ColumnaMoneda();
+
 frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmFacturas)
@@ -63,7 +63,6 @@ frmFacturas::~frmFacturas()
     delete ui;
     delete oCliente1;
     delete oFactura;
-    delete Columna;
 }
 
 void frmFacturas::lineasVentas()
@@ -108,11 +107,11 @@ void frmFacturas::lineasVentas()
     // Hacemos visible la cabecera
      Cabecera->setVisible(true);
      // Delegamos el control contenido en las columnas al nuevo objeto ColumnaGrid
-     ui->Lineas->setItemDelegateForColumn(4, Columna);
-     ui->Lineas->setItemDelegateForColumn(5, Columna);
-     ui->Lineas->setItemDelegateForColumn(6, Columna);
-     ui->Lineas->setItemDelegateForColumn(7, Columna);
-     ui->Lineas->setItemDelegateForColumn(8, Columna);
+     //ui->Lineas->setItemDelegateForColumn(4, Columna);
+     //ui->Lineas->setItemDelegateForColumn(5, Columna);
+     //ui->Lineas->setItemDelegateForColumn(6, Columna);
+     //ui->Lineas->setItemDelegateForColumn(7, Columna);
+     //ui->Lineas->setItemDelegateForColumn(8, Columna);
 }
 
 
@@ -712,9 +711,9 @@ void frmFacturas::on_btnBuscarArt_clicked()
                 ui->txtcTextoBuscar->text().trimmed()+"%'";
         modArt->setQuery(cSQL,QSqlDatabase::database("empresa"));
         ui->tablaBuscaArt->setModel(modArt);
-        ui->tablaBuscaArt->setItemDelegateForColumn(2, Columna);
-        ui->tablaBuscaArt->setItemDelegateForColumn(3, Columna);
-        ui->tablaBuscaArt->setItemDelegateForColumn(4, Columna);
+       // ui->tablaBuscaArt->setItemDelegateForColumn(2, Columna);
+       // ui->tablaBuscaArt->setItemDelegateForColumn(3, Columna);
+       // ui->tablaBuscaArt->setItemDelegateForColumn(4, Columna);
     } else {
         QMessageBox::critical(this,tr("Buscar Artículos"),tr("Debe especificar algún criterio de búsqueda"),tr("OK"));
     }

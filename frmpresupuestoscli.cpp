@@ -7,12 +7,10 @@
 #include "frmbuscarcliente.h"
 #include "articulo.h"
 #include <QMessageBox>
-#include "columnamoneda.h"
 #include "frmmodificarlin_precli.h"
 
 Presupuesto *oPres = new Presupuesto();
 Cliente *oClientePres = new Cliente();
-ColumnaMoneda *ColumnaPres = new ColumnaMoneda();
 FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmPresupuestosCli)
@@ -492,11 +490,11 @@ void FrmPresupuestosCli::LineasVentas()
     // Hacemos visible la cabecera
      Cabecera->setVisible(true);
      // Delegamos el control contenido en las columnas al nuevo objeto ColumnaGrid
-     ui->Lineas->setItemDelegateForColumn(4, ColumnaPres);
-     ui->Lineas->setItemDelegateForColumn(5, ColumnaPres);
-     ui->Lineas->setItemDelegateForColumn(6, ColumnaPres);
-     ui->Lineas->setItemDelegateForColumn(7, ColumnaPres);
-     ui->Lineas->setItemDelegateForColumn(8, ColumnaPres);
+    // ui->Lineas->setItemDelegateForColumn(4, ColumnaPres);
+    // ui->Lineas->setItemDelegateForColumn(5, ColumnaPres);
+    // ui->Lineas->setItemDelegateForColumn(6, ColumnaPres);
+     //ui->Lineas->setItemDelegateForColumn(7, ColumnaPres);
+     //ui->Lineas->setItemDelegateForColumn(8, ColumnaPres);
 }
 
 void FrmPresupuestosCli::on_chklEnviado_stateChanged(int arg1)

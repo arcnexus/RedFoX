@@ -97,7 +97,8 @@ void Paciente::GuardarPaciente()
             "sistole= :sistole,"
             "tabaco = :tabaco,"
             "talla = :talla,"
-            "trabaja = :trabaja"
+            "trabaja = :trabaja,"
+            "numhistoria =:numhistoria"
             " WHERE id = :id";
     QSqlQuery *qPaciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     qPaciente->prepare(cSql);
@@ -128,6 +129,7 @@ void Paciente::GuardarPaciente()
     qPaciente->bindValue(":tabaco", this->tabaco);
     qPaciente->bindValue(":talla",this->talla);
     qPaciente->bindValue(":trabaja",this->trabaja);
+    qPaciente->bindValue(":numhistoria",this->numhistoria);
     qPaciente->bindValue(":id",this->id);
     if(!qPaciente->exec()) {
         qDebug() << cSql;
@@ -142,6 +144,20 @@ void Paciente::GuardarPaciente()
     }
 }
 
+int Paciente::AnadirPaciente(int idCliente)
+{
+    QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    paciente->prepare("insert into pacientes (idCliente,numhistoria) values (:idCliente,:numhistoria)");
+    paciente->bindValue(":idCliente",idCliente);
+    paciente->bindValue(":numhistoria",QString::number(idCliente));
+    if (!paciente->exec())
+        QMessageBox::warning(NULL,QObject::tr("Error Pacientes"),QObject::tr("No se ha podido insertar un nuevo paciente"),
+                             QObject::tr("Aceptar"));
+    else
+        return paciente->lastInsertId().toInt();
+    delete paciente;
+}
+
 int Paciente::getalcohol()
 {
     return this->alcohol;
@@ -150,9 +166,9 @@ int Paciente::getalcohol()
 bool Paciente::getalcoholbool()
 {
     if(this->alcohol == 0)
-        return FALSE;
+        return false;
     else
-        return TRUE;
+        return true;
 }
 
 int Paciente::getnumHistoria()
@@ -300,9 +316,9 @@ int Paciente::gettabaco()
 bool Paciente::gettabacobool()
 {
     if (this->tabaco==1)
-        return TRUE;
+        return true;
     else
-        return FALSE;
+        return false;
 
 }
 
@@ -319,9 +335,9 @@ int Paciente::gettrabaja()
 bool Paciente::gettrabajabool()
 {
     if(this->trabaja ==1)
-        return TRUE;
+        return true;
     else
-        return FALSE;
+        return false;
 }
 
 void Paciente::setalcohol(int alcohol)

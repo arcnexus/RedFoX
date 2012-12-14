@@ -2,7 +2,6 @@
 #include "ui_frmpedidos.h"
 #include "pedidos.h"
 #include "cliente.h"
-#include "columnamoneda.h"
 #include "configuracion.h"
 #include "articulo.h"
 #include "frmmodificarlin_ped.h"
@@ -11,7 +10,6 @@
 
 Pedidos *oPedido = new Pedidos();
 Cliente *oCliente3 = new Cliente();
-ColumnaMoneda *Columna2 = new ColumnaMoneda();
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
     QDialog(parent),
@@ -77,11 +75,11 @@ void FrmPedidos::lineasVentas()
     // Hacemos visible la cabecera
      Cabecera->setVisible(true);
      // Delegamos el control contenido en las columnas al nuevo objeto ColumnaGrid
-     ui->Lineas->setItemDelegateForColumn(4, Columna2);
-     ui->Lineas->setItemDelegateForColumn(5, Columna2);
-     ui->Lineas->setItemDelegateForColumn(6, Columna2);
-     ui->Lineas->setItemDelegateForColumn(7, Columna2);
-     ui->Lineas->setItemDelegateForColumn(8, Columna2);
+     //ui->Lineas->setItemDelegateForColumn(4, Columna2);
+     //ui->Lineas->setItemDelegateForColumn(5, Columna2);
+     //ui->Lineas->setItemDelegateForColumn(6, Columna2);
+     //ui->Lineas->setItemDelegateForColumn(7, Columna2);
+     //ui->Lineas->setItemDelegateForColumn(8, Columna2);
 }
 
 void FrmPedidos::LLenarCampos()

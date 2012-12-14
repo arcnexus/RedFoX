@@ -34,9 +34,11 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
-    QTextCodec::setCodecForTr(linuxCodec);
-    QTextCodec::setCodecForCStrings(linuxCodec);
-    QTextCodec::setCodecForLocale(linuxCodec);
+    #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+        QTextCodec::setCodecForTr(linuxCodec);
+        QTextCodec::setCodecForCStrings(linuxCodec);
+   #endif
+        QTextCodec::setCodecForLocale(linuxCodec);
      //QStyle *style = QStyleFactory::create("oxygen");
     QStyle *style = QStyleFactory::create("fusion");
     QApplication::setStyle(style);

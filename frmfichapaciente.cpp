@@ -44,6 +44,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     QSqlQueryModel *qTipos = new QSqlQueryModel(this);
     qTipos->setQuery("Select descripcion from tiposimagen",QSqlDatabase::database("dbmedica"));
     ui->comboBox_tipoImagen->setModel(qTipos);
+    ui->txtHistorialEpisodio->setPlainText("");
 
     // Conexiones
 
@@ -64,11 +65,13 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->pushButton_editarimagen,SIGNAL(clicked()), this, SLOT(EditarImagenDiagnostico()));
     connect(ui->pushButton_GuardarImagen,SIGNAL(clicked()),this,SLOT(guardarDatosImagenes()));
     connect(oImagenes,SIGNAL(refrescarlista()),this,SLOT(llenartablahistorialimagenesepisodio()));
+    connect(ui->pushButton_DeshacerImagen,SIGNAL(clicked()),this,SLOT(deshacerDatosImagenes()));
 
 
 
     // Ocultar Iconos imagenes
     ui->itemFarma->setVisible(false);
+
 
 
 }
@@ -122,6 +125,7 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
         ui->radTrabaja->setChecked(true);
     else
         ui->radNoTrabaja->setChecked(true);
+    ui->txtNumHistoriaClinica->setText(QString::number(oPaciente->getnumHistoria()));
     // cargar datos Episodios
     QSqlQueryModel *EpisodiosModelo = new QSqlQueryModel(this);
     EpisodiosModelo->setQuery("Select descripcion from episodios where idpaciente = "+QString::number(oPaciente->getid()),QSqlDatabase::database("dbmedica"));
@@ -490,18 +494,23 @@ void FrmFichaPaciente::RecuperarCIE(int id, QString codigo, QString descripcion)
 
 void FrmFichaPaciente::ActivarControlesFarmacologia()
 {
-    ui->btnEditarFarmacologia->setEnabled(false);
-    ui->btnGuardarFarmacologia->setEnabled(true);
-    ui->btnDeshacerFarmacologia->setEnabled(false);
-    ui->txtInicioTratamientoFarma->setEnabled(true);
-    ui->txtPosologiaFarma->setEnabled(true);
-    ui->txtComentariosFarma->setEnabled(true);
-    ui->chkactivo->setEnabled(true);
-    ui->txtInicioTratamientoFarma->setFocus();
+    if(ui->listaTratamientosFarma->currentRow()>0) {
+        ui->btnEditarFarmacologia->setEnabled(false);
+        ui->btnGuardarFarmacologia->setEnabled(true);
+        ui->btnDeshacerFarmacologia->setEnabled(false);
+        ui->txtInicioTratamientoFarma->setEnabled(true);
+        ui->txtPosologiaFarma->setEnabled(true);
+        ui->txtComentariosFarma->setEnabled(true);
+        ui->chkactivo->setEnabled(true);
+        ui->txtInicioTratamientoFarma->setFocus();
+    } else
+        QMessageBox::warning(this,tr("Editar historial Farmacología"),tr("Antes de editar debe seleccionar una ficha de imagen"),
+                             tr("Aceptar"));
 }
 
 void FrmFichaPaciente::GuardarDatosFarmacologia()
 {
+
     ui->btnEditarFarmacologia->setEnabled(true);
     ui->btnGuardarFarmacologia->setEnabled(false);
     ui->btnDeshacerFarmacologia->setEnabled(false);
@@ -718,20 +727,24 @@ void FrmFichaPaciente::BorrarImagenDiagnostico()
 
 void FrmFichaPaciente::EditarImagenDiagnostico()
 {
-    ui->lineEdit_descripcionimagen->setEnabled(true);
-    ui->comboBox_tipoImagen->setEnabled(true);
-    ui->dateEdit_fechaimagen->setEnabled(true);
-    ui->txtComentariosImagen->setEnabled(true);
-    ui->pushButton_editarimagen->setEnabled(false);
-    ui->pushButton_GuardarImagen->setEnabled(true);
-    ui->pushButton_DeshacerImagen->setEnabled(true);
-    ui->checkBox_evaluada->setEnabled(true);
-    ui->lineEdit_descripcionimagen->setFocus();
+    if(ui->listaImagenes->currentRow()>=0) {
+        ui->lineEdit_descripcionimagen->setEnabled(true);
+        ui->comboBox_tipoImagen->setEnabled(true);
+        ui->dateEdit_fechaimagen->setEnabled(true);
+        ui->txtComentariosImagen->setEnabled(true);
+        ui->pushButton_editarimagen->setEnabled(false);
+        ui->pushButton_GuardarImagen->setEnabled(true);
+        ui->pushButton_DeshacerImagen->setEnabled(true);
+        ui->checkBox_evaluada->setEnabled(true);
+        ui->lineEdit_descripcionimagen->setFocus();
+     } else
+        QMessageBox::warning(this,tr("Editar imágenes"),tr("Debe seleccionar en la lista que imágen editar"),
+                             tr("Aceptar"));
 }
 
 void FrmFichaPaciente::recibedatospaciente(int historia, QString Nombre)
 {
-    ui->txtNumHistoriaClinica->setText(QString::number(historia));
+   // ui->txtNumHistoriaClinica->setText(QString::number(historia));
     ui->txtPaciente->setText(Nombre);
 }
 
@@ -798,6 +811,12 @@ void FrmFichaPaciente::guardarDatosImagenes()
     BloquearCamposImagen();
 
 
+}
+
+void FrmFichaPaciente::deshacerDatosImagenes()
+{
+    cargarDatosImagenes(ui->listaImagenes->currentRow(),3);
+    BloquearCamposImagen();
 }
 
 

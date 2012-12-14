@@ -163,16 +163,17 @@ QSqlQuery SqlCalls::RecuperarPaciente(int idCliente)
 
 int SqlCalls::CrearPaciente(int idCliente)
 {
-    QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    paciente->prepare("insert into pacientes (idCliente) values (:idCliente)");
-    paciente->bindValue(":idCliente",idCliente);
-    if (!paciente->exec())
-        QMessageBox::warning(NULL,QObject::tr("Error Pacientes"),QObject::tr("No se ha podido insertar un nuevo paciente"),
-                             QObject::tr("Aceptar"));
-    else {
-        return paciente->lastInsertId().toInt();
-    }
-    delete paciente;
+//    QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+//    paciente->prepare("insert into pacientes (idCliente,numhistoria) values (:idCliente,:numhistoria)");
+//    paciente->bindValue(":idCliente",idCliente);
+//    paciente->bindValue(":numhistoria",QString::number(idCliente));
+//    if (!paciente->exec())
+//        QMessageBox::warning(NULL,QObject::tr("Error Pacientes"),QObject::tr("No se ha podido insertar un nuevo paciente"),
+//                             QObject::tr("Aceptar"));
+//    else {
+//        return paciente->lastInsertId().toInt();
+//    }
+//    delete paciente;
 }
 
 

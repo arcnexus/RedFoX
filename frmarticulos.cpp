@@ -10,7 +10,6 @@
 #include <QString>
 #include <QPixmap>
 #include <QtGui>
-#include "columnamoneda.h"
 #include <QListView>
 
 
@@ -544,7 +543,6 @@ void FrmArticulos::on_txtrTarifa3_lostFocus()
 
 void FrmArticulos::on_botBuscarArtRapido_clicked()
 {
-    ColumnaMoneda *Columna = new ColumnaMoneda();
     if(!ui->txtBuscarArticulo->text().isEmpty()) {
         ui->lblMensajeRecuperar->setVisible(true);
         modArt = new QSqlQueryModel();
@@ -572,7 +570,7 @@ void FrmArticulos::on_botBuscarArtRapido_clicked()
         modArt->setHeaderData(1, Qt::Horizontal, QObject::tr("DESCRIPCIÓN"));
         modArt->setHeaderData(2, Qt::Horizontal, QObject::tr("PVP"));
 
-        ui->TablaBuscarArt->setItemDelegateForColumn(2, Columna);
+        //ui->TablaBuscarArt->setItemDelegateForColumn(2, Columna);
     } else {
         QMessageBox::critical(this,tr("Buscar Artículos"),tr("Debe especificar algún criterio de búsqueda"),tr("OK"));
     }

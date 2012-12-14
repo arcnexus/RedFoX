@@ -31,6 +31,7 @@ public slots:
     void cargarDatosMedicamento(int, int);
     void cargarDatosImagenes(int,int);
     void guardarDatosImagenes();
+    void deshacerDatosImagenes();
 
 private slots:
     void finishedSlot(QNetworkReply* reply);
