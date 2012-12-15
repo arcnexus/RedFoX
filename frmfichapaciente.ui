@@ -1713,15 +1713,15 @@ color: rgb(255, 0, 0);</string>
              <bool>true</bool>
             </property>
             <property name="currentIndex">
-             <number>3</number>
+             <number>4</number>
             </property>
             <widget class="QWidget" name="page_3">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>334</height>
+               <width>550</width>
+               <height>248</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2726,7 +2726,7 @@ background-color: rgb(219, 255, 208);</string>
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>0</y>
+               <y>-11</y>
                <width>559</width>
                <height>345</height>
               </rect>
@@ -2788,8 +2788,8 @@ background-color: rgb(219, 255, 208);</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset>
-                    <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -2805,9 +2805,6 @@ background-color: rgb(219, 255, 208);</string>
                    </size>
                   </property>
                  </spacer>
-                </item>
-                <item row="2" column="0" colspan="5">
-                 <widget class="QColumnView" name="listaInterconsultas"/>
                 </item>
                 <item row="1" column="0" colspan="5">
                  <widget class="QFrame" name="frame_7">
@@ -2853,6 +2850,9 @@ background-color: rgb(219, 255, 208);</string>
                    <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
+                </item>
+                <item row="2" column="0" colspan="5">
+                 <widget class="QTableWidget" name="tableWidget"/>
                 </item>
                </layout>
               </item>
@@ -2999,8 +2999,8 @@ background-color: rgb(219, 255, 208);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>313</width>
-               <height>267</height>
+               <width>576</width>
+               <height>334</height>
               </rect>
              </property>
              <attribute name="label">
@@ -3479,7 +3479,6 @@ background-color: rgb(219, 255, 208);</string>
   <tabstop>btnImportarInterconsulta</tabstop>
   <tabstop>btnVerInterconsulta</tabstop>
   <tabstop>btnBorrarInterconsulta</tabstop>
-  <tabstop>listaInterconsultas</tabstop>
   <tabstop>radRecibidoInterconsulta</tabstop>
   <tabstop>radPendienteRecibirInterconsulta</tabstop>
   <tabstop>btnAnadirMotivosDerivacionInterconsulta</tabstop>

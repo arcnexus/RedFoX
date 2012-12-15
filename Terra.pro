@@ -75,7 +75,8 @@ SOURCES += main.cpp\
     frminformacionfarmaco.cpp \
     frmanadirimagen.cpp \
     imagenesdiagnostico.cpp \
-    prueba.cpp
+    prueba.cpp \
+    interconsulta.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -119,7 +120,8 @@ HEADERS  += mainwindow.h \
     frminformacionfarmaco.h \
     frmanadirimagen.h \
     imagenesdiagnostico.h \
-    prueba.h
+    prueba.h \
+    interconsulta.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
