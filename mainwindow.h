@@ -63,6 +63,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QMdiArea *workspace;
+    void cerrarSubWindows();
 };
 
 #endif // MAINWINDOW_H

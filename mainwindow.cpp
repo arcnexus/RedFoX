@@ -77,6 +77,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->barraHerramientas->setCurrentIndex(3);
     // Preparo espacio de trabajo para poder acojer ventanas dentro de él
     workspace = new QMdiArea(ui->widget);
+    QImage img("logo.png");
+    workspace->setBackground(img);
+    //workspace->setStyleSheet("background-color: rgb(255, 227, 171)");
     QGridLayout *gridLayout = new QGridLayout;
      gridLayout->addWidget(workspace, 0, 0);
      ui->widget->setLayout(gridLayout);
@@ -195,8 +198,9 @@ void MainWindow::on_btnClientes_clicked()
     ui->btnClientes->setEnabled(false);
     frmClientes *frmClientes1 = new frmClientes(m_config);
     workspace->addSubWindow(frmClientes1);
-    frmClientes1->setWindowState(Qt::WindowMaximized);
+    //frmClientes1->setWindowState(Qt::WindowMaximized);
     frmClientes1->exec();
+    cerrarSubWindows();
     ui->btnClientes->setEnabled(true);
 }
 void MainWindow::on_btnFacturaCliente_clicked()
@@ -206,6 +210,7 @@ void MainWindow::on_btnFacturaCliente_clicked()
     workspace->addSubWindow(frmFacturas1);
     frmFacturas1->setWindowState(Qt::WindowMaximized);
     frmFacturas1->exec();
+    cerrarSubWindows();
     ui->btnFacturaCliente->setEnabled(true);
 }
 
@@ -216,6 +221,7 @@ void MainWindow::on_btnArticulos_clicked()
     workspace->addSubWindow(frmArticulos1);
     frmArticulos1->setWindowState(Qt::WindowMaximized);
     frmArticulos1->exec();
+    cerrarSubWindows();
     ui->btnArticulos->setEnabled(true);
 }
 
@@ -226,6 +232,7 @@ void MainWindow::on_botEmpresas_clicked()
     workspace->addSubWindow(frmEmpresa1);
     frmEmpresa1->setWindowState(Qt::WindowMaximized);
     frmEmpresa1->exec();
+    cerrarSubWindows();
     ui->botEmpresas->setEnabled(true);
 }
 
@@ -236,6 +243,7 @@ void MainWindow::on_btnProveedores_clicked()
     workspace->addSubWindow(frmProveedores1);
     frmProveedores1->setWindowState(Qt::WindowMaximized);
     frmProveedores1->exec();
+    cerrarSubWindows();
     ui->btnProveedores->setEnabled(true);
 
 }
@@ -247,6 +255,7 @@ void MainWindow::on_botConfiguracion_clicked()
     workspace->addSubWindow(frmConfiguracion1);
     frmConfiguracion1->setWindowState(Qt::WindowMaximized);
     frmConfiguracion1->exec();
+    cerrarSubWindows();
     ui->botConfiguracion->setEnabled(true);
 }
 
@@ -257,6 +266,7 @@ void MainWindow::on_btnAlbaran_clientes_clicked()
     workspace->addSubWindow(frmAlbaran1);
     frmAlbaran1->setWindowState(Qt::WindowMaximized);
     frmAlbaran1->exec();
+    cerrarSubWindows();
     ui->btnAlbaran_clientes->setEnabled(true);
 }
 
@@ -267,6 +277,7 @@ void MainWindow::on_btn_Pedido_cliente_clicked()
     workspace->addSubWindow(frmPedidos1);
     frmPedidos1->setWindowState(Qt::WindowMaximized);
     frmPedidos1->exec();
+    cerrarSubWindows();
     ui->btn_Pedido_cliente->setEnabled(true);
 }
 
@@ -277,6 +288,7 @@ void MainWindow::on_btnPresup_clientes_clicked()
     workspace->addSubWindow(frmPresupcli);
     frmPresupcli->setWindowState(Qt::WindowMaximized);
     frmPresupcli->exec();
+    cerrarSubWindows();
     ui->btnPresup_clientes->setEnabled(true);
 }
 
@@ -287,6 +299,7 @@ void MainWindow::on_btnCajaMinuta_clicked()
     workspace->addSubWindow(frmCajaMinuta);
     frmCajaMinuta->setWindowState(Qt::WindowMaximized);
     frmCajaMinuta->exec();
+    cerrarSubWindows();
     ui->btnCajaMinuta->setEnabled(true);
 }
 
@@ -296,6 +309,7 @@ void MainWindow::on_btnAgenda_clicked()
     frmAgendaVisitas *frmAgenda1 = new frmAgendaVisitas();
     frmAgenda1->setWindowState(Qt::WindowMaximized);
     frmAgenda1->exec();
+    cerrarSubWindows();
     ui->btnAgenda->setEnabled(true);
 }
 
@@ -307,5 +321,16 @@ void MainWindow::cambiarEstilo(int estado)
     else
         style = QStyleFactory::create("fusion");
 
-   QApplication::setStyle(style);
+    QApplication::setStyle(style);
+}
+
+void MainWindow::cerrarSubWindows()
+{
+    QList<QMdiSubWindow *> wnd = workspace->subWindowList();
+
+    QList<QMdiSubWindow *>::iterator i;
+
+    for (i=wnd.begin();i!= wnd.end();++i) {
+        (*i)->hide();
+    }
 }
