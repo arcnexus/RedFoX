@@ -97,7 +97,7 @@ void Login::on_Crearconfiguracin_clicked()
 {
     QSettings settings("infint", "terra");
     settings.setValue("cDriverBDTerra","QSQLITE");
-    settings.setValue("cRutaDBTerra","/home/arcnexus/project/terra/DB/terra.sqlite");
+    settings.setValue("cRutaDBTerra","/home/arcnexus/TerraSoftware/Proyectos/terra/DB/terra.sqlite");
     settings.setValue("cHostBDTerra","localhost");
     settings.setValue("cUserBDTerra","root");
     settings.setValue("cPasswordBDTerra","PatataBullida_99");

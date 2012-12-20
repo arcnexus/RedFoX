@@ -9,6 +9,7 @@
 #include "frmarticulos.h"
 #include <login.h>
 #include <QMdiArea>
+#include <QMdiSubWindow>
 #include <QFormLayout>
 #include <QDebug>
 #include <QSettings>

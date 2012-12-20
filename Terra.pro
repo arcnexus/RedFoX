@@ -16,13 +16,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 INCLUDEPATH += /Qwt/5.2.1/include
 INCLUDEPATH += /usr/local/Qxt/include/QxtCore
 DEPENDPATH += /Qwt/5.2.1/lib
-greaterThan(QT_MAJOR_VERSION, 4):INCLUDEPATH += /home/arcnexus/Qt5.0.0-rc2/5.0.0-rc2/gcc_64/include/QtWebKitWidgets
+greaterThan(QT_MAJOR_VERSION, 4):INCLUDEPATH += /home/arcnexus/Qt5.0.0/5.0.0/gcc_64/include/QtWebKitWidgets
 
 
 
 LIBS += -LC:/Qt/Qwt/5.2.1/lib
 LIBS += -L/usr/local/Qxt/lib
-greaterThan(QT_MAJOR_VERSION, 4):LIBS += -L/home/arcnexus/Qt5.0.0-rc2/Tools/QtCreator/lib/qtcreator/ -lQt5WebKitWidgets
+greaterThan(QT_MAJOR_VERSION, 4):LIBS += -L/home/arcnexus/Qt5.0.0/Tools/QtCreator/lib/qtcreator/ -lQt5WebKitWidgets
 
 
 TARGET = Terra
