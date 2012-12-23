@@ -73,9 +73,6 @@ void Login::on_btnAcceder_clicked()
                 settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
                 settings.setValue("nNivelAcceso",rUsuario.field("nivelacceso").value().toInt());
                 settings.setValue("cCategoria",rUsuario.field("categoria").value().toString());
-               // QStyle *style = QStyleFactory::create("oxygen");
-               //QStyle *style = QStyleFactory::create("plastique");
-               //QApplication::setStyle(style);
                 Login::done( QDialog::Accepted);
 
             } else {

@@ -57,7 +57,19 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     //LLenarCampos();
     bloquearCampos();
     this->Altas = false;
+    //Connect signals /slots.
 
+    connect(ui->txtPrimerApellido,SIGNAL(editingFinished()),this,SLOT(on_txtPrimerApellido_editingFinished()));
+    connect(ui->txtSegundoApellido,SIGNAL(editingFinished()),this,SLOT(on_txtSegundoApellido_editingFinished()));
+    connect(ui->txtcNombre,SIGNAL(editingFinished()),this,SLOT(on_txtcNombre_editingFinished()));
+    connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacion_editingFinished()));
+    connect(ui->txtcProvincia,SIGNAL(editingFinished()),this,SLOT(on_txtcProvincia_editingFinished()));
+    connect(ui->txtcCifNif,SIGNAL(editingFinished()),this,SLOT(on_txtcCifNif_editingFinished()));
+    connect(ui->txtcCp,SIGNAL(editingFinished()),this,SLOT(on_txtcCp_editingFinished()));
+    connect(ui->txtcCPFactura,SIGNAL(editingFinished()),this,SLOT(on_txtcCPFactura_editingFinished()));
+    connect(ui->txtcPoblacionFactura,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacionFactura_editingFinished()));
+    connect(ui->txtcPoblacionAlmacen,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacionAlmacen_editingFinished()));
+    connect(ui->txtrRiesgoPermitido,SIGNAL(editingFinished()),this,SLOT(on_txtrRiesgoPermitido_editingFinished()));
 
 }
 
@@ -527,7 +539,7 @@ void frmClientes::on_btnAnadir_clicked()
     ui->txtcCodigoCliente->setFocus();
 }
 
-void frmClientes::on_txtPrimerApellido_lostFocus()
+void frmClientes::on_txtPrimerApellido_editingFinished()
 {
     ui->txtPrimerApellido->setText(ui->txtPrimerApellido->text().toUpper());
     if(!ui->txtPrimerApellido->text().isEmpty() and !ui->txtSegundoApellido->text().isEmpty() and !ui->txtcNombre->text().isEmpty()) {
@@ -536,7 +548,7 @@ void frmClientes::on_txtPrimerApellido_lostFocus()
     }
 }
 
-void frmClientes::on_txtSegundoApellido_lostFocus()
+void frmClientes::on_txtSegundoApellido_editingFinished()
 {
     ui->txtSegundoApellido->setText(ui->txtSegundoApellido->text().toUpper());
     if(!ui->txtPrimerApellido->text().isEmpty() and !ui->txtSegundoApellido->text().isEmpty() and !ui->txtcNombre->text().isEmpty()) {
@@ -546,7 +558,7 @@ void frmClientes::on_txtSegundoApellido_lostFocus()
 
 }
 
-void frmClientes::on_txtcNombre_lostFocus()
+void frmClientes::on_txtcNombre_editingFinished()
 {
     ui->txtcNombre->setText(ui->txtcNombre->text().toUpper());
     if(!ui->txtPrimerApellido->text().isEmpty() and !ui->txtSegundoApellido->text().isEmpty() and !ui->txtcNombre->text().isEmpty()) {
@@ -556,7 +568,7 @@ void frmClientes::on_txtcNombre_lostFocus()
 
 }
 
-void frmClientes::on_txtcPoblacion_lostFocus()
+void frmClientes::on_txtcPoblacion_editingFinished()
 {
     ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
     if (ui->txtcCp->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty()) {
@@ -593,12 +605,12 @@ void frmClientes::on_txtcPoblacion_lostFocus()
 
 }
 
-void frmClientes::on_txtcProvincia_lostFocus()
+void frmClientes::on_txtcProvincia_editingFinished()
 {
     ui->txtcProvincia->setText(ui->txtcProvincia->text().toUpper());
 }
 
-void frmClientes::on_txtcCifNif_lostFocus()
+void frmClientes::on_txtcCifNif_editingFinished()
 {
     ui->txtcCifNif->setText(ui->txtcCifNif->text().toUpper());
 }
@@ -768,7 +780,7 @@ void frmClientes::on_btnBuscar_clicked()
     LLenarCampos();
 }
 
-void frmClientes::on_txtcCp_lostFocus()
+void frmClientes::on_txtcCp_editingFinished()
     {
     if (!ui->txtcCp->text().isEmpty() and ui->txtcPoblacion->text().isEmpty()) {
         FrmBuscarPoblacion BuscarPoblacion;
@@ -804,7 +816,7 @@ void frmClientes::on_txtcCp_lostFocus()
     }
 
 
-void frmClientes::on_txtcCPFactura_lostFocus()
+void frmClientes::on_txtcCPFactura_editingFinished()
 {
     if (!ui->txtcCPFactura->text().isEmpty() and ui->txtcPoblacionFactura->text().isEmpty()) {
         FrmBuscarPoblacion BuscarPoblacion;
@@ -841,7 +853,7 @@ void frmClientes::on_txtcCPFactura_lostFocus()
 
 }
 
-void frmClientes::on_txtcPoblacionFactura_lostFocus()
+void frmClientes::on_txtcPoblacionFactura_editingFinished()
 {
     ui->txtcPoblacionFactura->setText(ui->txtcPoblacionFactura->text().toUpper());
     if (ui->txtcCPFactura->text().isEmpty() and !ui->txtcPoblacionFactura->text().isEmpty()) {
@@ -877,7 +889,7 @@ void frmClientes::on_txtcPoblacionFactura_lostFocus()
     }
 }
 
-void frmClientes::on_txtcCpPoblacionAlmacen_lostFocus()
+void frmClientes::on_txtcCpPoblacionAlmacen_editingFinished()
 {
     if (!ui->txtcCpPoblacionAlmacen->text().isEmpty() and ui->txtcPoblacionAlmacen->text().isEmpty()) {
         FrmBuscarPoblacion BuscarPoblacion;
@@ -911,7 +923,7 @@ void frmClientes::on_txtcCpPoblacionAlmacen_lostFocus()
     }
 }
 
-void frmClientes::on_txtcPoblacionAlmacen_lostFocus()
+void frmClientes::on_txtcPoblacionAlmacen_editingFinished()
 {
     ui->txtcPoblacionAlmacen->setText(ui->txtcPoblacionAlmacen->text().toUpper());
     if (ui->txtcCpPoblacionAlmacen->text().isEmpty() and !ui->txtcPoblacionAlmacen->text().isEmpty()) {
@@ -952,7 +964,7 @@ void frmClientes::on_TablaDeudas_clicked(const QModelIndex &index)
 
 }
 
-void frmClientes::on_txtrRiesgoPermitido_lostFocus()
+void frmClientes::on_txtrRiesgoPermitido_editingFinished()
 {
     Configuracion *o_conf = new Configuracion;
     ui->txtrRiesgoPermitido->setText(o_conf->FormatoNumerico(ui->txtrRiesgoPermitido->text()));

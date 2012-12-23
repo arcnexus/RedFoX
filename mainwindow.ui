@@ -1356,9 +1356,12 @@ border-color: rgba(0, 0, 0, 0);</string>
       </property>
       <property name="minimumSize">
        <size>
-        <width>1024</width>
+        <width>1014</width>
         <height>0</height>
        </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(219, 228, 255);</string>
       </property>
      </widget>
     </item>
@@ -1370,7 +1373,7 @@ border-color: rgba(0, 0, 0, 0);</string>
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

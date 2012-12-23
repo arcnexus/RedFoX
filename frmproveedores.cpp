@@ -21,6 +21,12 @@ frmProveedores::frmProveedores(QWidget *parent) :
     qmFormaPago->setQuery("select cCodigo, cFormapago from FormPago",QSqlDatabase::database("empresa"));
 
     ui->txtcCodigoFormaPago->setModel(qmFormaPago);
+
+    //-------------------------
+    // CONEXIONES
+    //-------------------------
+    connect(ui->btnCerrar,SIGNAL(clicked()),this,SLOT(close()));
+
 }
 
 frmProveedores::~frmProveedores()
@@ -315,7 +321,7 @@ void frmProveedores::on_btnAnadir_clicked()
 }
 
 
-void frmProveedores::on_txtcPoblacion_lostFocus()
+void frmProveedores::on_txtcPoblacion_editingFinished()
 {
     ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
     if (ui->txtcCP->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty() and !ui->txtcCP->isReadOnly()) {
@@ -351,7 +357,7 @@ void frmProveedores::on_txtcPoblacion_lostFocus()
 
 }
 
-void frmProveedores::on_txtcCP_lostFocus()
+void frmProveedores::on_txtcCP_editingFinished()
 {
     if (!ui->txtcCP->text().isEmpty() and ui->txtcPoblacion->text().isEmpty() and !ui->txtcCP->isReadOnly()){
         FrmBuscarPoblacion BuscarPoblacion;
@@ -414,7 +420,7 @@ void frmProveedores::on_btnDeshacer_clicked()
     }
 }
 
-void frmProveedores::on_txtcEntidadBancariaProveedor_lostFocus()
+void frmProveedores::on_txtcEntidadBancariaProveedor_editingFinished()
 {
     Configuracion *oConfig = new Configuracion();
     QString cOk;
@@ -429,7 +435,7 @@ void frmProveedores::on_txtcEntidadBancariaProveedor_lostFocus()
     delete oConfig;
 }
 
-void frmProveedores::on_txtcOficinaBancariaProveedor_lostFocus()
+void frmProveedores::on_txtcOficinaBancariaProveedor_editingFinished()
 {
     Configuracion *oConfig = new Configuracion();
     QString cOk;
@@ -444,7 +450,7 @@ void frmProveedores::on_txtcOficinaBancariaProveedor_lostFocus()
     delete oConfig;
 }
 
-void frmProveedores::on_txtcDCProveedor_lostFocus()
+void frmProveedores::on_txtcDCProveedor_editingFinished()
 {
     Configuracion *oConfig = new  Configuracion();
     QString cOk;
@@ -461,7 +467,7 @@ void frmProveedores::on_txtcDCProveedor_lostFocus()
 
 
 
-void frmProveedores::on_txtcCCProveedor_lostFocus()
+void frmProveedores::on_txtcCCProveedor_editingFinished()
 {
     Configuracion *oConfig = new Configuracion();
     QString cOk;
@@ -476,7 +482,7 @@ void frmProveedores::on_txtcCCProveedor_lostFocus()
     delete oConfig;
 }
 
-void frmProveedores::on_txtcEntidadPagoProveedor_lostFocus()
+void frmProveedores::on_txtcEntidadPagoProveedor_editingFinished()
 {
     Configuracion *oConfig = new Configuracion();
     QString cOk;
@@ -491,7 +497,7 @@ void frmProveedores::on_txtcEntidadPagoProveedor_lostFocus()
     delete oConfig;
 }
 
-void frmProveedores::on_txtcOficinaPagoProveedor_lostFocus()
+void frmProveedores::on_txtcOficinaPagoProveedor_editingFinished()
 {
     Configuracion *oConfig = new Configuracion();
     QString cOk;
@@ -506,7 +512,7 @@ void frmProveedores::on_txtcOficinaPagoProveedor_lostFocus()
     delete oConfig;
 }
 
-void frmProveedores::on_txtcDCPagoProveedor_lostFocus()
+void frmProveedores::on_txtcDCPagoProveedor_editingFinished()
 {
     Configuracion *oConfig = new Configuracion();
     QString cOk;
@@ -521,7 +527,7 @@ void frmProveedores::on_txtcDCPagoProveedor_lostFocus()
     delete oConfig;
 }
 
-void frmProveedores::on_txtcCuentaPagoProveedor_lostFocus()
+void frmProveedores::on_txtcCuentaPagoProveedor_editingFinished()
 {
     Configuracion *oConfig = new Configuracion();
     QString cOk;

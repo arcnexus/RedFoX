@@ -35,6 +35,9 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(220, 220, 220);</string>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
@@ -321,9 +324,9 @@
         <colorrole role="Button">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>223</red>
-           <green>186</green>
-           <blue>90</blue>
+           <red>220</red>
+           <green>220</green>
+           <blue>220</blue>
           </color>
          </brush>
         </colorrole>
@@ -393,18 +396,18 @@
         <colorrole role="Base">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>255</red>
-           <green>255</green>
-           <blue>255</blue>
+           <red>220</red>
+           <green>220</green>
+           <blue>220</blue>
           </color>
          </brush>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>223</red>
-           <green>186</green>
-           <blue>90</blue>
+           <red>220</red>
+           <green>220</green>
+           <blue>220</blue>
           </color>
          </brush>
         </colorrole>
@@ -458,9 +461,9 @@
         <colorrole role="Button">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>223</red>
-           <green>186</green>
-           <blue>90</blue>
+           <red>220</red>
+           <green>220</green>
+           <blue>220</blue>
           </color>
          </brush>
         </colorrole>
@@ -530,18 +533,18 @@
         <colorrole role="Base">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>255</red>
-           <green>255</green>
-           <blue>255</blue>
+           <red>220</red>
+           <green>220</green>
+           <blue>220</blue>
           </color>
          </brush>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>223</red>
-           <green>186</green>
-           <blue>90</blue>
+           <red>220</red>
+           <green>220</green>
+           <blue>220</blue>
           </color>
          </brush>
         </colorrole>
@@ -595,9 +598,9 @@
         <colorrole role="Button">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>223</red>
-           <green>186</green>
-           <blue>90</blue>
+           <red>220</red>
+           <green>220</green>
+           <blue>220</blue>
           </color>
          </brush>
         </colorrole>
@@ -667,18 +670,18 @@
         <colorrole role="Base">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>223</red>
-           <green>186</green>
-           <blue>90</blue>
+           <red>220</red>
+           <green>220</green>
+           <blue>220</blue>
           </color>
          </brush>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>223</red>
-           <green>186</green>
-           <blue>90</blue>
+           <red>220</red>
+           <green>220</green>
+           <blue>220</blue>
           </color>
          </brush>
         </colorrole>
@@ -722,7 +725,7 @@
       </palette>
      </property>
      <property name="autoFillBackground">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -1186,7 +1189,7 @@ border-width: 1px</string>
        <string notr="true">background-color: rgb(220, 220, 220);</string>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -1290,6 +1293,9 @@ border-width: 1px</string>
             </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="locale">
+             <locale language="Catalan" country="Spain"/>
             </property>
            </widget>
           </item>
@@ -1667,7 +1673,7 @@ border-width: 1px</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>45</height>
+              <height>29</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -1682,8 +1688,8 @@ border-width: 1px</string>
             </property>
             <property name="iconSize">
              <size>
-              <width>32</width>
-              <height>32</height>
+              <width>21</width>
+              <height>21</height>
              </size>
             </property>
            </widget>
@@ -3438,8 +3444,8 @@ color: rgb(0, 0, 0);</string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>360</y>
+     <x>66</x>
+     <y>482</y>
     </hint>
     <hint type="destinationlabel">
      <x>766</x>
@@ -3454,12 +3460,12 @@ color: rgb(0, 0, 0);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>170</x>
-     <y>44</y>
+     <x>175</x>
+     <y>103</y>
     </hint>
     <hint type="destinationlabel">
-     <x>204</x>
-     <y>109</y>
+     <x>175</x>
+     <y>128</y>
     </hint>
    </hints>
   </connection>

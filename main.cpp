@@ -38,10 +38,12 @@ int main(int argc, char *argv[])
         QTextCodec::setCodecForTr(linuxCodec);
         QTextCodec::setCodecForCStrings(linuxCodec);
    #endif
-        QTextCodec::setCodecForLocale(linuxCodec);
-     //QStyle *style = QStyleFactory::create("oxygen");
-    QStyle *style = QStyleFactory::create("fusion");
-    QApplication::setStyle(style);
+        QTextCodec::setCodecForLocale(linuxCodec);;
+//  QStyle *style = QStyleFactory::create("fusion");
+//   QApplication::setStyle(style);
+   a.setStyle("fusion");
+
+
     MainWindow w;
     w.setVisible(true);
     w.setWindowState(Qt::WindowMaximized );

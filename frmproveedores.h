@@ -31,29 +31,29 @@ private slots:
 
     void on_btnAnterior_clicked();
 
-    void on_txtcPoblacion_lostFocus();
+    void on_txtcPoblacion_editingFinished();
 
-    void on_txtcCP_lostFocus();
+    void on_txtcCP_editingFinished();
 
     void on_btnBorrar_clicked();
 
     void on_btnDeshacer_clicked();
 
-    void on_txtcEntidadBancariaProveedor_lostFocus();
+    void on_txtcEntidadBancariaProveedor_editingFinished();
 
-    void on_txtcOficinaBancariaProveedor_lostFocus();
+    void on_txtcOficinaBancariaProveedor_editingFinished();
 
-    void on_txtcDCProveedor_lostFocus();
+    void on_txtcDCProveedor_editingFinished();
 
-    void on_txtcCCProveedor_lostFocus();
+    void on_txtcCCProveedor_editingFinished();
 
-    void on_txtcEntidadPagoProveedor_lostFocus();
+    void on_txtcEntidadPagoProveedor_editingFinished();
 
-    void on_txtcOficinaPagoProveedor_lostFocus();
+    void on_txtcOficinaPagoProveedor_editingFinished();
 
-    void on_txtcDCPagoProveedor_lostFocus();
+    void on_txtcDCPagoProveedor_editingFinished();
 
-    void on_txtcCuentaPagoProveedor_lostFocus();
+    void on_txtcCuentaPagoProveedor_editingFinished();
 
     void on_txtcCPAlmacen_editingFinished();
 
