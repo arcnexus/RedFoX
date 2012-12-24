@@ -39,15 +39,15 @@ private slots:
 
     void on_botDeshacer_clicked();
 
-    void on_txtrTarifa1_lostFocus();
+    void on_txtrTarifa1_editingFinished();
 
-    void on_txtrCoste_lostFocus();
+    void on_txtrCoste_editingFinished();
 
-    void on_txtrTarifa1_2_lostFocus();
+    void on_txtrTarifa1_2_editingFinished();
 
-    void on_txtrTarifa2_lostFocus();
+    void on_txtrTarifa2_editingFinished();
 
-    void on_txtrTarifa3_lostFocus();
+    void on_txtrTarifa3_editingFinished();
 
     void on_botBuscarArtRapido_clicked();
 

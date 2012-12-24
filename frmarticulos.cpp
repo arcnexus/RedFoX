@@ -32,6 +32,15 @@ FrmArticulos::FrmArticulos(Configuracion *o_config, QWidget *parent) :
     ui->botRotarImagen90->setVisible(false);
 
     bloquearCampos();
+    //-----------------------------------------
+    // CONEXIONES
+    //-----------------------------------------
+    connect(ui->txtrTarifa1,SIGNAL(editingFinished()),this,SLOT(on_txtrTarifa1_editingFinished()));
+    connect(ui->txtrCoste,SIGNAL(editingFinished()),this,SLOT(on_txtrCoste_editingFinished()));
+    connect(ui->txtrTarifa1_2,SIGNAL(editingFinished()),this,SLOT(on_txtrTarifa1_2_editingFinished()));
+    connect(ui->txtrTarifa2,SIGNAL(editingFinished()),this,SLOT(on_txtrTarifa2_editingFinished()));
+    connect(ui->txtrTarifa3,SIGNAL(editingFinished()),this,SLOT(on_txtrTarifa3_editingFinished()));
+
 }
 
 FrmArticulos::~FrmArticulos()
@@ -504,7 +513,7 @@ void FrmArticulos::on_botDeshacer_clicked()
     bloquearCampos();
 }
 
-void FrmArticulos::on_txtrTarifa1_lostFocus()
+void FrmArticulos::on_txtrTarifa1_editingFinished()
 {
     Configuracion *oConf = new Configuracion();
     ui->txtrTarifa1->setText( oConf->FormatoNumerico(ui->txtrTarifa1->text()));
@@ -512,14 +521,14 @@ void FrmArticulos::on_txtrTarifa1_lostFocus()
     delete oConf;
 }
 
-void FrmArticulos::on_txtrCoste_lostFocus()
+void FrmArticulos::on_txtrCoste_editingFinished()
 {
     Configuracion *oConf = new Configuracion();
     ui->txtrCoste->setText( oConf->FormatoNumerico(ui->txtrCoste->text()));
     delete oConf;
 }
 
-void FrmArticulos::on_txtrTarifa1_2_lostFocus()
+void FrmArticulos::on_txtrTarifa1_2_editingFinished()
 {
     Configuracion *oConf = new Configuracion();
     ui->txtrTarifa1_2->setText( oConf->FormatoNumerico(ui->txtrTarifa1_2->text()));
@@ -527,14 +536,14 @@ void FrmArticulos::on_txtrTarifa1_2_lostFocus()
     delete oConf;
 }
 
-void FrmArticulos::on_txtrTarifa2_lostFocus()
+void FrmArticulos::on_txtrTarifa2_editingFinished()
 {
     Configuracion *oConf = new Configuracion();
     ui->txtrTarifa2->setText( oConf->FormatoNumerico(ui->txtrTarifa2->text()));
     delete oConf;
 }
 
-void FrmArticulos::on_txtrTarifa3_lostFocus()
+void FrmArticulos::on_txtrTarifa3_editingFinished()
 {
     Configuracion *oConf = new Configuracion();
     ui->txtrTarifa3->setText( oConf->FormatoNumerico(ui->txtrTarifa3->text()));

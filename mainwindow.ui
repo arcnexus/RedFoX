@@ -1171,8 +1171,8 @@ border-color: rgba(0, 0, 0, 0);</string>
               <string>Facturas</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>:/Icons/PNG/factura.png</normaloff>:/Icons/PNG/factura.png</iconset>
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1359,6 +1359,9 @@ border-color: rgba(0, 0, 0, 0);</string>
         <width>1014</width>
         <height>0</height>
        </size>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(219, 228, 255);</string>

@@ -74,11 +74,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
         }
 
-
     ui->barraHerramientas->setCurrentIndex(3);
     // Preparo espacio de trabajo para poder acojer ventanas dentro de él
     workspace = new QMdiArea(ui->widget);
-    workspace->b
     //workspace->setStyleSheet("background-color: rgb(255, 227, 171)");
     QGridLayout *gridLayout = new QGridLayout;
      gridLayout->addWidget(workspace, 0, 0);
@@ -198,7 +196,7 @@ void MainWindow::on_btnClientes_clicked()
     ui->btnClientes->setEnabled(false);
     frmClientes *frmClientes1 = new frmClientes(m_config);
     workspace->addSubWindow(frmClientes1);
-    //frmClientes1->setWindowState(Qt::WindowMaximized);
+    frmClientes1->setWindowState(Qt::WindowMaximized);
     frmClientes1->exec();
     cerrarSubWindows();
     ui->btnClientes->setEnabled(true);
@@ -315,13 +313,14 @@ void MainWindow::on_btnAgenda_clicked()
 
 void MainWindow::cambiarEstilo(int estado)
 {
-    QStyle *style;
-    if (estado ==2)
-        style = QStyleFactory::create("oxygen");
-    else
-        style = QStyleFactory::create("fusion");
+//    QString style;
 
-    QApplication::setStyle(style);
+//    if (estado ==2)
+//        style = "GTK+";
+//    else
+//        style = "fusion";
+
+//    QApplication::setStyle(style);
 }
 
 void MainWindow::cerrarSubWindows()
@@ -334,3 +333,4 @@ void MainWindow::cerrarSubWindows()
         (*i)->hide();
     }
 }
+

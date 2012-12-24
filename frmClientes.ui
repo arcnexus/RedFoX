@@ -250,8 +250,8 @@
            <string>B&amp;orrar</string>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+           <iconset resource="terra.qrc">
+            <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
           </property>
           <property name="iconSize">
            <size>

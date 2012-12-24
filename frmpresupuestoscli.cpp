@@ -23,7 +23,9 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     model->setQuery("Select cFormapago from FormPago",QSqlDatabase::database("empresa"));
     ui->cboFormaPago->setModel(model);
     BloquearCampos();
-
+    //-----------------------
+    // Conexiones
+    //-----------------------
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
@@ -319,11 +321,7 @@ void FrmPresupuestosCli::BloquearCampos()
     ui->botBorrarLinea->setEnabled(false);
     ui->botEditarLinea->setEnabled(false);
     ui->botBuscarCliente->setEnabled(false);
-    ui->btnFacturar->setEnabled(false);
-    ui->btnAlbaran->setEnabled(false);
-    ui->btnPedido->setEnabled(false);
 }
-
 void FrmPresupuestosCli::DesbloquearCampos()
 {
     // LineEdit
@@ -387,9 +385,7 @@ void FrmPresupuestosCli::DesbloquearCampos()
     ui->botBorrarLinea->setEnabled(true);
     ui->botEditarLinea->setEnabled(true);
     ui->botBuscarCliente->setEnabled(true);
-    ui->btnFacturar->setEnabled(true);
-    ui->btnAlbaran->setEnabled(true);
-    ui->btnPedido->setEnabled(true);
+
 }
 
 void FrmPresupuestosCli::CalcularTotalLinea()

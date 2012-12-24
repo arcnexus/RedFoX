@@ -39,9 +39,14 @@ int main(int argc, char *argv[])
         QTextCodec::setCodecForCStrings(linuxCodec);
    #endif
         QTextCodec::setCodecForLocale(linuxCodec);;
-//  QStyle *style = QStyleFactory::create("fusion");
-//   QApplication::setStyle(style);
    a.setStyle("fusion");
+   QFile file("Coffee.qss");
+   if(file.open(QFile::ReadOnly)) {
+        QString styleSheet = QString::fromLatin1(file.readAll());
+        a.setStyleSheet(styleSheet);
+   } else
+       QMessageBox::warning(NULL,QObject::tr("Terra"),QObject::tr("No se puede cargar el archivo de tema"),
+                            QObject::tr("Aceptar"));
 
 
     MainWindow w;
@@ -51,3 +56,4 @@ int main(int argc, char *argv[])
     
     return a.exec();
 }
+

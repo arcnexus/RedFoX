@@ -29,6 +29,7 @@ public:
     Configuracion *m_config;
 
     
+
 private slots:
 
     void on_btnCerrarSesion_clicked();

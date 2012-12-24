@@ -6,118 +6,31 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1179</width>
-    <height>655</height>
+    <width>1020</width>
+    <height>489</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>490</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Gestión de Artículos</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(220, 220, 220);</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout_15">
-   <item row="1" column="0">
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="minimumSize">
-      <size>
-       <width>270</width>
-       <height>0</height>
-      </size>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ARTÍCULOS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>270</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="tabPosition">
-      <enum>QTabWidget::South</enum>
-     </property>
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <widget class="QWidget" name="tab">
-      <attribute name="icon">
-       <iconset resource="terra.qrc">
-        <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-      </attribute>
-      <attribute name="title">
-       <string>Búsqueda Rápida</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_19">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Buscar:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="3">
-        <widget class="QTableView" name="TablaBuscarArt"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QRadioButton" name="radPrecio">
-         <property name="minimumSize">
-          <size>
-           <width>72</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Precio</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="botBuscarArtRapido">
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="txtBuscarArticulo"/>
-       </item>
-       <item row="1" column="1">
-        <widget class="QRadioButton" name="radDescripcion">
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Descripción</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QLabel" name="lblMensajeRecuperar">
-         <property name="minimumSize">
-          <size>
-           <width>250</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realice&lt;span style=&quot; font-weight:600; color:#0000c0;&quot;&gt; dobleclick&lt;/span&gt; sobre el artículo&lt;/p&gt;&lt;p&gt;a recuperar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_2">
-      <attribute name="title">
-       <string>Historial</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QTableView" name="tableView"/>
-       </item>
-      </layout>
-     </widget>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="1" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="botAnadir">
@@ -364,7 +277,7 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="2">
+   <item row="1" column="1">
     <widget class="QTabWidget" name="tabWidget_2">
      <property name="currentIndex">
       <number>0</number>
@@ -375,7 +288,11 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_6">
        <item row="5" column="4">
-        <widget class="QLineEdit" name="txtcLocalizacion"/>
+        <widget class="QLineEdit" name="txtcLocalizacion">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
        </item>
        <item row="0" column="0" colspan="5">
         <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -402,6 +319,9 @@
                 <width>120</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
              </widget>
             </item>
@@ -431,6 +351,9 @@
                 <width>120</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
              </widget>
             </item>
@@ -463,6 +386,9 @@
                 <height>16777215</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -486,7 +412,11 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="txtcDescripcion"/>
+          <widget class="QLineEdit" name="txtcDescripcion">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_7">
@@ -503,7 +433,11 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="txtcProveedor"/>
+          <widget class="QLineEdit" name="txtcProveedor">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
          </item>
          <item row="3" column="0">
           <spacer name="verticalSpacer_4">
@@ -624,119 +558,69 @@ background-color: rgb(254, 255, 205);</string>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="txtcDescripcionResumida"/>
+          <widget class="QLineEdit" name="txtcDescripcionResumida">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
        <item row="2" column="0" colspan="5">
         <layout class="QGridLayout" name="gridLayout_14">
-         <item row="0" column="1">
-          <widget class="QFrame" name="frame_14">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="botCambiarImagen">
+           <property name="enabled">
+            <bool>false</bool>
            </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
+           <property name="text">
+            <string>Cambiar
+Imagen.</string>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_11">
-            <item>
-             <layout class="QGridLayout" name="gridLayout_8">
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_41">
-                <property name="minimumSize">
-                 <size>
-                  <width>101</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Precio Med. T3:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_39">
-                <property name="minimumSize">
-                 <size>
-                  <width>101</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Precio Med. T1:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLineEdit" name="txtrPrecioMedio1">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(254, 255, 205);
-color: rgb(0, 0, 0);</string>
-                </property>
-                <property name="text">
-                 <string>0,00</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_40">
-                <property name="minimumSize">
-                 <size>
-                  <width>101</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Precio Med. T2:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="QLineEdit" name="txtrPrecioMedio2">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(254, 255, 205);
-color: rgb(0, 0, 0);</string>
-                </property>
-                <property name="text">
-                 <string>0,00</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QLineEdit" name="txtrPrecioMedio3">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(254, 255, 205);
-color: rgb(0, 0, 0);</string>
-                </property>
-                <property name="text">
-                 <string>0,00</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
           </widget>
          </item>
-         <item row="0" column="0">
+         <item row="0" column="3" rowspan="4">
+          <widget class="QLabel" name="lblImagenArticulo">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>255</horstretch>
+             <verstretch>255</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>120</width>
+             <height>120</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>256</width>
+             <height>256</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="terra.qrc">:/Icons/PNG/paquete.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="botRotarImagen90">
+           <property name="text">
+            <string>Rotar Img 90º</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" rowspan="4">
           <widget class="QFrame" name="frame">
            <property name="minimumSize">
             <size>
@@ -932,56 +816,110 @@ color: rgb(0, 0, 0);</string>
            </layout>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="botCambiarImagen">
-           <property name="enabled">
-            <bool>false</bool>
+         <item row="0" column="1" rowspan="4">
+          <widget class="QFrame" name="frame_14">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
            </property>
-           <property name="text">
-            <string>Cambiar
-Imagen.</string>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
            </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="botRotarImagen90">
-           <property name="text">
-            <string>Rotar Img 90º</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3" rowspan="2">
-          <widget class="QLabel" name="lblImagenArticulo">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>255</horstretch>
-             <verstretch>255</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>150</width>
-             <height>150</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>256</width>
-             <height>256</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/PNG/paquete.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <item>
+             <layout class="QGridLayout" name="gridLayout_8">
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_41">
+                <property name="minimumSize">
+                 <size>
+                  <width>101</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Precio Med. T3:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_39">
+                <property name="minimumSize">
+                 <size>
+                  <width>101</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Precio Med. T1:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="txtrPrecioMedio1">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>0,00</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_40">
+                <property name="minimumSize">
+                 <size>
+                  <width>101</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Precio Med. T2:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QLineEdit" name="txtrPrecioMedio2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>0,00</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QLineEdit" name="txtrPrecioMedio3">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>0,00</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
@@ -1185,6 +1123,9 @@ color: rgb(0, 0, 0);</string>
            <height>16777215</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
          <property name="text">
           <string>0</string>
          </property>
@@ -1216,7 +1157,11 @@ color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QTextEdit" name="txttComentario"/>
+           <widget class="QTextEdit" name="txttComentario">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -1789,18 +1734,18 @@ color: rbg(0,0,0);</string>
                <string notr="true">background-color: rgb(254, 255, 205);
 color: rbg(0,0,0);</string>
               </property>
-              <property name="displayFormat">
-               <string>dd/MM/yyyy</string>
-              </property>
-              <property name="calendarPopup">
-               <bool>true</bool>
-              </property>
               <property name="date">
                <date>
                 <year>1752</year>
                 <month>9</month>
                 <day>14</day>
                </date>
+              </property>
+              <property name="displayFormat">
+               <string>dd/MM/yyyy</string>
+              </property>
+              <property name="calendarPopup">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -1987,13 +1932,124 @@ color: rbg(0,0,0);</string>
        <string>Multialmacén</string>
       </attribute>
      </widget>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ARTÍCULOS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Búsqueda</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_21">
+       <item row="0" column="0">
+        <widget class="QTabWidget" name="tabWidget">
+         <property name="minimumSize">
+          <size>
+           <width>270</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="tabPosition">
+          <enum>QTabWidget::South</enum>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="tab_2">
+          <attribute name="icon">
+           <iconset resource="terra.qrc">
+            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+          </attribute>
+          <attribute name="title">
+           <string>Búsqueda Rápida</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_19">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Buscar:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="3">
+            <widget class="QTableView" name="TablaBuscarArt">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QRadioButton" name="radPrecio">
+             <property name="minimumSize">
+              <size>
+               <width>72</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Precio</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QPushButton" name="botBuscarArtRapido">
+             <property name="icon">
+              <iconset resource="terra.qrc">
+               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="txtBuscarArticulo">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QRadioButton" name="radDescripcion">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Descripción</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0" colspan="2">
+            <widget class="QLabel" name="lblMensajeRecuperar">
+             <property name="minimumSize">
+              <size>
+               <width>250</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realice&lt;span style=&quot; font-weight:600; color:#0000c0;&quot;&gt; dobleclick&lt;/span&gt; sobre el artículo&lt;/p&gt;&lt;p&gt;a recuperar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_6">
+          <attribute name="title">
+           <string>Historial</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QTableView" name="tableView"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
@@ -2049,14 +2105,9 @@ color: rbg(0,0,0);</string>
   <tabstop>botBorrar</tabstop>
   <tabstop>botListados</tabstop>
   <tabstop>botCerrar</tabstop>
-  <tabstop>txtBuscarArticulo</tabstop>
-  <tabstop>botBuscarArtRapido</tabstop>
-  <tabstop>TablaBuscarArt</tabstop>
   <tabstop>lineEdit_16</tabstop>
-  <tabstop>tableView</tabstop>
   <tabstop>chklPvpIncluyeIva</tabstop>
   <tabstop>chklControlarStock</tabstop>
-  <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources>
   <include location="terra.qrc"/>
