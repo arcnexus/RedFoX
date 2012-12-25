@@ -9,6 +9,7 @@
 #include <QtSql>
 #include <QMdiArea>
 #include "configuracion.h"
+#include <QToolButton>
 
 
 namespace Ui {
@@ -31,31 +32,28 @@ public:
     
 
 private slots:
+    void btnMantenimientos_clicked();
+    void btnVentas_clicked();
 
-    void on_btnCerrarSesion_clicked();
+    void btnClientes_clicked();
 
-    void on_btnClientes_clicked();
+    void btnFacturaCliente_clicked();
 
-    void on_btnFacturaCliente_clicked();
-
-
-
-
-    void on_btnArticulos_clicked();
+    void btnArticulos_clicked();
 
     void on_botEmpresas_clicked();
 
-    void on_btnProveedores_clicked();
+    void btnProveedores_clicked();
 
     void on_botConfiguracion_clicked();
 
-    void on_btnAlbaran_clientes_clicked();
+    void btnAlbaran_clientes_clicked();
 
-    void on_btn_Pedido_cliente_clicked();
+    void btn_Pedido_cliente_clicked();
 
-    void on_btnPresup_clientes_clicked();
+    void btnPresup_clientes_clicked();
 
-    void on_btnCajaMinuta_clicked();
+    void btnCajaMinuta_clicked();
 
     void on_btnAgenda_clicked();
 
@@ -65,6 +63,15 @@ private:
     Ui::MainWindow *ui;
     QMdiArea *workspace;
     void cerrarSubWindows();
+    void Mantenimientos();
+    void Ventas();
+    QToolBar *m_modulesBar;
+    QToolBar *m_MantenimientosBar;
+    QToolBar *m_VentasBar;
+    QToolBar *m_ComprasBar;
+    QToolBar *m_AdminBar;
+
+    //QSignalMapper *m_modulesBarMapper;
 };
 
 #endif // MAINWINDOW_H

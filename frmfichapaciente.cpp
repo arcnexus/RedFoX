@@ -73,9 +73,6 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
 
     // Ocultar Iconos imagenes
     ui->itemFarma->setVisible(false);
-
-
-
 }
 
 FrmFichaPaciente::~FrmFichaPaciente()

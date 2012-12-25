@@ -26,6 +26,9 @@
    <iconset resource="terra.qrc">
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(219, 228, 255);</string>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
@@ -55,7 +58,8 @@
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);</string>
+        <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
        </property>
       </widget>
      </item>
@@ -263,8 +267,8 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>224</width>
-        <height>401</height>
+        <width>217</width>
+        <height>406</height>
        </rect>
       </property>
       <attribute name="label">
@@ -343,7 +347,7 @@ color: rgb(0, 0, 0);</string>
         <x>0</x>
         <y>0</y>
         <width>204</width>
-        <height>418</height>
+        <height>423</height>
        </rect>
       </property>
       <attribute name="label">
@@ -466,7 +470,7 @@ color: rgb(0, 0, 0);</string>
         <x>0</x>
         <y>0</y>
         <width>204</width>
-        <height>207</height>
+        <height>209</height>
        </rect>
       </property>
       <attribute name="label">
@@ -583,7 +587,7 @@ color: rgb(0, 0, 0);</string>
         <x>0</x>
         <y>0</y>
         <width>204</width>
-        <height>418</height>
+        <height>423</height>
        </rect>
       </property>
       <attribute name="label">
@@ -793,7 +797,7 @@ color: rgb(0, 0, 0);</string>
         <x>0</x>
         <y>0</y>
         <width>204</width>
-        <height>418</height>
+        <height>423</height>
        </rect>
       </property>
       <attribute name="label">
@@ -914,7 +918,8 @@ color: rgb(0, 0, 0);</string>
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);</string>
+        <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>999999</string>
@@ -1001,7 +1006,8 @@ color: rgb(0, 0, 0);</string>
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);</string>
+        <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
        </property>
        <property name="displayFormat">
         <string>dd/MM/yyyy HH:mm</string>
@@ -1030,7 +1036,8 @@ color: rgb(0, 0, 0);</string>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);</string>
+        <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
        </property>
       </widget>
      </item>
@@ -1145,7 +1152,8 @@ color: rgb(0, 0, 0);</string>
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 0);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
@@ -1178,7 +1186,8 @@ color: rgb(0, 0, 0);</string>
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 0);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
@@ -1194,7 +1203,8 @@ color: rgb(0, 0, 0);</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 0);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
@@ -1301,7 +1311,8 @@ color: rgb(0, 0, 0);</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 0);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="displayFormat">
              <string>dd/MM/yyyy</string>
@@ -1355,7 +1366,8 @@ color: rgb(0, 0, 0);</string>
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 0);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
@@ -1565,8 +1577,8 @@ color: rgb(0, 0, 0);</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">
-color: rgb(0, 0, 0);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
@@ -1582,8 +1594,8 @@ color: rgb(0, 0, 0);</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">
-color: rgb(0, 0, 0);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
@@ -1673,7 +1685,11 @@ color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item row="3" column="1" colspan="3">
-           <widget class="QListView" name="listaEpisodios"/>
+           <widget class="QListView" name="listaEpisodios">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -1691,6 +1707,9 @@ color: rgb(0, 0, 0);</string>
            <width>600</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(220, 220, 220);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -1713,15 +1732,15 @@ color: rgb(255, 0, 0);</string>
              <bool>true</bool>
             </property>
             <property name="currentIndex">
-             <number>4</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="page_3">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>550</width>
-               <height>248</height>
+               <width>576</width>
+               <height>341</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2033,8 +2052,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>541</width>
-               <height>253</height>
+               <width>576</width>
+               <height>341</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2110,6 +2129,9 @@ color: rgb(0, 0, 0);</string>
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
                   <property name="displayFormat">
                    <string>dd/MM/yyyy</string>
                   </property>
@@ -2129,6 +2151,9 @@ color: rgb(0, 0, 0);</string>
                  <widget class="QTextEdit" name="txtComentariosFarma">
                   <property name="enabled">
                    <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
                  </widget>
                 </item>
@@ -2152,6 +2177,9 @@ color: rgb(0, 0, 0);</string>
                     <width>16777215</width>
                     <height>63</height>
                    </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
                  </widget>
                 </item>
@@ -2214,7 +2242,11 @@ color: rgb(0, 0, 0);</string>
                  </widget>
                 </item>
                 <item row="1" column="0" colspan="8">
-                 <widget class="QTableWidget" name="listaTratamientosFarma"/>
+                 <widget class="QTableWidget" name="listaTratamientosFarma">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
                 </item>
                 <item row="2" column="5">
                  <widget class="QLabel" name="label_6">
@@ -2307,8 +2339,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>415</width>
-               <height>171</height>
+               <width>576</width>
+               <height>341</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2392,6 +2424,9 @@ color: rgb(0, 0, 0);</string>
                   <height>0</height>
                  </size>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
                </widget>
               </item>
               <item row="1" column="0" colspan="5">
@@ -2447,7 +2482,7 @@ color: rgb(0, 0, 0);</string>
                <x>0</x>
                <y>0</y>
                <width>576</width>
-               <height>334</height>
+               <height>341</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2542,7 +2577,8 @@ color: rgb(0, 0, 0);</string>
                  <bool>false</bool>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0, 128);</string>
+                 <string notr="true">color: rgb(0, 0, 128);
+background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
@@ -2635,7 +2671,8 @@ background-color: rgb(219, 255, 208);</string>
                  <bool>false</bool>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0, 128);</string>
+                 <string notr="true">color: rgb(0, 0, 128);
+background-color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="displayFormat">
                  <string>dd/MM/yyyy HH:mm</string>
@@ -2716,7 +2753,8 @@ background-color: rgb(219, 255, 208);</string>
                  <bool>false</bool>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0, 128);</string>
+                 <string notr="true">color: rgb(0, 0, 128);
+background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
@@ -2726,9 +2764,9 @@ background-color: rgb(219, 255, 208);</string>
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>-11</y>
+               <y>0</y>
                <width>559</width>
-               <height>345</height>
+               <height>342</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2852,7 +2890,11 @@ background-color: rgb(219, 255, 208);</string>
                  </widget>
                 </item>
                 <item row="2" column="0" colspan="5">
-                 <widget class="QTableWidget" name="tableWidget"/>
+                 <widget class="QTableWidget" name="tableWidget">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -2904,7 +2946,11 @@ background-color: rgb(219, 255, 208);</string>
                   </widget>
                  </item>
                  <item row="1" column="1" colspan="4">
-                  <widget class="QLineEdit" name="txtDerivaraInterconsulta"/>
+                  <widget class="QLineEdit" name="txtDerivaraInterconsulta">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </widget>
@@ -2919,7 +2965,11 @@ background-color: rgb(219, 255, 208);</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextEdit" name="txtPeticionInterconsulta"/>
+                 <widget class="QTextEdit" name="txtPeticionInterconsulta">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
                  <widget class="QLabel" name="label_21">
@@ -2929,7 +2979,11 @@ background-color: rgb(219, 255, 208);</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextEdit" name="txtRespuestaInterconsulta"/>
+                 <widget class="QTextEdit" name="txtRespuestaInterconsulta">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -2977,7 +3031,11 @@ background-color: rgb(219, 255, 208);</string>
                   </widget>
                  </item>
                  <item row="0" column="1" colspan="4">
-                  <widget class="QLineEdit" name="btnReferidodeInterconsultas"/>
+                  <widget class="QLineEdit" name="btnReferidodeInterconsultas">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
                  </item>
                  <item row="1" column="0">
                   <widget class="QLabel" name="label_84">
@@ -3000,7 +3058,7 @@ background-color: rgb(219, 255, 208);</string>
                <x>0</x>
                <y>0</y>
                <width>576</width>
-               <height>334</height>
+               <height>341</height>
               </rect>
              </property>
              <attribute name="label">
@@ -3010,7 +3068,11 @@ background-color: rgb(219, 255, 208);</string>
               <item row="0" column="0">
                <layout class="QGridLayout" name="gridLayout_16">
                 <item row="1" column="0" colspan="3">
-                 <widget class="QColumnView" name="columnView_4"/>
+                 <widget class="QColumnView" name="columnView_4">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
                 </item>
                 <item row="2" column="1">
                  <widget class="QToolButton" name="toolButton_20">
@@ -3021,8 +3083,8 @@ background-color: rgb(219, 255, 208);</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset>
-                    <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -3058,7 +3120,11 @@ background-color: rgb(219, 255, 208);</string>
               <item row="0" column="1">
                <layout class="QGridLayout" name="gridLayout_17">
                 <item row="0" column="1">
-                 <widget class="QLineEdit" name="lineEdit_9"/>
+                 <widget class="QLineEdit" name="lineEdit_9">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
                 </item>
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_25">
@@ -3089,12 +3155,26 @@ background-color: rgb(219, 255, 208);</string>
                  </widget>
                 </item>
                 <item row="5" column="0" colspan="2">
-                 <widget class="QTextEdit" name="textEdit_4"/>
+                 <widget class="QTextEdit" name="textEdit_4">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
                 </item>
                 <item row="7" column="0" rowspan="2">
                  <widget class="QPushButton" name="pushButton_21">
                   <property name="text">
                    <string>Editar</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="terra.qrc">
+                    <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>21</width>
+                    <height>21</height>
+                   </size>
                   </property>
                  </widget>
                 </item>
@@ -3106,10 +3186,18 @@ background-color: rgb(219, 255, 208);</string>
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QDateTimeEdit" name="dateTimeEdit_2"/>
+                 <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QDateTimeEdit" name="dateTimeEdit_3"/>
+                 <widget class="QDateTimeEdit" name="dateTimeEdit_3">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
                 </item>
                 <item row="3" column="0" colspan="2">
                  <widget class="QLabel" name="label_27">

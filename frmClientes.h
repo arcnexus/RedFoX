@@ -8,6 +8,8 @@
 #include <QtSql>
 #include "frmbuscarpoblacion.h"
 #include "configuracion.h"
+#include "frmfichapaciente.h"
+
 
 
 namespace Ui {
@@ -31,6 +33,7 @@ public slots:
 
 signals:
     void enviahistoriaynombre(int,QString);
+
 
 private slots:
     void on_btnSiguiente_clicked();
@@ -78,6 +81,7 @@ private slots:
     void on_txtrRiesgoPermitido_editingFinished();
 
     void on_btnFichaPaciente_clicked();
+
 
 private:
     Ui::frmClientes *ui;

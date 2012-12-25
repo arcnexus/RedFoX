@@ -24,6 +24,7 @@
 #include "frmcajaminuta.h"
 #include "frmagendavisitas.h"
 #include <QStyleFactory>
+#include <QToolBar>
 
 
 
@@ -32,8 +33,71 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // ----------------------------------------------------------------------------
+    // Barra de herramientas Modulos
+    // ----------------------------------------------------------------------------
+    m_modulesBar = new QToolBar(tr("Modulos"), this);
+    m_modulesBar->setAllowedAreas(Qt::LeftToolBarArea);
+    m_modulesBar->setIconSize(QSize(80, 48));
+    m_modulesBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    m_modulesBar->setMovable(false);
+    m_modulesBar->setFloatable(false);
+    m_modulesBar->setStyleSheet("background-color:rgb(219, 228, 255)");
+
+   this->addToolBar(Qt::LeftToolBarArea, m_modulesBar);
+
+    // MODULO MANTENIMIENTO.
+    QToolButton *BtnMantenimiento = new QToolButton(m_modulesBar);
+    BtnMantenimiento->setText(tr("Manten."));
+    BtnMantenimiento->setIcon(QIcon(":Icons/PNG/Maintenance.png"));
+    BtnMantenimiento->setToolTip(tr("Módulo de mantenimientos"));
+    BtnMantenimiento->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    // MODULO VENTAS/ENTRADAS.
+    QToolButton *BtnEntradas = new QToolButton(m_modulesBar);
+    BtnEntradas->setText(tr("Entradas"));
+    BtnEntradas->setIcon(QIcon(":Icons/PNG/ventas2.png"));
+    BtnEntradas->setToolTip(tr("Módulo de ventas/entradas clinica"));
+    BtnEntradas->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    // MODULO GASTOS/SALIDAS.
+    QToolButton *BtnSalidas = new QToolButton(m_modulesBar);
+    BtnSalidas->setText(tr("Salidas"));
+    BtnSalidas->setIcon(QIcon(":Icons/PNG/Gastos.png"));
+    BtnSalidas->setToolTip(tr("Módulo de Gastos/Salidas clinica"));
+    BtnSalidas->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    // INF. MEDICA.
+    QToolButton *BtnMedica = new QToolButton(m_modulesBar);
+    BtnMedica->setText(tr("Clínica"));
+    BtnMedica->setIcon(QIcon(":Icons/PNG/PatientFile2.png"));
+    BtnMedica->setToolTip(tr("Módulo de Gestión especificamente clínica"));
+    BtnMedica->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    m_modulesBar->addWidget(BtnMantenimiento);
+    m_modulesBar->addWidget(BtnEntradas);
+    m_modulesBar->addWidget(BtnSalidas);
+    m_modulesBar->addWidget(BtnMedica);
+    //-------------------------------
+    // Cargo Barras Herramientas
+    //-------------------------------
+    Mantenimientos();
+    Ventas();
+    btnMantenimientos_clicked();
+
+
+ //   m_modulesBarMapper = new QSignalMapper(this);
+ //   connect(m_modulesBarMapper, SIGNAL(mapped(QWidget*)), this->centralWidget(),
+   //         SLOT(setCurrentWidget(QWidget*)));
+
+    // ----------------------------------------------------------------------------
     // Conexiones
-    connect(ui->checkBox_kde,SIGNAL(stateChanged(int)),this, SLOT(cambiarEstilo(int)));
+    // ----------------------------------------------------------------------------
+    connect(ui->btnSalir_2,SIGNAL(clicked()),this,SLOT(close()));
+    connect(ui->btnSalir,SIGNAL(triggered()),this,SLOT(close()));
+    connect(BtnMantenimiento,SIGNAL(clicked()),this,SLOT(btnMantenimientos_clicked()));
+    connect(BtnEntradas,SIGNAL(clicked()),this,SLOT(btnVentas_clicked()));
 
     QSqlDatabase dbEmp;
     m_config = new Configuracion();
@@ -74,7 +138,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
         }
 
-    ui->barraHerramientas->setCurrentIndex(3);
     // Preparo espacio de trabajo para poder acojer ventanas dentro de él
     workspace = new QMdiArea(ui->widget);
     //workspace->setStyleSheet("background-color: rgb(255, 227, 171)");
@@ -93,12 +156,7 @@ MainWindow::MainWindow(QWidget *parent) :
          ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
          ui->txtcCategoria->setText(settings.value("cCategoria").toString());
         // Oculto controles según categoría
-
-         if(ui->txtnNivel->text()=="9")
-            ui->barraHerramientas->setTabEnabled(3,true);
-         else
-            ui->barraHerramientas->setTabEnabled(3,false);
-         ui->barraHerramientas->setCurrentIndex(0);
+        //TODO - Ocultar controles
 
         // capturo empresa
          QString Empresa = dlg->getEmpresa();
@@ -185,13 +243,163 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::on_btnCerrarSesion_clicked()
+void MainWindow::btnMantenimientos_clicked()
 {
-    ui->lineUsuarioActivo->setText("");
-    ui->lineEmpresaActiva->setVisible(false);
+    m_MantenimientosBar->show();
+    m_VentasBar->hide();
+  //  m_ComprasBar->hide();
+  //  m_AdminBar->hide();
 }
-void MainWindow::on_btnClientes_clicked()
+
+void MainWindow::btnVentas_clicked()
+{
+    m_MantenimientosBar->hide();
+    m_VentasBar->show();
+  //  m_ComprasBar->hide();
+  //  m_AdminBar->hide();
+}
+
+void MainWindow::Mantenimientos()
+{
+
+    // ----------------------------------------------------------------------------
+    // Barra de herramientas Mantenimientos
+    // ----------------------------------------------------------------------------
+    m_MantenimientosBar = new QToolBar(tr("Mantenimiento"), this);
+    m_MantenimientosBar->setAllowedAreas(Qt::TopToolBarArea);
+    m_MantenimientosBar->setIconSize(QSize(32,32));
+    m_MantenimientosBar->setStyleSheet("background-color:rgb(255, 235, 167)");
+    //m_MantenimientosBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    m_MantenimientosBar->setMovable(false);
+    m_MantenimientosBar->setFloatable(false);
+
+   this->addToolBar(Qt::TopToolBarArea, m_MantenimientosBar);
+
+    // PACIENTES
+    QToolButton *BtnClientes = new QToolButton(m_MantenimientosBar);
+    BtnClientes->setText("Pacientes");
+    BtnClientes->setIcon(QIcon(":Icons/PNG/clientes.png"));
+    BtnClientes->setToolTip("Gestión de Clientes/Pacientes");
+    BtnClientes->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    // PROVEEDORES
+    QToolButton *BtnProveedores = new QToolButton(m_MantenimientosBar);
+    BtnProveedores->setText("Proveedores");
+    BtnProveedores->setIcon(QIcon(":Icons/PNG/proveedores.png"));
+    BtnProveedores->setToolTip("Gestión de Proveedores");
+    BtnProveedores->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    // ARTICULOS
+    QToolButton *BtnArticulos = new QToolButton(m_MantenimientosBar);
+    BtnArticulos->setText("Articulos");
+    BtnArticulos->setIcon(QIcon(":Icons/PNG/articulos.png"));
+    BtnArticulos->setToolTip("Gestión de Articulos");
+    BtnArticulos->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+
+    // AGENDA
+    QToolButton *BtnAgenda = new QToolButton(m_MantenimientosBar);
+    BtnAgenda->setText("Agenda");
+    BtnAgenda->setIcon(QIcon(":Icons/PNG/Calendar2.png"));
+    BtnAgenda->setToolTip("Gestión de Agenda");
+    BtnAgenda->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    m_MantenimientosBar->addWidget(BtnClientes);
+    m_MantenimientosBar->addWidget(BtnProveedores);
+    m_MantenimientosBar->addWidget(BtnArticulos);
+    m_MantenimientosBar->addSeparator();
+    m_MantenimientosBar->addWidget(BtnAgenda);
+
+
+
+    //--------------------------
+    // Conexiones
+    //--------------------------
+    connect(BtnClientes,SIGNAL(clicked()),this,SLOT(btnClientes_clicked()));
+    connect(BtnArticulos,SIGNAL(clicked()),this,SLOT(btnArticulos_clicked()));
+    connect(BtnProveedores,SIGNAL(clicked()),this,SLOT(btnProveedores_clicked()));
+
+    connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
+    connect(ui->btnArt_culos,SIGNAL(triggered()),this,SLOT(btnArticulos_clicked()));
+    connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
+}
+
+
+void MainWindow::Ventas()
+{
+
+    // ----------------------------------------------------------------------------
+    // Barra de herramientas Ventas
+    // ----------------------------------------------------------------------------
+    m_VentasBar = new QToolBar(tr("Ventas"), this);
+    m_VentasBar->setAllowedAreas(Qt::TopToolBarArea);
+    m_VentasBar->setIconSize(QSize(32,32));
+    m_VentasBar->setStyleSheet("background-color:rgb(255, 235, 167)");
+    //m_VentasBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    m_VentasBar->setMovable(false);
+    m_VentasBar->setFloatable(false);
+
+   this->addToolBar(Qt::TopToolBarArea, m_VentasBar);
+
+    // PRESUPUESTOS
+    QToolButton *BtnPresupuestos_cli = new QToolButton(m_VentasBar);
+    BtnPresupuestos_cli->setText("Presup.");
+    BtnPresupuestos_cli->setIcon(QIcon(":Icons/PNG/presupuestos.png"));
+    BtnPresupuestos_cli->setToolTip("Gestión de Presupuestos a Clientes/Pacientes");
+    BtnPresupuestos_cli->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    // PEDIDOS
+    QToolButton *BtnPedidos_cli = new QToolButton(m_VentasBar);
+    BtnPedidos_cli->setText("Pedidos");
+    BtnPedidos_cli->setIcon(QIcon(":Icons/PNG/pedidos_cli.png"));
+    BtnPedidos_cli->setToolTip("Pedido de Paciente");
+    BtnPedidos_cli->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    // ALBARANES
+    QToolButton *BtnAlbaranes_cli = new QToolButton(m_VentasBar);
+    BtnAlbaranes_cli->setText("Albaranes");
+    BtnAlbaranes_cli->setIcon(QIcon(":Icons/PNG/albaran.png"));
+    BtnAlbaranes_cli->setToolTip("Gestión de Alabaranes a pacientes");
+    BtnAlbaranes_cli->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+   // FACTURA
+    QToolButton *BtnFactura_cli = new QToolButton(m_VentasBar);
+    BtnFactura_cli->setText("Facturas");
+    BtnFactura_cli->setIcon(QIcon(":Icons/PNG/Factura.png"));
+    BtnFactura_cli->setToolTip("Gestión de Facturas");
+    BtnFactura_cli->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    // CAJA
+     QToolButton *BtnCaja = new QToolButton(m_VentasBar);
+     BtnCaja->setText("Caja día");
+     BtnCaja->setIcon(QIcon(":Icons/PNG/tpv.png"));
+     BtnCaja->setToolTip("Gestión de Caja día");
+     BtnCaja->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    m_VentasBar->addWidget(BtnPresupuestos_cli);
+    m_VentasBar->addWidget(BtnPedidos_cli);
+    m_VentasBar->addWidget(BtnAlbaranes_cli);
+    m_VentasBar->addWidget(BtnFactura_cli);
+    m_VentasBar->addWidget(BtnCaja);
+
+
+
+    //--------------------------
+    // Conexiones
+    //--------------------------
+   connect(BtnPresupuestos_cli,SIGNAL(clicked()),this,SLOT(btnPresup_clientes_clicked()));
+   connect(BtnPedidos_cli,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
+   connect(BtnAlbaranes_cli,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
+   connect(BtnFactura_cli,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
+   connect(BtnCaja,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
+
+   connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
+   connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
+   connect(ui->actionAlbaranes,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
+   connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
+   connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+}
+
+
+void MainWindow::btnClientes_clicked()
 {
     ui->btnClientes->setEnabled(false);
     frmClientes *frmClientes1 = new frmClientes(m_config);
@@ -201,40 +409,40 @@ void MainWindow::on_btnClientes_clicked()
     cerrarSubWindows();
     ui->btnClientes->setEnabled(true);
 }
-void MainWindow::on_btnFacturaCliente_clicked()
+void MainWindow::btnFacturaCliente_clicked()
 {
-    ui->btnFacturaCliente->setEnabled(false);
+ //   ui->btnFacturaCliente->setEnabled(false);
     frmFacturas *frmFacturas1 = new frmFacturas(m_config);
     workspace->addSubWindow(frmFacturas1);
     frmFacturas1->setWindowState(Qt::WindowMaximized);
     frmFacturas1->exec();
     cerrarSubWindows();
-    ui->btnFacturaCliente->setEnabled(true);
+   // ui->btnFacturaCliente->setEnabled(true);
 }
 
-void MainWindow::on_btnArticulos_clicked()
+void MainWindow::btnArticulos_clicked()
 {
-    ui->btnArticulos->setEnabled(false);
+   // ui->btnArticulos->setEnabled(false);
     FrmArticulos *frmArticulos1 = new FrmArticulos(m_config);
     workspace->addSubWindow(frmArticulos1);
     frmArticulos1->setWindowState(Qt::WindowMaximized);
     frmArticulos1->exec();
     cerrarSubWindows();
-    ui->btnArticulos->setEnabled(true);
+   // ui->btnArticulos->setEnabled(true);
 }
 
 void MainWindow::on_botEmpresas_clicked()
 {
-    ui->botEmpresas->setEnabled(false);
+    //ui->botEmpresas->setEnabled(false);
     FrmEmpresas *frmEmpresa1 = new FrmEmpresas();
     workspace->addSubWindow(frmEmpresa1);
     frmEmpresa1->setWindowState(Qt::WindowMaximized);
     frmEmpresa1->exec();
     cerrarSubWindows();
-    ui->botEmpresas->setEnabled(true);
+    //ui->botEmpresas->setEnabled(true);
 }
 
-void MainWindow::on_btnProveedores_clicked()
+void MainWindow::btnProveedores_clicked()
 {
     ui->btnProveedores->setEnabled(false);
     frmProveedores *frmProveedores1 = new frmProveedores();
@@ -248,57 +456,57 @@ void MainWindow::on_btnProveedores_clicked()
 
 void MainWindow::on_botConfiguracion_clicked()
 {
-    ui->botConfiguracion->setEnabled(false);
+   // ui->botConfiguracion->setEnabled(false);
     FrmConfiguracion *frmConfiguracion1 = new FrmConfiguracion();
     workspace->addSubWindow(frmConfiguracion1);
     frmConfiguracion1->setWindowState(Qt::WindowMaximized);
     frmConfiguracion1->exec();
     cerrarSubWindows();
-    ui->botConfiguracion->setEnabled(true);
+   // ui->botConfiguracion->setEnabled(true);
 }
 
-void MainWindow::on_btnAlbaran_clientes_clicked()
+void MainWindow::btnAlbaran_clientes_clicked()
 {
-    ui->btnAlbaran_clientes->setEnabled(false);
+    //->setEnabled(false);
     FrmAlbaran *frmAlbaran1 = new FrmAlbaran();
     workspace->addSubWindow(frmAlbaran1);
     frmAlbaran1->setWindowState(Qt::WindowMaximized);
     frmAlbaran1->exec();
     cerrarSubWindows();
-    ui->btnAlbaran_clientes->setEnabled(true);
+  //  ui->btnAlbaran_clientes->setEnabled(true);
 }
 
-void MainWindow::on_btn_Pedido_cliente_clicked()
+void MainWindow::btn_Pedido_cliente_clicked()
 {
-    ui->btn_Pedido_cliente->setEnabled(false);
+    //ui->btn_Pedido_cliente->setEnabled(false);
     FrmPedidos *frmPedidos1 = new FrmPedidos();
     workspace->addSubWindow(frmPedidos1);
     frmPedidos1->setWindowState(Qt::WindowMaximized);
     frmPedidos1->exec();
     cerrarSubWindows();
-    ui->btn_Pedido_cliente->setEnabled(true);
+    //ui->btn_Pedido_cliente->setEnabled(true);
 }
 
-void MainWindow::on_btnPresup_clientes_clicked()
+void MainWindow::btnPresup_clientes_clicked()
 {
-    ui->btnPresup_clientes->setEnabled(false);
+    //ui->btnPresup_clientes->setEnabled(false);
     FrmPresupuestosCli *frmPresupcli = new FrmPresupuestosCli();
     workspace->addSubWindow(frmPresupcli);
     frmPresupcli->setWindowState(Qt::WindowMaximized);
     frmPresupcli->exec();
     cerrarSubWindows();
-    ui->btnPresup_clientes->setEnabled(true);
+   // ui->btnPresup_clientes->setEnabled(true);
 }
 
-void MainWindow::on_btnCajaMinuta_clicked()
+void MainWindow::btnCajaMinuta_clicked()
 {
-    ui->btnCajaMinuta->setEnabled(false);
+   // ui->btnCajaMinuta->setEnabled(false);
     FrmCajaMinuta *frmCajaMinuta = new FrmCajaMinuta();
     workspace->addSubWindow(frmCajaMinuta);
     frmCajaMinuta->setWindowState(Qt::WindowMaximized);
     frmCajaMinuta->exec();
     cerrarSubWindows();
-    ui->btnCajaMinuta->setEnabled(true);
+   // ui->btnCajaMinuta->setEnabled(true);
 }
 
 void MainWindow::on_btnAgenda_clicked()
@@ -333,4 +541,6 @@ void MainWindow::cerrarSubWindows()
         (*i)->hide();
     }
 }
+
+
 
