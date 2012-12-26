@@ -988,6 +988,8 @@ void frmClientes::on_btnFichaPaciente_clicked()
 
     FrmFichaPaciente *frmPaciente = new FrmFichaPaciente(this);
     frmPaciente->setWindowModality(Qt::WindowModal);
+
+
     // conexiones
     connect(this,SIGNAL(enviahistoriaynombre(int,QString)),frmPaciente,SLOT(recibedatospaciente(int ,QString)));
     emit enviahistoriaynombre(oCliente->getId(),oCliente->getcNombreFiscal());

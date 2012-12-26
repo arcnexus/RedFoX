@@ -85,5 +85,27 @@
         <file>PNG/PatientFile2.png</file>
         <file>PNG/presupuestos.png</file>
         <file>PNG/pedidos_cli.png</file>
+        <file>images/down_arrow.png</file>
+        <file>images/down_arrow_disabled.png</file>
+        <file>images/pushbutton.png</file>
+        <file>images/pushbutton_hover.png</file>
+        <file>images/pushbutton_pressed.png</file>
+        <file>images/up_arrow.png</file>
+        <file>images/up_arrow_disabled.png</file>
+        <file>Coffee.qss</file>
+        <file>images/spindown.png</file>
+        <file>images/spindown_hover.png</file>
+        <file>images/spindown_off.png</file>
+        <file>images/spindown_pressed.png</file>
+        <file>images/spinup.png</file>
+        <file>images/spinup_hover.png</file>
+        <file>images/spinup_off.png</file>
+        <file>images/spinup_pressed.png</file>
+        <file>images/checkbox_checked.png</file>
+        <file>images/checkbox_checked_hover.png</file>
+        <file>images/checkbox_checked_pressed.png</file>
+        <file>images/checkbox_unchecked.png</file>
+        <file>images/checkbox_unchecked_hover.png</file>
+        <file>images/checkbox_unchecked_pressed.png</file>
     </qresource>
 </RCC>

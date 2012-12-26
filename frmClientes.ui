@@ -329,9 +329,9 @@
         <colorrole role="Button">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>219</red>
-           <green>228</green>
-           <blue>255</blue>
+           <red>255</red>
+           <green>235</green>
+           <blue>167</blue>
           </color>
          </brush>
         </colorrole>
@@ -401,18 +401,18 @@
         <colorrole role="Base">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>219</red>
-           <green>228</green>
-           <blue>255</blue>
+           <red>255</red>
+           <green>235</green>
+           <blue>167</blue>
           </color>
          </brush>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>219</red>
-           <green>228</green>
-           <blue>255</blue>
+           <red>255</red>
+           <green>235</green>
+           <blue>167</blue>
           </color>
          </brush>
         </colorrole>
@@ -466,9 +466,9 @@
         <colorrole role="Button">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>219</red>
-           <green>228</green>
-           <blue>255</blue>
+           <red>255</red>
+           <green>235</green>
+           <blue>167</blue>
           </color>
          </brush>
         </colorrole>
@@ -538,18 +538,18 @@
         <colorrole role="Base">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>219</red>
-           <green>228</green>
-           <blue>255</blue>
+           <red>255</red>
+           <green>235</green>
+           <blue>167</blue>
           </color>
          </brush>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>219</red>
-           <green>228</green>
-           <blue>255</blue>
+           <red>255</red>
+           <green>235</green>
+           <blue>167</blue>
           </color>
          </brush>
         </colorrole>
@@ -603,9 +603,9 @@
         <colorrole role="Button">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>219</red>
-           <green>228</green>
-           <blue>255</blue>
+           <red>255</red>
+           <green>235</green>
+           <blue>167</blue>
           </color>
          </brush>
         </colorrole>
@@ -675,18 +675,18 @@
         <colorrole role="Base">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>219</red>
-           <green>228</green>
-           <blue>255</blue>
+           <red>255</red>
+           <green>235</green>
+           <blue>167</blue>
           </color>
          </brush>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>219</red>
-           <green>228</green>
-           <blue>255</blue>
+           <red>255</red>
+           <green>235</green>
+           <blue>167</blue>
           </color>
          </brush>
         </colorrole>
@@ -732,6 +732,9 @@
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 235, 167);</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -746,8 +749,7 @@
         </property>
         <property name="styleSheet">
          <string notr="true">color: rgb(29, 0, 255);
-background-color: rgb(255, 255, 192);
-border-width: 1px</string>
+background-color: rgb(255, 255, 192);</string>
         </property>
        </widget>
       </item>
@@ -787,8 +789,8 @@ border-width: 1px</string>
          <colorrole role="Button">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>219</red>
-            <green>228</green>
+            <red>205</red>
+            <green>213</green>
             <blue>255</blue>
            </color>
           </brush>
@@ -859,8 +861,8 @@ border-width: 1px</string>
          <colorrole role="Base">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>219</red>
-            <green>228</green>
+            <red>205</red>
+            <green>213</green>
             <blue>255</blue>
            </color>
           </brush>
@@ -868,8 +870,8 @@ border-width: 1px</string>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>219</red>
-            <green>228</green>
+            <red>205</red>
+            <green>213</green>
             <blue>255</blue>
            </color>
           </brush>
@@ -924,8 +926,8 @@ border-width: 1px</string>
          <colorrole role="Button">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>219</red>
-            <green>228</green>
+            <red>205</red>
+            <green>213</green>
             <blue>255</blue>
            </color>
           </brush>
@@ -996,8 +998,8 @@ border-width: 1px</string>
          <colorrole role="Base">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>219</red>
-            <green>228</green>
+            <red>205</red>
+            <green>213</green>
             <blue>255</blue>
            </color>
           </brush>
@@ -1005,8 +1007,8 @@ border-width: 1px</string>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>219</red>
-            <green>228</green>
+            <red>205</red>
+            <green>213</green>
             <blue>255</blue>
            </color>
           </brush>
@@ -1061,8 +1063,8 @@ border-width: 1px</string>
          <colorrole role="Button">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>219</red>
-            <green>228</green>
+            <red>205</red>
+            <green>213</green>
             <blue>255</blue>
            </color>
           </brush>
@@ -1133,8 +1135,8 @@ border-width: 1px</string>
          <colorrole role="Base">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>219</red>
-            <green>228</green>
+            <red>205</red>
+            <green>213</green>
             <blue>255</blue>
            </color>
           </brush>
@@ -1142,8 +1144,8 @@ border-width: 1px</string>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>219</red>
-            <green>228</green>
+            <red>205</red>
+            <green>213</green>
             <blue>255</blue>
            </color>
           </brush>
@@ -1191,11 +1193,11 @@ border-width: 1px</string>
        <bool>false</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(219, 228, 255);
+       <string notr="true">background-color: rgb(205, 213, 255);
 </string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -2001,6 +2003,12 @@ border-width: 1px</string>
           </item>
           <item>
            <widget class="QSpinBox" name="txtnDiaPago1">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -2015,6 +2023,12 @@ border-width: 1px</string>
           </item>
           <item>
            <widget class="QSpinBox" name="txtnDiaPago2">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -2142,6 +2156,12 @@ border-width: 1px</string>
            </item>
            <item row="1" column="0">
             <widget class="QPushButton" name="pushButton">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>27</height>
+              </size>
+             </property>
              <property name="text">
               <string>Ver Asientos Cliente</string>
              </property>
@@ -2187,6 +2207,12 @@ border-width: 1px</string>
             </item>
             <item>
              <widget class="QLineEdit" name="txtnPorcDtoCliente">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>27</height>
+               </size>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>50</width>
@@ -2209,10 +2235,10 @@ border-width: 1px</string>
           <item>
            <widget class="QCheckBox" name="chklRecargoEquivalencia">
             <property name="styleSheet">
-             <string notr="true"/>
+             <string notr="true">color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
-             <string>Recargo Equivaléncia</string>
+             <string>Recargo Equivalencia</string>
             </property>
            </widget>
           </item>
@@ -2434,6 +2460,9 @@ border-width: 1px</string>
              </item>
              <item row="0" column="0" colspan="3">
               <widget class="QCheckBox" name="chkClienteEmpresa">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(0, 0, 0);</string>
+               </property>
                <property name="text">
                 <string>Cliente Empresa (Aplicar IRPF)</string>
                </property>
@@ -2443,6 +2472,12 @@ border-width: 1px</string>
               <widget class="QLineEdit" name="txtrImporteACuenta">
                <property name="enabled">
                 <bool>false</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>27</height>
+                </size>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
@@ -2463,6 +2498,12 @@ background-color: rgb(255, 249, 173);</string>
               <widget class="QLineEdit" name="txtrVales">
                <property name="enabled">
                 <bool>false</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>27</height>
+                </size>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
@@ -2521,6 +2562,9 @@ background-color: rgb(255, 249, 173);</string>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
            <widget class="QCheckBox" name="chklBloqueoCliente">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);</string>
+            </property>
             <property name="text">
              <string>Activar Bloqueo cliente</string>
             </property>
@@ -2532,8 +2576,7 @@ background-color: rgb(255, 249, 173);</string>
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);
-border-color: rgb(48, 48, 48);</string>
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="undoRedoEnabled">
              <bool>true</bool>
@@ -2572,8 +2615,17 @@ border-color: rgb(48, 48, 48);</string>
         </item>
         <item row="0" column="1">
          <widget class="QLabel" name="label_82">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>21</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">text-decoration: underline;</string>
+          </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Comentarios generales sobre el cliente:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>Comentarios generales sobre el cliente:</string>
           </property>
          </widget>
         </item>
@@ -2593,6 +2645,12 @@ border-color: rgb(48, 48, 48);</string>
         </item>
         <item row="3" column="1">
          <widget class="QDateEdit" name="txtdFechaNacimiento">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);</string>
           </property>
@@ -2710,6 +2768,12 @@ border-color: rgb(48, 48, 48);</string>
              </item>
              <item row="0" column="1">
               <widget class="QDateEdit" name="txtdFechaAlta">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -2726,6 +2790,12 @@ border-color: rgb(48, 48, 48);</string>
              </item>
              <item row="0" column="4">
               <widget class="QDateEdit" name="txtdFechaUltimaCompra">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -2745,6 +2815,12 @@ border-color: rgb(48, 48, 48);</string>
                <property name="enabled">
                 <bool>true</bool>
                </property>
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(252, 252, 248);</string>
                </property>
@@ -2758,6 +2834,12 @@ border-color: rgb(48, 48, 48);</string>
              </item>
              <item row="2" column="1">
               <widget class="QLineEdit" name="txtrImporteAcumulado">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -2775,6 +2857,12 @@ color: rgb(0, 0, 0);</string>
              </item>
              <item row="1" column="4">
               <widget class="QLineEdit" name="txtrDeudaActual">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -2794,6 +2882,12 @@ color: rgb(0, 0, 0);</string>
               <widget class="QLineEdit" name="txtrVentasEjercicio">
                <property name="enabled">
                 <bool>false</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
@@ -2837,7 +2931,7 @@ color: rgb(0, 0, 0);</string>
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(202, 185, 150);</string>
+           <string notr="true">background-color: rgb(175,195,225);</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -2869,9 +2963,9 @@ color: rgb(0, 0, 0);</string>
                 <colorrole role="Button">
                  <brush brushstyle="SolidPattern">
                   <color alpha="255">
-                   <red>202</red>
-                   <green>185</green>
-                   <blue>150</blue>
+                   <red>175</red>
+                   <green>195</green>
+                   <blue>225</blue>
                   </color>
                  </brush>
                 </colorrole>
@@ -2941,18 +3035,18 @@ color: rgb(0, 0, 0);</string>
                 <colorrole role="Base">
                  <brush brushstyle="SolidPattern">
                   <color alpha="255">
-                   <red>202</red>
-                   <green>185</green>
-                   <blue>150</blue>
+                   <red>175</red>
+                   <green>195</green>
+                   <blue>225</blue>
                   </color>
                  </brush>
                 </colorrole>
                 <colorrole role="Window">
                  <brush brushstyle="SolidPattern">
                   <color alpha="255">
-                   <red>202</red>
-                   <green>185</green>
-                   <blue>150</blue>
+                   <red>175</red>
+                   <green>195</green>
+                   <blue>225</blue>
                   </color>
                  </brush>
                 </colorrole>
@@ -3006,9 +3100,9 @@ color: rgb(0, 0, 0);</string>
                 <colorrole role="Button">
                  <brush brushstyle="SolidPattern">
                   <color alpha="255">
-                   <red>202</red>
-                   <green>185</green>
-                   <blue>150</blue>
+                   <red>175</red>
+                   <green>195</green>
+                   <blue>225</blue>
                   </color>
                  </brush>
                 </colorrole>
@@ -3078,18 +3172,18 @@ color: rgb(0, 0, 0);</string>
                 <colorrole role="Base">
                  <brush brushstyle="SolidPattern">
                   <color alpha="255">
-                   <red>202</red>
-                   <green>185</green>
-                   <blue>150</blue>
+                   <red>175</red>
+                   <green>195</green>
+                   <blue>225</blue>
                   </color>
                  </brush>
                 </colorrole>
                 <colorrole role="Window">
                  <brush brushstyle="SolidPattern">
                   <color alpha="255">
-                   <red>202</red>
-                   <green>185</green>
-                   <blue>150</blue>
+                   <red>175</red>
+                   <green>195</green>
+                   <blue>225</blue>
                   </color>
                  </brush>
                 </colorrole>
@@ -3143,9 +3237,9 @@ color: rgb(0, 0, 0);</string>
                 <colorrole role="Button">
                  <brush brushstyle="SolidPattern">
                   <color alpha="255">
-                   <red>202</red>
-                   <green>185</green>
-                   <blue>150</blue>
+                   <red>175</red>
+                   <green>195</green>
+                   <blue>225</blue>
                   </color>
                  </brush>
                 </colorrole>
@@ -3215,18 +3309,18 @@ color: rgb(0, 0, 0);</string>
                 <colorrole role="Base">
                  <brush brushstyle="SolidPattern">
                   <color alpha="255">
-                   <red>202</red>
-                   <green>185</green>
-                   <blue>150</blue>
+                   <red>175</red>
+                   <green>195</green>
+                   <blue>225</blue>
                   </color>
                  </brush>
                 </colorrole>
                 <colorrole role="Window">
                  <brush brushstyle="SolidPattern">
                   <color alpha="255">
-                   <red>202</red>
-                   <green>185</green>
-                   <blue>150</blue>
+                   <red>175</red>
+                   <green>195</green>
+                   <blue>225</blue>
                   </color>
                  </brush>
                 </colorrole>
@@ -3276,7 +3370,7 @@ color: rgb(0, 0, 0);</string>
               <enum>QTabWidget::West</enum>
              </property>
              <property name="currentIndex">
-              <number>3</number>
+              <number>5</number>
              </property>
              <property name="movable">
               <bool>true</bool>

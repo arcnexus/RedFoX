@@ -20,6 +20,12 @@ Login::Login(Configuracion *m_config,QWidget *parent) :
 {
     this->setWindowFlags(Qt::Dialog|Qt::CustomizeWindowHint|Qt::WindowTitleHint);
     ui->setupUi(this);
+    //--------------------------------------------
+    // Conexiones
+    //--------------------------------------------
+    connect(ui->btnEmpresa,SIGNAL(clicked()),this,SLOT(btnEmpresa_clicked()));
+    connect(ui->Crearconfiguracin,SIGNAL(clicked()),this,SLOT(Crearconfiguracion_clicked()));
+
     // TODO - Rellenar en base a fichero de empresas BD terra.
     // Relleno combo empresas
 
@@ -90,7 +96,7 @@ void Login::on_btnAcceder_clicked()
     }
 }
 
-void Login::on_Crearconfiguracin_clicked()
+void Login::Crearconfiguracion_clicked()
 {
     QSettings settings("infint", "terra");
     settings.setValue("cDriverBDTerra","QSQLITE");
@@ -125,13 +131,13 @@ void Login::on_Crearconfiguracin_clicked()
 
 }
 
-void Login::on_btnEmpresa_clicked()
+void Login::btnEmpresa_clicked()
 {
-    FrmEmpresas *formEmpresa = new FrmEmpresas();
+    FrmEmpresas *formEmpresa = new FrmEmpresas(this);
     formEmpresa->setWindowState(Qt::WindowMaximized);
     formEmpresa->exec();
 
-    delete formEmpresa;
+
 }
 
 void Login::on_pushButton_clicked()

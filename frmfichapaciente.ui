@@ -1051,11 +1051,14 @@ background-color: rgb(255, 255, 255);</string>
        <height>16777215</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(219, 228, 255);</string>
+     </property>
      <property name="tabPosition">
       <enum>QTabWidget::West</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_7">
       <attribute name="title">
@@ -1077,7 +1080,7 @@ background-color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 220, 168);</string>
+          <string notr="true">background-color: rgb(197, 205, 255);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -1709,7 +1712,8 @@ background-color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(220, 220, 220);</string>
+          <string notr="true">background-color: rgb(197, 205, 255);
+</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -1721,7 +1725,7 @@ background-color: rgb(255, 255, 255);</string>
           <item row="0" column="0">
            <widget class="QLineEdit" name="txtDescrpicionEpisodio_2">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 192);
+             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(255, 0, 0);</string>
             </property>
            </widget>
@@ -1732,7 +1736,7 @@ color: rgb(255, 0, 0);</string>
              <bool>true</bool>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="page_3">
              <property name="geometry">
@@ -1766,7 +1770,7 @@ color: rgb(255, 0, 0);</string>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 192);
+                 <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 128);</string>
                 </property>
                </widget>
@@ -1869,7 +1873,8 @@ color: rgb(0, 0, 0);</string>
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">color: rgb(0, 0, 0);</string>
+                   <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
                   </property>
                   <property name="displayFormat">
                    <string>dd/MM/yyyy</string>
@@ -2043,6 +2048,9 @@ color: rgb(0, 0, 0);</string>
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
                </widget>
               </item>
              </layout>
@@ -2052,8 +2060,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>341</height>
+               <width>540</width>
+               <height>251</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2339,8 +2347,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>341</height>
+               <width>415</width>
+               <height>170</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2481,8 +2489,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>341</height>
+               <width>535</width>
+               <height>310</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2765,7 +2773,7 @@ background-color: rgb(255, 255, 255);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>559</width>
+               <width>375</width>
                <height>342</height>
               </rect>
              </property>
@@ -3057,8 +3065,8 @@ background-color: rgb(255, 255, 255);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>341</height>
+               <width>319</width>
+               <height>261</height>
               </rect>
              </property>
              <attribute name="label">

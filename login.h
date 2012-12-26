@@ -25,9 +25,9 @@ public:
 private slots:
     void on_btnAcceder_clicked();
 
-    void on_Crearconfiguracin_clicked();
+    void Crearconfiguracion_clicked();
 
-    void on_btnEmpresa_clicked();
+    void btnEmpresa_clicked();
 
     void on_pushButton_clicked();
 
