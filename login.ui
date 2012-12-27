@@ -398,7 +398,7 @@ border-color: #9DA2FF</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);</string>
+         <string notr="true">color: rgb(0, 0, 128);</string>
         </property>
         <property name="text">
          <string>C.Config.</string>
@@ -414,7 +414,7 @@ border-color: #9DA2FF</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);</string>
+         <string notr="true">color: rgb(0, 0, 128);</string>
         </property>
         <property name="text">
          <string>Cerrar</string>
@@ -430,7 +430,7 @@ border-color: #9DA2FF</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);</string>
+         <string notr="true">color: rgb(0, 0, 128);</string>
         </property>
         <property name="text">
          <string>Acceder</string>
@@ -877,8 +877,7 @@ border-color: rgb(192, 192, 255);</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(31, 60, 117);
-color: rgb(255, 255, 255);</string>
+         <string notr="true">color: rgb(0, 0, 128);</string>
         </property>
         <property name="text">
          <string>Modificar Empresas</string>

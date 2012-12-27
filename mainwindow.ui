@@ -694,7 +694,7 @@ background-color: rgb(255, 255, 255);</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);</string>
+            <string notr="true">color: rgb(0, 0, 128);</string>
            </property>
            <property name="text">
             <string>Salir de Terra</string>

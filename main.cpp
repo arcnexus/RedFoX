@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
    #endif
         QTextCodec::setCodecForLocale(linuxCodec);;
    a.setStyle("fusion");
-   QFile file(":Icons/Coffee.qss");
+   QFile file(":Icons/Terra.qss");
    if(file.open(QFile::ReadOnly)) {
         QString styleSheet = QString::fromLatin1(file.readAll());
         a.setStyleSheet(styleSheet);

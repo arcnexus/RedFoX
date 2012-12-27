@@ -24,7 +24,7 @@
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(220, 220, 220);</string>
+   <string notr="true"/>
   </property>
   <layout class="QGridLayout" name="gridLayout_20">
    <item row="0" column="1">

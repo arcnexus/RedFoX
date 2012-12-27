@@ -17,7 +17,6 @@
 #include <sqlcalls.h>
 #include "paciente.h"
 
-
 Cliente *oCliente = new Cliente();
 SqlCalls *llamadasSQL = new SqlCalls();
 frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :

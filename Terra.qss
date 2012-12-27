@@ -10,6 +10,9 @@ QLineEdit[echoMode="2"] {
 QLabel, QAbstractButton {
     font: normal;
 }
+QDialog {
+    background-color :rgb(219, 228, 255);
+}
 
 /* Mark mandatory fields with a brownish color. */
 .mandatory {
@@ -28,14 +31,64 @@ QStatusBar::item {
     border-radius: 2;
 }
 
-QComboBox, QLineEdit, QSpinBox, QTextEdit, QListView {
+QComboBox, QLineEdit, QSpinBox, QTextEdit, QListView,QDateTimeEdit, QDateEdit {
     background-color: white;
     selection-color: white; 
     selection-background-color: #4476C1;
 }
 tab {
     border radius:5px;
+
 }
+QTabWidget::pane { /* The tab widget frame */
+    border-top: 2px solid #C2C7CB;
+}
+
+QTabWidget::tab-bar {
+    left: 5px;
+    /* move to the right by 5px */
+}
+
+/* Style the tab using the tab sub-control. Note that     it reads QTabBar _not_ QTabWidget */
+
+QTabBar::tab {
+   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,   stop: 0 #9397D8, stop: 0.4 #9BA0E5, stop: 0.5 #A3A8F0, stop: 1.0 #9DA2FF);
+    border: 2px solid #342C89;
+    border-bottom-color: #9DA2FF;
+    color: #FFFFFF;
+    /* same as the pane color */
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    min-width: 1ex;
+    padding: 4px;
+    margin:2px;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,   stop: 0 #5D68CA, stop: 0.4 #525CB3, stop: 0.5 #3A407E, stop: 1.0 #9DA2FF);
+}
+
+QTabBar::tab:selected {
+    border-color: #340ABD;
+    border-bottom-color: #9DA2FF;
+    /* same as pane color */ }
+
+QTabBar::tab:!selected {
+    margin-top: 2px;
+    /* make non-selected tabs look smaller */
+}
+
+QTabBar::scroller  {
+    /* the width of the scroll buttons */
+    width: 15px;
+    border-image: url(:Icons/images/spinup.png) 2;
+}
+
+QTabBar QToolButton  {
+    /* the scroll buttons are tool buttons */
+    border-image: url(:Icons/images/spinup.png) 2;
+        border-width: 2px;
+    }
 
 QListView {
     show-decoration-selected: 1;
@@ -48,19 +101,20 @@ QListView::item:hover {
 /* We reserve 1 pixel space in padding. When we get the focus,
    we kill the padding and enlarge the border. This makes the items
    glow. */
-QLineEdit,QComboBox,QSpinBox,QDateEdit,QTextEdit,QPlainTextEdit {
+QLineEdit,QComboBox,QSpinBox,QDateEdit,QTextEdit,QPlainTextEdit,QDateTimeEdit {
     border-width: 1.5px;
     padding: 1px;
     border-style: solid;
     border-color: #9DA2FF;
     border-radius: 5px;
+
 }
 
 QFrame {
     border-radius: 5px;
 }
 QLabel {
-    border-radius: 2px;
+    border-radius: 5px;
 }
 
 /* As mentioned above, eliminate the padding and increase the border. */
@@ -133,6 +187,7 @@ QComboBox[editable="false"]::down-arrow:on {
     left: 2px;
 }
 
+
 QSpinBox::up-button {
     subcontrol-origin: border;
     subcontrol-position: top right;
@@ -161,8 +216,6 @@ QSpinBox::down-button {
 }
 
 
-
-
 QDateEdit::up-button {
     subcontrol-origin: border;
     subcontrol-position: top right;
@@ -183,52 +236,32 @@ QDateEdit::up-button:pressed {
 QDateEdit::down-button {
     subcontrol-origin: border;
     subcontrol-position: bottom right;
-
     width: 16px;
     border-image: url(:Icons/images/spindown.png) 1;
     border-width: 1px;
     border-top-width: 0;
 }
 
-
-
-
-
-
-
-QDateEdit[calendarPopup="true"]::up-button {
-    subcontrol-origin: border;
-    subcontrol-position: top right;
-
-    width: 16px; /* 16 + 2*1px border-width = 15px padding + 3px parent border */
-    border-image: url(:Icons/images/spinup.png) 1;
-    border-width: 1px;
+QDateEdit::drop-down {
+    border-image: url(:Icons/images/spindown.png) 1;
 }
 
-QDateEdit[calendarPopup="true"]::up-button:hover {
-    border-image: url(:Icons/images/spinup_hover.png) 1;
+QDateTimeEdit::drop-down {
+    border-image: url(:Icons/images/spindown.png) 1;
 }
 
-QDateEdit[calendarPopup="true"]::up-button:pressed {
-    border-image: url(:Icons/images/spinup_pressed.png) 1;
-}
-
-QDateEdit[calendarPopup="true"]::down-button {
+QDateTimeEdit::down-button {
     subcontrol-origin: border;
     subcontrol-position: bottom right;
-
     width: 16px;
     border-image: url(:Icons/images/spindown.png) 1;
     border-width: 1px;
     border-top-width: 0;
 }
-
-
 
 QTabWidget::up-button {
     subcontrol-origin: border;
     subcontrol-position: top right;
-
     width: 16px; /* 16 + 2*1px border-width = 15px padding + 3px parent border */
     border-image: url(:Icons/images/spinup.png) 1;
     border-width: 1px;
@@ -247,14 +280,14 @@ QtabWidget::down-button {
     subcontrol-position: bottom right;
 
     width: 16px;
-    border-image: url(:Icons/images/spindown.png) 1;
+    border-image: url(:Icons/images/pushbutton.png) 1;
     border-width: 1px;
     border-top-width: 0;
 }
 
 
 QPushButton {
-    min-width: 4em;
+    min-width: 1.5em;
 }
 
 QPushButton, QComboBox[editable="false"],
@@ -319,3 +352,41 @@ QDialogButtonBox {
     button-layout: 0;
 }
 
+
+  QScrollBar:vertical {
+      border: 2px solid grey;
+      background: #32CC99;
+      width: 15px;
+      margin: 22px 0 22px 0;
+  }
+  QScrollBar::handle:vertical {
+      background: white;
+      min-height: 20px;
+  }
+  QScrollBar::add-line:vertical {
+      border: 2px solid grey;
+      background: #32CC99;
+      height: 20px;
+      subcontrol-position: bottom;
+      subcontrol-origin: margin;
+  }
+
+  QScrollBar::sub-line:vertical {
+      border: 2px solid grey;
+      background: #32CC99;
+      height: 20px;
+      subcontrol-position: top;
+      subcontrol-origin: margin;
+  }
+  QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+      border: 2px solid grey;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-image: url(:Icons/images/down_arrow.png) 1;
+  }
+
+
+  QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+      background: none;
+  }

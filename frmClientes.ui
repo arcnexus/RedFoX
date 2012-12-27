@@ -1197,7 +1197,7 @@ background-color: rgb(255, 255, 192);</string>
 </string>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -1370,6 +1370,9 @@ background-color: rgb(255, 255, 192);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="readOnly">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -1599,7 +1602,8 @@ background-color: rgb(255, 255, 192);</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">background-color: rgb(255, 255, 255);
+</string>
             </property>
            </widget>
           </item>

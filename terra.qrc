@@ -92,7 +92,6 @@
         <file>images/pushbutton_pressed.png</file>
         <file>images/up_arrow.png</file>
         <file>images/up_arrow_disabled.png</file>
-        <file>Coffee.qss</file>
         <file>images/spindown.png</file>
         <file>images/spindown_hover.png</file>
         <file>images/spindown_off.png</file>
@@ -107,5 +106,6 @@
         <file>images/checkbox_unchecked.png</file>
         <file>images/checkbox_unchecked_hover.png</file>
         <file>images/checkbox_unchecked_pressed.png</file>
+        <file>Terra.qss</file>
     </qresource>
 </RCC>

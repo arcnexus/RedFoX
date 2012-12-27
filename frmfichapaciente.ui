@@ -65,6 +65,9 @@ background-color: rgb(255, 255, 255);</string>
      </item>
      <item>
       <widget class="QFrame" name="frame">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(197, 205, 255);</string>
+       </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
        </property>
@@ -141,7 +144,8 @@ color: rgb(0, 0, 0);</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 192, 192);</string>
+         <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);</string>
         </property>
         <property name="text">
          <string>EPISODIO</string>
@@ -1247,7 +1251,8 @@ background-color: rgb(255, 255, 255);</string>
        <item row="0" column="0" colspan="5">
         <widget class="QLabel" name="label_34">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(0, 192, 192);</string>
+          <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);</string>
          </property>
          <property name="text">
           <string>ANTECEDENTES Y DATOS VARIOS</string>
@@ -1281,6 +1286,10 @@ background-color: rgb(255, 255, 255);</string>
            <width>16777215</width>
            <height>36</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(197, 205, 255);
+</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -1341,6 +1350,9 @@ background-color: rgb(255, 255, 255);</string>
            <width>16777215</width>
            <height>156</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(197, 205, 255);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -1407,6 +1419,9 @@ color: rgb(0, 0, 0);</string>
        </item>
        <item row="5" column="0" colspan="5">
         <widget class="QFrame" name="frame_14">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(197, 205, 255);</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -1417,7 +1432,8 @@ color: rgb(0, 0, 0);</string>
           <item row="0" column="0">
            <widget class="QLabel" name="label_41">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(0, 192, 192);</string>
+             <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);</string>
             </property>
             <property name="text">
              <string>ALERGIAS CONOCIDAS</string>
@@ -1436,7 +1452,8 @@ color: rgb(0, 0, 0);</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(0, 192, 192);</string>
+             <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);</string>
             </property>
             <property name="text">
              <string>CIRUGÍAS PREVIAS</string>
@@ -1458,7 +1475,7 @@ color: rgb(0, 0, 0);</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">
+             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
             </property>
            </widget>
@@ -1475,7 +1492,7 @@ color: rgb(0, 0, 0);</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">
+             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
             </property>
            </widget>
@@ -1511,6 +1528,9 @@ color: rgb(0, 0, 0);</string>
            <height>120</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(197, 205, 255);</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -1533,7 +1553,8 @@ color: rgb(0, 0, 0);</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(0, 192, 192);</string>
+             <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);</string>
             </property>
             <property name="text">
              <string>ANTECEDENTES FAMILIARES</string>
@@ -1558,7 +1579,8 @@ color: rgb(0, 0, 0);</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(0, 192, 192);</string>
+             <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);</string>
             </property>
             <property name="text">
              <string>ENFERMEDADES CONOCIDAS</string>
@@ -1635,7 +1657,8 @@ background-color: rgb(255, 255, 255);</string>
        <item row="0" column="0">
         <widget class="QLabel" name="label_4">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(0, 192, 192);</string>
+          <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);</string>
          </property>
          <property name="text">
           <string>EPISODIOS CLÍNICOS</string>
@@ -2489,7 +2512,7 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>535</width>
+               <width>534</width>
                <height>310</height>
               </rect>
              </property>
@@ -2773,7 +2796,7 @@ background-color: rgb(255, 255, 255);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>375</width>
+               <width>374</width>
                <height>342</height>
               </rect>
              </property>
@@ -3305,7 +3328,8 @@ background-color: rgb(255, 255, 255);</string>
          <item row="0" column="0" colspan="3">
           <widget class="QLabel" name="label_48">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(0, 192, 192);</string>
+            <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);</string>
            </property>
            <property name="text">
             <string>MEDICAMENTOS</string>
@@ -3392,7 +3416,8 @@ background-color: rgb(255, 255, 255);</string>
        <item row="0" column="0">
         <widget class="QLabel" name="label_49">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(0, 192, 192);</string>
+          <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);</string>
          </property>
          <property name="text">
           <string>REGISTRO DE PRUEBAS DE IMÁGEN</string>
