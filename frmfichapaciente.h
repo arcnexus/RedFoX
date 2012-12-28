@@ -58,6 +58,7 @@ private slots:
     void EditarImagenDiagnostico();
     void recibedatospaciente(int,QString);
     void AnadirInterconsulta();
+    void AnadirAnalitica();
 signals:
     void pasaid(int);
     void pasaCodigoNacional(QString);

@@ -1062,7 +1062,7 @@ background-color: rgb(255, 255, 255);</string>
       <enum>QTabWidget::West</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_7">
       <attribute name="title">
@@ -1759,7 +1759,7 @@ color: rgb(255, 0, 0);</string>
              <bool>true</bool>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="page_3">
              <property name="geometry">
@@ -2083,8 +2083,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>540</width>
-               <height>251</height>
+               <width>576</width>
+               <height>341</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2370,8 +2370,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>415</width>
-               <height>170</height>
+               <width>576</width>
+               <height>341</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2495,7 +2495,9 @@ color: rgb(0, 0, 0);</string>
               <item row="0" column="0" colspan="5">
                <widget class="QLabel" name="label_12">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 192, 192);</string>
+                 <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);
+</string>
                 </property>
                 <property name="text">
                  <string>ANALISIS</string>
@@ -2512,8 +2514,8 @@ color: rgb(0, 0, 0);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>534</width>
-               <height>310</height>
+               <width>576</width>
+               <height>341</height>
               </rect>
              </property>
              <attribute name="label">
@@ -2713,7 +2715,9 @@ background-color: rgb(255, 255, 255);</string>
               <item row="2" column="8">
                <widget class="QLabel" name="label_87">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 192, 192);</string>
+                 <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);
+</string>
                 </property>
                 <property name="text">
                  <string>COMENTARIOS IMAGEN</string>
@@ -2748,7 +2752,9 @@ background-color: rgb(255, 255, 255);</string>
               <item row="9" column="0" colspan="8">
                <widget class="QLabel" name="label_17">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 192, 192);</string>
+                 <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);
+</string>
                 </property>
                 <property name="text">
                  <string>REGISTRO DE PRUEBAS DE IMÁGEN</string>
@@ -2796,7 +2802,7 @@ background-color: rgb(255, 255, 255);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>374</width>
+               <width>559</width>
                <height>342</height>
               </rect>
              </property>
@@ -2910,7 +2916,8 @@ background-color: rgb(255, 255, 255);</string>
                 <item row="0" column="0" colspan="5">
                  <widget class="QLabel" name="label_19">
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(0, 192, 192);</string>
+                   <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);</string>
                   </property>
                   <property name="text">
                    <string>INTERCONSULTAS</string>
@@ -3088,8 +3095,8 @@ background-color: rgb(255, 255, 255);</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>319</width>
-               <height>261</height>
+               <width>576</width>
+               <height>341</height>
               </rect>
              </property>
              <attribute name="label">
@@ -3122,7 +3129,8 @@ background-color: rgb(255, 255, 255);</string>
                 <item row="0" column="0" colspan="3">
                  <widget class="QLabel" name="label_24">
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(0, 192, 192);</string>
+                   <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);</string>
                   </property>
                   <property name="text">
                    <string>AVISOS</string>

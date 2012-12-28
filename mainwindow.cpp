@@ -75,10 +75,17 @@ MainWindow::MainWindow(QWidget *parent) :
     BtnMedica->setToolTip(tr("Módulo de Gestión especificamente clínica"));
     BtnMedica->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
+    // Salir
+    QToolButton *BtnCerrar = new QToolButton(m_modulesBar);
+    BtnCerrar->setText(tr("Salir"));
+    BtnCerrar->setIcon(QIcon(":Icons/PNG/Exit.png"));
+    BtnCerrar->setToolTip(tr("Salir de Terra"));
+    BtnCerrar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     m_modulesBar->addWidget(BtnMantenimiento);
     m_modulesBar->addWidget(BtnEntradas);
     m_modulesBar->addWidget(BtnSalidas);
     m_modulesBar->addWidget(BtnMedica);
+    m_modulesBar->addWidget(BtnCerrar);
     //-------------------------------
     // Cargo Barras Herramientas
     //-------------------------------
@@ -98,6 +105,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btnSalir,SIGNAL(triggered()),this,SLOT(close()));
     connect(BtnMantenimiento,SIGNAL(clicked()),this,SLOT(btnMantenimientos_clicked()));
     connect(BtnEntradas,SIGNAL(clicked()),this,SLOT(btnVentas_clicked()));
+    connect(BtnCerrar,SIGNAL(clicked()),this,SLOT(close()));
 
     QSqlDatabase dbEmp;
     m_config = new Configuracion();

@@ -393,7 +393,7 @@ border-color: #9DA2FF</string>
        <widget class="QPushButton" name="Crearconfiguracin">
         <property name="minimumSize">
          <size>
-          <width>124</width>
+          <width>136</width>
           <height>33</height>
          </size>
         </property>
@@ -401,7 +401,7 @@ border-color: #9DA2FF</string>
          <string notr="true">color: rgb(0, 0, 128);</string>
         </property>
         <property name="text">
-         <string>C.Config.</string>
+         <string>Config.</string>
         </property>
        </widget>
       </item>

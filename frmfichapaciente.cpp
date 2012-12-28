@@ -24,6 +24,7 @@
 #include <QDesktopWidget>
 #include "imagenesdiagnostico.h"
 #include "interconsulta.h"
+#include "frmanalitica.h"
 
 Paciente *oPaciente = new Paciente();
 Episodio *oEpisodio = new Episodio();
@@ -68,6 +69,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(oImagenes,SIGNAL(refrescarlista()),this,SLOT(llenartablahistorialimagenesepisodio()));
     connect(ui->pushButton_DeshacerImagen,SIGNAL(clicked()),this,SLOT(deshacerDatosImagenes()));
     connect(ui->btnAnadirInterconsulta,SIGNAL(clicked()),this,SLOT(AnadirInterconsulta()));
+    connect(ui->btnAnadirAnalitica,SIGNAL(clicked()),this,SLOT(AnadirAnalitica()));
 
 
 
@@ -751,6 +753,12 @@ void FrmFichaPaciente::AnadirInterconsulta()
 {
     Interconsulta *oInterconsulta = new Interconsulta(this);
     oInterconsulta->AnadirInterconsulta(oEpisodio->getid(),oPaciente->getid());
+}
+
+void FrmFichaPaciente::AnadirAnalitica()
+{
+    FrmAnalitica *frmAnalitica = new FrmAnalitica();
+    frmAnalitica->exec();
 }
 
 
