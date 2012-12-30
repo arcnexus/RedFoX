@@ -35,7 +35,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="cboTipoAnalitica">
         <property name="minimumSize">
          <size>
           <width>150</width>

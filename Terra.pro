@@ -77,7 +77,8 @@ SOURCES += main.cpp\
     imagenesdiagnostico.cpp \
     prueba.cpp \
     interconsulta.cpp \
-    frmanalitica.cpp
+    frmanalitica.cpp \
+    frmanalitica2.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -123,7 +124,8 @@ HEADERS  += mainwindow.h \
     imagenesdiagnostico.h \
     prueba.h \
     interconsulta.h \
-    frmanalitica.h
+    frmanalitica.h \
+    frmanalitica2.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -152,7 +154,8 @@ FORMS    += mainwindow.ui \
     frmbuscarcie.ui \
     frminformacionfarmaco.ui \
     frmanadirimagen.ui \
-    frmanalitica.ui
+    frmanalitica.ui \
+    frmanalitica2.ui
 
 RESOURCES += \
     terra.qrc

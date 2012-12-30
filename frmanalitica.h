@@ -17,6 +17,11 @@ public:
     
 private:
     Ui::FrmAnalitica *ui;
+private slots:
+    void AnadirCamposAnalitica();
+
+signals:
+    void pasartipo(QString);
 };
 
 #endif // FRMANALITICA_H
