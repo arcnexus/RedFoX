@@ -3,6 +3,7 @@
 #include <QSql>
 #include<QSqlQueryModel>
 #include "frmanalitica2.h"
+#include <QMessageBox>
 
 FrmAnalitica::FrmAnalitica(QWidget *parent) :
     QDialog(parent),
@@ -30,8 +31,10 @@ FrmAnalitica::~FrmAnalitica()
 void FrmAnalitica::AnadirCamposAnalitica()
 {
     Frmanalitica2 *frmanalitica2 = new Frmanalitica2(this);
-    connect(this,SIGNAL(pasartipo(QString)),frmanalitica2,SLOT(cargarDatos(QString)));
-    emit pasartipo(ui->cboTipoAnalitica->currentText());
-    frmanalitica2->show();
-
+    connect(this,SIGNAL(pasartipo(QString,int)),frmanalitica2,SLOT(cargarDatos(QString,int)));
+    emit pasartipo(ui->cboTipoAnalitica->currentText(),idanalitica);
+    if(frmanalitica2->exec() == QDialog::Accepted)
+        QMessageBox::information(this,"prova","Acceptat","OK");
+    else
+        QMessageBox::information(this,"prova","Cancelled","OK");
 }

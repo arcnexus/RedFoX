@@ -17,10 +17,16 @@ public:
     
 private:
     Ui::Frmanalitica2 *ui;
+    int idAnalitica;
+    QString cTipo;
+public slots:
+
 
 private slots:
-    void cargarDatos(QString cTipo);
+    void cargarDatos(QString cTipo,int idAnalitica);
+    void aceptar();
 
+signals:
 };
 
 #endif // FRMANALITICA2_H

@@ -78,7 +78,8 @@ SOURCES += main.cpp\
     prueba.cpp \
     interconsulta.cpp \
     frmanalitica.cpp \
-    frmanalitica2.cpp
+    frmanalitica2.cpp \
+    analitica.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -125,7 +126,8 @@ HEADERS  += mainwindow.h \
     prueba.h \
     interconsulta.h \
     frmanalitica.h \
-    frmanalitica2.h
+    frmanalitica2.h \
+    analitica.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
