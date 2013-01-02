@@ -18,9 +18,10 @@ public:
 private:
     Ui::FrmAnalitica *ui;
     int idanalitica;
+    void llenartabla();
 private slots:
     void AnadirCamposAnalitica();
-
+    void capturaID(int);
 signals:
     void pasartipo(QString,int);
 };

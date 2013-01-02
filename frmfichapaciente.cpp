@@ -25,6 +25,7 @@
 #include "imagenesdiagnostico.h"
 #include "interconsulta.h"
 #include "frmanalitica.h"
+#include "analitica.h"
 
 Paciente *oPaciente = new Paciente();
 Episodio *oEpisodio = new Episodio();
@@ -757,7 +758,13 @@ void FrmFichaPaciente::AnadirInterconsulta()
 
 void FrmFichaPaciente::AnadirAnalitica()
 {
-    FrmAnalitica *frmAnalitica = new FrmAnalitica();
+    FrmAnalitica *frmAnalitica = new FrmAnalitica(this);
+    Analitica *oAnalitica = new Analitica(this);
+    connect(this,SIGNAL(pasaid(int)),frmAnalitica,SLOT(capturaID(int)));
+    oAnalitica->setIdEpisodio(oEpisodio->getid());
+    oAnalitica->AnadirAnalitica();
+    emit pasaid(oAnalitica->getId());
+
     frmAnalitica->exec();
 }
 

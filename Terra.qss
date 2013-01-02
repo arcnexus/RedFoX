@@ -1,6 +1,9 @@
 .QWidget {
    background-color: white;
 }
+QDialog {
+    background-color :rgb(219, 228, 255);
+}
 
 /* Nice Windows-XP-style password character. */
 QLineEdit[echoMode="2"] {
@@ -10,9 +13,7 @@ QLineEdit[echoMode="2"] {
 QLabel, QAbstractButton {
     font: normal;
 }
-QDialog {
-    background-color :rgb(219, 228, 255);
-}
+
 
 /* Mark mandatory fields with a brownish color. */
 .mandatory {
@@ -31,11 +32,7 @@ QStatusBar::item {
     border-radius: 2;
 }
 
-QComboBox, QLineEdit, QSpinBox, QTextEdit, QListView,QDateTimeEdit, QDateEdit {
-    background-color: white;
-    selection-color: white; 
-    selection-background-color: #4476C1;
-}
+
 tab {
     border radius:5px;
 
@@ -101,17 +98,20 @@ QListView::item:hover {
 /* We reserve 1 pixel space in padding. When we get the focus,
    we kill the padding and enlarge the border. This makes the items
    glow. */
-QLineEdit,QComboBox,QSpinBox,QDateEdit,QTextEdit,QPlainTextEdit,QDateTimeEdit {
+QLineEdit,QComboBox,QSpinBox,QDateEdit,QTextEdit,QPlainTextEdit,QDateTimeEdit, QListView{
+    background: rgb(255, 255, 255);
     border-width: 1.5px;
     padding: 1px;
     border-style: solid;
     border-color: #9DA2FF;
     border-radius: 5px;
-
+    selection-color: #FFFFFF;
+    selection-background-color: #4476C1;
 }
 
 QFrame {
     border-radius: 5px;
+    background: rgb(175,195,225);
 }
 QLabel {
     border-radius: 5px;
@@ -139,8 +139,8 @@ QRadioButton:hover, QCheckBox:hover {
 
 *::down-arrow, *::menu-indicator {
     image: url(:Icons/images/down_arrow.png);
-    width: 7px;
-    height: 7px;
+    width: 20px;
+    height: 10px;
 }
 
 *::down-arrow:disabled, *::down-arrow:off {
@@ -149,8 +149,8 @@ QRadioButton:hover, QCheckBox:hover {
 
 *::up-arrow {
     image: url(:Icons/images/up_arrow.png);
-    width: 7px;
-    height: 7px;
+    width: 20px;
+    height: 10px;
 }
 
 *::up-arrow:disabled, *::up-arrow:off {
@@ -250,6 +250,15 @@ QDateTimeEdit::drop-down {
     border-image: url(:Icons/images/spindown.png) 1;
 }
 
+QDateTimeEdit::up-button {
+    subcontrol-origin: border;
+    subcontrol-position: top right;
+
+    width: 16px; /* 16 + 2*1px border-width = 15px padding + 3px parent border */
+    border-image: url(:Icons/images/spinup.png) 1;
+    border-width: 1px;
+}
+
 QDateTimeEdit::down-button {
     subcontrol-origin: border;
     subcontrol-position: bottom right;
@@ -343,10 +352,6 @@ QCheckBox::indicator:checked:pressed {
     image: url(:Icons/images/checkbox_checked_pressed.png);
 }
 
-
-
-
-
 /* Force the dialog's buttons to follow the Windows guidelines. */
 QDialogButtonBox {
     button-layout: 0;
@@ -354,17 +359,18 @@ QDialogButtonBox {
 
 
   QScrollBar:vertical {
-      border: 2px solid grey;
+      border: none;
       background: #32CC99;
-      width: 15px;
+      width: 20px;
       margin: 22px 0 22px 0;
   }
   QScrollBar::handle:vertical {
-      background: white;
+      background: blue;
+      border-radius:5;
       min-height: 20px;
   }
   QScrollBar::add-line:vertical {
-      border: 2px solid grey;
+      border: none solid grey;
       background: #32CC99;
       height: 20px;
       subcontrol-position: bottom;
@@ -372,21 +378,75 @@ QDialogButtonBox {
   }
 
   QScrollBar::sub-line:vertical {
-      border: 2px solid grey;
+      border: none solid grey;
       background: #32CC99;
       height: 20px;
       subcontrol-position: top;
       subcontrol-origin: margin;
   }
-  QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+  QScrollBar::up-arrow:vertical {
       border: 2px solid grey;
-      width: 3px;
-      height: 3px;
+      height: 20px;
       background: white;
-      border-image: url(:Icons/images/down_arrow.png) 1;
+      width: 20px;
+      border-image: url(:Icons/images/spinup.png) 2;
   }
-
+  QScrollBar::down-arrow:vertical{
+        border: 2px solid grey;
+        height: 20px;
+        background: white;
+        width: 20px;
+        border-image: url(:Icons/images/spindown.png) 2;
+    }
 
   QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       background: none;
   }
+
+QScrollBar:horizontal {
+      border: none;
+      background: #32CC99;
+      width: 20px;
+      margin: 22px 0 22px 0;
+}
+  QScrollBar::handle:horizontal {
+      background: blue;
+      border-radius:5;
+      min-height: 20px;
+  }
+  QScrollBar::add-line:horizontal {
+      border: none solid grey;
+      background: #32CC99;
+      height: 20px;
+      subcontrol-position: bottom;
+      subcontrol-origin: margin;
+  }
+
+  QScrollBar::sub-line:horizontal {
+      border: none solid grey;
+      background: #32CC99;
+      height: 20px;
+      subcontrol-position: top;
+      subcontrol-origin: margin;
+  }
+  QScrollBar::up-arrow:horizontal {
+      border: 2px solid grey;
+      height: 20px;
+      background: white;
+      width: 20px;
+      border-image: url(:Icons/images/spinup.png) 2;
+  }
+  QScrollBar::down-arrow:horizontal{
+        border: 2px solid grey;
+        height: 20px;
+        background: white;
+        width: 20px;
+        border-image: url(:Icons/images/spindown.png) 2;
+    }
+
+  QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+      background: none;
+  }
+
+
+

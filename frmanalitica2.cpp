@@ -4,7 +4,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include "analitica.h"
-Analitica *oAnalitica = new Analitica();
+
 Frmanalitica2::Frmanalitica2(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Frmanalitica2)
@@ -85,13 +85,13 @@ void Frmanalitica2::cargarDatos(QString cTipo, int idAnalitica)
 
 void Frmanalitica2::aceptar()
 {
-
+    Analitica *oAnalitica = new Analitica();
     int lin = 0;
     int lineas = ui->tabla->rowCount();
-    int status;
+    bool status;
     for(lin= 0; lin < lineas ; lin++) {
-        status = ui->tabla->item(lin,0)->text().toInt();
-        if(status==1){
+        status = ui->tabla->item(lin,0)->checkState();
+        if(status==true){
             oAnalitica->AnadirLineas(this->idAnalitica,ui->tabla->item(lin,1)->text(),ui->tabla->item(lin,2)->text(),
                                      ui->tabla->item(lin,3)->text(),ui->tabla->item(lin,4)->text(),
                                      this->cTipo);
