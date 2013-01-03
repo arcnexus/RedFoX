@@ -3371,36 +3371,23 @@ color: rgb(0, 0, 0);</string>
               <bool>false</bool>
              </property>
              <property name="tabPosition">
-              <enum>QTabWidget::West</enum>
+              <enum>QTabWidget::North</enum>
              </property>
              <property name="currentIndex">
-              <number>5</number>
+              <number>0</number>
              </property>
              <property name="movable">
               <bool>true</bool>
              </property>
-             <widget class="QWidget" name="tab_Facturas">
+             <widget class="QWidget" name="tab_13">
               <attribute name="title">
-               <string>Facturas</string>
+               <string>Presupuestos</string>
               </attribute>
-              <layout class="QGridLayout" name="gridLayout_11">
+              <layout class="QGridLayout" name="gridLayout_19">
                <item row="0" column="0">
-                <widget class="QTableView" name="tablaFacturas"/>
-               </item>
-              </layout>
-             </widget>
-             <widget class="QWidget" name="tab_4">
-              <attribute name="title">
-               <string>R.Deudas</string>
-              </attribute>
-              <layout class="QVBoxLayout" name="verticalLayout_4">
-               <item>
-                <widget class="QTableView" name="TablaDeudas"/>
-               </item>
-               <item>
-                <widget class="QPushButton" name="Pagar">
-                 <property name="text">
-                  <string>Pagar Deuda</string>
+                <widget class="QTableView" name="tablaPresupuestos">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
@@ -3413,11 +3400,28 @@ color: rgb(0, 0, 0);</string>
               <layout class="QGridLayout" name="gridLayout_10">
                <item row="0" column="0">
                 <widget class="QTableView" name="TablaAlbaranes">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
                  <property name="alternatingRowColors">
                   <bool>true</bool>
                  </property>
                  <property name="selectionMode">
                   <enum>QAbstractItemView::SingleSelection</enum>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_Facturas">
+              <attribute name="title">
+               <string>Facturas</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_11">
+               <item row="0" column="0">
+                <widget class="QTableView" name="tablaFacturas">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
@@ -3429,7 +3433,32 @@ color: rgb(0, 0, 0);</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_12">
                <item row="0" column="0">
-                <widget class="QTableView" name="tablaTickets"/>
+                <widget class="QTableView" name="tablaTickets">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_4">
+              <attribute name="title">
+               <string>R.Deudas</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <item>
+                <widget class="QTableView" name="TablaDeudas">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="Pagar">
+                 <property name="text">
+                  <string>Pagar Deuda</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -3439,17 +3468,11 @@ color: rgb(0, 0, 0);</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_13">
                <item row="0" column="0">
-                <widget class="QTableView" name="tablaVales"/>
-               </item>
-              </layout>
-             </widget>
-             <widget class="QWidget" name="tab_13">
-              <attribute name="title">
-               <string>Presupuestos</string>
-              </attribute>
-              <layout class="QGridLayout" name="gridLayout_19">
-               <item row="0" column="0">
-                <widget class="QTableView" name="tablaPresupuestos"/>
+                <widget class="QTableView" name="tablaVales">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>

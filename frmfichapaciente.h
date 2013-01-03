@@ -35,7 +35,6 @@ public slots:
 
 private slots:
     void finishedSlot(QNetworkReply* reply);
-    void on_btnAgenda_clicked();
     void on_btnAnadirEpisodio_clicked();
     void on_btnBuscarCIEEpisodio_clicked();
     void on_btnEditarPaciente_clicked();
@@ -51,6 +50,7 @@ private slots:
     void GuardarDatosFarmacologia();
     void llenartablahistorialfarmacologiaepisodio();
     void llenartablahistorialimagenesepisodio();
+    void llenartablahistorialanalisisepisodio();
     void BorrarDatosMedicamento();
     void MostrarFichaMedicamento();
     void AnadirImagenDiagnostico();
@@ -62,6 +62,7 @@ private slots:
 signals:
     void pasaid(int);
     void pasaCodigoNacional(QString);
+    void pasaPaciente(QString);
 
 private:
     Ui::FrmFichaPaciente *ui;

@@ -90,15 +90,11 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
     bool Alc = oPaciente->getalcoholbool();
     ui->chkAlcohol->setChecked(Alc);
     ui->txtAlergiasConocidas->setPlainText(oPaciente->getalergiasConocidas());
-    ui->txtAlergiasConocidasBarra->setPlainText(oPaciente->getalergiasConocidas());
     ui->txtAntecedentesFamiliares->setPlainText(oPaciente->getantecedentesFamiliares());
-    ui->txtAntecedentesFamiliaresBarra->setPlainText(oPaciente->getantecedentesFamiliares());
     ui->txtCirugiasPrevias->setPlainText(oPaciente->getcirugiasPrevias());
-    ui->txtCirugiasPreviasBarra->setPlainText(oPaciente->getcirugiasPrevias());
     ui->txtDiastole->setText(QString::number(oPaciente->getdiastole(),'f',2));
     ui->txtSistole->setText(QString::number(oPaciente->getsistole(),'f',2));
     ui->txtEnfermedadesConocidas->setPlainText(oPaciente->getenfermedadesConocidas());
-    ui->txtEnfermedadesConocidasBarra->setPlainText(oPaciente->getenfermedadesConocidas());
     ui->txtFamiliaNuclear->setPlainText(oPaciente->getfamilia());
     ui->txtFechaAlta->setDate(oPaciente->getfechaAlta());
     ui->txtFiliacion->setText(oPaciente->getfiliacion());
@@ -113,7 +109,7 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
 
     ui->txtNumeroSS->setText(oPaciente->getnumSS());
     ui->txtOtrasDrogas->setPlainText(oPaciente->gethabitosDrogas());
-    ui->txtPermietroCraneal->setText(QString::number(oPaciente->getperimetroCraneal(),'f',2));
+    ui->txtPerimetroCraneal->setText(QString::number(oPaciente->getperimetroCraneal(),'f',2));
     ui->txtPeso->setText(QString::number(oPaciente->getpeso(),'f',2));
     ui->txtProfesion->setText(oPaciente->getprofesion());
     if(oPaciente->getsexo()=="H")
@@ -156,6 +152,7 @@ void FrmFichaPaciente::cargarEpisodio(int control)
     ui->txtCIEEpisiodio->setText(oEpisodio->getCIE());
     llenartablahistorialfarmacologiaepisodio();
     llenartablahistorialimagenesepisodio();
+    llenartablahistorialanalisisepisodio();
 
 }
 
@@ -182,7 +179,7 @@ void FrmFichaPaciente::guardarDatosPaciente()
     oPaciente->setnacimiento(ui->txtNacimiento->dateTime());
     oPaciente->setnivelEstudios(ui->cboNivelEstudios->currentText());
     oPaciente->setnumSS(ui->txtNumeroSS->text());
-    oPaciente->setperimetroCraneal(ui->txtPermietroCraneal->text().toDouble());
+    oPaciente->setperimetroCraneal(ui->txtPerimetroCraneal->text().toDouble());
     oPaciente->setpeso(ui->txtPeso->text().toDouble());
     oPaciente->setprofesion(ui->txtProfesion->text());
     if(ui->radHombre->isChecked())
@@ -237,16 +234,6 @@ void FrmFichaPaciente::finishedSlot(QNetworkReply* reply)
 }
 
 
-void FrmFichaPaciente::on_btnAgenda_clicked()
-{
-    ui->btnAgenda->setEnabled(false);
-    frmAgendaVisitas *Agenda = new frmAgendaVisitas(this);
-    Agenda->setWindowState(Qt::WindowMaximized);
-    Agenda->show();
-    ui->btnAgenda->setEnabled(true);
-
-}
-
 
 void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
 {
@@ -294,7 +281,7 @@ void FrmFichaPaciente::BloquearCamposPaciente()
     ui->txtCirugiasPrevias->setEnabled(false);
     ui->txtMutua->setEnabled(false);
     ui->txtNumeroSS->setEnabled(false);
-    ui->txtPermietroCraneal->setEnabled(false);
+    ui->txtPerimetroCraneal->setEnabled(false);
     ui->txtPeso->setEnabled(false);
     ui->txtProfesion->setEnabled(false);
     ui->txtSistole->setEnabled(false);
@@ -333,7 +320,7 @@ void FrmFichaPaciente::DesbloquearCamposPaciente()
     ui->txtCirugiasPrevias->setEnabled(true);
     ui->txtMutua->setEnabled(true);
     ui->txtNumeroSS->setEnabled(true);
-    ui->txtPermietroCraneal->setEnabled(true);
+    ui->txtPerimetroCraneal->setEnabled(true);
     ui->txtPeso->setEnabled(true);
     ui->txtProfesion->setEnabled(true);
     ui->txtSistole->setEnabled(true);
@@ -669,6 +656,58 @@ void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
 
 }
 
+void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
+{
+    // Cargar imagenes episodio
+    QStringList list;
+    list <<QObject::tr("ANALISIS")<< QObject::tr("FECHA") <<"ID";
+    QSqlQuery *qAnalisis = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QString cSQL = " Select analisis, id,fechaanalisis from Analitica where idepisodio = :id ";
+    qAnalisis->prepare(cSQL);
+    qAnalisis->bindValue(":id",oEpisodio->getid());
+    ui->listaAnaliticas->setRowCount(0);
+    ui->listaAnaliticas->setColumnCount(3);
+    ui->listaAnaliticas->setColumnWidth(0,250);
+    ui->listaAnaliticas->setColumnWidth(1,170);
+    ui->listaAnaliticas->setColumnWidth(2,0);
+    ui->listaAnaliticas->setHorizontalHeaderLabels(list);
+    int pos = 0;
+    QSqlRecord reg ;
+    // Relleno la tabla
+     QString cFecha;
+    if (qAnalisis->exec()) {
+        while (qAnalisis->next()) {
+            // Nombre Medicamento
+            reg = qAnalisis->record();
+
+            ui->listaAnaliticas->setRowCount(pos+1);
+            QTableWidgetItem *newItem = new QTableWidgetItem(reg.field("analisis").value().toString());
+            // para que los elementos no sean editables
+            newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
+            newItem->setTextColor(Qt::blue); // color de las imagenes evaluados
+            ui->listaAnaliticas->setItem(pos,0,newItem);
+
+            // fecha
+            cFecha = reg.field("fechaanalisis").value().toDateTime().toString("dd/MM/yyyy : hh:mm");
+            QTableWidgetItem *newItem1 = new QTableWidgetItem(cFecha);
+            // para que los elementos no sean editables
+            newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
+            newItem1->setTextColor(Qt::blue); // color de los items
+            ui->listaAnaliticas->setItem(pos,1,newItem1);
+
+            // id
+            QTableWidgetItem *newItem2 = new QTableWidgetItem(reg.field("id").value().toString());
+            // para que los elementos no sean editables
+            newItem2->setFlags(newItem2->flags() & (~Qt::ItemIsEditable));
+            newItem2->setTextColor(Qt::blue); // color de los items
+            ui->listaAnaliticas->setItem(pos,2,newItem2);
+
+            pos++;
+
+        }
+    }
+}
+
 void FrmFichaPaciente::BorrarDatosMedicamento()
 {
      if(QMessageBox::question(this,tr("Borrar medicamento historial"),tr("Va a proceder a borrar un medicamento del historial,")+
@@ -758,14 +797,20 @@ void FrmFichaPaciente::AnadirInterconsulta()
 
 void FrmFichaPaciente::AnadirAnalitica()
 {
-    FrmAnalitica *frmAnalitica = new FrmAnalitica(this);
-    Analitica *oAnalitica = new Analitica(this);
-    connect(this,SIGNAL(pasaid(int)),frmAnalitica,SLOT(capturaID(int)));
-    oAnalitica->setIdEpisodio(oEpisodio->getid());
-    oAnalitica->AnadirAnalitica();
-    emit pasaid(oAnalitica->getId());
+    if(!oEpisodio->getid()==0) {
+        FrmAnalitica *frmAnalitica = new FrmAnalitica(this);
+        Analitica *oAnalitica = new Analitica(this);
+        connect(this,SIGNAL(pasaid(int)),frmAnalitica,SLOT(capturaID(int)));
+        connect(this,SIGNAL(pasaPaciente(QString)),frmAnalitica,SLOT(capturaPaciente(QString)));
+        oAnalitica->setIdEpisodio(oEpisodio->getid());
 
-    frmAnalitica->exec();
+        oAnalitica->AnadirAnalitica();
+        emit pasaid(oAnalitica->getId());
+        emit pasaPaciente(ui->txtPaciente->text());
+        frmAnalitica->exec();
+    } else
+        QMessageBox::warning(this,tr("Analitica"),tr("Debe seleccionar un episodio antes de poder añadir una antalítica"), tr("Aceptar"));
+    llenartablahistorialanalisisepisodio();
 }
 
 

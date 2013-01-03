@@ -62,12 +62,13 @@ QTabBar::tab {
 }
 
 QTabBar::tab:selected, QTabBar::tab:hover {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,   stop: 0 #5D68CA, stop: 0.4 #525CB3, stop: 0.5 #3A407E, stop: 1.0 #9DA2FF);
+    /*background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,   stop: 0 #1d2146, stop: 0.4 #525CB3, stop: 0.5 #3A407E, stop: 1.0 #9DA2FF);*/
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,   stop: 0 #ff7807, stop: 0.4 #fb8e36, stop: 0.5 #ffb071, stop: 1.0 #ffcea7);
 }
 
 QTabBar::tab:selected {
-    border-color: #340ABD;
-    border-bottom-color: #9DA2FF;
+    border-color: #ff0707;
+    border-bottom-color: #ffcea7;
     /* same as pane color */ }
 
 QTabBar::tab:!selected {
@@ -361,18 +362,18 @@ QDialogButtonBox {
   QScrollBar:vertical {
       border: none;
       background: #32CC99;
-      width: 20px;
-      margin: 22px 0 22px 0;
+      width: 10px;
+      margin: 12px 0 12px 0;
   }
   QScrollBar::handle:vertical {
-      background: blue;
+      background: #506d76;
       border-radius:5;
-      min-height: 20px;
+      min-height: 10px;
   }
   QScrollBar::add-line:vertical {
       border: none solid grey;
       background: #32CC99;
-      height: 20px;
+      height: 10px;
       subcontrol-position: bottom;
       subcontrol-origin: margin;
   }
@@ -380,22 +381,22 @@ QDialogButtonBox {
   QScrollBar::sub-line:vertical {
       border: none solid grey;
       background: #32CC99;
-      height: 20px;
+      height: 10px;
       subcontrol-position: top;
       subcontrol-origin: margin;
   }
   QScrollBar::up-arrow:vertical {
       border: 2px solid grey;
-      height: 20px;
+      height: 10px;
       background: white;
-      width: 20px;
+      width: 10px;
       border-image: url(:Icons/images/spinup.png) 2;
   }
   QScrollBar::down-arrow:vertical{
         border: 2px solid grey;
-        height: 20px;
+        height: 10px;
         background: white;
-        width: 20px;
+        width: 10px;
         border-image: url(:Icons/images/spindown.png) 2;
     }
 
@@ -406,18 +407,18 @@ QDialogButtonBox {
 QScrollBar:horizontal {
       border: none;
       background: #32CC99;
-      width: 20px;
-      margin: 22px 0 22px 0;
+      width: 10px;
+      margin: 12px 0 12px 0;
 }
   QScrollBar::handle:horizontal {
-      background: blue;
+      background: #506d76;
       border-radius:5;
-      min-height: 20px;
+      min-height: 10px;
   }
   QScrollBar::add-line:horizontal {
       border: none solid grey;
       background: #32CC99;
-      height: 20px;
+      height: 10px;
       subcontrol-position: bottom;
       subcontrol-origin: margin;
   }
@@ -425,28 +426,25 @@ QScrollBar:horizontal {
   QScrollBar::sub-line:horizontal {
       border: none solid grey;
       background: #32CC99;
-      height: 20px;
+      height: 10px;
       subcontrol-position: top;
       subcontrol-origin: margin;
   }
   QScrollBar::up-arrow:horizontal {
       border: 2px solid grey;
-      height: 20px;
+      height: 10px;
       background: white;
-      width: 20px;
+      width: 10px;
       border-image: url(:Icons/images/spinup.png) 2;
   }
   QScrollBar::down-arrow:horizontal{
         border: 2px solid grey;
-        height: 20px;
+        height: 10px;
         background: white;
-        width: 20px;
+        width: 10px;
         border-image: url(:Icons/images/spindown.png) 2;
     }
 
   QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
       background: none;
   }
-
-
-

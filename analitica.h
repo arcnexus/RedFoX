@@ -2,6 +2,7 @@
 #define ANALITICA_H
 
 #include <QObject>
+#include <QDate>
 
 class Analitica : public QObject
 {
@@ -15,6 +16,7 @@ private:
     QString comentarios;
     QString valorreferencia;
     QString valor;
+    QDate fecha;
 
 public:
     explicit Analitica(QObject *parent = 0);
@@ -27,7 +29,7 @@ public:
     void setComentarios(QString comentarios) {this->comentarios = comentarios;}
     void setValor(QString valor) {this->valor = valor;}
     void setValorReferencia(QString valor) {this->valorreferencia = valor;}
-
+    void setFechaAnalisis(QDate fecha) {this->fecha = fecha;}
 
     int getId() {return this->id;}
     int getIdEpisodio() {return this->idepisodio;}
@@ -36,6 +38,7 @@ public:
     QString getComentarios() {return this->comentarios;}
     QString getValor() {return this->valor;}
     QString getValorReferencia() {return this->valorreferencia;}
+    QDate getFechaAnalisis() {return this->fecha; }
 
 signals:
     

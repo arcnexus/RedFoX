@@ -17,6 +17,9 @@
    <iconset resource="terra.qrc">
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(219, 228, 255);</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="1" column="1">
     <widget class="QPushButton" name="btnCerrar">
@@ -39,21 +42,13 @@
     </spacer>
    </item>
    <item row="0" column="0" colspan="2">
-    <widget class="QToolBox" name="toolBox">
+    <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="page">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1192</width>
-        <height>401</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Buscar por nombre de medicamento.</string>
+     <widget class="QWidget" name="tabWidgetPage1" native="true">
+      <attribute name="title">
+       <string>Buscar por Nombre Medicamento</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="3" column="0" colspan="6">
@@ -63,6 +58,9 @@
            <width>0</width>
            <height>152</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="alternatingRowColors">
           <bool>true</bool>
@@ -141,6 +139,9 @@
        </item>
        <item row="1" column="0" colspan="3">
         <widget class="QFrame" name="frame">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(197, 205, 255);</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -177,6 +178,9 @@
        </item>
        <item row="5" column="0" colspan="6">
         <widget class="QWebView" name="webView_ProspectoBuscarPorMedicamento">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
          <property name="url">
           <url>
            <string>about:blank</string>
@@ -205,21 +209,17 @@
         </widget>
        </item>
        <item row="0" column="1" colspan="5">
-        <widget class="QLineEdit" name="txtBuscar"/>
+        <widget class="QLineEdit" name="txtBuscar">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="patologia">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1192</width>
-        <height>401</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Buscar por Patología.</string>
+     <widget class="QWidget" name="tabWidgetPage2" native="true">
+      <attribute name="title">
+       <string>Buscar por patología</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_6">
        <item row="2" column="0">
@@ -236,7 +236,11 @@
           </attribute>
           <layout class="QGridLayout" name="gridLayout_4">
            <item row="1" column="0" colspan="3">
-            <widget class="QLineEdit" name="txtBuscarPatologia"/>
+            <widget class="QLineEdit" name="txtBuscarPatologia">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+            </widget>
            </item>
            <item row="3" column="0" colspan="3">
             <widget class="QLabel" name="label_7">
@@ -305,6 +309,9 @@
            </item>
            <item row="4" column="3" colspan="3">
             <widget class="QTableWidget" name="tablamedicamentosPatologia">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
              <property name="alternatingRowColors">
               <bool>true</bool>
              </property>
@@ -342,6 +349,9 @@
            </item>
            <item row="4" column="0" colspan="3">
             <widget class="QTableWidget" name="tablaPatologias">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
              <property name="alternatingRowColors">
               <bool>true</bool>
              </property>
@@ -403,6 +413,9 @@
                <height>180</height>
               </size>
              </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
              <property name="url">
               <url>
                <string>about:blank</string>
@@ -419,6 +432,9 @@
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="0" column="0">
             <widget class="QWebView" name="textProspectoPato">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
              <property name="url">
               <url>
                <string>about:blank</string>
@@ -432,17 +448,9 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_3">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1192</width>
-        <height>401</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Buscar por Molécula.</string>
+     <widget class="QWidget" name="tabWidgetPage3" native="true">
+      <attribute name="title">
+       <string>Buscar por molécula</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
        <item row="2" column="0">
@@ -510,6 +518,9 @@
        </item>
        <item row="4" column="1">
         <widget class="QTableWidget" name="tablamedicamentosMolecula">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
          <property name="alternatingRowColors">
           <bool>true</bool>
          </property>
@@ -558,6 +569,9 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
          <property name="alternatingRowColors">
           <bool>true</bool>
          </property>
@@ -589,6 +603,9 @@
            <width>346</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
@@ -623,6 +640,9 @@
        </item>
        <item row="7" column="0" colspan="2">
         <widget class="QWebView" name="textProspectoMolecula">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
          <property name="url">
           <url>
            <string>about:blank</string>
@@ -642,17 +662,9 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_4">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1192</width>
-        <height>401</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Busqueda por principio activo.</string>
+     <widget class="QWidget" name="tabWidgetPage4" native="true">
+      <attribute name="title">
+       <string>Buscar por principio activo</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_7">
        <item row="5" column="0">
@@ -670,7 +682,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Consultar medicamentos Principio Activo señalado</string>
+          <string>C. medicamentos Principio Activo señalado</string>
          </property>
          <property name="icon">
           <iconset resource="terra.qrc">
@@ -764,10 +776,16 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
         </widget>
        </item>
        <item row="4" column="1">
         <widget class="QTableWidget" name="tablamedicamentospactivos">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
          <property name="alternatingRowColors">
           <bool>true</bool>
          </property>
@@ -789,6 +807,9 @@
            <width>346</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="alternatingRowColors">
           <bool>true</bool>
@@ -833,6 +854,9 @@
        </item>
        <item row="7" column="0" colspan="2">
         <widget class="QWebView" name="textProspectopa">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
          <property name="url">
           <url>
            <string>about:blank</string>
