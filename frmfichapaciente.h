@@ -59,6 +59,7 @@ private slots:
     void recibedatospaciente(int,QString);
     void AnadirInterconsulta();
     void AnadirAnalitica();
+    void VerAnalitica();
 signals:
     void pasaid(int);
     void pasaCodigoNacional(QString);

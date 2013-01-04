@@ -26,6 +26,7 @@
 #include "interconsulta.h"
 #include "frmanalitica.h"
 #include "analitica.h"
+#include "frmveranalitica.h"
 
 Paciente *oPaciente = new Paciente();
 Episodio *oEpisodio = new Episodio();
@@ -71,6 +72,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->pushButton_DeshacerImagen,SIGNAL(clicked()),this,SLOT(deshacerDatosImagenes()));
     connect(ui->btnAnadirInterconsulta,SIGNAL(clicked()),this,SLOT(AnadirInterconsulta()));
     connect(ui->btnAnadirAnalitica,SIGNAL(clicked()),this,SLOT(AnadirAnalitica()));
+    connect(ui->btnVerAnalitica,SIGNAL(clicked()),this,SLOT(VerAnalitica()));
 
 
 
@@ -807,6 +809,23 @@ void FrmFichaPaciente::AnadirAnalitica()
         oAnalitica->AnadirAnalitica();
         emit pasaid(oAnalitica->getId());
         emit pasaPaciente(ui->txtPaciente->text());
+        frmAnalitica->exec();
+    } else
+        QMessageBox::warning(this,tr("Analitica"),tr("Debe seleccionar un episodio antes de poder añadir una antalítica"), tr("Aceptar"));
+    llenartablahistorialanalisisepisodio();
+}
+
+void FrmFichaPaciente::VerAnalitica()
+{
+    if(!oEpisodio->getid()==0) {
+        FrmVerAnalitica *frmAnalitica = new FrmVerAnalitica(this);
+        Analitica *oAnalitica = new Analitica(this);
+       // connect(this,SIGNAL(pasaid(int)),frmAnalitica,SLOT(capturaID(int)));
+       // connect(this,SIGNAL(pasaPaciente(QString)),frmAnalitica,SLOT(capturaPaciente(QString)));
+        oAnalitica->setIdEpisodio(oEpisodio->getid());
+        oAnalitica->setId(ui->listaAnaliticas->item(ui->listaAnaliticas->currentRow(),2)->text().toInt());
+       // emit pasaid(oAnalitica->getId());
+       // emit pasaPaciente(ui->txtPaciente->text());
         frmAnalitica->exec();
     } else
         QMessageBox::warning(this,tr("Analitica"),tr("Debe seleccionar un episodio antes de poder añadir una antalítica"), tr("Aceptar"));

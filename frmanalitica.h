@@ -26,7 +26,7 @@ private slots:
     void AsignarAnalitica();
     void AsignarFecha();
     void GuardarYCerrar();
-    void llenartabla(QString);
+    void llenartabla();
 signals:
     void pasartipo(QString,int);
 };

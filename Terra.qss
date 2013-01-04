@@ -1,8 +1,8 @@
 .QWidget {
-   background-color: white;
+  background-color: white;
 }
-QDialog {
-    background-color :rgb(219, 228, 255);
+ QDialog {
+   background-color :rgb(219, 228, 255);
 }
 
 /* Nice Windows-XP-style password character. */
