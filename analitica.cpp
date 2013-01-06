@@ -1,6 +1,8 @@
 #include "analitica.h"
 #include <QtSql>
 #include <QSqlQuery>
+#include <QSqlRecord>
+#include <QSqlError>
 #include <QMessageBox>
 #include <QDebug>
 
@@ -15,11 +17,10 @@ void Analitica::AnadirAnalitica()
     if(this->analisis.isEmpty())
         this->setAnalisis(tr("pendiente determinar"));
     QSqlQuery *qAna = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qAna->prepare("Insert INTO Analitica (idepisodio, analisis, tipoanalisis, comentarios)"
-                  " VALUES (:idepisodio, :analisis, :tipoanalisis, :comentarios)");
+    qAna->prepare("Insert INTO Analitica (idepisodio, analisis, comentarios)"
+                  " VALUES (:idepisodio, :analisis, :comentarios)");
     qAna->bindValue(":idepisodio",this->idepisodio);
     qAna->bindValue(":analisis", this->analisis);
-    qAna->bindValue(":tipoanalisis",this->tipoanalisis);
     qAna->bindValue(":comentarios",this->comentarios);
     if(!qAna->exec()){
         QMessageBox::warning(NULL,tr("Nueva Analítica"),tr("Falló al insertar una nueva analítica: ")+
@@ -48,5 +49,21 @@ void Analitica::AnadirLineas(int idanalitica, QString descripcion, QString valor
          qDebug() << qAna->lastQuery();
 }
 
+
+}
+
+void Analitica::recuperarDatos(int nId)
+{
+    QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    qAnalitica->prepare("select * from analitica were id = :id");
+    qAnalitica->bindValue(":id",nId);
+    if (qAnalitica->exec()) {
+        qAnalitica->next();
+        QSqlRecord qRec = qAnalitica->record();
+        this->analisis = qRec.field("analisis").value().toString();
+        this->fecha = qRec.field("fechaanalisis").value().toDateTime();
+        this->comentarios = qRec.field("comentarios").value().toString();
+    }
+    delete qAnalitica;
 
 }

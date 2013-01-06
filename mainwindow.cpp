@@ -107,6 +107,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(BtnEntradas,SIGNAL(clicked()),this,SLOT(btnVentas_clicked()));
     connect(BtnCerrar,SIGNAL(clicked()),this,SLOT(close()));
 
+
     QSqlDatabase dbEmp;
     m_config = new Configuracion();
             QSettings settings("infint", "terra");
@@ -508,7 +509,6 @@ void MainWindow::btnPresup_clientes_clicked()
 
 void MainWindow::btnCajaMinuta_clicked()
 {
-   // ui->btnCajaMinuta->setEnabled(false);
     FrmCajaMinuta *frmCajaMinuta = new FrmCajaMinuta();
     workspace->addSubWindow(frmCajaMinuta);
     frmCajaMinuta->setWindowState(Qt::WindowMaximized);

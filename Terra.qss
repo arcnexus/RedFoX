@@ -1,7 +1,4 @@
-.QWidget {
-  background-color: white;
-}
- QDialog {
+QDialog {
    background-color :rgb(219, 228, 255);
 }
 
@@ -96,19 +93,6 @@ QListView::item:hover {
     background-color: white;
 }
 
-/* We reserve 1 pixel space in padding. When we get the focus,
-   we kill the padding and enlarge the border. This makes the items
-   glow. */
-QLineEdit,QComboBox,QSpinBox,QDateEdit,QTextEdit,QPlainTextEdit,QDateTimeEdit, QListView{
-    background: rgb(255, 255, 255);
-    border-width: 1.5px;
-    padding: 1px;
-    border-style: solid;
-    border-color: #9DA2FF;
-    border-radius: 5px;
-    selection-color: #FFFFFF;
-    selection-background-color: #4476C1;
-}
 
 QFrame {
     border-radius: 5px;
@@ -447,4 +431,17 @@ QScrollBar:horizontal {
 
   QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
       background: none;
+  }
+  /* We reserve 1 pixel space in padding. When we get the focus,
+     we kill the padding and enlarge the border. This makes the items
+     glow. */
+  QLineEdit,QComboBox,QSpinBox,QDateEdit,QTextEdit,QPlainTextEdit,QDateTimeEdit, QListView{
+      background: rgb(255, 255, 255);
+      border-width: 1.5px;
+      padding: 1px;
+      border-style: solid;
+      border-color: #9DA2FF;
+      border-radius: 5px;
+      selection-color: #FFFFFF;
+      selection-background-color: #4476C1;
   }

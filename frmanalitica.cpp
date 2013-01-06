@@ -102,7 +102,7 @@ void FrmAnalitica::llenartabla()
             // para que los elementos no sean editables
             newItem3->setFlags(newItem3->flags() & (~Qt::ItemIsEditable));
             newItem3->setTextColor(Qt::blue); // color de los items
-            ui->tablaAnalitica->setItem(pos,2,newItem3);
+            ui->tablaAnalitica->setItem(pos,3,newItem3);
 
             pos++;
 
@@ -152,7 +152,6 @@ void FrmAnalitica::GuardarYCerrar()
                   "WHERE id =:id");
     qAna->bindValue(":analisis",oAnalitica->getAnalisis());
     qAna->bindValue(":fechaanalisis",oAnalitica->getFechaAnalisis());
-    qAna->bindValue(":tipoanalisis",oAnalitica->getTipoAnalisis());
     qAna->bindValue(":id",oAnalitica->getId());
 
     if(!qAna->exec()){

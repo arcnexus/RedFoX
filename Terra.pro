@@ -160,7 +160,8 @@ FORMS    += mainwindow.ui \
     frmanadirimagen.ui \
     frmanalitica.ui \
     frmanalitica2.ui \
-    frmveranalitica.ui
+    frmveranalitica.ui \
+    prueba.ui
 
 RESOURCES += \
     terra.qrc

@@ -1,18 +1,22 @@
 #ifndef PRUEBA_H
 #define PRUEBA_H
 
-#include <QObject>
+#include <QWidget>
 
-class prueba : public QObject
+namespace Ui {
+class Prueba;
+}
+
+class Prueba : public QWidget
 {
     Q_OBJECT
+    
 public:
-    explicit prueba(QObject *parent = 0);
+    explicit Prueba(QWidget *parent = 0);
+    ~Prueba();
     
-signals:
-    
-public slots:
-    
+private:
+    Ui::Prueba *ui;
 };
 
 #endif // PRUEBA_H

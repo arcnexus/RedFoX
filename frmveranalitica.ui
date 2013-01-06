@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>FrmVerAnalitica</class>
  <widget class="QDialog" name="FrmVerAnalitica">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -19,7 +22,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
-    <widget class="QTableWidget" name="tabla">
+    <widget class="QTableWidget" name="tablaAnalitica">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);
 alternate-background-color: rgb(252, 255, 192);</string>
@@ -35,7 +38,7 @@ alternate-background-color: rgb(252, 255, 192);</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(197, 205, 255);</string>
+      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -52,9 +55,9 @@ alternate-background-color: rgb(252, 255, 192);</string>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="txtAnalitica">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true"/>
         </property>
         <property name="readOnly">
          <bool>true</bool>
@@ -69,7 +72,7 @@ alternate-background-color: rgb(252, 255, 192);</string>
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QDateTimeEdit" name="dateTimeEdit">
+       <widget class="QDateTimeEdit" name="txtFechaAnalitica">
         <property name="minimumSize">
          <size>
           <width>165</width>
@@ -95,7 +98,7 @@ alternate-background-color: rgb(252, 255, 192);</string>
        </widget>
       </item>
       <item row="1" column="1" colspan="3">
-       <widget class="QLineEdit" name="lineEdit_2">
+       <widget class="QLineEdit" name="txtPaciente">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>

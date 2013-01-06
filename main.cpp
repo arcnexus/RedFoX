@@ -39,15 +39,19 @@ int main(int argc, char *argv[])
         QTextCodec::setCodecForCStrings(linuxCodec);
    #endif
         QTextCodec::setCodecForLocale(linuxCodec);;
-   a.setStyle("fusion");
-   QFile file(":Icons/Terra.qss");
-   if(file.open(QFile::ReadOnly)) {
-        QString styleSheet = QString::fromLatin1(file.readAll());
-        a.setStyleSheet(styleSheet);
-   } else
-       QMessageBox::warning(NULL,QObject::tr("Terra"),QObject::tr("No se puede cargar el archivo de tema"),
-                            QObject::tr("Aceptar"));
-
+//   a.setStyle("fusion");
+//   QFile file(":Icons/Terra.qss");
+//   if(file.open(QFile::ReadOnly)) {
+//        QString styleSheet = QString::fromLatin1(file.readAll());
+//        a.setStyleSheet(styleSheet);
+//   } else
+//       QMessageBox::warning(NULL,QObject::tr("Terra"),QObject::tr("No se puede cargar el archivo de tema"),
+//                            QObject::tr("Aceptar"));
+        QFile qss(":Icons/Terra.qss");
+        qss.open(QFile::ReadOnly);
+        a.setStyle("fusion");
+        a.setStyleSheet(qss.readAll());
+        qss.close();
 
     MainWindow w;
     w.setVisible(true);

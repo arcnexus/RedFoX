@@ -1,6 +1,14 @@
 #include "prueba.h"
+#include "ui_prueba.h"
 
-prueba::prueba(QObject *parent) :
-    QObject(parent)
+Prueba::Prueba(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Prueba)
 {
+    ui->setupUi(this);
+}
+
+Prueba::~Prueba()
+{
+    delete ui;
 }
