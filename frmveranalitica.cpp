@@ -17,14 +17,7 @@
      *-------------------------------------*/
     connect(ui->btnCerrar,SIGNAL(clicked()),this,SLOT(close()));
 
-    /*--------------------------------------
-     *Acciones
-     *------------------------------------*/
-    cargarDatos();
-
-    llenarTabla();
 }
-
 FrmVerAnalitica::~FrmVerAnalitica()
 {
     delete ui;
@@ -92,7 +85,8 @@ void FrmVerAnalitica::llenarTabla()
 void FrmVerAnalitica::capturaId(int nID)
 {
  oAnalitica1->setId(nID);
-
+ cargarDatos();
+llenarTabla();
 }
 
 void FrmVerAnalitica::capturaPaciente(QString Paciente)

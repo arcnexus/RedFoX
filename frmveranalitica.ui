@@ -57,7 +57,8 @@ alternate-background-color: rgb(252, 255, 192);</string>
       <item row="0" column="1">
        <widget class="QLineEdit" name="txtAnalitica">
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">color: rgb(0, 0, 255);
+background-color: rgb(255, 255, 255);</string>
         </property>
         <property name="readOnly">
          <bool>true</bool>

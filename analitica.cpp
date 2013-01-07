@@ -55,7 +55,7 @@ void Analitica::AnadirLineas(int idanalitica, QString descripcion, QString valor
 void Analitica::recuperarDatos(int nId)
 {
     QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qAnalitica->prepare("select * from analitica were id = :id");
+    qAnalitica->prepare("select * from Analitica where id = :id");
     qAnalitica->bindValue(":id",nId);
     if (qAnalitica->exec()) {
         qAnalitica->next();
@@ -63,6 +63,10 @@ void Analitica::recuperarDatos(int nId)
         this->analisis = qRec.field("analisis").value().toString();
         this->fecha = qRec.field("fechaanalisis").value().toDateTime();
         this->comentarios = qRec.field("comentarios").value().toString();
+    } else {
+        QMessageBox::warning(NULL,tr("Analítica"),tr("Error en la carga de datos de analitica: ")+
+                             qAnalitica->lastError().text(), tr("Aceptar"));
+        qDebug() << qAnalitica->lastQuery();
     }
     delete qAnalitica;
 
