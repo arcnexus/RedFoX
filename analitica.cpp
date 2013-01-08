@@ -61,7 +61,7 @@ void Analitica::recuperarDatos(int nId)
         qAnalitica->next();
         QSqlRecord qRec = qAnalitica->record();
         this->analisis = qRec.field("analisis").value().toString();
-        this->fecha = qRec.field("fechaanalisis").value().toDateTime();
+        this->fecha = qRec.field("fechaanalisis").value().toDate();
         this->comentarios = qRec.field("comentarios").value().toString();
     } else {
         QMessageBox::warning(NULL,tr("Analítica"),tr("Error en la carga de datos de analitica: ")+
@@ -70,4 +70,40 @@ void Analitica::recuperarDatos(int nId)
     }
     delete qAnalitica;
 
+}
+
+void Analitica::GuardarDatos(int nId)
+{
+    QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    qAnalitica->prepare("UPDATE Analitica SET "
+                        "analisis = :analisis,"
+                        "comentarios = :comentarios,"
+                        "fechaanalisis = :fechaanalisis"
+                        " WHERE id = :id");
+    qAnalitica->bindValue(":analisis",this->analisis);
+    qAnalitica->bindValue(":comentarios",this->comentarios);
+    qAnalitica->bindValue(":fechaanalisis",this->fecha);
+    qAnalitica->bindValue(":id",nId);
+    if(!qAnalitica->exec())
+        QMessageBox::warning(NULL,tr("Analítica"),tr("Error al guardar los datos de analitica: ")+
+                                                     qAnalitica->lastError().text(),tr("Aceptar"));
+
+}
+
+void Analitica::GuardarLineas(int id, QString valor, QString referencia, QString comentarios)
+{
+    QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    qAnalitica->prepare("UPDATE analitica2 SET "
+    "valor = :valor,"
+    "referencia = :referencia,"
+    "comentarios = :comentarios "
+    "WHERE id =:id");
+    qAnalitica->bindValue(":valor",valor);
+    qAnalitica->bindValue(":referencia",referencia);
+    qAnalitica->bindValue(":comentarios",comentarios);
+    qAnalitica->bindValue(":id",id);
+    if(!qAnalitica->exec())
+        QMessageBox::warning(NULL,tr("Analítica"),tr("No se puede actualizar el registro de analítica. Error:")+
+                             qAnalitica->lastError().text(),
+                             tr("Aceptar"));
 }

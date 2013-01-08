@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
     w.setVisible(true);
     w.setWindowState(Qt::WindowMaximized );
     w.show();
+
     
     return a.exec();
 }

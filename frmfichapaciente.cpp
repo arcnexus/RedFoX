@@ -818,15 +818,17 @@ void FrmFichaPaciente::AnadirAnalitica()
 void FrmFichaPaciente::VerAnalitica()
 {
     if(!oEpisodio->getid()==0) {
-        FrmVerAnalitica *frmAnalitica = new FrmVerAnalitica(this);
-        Analitica *oAnalitica = new Analitica(this);
-        connect(this,SIGNAL(pasaid(int)),frmAnalitica,SLOT(capturaId(int)));
-        connect(this,SIGNAL(pasaPaciente(QString)),frmAnalitica,SLOT(capturaPaciente(QString)));
+
+       FrmVerAnalitica frmAnalitica;
+       Analitica *oAnalitica = new Analitica(this);
+        frmAnalitica.setWindowModality(Qt::WindowModal);
+        connect(this,SIGNAL(pasaid(int)),&frmAnalitica,SLOT(capturaId(int)));
+        connect(this,SIGNAL(pasaPaciente(QString)),&frmAnalitica,SLOT(capturaPaciente(QString)));
         oAnalitica->setIdEpisodio(oEpisodio->getid());
         oAnalitica->setId(ui->listaAnaliticas->item(ui->listaAnaliticas->currentRow(),2)->text().toInt());
         emit pasaid(oAnalitica->getId());
         emit pasaPaciente(ui->txtPaciente->text());
-        frmAnalitica->exec();
+        frmAnalitica.exec();
     } else
         QMessageBox::warning(this,tr("Analitica"),tr("Debe seleccionar un episodio antes de poder añadir una antalítica"), tr("Aceptar"));
     llenartablahistorialanalisisepisodio();

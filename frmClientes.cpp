@@ -985,13 +985,13 @@ void frmClientes::on_btnFichaPaciente_clicked()
     // open patient form
 
 
-    FrmFichaPaciente *frmPaciente = new FrmFichaPaciente(this);
-    frmPaciente->setWindowModality(Qt::WindowModal);
+    FrmFichaPaciente frmPaciente;
+    frmPaciente.setWindowModality(Qt::WindowModal);
 
 
     // conexiones
-    connect(this,SIGNAL(enviahistoriaynombre(int,QString)),frmPaciente,SLOT(recibedatospaciente(int ,QString)));
+    connect(this,SIGNAL(enviahistoriaynombre(int,QString)),&frmPaciente,SLOT(recibedatospaciente(int ,QString)));
     emit enviahistoriaynombre(oCliente->getId(),oCliente->getcNombreFiscal());
-    frmPaciente->cargarDatos(oCliente->getId());
-    frmPaciente->show();
+    frmPaciente.cargarDatos(oCliente->getId());
+    frmPaciente.exec();
 }

@@ -149,7 +149,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Preparo espacio de trabajo para poder acojer ventanas dentro de él
     workspace = new QMdiArea(ui->widget);
-    //workspace->setStyleSheet("background-color: rgb(255, 227, 171)");
     QGridLayout *gridLayout = new QGridLayout;
      gridLayout->addWidget(workspace, 0, 0);
      ui->widget->setLayout(gridLayout);

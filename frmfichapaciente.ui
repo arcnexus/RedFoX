@@ -54,8 +54,7 @@
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>999999</string>
@@ -274,7 +273,7 @@ color: rgb(255,255,255);</string>
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_7">
       <attribute name="title">
@@ -401,6 +400,10 @@ background-color: rgb(255, 255, 255);</string>
               <height>32</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">
+background-color: rgb(0, 170, 255);</string>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -428,8 +431,7 @@ color: rgb(0, 0, 0);</string>
                 <bool>false</bool>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-color: rgb(0, 0, 0);</string>
+                <string notr="true">color: rgb(0, 0, 0);</string>
                </property>
                <property name="text">
                 <string>No</string>
@@ -970,7 +972,7 @@ color: rgb(255, 0, 0);</string>
              <bool>true</bool>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tabWidget_2Page1">
              <attribute name="icon">
@@ -1686,6 +1688,15 @@ color: rgb(255,255,255);
                 </property>
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::SingleSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
                 </property>
                </widget>
               </item>

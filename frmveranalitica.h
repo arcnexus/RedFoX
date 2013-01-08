@@ -17,11 +17,15 @@ public:
     
 private:
     Ui::FrmVerAnalitica *ui;
+    int nID;
 private slots:
-    void llenarTabla();
-    void capturaId(int);
+    void llenarTabla(int nID);
+    void capturaId(int nId);
     void capturaPaciente(QString);
-    void cargarDatos();
+    void cargarDatos(int nID);
+    void editarDatos();
+    void guardarDatos();
+    void guardarDatosItems(int,int);
 };
 
 #endif // FRMVERANALITICA_H
