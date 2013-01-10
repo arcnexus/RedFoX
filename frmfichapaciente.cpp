@@ -73,6 +73,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->btnAnadirInterconsulta,SIGNAL(clicked()),this,SLOT(AnadirInterconsulta()));
     connect(ui->btnAnadirAnalitica,SIGNAL(clicked()),this,SLOT(AnadirAnalitica()));
     connect(ui->btnVerAnalitica,SIGNAL(clicked()),this,SLOT(VerAnalitica()));
+    connect(ui->btnBorrarAnalitica,SIGNAL(clicked()),this,SLOT(BorrarAnalitica()));
 
 
 
@@ -538,7 +539,7 @@ void FrmFichaPaciente::llenartablahistorialfarmacologiaepisodio()
     qFarma->bindValue(":id",oEpisodio->getid());
     ui->listaTratamientosFarma->setRowCount(0);
     ui->listaTratamientosFarma->setColumnCount(3);
-    ui->listaTratamientosFarma->setColumnWidth(0,ui->listaTratamientosFarma->width()-30);
+    ui->listaTratamientosFarma->setColumnWidth(0,120);
     ui->listaTratamientosFarma->setColumnWidth(1,0);
     ui->listaTratamientosFarma->setColumnWidth(2,0);
     ui->listaTratamientosFarma->setHorizontalHeaderLabels(list);
@@ -662,16 +663,17 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
 {
     // Cargar imagenes episodio
     QStringList list;
-    list <<QObject::tr("ANALISIS")<< QObject::tr("FECHA") <<"ID";
+    list <<QObject::tr("ANALISIS")<< QObject::tr("FECHA") <<"ID" <<tr("COMENTARIOS");
     QSqlQuery *qAnalisis = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    QString cSQL = " Select analisis, id,fechaanalisis from Analitica where idepisodio = :id ";
+    QString cSQL = " Select analisis, id,fechaanalisis,comentarios from Analitica where idepisodio = :id ";
     qAnalisis->prepare(cSQL);
     qAnalisis->bindValue(":id",oEpisodio->getid());
     ui->listaAnaliticas->setRowCount(0);
-    ui->listaAnaliticas->setColumnCount(3);
-    ui->listaAnaliticas->setColumnWidth(0,250);
+    ui->listaAnaliticas->setColumnCount(4);
+    ui->listaAnaliticas->setColumnWidth(0,200);
     ui->listaAnaliticas->setColumnWidth(1,170);
     ui->listaAnaliticas->setColumnWidth(2,0);
+    ui->listaAnaliticas->setColumnWidth(3,150);
     ui->listaAnaliticas->setHorizontalHeaderLabels(list);
     int pos = 0;
     QSqlRecord reg ;
@@ -704,6 +706,12 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
             newItem2->setTextColor(Qt::blue); // color de los items
             ui->listaAnaliticas->setItem(pos,2,newItem2);
 
+            // comentarios
+            QTableWidgetItem *newItem3 = new QTableWidgetItem(reg.field("comentarios").value().toString());
+            // para que los elementos no sean editables
+            newItem3->setFlags(newItem3->flags() & (~Qt::ItemIsEditable));
+            newItem3->setTextColor(Qt::blue); // color de los items
+            ui->listaAnaliticas->setItem(pos,3,newItem3);
             pos++;
 
         }
@@ -832,6 +840,13 @@ void FrmFichaPaciente::VerAnalitica()
     } else
         QMessageBox::warning(this,tr("Analitica"),tr("Debe seleccionar un episodio antes de poder añadir una antalítica"), tr("Aceptar"));
     llenartablahistorialanalisisepisodio();
+}
+
+void FrmFichaPaciente::BorrarAnalitica()
+{
+    Analitica oAnalitica;
+    oAnalitica.BorrarAnalitica(ui->listaAnaliticas->item(ui->listaAnaliticas->currentRow(),3)->text().toInt());
+
 }
 
 

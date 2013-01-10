@@ -12,6 +12,8 @@ Frmanalitica2::Frmanalitica2(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->btnAnadir,SIGNAL(clicked()),this,SLOT(aceptar()));
     connect(ui->btnCancelar,SIGNAL(clicked()),this,SLOT(close()));
+    connect(ui->btnMarcar,SIGNAL(clicked()),this,SLOT(marcartodos()));
+    connect(ui->btnDesmarcar,SIGNAL(clicked()),this,SLOT(desmarcartodos()));
 }
 
 Frmanalitica2::~Frmanalitica2()
@@ -92,14 +94,35 @@ void Frmanalitica2::aceptar()
     for(lin= 0; lin < lineas ; lin++) {
         status = ui->tabla->item(lin,0)->checkState();
         if(status==true){
-            oAnalitica->AnadirLineas(this->idAnalitica,ui->tabla->item(lin,1)->text(),ui->tabla->item(lin,2)->text(),
-                                     ui->tabla->item(lin,3)->text(),ui->tabla->item(lin,4)->text(),
-                                     this->cTipo);
+            QString cAnalitica = ui->tabla->item(lin,1)->text();
+            QString cValor = ui->tabla->item(lin,2)->text();
+            QString cRefer = ui->tabla->item(lin,3)->text();
+            QString cComent = ui->tabla->item(lin,4)->text();
+
+            oAnalitica->AnadirLineas(this->idAnalitica,cAnalitica,cValor,cRefer,cComent,this->cTipo);
 
         }
     }
     this->close();
 
+}
+
+void Frmanalitica2::marcartodos()
+{
+    int lin = 0;
+    int lineas = ui->tabla->rowCount();
+    for(lin= 0; lin < lineas ; lin++) {
+        ui->tabla->item(lin,0)->setCheckState(Qt::Checked);
+    }
+}
+
+void Frmanalitica2::desmarcartodos()
+{
+    int lin = 0;
+    int lineas = ui->tabla->rowCount();
+    for(lin= 0; lin < lineas ; lin++) {
+        ui->tabla->item(lin,0)->setCheckState(Qt::Unchecked);
+    }
 }
 
 

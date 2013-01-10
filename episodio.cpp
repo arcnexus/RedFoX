@@ -80,6 +80,12 @@ void Episodio::GuardarEpisodio()
 
 }
 
+void Episodio::BorrarEpisodio(int nID)
+{
+
+
+}
+
 int Episodio::getid()
 {
     return this->id;

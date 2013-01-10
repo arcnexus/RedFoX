@@ -58,17 +58,18 @@ void FrmAnalitica::llenartabla()
     // Cargar analitica
     ui->tablaAnalitica->blockSignals(true);
     QStringList list;
-    list <<tr("DESCRIPCIÓN")<<tr("VALOR") <<tr("REFERENCIA")<<tr("id");
+    list <<tr("DESCRIPCIÓN")<<tr("VALOR") <<tr("REFERENCIA")<<tr("id") << tr("COMENTARIOS");
     QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     QString cSQL = " select * from analitica2 where idanalitica =:idanalitica";
     qAnalitica->prepare(cSQL);
     qAnalitica->bindValue(":idanalitica",oAnalitica.getId());
     ui->tablaAnalitica->setRowCount(0);
-    ui->tablaAnalitica->setColumnCount(4);
-    ui->tablaAnalitica->setColumnWidth(0,450);
+    ui->tablaAnalitica->setColumnCount(5);
+    ui->tablaAnalitica->setColumnWidth(0,350);
     ui->tablaAnalitica->setColumnWidth(1,120);
     ui->tablaAnalitica->setColumnWidth(2,120);
     ui->tablaAnalitica->setColumnWidth(3,0);
+    ui->tablaAnalitica->setColumnWidth(4,250);
     ui->tablaAnalitica->setHorizontalHeaderLabels(list);
     int pos = 0;
     QSqlRecord reg ;
@@ -104,6 +105,12 @@ void FrmAnalitica::llenartabla()
             newItem3->setTextColor(Qt::blue); // color de los items
             ui->tablaAnalitica->setItem(pos,3,newItem3);
 
+            // comentarios
+            QTableWidgetItem *newItem4 = new QTableWidgetItem(reg.field("comentarios").value().toString());
+            // para que los elementos no sean editables
+            newItem4->setFlags(newItem4->flags() & (~Qt::ItemIsEditable));
+            newItem4->setTextColor(Qt::blue); // color de los items
+            ui->tablaAnalitica->setItem(pos,4,newItem4);
             pos++;
 
         }

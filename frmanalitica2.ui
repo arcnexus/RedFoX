@@ -18,18 +18,7 @@
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="1">
-    <widget class="QPushButton" name="btnAnadir">
-     <property name="text">
-      <string>Añadir</string>
-     </property>
-     <property name="icon">
-      <iconset resource="terra.qrc">
-       <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
+   <item row="2" column="7">
     <widget class="QPushButton" name="btnCancelar">
      <property name="text">
       <string>Cancelar</string>
@@ -40,7 +29,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -53,8 +42,39 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="0" colspan="3">
+   <item row="2" column="6">
+    <widget class="QPushButton" name="btnAnadir">
+     <property name="text">
+      <string>Añadir</string>
+     </property>
+     <property name="icon">
+      <iconset resource="terra.qrc">
+       <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="8">
     <widget class="QTableWidget" name="tabla"/>
+   </item>
+   <item row="0" column="2">
+    <widget class="QPushButton" name="btnMarcar">
+     <property name="text">
+      <string>Marcar todos</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="btnDesmarcar">
+     <property name="maximumSize">
+      <size>
+       <width>167</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Desmarcar todos</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

@@ -25,6 +25,8 @@ public slots:
 private slots:
     void cargarDatos(QString cTipo,int idAnalitica);
     void aceptar();
+    void marcartodos();
+    void desmarcartodos();
 
 signals:
 };

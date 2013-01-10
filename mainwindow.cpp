@@ -239,7 +239,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
                   }
          } else
-             qDebug() <<"Fallo la conexión al fichero Medico";
+             qDebug() <<"Fallo la conexión al fichero Médico";
 
 
      } else

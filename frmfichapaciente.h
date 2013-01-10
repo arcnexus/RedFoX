@@ -60,6 +60,7 @@ private slots:
     void AnadirInterconsulta();
     void AnadirAnalitica();
     void VerAnalitica();
+    void BorrarAnalitica();
 signals:
     void pasaid(int);
     void pasaCodigoNacional(QString);
