@@ -41,11 +41,11 @@ private slots:
 
     void btnArticulos_clicked();
 
-    void on_botEmpresas_clicked();
+   // void on_botEmpresas_clicked();
 
     void btnProveedores_clicked();
 
-    void on_botConfiguracion_clicked();
+  //  void on_botConfiguracion_clicked();
 
     void btnAlbaran_clientes_clicked();
 
@@ -55,7 +55,7 @@ private slots:
 
     void btnCajaMinuta_clicked();
 
-    void on_btnAgenda_clicked();
+ //4   void on_btnAgenda_clicked();
 
     void cambiarEstilo(int);
 

@@ -5,6 +5,8 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include "analitica.h"
+#include "frmanalitica.h"
+#include <QDate>
 
     FrmVerAnalitica::FrmVerAnalitica(QWidget *parent) :
     QDialog(parent),
@@ -17,7 +19,8 @@
     connect(ui->btnCerrar,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->btnEditar,SIGNAL(clicked()), this,SLOT(editarDatos()));
     connect(ui->btnGuardar,SIGNAL(clicked()),this,SLOT(guardarDatos()));
-    //connect(ui->tablaAnalitica,SIGNAL(itemChanged(QTableWidgetItem*)),this, SLOT(guardarDatosItems(int,int)));
+    connect(ui->btnDeshacer,SIGNAL(clicked()),this,SLOT(Deshacer()));
+    connect(ui->btnaddlinea,SIGNAL(clicked()),this,SLOT(addLineas()));
 
 }
 FrmVerAnalitica::~FrmVerAnalitica()
@@ -27,8 +30,11 @@ FrmVerAnalitica::~FrmVerAnalitica()
 
 void FrmVerAnalitica::llenarTabla(int nID)
 {
+
+    //QTableWidget *tablaAnalitica = new QTableWidget(this);
+    connect(ui->tablaAnalitica,SIGNAL(itemChanged(QTableWidgetItem*)),this, SLOT(guardarDatosItems(QTableWidgetItem*)));
     // Cargar analitica
-    ui->tablaAnalitica->clear();
+    //ui->tablaAnalitica->clear();
     QStringList list;
     list <<tr("DESCRIPCIÓN")<<tr("VALOR") <<tr("REFERENCIA") <<tr("COMENTARIOS") <<tr("id");
     QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
@@ -40,26 +46,30 @@ void FrmVerAnalitica::llenarTabla(int nID)
     ui->tablaAnalitica->setColumnWidth(0,150);
     ui->tablaAnalitica->setColumnWidth(1,90);
     ui->tablaAnalitica->setColumnWidth(2,90);
-    ui->tablaAnalitica->setColumnWidth(3,90);
+    ui->tablaAnalitica->setColumnWidth(3,120);
     ui->tablaAnalitica->setColumnWidth(4,0);
     ui->tablaAnalitica->setHorizontalHeaderLabels(list);
     int pos = 0;
     QSqlRecord reg ;
     // Relleno la tabla
+    ui->tablaAnalitica->blockSignals(true);
     if (qAnalitica->exec()) {
         while (qAnalitica->next()) {
             // Descripción
             reg = qAnalitica->record();
             ui->tablaAnalitica->setRowCount(pos+1);
-            QTableWidgetItem *newItem = new QTableWidgetItem(reg.field("descripcion").value().toString());
+            //QTableWidgetItem *newItem = new QTableWidgetItem(reg.field("descripcion").value().toString());
             // para que los elementos no sean editables
-            newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
-            newItem->setTextColor(Qt::blue); // color de los Medicamentos activos
-            ui->tablaAnalitica->setItem(pos,0,newItem);
+            //newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
+            //newItem->setTextColor(Qt::blue); // color de los Medicamentos activos
+
+            //ui->tablaAnalitica->setItem(pos,0,newItem);
+            ui->tablaAnalitica->setItem(pos,0,new QTableWidgetItem (reg.field("descripcion").value().toString()));
 
             // Valor
             QTableWidgetItem *newItem1 = new QTableWidgetItem(reg.field("valor").value().toString());
             newItem1->setTextColor(Qt::blue); // color de los items
+            ui->tablaAnalitica->removeCellWidget(pos,1);
             ui->tablaAnalitica->setItem(pos,1,newItem1);
 
 
@@ -67,6 +77,7 @@ void FrmVerAnalitica::llenarTabla(int nID)
             QTableWidgetItem *newItem2 = new QTableWidgetItem(reg.field("referencia").value().toString());
 
             newItem2->setTextColor(Qt::blue); // color de los items
+            ui->tablaAnalitica->removeCellWidget(pos,2);
             ui->tablaAnalitica->setItem(pos,2,newItem2);
 
 
@@ -74,6 +85,7 @@ void FrmVerAnalitica::llenarTabla(int nID)
             QTableWidgetItem *newItem3 = new QTableWidgetItem(reg.field("comentarios").value().toString());
 
             newItem3->setTextColor(Qt::blue); // color de los items
+            ui->tablaAnalitica->removeCellWidget(pos,3);
             ui->tablaAnalitica->setItem(pos,3,newItem3);
 
 
@@ -82,12 +94,15 @@ void FrmVerAnalitica::llenarTabla(int nID)
             // para que los elementos no sean editables
             newItem4->setFlags(newItem4->flags() & (~Qt::ItemIsEditable));
             newItem4->setTextColor(Qt::blue); // color de los items
+            ui->tablaAnalitica->removeCellWidget(pos,4);
             ui->tablaAnalitica->setItem(pos,4,newItem4);
 
             pos++;
 
         }
+        nEdited = 1;
     }
+    ui->tablaAnalitica->blockSignals(false);
 }
 
 void FrmVerAnalitica::capturaId(int nId)
@@ -103,6 +118,16 @@ void FrmVerAnalitica::capturaPaciente(QString Paciente)
 }
 
 void FrmVerAnalitica::cargarDatos(int nID)
+{
+    Analitica oAna;
+    oAna.recuperarDatos(nID);
+    ui->txtAnalitica->setText(oAna.getAnalisis());
+    ui->txtFechaAnalitica->setDate(oAna.getFechaAnalisis());
+    ui->txtComentarios->setText(oAna.getComentarios());
+
+}
+
+void FrmVerAnalitica::cargarDatos()
 {
     Analitica oAna;
     oAna.recuperarDatos(nID);
@@ -143,12 +168,41 @@ void FrmVerAnalitica::guardarDatos()
 
 }
 
-void FrmVerAnalitica::guardarDatosItems(int row, int col)
+void FrmVerAnalitica::guardarDatosItems(QTableWidgetItem* tItem)
 {
-    int nIdItem = ui->tablaAnalitica->item(row,4)->text().toInt();
-    Analitica oanalit;
-    oanalit.GuardarLineas(nIdItem,ui->tablaAnalitica->item(row,1)->text(),ui->tablaAnalitica->item(row,2)->text(),
-                          ui->tablaAnalitica->item(row,3)->text());
-    llenarTabla(nID);
+   int fila = tItem->row();
+   if (nEdited == 1) {
+       int id = ui->tablaAnalitica->item(fila,4)->text().toInt();
+       QString valor = ui->tablaAnalitica->item(fila,1)->text();
+       QString refer = ui->tablaAnalitica->item(fila,2)->text();
+       QString coment = ui->tablaAnalitica->item(fila,3)->text();
 
+       Analitica oAna;
+       oAna.GuardarLineas(id,valor,refer,coment);
+   }
 }
+
+void FrmVerAnalitica::Deshacer()
+{
+    ui->btnEditar->setEnabled(false);
+    ui->btnGuardar->setEnabled(true);
+    ui->btnDeshacer->setEnabled(true);
+    ui->btnCerrar->setEnabled(false);
+    cargarDatos();
+}
+
+void FrmVerAnalitica::addLineas()
+{
+   FrmAnalitica frmAnalitica;
+   connect(this,SIGNAL(pasarID(int)),&frmAnalitica,SLOT(capturaID(int)));
+   connect(this,SIGNAL(pasarPaciente(QString)),&frmAnalitica,SLOT(capturaPaciente(QString)));
+   connect(this,SIGNAL(pasarFecha(QDate)),&frmAnalitica,SLOT(AsignarFecha(QDate)));
+   connect(this,SIGNAL(pasarAnalitica(QString)),&frmAnalitica,SLOT(AsignarAnalitica(QString)));
+    emit pasarID(nID);
+    emit pasarPaciente(ui->txtPaciente->text());
+   emit pasarFecha(ui->txtFechaAnalitica->date());
+   emit pasarAnalitica(ui->txtAnalitica->text());
+    frmAnalitica.exec();
+ llenarTabla(nID);
+}
+

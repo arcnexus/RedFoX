@@ -13,7 +13,6 @@
 #include <QSqlError>
 #include <QDebug>
 
-Analitica * oAnalitica = new Analitica();
 
 FrmAnalitica::FrmAnalitica(QWidget *parent) :
     QDialog(parent),
@@ -40,7 +39,8 @@ FrmAnalitica::FrmAnalitica(QWidget *parent) :
      * VALORES CONTROLES
      *---------------------------------*/
     ui->txtFechaAnalitica->setDate(QDate::currentDate());
-    oAnalitica->setFechaAnalisis(QDate::currentDate());
+
+    oAnalitica.setFechaAnalisis(QDate::currentDate());
 
     /*----------------------------------
      *LLenar Tabla
@@ -56,13 +56,13 @@ FrmAnalitica::~FrmAnalitica()
 void FrmAnalitica::llenartabla()
 {
     // Cargar analitica
-    ui->tablaAnalitica->clear();
+    ui->tablaAnalitica->blockSignals(true);
     QStringList list;
     list <<tr("DESCRIPCIÓN")<<tr("VALOR") <<tr("REFERENCIA")<<tr("id");
     QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     QString cSQL = " select * from analitica2 where idanalitica =:idanalitica";
     qAnalitica->prepare(cSQL);
-    qAnalitica->bindValue(":idanalitica",oAnalitica->getId());
+    qAnalitica->bindValue(":idanalitica",oAnalitica.getId());
     ui->tablaAnalitica->setRowCount(0);
     ui->tablaAnalitica->setColumnCount(4);
     ui->tablaAnalitica->setColumnWidth(0,450);
@@ -107,24 +107,25 @@ void FrmAnalitica::llenartabla()
             pos++;
 
         }
+        ui->tablaAnalitica->blockSignals(false);
     }
 
 }
 
 void FrmAnalitica::AnadirCamposAnalitica()
 {
-    Frmanalitica2 *frmanalitica2 = new Frmanalitica2(this);
-    connect(this,SIGNAL(pasartipo(QString,int)),frmanalitica2,SLOT(cargarDatos(QString,int)));
-    emit pasartipo(ui->cboTipoAnalitica->currentText(),oAnalitica->getId());
+    Frmanalitica2 frmanalitica2;
+    connect(this,SIGNAL(pasartipo(QString,int)),&frmanalitica2,SLOT(cargarDatos(QString,int)));
+    emit pasartipo(ui->cboTipoAnalitica->currentText(),oAnalitica.getId());
 
-    frmanalitica2->exec();
+    frmanalitica2.exec();
     llenartabla();
 
 }
 
 void FrmAnalitica::capturaID(int idAna)
 {
-    oAnalitica->setId(idAna);
+    oAnalitica.setId(idAna);
 }
 
 void FrmAnalitica::capturaPaciente(QString Paciente)
@@ -134,12 +135,24 @@ void FrmAnalitica::capturaPaciente(QString Paciente)
 
 void FrmAnalitica::AsignarAnalitica()
 {
-    oAnalitica->setAnalisis(ui->txtAnalitica->text());
+    oAnalitica.setAnalisis(ui->txtAnalitica->text());
+}
+
+void FrmAnalitica::AsignarAnalitica(QString Analitica)
+{
+    ui->txtAnalitica->setText(Analitica);
+    oAnalitica.setAnalisis(Analitica);
 }
 
 void FrmAnalitica::AsignarFecha()
 {
-    oAnalitica->setFechaAnalisis(ui->txtFechaAnalitica->date());
+    oAnalitica.setFechaAnalisis(ui->txtFechaAnalitica->date());
+}
+
+void FrmAnalitica::AsignarFecha(QDate Fecha)
+{
+    ui->txtFechaAnalitica->setDate(Fecha);
+    oAnalitica.setFechaAnalisis(Fecha);
 }
 
 void FrmAnalitica::GuardarYCerrar()
@@ -150,9 +163,9 @@ void FrmAnalitica::GuardarYCerrar()
                   "fechaanalisis = :fechaanalisis,"
                   "tipoanalisis = :tipoanalisis "
                   "WHERE id =:id");
-    qAna->bindValue(":analisis",oAnalitica->getAnalisis());
-    qAna->bindValue(":fechaanalisis",oAnalitica->getFechaAnalisis());
-    qAna->bindValue(":id",oAnalitica->getId());
+    qAna->bindValue(":analisis",oAnalitica.getAnalisis());
+    qAna->bindValue(":fechaanalisis",oAnalitica.getFechaAnalisis());
+    qAna->bindValue(":id",oAnalitica.getId());
 
     if(!qAna->exec()){
         QMessageBox::warning(this,tr("Analítica"),tr("No se pudo actualizar la cabecera de analítica:")+

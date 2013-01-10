@@ -56,6 +56,10 @@ frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     this->Altas = false;
     ui->txtcCodigoArticulo->setFocus();
     BloquearCampos();
+    /* -----------------------------------------
+     *CONEXIONES
+     *----------------------------------------*/
+    connect(ui->txtcCodigoArticulo,SIGNAL(editingFinished()),this,SLOT(on_txtcCodigoArticulo_lostFocus()));
 }
 
 frmFacturas::~frmFacturas()

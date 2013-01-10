@@ -20,45 +20,7 @@
    <iconset resource="terra.qrc">
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="0">
-    <widget class="QTableWidget" name="tablaAnalitica">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" colspan="3">
-    <widget class="QFrame" name="frame_2">
-     <property name="minimumSize">
-      <size>
-       <width>317</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <widget class="QTextEdit" name="txtComentarios">
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
+  <layout class="QGridLayout" name="gridGeneral">
    <item row="0" column="3">
     <widget class="QPushButton" name="btnCerrar">
      <property name="maximumSize">
@@ -82,31 +44,6 @@
      </property>
      <property name="checked">
       <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QPushButton" name="btnEditar">
-     <property name="text">
-      <string>Editar</string>
-     </property>
-     <property name="icon">
-      <iconset resource="terra.qrc">
-       <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QPushButton" name="btnGuardar">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Guardar</string>
-     </property>
-     <property name="icon">
-      <iconset resource="terra.qrc">
-       <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
      </property>
     </widget>
    </item>
@@ -191,6 +128,53 @@
      </layout>
     </widget>
    </item>
+   <item row="0" column="2">
+    <widget class="QPushButton" name="btnEditar">
+     <property name="text">
+      <string>Editar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="terra.qrc">
+       <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="btnaddlinea">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="terra.qrc">
+       <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QPushButton" name="btnDeleteLinea">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="terra.qrc">
+       <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="btnGuardar">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Guardar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="terra.qrc">
+       <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="3">
     <widget class="QPushButton" name="btnDeshacer">
      <property name="enabled">
@@ -204,6 +188,53 @@
        <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
      </property>
     </widget>
+   </item>
+   <item row="4" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="2" rowspan="3" colspan="2">
+    <widget class="QFrame" name="frame_2">
+     <property name="minimumSize">
+      <size>
+       <width>317</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QTextEdit" name="txtComentarios">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" rowspan="3">
+    <widget class="QTableWidget" name="tablaAnalitica"/>
    </item>
   </layout>
  </widget>

@@ -9,6 +9,8 @@
 #include "frmbuscarpoblacion.h"
 #include "configuracion.h"
 #include "frmfichapaciente.h"
+#include "cliente.h"
+#include "sqlcalls.h"
 
 
 
@@ -91,6 +93,8 @@ private:
     QSqlDatabase dbCliente;
     FrmBuscarPoblacion BuscarPoblacion;
     QSqlQuery tbpaciente;
+    Cliente oCliente;
+    SqlCalls *llamadasSQL;
 
 
 };

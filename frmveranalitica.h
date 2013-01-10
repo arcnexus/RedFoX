@@ -2,6 +2,8 @@
 #define FRMVERANALITICA_H
 
 #include <QDialog>
+#include <QTableWidgetItem>
+#include <QDate>
 
 namespace Ui {
 class FrmVerAnalitica;
@@ -18,14 +20,23 @@ public:
 private:
     Ui::FrmVerAnalitica *ui;
     int nID;
+    int nEdited;
 private slots:
     void llenarTabla(int nID);
     void capturaId(int nId);
     void capturaPaciente(QString);
     void cargarDatos(int nID);
+    void cargarDatos();
     void editarDatos();
     void guardarDatos();
-    void guardarDatosItems(int,int);
+    void guardarDatosItems(QTableWidgetItem*);
+    void Deshacer();
+    void addLineas();
+signals:
+    void pasarID(int);
+    void pasarPaciente(QString);
+    void pasarFecha(QDate);
+    void pasarAnalitica(QString);
 };
 
 #endif // FRMVERANALITICA_H

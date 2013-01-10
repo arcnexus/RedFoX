@@ -108,6 +108,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(BtnCerrar,SIGNAL(clicked()),this,SLOT(close()));
 
 
+
     QSqlDatabase dbEmp;
     m_config = new Configuracion();
             QSettings settings("infint", "terra");
@@ -410,7 +411,7 @@ void MainWindow::Ventas()
 void MainWindow::btnClientes_clicked()
 {
     ui->btnClientes->setEnabled(false);
-    frmClientes *frmClientes1 = new frmClientes(m_config);
+    frmClientes *frmClientes1 = new frmClientes(m_config,this);
     workspace->addSubWindow(frmClientes1);
     frmClientes1->setWindowState(Qt::WindowMaximized);
     frmClientes1->exec();
@@ -439,16 +440,16 @@ void MainWindow::btnArticulos_clicked()
    // ui->btnArticulos->setEnabled(true);
 }
 
-void MainWindow::on_botEmpresas_clicked()
-{
-    //ui->botEmpresas->setEnabled(false);
-    FrmEmpresas *frmEmpresa1 = new FrmEmpresas();
-    workspace->addSubWindow(frmEmpresa1);
-    frmEmpresa1->setWindowState(Qt::WindowMaximized);
-    frmEmpresa1->exec();
-    cerrarSubWindows();
-    //ui->botEmpresas->setEnabled(true);
-}
+//void MainWindow::on_botEmpresas_clicked()
+//{
+//    //ui->botEmpresas->setEnabled(false);
+//    FrmEmpresas *frmEmpresa1 = new FrmEmpresas();
+//    workspace->addSubWindow(frmEmpresa1);
+//    frmEmpresa1->setWindowState(Qt::WindowMaximized);
+//    frmEmpresa1->exec();
+//    cerrarSubWindows();
+//    //ui->botEmpresas->setEnabled(true);
+//}
 
 void MainWindow::btnProveedores_clicked()
 {
@@ -462,21 +463,21 @@ void MainWindow::btnProveedores_clicked()
 
 }
 
-void MainWindow::on_botConfiguracion_clicked()
-{
-   // ui->botConfiguracion->setEnabled(false);
-    FrmConfiguracion *frmConfiguracion1 = new FrmConfiguracion();
-    workspace->addSubWindow(frmConfiguracion1);
-    frmConfiguracion1->setWindowState(Qt::WindowMaximized);
-    frmConfiguracion1->exec();
-    cerrarSubWindows();
-   // ui->botConfiguracion->setEnabled(true);
-}
+//void MainWindow::on_botConfiguracion_clicked()
+//{
+//   // ui->botConfiguracion->setEnabled(false);
+//    FrmConfiguracion *frmConfiguracion1 = new FrmConfiguracion();
+//    workspace->addSubWindow(frmConfiguracion1);
+//    frmConfiguracion1->setWindowState(Qt::WindowMaximized);
+//    frmConfiguracion1->exec();
+//    cerrarSubWindows();
+//   // ui->botConfiguracion->setEnabled(true);
+//}
 
 void MainWindow::btnAlbaran_clientes_clicked()
 {
     //->setEnabled(false);
-    FrmAlbaran *frmAlbaran1 = new FrmAlbaran();
+    FrmAlbaran *frmAlbaran1 = new FrmAlbaran(this);
     workspace->addSubWindow(frmAlbaran1);
     frmAlbaran1->setWindowState(Qt::WindowMaximized);
     frmAlbaran1->exec();
@@ -516,15 +517,15 @@ void MainWindow::btnCajaMinuta_clicked()
    // ui->btnCajaMinuta->setEnabled(true);
 }
 
-void MainWindow::on_btnAgenda_clicked()
-{
-    ui->btnAgenda->setEnabled(false);
-    frmAgendaVisitas *frmAgenda1 = new frmAgendaVisitas();
-    frmAgenda1->setWindowState(Qt::WindowMaximized);
-    frmAgenda1->exec();
-    cerrarSubWindows();
-    ui->btnAgenda->setEnabled(true);
-}
+//void MainWindow::on_btnAgenda_clicked()
+//{
+//    ui->btnAgenda->setEnabled(false);
+//    frmAgendaVisitas *frmAgenda1 = new frmAgendaVisitas();
+//    frmAgenda1->setWindowState(Qt::WindowMaximized);
+//    frmAgenda1->exec();
+//    cerrarSubWindows();
+//    ui->btnAgenda->setEnabled(true);
+//}
 
 void MainWindow::cambiarEstilo(int estado)
 {
