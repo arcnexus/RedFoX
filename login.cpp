@@ -51,12 +51,12 @@ Login::~Login()
     //dbTerra.close();
 }
 
-const QString &Login::getUsuario() const
+const QString Login::getUsuario()
 {
     return ui->lineUsuario->text();
 }
 
-const QString &Login::getEmpresa() const
+const QString Login::getEmpresa()
 {
     return ui->cboEmpresa->currentText();
 }

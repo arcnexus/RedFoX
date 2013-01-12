@@ -6,15 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1145</width>
-    <height>536</height>
+    <width>963</width>
+    <height>591</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgba(255, 75, 75, 148);</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
@@ -68,89 +65,6 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_13">
-      <item row="0" column="1" colspan="2">
-       <layout class="QGridLayout" name="gridLayout_6">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Empresa</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QLabel" name="label_24">
-          <property name="text">
-           <string>Ejercicio:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="txtcCodigo">
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1" colspan="3">
-         <widget class="QLineEdit" name="txtEmpresa">
-          <property name="minimumSize">
-           <size>
-            <width>380</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <widget class="QSpinBox" name="txtnEjercicio">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="minimum">
-           <number>2010</number>
-          </property>
-          <property name="maximum">
-           <number>2999</number>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="4">
-         <spacer name="horizontalSpacer_4">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item row="2" column="1">
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item row="0" column="0" rowspan="3">
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
@@ -310,18 +224,88 @@
         </item>
        </layout>
       </item>
+      <item row="0" column="1" colspan="2">
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Empresa</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_24">
+          <property name="text">
+           <string>Ejercicio:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="txtcCodigo">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" colspan="3">
+         <widget class="QLineEdit" name="txtEmpresa">
+          <property name="minimumSize">
+           <size>
+            <width>380</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QSpinBox" name="txtnEjercicio">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="minimum">
+           <number>2010</number>
+          </property>
+          <property name="maximum">
+           <number>2999</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
       <item row="1" column="1" colspan="2">
        <widget class="QToolBox" name="toolBox">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>992</width>
-           <height>306</height>
+           <width>802</width>
+           <height>351</height>
           </rect>
          </property>
          <attribute name="label">
@@ -718,8 +702,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>975</width>
-           <height>316</height>
+           <width>907</width>
+           <height>334</height>
           </rect>
          </property>
          <attribute name="label">
@@ -1128,68 +1112,26 @@
         </widget>
        </widget>
       </item>
+      <item row="2" column="1">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>txtcCodigo</tabstop>
-  <tabstop>txtEmpresa</tabstop>
-  <tabstop>txtnEjercicio</tabstop>
-  <tabstop>txtcDireccion</tabstop>
-  <tabstop>txtcCP</tabstop>
-  <tabstop>txtcPoblacion</tabstop>
-  <tabstop>txtcProvincia</tabstop>
-  <tabstop>txtcPais</tabstop>
-  <tabstop>txtcCif</tabstop>
-  <tabstop>txtcInscripcion</tabstop>
-  <tabstop>txtnDigitosFactura</tabstop>
-  <tabstop>txtcSerieFactura</tabstop>
-  <tabstop>txtcTelefono1</tabstop>
-  <tabstop>txtcTelefono2</tabstop>
-  <tabstop>txtcFax</tabstop>
-  <tabstop>txtcMail</tabstop>
-  <tabstop>txtcWeb</tabstop>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>txtcComentarioFactura</tabstop>
-  <tabstop>botAnadir</tabstop>
-  <tabstop>botSiguiente</tabstop>
-  <tabstop>botAnterior</tabstop>
-  <tabstop>botBuscar</tabstop>
-  <tabstop>botGuardar</tabstop>
-  <tabstop>botBorrar</tabstop>
-  <tabstop>botCerrar</tabstop>
-  <tabstop>txtcDriver</tabstop>
-  <tabstop>txtRutaBd</tabstop>
-  <tabstop>txtcHost</tabstop>
-  <tabstop>txtcNombreBd</tabstop>
-  <tabstop>txtcUser</tabstop>
-  <tabstop>txtcPassword</tabstop>
-  <tabstop>txtcPuerto</tabstop>
-  <tabstop>txtcComentarioTicket</tabstop>
-  <tabstop>txtcCometarioAlbaran</tabstop>
-  <tabstop>txtMensaje</tabstop>
- </tabstops>
  <resources>
   <include location="terra.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>botCerrar</sender>
-   <signal>clicked()</signal>
-   <receiver>FrmEmpresas</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>88</x>
-     <y>465</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>3</x>
-     <y>415</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
