@@ -29,11 +29,7 @@
 #include <QApplication>
 
 
-/*   #THEFOX#  */ // ARCNEXUS //
-//Windows 7 - 32 | QtCreator 2.6.1 => Commit! :PP
-
-
-
+//NOTE - TheFox :: Archivo Revisado
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -44,26 +40,22 @@ int main(int argc, char *argv[])
         QTextCodec::setCodecForCStrings(linuxCodec);
    #endif
         QTextCodec::setCodecForLocale(linuxCodec);;
-//   a.setStyle("fusion");
-//   QFile file(":Icons/Terra.qss");
-//   if(file.open(QFile::ReadOnly)) {
-//        QString styleSheet = QString::fromLatin1(file.readAll());
-//        a.setStyleSheet(styleSheet);
-//   } else
-//       QMessageBox::warning(NULL,QObject::tr("Terra"),QObject::tr("No se puede cargar el archivo de tema"),
-//                            QObject::tr("Aceptar"));
-        QFile qss(":Icons/Terra.qss");
-        qss.open(QFile::ReadOnly);
-        a.setStyle("fusion");
-        a.setStyleSheet(qss.readAll());
-        qss.close();
+
+   a.setStyle("fusion");
+
+   QFile file(":Icons/Terra.qss");
+
+   if(file.open(QFile::ReadOnly))
+        a.setStyleSheet(file.readAll());
+   else
+       QMessageBox::warning(NULL,
+                            QObject::tr("Terra"),
+                            QObject::tr("No se puede cargar el archivo de tema"),
+                            QObject::tr("Aceptar"));
 	
 
-  MainWindow w;
-  //  w.setVisible(true);
-   w.setWindowState(Qt::WindowMaximized );
-  //w.show();
-
+    MainWindow w;
+    w.setWindowState(Qt::WindowMaximized );
     
     return a.exec();
 }

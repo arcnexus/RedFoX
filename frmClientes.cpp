@@ -16,9 +16,11 @@
 #include "frmfichapaciente.h"
 #include "sqlcalls.h"
 #include "paciente.h"
-#ifdef win
+
+#ifdef WIN32
     #define and &&
 #endif
+
 frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmClientes)
@@ -72,8 +74,6 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     connect(ui->txtcPoblacionFactura,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacionFactura_editingFinished()));
     connect(ui->txtcPoblacionAlmacen,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacionAlmacen_editingFinished()));
     connect(ui->txtrRiesgoPermitido,SIGNAL(editingFinished()),this,SLOT(on_txtrRiesgoPermitido_editingFinished()));
-
-
 }
 
 frmClientes::~frmClientes()
@@ -85,12 +85,9 @@ frmClientes::~frmClientes()
     //delete modelPoblaciones;
     //delete llamadasSQL;
     //FIXME: borrar cando se use realmente...si no se usan suprimirlos
-
-
-
 }
-void frmClientes::LLenarCampos() {
-
+void frmClientes::LLenarCampos()
+{
     Configuracion *o_Configuracion = new Configuracion();
     ui->txtcCodigoCliente->setText(oCliente->getcCodigoCliente());
     ui->txtPrimerApellido->setText(oCliente->getcApellido1());
@@ -132,25 +129,28 @@ void frmClientes::LLenarCampos() {
     ui->txtrRiesgoPermitido->setText(o_Configuracion->FormatoNumerico(QString::number(oCliente->getrRiesgoMaximo(),'f',2)));
     ui->txtrDeudaActual->setText(o_Configuracion->FormatoNumerico(QString::number(oCliente->getrDeudaActual(),'f',2)));
     ui->txttComentarios->setText(oCliente->gettComentarios());
-    if(oCliente->islBloqueado()) {
+
+    if(oCliente->islBloqueado())
         ui->chklBloqueoCliente->setChecked(true);
-    } else {
+    else
         ui->chklBloqueoCliente->setChecked(false);
-    }
+
     ui->txttComentarioBloqueo->setText(oCliente->gettComentarioBloqueo());
     ui->txtnPorcDtoCliente->setText(QString::number(oCliente->getnPorcDtoCliente()));
-    if(oCliente->islRecargoEquivalencia()) {
+
+    if(oCliente->islRecargoEquivalencia())
         ui->chklRecargoEquivalencia->setChecked(true);
-    } else {
+    else
         ui->chklRecargoEquivalencia->setChecked(false);
-    }
+
     ui->txtcCuentaContable->setText(oCliente->getcCuentaContable());
     ui->txtcCuentaIvaRepercutido->setText(oCliente->getcCuentaIvaRepercutido());
     ui->txtcCuentaDeudas->setText(oCliente->getcCuentaDeudas());
     ui->txtcCuentaCobros->setText(oCliente->getcCuentaCobros());
     int indice=ui->cbocFormaPago->findText(oCliente->getcFormaPago());
+
     if(indice!=-1)
-     ui->cbocFormaPago->setCurrentIndex(indice);
+        ui->cbocFormaPago->setCurrentIndex(indice);
 
     //ui->cbocFormaPago->setItemText();
     ui->txtnDiaPago1->setValue(oCliente->getnDiaPago1());
@@ -181,198 +181,198 @@ void frmClientes::LLenarCampos() {
     deudas->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ColumnaFecha *columnaFecha = new ColumnaFecha();
     ui->TablaDeudas->setModel(deudas);
-      //  ui->TablaDeudas->setItemDelegateForColumn(2,columnaMoneda);
-        ui->TablaDeudas->setItemDelegateForColumn(3,columnaFecha);
-        ui->TablaDeudas->setItemDelegateForColumn(4,columnaFecha);
+    //  ui->TablaDeudas->setItemDelegateForColumn(2,columnaMoneda);
+    ui->TablaDeudas->setItemDelegateForColumn(3,columnaFecha);
+    ui->TablaDeudas->setItemDelegateForColumn(4,columnaFecha);
     //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
-   QHeaderView *CabeceraDeu = new QHeaderView(Qt::Horizontal,this);
-   // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
-   ui->TablaDeudas->setHorizontalHeader(CabeceraDeu);
-   /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
-   //CabeceraDeu->setResizeMode(0,QHeaderView::Fixed);
-   CabeceraDeu->resizeSection(0,0);
-   //CabeceraDeu->setResizeMode(1,QHeaderView::Fixed);
-   CabeceraDeu->resizeSection(1,85);
-   //CabeceraDeu->setResizeMode(2,QHeaderView::Fixed);
-   CabeceraDeu->resizeSection(2,85);
-   //CabeceraDeu->setResizeMode(3,QHeaderView::Fixed);
-   CabeceraDeu->resizeSection(3,85);
-   //CabeceraDeu->setResizeMode(4,QHeaderView::Fixed);
-   CabeceraDeu->resizeSection(4,85);
-   deudas->setHeaderData(1, Qt::Horizontal, QObject::tr("DOCUMENTO"));
-   deudas->setHeaderData(2, Qt::Horizontal, QObject::tr("I.PENDIENTE"));
-   deudas->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA"));
-   deudas->setHeaderData(4, Qt::Horizontal, QObject::tr("VTO"));
-   CabeceraDeu->setVisible(true);
+    QHeaderView *CabeceraDeu = new QHeaderView(Qt::Horizontal,this);
+    // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+    ui->TablaDeudas->setHorizontalHeader(CabeceraDeu);
+    /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
+    //CabeceraDeu->setResizeMode(0,QHeaderView::Fixed);
+    CabeceraDeu->resizeSection(0,0);
+    //CabeceraDeu->setResizeMode(1,QHeaderView::Fixed);
+    CabeceraDeu->resizeSection(1,85);
+    //CabeceraDeu->setResizeMode(2,QHeaderView::Fixed);
+    CabeceraDeu->resizeSection(2,85);
+    //CabeceraDeu->setResizeMode(3,QHeaderView::Fixed);
+    CabeceraDeu->resizeSection(3,85);
+    //CabeceraDeu->setResizeMode(4,QHeaderView::Fixed);
+    CabeceraDeu->resizeSection(4,85);
+    deudas->setHeaderData(1, Qt::Horizontal, QObject::tr("DOCUMENTO"));
+    deudas->setHeaderData(2, Qt::Horizontal, QObject::tr("I.PENDIENTE"));
+    deudas->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA"));
+    deudas->setHeaderData(4, Qt::Horizontal, QObject::tr("VTO"));
+    CabeceraDeu->setVisible(true);
 
-   /********************************************************************
+    /********************************************************************
     * ALBARANES
     *******************************************************************/
 
-   QSqlQueryModel *Albaranes = new QSqlQueryModel();
-   cSQL= "Select id,nAlbaran,dFecha,nFactura,rTotalAlbaran from cab_alb where id_Cliente =" + QString::number(oCliente->getId());
-   Albaranes->setQuery(cSQL,QSqlDatabase::database("empresa"));
-   ui->TablaAlbaranes->setModel(Albaranes);
-       ui->TablaAlbaranes->setItemDelegateForColumn(2,columnaFecha);
-     //  ui->TablaAlbaranes->setItemDelegateForColumn(4,columnaMoneda);
-   //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
-  QHeaderView *CabeceraAlb = new QHeaderView(Qt::Horizontal,this);
-  // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
-  ui->TablaAlbaranes->setHorizontalHeader(CabeceraAlb);
-  /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
- // CabeceraAlb->setResizeMode(0,QHeaderView::Fixed);
-  CabeceraAlb->resizeSection(0,0);
- //  CabeceraAlb->setResizeMode(1,QHeaderView::Fixed);
-  CabeceraAlb->resizeSection(1,85);
- // CabeceraAlb->setResizeMode(2,QHeaderView::Fixed);
-  CabeceraAlb->resizeSection(2,85);
- // CabeceraAlb->setResizeMode(3,QHeaderView::Fixed);
-  CabeceraAlb->resizeSection(3,85);
- // CabeceraAlb->setResizeMode(4,QHeaderView::Fixed);
-  CabeceraAlb->resizeSection(4,85);
-  Albaranes->setHeaderData(1, Qt::Horizontal, QObject::tr("ALBARAN"));
-  Albaranes->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
-  Albaranes->setHeaderData(3, Qt::Horizontal, QObject::tr("FACTURA"));
-  Albaranes->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
-  CabeceraAlb->setVisible(true);
+    QSqlQueryModel *Albaranes = new QSqlQueryModel();
+    cSQL= "Select id,nAlbaran,dFecha,nFactura,rTotalAlbaran from cab_alb where id_Cliente =" + QString::number(oCliente->getId());
+    Albaranes->setQuery(cSQL,QSqlDatabase::database("empresa"));
+    ui->TablaAlbaranes->setModel(Albaranes);
+    ui->TablaAlbaranes->setItemDelegateForColumn(2,columnaFecha);
+    //  ui->TablaAlbaranes->setItemDelegateForColumn(4,columnaMoneda);
+    //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
+    QHeaderView *CabeceraAlb = new QHeaderView(Qt::Horizontal,this);
+    // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+    ui->TablaAlbaranes->setHorizontalHeader(CabeceraAlb);
+    /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
+    // CabeceraAlb->setResizeMode(0,QHeaderView::Fixed);
+    CabeceraAlb->resizeSection(0,0);
+    //  CabeceraAlb->setResizeMode(1,QHeaderView::Fixed);
+    CabeceraAlb->resizeSection(1,85);
+    // CabeceraAlb->setResizeMode(2,QHeaderView::Fixed);
+    CabeceraAlb->resizeSection(2,85);
+    // CabeceraAlb->setResizeMode(3,QHeaderView::Fixed);
+    CabeceraAlb->resizeSection(3,85);
+    // CabeceraAlb->setResizeMode(4,QHeaderView::Fixed);
+    CabeceraAlb->resizeSection(4,85);
+    Albaranes->setHeaderData(1, Qt::Horizontal, QObject::tr("ALBARAN"));
+    Albaranes->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
+    Albaranes->setHeaderData(3, Qt::Horizontal, QObject::tr("FACTURA"));
+    Albaranes->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
+    CabeceraAlb->setVisible(true);
 
-  /********************************************************************
+    /********************************************************************
    * FACTURAS
    *******************************************************************/
 
-  QSqlQueryModel *Facturas = new QSqlQueryModel(this);
-
-  cSQL= "Select id,cFactura,dFecha,dFechaCobro,rTotal from cab_fac where iId_Cliente =" + QString::number(oCliente->getId());
-  Facturas->setQuery(cSQL,QSqlDatabase::database("empresa"));
-  ui->tablaFacturas->setModel(Facturas);
-      ui->tablaFacturas->setItemDelegateForColumn(2,columnaFecha);
-      ui->tablaFacturas->setItemDelegateForColumn(3,columnaFecha);
+    QSqlQueryModel *Facturas = new QSqlQueryModel(this);
+    cSQL= "Select id,cFactura,dFecha,dFechaCobro,rTotal from cab_fac where iId_Cliente =" + QString::number(oCliente->getId());
+    Facturas->setQuery(cSQL,QSqlDatabase::database("empresa"));
+    ui->tablaFacturas->setModel(Facturas);
+    ui->tablaFacturas->setItemDelegateForColumn(2,columnaFecha);
+    ui->tablaFacturas->setItemDelegateForColumn(3,columnaFecha);
     //  ui->tablaFacturas->setItemDelegateForColumn(4,columnaMoneda);
-  //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
- QHeaderView *CabeceraFac = new QHeaderView(Qt::Horizontal,this);
- // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
- ui->tablaFacturas->setHorizontalHeader(CabeceraFac);
- /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
-// CabeceraFac->setResizeMode(0,QHeaderView::Fixed);
- CabeceraFac->resizeSection(0,0);
-// CabeceraFac->setResizeMode(1,QHeaderView::Fixed);
- CabeceraFac->resizeSection(1,85);
-// CabeceraFac->setResizeMode(2,QHeaderView::Fixed);
- CabeceraFac->resizeSection(2,85);
-// CabeceraFac->setResizeMode(3,QHeaderView::Fixed);
- CabeceraFac->resizeSection(3,85);
-// CabeceraFac->setResizeMode(4,QHeaderView::Fixed);
- CabeceraFac->resizeSection(4,85);
- Facturas->setHeaderData(1, Qt::Horizontal, QObject::tr("FACTURA"));
- Facturas->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
- Facturas->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA COBRO"));
- Facturas->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
- CabeceraFac->setVisible(true);
+    //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
+    QHeaderView *CabeceraFac = new QHeaderView(Qt::Horizontal,this);
+    // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+    ui->tablaFacturas->setHorizontalHeader(CabeceraFac);
+    /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
+    // CabeceraFac->setResizeMode(0,QHeaderView::Fixed);
+    CabeceraFac->resizeSection(0,0);
+    // CabeceraFac->setResizeMode(1,QHeaderView::Fixed);
+    CabeceraFac->resizeSection(1,85);
+    // CabeceraFac->setResizeMode(2,QHeaderView::Fixed);
+    CabeceraFac->resizeSection(2,85);
+    // CabeceraFac->setResizeMode(3,QHeaderView::Fixed);
+    CabeceraFac->resizeSection(3,85);
+    // CabeceraFac->setResizeMode(4,QHeaderView::Fixed);
+    CabeceraFac->resizeSection(4,85);
+    Facturas->setHeaderData(1, Qt::Horizontal, QObject::tr("FACTURA"));
+    Facturas->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
+    Facturas->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA COBRO"));
+    Facturas->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
+    CabeceraFac->setVisible(true);
 
- /********************************************************************
+    /********************************************************************
   * PRESUPUESTOS
   *******************************************************************/
 
- QSqlQueryModel *Presupuestos = new QSqlQueryModel(this);
+    QSqlQueryModel *Presupuestos = new QSqlQueryModel(this);
 
- cSQL= "Select id,nPresupuesto,dFecha,dValidoHasta,rTotal from cab_pre where id_Cliente =" + QString::number(oCliente->getId());
- Presupuestos->setQuery(cSQL,QSqlDatabase::database("empresa"));
- ui->tablaPresupuestos->setModel(Presupuestos);
- ui->tablaPresupuestos->setItemDelegateForColumn(2,columnaFecha);
- ui->tablaPresupuestos->setItemDelegateForColumn(3,columnaFecha);
- //ui->tablaPresupuestos->setItemDelegateForColumn(4,columnaMoneda);
- //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
-QHeaderView *CabeceraPre = new QHeaderView(Qt::Horizontal,this);
-// Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
-ui->tablaPresupuestos->setHorizontalHeader(CabeceraPre);
-/*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
-//CabeceraPre->setResizeMode(0,QHeaderView::Fixed);
-CabeceraPre->resizeSection(0,0);
-//CabeceraPre->setResizeMode(1,QHeaderView::Fixed);
-CabeceraPre->resizeSection(1,85);
-//CabeceraPre->setResizeMode(2,QHeaderView::Fixed);
-CabeceraPre->resizeSection(2,85);
-//CabeceraPre->setResizeMode(3,QHeaderView::Fixed);
-CabeceraPre->resizeSection(3,85);
-//CabeceraPre->setResizeMode(4,QHeaderView::Fixed);
-CabeceraPre->resizeSection(4,85);
-//CabeceraPre->set
-Presupuestos->setHeaderData(1, Qt::Horizontal, QObject::tr("PRES"));
-Presupuestos->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
-Presupuestos->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA APRO."));
-Presupuestos->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
-CabeceraPre->setVisible(true);
+    cSQL= "Select id,nPresupuesto,dFecha,dValidoHasta,rTotal from cab_pre where id_Cliente =" + QString::number(oCliente->getId());
+    Presupuestos->setQuery(cSQL,QSqlDatabase::database("empresa"));
+    ui->tablaPresupuestos->setModel(Presupuestos);
+    ui->tablaPresupuestos->setItemDelegateForColumn(2,columnaFecha);
+    ui->tablaPresupuestos->setItemDelegateForColumn(3,columnaFecha);
+    //ui->tablaPresupuestos->setItemDelegateForColumn(4,columnaMoneda);
+    //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
+    QHeaderView *CabeceraPre = new QHeaderView(Qt::Horizontal,this);
+    // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+    ui->tablaPresupuestos->setHorizontalHeader(CabeceraPre);
+    /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
+    //CabeceraPre->setResizeMode(0,QHeaderView::Fixed);
+    CabeceraPre->resizeSection(0,0);
+    //CabeceraPre->setResizeMode(1,QHeaderView::Fixed);
+    CabeceraPre->resizeSection(1,85);
+    //CabeceraPre->setResizeMode(2,QHeaderView::Fixed);
+    CabeceraPre->resizeSection(2,85);
+    //CabeceraPre->setResizeMode(3,QHeaderView::Fixed);
+    CabeceraPre->resizeSection(3,85);
+    //CabeceraPre->setResizeMode(4,QHeaderView::Fixed);
+    CabeceraPre->resizeSection(4,85);
+    //CabeceraPre->set
+    Presupuestos->setHeaderData(1, Qt::Horizontal, QObject::tr("PRES"));
+    Presupuestos->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
+    Presupuestos->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA APRO."));
+    Presupuestos->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
+    CabeceraPre->setVisible(true);
 
 
-/********************************************************************
+    /********************************************************************
  * VALES
  *******************************************************************/
 
-QSqlQueryModel *Vales = new QSqlQueryModel(this);
+    QSqlQueryModel *Vales = new QSqlQueryModel(this);
 
-cSQL= "Select id,nNumero,dFecha,dVto,rImporte from vales where id_Cliente =" + QString::number(oCliente->getId());
-Vales->setQuery(cSQL,QSqlDatabase::database("empresa"));
-ui->tablaVales->setModel(Vales);
-ui->tablaVales->setItemDelegateForColumn(2,columnaFecha);
-ui->tablaVales->setItemDelegateForColumn(3,columnaFecha);
-//ui->tablaVales->setItemDelegateForColumn(4,columnaMoneda);
-//Creamos Objeto de la clase Cabecera para las cabeceras horizontales
-QHeaderView *CabeceraVal = new QHeaderView(Qt::Horizontal,this);
-// Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
-ui->tablaVales->setHorizontalHeader(CabeceraVal);
-/*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
-//CabeceraVal->setResizeMode(0,QHeaderView::Fixed);
-CabeceraVal->resizeSection(0,0);
-//CabeceraVal->setResizeMode(1,QHeaderView::Fixed);
-CabeceraVal->resizeSection(1,85);
-//CabeceraVal->setResizeMode(2,QHeaderView::Fixed);
-CabeceraVal->resizeSection(2,85);
-//CabeceraVal->setResizeMode(3,QHeaderView::Fixed);
-CabeceraVal->resizeSection(3,85);
-//CabeceraVal->setResizeMode(4,QHeaderView::Fixed);
-CabeceraVal->resizeSection(4,85);
-Vales->setHeaderData(1, Qt::Horizontal, QObject::tr("VALE"));
-Vales->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
-Vales->setHeaderData(3, Qt::Horizontal, QObject::tr("VTO."));
-Vales->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
-CabeceraVal->setVisible(true);
+    cSQL= "Select id,nNumero,dFecha,dVto,rImporte from vales where id_Cliente =" + QString::number(oCliente->getId());
+    Vales->setQuery(cSQL,QSqlDatabase::database("empresa"));
+    ui->tablaVales->setModel(Vales);
+    ui->tablaVales->setItemDelegateForColumn(2,columnaFecha);
+    ui->tablaVales->setItemDelegateForColumn(3,columnaFecha);
+    //ui->tablaVales->setItemDelegateForColumn(4,columnaMoneda);
+    //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
+    QHeaderView *CabeceraVal = new QHeaderView(Qt::Horizontal,this);
+    // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+    ui->tablaVales->setHorizontalHeader(CabeceraVal);
+    /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
+    //CabeceraVal->setResizeMode(0,QHeaderView::Fixed);
+    CabeceraVal->resizeSection(0,0);
+    //CabeceraVal->setResizeMode(1,QHeaderView::Fixed);
+    CabeceraVal->resizeSection(1,85);
+    //CabeceraVal->setResizeMode(2,QHeaderView::Fixed);
+    CabeceraVal->resizeSection(2,85);
+    //CabeceraVal->setResizeMode(3,QHeaderView::Fixed);
+    CabeceraVal->resizeSection(3,85);
+    //CabeceraVal->setResizeMode(4,QHeaderView::Fixed);
+    CabeceraVal->resizeSection(4,85);
+    Vales->setHeaderData(1, Qt::Horizontal, QObject::tr("VALE"));
+    Vales->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
+    Vales->setHeaderData(3, Qt::Horizontal, QObject::tr("VTO."));
+    Vales->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
+    CabeceraVal->setVisible(true);
 
-/********************************************************************
- * TICKETS
- *******************************************************************/
+    /********************************************************************
+    * TICKETS
+    *******************************************************************/
 
-QSqlQueryModel *Tickets = new QSqlQueryModel(this);
+    QSqlQueryModel *Tickets = new QSqlQueryModel(this);
 
-cSQL= "Select id,nTicket,dFecha,cHora,rImporte from cab_tpv where id_Cliente =" + QString::number(oCliente->getId());
-Tickets->setQuery(cSQL,QSqlDatabase::database("empresa"));
-ui->tablaTickets->setModel(Tickets);
-ui->tablaTickets->setItemDelegateForColumn(2,columnaFecha);
-ui->tablaTickets->setItemDelegateForColumn(3,columnaFecha);
-//ui->tablaTickets->setItemDelegateForColumn(4,columnaMoneda);
-//Creamos Objeto de la clase Cabecera para las cabeceras horizontales
-QHeaderView *CabeceraTic = new QHeaderView(Qt::Horizontal,this);
-// Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
-ui->tablaTickets->setHorizontalHeader(CabeceraTic);
-/*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
-//CabeceraTic->setResizeMode(0,QHeaderView::Fixed);
-CabeceraTic->resizeSection(0,0);
-//CabeceraTic->setResizeMode(1,QHeaderView::Fixed);
-CabeceraTic->resizeSection(1,85);
-//CabeceraTic->setResizeMode(2,QHeaderView::Fixed);
-CabeceraTic->resizeSection(2,85);
-//CabeceraTic->setResizeMode(3,QHeaderView::Fixed);
-CabeceraTic->resizeSection(3,85);
-//CabeceraTic->setResizeMode(4,QHeaderView::Fixed);
-CabeceraTic->resizeSection(4,85);
-Tickets->setHeaderData(1, Qt::Horizontal, QObject::tr("TICKET"));
-Tickets->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
-Tickets->setHeaderData(3, Qt::Horizontal, QObject::tr("HORA"));
-Tickets->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
-CabeceraTic->setVisible(true);
+    cSQL= "Select id,nTicket,dFecha,cHora,rImporte from cab_tpv where id_Cliente =" + QString::number(oCliente->getId());
+    Tickets->setQuery(cSQL,QSqlDatabase::database("empresa"));
+    ui->tablaTickets->setModel(Tickets);
+    ui->tablaTickets->setItemDelegateForColumn(2,columnaFecha);
+    ui->tablaTickets->setItemDelegateForColumn(3,columnaFecha);
+    //ui->tablaTickets->setItemDelegateForColumn(4,columnaMoneda);
+    //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
+    QHeaderView *CabeceraTic = new QHeaderView(Qt::Horizontal,this);
+    // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
+    ui->tablaTickets->setHorizontalHeader(CabeceraTic);
+    /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
+    //CabeceraTic->setResizeMode(0,QHeaderView::Fixed);
+    CabeceraTic->resizeSection(0,0);
+    //CabeceraTic->setResizeMode(1,QHeaderView::Fixed);
+    CabeceraTic->resizeSection(1,85);
+    //CabeceraTic->setResizeMode(2,QHeaderView::Fixed);
+    CabeceraTic->resizeSection(2,85);
+    //CabeceraTic->setResizeMode(3,QHeaderView::Fixed);
+    CabeceraTic->resizeSection(3,85);
+    //CabeceraTic->setResizeMode(4,QHeaderView::Fixed);
+    CabeceraTic->resizeSection(4,85);
+    Tickets->setHeaderData(1, Qt::Horizontal, QObject::tr("TICKET"));
+    Tickets->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
+    Tickets->setHeaderData(3, Qt::Horizontal, QObject::tr("HORA"));
+    Tickets->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
+    CabeceraTic->setVisible(true);
 
-delete o_Configuracion;
+    delete o_Configuracion;
 }
-void frmClientes::VaciarCampos() {
+void frmClientes::VaciarCampos()
+{
     QDate dFecha;
 
     ui->txtcCodigoCliente->setText("");
@@ -438,11 +438,10 @@ void frmClientes::VaciarCampos() {
     ui->txtcPasswordWeb->setText("");
     ui->txtPrimerApellido->setFocus();
     ui->chkClienteEmpresa->setChecked(false);
-
 }
 
-void frmClientes::LLenarCliente() {
-
+void frmClientes::LLenarCliente()
+{
     oCliente->setcCodigoCliente(ui->txtcCodigoCliente->text());
     oCliente->setcApellido1(ui->txtPrimerApellido->text());
     oCliente->setcApellido2(ui->txtSegundoApellido->text());
@@ -504,6 +503,7 @@ void frmClientes::LLenarCliente() {
     oCliente->setrImportePendiente(ui->txtrImporteAcumulado->text().toDouble());
     oCliente->setcAccesoWeb(ui->txtcAccesoWeb->text());
     oCliente->setcPasswordWeb(ui->txtcPasswordWeb->text());
+
     if (ui->chkClienteEmpresa)
         oCliente->setlIRPF(true);
     else
@@ -513,11 +513,9 @@ void frmClientes::LLenarCliente() {
 
 void frmClientes::on_btnSiguiente_clicked()
 {
-
     QString cId = QString::number(oCliente->getId());
     oCliente->Recuperar("Select * from clientes where id >"+cId+" order by id limit 1 ");
     LLenarCampos();
-
 }
 
 void frmClientes::on_btnAnterior_clicked()
@@ -529,14 +527,15 @@ void frmClientes::on_btnAnterior_clicked()
 
 void frmClientes::on_btnGuardar_clicked()
 {
-
     LLenarCliente();
-    if(this->Altas) {
+    if(this->Altas)
+    {
        this->Altas = false;
        oCliente->Anadir();
-    } else {
-
-        oCliente->Guardar();
+    }
+    else
+    {
+       oCliente->Guardar();
     }
     bloquearCampos();
 }
@@ -544,9 +543,8 @@ void frmClientes::on_btnGuardar_clicked()
 void frmClientes::on_btnAnadir_clicked()
 {
     desbloquearCampos();
-
-   VaciarCampos();
-   this->Altas = true;
+    VaciarCampos();
+    this->Altas = true;
     ui->txtcCodigoCliente->setText(oCliente->NuevoCodigoCliente());
     ui->txtcCodigoCliente->setFocus();
 }
@@ -554,7 +552,11 @@ void frmClientes::on_btnAnadir_clicked()
 void frmClientes::on_txtPrimerApellido_editingFinished()
 {
     ui->txtPrimerApellido->setText(ui->txtPrimerApellido->text().toUpper());
-    if(!ui->txtPrimerApellido->text().isEmpty() and !ui->txtSegundoApellido->text().isEmpty() and !ui->txtcNombre->text().isEmpty()) {
+
+    if(!ui->txtPrimerApellido->text().isEmpty()
+       and !ui->txtSegundoApellido->text().isEmpty()
+       and !ui->txtcNombre->text().isEmpty())
+    {
         ui->txtcNombreFiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtcNombre->text());
         ui->txtNombreFiscal->setText(ui->txtcNombreFiscal->text());
     }
@@ -563,7 +565,11 @@ void frmClientes::on_txtPrimerApellido_editingFinished()
 void frmClientes::on_txtSegundoApellido_editingFinished()
 {
     ui->txtSegundoApellido->setText(ui->txtSegundoApellido->text().toUpper());
-    if(!ui->txtPrimerApellido->text().isEmpty() and !ui->txtSegundoApellido->text().isEmpty() and !ui->txtcNombre->text().isEmpty()) {
+
+    if(!ui->txtPrimerApellido->text().isEmpty()
+        and !ui->txtSegundoApellido->text().isEmpty()
+        and !ui->txtcNombre->text().isEmpty())
+    {
         ui->txtcNombreFiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtcNombre->text());
         ui->txtNombreFiscal->setText(ui->txtcNombreFiscal->text());
     }
@@ -573,7 +579,11 @@ void frmClientes::on_txtSegundoApellido_editingFinished()
 void frmClientes::on_txtcNombre_editingFinished()
 {
     ui->txtcNombre->setText(ui->txtcNombre->text().toUpper());
-    if(!ui->txtPrimerApellido->text().isEmpty() and !ui->txtSegundoApellido->text().isEmpty() and !ui->txtcNombre->text().isEmpty()) {
+
+    if(!ui->txtPrimerApellido->text().isEmpty()
+       and !ui->txtSegundoApellido->text().isEmpty()
+       and !ui->txtcNombre->text().isEmpty())
+    {
         ui->txtcNombreFiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtcNombre->text());
         ui->txtNombreFiscal->setText(ui->txtcNombreFiscal->text());
     }
@@ -582,39 +592,45 @@ void frmClientes::on_txtcNombre_editingFinished()
 
 void frmClientes::on_txtcPoblacion_editingFinished()
 {
+    //BUG - A veces salta dos veces la ventana
     ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
-    if (ui->txtcCp->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty()) {
-        FrmBuscarPoblacion BuscarPoblacion;
-        BuscarPoblacion.setcPoblacion(ui->txtcPoblacion->text(),1);
-       if(BuscarPoblacion.exec()) {
+    if (ui->txtcCp->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty())
+    {
+       FrmBuscarPoblacion BuscarPoblacion;
+       BuscarPoblacion.setcPoblacion(ui->txtcPoblacion->text(),1);
+       if(BuscarPoblacion.exec())
+       {
         //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
-           int nId = BuscarPoblacion.DevolverID();
-           qDebug() <<nId;
-         if(nId > 0) {
-               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
-               QString cId;
-               cId = QString::number(nId);
-               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
-               qPoblacion.bindValue(":id",cId);
-               if(!qPoblacion.exec()) {
-                  /* qDebug() << qPoblacion.lastQuery();
-                   qDebug() << qPoblacion.value(0).toString(); */
-                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-               } else {
-                  // qDebug() << qPoblacion.lastQuery();
-                   if (qPoblacion.next()) {
-                        ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
-                        ui->txtcCp->setText(qPoblacion.value(1).toString());
-                        ui->txtcProvincia->setText(qPoblacion.value(2).toString());
-                        ui->txtcPais->setText("ESPAÑA");
-                   }
-               }
-
-           }
+         int nId = BuscarPoblacion.DevolverID();
+         qDebug() <<nId;
+         if(nId > 0)
+         {
+             QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+             QString cId;
+             cId = QString::number(nId);
+             qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+             qPoblacion.bindValue(":id",cId);
+             if(!qPoblacion.exec())
+             {
+                 /* qDebug() << qPoblacion.lastQuery();
+                 qDebug() << qPoblacion.value(0).toString(); */
+                 QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+             }
+             else
+             {
+                 // qDebug() << qPoblacion.lastQuery();
+                 if (qPoblacion.next())
+                 {
+                     ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
+                     ui->txtcCp->setText(qPoblacion.value(1).toString());
+                     ui->txtcProvincia->setText(qPoblacion.value(2).toString());
+                     ui->txtcPais->setText("ESPAÑA");
+                 }
+             }
+         }
        }
       // BuscarPoblacion.close();
     }
-
 }
 
 void frmClientes::on_txtcProvincia_editingFinished()
@@ -632,8 +648,6 @@ void frmClientes::on_btnEditar_clicked()
         desbloquearCampos();
         ui->txtcCodigoCliente->setEnabled(false);
         ui->txtcCifNif->setFocus();
-
-
 }
 void frmClientes::bloquearCampos() {
 
@@ -695,10 +709,9 @@ void frmClientes::bloquearCampos() {
     ui->btnEditar->setEnabled(true);
     ui->btnGuardar->setEnabled(false);
     ui->btnSiguiente->setEnabled(true);
-
-
 }
-void frmClientes::desbloquearCampos() {
+void frmClientes::desbloquearCampos()
+{
     // LineEdit
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;
@@ -777,197 +790,227 @@ void frmClientes::on_btnBorrar_clicked()
 
     oCliente->Borrar(oCliente->getId());
     VaciarCampos();
-
 }
 
 void frmClientes::on_btnBuscar_clicked()
 {
+    //NOTE - Fixed crash
     FrmBuscarCliente BuscarClientes;
-    BuscarClientes.exec();
-    int nId = BuscarClientes.DevolverID();
-    qDebug() << nId;
-    QString cId = QString::number(nId);
+    if(BuscarClientes.exec() == QDialog::Accepted)
+    {
+        int nId = BuscarClientes.DevolverID();
+        qDebug() << nId;
+        QString cId = QString::number(nId);
 
-    oCliente->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
-    LLenarCampos();
+        oCliente->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
+        LLenarCampos();
+    }
 }
 
 void frmClientes::on_txtcCp_editingFinished()
+{
+    if (!ui->txtcCp->text().isEmpty() and ui->txtcPoblacion->text().isEmpty())
     {
-    if (!ui->txtcCp->text().isEmpty() and ui->txtcPoblacion->text().isEmpty()) {
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
-       if(BuscarPoblacion.exec()) {
-        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
-           int nId = BuscarPoblacion.DevolverID();
-           //qDebug() <<nId;
-         if(nId > 0) {
-               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
-               QString cId;
-               cId = QString::number(nId);
-               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
-               qPoblacion.bindValue(":id",cId);
-               if(!qPoblacion.exec()) {
-                  /* qDebug() << qPoblacion.lastQuery();
-                   qDebug() << qPoblacion.value(0).toString(); */
-                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-               } else {
-                   //qDebug() << qPoblacion.lastQuery();
-                   if (qPoblacion.next()) {
+        if(BuscarPoblacion.exec())
+        {
+            //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+            int nId = BuscarPoblacion.DevolverID();
+            //qDebug() <<nId;
+            if(nId > 0)
+            {
+                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QString cId;
+                cId = QString::number(nId);
+                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+                qPoblacion.bindValue(":id",cId);
+                if(!qPoblacion.exec())
+                {
+                    /* qDebug() << qPoblacion.lastQuery();
+                    qDebug() << qPoblacion.value(0).toString(); */
+                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                }
+                else
+                {
+                    //qDebug() << qPoblacion.lastQuery();
+                    if (qPoblacion.next())
+                    {
+                        ui->txtcCp->setText(qPoblacion.value(1).toString());
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
                         ui->txtcProvincia->setText(qPoblacion.value(2).toString());
                         ui->txtcPais->setText("ESPAÑA");
-                   }
-               }
-
-           }
-       }
-      // BuscarPoblacion.close();
+                    }
+                }
+            }
+        }
+        // BuscarPoblacion.close();
     }
-
-    }
+}
 
 
 void frmClientes::on_txtcCPFactura_editingFinished()
 {
-    if (!ui->txtcCPFactura->text().isEmpty() and ui->txtcPoblacionFactura->text().isEmpty()) {
+    if (!ui->txtcCPFactura->text().isEmpty() and ui->txtcPoblacionFactura->text().isEmpty())
+    {
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcCPFactura->text(),0);
-       if(BuscarPoblacion.exec()) {
-        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
-           int nId = BuscarPoblacion.DevolverID();
-           //qDebug() <<nId;
-         if(nId > 0) {
-               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
-               QString cId;
-               cId = QString::number(nId);
-
-               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP, col_6 as provincia from poblaciones where col_1 = :cId");
-               qPoblacion.bindValue(":id",cId);
-               if(!qPoblacion.exec()) {
-                  // qDebug() << qPoblacion.lastQuery();
-                  // qDebug() << qPoblacion.value(0).toString();
-                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-               } else {
-                   //qDebug() << qPoblacion.lastQuery();
-                   if (qPoblacion.next()) {
-                                        qDebug() << qPoblacion.value(0).toString();
+        if(BuscarPoblacion.exec())
+        {
+            //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+            int nId = BuscarPoblacion.DevolverID();
+            //qDebug() <<nId;
+            if(nId > 0)
+            {
+                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QString cId;
+                cId = QString::number(nId);
+                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP, col_6 as provincia from poblaciones where col_1 = :cId");
+                qPoblacion.bindValue(":id",cId);
+                if(!qPoblacion.exec())
+                {
+                    // qDebug() << qPoblacion.lastQuery();
+                    // qDebug() << qPoblacion.value(0).toString();
+                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                }
+                else
+                {
+                    //qDebug() << qPoblacion.lastQuery();
+                    if (qPoblacion.next())
+                    {
+                        qDebug() << qPoblacion.value(0).toString();
                         ui->txtcPoblacionFactura->setText(qPoblacion.value(0).toString());
                         ui->txtcProvinciaFactura->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisFactura->setText("ESPAÑA");
-                   }
-               }
-
-           }
-       }
-      // BuscarPoblacion.close();
+                    }
+                }
+            }
+        }
+        // BuscarPoblacion.close();
     }
-
 }
 
 void frmClientes::on_txtcPoblacionFactura_editingFinished()
 {
     ui->txtcPoblacionFactura->setText(ui->txtcPoblacionFactura->text().toUpper());
-    if (ui->txtcCPFactura->text().isEmpty() and !ui->txtcPoblacionFactura->text().isEmpty()) {
+    if (ui->txtcCPFactura->text().isEmpty() and !ui->txtcPoblacionFactura->text().isEmpty())
+    {
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcPoblacionFactura->text(),1);
-       if(BuscarPoblacion.exec()) {
-        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
-           int nId = BuscarPoblacion.DevolverID();
-           //qDebug() <<nId;
-         if(nId > 0) {
-               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
-               QString cId;
-               cId = QString::number(nId);
-               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
-               qPoblacion.bindValue(":id",cId);
-               if(!qPoblacion.exec()) {
-                  // qDebug() << qPoblacion.lastQuery();
-                   //qDebug() << qPoblacion.value(0).toString();
-                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-               } else {
-                  // qDebug() << qPoblacion.lastQuery();
-                   if (qPoblacion.next()) {
+        if(BuscarPoblacion.exec())
+        {
+            //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+            int nId = BuscarPoblacion.DevolverID();
+            //qDebug() <<nId;
+            if(nId > 0)
+            {
+                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QString cId;
+                cId = QString::number(nId);
+                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+                qPoblacion.bindValue(":id",cId);
+                if(!qPoblacion.exec())
+                {
+                    // qDebug() << qPoblacion.lastQuery();
+                    //qDebug() << qPoblacion.value(0).toString();
+                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                }
+                else
+                {
+                    // qDebug() << qPoblacion.lastQuery();
+                    if (qPoblacion.next())
+                    {
                         ui->txtcPoblacionFactura->setText(qPoblacion.value(0).toString());
                         ui->txtcCPFactura->setText(qPoblacion.value(1).toString());
                         ui->txtcProvinciaFactura->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisFactura->setText("ESPAÑA");
                    }
-               }
-
-           }
-       }
+                }
+            }
+        }
       // BuscarPoblacion.close();
     }
 }
 
 void frmClientes::on_txtcCpPoblacionAlmacen_editingFinished()
 {
-    if (!ui->txtcCpPoblacionAlmacen->text().isEmpty() and ui->txtcPoblacionAlmacen->text().isEmpty()) {
+    if (!ui->txtcCpPoblacionAlmacen->text().isEmpty() and ui->txtcPoblacionAlmacen->text().isEmpty())
+    {
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcCpPoblacionAlmacen->text(),0);
-       if(BuscarPoblacion.exec()) {
-        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
-           int nId = BuscarPoblacion.DevolverID();
-          // qDebug() <<nId;
-         if(nId > 0) {
-               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
-               QString cId;
-               cId = QString::number(nId);
-               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP, col_6 as provincia from poblaciones where col_1 = :cId");
-               qPoblacion.bindValue(":id",cId);
-               if(!qPoblacion.exec()) {
-                  /* qDebug() << qPoblacion.lastQuery();
-                   qDebug() << qPoblacion.value(0).toString(); */
-                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-               } else {
-                  // qDebug() << qPoblacion.lastQuery();
-                   if (qPoblacion.next()) {
+        if(BuscarPoblacion.exec())
+        {
+            //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+            int nId = BuscarPoblacion.DevolverID();
+            // qDebug() <<nId;
+            if(nId > 0)
+            {
+                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QString cId;
+                cId = QString::number(nId);
+                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP, col_6 as provincia from poblaciones where col_1 = :cId");
+                qPoblacion.bindValue(":id",cId);
+                if(!qPoblacion.exec())
+                {
+                    /* qDebug() << qPoblacion.lastQuery();
+                    qDebug() << qPoblacion.value(0).toString(); */
+                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                }
+                else
+                {
+                    // qDebug() << qPoblacion.lastQuery();
+                    if (qPoblacion.next())
+                    {
                         ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());
                         ui->txtcProvinciaAlmacen->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisAlmacen->setText("ESPAÑA");
-                   }
-               }
-
-           }
-       }
-      // BuscarPoblacion.close();
+                    }
+                }
+            }
+        }
+        // BuscarPoblacion.close();
     }
 }
 
 void frmClientes::on_txtcPoblacionAlmacen_editingFinished()
 {
     ui->txtcPoblacionAlmacen->setText(ui->txtcPoblacionAlmacen->text().toUpper());
-    if (ui->txtcCpPoblacionAlmacen->text().isEmpty() and !ui->txtcPoblacionAlmacen->text().isEmpty()) {
+    if (ui->txtcCpPoblacionAlmacen->text().isEmpty() and !ui->txtcPoblacionAlmacen->text().isEmpty())
+    {
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcPoblacionAlmacen->text(),1);
-       if(BuscarPoblacion.exec()) {
-        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
-           int nId = BuscarPoblacion.DevolverID();
-           qDebug() <<nId;
-         if(nId > 0) {
-               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
-               QString cId;
-               cId = QString::number(nId);
-               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
-               qPoblacion.bindValue(":id",cId);
-               if(!qPoblacion.exec()) {
-                  /* qDebug() << qPoblacion.lastQuery();
-                   qDebug() << qPoblacion.value(0).toString(); */
-                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-               } else {
-                  // qDebug() << qPoblacion.lastQuery();
-                   if (qPoblacion.next()) {
+        if(BuscarPoblacion.exec())
+        {
+            //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+            int nId = BuscarPoblacion.DevolverID();
+            qDebug() <<nId;
+            if(nId > 0)
+            {
+                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QString cId;
+                cId = QString::number(nId);
+                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+                qPoblacion.bindValue(":id",cId);
+                if(!qPoblacion.exec())
+                {
+                    /* qDebug() << qPoblacion.lastQuery();
+                    qDebug() << qPoblacion.value(0).toString(); */
+                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                }
+                else
+                {
+                    // qDebug() << qPoblacion.lastQuery();
+                    if (qPoblacion.next())
+                    {
                         ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());
                         ui->txtcCpPoblacionAlmacen->setText(qPoblacion.value(1).toString());
                         ui->txtcProvinciaAlmacen->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisAlmacen->setText("ESPAÑA");
-                   }
-               }
-
-           }
-       }
-      // BuscarPoblacion.close();
+                    }
+                }
+            }
+        }
+        // BuscarPoblacion.close();
     }
 }
 
@@ -985,16 +1028,24 @@ void frmClientes::on_txtrRiesgoPermitido_editingFinished()
 
 void frmClientes::on_btnFichaPaciente_clicked()
 {
+    //NOTE - no mostar subform si no hay ningun cliente select
+    if(ui->txtcCodigoCliente->text().isEmpty())
+        return;
+
     int idPaciente;
     //if not patient record in database, create it now.
     Paciente oPaciente;
     oPaciente.RecuperarPaciente(oCliente->getId());
+
+    //NOTE mental - Esto para que es?
+    //--------------------------------------------------------
     if(oPaciente.getid()==0){
         int idCliente = oCliente->getId();
         idPaciente = oPaciente.AnadirPaciente(idCliente);
         if (idPaciente!=0)
             oPaciente.RecuperarPaciente(idPaciente);
     }
+    //---------------------------------------------------------
     // open patient form
 
 

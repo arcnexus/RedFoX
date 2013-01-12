@@ -26,7 +26,6 @@
 #include <QStyleFactory>
 #include <QToolBar>
 
-/*THEFOX*/
 #include <QtCore/QTimer>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -161,11 +160,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->widget->setLayout(gridLayout);
     
 	// Identificación de usuario
-	init();
+    QTimer::singleShot(0,this,SLOT(init()));
 }
 void MainWindow::init()
 {
-    Login *dlg = new Login(m_config);
+    //Login *dlg = new Login(m_config);
+    //NOTE - Fixed: puntero no borrado
+    QScopedPointer<Login>dlg(new Login(m_config));
 	if ( dlg->exec()==QDialog::Accepted) 
 	{
 		// capturo usuario
@@ -221,7 +222,6 @@ void MainWindow::init()
 			settings.setValue("Clave2",record.field("clave2").value().toString());
 
 			// Abro empresa activa
-			QMessageBox::information(0,"Driver" , "sql = "+m_config->cDriverBDEmpresa);
 			QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"empresa");
 			if (m_config->cDriverBDEmpresa =="QSQLITE") {
 				dbEmpresa.setDatabaseName(m_config->cRutaBdEmpresa);
@@ -560,6 +560,8 @@ void MainWindow::cerrarSubWindows()
 
     for (i=wnd.begin();i!= wnd.end();++i) {
         (*i)->hide();
+        //NOTE - Fixed Libera la memoria tmb
+        (*i)->deleteLater();
     }
 }
 

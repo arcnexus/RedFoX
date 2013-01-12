@@ -17,6 +17,10 @@ public:
     void LLenarCampos();
     void CargarCamposEnEmpresa();
 private slots:
+    //TODO - boton buscar
+    //TODO - boton borrar
+    //TODO - boton añadir
+
     void on_botSiguiente_clicked();
 
     void on_botAnterior_clicked();

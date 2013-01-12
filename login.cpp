@@ -13,7 +13,7 @@
 #include <QSqlField>
 #include "frmempresas.h"
 
-/*THEFOX*/
+//NOTE - TheFox :: Archivo Revisado
 #include <QtCore/QTimer>
 
 Login::Login(Configuracion *m_config,QWidget *parent) :
@@ -91,9 +91,14 @@ void Login::on_btnAcceder_clicked()
 
 void Login::Crearconfiguracion_clicked()
 {
+    //NOTE - Hacer esto por defecto la primera vez que se ejecute Terra?
+
     QSettings settings("infint", "terra");
     settings.setValue("cDriverBDTerra","QSQLITE");
     settings.setValue("cRutaDBTerra",qApp->applicationDirPath()+"/DB/terra.sqlite");
+
+    //TODO - Crear archivo terra.sqlite y crear las tablas
+
     settings.setValue("cHostBDTerra","localhost");
     settings.setValue("cUserBDTerra","root");
     settings.setValue("cPasswordBDTerra","PatataBullida_99");
@@ -120,18 +125,25 @@ void Login::Crearconfiguracion_clicked()
     settings.setValue("cCategoria","");
     settings.setValue("Clave1","");
     settings.setValue("Clave2","");
+
+    //Note - notificar al usuario que el boton hace algo
+    QMessageBox::information(this,
+                             tr("Configurado"),
+                             tr("Configuración inicial realizada con éxito"),
+                             tr("Aceptar"));
 }
 
 void Login::btnEmpresa_clicked()
 {
-    FrmEmpresas *formEmpresa = new FrmEmpresas(this);
+    //NOTE - Fixed pointer
+    QScopedPointer<FrmEmpresas>formEmpresa(new FrmEmpresas(this));
+    //FrmEmpresas *formEmpresa = new FrmEmpresas(this);
     formEmpresa->setWindowState(Qt::WindowMaximized);
     formEmpresa->exec();	
 }
 
 void Login::on_pushButton_clicked()
 {
-    //exit(0);
 	this->hide();
 }
 
@@ -140,7 +152,9 @@ void Login::init()
 	// TODO - Rellenar en base a fichero de empresas BD terra.
 	// Relleno combo empresas
 
-	QSqlQuery *QryEmpresas = new QSqlQuery(QSqlDatabase::database("terra"));
+    //NOTE - Fixed pointer
+    QScopedPointer<QSqlQuery>QryEmpresas(new QSqlQuery(QSqlDatabase::database("terra")));
+    //QSqlQuery *QryEmpresas = new QSqlQuery(QSqlDatabase::database("terra"));
 
 	QryEmpresas->prepare("Select * from empresas");
 	if(QryEmpresas->exec()) 
@@ -152,8 +166,10 @@ void Login::init()
 		}
 	}
 	this->ui->lineUsuario->setFocus();
-#if _DEBUG
+    //Esto es por pereza mas que nada xD
+    #if _DEBUG
 	this->ui->lineUsuario->setText("marc");
 	this->ui->linePassword->setText("patata");
-#endif
+    this->ui->btnAcceder->click();
+    #endif
 }

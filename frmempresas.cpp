@@ -11,6 +11,7 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->txtMensaje->setText("ATENCION: Modifique con cuidado. Cambiar estos\n valores puede hacer que el programa deje\n de funcionar");
+    connect(ui->botCerrar,SIGNAL(clicked()),this,SLOT(close()));
 }
 
 FrmEmpresas::~FrmEmpresas()

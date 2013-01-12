@@ -8,7 +8,8 @@
 #include <QDebug>
 #include "configuracion.h"
 #include "frmdecision.h"
-#ifdef win
+
+#ifdef WIN32
     #define and &&
 #endif
 

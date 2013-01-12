@@ -9,6 +9,7 @@
 #include <QSqlQueryModel>
 #include <QDebug>
 
+//NOTE - TheFox :: Revisado
 FrmBuscarCliente::FrmBuscarCliente(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmBuscarCliente)
@@ -16,6 +17,7 @@ FrmBuscarCliente::FrmBuscarCliente(QWidget *parent) :
     ui->setupUi(this);
    // this::connect(this,SIGNAL(enviar_id_cliente(int)),frmClientes,SLOT(set_id_Cliente(int)));
 
+    ModelClientes = 0;
 }
 
 FrmBuscarCliente::~FrmBuscarCliente()
@@ -28,7 +30,10 @@ void FrmBuscarCliente::on_pushButton_clicked()
     // 1º - Preparamos la Select y la asociamos a un QSqlQueryModel
     QString  cSQL;
     cSQL ="Select id,cNombreFiscal,cCifNif,cPoblacion from clientes where cNombrefiscal like '%"+ui->txtBuscar->text().trimmed()+"%'";
-    ModelClientes = new QSqlQueryModel();
+
+    //NOTE - asignale parent a los pointer y se borraran solos al borrar el parent
+    ModelClientes = new QSqlQueryModel(this);
+
     ModelClientes->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->Grid->setModel(ModelClientes);
 
@@ -54,10 +59,15 @@ void FrmBuscarCliente::on_pushButton_clicked()
     //emit enviar_id_cliente( ui->txtBuscar->text().toInt());
 }
 
-int FrmBuscarCliente::DevolverID() {
-    QModelIndex celda=ui->Grid->currentIndex();
-    QModelIndex index=ModelClientes->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+int FrmBuscarCliente::DevolverID()
+{
+    if(ModelClientes)
+    {
+        QModelIndex celda=ui->Grid->currentIndex();
+        QModelIndex index=ModelClientes->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
 
-    QVariant pKey=ModelClientes->data(index,Qt::EditRole);
-   return pKey.toInt();
+        QVariant pKey=ModelClientes->data(index,Qt::EditRole);
+        return pKey.toInt();
+    }
+    return -1;
 }

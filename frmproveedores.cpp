@@ -4,7 +4,8 @@
 #include "configuracion.h"
 #include "frmbuscarpoblacion.h"
 #include <QDebug>
-#ifdef win
+
+#ifdef WIN32
     #define and &&
 #endif
 Proveedor *oProveedor = new Proveedor();
