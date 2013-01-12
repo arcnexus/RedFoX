@@ -93,13 +93,13 @@ QSqlQuery SqlCalls::query(const QString &stament,
     return query;
 }
 
-QSqlQueryModel SqlCalls::queryModel(const QString statment, const QString &connection) const
-{
+//QSqlQueryModel SqlCalls::queryModel(const QString statment, const QString &connection) const
+//{
 //    QString cSql = statment;
 //    QSqlQueryModel *qModel = new QSqlQueryModel();
 //    qModel->setQuery(cSql,QSqlDatabase::database(connection));
     //    return &qModel;
-}
+//}
 
 QStringList SqlCalls::queryList(const QString statment, const QString &connection) const
 {
@@ -161,8 +161,8 @@ QSqlQuery SqlCalls::RecuperarPaciente(int idCliente)
 }
 
 
-int SqlCalls::CrearPaciente(int idCliente)
-{
+//int SqlCalls::CrearPaciente(int idCliente)
+//{
 //    QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
 //    paciente->prepare("insert into pacientes (idCliente,numhistoria) values (:idCliente,:numhistoria)");
 //    paciente->bindValue(":idCliente",idCliente);
@@ -174,6 +174,6 @@ int SqlCalls::CrearPaciente(int idCliente)
 //        return paciente->lastInsertId().toInt();
 //    }
 //    delete paciente;
-}
+//}
 
 

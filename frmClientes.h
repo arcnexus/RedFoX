@@ -93,7 +93,7 @@ private:
     QSqlDatabase dbCliente;
     FrmBuscarPoblacion BuscarPoblacion;
     QSqlQuery tbpaciente;
-    Cliente oCliente;
+    Cliente* oCliente;
     SqlCalls *llamadasSQL;
 
 

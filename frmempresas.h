@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include "empresa.h"
-
 namespace Ui {
 class FrmEmpresas;
 }
@@ -27,8 +26,6 @@ private slots:
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
-
-
 };
 
 #endif // FRMEMPRESAS_H

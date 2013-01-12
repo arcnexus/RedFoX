@@ -7,8 +7,8 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "configuracion.h"
-#include <frmdecision.h>
-
+#include "frmdecision.h"
+#define and &&
 
 
 Factura::Factura(QObject *parent) :

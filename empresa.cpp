@@ -18,8 +18,6 @@ void Empresa::Anadir()
     if (!qEmpresa.exec("insert into empresa nombre values ('')"))
         QMessageBox::warning(NULL,QObject::tr("Gestión de Empresas"),QObject::tr("No se puede crear la empresa"),
                               qEmpresa.lastError().text());
-
-
 }
 
 void Empresa::Recuperar(QString cSQL)
@@ -28,8 +26,10 @@ void Empresa::Recuperar(QString cSQL)
     if (!qEmpresa.exec(cSQL))
         QMessageBox::warning(NULL,QObject::tr("Gestión de Empresas"),QObject::tr("No se puede recuperar la ficha de empresa"),
                              qEmpresa.lastError().text());
-    else {
-        if(qEmpresa.next()) {
+    else 
+	{
+        if(qEmpresa.next()) 
+		{
             QSqlRecord registro = qEmpresa.record();
             this->id = registro.field("id").value().toInt();
             this->cCodigo = registro.field("codigo").value().toString();
@@ -74,11 +74,10 @@ void Empresa::Recuperar(QString cSQL)
             this->cCuentaClientes = registro.field("codigocuentaclientes").value().toString();
             this->cCuentaAcreeedores = registro.field("codigocuentaacreedores").value().toString();
             this->cCuentaProveedores = registro.field("codigocuentaproveedores").value().toString();
-
-        } else {
+		} 
+		else 
+		{
             QMessageBox::information(NULL,QObject::tr("Gestión Empresas"),QObject::tr("No se ha podido encontrar la ficha de empresa"));
-
-
         }
     }
 }

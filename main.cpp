@@ -29,10 +29,14 @@
 #include <QApplication>
 
 
+/*THEFOX*/
+
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+	
     QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
     #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
         QTextCodec::setCodecForTr(linuxCodec);
@@ -52,11 +56,12 @@ int main(int argc, char *argv[])
         a.setStyle("fusion");
         a.setStyleSheet(qss.readAll());
         qss.close();
+	
 
-    MainWindow w;
-    w.setVisible(true);
-    w.setWindowState(Qt::WindowMaximized );
-    w.show();
+  MainWindow w;
+  //  w.setVisible(true);
+   w.setWindowState(Qt::WindowMaximized );
+  //w.show();
 
     
     return a.exec();

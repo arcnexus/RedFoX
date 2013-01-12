@@ -12,15 +12,26 @@
 #include <QDomElement>
 #include <QStandardItemModel>
 #include <QtWebKit>
-#include <qwebview.h>
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+#include <QtWebKitWidgets/QWebView>
+#else
+#include <QWebView>
+#endif
 
 #include "qwebkitglobal.h"
-#include "qwebpage.h"
+//#include "qwebpage.h"
+
+
+
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     #include <QtWidgets/qwidget.h>
+    #include <QtWebKitWidgets/QWebPage>
 #else
     #include <QtGui/qwidget.h>
+    #include <QWebPage>
 #endif
+
 #include <QtGui/qicon.h>
 #include <QtGui/qpainter.h>
 #include <QtCore/qurl.h>

@@ -11,7 +11,6 @@ public:
     int NuevoEpisodio(int idPaciente);
     void RecuperarEpisodio(int idEpisodio);
     void GuardarEpisodio();
-    void BorrarEpisodio(int nID);
     int getid();
     int getidPaciente();
     int getcerrado();

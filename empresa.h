@@ -157,13 +157,7 @@ private:
     int nDigitosCuentas;
     QString cCuentaClientes;
     QString cCuentaProveedores;
-    QString cCuentaAcreeedores;
-
-
-
-
-
-    
+    QString cCuentaAcreeedores;    
 };
 
 #endif // EMPRESA_H

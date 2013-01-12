@@ -382,7 +382,6 @@ void frmFacturas::BloquearCampos()
     ui->botBorrarLinea->setEnabled(false);
     ui->botEditarLinea->setEnabled(false);
     ui->botBuscarCliente->setEnabled(false);
-
 }
 
 void frmFacturas::DesbloquearCampos()

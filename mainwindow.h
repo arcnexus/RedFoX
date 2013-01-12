@@ -32,6 +32,8 @@ public:
     
 
 private slots:
+	void init();
+
     void btnMantenimientos_clicked();
     void btnVentas_clicked();
 
@@ -54,9 +56,6 @@ private slots:
     void btnPresup_clientes_clicked();
 
     void btnCajaMinuta_clicked();
-
-    void GestEmpresas();
-
 
  //4   void on_btnAgenda_clicked();
 

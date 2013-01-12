@@ -5,7 +5,7 @@
 #include <QSqlRecord>
 #include <QErrorMessage>
 #include <QMessageBox>
-#include <frmdecision.h>
+#include "frmdecision.h"
 #include <QDebug>
 #include "configuracion.h"
 #include <QString>
@@ -198,11 +198,11 @@ cab_ped.bindValue(":dFechaLimiteEntrega", this->dFechaLimiteEntrega);
 cab_ped.bindValue(":Id",this->id);
 
 if(!cab_ped.exec()){
-    QMessageBox::critical(NULL,QObject::QObject::tr("error al guardar datos Pedido:"), cab_ped.lastError().text());
+    QMessageBox::critical(NULL,QObject::tr("error al guardar datos Pedido:"), cab_ped.lastError().text());
     qDebug() << cab_ped.lastQuery();
 } else {
-    QMessageBox::information(NULL,QObject::QObject::tr("Guardar datos"),QObject::QObject::tr("El Pedido se ha guardado correctamente:"),
-                             QObject::QObject::tr("Ok"));
+    QMessageBox::information(NULL,QObject::tr("Guardar datos"),QObject::tr("El Pedido se ha guardado correctamente:"),
+                             QObject::tr("Ok"));
     QString cSQL = "Select * from ped_cli where id ="+QString::number(nId_Pedido);
     RecuperarPedido(cSQL);
 }

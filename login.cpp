@@ -5,14 +5,16 @@
 #include <QErrorMessage>
 #include <QMessageBox>
 #include<QSqlError>
-#include<mainwindow.h>
+#include "mainwindow.h"
 #include <QDir>
 #include <QDebug>
-#include <configuracion.h>
+#include "configuracion.h"
 #include <QSqlRecord>
 #include <QSqlField>
 #include "frmempresas.h"
 
+/*THEFOX*/
+#include <QtCore/QTimer>
 
 Login::Login(Configuracion *m_config,QWidget *parent) :
     QDialog(parent),
@@ -26,37 +28,21 @@ Login::Login(Configuracion *m_config,QWidget *parent) :
     connect(ui->btnEmpresa,SIGNAL(clicked()),this,SLOT(btnEmpresa_clicked()));
     connect(ui->Crearconfiguracin,SIGNAL(clicked()),this,SLOT(Crearconfiguracion_clicked()));
 
-    // TODO - Rellenar en base a fichero de empresas BD terra.
-    // Relleno combo empresas
-
-    QSqlQuery *QryEmpresas = new QSqlQuery(QSqlDatabase::database("terra"));
-    QryEmpresas->prepare("Select * from empresas");
-    if(QryEmpresas->exec()) {
-
-        while (QryEmpresas->next()) {
-              QSqlRecord rEmpresa = QryEmpresas->record();
-              ui->cboEmpresa->addItem(rEmpresa.field("nombre").value().toString());
-        }
-    }
-
-    this->ui->lineUsuario->setFocus();
-
+	QTimer::singleShot(0,this,SLOT(init()));
 }
 
 Login::~Login()
 {
-
     delete ui;
-
     //dbTerra.close();
 }
 
-const QString Login::getUsuario()
+const QString Login::getUsuario() const
 {
     return ui->lineUsuario->text();
 }
 
-const QString Login::getEmpresa()
+const QString Login::getEmpresa() const
 {
     return ui->cboEmpresa->currentText();
 }
@@ -64,35 +50,42 @@ const QString Login::getEmpresa()
 
 void Login::on_btnAcceder_clicked()
 {
-
     QSqlQuery qryUsers(QSqlDatabase::database("terra"));
+
     qryUsers.prepare( "SELECT * FROM usuarios where nombre =:Nombre" );
     qryUsers.bindValue(":Nombre",ui->lineUsuario->text());
     //qryUsers.prepare("Select * from usuarios where nombre = '"+ui->lineUsuario->text.trimmed()+"'");
-    if( !qryUsers.exec() ) {
+
+    if( !qryUsers.exec() ) 
+	{
         QMessageBox::critical(NULL, "error:", qryUsers.lastError().text());
-    } else {
-        if (qryUsers.next()) {
+    } 
+	else 
+	{
+       if (qryUsers.next()) 
+	   {
             QSqlRecord rUsuario = qryUsers.record();
-            if (ui->linePassword->text()==qryUsers.value(2).toString()) {
+            if (ui->linePassword->text() == qryUsers.value(2).toString()) 
+			{
                 QSettings settings("infint", "terra");
                 settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
                 settings.setValue("nNivelAcceso",rUsuario.field("nivelacceso").value().toInt());
                 settings.setValue("cCategoria",rUsuario.field("categoria").value().toString());
-                Login::done( QDialog::Accepted);
-
-            } else {
+                Login::done(QDialog::Accepted);
+            }
+			else 
+			{
                 QMessageBox::critical(0,"ACCESO DENEGADO","El usuario y la contraseña no se corresponden\n\n Verifique los datos");
                 ui->linePassword->setText("");
                 ui->linePassword->setFocus();
             }
-
-        } else {
-
-            QMessageBox::critical(0,"Error","No existe ningún usuario con este nombre");
-            ui->lineUsuario->setText("");
-            ui->lineUsuario->setFocus();
-        }
+       } 
+	   else
+	   {
+           QMessageBox::critical(0,"Error","No existe ningún usuario con este nombre");
+           ui->lineUsuario->setText("");
+           ui->lineUsuario->setFocus();
+       }
     }
 }
 
@@ -100,7 +93,7 @@ void Login::Crearconfiguracion_clicked()
 {
     QSettings settings("infint", "terra");
     settings.setValue("cDriverBDTerra","QSQLITE");
-    settings.setValue("cRutaDBTerra","/home/arcnexus/TerraSoftware/Proyectos/terra/DB/terra.sqlite");
+    settings.setValue("cRutaDBTerra",qApp->applicationDirPath()+"/DB/terra.sqlite");
     settings.setValue("cHostBDTerra","localhost");
     settings.setValue("cUserBDTerra","root");
     settings.setValue("cPasswordBDTerra","PatataBullida_99");
@@ -127,20 +120,40 @@ void Login::Crearconfiguracion_clicked()
     settings.setValue("cCategoria","");
     settings.setValue("Clave1","");
     settings.setValue("Clave2","");
-
-
 }
 
 void Login::btnEmpresa_clicked()
 {
     FrmEmpresas *formEmpresa = new FrmEmpresas(this);
     formEmpresa->setWindowState(Qt::WindowMaximized);
-    formEmpresa->exec();
-
-
+    formEmpresa->exec();	
 }
 
 void Login::on_pushButton_clicked()
 {
-    exit(0);
+    //exit(0);
+	this->hide();
+}
+
+void Login::init()
+{
+	// TODO - Rellenar en base a fichero de empresas BD terra.
+	// Relleno combo empresas
+
+	QSqlQuery *QryEmpresas = new QSqlQuery(QSqlDatabase::database("terra"));
+
+	QryEmpresas->prepare("Select * from empresas");
+	if(QryEmpresas->exec()) 
+	{
+		while (QryEmpresas->next()) 
+		{
+			QSqlRecord rEmpresa = QryEmpresas->record();
+			ui->cboEmpresa->addItem(rEmpresa.field("nombre").value().toString());
+		}
+	}
+	this->ui->lineUsuario->setFocus();
+#if _DEBUG
+	this->ui->lineUsuario->setText("marc");
+	this->ui->linePassword->setText("patata");
+#endif
 }

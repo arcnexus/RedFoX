@@ -5,8 +5,12 @@
 #include <QNetworkReply>
 #include <QXmlStreamAttributes>
 #include <QStringList>
-#include <QWebView>
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+#include <QtWebKitWidgets/QWebView>
+#else
+#include <QWebView>
+#endif
 namespace Ui {
 class FrmAnadirMedicamento;
 }

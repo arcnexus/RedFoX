@@ -4,7 +4,7 @@
 #include <QErrorMessage>
 #include <QSqlQuery>
 #include <QMessageBox>
-#include <frmdecision.h>
+#include "frmdecision.h"
 #include "configuracion.h"
 
 

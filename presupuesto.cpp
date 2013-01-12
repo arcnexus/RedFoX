@@ -5,7 +5,7 @@
 #include <QSqlRecord>
 #include <QErrorMessage>
 #include <QMessageBox>
-#include <frmdecision.h>
+#include "frmdecision.h"
 #include <QDebug>
 #include "configuracion.h"
 #include <QString>
@@ -373,11 +373,11 @@ void Presupuesto::GuardarPres(int nId_Presupuesto)
          cab_pre.bindValue(":nId",this->id);
 
     if(!cab_pre.exec()){
-        QMessageBox::critical(NULL,QObject::QObject::tr("error al guardar datos Presupuesto:"), cab_pre.lastError().text());
+        QMessageBox::critical(NULL,QObject::tr("error al guardar datos Presupuesto:"), cab_pre.lastError().text());
         qDebug() << cab_pre.lastQuery();
     } else {
-        QMessageBox::information(NULL,QObject::QObject::tr("Guardar datos"),QObject::QObject::tr("El Presupuesto se ha guardado correctamente:"),
-                                 QObject::QObject::tr("Ok"));
+        QMessageBox::information(NULL,QObject::tr("Guardar datos"),QObject::tr("El Presupuesto se ha guardado correctamente:"),
+                                 QObject::tr("Ok"));
         QString cSQL = "Select * from cab_pre where Id ="+QString::number(nId_Presupuesto);
         RecuperarPresupuesto(cSQL);
     }

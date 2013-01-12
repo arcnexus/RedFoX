@@ -5,7 +5,11 @@
 #include <QSettings>
 #include <QDate>
 #include <QUrl>
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+#include <QtWebKitWidgets/QWebView>
+#else
 #include <QWebView>
+#endif
 
 FrmInformacionFarmaco::FrmInformacionFarmaco(QWidget *parent) :
     QDialog(parent),

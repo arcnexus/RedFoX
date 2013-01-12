@@ -9,14 +9,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>783</width>
-    <height>360</height>
+    <width>787</width>
+    <height>369</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>191</height>
+    <width>787</width>
+    <height>369</height>
    </size>
   </property>
   <property name="contextMenuPolicy">
@@ -697,19 +697,6 @@ border-color: rgb(192, 192, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="2">
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item row="2" column="3">
        <spacer name="verticalSpacer">
         <property name="orientation">
@@ -911,6 +898,19 @@ border-color: rgb(192, 192, 255);</string>
         </property>
        </widget>
       </item>
+      <item row="4" column="2">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
      <zorder>label_5</zorder>
      <zorder>pushButton</zorder>
@@ -922,8 +922,8 @@ border-color: rgb(192, 192, 255);</string>
      <zorder>label_2</zorder>
      <zorder>label</zorder>
      <zorder>horizontalSpacer</zorder>
-     <zorder>horizontalSpacer_2</zorder>
      <zorder>verticalSpacer</zorder>
+     <zorder>horizontalSpacer_2</zorder>
     </widget>
    </item>
   </layout>

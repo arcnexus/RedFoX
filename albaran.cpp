@@ -5,11 +5,11 @@
 #include <QSqlRecord>
 #include <QErrorMessage>
 #include <QMessageBox>
-#include <frmdecision.h>
+#include "frmdecision.h"
 #include <QDebug>
 #include "configuracion.h"
 #include <QString>
-//---------- ahora sí que irá.
+
 Albaran::Albaran(QObject *parent) :
     QObject(parent)
 {

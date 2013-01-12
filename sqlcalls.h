@@ -31,8 +31,8 @@ public:
                     const QString &connection) const;
 
     // Generic QueryModels
-    QSqlQueryModel queryModel(const QString statment,
-                              const QString &connection) const;
+ //   QSqlQueryModel queryModel(const QString statment,
+ //                             const QString &connection) const;
 
     QStringList queryList(const QString statment,
                               const QString &connection) const;
@@ -42,7 +42,7 @@ public:
     int addRec(const QString &statment,const QStringList &parameters,const QString &connection);
     QSqlQuery RecuperarPaciente(int idCliente);
 
-    int CrearPaciente(int idCliente);
+  //  int CrearPaciente(int idCliente);
 private:
     QStringList m_connections;
     QString m_defaultConnection;

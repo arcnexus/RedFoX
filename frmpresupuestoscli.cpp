@@ -1,7 +1,7 @@
 #include "frmpresupuestoscli.h"
 #include "ui_frmpresupuestoscli.h"
 #include <QSqlQueryModel>
-#include <presupuesto.h>
+#include "presupuesto.h"
 #include "configuracion.h"
 #include "cliente.h"
 #include "frmbuscarcliente.h"

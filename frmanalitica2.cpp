@@ -12,8 +12,6 @@ Frmanalitica2::Frmanalitica2(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->btnAnadir,SIGNAL(clicked()),this,SLOT(aceptar()));
     connect(ui->btnCancelar,SIGNAL(clicked()),this,SLOT(close()));
-    connect(ui->btnMarcar,SIGNAL(clicked()),this,SLOT(marcartodos()));
-    connect(ui->btnDesmarcar,SIGNAL(clicked()),this,SLOT(desmarcartodos()));
 }
 
 Frmanalitica2::~Frmanalitica2()
@@ -61,7 +59,7 @@ void Frmanalitica2::cargarDatos(QString cTipo, int idAnalitica)
             cDescripcion = reg.field("descripcion").value().toString();
             QTableWidgetItem *newItem1 = new QTableWidgetItem(cDescripcion);
             // para que los elementos no sean editables
-            newItem1->setFlags(!Qt::ItemIsEnabled);
+            newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
             newItem1->setTextColor(Qt::black); // color de los items
             ui->tabla->setItem(pos,1,newItem1);
 
@@ -94,35 +92,14 @@ void Frmanalitica2::aceptar()
     for(lin= 0; lin < lineas ; lin++) {
         status = ui->tabla->item(lin,0)->checkState();
         if(status==true){
-            QString cAnalitica = ui->tabla->item(lin,1)->text();
-            QString cValor = ui->tabla->item(lin,2)->text();
-            QString cRefer = ui->tabla->item(lin,3)->text();
-            QString cComent = ui->tabla->item(lin,4)->text();
-
-            oAnalitica->AnadirLineas(this->idAnalitica,cAnalitica,cValor,cRefer,cComent,this->cTipo);
+            oAnalitica->AnadirLineas(this->idAnalitica,ui->tabla->item(lin,1)->text(),ui->tabla->item(lin,2)->text(),
+                                     ui->tabla->item(lin,3)->text(),ui->tabla->item(lin,4)->text(),
+                                     this->cTipo);
 
         }
     }
     this->close();
 
-}
-
-void Frmanalitica2::marcartodos()
-{
-    int lin = 0;
-    int lineas = ui->tabla->rowCount();
-    for(lin= 0; lin < lineas ; lin++) {
-        ui->tabla->item(lin,0)->setCheckState(Qt::Checked);
-    }
-}
-
-void Frmanalitica2::desmarcartodos()
-{
-    int lin = 0;
-    int lineas = ui->tabla->rowCount();
-    for(lin= 0; lin < lineas ; lin++) {
-        ui->tabla->item(lin,0)->setCheckState(Qt::Unchecked);
-    }
 }
 
 

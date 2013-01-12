@@ -29,7 +29,6 @@ void Analitica::AnadirAnalitica()
         qDebug() << qAna->lastQuery();
     } else
         this->setId(qAna->lastInsertId().toInt());
-    delete qAna;
 }
 
 void Analitica::AnadirLineas(int idanalitica, QString descripcion, QString valor, QString referencia,
@@ -48,8 +47,8 @@ void Analitica::AnadirLineas(int idanalitica, QString descripcion, QString valor
         QMessageBox::warning(NULL,tr("Añadir línea analitica"),tr("Fallo al insertar línea analitica")+
                              qAna->lastError().text(),tr("Aceptar"));
          qDebug() << qAna->lastQuery();
-    }
-    delete qAna;
+}
+
 
 }
 
@@ -88,7 +87,6 @@ void Analitica::GuardarDatos(int nId)
     if(!qAnalitica->exec())
         QMessageBox::warning(NULL,tr("Analítica"),tr("Error al guardar los datos de analitica: ")+
                                                      qAnalitica->lastError().text(),tr("Aceptar"));
-    delete qAnalitica;
 
 }
 
@@ -108,47 +106,4 @@ void Analitica::GuardarLineas(int id, QString valor, QString referencia, QString
         QMessageBox::warning(NULL,tr("Analítica"),tr("No se puede actualizar el registro de analítica. Error:")+
                              qAnalitica->lastError().text(),
                              tr("Aceptar"));
-    delete qAnalitica;
-}
-
-void Analitica::BorrarAnalitica(int nId)
-{
-    // TODO : Abrir transacción:
-    QSqlDatabase dbmedica = QSqlDatabase::database("dbmedica");
-    dbmedica.transaction();
-
-    QSqlQuery *qAna = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qAna->prepare("delete from analitica2 where idanalitica = :nidAnalitica");
-    qAna->bindValue(":nidAnalitica",nId);
-    try {
-        if(!qAna->exec())
-            QMessageBox::warning(NULL,tr("Borrar Analítica"),tr("Ha ocurrido un error al tratar de borrar las líneas de analítica")+
-                                 qAna->lastError().text(),tr("Aceptar"));
-        qAna->prepare("delete from Analitica where id =:nId");
-        qAna->bindValue(":nId",nId);
-        if(!qAna->exec())
-            QMessageBox::warning(NULL,tr("Borrar Analítica"),tr("Ha ocurrido un error al tratar de borrar la analítica")+
-                                 qAna->lastError().text(),tr("Aceptar"));
-        else
-            QMessageBox::warning(NULL,tr("Borrar Analítica"),tr("La Analítica ha sido borrada satisfactoriamente"),tr("Aceptar"));
-        dbmedica.commit();
-
-    } catch(...) {
-            dbmedica.rollback();
-    }
-        // TODO: Cerrar Transacción:
-    delete qAna;
-}
-
-void Analitica::BorrarLineaAnalitica(int nId)
-{
-    QSqlQuery *qAna = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qAna->prepare("delete from analitica2 where id = :nid");
-    qAna->bindValue(":nid",nId);
-    if(!qAna->exec())
-        QMessageBox::warning(NULL,tr("Borrar Analítica"),tr("Ha ocurrido un error al tratar de borrar la línea de analítica")+
-                             qAna->lastError().text(),tr("Aceptar"));
-    else
-        QMessageBox::warning(NULL,tr("Borrar Analítica"),tr("La línea ha sido borrada satisfactoriamente"),tr("Aceptar"));
-    delete qAna;
 }
