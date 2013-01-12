@@ -4,7 +4,9 @@
 #include "configuracion.h"
 #include "frmbuscarpoblacion.h"
 #include <QDebug>
-#define and &&
+#ifdef win
+    #define and &&
+#endif
 Proveedor *oProveedor = new Proveedor();
 
 frmProveedores::frmProveedores(QWidget *parent) :

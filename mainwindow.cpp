@@ -115,7 +115,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QSettings settings("infint", "terra");
     // Cambiar por parametros fichero configuración.
     m_config->cDriverBDTerra = settings.value("cDriverBDTerra").toString();
-    m_config->cRutaBdTerra = "C:/Users/Marco/Documents/Visual Studio 2010/Projects/terra-master/DB/terra.sqlite";/*settings.value("cRutaDBTerra").toString();*/
+    m_config->cRutaBdTerra = settings.value("cRutaDBTerra").toString();
+   // m_config->cRutaBdTerra = "C:/Users/Marco/Documents/Visual Studio 2010/Projects/terra-master/DB/terra.sqlite";/*settings.value("cRutaDBTerra").toString();*/
     m_config->cHostBDTerra = settings.value("cHostBDTerra").toString();
     m_config->cUsuarioBDTerra  =   settings.value("cUserBDTerra").toString();
     m_config->cPasswordBDTerra = settings.value("cPasswordBDTerra").toString();

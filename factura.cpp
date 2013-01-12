@@ -8,7 +8,9 @@
 #include <QDebug>
 #include "configuracion.h"
 #include "frmdecision.h"
-#define and &&
+#ifdef win
+    #define and &&
+#endif
 
 
 Factura::Factura(QObject *parent) :
