@@ -9,7 +9,7 @@
 #include <QDebug>
 #include "configuracion.h"
 #include <QString>
-//--------
+//------
 Albaran::Albaran(QObject *parent) :
     QObject(parent)
 {
