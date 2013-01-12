@@ -28,7 +28,6 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     oCliente = new Cliente(this);
     oCliente->setId(0);
 
-
     // Rellenar formas de pago
     modelFP = new QSqlQueryModel();
     modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("empresa"));
@@ -73,7 +72,7 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     connect(ui->txtcPoblacionFactura,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacionFactura_editingFinished()));
     connect(ui->txtcPoblacionAlmacen,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacionAlmacen_editingFinished()));
     connect(ui->txtrRiesgoPermitido,SIGNAL(editingFinished()),this,SLOT(on_txtrRiesgoPermitido_editingFinished()));
-    connect(ui->btnSiguiente,SIGNAL(clicked()),this,SLOT(on_btnSiguiente_clicked()));
+
 
 }
 

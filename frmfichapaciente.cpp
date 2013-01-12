@@ -538,7 +538,7 @@ void FrmFichaPaciente::llenartablahistorialfarmacologiaepisodio()
     qFarma->bindValue(":id",oEpisodio->getid());
     ui->listaTratamientosFarma->setRowCount(0);
     ui->listaTratamientosFarma->setColumnCount(3);
-    ui->listaTratamientosFarma->setColumnWidth(0,ui->listaTratamientosFarma->width()-30);
+    ui->listaTratamientosFarma->setColumnWidth(0,220);
     ui->listaTratamientosFarma->setColumnWidth(1,0);
     ui->listaTratamientosFarma->setColumnWidth(2,0);
     ui->listaTratamientosFarma->setHorizontalHeaderLabels(list);

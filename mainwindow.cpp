@@ -257,7 +257,7 @@ void MainWindow::init()
 			qDebug() <<"Fallo la conexión al fichero Medico";
 	} 
 	else
-		/*exit(0);*/qApp->quit();
+        qApp->quit();
 }
 
 MainWindow::~MainWindow()
