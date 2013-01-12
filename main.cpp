@@ -30,6 +30,7 @@
 
 
 /*   #THEFOX#  */ // ARCNEXUS //
+//Windows 7 - 32 | QtCreator 2.6.1 => Commit! :PP
 
 
 
