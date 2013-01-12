@@ -404,7 +404,7 @@ void MainWindow::Ventas()
    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
    connect(ui->actionAlbaranes,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
-   connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+   //connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
 }
 
 
@@ -514,7 +514,14 @@ void MainWindow::btnCajaMinuta_clicked()
     frmCajaMinuta->setWindowState(Qt::WindowMaximized);
     frmCajaMinuta->exec();
     cerrarSubWindows();
-   // ui->btnCajaMinuta->setEnabled(true);
+    // ui->btnCajaMinuta->setEnabled(true);
+}
+
+void MainWindow::GestEmpresas()
+{
+    FrmEmpresas *formEmpresa = new FrmEmpresas();
+    formEmpresa->setWindowState(Qt::WindowMaximized);
+    formEmpresa->exec();
 }
 
 //void MainWindow::on_btnAgenda_clicked()

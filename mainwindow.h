@@ -55,6 +55,9 @@ private slots:
 
     void btnCajaMinuta_clicked();
 
+    void GestEmpresas();
+
+
  //4   void on_btnAgenda_clicked();
 
     void cambiarEstilo(int);

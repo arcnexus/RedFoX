@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "empresa.h"
+
 namespace Ui {
 class FrmEmpresas;
 }

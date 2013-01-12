@@ -19,8 +19,8 @@ public:
     explicit Login(Configuracion *m_config, QWidget *parent = 0);
     ~Login();
 
-    const QString &getUsuario() const;
-    const QString &getEmpresa() const;
+    const QString getUsuario();
+    const QString getEmpresa();
     
 private slots:
     void on_btnAcceder_clicked();
