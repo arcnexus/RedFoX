@@ -29,7 +29,7 @@
 #include <QApplication>
 
 
-/***  THEFOX  ***/ // ARCNEXUS //
+/*   #THEFOX#  */ // ARCNEXUS //
 
 
 
