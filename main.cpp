@@ -30,6 +30,8 @@
 
 
 //NOTE - TheFox :: Archivo Revisado
+
+//--
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
