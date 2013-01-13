@@ -1,16 +1,13 @@
 #include "frmpresupuestoscli.h"
 #include "ui_frmpresupuestoscli.h"
 #include <QSqlQueryModel>
-#include "presupuesto.h"
 #include "configuracion.h"
-#include "cliente.h"
 #include "frmbuscarcliente.h"
 #include "articulo.h"
 #include <QMessageBox>
 #include "frmmodificarlin_precli.h"
 
-Presupuesto *oPres = new Presupuesto();
-Cliente *oClientePres = new Cliente();
+
 FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmPresupuestosCli)
@@ -26,11 +23,15 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     //-----------------------
     // Conexiones
     //-----------------------
+    oPres = new Presupuesto();
+    oClientePres = new Cliente();
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
 {
     delete ui;
+    delete oPres;
+    delete oClientePres;
 }
 
 void FrmPresupuestosCli::LLenarCampos()
@@ -103,6 +104,7 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtcEmail->setText(oPres->getcEmail());
     ui->chklRecargoEq->setChecked(oPres->getlRecargoEquivalencia());
     LineasVentas();
+    delete o_conf;
 }
 
 void FrmPresupuestosCli::LLenarCamposCliente()

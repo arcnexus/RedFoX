@@ -10,6 +10,7 @@ class Paciente
 {
 public:
     Paciente();
+    ~Paciente();
     QSqlQuery *qepisodio;
 public slots:
     // Funciones varias

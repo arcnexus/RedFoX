@@ -14,7 +14,8 @@ ImagenesDiagnostico::ImagenesDiagnostico(QObject *parent) :
 void ImagenesDiagnostico::guardarDatosDB()
 {
         //emit ui_ponerDatosEnObjetoImagen();
-        QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+        QScopedPointer<QSqlQuery>qImagen (new QSqlQuery(QSqlDatabase::database("dbmedica")));
+        //QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
         qImagen->prepare("UPDATE imagenes SET "
                          "localizacionimagen =:localizacionimagen,"
                          "comentarios = :comentarios,"
@@ -45,7 +46,8 @@ void ImagenesDiagnostico::guardarDatosDB()
 
 void ImagenesDiagnostico::llenarObjetoconDatosDB()
 {
-    QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QScopedPointer<QSqlQuery>qImagen (new QSqlQuery(QSqlDatabase::database("dbmedica")));
+    //QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     QString cSQL = "Select * from imagenes where id =:id";
 
     qImagen->prepare(cSQL);
@@ -68,7 +70,8 @@ void ImagenesDiagnostico::llenarObjetoconDatosDB()
 
 void ImagenesDiagnostico::llenarObjetoconDatosDB(int nid)
 {
-    QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QScopedPointer<QSqlQuery>qImagen (new QSqlQuery(QSqlDatabase::database("dbmedica")));
+    //QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     QString cSQL = "Select * from imagenes where id =:id";
 
     qImagen->prepare(cSQL);
@@ -94,7 +97,8 @@ void ImagenesDiagnostico::BorrarImagen(int nid)
     if(QMessageBox::question(NULL,QObject::tr("Borrar imagen del historial"),
                              QObject::tr("Va a proceder a borrar una imagen del historial, ¿Desea continuar?"),
                              QObject::tr("Cancelar"),QObject::tr("Borrar")) ==QMessageBox::Accepted) {
-        QSqlQuery *qImagenes = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+        QScopedPointer<QSqlQuery>qImagenes (new QSqlQuery(QSqlDatabase::database("dbmedica")));
+        //QSqlQuery *qImagenes = new QSqlQuery(QSqlDatabase::database("dbmedica"));
         qImagenes->prepare("delete from imagenes where id = :nid");
         qImagenes->bindValue(":nid",nid);
         if(!qImagenes->exec())
@@ -108,7 +112,8 @@ void ImagenesDiagnostico::BorrarImagen(int nid)
 void ImagenesDiagnostico::anadirDatosDB()
 {
     emit ui_ponerDatosEnObjetoImagen();
-    QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QScopedPointer<QSqlQuery>qImagen (new QSqlQuery(QSqlDatabase::database("dbmedica")));
+    //QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     qImagen->prepare("INSERT INTO imagenes "
                     "(idepisodio,localizacionimagen,comentarios,evaluada,descripcion,fechaimagen,"
                     "tipoimagen) VALUES (:idepisodio,:localizacionimagen,:comentarios,:evaluada,"

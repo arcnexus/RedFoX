@@ -8,7 +8,13 @@
 
 Paciente::Paciente()
 {
+    qepisodio=0;
+}
 
+Paciente::~Paciente()
+{
+    if(qepisodio)
+        delete qepisodio;
 }
 void Paciente::RecuperarPaciente(int idCliente)
 {
@@ -20,7 +26,8 @@ void Paciente::RecuperarPaciente(int idCliente)
 //        QSqlRecord rPaciente = qpaciente.record();
 
 //        Paciente *oPaciente = new Paciente();
-        QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+        QScopedPointer<QSqlQuery>paciente (new QSqlQuery(QSqlDatabase::database("dbmedica")));
+       // QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
         QString queryPaciente = "select * from pacientes where idcliente = :idcliente";
         paciente->prepare(queryPaciente);
 
@@ -100,7 +107,8 @@ void Paciente::GuardarPaciente()
             "trabaja = :trabaja,"
             "numhistoria =:numhistoria"
             " WHERE id = :id";
-    QSqlQuery *qPaciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QScopedPointer<QSqlQuery>qPaciente (new QSqlQuery(QSqlDatabase::database("dbmedica")));
+    //QSqlQuery *qPaciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     qPaciente->prepare(cSql);
     qPaciente->bindValue(":idcliente",this->idCliente);
     qPaciente->bindValue(":alcohol",this->alcohol);

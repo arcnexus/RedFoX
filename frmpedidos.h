@@ -4,7 +4,8 @@
 #include <QDialog>
 #include "configuracion.h"
 # include <QSqlQueryModel>
-
+#include "pedidos.h"
+#include "cliente.h"
 namespace Ui {
 class frmPedidos;
 }
@@ -16,7 +17,8 @@ class FrmPedidos : public QDialog
 public:
     explicit FrmPedidos(QWidget *parent = 0);
     ~FrmPedidos();
-    
+    Pedidos *oPedido;
+    Cliente *oCliente3;
 private slots:
     void on_btnSiguiente_clicked();
 

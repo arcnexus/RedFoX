@@ -294,6 +294,7 @@ void Empresa::Borrar(int nId)
 
          }
     }
+   Decision->deleteLater();
 }
 
 int Empresa::getid()

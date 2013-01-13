@@ -14,8 +14,14 @@ Albaran::Albaran(QObject *parent) :
     QObject(parent)
 {
     this->id =0;
+    cab_alb = 0;
 }
 
+Albaran::~Albaran()
+{
+    if(cab_alb)
+        delete cab_alb;
+}
 // Metodos utilidad Clase
 void Albaran::AnadirAlbaran() {
     Configuracion *oConf =  new Configuracion();

@@ -75,6 +75,7 @@ void FrmModificarLin_ped::PonerCampos(int ID_Lin)
         ui->txtTotal->setText(o_config->FormatoNumerico(record.field("rTotal").value().toString()));
         ui->txtPorcIVA->setText(o_config->FormatoNumerico(record.field("nPorcIva").value().toString()));
     }
+    delete Mod_linPed;
 }
 void FrmModificarLin_ped::CalcularTotal()
 {

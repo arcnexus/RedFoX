@@ -22,20 +22,22 @@
 #include "frminformacionfarmaco.h"
 #include "frmanadirimagen.h"
 #include <QDesktopWidget>
-#include "imagenesdiagnostico.h"
+
 #include "interconsulta.h"
 #include "frmanalitica.h"
 #include "analitica.h"
 #include "frmveranalitica.h"
 
-Paciente *oPaciente = new Paciente();
-Episodio *oEpisodio = new Episodio();
-ImagenesDiagnostico *oImagenes = new ImagenesDiagnostico();
+
 
 FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmFichaPaciente)
 {
+    oPaciente = new Paciente();
+    oEpisodio = new Episodio();
+    oImagenes = new ImagenesDiagnostico();
+
     ui->setupUi(this);
     // Rellenar combos
     SqlCalls *llamada = new SqlCalls();
@@ -83,6 +85,9 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
 FrmFichaPaciente::~FrmFichaPaciente()
 {
     delete ui;
+    delete oPaciente;
+    delete oEpisodio ;
+    delete oImagenes;
 }
 
 void FrmFichaPaciente::cargarDatos(int idcliente)
@@ -100,7 +105,7 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
     ui->txtFamiliaNuclear->setPlainText(oPaciente->getfamilia());
     ui->txtFechaAlta->setDate(oPaciente->getfechaAlta());
     ui->txtFiliacion->setText(oPaciente->getfiliacion());
-;
+
     ui->txtHijos->setValue(oPaciente->gethijos());
     ui->txtHistorialEpisodio->setPlainText(oPaciente->gethistorial());
     ui->txtIMC->setText(QString::number(oPaciente->getIMC()));
@@ -441,6 +446,7 @@ void FrmFichaPaciente::on_listaEpisodios_clicked(const QModelIndex &index)
         cargarEpisodio(0);
         ui->btnEditarEpisodio->setEnabled(true);
     }
+    delete qEpisodio;
 }
 
 
@@ -472,7 +478,6 @@ void FrmFichaPaciente::BuscarCIE()
     FrmBuscarCIE *BuscarCIE = new FrmBuscarCIE();
     connect(BuscarCIE,SIGNAL(emitirCIE(int,QString,QString )), this, SLOT(RecuperarCIE(int,QString,QString)));
     BuscarCIE->show();
-
 }
 
 void FrmFichaPaciente::RecuperarCIE(int id, QString codigo, QString descripcion)
@@ -590,6 +595,7 @@ void FrmFichaPaciente::llenartablahistorialfarmacologiaepisodio()
         ui->itemFarma->setVisible(false);
         ui->btnEditarFarmacologia->setEnabled(false);
     }
+    delete qFarma;
 }
 
 void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
@@ -655,7 +661,7 @@ void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
             }
         }
     }
-
+    delete qImagenes;
 }
 
 void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
@@ -708,6 +714,7 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
 
         }
     }
+    delete qAnalisis;
 }
 
 void FrmFichaPaciente::BorrarDatosMedicamento()
@@ -738,17 +745,16 @@ void FrmFichaPaciente::MostrarFichaMedicamento()
         frmFarmaco->setModal(true);
         frmFarmaco->setWindowModality(Qt::WindowModal);
         frmFarmaco->show();
-
-
     }
-
+    delete qFarma;
 }
 
 void FrmFichaPaciente::AnadirImagenDiagnostico()
 {
+    FrmAnadirImagen *imagen;
     if (oEpisodio->getid() >0) {
 
-        FrmAnadirImagen *imagen = new FrmAnadirImagen();
+        imagen = new FrmAnadirImagen();
         connect(this,SIGNAL(pasaid(int)),imagen,SLOT(RecuperarId(int)));
         emit pasaid(oEpisodio->getid());
         imagen->adjustSize();
@@ -759,6 +765,7 @@ void FrmFichaPaciente::AnadirImagenDiagnostico()
         QMessageBox::warning(this,tr("Añadir imagenes a episodio"),
                              tr("Debe seleccionar o crear un episodio antes de añadir una nueva imagen diagnostica"),tr("Aceptar"));
    llenartablahistorialimagenesepisodio();
+   imagen->deleteLater();
 }
 
 void FrmFichaPaciente::BorrarImagenDiagnostico()
@@ -795,6 +802,7 @@ void FrmFichaPaciente::AnadirInterconsulta()
 {
     Interconsulta *oInterconsulta = new Interconsulta(this);
     oInterconsulta->AnadirInterconsulta(oEpisodio->getid(),oPaciente->getid());
+    oInterconsulta->deleteLater();
 }
 
 void FrmFichaPaciente::AnadirAnalitica()
@@ -810,6 +818,7 @@ void FrmFichaPaciente::AnadirAnalitica()
         emit pasaid(oAnalitica->getId());
         emit pasaPaciente(ui->txtPaciente->text());
         frmAnalitica->exec();
+        frmAnalitica->deleteLater();
     } else
         QMessageBox::warning(this,tr("Analitica"),tr("Debe seleccionar un episodio antes de poder añadir una antalítica"), tr("Aceptar"));
     llenartablahistorialanalisisepisodio();
@@ -829,6 +838,8 @@ void FrmFichaPaciente::VerAnalitica()
         emit pasaid(oAnalitica->getId());
         emit pasaPaciente(ui->txtPaciente->text());
         frmAnalitica.exec();
+        oAnalitica->deleteLater();
+        frmAnalitica.deleteLater();
     } else
         QMessageBox::warning(this,tr("Analitica"),tr("Debe seleccionar un episodio antes de poder añadir una antalítica"), tr("Aceptar"));
     llenartablahistorialanalisisepisodio();

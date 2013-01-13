@@ -110,7 +110,7 @@ void FrmAnalitica::llenartabla()
         }
         ui->tablaAnalitica->blockSignals(false);
     }
-
+    delete qAnalitica;
 }
 
 void FrmAnalitica::AnadirCamposAnalitica()

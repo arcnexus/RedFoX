@@ -75,6 +75,7 @@ void FrmModificarLin_precli::PonerCampos(int ID_Lin)
         ui->txtTotal->setText(o_config->FormatoNumerico(record.field("rTotal").value().toString()));
         ui->txtPorcIVA->setText(o_config->FormatoNumerico(record.field("nPorcIva").value().toString()));
     }
+    delete Mod_lin_pre;
 }
 
 void FrmModificarLin_precli::CalcularTotal()

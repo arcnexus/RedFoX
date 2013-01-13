@@ -12,6 +12,13 @@
 Presupuesto::Presupuesto()
 {
     this->id = 0;
+    qCab_pre = 0;
+}
+
+Presupuesto::~Presupuesto()
+{
+    if(this->qCab_pre)
+        delete qCab_pre;
 }
 
 void Presupuesto::AnadirPresupuesto()

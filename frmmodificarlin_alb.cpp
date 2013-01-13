@@ -61,29 +61,30 @@ void FrmModificarLin_alb::PonerCampos(int ID_Lin)
         ui->txtTotal->setText(o_config->FormatoNumerico(record.field("rTotal").value().toString()));
         ui->txtPorcIVA->setText(o_config->FormatoNumerico(record.field("nPorcIva").value().toString()));
     }
+    delete Mod_linAlb;
 }
 void FrmModificarLin_alb::CalcularTotal()
-    {
-        Configuracion *o_config = new Configuracion();
-        // Calculo totales línea
-        double impDto,impTot,impSubtotal;
-        impSubtotal = (ui->txtCantidad->text().replace(".","").toDouble() * ui->txtPVP->text().replace(".","").toDouble());
-        ui->txtSubTotal->setText(o_config->FormatoNumerico(QString::number(impSubtotal,'f',2)));
-        impDto = (ui->txtSubTotal->text().replace(".","").toDouble() * ui->txtPorcDto->text().toDouble())/100 ;
-        ui->txtDTO->setText(o_config->FormatoNumerico(QString::number(impDto,'f',2)));
-        impTot = ui->txtSubTotal->text().replace(".","").toDouble() - ui->txtDTO->text().replace(".","").toDouble();
-        ui->txtTotal->setText(o_config->FormatoNumerico(QString::number(impTot,'f',2)));
-        delete o_config;
-    }
+{
+    Configuracion *o_config = new Configuracion();
+    // Calculo totales línea
+    double impDto,impTot,impSubtotal;
+    impSubtotal = (ui->txtCantidad->text().replace(".","").toDouble() * ui->txtPVP->text().replace(".","").toDouble());
+    ui->txtSubTotal->setText(o_config->FormatoNumerico(QString::number(impSubtotal,'f',2)));
+    impDto = (ui->txtSubTotal->text().replace(".","").toDouble() * ui->txtPorcDto->text().toDouble())/100 ;
+    ui->txtDTO->setText(o_config->FormatoNumerico(QString::number(impDto,'f',2)));
+    impTot = ui->txtSubTotal->text().replace(".","").toDouble() - ui->txtDTO->text().replace(".","").toDouble();
+    ui->txtTotal->setText(o_config->FormatoNumerico(QString::number(impTot,'f',2)));
+    delete o_config;
+}
 
 void FrmModificarLin_alb::on_pushButton_clicked()
 {
     Albaran *oAlbaran = new Albaran();
     oAlbaran->ModificarLineaAlbaran(this->nId,ui->txtCodigo->text(),ui->txtCantidad->text().toDouble(),
-                                 ui->txtDescripcion->text(),ui->txtPVP->text().replace(".","").toDouble(),
-                                 ui->txtSubTotal->text().replace(".","").toDouble(),ui->txtPorcDto->text().toDouble(),
-                                 ui->txtDTO->text().replace(".","").toDouble(),ui->txtTotal->text().replace(".","").toDouble(),
-                                 ui->txtPorcIVA->text().toDouble());
+                                    ui->txtDescripcion->text(),ui->txtPVP->text().replace(".","").toDouble(),
+                                    ui->txtSubTotal->text().replace(".","").toDouble(),ui->txtPorcDto->text().toDouble(),
+                                    ui->txtDTO->text().replace(".","").toDouble(),ui->txtTotal->text().replace(".","").toDouble(),
+                                    ui->txtPorcIVA->text().toDouble());
 
     delete oAlbaran;
 

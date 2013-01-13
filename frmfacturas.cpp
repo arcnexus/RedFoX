@@ -1,6 +1,6 @@
 #include "frmfacturas.h"
 #include "ui_frmfacturas.h"
-#include "factura.h"
+
 #include <QSqlDatabase>
 #include <QtSql>
 #include <QErrorMessage>
@@ -13,18 +13,19 @@
 #include <QTableView>
 #include <QHeaderView>
 #include "articulo.h"
-#include "cliente.h"
+
 #include "frmmodificarlin_fac.h"
 
 
 
-Factura *oFactura = new Factura();
-Cliente *oCliente1 = new Cliente();
+
 
 frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmFacturas)
 {
+    oFactura = new Factura();
+    oCliente1 = new Cliente();
     o_configuracion =o_config;
     o_configuracion->CargarDatos();
     ui->setupUi(this);
@@ -792,7 +793,7 @@ void frmFacturas::on_txtcCodigoCliente_lostFocus()
 void frmFacturas::on_btnImprimir_clicked()
 {
    // KDReports::Report report;
-
+    //TODO Reports
 }
 
 void frmFacturas::RellenarDespuesCalculo()

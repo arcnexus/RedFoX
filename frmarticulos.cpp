@@ -1,11 +1,11 @@
 #include "frmarticulos.h"
 #include "ui_frmarticulos.h"
 #include "configuracion.h"
-#include "articulo.h"
+
 #include <QMessageBox>
 #include <QSqlQuery>
 #include <QSqlDatabase>
-#include <QtSql>
+
 #include <QSqlRecord>
 #include <QString>
 #include <QPixmap>
@@ -14,12 +14,13 @@
 
 
 
-Articulo *oArticulo = new Articulo();
-QSqlQueryModel *modArt = new QSqlQueryModel();
+
 FrmArticulos::FrmArticulos(Configuracion *o_config, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmArticulos)
 {
+    oArticulo = new Articulo();
+    modArt = new QSqlQueryModel();
     ui->setupUi(this);
     // Cargar valores IVA
     o_config->CargarDatos();
@@ -46,6 +47,8 @@ FrmArticulos::FrmArticulos(Configuracion *o_config, QWidget *parent) :
 FrmArticulos::~FrmArticulos()
 {
     delete ui;
+    delete oArticulo;
+    delete modArt;
 }
 
 void FrmArticulos::on_botAnadir_clicked()
@@ -303,7 +306,7 @@ void FrmArticulos::LLenarCampos()
    ui->txtcLocalizacion->setText(oArticulo->getcLocalizacion());
 //    // Recuperamos imagen desde BD
    oArticulo->CargarImagen(ui->lblImagenArticulo);
-
+   delete oConfig;
 }
 
 void FrmArticulos::CargarCamposEnArticulo()

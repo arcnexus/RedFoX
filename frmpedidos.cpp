@@ -1,15 +1,13 @@
 #include "frmpedidos.h"
 #include "ui_frmpedidos.h"
-#include "pedidos.h"
-#include "cliente.h"
+
 #include "configuracion.h"
 #include "articulo.h"
 #include "frmmodificarlin_ped.h"
 #include "frmbuscarcliente.h"
 #include <QMessageBox>
 
-Pedidos *oPedido = new Pedidos();
-Cliente *oCliente3 = new Cliente();
+
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
     QDialog(parent),
@@ -26,11 +24,15 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     Configuracion *o_conf = new Configuracion();
     o_configuracion = o_conf;
     BloquearCampos();
+    oPedido = new Pedidos();
+    oCliente3 = new Cliente();
 }
 
 FrmPedidos::~FrmPedidos()
 {
     delete ui;
+    delete oPedido;
+    delete oCliente3;
 }
 
 void FrmPedidos::lineasVentas()

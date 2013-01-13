@@ -20,6 +20,7 @@ int Episodio::NuevoEpisodio(int idPaciente)
                              qEpisodio->lastError().text());
         return 0;
     }
+    delete qEpisodio;
 }
 
 void Episodio::RecuperarEpisodio(int idEpisodio)
@@ -45,9 +46,7 @@ void Episodio::RecuperarEpisodio(int idEpisodio)
         QMessageBox::warning(NULL,QObject::tr("ERROR: Recuperar episodio"),QObject::tr("No se pudo recuperar el episodio. ERROR servidor:")+
                              qEpisodio->lastError().text(),QObject::tr("Aceptar"));
     }
-
-
-
+    delete qEpisodio;
 }
 
 void Episodio::GuardarEpisodio()
@@ -76,7 +75,7 @@ void Episodio::GuardarEpisodio()
         QMessageBox::warning(NULL,QObject::tr("ERROR: Modificación Episodios"),QObject::tr("No se puede modificar el episodio:")+
                                                                                            qEpisodio->lastError().text(),
                              QObject::tr("Aceptar"));
-
+    delete qEpisodio;
 
 }
 

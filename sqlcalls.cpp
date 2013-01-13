@@ -113,11 +113,11 @@ QStringList SqlCalls::queryList(const QString statment, const QString &connectio
 
 int SqlCalls::addRec(const QString &statment, const QString &connection)
 {
-    QString cSQL = statment;
-    QSqlQuery *tInsert = new QSqlQuery(QSqlDatabase::database(connection));
-    tInsert->prepare(statment);
-    if (tInsert->exec()) {
-        return tInsert->lastInsertId().toInt();
+    //QString cSQL = statment;
+    QSqlQuery tInsert = QSqlQuery(QSqlDatabase::database(connection));
+    tInsert.prepare(statment);
+    if (tInsert.exec()) {
+        return tInsert.lastInsertId().toInt();
     }
     else {
         QMessageBox::warning(NULL,QObject::tr("Error"),QObject::tr("Ha ocurrido un fallo al insertar el registro"),
@@ -129,17 +129,17 @@ int SqlCalls::addRec(const QString &statment, const QString &connection)
 
 int SqlCalls::addRec(const QString &statment, const QStringList &parameters, const QString &connection)
 {
-    QString cSQL = statment;
-    QSqlQuery *tInsert = new QSqlQuery(QSqlDatabase::database(connection));
-    tInsert->prepare(statment);
+    //QString cSQL = statment;
+    QSqlQuery tInsert = QSqlQuery(QSqlDatabase::database(connection));
+    tInsert.prepare(statment);
     for (int i = 0; i < parameters.count(); i++)
-        tInsert->bindValue(i,parameters.at(i));
+        tInsert.bindValue(i,parameters.at(i));
 
-    if(!tInsert->exec())
-        qDebug() << tInsert->lastError().text();
+    if(!tInsert.exec())
+        qDebug() << tInsert.lastError().text();
 
     else
-        return tInsert->lastInsertId().toInt();
+        return tInsert.lastInsertId().toInt();
 
 }
 

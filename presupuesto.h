@@ -10,7 +10,7 @@ class Presupuesto
 {
 public:
     Presupuesto();
-
+    ~Presupuesto();
 private:
     int id;
     int nPresupuesto;

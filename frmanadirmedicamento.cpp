@@ -260,7 +260,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspectoMedicamento(QNetworkReply*
 
 
      //ui->textProspecto->setText((cXML));
-
+    reply->manager()->deleteLater();
 }
 // FIN BUSCAR EL PROSPECTO
 
@@ -374,7 +374,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarMedicamentoPorPatologia(QNetworkRep
 
 
     // ui->textProspecto->setText((cXML));
-
+    reply->manager()->deleteLater();
 }
 // FIN BUSCAR MEDICAMENTOS POR PATOLOGÍA
 // BUSCAR PATOLOGIAS
@@ -466,7 +466,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarPatologia(QNetworkReply* reply)
 
 
      //ui->textProspecto->setText((cXML));
-
+    reply->manager()->deleteLater();
 }
 // FIN BUSCAR PATOLOGÍAS
 
@@ -566,7 +566,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspecto(QNetworkReply* reply)
 
 
      //ui->textProspecto->setText((cXML));
-
+    reply->manager()->deleteLater();
 }
 // FIN BUSCAR EL PROSPECTO
 
@@ -661,7 +661,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarMolecula(QNetworkReply* reply)
 
 
      //ui->textProspecto->setText((cXML));
-
+    reply->manager()->deleteLater();
 }
 // FIN BUSCAR MOLÉCULAS
 
@@ -770,7 +770,7 @@ void FrmAnadirMedicamento::on_btnBuscarMedicamentoporMolecula_clicked()
 
 
      // ui->textProspecto->setText((cXML));
-
+    reply->manager()->deleteLater();
  }
  // FIN BUSCAR MEDICAMENTOS POR MOLÉCULA
 
@@ -859,7 +859,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspectoMolecula(QNetworkReply* re
 
 
      //ui->textProspecto->setText((cXML));
-
+    reply->manager()->deleteLater();
 }
 // FIN BUSCAR EL PROSPECTO
 // BUSCAR POR PRINCIPIOS ACTIVOS
@@ -949,7 +949,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarPrincipioActivo(QNetworkReply* repl
 
 
      //ui->textProspecto->setText((cXML));
-
+    reply->manager()->deleteLater();
 }
 // FIN BUSCAR MOLÉCULAS
 // BUSCAR MEDICAMENTO POR PRINCIPIO ACTIVO
@@ -1054,7 +1054,7 @@ void FrmAnadirMedicamento::on_btnBuscarMedicamentoporPA_clicked()
           }
           n = n.nextSibling();
       }
-
+    reply->manager()->deleteLater();
 
      // ui->textProspecto->setText((cXML));
 
@@ -1144,7 +1144,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspectoPrincAct(QNetworkReply* re
          n = n.nextSibling();
      }
 
-
+    reply->manager()->deleteLater();
      //ui->textProspecto->setText((cXML));
 
 }

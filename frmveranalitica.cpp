@@ -8,7 +8,7 @@
 #include "frmanalitica.h"
 #include <QDate>
 
-    FrmVerAnalitica::FrmVerAnalitica(QWidget *parent) :
+FrmVerAnalitica::FrmVerAnalitica(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmVerAnalitica)
 {
@@ -37,7 +37,8 @@ void FrmVerAnalitica::llenarTabla(int nID)
     //ui->tablaAnalitica->clear();
     QStringList list;
     list <<tr("DESCRIPCIÓN")<<tr("VALOR") <<tr("REFERENCIA") <<tr("COMENTARIOS") <<tr("id");
-    QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QScopedPointer<QSqlQuery>qAnalitica (new QSqlQuery(QSqlDatabase::database("dbmedica")));
+    //QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     QString cSQL = " select * from analitica2 where idanalitica =:idanalitica";
     qAnalitica->prepare(cSQL);
     qAnalitica->bindValue(":idanalitica",nID);
@@ -107,9 +108,9 @@ void FrmVerAnalitica::llenarTabla(int nID)
 
 void FrmVerAnalitica::capturaId(int nId)
 {
-nID = nId;
- cargarDatos(nID);
-llenarTabla(nID);
+    nID = nId;
+    cargarDatos(nID);
+    llenarTabla(nID);
 }
 
 void FrmVerAnalitica::capturaPaciente(QString Paciente)
@@ -170,16 +171,16 @@ void FrmVerAnalitica::guardarDatos()
 
 void FrmVerAnalitica::guardarDatosItems(QTableWidgetItem* tItem)
 {
-   int fila = tItem->row();
-   if (nEdited == 1) {
-       int id = ui->tablaAnalitica->item(fila,4)->text().toInt();
-       QString valor = ui->tablaAnalitica->item(fila,1)->text();
-       QString refer = ui->tablaAnalitica->item(fila,2)->text();
-       QString coment = ui->tablaAnalitica->item(fila,3)->text();
+    int fila = tItem->row();
+    if (nEdited == 1) {
+        int id = ui->tablaAnalitica->item(fila,4)->text().toInt();
+        QString valor = ui->tablaAnalitica->item(fila,1)->text();
+        QString refer = ui->tablaAnalitica->item(fila,2)->text();
+        QString coment = ui->tablaAnalitica->item(fila,3)->text();
 
-       Analitica oAna;
-       oAna.GuardarLineas(id,valor,refer,coment);
-   }
+        Analitica oAna;
+        oAna.GuardarLineas(id,valor,refer,coment);
+    }
 }
 
 void FrmVerAnalitica::Deshacer()
@@ -193,16 +194,16 @@ void FrmVerAnalitica::Deshacer()
 
 void FrmVerAnalitica::addLineas()
 {
-   FrmAnalitica frmAnalitica;
-   connect(this,SIGNAL(pasarID(int)),&frmAnalitica,SLOT(capturaID(int)));
-   connect(this,SIGNAL(pasarPaciente(QString)),&frmAnalitica,SLOT(capturaPaciente(QString)));
-   connect(this,SIGNAL(pasarFecha(QDate)),&frmAnalitica,SLOT(AsignarFecha(QDate)));
-   connect(this,SIGNAL(pasarAnalitica(QString)),&frmAnalitica,SLOT(AsignarAnalitica(QString)));
+    FrmAnalitica frmAnalitica;
+    connect(this,SIGNAL(pasarID(int)),&frmAnalitica,SLOT(capturaID(int)));
+    connect(this,SIGNAL(pasarPaciente(QString)),&frmAnalitica,SLOT(capturaPaciente(QString)));
+    connect(this,SIGNAL(pasarFecha(QDate)),&frmAnalitica,SLOT(AsignarFecha(QDate)));
+    connect(this,SIGNAL(pasarAnalitica(QString)),&frmAnalitica,SLOT(AsignarAnalitica(QString)));
     emit pasarID(nID);
     emit pasarPaciente(ui->txtPaciente->text());
-   emit pasarFecha(ui->txtFechaAnalitica->date());
-   emit pasarAnalitica(ui->txtAnalitica->text());
+    emit pasarFecha(ui->txtFechaAnalitica->date());
+    emit pasarAnalitica(ui->txtAnalitica->text());
     frmAnalitica.exec();
- llenarTabla(nID);
+    llenarTabla(nID);
 }
 

@@ -12,7 +12,7 @@ class Albaran : public QObject
     Q_OBJECT
 public:
     explicit Albaran(QObject *parent = 0);
-
+    ~Albaran();
 private:
     int id;
     QString cCodigoCliente;

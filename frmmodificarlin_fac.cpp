@@ -41,7 +41,8 @@ void frmModificarLin_fac::ponerCampos(int ID_Lin)
         ui->txtPorcIVA->setText(o_config->FormatoNumerico(record.field("nPorcIva").value().toString()));
 
     }
-    delete Mod_linFac,o_config;
+    delete Mod_linFac;
+    delete o_config;
     ui->txtCodigo->setFocus();
 }
 

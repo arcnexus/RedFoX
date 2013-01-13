@@ -2,11 +2,12 @@
 #define FRMARTICULOS_H
 
 #include <QDialog>
+#include <QtSql>
 #include "configuracion.h"
 #include <QToolButton>
 #include <QListWidget>
 #include <QGridLayout>
-
+#include "articulo.h"
 namespace Ui {
 class FrmArticulos;
 }
@@ -18,7 +19,8 @@ class FrmArticulos : public QDialog
 public:
     explicit FrmArticulos(Configuracion *o_config, QWidget *parent = 0);
     ~FrmArticulos();
-
+    Articulo *oArticulo;
+    QSqlQueryModel *modArt;
     
 private slots:
     void on_botSiguiente_clicked();

@@ -10,7 +10,8 @@ Interconsulta::Interconsulta(QObject *parent) :
 
 void Interconsulta::AnadirInterconsulta(int idEpisodio,int idPaciente)
 {
-    QSqlQuery *qInterconsulta = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QScopedPointer<QSqlQuery>qInterconsulta (new QSqlQuery(QSqlDatabase::database("dbmedica")));
+    //QSqlQuery *qInterconsulta = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     QString cSQL = "INSERT INTO interconsulta (idpaciente, idepisodio,fechapeticion) VALUES "
             " (:idpaciente, :idepisodio, :fechapeticion)";
     qInterconsulta->prepare(cSQL);

@@ -124,7 +124,7 @@ void Farmacologia::AnadirFarmaco()
         QMessageBox::warning(NULL,QObject::tr("Historial Farmacología"),
                       QObject::tr("No se ha podido guardar el registro del historial;ERROR: ")+qFarma->lastError().text(),
                              QObject::tr("Aceptar"));
-
+    delete qFarma;
 }
 
 void Farmacologia::modificarFarmaco(int id)

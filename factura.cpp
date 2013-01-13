@@ -318,7 +318,7 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
                    }
                    delete Deudacliente;
                }
-
+                delete Cliente;
                }
            }
 
@@ -467,7 +467,7 @@ void Factura::AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, 
     QArticulos->bindValue(":cCodigo",cCodigo);
 
     QArticulos->exec();
-
+    delete QArticulos;
 }
 
 void Factura::ModificarLineaFactura(int id_lin, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal, double porcdto, double dto, double total, double nPorcIva)
@@ -653,6 +653,8 @@ void Factura::calcularFactura()
                 this->rTotal = this->rBase + this->rImporteIva;
         }
     }
+    delete Qlin_fac;
+    delete o_config;
 }
 
 void Factura::CobrarFactura()

@@ -81,6 +81,7 @@ void Frmanalitica2::cargarDatos(QString cTipo, int idAnalitica)
             pos++;
         }
     }
+    delete qDatos;
 }
 
 void Frmanalitica2::aceptar()
@@ -99,7 +100,7 @@ void Frmanalitica2::aceptar()
         }
     }
     this->close();
-
+    oAnalitica->deleteLater();
 }
 
 

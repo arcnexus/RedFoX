@@ -11,6 +11,7 @@
 #include <QtSql>
 #include "paciente.h"
 #include "episodio.h"
+#include "imagenesdiagnostico.h"
 
 namespace Ui {
 class FrmFichaPaciente;
@@ -26,6 +27,9 @@ public:
     void cargarDatos(int idcliente);
     void cargarEpisodio(int control);
     void guardarDatosPaciente();
+    Paciente *oPaciente;
+    Episodio *oEpisodio;
+    ImagenesDiagnostico *oImagenes;
 public slots:
     void AnadirDatosMedicamento(int id, QString nombre,QString codigo_nacional);
     void cargarDatosMedicamento(int, int);

@@ -14,6 +14,13 @@
 Pedidos::Pedidos()
 {
     this->id =0;
+    cab_ped = 0;
+}
+
+Pedidos::~Pedidos()
+{
+    if(cab_ped)
+        delete cab_ped;
 }
 void Pedidos::AnadirPedido() {
     Configuracion *oConf =  new Configuracion();
@@ -328,7 +335,8 @@ if (!Qlin_ped->exec()){
    lCorrecto = false;
 }
 delete Qlin_ped;
-QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
+QScopedPointer<QSqlQuery>QArticulos (new QSqlQuery(QSqlDatabase::database("empresa")));
+//QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
 QArticulos->prepare("update articulos set "
                     "dUltimaVenta = :dUltimaVenta,"
                     "nUnidadesVendidas = nUnidadesVendidas +:nCantidad,"
@@ -471,7 +479,8 @@ void Pedidos::BorrarLineaPedido(int id_lin)
 
 void Pedidos::calcularPedido()
 {
-Configuracion *o_config = new Configuracion();
+QScopedPointer<Configuracion>o_config (new Configuracion());
+//Configuracion *o_config = new Configuracion();
 o_config->CargarDatos();
 // Reseteo valores
 this->rSubtotal = 0;
@@ -497,7 +506,9 @@ this->rTotal2 =0;
 this->rTotal3 =0;
 this->rTotal4 = 0;
 
-QSqlQuery *Qlin_ped = new QSqlQuery(QSqlDatabase::database("empresa"));
+QScopedPointer<QSqlQuery>Qlin_ped ( new QSqlQuery(QSqlDatabase::database("empresa")));
+//QSqlQuery *Qlin_ped = new QSqlQuery(QSqlDatabase::database("empresa"));
+
 Qlin_ped->prepare("Select * from lin_ped where id_cab = :nId");
 Qlin_ped->bindValue(":nId",this->id);
 if (Qlin_ped->exec()) {
@@ -560,7 +571,7 @@ if (Qlin_ped->exec()) {
 
 void Pedidos::FacturarPedido()
 {
-
+    //TODO Pedidos::FacturarPedido()
 }
 
 // getters

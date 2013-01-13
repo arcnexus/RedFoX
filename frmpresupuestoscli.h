@@ -6,6 +6,8 @@
 #include <QSortFilterProxyModel>
 #include <QTableView>
 #include <QSqlQueryModel>
+#include "presupuesto.h"
+#include "cliente.h"
 
 namespace Ui {
 class FrmPresupuestosCli;
@@ -27,7 +29,8 @@ public:
     void CalcularTotalLinea();
     void RellenarDespuesCalculo();
     void LineasVentas();
-    
+    Presupuesto *oPres;
+    Cliente *oClientePres;
 private slots:
     void on_chklEnviado_stateChanged(int arg1);
 

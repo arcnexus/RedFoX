@@ -549,7 +549,7 @@ void FrmAlbaran::on_txtcCodigoArticulo_editingFinished()
                 ui->txtPorcDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrDto(),'f',0)));
             }
             ui->txtPorcIVAArticulo->setText(QString::number(oArt->getnTipoIva(),'f',0));
-
+            delete oArt;
         }
         calcularTotalLinea();
     }

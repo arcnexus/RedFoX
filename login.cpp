@@ -97,7 +97,18 @@ void Login::Crearconfiguracion_clicked()
     settings.setValue("cDriverBDTerra","QSQLITE");
     settings.setValue("cRutaDBTerra",qApp->applicationDirPath()+"/DB/terra.sqlite");
 
-    //TODO - Crear archivo terra.sqlite y crear las tablas
+    QDir directorioBd(qApp->applicationDirPath()+"/DB");
+    if(!directorioBd.exists())
+    {
+        QDir path(qApp->applicationDirPath());
+        path.mkdir(qApp->applicationDirPath()+"/DB");
+    }
+
+    QFile bd(qApp->applicationDirPath()+"/DB/terra.sqlite");
+    if(!bd.exists())
+    {
+       //TODO - Descargar terra.sqlite del servidor??
+    }
 
     settings.setValue("cHostBDTerra","localhost");
     settings.setValue("cUserBDTerra","root");
@@ -170,6 +181,6 @@ void Login::init()
     #if _DEBUG
 	this->ui->lineUsuario->setText("marc");
 	this->ui->linePassword->setText("patata");
-    this->ui->btnAcceder->click();
+   // this->ui->btnAcceder->click();
     #endif
 }

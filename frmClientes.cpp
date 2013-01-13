@@ -175,7 +175,7 @@ void frmClientes::LLenarCampos()
      * DEUDAS
      *******************************************************************/
 
-    QSqlQueryModel *deudas = new QSqlQueryModel();
+    QSqlQueryModel *deudas = new QSqlQueryModel(this);
     QString cSQL;
     cSQL= "Select id,cDocumento,rPendienteCobro,dFecha,dVencimiento from clientes_deuda where Id_cliente =" + QString::number(oCliente->getId());
     deudas->setQuery(cSQL,QSqlDatabase::database("empresa"));
@@ -209,7 +209,7 @@ void frmClientes::LLenarCampos()
     * ALBARANES
     *******************************************************************/
 
-    QSqlQueryModel *Albaranes = new QSqlQueryModel();
+    QSqlQueryModel *Albaranes = new QSqlQueryModel(this);
     cSQL= "Select id,nAlbaran,dFecha,nFactura,rTotalAlbaran from cab_alb where id_Cliente =" + QString::number(oCliente->getId());
     Albaranes->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->TablaAlbaranes->setModel(Albaranes);

@@ -9,7 +9,7 @@ class Pedidos
 {
 public:
     Pedidos();
-
+    ~Pedidos();
 
 private:
     int id;

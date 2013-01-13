@@ -22,11 +22,11 @@ int FrmBuscarPoblacion::DevolverID()
 {
     if(ModelPoblaciones)
     {
-    QModelIndex celda=ui->ListaPoblaciones->currentIndex();
-    QModelIndex index=ModelPoblaciones->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+        QModelIndex celda=ui->ListaPoblaciones->currentIndex();
+        QModelIndex index=ModelPoblaciones->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
 
-    QVariant pKey=ModelPoblaciones->data(index,Qt::EditRole);
-    return pKey.toInt();
+        QVariant pKey=ModelPoblaciones->data(index,Qt::EditRole);
+        return pKey.toInt();
     }
     return -1;
 }

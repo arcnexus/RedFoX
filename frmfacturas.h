@@ -7,7 +7,8 @@
 #include <QHeaderView>
 #include <QItemDelegate>
 #include "configuracion.h"
-
+#include "factura.h"
+#include "cliente.h"
 namespace Ui {
 class frmFacturas;
 }
@@ -27,7 +28,8 @@ public slots:
 public:
     explicit frmFacturas(Configuracion *o_config, QWidget *parent = 0);
     ~frmFacturas();
-
+    Factura *oFactura;
+    Cliente *oCliente1;
     
 private slots:
     void lineasVentas();

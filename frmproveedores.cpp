@@ -6,7 +6,7 @@
 #include <QDebug>
 
 #ifdef WIN32
-    #define and &&
+#define and &&
 #endif
 Proveedor *oProveedor = new Proveedor();
 
@@ -38,7 +38,8 @@ frmProveedores::~frmProveedores()
 }
 void frmProveedores::LLenarCampos()
 {
-    Configuracion *oConf = new Configuracion();
+    QScopedPointer<Configuracion> oConf (new Configuracion());
+    //Configuracion *oConf = new Configuracion();
     ui->txtcCodigo->setText(oProveedor->getcCodigo());
     ui->txtcProveedor->setText(oProveedor->getcProveedor());
     ui->txtcCif->setText(oProveedor->getcCif());
@@ -98,7 +99,7 @@ void frmProveedores::LLenarCampos()
     if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
             !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
         cOk = oConf->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
-                              ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+                               ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
@@ -106,7 +107,7 @@ void frmProveedores::LLenarCampos()
     if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
             !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
         cOk = oConf->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
-                              ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+                               ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
@@ -184,19 +185,19 @@ void frmProveedores::DesbloquerCampos()
         //qDebug() << lineEdit->objectName();
     }
     // SpinBox
-//    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-//    QSpinBox *SpinBox;
-//    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(false);
-//        //qDebug() << lineEdit->objectName();
-//    }
+    //    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
+    //    QSpinBox *SpinBox;
+    //    foreach (SpinBox, SpinBoxList) {
+    //        SpinBox->setReadOnly(false);
+    //        //qDebug() << lineEdit->objectName();
+    //    }
     // DoubleSpinBox
-//    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-//    QDoubleSpinBox *DSpinBox;
-//    foreach (DSpinBox, DSpinBoxList) {
-//        DSpinBox->setReadOnly(false);
-//        //qDebug() << lineEdit->objectName();
-//    }
+    //    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
+    //    QDoubleSpinBox *DSpinBox;
+    //    foreach (DSpinBox, DSpinBoxList) {
+    //        DSpinBox->setReadOnly(false);
+    //        //qDebug() << lineEdit->objectName();
+    //    }
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
@@ -242,18 +243,18 @@ void frmProveedores::BloquearCampos()
     foreach (ComboBox, ComboBoxList) {
         ComboBox->setEnabled(false);
     }
-//    // SpinBox
-//    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-//    QSpinBox *SpinBox;
-//    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(true);
-//    }
-//    // DoubleSpinBox
-//    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-//    QDoubleSpinBox *DSpinBox;
-//    foreach (DSpinBox, DSpinBoxList) {
-//        DSpinBox->setReadOnly(true);
-//    }
+    //    // SpinBox
+    //    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
+    //    QSpinBox *SpinBox;
+    //    foreach (SpinBox, SpinBoxList) {
+    //        SpinBox->setReadOnly(true);
+    //    }
+    //    // DoubleSpinBox
+    //    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
+    //    QDoubleSpinBox *DSpinBox;
+    //    foreach (DSpinBox, DSpinBoxList) {
+    //        DSpinBox->setReadOnly(true);
+    //    }
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
@@ -292,7 +293,6 @@ void frmProveedores::on_btnSiguiente_clicked()
 {
     oProveedor->Recuperar("Select * from proveedores where id>"+QString::number(oProveedor->id),1);
     LLenarCampos();
-
 }
 
 void frmProveedores::on_btnAnterior_clicked()
@@ -332,29 +332,29 @@ void frmProveedores::on_txtcPoblacion_editingFinished()
         Configuracion *oConfig = new Configuracion();
         oConfig->CargarDatos();
         BuscarPoblacion.setcPoblacion(ui->txtcPoblacion->text(),1);
-       if(BuscarPoblacion.exec()) {
-        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
-           int nId = BuscarPoblacion.DevolverID();
+        if(BuscarPoblacion.exec()) {
+            //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+            int nId = BuscarPoblacion.DevolverID();
 
-         if(nId > 0) {
-               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
-               QString cId;
-               cId = QString::number(nId);
-               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
-               qPoblacion.bindValue(":id",cId);
-               if(!qPoblacion.exec()) {
-                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-               } else {
-                   if (qPoblacion.next()) {
+            if(nId > 0) {
+                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QString cId;
+                cId = QString::number(nId);
+                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+                qPoblacion.bindValue(":id",cId);
+                if(!qPoblacion.exec()) {
+                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                } else {
+                    if (qPoblacion.next()) {
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
                         ui->txtcCP->setText(qPoblacion.value(1).toString());
                         ui->txtcProvincia->setText(qPoblacion.value(2).toString());
                         ui->txtcPais->setText(oConfig->cPais);
-                   }
-               }
+                    }
+                }
 
-           }
-       }
+            }
+        }
     }
     ui->txtcTelefono1->setFocus();
 
@@ -367,28 +367,28 @@ void frmProveedores::on_txtcCP_editingFinished()
         Configuracion *oConfig = new Configuracion();
         oConfig->CargarDatos();
         BuscarPoblacion.setcPoblacion(ui->txtcCP->text(),0);
-       if(BuscarPoblacion.exec()) {
-           int nId = BuscarPoblacion.DevolverID();
-         if(nId > 0) {
-               QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
-               QString cId;
-               cId = QString::number(nId);
-               qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
-               qPoblacion.bindValue(":id",cId);
-               if(!qPoblacion.exec()) {
-                   QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-               } else {
-                   if (qPoblacion.next()) {
+        if(BuscarPoblacion.exec()) {
+            int nId = BuscarPoblacion.DevolverID();
+            if(nId > 0) {
+                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QString cId;
+                cId = QString::number(nId);
+                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+                qPoblacion.bindValue(":id",cId);
+                if(!qPoblacion.exec()) {
+                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                } else {
+                    if (qPoblacion.next()) {
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
                         ui->txtcProvincia->setText(qPoblacion.value(2).toString());
                         ui->txtcPais->setText(oConfig->cPais);
-                   }
-               }
+                    }
+                }
 
-           }
-    delete oConfig;
-       }
-      }
+            }
+            delete oConfig;
+        }
+    }
     ui->txtcTelefono1->setFocus();
 }
 
@@ -399,21 +399,21 @@ void frmProveedores::on_txtcCP_editingFinished()
 
 void frmProveedores::on_btnBorrar_clicked()
 {
-   int ndev = QMessageBox::question(NULL,tr("Gestión de proveedores"),tr("Está seguro/a de borrar el proveedor?\n"
-                                                               "se borrarán todos los historiales de ese proveedor.\n"
-                                                                " Esta opción no se puede deshacer"),
-                          tr("Borrar"),tr("Cancelar Borrado"));
-   if(ndev ==0) {
+    int ndev = QMessageBox::question(NULL,tr("Gestión de proveedores"),tr("Está seguro/a de borrar el proveedor?\n"
+                                                                          "se borrarán todos los historiales de ese proveedor.\n"
+                                                                          " Esta opción no se puede deshacer"),
+                                     tr("Borrar"),tr("Cancelar Borrado"));
+    if(ndev ==0) {
         oProveedor->Borrar(oProveedor->id);
         oProveedor->Vaciar();
         LLenarCampos();
-   }
+    }
 }
 
 void frmProveedores::on_btnDeshacer_clicked()
 {
     int ndev = QMessageBox::question(NULL,tr("Gestión de proveedores"),tr("Se perderán los cambios realizados en la ficha\n"
-                                                                           " Esta opción no se puede deshacer\n\n"
+                                                                          " Esta opción no se puede deshacer\n\n"
                                                                           "¿ Desea anular los cambios o continuar la edición?"),
                                      tr("Continuar Edición"),tr("Anular cambios"));
     if(ndev==1) {
@@ -430,7 +430,7 @@ void frmProveedores::on_txtcEntidadBancariaProveedor_editingFinished()
     if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
             !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
         cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
-                              ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+                                 ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
@@ -445,7 +445,7 @@ void frmProveedores::on_txtcOficinaBancariaProveedor_editingFinished()
     if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
             !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
         cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
-                              ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+                                 ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
@@ -460,7 +460,7 @@ void frmProveedores::on_txtcDCProveedor_editingFinished()
     if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
             !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
         cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
-                              ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+                                 ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
@@ -477,7 +477,7 @@ void frmProveedores::on_txtcCCProveedor_editingFinished()
     if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
             !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
         cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
-                              ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+                                 ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
@@ -492,7 +492,7 @@ void frmProveedores::on_txtcEntidadPagoProveedor_editingFinished()
     if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
             !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
         cOk = oConfig->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
-                              ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+                                 ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
@@ -507,7 +507,7 @@ void frmProveedores::on_txtcOficinaPagoProveedor_editingFinished()
     if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
             !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
         cOk = oConfig->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
-                              ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+                                 ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
@@ -522,7 +522,7 @@ void frmProveedores::on_txtcDCPagoProveedor_editingFinished()
     if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
             !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
         cOk = oConfig->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
-                              ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+                                 ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
@@ -537,7 +537,7 @@ void frmProveedores::on_txtcCuentaPagoProveedor_editingFinished()
     if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
             !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
         cOk = oConfig->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
-                              ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+                                 ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
@@ -553,27 +553,27 @@ void frmProveedores::on_txtcCPAlmacen_editingFinished()
             Configuracion *oConfig = new Configuracion();
             oConfig->CargarDatos();
             BuscarPoblacion.setcPoblacion(ui->txtcCPAlmacen->text(),0);
-           if(BuscarPoblacion.exec()) {
-               int nId = BuscarPoblacion.DevolverID();
-             if(nId > 0) {
-                   QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
-                   QString cId;
-                   cId = QString::number(nId);
-                   qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
-                   qPoblacion.bindValue(":id",cId);
-                   if(!qPoblacion.exec()) {
-                       QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-                   } else {
-                       if (qPoblacion.next()) {
+            if(BuscarPoblacion.exec()) {
+                int nId = BuscarPoblacion.DevolverID();
+                if(nId > 0) {
+                    QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                    QString cId;
+                    cId = QString::number(nId);
+                    qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+                    qPoblacion.bindValue(":id",cId);
+                    if(!qPoblacion.exec()) {
+                        QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                    } else {
+                        if (qPoblacion.next()) {
                             ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());
                             ui->txtcProvinciaAmacen->setText(qPoblacion.value(2).toString());
                             ui->txtcPaisAlmacen->setText(oConfig->cPais);
-                       }
-                   }
+                        }
+                    }
 
-               }
-        delete oConfig;
-           }
+                }
+                delete oConfig;
+            }
         }
         ui->txtcTelefonoAlmacen->setFocus();
     }
