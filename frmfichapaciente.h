@@ -63,6 +63,7 @@ private slots:
     void recibedatospaciente(int,QString);
     void AnadirInterconsulta();
     void AnadirAnalitica();
+    void BorrarAnalitica();
     void VerAnalitica();
 signals:
     void pasaid(int);

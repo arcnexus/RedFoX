@@ -32,6 +32,7 @@ private slots:
     void guardarDatosItems(QTableWidgetItem*);
     void Deshacer();
     void addLineas();
+    void BorrarLineas();
 signals:
     void pasarID(int);
     void pasarPaciente(QString);

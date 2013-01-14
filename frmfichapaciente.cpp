@@ -75,6 +75,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->btnAnadirInterconsulta,SIGNAL(clicked()),this,SLOT(AnadirInterconsulta()));
     connect(ui->btnAnadirAnalitica,SIGNAL(clicked()),this,SLOT(AnadirAnalitica()));
     connect(ui->btnVerAnalitica,SIGNAL(clicked()),this,SLOT(VerAnalitica()));
+    connect(ui->btnBorrarAnalitica,SIGNAL(clicked()),this,SLOT(BorrarAnalitica()));
 
 
 
@@ -824,6 +825,14 @@ void FrmFichaPaciente::AnadirAnalitica()
     llenartablahistorialanalisisepisodio();
 }
 
+void FrmFichaPaciente::BorrarAnalitica()
+{
+    Analitica oAnalitica;
+    int nId = ui->listaAnaliticas->item(ui->listaAnaliticas->currentRow(),2)->text().toInt();
+    oAnalitica.EliminarAnalitica(nId);
+}
+
+
 void FrmFichaPaciente::VerAnalitica()
 {
     if(!oEpisodio->getid()==0) {
@@ -906,8 +915,6 @@ void FrmFichaPaciente::guardarDatosImagenes()
     oImagenes->setTipoImagen(ui->comboBox_tipoImagen->currentText());
     oImagenes->guardarDatosDB();
     BloquearCamposImagen();
-
-
 }
 
 void FrmFichaPaciente::deshacerDatosImagenes()
