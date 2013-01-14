@@ -24,6 +24,8 @@ public:
     void recuperarDatos(int nId);
     void GuardarDatos(int nId);
     void GuardarLineas(int id, QString valor, QString referencia, QString comentarios);
+    void EliminarAnalitica(int id);
+    void EliminarLinea(int id);
     void setId(int id) {this->id =id;}
     void setIdEpisodio(int idepisodio) {this->idepisodio = idepisodio;}
     void setAnalisis(QString Analisis) {this->analisis = Analisis;}
