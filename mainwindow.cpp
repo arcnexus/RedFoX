@@ -27,6 +27,14 @@
 #include <QToolBar>
 
 #include <QtCore/QTimer>
+#include <QProgressBar>
+
+
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+#include <QDesktopWidget>
+#endif
+#include <QProgressBar>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -188,8 +196,19 @@ void MainWindow::init()
 		QryEmpresa.prepare("Select * from empresas where nombre = :nombre");
 		QryEmpresa.bindValue(":nombre",Empresa.trimmed());
 		if (QryEmpresa.exec()) 
-		{
+        {
 			QryEmpresa.next();
+            QDesktopWidget *desktop = QApplication::desktop();
+            QProgressBar progress;
+            progress.setWindowFlags(Qt::FramelessWindowHint);
+
+            progress.setAlignment(Qt::AlignCenter);
+            progress.resize(600 , 40);
+            progress.setMaximum(6);
+            progress.setVisible(true);
+            progress.show();
+            progress.move(desktop->width()/2 - progress.width()/2 , desktop->height()/2 - progress.height()/2);
+            QApplication::processEvents();
 			QSqlRecord record = QryEmpresa.record();
 			// DBEMpresa
 			m_config->cDriverBDEmpresa = record.field("driverBD").value().toString();
@@ -198,6 +217,8 @@ void MainWindow::init()
 			m_config->cPasswordBDEmpresa =record.field("contrasena").value().toString();
 			m_config->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
 			m_config->cUsuarioBDEmpresa = record.field("user").value().toString();
+            progress.setValue(1);
+            QApplication::processEvents();
 			//DBMedica
 			m_config->cDriverBDMedica = record.field("driverBDMedica").value().toString();
 			m_config->cHostBDMedica = record.field("hostBDMedica").value().toString();
@@ -205,12 +226,16 @@ void MainWindow::init()
 			m_config->cPasswordBDMedica =record.field("contrasenaBDMedica").value().toString();
 			m_config->cRutaBdMedica = record.field("RutaBDMedicaSqLite").value().toString();
 			m_config->cUsuarioBDMedica = record.field("userBDMedica").value().toString();
+            progress.setValue(2);
+            QApplication::processEvents();
 			// Varios
 			m_config->cSerie = record.field("serie").value().toString();
 			m_config->nDigitosCuentasContables = record.field("ndigitoscuenta").value().toInt();
 			m_config->cCuentaAcreedores = record.field("codigocuentaacreedores").value().toString();
 			m_config->cCuentaClientes = record.field("codigocuentaclientes").value().toString();
 			m_config->cCuentaProveedores = record.field("codigocuentaproveedores").value().toString();
+            progress.setValue(3);
+            QApplication::processEvents();
 			// Guardo preferencias
 			QSettings settings("infint", "terra");
 			settings.setValue("cSerie",m_config->cSerie);
@@ -219,8 +244,9 @@ void MainWindow::init()
 			settings.setValue("cCuentaProveedores",m_config->cCuentaProveedores);
 			settings.setValue("cCuentaAcreedores",m_config->cCuentaAcreedores);
 			settings.setValue("Clave1",record.field("clave1").value().toString());
-			settings.setValue("Clave2",record.field("clave2").value().toString());
-
+            settings.setValue("Clave2",record.field("clave2").value().toString());
+            progress.setValue(4);
+            QApplication::processEvents();
 			// Abro empresa activa
 			QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"empresa");
 			if (m_config->cDriverBDEmpresa =="QSQLITE") {
@@ -233,6 +259,8 @@ void MainWindow::init()
 				dbEmpresa.open(m_config->cUsuarioBDEmpresa,m_config->cPasswordBDEmpresa);
 
 			}
+            progress.setValue(5);
+            QApplication::processEvents();
 			// Abro bdmedica activa
 			QSqlDatabase dbMedica = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"dbmedica");
 			if (m_config->cDriverBDMedica =="QSQLITE") {
@@ -251,7 +279,9 @@ void MainWindow::init()
 			{
 				QMessageBox::critical(0, "error:", dbMedica.lastError().text());
 			}
+            progress.setValue(6);
 			this->show();
+            QApplication::processEvents();
 		} 
 		else
 			qDebug() <<"Fallo la conexión al fichero Medico";

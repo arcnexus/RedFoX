@@ -108,6 +108,7 @@ void Analitica::GuardarLineas(int id, QString valor, QString referencia, QString
                              tr("Aceptar"));
 }
 
+/*
 void Analitica::EliminarAnalitica(int id)
 {
 
@@ -117,3 +118,4 @@ void Analitica::EliminarAnalitica(int id)
 void Analitica::EliminarLinea(int id)
 {
 }
+*/
