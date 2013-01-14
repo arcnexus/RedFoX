@@ -292,6 +292,7 @@ void MainWindow::init()
 
 MainWindow::~MainWindow()
 {
+    cerrarSubWindows();
     delete ui;
 }
 
@@ -453,33 +454,35 @@ void MainWindow::Ventas()
 
 void MainWindow::btnClientes_clicked()
 {
+    cerrarSubWindows();
     ui->btnClientes->setEnabled(false);
     frmClientes *frmClientes1 = new frmClientes(m_config,this);
     workspace->addSubWindow(frmClientes1);
     frmClientes1->setWindowState(Qt::WindowMaximized);
-    frmClientes1->exec();
-    cerrarSubWindows();
+    frmClientes1->show();
     ui->btnClientes->setEnabled(true);
 }
 void MainWindow::btnFacturaCliente_clicked()
 {
+    cerrarSubWindows();
  //   ui->btnFacturaCliente->setEnabled(false);
     frmFacturas *frmFacturas1 = new frmFacturas(m_config);
     workspace->addSubWindow(frmFacturas1);
     frmFacturas1->setWindowState(Qt::WindowMaximized);
-    frmFacturas1->exec();
-    cerrarSubWindows();
+    frmFacturas1->show();
+
    // ui->btnFacturaCliente->setEnabled(true);
 }
 
 void MainWindow::btnArticulos_clicked()
 {
+    cerrarSubWindows();
    // ui->btnArticulos->setEnabled(false);
     FrmArticulos *frmArticulos1 = new FrmArticulos(m_config);
     workspace->addSubWindow(frmArticulos1);
     frmArticulos1->setWindowState(Qt::WindowMaximized);
-    frmArticulos1->exec();
-    cerrarSubWindows();
+    frmArticulos1->show();
+
    // ui->btnArticulos->setEnabled(true);
 }
 
@@ -496,14 +499,13 @@ void MainWindow::btnArticulos_clicked()
 
 void MainWindow::btnProveedores_clicked()
 {
+    cerrarSubWindows();
     ui->btnProveedores->setEnabled(false);
     frmProveedores *frmProveedores1 = new frmProveedores();
     workspace->addSubWindow(frmProveedores1);
     frmProveedores1->setWindowState(Qt::WindowMaximized);
-    frmProveedores1->exec();
-    cerrarSubWindows();
+    frmProveedores1->show();
     ui->btnProveedores->setEnabled(true);
-
 }
 
 //void MainWindow::on_botConfiguracion_clicked()
@@ -519,44 +521,48 @@ void MainWindow::btnProveedores_clicked()
 
 void MainWindow::btnAlbaran_clientes_clicked()
 {
+    cerrarSubWindows();
     //->setEnabled(false);
     FrmAlbaran *frmAlbaran1 = new FrmAlbaran(this);
     workspace->addSubWindow(frmAlbaran1);
     frmAlbaran1->setWindowState(Qt::WindowMaximized);
-    frmAlbaran1->exec();
-    cerrarSubWindows();
+    frmAlbaran1->show();
+
   //  ui->btnAlbaran_clientes->setEnabled(true);
 }
 
 void MainWindow::btn_Pedido_cliente_clicked()
 {
+    cerrarSubWindows();
     //ui->btn_Pedido_cliente->setEnabled(false);
     FrmPedidos *frmPedidos1 = new FrmPedidos();
     workspace->addSubWindow(frmPedidos1);
     frmPedidos1->setWindowState(Qt::WindowMaximized);
-    frmPedidos1->exec();
-    cerrarSubWindows();
+    frmPedidos1->show();
+
     //ui->btn_Pedido_cliente->setEnabled(true);
 }
 
 void MainWindow::btnPresup_clientes_clicked()
 {
+    cerrarSubWindows();
     //ui->btnPresup_clientes->setEnabled(false);
     FrmPresupuestosCli *frmPresupcli = new FrmPresupuestosCli();
     workspace->addSubWindow(frmPresupcli);
     frmPresupcli->setWindowState(Qt::WindowMaximized);
-    frmPresupcli->exec();
-    cerrarSubWindows();
+    frmPresupcli->show();
+
    // ui->btnPresup_clientes->setEnabled(true);
 }
 
 void MainWindow::btnCajaMinuta_clicked()
 {
+    cerrarSubWindows();
     FrmCajaMinuta *frmCajaMinuta = new FrmCajaMinuta();
     workspace->addSubWindow(frmCajaMinuta);
     frmCajaMinuta->setWindowState(Qt::WindowMaximized);
-    frmCajaMinuta->exec();
-    cerrarSubWindows();
+    frmCajaMinuta->show();
+
    // ui->btnCajaMinuta->setEnabled(true);
 }
 
