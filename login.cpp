@@ -178,9 +178,9 @@ void Login::init()
 	}
 	this->ui->lineUsuario->setFocus();
     //Esto es por pereza mas que nada xD
-    #if _DEBUG
+
 	this->ui->lineUsuario->setText("marc");
 	this->ui->linePassword->setText("patata");
-   // this->ui->btnAcceder->click();
-    #endif
+   this->ui->btnAcceder->click();
+
 }

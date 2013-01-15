@@ -128,6 +128,8 @@ void Analitica::EliminarAnalitica(int id)
 
 void Analitica::EliminarLinea(int id)
 {
+    // TODO - Añadir cuadro contraseña - solo determinados usuarios pueden borrar
+
     QSqlQuery qlineas = QSqlQuery(QSqlDatabase::database("dbmedica"));
     qlineas.prepare("delete from analitica2 where id = :id");
     qlineas.bindValue(":id",id);

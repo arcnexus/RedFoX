@@ -21,6 +21,8 @@ FrmVerAnalitica::FrmVerAnalitica(QWidget *parent) :
     connect(ui->btnGuardar,SIGNAL(clicked()),this,SLOT(guardarDatos()));
     connect(ui->btnDeshacer,SIGNAL(clicked()),this,SLOT(Deshacer()));
     connect(ui->btnaddlinea,SIGNAL(clicked()),this,SLOT(addLineas()));
+    connect(ui->btnDeleteLinea,SIGNAL(clicked()), this,SLOT(BorrarLineas()));
+
 
 
 }
@@ -212,5 +214,6 @@ void FrmVerAnalitica::BorrarLineas()
 {
     Analitica oAnalitica;
     oAnalitica.EliminarLinea(ui->tablaAnalitica->item(ui->tablaAnalitica->currentRow(),4)->text().toInt());
+    llenarTabla(nID);
 }
 
