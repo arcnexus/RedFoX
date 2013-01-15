@@ -29,7 +29,7 @@
 #include "frmveranalitica.h"
 #include <QInputDialog>
 
-
+//TODO integrar http://doc.ginkgo-cadx.com/ginkgo-integration/ginkgo-cadx-integration-input-xml-integration/
 
 FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     QDialog(parent),
@@ -926,3 +926,8 @@ void FrmFichaPaciente::deshacerDatosImagenes()
 }
 
 
+
+void FrmFichaPaciente::on_BtnDeshacerPaciente_clicked()
+{
+    //TODO FrmFichaPaciente::on_BtnDeshacerPaciente_clicked()
+}

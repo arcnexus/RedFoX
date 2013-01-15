@@ -28,7 +28,7 @@
 #include <QStyleFactory>
 #include <QApplication>
 
-
+#include <QInputDialog>
 //NOTE - TheFox :: Archivo Revisado
 
 //--
@@ -55,6 +55,8 @@ int main(int argc, char *argv[])
                             QObject::tr("No se puede cargar el archivo de tema"),
                             QObject::tr("Aceptar"));
 	
+
+
 
     MainWindow w;
     w.setWindowState(Qt::WindowMaximized );

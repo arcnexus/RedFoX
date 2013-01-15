@@ -11,7 +11,14 @@
 #include "configuracion.h"
 #include <QToolButton>
 
-
+#include "frmClientes.h"
+#include "frmfacturas.h"
+#include "frmarticulos.h"
+#include "frmproveedores.h"
+#include "frmalbaran.h"
+#include "frmpedidos.h"
+#include "frmpresupuestoscli.h"
+#include "frmcajaminuta.h"
 namespace Ui {
 class MainWindow;
 }
@@ -27,14 +34,13 @@ public:
     QString empresa;
     //QSqlDatabase dbConfiguracion;
     QSqlQuery QryConfiguracion;
-    Configuracion *m_config;
-
-    
+    Configuracion *m_config;    
 
 private slots:
 	void init();
 
     void btnMantenimientos_clicked();
+
     void btnVentas_clicked();
 
     void btnClientes_clicked();
@@ -63,17 +69,25 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QMdiArea *workspace;
-    void cerrarSubWindows();
+
     void Mantenimientos();
     void Ventas();
+
+    //TOOLBARS
     QToolBar *m_modulesBar;
     QToolBar *m_MantenimientosBar;
     QToolBar *m_VentasBar;
     QToolBar *m_ComprasBar;
     QToolBar *m_AdminBar;
-
-    //QSignalMapper *m_modulesBarMapper;
+    //WIDGETS
+    frmClientes *frmClientes1;
+    frmFacturas *frmFacturas1;
+    FrmArticulos *frmArticulos1;
+    frmProveedores *frmProveedores1;
+    FrmAlbaran *frmAlbaran1;
+    FrmPedidos *frmPedidos1;
+    FrmPresupuestosCli *frmPresupcli;
+    FrmCajaMinuta *frmCajaMinuta;
 };
 
 #endif // MAINWINDOW_H
