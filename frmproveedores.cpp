@@ -24,12 +24,6 @@ frmProveedores::frmProveedores(QWidget *parent) :
     qmFormaPago->setQuery("select cCodigo, cFormapago from FormPago",QSqlDatabase::database("empresa"));
 
     ui->txtcCodigoFormaPago->setModel(qmFormaPago);
-
-    //-------------------------
-    // CONEXIONES
-    //-------------------------
-    connect(ui->btnCerrar,SIGNAL(clicked()),this,SLOT(close()));
-
 }
 
 frmProveedores::~frmProveedores()
@@ -223,7 +217,6 @@ void frmProveedores::DesbloquerCampos()
     ui->btnAnterior->setEnabled(false);
     ui->btnBorrar->setEnabled(false);
     ui->btnBuscar->setEnabled(false);
-    ui->btnCerrar->setEnabled(false);
     ui->btnDeshacer->setEnabled(true);
     ui->btnEditar->setEnabled(false);
     ui->btnGuardar->setEnabled(true);
@@ -279,7 +272,6 @@ void frmProveedores::BloquearCampos()
     ui->btnAnterior->setEnabled(true);
     ui->btnBorrar->setEnabled(true);
     ui->btnBuscar->setEnabled(true);
-    ui->btnCerrar->setEnabled(true);
     ui->btnDeshacer->setEnabled(false);
     ui->btnEditar->setEnabled(true);
     ui->btnGuardar->setEnabled(false);

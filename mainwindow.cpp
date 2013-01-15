@@ -97,11 +97,6 @@ MainWindow::MainWindow(QWidget *parent) :
     Ventas();
     btnMantenimientos_clicked();
 
-
- //   m_modulesBarMapper = new QSignalMapper(this);
- //   connect(m_modulesBarMapper, SIGNAL(mapped(QWidget*)), this->centralWidget(),
-   //         SLOT(setCurrentWidget(QWidget*)));
-
     // ----------------------------------------------------------------------------
     // Conexiones
     // ----------------------------------------------------------------------------
@@ -119,7 +114,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // Cambiar por parametros fichero configuración.
     m_config->cDriverBDTerra = settings.value("cDriverBDTerra").toString();
     m_config->cRutaBdTerra = settings.value("cRutaDBTerra").toString();
-   // m_config->cRutaBdTerra = "C:/Users/Marco/Documents/Visual Studio 2010/Projects/terra-master/DB/terra.sqlite";/*settings.value("cRutaDBTerra").toString();*/
     m_config->cHostBDTerra = settings.value("cHostBDTerra").toString();
     m_config->cUsuarioBDTerra  =   settings.value("cUserBDTerra").toString();
     m_config->cPasswordBDTerra = settings.value("cPasswordBDTerra").toString();
@@ -135,20 +129,13 @@ MainWindow::MainWindow(QWidget *parent) :
     if (m_config->cDriverBDTerra == "QSQLITE")
 	{
         dbTerra.setDatabaseName(m_config->cRutaBdTerra);
+        dbTerra.open();
     }
 	else
 	{
         dbTerra.setDatabaseName(m_config->cNombreBDTerra);
         dbTerra.setHostName(m_config->cHostBDTerra);
         dbTerra.open(m_config->cUsuarioBDTerra,m_config->cPasswordBDTerra);
-    }
-
-    if (m_config->cDriverBDTerra == "QSQLITE")
-	{
-        dbTerra.open();
-    }
-	else
-	{
         dbTerra.open(m_config->cUsuarioBDTerra,m_config->cPasswordBDTerra);
     }
 
@@ -157,12 +144,6 @@ MainWindow::MainWindow(QWidget *parent) :
         QMessageBox::critical(0, "error:", dbTerra.lastError().text());
     }
 
-    // Preparo espacio de trabajo para poder acojer ventanas dentro de él
-    //workspace = new QMdiArea(ui->widget);
-    //QGridLayout *gridLayout = new QGridLayout;
-    //gridLayout->addWidget(workspace, 0, 0);
-    //ui->widget->setLayout(gridLayout);
-    
 	// Identificación de usuario
     //Widgets
     frmClientes1 = new frmClientes(m_config,this);
@@ -325,7 +306,6 @@ void MainWindow::btnVentas_clicked()
 
 void MainWindow::Mantenimientos()
 {
-
     // ----------------------------------------------------------------------------
     // Barra de herramientas Mantenimientos
     // ----------------------------------------------------------------------------
@@ -333,63 +313,38 @@ void MainWindow::Mantenimientos()
     m_MantenimientosBar->setAllowedAreas(Qt::TopToolBarArea);
     m_MantenimientosBar->setIconSize(QSize(32,32));
     m_MantenimientosBar->setStyleSheet("background-color:rgb(255, 235, 167)");
-    //m_MantenimientosBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    m_MantenimientosBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     m_MantenimientosBar->setMovable(false);
     m_MantenimientosBar->setFloatable(false);
 
-   this->addToolBar(Qt::TopToolBarArea, m_MantenimientosBar);
+    this->addToolBar(Qt::TopToolBarArea, m_MantenimientosBar);
 
     // PACIENTES
-    QToolButton *BtnClientes = new QToolButton(m_MantenimientosBar);
-    BtnClientes->setText("Pacientes");
-    BtnClientes->setIcon(QIcon(":Icons/PNG/clientes.png"));
-    BtnClientes->setToolTip("Gestión de Clientes/Pacientes");
-    BtnClientes->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    // PROVEEDORES
-    QToolButton *BtnProveedores = new QToolButton(m_MantenimientosBar);
-    BtnProveedores->setText("Proveedores");
-    BtnProveedores->setIcon(QIcon(":Icons/PNG/proveedores.png"));
-    BtnProveedores->setToolTip("Gestión de Proveedores");
-    BtnProveedores->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    // ARTICULOS
-    QToolButton *BtnArticulos = new QToolButton(m_MantenimientosBar);
-    BtnArticulos->setText("Articulos");
-    BtnArticulos->setIcon(QIcon(":Icons/PNG/articulos.png"));
-    BtnArticulos->setToolTip("Gestión de Articulos");
-    BtnArticulos->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    m_MantenimientosBar->addAction(ui->btnClientes);
 
+    // PROVEEDORES
+    m_MantenimientosBar->addAction(ui->btnProveedores);
+
+    // ARTICULOS
+    m_MantenimientosBar->addAction(ui->btnArt_culos);
+
+    m_MantenimientosBar->addSeparator();
 
     // AGENDA
-    QToolButton *BtnAgenda = new QToolButton(m_MantenimientosBar);
-    BtnAgenda->setText("Agenda");
-    BtnAgenda->setIcon(QIcon(":Icons/PNG/Calendar2.png"));
-    BtnAgenda->setToolTip("Gestión de Agenda");
-    BtnAgenda->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-
-    m_MantenimientosBar->addWidget(BtnClientes);
-    m_MantenimientosBar->addWidget(BtnProveedores);
-    m_MantenimientosBar->addWidget(BtnArticulos);
-    m_MantenimientosBar->addSeparator();
-    m_MantenimientosBar->addWidget(BtnAgenda);
-
-
+    m_MantenimientosBar->addAction(ui->btnAgenda);
 
     //--------------------------
     // Conexiones
     //--------------------------
-    connect(BtnClientes,SIGNAL(clicked()),this,SLOT(btnClientes_clicked()));
-    connect(BtnArticulos,SIGNAL(clicked()),this,SLOT(btnArticulos_clicked()));
-    connect(BtnProveedores,SIGNAL(clicked()),this,SLOT(btnProveedores_clicked()));
-
-    //connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
+    connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
     connect(ui->btnArt_culos,SIGNAL(triggered()),this,SLOT(btnArticulos_clicked()));
     connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
+    //TODO conexion boton agenda
 }
 
 
 void MainWindow::Ventas()
 {
-
     // ----------------------------------------------------------------------------
     // Barra de herramientas Ventas
     // ----------------------------------------------------------------------------
@@ -397,69 +352,35 @@ void MainWindow::Ventas()
     m_VentasBar->setAllowedAreas(Qt::TopToolBarArea);
     m_VentasBar->setIconSize(QSize(32,32));
     m_VentasBar->setStyleSheet("background-color:rgb(255, 235, 167)");
-    //m_VentasBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    m_VentasBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     m_VentasBar->setMovable(false);
     m_VentasBar->setFloatable(false);
 
-   this->addToolBar(Qt::TopToolBarArea, m_VentasBar);
+    this->addToolBar(Qt::TopToolBarArea, m_VentasBar);
 
     // PRESUPUESTOS
-    QToolButton *BtnPresupuestos_cli = new QToolButton(m_VentasBar);
-    BtnPresupuestos_cli->setText("Presup.");
-    BtnPresupuestos_cli->setIcon(QIcon(":Icons/PNG/presupuestos.png"));
-    BtnPresupuestos_cli->setToolTip("Gestión de Presupuestos a Clientes/Pacientes");
-    BtnPresupuestos_cli->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    m_VentasBar->addAction(ui->actionPresupuestos);
 
     // PEDIDOS
-    QToolButton *BtnPedidos_cli = new QToolButton(m_VentasBar);
-    BtnPedidos_cli->setText("Pedidos");
-    BtnPedidos_cli->setIcon(QIcon(":Icons/PNG/pedidos_cli.png"));
-    BtnPedidos_cli->setToolTip("Pedido de Paciente");
-    BtnPedidos_cli->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    m_VentasBar->addAction(ui->actionPedidos);
 
     // ALBARANES
-    QToolButton *BtnAlbaranes_cli = new QToolButton(m_VentasBar);
-    BtnAlbaranes_cli->setText("Albaranes");
-    BtnAlbaranes_cli->setIcon(QIcon(":Icons/PNG/albaran.png"));
-    BtnAlbaranes_cli->setToolTip("Gestión de Alabaranes a pacientes");
-    BtnAlbaranes_cli->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    m_VentasBar->addAction(ui->actionAlbaranes);
 
-   // FACTURA
-    QToolButton *BtnFactura_cli = new QToolButton(m_VentasBar);
-    BtnFactura_cli->setText("Facturas");
-    BtnFactura_cli->setIcon(QIcon(":Icons/PNG/Factura.png"));
-    BtnFactura_cli->setToolTip("Gestión de Facturas");
-    BtnFactura_cli->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    // FACTURA
+    m_VentasBar->addAction(ui->actionFacturas);
 
     // CAJA
-     QToolButton *BtnCaja = new QToolButton(m_VentasBar);
-     BtnCaja->setText("Caja día");
-     BtnCaja->setIcon(QIcon(":Icons/PNG/tpv.png"));
-     BtnCaja->setToolTip("Gestión de Caja día");
-     BtnCaja->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-
-    m_VentasBar->addWidget(BtnPresupuestos_cli);
-    m_VentasBar->addWidget(BtnPedidos_cli);
-    m_VentasBar->addWidget(BtnAlbaranes_cli);
-    m_VentasBar->addWidget(BtnFactura_cli);
-    m_VentasBar->addWidget(BtnCaja);
-
-
+    m_VentasBar->addAction(ui->actionVentas_Contado);
 
     //--------------------------
     // Conexiones
     //--------------------------
-   connect(BtnPresupuestos_cli,SIGNAL(clicked()),this,SLOT(btnPresup_clientes_clicked()));
-   connect(BtnPedidos_cli,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
-   connect(BtnAlbaranes_cli,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
-   connect(BtnFactura_cli,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
-   connect(BtnCaja,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
-
-   connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
-   connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
-   connect(ui->actionAlbaranes,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
-   connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
-   connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
+    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
+    connect(ui->actionAlbaranes,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
+    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
+    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
 }
 
 
@@ -522,15 +443,6 @@ void MainWindow::btnPresup_clientes_clicked()
 void MainWindow::btnCajaMinuta_clicked()
 {
     ui->stackedWidget->setCurrentWidget(frmCajaMinuta);
-    //TODO Cambio main gui 8
-    /*
-    cerrarSubWindows();
-    FrmCajaMinuta *frmCajaMinuta = new FrmCajaMinuta();
-    workspace->addSubWindow(frmCajaMinuta);
-    frmCajaMinuta->setWindowState(Qt::WindowMaximized);
-    frmCajaMinuta->show();
-
-   // ui->btnCajaMinuta->setEnabled(true);*/
 }
 
 //void MainWindow::on_btnAgenda_clicked()
@@ -554,9 +466,3 @@ void MainWindow::cambiarEstilo(int estado)
 
 //    QApplication::setStyle(style);
 }
-
-
-
-
-
-

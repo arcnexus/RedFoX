@@ -1464,8 +1464,6 @@ color: rgb(23, 76, 7);</string>
            </layout>
           </item>
          </layout>
-         <zorder>layoutWidget_3</zorder>
-         <zorder>tabWidget</zorder>
         </widget>
        </item>
       </layout>
@@ -2230,29 +2228,6 @@ border-right-color: rgb(220, 220, 220);</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="btnCerrar">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>&amp;Salir</string>
-        </property>
-        <property name="icon">
-         <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -2268,27 +2243,9 @@ border-right-color: rgb(220, 220, 220);</string>
   <tabstop>btnGuardar</tabstop>
   <tabstop>btnDeshacer</tabstop>
   <tabstop>btnCobrar</tabstop>
-  <tabstop>btnCerrar</tabstop>
  </tabstops>
  <resources>
   <include location="terra.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>btnCerrar</sender>
-   <signal>clicked()</signal>
-   <receiver>frmFacturas</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1003</x>
-     <y>462</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>705</x>
-     <y>434</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

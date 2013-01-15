@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
+    <width>1004</width>
     <height>428</height>
    </rect>
   </property>
@@ -255,29 +255,6 @@
         <property name="icon">
          <iconset>
           <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnCerrar">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>&amp;Salir</string>
-        </property>
-        <property name="icon">
-         <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -964,7 +941,7 @@ color: rgb(0, 64, 64);</string>
                  <number>65</number>
                 </property>
                 <property name="verticalSpacing">
-                 <number>-1</number>
+                 <number>6</number>
                 </property>
                 <item row="4" column="0">
                  <widget class="QLabel" name="label_36">
@@ -2402,7 +2379,6 @@ color: rgb(0, 64, 64);</string>
   <tabstop>btnGuardar</tabstop>
   <tabstop>btnDeshacer</tabstop>
   <tabstop>btnBorrar</tabstop>
-  <tabstop>btnCerrar</tabstop>
   <tabstop>txtnRec3</tabstop>
   <tabstop>txtdValidoHasta</tabstop>
   <tabstop>txtrACuenta</tabstop>
@@ -2452,22 +2428,5 @@ color: rgb(0, 64, 64);</string>
  <resources>
   <include location="terra.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>btnCerrar</sender>
-   <signal>clicked()</signal>
-   <receiver>FrmPresupuestosCli</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1075</x>
-     <y>511</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1089</x>
-     <y>445</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

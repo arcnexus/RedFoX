@@ -2368,29 +2368,6 @@ color: rgb(0, 64, 64);</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="btnCerrar">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>&amp;Salir</string>
-        </property>
-        <property name="icon">
-         <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -2412,7 +2389,6 @@ color: rgb(0, 64, 64);</string>
   <tabstop>btnFacturar</tabstop>
   <tabstop>btnAnterior</tabstop>
   <tabstop>btnDeshacer</tabstop>
-  <tabstop>btnCerrar</tabstop>
   <tabstop>btnImprimir</tabstop>
   <tabstop>btnGuardar</tabstop>
   <tabstop>btnAnadir</tabstop>
@@ -2462,22 +2438,5 @@ color: rgb(0, 64, 64);</string>
  <resources>
   <include location="terra.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>btnCerrar</sender>
-   <signal>clicked()</signal>
-   <receiver>FrmAlbaran</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1070</x>
-     <y>477</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1008</x>
-     <y>443</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

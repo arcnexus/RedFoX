@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1020</width>
-    <height>489</height>
+    <height>490</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -230,29 +230,6 @@
        <property name="icon">
         <iconset resource="terra.qrc">
          <normaloff>:/Icons/PNG/List.png</normaloff>:/Icons/PNG/List.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>24</width>
-         <height>24</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="botCerrar">
-       <property name="minimumSize">
-        <size>
-         <width>115</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Cerrar</string>
-       </property>
-       <property name="icon">
-        <iconset resource="terra.qrc">
-         <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -1877,18 +1854,18 @@ color: rbg(0,0,0);</string>
                <string notr="true">background-color: rgb(254, 255, 205);
 color: rbg(0,0,0);</string>
               </property>
+              <property name="displayFormat">
+               <string>dd/MM/yyyy</string>
+              </property>
+              <property name="calendarPopup">
+               <bool>true</bool>
+              </property>
               <property name="date">
                <date>
                 <year>1752</year>
                 <month>9</month>
                 <day>14</day>
                </date>
-              </property>
-              <property name="displayFormat">
-               <string>dd/MM/yyyy</string>
-              </property>
-              <property name="calendarPopup">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -2247,7 +2224,6 @@ color: rbg(0,0,0);</string>
   <tabstop>botDeshacer</tabstop>
   <tabstop>botBorrar</tabstop>
   <tabstop>botListados</tabstop>
-  <tabstop>botCerrar</tabstop>
   <tabstop>lineEdit_16</tabstop>
   <tabstop>chklPvpIncluyeIva</tabstop>
   <tabstop>chklControlarStock</tabstop>
@@ -2255,22 +2231,5 @@ color: rbg(0,0,0);</string>
  <resources>
   <include location="terra.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>botCerrar</sender>
-   <signal>clicked()</signal>
-   <receiver>FrmArticulos</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1071</x>
-     <y>353</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1061</x>
-     <y>458</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
