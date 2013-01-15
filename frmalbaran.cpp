@@ -294,7 +294,6 @@ void FrmAlbaran::BloquearCampos()
     ui->btnAnterior->setEnabled(true);
    // ui->btnBorrar->setEnabled(true);
     ui->btnBuscar->setEnabled(true);
-    ui->btnCerrar->setEnabled(true);
     ui->btnDeshacer->setEnabled(false);
     ui->btnEditar->setEnabled(true);
     ui->btnGuardar->setEnabled(false);
@@ -361,7 +360,6 @@ void FrmAlbaran::DesbloquearCampos()
     ui->btnAnterior->setEnabled(false);
    // ui->btnBorrar->setEnabled(false);
     ui->btnBuscar->setEnabled(false);
-    ui->btnCerrar->setEnabled(false);
     ui->btnDeshacer->setEnabled(true);
     ui->btnEditar->setEnabled(false);
     ui->btnGuardar->setEnabled(true);

@@ -140,7 +140,6 @@ void FrmArticulos::bloquearCampos() {
     ui->botAnterior->setEnabled(true);
     ui->botBorrar->setEnabled(true);
     ui->botBuscar->setEnabled(true);
-    ui->botCerrar->setEnabled(true);
     ui->botDeshacer->setEnabled(false);
     ui->botEditar->setEnabled(true);
     ui->botGuardar->setEnabled(false);
@@ -215,7 +214,6 @@ void FrmArticulos::desbloquearCampos() {
     ui->botAnterior->setEnabled(false);
     ui->botBorrar->setEnabled(false);
     ui->botBuscar->setEnabled(false);
-    ui->botCerrar->setEnabled(false);
     ui->botDeshacer->setEnabled(true);
     ui->botEditar->setEnabled(false);
     ui->botGuardar->setEnabled(true);

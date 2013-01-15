@@ -585,7 +585,7 @@ color: rgb(0, 64, 64);</string>
                  <number>65</number>
                 </property>
                 <property name="verticalSpacing">
-                 <number>-1</number>
+                 <number>6</number>
                 </property>
                 <item row="4" column="0">
                  <widget class="QLabel" name="label_12">
@@ -2426,29 +2426,6 @@ color: rgb(0, 64, 64);</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="btnCerrar">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>&amp;Salir</string>
-        </property>
-        <property name="icon">
-         <iconset resource="terra.qrc">
-          <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -2457,22 +2434,5 @@ color: rgb(0, 64, 64);</string>
  <resources>
   <include location="terra.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>btnCerrar</sender>
-   <signal>clicked()</signal>
-   <receiver>frmPedidos</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1072</x>
-     <y>471</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1079</x>
-     <y>275</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

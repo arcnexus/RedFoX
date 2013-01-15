@@ -266,29 +266,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="btnCerrar">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>38</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&amp;Cerrar</string>
-          </property>
-          <property name="icon">
-           <iconset resource="terra.qrc">
-            <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
      </layout>
@@ -3557,29 +3534,12 @@ color: rgb(0, 0, 0);</string>
   <tabstop>btnGuardar</tabstop>
   <tabstop>btnDeshacer</tabstop>
   <tabstop>btnBorrar</tabstop>
-  <tabstop>btnCerrar</tabstop>
   <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources>
   <include location="terra.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>btnCerrar</sender>
-   <signal>clicked()</signal>
-   <receiver>frmClientes</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>66</x>
-     <y>482</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>766</x>
-     <y>401</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>chklBloqueoCliente</sender>
    <signal>toggled(bool)</signal>

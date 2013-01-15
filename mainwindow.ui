@@ -734,7 +734,7 @@ background-color: rgb(255, 255, 255);</string>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(219, 228, 255);</string>
         </property>
-        <widget class="QWidget" name="stackedWidgetPage1" native="true"/>
+        <widget class="QWidget" name="stackedWidgetPage1"/>
        </widget>
       </item>
      </layout>
@@ -857,26 +857,46 @@ background-color: rgb(255, 255, 255);</string>
    </property>
   </action>
   <action name="actionPresupuestos">
+   <property name="icon">
+    <iconset resource="terra.qrc">
+     <normaloff>:/Icons/PNG/presupuestos.png</normaloff>:/Icons/PNG/presupuestos.png</iconset>
+   </property>
    <property name="text">
     <string>Presupuestos</string>
    </property>
   </action>
   <action name="actionPedidos">
+   <property name="icon">
+    <iconset resource="terra.qrc">
+     <normaloff>:/Icons/PNG/pedidos_cli.png</normaloff>:/Icons/PNG/pedidos_cli.png</iconset>
+   </property>
    <property name="text">
     <string>Pedidos</string>
    </property>
   </action>
   <action name="actionAlbaranes">
+   <property name="icon">
+    <iconset resource="terra.qrc">
+     <normaloff>:/Icons/PNG/albaran.png</normaloff>:/Icons/PNG/albaran.png</iconset>
+   </property>
    <property name="text">
     <string>Albaranes</string>
    </property>
   </action>
   <action name="actionFacturas">
+   <property name="icon">
+    <iconset resource="terra.qrc">
+     <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
+   </property>
    <property name="text">
     <string>Facturas</string>
    </property>
   </action>
   <action name="actionVentas_Contado">
+   <property name="icon">
+    <iconset resource="terra.qrc">
+     <normaloff>:/Icons/PNG/tpv.png</normaloff>:/Icons/PNG/tpv.png</iconset>
+   </property>
    <property name="text">
     <string>Ventas Contado</string>
    </property>

@@ -235,29 +235,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="btnCerrar">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>45</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Cerrar</string>
-          </property>
-          <property name="icon">
-           <iconset resource="terra.qrc">
-            <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
      </layout>
@@ -1463,7 +1440,6 @@ color: rgb(0, 0, 0);</string>
   <tabstop>btnGuardar</tabstop>
   <tabstop>btnDeshacer</tabstop>
   <tabstop>btnBorrar</tabstop>
-  <tabstop>btnCerrar</tabstop>
   <tabstop>tabWidget_5</tabstop>
   <tabstop>tabWidget_3</tabstop>
   <tabstop>txtcCuentaAplicacion</tabstop>
