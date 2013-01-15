@@ -670,16 +670,17 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
 {
     // Cargar imagenes episodio
     QStringList list;
-    list <<QObject::tr("ANALISIS")<< QObject::tr("FECHA") <<"ID";
+    list <<QObject::tr("ANALISIS")<< QObject::tr("FECHA") <<"ID" <<tr("COMENTARIOS");
     QSqlQuery *qAnalisis = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    QString cSQL = " Select analisis, id,fechaanalisis from Analitica where idepisodio = :id ";
+    QString cSQL = " Select analisis, id,fechaanalisis, comentarios from Analitica where idepisodio = :id ";
     qAnalisis->prepare(cSQL);
     qAnalisis->bindValue(":id",oEpisodio->getid());
     ui->listaAnaliticas->setRowCount(0);
-    ui->listaAnaliticas->setColumnCount(3);
-    ui->listaAnaliticas->setColumnWidth(0,250);
+    ui->listaAnaliticas->setColumnCount(4);
+    ui->listaAnaliticas->setColumnWidth(0,230);
     ui->listaAnaliticas->setColumnWidth(1,170);
     ui->listaAnaliticas->setColumnWidth(2,0);
+    ui->listaAnaliticas->setColumnWidth(3,150);
     ui->listaAnaliticas->setHorizontalHeaderLabels(list);
     int pos = 0;
     QSqlRecord reg ;
@@ -711,6 +712,13 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
             newItem2->setFlags(newItem2->flags() & (~Qt::ItemIsEditable));
             newItem2->setTextColor(Qt::blue); // color de los items
             ui->listaAnaliticas->setItem(pos,2,newItem2);
+
+            // comentarios
+            QTableWidgetItem *newItem3 = new QTableWidgetItem(reg.field("comentarios").value().toString());
+            // para que los elementos no sean editables
+            newItem3->setFlags(newItem3->flags() & (~Qt::ItemIsEditable));
+            newItem3->setTextColor(Qt::blue); // color de los items
+            ui->listaAnaliticas->setItem(pos,3,newItem3);
 
             pos++;
 

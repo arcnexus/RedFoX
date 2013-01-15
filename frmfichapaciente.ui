@@ -273,7 +273,7 @@ color: rgb(255,255,255);</string>
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_7">
       <attribute name="title">
@@ -975,7 +975,7 @@ color: rgb(255, 0, 0);</string>
              <bool>true</bool>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="tabWidget_2Page1">
              <attribute name="icon">
@@ -1625,7 +1625,7 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="3">
+              <item row="2" column="2">
                <widget class="QToolButton" name="btnVerAnalitica">
                 <property name="toolTip">
                  <string>Ver Analisis</string>
@@ -1639,7 +1639,7 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="4">
+              <item row="2" column="3">
                <widget class="QToolButton" name="btnImportarAnalitica">
                 <property name="toolTip">
                  <string>Importar Analisis</string>
@@ -1653,7 +1653,7 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="5">
+              <item row="2" column="4">
                <spacer name="horizontalSpacer_8">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -1666,7 +1666,7 @@ color: rgb(0, 0, 0);</string>
                 </property>
                </spacer>
               </item>
-              <item row="0" column="0" colspan="6">
+              <item row="0" column="0" colspan="5">
                <widget class="QLabel" name="label_12">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(0, 0, 192);
@@ -1681,7 +1681,7 @@ color: rgb(255,255,255);
                 </property>
                </widget>
               </item>
-              <item row="1" column="0" colspan="6">
+              <item row="1" column="0" colspan="5">
                <widget class="QTableWidget" name="listaAnaliticas">
                 <property name="minimumSize">
                  <size>
@@ -1700,23 +1700,6 @@ color: rgb(255,255,255);
                 </property>
                 <property name="selectionBehavior">
                  <enum>QAbstractItemView::SelectRows</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="QPushButton" name="btnModificarAnalitica">
-                <property name="maximumSize">
-                 <size>
-                  <width>32</width>
-                  <height>32</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset resource="terra.qrc">
-                  <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
                 </property>
                </widget>
               </item>
