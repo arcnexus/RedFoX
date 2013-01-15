@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
         QTextCodec::setCodecForTr(linuxCodec);
         QTextCodec::setCodecForCStrings(linuxCodec);
    #endif
-        QTextCodec::setCodecForLocale(linuxCodec);;
+   QTextCodec::setCodecForLocale(linuxCodec);;
 
    a.setStyle("fusion");
 
