@@ -1037,25 +1037,19 @@ void frmClientes::on_btnFichaPaciente_clicked()
     Paciente oPaciente;
     oPaciente.RecuperarPaciente(oCliente->getId());
 
-    //NOTE mental - Esto para que es?
-    //--------------------------------------------------------
     if(oPaciente.getid()==0){
         int idCliente = oCliente->getId();
         idPaciente = oPaciente.AnadirPaciente(idCliente);
         if (idPaciente!=0)
             oPaciente.RecuperarPaciente(idPaciente);
     }
-    //---------------------------------------------------------
     // open patient form
 
 
-    FrmFichaPaciente frmPaciente;
+    FrmFichaPaciente frmPaciente(this);
     frmPaciente.setWindowModality(Qt::WindowModal);
 
-
-    // conexiones
-    connect(this,SIGNAL(enviahistoriaynombre(int,QString)),&frmPaciente,SLOT(recibedatospaciente(int ,QString)));
-    emit enviahistoriaynombre(oCliente->getId(),oCliente->getcNombreFiscal());
+    frmPaciente.recibedatospaciente(oCliente->getId(),oCliente->getcNombreFiscal());
     frmPaciente.cargarDatos(oCliente->getId());
     frmPaciente.exec();
 }

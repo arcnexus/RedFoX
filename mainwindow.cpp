@@ -4,9 +4,7 @@
 #include <QtSql>
 #include <QErrorMessage>
 #include<QSqlError>
-#include "frmClientes.h"
-#include "frmfacturas.h"
-#include "frmarticulos.h"
+
 #include "login.h"
 #include <QMdiArea>
 #include <QMdiSubWindow>
@@ -16,12 +14,10 @@
 #include "configuracion.h"
 #include <QSqlQuery>
 #include "frmempresas.h"
-#include "frmproveedores.h"
+
 #include "frmconfiguracion.h"
-#include "frmalbaran.h"
-#include "frmpedidos.h"
-#include "frmpresupuestoscli.h"
-#include "frmcajaminuta.h"
+
+
 #include "frmagendavisitas.h"
 #include <QStyleFactory>
 #include <QToolBar>
@@ -162,16 +158,36 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     // Preparo espacio de trabajo para poder acojer ventanas dentro de él
-    workspace = new QMdiArea(ui->widget);
-    QGridLayout *gridLayout = new QGridLayout;
-    gridLayout->addWidget(workspace, 0, 0);
-    ui->widget->setLayout(gridLayout);
+    //workspace = new QMdiArea(ui->widget);
+    //QGridLayout *gridLayout = new QGridLayout;
+    //gridLayout->addWidget(workspace, 0, 0);
+    //ui->widget->setLayout(gridLayout);
     
 	// Identificación de usuario
+    //Widgets
+    frmClientes1 = new frmClientes(m_config,this);
+    frmFacturas1 = new frmFacturas(m_config,this);
+    frmArticulos1 = new FrmArticulos(m_config,this);
+    frmProveedores1 = new frmProveedores(this);
+    frmAlbaran1 = new FrmAlbaran(this);
+    frmPedidos1 = new FrmPedidos(this);
+    frmPresupcli = new FrmPresupuestosCli(this);
+    frmCajaMinuta = new FrmCajaMinuta(this);
+
+    ui->stackedWidget->addWidget(frmClientes1);
+    ui->stackedWidget->addWidget(frmFacturas1);
+    ui->stackedWidget->addWidget(frmArticulos1);
+    ui->stackedWidget->addWidget(frmProveedores1);
+    ui->stackedWidget->addWidget(frmAlbaran1);
+    ui->stackedWidget->addWidget(frmPedidos1);
+    ui->stackedWidget->addWidget(frmPresupcli);
+    ui->stackedWidget->addWidget(frmCajaMinuta);
+    //intit
     QTimer::singleShot(0,this,SLOT(init()));
 }
 void MainWindow::init()
 {
+
     //Login *dlg = new Login(m_config);
     //NOTE - Fixed: puntero no borrado
     QScopedPointer<Login>dlg(new Login(m_config));
@@ -281,7 +297,7 @@ void MainWindow::init()
 			}
             progress.setValue(6);
 			this->show();
-            QApplication::processEvents();
+            QApplication::processEvents();           
 		} 
 		else
 			qDebug() <<"Fallo la conexión al fichero Medico";
@@ -292,7 +308,6 @@ void MainWindow::init()
 
 MainWindow::~MainWindow()
 {
-    cerrarSubWindows();
     delete ui;
 }
 
@@ -300,16 +315,12 @@ void MainWindow::btnMantenimientos_clicked()
 {
     m_MantenimientosBar->show();
     m_VentasBar->hide();
-  //  m_ComprasBar->hide();
-  //  m_AdminBar->hide();
 }
 
 void MainWindow::btnVentas_clicked()
 {
     m_MantenimientosBar->hide();
     m_VentasBar->show();
-  //  m_ComprasBar->hide();
-  //  m_AdminBar->hide();
 }
 
 void MainWindow::Mantenimientos()
@@ -454,36 +465,16 @@ void MainWindow::Ventas()
 
 void MainWindow::btnClientes_clicked()
 {
-    cerrarSubWindows();
-    ui->btnClientes->setEnabled(false);
-    frmClientes *frmClientes1 = new frmClientes(m_config,this);
-    workspace->addSubWindow(frmClientes1);
-    frmClientes1->setWindowState(Qt::WindowMaximized);
-    frmClientes1->show();
-    ui->btnClientes->setEnabled(true);
+    ui->stackedWidget->setCurrentWidget(frmClientes1);
 }
 void MainWindow::btnFacturaCliente_clicked()
 {
-    cerrarSubWindows();
- //   ui->btnFacturaCliente->setEnabled(false);
-    frmFacturas *frmFacturas1 = new frmFacturas(m_config);
-    workspace->addSubWindow(frmFacturas1);
-    frmFacturas1->setWindowState(Qt::WindowMaximized);
-    frmFacturas1->show();
-
-   // ui->btnFacturaCliente->setEnabled(true);
+    ui->stackedWidget->setCurrentWidget(frmFacturas1);
 }
 
 void MainWindow::btnArticulos_clicked()
 {
-    cerrarSubWindows();
-   // ui->btnArticulos->setEnabled(false);
-    FrmArticulos *frmArticulos1 = new FrmArticulos(m_config);
-    workspace->addSubWindow(frmArticulos1);
-    frmArticulos1->setWindowState(Qt::WindowMaximized);
-    frmArticulos1->show();
-
-   // ui->btnArticulos->setEnabled(true);
+    ui->stackedWidget->setCurrentWidget(frmArticulos1);
 }
 
 //void MainWindow::on_botEmpresas_clicked()
@@ -499,13 +490,7 @@ void MainWindow::btnArticulos_clicked()
 
 void MainWindow::btnProveedores_clicked()
 {
-    cerrarSubWindows();
-    ui->btnProveedores->setEnabled(false);
-    frmProveedores *frmProveedores1 = new frmProveedores();
-    workspace->addSubWindow(frmProveedores1);
-    frmProveedores1->setWindowState(Qt::WindowMaximized);
-    frmProveedores1->show();
-    ui->btnProveedores->setEnabled(true);
+    ui->stackedWidget->setCurrentWidget(frmProveedores1);
 }
 
 //void MainWindow::on_botConfiguracion_clicked()
@@ -521,49 +506,31 @@ void MainWindow::btnProveedores_clicked()
 
 void MainWindow::btnAlbaran_clientes_clicked()
 {
-    cerrarSubWindows();
-    //->setEnabled(false);
-    FrmAlbaran *frmAlbaran1 = new FrmAlbaran(this);
-    workspace->addSubWindow(frmAlbaran1);
-    frmAlbaran1->setWindowState(Qt::WindowMaximized);
-    frmAlbaran1->show();
-
-  //  ui->btnAlbaran_clientes->setEnabled(true);
+    ui->stackedWidget->setCurrentWidget(frmAlbaran1);
 }
 
 void MainWindow::btn_Pedido_cliente_clicked()
 {
-    cerrarSubWindows();
-    //ui->btn_Pedido_cliente->setEnabled(false);
-    FrmPedidos *frmPedidos1 = new FrmPedidos();
-    workspace->addSubWindow(frmPedidos1);
-    frmPedidos1->setWindowState(Qt::WindowMaximized);
-    frmPedidos1->show();
-
-    //ui->btn_Pedido_cliente->setEnabled(true);
+    ui->stackedWidget->setCurrentWidget(frmPedidos1);
 }
 
 void MainWindow::btnPresup_clientes_clicked()
 {
-    cerrarSubWindows();
-    //ui->btnPresup_clientes->setEnabled(false);
-    FrmPresupuestosCli *frmPresupcli = new FrmPresupuestosCli();
-    workspace->addSubWindow(frmPresupcli);
-    frmPresupcli->setWindowState(Qt::WindowMaximized);
-    frmPresupcli->show();
-
-   // ui->btnPresup_clientes->setEnabled(true);
+    ui->stackedWidget->setCurrentWidget(frmPresupcli);
 }
 
 void MainWindow::btnCajaMinuta_clicked()
 {
+    ui->stackedWidget->setCurrentWidget(frmCajaMinuta);
+    //TODO Cambio main gui 8
+    /*
     cerrarSubWindows();
     FrmCajaMinuta *frmCajaMinuta = new FrmCajaMinuta();
     workspace->addSubWindow(frmCajaMinuta);
     frmCajaMinuta->setWindowState(Qt::WindowMaximized);
     frmCajaMinuta->show();
 
-   // ui->btnCajaMinuta->setEnabled(true);
+   // ui->btnCajaMinuta->setEnabled(true);*/
 }
 
 //void MainWindow::on_btnAgenda_clicked()
@@ -586,19 +553,6 @@ void MainWindow::cambiarEstilo(int estado)
 //        style = "fusion";
 
 //    QApplication::setStyle(style);
-}
-
-void MainWindow::cerrarSubWindows()
-{
-    QList<QMdiSubWindow *> wnd = workspace->subWindowList();
-
-    QList<QMdiSubWindow *>::iterator i;
-
-    for (i=wnd.begin();i!= wnd.end();++i) {
-        (*i)->hide();
-        //NOTE - Fixed Libera la memoria tmb
-        (*i)->deleteLater();
-    }
 }
 
 

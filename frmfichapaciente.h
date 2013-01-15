@@ -36,7 +36,7 @@ public slots:
     void cargarDatosImagenes(int,int);
     void guardarDatosImagenes();
     void deshacerDatosImagenes();
-
+     void recibedatospaciente(int,QString);
 private slots:
     void finishedSlot(QNetworkReply* reply);
     void on_btnAnadirEpisodio_clicked();
@@ -60,11 +60,12 @@ private slots:
     void AnadirImagenDiagnostico();
     void BorrarImagenDiagnostico();
     void EditarImagenDiagnostico();
-    void recibedatospaciente(int,QString);
     void AnadirInterconsulta();
     void AnadirAnalitica();
     void BorrarAnalitica();
     void VerAnalitica();
+    void on_BtnDeshacerPaciente_clicked();
+
 signals:
     void pasaid(int);
     void pasaCodigoNacional(QString);
