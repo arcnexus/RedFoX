@@ -5,6 +5,7 @@
 #include <QSqlError>
 #include <QMessageBox>
 #include <QDebug>
+#include <QInputDialog>
 
 Analitica::Analitica(QObject *parent) :
     QObject(parent)
@@ -111,31 +112,53 @@ void Analitica::GuardarLineas(int id, QString valor, QString referencia, QString
 
 void Analitica::EliminarAnalitica(int id)
 {
-    QSqlQuery qlineas = QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qlineas.prepare("delete from analitica2 where idanalitica = :idAnalitica");
-    qlineas.bindValue(":idAnalitica",id);
-    if(!qlineas.exec())
-        QMessageBox::warning(NULL,tr("Analitica"),tr("Ocurrió un error al borrar la línea. No se puede Borrar: ")+
-                             qlineas.lastError().text(),tr("Aceptar"));
+    QInputDialog d;
+    d.setLabelText("Introduzca la contraseña de borrado.\n Este paso quedará registrado a su nombre");
+    d.setOkButtonText("Aceptar");
+    d.setCancelButtonText("Cancelar");
+    d.setTextEchoMode(QLineEdit::Password);
+    if(d.exec() == QInputDialog::Accepted) {
+        QString Contra = d.textValue();
+        // TODO - Añadir a configuración y hacer parametrizable
+        // TODO - Registrar paso en registro movimientos traumaticos
+        if(Contra == "AAAA"){
+            QSqlQuery qlineas = QSqlQuery(QSqlDatabase::database("dbmedica"));
+            qlineas.prepare("delete from analitica2 where idanalitica = :idAnalitica");
+            qlineas.bindValue(":idAnalitica",id);
+            if(!qlineas.exec())
+                QMessageBox::warning(NULL,tr("Analitica"),tr("Ocurrió un error al borrar la línea. No se puede Borrar: ")+
+                                     qlineas.lastError().text(),tr("Aceptar"));
 
-    qlineas.prepare("delete from Analitica where id = :id");
-    qlineas.bindValue(":id",id);
-    if(!qlineas.exec())
-        QMessageBox::warning(NULL,tr("Analitica"),tr("Ocurrió un error al borrar la analítica. No se puede Borrar: ")+
-                             qlineas.lastError().text(),tr("Aceptar"));
+            qlineas.prepare("delete from Analitica where id = :id");
+            qlineas.bindValue(":id",id);
+            if(!qlineas.exec())
+                QMessageBox::warning(NULL,tr("Analitica"),tr("Ocurrió un error al borrar la analítica. No se puede Borrar: ")+
+                                     qlineas.lastError().text(),tr("Aceptar"));
+        }
+    }
 }
 
 
 void Analitica::EliminarLinea(int id)
 {
-    // TODO - Añadir cuadro contraseña - solo determinados usuarios pueden borrar
+    QInputDialog d;
+    d.setLabelText("Introduzca la contraseña de borrado.\n Este paso quedará registrado a su nombre");
+    d.setOkButtonText("Aceptar");
+    d.setCancelButtonText("Cancelar");
+    d.setTextEchoMode(QLineEdit::Password);
+    if(d.exec() == QInputDialog::Accepted) {
+        QString Contra = d.textValue();
+        // TODO - Añadir a configuración y hacer parametrizable
+        // TODO - Registrar paso en registro movimientos traumaticos
+        if(Contra == "AAAA"){
 
-    QSqlQuery qlineas = QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qlineas.prepare("delete from analitica2 where id = :id");
-    qlineas.bindValue(":id",id);
-    if(!qlineas.exec())
-        QMessageBox::warning(NULL,tr("Analitica"),tr("Ocurrió un error al borrar la línea. No se puede Borrar: ")+
-                             qlineas.lastError().text(),tr("Aceptar"));
-
+            QSqlQuery qlineas = QSqlQuery(QSqlDatabase::database("dbmedica"));
+            qlineas.prepare("delete from analitica2 where id = :id");
+            qlineas.bindValue(":id",id);
+            if(!qlineas.exec())
+                QMessageBox::warning(NULL,tr("Analitica"),tr("Ocurrió un error al borrar la línea. No se puede Borrar: ")+
+                                     qlineas.lastError().text(),tr("Aceptar"));
+        }
+    }
 }
 

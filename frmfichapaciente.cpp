@@ -828,21 +828,10 @@ void FrmFichaPaciente::AnadirAnalitica()
 
 void FrmFichaPaciente::BorrarAnalitica()
 {
-    QInputDialog d;
-    d.setLabelText("Introduzca la contraseña de borrado.\n Este paso quedará registrado a su nombre");
-    d.setOkButtonText("Aceptar");
-    d.setCancelButtonText("Cancelar");
-    d.setTextEchoMode(QLineEdit::Password);
-    if(d.exec() == Accepted) {
-        QString Contra = d.textValue();
-        // TODO - Añadir a configuración y hacer parametrizable
-        if(Contra == "AAAA"){
-            Analitica oAnalitica;
-            int nId = ui->listaAnaliticas->item(ui->listaAnaliticas->currentRow(),2)->text().toInt();
-            oAnalitica.EliminarAnalitica(nId);
-            //TODO - Guardar datos usuario y fecha borrado
-        }
-    }
+    Analitica oAnalitica;
+    int nId = ui->listaAnaliticas->item(ui->listaAnaliticas->currentRow(),2)->text().toInt();
+    oAnalitica.EliminarAnalitica(nId);
+    llenartablahistorialanalisisepisodio();
 }
 
 
