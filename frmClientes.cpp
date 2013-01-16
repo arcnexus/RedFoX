@@ -813,7 +813,7 @@ void frmClientes::on_txtcCp_editingFinished()
         BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
         if(BuscarPoblacion.exec())
         {
-            //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+
             int nId = BuscarPoblacion.DevolverID();
             //qDebug() <<nId;
             if(nId > 0)
@@ -831,7 +831,7 @@ void frmClientes::on_txtcCp_editingFinished()
                 }
                 else
                 {
-                    //qDebug() << qPoblacion.lastQuery();
+                    qDebug() << qPoblacion.lastQuery();
                     if (qPoblacion.next())
                     {
                         ui->txtcCp->setText(qPoblacion.value(1).toString());
