@@ -181,6 +181,6 @@ void Login::init()
 
 	this->ui->lineUsuario->setText("marc");
 	this->ui->linePassword->setText("patata");
-   this->ui->btnAcceder->click();
+   //this->ui->btnAcceder->click();
 
 }
