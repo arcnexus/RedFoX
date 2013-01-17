@@ -592,7 +592,6 @@ void frmClientes::on_txtcNombre_editingFinished()
 
 void frmClientes::on_txtcPoblacion_editingFinished()
 {
-    //BUG - A veces salta dos veces la ventana
     ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
     if (ui->txtcCp->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty())
     {
@@ -602,14 +601,14 @@ void frmClientes::on_txtcPoblacion_editingFinished()
        {
         //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
          int nId = BuscarPoblacion.DevolverID();
-         qDebug() <<nId;
+         qDebug() << "nID: " <<nId;
          if(nId > 0)
          {
              QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
              QString cId;
              cId = QString::number(nId);
              qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
-             qPoblacion.bindValue(":id",cId);
+             qPoblacion.bindValue(":cId",cId);
              if(!qPoblacion.exec())
              {
                  /* qDebug() << qPoblacion.lastQuery();
@@ -618,7 +617,6 @@ void frmClientes::on_txtcPoblacion_editingFinished()
              }
              else
              {
-                 // qDebug() << qPoblacion.lastQuery();
                  if (qPoblacion.next())
                  {
                      ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
@@ -822,7 +820,7 @@ void frmClientes::txtcCp_editingFinished()
                 QString cId;
                 cId = QString::number(nId);
                 qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
-                qPoblacion.bindValue(":id",cId);
+                qPoblacion.bindValue(":cId",cId);
                 if(!qPoblacion.exec())
                 {
                     /* qDebug() << qPoblacion.lastQuery();*/

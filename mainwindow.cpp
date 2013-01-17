@@ -168,7 +168,6 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 void MainWindow::init()
 {
-
     //Login *dlg = new Login(m_config);
     //NOTE - Fixed: puntero no borrado
     QScopedPointer<Login>dlg(new Login(m_config));
