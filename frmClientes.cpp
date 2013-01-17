@@ -69,7 +69,7 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacion_editingFinished()));
     connect(ui->txtcProvincia,SIGNAL(editingFinished()),this,SLOT(on_txtcProvincia_editingFinished()));
     connect(ui->txtcCifNif,SIGNAL(editingFinished()),this,SLOT(on_txtcCifNif_editingFinished()));
-    connect(ui->txtcCp,SIGNAL(editingFinished()),this,SLOT(on_txtcCp_editingFinished()));
+    connect(ui->txtcCp,SIGNAL(editingFinished()),this,SLOT(txtcCp_editingFinished()));
     connect(ui->txtcCPFactura,SIGNAL(editingFinished()),this,SLOT(on_txtcCPFactura_editingFinished()));
     connect(ui->txtcPoblacionFactura,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacionFactura_editingFinished()));
     connect(ui->txtcPoblacionAlmacen,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacionAlmacen_editingFinished()));
@@ -805,7 +805,7 @@ void frmClientes::on_btnBuscar_clicked()
     }
 }
 
-void frmClientes::on_txtcCp_editingFinished()
+void frmClientes::txtcCp_editingFinished()
 {
     if (!ui->txtcCp->text().isEmpty() and ui->txtcPoblacion->text().isEmpty())
     {
@@ -825,13 +825,13 @@ void frmClientes::on_txtcCp_editingFinished()
                 qPoblacion.bindValue(":id",cId);
                 if(!qPoblacion.exec())
                 {
-                    /* qDebug() << qPoblacion.lastQuery();
-                    qDebug() << qPoblacion.value(0).toString(); */
+                    /* qDebug() << qPoblacion.lastQuery();*/
                     QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                 }
                 else
                 {
-                    qDebug() << qPoblacion.lastQuery();
+                    qDebug() << "Poblacion" <<qPoblacion.value(0).toString();
+                    qDebug() << qPoblacion.lastQuery() <<" ID:= " << cId;
                     if (qPoblacion.next())
                     {
                         ui->txtcCp->setText(qPoblacion.value(1).toString());

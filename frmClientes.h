@@ -68,7 +68,7 @@ private slots:
 
     void on_btnBuscar_clicked();
 
-    void on_txtcCp_editingFinished();
+    void txtcCp_editingFinished();
 
     void on_txtcCPFactura_editingFinished();
 

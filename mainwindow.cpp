@@ -398,32 +398,10 @@ void MainWindow::btnArticulos_clicked()
     ui->stackedWidget->setCurrentWidget(frmArticulos1);
 }
 
-//void MainWindow::on_botEmpresas_clicked()
-//{
-//    //ui->botEmpresas->setEnabled(false);
-//    FrmEmpresas *frmEmpresa1 = new FrmEmpresas();
-//    workspace->addSubWindow(frmEmpresa1);
-//    frmEmpresa1->setWindowState(Qt::WindowMaximized);
-//    frmEmpresa1->exec();
-//    cerrarSubWindows();
-//    //ui->botEmpresas->setEnabled(true);
-//}
-
 void MainWindow::btnProveedores_clicked()
 {
     ui->stackedWidget->setCurrentWidget(frmProveedores1);
 }
-
-//void MainWindow::on_botConfiguracion_clicked()
-//{
-//   // ui->botConfiguracion->setEnabled(false);
-//    FrmConfiguracion *frmConfiguracion1 = new FrmConfiguracion();
-//    workspace->addSubWindow(frmConfiguracion1);
-//    frmConfiguracion1->setWindowState(Qt::WindowMaximized);
-//    frmConfiguracion1->exec();
-//    cerrarSubWindows();
-//   // ui->botConfiguracion->setEnabled(true);
-//}
 
 void MainWindow::btnAlbaran_clientes_clicked()
 {
