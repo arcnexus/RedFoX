@@ -840,7 +840,6 @@ void frmClientes::txtcCp_editingFinished()
                 }
             }
         }
-        // BuscarPoblacion.close();
     }
 }
 
@@ -862,7 +861,7 @@ void frmClientes::on_txtcCPFactura_editingFinished()
                 QString cId;
                 cId = QString::number(nId);
                 qPoblacion.prepare("select col_3 as poblacion, col_4 as CP, col_6 as provincia from poblaciones where col_1 = :cId");
-                qPoblacion.bindValue(":id",cId);
+                qPoblacion.bindValue(":cId",cId);
                 if(!qPoblacion.exec())
                 {
                     // qDebug() << qPoblacion.lastQuery();
@@ -904,7 +903,7 @@ void frmClientes::on_txtcPoblacionFactura_editingFinished()
                 QString cId;
                 cId = QString::number(nId);
                 qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
-                qPoblacion.bindValue(":id",cId);
+                qPoblacion.bindValue(":cId",cId);
                 if(!qPoblacion.exec())
                 {
                     // qDebug() << qPoblacion.lastQuery();
@@ -945,7 +944,7 @@ void frmClientes::on_txtcCpPoblacionAlmacen_editingFinished()
                 QString cId;
                 cId = QString::number(nId);
                 qPoblacion.prepare("select col_3 as poblacion, col_4 as CP, col_6 as provincia from poblaciones where col_1 = :cId");
-                qPoblacion.bindValue(":id",cId);
+                qPoblacion.bindValue(":cId",cId);
                 if(!qPoblacion.exec())
                 {
                     /* qDebug() << qPoblacion.lastQuery();
@@ -986,7 +985,7 @@ void frmClientes::on_txtcPoblacionAlmacen_editingFinished()
                 QString cId;
                 cId = QString::number(nId);
                 qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
-                qPoblacion.bindValue(":id",cId);
+                qPoblacion.bindValue(":cId",cId);
                 if(!qPoblacion.exec())
                 {
                     /* qDebug() << qPoblacion.lastQuery();
