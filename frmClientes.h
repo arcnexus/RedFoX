@@ -46,17 +46,17 @@ private slots:
 
     void on_btnAnadir_clicked();
 
-    void on_txtPrimerApellido_editingFinished();
+    void txtPrimerApellido_editingFinished();
 
-    void on_txtSegundoApellido_editingFinished();
+    void txtSegundoApellido_editingFinished();
 
-    void on_txtcNombre_editingFinished();
+    void txtcNombre_editingFinished();
 
-    void on_txtcPoblacion_editingFinished();
+    void txtcPoblacion_editingFinished();
 
-    void on_txtcProvincia_editingFinished();
+    void txtcProvincia_editingFinished();
 
-    void on_txtcCifNif_editingFinished();
+    void txtcCifNif_editingFinished();
 
     void on_btnEditar_clicked();
     void bloquearCampos();
@@ -70,17 +70,17 @@ private slots:
 
     void txtcCp_editingFinished();
 
-    void on_txtcCPFactura_editingFinished();
+    void txtcCPFactura_editingFinished();
 
-    void on_txtcPoblacionFactura_editingFinished();
+    void txtcPoblacionFactura_editingFinished();
 
-    void on_txtcCpPoblacionAlmacen_editingFinished();
+    void txtcCpPoblacionAlmacen_editingFinished();
 
-    void on_txtcPoblacionAlmacen_editingFinished();
+    void txtcPoblacionAlmacen_editingFinished();
 
-    void on_TablaDeudas_clicked(const QModelIndex &index);
+    void TablaDeudas_clicked(const QModelIndex &index);
 
-    void on_txtrRiesgoPermitido_editingFinished();
+    void txtrRiesgoPermitido_editingFinished();
 
     void on_btnFichaPaciente_clicked();
 

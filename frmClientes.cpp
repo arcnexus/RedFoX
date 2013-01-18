@@ -63,17 +63,18 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     this->Altas = false;
     //Connect signals /slots.
 
-    connect(ui->txtPrimerApellido,SIGNAL(editingFinished()),this,SLOT(on_txtPrimerApellido_editingFinished()));
-    connect(ui->txtSegundoApellido,SIGNAL(editingFinished()),this,SLOT(on_txtSegundoApellido_editingFinished()));
-    connect(ui->txtcNombre,SIGNAL(editingFinished()),this,SLOT(on_txtcNombre_editingFinished()));
-    connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacion_editingFinished()));
-    connect(ui->txtcProvincia,SIGNAL(editingFinished()),this,SLOT(on_txtcProvincia_editingFinished()));
-    connect(ui->txtcCifNif,SIGNAL(editingFinished()),this,SLOT(on_txtcCifNif_editingFinished()));
+    connect(ui->txtPrimerApellido,SIGNAL(editingFinished()),this,SLOT(txtPrimerApellido_editingFinished()));
+    connect(ui->txtSegundoApellido,SIGNAL(editingFinished()),this,SLOT(txtSegundoApellido_editingFinished()));
+    connect(ui->txtcNombre,SIGNAL(editingFinished()),this,SLOT(txtcNombre_editingFinished()));
+    //
+    //aki connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacion_editingFinished()));
+    connect(ui->txtcProvincia,SIGNAL(editingFinished()),this,SLOT(txtcProvincia_editingFinished()));
+    connect(ui->txtcCifNif,SIGNAL(editingFinished()),this,SLOT(txtcCifNif_editingFinished()));
     connect(ui->txtcCp,SIGNAL(editingFinished()),this,SLOT(txtcCp_editingFinished()));
-    connect(ui->txtcCPFactura,SIGNAL(editingFinished()),this,SLOT(on_txtcCPFactura_editingFinished()));
-    connect(ui->txtcPoblacionFactura,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacionFactura_editingFinished()));
-    connect(ui->txtcPoblacionAlmacen,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacionAlmacen_editingFinished()));
-    connect(ui->txtrRiesgoPermitido,SIGNAL(editingFinished()),this,SLOT(on_txtrRiesgoPermitido_editingFinished()));
+    connect(ui->txtcCPFactura,SIGNAL(editingFinished()),this,SLOT(txtcCPFactura_editingFinished()));
+    connect(ui->txtcPoblacionFactura,SIGNAL(editingFinished()),this,SLOT(txtcPoblacionFactura_editingFinished()));
+    connect(ui->txtcPoblacionAlmacen,SIGNAL(editingFinished()),this,SLOT(txtcPoblacionAlmacen_editingFinished()));
+    connect(ui->txtrRiesgoPermitido,SIGNAL(editingFinished()),this,SLOT(txtrRiesgoPermitido_editingFinished()));
 }
 
 frmClientes::~frmClientes()
@@ -549,7 +550,7 @@ void frmClientes::on_btnAnadir_clicked()
     ui->txtcCodigoCliente->setFocus();
 }
 
-void frmClientes::on_txtPrimerApellido_editingFinished()
+void frmClientes::txtPrimerApellido_editingFinished()
 {
     ui->txtPrimerApellido->setText(ui->txtPrimerApellido->text().toUpper());
 
@@ -562,7 +563,7 @@ void frmClientes::on_txtPrimerApellido_editingFinished()
     }
 }
 
-void frmClientes::on_txtSegundoApellido_editingFinished()
+void frmClientes::txtSegundoApellido_editingFinished()
 {
     ui->txtSegundoApellido->setText(ui->txtSegundoApellido->text().toUpper());
 
@@ -576,7 +577,7 @@ void frmClientes::on_txtSegundoApellido_editingFinished()
 
 }
 
-void frmClientes::on_txtcNombre_editingFinished()
+void frmClientes::txtcNombre_editingFinished()
 {
     ui->txtcNombre->setText(ui->txtcNombre->text().toUpper());
 
@@ -590,7 +591,7 @@ void frmClientes::on_txtcNombre_editingFinished()
 
 }
 
-void frmClientes::on_txtcPoblacion_editingFinished()
+void frmClientes::txtcPoblacion_editingFinished()
 {
     ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
     if (ui->txtcCp->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty())
@@ -631,12 +632,12 @@ void frmClientes::on_txtcPoblacion_editingFinished()
     }
 }
 
-void frmClientes::on_txtcProvincia_editingFinished()
+void frmClientes::txtcProvincia_editingFinished()
 {
     ui->txtcProvincia->setText(ui->txtcProvincia->text().toUpper());
 }
 
-void frmClientes::on_txtcCifNif_editingFinished()
+void frmClientes::txtcCifNif_editingFinished()
 {
     ui->txtcCifNif->setText(ui->txtcCifNif->text().toUpper());
 }
@@ -844,7 +845,7 @@ void frmClientes::txtcCp_editingFinished()
 }
 
 
-void frmClientes::on_txtcCPFactura_editingFinished()
+void frmClientes::txtcCPFactura_editingFinished()
 {
     if (!ui->txtcCPFactura->text().isEmpty() and ui->txtcPoblacionFactura->text().isEmpty())
     {
@@ -885,7 +886,7 @@ void frmClientes::on_txtcCPFactura_editingFinished()
     }
 }
 
-void frmClientes::on_txtcPoblacionFactura_editingFinished()
+void frmClientes::txtcPoblacionFactura_editingFinished()
 {
     ui->txtcPoblacionFactura->setText(ui->txtcPoblacionFactura->text().toUpper());
     if (ui->txtcCPFactura->text().isEmpty() and !ui->txtcPoblacionFactura->text().isEmpty())
@@ -927,7 +928,7 @@ void frmClientes::on_txtcPoblacionFactura_editingFinished()
     }
 }
 
-void frmClientes::on_txtcCpPoblacionAlmacen_editingFinished()
+void frmClientes::txtcCpPoblacionAlmacen_editingFinished()
 {
     if (!ui->txtcCpPoblacionAlmacen->text().isEmpty() and ui->txtcPoblacionAlmacen->text().isEmpty())
     {
@@ -967,7 +968,7 @@ void frmClientes::on_txtcCpPoblacionAlmacen_editingFinished()
     }
 }
 
-void frmClientes::on_txtcPoblacionAlmacen_editingFinished()
+void frmClientes::txtcPoblacionAlmacen_editingFinished()
 {
     ui->txtcPoblacionAlmacen->setText(ui->txtcPoblacionAlmacen->text().toUpper());
     if (ui->txtcCpPoblacionAlmacen->text().isEmpty() and !ui->txtcPoblacionAlmacen->text().isEmpty())
@@ -1009,12 +1010,12 @@ void frmClientes::on_txtcPoblacionAlmacen_editingFinished()
     }
 }
 
-void frmClientes::on_TablaDeudas_clicked(const QModelIndex &index)
+void frmClientes::TablaDeudas_clicked(const QModelIndex &index)
 {
 
 }
 
-void frmClientes::on_txtrRiesgoPermitido_editingFinished()
+void frmClientes::txtrRiesgoPermitido_editingFinished()
 {
     Configuracion *o_conf = new Configuracion;
     ui->txtrRiesgoPermitido->setText(o_conf->FormatoNumerico(ui->txtrRiesgoPermitido->text()));
