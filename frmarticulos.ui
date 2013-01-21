@@ -1854,18 +1854,18 @@ color: rbg(0,0,0);</string>
                <string notr="true">background-color: rgb(254, 255, 205);
 color: rbg(0,0,0);</string>
               </property>
-              <property name="displayFormat">
-               <string>dd/MM/yyyy</string>
-              </property>
-              <property name="calendarPopup">
-               <bool>true</bool>
-              </property>
               <property name="date">
                <date>
                 <year>1752</year>
                 <month>9</month>
                 <day>14</day>
                </date>
+              </property>
+              <property name="displayFormat">
+               <string>dd/MM/yyyy</string>
+              </property>
+              <property name="calendarPopup">
+               <bool>true</bool>
               </property>
              </widget>
             </item>

@@ -22,7 +22,7 @@
 #include "frminformacionfarmaco.h"
 #include "frmanadirimagen.h"
 #include <QDesktopWidget>
-
+#include "frmvisitas.h"
 #include "interconsulta.h"
 #include "frmanalitica.h"
 #include "analitica.h"
@@ -77,7 +77,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->btnAnadirAnalitica,SIGNAL(clicked()),this,SLOT(AnadirAnalitica()));
     connect(ui->btnVerAnalitica,SIGNAL(clicked()),this,SLOT(VerAnalitica()));
     connect(ui->btnBorrarAnalitica,SIGNAL(clicked()),this,SLOT(BorrarAnalitica()));
-
+    connect(ui->btnAnadirVisita,SIGNAL(clicked()),this,SLOT(AnadirVisita()));
 
 
     // Ocultar Iconos imagenes
@@ -134,9 +134,17 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
         ui->radNoTrabaja->setChecked(true);
     ui->txtNumHistoriaClinica->setText(QString::number(oPaciente->getnumHistoria()));
     // cargar datos Episodios
-    QSqlQueryModel *EpisodiosModelo = new QSqlQueryModel(this);
-    EpisodiosModelo->setQuery("Select descripcion from episodios where idpaciente = "+QString::number(oPaciente->getid()),QSqlDatabase::database("dbmedica"));
-    ui->listaEpisodios->setModel(EpisodiosModelo);
+    QSqlQuery *Episodios = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+
+    Episodios->prepare("Select descripcion from episodios where idpaciente = :nId");
+    Episodios->bindValue("nID",oEpisodio->getid());
+    ui->listaEpisodios->setColumnCount(2);
+    //--------------------------------
+    // TODO Agregar items a treeview
+
+   // ui->listaEpisodios->
+
+    //ui->listaEpisodios->setModel(EpisodiosModelo);
 
 }
 
@@ -429,7 +437,7 @@ void FrmFichaPaciente::on_btnGuardarEpisodio_clicked()
     // cargar datos Episodios
     QSqlQueryModel *EpisodiosModelo = new QSqlQueryModel(this);
     EpisodiosModelo->setQuery("Select descripcion from episodios where idpaciente = "+QString::number(oPaciente->getid()),QSqlDatabase::database("dbmedica"));
-    ui->listaEpisodios->setModel(EpisodiosModelo);
+   // ui->listaEpisodios->setModel(EpisodiosModelo);
     BloquearCamposEpisodio();
 
 }
@@ -938,4 +946,10 @@ void FrmFichaPaciente::deshacerDatosImagenes()
 void FrmFichaPaciente::on_BtnDeshacerPaciente_clicked()
 {
     //TODO FrmFichaPaciente::on_BtnDeshacerPaciente_clicked()
+}
+
+void FrmFichaPaciente::AnadirVisita()
+{
+    frmVisitas frmvisitas;
+    frmvisitas.exec();
 }
