@@ -43,10 +43,13 @@ void FrmBuscarCIE::sltBuscarCie()
 
 void FrmBuscarCIE::sltDevolverValores()
 {
+    if(!ui->tablaCIE->selectedItems().isEmpty())
+    {
     emit emitirCIE(ui->tablaCIE->item(ui->tablaCIE->currentRow(),0)->text().toInt(),
                    ui->tablaCIE->item(ui->tablaCIE->currentRow(),1)->text(),
                    ui->tablaCIE->item(ui->tablaCIE->currentRow(),2)->text());
     close();
+    }
 }
 void FrmBuscarCIE::finishedSlotCIE(QNetworkReply* reply)
 {

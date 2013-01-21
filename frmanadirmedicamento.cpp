@@ -272,6 +272,8 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspectoMedicamento(QNetworkReply*
 
 void FrmAnadirMedicamento::on_btnBuscarMedicamentoporPatologia_clicked()
 {
+   if(ui->tablaPatologias->selectedItems().isEmpty())
+       return;
    // ui->tablaPatologias->setCurrentCell(1,ui->tablaPatologias->currentRow(),NULL);
     QString cUrl = "http://demo.vademecumdata.es/vweb/xml/ws_indication/DrugsList?id_indication="+
     ui->tablaPatologias->item(ui->tablaPatologias->currentRow(), 1)->text();
@@ -668,6 +670,8 @@ void FrmAnadirMedicamento::finishedSlotBuscarMolecula(QNetworkReply* reply)
 // BUSCAR MEDICAMENTOS POR MOLÉCULA
 void FrmAnadirMedicamento::on_btnBuscarMedicamentoporMolecula_clicked()
 {
+    if (ui->tablamedicamentosMolecula->selectedItems().isEmpty())
+        return;
     // ui->tablaPatologias->setCurrentCell(1,ui->tablaPatologias->currentRow(),NULL);
      QString cUrl = "http://demo.vademecumdata.es/vweb/xml/ws_substance/DrugsList?id_molecule="+
      ui->tablaMoleculas->item(ui->tablaMoleculas->currentRow(), 1)->text();
@@ -955,6 +959,8 @@ void FrmAnadirMedicamento::finishedSlotBuscarPrincipioActivo(QNetworkReply* repl
 // BUSCAR MEDICAMENTO POR PRINCIPIO ACTIVO
 void FrmAnadirMedicamento::on_btnBuscarMedicamentoporPA_clicked()
 {
+    if(ui->tablaPrincipiosActivos->selectedItems().isEmpty())
+        return;
     // ui->tablaPatologias->setCurrentCell(1,ui->tablaPatologias->currentRow(),NULL);
      QString cUrl = "http://demo.vademecumdata.es/vweb/xml/ws_atc/DrugsList?code_atc="+
      ui->tablaPrincipiosActivos->item(ui->tablaPrincipiosActivos->currentRow(), 1)->text();
@@ -1169,17 +1175,21 @@ void FrmAnadirMedicamento::Aceptarporpatologia()
 
 void FrmAnadirMedicamento::Aceptarpormolecula()
 {
-    emit datos(ui->tablamedicamentosMolecula->item(ui->tablamedicamentosMolecula->currentRow(),1)->text().toInt(),
-               ui->tablamedicamentosMolecula->item(ui->tablamedicamentosMolecula->currentRow(),0)->text(),
-               ui->tablamedicamentosMolecula->item(ui->tablamedicamentosMolecula->currentRow(),3)->text());
-    close();
-
+    if(!ui->tablamedicamentosMolecula->selectedItems().isEmpty())
+    {
+        emit datos(ui->tablamedicamentosMolecula->item(ui->tablamedicamentosMolecula->currentRow(),1)->text().toInt(),
+                   ui->tablamedicamentosMolecula->item(ui->tablamedicamentosMolecula->currentRow(),0)->text(),
+                   ui->tablamedicamentosMolecula->item(ui->tablamedicamentosMolecula->currentRow(),3)->text());
+        close();
+    }
 }
 void FrmAnadirMedicamento::AceptarporPA()
 {
-    emit datos(ui->tablamedicamentospactivos->item(ui->tablamedicamentospactivos->currentRow(),1)->text().toInt(),
-               ui->tablamedicamentospactivos->item(ui->tablamedicamentospactivos->currentRow(),0)->text(),
-               ui->tablamedicamentospactivos->item(ui->tablamedicamentospactivos->currentRow(),3)->text());
-    close();
-
+    if(!ui->tablamedicamentospactivos->selectedItems().isEmpty())
+    {
+        emit datos(ui->tablamedicamentospactivos->item(ui->tablamedicamentospactivos->currentRow(),1)->text().toInt(),
+                   ui->tablamedicamentospactivos->item(ui->tablamedicamentospactivos->currentRow(),0)->text(),
+                   ui->tablamedicamentospactivos->item(ui->tablamedicamentospactivos->currentRow(),3)->text());
+        close();
+    }
 }

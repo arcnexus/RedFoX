@@ -646,33 +646,39 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
 
 void FrmFichaPaciente::BorrarDatosMedicamento()
 {
-    if(QMessageBox::question(this,
-                             tr("Borrar medicamento historial"),
-                             tr("Va a proceder a borrar un medicamento del historial,")+
-                             tr("¿Desea continuar?"),
-                             tr("Cancelar"),
-                             tr("Borrar")) ==QMessageBox::Accepted)
+    if(!ui->listaTratamientosFarma->selectedItems().isEmpty())
     {
-        Farmacologia oFarma;
-        oFarma.borrarFarmaco(ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),1)->text().toInt());
-        llenartablahistorialfarmacologiaepisodio();
+        if(QMessageBox::question(this,
+                                 tr("Borrar medicamento historial"),
+                                 tr("Va a proceder a borrar un medicamento del historial,")+
+                                 tr("¿Desea continuar?"),
+                                 tr("Cancelar"),
+                                 tr("Borrar")) ==QMessageBox::Accepted)
+        {
+            Farmacologia oFarma;
+            oFarma.borrarFarmaco(ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),1)->text().toInt());
+            llenartablahistorialfarmacologiaepisodio();
+        }
     }
 }
 
 void FrmFichaPaciente::MostrarFichaMedicamento()
 {
-    QSqlQuery qFarma(QSqlDatabase::database("dbmedica"));
-    QString cSQL = "select codigonacional from histofarma where id =:id";
-    qFarma.prepare(cSQL);
-    qFarma.bindValue(":id",ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),1)->text());
-    if(qFarma.exec()) {
-        qFarma.next();
-        QString cCodigoNacional = qFarma.value(0).toString();
-        FrmInformacionFarmaco frmFarmaco(this);
-        frmFarmaco.capturarid(cCodigoNacional);
-        frmFarmaco.setModal(true);
-        frmFarmaco.setWindowModality(Qt::WindowModal);
-        frmFarmaco.exec();
+    if(!ui->listaTratamientosFarma->selectedItems().isEmpty())
+    {
+        QSqlQuery qFarma(QSqlDatabase::database("dbmedica"));
+        QString cSQL = "select codigonacional from histofarma where id =:id";
+        qFarma.prepare(cSQL);
+        qFarma.bindValue(":id",ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),1)->text());
+        if(qFarma.exec()) {
+            qFarma.next();
+            QString cCodigoNacional = qFarma.value(0).toString();
+            FrmInformacionFarmaco frmFarmaco(this);
+            frmFarmaco.capturarid(cCodigoNacional);
+            frmFarmaco.setModal(true);
+            frmFarmaco.setWindowModality(Qt::WindowModal);
+            frmFarmaco.exec();
+        }
     }
 }
 
@@ -744,19 +750,22 @@ void FrmFichaPaciente::AnadirAnalitica()
 }
 
 void FrmFichaPaciente::BorrarAnalitica()
-{
-    Analitica oAnalitica;
-    int nId = ui->listaAnaliticas->item(ui->listaAnaliticas->currentRow(),2)->text().toInt();
-    oAnalitica.EliminarAnalitica(nId);
-    llenartablahistorialanalisisepisodio();
+{    
+    if(!ui->listaAnaliticas->selectedItems().isEmpty())
+    {
+        Analitica oAnalitica;
+        int nId = ui->listaAnaliticas->item(ui->listaAnaliticas->currentRow(),2)->text().toInt();
+        oAnalitica.EliminarAnalitica(nId);
+        llenartablahistorialanalisisepisodio();
+    }
 }
 
 
 void FrmFichaPaciente::VerAnalitica()
 {
-    if(!oEpisodio->getid()==0)
+    if(!oEpisodio->getid()==0 &&
+       !ui->listaAnaliticas->selectedItems().isEmpty())
     {
-
         FrmVerAnalitica frmAnalitica;
         Analitica oAnalitica(this);
         frmAnalitica.setWindowModality(Qt::WindowModal);

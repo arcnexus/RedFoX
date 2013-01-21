@@ -212,8 +212,11 @@ void FrmVerAnalitica::addLineas()
 
 void FrmVerAnalitica::BorrarLineas()
 {
-    Analitica oAnalitica;
-    oAnalitica.EliminarLinea(ui->tablaAnalitica->item(ui->tablaAnalitica->currentRow(),4)->text().toInt());
-    llenarTabla(nID);
+    if(!ui->tablaAnalitica->selectedItems().isEmpty())
+    {
+        Analitica oAnalitica;
+        oAnalitica.EliminarLinea(ui->tablaAnalitica->item(ui->tablaAnalitica->currentRow(),4)->text().toInt());
+        llenarTabla(nID);
+    }
 }
 
