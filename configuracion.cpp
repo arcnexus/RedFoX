@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QMessageBox>
-
+#include <QApplication>
 
 Configuracion::Configuracion()
 {
@@ -122,7 +122,7 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString DC, Q
     QString cEntidadOficina = Entidad + Oficina;
     int longitud = cEntidadOficina.length();
     if (longitud != 8)
-        QMessageBox::warning(NULL,QObject::tr("Verificación cuenta bancaria"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Verificación cuenta bancaria"),
                              QObject::tr("El Codigo  de Entidad más  el  Codigo  de Oficina debe tener 8 dígitos."),
                         QObject::tr("Aceptar"));
     int suma = 0;
@@ -143,7 +143,7 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString DC, Q
 
     longitud = CC.length();
     if(longitud != 10)
-        QMessageBox::warning(NULL,QObject::tr("Verificación cuenta bancaria"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Verificación cuenta bancaria"),
                              QObject::tr("El  numero de cuenta debe tener 10 dígitos."),
                         QObject::tr("Aceptar"));
     suma = CC.mid( 0, 1).toInt() * 1 + CC.mid( 1, 1).toInt() * 2 + CC.mid( 2, 1).toInt() * 4 + CC.mid(3, 1).toInt() * 8;
@@ -171,7 +171,7 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
     QString cEntidadOficina = Entidad + Oficina;
     int longitud = cEntidadOficina.length();
     if (longitud != 8)
-        QMessageBox::warning(NULL,QObject::tr("Verificación cuenta bancaria"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Verificación cuenta bancaria"),
                              QObject::tr("El Codigo  de Entidad más  el  Codigo  de Oficina debe tener 8 dígitos."),
                         QObject::tr("Aceptar"));
     int suma;
@@ -188,7 +188,7 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
 
     longitud = CC.length();
     if(longitud != 10)
-        QMessageBox::warning(NULL,QObject::tr("Verificación cuenta bancaria"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Verificación cuenta bancaria"),
                              QObject::tr("El  numero de cuenta debe tener 10 dígitos."),
                         QObject::tr("Aceptar"));
     suma = CC.mid( 1, 1).toInt() * 1 + CC.mid( 2, 1).toInt() * 2 + CC.mid( 3, 1).toInt() * 4 + CC.mid(4, 1).toInt() * 8;

@@ -58,7 +58,7 @@ void Login::on_btnAcceder_clicked()
 
     if( !qryUsers.exec() ) 
 	{
-        QMessageBox::critical(NULL, "error:", qryUsers.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(), "error:", qryUsers.lastError().text());
     } 
 	else 
 	{

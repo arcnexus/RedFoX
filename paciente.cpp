@@ -5,7 +5,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include"episodio.h"
-
+#include <QApplication>
 Paciente::Paciente()
 {
     qepisodio=0;
@@ -67,7 +67,7 @@ void Paciente::RecuperarPaciente(int idCliente)
           }
 
         else {
-            QMessageBox::warning(NULL,QObject::tr("Error Pacientes"),
+            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error Pacientes"),
                                  QObject::tr("No se puede recuperar el paciente"),
                                  QObject::tr("Aceptar"));
         }
@@ -143,11 +143,11 @@ void Paciente::GuardarPaciente()
         qDebug() << cSql;
         qDebug() <<qPaciente->lastQuery();
         qDebug()  << qPaciente->lastError().text();
-        QMessageBox::warning(NULL,QObject::tr("ERROR PACIENTE"),QObject::tr("No se ha podido guardar el paciente"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR PACIENTE"),QObject::tr("No se ha podido guardar el paciente"),
                              QObject::tr("Aceptar"));
     }
     else {
-        QMessageBox::information(NULL,QObject::tr("PACIENTE"),QObject::tr("Los datos del paciente han sido guardados"),
+        QMessageBox::information(qApp->activeWindow(),QObject::tr("PACIENTE"),QObject::tr("Los datos del paciente han sido guardados"),
                              QObject::tr("Aceptar"));
     }
 }
@@ -159,7 +159,7 @@ int Paciente::AnadirPaciente(int idCliente)
     paciente->bindValue(":idCliente",idCliente);
     paciente->bindValue(":numhistoria",QString::number(idCliente));
     if (!paciente->exec())
-        QMessageBox::warning(NULL,QObject::tr("Error Pacientes"),QObject::tr("No se ha podido insertar un nuevo paciente"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error Pacientes"),QObject::tr("No se ha podido insertar un nuevo paciente"),
                              QObject::tr("Aceptar"));
     else
         return paciente->lastInsertId().toInt();

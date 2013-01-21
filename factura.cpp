@@ -8,7 +8,7 @@
 #include <QDebug>
 #include "configuracion.h"
 #include "frmdecision.h"
-
+#include <QApplication>
 #ifdef WIN32
     #define and &&
 #endif
@@ -106,7 +106,7 @@ void Factura::AnadirFactura() {
      cab_fac.bindValue(":cNumeroCuenta",this->cNumeroCuenta);
      cab_fac.bindValue(":cPedidoCliente",this->cPedidoCliente);
      if(!cab_fac.exec()){
-         QMessageBox::critical(NULL,"error al guardar datos Factura:", cab_fac.lastError().text());
+         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Factura:", cab_fac.lastError().text());
      } else {
          this->id = cab_fac.lastInsertId().toInt();
          QString cSQL = "Select * from cab_fac where id ="+QString::number(this->id);
@@ -249,9 +249,9 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
     cab_fac.bindValue(":nIRPF",this->nIRPF);
     cab_fac.bindValue(":rImporteIRPF",this->rImporteIRPF);
     if(!cab_fac.exec()){
-        QMessageBox::critical(NULL,tr("error al guardar datos Factura:"), cab_fac.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(),tr("error al guardar datos Factura:"), cab_fac.lastError().text());
     } else {
-        QMessageBox::information(NULL,tr("Guardar datos"),tr("La Factura se ha guardado correctamente:"),tr("Ok"));
+        QMessageBox::information(qApp->activeWindow(),tr("Guardar datos"),tr("La Factura se ha guardado correctamente:"),tr("Ok"));
         QString cSQL = "Select * from cab_fac where id ="+QString::number(nId_Factura);
         RecuperarFactura(cSQL);
         if (FacturaLegal) {
@@ -297,7 +297,7 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
                    Deudacliente->bindValue(":cCuenta",record.field("cCuentaCorriente").value().toString());
                    if(!Deudacliente->exec()) {
                        qDebug() << Deudacliente->lastQuery();
-                       QMessageBox::warning(NULL,tr("Añadir deuda"),tr("No se ha podido añadir la deuda ")+Deudacliente->lastError().text() ,tr("OK"));
+                       QMessageBox::warning(qApp->activeWindow(),tr("Añadir deuda"),tr("No se ha podido añadir la deuda ")+Deudacliente->lastError().text() ,tr("OK"));
                     } else {
                        // Añadimos acumulados ficha cliente.
                        Cliente->prepare("Update clientes set dFechaUltimaCompra = :dFechaUltimaCompra, "
@@ -311,7 +311,7 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
                        Cliente->bindValue(":rDeudaActual",this->rTotal);
                        Cliente->bindValue(":Id_Cliente",record.field("Id").value().toInt());
                        if (!Cliente->exec()){
-                           QMessageBox::warning(NULL,tr("Añadir Acumulados"),
+                           QMessageBox::warning(qApp->activeWindow(),tr("Añadir Acumulados"),
                                                 tr("No se ha podido añadir los correspondientes acumulados a la ficha del cliente"),
                                                 tr("OK"));
                        }
@@ -331,7 +331,7 @@ void Factura::RecuperarFactura(QString cSQL){
         cab_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
         cab_fac->prepare(cSQL);
         if( !cab_fac->exec() ) {
-            QMessageBox::critical(NULL, "error:", cab_fac->lastError().text());
+            QMessageBox::critical(qApp->activeWindow(), "error:", cab_fac->lastError().text());
         } else {
             if (cab_fac->next()) {
                 QSqlRecord registro = cab_fac->record();
@@ -424,7 +424,7 @@ QString Factura::NuevoNumeroFactura() {
             cNum.prepend("0");
         }
     } else {
-         QMessageBox::critical(NULL, "error:", cab_fac.lastError().text());
+         QMessageBox::critical(qApp->activeWindow(), "error:", cab_fac.lastError().text());
     }
     delete oConfig;
     cNumFac = cSerie + cNum;
@@ -450,7 +450,7 @@ void Factura::AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, 
     Qlin_fac->bindValue(":rTotal",total);
     Qlin_fac->bindValue(":nPorcIva",nPorcIva);
     if (!Qlin_fac->exec()){
-       QMessageBox::critical(NULL,"error al guardar datos línea Factura:", Qlin_fac->lastError().text());
+       QMessageBox::critical(qApp->activeWindow(),"error al guardar datos línea Factura:", Qlin_fac->lastError().text());
     }
     delete Qlin_fac;
     QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
@@ -519,7 +519,7 @@ void Factura::ModificarLineaFactura(int id_lin, QString cCodigo, double nCantida
     Qlin_fac->bindValue(":rTotal",total);
     Qlin_fac->bindValue(":nPorcIva",nPorcIva);
     if (!Qlin_fac->exec()){
-       QMessageBox::critical(NULL,"error al modificar datos línea Factura:", Qlin_fac->lastError().text());
+       QMessageBox::critical(qApp->activeWindow(),"error al modificar datos línea Factura:", Qlin_fac->lastError().text());
     }
     delete Qlin_fac;
     // Actualizo ficha artículo
@@ -573,13 +573,13 @@ void Factura::BorrarLineaFactura(int id_lin)
             qrylin_fac->prepare("Delete from lin_fac where id = :id_lin");
             qrylin_fac->bindValue(":id_lin",id_lin);
             if(!qrylin_fac->exec()){
-               QMessageBox::critical(NULL,tr("Borrar línea"),tr("Falló el borrado de la línea de factura"),tr("&Aceptar"));
+               QMessageBox::critical(qApp->activeWindow(),tr("Borrar línea"),tr("Falló el borrado de la línea de factura"),tr("&Aceptar"));
             }
             delete qrylin_fac;
             calcularFactura();
          }
     } else {
-        QMessageBox::critical(NULL,tr("Borrar Línea factura"),tr("Debe seleccionar una línea para poder borrar"),tr("OK"));
+        QMessageBox::critical(qApp->activeWindow(),tr("Borrar Línea factura"),tr("Debe seleccionar una línea para poder borrar"),tr("OK"));
     }
 }
 
@@ -673,7 +673,7 @@ void Factura::CobrarFactura()
     Cliente->bindValue(":rVentasEjercicio",this->rTotal);
     Cliente->bindValue(":cCodigoCliente",this->cCodigoCliente);
     if (!Cliente->exec()){
-        QMessageBox::warning(NULL,tr("Añadir Acumulados"),
+        QMessageBox::warning(qApp->activeWindow(),tr("Añadir Acumulados"),
                              tr("No se ha podido añadir los correspondientes acumulados a la ficha del cliente"),
                              tr("OK"));
     }
@@ -681,7 +681,7 @@ void Factura::CobrarFactura()
     cab_fac->prepare("update cab_fac set lCobrada = 1 where Id =:id_cab");
     cab_fac->bindValue(":id_cab",this->id);
     if(!cab_fac->exec()) {
-        QMessageBox::warning(NULL,tr("Guardar Factura"),tr("No se ha podido marcar la factura como cobrada"),tr("OK"));
+        QMessageBox::warning(qApp->activeWindow(),tr("Guardar Factura"),tr("No se ha podido marcar la factura como cobrada"),tr("OK"));
     }
     delete Cliente;
     delete cab_fac;

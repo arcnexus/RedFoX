@@ -5,7 +5,7 @@
 #include <QSqlRecord>
 #include <QMessageBox>
 #include "frmdecision.h"
-
+#include <QApplication>
 Empresa::Empresa(QObject *parent) :
     QObject(parent)
 {
@@ -16,7 +16,7 @@ void Empresa::Anadir()
 {
     qEmpresa = QSqlQuery(QSqlDatabase::database("terra"));
     if (!qEmpresa.exec("insert into empresa nombre values ('')"))
-        QMessageBox::warning(NULL,QObject::tr("Gestión de Empresas"),QObject::tr("No se puede crear la empresa"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Empresas"),QObject::tr("No se puede crear la empresa"),
                               qEmpresa.lastError().text());
 }
 
@@ -24,7 +24,7 @@ void Empresa::Recuperar(QString cSQL)
 {
     qEmpresa = QSqlQuery(QSqlDatabase::database("terra"));
     if (!qEmpresa.exec(cSQL))
-        QMessageBox::warning(NULL,QObject::tr("Gestión de Empresas"),QObject::tr("No se puede recuperar la ficha de empresa"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Empresas"),QObject::tr("No se puede recuperar la ficha de empresa"),
                              qEmpresa.lastError().text());
     else 
 	{
@@ -77,7 +77,7 @@ void Empresa::Recuperar(QString cSQL)
 		} 
 		else 
 		{
-            QMessageBox::information(NULL,QObject::tr("Gestión Empresas"),QObject::tr("No se ha podido encontrar la ficha de empresa"));
+            QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Empresas"),QObject::tr("No se ha podido encontrar la ficha de empresa"));
         }
     }
 }
@@ -86,7 +86,7 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
 {
     qEmpresa = QSqlQuery(QSqlDatabase::database("terra"));
     if (!qEmpresa.exec(cSQL))
-        QMessageBox::warning(NULL,QObject::tr("Gestión de Empresas"),QObject::tr("No se puede recuperar la ficha de empresa"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Empresas"),QObject::tr("No se puede recuperar la ficha de empresa"),
                              qEmpresa.lastError().text());
     else {
         if(qEmpresa.next()) {
@@ -133,9 +133,9 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->cCuentaProveedores = registro.field("codigocuentaproveedores").value().toString();
         } else {
             if (nProcede == 1)
-                QMessageBox::information(NULL,QObject::tr("Gestión Empresas"),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
+                QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Empresas"),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
             else
-                QMessageBox::information(NULL, QObject::tr("Gestión Empresas"),QObject::tr("No hay más empresas: se ha llegado al inicio del fichero"));
+                QMessageBox::information(qApp->activeWindow(), QObject::tr("Gestión Empresas"),QObject::tr("No hay más empresas: se ha llegado al inicio del fichero"));
 
         }
     }
@@ -225,10 +225,10 @@ void Empresa::Guardar()
 
 
     if (!qEmpresa.exec())
-        QMessageBox::warning(NULL,QObject::tr("Gestión de Empresas"),QObject::tr("No se ha podido modificar la ficha de la empresa")+
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Empresas"),QObject::tr("No se ha podido modificar la ficha de la empresa")+
                              qEmpresa.lastError().text(), QObject::tr("Ok"));
     else {
-        QMessageBox::information(NULL,QObject::tr("Gestión de Empresas"),QObject::tr("La ficha de la empresa ha sido modificada\n"
+        QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión de Empresas"),QObject::tr("La ficha de la empresa ha sido modificada\n"
                                                                                      "ADMINISTRADOR: Verifique funcionamiento correcto\n"
                                                                                      "antes de dar acceso a usuarios"),
                                  QObject::tr("OK"));
@@ -283,7 +283,7 @@ void Empresa::Borrar(int nId)
         qEmpresa.prepare("Delete from empresa where id = :nId");
         qEmpresa.bindValue(":id",nId);
         if(!qEmpresa.exec()){
-           QMessageBox::critical(NULL,QObject::tr("Borrar Empresa"),QObject::tr("Falló el borrado de la Empresa"),QObject::tr("&Aceptar"));
+           QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar Empresa"),QObject::tr("Falló el borrado de la Empresa"),QObject::tr("&Aceptar"));
         } else {
             // Busco el id más proximo
             qEmpresa.prepare("select * from articulos where id <:nId");

@@ -227,7 +227,7 @@ void FrmFichaPaciente::AnadirDatosMedicamento(int id, QString nombre, QString co
     qTratamientos.bindValue(":iniciotratamiento",QDate::currentDate());
     qTratamientos.bindValue(":codigonacional",codigo_nacional);
     if (!qTratamientos.exec()) {
-        QMessageBox::warning(NULL,"ERROR",
+        QMessageBox::warning(qApp->activeWindow(),"ERROR",
                              "No se pudo crear el registro del historial de farmacología, Error:"+
                              qTratamientos.lastError().text()
                              ,tr("Aceptar"));

@@ -535,7 +535,7 @@ void FrmPresupuestosCli::on_btnEditar_clicked()
     if (oPres->getcFactura()=="0") {
         DesbloquearCampos();
     } else {
-        QMessageBox::warning(NULL,tr("Editar Presupuesto"),tr("No se puede editar un Presupuesto que ha sido facturado, solo los NO facturados se pueden editar")+
+        QMessageBox::warning(qApp->activeWindow(),tr("Editar Presupuesto"),tr("No se puede editar un Presupuesto que ha sido facturado, solo los NO facturados se pueden editar")+
                              tr("<p><b> Si necesita modificar algo genere una factura nueva y realice el abono correspondiente</b>")+
                                 tr("y luego si es preciso realice un nuevo presupuesto y facture de nuevo "),tr("OK"));
     }
@@ -618,7 +618,7 @@ void FrmPresupuestosCli::on_btnAnadirLinea_clicked()
         ui->txtPorcIVAArticulo->setText(0);
         ui->txtcCodigoArticulo->setFocus();
     } else {
-        QMessageBox::critical(NULL,tr("Insertar Línea"),tr("Debe especificar un artículo y una cantidad"),tr("&Aceptar"));
+        QMessageBox::critical(qApp->activeWindow(),tr("Insertar Línea"),tr("Debe especificar un artículo y una cantidad"),tr("&Aceptar"));
         ui->txtcCodigoArticulo->setFocus();
     }
     LineasVentas();

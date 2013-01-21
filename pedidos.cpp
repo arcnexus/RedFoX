@@ -9,7 +9,7 @@
 #include <QDebug>
 #include "configuracion.h"
 #include <QString>
-
+#include <QApplication>
 
 Pedidos::Pedidos()
 {
@@ -51,7 +51,7 @@ void Pedidos::AnadirPedido() {
      cab_ped.bindValue(":nPorcentajeRecargoEq3",this->nRec3);
      cab_ped.bindValue(":nPorcentajeRecargoEq4",this->nRec4);
      if(!cab_ped.exec()){
-         QMessageBox::critical(NULL,"error al guardar datos Pedido:", cab_ped.lastError().text());
+         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Pedido:", cab_ped.lastError().text());
      } else {
          this->id = cab_ped.lastInsertId().toInt();
          QString cSQL = "Select * from ped_cli where id ="+QString::number(this->id);
@@ -205,10 +205,10 @@ cab_ped.bindValue(":dFechaLimiteEntrega", this->dFechaLimiteEntrega);
 cab_ped.bindValue(":Id",this->id);
 
 if(!cab_ped.exec()){
-    QMessageBox::critical(NULL,QObject::tr("error al guardar datos Pedido:"), cab_ped.lastError().text());
+    QMessageBox::critical(qApp->activeWindow(),QObject::tr("error al guardar datos Pedido:"), cab_ped.lastError().text());
     qDebug() << cab_ped.lastQuery();
 } else {
-    QMessageBox::information(NULL,QObject::tr("Guardar datos"),QObject::tr("El Pedido se ha guardado correctamente:"),
+    QMessageBox::information(qApp->activeWindow(),QObject::tr("Guardar datos"),QObject::tr("El Pedido se ha guardado correctamente:"),
                              QObject::tr("Ok"));
     QString cSQL = "Select * from ped_cli where id ="+QString::number(nId_Pedido);
     RecuperarPedido(cSQL);
@@ -221,7 +221,7 @@ void Pedidos::RecuperarPedido(QString cSQL){
     cab_ped = new QSqlQuery(QSqlDatabase::database("empresa"));
     cab_ped->prepare(cSQL);
     if( !cab_ped->exec() ) {
-        QMessageBox::critical(NULL, "error:", cab_ped->lastError().text());
+        QMessageBox::critical(qApp->activeWindow(), "error:", cab_ped->lastError().text());
     } else {
         if (cab_ped->next()) {
             QSqlRecord registro = cab_ped->record();
@@ -304,7 +304,7 @@ if(cab_ped.exec()) {
     nPedido= cab_ped.value(0).toInt();
     nPedido ++;
 } else {
-     QMessageBox::critical(NULL, "error:", cab_ped.lastError().text());
+     QMessageBox::critical(qApp->activeWindow(), "error:", cab_ped.lastError().text());
 }
 return nPedido;
 
@@ -331,7 +331,7 @@ Qlin_ped->bindValue(":rSubTotal",subtotal);
 Qlin_ped->bindValue(":rTotal",total);
 Qlin_ped->bindValue(":nPorcIva",nPorcIva);
 if (!Qlin_ped->exec()){
-   QMessageBox::critical(NULL,"error al guardar datos línea Pedido:", Qlin_ped->lastError().text());
+   QMessageBox::critical(qApp->activeWindow(),"error al guardar datos línea Pedido:", Qlin_ped->lastError().text());
    lCorrecto = false;
 }
 delete Qlin_ped;
@@ -350,14 +350,14 @@ QArticulos->bindValue(":rTotal",total);
 QArticulos->bindValue(":cCodigo",cCodigo);
 
 if (!QArticulos->exec()) {
-    QMessageBox::warning(NULL,QObject::tr("Gestión de Pedidoes"),QObject::tr("No se puede actualizar la ficha del artículo")+
+    QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Pedidoes"),QObject::tr("No se puede actualizar la ficha del artículo")+
                          QArticulos->lastError().text(),QObject::tr("Aceptar"));
     lCorrecto = false;
 }
 if(lCorrecto) {
     QSqlDatabase::database("empresa").commit();
 } else {
-    QMessageBox::warning(NULL,QObject::tr("Gestión de Pedidoes"),QObject::tr("Se desharán los últimos cambios"));
+    QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Pedidoes"),QObject::tr("Se desharán los últimos cambios"));
     QSqlDatabase::database("empresa").rollback();
 }
 }
@@ -411,7 +411,7 @@ Qlin_ped->bindValue(":rSubTotal",subtotal);
 Qlin_ped->bindValue(":rTotal",total);
 Qlin_ped->bindValue(":nPorcIva",nPorcIva);
 if (!Qlin_ped->exec()){
-   QMessageBox::critical(NULL,"error al modificar datos línea Pedido:", Qlin_ped->lastError().text());
+   QMessageBox::critical(qApp->activeWindow(),"error al modificar datos línea Pedido:", Qlin_ped->lastError().text());
 }
 delete Qlin_ped;
 // Actualizo ficha artículo
@@ -465,14 +465,14 @@ void Pedidos::BorrarLineaPedido(int id_lin)
             qrylin_ped->prepare("Delete from lin_ped where id = :id_lin");
             qrylin_ped->bindValue(":id_lin",id_lin);
             if(!qrylin_ped->exec()){
-               QMessageBox::critical(NULL,QObject::tr("Borrar línea"),QObject::tr("Falló el borrado de la línea de Pedido"),
+               QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar línea"),QObject::tr("Falló el borrado de la línea de Pedido"),
                                      QObject::tr("&Aceptar"));
             }
             delete qrylin_ped;
             calcularPedido();
          }
     } else {
-        QMessageBox::critical(NULL,QObject::tr("Borrar Línea Pedido"),QObject::tr("Debe seleccionar una línea para poder borrar"),
+        QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar Línea Pedido"),QObject::tr("Debe seleccionar una línea para poder borrar"),
                               QObject::tr("OK"));
     }
 }

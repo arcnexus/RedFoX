@@ -335,7 +335,7 @@ void frmProveedores::on_txtcPoblacion_editingFinished()
                 qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
                 qPoblacion.bindValue(":id",cId);
                 if(!qPoblacion.exec()) {
-                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                 } else {
                     if (qPoblacion.next()) {
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
@@ -368,7 +368,7 @@ void frmProveedores::on_txtcCP_editingFinished()
                 qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
                 qPoblacion.bindValue(":id",cId);
                 if(!qPoblacion.exec()) {
-                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                 } else {
                     if (qPoblacion.next()) {
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
@@ -554,7 +554,7 @@ void frmProveedores::on_txtcCPAlmacen_editingFinished()
                     qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
                     qPoblacion.bindValue(":id",cId);
                     if(!qPoblacion.exec()) {
-                        QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                        QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                     } else {
                         if (qPoblacion.next()) {
                             ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());

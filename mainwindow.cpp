@@ -263,7 +263,7 @@ void MainWindow::init()
 				dbMedica.setDatabaseName(m_config->cRutaBdMedica);
 				// qDebug() << "Medica:" << m_config->cRutaBdMedica;
 				if(!dbMedica.open())
-					QMessageBox::warning(NULL,tr("ERROR DB"),tr("No se ha podido abrir la BD medica"),
+					QMessageBox::warning(qApp->activeWindow(),tr("ERROR DB"),tr("No se ha podido abrir la BD medica"),
 					tr("Aceptar"));
 			} else {
 				dbMedica.setDatabaseName(m_config->cNombreBDMedica);

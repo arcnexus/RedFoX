@@ -9,6 +9,7 @@
 #include <QDebug>
 #include "configuracion.h"
 #include <QString>
+#include <QApplication>
 Presupuesto::Presupuesto()
 {
     this->id = 0;
@@ -51,7 +52,7 @@ void Presupuesto::AnadirPresupuesto()
      cab_pre.bindValue(":nPorcentajeRecargoEq3",this->nRecargoEquivalencia3);
      cab_pre.bindValue(":nPorcentajeRecargoEq4",this->nRecargoEquivalencia4);
      if(!cab_pre.exec()){
-         QMessageBox::critical(NULL,"error al guardar datos Presupuesto:", cab_pre.lastError().text());
+         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Presupuesto:", cab_pre.lastError().text());
      } else {
          this->id = cab_pre.lastInsertId().toInt();
          QString cSQL = "Select * from cab_pre where id ="+QString::number(this->id);
@@ -64,7 +65,7 @@ void Presupuesto::RecuperarPresupuesto(QString cSQL)
     qCab_pre = new QSqlQuery(QSqlDatabase::database("empresa"));
     qCab_pre->prepare(cSQL);
     if( !qCab_pre->exec() ) {
-        QMessageBox::critical(NULL, "error:", qCab_pre->lastError().text());
+        QMessageBox::critical(qApp->activeWindow(), "error:", qCab_pre->lastError().text());
     } else {
         if (qCab_pre->next()) {
             QSqlRecord registro = qCab_pre->record();
@@ -132,7 +133,7 @@ void Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->rTotal4 = registro.field("rTotal4").value().toDouble();
             this->lRecargoEquivalencia = registro.field("lRecargoEquivalencia").value().toBool();
         } else {
-            QMessageBox::information(NULL,QObject::tr("Gestión de Presupuestos"),
+            QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión de Presupuestos"),
                                      QObject::tr("No se ha podido recuperar el presupuesto. Error: ")+
                                                  qCab_pre->lastError().text(),QObject::tr("Aceptar"));
         }
@@ -145,7 +146,7 @@ void Presupuesto::RecuperarPresupuesto(QString cSQL, int nAccion)
     qCab_pre = new QSqlQuery(QSqlDatabase::database("empresa"));
     qCab_pre->prepare(cSQL);
     if( !qCab_pre->exec() ) {
-        QMessageBox::critical(NULL, "error:", qCab_pre->lastError().text());
+        QMessageBox::critical(qApp->activeWindow(), "error:", qCab_pre->lastError().text());
     } else {
         if (qCab_pre->next()) {
             QSqlRecord registro = qCab_pre->record();
@@ -214,10 +215,10 @@ void Presupuesto::RecuperarPresupuesto(QString cSQL, int nAccion)
             this->lRecargoEquivalencia = registro.field("lRecargoEquivalencia").value().toBool();
         } else {
             if(nAccion == 0)
-                QMessageBox::information(NULL,QObject::tr("Gestión de Presupuestos"),
+                QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión de Presupuestos"),
                                          QObject::tr("No hay más presupuestos, se encuentra al final del fichero"),QObject::tr("Aceptar"));
             else
-                QMessageBox::information(NULL,QObject::tr("Gestión de Presupuestos"),
+                QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión de Presupuestos"),
                                          QObject::tr("No hay más presupuestos, se encuentra en el inicio del fichero"),QObject::tr("Aceptar"));
         }
    }
@@ -380,10 +381,10 @@ void Presupuesto::GuardarPres(int nId_Presupuesto)
          cab_pre.bindValue(":nId",this->id);
 
     if(!cab_pre.exec()){
-        QMessageBox::critical(NULL,QObject::tr("error al guardar datos Presupuesto:"), cab_pre.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(),QObject::tr("error al guardar datos Presupuesto:"), cab_pre.lastError().text());
         qDebug() << cab_pre.lastQuery();
     } else {
-        QMessageBox::information(NULL,QObject::tr("Guardar datos"),QObject::tr("El Presupuesto se ha guardado correctamente:"),
+        QMessageBox::information(qApp->activeWindow(),QObject::tr("Guardar datos"),QObject::tr("El Presupuesto se ha guardado correctamente:"),
                                  QObject::tr("Ok"));
         QString cSQL = "Select * from cab_pre where Id ="+QString::number(nId_Presupuesto);
         RecuperarPresupuesto(cSQL);
@@ -400,7 +401,7 @@ int Presupuesto::NuevoNumeroPresupuesto()
         nPresupuesto= cab_pre.value(0).toInt();
         nPresupuesto ++;
     } else {
-         QMessageBox::critical(NULL, "error:", cab_pre.lastError().text());
+         QMessageBox::critical(qApp->activeWindow(), "error:", cab_pre.lastError().text());
     }
     return nPresupuesto;
 
@@ -428,7 +429,7 @@ void Presupuesto::AnadirLineaPresupuesto(int id_cab, QString cCodigo, double nCa
     Qlin_pre->bindValue(":rTotal",total);
     Qlin_pre->bindValue(":nPorcIva",nPorcIva);
     if (!Qlin_pre->exec()){
-       QMessageBox::critical(NULL,QObject::tr("error al guardar datos línea Presupuesto:"), Qlin_pre->lastError().text());
+       QMessageBox::critical(qApp->activeWindow(),QObject::tr("error al guardar datos línea Presupuesto:"), Qlin_pre->lastError().text());
        lCorrecto = false;
     }
     delete Qlin_pre;
@@ -446,14 +447,14 @@ void Presupuesto::AnadirLineaPresupuesto(int id_cab, QString cCodigo, double nCa
     QArticulos->bindValue(":cCodigo",cCodigo);
 
     if (!QArticulos->exec()) {
-        QMessageBox::warning(NULL,QObject::tr("Gestión de Presupuestos"),QObject::tr("No se puede actualizar la ficha del artículo")+
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Presupuestos"),QObject::tr("No se puede actualizar la ficha del artículo")+
                              QArticulos->lastError().text(),QObject::tr("Aceptar"));
         lCorrecto = false;
     }
     if(lCorrecto) {
         QSqlDatabase::database("empresa").commit();
     } else {
-        QMessageBox::warning(NULL,QObject::tr("Gestión de Presupuestos"),QObject::tr("Se desharán los últimos cambios"));
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Presupuestos"),QObject::tr("Se desharán los últimos cambios"));
         QSqlDatabase::database("empresa").rollback();
     }
 }
@@ -485,7 +486,7 @@ void Presupuesto::ModificarLineaPresupuesto(int id_lin, QString cCodigo, double 
     Qlin_pre->bindValue(":rTotal", total);
     Qlin_pre->bindValue(":id_lin",id_lin);
     if (!Qlin_pre->exec()){
-       QMessageBox::critical(NULL,"error al modificar datos línea Pedido:", Qlin_pre->lastError().text());
+       QMessageBox::critical(qApp->activeWindow(),"error al modificar datos línea Pedido:", Qlin_pre->lastError().text());
     }
     delete Qlin_pre;
 
@@ -503,14 +504,14 @@ void Presupuesto::BorrarLineaPresupuesto(int id_lin)
             qrylin_pre->prepare("Delete from lin_pre where id = :id_lin");
             qrylin_pre->bindValue(":id_lin",id_lin);
             if(!qrylin_pre->exec()){
-               QMessageBox::critical(NULL,QObject::tr("Borrar línea"),QObject::tr("Falló el borrado de la línea de Presupuesto"),
+               QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar línea"),QObject::tr("Falló el borrado de la línea de Presupuesto"),
                                      QObject::tr("&Aceptar"));
             }
             delete qrylin_pre;
             calcularPresupuesto();
          }
     } else {
-        QMessageBox::critical(NULL,QObject::tr("Borrar línea"),QObject::tr("Debe seleccionar una línea para poder borrar"),
+        QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar línea"),QObject::tr("Debe seleccionar una línea para poder borrar"),
                               QObject::tr("OK"));
     }
 }

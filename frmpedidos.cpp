@@ -577,7 +577,7 @@ void FrmPedidos::on_btnEditar_clicked()
     if (!oPedido->getlFacturado()) {
         DesbloquearCampos();
     } else {
-        QMessageBox::warning(NULL,tr("Editar Pedido"),tr("No se puede editar un pedido que ha sido facturado, solo los NO facturados se pueden editar")+
+        QMessageBox::warning(qApp->activeWindow(),tr("Editar Pedido"),tr("No se puede editar un pedido que ha sido facturado, solo los NO facturados se pueden editar")+
                              tr("<p><b> Si necesita modificar algo genere una factura nueva y realice el abono correspondiente</b>")+
                                 tr("y luego si es preciso realice un nuevo pedido y facture de nuevo "),tr("OK"));
     }
@@ -654,7 +654,7 @@ void FrmPedidos::on_btnAnadirLinea_clicked()
         ui->txtPorcIVAArticulo->setText(0);
         ui->txtcCodigoArticulo->setFocus();
     } else {
-        QMessageBox::critical(NULL,tr("Insertar Línea"),tr("Debe especificar un artículo y una cantidad"),tr("&Aceptar"));
+        QMessageBox::critical(qApp->activeWindow(),tr("Insertar Línea"),tr("Debe especificar un artículo y una cantidad"),tr("&Aceptar"));
         ui->txtcCodigoArticulo->setFocus();
     }
     lineasVentas();

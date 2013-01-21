@@ -3,8 +3,7 @@
 #include <QSqlRecord>
 #include <QMessageBox>
 #include <QDebug>
-
-
+#include <QApplication>
 
 ImagenesDiagnostico::ImagenesDiagnostico(QObject *parent) :
     QObject(parent)
@@ -34,11 +33,11 @@ void ImagenesDiagnostico::guardarDatosDB()
         qImagen->bindValue(":id",this->id);
 
         if(qImagen->exec()){
-            QMessageBox::information(NULL,QObject::tr("Modificar Imagenes"),QObject::tr("La imagen ha sido modificada correctamente"),
+            QMessageBox::information(qApp->activeWindow(),QObject::tr("Modificar Imagenes"),QObject::tr("La imagen ha sido modificada correctamente"),
                                      QObject::tr("Aceptar"));
             emit refrescarlista();
         } else
-            QMessageBox::information(NULL,QObject::tr("Modificar Imagenes"),QObject::tr("Ocurrió un error al modificar la imagen en el episodio:")+
+            QMessageBox::information(qApp->activeWindow(),QObject::tr("Modificar Imagenes"),QObject::tr("Ocurrió un error al modificar la imagen en el episodio:")+
                                      qImagen->lastError().text(),
                                      QObject::tr("Aceptar"));
 }
@@ -63,7 +62,7 @@ void ImagenesDiagnostico::llenarObjetoconDatosDB()
         this->TipoImagen = rImagen.field("tipoimagen").value().toString();
         this->Evaluada =rImagen.field("evaluada").value().toInt();
     } else {
-        QMessageBox::warning(NULL,QObject::tr("Imagenes Diagnóstico"),QObject::tr("No se ha podido recuperar el registro de imagen"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Imagenes Diagnóstico"),QObject::tr("No se ha podido recuperar el registro de imagen"),
                              QObject::tr("Aceptar"));
     }
 }
@@ -87,7 +86,7 @@ void ImagenesDiagnostico::llenarObjetoconDatosDB(int nid)
         this->TipoImagen = rImagen.field("tipoimagen").value().toString();
         this->Evaluada =rImagen.field("evaluada").value().toInt();
     } else {
-        QMessageBox::warning(NULL,QObject::tr("Imagenes Diagnóstico"),QObject::tr("No se ha podido recuperar el registro de imagen"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Imagenes Diagnóstico"),QObject::tr("No se ha podido recuperar el registro de imagen"),
                              QObject::tr("Aceptar"));
     }
 }
@@ -102,7 +101,7 @@ void ImagenesDiagnostico::BorrarImagen(int nid)
         qImagenes->prepare("delete from imagenes where id = :nid");
         qImagenes->bindValue(":nid",nid);
         if(!qImagenes->exec())
-            QMessageBox::warning(NULL,QObject::tr("Borrar Imagen"),tr("Atención::No se puede borrar la imagen :")+
+            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Borrar Imagen"),tr("Atención::No se puede borrar la imagen :")+
                                  qImagenes->lastError().text(),tr("Aceptar"));
 
 
@@ -126,11 +125,11 @@ void ImagenesDiagnostico::anadirDatosDB()
     qImagen->bindValue(":fechaimagen",this->FechaImagen);
     qImagen->bindValue(":tipoimagen",this->TipoImagen);
     if(qImagen->exec()){
-        QMessageBox::information(NULL,QObject::tr("Insertar Imagenes"),QObject::tr("La imagen ha sido insertada correctamente"),
+        QMessageBox::information(qApp->activeWindow(),QObject::tr("Insertar Imagenes"),QObject::tr("La imagen ha sido insertada correctamente"),
                                  QObject::tr("Aceptar"));
         emit cerrarventana();
     } else
-        QMessageBox::information(NULL,QObject::tr("Insertar Imagenes"),QObject::tr("Ocurrió un error al insertar la imagen en el episodio:")+
+        QMessageBox::information(qApp->activeWindow(),QObject::tr("Insertar Imagenes"),QObject::tr("Ocurrió un error al insertar la imagen en el episodio:")+
                                  qImagen->lastError().text(),
                                  QObject::tr("Aceptar"));
 

@@ -191,7 +191,7 @@ void Albaran::RecuperarAlbaran(QString cSQL){
         cab_alb = new QSqlQuery(QSqlDatabase::database("empresa"));
         cab_alb->prepare(cSQL);
         if( !cab_alb->exec() ) {
-            QMessageBox::critical(NULL, "error:", cab_alb->lastError().text());
+            QMessageBox::critical(qApp->activeWindow(), "error:", cab_alb->lastError().text());
         } else {
             if (cab_alb->next()) {
                 QSqlRecord registro = cab_alb->record();
@@ -262,7 +262,7 @@ int Albaran::NuevoNumeroAlbaran() {
         nAlbaran= cab_alb.value(0).toInt();
         nAlbaran ++;
     } else {
-         QMessageBox::critical(NULL, "error:", cab_alb.lastError().text());
+         QMessageBox::critical(qApp->activeWindow(), "error:", cab_alb.lastError().text());
     }
     return nAlbaran;
 
@@ -289,7 +289,7 @@ void Albaran::AnadirLineaAlbaran(int id_cab, QString cCodigo, double nCantidad, 
     Qlin_alb->bindValue(":rTotal",total);
     Qlin_alb->bindValue(":nPorcIva",nPorcIva);
     if (!Qlin_alb->exec()){
-       QMessageBox::critical(NULL,"error al guardar datos línea Albaran:", Qlin_alb->lastError().text());
+       QMessageBox::critical(qApp->activeWindow(),"error al guardar datos línea Albaran:", Qlin_alb->lastError().text());
        lCorrecto = false;
     }
     delete Qlin_alb;

@@ -507,7 +507,7 @@ void FrmAlbaran::on_btnEditar_clicked()
     if (!oAlbaran->getlFacturado()) {
         DesbloquearCampos();
     } else {
-        QMessageBox::warning(NULL,tr("Editar Albarán"),tr("No se puede editar un albarán que ha sido facturado, solo los NO facturados se pueden editar")+
+        QMessageBox::warning(qApp->activeWindow(),tr("Editar Albarán"),tr("No se puede editar un albarán que ha sido facturado, solo los NO facturados se pueden editar")+
                              tr("<p><b> Si necesita modificar algo genere una factura nueva y realice el abono correspondiente</b>")+
                                 tr("y luego si es preciso realice un nuevo albarán y facture de nuevo "),tr("OK"));
     }
@@ -570,7 +570,7 @@ void FrmAlbaran::on_txtPVPArticulo_editingFinished()
         bool ok;
         ok = o_configuracion->EsNumero(ui->txtPVPArticulo->text());
         if(!ok) {
-           QMessageBox::critical(NULL,tr("Entrada de Importe"),
+           QMessageBox::critical(qApp->activeWindow(),tr("Entrada de Importe"),
                                  tr("No puede entrar letras en un campo monetario. \n"
                                     "Sólo se aceptan los valores  (-)  (0123456789) (,)  (.)  "),tr("&Aceptar"));
            ui->txtPVPArticulo->setText("0,00");
@@ -610,7 +610,7 @@ void FrmAlbaran::on_btnAnadirLinea_clicked()
         ui->txtPorcIVAArticulo->setText(0);
         ui->txtcCodigoArticulo->setFocus();
     } else {
-        QMessageBox::critical(NULL,tr("Insertar Línea"),tr("Debe especificar un artículo y una cantidad"),tr("&Aceptar"));
+        QMessageBox::critical(qApp->activeWindow(),tr("Insertar Línea"),tr("Debe especificar un artículo y una cantidad"),tr("&Aceptar"));
         ui->txtcCodigoArticulo->setFocus();
     }
     lineasVentas();
@@ -640,7 +640,7 @@ void FrmAlbaran::on_pushButton_clicked()
         qCab_alb->bindValue(":nId",oAlbaran->Getid());
         qLin_alb->bindValue(":id_cab",oAlbaran->Getid());
         if (!qCab_alb->exec() || !qLin_alb->exec()){
-            QMessageBox::warning(NULL,tr("Gestión de Albaranes"),tr("Error al borrar albarán :")+qCab_alb->lastError().text()+ tr("\n No se Borrará"),tr("Aceptar"));
+            QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Albaranes"),tr("Error al borrar albarán :")+qCab_alb->lastError().text()+ tr("\n No se Borrará"),tr("Aceptar"));
             QSqlDatabase::database("empresa").rollback();
         } else {
             QSqlDatabase::database("empresa").commit();
@@ -649,7 +649,7 @@ void FrmAlbaran::on_pushButton_clicked()
         delete qCab_alb;
         delete qLin_alb;
     } else
-        QMessageBox::information(NULL,tr("Gestión de Albaranes"),tr("No se borrará el albarán"),tr("Aceptar"));
+        QMessageBox::information(qApp->activeWindow(),tr("Gestión de Albaranes"),tr("No se borrará el albarán"),tr("Aceptar"));
 }
 
 void FrmAlbaran::on_botEditarLinea_clicked()

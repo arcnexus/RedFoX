@@ -6,7 +6,7 @@
 #include <QMessageBox>
 #include "frmdecision.h"
 #include "configuracion.h"
-
+#include <QApplication>
 
 Cliente::Cliente(QObject *parent) :
     QObject(parent)
@@ -152,9 +152,9 @@ void Cliente::Guardar() {
 
 
     if(!query.exec()){
-        QMessageBox::critical(NULL,"error al guardar datos cliente. Descripción Error: ", query.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(),"error al guardar datos cliente. Descripción Error: ", query.lastError().text());
     } else {
-        QMessageBox::information(NULL,"Guardar datos","Los datos se han guardado correctamente:","Ok");
+        QMessageBox::information(qApp->activeWindow(),"Guardar datos","Los datos se han guardado correctamente:","Ok");
     }
         ;
 
@@ -246,9 +246,9 @@ void Cliente::Anadir() {
              query.bindValue(":nIRPF",0);
 
          if(!query.exec()){
-             QMessageBox::critical(NULL,"error al insertar:", query.lastError().text());
+             QMessageBox::critical(qApp->activeWindow(),"error al insertar:", query.lastError().text());
          } else{
-             QMessageBox::information(NULL,"NuevoCliente","Cliente insertado Correctamente");
+             QMessageBox::information(qApp->activeWindow(),"NuevoCliente","Cliente insertado Correctamente");
          }
 
 
@@ -257,7 +257,7 @@ void Cliente::Recuperar(QString cSQL) {
     qryCliente = new QSqlQuery(QSqlDatabase::database("empresa"));
     qryCliente->prepare(cSQL);
     if( !qryCliente->exec() ) {
-        QMessageBox::critical(NULL, "error:", qryCliente->lastError().text());
+        QMessageBox::critical(qApp->activeWindow(), "error:", qryCliente->lastError().text());
     } else {
         if (qryCliente->next()) {
             QSqlRecord registro = qryCliente->record();
@@ -347,7 +347,7 @@ void Cliente::AnadirDeuda(int id_cliente, QDate dFechaDeuda, QDate dFechaVto, QS
     qCliente.bindValue(":rImporte",rImporte);
     qCliente.bindValue(":id", id_cliente);
     if(!qCliente.exec()) {
-        QMessageBox::critical(NULL,tr("Añadir deuda cliente"),tr("Ha fallado la inserción de la deuda en la ficha del paciente"),tr("&Aceptar"));
+        QMessageBox::critical(qApp->activeWindow(),tr("Añadir deuda cliente"),tr("Ha fallado la inserción de la deuda en la ficha del paciente"),tr("&Aceptar"));
     }
 
     QSqlQuery qClientes_Deuda(QSqlDatabase::database("empresa"));
@@ -370,7 +370,7 @@ void Cliente::AnadirDeuda(int id_cliente, QDate dFechaDeuda, QDate dFechaVto, QS
     qClientes_Deuda.bindValue(":cDC",cDC);
     qClientes_Deuda.bindValue(":cCuenta",cCuenta);
     if(!qClientes_Deuda.exec()) {
-        QMessageBox::critical(NULL,tr("Añadir deuda cliente"),tr("Falló la inserción en la tabla de deudas"),tr("&Aceptar"));
+        QMessageBox::critical(qApp->activeWindow(),tr("Añadir deuda cliente"),tr("Falló la inserción en la tabla de deudas"),tr("&Aceptar"));
     }
 
 }
@@ -379,7 +379,7 @@ void Cliente::DescontarDeuda(int id_deuda, double rPagado){
     qClientes_deuda.prepare("Select * from clientes_deuda where id =:id_deuda");
     qClientes_deuda.bindValue(":id_deuda",id_deuda);
     if (!qClientes_deuda.exec()) {
-        QMessageBox::critical(NULL,tr("Modificar deuda Cliente"),tr("Falló la lectura de la deuda del cliente"),tr("&Aceptar"));
+        QMessageBox::critical(qApp->activeWindow(),tr("Modificar deuda Cliente"),tr("Falló la lectura de la deuda del cliente"),tr("&Aceptar"));
     }
     qClientes_deuda.prepare("update clientes_deuda ");
     qClientes_deuda.clear();
@@ -394,7 +394,7 @@ void Cliente::Borrar(int id_cliente) {
         qryCliente.prepare("Delete from clientes where id = :id_Cliente");
         qryCliente.bindValue(":id",id_cliente);
         if(!qryCliente.exec()){
-           QMessageBox::critical(NULL,tr("Borrar cliente"),tr("Falló el borrado de la deuda del cliente"),tr("&Aceptar"));
+           QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),tr("Falló el borrado de la deuda del cliente"),tr("&Aceptar"));
         }
 
 

@@ -1,7 +1,7 @@
 #include "episodio.h"
 #include "sqlcalls.h"
 #include <QMessageBox>
-
+#include <QApplication>
 Episodio::Episodio()
 {
 }
@@ -16,7 +16,7 @@ int Episodio::NuevoEpisodio(int idPaciente)
         nid =qEpisodio->lastInsertId().toInt();
         return nid;
     } else {
-        QMessageBox::warning(NULL,QObject::tr("ERROR: Inserción de Episodios"),QObject::tr("Falló la inserción de episodios, error servidor:")+
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR: Inserción de Episodios"),QObject::tr("Falló la inserción de episodios, error servidor:")+
                              qEpisodio->lastError().text());
         return 0;
     }
@@ -43,7 +43,7 @@ void Episodio::RecuperarEpisodio(int idEpisodio)
         this->setprivado(rEpisodio.field("privado").value().toInt());
 
     } else {
-        QMessageBox::warning(NULL,QObject::tr("ERROR: Recuperar episodio"),QObject::tr("No se pudo recuperar el episodio. ERROR servidor:")+
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR: Recuperar episodio"),QObject::tr("No se pudo recuperar el episodio. ERROR servidor:")+
                              qEpisodio->lastError().text(),QObject::tr("Aceptar"));
     }
     delete qEpisodio;
@@ -72,7 +72,7 @@ void Episodio::GuardarEpisodio()
     qEpisodio->bindValue(":descripcion",this->descripcion);
     qEpisodio->bindValue(":id",this->id);
     if (!qEpisodio->exec())
-        QMessageBox::warning(NULL,QObject::tr("ERROR: Modificación Episodios"),QObject::tr("No se puede modificar el episodio:")+
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR: Modificación Episodios"),QObject::tr("No se puede modificar el episodio:")+
                                                                                            qEpisodio->lastError().text(),
                              QObject::tr("Aceptar"));
     delete qEpisodio;

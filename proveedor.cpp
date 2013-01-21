@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include "configuracion.h"
 #include <QScopedPointer>
+#include <QApplication>
 Proveedor::Proveedor(QObject *parent) :
     QObject(parent)
 {
@@ -17,7 +18,7 @@ void Proveedor::Anadir()
     QScopedPointer<QSqlQuery>QProveedor(new QSqlQuery(QSqlDatabase::database("empresa")));
     //QSqlQuery *QProveedor = new QSqlQuery(QSqlDatabase::database("empresa"));
     if (!QProveedor->exec("insert into proveedores (cCodigo) values('')"))
-            QMessageBox::warning(NULL,QObject::tr("Gestión de proveedores"),
+            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de proveedores"),
                                  QObject::tr("No se ha podido crear una nueva ficha de proveedor. Error: ")+
                                  QProveedor->lastError().text(),QObject::tr("Aceptar"));
     else {
@@ -86,13 +87,13 @@ void Proveedor::Recuperar(QString cSQL)
             this->tTextoparaPedidos = rProveedor.field("tTextoparaPedidos").value().toString();
             this->rEntregadoaCuenta = rProveedor.field("rEntregadoaCuenta").value().toDouble();
         } else {
-            QMessageBox::information(NULL,QObject::tr("Gestión Proveedores"),QObject::tr("No se encuentra el proveedor"),
+            QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("No se encuentra el proveedor"),
                                          QObject::tr("Ok"));
 
             }
 
     } else
-     QMessageBox::warning(NULL,QObject::tr("Gestión Proveedores"),QObject::tr("Problema en la BD no se puede recuperar el proveedor Error: ")+
+     QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Problema en la BD no se puede recuperar el proveedor Error: ")+
                                  qProveedor->lastError().text() ,QObject::tr("Ok"));
 }
 
@@ -155,15 +156,15 @@ void Proveedor::Recuperar(QString cSQL, int nProcede)
             this->rEntregadoaCuenta = rProveedor.field("rEntregadoaCuenta").value().toDouble();
         } else {
             if (nProcede ==1) {
-                QMessageBox::information(NULL,QObject::tr("Gestión Proveedores"),QObject::tr("Se ha llegado al último proveedor"),
+                QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Se ha llegado al último proveedor"),
                                          QObject::tr("Ok"));
             } else {
-                QMessageBox::information(NULL,QObject::tr("Gestión Proveedores"),QObject::tr("Se ha llegado al primer proveedor"),
+                QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Se ha llegado al primer proveedor"),
                                          QObject::tr("Ok"));
             }
         }
     } else
-     QMessageBox::warning(NULL,QObject::tr("Gestión Proveedores"),QObject::tr("Problema en la BD no se puede recuperar el proveedor Error: ")+
+     QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Problema en la BD no se puede recuperar el proveedor Error: ")+
                                  qProveedor->lastError().text() ,QObject::tr("Ok"));
 }
 
@@ -275,7 +276,7 @@ void Proveedor::Guardar()
       qProveedor->bindValue(":tTextoparaPedidos", this->tTextoparaPedidos);
       qProveedor->bindValue(":nId",this->id);
     if(!qProveedor->exec())
-        QMessageBox::warning(NULL,QObject::tr("Gestión proveedores/Acreedores"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión proveedores/Acreedores"),
                              QObject::tr("No se ha podido insertar el proveedor en la BD"),QObject::tr("Ok"));
     }
 
@@ -339,10 +340,10 @@ void Proveedor::Borrar(int nId)
     //QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("empresa"));
     qProveedor->prepare("delete from proveedores where Id = "+QString::number(nId));
     if(qProveedor->exec())
-        QMessageBox::information(NULL,QObject::tr("Gestión de Proveedores"),QObject::tr("Se ha borrado la ficha del proveedor"),
+        QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión de Proveedores"),QObject::tr("Se ha borrado la ficha del proveedor"),
                                  QObject::tr("Aceptar"));
    else
-        QMessageBox::warning(NULL,QObject::tr("Gestión de Proveedores"),QObject::tr("No Se ha borrado la ficha del proveedor ERROR: ")+
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Proveedores"),QObject::tr("No Se ha borrado la ficha del proveedor ERROR: ")+
                              qProveedor->lastError().text(),QObject::tr("Aceptar"));
 }
 

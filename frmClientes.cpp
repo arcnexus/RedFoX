@@ -613,7 +613,7 @@ void frmClientes::txtcPoblacion_editingFinished()
              {
                  /* qDebug() << qPoblacion.lastQuery();
                  qDebug() << qPoblacion.value(0).toString(); */
-                 QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                 QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
              }
              else
              {
@@ -823,7 +823,7 @@ void frmClientes::txtcCp_editingFinished()
                 if(!qPoblacion.exec())
                 {
                     /* qDebug() << qPoblacion.lastQuery();*/
-                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                 }
                 else
                 {
@@ -865,7 +865,7 @@ void frmClientes::txtcCPFactura_editingFinished()
                 {
                     // qDebug() << qPoblacion.lastQuery();
                     // qDebug() << qPoblacion.value(0).toString();
-                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                 }
                 else
                 {
@@ -907,7 +907,7 @@ void frmClientes::txtcPoblacionFactura_editingFinished()
                 {
                     // qDebug() << qPoblacion.lastQuery();
                     //qDebug() << qPoblacion.value(0).toString();
-                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                 }
                 else
                 {
@@ -948,7 +948,7 @@ void frmClientes::txtcCpPoblacionAlmacen_editingFinished()
                 {
                     /* qDebug() << qPoblacion.lastQuery();
                     qDebug() << qPoblacion.value(0).toString(); */
-                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                 }
                 else
                 {
@@ -989,7 +989,7 @@ void frmClientes::txtcPoblacionAlmacen_editingFinished()
                 {
                     /* qDebug() << qPoblacion.lastQuery();
                     qDebug() << qPoblacion.value(0).toString(); */
-                    QMessageBox::critical(NULL,tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                 }
                 else
                 {

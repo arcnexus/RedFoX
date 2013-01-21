@@ -242,7 +242,7 @@ void FrmArticulos::LLenarCampos()
    qryProveedor->prepare("select id,cProveedor from Proveedores where id = :id");
    qryProveedor->bindValue(":id",oArticulo->getid_Proveedor());
    if (!qryProveedor->exec()) {
-       QMessageBox::warning(NULL,tr("Error Datos"),tr("No se encuentra el proveedor asociado \n Deberá comprovar ficha producto"),tr("OK"));
+       QMessageBox::warning(qApp->activeWindow(),tr("Error Datos"),tr("No se encuentra el proveedor asociado \n Deberá comprovar ficha producto"),tr("OK"));
 
    } else {
        qryProveedor->next();
@@ -453,7 +453,7 @@ void FrmArticulos::on_botCambiarImagen_clicked()
         Articulo->bindValue(":imagen",ba);
         Articulo->bindValue(":nid",oArticulo->getId());
         if (!Articulo->exec())
-            QMessageBox::warning(NULL,tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
+            QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
         delete Articulo;
     }
 }
@@ -500,7 +500,7 @@ void FrmArticulos::on_botRotarImagen90_clicked()
    Articulo->bindValue(":imagen",bArray);
     Articulo->bindValue(":nid",oArticulo->getId());
    if (!Articulo->exec())
-        QMessageBox::warning(NULL,tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
+        QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
     delete Articulo;
     ui->lblImagenArticulo->setPixmap(pixmap);
     ui->lblImagenArticulo->setScaledContents(true);
@@ -631,7 +631,7 @@ void FrmArticulos::CerrarBusquedaOKSeccion()
         Secciones.next();
         oArticulo->setid_Seccion(Secciones.value(0).toInt());
     } else
-        QMessageBox::warning(NULL, tr("Seleccionar Sección"),tr("No se puede recuperar correctamente la sección")+
+        QMessageBox::warning(qApp->activeWindow(), tr("Seleccionar Sección"),tr("No se puede recuperar correctamente la sección")+
                              Secciones.lastError().text(),tr("Ok"));
     ventana->close();
 
@@ -646,7 +646,7 @@ void FrmArticulos::CerrarBusquedaOKFamilia()
         Familia.next();
         oArticulo->setid_Familia(Familia.value(0).toInt());
     } else
-        QMessageBox::warning(NULL, tr("Seleccionar Familia / Error devuelto: "),tr("No se puede recuperar correctamente la Familia")+
+        QMessageBox::warning(qApp->activeWindow(), tr("Seleccionar Familia / Error devuelto: "),tr("No se puede recuperar correctamente la Familia")+
                              Familia.lastError().text(),tr("Ok"));
     ventana->close();
 
@@ -660,7 +660,7 @@ void FrmArticulos::CerrarBusquedaOKSubFamilia()
         SubFamilia.next();
         oArticulo->setid_SubFamilia(SubFamilia.value(0).toInt());
     } else
-        QMessageBox::warning(NULL, tr("Seleccionar SubFamilia / Error devuelto: "),tr("No se puede recuperar correctamente la SubFamilia")+
+        QMessageBox::warning(qApp->activeWindow(), tr("Seleccionar SubFamilia / Error devuelto: "),tr("No se puede recuperar correctamente la SubFamilia")+
                              SubFamilia.lastError().text(),tr("Ok"));
     ventana->close();
 }

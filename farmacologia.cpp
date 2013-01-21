@@ -5,7 +5,7 @@
 #include "QtSql/QSqlDatabase"
 #include <QSqlRecord>
 #include <QMessageBox>
-
+#include <QApplication>
 
 Farmacologia::Farmacologia()
 {
@@ -121,7 +121,7 @@ void Farmacologia::AnadirFarmaco()
     qFarma->bindValue(":id",this->id);
 
     if(!qFarma->exec())
-        QMessageBox::warning(NULL,QObject::tr("Historial Farmacología"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Historial Farmacología"),
                       QObject::tr("No se ha podido guardar el registro del historial;ERROR: ")+qFarma->lastError().text(),
                              QObject::tr("Aceptar"));
     delete qFarma;
@@ -145,7 +145,7 @@ void Farmacologia::modificarFarmaco(int id)
     qFarma->bindValue(":activo",this->activo);
     qFarma->bindValue(":id",id);
     if(!qFarma->exec())
-        QMessageBox::warning(NULL,QObject::tr("Historial Farmacología"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Historial Farmacología"),
                       QObject::tr("No se ha podido guardar el registro del historial;ERROR: ")+qFarma->lastError().text(),
                              QObject::tr("Aceptar"));
     delete qFarma;
@@ -159,7 +159,7 @@ void Farmacologia::borrarFarmaco(int id)
     qFarma->prepare(cSQL);
     qFarma->bindValue(":id",id);
     if(!qFarma->exec())
-        QMessageBox::warning(NULL,QObject::tr("Historial Farmacología"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Historial Farmacología"),
                       QObject::tr("No se ha podido borrar el registro del historial;ERROR: ")+qFarma->lastError().text(),
                              QObject::tr("Aceptar"));
     delete qFarma;
@@ -181,7 +181,7 @@ void Farmacologia::cargarDatos(QString cSQL)
         this->activo = rFarma.field("activo").value().toInt();
         this->codigonacional = rFarma.field("codigonacional").value().toString();
     } else
-        QMessageBox::warning(NULL,QObject::tr("ERROR"),QObject::tr("No se ha podido recuperar el registro de farmacología"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR"),QObject::tr("No se ha podido recuperar el registro de farmacología"),
                              QObject::tr("Aceptar"));
     delete qFarma;
 }

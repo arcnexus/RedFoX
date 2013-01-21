@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QtSql>
 #include <QStringList>
-
+#include <QApplication>
 static const QString queryPaciente = "SELECT * FROM pacientes WHERE IdCliente = :idCliente";
 
 SqlCalls::SqlCalls(QObject *parent) :
@@ -120,7 +120,7 @@ int SqlCalls::addRec(const QString &statment, const QString &connection)
         return tInsert.lastInsertId().toInt();
     }
     else {
-        QMessageBox::warning(NULL,QObject::tr("Error"),QObject::tr("Ha ocurrido un fallo al insertar el registro"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error"),QObject::tr("Ha ocurrido un fallo al insertar el registro"),
                    QObject::tr("Aceptar"));
 
         return NULL;
@@ -154,7 +154,7 @@ QSqlQuery SqlCalls::RecuperarPaciente(int idCliente)
     if (paciente->exec())
         return *paciente;
     else
-        QMessageBox::warning(NULL,QObject::tr("Error Pacientes"),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error Pacientes"),
                              QObject::tr("No se puede recuperar el paciente"),
                              QObject::tr("Aceptar"));
     delete paciente;
@@ -168,7 +168,7 @@ QSqlQuery SqlCalls::RecuperarPaciente(int idCliente)
 //    paciente->bindValue(":idCliente",idCliente);
 //    paciente->bindValue(":numhistoria",QString::number(idCliente));
 //    if (!paciente->exec())
-//        QMessageBox::warning(NULL,QObject::tr("Error Pacientes"),QObject::tr("No se ha podido insertar un nuevo paciente"),
+//        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error Pacientes"),QObject::tr("No se ha podido insertar un nuevo paciente"),
 //                             QObject::tr("Aceptar"));
 //    else {
 //        return paciente->lastInsertId().toInt();

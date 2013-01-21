@@ -6,7 +6,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QInputDialog>
-
+#include <QApplication>
 Analitica::Analitica(QObject *parent) :
     QObject(parent)
 {
@@ -24,7 +24,7 @@ void Analitica::AnadirAnalitica()
     qAna->bindValue(":analisis", this->analisis);
     qAna->bindValue(":comentarios",this->comentarios);
     if(!qAna->exec()){
-        QMessageBox::warning(NULL,tr("Nueva Analítica"),tr("Falló al insertar una nueva analítica: ")+
+        QMessageBox::warning(qApp->activeWindow(),tr("Nueva Analítica"),tr("Falló al insertar una nueva analítica: ")+
                                                            qAna->lastError().text(),tr("Aceptar"));
 
         qDebug() << qAna->lastQuery();
@@ -45,7 +45,7 @@ void Analitica::AnadirLineas(int idanalitica, QString descripcion, QString valor
     qAna->bindValue(":comentarios",comentarios);
     qAna->bindValue(":tipo",tipo);
     if (!qAna->exec()) {
-        QMessageBox::warning(NULL,tr("Añadir línea analitica"),tr("Fallo al insertar línea analitica")+
+        QMessageBox::warning(qApp->activeWindow(),tr("Añadir línea analitica"),tr("Fallo al insertar línea analitica")+
                              qAna->lastError().text(),tr("Aceptar"));
          qDebug() << qAna->lastQuery();
 }
@@ -65,7 +65,7 @@ void Analitica::recuperarDatos(int nId)
         this->fecha = qRec.field("fechaanalisis").value().toDate();
         this->comentarios = qRec.field("comentarios").value().toString();
     } else {
-        QMessageBox::warning(NULL,tr("Analítica"),tr("Error en la carga de datos de analitica: ")+
+        QMessageBox::warning(qApp->activeWindow(),tr("Analítica"),tr("Error en la carga de datos de analitica: ")+
                              qAnalitica->lastError().text(), tr("Aceptar"));
         qDebug() << qAnalitica->lastQuery();
     }
@@ -86,7 +86,7 @@ void Analitica::GuardarDatos(int nId)
     qAnalitica->bindValue(":fechaanalisis",this->fecha);
     qAnalitica->bindValue(":id",nId);
     if(!qAnalitica->exec())
-        QMessageBox::warning(NULL,tr("Analítica"),tr("Error al guardar los datos de analitica: ")+
+        QMessageBox::warning(qApp->activeWindow(),tr("Analítica"),tr("Error al guardar los datos de analitica: ")+
                                                      qAnalitica->lastError().text(),tr("Aceptar"));
 
 }
@@ -104,7 +104,7 @@ void Analitica::GuardarLineas(int id, QString valor, QString referencia, QString
     qAnalitica->bindValue(":comentarios",comentarios);
     qAnalitica->bindValue(":id",id);
     if(!qAnalitica->exec())
-        QMessageBox::warning(NULL,tr("Analítica"),tr("No se puede actualizar el registro de analítica. Error:")+
+        QMessageBox::warning(qApp->activeWindow(),tr("Analítica"),tr("No se puede actualizar el registro de analítica. Error:")+
                              qAnalitica->lastError().text(),
                              tr("Aceptar"));
 }
@@ -126,13 +126,13 @@ void Analitica::EliminarAnalitica(int id)
             qlineas.prepare("delete from analitica2 where idanalitica = :idAnalitica");
             qlineas.bindValue(":idAnalitica",id);
             if(!qlineas.exec())
-                QMessageBox::warning(NULL,tr("Analitica"),tr("Ocurrió un error al borrar la línea. No se puede Borrar: ")+
+                QMessageBox::warning(qApp->activeWindow(),tr("Analitica"),tr("Ocurrió un error al borrar la línea. No se puede Borrar: ")+
                                      qlineas.lastError().text(),tr("Aceptar"));
 
             qlineas.prepare("delete from Analitica where id = :id");
             qlineas.bindValue(":id",id);
             if(!qlineas.exec())
-                QMessageBox::warning(NULL,tr("Analitica"),tr("Ocurrió un error al borrar la analítica. No se puede Borrar: ")+
+                QMessageBox::warning(qApp->activeWindow(),tr("Analitica"),tr("Ocurrió un error al borrar la analítica. No se puede Borrar: ")+
                                      qlineas.lastError().text(),tr("Aceptar"));
         }
     }
@@ -156,7 +156,7 @@ void Analitica::EliminarLinea(int id)
             qlineas.prepare("delete from analitica2 where id = :id");
             qlineas.bindValue(":id",id);
             if(!qlineas.exec())
-                QMessageBox::warning(NULL,tr("Analitica"),tr("Ocurrió un error al borrar la línea. No se puede Borrar: ")+
+                QMessageBox::warning(qApp->activeWindow(),tr("Analitica"),tr("Ocurrió un error al borrar la línea. No se puede Borrar: ")+
                                      qlineas.lastError().text(),tr("Aceptar"));
         }
     }

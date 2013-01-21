@@ -64,6 +64,6 @@ void FrmConfiguracion::on_btnGuardar_clicked()
     else
         settings.setValue("lProfesional",0);
     settings.setValue("nIRPF",ui->txtnIRPF->text().toDouble());
-    QMessageBox::information(NULL,tr("CONFIGURACIÓN TERRA"),tr("Los datos de configuración se han guardado correctamente"),tr("ok"));
+    QMessageBox::information(qApp->activeWindow(),tr("CONFIGURACIÓN TERRA"),tr("Los datos de configuración se han guardado correctamente"),tr("ok"));
     close();
 }

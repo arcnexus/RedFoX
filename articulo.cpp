@@ -6,7 +6,7 @@
 #include <QMessageBox>
 #include "frmdecision.h"
 #include <QByteArray>
-
+#include <QApplication>
 Articulo::Articulo()
 {
 
@@ -84,7 +84,7 @@ void Articulo::Anadir()
 
 
          if(!query.exec()) {
-             QMessageBox::warning(NULL,QObject::tr("Añadir Artículo"),QObject::tr("Falló la inserción de un nuevo artículo"),
+             QMessageBox::warning(qApp->activeWindow(),QObject::tr("Añadir Artículo"),QObject::tr("Falló la inserción de un nuevo artículo"),
                                   QObject::tr("Ok"));
          } else {
              QString cID = query.lastInsertId().toString();
@@ -157,10 +157,10 @@ void Articulo::Recuperar(QString cSQL)
                this->cLocalizacion = registro.field("cLocalizacion").value().toString();
 
            } else {
-               QMessageBox::critical(NULL,"Búsqueda de artículos", "No se encuentra el artículo");
+               QMessageBox::critical(qApp->activeWindow(),"Búsqueda de artículos", "No se encuentra el artículo");
            }
     } else {
-        QMessageBox::critical(NULL,"error al leer datos artículo:", qryArticulo.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(),"error al leer datos artículo:", qryArticulo.lastError().text());
     }
 }
 
@@ -226,12 +226,12 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
 
            } else {
                if (nProcede ==1)
-                   QMessageBox::critical(NULL,"Búsqueda de artículos", "Se ha llegado al final del fichero");
+                   QMessageBox::critical(qApp->activeWindow(),"Búsqueda de artículos", "Se ha llegado al final del fichero");
                if (nProcede == 2)
-                   QMessageBox::critical(NULL,"Búsqueda de artículos", "Se ha llegado al inicio del fichero");
+                   QMessageBox::critical(qApp->activeWindow(),"Búsqueda de artículos", "Se ha llegado al inicio del fichero");
            }
     } else {
-        QMessageBox::critical(NULL,"error al leer datos artículo:", qryArticulo.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(),"error al leer datos artículo:", qryArticulo.lastError().text());
     }
 }
 
@@ -343,11 +343,11 @@ void Articulo::Guardar()
 
 
     if(!query.exec()) {
-        QMessageBox::warning(NULL,QObject::tr("Guardar Artículo"),QObject::tr("No se puede guardar el artículo "),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Guardar Artículo"),QObject::tr("No se puede guardar el artículo "),
                              QObject::tr("Ok"));
 
     } else {
-        QMessageBox::information(NULL,QObject::tr("Guardar Artículo"),QObject::tr("Se ha guardado el artículo en la base de datos"),
+        QMessageBox::information(qApp->activeWindow(),QObject::tr("Guardar Artículo"),QObject::tr("Se ha guardado el artículo en la base de datos"),
                                  QObject::tr("Ok"));
     }
 
@@ -419,7 +419,7 @@ void Articulo::Borrar(int nId)
         qryArticulo.prepare("Delete from articulos where id = :nId");
         qryArticulo.bindValue(":id",nId);
         if(!qryArticulo.exec()){
-           QMessageBox::critical(NULL,QObject::tr("Borrar Artíclo"),QObject::tr("Falló el borrado del Artículo"),QObject::tr("&Aceptar"));
+           QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar Artíclo"),QObject::tr("Falló el borrado del Artículo"),QObject::tr("&Aceptar"));
         } else {
             // Busco el id más proximo
             qryArticulo.prepare("select * from articulos where id <:nId");
@@ -460,7 +460,7 @@ void Articulo::CargarImagen(QLabel *label)
                pm1.loadFromData(ba1);
                label->setPixmap(pm1);
           } else
-               QMessageBox::warning(NULL,QObject::tr("Error al recuperar"),
+               QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al recuperar"),
                                     QObject::tr("No se puede recuperar la imagen asociada al artículo"),QObject::tr("Ok"));
     }
 }

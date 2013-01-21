@@ -561,7 +561,7 @@ void frmFacturas::on_btnEditar_clicked()
     if (oFactura->getcFactura() ==tr("BORRADOR")) {
         DesbloquearCampos();
     } else {
-        QMessageBox::warning(NULL,tr("Editar Factura"),tr("No se puede editar una factura que ha sido numerada, solo los BORRADORES se pueden editar")+
+        QMessageBox::warning(qApp->activeWindow(),tr("Editar Factura"),tr("No se puede editar una factura que ha sido numerada, solo los BORRADORES se pueden editar")+
                              tr("<p><b> Si necesita modificar algo genere una factura nueva y realice el abono correspondiente</b>"),tr("OK"));
     }
 }
@@ -574,7 +574,7 @@ void frmFacturas::on_txtPVPArticulo_lostFocus()
         bool ok;
         ok = o_configuracion->EsNumero(ui->txtPVPArticulo->text());
         if(!ok) {
-           QMessageBox::critical(NULL,tr("Entrada de Importe"),
+           QMessageBox::critical(qApp->activeWindow(),tr("Entrada de Importe"),
                                  tr("No puede entrar letras en un campo monetario. \n"
                                     "Sólo se aceptan los valores  (-)  (0123456789) (,)  (.)  "),tr("&Aceptar"));
            ui->txtPVPArticulo->setText("0,00");
@@ -666,7 +666,7 @@ void frmFacturas::on_btnAnadirLinea_clicked()
         ui->txtPorcIVAArticulo->setText(0);
         ui->txtcCodigoArticulo->setFocus();
     } else {
-        QMessageBox::critical(NULL,tr("Insertar Línea"),tr("Debe especificar un artículo y una cantidad"),tr("&Aceptar"));
+        QMessageBox::critical(qApp->activeWindow(),tr("Insertar Línea"),tr("Debe especificar un artículo y una cantidad"),tr("&Aceptar"));
         ui->txtcCodigoArticulo->setFocus();
     }
     lineasVentas();

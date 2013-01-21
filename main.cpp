@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
    if(file.open(QFile::ReadOnly))
         a.setStyleSheet(file.readAll());
    else
-       QMessageBox::warning(NULL,
+       QMessageBox::warning(qApp->activeWindow(),
                             QObject::tr("Terra"),
                             QObject::tr("No se puede cargar el archivo de tema"),
                             QObject::tr("Aceptar"));
