@@ -319,21 +319,16 @@ void FrmFichaPaciente::BloquearCamposEpisodio(bool state)
 
 void FrmFichaPaciente::LLenarEpisodio()
 {
-    if (ui->radEpisodioAbierto->isChecked())
-        oEpisodio->setcerrado(0);
-    else
-        oEpisodio->setcerrado(1);
+    oEpisodio->setcerrado(!ui->radEpisodioAbierto->isChecked());
+
     oEpisodio->setCIE(ui->txtCIEEpisiodio->text());
     oEpisodio->setdescripcion(ui->txtDescripcionEpisodio->text());
     oEpisodio->setdoctor(ui->cboDoctorEpisodio->currentText());
     oEpisodio->setfecha(ui->txtFechaEpisodio->date());
     oEpisodio->sethistorial(ui->txtHistorialEpisodio->toPlainText());
     oEpisodio->setidPaciente(oPaciente->getid());
-    if (ui->chkEpisodioprivado->isChecked())
-        oEpisodio->setprivado(1);
-    else
-        oEpisodio->setprivado(0);
-    //DesbloquearCamposEpisodio();
+
+    oEpisodio->setprivado(ui->chkEpisodioprivado->isChecked());
 }
 
 void FrmFichaPaciente::BloquearCamposImagen()
@@ -366,6 +361,7 @@ void FrmFichaPaciente::on_btnGuardarEpisodio_clicked()
     LLenarEpisodio();
     oEpisodio->GuardarEpisodio();
     // cargar datos Episodios
+    //BUG ? ¿este Model para que?
     QSqlQueryModel *EpisodiosModelo = new QSqlQueryModel(this);
     EpisodiosModelo->setQuery("Select descripcion from episodios where idpaciente = "+QString::number(oPaciente->getid()),QSqlDatabase::database("dbmedica"));
    // ui->listaEpisodios->setModel(EpisodiosModelo);
@@ -389,8 +385,6 @@ void FrmFichaPaciente::on_listaEpisodios_clicked(const QModelIndex &index)
     }
 }
 
-
-
 void FrmFichaPaciente::on_btnEditarEpisodio_clicked()
 {
     BloquearCamposEpisodio(false);
@@ -410,12 +404,12 @@ void FrmFichaPaciente::on_btnAnadirFarma_clicked()
     connect(&nuevomed, SIGNAL(datos(int, QString,QString)), this, SLOT(AnadirDatosMedicamento(int, QString,QString)));
     nuevomed.exec();
 }
-//TODO TheFox continuar por aki ------------------
+
 void FrmFichaPaciente::BuscarCIE()
 {
-    FrmBuscarCIE *BuscarCIE = new FrmBuscarCIE();
-    connect(BuscarCIE,SIGNAL(emitirCIE(int,QString,QString )), this, SLOT(RecuperarCIE(int,QString,QString)));
-    BuscarCIE->show();
+    FrmBuscarCIE BuscarCIE(this);
+    connect(&BuscarCIE,SIGNAL(emitirCIE(int,QString,QString )), this, SLOT(RecuperarCIE(int,QString,QString)));
+    BuscarCIE.exec();
 }
 
 void FrmFichaPaciente::RecuperarCIE(int id, QString codigo, QString descripcion)
@@ -444,7 +438,6 @@ void FrmFichaPaciente::ActivarControlesFarmacologia()
 
 void FrmFichaPaciente::GuardarDatosFarmacologia()
 {
-
     ui->btnEditarFarmacologia->setEnabled(true);
     ui->btnGuardarFarmacologia->setEnabled(false);
     ui->btnDeshacerFarmacologia->setEnabled(false);
@@ -453,21 +446,17 @@ void FrmFichaPaciente::GuardarDatosFarmacologia()
     ui->txtComentariosFarma->setEnabled(false);
     ui->chkactivo->setEnabled(false);
 
-    Farmacologia *oFarmacologia = new Farmacologia();
-    oFarmacologia->setidepisodio(oEpisodio->getid());
-    if(ui->chkactivo->isChecked())
-        oFarmacologia->setactivo(true);
-    else
-        oFarmacologia->setactivo(false);
-    oFarmacologia->setcomentarios(ui->txtComentariosFarma->toPlainText());
-    oFarmacologia->setindicacionposologia(ui->txtPosologiaFarma->toPlainText());
-    oFarmacologia->setiniciotratamiento(ui->txtInicioTratamientoFarma->date());
-    oFarmacologia->setmedicamento(ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),0)->text());
-    oFarmacologia->modificarFarmaco(ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),1)->text().toInt());
+    Farmacologia oFarmacologia;
+
+    oFarmacologia.setidepisodio(oEpisodio->getid());
+    oFarmacologia.setactivo(ui->chkactivo->isChecked());
+    oFarmacologia.setcomentarios(ui->txtComentariosFarma->toPlainText());
+    oFarmacologia.setindicacionposologia(ui->txtPosologiaFarma->toPlainText());
+    oFarmacologia.setiniciotratamiento(ui->txtInicioTratamientoFarma->date());
+    oFarmacologia.setmedicamento(ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),0)->text());
+    oFarmacologia.modificarFarmaco(ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),1)->text().toInt());
 
     llenartablahistorialfarmacologiaepisodio();
-    delete oFarmacologia;
-
 }
 
 void FrmFichaPaciente::llenartablahistorialfarmacologiaepisodio()
@@ -475,10 +464,10 @@ void FrmFichaPaciente::llenartablahistorialfarmacologiaepisodio()
     // Cargar farmacología episodio
     QStringList list;
     list <<"NOMBRE"<<"ID";
-    QSqlQuery *qFarma = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QSqlQuery qFarma(QSqlDatabase::database("dbmedica"));
     QString cSQL = " Select medicamento, id,idmedicamento,activo from histofarma where idepisodio = :id ";
-    qFarma->prepare(cSQL);
-    qFarma->bindValue(":id",oEpisodio->getid());
+    qFarma.prepare(cSQL);
+    qFarma.bindValue(":id",oEpisodio->getid());
     ui->listaTratamientosFarma->setRowCount(0);
     ui->listaTratamientosFarma->setColumnCount(3);
     ui->listaTratamientosFarma->setColumnWidth(0,220);
@@ -488,13 +477,16 @@ void FrmFichaPaciente::llenartablahistorialfarmacologiaepisodio()
     int pos = 0;
     QSqlRecord reg ;
     // Relleno la tabla
-    if (qFarma->exec()) {
-        while (qFarma->next()) {
+    if (qFarma.exec())
+    {
+        while (qFarma.next())
+        {
             // Nombre Medicamento
-            reg = qFarma->record();
-            if ((ui->radversoloactivosfarmacologia->isChecked() && reg.field("activo").value().toInt()==1)
-                    || ui->radvertodosfarmacologia->isChecked() ) {
-
+            reg = qFarma.record();
+            if ((ui->radversoloactivosfarmacologia->isChecked()
+                 && reg.field("activo").value().toInt()==1)
+                 || ui->radvertodosfarmacologia->isChecked() )
+            {
                 ui->listaTratamientosFarma->setRowCount(pos+1);
                 QTableWidgetItem *newItem = new QTableWidgetItem(reg.field("medicamento").value().toString());
                 // para que los elementos no sean editables
@@ -504,7 +496,6 @@ void FrmFichaPaciente::llenartablahistorialfarmacologiaepisodio()
                 else
                     newItem->setTextColor(Qt::darkGray); // color de los Medicamentos NO activos
                 ui->listaTratamientosFarma->setItem(pos,0,newItem);
-
 
                 // id HistorialMedicamento
                 QTableWidgetItem *newItem1 = new QTableWidgetItem(QString::number(reg.field("id").value().toInt()));
@@ -521,19 +512,12 @@ void FrmFichaPaciente::llenartablahistorialfarmacologiaepisodio()
                 newItem2->setTextColor(Qt::blue); // color de los items
                 ui->listaTratamientosFarma->setItem(pos,2,newItem2);
 
-
                 pos++;
             }
         }
     }
-    if(pos >0) {
-        ui->itemFarma->setVisible(true);
-        ui->btnEditarFarmacologia->setEnabled(true);
-    } else {
-        ui->itemFarma->setVisible(false);
-        ui->btnEditarFarmacologia->setEnabled(false);
-    }
-    delete qFarma;
+    ui->itemFarma->setVisible(pos >0);
+    ui->btnEditarFarmacologia->setEnabled(pos >0);
 }
 
 void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
@@ -541,10 +525,10 @@ void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
     // Cargar imagenes episodio
     QStringList list;
     list <<QObject::tr("DESCRIPCIÓN")<< QObject::tr("FECHA") <<QObject::tr("TIPO") <<"ID";
-    QSqlQuery *qImagenes = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QSqlQuery qImagenes(QSqlDatabase::database("dbmedica"));
     QString cSQL = " Select descripcion, id,fechaimagen, tipoimagen,evaluada from imagenes where idepisodio = :id ";
-    qImagenes->prepare(cSQL);
-    qImagenes->bindValue(":id",oEpisodio->getid());
+    qImagenes.prepare(cSQL);
+    qImagenes.bindValue(":id",oEpisodio->getid());
     ui->listaImagenes->setRowCount(0);
     ui->listaImagenes->setColumnCount(4);
     ui->listaImagenes->setColumnWidth(0,250);
@@ -556,10 +540,10 @@ void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
     QSqlRecord reg ;
     // Relleno la tabla
      QString cFecha;
-    if (qImagenes->exec()) {
-        while (qImagenes->next()) {
+    if (qImagenes.exec()) {
+        while (qImagenes.next()) {
             // Nombre Medicamento
-            reg = qImagenes->record();
+            reg = qImagenes.record();
             if ((ui->radImagenEvaluada->isChecked() && reg.field("evaluada").value().toInt()==1)
                     || !ui->radImagenEvaluada->isChecked() ) {
 
@@ -599,7 +583,6 @@ void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
             }
         }
     }
-    delete qImagenes;
 }
 
 void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
@@ -607,10 +590,10 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
     // Cargar imagenes episodio
     QStringList list;
     list <<QObject::tr("ANALISIS")<< QObject::tr("FECHA") <<"ID" <<tr("COMENTARIOS");
-    QSqlQuery *qAnalisis = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QSqlQuery qAnalisis(QSqlDatabase::database("dbmedica"));
     QString cSQL = " Select analisis, id,fechaanalisis, comentarios from Analitica where idepisodio = :id ";
-    qAnalisis->prepare(cSQL);
-    qAnalisis->bindValue(":id",oEpisodio->getid());
+    qAnalisis.prepare(cSQL);
+    qAnalisis.bindValue(":id",oEpisodio->getid());
     ui->listaAnaliticas->setRowCount(0);
     ui->listaAnaliticas->setColumnCount(4);
     ui->listaAnaliticas->setColumnWidth(0,230);
@@ -622,10 +605,10 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
     QSqlRecord reg ;
     // Relleno la tabla
      QString cFecha;
-    if (qAnalisis->exec()) {
-        while (qAnalisis->next()) {
+    if (qAnalisis.exec()) {
+        while (qAnalisis.next()) {
             // Nombre Medicamento
-            reg = qAnalisis->record();
+            reg = qAnalisis.record();
 
             ui->listaAnaliticas->setRowCount(pos+1);
             QTableWidgetItem *newItem = new QTableWidgetItem(reg.field("analisis").value().toString());
@@ -657,68 +640,63 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
             ui->listaAnaliticas->setItem(pos,3,newItem3);
 
             pos++;
-
         }
     }
-    delete qAnalisis;
 }
 
 void FrmFichaPaciente::BorrarDatosMedicamento()
 {
-     if(QMessageBox::question(this,tr("Borrar medicamento historial"),tr("Va a proceder a borrar un medicamento del historial,")+
-                         tr("¿Desea continuar?"),tr("Cancelar"),tr("Borrar")) ==QMessageBox::Accepted) {
-         Farmacologia *oFarma = new Farmacologia();
-         oFarma->borrarFarmaco(ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),1)->text().toInt());
-         delete oFarma;
-         llenartablahistorialfarmacologiaepisodio();
-
+    if(QMessageBox::question(this,
+                             tr("Borrar medicamento historial"),
+                             tr("Va a proceder a borrar un medicamento del historial,")+
+                             tr("¿Desea continuar?"),
+                             tr("Cancelar"),
+                             tr("Borrar")) ==QMessageBox::Accepted)
+    {
+        Farmacologia oFarma;
+        oFarma.borrarFarmaco(ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),1)->text().toInt());
+        llenartablahistorialfarmacologiaepisodio();
     }
-
 }
 
 void FrmFichaPaciente::MostrarFichaMedicamento()
 {
-    QSqlQuery *qFarma = new QSqlQuery(QSqlDatabase::database("dbmedica"));
+    QSqlQuery qFarma(QSqlDatabase::database("dbmedica"));
     QString cSQL = "select codigonacional from histofarma where id =:id";
-    qFarma->prepare(cSQL);
-    qFarma->bindValue(":id",ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),1)->text());
-    if(qFarma->exec()) {
-        qFarma->next();
-        QString cCodigoNacional = qFarma->value(0).toString();
-        FrmInformacionFarmaco *frmFarmaco = new FrmInformacionFarmaco();
-        connect(this,SIGNAL(pasaCodigoNacional(QString)),frmFarmaco,SLOT(capturarid(QString)));
-        emit pasaCodigoNacional(cCodigoNacional);
-        frmFarmaco->setModal(true);
-        frmFarmaco->setWindowModality(Qt::WindowModal);
-        frmFarmaco->show();
+    qFarma.prepare(cSQL);
+    qFarma.bindValue(":id",ui->listaTratamientosFarma->item(ui->listaTratamientosFarma->currentRow(),1)->text());
+    if(qFarma.exec()) {
+        qFarma.next();
+        QString cCodigoNacional = qFarma.value(0).toString();
+        FrmInformacionFarmaco frmFarmaco(this);
+        frmFarmaco.capturarid(cCodigoNacional);
+        frmFarmaco.setModal(true);
+        frmFarmaco.setWindowModality(Qt::WindowModal);
+        frmFarmaco.exec();
     }
-    delete qFarma;
 }
 
 void FrmFichaPaciente::AnadirImagenDiagnostico()
 {
-    FrmAnadirImagen *imagen;
-    if (oEpisodio->getid() >0) {
-
-        imagen = new FrmAnadirImagen();
-        connect(this,SIGNAL(pasaid(int)),imagen,SLOT(RecuperarId(int)));
-        emit pasaid(oEpisodio->getid());
-        imagen->adjustSize();
-        imagen->move(QApplication::desktop()->screen()->rect().center() - imagen->rect().center());
-        imagen->show();
-
-    } else
+    if (oEpisodio->getid() >0)
+    {
+        FrmAnadirImagen imagen;
+        imagen.RecuperarId(oEpisodio->getid());
+        imagen.adjustSize();
+        imagen.move(QApplication::desktop()->screen()->rect().center() - imagen.rect().center());
+        imagen.exec();
+    }
+    else
         QMessageBox::warning(this,tr("Añadir imagenes a episodio"),
-                             tr("Debe seleccionar o crear un episodio antes de añadir una nueva imagen diagnostica"),tr("Aceptar"));
+                             tr("Debe seleccionar o crear un episodio antes de añadir una nueva imagen diagnostica"),
+                             tr("Aceptar"));
    llenartablahistorialimagenesepisodio();
-   imagen->deleteLater();
 }
 
 void FrmFichaPaciente::BorrarImagenDiagnostico()
 {
     oImagenes->BorrarImagen(ui->listaImagenes->item(ui->listaImagenes->currentRow(),3)->text().toInt());
     llenartablahistorialimagenesepisodio();
-
 }
 
 void FrmFichaPaciente::EditarImagenDiagnostico()
@@ -746,25 +724,20 @@ void FrmFichaPaciente::recibedatospaciente(int historia, QString Nombre)
 
 void FrmFichaPaciente::AnadirInterconsulta()
 {
-    Interconsulta *oInterconsulta = new Interconsulta(this);
-    oInterconsulta->AnadirInterconsulta(oEpisodio->getid(),oPaciente->getid());
-    oInterconsulta->deleteLater();
+    Interconsulta oInterconsulta(this);
+    oInterconsulta.AnadirInterconsulta(oEpisodio->getid(),oPaciente->getid());
 }
 
 void FrmFichaPaciente::AnadirAnalitica()
 {
     if(!oEpisodio->getid()==0) {
-        FrmAnalitica *frmAnalitica = new FrmAnalitica(this);
-        Analitica *oAnalitica = new Analitica(this);
-        connect(this,SIGNAL(pasaid(int)),frmAnalitica,SLOT(capturaID(int)));
-        connect(this,SIGNAL(pasaPaciente(QString)),frmAnalitica,SLOT(capturaPaciente(QString)));
-        oAnalitica->setIdEpisodio(oEpisodio->getid());
-
-        oAnalitica->AnadirAnalitica();
-        emit pasaid(oAnalitica->getId());
-        emit pasaPaciente(ui->txtPaciente->text());
-        frmAnalitica->exec();
-        frmAnalitica->deleteLater();
+        FrmAnalitica frmAnalitica(this);
+        Analitica oAnalitica(this);
+        oAnalitica.setIdEpisodio(oEpisodio->getid());
+        oAnalitica.AnadirAnalitica();
+        frmAnalitica.capturaID(oAnalitica.getId());
+        frmAnalitica.capturaPaciente(ui->txtPaciente->text());
+        frmAnalitica.exec();
     } else
         QMessageBox::warning(this,tr("Analitica"),tr("Debe seleccionar un episodio antes de poder añadir una antalítica"), tr("Aceptar"));
     llenartablahistorialanalisisepisodio();
@@ -781,20 +754,19 @@ void FrmFichaPaciente::BorrarAnalitica()
 
 void FrmFichaPaciente::VerAnalitica()
 {
-    if(!oEpisodio->getid()==0) {
+    if(!oEpisodio->getid()==0)
+    {
 
-       FrmVerAnalitica frmAnalitica;
-       Analitica *oAnalitica = new Analitica(this);
+        FrmVerAnalitica frmAnalitica;
+        Analitica oAnalitica(this);
         frmAnalitica.setWindowModality(Qt::WindowModal);
-        connect(this,SIGNAL(pasaid(int)),&frmAnalitica,SLOT(capturaId(int)));
-        connect(this,SIGNAL(pasaPaciente(QString)),&frmAnalitica,SLOT(capturaPaciente(QString)));
-        oAnalitica->setIdEpisodio(oEpisodio->getid());
-        oAnalitica->setId(ui->listaAnaliticas->item(ui->listaAnaliticas->currentRow(),2)->text().toInt());
-        emit pasaid(oAnalitica->getId());
-        emit pasaPaciente(ui->txtPaciente->text());
+
+        oAnalitica.setIdEpisodio(oEpisodio->getid());
+        oAnalitica.setId(ui->listaAnaliticas->item(ui->listaAnaliticas->currentRow(),2)->text().toInt());
+
+        frmAnalitica.capturaId(oAnalitica.getId());
+        frmAnalitica.capturaPaciente(ui->txtPaciente->text());
         frmAnalitica.exec();
-        oAnalitica->deleteLater();
-        frmAnalitica.deleteLater();
     } else
         QMessageBox::warning(this,tr("Analitica"),tr("Debe seleccionar un episodio antes de poder añadir una antalítica"), tr("Aceptar"));
     llenartablahistorialanalisisepisodio();
@@ -803,20 +775,15 @@ void FrmFichaPaciente::VerAnalitica()
 
 void FrmFichaPaciente::cargarDatosMedicamento(int crow, int ccol)
 {
-    Farmacologia *oFarmacologia = new Farmacologia();
+    Farmacologia oFarmacologia;
     QString cSQL;
     QString id = ui->listaTratamientosFarma->item(crow,1)->text();
     cSQL = "Select * from histofarma where id="+id;
-    oFarmacologia->cargarDatos(cSQL);
-    ui->txtInicioTratamientoFarma->setDate(oFarmacologia->getiniciotratamiento());
-    if (oFarmacologia->getactivo()==1)
-        ui->chkactivo->setChecked(true);
-    else
-        ui->chkactivo->setChecked(false);
-    ui->txtComentariosFarma->setPlainText(oFarmacologia->getcomentarios());
-    ui->txtPosologiaFarma->setPlainText(oFarmacologia->getindicacionposologia());
-    delete oFarmacologia;
-
+    oFarmacologia.cargarDatos(cSQL);
+    ui->txtInicioTratamientoFarma->setDate(oFarmacologia.getiniciotratamiento());
+    ui->chkactivo->setChecked(oFarmacologia.getactivo()==1);
+    ui->txtComentariosFarma->setPlainText(oFarmacologia.getcomentarios());
+    ui->txtPosologiaFarma->setPlainText(oFarmacologia.getindicacionposologia());
 }
 
 void FrmFichaPaciente::cargarDatosImagenes(int crow, int ccol)
@@ -827,24 +794,20 @@ void FrmFichaPaciente::cargarDatosImagenes(int crow, int ccol)
     ui->txtComentariosImagen->setPlainText(oImagenes->getComentarios());
     ui->lineEdit_descripcionimagen->setText(oImagenes->getDescripcion());
     ui->dateEdit_fechaimagen->setDate(oImagenes->getFechaImagen());
+
     int nindex = ui->comboBox_tipoImagen->findText(oImagenes->getTipoImagen());
     if (nindex >-1)
         ui->comboBox_tipoImagen->setCurrentIndex(nindex);
     else
         ui->comboBox_tipoImagen->clear();
 
-    if (!oImagenes->getLocalizacionImagen().isEmpty()) {
+    if (!oImagenes->getLocalizacionImagen().isEmpty())
+    {
         QImage imagen(oImagenes->getLocalizacionImagen());
-
         QPixmap qpmImagen = QPixmap::fromImage(imagen);
         ui->lblImagenDiagnostico->setPixmap(qpmImagen.scaled(ui->lblImagenDiagnostico->size(), Qt::KeepAspectRatio));
-
-    }
-    if (oImagenes->getEvaluada()==1)
-        ui->checkBox_evaluada->setChecked(true);
-    else
-        ui->checkBox_evaluada->setChecked(false);
-
+    }    
+    ui->checkBox_evaluada->setChecked(oImagenes->getEvaluada()==1);
 }
 
 void FrmFichaPaciente::guardarDatosImagenes()
@@ -854,10 +817,9 @@ void FrmFichaPaciente::guardarDatosImagenes()
     oImagenes->setComentarios(ui->txtComentariosImagen->toPlainText());
     oImagenes->setDescripcion(ui->lineEdit_descripcionimagen->text());
     oImagenes->setFechaImagen(ui->dateEdit_fechaimagen->date());
-    if(ui->checkBox_evaluada->isChecked())
-        oImagenes->setEvaluada(true);
-    else
-        oImagenes->setEvaluada(false);
+
+    oImagenes->setEvaluada(ui->checkBox_evaluada->isChecked());
+
     oImagenes->setTipoImagen(ui->comboBox_tipoImagen->currentText());
     oImagenes->guardarDatosDB();
     BloquearCamposImagen();

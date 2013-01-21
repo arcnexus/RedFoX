@@ -8,7 +8,7 @@
 ImagenesDiagnostico *oImagenesDiagnostico = new ImagenesDiagnostico(NULL);
 
 FrmAnadirImagen::FrmAnadirImagen(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::FrmAnadirImagen)
 {
     ui->setupUi(this);

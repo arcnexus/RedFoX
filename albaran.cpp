@@ -9,7 +9,7 @@
 #include <QDebug>
 #include "configuracion.h"
 #include <QString>
-
+#include <QApplication>
 Albaran::Albaran(QObject *parent) :
     QObject(parent)
 {
@@ -52,7 +52,7 @@ void Albaran::AnadirAlbaran() {
      cab_alb.bindValue(":nPorcentajeRecargoEq3",this->nRec3);
      cab_alb.bindValue(":nPorcentajeRecargoEq4",this->nRec4);
      if(!cab_alb.exec()){
-         QMessageBox::critical(NULL,"error al guardar datos Albaran:", cab_alb.lastError().text());
+         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Albaran:", cab_alb.lastError().text());
      } else {
          this->id = cab_alb.lastInsertId().toInt();
          QString cSQL = "Select * from cab_alb where id ="+QString::number(this->id);
@@ -176,10 +176,10 @@ void Albaran::GuardarAlbaran(int nId_Albaran) {
     cab_alb.bindValue(":Id", this->id);
 
     if(!cab_alb.exec()){
-        QMessageBox::critical(NULL,tr("error al guardar datos Albaran:"), cab_alb.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(),tr("error al guardar datos Albaran:"), cab_alb.lastError().text());
         qDebug() << cab_alb.lastQuery();
     } else {
-        QMessageBox::information(NULL,tr("Guardar datos"),tr("El Albaran se ha guardado correctamente:"),tr("Ok"));
+        QMessageBox::information(qApp->activeWindow(),tr("Guardar datos"),tr("El Albaran se ha guardado correctamente:"),tr("Ok"));
         QString cSQL = "Select * from cab_alb where id ="+QString::number(nId_Albaran);
         RecuperarAlbaran(cSQL);
     }
@@ -307,14 +307,14 @@ void Albaran::AnadirLineaAlbaran(int id_cab, QString cCodigo, double nCantidad, 
     QArticulos->bindValue(":cCodigo",cCodigo);
 
     if (!QArticulos->exec()) {
-        QMessageBox::warning(NULL,QObject::tr("Gestión de Albaranes"),QObject::tr("No se puede actualizar la ficha del artículo")+
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Albaranes"),QObject::tr("No se puede actualizar la ficha del artículo")+
                              QArticulos->lastError().text(),QObject::tr("Aceptar"));
         lCorrecto = false;
     }
     if(lCorrecto) {
         QSqlDatabase::database("empresa").commit();
     } else {
-        QMessageBox::warning(NULL,QObject::tr("Gestión de Albaranes"),QObject::tr("Se desharán los últimos cambios"));
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Albaranes"),QObject::tr("Se desharán los últimos cambios"));
         QSqlDatabase::database("empresa").rollback();
     }
 }
@@ -368,7 +368,7 @@ void Albaran::ModificarLineaAlbaran(int id_lin, QString cCodigo, double nCantida
     Qlin_alb->bindValue(":rTotal",total);
     Qlin_alb->bindValue(":nPorcIva",nPorcIva);
     if (!Qlin_alb->exec()){
-       QMessageBox::critical(NULL,"error al modificar datos línea Albaran:", Qlin_alb->lastError().text());
+       QMessageBox::critical(qApp->activeWindow(),"error al modificar datos línea Albaran:", Qlin_alb->lastError().text());
     }
     delete Qlin_alb;
     // Actualizo ficha artículo
@@ -422,13 +422,13 @@ void Albaran::BorrarLineaAlbaran(int id_lin)
             qrylin_alb->prepare("Delete from lin_alb where id = :id_lin");
             qrylin_alb->bindValue(":id_lin",id_lin);
             if(!qrylin_alb->exec()){
-               QMessageBox::critical(NULL,tr("Borrar línea"),tr("Falló el borrado de la línea de Albaran"),tr("&Aceptar"));
+               QMessageBox::critical(qApp->activeWindow(),tr("Borrar línea"),tr("Falló el borrado de la línea de Albaran"),tr("&Aceptar"));
             }
             delete qrylin_alb;
             calcularAlbaran();
          }
     } else {
-        QMessageBox::critical(NULL,tr("Borrar Línea Albaran"),tr("Debe seleccionar una línea para poder borrar"),tr("OK"));
+        QMessageBox::critical(qApp->activeWindow(),tr("Borrar Línea Albaran"),tr("Debe seleccionar una línea para poder borrar"),tr("OK"));
     }
 }
 

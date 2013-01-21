@@ -17,11 +17,12 @@ public:
     explicit FrmInformacionFarmaco(QWidget *parent = 0);
     ~FrmInformacionFarmaco();
     
-
+public slots:
+    void capturarid(QString);
 private:
     Ui::FrmInformacionFarmaco *ui;
 private slots:
-    void capturarid(QString);
+
     void finishedSlotBuscarMedicamento(QNetworkReply* reply);
     void cargaFinalizada1(bool estado);
     void cargaFinalizada2(bool estado);

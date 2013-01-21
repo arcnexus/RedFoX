@@ -16,15 +16,15 @@ class FrmVerAnalitica : public QDialog
 public:
     explicit FrmVerAnalitica(QWidget *parent = 0);
     ~FrmVerAnalitica();
-    
+public slots:
+    void capturaId(int nId);
+    void capturaPaciente(QString);
 private:
     Ui::FrmVerAnalitica *ui;
     int nID;
     int nEdited;
 private slots:
     void llenarTabla(int nID);
-    void capturaId(int nId);
-    void capturaPaciente(QString);
     void cargarDatos(int nID);
     void cargarDatos();
     void editarDatos();

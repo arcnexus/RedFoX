@@ -2,23 +2,24 @@
 #define FRMANADIRIMAGEN_H
 
 #include <QWidget>
-
+#include <QDialog>
 namespace Ui {
 class FrmAnadirImagen;
 }
 
-class FrmAnadirImagen : public QWidget
+class FrmAnadirImagen : public QDialog
 {
     Q_OBJECT
     
 public:
     explicit FrmAnadirImagen(QWidget *parent = 0);
     ~FrmAnadirImagen();
-    
+public slots:
+    void RecuperarId(int cIDEpisodio);
 private:
     Ui::FrmAnadirImagen *ui;
 private slots:
-    void RecuperarId(int cIDEpisodio);
+
     void AnadirImagen();
     void GuardarDatosEnObjetoImagen();
 signals:
