@@ -32,7 +32,7 @@ public:
     Presupuesto *oPres;
     Cliente *oClientePres;
 private slots:
-    void on_chklEnviado_stateChanged(int arg1);
+    void on_chklAprovado_stateChanged(int arg1);
 
     void on_btnSiguiente_clicked();
 

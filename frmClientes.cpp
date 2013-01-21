@@ -66,8 +66,7 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
     connect(ui->txtPrimerApellido,SIGNAL(editingFinished()),this,SLOT(txtPrimerApellido_editingFinished()));
     connect(ui->txtSegundoApellido,SIGNAL(editingFinished()),this,SLOT(txtSegundoApellido_editingFinished()));
     connect(ui->txtcNombre,SIGNAL(editingFinished()),this,SLOT(txtcNombre_editingFinished()));
-    //
-    //aki connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(on_txtcPoblacion_editingFinished()));
+
     connect(ui->txtcProvincia,SIGNAL(editingFinished()),this,SLOT(txtcProvincia_editingFinished()));
     connect(ui->txtcCifNif,SIGNAL(editingFinished()),this,SLOT(txtcCifNif_editingFinished()));
     connect(ui->txtcCp,SIGNAL(editingFinished()),this,SLOT(txtcCp_editingFinished()));
@@ -791,7 +790,6 @@ void frmClientes::on_btnBorrar_clicked()
 
 void frmClientes::on_btnBuscar_clicked()
 {
-    //NOTE - Fixed crash
     FrmBuscarCliente BuscarClientes;
     if(BuscarClientes.exec() == QDialog::Accepted)
     {

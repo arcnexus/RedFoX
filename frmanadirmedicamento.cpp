@@ -38,7 +38,7 @@
 #include <QtNetwork/qnetworkaccessmanager.h>
 
 FrmAnadirMedicamento::FrmAnadirMedicamento(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::FrmAnadirMedicamento)
 {
     ui->setupUi(this);

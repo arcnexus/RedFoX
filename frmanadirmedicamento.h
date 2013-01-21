@@ -1,6 +1,7 @@
 #ifndef FRMANADIRMEDICAMENTO_H
 #define FRMANADIRMEDICAMENTO_H
 
+#include <QDialog>
 #include <QWidget>
 #include <QNetworkReply>
 #include <QXmlStreamAttributes>
@@ -15,7 +16,7 @@ namespace Ui {
 class FrmAnadirMedicamento;
 }
 
-class FrmAnadirMedicamento : public QWidget
+class FrmAnadirMedicamento : public QDialog
 {
     Q_OBJECT
     

@@ -78,10 +78,8 @@ private:
     //QXmlStreamReader *xmlReader;
     QXmlStreamAttributes attrib;
     QSqlQuery paciente;
-    void BloquearCamposPaciente();
-    void DesbloquearCamposPaciente();
-    void BloquearCamposEpisodio();
-    void DesbloquearCamposEpisodio();
+    void BloquearCamposPaciente(bool state);
+    void BloquearCamposEpisodio(bool state);
     void LLenarEpisodio();
     void BloquearCamposImagen();
 };

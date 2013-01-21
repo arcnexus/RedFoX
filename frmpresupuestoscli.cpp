@@ -493,7 +493,7 @@ void FrmPresupuestosCli::LineasVentas()
      //ui->Lineas->setItemDelegateForColumn(8, ColumnaPres);
 }
 
-void FrmPresupuestosCli::on_chklEnviado_stateChanged(int arg1)
+void FrmPresupuestosCli::on_chklAprovado_stateChanged(int arg1)
 {
     if(arg1 == 0) {
         ui->lblFechaAprovacin->setVisible(false);

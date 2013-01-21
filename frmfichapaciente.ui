@@ -193,7 +193,7 @@ color: rgb(255,255,255);</string>
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="label_67">
+          <widget class="QLabel" name="itemAnalitica">
            <property name="maximumSize">
             <size>
              <width>32</width>
@@ -212,7 +212,7 @@ color: rgb(255,255,255);</string>
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QLabel" name="label_68">
+          <widget class="QLabel" name="itemImagenes">
            <property name="maximumSize">
             <size>
              <width>32</width>
@@ -231,7 +231,7 @@ color: rgb(255,255,255);</string>
           </widget>
          </item>
          <item row="3" column="0">
-          <widget class="QLabel" name="label_69">
+          <widget class="QLabel" name="itemInterConsulta">
            <property name="maximumSize">
             <size>
              <width>32</width>
@@ -2269,9 +2269,9 @@ color: rgb(255,255,255);</string>
           </size>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
-         <widget class="QWidget" name="tabWidget_4Page1" native="true">
+         <widget class="QWidget" name="tabWidget_4Page1">
           <attribute name="title">
            <string>Lista Episodios paciente</string>
           </attribute>
@@ -3216,6 +3216,9 @@ color: rgb(0, 0, 0);</string>
           <property name="text">
            <string>HOMBRE</string>
           </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -3229,6 +3232,12 @@ color: rgb(0, 0, 0);</string>
           </property>
           <property name="text">
            <string>MUJER</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
