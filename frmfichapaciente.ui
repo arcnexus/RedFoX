@@ -2269,7 +2269,7 @@ color: rgb(255,255,255);</string>
           </size>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tabWidget_4Page1">
           <attribute name="title">
@@ -2305,6 +2305,12 @@ color: rgb(255,255,255);</string>
            </item>
            <item row="0" column="1" colspan="3">
             <widget class="QTreeWidget" name="listaEpisodios">
+             <property name="animated">
+              <bool>true</bool>
+             </property>
+             <attribute name="headerVisible">
+              <bool>false</bool>
+             </attribute>
              <column>
               <property name="text">
                <string notr="true">1</string>

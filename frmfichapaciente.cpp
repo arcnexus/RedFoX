@@ -140,7 +140,7 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
     // cargar datos Episodios
     QSqlQuery Episodios(QSqlDatabase::database("dbmedica"));
 
-    Episodios.prepare("Select descripcion from episodios where idpaciente = :nId");
+    Episodios.prepare("Select id, descripcion from episodios where idpaciente = :nId");
     Episodios.bindValue(":nId",idcliente);
     if(Episodios.exec()) {
         ui->listaEpisodios->setColumnCount(1);
@@ -152,9 +152,19 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
             item->setText(0,registro.field("descripcion").value().toString());
             ui->listaEpisodios->addTopLevelItem(item);
             // TODO - Leer base de datos visitas para añadir como hijo de Episodios.
-            QTreeWidgetItem *child = new QTreeWidgetItem(ui->listaEpisodios);
-            child->setText(0,"AAAAA");
-            item->addChild(child);
+            QSqlQuery qVisitas(QSqlDatabase::database("dbmedica"));
+            qVisitas.prepare("select id,fechahora,medico from visitas where id =:nId");
+            qVisitas.bindValue(":nId",registro.field("id").value().toString());
+            if(qVisitas.exec()) {
+                while(qVisitas.next()){
+                    QSqlRecord recVis = qVisitas.record();
+                    QTreeWidgetItem *child = new QTreeWidgetItem(item);
+                    QString Valor = recVis.field("fechahora").value().toDateTime().toString() +" "+
+                            recVis.field("medico").value().toString();
+                    child->setText(0,Valor);
+                    item->addChild(child);
+                }
+            }
         }
     } else
         QMessageBox::warning(qApp->activeWindow(),tr("Error"),tr("pepito"),tr("aceptar"));
