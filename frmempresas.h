@@ -31,9 +31,18 @@ private slots:
     void txtcPoblacion_editingFinished();
 
     void txtcCp_editingFinished();
+    void on_botAnadir_clicked();
+
+    void on_btn_ruta_db_clicked();
+
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
+    void limpiar_campos();
+   bool crear_empresa_sqlite();
+   bool crear_medica_sqlite();
+   bool crear_empresa_mysql();
+   bool crear_medica_mysql();
 };
 
 #endif // FRMEMPRESAS_H

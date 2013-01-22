@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `analitica` (
   `fechaanalisis` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) 
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=77 ;
 
 CREATE TABLE IF NOT EXISTS `analitica2` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

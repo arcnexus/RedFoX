@@ -5,7 +5,7 @@
 #include<QSqlQuery>
 #include <QMessageBox>
 #include "frmbuscarpoblacion.h"
-
+#include <QFileDialog>
 #ifdef WIN32
     #define and &&
 #endif
@@ -19,6 +19,8 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     connect(ui->botCerrar,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(txtcPoblacion_editingFinished()));
     connect(ui->txtcCP,SIGNAL(editingFinished()),this,SLOT(txtcCp_editingFinished()));
+
+    on_botSiguiente_clicked();
 }
 
 FrmEmpresas::~FrmEmpresas()
@@ -73,9 +75,6 @@ void FrmEmpresas::LLenarCampos()
     ui->txtcCuentaCliente->setText(oEmpresa.getcCuentaClientes());
     ui->txtcCuentaProveedores->setText(oEmpresa.getcCuentaProveedores());
     ui->txtcCuentaAcreedores->setText(oEmpresa.getcCuentaAcreedores());
-
-
-
 }
 
 void FrmEmpresas::CargarCamposEnEmpresa()
@@ -138,8 +137,45 @@ void FrmEmpresas::on_botAnterior_clicked()
 
 void FrmEmpresas::on_botGuardar_clicked()
 {
-    CargarCamposEnEmpresa();
-    oEmpresa.Guardar();
+    if(ui->botAnadir->text() == "Deshacer")
+    {
+        int idriver = ui->txtcDriver->currentIndex();
+        int idriverMedica = ui->txtcDriver->currentIndex();
+        if(ui->txtRutaBd->text().isEmpty() && (idriver == 0 || idriverMedica == 0))
+        {
+            QMessageBox::critical(qApp->activeWindow(),tr("Ruta no valida"),tr("Especifique un ruta valida para la base de datos"),tr("&Aceptar"));
+            return;
+        }
+
+        if( ui->txtcDriver->currentIndex() == 0 )
+        {
+            if(!crear_empresa_sqlite())
+                return;
+        }
+        else
+            if(!crear_empresa_mysql())
+                return;
+
+        if( ui->txtcDriverMedica->currentIndex() == 0 )
+        {
+            if(!crear_medica_sqlite())
+                return;
+        }
+        else
+            if(!crear_medica_mysql())
+                return;
+
+        oEmpresa.Anadir(ui->txtcCodigo->text());
+        ui->botAnadir->setText("Añadir");
+        ui->botAnadir->setIcon(QIcon(":/Icons/PNG/add.png"));
+        CargarCamposEnEmpresa();
+        oEmpresa.Guardar();
+    }
+    else
+    {
+        CargarCamposEnEmpresa();
+        oEmpresa.Guardar();
+    }
 }
 
 void FrmEmpresas::txtcPoblacion_editingFinished()
@@ -219,4 +255,233 @@ void FrmEmpresas::txtcCp_editingFinished()
             }
         }
     }
+}
+
+void FrmEmpresas::on_botAnadir_clicked()
+{
+    if(ui->botAnadir->text() == "Añadir")
+    {
+        ui->botAnadir->setText("Deshacer");
+        ui->botAnadir->setIcon(QIcon(":/Icons/PNG/undo.png"));
+
+        QSqlQuery get_last(QSqlDatabase::database("terra"));
+        get_last.prepare("SELECT id FROM empresas ORDER BY id DESC LIMIT 1");
+        if(get_last.exec())
+        {
+            limpiar_campos();
+            if(get_last.next())
+            {
+                int last_id = get_last.record().value("id").toInt()  + 1;
+                ui->txtcCodigo->setText(QString::number(last_id));
+            }
+            else
+            {
+                ui->txtcCodigo->setText("1");
+            }
+        }
+    }
+    else
+    {
+        ui->botAnadir->setText("Añadir");
+        ui->botAnadir->setIcon(QIcon(":/Icons/PNG/add.png"));
+        oEmpresa.Recuperar("select * from empresas where id > "+ QString::number(0),1);
+        LLenarCampos();
+    }
+}
+
+void FrmEmpresas::limpiar_campos()
+{
+    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
+    QLineEdit *lineEdit;
+    foreach (lineEdit, lineEditList) {
+        lineEdit->setText("");
+    }
+    QList<QTextEdit *> lineTxtList = this->findChildren<QTextEdit *>();
+    QTextEdit *txtEdit;
+    foreach (txtEdit, lineTxtList) {
+        txtEdit->setText("");
+    }
+}
+
+bool FrmEmpresas::crear_empresa_sqlite()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    QString ruta = ui->txtRutaBd->text() + "\\";
+    QString empresa = ui->txtEmpresa->text()+".sqlite";
+    ruta = ruta + empresa;
+    db.setDatabaseName(ruta);
+
+    if (!db.open())
+    {
+        QMessageBox::critical(0,
+                              tr("Error al crear base de datos"),
+                              tr("Ha sido imposible crear la base de datos"),
+                              tr("Aceptar"));
+        return false;
+    }
+    bool valid = true;
+    QFile file(":/Icons/sql/Db_empresa_sqlite.sql");
+    if(file.open(QFile::ReadOnly))
+    {
+        QSqlQuery query;
+        QString file_data = file.readAll();
+        QStringList querys = file_data.split(";",QString::SkipEmptyParts);
+        QString _query;
+        foreach(_query,querys)
+            valid &= query.exec(_query);
+    }
+    if(!valid)
+    {
+        db.close();
+        QFile::remove(ruta);
+    }
+    return valid;
+}
+
+bool FrmEmpresas::crear_medica_sqlite()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    QString ruta = ui->txtRutaBd->text() + "\\";
+    QString empresa = ui->txtEmpresa->text()+"med.sqlite";
+    ruta = ruta + empresa;
+    db.setDatabaseName(ruta);
+
+    if (!db.open())
+    {
+        QMessageBox::critical(0,
+                              tr("Error al crear base de datos"),
+                              tr("Ha sido imposible crear la base de datos"),
+                              tr("Aceptar"));
+        return false;
+    }
+    bool valid = true;
+    //FIXME  Cambiar fichero
+    QFile file(":/Icons/sql/Db_empresa_sqlite.sql");
+    if(file.open(QFile::ReadOnly))
+    {
+        QSqlQuery query;
+        QString file_data = file.readAll();
+        QStringList querys = file_data.split(";",QString::SkipEmptyParts);
+        QString _query;
+        foreach(_query,querys)
+            valid &= query.exec(_query);
+    }
+    else
+        valid=false;
+    if(!valid)
+    {
+        db.close();
+        QFile::remove(ruta);        
+    }
+    return valid;
+}
+
+
+bool FrmEmpresas::crear_empresa_mysql()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName(ui->txtcHost->text());
+    db.setUserName(ui->txtcUser->text());
+    db.setPassword(ui->txtcPassword->text());
+    db.setDatabaseName(ui->txtcNombreBd->text());
+    db.setPort(ui->txtcPuerto->text().toInt());
+
+    if (!db.open())
+    {
+        QMessageBox::critical(0,
+                              tr("Error al crear base de datos"),
+                              tr("Ha sido imposible crear la base de datos"),
+                              tr("Aceptar"));
+        return false;
+    }
+
+    bool valid = true;
+    QFile file(":/Icons/sql/Db_empresa_mysql.sql");
+    if(file.open(QFile::ReadOnly))
+    {
+        QSqlQuery query;
+        QString file_data = file.readAll();
+        QStringList querys = file_data.split(";",QString::SkipEmptyParts);
+        QString _query;
+        foreach(_query,querys)
+        {
+            _query = _query.remove("\r");
+            _query = _query.remove("\n");
+            qDebug() << _query;
+            if(_query.isEmpty())
+                continue;
+            valid &= query.exec(_query);
+            if(!valid)
+            {
+                qDebug() << query.lastError();
+                return false;
+            }
+        }
+    }
+    else
+        valid=false;
+    if(!valid)
+    {
+        db.close();
+    }
+    return valid;
+}
+
+bool FrmEmpresas::crear_medica_mysql()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName(ui->txtcHostmedic->text());
+    db.setUserName(ui->txtcUserMedic->text());
+    db.setPassword(ui->txtcPasswordBdMedic->text());
+    db.setDatabaseName(ui->txtcNombreBdMedic->text());
+    db.setPort(ui->txtcPuertoMedic->text().toInt());
+
+    if (!db.open())
+    {
+        QMessageBox::critical(0,
+                              tr("Error al crear base de datos"),
+                              tr("Ha sido imposible crear la base de datos"),
+                              tr("Aceptar"));
+        return false;
+    }
+    bool valid = true;
+    QFile file(":/Icons/sql/Db_empresa_medica_mysql.sql");
+    if(file.open(QFile::ReadOnly))
+    {
+        QSqlQuery query;
+        QString file_data = file.readAll();
+        QStringList querys = file_data.split(";",QString::SkipEmptyParts);
+        QString _query;
+        foreach(_query,querys)
+        {
+            qDebug() << "--------------------------------------------";
+            _query = _query.remove("\r");
+            _query = _query.remove("\n");
+            qDebug() << _query;
+            if(_query.isEmpty())
+                continue;
+            valid &= query.exec(_query);
+            if(!valid)
+            {
+                qDebug() << query.lastError();
+                return false;
+            }
+        }
+    }
+    else
+        valid=false;
+    if(!valid)
+    {
+        db.close();
+    }
+    return valid;
+}
+
+void FrmEmpresas::on_btn_ruta_db_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                                     "/home",
+                                                     QFileDialog::ShowDirsOnly
+                                                     | QFileDialog::DontResolveSymlinks);
+    ui->txtRutaBd->setText(dir);
 }
