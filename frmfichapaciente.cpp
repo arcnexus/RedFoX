@@ -797,9 +797,9 @@ void FrmFichaPaciente::VerAnalitica()
         frmAnalitica.capturaId(oAnalitica.getId());
         frmAnalitica.capturaPaciente(ui->txtPaciente->text());
         frmAnalitica.exec();
+        llenartablahistorialanalisisepisodio();
     } else
-        QMessageBox::warning(this,tr("Analitica"),tr("Debe seleccionar un episodio antes de poder añadir una antalítica"), tr("Aceptar"));
-    llenartablahistorialanalisisepisodio();
+        QMessageBox::warning(this,tr("Analitica"),tr("Debe seleccionar un episodio antes de poder añadir una antalítica"), tr("Aceptar"));    
 }
 
 

@@ -360,11 +360,21 @@ bool FrmEmpresas::crear_empresa_sqlite(copy_db_progressFrm *form)
         QString _query;
         foreach(_query,querys)
         {
+            _query = _query.remove("\r");
+            _query = _query.remove("\n");
+            if(_query == "")
+                continue;
             valid &= query.exec(_query);
             index ++;
             int i = _query.indexOf("\"")+1;
             QString tabla = _query.mid(i,_query.indexOf("\"",i)-i);
             form->setProgess_2("Creando tabla: "+tabla , index);
+            qDebug() << "---------------------";
+            if(!valid)
+            {
+            qDebug() << query.lastQuery();
+            qDebug() << query.lastError();
+            }
         }
     }
     if(!valid)
@@ -405,11 +415,21 @@ bool FrmEmpresas::crear_medica_sqlite(copy_db_progressFrm *form)
         QString _query;
         foreach(_query,querys)
         {
+            _query = _query.remove("\r");
+            _query = _query.remove("\n");
+            if(_query == "")
+                continue;
             valid &= query.exec(_query);
             index ++;
             int i = _query.indexOf("\"")+1;
             QString tabla = _query.mid(i,_query.indexOf("\"",i)-i);
             form->setProgess_2("Creando tabla: "+tabla , index);
+            qDebug() << "---------------------";
+            if(!valid)
+            {
+            qDebug() << query.lastQuery();
+            qDebug() << query.lastError();
+            }
         }
     }
     else
@@ -565,6 +585,63 @@ bool FrmEmpresas::crear_medica_mysql(copy_db_progressFrm *form)
     return valid;
 }
 
+void FrmEmpresas::borrar_mysql()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName(oEmpresa.getcHost());
+    db.setUserName(oEmpresa.getcUser());
+    db.setPassword(oEmpresa.getcContrasena());
+    if(!oEmpresa.getcPuerto().isEmpty())
+        db.setPort(oEmpresa.getcPuerto().toInt());
+
+    db.transaction();
+    bool valid = true;
+
+    if(db.open())
+    {
+        QSqlQuery query;
+        query.prepare("DROP DATABASE "+oEmpresa.getcNombreBD());
+        if(!query.exec())
+        {
+            qDebug() << query.lastQuery();
+            qDebug() << query.lastError();
+            valid = false;
+        }
+        query.prepare("DROP DATABASE "+oEmpresa.getcNombreBDMed());
+        if(!query.exec())
+        {
+            qDebug() << query.lastQuery();
+            qDebug() << query.lastError();
+            valid = false;
+        }
+    }
+    else
+        valid = false;
+
+    if (valid)
+    {
+        if(oEmpresa.Borrar(oEmpresa.getid()))
+            db.commit();
+        else
+            db.rollback();
+    }
+    else
+    {
+        db.rollback();
+        QMessageBox::critical(this,
+                              tr("Error al borrar base de datos"),
+                              tr("Ha sido imposible borrar la base de datos"),
+                              tr("Aceptar"));
+    }
+
+}
+
+void FrmEmpresas::borrar_sqlite()
+{
+    QFile::remove(oEmpresa.getcRutaBDSqLite());
+    oEmpresa.Borrar(oEmpresa.getid());
+}
+
 void FrmEmpresas::on_btn_ruta_db_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
@@ -587,4 +664,20 @@ void FrmEmpresas::on_btn_migrar_clicked()
 {
     ui->txtcDriver->setCurrentIndex(1);
     ui->btn_migrar->setText("Migrando...");
+}
+
+void FrmEmpresas::on_botBorrar_clicked()
+{
+    if(QMessageBox::question(this,tr("¿Está seguro?"),
+                          tr("Esta acción no tiene vuelta atras, ¿Desea continuar?"),
+                          tr("No"),tr("Si")) == QMessageBox::Accepted)
+    {
+        qDebug() << "si";
+        if(oEmpresa.getcDriverBD() == "QSQLITE")
+            borrar_sqlite();
+        else
+            borrar_mysql();
+    }
+    else
+        qDebug() << "no";
 }
