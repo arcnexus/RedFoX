@@ -38,6 +38,10 @@ private slots:
 
     void on_txtcDriver_currentIndexChanged(int index);
 
+
+
+    void on_btn_migrar_clicked();
+
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
