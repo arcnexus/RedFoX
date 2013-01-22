@@ -10,7 +10,7 @@ class Empresa : public QObject
     Q_OBJECT
 public:
     explicit Empresa(QObject *parent = 0);
-    void Anadir();
+    void Anadir(QString id);
     void Recuperar(QString cSQL);
     void Recuperar(QString cSQL,int nProcede);
     void Guardar();

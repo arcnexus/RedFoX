@@ -12,12 +12,16 @@ Empresa::Empresa(QObject *parent) :
     this->id=0;
 }
 
-void Empresa::Anadir()
+void Empresa::Anadir(QString id)
 {
     qEmpresa = QSqlQuery(QSqlDatabase::database("terra"));
-    if (!qEmpresa.exec("insert into empresa nombre values ('')"))
-        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Empresas"),QObject::tr("No se puede crear la empresa"),
+    qEmpresa.prepare("insert into empresas (id) values (:id)");
+    qEmpresa.bindValue(":id",id);
+    if (!qEmpresa.exec())
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Empresas"),QObject::tr("No se puede crear la empresa\n")+
                               qEmpresa.lastError().text());
+    else
+        this->id = id.toInt();
 }
 
 void Empresa::Recuperar(QString cSQL)

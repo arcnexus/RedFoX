@@ -107,5 +107,8 @@
         <file>images/checkbox_unchecked_pressed.png</file>
         <file>Terra.qss</file>
         <file>PNG/users.png</file>
+        <file>sql/Db_empresa_sqlite.sql</file>
+        <file>sql/Db_empresa_mysql.sql</file>
+        <file>sql/Db_empresa_medica_mysql.sql</file>
     </qresource>
 </RCC>
