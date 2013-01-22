@@ -35,6 +35,22 @@ FRMEMPRESAS.CPP
         -enlazar con vademecums terra (Aquí van los vademecum de Medicina china, homeopatia, naturopatia, ayurveda.... - El proceso es 
                                 el mismo que con vademecum de data solutions, solo que este lo cobramos todo para nosotros :) ) 
         -Modificar formato informes (Este enlaza con OpenRPT)
+- Cambiar boton salir de terra de la barra superior por el de lockwindow.
+        
+
+CLIENTES/PACIENTES
+
+
+- El boton borrar ahora usa una pantalla que creé cuando no sabía usar qMessageBox, deberá cambiarse por un Qmessagebox.
+
+
+HISTORIA CLINICA
+- Añadir funcionalidad Visitas {Marc}
+- Impresión de informes
+        TODO - Definir informes
+- poner iconos en Treewidget de episodios.
+
+
                                 
         
 
