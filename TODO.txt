@@ -23,5 +23,18 @@ FRMEMPRESAS.CPP
 [END] - Solo el administrador deberá tener acceso a esta pantalla (FRMEMPRESAS.CPP)
   
   
-  
+ MAINWINDOW
+ 
+ - Falta agregar boton administrador en la barra vertical de la izquierda.
+ - En la  barra horizontal superior debe haber los botones para:
+        -gestionar usuarios
+        -gestionar empresas
+        -crear copia de seguridad.
+        -enlazar con vademecum ( deberá salir una pantalla donde aparezca un código aleatorio y luego sobre eso nosotros calcularemos
+                                otro código que les facilitaremos una vez tengamos el justificante del pago de la cuota de vademecum 120€/año aprox.)
+        -enlazar con vademecums terra (Aquí van los vademecum de Medicina china, homeopatia, naturopatia, ayurveda.... - El proceso es 
+                                el mismo que con vademecum de data solutions, solo que este lo cobramos todo para nosotros :) ) 
+        -Modificar formato informes (Este enlaza con OpenRPT)
+                                
+        
 
