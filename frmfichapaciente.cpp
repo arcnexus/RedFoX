@@ -151,7 +151,7 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
 
             item->setText(0,registro.field("descripcion").value().toString());
             ui->listaEpisodios->addTopLevelItem(item);
-            // TODO - Leer base de datos visitas para añadir como hijo de Episodios.
+            //Leer base de datos visitas para añadir como hijo de Episodios.
             QSqlQuery qVisitas(QSqlDatabase::database("dbmedica"));
             qVisitas.prepare("select id,fechahora,medico from visitas where idepisodio =:nId");
             qVisitas.bindValue(":nId",registro.field("id").value().toString());
