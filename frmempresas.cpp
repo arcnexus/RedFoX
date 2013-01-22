@@ -48,9 +48,10 @@ void FrmEmpresas::LLenarCampos()
     ui->txtcUserMedic->setText(oEmpresa.getcUserMed());
     ui->txtcPasswordBdMedic->setText(oEmpresa.getcContrasenaMed());
     ui->txtcPuertoMedic->setText(oEmpresa.getcPuertoMed());
-    indice=ui->txtcDriverMedica->findText(oEmpresa.getcDriverBDMed());
-    if(indice!=-1)
-       ui->txtcDriverMedica->setCurrentIndex(indice);
+
+    //indice=ui->txtcDriverMedica->findText(oEmpresa.getcDriverBDMed());
+    //if(indice!=-1)
+    //ui->txtcDriverMedica->setCurrentIndex(indice);
 
 
     ui->txtcDireccion->setText(oEmpresa.getcDireccion());
@@ -94,7 +95,7 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.setcUserMed(ui->txtcUserMedic->text());
     oEmpresa.setcContrasenaMed(ui->txtcPasswordBdMedic ->text());
     oEmpresa.setcPuertoMed(ui->txtcPuertoMedic->text());
-    oEmpresa.setcDriverBDMed(ui->txtcDriverMedica->currentText());
+    oEmpresa.setcDriverBDMed(ui->txtcDriver->currentText());
 
 
 
@@ -148,22 +149,19 @@ void FrmEmpresas::on_botGuardar_clicked()
         }
 
         if( ui->txtcDriver->currentIndex() == 0 )
-        {
+        {            
             if(!crear_empresa_sqlite())
                 return;
-        }
-        else
-            if(!crear_empresa_mysql())
-                return;
-
-        if( ui->txtcDriverMedica->currentIndex() == 0 )
-        {
             if(!crear_medica_sqlite())
                 return;
         }
         else
+        {
+            if(!crear_empresa_mysql())
+                return;
             if(!crear_medica_mysql())
                 return;
+        }
 
         oEmpresa.Anadir(ui->txtcCodigo->text());
         ui->botAnadir->setText("Añadir");
@@ -484,4 +482,10 @@ void FrmEmpresas::on_btn_ruta_db_clicked()
                                                      QFileDialog::ShowDirsOnly
                                                      | QFileDialog::DontResolveSymlinks);
     ui->txtRutaBd->setText(dir);
+}
+
+void FrmEmpresas::on_txtcDriver_currentIndexChanged(int index)
+{
+    ui->sqlite_frame->setEnabled(index == 0);
+    ui->mysql_frame->setEnabled(!(index == 0));
 }

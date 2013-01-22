@@ -42,6 +42,11 @@ const QString Login::getUsuario() const
     return ui->lineUsuario->text();
 }
 
+const QString Login::getPass() const
+{
+    return ui->linePassword->text();
+}
+
 const QString Login::getEmpresa() const
 {
     return ui->cboEmpresa->currentText();

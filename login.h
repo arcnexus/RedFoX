@@ -20,8 +20,9 @@ public:
     ~Login();
 
     const QString getUsuario() const;
+    const QString getPass() const;
     const QString getEmpresa() const;
-    
+
 private slots:
 	void init();
     void on_btnAcceder_clicked();

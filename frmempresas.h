@@ -35,6 +35,8 @@ private slots:
 
     void on_btn_ruta_db_clicked();
 
+    void on_txtcDriver_currentIndexChanged(int index);
+
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
