@@ -1,0 +1,27 @@
+TERRA - TODO
+
+En los items que se solucionen pondremos [END] a su izquierda. Así.
+
+[END] - Añadir botón patata.
+
+
+FRMEMPRESAS.CPP
+ -Agregar Buscador por codigo postal como en clientes.cpp
+ -Agregar buscador por población como en clientes.cpp
+ -Al agregar empresa hacer que tome el año en curso como ejercicio actual
+ -En pestaña cuentas comprobar que el numero de cuenta bancaria es correcto.
+ - Forzar tamaño botones navegación
+ - En pestaña BD en combos de driver dejar solo mySQL y SQLite.
+ 
+ (La idea es que para mono-usuario puedan usar sqlite para no tener que instalar ninguna BD y si necesitan más de un ordenador
+  entonces mysql). 
+  
+  El botón migrar a BD multipuesto debe ser capaz de migrar los datos de sqlite a una BD mySQL (Crear BD en  mySQL y Rellenar)
+  El botón Guardar debe de ser capaz de generar una nueva BD en MySQL o en SQLITE si está no existe y según el driver elegido por el usuario
+  
+  
+  - Solo el administrador deberá tener acceso a esta pantalla (FRMEMPRESAS.CPP)
+  
+  
+  
+
