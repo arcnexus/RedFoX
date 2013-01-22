@@ -25,7 +25,7 @@
 #include <QtCore/QTimer>
 #include <QProgressBar>
 
-
+#include "block_terra_form.h"
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 #include <QDesktopWidget>
@@ -100,7 +100,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // ----------------------------------------------------------------------------
     // Conexiones
     // ----------------------------------------------------------------------------
-    connect(ui->btnSalir_2,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->btnSalir,SIGNAL(triggered()),this,SLOT(close()));
     connect(BtnMantenimiento,SIGNAL(clicked()),this,SLOT(btnMantenimientos_clicked()));
     connect(BtnEntradas,SIGNAL(clicked()),this,SLOT(btnVentas_clicked()));
@@ -175,6 +174,8 @@ void MainWindow::init()
 	{
 		// capturo usuario
 		QString usuario = dlg->getUsuario();
+        user = dlg->getUsuario();
+        pass = dlg->getPass();
 		ui->lineUsuarioActivo->setText(usuario);
 		m_config->cUsuarioActivo = ui->lineUsuarioActivo->text();
 		QSettings settings("infint", "terra");
@@ -441,4 +442,13 @@ void MainWindow::cambiarEstilo(int estado)
 //        style = "fusion";
 
 //    QApplication::setStyle(style);
+}
+
+void MainWindow::on_btn_bloquear_clicked()
+{
+    block_terra_form form(this);
+    form.set_user(user,pass);
+    this->hide();
+    form.exec();
+    this->show();
 }

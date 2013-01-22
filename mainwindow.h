@@ -67,6 +67,8 @@ private slots:
 
     void cambiarEstilo(int);
 
+    void on_btn_bloquear_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -88,6 +90,8 @@ private:
     FrmPedidos *frmPedidos1;
     FrmPresupuestosCli *frmPresupcli;
     FrmCajaMinuta *frmCajaMinuta;
+    QString user;
+    QString pass;
 };
 
 #endif // MAINWINDOW_H
