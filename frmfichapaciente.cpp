@@ -153,13 +153,13 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
             ui->listaEpisodios->addTopLevelItem(item);
             // TODO - Leer base de datos visitas para añadir como hijo de Episodios.
             QSqlQuery qVisitas(QSqlDatabase::database("dbmedica"));
-            qVisitas.prepare("select id,fechahora,medico from visitas where id =:nId");
+            qVisitas.prepare("select id,fechahora,medico from visitas where idepisodio =:nId");
             qVisitas.bindValue(":nId",registro.field("id").value().toString());
             if(qVisitas.exec()) {
                 while(qVisitas.next()){
                     QSqlRecord recVis = qVisitas.record();
                     QTreeWidgetItem *child = new QTreeWidgetItem(item);
-                    QString Valor = recVis.field("fechahora").value().toDateTime().toString() +" "+
+                    QString Valor = recVis.field("fechahora").value().toDateTime().toString("dd/MM/yyyy hh:mm") +" "+
                             recVis.field("medico").value().toString();
                     child->setText(0,Valor);
                     item->addChild(child);
