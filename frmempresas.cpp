@@ -4,14 +4,21 @@
 #include <QSqlDatabase>
 #include<QSqlQuery>
 #include <QMessageBox>
+#include "frmbuscarpoblacion.h"
 
+#ifdef WIN32
+    #define and &&
+#endif
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmEmpresas)
 {
     ui->setupUi(this);
     ui->txtMensaje->setText("ATENCION: Modifique con cuidado. Cambiar estos\n valores puede hacer que el programa deje\n de funcionar");
+
     connect(ui->botCerrar,SIGNAL(clicked()),this,SLOT(close()));
+    connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(txtcPoblacion_editingFinished()));
+    connect(ui->txtcCP,SIGNAL(editingFinished()),this,SLOT(txtcCp_editingFinished()));
 }
 
 FrmEmpresas::~FrmEmpresas()
@@ -133,4 +140,83 @@ void FrmEmpresas::on_botGuardar_clicked()
 {
     CargarCamposEnEmpresa();
     oEmpresa.Guardar();
+}
+
+void FrmEmpresas::txtcPoblacion_editingFinished()
+{
+    ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
+    if (ui->txtcCP->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty())
+    {
+       FrmBuscarPoblacion BuscarPoblacion;
+       BuscarPoblacion.setcPoblacion(ui->txtcPoblacion->text(),1);
+       if(BuscarPoblacion.exec())
+       {
+        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
+         int nId = BuscarPoblacion.DevolverID();
+         qDebug() << "nID: " <<nId;
+         if(nId > 0)
+         {
+             QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+             QString cId;
+             cId = QString::number(nId);
+             qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+             qPoblacion.bindValue(":cId",cId);
+             if(!qPoblacion.exec())
+             {
+                 /* qDebug() << qPoblacion.lastQuery();
+                 qDebug() << qPoblacion.value(0).toString(); */
+                 QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+             }
+             else
+             {
+                 if (qPoblacion.next())
+                 {
+                     ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
+                     ui->txtcCP->setText(qPoblacion.value(1).toString());
+                     ui->txtcProvincia->setText(qPoblacion.value(2).toString());
+                     ui->txtcPais->setText("ESPAÑA");
+                 }
+             }
+         }
+       }
+    }
+}
+void FrmEmpresas::txtcCp_editingFinished()
+{
+    if (!ui->txtcCP->text().isEmpty() and ui->txtcPoblacion->text().isEmpty())
+    {
+        FrmBuscarPoblacion BuscarPoblacion;
+        BuscarPoblacion.setcPoblacion(ui->txtcCP->text(),0);
+        if(BuscarPoblacion.exec())
+        {
+
+            int nId = BuscarPoblacion.DevolverID();
+            //qDebug() <<nId;
+            if(nId > 0)
+            {
+                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QString cId;
+                cId = QString::number(nId);
+                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+                qPoblacion.bindValue(":cId",cId);
+                if(!qPoblacion.exec())
+                {
+                    /* qDebug() << qPoblacion.lastQuery();*/
+                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+                }
+                else
+                {
+                    qDebug() << "Poblacion" <<qPoblacion.value(0).toString();
+                    qDebug() << qPoblacion.lastQuery() <<" ID:= " << cId;
+                    if (qPoblacion.next())
+                    {
+                        ui->txtcCP->setText(qPoblacion.value(1).toString());
+                        ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
+                        ui->txtcProvincia->setText(qPoblacion.value(2).toString());
+                        ui->txtcPais->setText("ESPAÑA");
+                    }
+                }
+            }
+        }
+    }
 }

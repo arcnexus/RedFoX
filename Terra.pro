@@ -168,3 +168,6 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     terra.qrc
+
+OTHER_FILES += \
+    TODO.txt

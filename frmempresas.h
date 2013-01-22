@@ -16,6 +16,7 @@ public:
     ~FrmEmpresas();
     void LLenarCampos();
     void CargarCamposEnEmpresa();
+
 private slots:
     //TODO - boton buscar
     //TODO - boton borrar
@@ -27,6 +28,9 @@ private slots:
 
     void on_botGuardar_clicked();
 
+    void txtcPoblacion_editingFinished();
+
+    void txtcCp_editingFinished();
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;

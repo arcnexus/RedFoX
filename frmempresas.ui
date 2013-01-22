@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>963</width>
+    <width>1070</width>
     <height>591</height>
    </rect>
   </property>
@@ -312,7 +312,7 @@
         <property name="currentIndex">
          <number>0</number>
         </property>
-        <widget class="QWidget" name="tabWidgetPage1" native="true">
+        <widget class="QWidget" name="tabWidgetPage1">
          <attribute name="title">
           <string>Datos Fiscales y de Gestión</string>
          </attribute>
@@ -702,7 +702,7 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tabWidgetPage2" native="true">
+        <widget class="QWidget" name="tabWidgetPage2">
          <attribute name="title">
           <string>Datos conexión Base de datos</string>
          </attribute>
@@ -728,41 +728,9 @@
             </item>
             <item>
              <property name="text">
-              <string>QPSQL</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>QODBC</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>QIBASE</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>QDB2</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>QOCI</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
               <string/>
              </property>
             </item>
-           </widget>
-          </item>
-          <item row="0" column="2" rowspan="4">
-           <widget class="QLabel" name="label_12">
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;QSQLITE&lt;/span&gt; = &lt;span style=&quot; font-style:italic;&quot;&gt;SQLITE&lt;/span&gt;- &lt;span style=&quot; font-weight:600;&quot;&gt;QMYSQL &lt;/span&gt;= &lt;span style=&quot; font-style:italic;&quot;&gt;MySQL &lt;/span&gt;- &lt;span style=&quot; font-weight:600;&quot;&gt;QPSQL&lt;/span&gt; = &lt;span style=&quot; font-style:italic;&quot;&gt;PostgreSQL - &lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;QIBASE&lt;/span&gt; = &lt;span style=&quot; font-style:italic;&quot;&gt;Borland y FireBird - &lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;QODBC&lt;/span&gt; =&lt;span style=&quot; font-style:italic;&quot;&gt; BD(ODBC) incluye MS-SQLServer&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;QOCI &lt;/span&gt;= &lt;span style=&quot; font-style:italic;&quot;&gt;Oracle -&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;QDB2&lt;/span&gt; =&lt;span style=&quot; font-style:italic;&quot;&gt; IBM DB2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
            </widget>
           </item>
           <item row="0" column="3" rowspan="2">
@@ -792,37 +760,12 @@
             </item>
             <item>
              <property name="text">
-              <string>QPSQL</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>QODBC</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>QIBASE</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>QDB2</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>QOCI</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
               <string/>
              </property>
             </item>
            </widget>
           </item>
-          <item row="4" column="0" colspan="3">
+          <item row="2" column="0" colspan="3">
            <widget class="QFrame" name="frame_2">
             <property name="maximumSize">
              <size>
@@ -865,46 +808,7 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QComboBox" name="txtcDriver_2">
-               <item>
-                <property name="text">
-                 <string>QMYSQL</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>QPSQL</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>QODBC</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>QIBASE</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>QDB2</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>QOCI</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string/>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="2" column="2">
+             <item row="2" column="1" colspan="2">
               <spacer name="horizontalSpacer_5">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -920,7 +824,14 @@
             </layout>
            </widget>
           </item>
-          <item row="5" column="0" colspan="3">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_37">
+            <property name="text">
+             <string>Driver activo BD Medica:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="3">
            <widget class="QFrame" name="frame_3">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -932,7 +843,7 @@
              <item row="0" column="0" colspan="4">
               <widget class="QLabel" name="label_5">
                <property name="text">
-                <string>Configuración Bases de datos (MySQL, PostgreSQL.....) - Multipuesto  y Multidelegaciones.</string>
+                <string>Configuración Bases de datos (MySQL) - Multipuesto  y Multidelegaciones.</string>
                </property>
               </widget>
              </item>
@@ -1015,7 +926,7 @@
              <item row="3" column="0" colspan="4">
               <widget class="QLabel" name="label_34">
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configuración Bases de datos  &lt;span style=&quot; font-weight:600; color:#000080;&quot;&gt;médicas&lt;/span&gt; (MySQL, PostgreSQL.....) - Multipuesto  y Multidelegaciones.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configuración Bases de datos  &lt;span style=&quot; font-weight:600; color:#000080;&quot;&gt;médicas&lt;/span&gt; (MySQL) - Multipuesto  y Multidelegaciones.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </item>
@@ -1098,12 +1009,18 @@
             </layout>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_37">
-            <property name="text">
-             <string>Driver activo BD Medica:</string>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-           </widget>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
