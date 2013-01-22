@@ -143,6 +143,7 @@ void FrmEmpresas::on_botGuardar_clicked()
     {
         int idriver = ui->txtcDriver->currentIndex();
         int idriverMedica = ui->txtcDriver->currentIndex();
+
         if(ui->txtRutaBd->text().isEmpty() && (idriver == 0 || idriverMedica == 0))
         {
             QMessageBox::critical(qApp->activeWindow(),tr("Ruta no valida"),tr("Especifique un ruta valida para la base de datos"),tr("&Aceptar"));
@@ -188,10 +189,18 @@ void FrmEmpresas::on_botGuardar_clicked()
         CargarCamposEnEmpresa();
         oEmpresa.Guardar();
     }
+
     else
     {
-        CargarCamposEnEmpresa();
-        oEmpresa.Guardar();
+        if(ui->btn_migrar->text() == "Migrando..." )
+        {
+            //TODO Migrar
+        }
+        else
+        {
+            CargarCamposEnEmpresa();
+            oEmpresa.Guardar();
+        }
     }
 }
 
@@ -278,6 +287,7 @@ void FrmEmpresas::on_botAnadir_clicked()
 {
     if(ui->botAnadir->text() == "Añadir")
     {
+        ui->btn_migrar->setEnabled(false);
         ui->botAnadir->setText("Deshacer");
         ui->botAnadir->setIcon(QIcon(":/Icons/PNG/undo.png"));
 
@@ -299,6 +309,7 @@ void FrmEmpresas::on_botAnadir_clicked()
     }
     else
     {
+        ui->btn_migrar->setEnabled(true);
         ui->botAnadir->setText("Añadir");
         ui->botAnadir->setIcon(QIcon(":/Icons/PNG/add.png"));
         oEmpresa.Recuperar("select * from empresas where id > "+ QString::number(0),1);
@@ -567,4 +578,13 @@ void FrmEmpresas::on_txtcDriver_currentIndexChanged(int index)
 {
     ui->sqlite_frame->setEnabled(index == 0);
     ui->mysql_frame->setEnabled(!(index == 0));
+    if(index == 0)
+        ui->btn_migrar->setText("Migrar a BD Multipuesto");
+}
+
+
+void FrmEmpresas::on_btn_migrar_clicked()
+{
+    ui->txtcDriver->setCurrentIndex(1);
+    ui->btn_migrar->setText("Migrando...");
 }
