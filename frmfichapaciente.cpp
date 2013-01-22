@@ -141,13 +141,23 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
     QSqlQuery Episodios(QSqlDatabase::database("dbmedica"));
 
     Episodios.prepare("Select descripcion from episodios where idpaciente = :nId");
-    Episodios.bindValue("nID",oEpisodio->getid());
-    ui->listaEpisodios->setColumnCount(2);
-    //--------------------------------
-    // TODO Agregar items a treeview
+    Episodios.bindValue(":nId",idcliente);
+    if(Episodios.exec()) {
+        ui->listaEpisodios->setColumnCount(1);
+        //--------------------------------
+        while (Episodios.next()) {
+            QSqlRecord registro = Episodios.record();
+            QTreeWidgetItem *item = new QTreeWidgetItem(ui->listaEpisodios);
 
-   // ui->listaEpisodios->
-
+            item->setText(0,registro.field("descripcion").value().toString());
+            ui->listaEpisodios->addTopLevelItem(item);
+            // TODO - Leer base de datos visitas para añadir como hijo de Episodios.
+            QTreeWidgetItem *child = new QTreeWidgetItem(ui->listaEpisodios);
+            child->setText(0,"AAAAA");
+            item->addChild(child);
+        }
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Error"),tr("pepito"),tr("aceptar"));
     //ui->listaEpisodios->setModel(EpisodiosModelo);
 
 }
@@ -362,10 +372,11 @@ void FrmFichaPaciente::on_btnGuardarEpisodio_clicked()
     oEpisodio->GuardarEpisodio();
     // cargar datos Episodios
     //BUG ? ¿este Model para que?
-    QSqlQueryModel *EpisodiosModelo = new QSqlQueryModel(this);
-    EpisodiosModelo->setQuery("Select descripcion from episodios where idpaciente = "+QString::number(oPaciente->getid()),QSqlDatabase::database("dbmedica"));
-   // ui->listaEpisodios->setModel(EpisodiosModelo);
-    BloquearCamposEpisodio(true);
+//    QSqlQueryModel *EpisodiosModelo = new QSqlQueryModel(this);
+//    EpisodiosModelo->setQuery("Select descripcion from episodios where idpaciente = "+QString::number(oPaciente->getid()),QSqlDatabase::database("dbmedica"));
+//   // ui->listaEpisodios->setModel(EpisodiosModelo);
+ BloquearCamposEpisodio(true);
+
 }
 
 
