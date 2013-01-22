@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include "frmbuscarpoblacion.h"
 #include <QFileDialog>
+#include <QApplication>
 #ifdef WIN32
     #define and &&
 #endif
@@ -149,17 +150,35 @@ void FrmEmpresas::on_botGuardar_clicked()
         }
 
         if( ui->txtcDriver->currentIndex() == 0 )
-        {            
-            if(!crear_empresa_sqlite())
+        {
+            copy_db_progressFrm frm(this,2);
+            frm.setWindowTitle(tr("Creando base de datos sqlite"));
+            QApplication::processEvents();
+            frm.set_Max_1(2);
+            frm.setProgess_1(tr("Creando base de datos de empresa"),0);
+            frm.setModal(true);
+            frm.show();
+            if(!crear_empresa_sqlite(&frm))
                 return;
-            if(!crear_medica_sqlite())
+            frm.setProgess_1(tr("Creando base de datos medica"),1);
+            frm.setProgess_2("",0);
+            if(!crear_medica_sqlite(&frm))
                 return;
         }
         else
         {
-            if(!crear_empresa_mysql())
+            copy_db_progressFrm frm(this,2);
+            frm.setWindowTitle(tr("Creando base de datos mysql"));
+            QApplication::processEvents();
+            frm.set_Max_1(2);
+            frm.setProgess_1(tr("Creando base de datos de empresa"),0);
+            frm.setModal(true);
+            frm.show();
+            if(!crear_empresa_mysql(&frm))
                 return;
-            if(!crear_medica_mysql())
+            frm.setProgess_1(tr("Creando base de datos medica"),1);
+            frm.setProgess_2("",0);
+            if(!crear_medica_mysql(&frm))
                 return;
         }
 
@@ -301,7 +320,7 @@ void FrmEmpresas::limpiar_campos()
     }
 }
 
-bool FrmEmpresas::crear_empresa_sqlite()
+bool FrmEmpresas::crear_empresa_sqlite(copy_db_progressFrm *form)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     QString ruta = ui->txtRutaBd->text() + "\\";
@@ -311,7 +330,7 @@ bool FrmEmpresas::crear_empresa_sqlite()
 
     if (!db.open())
     {
-        QMessageBox::critical(0,
+        QMessageBox::critical(this,
                               tr("Error al crear base de datos"),
                               tr("Ha sido imposible crear la base de datos"),
                               tr("Aceptar"));
@@ -324,9 +343,18 @@ bool FrmEmpresas::crear_empresa_sqlite()
         QSqlQuery query;
         QString file_data = file.readAll();
         QStringList querys = file_data.split(";",QString::SkipEmptyParts);
+        form->set_Max_2(querys.size());
+        form->setProgess_2(tr("Creando tablas..."),0);
+        int index = 0;
         QString _query;
         foreach(_query,querys)
+        {
             valid &= query.exec(_query);
+            index ++;
+            int i = _query.indexOf("\"")+1;
+            QString tabla = _query.mid(i,_query.indexOf("\"",i)-i);
+            form->setProgess_2("Creando tabla: "+tabla , index);
+        }
     }
     if(!valid)
     {
@@ -336,7 +364,7 @@ bool FrmEmpresas::crear_empresa_sqlite()
     return valid;
 }
 
-bool FrmEmpresas::crear_medica_sqlite()
+bool FrmEmpresas::crear_medica_sqlite(copy_db_progressFrm *form)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     QString ruta = ui->txtRutaBd->text() + "\\";
@@ -360,9 +388,18 @@ bool FrmEmpresas::crear_medica_sqlite()
         QSqlQuery query;
         QString file_data = file.readAll();
         QStringList querys = file_data.split(";",QString::SkipEmptyParts);
+        form->set_Max_2(querys.size());
+        form->setProgess_2(tr("Creando tablas..."),0);
+        int index = 0;
         QString _query;
         foreach(_query,querys)
+        {
             valid &= query.exec(_query);
+            index ++;
+            int i = _query.indexOf("\"")+1;
+            QString tabla = _query.mid(i,_query.indexOf("\"",i)-i);
+            form->setProgess_2("Creando tabla: "+tabla , index);
+        }
     }
     else
         valid=false;
@@ -375,18 +412,18 @@ bool FrmEmpresas::crear_medica_sqlite()
 }
 
 
-bool FrmEmpresas::crear_empresa_mysql()
+bool FrmEmpresas::crear_empresa_mysql(copy_db_progressFrm *form)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(ui->txtcHost->text());
     db.setUserName(ui->txtcUser->text());
     db.setPassword(ui->txtcPassword->text());
-    db.setDatabaseName(ui->txtcNombreBd->text());
-    db.setPort(ui->txtcPuerto->text().toInt());
+    if(!ui->txtcPuerto->text().isEmpty())
+        db.setPort(ui->txtcPuerto->text().toInt());
 
     if (!db.open())
     {
-        QMessageBox::critical(0,
+        QMessageBox::critical(this,
                               tr("Error al crear base de datos"),
                               tr("Ha sido imposible crear la base de datos"),
                               tr("Aceptar"));
@@ -398,22 +435,42 @@ bool FrmEmpresas::crear_empresa_mysql()
     if(file.open(QFile::ReadOnly))
     {
         QSqlQuery query;
+        QString qs = QString("CREATE DATABASE %1;").arg(ui->txtcNombreBd->text());
+        if(query.exec(qs))
+        {
+            db.close();
+            db.setDatabaseName(ui->txtcNombreBd->text());
+            db.open();
+        }
+        else
+        {
+            QMessageBox::critical(this,
+                                  tr("Error al crear base de datos"),
+                                  tr("Ha sido imposible crear la base de datos"),
+                                  tr("Aceptar"));
+            return false;
+        }
         QString file_data = file.readAll();
         QStringList querys = file_data.split(";",QString::SkipEmptyParts);
+        form->set_Max_2(querys.size());
+        form->setProgess_2(tr("Creando tablas..."),0);
+        int index = 0;
         QString _query;
         foreach(_query,querys)
         {
             _query = _query.remove("\r");
             _query = _query.remove("\n");
-            qDebug() << _query;
             if(_query.isEmpty())
                 continue;
             valid &= query.exec(_query);
+
+            index ++;
+            int i = _query.indexOf("`")+1;
+            QString tabla = _query.mid(i,_query.indexOf("`",i)-i);
+            form->setProgess_2("Creando tabla: "+tabla , index);
+
             if(!valid)
-            {
-                qDebug() << query.lastError();
-                return false;
-            }
+                return false;            
         }
     }
     else
@@ -425,18 +482,19 @@ bool FrmEmpresas::crear_empresa_mysql()
     return valid;
 }
 
-bool FrmEmpresas::crear_medica_mysql()
+bool FrmEmpresas::crear_medica_mysql(copy_db_progressFrm *form)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(ui->txtcHostmedic->text());
     db.setUserName(ui->txtcUserMedic->text());
     db.setPassword(ui->txtcPasswordBdMedic->text());
-    db.setDatabaseName(ui->txtcNombreBdMedic->text());
-    db.setPort(ui->txtcPuertoMedic->text().toInt());
+
+    if(!ui->txtcPuerto->text().isEmpty())
+        db.setPort(ui->txtcPuerto->text().toInt());
 
     if (!db.open())
     {
-        QMessageBox::critical(0,
+        QMessageBox::critical(this,
                               tr("Error al crear base de datos"),
                               tr("Ha sido imposible crear la base de datos"),
                               tr("Aceptar"));
@@ -447,23 +505,44 @@ bool FrmEmpresas::crear_medica_mysql()
     if(file.open(QFile::ReadOnly))
     {
         QSqlQuery query;
+        QString qs = QString("CREATE DATABASE %1;").arg(ui->txtcNombreBdMedic->text());
+        if(query.exec(qs))
+        {
+            db.close();
+            db.setDatabaseName(ui->txtcNombreBdMedic->text());
+            db.open();
+        }
+        else
+        {
+            QMessageBox::critical(this,
+                                  tr("Error al crear base de datos"),
+                                  tr("Ha sido imposible crear la base de datos"),
+                                  tr("Aceptar"));
+            return false;
+        }
         QString file_data = file.readAll();
         QStringList querys = file_data.split(";",QString::SkipEmptyParts);
+
+        form->set_Max_2(querys.size());
+        form->setProgess_2(tr("Creando tablas..."),0);
+        int index = 0;
+
         QString _query;
         foreach(_query,querys)
         {
-            qDebug() << "--------------------------------------------";
             _query = _query.remove("\r");
             _query = _query.remove("\n");
-            qDebug() << _query;
             if(_query.isEmpty())
                 continue;
+
+            index ++;
+            int i = _query.indexOf("`")+1;
+            QString tabla = _query.mid(i,_query.indexOf("`",i)-i);
+            form->setProgess_2("Creando tabla: "+tabla , index);
+
             valid &= query.exec(_query);
             if(!valid)
-            {
-                qDebug() << query.lastError();
                 return false;
-            }
         }
     }
     else

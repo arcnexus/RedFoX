@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "empresa.h"
+#include "copy_db_progressfrm.h"
 namespace Ui {
 class FrmEmpresas;
 }
@@ -41,10 +42,10 @@ private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
     void limpiar_campos();
-   bool crear_empresa_sqlite();
-   bool crear_medica_sqlite();
-   bool crear_empresa_mysql();
-   bool crear_medica_mysql();
+   bool crear_empresa_sqlite(copy_db_progressFrm * form);
+   bool crear_medica_sqlite(copy_db_progressFrm * form);
+   bool crear_empresa_mysql(copy_db_progressFrm * form);
+   bool crear_medica_mysql(copy_db_progressFrm * form);
 };
 
 #endif // FRMEMPRESAS_H

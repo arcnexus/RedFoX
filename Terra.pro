@@ -83,7 +83,8 @@ SOURCES += main.cpp\
     frmveranalitica.cpp \
     frmvisitas.cpp \
     arearestringida_form.cpp \
-    block_terra_form.cpp
+    block_terra_form.cpp \
+    copy_db_progressfrm.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -135,7 +136,8 @@ HEADERS  += mainwindow.h \
     frmveranalitica.h \
     frmvisitas.h \
     arearestringida_form.h \
-    block_terra_form.h
+    block_terra_form.h \
+    copy_db_progressfrm.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -170,7 +172,8 @@ FORMS    += mainwindow.ui \
     prueba.ui \
     frmvisitas.ui \
     arearestringida_form.ui \
-    block_terra_form.ui
+    block_terra_form.ui \
+    copy_db_progressfrm.ui
 
 RESOURCES += \
     terra.qrc

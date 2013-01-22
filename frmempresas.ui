@@ -156,7 +156,7 @@
         <item row="0" column="0">
          <widget class="QPushButton" name="botAnadir">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -165,6 +165,12 @@
            <size>
             <width>115</width>
             <height>35</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>115</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="text">
@@ -185,7 +191,7 @@
         <item row="1" column="0">
          <widget class="QPushButton" name="botSiguiente">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -194,6 +200,12 @@
            <size>
             <width>115</width>
             <height>35</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>115</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="text">
@@ -214,7 +226,7 @@
         <item row="2" column="0">
          <widget class="QPushButton" name="botAnterior">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -223,6 +235,12 @@
            <size>
             <width>115</width>
             <height>35</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>115</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="text">
@@ -243,7 +261,7 @@
         <item row="3" column="0">
          <widget class="QPushButton" name="botBuscar">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -252,6 +270,12 @@
            <size>
             <width>115</width>
             <height>35</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>115</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="text">
@@ -272,7 +296,7 @@
         <item row="5" column="0">
          <widget class="QPushButton" name="botBorrar">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -281,6 +305,12 @@
            <size>
             <width>115</width>
             <height>35</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>115</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="text">
@@ -301,7 +331,7 @@
         <item row="4" column="0">
          <widget class="QPushButton" name="botGuardar">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -310,6 +340,12 @@
            <size>
             <width>115</width>
             <height>35</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>115</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="text">
@@ -330,7 +366,7 @@
         <item row="6" column="0">
          <widget class="QPushButton" name="botCerrar">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -339,6 +375,12 @@
            <size>
             <width>115</width>
             <height>35</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>115</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="text">
