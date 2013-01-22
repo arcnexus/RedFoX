@@ -12,8 +12,8 @@
 #include <QSqlRecord>
 #include <QSqlField>
 #include "frmempresas.h"
+#include "arearestringida_form.h"
 
-//NOTE - TheFox :: Archivo Revisado
 #include <QtCore/QTimer>
 
 Login::Login(Configuracion *m_config,QWidget *parent) :
@@ -75,14 +75,14 @@ void Login::on_btnAcceder_clicked()
             }
 			else 
 			{
-                QMessageBox::critical(0,"ACCESO DENEGADO","El usuario y la contraseña no se corresponden\n\n Verifique los datos");
+                QMessageBox::critical(this,"ACCESO DENEGADO","El usuario y la contraseña no se corresponden\n\n Verifique los datos");
                 ui->linePassword->setText("");
                 ui->linePassword->setFocus();
             }
        } 
 	   else
 	   {
-           QMessageBox::critical(0,"Error","No existe ningún usuario con este nombre");
+           QMessageBox::critical(this,"Error","No existe ningún usuario con este nombre");
            ui->lineUsuario->setText("");
            ui->lineUsuario->setFocus();
        }
@@ -146,11 +146,14 @@ void Login::Crearconfiguracion_clicked()
 
 void Login::btnEmpresa_clicked()
 {
-    //NOTE - Fixed pointer
-    QScopedPointer<FrmEmpresas>formEmpresa(new FrmEmpresas(this));
-    //FrmEmpresas *formEmpresa = new FrmEmpresas(this);
-    formEmpresa->setWindowState(Qt::WindowMaximized);
-    formEmpresa->exec();	
+    AreaRestringida_form check(this);
+    check.exec();
+    if(check.es_valido())
+    {
+        FrmEmpresas formEmpresa(this);
+        formEmpresa.setWindowState(Qt::WindowMaximized);
+        formEmpresa.exec();
+    }
 }
 
 void Login::on_pushButton_clicked()
