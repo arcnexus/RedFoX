@@ -12,6 +12,7 @@
 #include "paciente.h"
 #include "episodio.h"
 #include "imagenesdiagnostico.h"
+#include <QTreeWidgetItem>
 
 namespace Ui {
 class FrmFichaPaciente;
@@ -44,7 +45,7 @@ private slots:
     void on_btnEditarPaciente_clicked();
     void on_btnGuardarPaciente_clicked();
     void on_btnGuardarEpisodio_clicked();
-    void on_listaEpisodios_clicked(const QModelIndex &index);
+    void listaEpisodios_currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*);
     void on_btnEditarEpisodio_clicked();
     void on_btnDeshacerEpisodio_clicked();
     void on_btnAnadirFarma_clicked();

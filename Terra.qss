@@ -440,7 +440,7 @@ QTableView, QTableWidet {
      alternate-background-color: rgb(255, 255, 127);
  }
 
-QLineEdit,QComboBox,QSpinBox,QDateEdit,QTextEdit,QPlainTextEdit,QDateTimeEdit, QListView{
+QLineEdit,QComboBox,QSpinBox,QDateEdit,QTextEdit,QPlainTextEdit,QDateTimeEdit, QListView,QTreeWidget{
       /*background: rgb(255, 255, 255); */
       background-color: rgb(255, 255, 255);
       border-width: 1.5px;

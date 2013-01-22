@@ -243,29 +243,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="btnBorrar">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>38</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>B&amp;orrar</string>
-          </property>
-          <property name="icon">
-           <iconset resource="terra.qrc">
-            <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
      </layout>
@@ -727,6 +704,29 @@
         <property name="styleSheet">
          <string notr="true">color: rgb(29, 0, 255);
 background-color: rgb(255, 255, 192);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="btnBorrar">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>B&amp;orrar</string>
+        </property>
+        <property name="icon">
+         <iconset resource="terra.qrc">
+          <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>18</width>
+          <height>18</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -3533,7 +3533,6 @@ color: rgb(0, 0, 0);</string>
   <tabstop>btnEditar</tabstop>
   <tabstop>btnGuardar</tabstop>
   <tabstop>btnDeshacer</tabstop>
-  <tabstop>btnBorrar</tabstop>
   <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources>

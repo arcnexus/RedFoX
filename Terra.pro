@@ -84,7 +84,8 @@ SOURCES += main.cpp\
     frmvisitas.cpp \
     arearestringida_form.cpp \
     block_terra_form.cpp \
-    copy_db_progressfrm.cpp
+    copy_db_progressfrm.cpp \
+    visitas.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -137,7 +138,8 @@ HEADERS  += mainwindow.h \
     frmvisitas.h \
     arearestringida_form.h \
     block_terra_form.h \
-    copy_db_progressfrm.h
+    copy_db_progressfrm.h \
+    visitas.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \

@@ -78,6 +78,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->btnVerAnalitica,SIGNAL(clicked()),this,SLOT(VerAnalitica()));
     connect(ui->btnBorrarAnalitica,SIGNAL(clicked()),this,SLOT(BorrarAnalitica()));
     connect(ui->btnAnadirVisita,SIGNAL(clicked()),this,SLOT(AnadirVisita()));
+    connect(ui->listaEpisodios,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),this,SLOT(listaEpisodios_currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
 
 
     // Ocultar Iconos imagenes
@@ -143,32 +144,38 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
     Episodios.prepare("Select id, descripcion from episodios where idpaciente = :nId");
     Episodios.bindValue(":nId",idcliente);
     if(Episodios.exec()) {
-        ui->listaEpisodios->setColumnCount(1);
+        ui->listaEpisodios->setColumnCount(3);
+        ui->listaEpisodios->setColumnWidth(0,50);
+        ui->listaEpisodios->setColumnWidth(1,200);
+        ui->listaEpisodios->setColumnWidth(2,0);
         //--------------------------------
         while (Episodios.next()) {
             QSqlRecord registro = Episodios.record();
             QTreeWidgetItem *item = new QTreeWidgetItem(ui->listaEpisodios);
-
-            item->setText(0,registro.field("descripcion").value().toString());
+            item->setText(0,registro.field("id").value().toString());
+            item->setText(1,registro.field("descripcion").value().toString());
+            item->setText(2,"EPISODIO");
             ui->listaEpisodios->addTopLevelItem(item);
-            // TODO - Leer base de datos visitas para añadir como hijo de Episodios.
+            //Leer base de datos visitas para añadir como hijo de Episodios.
             QSqlQuery qVisitas(QSqlDatabase::database("dbmedica"));
-            qVisitas.prepare("select id,fechahora,medico from visitas where id =:nId");
+            qVisitas.prepare("select id,fechahora,medico from visitas where idepisodio =:nId");
             qVisitas.bindValue(":nId",registro.field("id").value().toString());
             if(qVisitas.exec()) {
                 while(qVisitas.next()){
                     QSqlRecord recVis = qVisitas.record();
                     QTreeWidgetItem *child = new QTreeWidgetItem(item);
-                    QString Valor = recVis.field("fechahora").value().toDateTime().toString() +" "+
+                    QString Valor = recVis.field("fechahora").value().toDateTime().toString("dd/MM/yyyy hh:mm") +" "+
                             recVis.field("medico").value().toString();
-                    child->setText(0,Valor);
+                    child->setText(0,recVis.field("id").value().toString());
+                    child->setText(1,Valor);
+                    child->setText(2,"VISITA");
+                    child->setIcon(0,QIcon(":Icons/PNG/notepad.png"));
                     item->addChild(child);
                 }
             }
         }
     } else
-        QMessageBox::warning(qApp->activeWindow(),tr("Error"),tr("pepito"),tr("aceptar"));
-    //ui->listaEpisodios->setModel(EpisodiosModelo);
+        QMessageBox::warning(qApp->activeWindow(),tr("Error"),tr("No se pueden cargar los datos del episodio"),tr("aceptar"));
 
 }
 
@@ -390,19 +397,18 @@ void FrmFichaPaciente::on_btnGuardarEpisodio_clicked()
 }
 
 
-void FrmFichaPaciente::on_listaEpisodios_clicked(const QModelIndex &index)
+void FrmFichaPaciente::listaEpisodios_currentItemChanged(QTreeWidgetItem*current,QTreeWidgetItem*previous)
 {
-    QString cDescripcion = ui->listaEpisodios->model()->data(index).toString();
-    QSqlQuery qEpisodio(QSqlDatabase::database("dbmedica"));
-    qEpisodio.prepare("select id from episodios where descripcion =:descripcion and idpaciente = :idpaciente");
-    qEpisodio.bindValue(":descripcion",cDescripcion);
-    qEpisodio.bindValue(":idpaciente",oPaciente->getid());
-    if (qEpisodio.exec())
-    {
-        qEpisodio.next();
-        oEpisodio->RecuperarEpisodio(qEpisodio.value(0).toInt());
-        cargarEpisodio(0);
-        ui->btnEditarEpisodio->setEnabled(true);
+    if(current->text(2) == "EPISODIO"){
+        int nIdEpisodio = current->text(0).toInt();
+        oEpisodio->RecuperarEpisodio(nIdEpisodio);
+        cargarEpisodio(1);
+
+    }
+    else {
+
+        int nIdVisita = current->text(0).toInt();
+        // TODO - Cargar Visita
     }
 }
 
