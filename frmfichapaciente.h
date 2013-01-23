@@ -56,6 +56,7 @@ private slots:
     void llenartablahistorialfarmacologiaepisodio();
     void llenartablahistorialimagenesepisodio();
     void llenartablahistorialanalisisepisodio();
+    void llenarTablahistorialvisitas();
     void BorrarDatosMedicamento();
     void MostrarFichaMedicamento();
     void AnadirImagenDiagnostico();

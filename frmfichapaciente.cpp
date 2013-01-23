@@ -142,7 +142,7 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
     QSqlQuery Episodios(QSqlDatabase::database("dbmedica"));
 
     Episodios.prepare("Select id, descripcion from episodios where idpaciente = :nId");
-    Episodios.bindValue(":nId",idcliente);
+    Episodios.bindValue(":nId",oPaciente->getid());
     if(Episodios.exec()) {
         ui->listaEpisodios->setColumnCount(3);
         ui->listaEpisodios->setColumnWidth(0,50);
@@ -202,6 +202,7 @@ void FrmFichaPaciente::cargarEpisodio(int control)
     llenartablahistorialfarmacologiaepisodio();
     llenartablahistorialimagenesepisodio();
     llenartablahistorialanalisisepisodio();
+    llenarTablahistorialvisitas();
 }
 
 void FrmFichaPaciente::guardarDatosPaciente()
@@ -669,6 +670,65 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
             pos++;
         }
     }
+}
+
+void FrmFichaPaciente::llenarTablahistorialvisitas()
+{
+    // Cargar visitas episodio
+    QStringList list;
+    list <<QObject::tr("FECHA/HORA") << tr("Doctor/Terapeuta") <<tr("EXPLORACIÓN") <<tr("ID");
+    QSqlQuery qVisitas(QSqlDatabase::database("dbmedica"));
+    QString cSQL = " Select id,fechahora, medico, exploracion from visitas where idepisodio = :id ";
+    qVisitas.prepare(cSQL);
+    qVisitas.bindValue(":id",oEpisodio->getid());
+    ui->listaVisitas->setRowCount(0);
+    ui->listaVisitas->setColumnCount(4);
+    ui->listaVisitas->setColumnWidth(0,230);
+    ui->listaVisitas->setColumnWidth(1,170);
+    ui->listaVisitas->setColumnWidth(2,120);
+    ui->listaVisitas->setColumnWidth(3,0);
+    ui->listaVisitas->setHorizontalHeaderLabels(list);
+    int pos = 0;
+    QSqlRecord reg ;
+    // Relleno la tabla
+    if (qVisitas.exec()) {
+        while (qVisitas.next()) {
+            // Nombre Medicamento
+            reg = qVisitas.record();
+            // Fecha Hora
+            ui->listaVisitas->setRowCount(pos+1);
+            QTableWidgetItem *newItem = new QTableWidgetItem(reg.field("fechahora").value().toDateTime().toString("dd/MM/yyyy hh:mm"));
+            // para que los elementos no sean editables
+            newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
+            newItem->setTextColor(Qt::blue);
+            ui->listaVisitas->setItem(pos,0,newItem);
+
+            // MEDICO
+;
+            QTableWidgetItem *newItem1 = new QTableWidgetItem(reg.field("doctor").value().toString());
+            // para que los elementos no sean editables
+            newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
+            newItem1->setTextColor(Qt::blue); // color de los items
+            ui->listaVisitas->setItem(pos,1,newItem1);
+
+            // EXPLORACIÓN
+            QTableWidgetItem *newItem2 = new QTableWidgetItem(reg.field("exploracion").value().toString());
+            // para que los elementos no sean editables
+            newItem2->setFlags(newItem2->flags() & (~Qt::ItemIsEditable));
+            newItem2->setTextColor(Qt::blue); // color de los items
+            ui->listaVisitas->setItem(pos,2,newItem2);
+
+            // ID
+            QTableWidgetItem *newItem3 = new QTableWidgetItem(reg.field("id").value().toString());
+            // para que los elementos no sean editables
+            newItem3->setFlags(newItem3->flags() & (~Qt::ItemIsEditable));
+            newItem3->setTextColor(Qt::blue); // color de los items
+            ui->listaVisitas->setItem(pos,3,newItem3);
+
+            pos++;
+        }
+    }
+
 }
 
 void FrmFichaPaciente::BorrarDatosMedicamento()

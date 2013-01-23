@@ -935,7 +935,21 @@ color: rgb(255, 0, 0);</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_3">
               <item row="0" column="0" colspan="5">
-               <widget class="QTableWidget" name="tableWidget_2"/>
+               <widget class="QTableWidget" name="listaVisitas">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 216);</string>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::SingleSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+               </widget>
               </item>
               <item row="1" column="0">
                <widget class="QPushButton" name="btnAnadirVisita">
