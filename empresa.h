@@ -15,7 +15,7 @@ public:
     void Recuperar(QString cSQL,int nProcede);
     void Guardar();
     void Vaciar();
-    void Borrar(int nId);
+    bool Borrar(int nId);
 
     // Getters
     int getid();

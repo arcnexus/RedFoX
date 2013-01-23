@@ -21,7 +21,6 @@ public:
 private slots:
     //TODO - boton buscar
     //TODO - boton borrar
-    //TODO - boton añadir
 
     void on_botSiguiente_clicked();
 
@@ -32,15 +31,16 @@ private slots:
     void txtcPoblacion_editingFinished();
 
     void txtcCp_editingFinished();
+
     void on_botAnadir_clicked();
 
     void on_btn_ruta_db_clicked();
 
     void on_txtcDriver_currentIndexChanged(int index);
 
-
-
     void on_btn_migrar_clicked();
+
+    void on_botBorrar_clicked();
 
 private:
     Ui::FrmEmpresas *ui;
@@ -50,6 +50,9 @@ private:
    bool crear_medica_sqlite(copy_db_progressFrm * form);
    bool crear_empresa_mysql(copy_db_progressFrm * form);
    bool crear_medica_mysql(copy_db_progressFrm * form);
+
+   void borrar_mysql();
+   void borrar_sqlite();
 };
 
 #endif // FRMEMPRESAS_H

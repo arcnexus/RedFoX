@@ -276,29 +276,35 @@ void Empresa::Vaciar()
     this->cCuentaProveedores= "400";
 }
 
-void Empresa::Borrar(int nId)
+bool Empresa::Borrar(int nId)
 {
     qEmpresa = QSqlQuery(QSqlDatabase::database("terra"));
-    frmDecision *Decision = new frmDecision();
-    Decision->Inicializar(QObject::tr("Borrar Empresa"),QObject::tr("¿Desea realmente Borrar esta ficha de empresa"),QObject::tr("Esta opción no se puede deshacer"),
-                          QObject::tr("Se borrarán todos los datos de la empresa"),QObject::tr("Borrar"),QObject::tr("Cancelar"));
-    int elegido = Decision->exec();
-   if(elegido == 1) {
-        qEmpresa.prepare("Delete from empresa where id = :nId");
-        qEmpresa.bindValue(":id",nId);
-        if(!qEmpresa.exec()){
-           QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar Empresa"),QObject::tr("Falló el borrado de la Empresa"),QObject::tr("&Aceptar"));
-        } else {
-            // Busco el id más proximo
-            qEmpresa.prepare("select * from articulos where id <:nId");
-            qEmpresa.bindValue(":nId",this->id);
-            qEmpresa.exec();
-            QSqlRecord registro = qEmpresa.record();
-            this->id = registro.field("id").value().toInt();
-
-         }
+    //    frmDecision *Decision = new frmDecision();
+    //    Decision->Inicializar(QObject::tr("Borrar Empresa"),QObject::tr("¿Desea realmente Borrar esta ficha de empresa"),QObject::tr("Esta opción no se puede deshacer"),
+    //                          QObject::tr("Se borrarán todos los datos de la empresa"),QObject::tr("Borrar"),QObject::tr("Cancelar"));
+    //    int elegido = Decision->exec();
+    //   if(elegido == 1) {
+    qEmpresa.prepare("Delete from empresas where id = "+QString::number(nId));
+    //qEmpresa.bindValue(":id",nId);
+    if(!qEmpresa.exec())
+    {
+        qDebug() << qEmpresa.lastQuery();
+        qDebug() << qEmpresa.lastError();
+        QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar Empresa"),QObject::tr("Falló el borrado de la Empresa"),QObject::tr("&Aceptar"));
+        return false;
     }
-   Decision->deleteLater();
+    else
+    {
+        // Busco el id más proximo
+        qEmpresa.prepare("select * from articulos where id <:nId");
+        qEmpresa.bindValue(":nId",this->id);
+        qEmpresa.exec();
+        QSqlRecord registro = qEmpresa.record();
+        this->id = registro.field("id").value().toInt();
+        return true;
+        //         }
+    }
+   //Decision->deleteLater();
 }
 
 int Empresa::getid()
