@@ -34,6 +34,7 @@
 //--
 int main(int argc, char *argv[])
 {
+    qDebug() << "drivers: "<< QSqlDatabase::drivers();
     QApplication a(argc, argv);
 	
     QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");

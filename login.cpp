@@ -158,6 +158,7 @@ void Login::btnEmpresa_clicked()
         FrmEmpresas formEmpresa(this);
         formEmpresa.setWindowState(Qt::WindowMaximized);
         formEmpresa.exec();
+        init();
     }
 }
 
@@ -172,6 +173,7 @@ void Login::init()
 	// Relleno combo empresas
 
     //NOTE - Fixed pointer
+    ui->cboEmpresa->clear();
     QScopedPointer<QSqlQuery>QryEmpresas(new QSqlQuery(QSqlDatabase::database("terra")));
     //QSqlQuery *QryEmpresas = new QSqlQuery(QSqlDatabase::database("terra"));
 

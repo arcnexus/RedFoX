@@ -369,12 +369,6 @@ bool FrmEmpresas::crear_empresa_sqlite(copy_db_progressFrm *form)
             int i = _query.indexOf("\"")+1;
             QString tabla = _query.mid(i,_query.indexOf("\"",i)-i);
             form->setProgess_2("Creando tabla: "+tabla , index);
-            qDebug() << "---------------------";
-            if(!valid)
-            {
-            qDebug() << query.lastQuery();
-            qDebug() << query.lastError();
-            }
         }
     }
     if(!valid)
