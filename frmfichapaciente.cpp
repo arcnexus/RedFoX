@@ -343,6 +343,8 @@ void FrmFichaPaciente::BloquearCamposEpisodio(bool state)
      ui->btnDeshacerEpisodio->setEnabled(!state);
      ui->btnEpisodioAbierto->setEnabled(!state);
      ui->btnEpisodioCerrado->setEnabled(!state);
+
+     ui->btnAnadirEpisodio->setEnabled(state);
 }
 
 void FrmFichaPaciente::LLenarEpisodio()
@@ -354,7 +356,7 @@ void FrmFichaPaciente::LLenarEpisodio()
     oEpisodio->setdoctor(ui->cboDoctorEpisodio->currentText());
     oEpisodio->setfecha(ui->txtFechaEpisodio->date());
     oEpisodio->sethistorial(ui->txtHistorialEpisodio->toPlainText());
-    oEpisodio->setidPaciente(oPaciente->getid());
+    oEpisodio->setidPaciente(oPaciente->getidCliente());
 
     oEpisodio->setprivado(ui->chkEpisodioprivado->isChecked());
 }

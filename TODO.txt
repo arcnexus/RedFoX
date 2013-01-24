@@ -50,6 +50,10 @@ HISTORIA CLINICA
         TODO - Definir informes
 - poner iconos en Treewidget de episodios.
 
+BASE DE DATOS
+- ¿Tabla categoria usuario?
+- ¿Form para añadir medicos?
+- ¿Mysql db de usuarios?
 
                                 
         
