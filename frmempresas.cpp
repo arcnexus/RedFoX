@@ -18,10 +18,12 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     ui->txtMensaje->setText("ATENCION: Modifique con cuidado. Cambiar estos\n valores puede hacer que el programa deje\n de funcionar");
 
     connect(ui->botCerrar,SIGNAL(clicked()),this,SLOT(close()));
+    connect(ui->botCerrar_2,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(txtcPoblacion_editingFinished()));
     connect(ui->txtcCP,SIGNAL(editingFinished()),this,SLOT(txtcCp_editingFinished()));
 
     on_botSiguiente_clicked();
+    on_botSiguiente_user_clicked();
 }
 
 FrmEmpresas::~FrmEmpresas()
@@ -636,6 +638,15 @@ void FrmEmpresas::borrar_sqlite()
     oEmpresa.Borrar(oEmpresa.getid());
 }
 
+void FrmEmpresas::llenar_user(QSqlRecord record)
+{
+    ui->txt_id_user->setText(record.value(0).toString());
+    ui->txt_nombre_user->setText(record.value(1).toString());
+    ui->txt_pass_user->setText(record.value(2).toString());
+    ui->spin_nacceso_user->setValue(record.value(3).toInt());
+    ui->txt_categoria_user->setText(record.value(4).toString());
+}
+
 void FrmEmpresas::on_btn_ruta_db_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
@@ -672,6 +683,105 @@ void FrmEmpresas::on_botBorrar_clicked()
         else
             borrar_mysql();
     }
+}
+
+void FrmEmpresas::on_botAnadir_user_clicked()
+{
+    if(ui->botAnadir_user->text() == "Añadir")
+    {
+        ui->botAnadir_user->setText("Deshacer");
+        ui->botAnadir_user->setIcon(QIcon(":/Icons/PNG/undo.png"));
+
+        QSqlQuery get_last(QSqlDatabase::database("terra"));
+        get_last.prepare("SELECT * FROM usuarios ORDER BY id DESC LIMIT 1");
+        if(get_last.exec())
+        {
+            limpiar_campos();
+            if(get_last.next())
+            {
+                int last_id = get_last.record().value("id").toInt()  + 1;
+                ui->txt_id_user->setText(QString::number(last_id));
+            }
+            else
+            {
+                ui->txt_id_user->setText("1");
+            }
+        }
+    }
     else
-        qDebug() << "no";
+    {
+        ui->botAnadir_user->setText("Añadir");
+        ui->botAnadir_user->setIcon(QIcon(":/Icons/PNG/add.png"));
+    }
+}
+
+void FrmEmpresas::on_botSiguiente_user_clicked()
+{
+    QSqlQuery next_user(QSqlDatabase::database("terra"));
+    QString sql = QString("SELECT * FROM usuarios WHERE id > %1 LIMIT 1 ")
+            .arg(ui->txt_id_user->text());
+    next_user.prepare(sql);
+    if(next_user.exec())
+    {
+        if(next_user.next())
+            llenar_user(next_user.record());
+        else
+            QMessageBox::information(this,tr("Final de archivo"),
+                                     tr("No exsten mas usuarios"),tr("Aceptar"));
+
+    }
+}
+
+void FrmEmpresas::on_botAnterior_user_clicked()
+{
+    QSqlQuery next_user(QSqlDatabase::database("terra"));
+    QString sql = QString("SELECT * FROM usuarios WHERE id < %1 ORDER BY id DESC LIMIT 1")
+            .arg(ui->txt_id_user->text());
+    next_user.prepare(sql);
+    if(next_user.exec())
+    {
+        if(next_user.next())
+            llenar_user(next_user.record());
+        else
+            QMessageBox::information(this,tr("Inicio de archivo"),
+                                     tr("Este es el primer usuario"),tr("Aceptar"));
+
+    }
+}
+
+void FrmEmpresas::on_botBuscar_user_clicked()
+{
+    //TODO buscar user
+}
+
+void FrmEmpresas::on_botGuardar_user_clicked()
+{
+    if(ui->botAnadir_user->text() == "Añadir")
+    {
+        //TODO modificar user actual
+    }
+    else
+    {
+
+        QSqlQuery add_user(QSqlDatabase::database("terra"));
+        add_user.prepare("INSERT INTO usuarios (id,nombre,contrasena,nivelacceso,categoria) "
+                         "VALUES (?1,?2,?3,?4,?5)");
+        add_user.bindValue("?1",ui->txt_id_user->text());
+        add_user.bindValue("?2",ui->txt_nombre_user->text());
+        add_user.bindValue("?3",ui->txt_pass_user->text());
+        add_user.bindValue("?4",ui->spin_nacceso_user->value());
+        add_user.bindValue("?5",ui->txt_categoria_user->text());
+        if(add_user.exec())
+            QMessageBox::information(this,tr("Guardado"),tr("Se ha guardado con exito"),tr("Aceptar"));
+        else
+            QMessageBox::critical(this,tr("Error"),tr("No se ha podido guardar el nuevo usuario.\n%1").arg(add_user.lastError().text()),tr("Aceptar"));
+
+        ui->botAnadir_user->setText("Añadir");
+        ui->botAnadir_user->setIcon(QIcon(":/Icons/PNG/add.png"));
+    }
+}
+
+void FrmEmpresas::on_botBorrar_user_clicked()
+{
+    //TODO borrar user
 }

@@ -42,17 +42,31 @@ private slots:
 
     void on_botBorrar_clicked();
 
+    void on_botAnadir_user_clicked();
+
+    void on_botSiguiente_user_clicked();
+
+    void on_botAnterior_user_clicked();
+
+    void on_botBuscar_user_clicked();
+
+    void on_botGuardar_user_clicked();
+
+    void on_botBorrar_user_clicked();
+
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
     void limpiar_campos();
-   bool crear_empresa_sqlite(copy_db_progressFrm * form);
-   bool crear_medica_sqlite(copy_db_progressFrm * form);
-   bool crear_empresa_mysql(copy_db_progressFrm * form);
-   bool crear_medica_mysql(copy_db_progressFrm * form);
+    bool crear_empresa_sqlite(copy_db_progressFrm * form);
+    bool crear_medica_sqlite(copy_db_progressFrm * form);
+    bool crear_empresa_mysql(copy_db_progressFrm * form);
+    bool crear_medica_mysql(copy_db_progressFrm * form);
 
-   void borrar_mysql();
-   void borrar_sqlite();
+    void borrar_mysql();
+    void borrar_sqlite();
+
+    void llenar_user(QSqlRecord record);
 };
 
 #endif // FRMEMPRESAS_H

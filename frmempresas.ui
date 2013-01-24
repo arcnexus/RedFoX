@@ -59,7 +59,7 @@
       <string notr="true">background-color: rgb(215, 215, 215);</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="Empresas">
       <attribute name="title">
@@ -1206,7 +1206,7 @@
        <item row="0" column="0">
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QPushButton" name="botAnadir_2">
+          <widget class="QPushButton" name="botAnadir_user">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -1254,7 +1254,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="botSiguiente_2">
+          <widget class="QPushButton" name="botSiguiente_user">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -1302,7 +1302,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="botAnterior_2">
+          <widget class="QPushButton" name="botAnterior_user">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -1350,7 +1350,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="botBuscar_2">
+          <widget class="QPushButton" name="botBuscar_user">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -1398,7 +1398,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="botGuardar_2">
+          <widget class="QPushButton" name="botGuardar_user">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -1446,7 +1446,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="botBorrar_2">
+          <widget class="QPushButton" name="botBorrar_user">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -1527,7 +1527,7 @@
        <item row="0" column="1">
         <layout class="QFormLayout" name="formLayout">
          <item row="0" column="1">
-          <widget class="QLineEdit" name="lineEdit_2">
+          <widget class="QLineEdit" name="txt_id_user">
            <property name="maximumSize">
             <size>
              <width>100</width>
@@ -1536,6 +1536,12 @@
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1547,7 +1553,7 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QLineEdit" name="txt_nombre_user">
            <property name="maximumSize">
             <size>
              <width>300</width>
@@ -1567,7 +1573,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="lineEdit_3">
+          <widget class="QLineEdit" name="txt_pass_user">
            <property name="maximumSize">
             <size>
              <width>300</width>
@@ -1576,6 +1582,9 @@
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
            </property>
           </widget>
          </item>
@@ -1587,7 +1596,7 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QSpinBox" name="spinBox">
+          <widget class="QSpinBox" name="spin_nacceso_user">
            <property name="maximumSize">
             <size>
              <width>100</width>
@@ -1596,6 +1605,12 @@
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>9</number>
            </property>
           </widget>
          </item>
@@ -1607,7 +1622,7 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QLineEdit" name="lineEdit_4">
+          <widget class="QLineEdit" name="txt_categoria_user">
            <property name="maximumSize">
             <size>
              <width>300</width>
@@ -1632,9 +1647,6 @@
         </layout>
        </item>
       </layout>
-      <zorder>layoutWidget</zorder>
-      <zorder>formLayoutWidget</zorder>
-      <zorder>label_38</zorder>
      </widget>
     </widget>
    </item>
