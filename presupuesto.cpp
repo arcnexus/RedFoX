@@ -5,7 +5,6 @@
 #include <QSqlRecord>
 #include <QErrorMessage>
 #include <QMessageBox>
-#include "frmdecision.h"
 #include <QDebug>
 #include "configuracion.h"
 #include <QString>
@@ -494,23 +493,25 @@ void Presupuesto::ModificarLineaPresupuesto(int id_lin, QString cCodigo, double 
 
 void Presupuesto::BorrarLineaPresupuesto(int id_lin)
 {
-    if (id_lin !=0) {
-        QSqlQuery *qrylin_pre = new QSqlQuery(QSqlDatabase::database("empresa"));
-        frmDecision msgBox;
-        msgBox.Inicializar(QObject::tr("Borrar línea"),QObject::tr("Está a punto de borrar la línea del Presupuesto"),
-                           QObject::tr("¿Desea continuar?"),"",QObject::tr("Sí"),QObject::tr("No"));
-        int elegido = msgBox.exec();
-       if(elegido == 1) {
-            qrylin_pre->prepare("Delete from lin_pre where id = :id_lin");
-            qrylin_pre->bindValue(":id_lin",id_lin);
-            if(!qrylin_pre->exec()){
-               QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar línea"),QObject::tr("Falló el borrado de la línea de Presupuesto"),
-                                     QObject::tr("&Aceptar"));
+    if (id_lin !=0)
+    {
+        if(QMessageBox::question(qApp->activeWindow(),qApp->tr("Borrar línea"),
+                                 qApp->tr("Está a punto de borrar la línea del Presupuesto\n¿Desea continuar?"),
+                                 qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted)
+        {
+            QSqlQuery qrylin_pre(QSqlDatabase::database("empresa"));
+            qrylin_pre.prepare("Delete from lin_pre where id = :id_lin");
+            qrylin_pre.bindValue(":id_lin",id_lin);
+            if(!qrylin_pre.exec())
+            {
+                QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar línea"),QObject::tr("Falló el borrado de la línea de Presupuesto"),
+                                      QObject::tr("&Aceptar"));
             }
-            delete qrylin_pre;
             calcularPresupuesto();
-         }
-    } else {
+        }
+    }
+    else
+    {
         QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar línea"),QObject::tr("Debe seleccionar una línea para poder borrar"),
                               QObject::tr("OK"));
     }

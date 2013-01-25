@@ -4,7 +4,6 @@
 #include <QErrorMessage>
 #include <QSqlQuery>
 #include <QMessageBox>
-#include "frmdecision.h"
 #include "configuracion.h"
 #include <QApplication>
 
@@ -385,20 +384,22 @@ void Cliente::DescontarDeuda(int id_deuda, double rPagado){
     qClientes_deuda.clear();
 
 }
-void Cliente::Borrar(int id_cliente) {
-    QSqlQuery qryCliente(QSqlDatabase::database("empresa"));
-    frmDecision msgBox;
-    msgBox.Inicializar("Borrar Ficha","Está apunto de borrar la ficha de un cliente","¿Desea continuar?","","Sí","No");
-    int elegido = msgBox.exec();
-   if(elegido == QMessageBox::Yes) {
+void Cliente::Borrar(int id_cliente)
+{
+    if(QMessageBox::question(qApp->activeWindow(),tr("Borrar Ficha"),
+                          tr("Está apunto de borrar la ficha de un cliente\n¿Desea continuar?"),
+                          tr("No"),tr("Si")) == QMessageBox::Accepted)
+    {
+        QSqlQuery qryCliente(QSqlDatabase::database("empresa"));
         qryCliente.prepare("Delete from clientes where id = :id_Cliente");
         qryCliente.bindValue(":id",id_cliente);
-        if(!qryCliente.exec()){
-           QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),tr("Falló el borrado de la deuda del cliente"),tr("&Aceptar"));
-        }
-
-
-   }
+        if(!qryCliente.exec())
+            QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),
+                                  tr("Falló el borrado de la deuda del cliente"),tr("&Aceptar"));
+        else
+            QMessageBox::information(qApp->activeWindow(),tr("Borrar cliente"),
+                                     tr("Borrado correctamente"),tr("&Aceptar"));
+    }
 }
 
 QString Cliente::NuevoCodigoCliente()

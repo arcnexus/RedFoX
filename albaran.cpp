@@ -5,7 +5,6 @@
 #include <QSqlRecord>
 #include <QErrorMessage>
 #include <QMessageBox>
-#include "frmdecision.h"
 #include <QDebug>
 #include "configuracion.h"
 #include <QString>
@@ -392,45 +391,46 @@ void Albaran::ModificarLineaAlbaran(int id_lin, QString cCodigo, double nCantida
 
 void Albaran::BorrarLineaAlbaran(int id_lin)
 {
-    if (id_lin !=0) {
-        QSqlQuery *qrylin_alb = new QSqlQuery(QSqlDatabase::database("empresa"));
-        frmDecision msgBox;
-        msgBox.Inicializar(tr("Borrar línea"),tr("Está a punto de borrar la línea de la Albaran"),
-                           tr("¿Desea continuar?"),"",tr("Sí"),tr("No"));
-        int elegido = msgBox.exec();
-       if(elegido == 1) {
-           qrylin_alb->prepare("Select * from lin_alb where id = :id_lin");
-           qrylin_alb->bindValue(":id_lin",id_lin);
-           if (qrylin_alb->exec()) {
-               QSqlRecord record = qrylin_alb->record();
-               // Reponer Artículo
-               QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
-               QArticulos->prepare("update articulos set "
-                                   "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
-                                   "nStockReal = nStockReal - :nCantidad2, "
-                                   "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
-                                   "where cCodigo= :cCodigo");
-               QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
-               QArticulos->bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
-               QArticulos->bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
-               QArticulos->bindValue(":rTotal",record.field("rTotal").value().toDouble());
-               QArticulos->bindValue(":cCodigo",record.field("cCodigo").value().toString());
-               QArticulos->exec();
-               delete QArticulos;
-
-           }
-            qrylin_alb->prepare("Delete from lin_alb where id = :id_lin");
-            qrylin_alb->bindValue(":id_lin",id_lin);
-            if(!qrylin_alb->exec()){
-               QMessageBox::critical(qApp->activeWindow(),tr("Borrar línea"),tr("Falló el borrado de la línea de Albaran"),tr("&Aceptar"));
+    if (id_lin !=0)
+    {
+        if(QMessageBox::question(qApp->activeWindow(),tr("Borrar línea"),
+                                 tr("Está a punto de borrar la línea de la Albaran"),
+                                 tr("No"),tr("Si")) == QMessageBox::Accepted)
+        {
+            QSqlQuery qrylin_alb(QSqlDatabase::database("empresa"));
+            qrylin_alb.prepare("Select * from lin_alb where id = :id_lin");
+            qrylin_alb.bindValue(":id_lin",id_lin);
+            if (qrylin_alb.exec()) {
+                QSqlRecord record = qrylin_alb.record();
+                // Reponer Artículo
+                QSqlQuery QArticulos(QSqlDatabase::database("empresa"));
+                QArticulos.prepare("update articulos set "
+                                    "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
+                                    "nStockReal = nStockReal - :nCantidad2, "
+                                    "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
+                                    "where cCodigo= :cCodigo");
+                QArticulos.bindValue(":dUltimaVenta",QDate::currentDate());
+                QArticulos.bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
+                QArticulos.bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
+                QArticulos.bindValue(":rTotal",record.field("rTotal").value().toDouble());
+                QArticulos.bindValue(":cCodigo",record.field("cCodigo").value().toString());
+                QArticulos.exec();
             }
-            delete qrylin_alb;
+            qrylin_alb.prepare("Delete from lin_alb where id = :id_lin");
+            qrylin_alb.bindValue(":id_lin",id_lin);
+            if(!qrylin_alb.exec()){
+                QMessageBox::critical(qApp->activeWindow(),tr("Borrar línea"),tr("Falló el borrado de la línea de Albaran"),tr("&Aceptar"));
+            }
             calcularAlbaran();
-         }
-    } else {
+        }
+    }
+    else
+    {
         QMessageBox::critical(qApp->activeWindow(),tr("Borrar Línea Albaran"),tr("Debe seleccionar una línea para poder borrar"),tr("OK"));
     }
 }
+
+
 
 void Albaran::calcularAlbaran()
 {

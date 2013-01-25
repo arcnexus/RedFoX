@@ -5,7 +5,6 @@
 #include <QSqlRecord>
 #include <QErrorMessage>
 #include <QMessageBox>
-#include "frmdecision.h"
 #include <QDebug>
 #include "configuracion.h"
 #include <QString>
@@ -435,43 +434,44 @@ delete QArticulos;
 
 void Pedidos::BorrarLineaPedido(int id_lin)
 {
-    if (id_lin !=0) {
-        QSqlQuery *qrylin_ped = new QSqlQuery(QSqlDatabase::database("empresa"));
-        frmDecision msgBox;
-        msgBox.Inicializar(QObject::tr("Borrar línea"),QObject::tr("Está a punto de borrar la línea de la Pedido"),
-                           QObject::tr("¿Desea continuar?"),"",QObject::tr("Sí"),QObject::tr("No"));
-        int elegido = msgBox.exec();
-       if(elegido == 1) {
-           qrylin_ped->prepare("Select * from lin_ped where id = :id_lin");
-           qrylin_ped->bindValue(":id_lin",id_lin);
-           if (qrylin_ped->exec()) {
-               QSqlRecord record = qrylin_ped->record();
-               // Reponer Artículo
-               QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
-               QArticulos->prepare("update articulos set "
+    if (id_lin !=0)
+    {
+        if(QMessageBox::question(qApp->activeWindow(),qApp->tr("Borrar línea"),
+                                 qApp->tr("Está a punto de borrar la línea de la Pedido\n¿Desea continuar?"),
+                                 qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted)
+        {
+            QSqlQuery qrylin_ped(QSqlDatabase::database("empresa"));
+            qrylin_ped.prepare("Select * from lin_ped where id = :id_lin");
+            qrylin_ped.bindValue(":id_lin",id_lin);
+            if (qrylin_ped.exec())
+            {
+                QSqlRecord record = qrylin_ped.record();
+                // Reponer Artículo
+                QSqlQuery QArticulos(QSqlDatabase::database("empresa"));
+                QArticulos.prepare("update articulos set "
                                    "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
                                    "nStockReal = nStockReal - :nCantidad2, "
                                    "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
                                    "where cCodigo= :cCodigo");
-               QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
-               QArticulos->bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
-               QArticulos->bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
-               QArticulos->bindValue(":rTotal",record.field("rTotal").value().toDouble());
-               QArticulos->bindValue(":cCodigo",record.field("cCodigo").value().toString());
-               QArticulos->exec();
-               delete QArticulos;
-
-           }
-            qrylin_ped->prepare("Delete from lin_ped where id = :id_lin");
-            qrylin_ped->bindValue(":id_lin",id_lin);
-            if(!qrylin_ped->exec()){
-               QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar línea"),QObject::tr("Falló el borrado de la línea de Pedido"),
-                                     QObject::tr("&Aceptar"));
+                QArticulos.bindValue(":dUltimaVenta",QDate::currentDate());
+                QArticulos.bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
+                QArticulos.bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
+                QArticulos.bindValue(":rTotal",record.field("rTotal").value().toDouble());
+                QArticulos.bindValue(":cCodigo",record.field("cCodigo").value().toString());
+                QArticulos.exec();
             }
-            delete qrylin_ped;
+            qrylin_ped.prepare("Delete from lin_ped where id = :id_lin");
+            qrylin_ped.bindValue(":id_lin",id_lin);
+            if(!qrylin_ped.exec())
+            {
+                QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar línea"),QObject::tr("Falló el borrado de la línea de Pedido"),
+                                      QObject::tr("&Aceptar"));
+            }
             calcularPedido();
-         }
-    } else {
+        }
+    }
+    else
+    {
         QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar Línea Pedido"),QObject::tr("Debe seleccionar una línea para poder borrar"),
                               QObject::tr("OK"));
     }

@@ -7,7 +7,6 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "configuracion.h"
-#include "frmdecision.h"
 #include <QApplication>
 #ifdef WIN32
     #define and &&
@@ -118,70 +117,70 @@ void Factura::AnadirFactura() {
 void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
     cab_fac.prepare( "UPDATE cab_fac set "
-                   "cCodigoCliente = :cCodigoCliente,"
-                   "cFactura = :cFactura,"
-                   "dFecha = :dFecha,"
-                   "dFechaCobro = :dFechaCobro,"
-                   "iId_Cliente = :iId_Cliente,"
-                   "cCliente = :cCliente,"
-                   "cDireccion = :cDireccion,"
-                   "cDireccion2 = :cDireccion2,"
-                   "cCp=:cCp,"
-                   "cPoblacion =:cPoblacion,"
-                   "cProvincia =:cProvincia,"
-                   "cPais = :cPais,"
-                   "cCif = :cCif,"
-                   "lRecargoEquivalencia = :lRecargoEquivalencia,"
-                   "rSubtotal =:rSubtotal,"
-                   "nDto =:nDto,"
-                   "nDtoPP =:nDtoPP,"
-                   "rImporteDescuento =:rImporteDescuento,"
-                   "rImporteDescuentoPP =:rImporteDescuentoPP,"
-                   "rBase =:rBase,"
-                   "nIva =:nIva,"
-                   "rImporteIva = :rImporteIva,"
-                   "rTotal = :rTotal,"
-                   "lImpresa =:lImpresa,"
-                   "lCobrada =:lCobrada,"
-                   "lContabilizada =:lContabilizada,"
-                   "id_FormaPago =:id_FormaPago,"
-                   "cFormaPago = :cFormaPago,"
-                   "tComentario =:tComentario,"
-                   "rBase1 =:rBase1,"
-                   "rBase2 =:rBase2,"
-                   "rBase3 =:rBase3,"
-                   "rBase4 =:rBase4,"
-                   "nPorcentajeIVA1 =:nPorcentajeIVA1,"
-                   "nPorcentajeIVA2 =:nPorcentajeIVA2,"
-                   "nPorcentajeIVA3 =:nPorcentajeIVA3,"
-                   "nPorcentajeIVA4 =:nPorcentajeIVA4,"
-                   "rIVA1 =:rIVA1,"
-                   "rIVA2 =:rIVA2,"
-                   "rIVA3 =:rIVA3,"
-                   "rIVA4 =:rIVA4,"
-                   "rTotal1=:rTotal1,"
-                   "rTotal2=:rTotal2,"
-                   "rTotal3=:rTotal3,"
-                   "rTotal4=:rTotal4,"
-                   "nRec1 =:nRec1,"
-                   "nRec2 =:nRec2,"
-                   "nRec3 =:nRec3,"
-                   "nRec4 =:nRec4,"
-                   "rRecargoEq1 =:rRecargoEq1,"
-                   "rRecargoEq2 =:rRecargoEq2,"
-                   "rRecargoEq3 =:rRecargoEq3,"
-                   "rRecargoEq4 =:rRecargoEq4,"
-                   "rTotalRecargoEq =:rTotalRecargoEq,"
-                   "rEntregadoaCuenta =:rEntregadoaCuenta,"
-                   "rImportePendiente =:rImportePendiente,"
-                   "cCodigoEntidad =:cCodigoEntidad,"
-                   "cOficinaEntidad =:cOficinaEntidad,"
-                   "cDCCuenta =:cDCCuenta,"
-                   "cNumeroCuenta =:cNumeroCuenta,"
-                   "cPedidoCliente =:cPedidoCliente,"
-                   "nIRPF =:nIRPF,"
-                   "rImporteIRPF =:rImporteIRPF"
-                   " where Id=:Id");
+                     "cCodigoCliente = :cCodigoCliente,"
+                     "cFactura = :cFactura,"
+                     "dFecha = :dFecha,"
+                     "dFechaCobro = :dFechaCobro,"
+                     "iId_Cliente = :iId_Cliente,"
+                     "cCliente = :cCliente,"
+                     "cDireccion = :cDireccion,"
+                     "cDireccion2 = :cDireccion2,"
+                     "cCp=:cCp,"
+                     "cPoblacion =:cPoblacion,"
+                     "cProvincia =:cProvincia,"
+                     "cPais = :cPais,"
+                     "cCif = :cCif,"
+                     "lRecargoEquivalencia = :lRecargoEquivalencia,"
+                     "rSubtotal =:rSubtotal,"
+                     "nDto =:nDto,"
+                     "nDtoPP =:nDtoPP,"
+                     "rImporteDescuento =:rImporteDescuento,"
+                     "rImporteDescuentoPP =:rImporteDescuentoPP,"
+                     "rBase =:rBase,"
+                     "nIva =:nIva,"
+                     "rImporteIva = :rImporteIva,"
+                     "rTotal = :rTotal,"
+                     "lImpresa =:lImpresa,"
+                     "lCobrada =:lCobrada,"
+                     "lContabilizada =:lContabilizada,"
+                     "id_FormaPago =:id_FormaPago,"
+                     "cFormaPago = :cFormaPago,"
+                     "tComentario =:tComentario,"
+                     "rBase1 =:rBase1,"
+                     "rBase2 =:rBase2,"
+                     "rBase3 =:rBase3,"
+                     "rBase4 =:rBase4,"
+                     "nPorcentajeIVA1 =:nPorcentajeIVA1,"
+                     "nPorcentajeIVA2 =:nPorcentajeIVA2,"
+                     "nPorcentajeIVA3 =:nPorcentajeIVA3,"
+                     "nPorcentajeIVA4 =:nPorcentajeIVA4,"
+                     "rIVA1 =:rIVA1,"
+                     "rIVA2 =:rIVA2,"
+                     "rIVA3 =:rIVA3,"
+                     "rIVA4 =:rIVA4,"
+                     "rTotal1=:rTotal1,"
+                     "rTotal2=:rTotal2,"
+                     "rTotal3=:rTotal3,"
+                     "rTotal4=:rTotal4,"
+                     "nRec1 =:nRec1,"
+                     "nRec2 =:nRec2,"
+                     "nRec3 =:nRec3,"
+                     "nRec4 =:nRec4,"
+                     "rRecargoEq1 =:rRecargoEq1,"
+                     "rRecargoEq2 =:rRecargoEq2,"
+                     "rRecargoEq3 =:rRecargoEq3,"
+                     "rRecargoEq4 =:rRecargoEq4,"
+                     "rTotalRecargoEq =:rTotalRecargoEq,"
+                     "rEntregadoaCuenta =:rEntregadoaCuenta,"
+                     "rImportePendiente =:rImportePendiente,"
+                     "cCodigoEntidad =:cCodigoEntidad,"
+                     "cOficinaEntidad =:cOficinaEntidad,"
+                     "cDCCuenta =:cDCCuenta,"
+                     "cNumeroCuenta =:cNumeroCuenta,"
+                     "cPedidoCliente =:cPedidoCliente,"
+                     "nIRPF =:nIRPF,"
+                     "rImporteIRPF =:rImporteIRPF"
+                     " where Id=:Id");
 
     // Pasamos valores reales a la Select
     cab_fac.bindValue(":Id",nId_Factura);
@@ -248,83 +247,85 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
     cab_fac.bindValue(":cPedidoCliente",this->cPedidoCliente);
     cab_fac.bindValue(":nIRPF",this->nIRPF);
     cab_fac.bindValue(":rImporteIRPF",this->rImporteIRPF);
-    if(!cab_fac.exec()){
+    if(!cab_fac.exec())
+    {
         QMessageBox::critical(qApp->activeWindow(),tr("error al guardar datos Factura:"), cab_fac.lastError().text());
-    } else {
+    }
+    else
+    {
         QMessageBox::information(qApp->activeWindow(),tr("Guardar datos"),tr("La Factura se ha guardado correctamente:"),tr("Ok"));
         QString cSQL = "Select * from cab_fac where id ="+QString::number(nId_Factura);
         RecuperarFactura(cSQL);
-        if (FacturaLegal) {
+        if (FacturaLegal)
+        {
+            if(QMessageBox::question(qApp->activeWindow(),tr("Guardar Factura"),
+                                     tr("¿Desea cobrar la factura ahora o generar una deuda al cliente?"),
+                                     tr("Cobrar"),tr("Generar deuda")) == QMessageBox::Accepted)
+            {
+                CobrarFactura();
+            }
+            else
+            {
+                // Busco ficha cliente
+                QSqlQuery Cliente(QSqlDatabase::database("empresa"));
+                Cliente.prepare("Select * from clientes where cCodigoCliente = :cCodCli");
+                Cliente.bindValue(":cCodCli",this->cCodigoCliente);
+                if (Cliente.exec())
+                {
+                    Cliente.next();
+                    QSqlRecord record = Cliente.record();
 
-            frmDecision msgBox;
-            msgBox.Inicializar(tr("Guardar Factura"),"",tr("¿Desea cobrar la factura ahora o generar una deuda al cliente?"),"",
-                               tr("Cobrar"),tr("Generar deuda"));
-            int elegido = msgBox.exec();
-           if(elegido == 1) {
-               CobrarFactura();
+                    // Genero deuda cliente
 
-           } else {
-               // Busco ficha cliente
-               QSqlQuery *Cliente = new QSqlQuery(QSqlDatabase::database("empresa"));
-               Cliente->prepare("Select * from clientes where cCodigoCliente = :cCodCli");
-               Cliente->bindValue(":cCodCli",this->cCodigoCliente);
-               if (Cliente->exec()) {
-                   Cliente->next();
-                   QSqlRecord record = Cliente->record();
-
-
-                   // Genero deuda cliente
-
-                   QSqlQuery *Deudacliente = new QSqlQuery(QSqlDatabase::database("empresa"));
-                   Deudacliente->prepare("Insert into clientes_deuda (id_Cliente,dFecha,dVencimiento,cDocumento,id_Ticket,id_Factura,nTipo,"
+                    QSqlQuery Deudacliente(QSqlDatabase::database("empresa"));
+                    Deudacliente.prepare("Insert into clientes_deuda (id_Cliente,dFecha,dVencimiento,cDocumento,id_Ticket,id_Factura,nTipo,"
                                          "rImporte,rPagado,rPendienteCobro,cEntidad,cOficina,cDC,cCuenta)"
                                          " values (:id_cliente,:dFecha,:dVencimiento,:cDocumento,:id_tiquet,:id_factura,:nTipo,"
                                          ":rImporte,:rPagado,:rPendienteCobro,:cEntidad,:cOficina,:cDC,:cCuenta)");
-                   Deudacliente->bindValue(":id_cliente",record.field("Id").value().toInt());
-                   Deudacliente->bindValue(":dFecha",QDate::currentDate());
-                   Deudacliente->bindValue(":dVencimiento",QDate::currentDate());
-                   // TODO Deudacliente->bindValue(":dVencimiento",oConf->CalcularVencimiento());
-                   Deudacliente->bindValue(":cDocumento",this->cFactura);
-                   Deudacliente->bindValue(":id_tiquet",0);
-                   Deudacliente->bindValue(":id_factura",nId_Factura);
-                   Deudacliente->bindValue("nTipo",1);
-                   Deudacliente->bindValue(":rImporte",this->rTotal);
-                   Deudacliente->bindValue(":rPagado",0);
-                   Deudacliente->bindValue(":rPendienteCobro",this->rTotal);
-                   Deudacliente->bindValue(":cEntidad",record.field("cCEntidadBancaria").value().toString());
-                   Deudacliente->bindValue(":cOficina",record.field("cOficinaBancaria").value().toString());
-                   Deudacliente->bindValue(":cDC",record.field("cDC").value().toString());
-                   Deudacliente->bindValue(":cCuenta",record.field("cCuentaCorriente").value().toString());
-                   if(!Deudacliente->exec()) {
-                       qDebug() << Deudacliente->lastQuery();
-                       QMessageBox::warning(qApp->activeWindow(),tr("Añadir deuda"),tr("No se ha podido añadir la deuda ")+Deudacliente->lastError().text() ,tr("OK"));
-                    } else {
-                       // Añadimos acumulados ficha cliente.
-                       Cliente->prepare("Update clientes set dFechaUltimaCompra = :dFechaUltimaCompra, "
+                    Deudacliente.bindValue(":id_cliente",record.field("Id").value().toInt());
+                    Deudacliente.bindValue(":dFecha",QDate::currentDate());
+                    Deudacliente.bindValue(":dVencimiento",QDate::currentDate());
+                    // TODO Deudacliente->bindValue(":dVencimiento",oConf->CalcularVencimiento());
+                    Deudacliente.bindValue(":cDocumento",this->cFactura);
+                    Deudacliente.bindValue(":id_tiquet",0);
+                    Deudacliente.bindValue(":id_factura",nId_Factura);
+                    Deudacliente.bindValue("nTipo",1);
+                    Deudacliente.bindValue(":rImporte",this->rTotal);
+                    Deudacliente.bindValue(":rPagado",0);
+                    Deudacliente.bindValue(":rPendienteCobro",this->rTotal);
+                    Deudacliente.bindValue(":cEntidad",record.field("cCEntidadBancaria").value().toString());
+                    Deudacliente.bindValue(":cOficina",record.field("cOficinaBancaria").value().toString());
+                    Deudacliente.bindValue(":cDC",record.field("cDC").value().toString());
+                    Deudacliente.bindValue(":cCuenta",record.field("cCuentaCorriente").value().toString());
+                    if(!Deudacliente.exec())
+                    {
+                        qDebug() << Deudacliente.lastQuery();
+                        QMessageBox::warning(qApp->activeWindow(),tr("Añadir deuda"),tr("No se ha podido añadir la deuda ")+Deudacliente.lastError().text() ,tr("OK"));
+                    }
+                    else
+                    {
+                        // Añadimos acumulados ficha cliente.
+                        Cliente.prepare("Update clientes set dFechaUltimaCompra = :dFechaUltimaCompra, "
                                         "rAcumuladoVentas = rAcumuladoVentas + :rAcumuladoVentas,"
                                         "rVentasEjercicio = rVentasEjercicio + :rVentasEjercicio,"
                                         "rDeudaActual = rDeudaActual + :rDeudaActual "
                                         " where Id = :Id_Cliente");
-                       Cliente->bindValue(":dFechaUltimaCompra",QDate::currentDate());
-                       Cliente->bindValue(":rAcumuladoVentas",this->rTotal);
-                       Cliente->bindValue(":rVentasEjercicio",this->rTotal);
-                       Cliente->bindValue(":rDeudaActual",this->rTotal);
-                       Cliente->bindValue(":Id_Cliente",record.field("Id").value().toInt());
-                       if (!Cliente->exec()){
-                           QMessageBox::warning(qApp->activeWindow(),tr("Añadir Acumulados"),
-                                                tr("No se ha podido añadir los correspondientes acumulados a la ficha del cliente"),
-                                                tr("OK"));
-                       }
-                   }
-                   delete Deudacliente;
-               }
-                delete Cliente;
-               }
-           }
-
+                        Cliente.bindValue(":dFechaUltimaCompra",QDate::currentDate());
+                        Cliente.bindValue(":rAcumuladoVentas",this->rTotal);
+                        Cliente.bindValue(":rVentasEjercicio",this->rTotal);
+                        Cliente.bindValue(":rDeudaActual",this->rTotal);
+                        Cliente.bindValue(":Id_Cliente",record.field("Id").value().toInt());
+                        if (!Cliente.exec())
+                        {
+                            QMessageBox::warning(qApp->activeWindow(),tr("Añadir Acumulados"),
+                                                 tr("No se ha podido añadir los correspondientes acumulados a la ficha del cliente"),
+                                                 tr("OK"));
+                        }
+                    }
+                }
+            }
+        }
     }
-
-
 }
 
 void Factura::RecuperarFactura(QString cSQL){
@@ -543,42 +544,42 @@ void Factura::ModificarLineaFactura(int id_lin, QString cCodigo, double nCantida
 
 void Factura::BorrarLineaFactura(int id_lin)
 {
-    if (id_lin !=0) {
-        QSqlQuery *qrylin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
-        frmDecision msgBox;
-        msgBox.Inicializar(tr("Borrar línea"),tr("Está a punto de borrar la línea de la factura"),
-                           tr("¿Desea continuar?"),"",tr("Sí"),tr("No"));
-        int elegido = msgBox.exec();
-       if(elegido == 1) {
-           qrylin_fac->prepare("Select * from lin_fac where id = :id_lin");
-           qrylin_fac->bindValue(":id_lin",id_lin);
-           if (qrylin_fac->exec()) {
-               QSqlRecord record = qrylin_fac->record();
-               // Reponer Artículo
-               QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
-               QArticulos->prepare("update articulos set "
+    if (id_lin !=0)
+    {
+        if(QMessageBox::question(qApp->activeWindow(),tr("Borrar línea"),
+                                 tr("Está a punto de borrar la línea de la factura\n¿Desea continuar?"),
+                                 tr("No"),tr("Si")) == QMessageBox::Accepted)
+        {
+            QSqlQuery qrylin_fac(QSqlDatabase::database("empresa"));
+            qrylin_fac.prepare("Select * from lin_fac where id = :id_lin");
+            qrylin_fac.bindValue(":id_lin",id_lin);
+            if (qrylin_fac.exec())
+            {
+                QSqlRecord record = qrylin_fac.record();
+                // Reponer Artículo
+                QSqlQuery QArticulos(QSqlDatabase::database("empresa"));
+                QArticulos.prepare("update articulos set "
                                    "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
                                    "nStockReal = nStockReal - :nCantidad2, "
                                    "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
                                    "where cCodigo= :cCodigo");
-               QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
-               QArticulos->bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
-               QArticulos->bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
-               QArticulos->bindValue(":rTotal",record.field("rTotal").value().toDouble());
-               QArticulos->bindValue(":cCodigo",record.field("cCodigo").value().toString());
-               QArticulos->exec();
-               delete QArticulos;
-
-           }
-            qrylin_fac->prepare("Delete from lin_fac where id = :id_lin");
-            qrylin_fac->bindValue(":id_lin",id_lin);
-            if(!qrylin_fac->exec()){
-               QMessageBox::critical(qApp->activeWindow(),tr("Borrar línea"),tr("Falló el borrado de la línea de factura"),tr("&Aceptar"));
+                QArticulos.bindValue(":dUltimaVenta",QDate::currentDate());
+                QArticulos.bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
+                QArticulos.bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
+                QArticulos.bindValue(":rTotal",record.field("rTotal").value().toDouble());
+                QArticulos.bindValue(":cCodigo",record.field("cCodigo").value().toString());
+                QArticulos.exec();
             }
-            delete qrylin_fac;
+            qrylin_fac.prepare("Delete from lin_fac where id = :id_lin");
+            qrylin_fac.bindValue(":id_lin",id_lin);
+            if(!qrylin_fac.exec()){
+                QMessageBox::critical(qApp->activeWindow(),tr("Borrar línea"),tr("Falló el borrado de la línea de factura"),tr("&Aceptar"));
+            }
             calcularFactura();
-         }
-    } else {
+        }
+    }
+    else
+    {
         QMessageBox::critical(qApp->activeWindow(),tr("Borrar Línea factura"),tr("Debe seleccionar una línea para poder borrar"),tr("OK"));
     }
 }

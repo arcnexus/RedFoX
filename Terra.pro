@@ -41,7 +41,6 @@ SOURCES += main.cpp\
     cliente.cpp \
     proveedor.cpp \
     frmbuscarcliente.cpp \
-    frmdecision.cpp \
     frmfacturas.cpp \
     factura.cpp \
     frmbuscarpoblacion.cpp \
@@ -95,7 +94,6 @@ HEADERS  += mainwindow.h \
     cliente.h \
     proveedor.h \
     frmbuscarcliente.h \
-    frmdecision.h \
     frmfacturas.h \
     factura.h \
     frmbuscarpoblacion.h \
@@ -147,7 +145,6 @@ FORMS    += mainwindow.ui \
     frmproveedores.ui \
     frmarticulos.ui \
     frmbuscarcliente.ui \
-    frmdecision.ui \
     frmfacturas.ui \
     pruebas.ui \
     frmbuscarpoblacion.ui \

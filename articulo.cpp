@@ -4,7 +4,6 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QMessageBox>
-#include "frmdecision.h"
 #include <QByteArray>
 #include <QApplication>
 Articulo::Articulo()
@@ -410,30 +409,27 @@ void Articulo::Vaciar()
 
 void Articulo::Borrar(int nId)
 {
-    frmDecision *Decision = new frmDecision();
-    QSqlQuery qryArticulo(QSqlDatabase::database("empresa"));
-    Decision->Inicializar(QObject::tr("Borrar Artículo"),QObject::tr("¿Desea realmente Borrar este artículo"),QObject::tr("Esta opción no se puede deshacer"),
-                          "",QObject::tr("Borrar"),QObject::tr("Cancelar"));
-    int elegido = Decision->exec();
-   if(elegido == 1) {
+    if(QMessageBox::question(qApp->activeWindow(),qApp->tr("Borrar Artículo"),
+                             qApp->tr("¿Desea realmente Borrar este artículo?\nEsta opción no se puede deshacer"),
+                             qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted)
+    {
+        QSqlQuery qryArticulo(QSqlDatabase::database("empresa"));
         qryArticulo.prepare("Delete from articulos where id = :nId");
         qryArticulo.bindValue(":id",nId);
-        if(!qryArticulo.exec()){
-           QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar Artíclo"),QObject::tr("Falló el borrado del Artículo"),QObject::tr("&Aceptar"));
-        } else {
+        if(!qryArticulo.exec())
+        {
+            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar Artíclo"),QObject::tr("Falló el borrado del Artículo"),QObject::tr("&Aceptar"));
+        }
+        else
+        {
             // Busco el id más proximo
             qryArticulo.prepare("select * from articulos where id <:nId");
             qryArticulo.bindValue(":nId",this->id);
             qryArticulo.exec();
             QSqlRecord registro = qryArticulo.record();
             this->id = registro.field("Id").value().toInt();
-
-         }
-
-
-     }
-   delete Decision;
-
+        }
+    }
 }
 
 void Articulo::Vender(int id, int cantidad, double rPVP)
