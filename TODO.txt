@@ -16,7 +16,7 @@ FRMEMPRESAS.CPP
  (La idea es que para mono-usuario puedan usar sqlite para no tener que instalar ninguna BD y si necesitan más de un ordenador
   entonces mysql). 
   
-  El botón migrar a BD multipuesto debe ser capaz de migrar los datos de sqlite a una BD mySQL (Crear BD en  mySQL y Rellenar)
+  - El botón migrar a BD multipuesto debe ser capaz de migrar los datos de sqlite a una BD mySQL (Crear BD en  mySQL y Rellenar)
 [END] -   El botón Guardar debe de ser capaz de generar una nueva BD en MySQL o en SQLITE si está no existe y según el driver elegido por el usuario
   
   
@@ -50,13 +50,30 @@ HISTORIA CLINICA
         TODO - Definir informes
 - poner iconos en Treewidget de episodios.
 
+
+
+GENERICO:
+
 BASE DE DATOS
-- ¿Tabla categoria usuario?
-- ¿Form para añadir medicos?
-- ¿Mysql db de usuarios?
+- Terminar reestructuración y esquema BDEMPRESA y BDMEDICA en mysql-workbench
+- Añadir tablas necesarias
+- Tabla categoria usuario
+- Form para añadir medicos
+- Mysql db de usuarios??? - ¿A qué te refieres con esto, no la tenemos ya en sqlite?
+
+- Separar BD callejero /CP de España de la BD sqlite (son muchos Mb y podría estar en la web o bien ser descargable a parte, la BD
+  termina pesando más de 20 Mb cuando podrían ser unos pocos K)
+
+OTROS:
+
+-Enlace con Prestashop - (Agupunt- pero nos da mucha potencia de cara a la venta por web enlazada con terra)
+-Enlace con Jooma        ( lo mismo que Prestashop)
+-Importación datos facturaplus. (Importar de Facturaplus -Contaplus facilita la captación de usuarios que ahora usen facturaplus como
+                                 software de gestión de la clínica)
 
 
-Hola Marc en vbox :P
+
+
 
                                 
         

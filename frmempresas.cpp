@@ -764,13 +764,29 @@ void FrmEmpresas::on_botGuardar_user_clicked()
     {
 
         QSqlQuery add_user(QSqlDatabase::database("terra"));
-        add_user.prepare("INSERT INTO usuarios (id,nombre,contrasena,nivelacceso,categoria) "
+        /*add_user.prepare("INSERT INTO usuarios (id,nombre,contrasena,nivelacceso,categoria) "
                          "VALUES (?1,?2,?3,?4,?5)");
+         Id es un campo autoincremental y no se debe sobreescribir ya que puede dar problemas, siendo la propia bd
+           la  que debe ser la encargada de la gestión de ese campo
+
         add_user.bindValue("?1",ui->txt_id_user->text());
         add_user.bindValue("?2",ui->txt_nombre_user->text());
         add_user.bindValue("?3",ui->txt_pass_user->text());
         add_user.bindValue("?4",ui->spin_nacceso_user->value());
-        add_user.bindValue("?5",ui->txt_categoria_user->text());
+        add_user.bindValue("?5",ui->txt_categoria_user->text());*/
+
+        // NOTE - Así no falla la entrada de datos a la bd en linux, prueba a ver si funciona bien en windows.
+
+        add_user.prepare("INSERT INTO usuarios (id,nombre,contrasena,nivelacceso,categoria) "
+                                 "VALUES (:id,:nombre,:contrasena,:nivelacceso,:categoria)");
+
+                add_user.bindValue(":id",ui->txt_id_user->text());
+                add_user.bindValue(":nombre",ui->txt_nombre_user->text());
+                add_user.bindValue(":contrasena",ui->txt_pass_user->text());
+                add_user.bindValue(":nivelacceso",ui->spin_nacceso_user->value());
+                add_user.bindValue(":categoria",ui->txt_categoria_user->text());
+
+
         if(add_user.exec())
             QMessageBox::information(this,tr("Guardado"),tr("Se ha guardado con exito"),tr("Aceptar"));
         else
