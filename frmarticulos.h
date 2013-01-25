@@ -62,10 +62,6 @@ private slots:
     void on_botBuscarSubfamilia_clicked();
 
 public slots:
-    void CerrarBusquedaOKSeccion();
-    void CerrarBusquedaOKFamilia();
-    void CerrarBusquedaOKSubFamilia();
-    void CerrarBusqueda();
     void AnadirSeccion();
 
 private:

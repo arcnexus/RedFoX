@@ -756,7 +756,6 @@ background-color: rgb(255, 255, 255);</string>
     </property>
     <addaction name="btnClientes"/>
     <addaction name="btnProveedores"/>
-    <addaction name="btnArt_culos"/>
     <addaction name="btnFormas_de_Pago"/>
     <addaction name="btnTipos_de_Iva"/>
     <addaction name="btnAgenda"/>
@@ -784,9 +783,19 @@ background-color: rgb(255, 255, 255);</string>
      <string>Administrador</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuAlmacen">
+    <property name="title">
+     <string>Almacen</string>
+    </property>
+    <addaction name="btnArt_culos"/>
+    <addaction name="actionGestion_de_Secciones"/>
+    <addaction name="actionGestion_de_Familias"/>
+    <addaction name="actionGestion_de_subfamilias"/>
+   </widget>
    <addaction name="menuArchivos"/>
    <addaction name="menuVentas"/>
    <addaction name="menuCompras"/>
+   <addaction name="menuAlmacen"/>
    <addaction name="menuAdministrador"/>
   </widget>
   <action name="btnClientes">
@@ -899,6 +908,21 @@ background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>Ventas Contado</string>
+   </property>
+  </action>
+  <action name="actionGestion_de_Secciones">
+   <property name="text">
+    <string>Gestion de Secciones</string>
+   </property>
+  </action>
+  <action name="actionGestion_de_Familias">
+   <property name="text">
+    <string>Gestion de Familias</string>
+   </property>
+  </action>
+  <action name="actionGestion_de_subfamilias">
+   <property name="text">
+    <string>Gestion de SubFamilias</string>
    </property>
   </action>
  </widget>

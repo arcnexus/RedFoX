@@ -26,6 +26,7 @@
 #include <QProgressBar>
 
 #include "block_terra_form.h"
+#include "Gestion_Almacen/gestion_seccionalmacen.h"
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 #include <QDesktopWidget>
@@ -104,7 +105,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(BtnMantenimiento,SIGNAL(clicked()),this,SLOT(btnMantenimientos_clicked()));
     connect(BtnEntradas,SIGNAL(clicked()),this,SLOT(btnVentas_clicked()));
     connect(BtnCerrar,SIGNAL(clicked()),this,SLOT(close()));
-
+    connect(ui->actionGestion_de_Secciones,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
+    connect(ui->actionGestion_de_Familias,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
+    connect(ui->actionGestion_de_subfamilias,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
 
 
     QSqlDatabase dbEmp;
@@ -451,4 +454,26 @@ void MainWindow::on_btn_bloquear_clicked()
     this->hide();
     form.exec();
     this->show();
+}
+
+void MainWindow::divisiones_almacen()
+{
+    if(sender()== ui->actionGestion_de_Secciones)
+    {
+        gestion_SeccionAlmacen form(this,"secciones",editar);
+        form.setWindowTitle(tr("Secciones"));
+        form.exec();
+    }
+    else if (sender() == ui->actionGestion_de_Familias)
+    {
+        gestion_SeccionAlmacen form(this,"familias",editar);
+        form.setWindowTitle(tr("Familias"));
+        form.exec();
+    }
+    else if (sender() == ui->actionGestion_de_subfamilias)
+    {
+        gestion_SeccionAlmacen form(this,"subfamilias",editar);
+        form.setWindowTitle(tr("SubFamilias"));
+        form.exec();
+    }
 }

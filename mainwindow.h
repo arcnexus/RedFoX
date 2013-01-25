@@ -69,6 +69,7 @@ private slots:
 
     void on_btn_bloquear_clicked();
 
+    void divisiones_almacen();
 private:
     Ui::MainWindow *ui;
 

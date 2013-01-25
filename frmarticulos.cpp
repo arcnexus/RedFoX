@@ -13,7 +13,7 @@
 #include <QListView>
 
 
-
+#include "Gestion_Almacen/gestion_seccionalmacen.h"
 
 FrmArticulos::FrmArticulos(Configuracion *o_config, QWidget *parent) :
     QDialog(parent),
@@ -54,20 +54,16 @@ FrmArticulos::~FrmArticulos()
 void FrmArticulos::on_botAnadir_clicked()
 {
     desbloquearCampos();
-
     VaciarCampos();
-    oArticulo->Anadir();
-    LLenarCampos();
-
+    //LLenarCampos();
     //ui->lblImagenArticulo->setPixmap(QPixmap::fromImage());
     ui->txtcCodigo->setFocus();
-
-
 }
 
 void FrmArticulos::on_botGuardar_clicked()
 {
     bloquearCampos();
+    oArticulo->Anadir();
     CargarCamposEnArticulo();
     oArticulo->Guardar();
 }
@@ -77,7 +73,6 @@ void FrmArticulos::on_botSiguiente_clicked()
     QString cId = QString::number(oArticulo->getId());
     oArticulo->Recuperar("Select * from articulos where id >"+cId+" order by id limit 1 ",1);
     LLenarCampos();
-
 }
 void FrmArticulos::on_botAnterior_clicked()
 {
@@ -601,74 +596,15 @@ void FrmArticulos::on_TablaBuscarArt_doubleClicked(const QModelIndex &index)
 
 void FrmArticulos::on_botBuscarSeccion_clicked()
 {
-    ventana = new QDialog(this);
-    ventana->setMinimumWidth(300);
-    ventana->setMinimumHeight(350);
-    lista = new QListView(ventana);
-    QSqlQueryModel *modelo = new QSqlQueryModel(this);
-    modelo->setQuery("Select cSeccion from Secciones",QSqlDatabase::database("empresa"));
-    lista->setModel(modelo);
-    QGridLayout *layout = new QGridLayout(ventana);
-    QPushButton *botAceptar = new QPushButton(tr("Aceptar"));
-    QPushButton *botCancelar = new QPushButton(tr("Cancelar"));
-    QPushButton *botAnadir = new QPushButton(tr("Añadir"));
-    layout->addWidget(lista,0,0,1,1);
-    layout->addWidget(botAnadir,0,1,2,1);
-    layout->addWidget(botAceptar,1,0);
-    layout->addWidget(botCancelar,1,1);
-    ventana->setLayout(layout);
-    ventana->setWindowTitle(tr("Seleccione una Sección"));
-    connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusquedaOKSeccion()));
-    connect(botCancelar,SIGNAL(clicked()),this, SLOT(CerrarBusqueda()));
-    ventana->show();
+    gestion_SeccionAlmacen form(this,"secciones",editar);
+    form.setWindowTitle(tr("Secciones"));
+    if(form.exec() == QDialog::Accepted)
+    {
+        ui->txtcSeccion->setText(form.value);
+    }
 }
 
-void FrmArticulos::CerrarBusquedaOKSeccion()
-{
-    ui->txtcSeccion->setText(lista->currentIndex().data().toString());
-    QSqlQuery Secciones = QSqlQuery(QSqlDatabase::database("empresa"));
-    if(Secciones.exec("Select id from Secciones where cSeccion ='"+ui->txtcSeccion->text()+"'")){
-        Secciones.next();
-        oArticulo->setid_Seccion(Secciones.value(0).toInt());
-    } else
-        QMessageBox::warning(qApp->activeWindow(), tr("Seleccionar Sección"),tr("No se puede recuperar correctamente la sección")+
-                             Secciones.lastError().text(),tr("Ok"));
-    ventana->close();
 
-
-}
-
-void FrmArticulos::CerrarBusquedaOKFamilia()
-{
-    ui->txtcFamilia->setText(lista->currentIndex().data().toString());
-    QSqlQuery Familia = QSqlQuery(QSqlDatabase::database("empresa"));
-    if(Familia.exec("Select id from familias where cFamilia ='"+ui->txtcFamilia->text()+"'")){
-        Familia.next();
-        oArticulo->setid_Familia(Familia.value(0).toInt());
-    } else
-        QMessageBox::warning(qApp->activeWindow(), tr("Seleccionar Familia / Error devuelto: "),tr("No se puede recuperar correctamente la Familia")+
-                             Familia.lastError().text(),tr("Ok"));
-    ventana->close();
-
-}
-
-void FrmArticulos::CerrarBusquedaOKSubFamilia()
-{
-    ui->txtcSubFamilia->setText(lista->currentIndex().data().toString());
-    QSqlQuery SubFamilia = QSqlQuery(QSqlDatabase::database("empresa"));
-    if(SubFamilia.exec("Select id from subfamilias where cSubfamilia ='"+ui->txtcSubFamilia->text()+"'")){
-        SubFamilia.next();
-        oArticulo->setid_SubFamilia(SubFamilia.value(0).toInt());
-    } else
-        QMessageBox::warning(qApp->activeWindow(), tr("Seleccionar SubFamilia / Error devuelto: "),tr("No se puede recuperar correctamente la SubFamilia")+
-                             SubFamilia.lastError().text(),tr("Ok"));
-    ventana->close();
-}
-
-void FrmArticulos::CerrarBusqueda()
-{
-    ventana->close();
-}
 
 void FrmArticulos::AnadirSeccion()
 {
@@ -679,47 +615,32 @@ void FrmArticulos::AnadirSeccion()
 
 void FrmArticulos::on_botBuscarFamilia_clicked()
 {
-    ventana = new QDialog(this);
-    ventana->setMinimumWidth(300);
-    ventana->setMinimumHeight(350);
-    lista = new QListView(ventana);
-    QSqlQueryModel *modelo = new QSqlQueryModel(this);
-    modelo->setQuery("Select cFamilia from Familias where Id_Seccion = "+QString::number(oArticulo->getid_Seccion())
-                     ,QSqlDatabase::database("empresa"));
-    lista->setModel(modelo);
+    gestion_SeccionAlmacen form(this,"familias",editar);
+    form.setWindowTitle(tr("Familias"));
+    QSqlQuery query(QSqlDatabase::database("empresa"));
+    query.prepare(QString("SELECT id FROM Secciones WHERE cSeccion = '%1' ").arg(ui->txtcSeccion->text()));
+    if (query.exec())
+        if(query.next())
+            form.filter("Id_Seccion = "+query.record().value(0).toString());
 
-    QGridLayout *layout = new QGridLayout(ventana);
-    QPushButton *botAceptar = new QPushButton("Aceptar");
-    QPushButton *botCancelar = new QPushButton("Cancelar");
-    layout->addWidget(lista,0,0,1,2);
-    layout->addWidget(botAceptar,1,0);
-    layout->addWidget(botCancelar,1,1);
-    ventana->setLayout(layout);
-    ventana->setWindowTitle(tr("Seleccione una família"));
-    connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusquedaOKFamilia()));
-    connect(botCancelar,SIGNAL(clicked()),this, SLOT(CerrarBusqueda()));
-    ventana->show();
+    if(form.exec() == QDialog::Accepted)
+    {
+        ui->txtcFamilia->setText(form.value);
+    }
 }
 
 void FrmArticulos::on_botBuscarSubfamilia_clicked()
 {
-    ventana = new QDialog(this);
-    ventana->setMinimumWidth(300);
-    ventana->setMinimumHeight(350);
-    lista = new QListView(ventana);
-    QSqlQueryModel *modelo = new QSqlQueryModel(this);
-    modelo->setQuery("Select cSubfamilia from subfamilias where Id_Familia = "+QString::number(oArticulo->getid_Familia())
-                     ,QSqlDatabase::database("empresa"));
-    lista->setModel(modelo);
-    QGridLayout *layout = new QGridLayout(ventana);
-    QPushButton *botAceptar = new QPushButton("Aceptar");
-    QPushButton *botCancelar = new QPushButton("Cancelar");
-    layout->addWidget(lista,0,0,1,2);
-    layout->addWidget(botAceptar,1,0);
-    layout->addWidget(botCancelar,1,1);
-    ventana->setLayout(layout);
-    ventana->setWindowTitle(tr("Seleccione una Subfamília"));
-    connect(botAceptar, SIGNAL(clicked()),this, SLOT(CerrarBusquedaOKSubFamilia()));
-    connect(botCancelar,SIGNAL(clicked()),this, SLOT(CerrarBusqueda()));
-    ventana->show();
+    gestion_SeccionAlmacen form(this,"subfamilias",editar);
+    form.setWindowTitle(tr("SubFamilias"));
+    QSqlQuery query(QSqlDatabase::database("empresa"));
+    query.prepare(QString("SELECT id FROM familias WHERE cFamilia = '%1'").arg(ui->txtcFamilia->text()));
+    if (query.exec())
+        if(query.next())
+            form.filter("Id_Seccion = "+query.record().value(0).toString());
+
+    if(form.exec() == QDialog::Accepted)
+    {
+        ui->txtcSubFamilia->setText(form.value);
+    }
 }

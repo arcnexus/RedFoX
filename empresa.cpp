@@ -4,7 +4,6 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QMessageBox>
-#include "frmdecision.h"
 #include <QApplication>
 Empresa::Empresa(QObject *parent) :
     QObject(parent)

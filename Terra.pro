@@ -84,7 +84,8 @@ SOURCES += main.cpp\
     arearestringida_form.cpp \
     block_terra_form.cpp \
     copy_db_progressfrm.cpp \
-    visitas.cpp
+    visitas.cpp \
+    Gestion_Almacen/gestion_seccionalmacen.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -137,7 +138,8 @@ HEADERS  += mainwindow.h \
     arearestringida_form.h \
     block_terra_form.h \
     copy_db_progressfrm.h \
-    visitas.h
+    visitas.h \
+    Gestion_Almacen/gestion_seccionalmacen.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -172,7 +174,8 @@ FORMS    += mainwindow.ui \
     frmvisitas.ui \
     arearestringida_form.ui \
     block_terra_form.ui \
-    copy_db_progressfrm.ui
+    copy_db_progressfrm.ui \
+    Gestion_Almacen/gestion_seccionalmacen.ui
 
 RESOURCES += \
     terra.qrc
