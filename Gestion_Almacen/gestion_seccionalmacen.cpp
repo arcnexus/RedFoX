@@ -1,6 +1,7 @@
 #include "gestion_seccionalmacen.h"
 #include "ui_gestion_seccionalmacen.h"
-
+#include <QDebug>
+#include <QSqlError>
 gestion_SeccionAlmacen::gestion_SeccionAlmacen(QWidget *parent,  QString tabla, int tipo ) :
     QDialog(parent),
     ui(new Ui::gestion_SeccionAlmacen)
@@ -43,7 +44,8 @@ gestion_SeccionAlmacen::gestion_SeccionAlmacen(QWidget *parent,  QString tabla, 
         model->setRelation(2,QSqlRelation("familias","id","cFamilia"));
     }
 
-    model->select();
+    if(!model->select())
+        qDebug() << model->lastError();
 }
 
 gestion_SeccionAlmacen::~gestion_SeccionAlmacen()

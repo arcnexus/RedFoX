@@ -618,11 +618,13 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
     gestion_SeccionAlmacen form(this,"familias",editar);
     form.setWindowTitle(tr("Familias"));
     QSqlQuery query(QSqlDatabase::database("empresa"));
-    query.prepare(QString("SELECT id FROM Secciones WHERE cSeccion = '%1' ").arg(ui->txtcSeccion->text()));
+    query.prepare(QString("SELECT id FROM secciones WHERE cSeccion = '%1' ").arg(ui->txtcSeccion->text()));
     if (query.exec())
         if(query.next())
             form.filter("Id_Seccion = "+query.record().value(0).toString());
 
+    qDebug () << query.lastQuery();
+    qDebug () << query.lastError();
     if(form.exec() == QDialog::Accepted)
     {
         ui->txtcFamilia->setText(form.value);
