@@ -1,6 +1,7 @@
 #include "db_table_view.h"
 #include "ui_db_table_view.h"
-
+#include <QDebug>
+#include <QSqlError>
 Db_table_View::Db_table_View(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Db_table_View)
@@ -26,7 +27,8 @@ void Db_table_View::set_db(QString db)
 void Db_table_View::set_table(QString tabla)
 {
     model->setTable(tabla);
-    model->select();
+    if(!model->select())
+        qDebug () << model->lastError();
     ui->resultado_list->hideColumn(0);
 }
 

@@ -763,8 +763,12 @@ background-color: rgb(255, 255, 255);</string>
     <addaction name="btnSalir"/>
     <addaction name="actionDoctores"/>
     <addaction name="actionBancos"/>
-    <addaction name="actionTipos_I_V_A"/>
-    <addaction name="actionFormas_de_pago"/>
+    <addaction name="actionPaises"/>
+    <addaction name="actionAvisos"/>
+    <addaction name="actionTipos_de_imagen"/>
+    <addaction name="actionTipos_de_anal_tica"/>
+    <addaction name="actionCampos_de_analitica"/>
+    <addaction name="actionMotivos_de_interconsulta"/>
    </widget>
    <widget class="QMenu" name="menuVentas">
     <property name="title">
@@ -957,6 +961,36 @@ background-color: rgb(255, 255, 255);</string>
   <action name="actionConceptos_tallas">
    <property name="text">
     <string>Conceptos tallas</string>
+   </property>
+  </action>
+  <action name="actionPaises">
+   <property name="text">
+    <string>Paises</string>
+   </property>
+  </action>
+  <action name="actionAvisos">
+   <property name="text">
+    <string>Avisos</string>
+   </property>
+  </action>
+  <action name="actionTipos_de_imagen">
+   <property name="text">
+    <string>Tipos de imagen</string>
+   </property>
+  </action>
+  <action name="actionTipos_de_anal_tica">
+   <property name="text">
+    <string>Tipos de analítica</string>
+   </property>
+  </action>
+  <action name="actionCampos_de_analitica">
+   <property name="text">
+    <string>Campos de analitica</string>
+   </property>
+  </action>
+  <action name="actionMotivos_de_interconsulta">
+   <property name="text">
+    <string>Motivos de interconsulta</string>
    </property>
   </action>
  </widget>
