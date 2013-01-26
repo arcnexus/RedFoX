@@ -1,5 +1,10 @@
 QDialog {
    background-color :rgb(219, 228, 255);
+
+}
+
+QWidget {
+    background-color: #ecefed;
 }
 
 /* Nice Windows-XP-style password character. */
@@ -31,11 +36,12 @@ QStatusBar::item {
 
 
 tab {
-    border radius:5px;
+    border-radius:5px;
 
 }
 QTabWidget::pane { /* The tab widget frame */
-    border-top: 2px solid #1e2c4a;
+    /*border-top: 2px solid #1e2c4a;*/
+    border-radius:5px;
 }
 
 QTabWidget::tab-bar {
@@ -48,7 +54,6 @@ QTabWidget::tab-bar {
 
 QTabBar::tab {
     background: #304163;
-    /*border-bottom-color: #9DA2FF;*/
     color: #FFFFFF;
     /* same as the pane color */
     border-top-left-radius: 4px;
@@ -60,7 +65,7 @@ QTabBar::tab {
 }
 
 QTabBar::tab:selected, QTabBar::tab:hover {
-    /*background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,   stop: 0 #1d2146, stop: 0.4 #525CB3, stop: 0.5 #3A407E, stop: 1.0 #9DA2FF);*/
+
     background:#ecf1f0;
     color:#000000
 }
@@ -84,7 +89,7 @@ QTabBar::scroller  {
 QTabBar QToolButton  {
     /* the scroll buttons are tool buttons */
     border-image: url(:Icons/images/spinup.png) 2;
-        border-width: 2px;
+        border-width: 0px;
     }
 
 QListView {

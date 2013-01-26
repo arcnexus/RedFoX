@@ -29,7 +29,7 @@
    <string>TERRA - Gestión de Pacientes</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="terra.qrc">
+   <iconset resource="../terra.qrc">
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <property name="autoFillBackground">
@@ -520,7 +520,7 @@ background-color: rgb(255, 255, 192);</string>
          <string>B&amp;orrar</string>
         </property>
         <property name="icon">
-         <iconset resource="terra.qrc">
+         <iconset resource="../terra.qrc">
           <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
         </property>
         <property name="iconSize">
@@ -578,7 +578,7 @@ background-color: rgb(255, 255, 192);</string>
            <string>&amp;Nuevo</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
           </property>
           <property name="iconSize">
@@ -601,7 +601,7 @@ background-color: rgb(255, 255, 192);</string>
            <string>&amp;Siguiente</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
           </property>
           <property name="iconSize">
@@ -624,7 +624,7 @@ background-color: rgb(255, 255, 192);</string>
            <string>&amp;Anterior</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
           </property>
           <property name="iconSize">
@@ -647,7 +647,7 @@ background-color: rgb(255, 255, 192);</string>
            <string>&amp;Buscar</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
           </property>
           <property name="iconSize">
@@ -670,7 +670,7 @@ background-color: rgb(255, 255, 192);</string>
            <string>&amp;Editar</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
           </property>
           <property name="iconSize">
@@ -696,7 +696,7 @@ background-color: rgb(255, 255, 192);</string>
            <string>&amp;Guardar</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
           </property>
           <property name="iconSize">
@@ -722,7 +722,7 @@ background-color: rgb(255, 255, 192);</string>
            <string>&amp;Deshacer</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
           </property>
           <property name="iconSize">
@@ -1193,7 +1193,7 @@ background-color: rgb(255, 255, 192);</string>
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">
@@ -1694,7 +1694,7 @@ background-color: rgb(255, 255, 192);</string>
                 <string>Historial Clínico del Paciente</string>
                </property>
                <property name="icon">
-                <iconset resource="terra.qrc">
+                <iconset resource="../terra.qrc">
                  <normaloff>:/Icons/PNG/medic.png</normaloff>:/Icons/PNG/medic.png</iconset>
                </property>
                <property name="iconSize">
@@ -3391,6 +3391,9 @@ color: rgb(0, 0, 0);</string>
                  <bool>true</bool>
                 </property>
                 <widget class="QWidget" name="tab_13">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: #ecefed;</string>
+                 </property>
                  <attribute name="title">
                   <string>Presupuestos</string>
                  </attribute>
@@ -3405,6 +3408,9 @@ color: rgb(0, 0, 0);</string>
                  </layout>
                 </widget>
                 <widget class="QWidget" name="tab_7">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: #ecefed;</string>
+                 </property>
                  <attribute name="title">
                   <string>Albaranes</string>
                  </attribute>
@@ -3425,6 +3431,9 @@ color: rgb(0, 0, 0);</string>
                  </layout>
                 </widget>
                 <widget class="QWidget" name="tab_Facturas">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: #ecefed;</string>
+                 </property>
                  <attribute name="title">
                   <string>Facturas</string>
                  </attribute>
@@ -3439,6 +3448,9 @@ color: rgb(0, 0, 0);</string>
                  </layout>
                 </widget>
                 <widget class="QWidget" name="tab_11">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: #ecefed;</string>
+                 </property>
                  <attribute name="title">
                   <string>Tiquets</string>
                  </attribute>
@@ -3453,6 +3465,9 @@ color: rgb(0, 0, 0);</string>
                  </layout>
                 </widget>
                 <widget class="QWidget" name="tab_4">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: #ecefed;</string>
+                 </property>
                  <attribute name="title">
                   <string>R.Deudas</string>
                  </attribute>
@@ -3474,6 +3489,9 @@ color: rgb(0, 0, 0);</string>
                  </layout>
                 </widget>
                 <widget class="QWidget" name="tab_12">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: #ecefed;</string>
+                 </property>
                  <attribute name="title">
                   <string>Vales</string>
                  </attribute>
@@ -3512,7 +3530,7 @@ color: rgb(0, 0, 0);</string>
   <tabstop>btnDeshacer</tabstop>
  </tabstops>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="../terra.qrc"/>
  </resources>
  <connections/>
 </ui>
