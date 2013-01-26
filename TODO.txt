@@ -25,6 +25,8 @@ FRMEMPRESAS.CPP
   
  MAINWINDOW
  
+ - Ordenar los menus.
+ - Iconos de los menus.
  - Falta agregar boton administrador en la barra vertical de la izquierda.
  - En la  barra horizontal superior debe haber los botones para:
         -gestionar usuarios

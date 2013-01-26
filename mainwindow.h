@@ -75,6 +75,12 @@ private slots:
     void handle_bancos();
     void handle_tiposIVA();
     void handle_fomasPago();
+    void handle_paises();
+    void hande_avisos();
+    void handle_tiposImagen();
+    void handle_tipoAnalitica();
+    void handle_campoAnalitica();
+    void handle_motivoInterConsulta();
 private:
     Ui::MainWindow *ui;
 

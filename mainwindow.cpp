@@ -112,8 +112,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionGestion_de_subfamilias,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
     connect(ui->actionDoctores,SIGNAL(triggered()),this,SLOT(handle_doctores()));
     connect(ui->actionBancos,SIGNAL(triggered()),this,SLOT(handle_bancos()));
-    connect(ui->actionTipos_I_V_A,SIGNAL(triggered()),this,SLOT(handle_tiposIVA()));
-    connect(ui->actionFormas_de_pago,SIGNAL(triggered()),this,SLOT(handle_fomasPago()));
+    connect(ui->btnTipos_de_Iva,SIGNAL(triggered()),this,SLOT(handle_tiposIVA()));
+    connect(ui->btnFormas_de_Pago,SIGNAL(triggered()),this,SLOT(handle_fomasPago()));
+    connect(ui->actionPaises,SIGNAL(triggered()),this,SLOT(handle_paises()));
+    connect(ui->actionAvisos,SIGNAL(triggered()),this,SLOT(hande_avisos()));
+    connect(ui->actionTipos_de_imagen,SIGNAL(triggered()),this,SLOT(handle_tiposImagen()));
+    connect(ui->actionTipos_de_anal_tica,SIGNAL(triggered()),this,SLOT(handle_tipoAnalitica()));
+    connect(ui->actionCampos_de_analitica,SIGNAL(triggered()),this,SLOT(handle_campoAnalitica()));
+    connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));
 
 
     QSqlDatabase dbEmp;
@@ -552,6 +558,103 @@ void MainWindow::handle_fomasPago()
     QStringList headers;
     headers << tr("Codigo") << tr("Forma de pago") << tr("Dia de pago 1") << tr("Dia de pago 2");
     headers << tr("Dia de pago 3") << tr("Dia de pago 4") << tr("Dia 1") << tr("Dia 2") << tr("Dia 3")<< tr("Dia 4");
+    form.set_table_headers(headers);
+
+    form.set_columnHide(0);
+    form.exec();
+}
+
+void MainWindow::handle_paises()
+{
+    Db_table_View form(this);
+    form.set_db("empresa");
+    form.set_table("paises");
+
+    form.setWindowTitle(tr("Paises"));
+
+    QStringList headers;
+    headers << tr("Pais");
+    form.set_table_headers(headers);
+
+    form.set_columnHide(0);
+    form.exec();
+}
+
+void MainWindow::hande_avisos()
+{
+    Db_table_View form(this);
+    form.set_db("dbmedica");
+    form.set_table("avisos");
+
+    form.setWindowTitle(tr("Avisos"));
+
+    QStringList headers;
+    headers << tr("Motivo") << tr("Inicio") << tr("Final") << tr("Descripcion") << tr("Estado");
+    form.set_table_headers(headers);
+
+    form.set_columnHide(0);
+    form.exec();
+}
+
+void MainWindow::handle_tiposImagen()
+{
+    Db_table_View form(this);
+    form.set_db("dbmedica");
+    form.set_table("tiposimagen");
+
+    form.setWindowTitle(tr("Tipo de imagenes"));
+
+    QStringList headers;
+    headers << tr("Descripcion") << tr("Comentarios");
+    form.set_table_headers(headers);
+
+    form.set_columnHide(0);
+    form.exec();
+}
+
+void MainWindow::handle_tipoAnalitica()
+{
+    Db_table_View form(this);
+    form.set_db("dbmedica");
+    form.set_table("tiposanalitica");
+
+    form.setWindowTitle(tr("Tipo de Analitica"));
+
+    QStringList headers;
+    headers << tr("Tipos de Analisis");
+    form.set_table_headers(headers);
+
+    form.set_columnHide(0);
+    form.exec();
+}
+
+void MainWindow::handle_campoAnalitica()
+{
+    Db_table_View form(this);
+    form.set_db("dbmedica");
+    form.set_table("tiposanalitica2");
+
+    form.setWindowTitle(tr("Campos para analitica"));
+
+    QStringList headers;
+    headers << tr("Tipo") << tr("Descripcion") << tr("Valores de referencia") << tr("Pertenece a:");
+    form.set_table_headers(headers);
+
+    form.set_relation(4,QSqlRelation("tiposanalitica","id","tipoanalisis"));
+    form.set_columnHide(0);
+    form.exec();
+}
+
+void MainWindow::handle_motivoInterConsulta()
+{
+    Db_table_View form(this);
+    form.set_db("dbmedica");
+    form.set_table("motivosinterconsulta");
+
+    form.setWindowTitle(tr("Motivo de inter consulta"));
+
+    QStringList headers;
+    headers << tr("Tipo") << tr("Descripcion") << tr("Comentarios");
     form.set_table_headers(headers);
 
     form.set_columnHide(0);
