@@ -161,15 +161,15 @@ void Cliente::Guardar() {
 void Cliente::Anadir() {
     QSqlQuery query(QSqlDatabase::database("empresa"));
          query.prepare("INSERT INTO clientes (cCodigoCliente, cApellido1, cApellido2,cNombre,cNombreFiscal,cNombreComercial,cPersonaContacto,"
-                       " cCifNif,cDireccion1,cDireccion2,cCP,cPoblacion,cProvincia,cPais,cTelefono1,cTelefono2,cFax,"
+                       " cCifNif,cDireccion1,cDireccion2,cCP,cPoblacion,cProvincia,idpais,cTelefono1,cTelefono2,cFax,"
                        "cMovil,cEmail,cWeb,cDireccionFactura1,cDireccionFactura2,cCPFactura,cPoblacionFactura,cProvinciaFactura,"
                        "cPaisFactura,cDireccionAlmacen,cDireccionAlmacen2,cCPAlmacen,cPoblacionAlmacen,cProvinciaAlmacen,"
-                       "cPaisAlmacen,dFechaAlta,dFechaUltimaCompra,rAcumuladoVentas,rVentasEjercicio,rRiesgoMaximo,rDeudaActual,"
+                       "idPaisAlmacen,dFechaAlta,dFechaUltimaCompra,rAcumuladoVentas,rVentasEjercicio,rRiesgoMaximo,rDeudaActual,"
                        "tComentarios,lBloqueado,tComentarioBloqueo,nPorcDtoCliente,lRecargoEquivalencia,cCuentaContable,cCuentaIvaRepercutido,"
-                       "cCuentaDeudas,cCuentaCobros,cFormaPago,nDiapago1,nDiaPago2,nTarifaCliente,rImporteACuenta,rVales,"
-                       "cCentidadBancaria,cOficinaBancaria,cDC,cCuentaCorriente,dFechaNacimiento,rImportePendiente,cAccesoWeb,"
+                       "cCuentaDeudas,cCuentaCobros,idFormaPago,nDiapago1,nDiaPago2,nTarifaCliente,rImporteACuenta,rVales,"
+                       "cCentidadBancaria,cOficinaBancaria,cDC,cCuentaCorriente,dFechaNacimiento,rImportePendiente,cTipoCliente,cAccesoWeb,"
                        "cPasswordWeb,nIRPF) "
-                       "VALUES (:cCodigoCliente, :cApellido, :cApellido2,:cNombre,:cNombreFiscal,:cNombreComercial,:cPersonaContacto,"
+                       "VALUES (:cCodigoCliente, :cApellido1, :cApellido2,:cNombre,:cNombreFiscal,:cNombreComercial,:cPersonaContacto,"
                        ":cCifNif,:cDireccion1,:cDireccion2,:cCP,:cPoblacion,:cProvincia,:cPais,:cTelefono1,:cTelefono2,:cFax,"
                        ":cMovil,:cEmail,:cWeb,:cDireccionFactura1,:cDireccionFactura2,:cCPFactura,:cPoblacionFactura,:cProvinciaFactura,"
                        ":cPaisFactura,:cDireccionAlmacen,:cDireccionAlmacen2,:cCPAlmacen,:cPoblacionAlmacen,:cProvinciaAlmacen,"
@@ -177,7 +177,7 @@ void Cliente::Anadir() {
                        ":tComentarios,:lBloqueado,:tComentarioBloqueo,:nPorcDtoCliente,:lRecargoEquivalencia,:cCuentaContable,:cCuentaIvaRepercutido,"
                        ":cCuentaDeudas,:cCuentaCobros,:cFormaPago,:nDiapago1,:nDiaPago2,:nTarifaCliente,:rImporteACuenta,:rVales,"
                        ":cCentidadBancaria,:cOficinaBancaria,:cDC,:cCuentaCorriente,:dFechaNacimiento,:rImportePendiente,"
-                       ":cAccesoWeb,:cPasswordWeb,:nIRPF)");
+                       ":cTipoCliente,:cAccesoWeb,:cPasswordWeb,:nIRPF)");
          query.bindValue(":cCodigoCliente", this->cCodigoCliente);
          query.bindValue(":cApellido1", this->cApellido1);
          query.bindValue(":cApellido2",this->cApellido2);
@@ -191,7 +191,7 @@ void Cliente::Anadir() {
          query.bindValue(":cCP",this->cCp);
          query.bindValue(":cPoblacion",this->cPoblacion);
          query.bindValue(":cProvincia", this->cProvincia);
-         query.bindValue(":cPais",this->cPais);
+         query.bindValue(":idpais",this->cPais);
          query.bindValue(":cTelefono1", this->cTelefono1);
          query.bindValue(":cTelefono2",this->cTelefono2);
          query.bindValue(":cFax",this->cFax);
@@ -237,6 +237,7 @@ void Cliente::Anadir() {
          query.bindValue(":cCuentaCorriente",this->cCuentaCorriente);
          query.bindValue(":dFechaNacimiento",this->dFechaNacimiento);
          query.bindValue(":rImportePendiente",this->rImportePendiente);
+         query.bindValue(":cTipoCliente","");//FIXME cTipoCliente
          query.bindValue(":cAccesoWeb",this->cAccesoWeb);
          query.bindValue(":cPasswordWeb",this->cPasswordWeb);
          if (this->lIRPF)
@@ -249,8 +250,6 @@ void Cliente::Anadir() {
          } else{
              QMessageBox::information(qApp->activeWindow(),"NuevoCliente","Cliente insertado Correctamente");
          }
-
-
 }
 void Cliente::Recuperar(QString cSQL) {
     qryCliente = new QSqlQuery(QSqlDatabase::database("empresa"));

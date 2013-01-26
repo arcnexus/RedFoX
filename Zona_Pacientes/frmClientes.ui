@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1045</width>
+    <width>1024</width>
     <height>500</height>
    </rect>
   </property>
@@ -41,7 +41,7 @@
   <property name="modal">
    <bool>true</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout_23">
+  <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="label_40">
      <property name="text">
@@ -756,11 +756,11 @@ background-color: rgb(255, 255, 192);</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
         <widget class="QTabWidget" name="tabWidget">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>1</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -3521,13 +3521,82 @@ color: rgb(0, 0, 0);</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>txtcCodigoCliente</tabstop>
+  <tabstop>txtcCifNif</tabstop>
+  <tabstop>txtcNombre</tabstop>
+  <tabstop>txtPrimerApellido</tabstop>
+  <tabstop>txtSegundoApellido</tabstop>
+  <tabstop>txtcNombreFiscal</tabstop>
+  <tabstop>txtcNombreComercial</tabstop>
+  <tabstop>txtcPersonaContacto</tabstop>
+  <tabstop>txtcDireccion1</tabstop>
+  <tabstop>txtcDireccion2</tabstop>
+  <tabstop>txtcCp</tabstop>
+  <tabstop>txtcPoblacion</tabstop>
+  <tabstop>txtcProvincia</tabstop>
+  <tabstop>txtcPais</tabstop>
+  <tabstop>txtcTelefono1</tabstop>
+  <tabstop>txtcTelefono2</tabstop>
+  <tabstop>txtcFax</tabstop>
+  <tabstop>txtcMovil</tabstop>
+  <tabstop>txtcWeb</tabstop>
+  <tabstop>txtcEMail</tabstop>
+  <tabstop>btnGuardar</tabstop>
+  <tabstop>btnDeshacer</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnSiguiente</tabstop>
   <tabstop>btnAnterior</tabstop>
   <tabstop>btnBuscar</tabstop>
   <tabstop>btnEditar</tabstop>
-  <tabstop>btnGuardar</tabstop>
-  <tabstop>btnDeshacer</tabstop>
+  <tabstop>btnFichaPaciente</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>txtNombreFiscal</tabstop>
+  <tabstop>btnBorrar</tabstop>
+  <tabstop>txtcPaisFactura</tabstop>
+  <tabstop>txtcCPFactura</tabstop>
+  <tabstop>txtcPoblacionFactura</tabstop>
+  <tabstop>txtcDireccionFactura2</tabstop>
+  <tabstop>txtcDireccionFactura1</tabstop>
+  <tabstop>txtcDireccionAlmacen2</tabstop>
+  <tabstop>txtcDireccionAlmacen1</tabstop>
+  <tabstop>txtcProvinciaFactura</tabstop>
+  <tabstop>txtcCpPoblacionAlmacen</tabstop>
+  <tabstop>txtcPoblacionAlmacen</tabstop>
+  <tabstop>txtcPaisAlmacen</tabstop>
+  <tabstop>txtcProvinciaAlmacen</tabstop>
+  <tabstop>txtnDiaPago1</tabstop>
+  <tabstop>txtnDiaPago2</tabstop>
+  <tabstop>txtcCuentaContable</tabstop>
+  <tabstop>txtcCuentaIvaRepercutido</tabstop>
+  <tabstop>txtcCuentaDeudas</tabstop>
+  <tabstop>txtcCuentaCobros</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>cbocFormaPago</tabstop>
+  <tabstop>txtnPorcDtoCliente</tabstop>
+  <tabstop>chklRecargoEquivalencia</tabstop>
+  <tabstop>cbonTarifaCliente</tabstop>
+  <tabstop>txtcEntidadBancaria</tabstop>
+  <tabstop>txtcOficinaBancaria</tabstop>
+  <tabstop>txtcDc</tabstop>
+  <tabstop>txtcCuentaCorriente</tabstop>
+  <tabstop>chkClienteEmpresa</tabstop>
+  <tabstop>chklBloqueoCliente</tabstop>
+  <tabstop>txttComentarioBloqueo</tabstop>
+  <tabstop>txtcAccesoWeb</tabstop>
+  <tabstop>txtcPasswordWeb</tabstop>
+  <tabstop>txttComentarios</tabstop>
+  <tabstop>txtdFechaNacimiento</tabstop>
+  <tabstop>txtdFechaAlta</tabstop>
+  <tabstop>txtdFechaUltimaCompra</tabstop>
+  <tabstop>txtrRiesgoPermitido</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>tablaPresupuestos</tabstop>
+  <tabstop>TablaAlbaranes</tabstop>
+  <tabstop>tablaFacturas</tabstop>
+  <tabstop>tablaTickets</tabstop>
+  <tabstop>TablaDeudas</tabstop>
+  <tabstop>Pagar</tabstop>
+  <tabstop>tablaVales</tabstop>
  </tabstops>
  <resources>
   <include location="../terra.qrc"/>
