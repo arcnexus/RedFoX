@@ -3521,6 +3521,72 @@ color: rgb(0, 0, 0);</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>txtcCodigoCliente</tabstop>
+  <tabstop>txtcCifNif</tabstop>
+  <tabstop>txtcNombre</tabstop>
+  <tabstop>txtPrimerApellido</tabstop>
+  <tabstop>txtSegundoApellido</tabstop>
+  <tabstop>txtcNombreFiscal</tabstop>
+  <tabstop>txtcNombreComercial</tabstop>
+  <tabstop>txtcPersonaContacto</tabstop>
+  <tabstop>txtcDireccion1</tabstop>
+  <tabstop>txtcDireccion2</tabstop>
+  <tabstop>txtcCp</tabstop>
+  <tabstop>txtcPoblacion</tabstop>
+  <tabstop>txtcProvincia</tabstop>
+  <tabstop>txtcPais</tabstop>
+  <tabstop>txtcTelefono1</tabstop>
+  <tabstop>txtcTelefono2</tabstop>
+  <tabstop>txtcFax</tabstop>
+  <tabstop>txtcMovil</tabstop>
+  <tabstop>txtcWeb</tabstop>
+  <tabstop>txtcEMail</tabstop>
+  <tabstop>btnFichaPaciente</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>txtcDireccionFactura1</tabstop>
+  <tabstop>txtcDireccionFactura2</tabstop>
+  <tabstop>txtcCPFactura</tabstop>
+  <tabstop>txtcPoblacionFactura</tabstop>
+  <tabstop>txtcProvinciaFactura</tabstop>
+  <tabstop>txtcPaisFactura</tabstop>
+  <tabstop>txtcDireccionAlmacen1</tabstop>
+  <tabstop>txtcDireccionAlmacen2</tabstop>
+  <tabstop>txtcCpPoblacionAlmacen</tabstop>
+  <tabstop>txtcPoblacionAlmacen</tabstop>
+  <tabstop>txtcProvinciaAlmacen</tabstop>
+  <tabstop>txtcPaisAlmacen</tabstop>
+  <tabstop>txtnPorcDtoCliente</tabstop>
+  <tabstop>chklRecargoEquivalencia</tabstop>
+  <tabstop>cbonTarifaCliente</tabstop>
+  <tabstop>cbocFormaPago</tabstop>
+  <tabstop>txtnDiaPago1</tabstop>
+  <tabstop>txtnDiaPago2</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>txtcCuentaContable</tabstop>
+  <tabstop>txtcCuentaIvaRepercutido</tabstop>
+  <tabstop>txtcCuentaDeudas</tabstop>
+  <tabstop>txtcCuentaCobros</tabstop>
+  <tabstop>chkClienteEmpresa</tabstop>
+  <tabstop>txtcEntidadBancaria</tabstop>
+  <tabstop>txtcOficinaBancaria</tabstop>
+  <tabstop>txtcDc</tabstop>
+  <tabstop>txtcCuentaCorriente</tabstop>
+  <tabstop>chklBloqueoCliente</tabstop>
+  <tabstop>txttComentarioBloqueo</tabstop>
+  <tabstop>txttComentarios</tabstop>
+  <tabstop>txtcAccesoWeb</tabstop>
+  <tabstop>txtcPasswordWeb</tabstop>
+  <tabstop>txtdFechaNacimiento</tabstop>
+  <tabstop>txtdFechaAlta</tabstop>
+  <tabstop>txtrRiesgoPermitido</tabstop>
+  <tabstop>txtdFechaUltimaCompra</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>tablaPresupuestos</tabstop>
+  <tabstop>TablaAlbaranes</tabstop>
+  <tabstop>tablaFacturas</tabstop>
+  <tabstop>tablaTickets</tabstop>
+  <tabstop>TablaDeudas</tabstop>
+  <tabstop>tablaVales</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnSiguiente</tabstop>
   <tabstop>btnAnterior</tabstop>
@@ -3528,6 +3594,9 @@ color: rgb(0, 0, 0);</string>
   <tabstop>btnEditar</tabstop>
   <tabstop>btnGuardar</tabstop>
   <tabstop>btnDeshacer</tabstop>
+  <tabstop>txtNombreFiscal</tabstop>
+  <tabstop>Pagar</tabstop>
+  <tabstop>btnBorrar</tabstop>
  </tabstops>
  <resources>
   <include location="../terra.qrc"/>
