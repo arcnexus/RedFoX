@@ -14,20 +14,13 @@
    <string>Busqueda de Medicamentos</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="terra.qrc">
+   <iconset resource="../terra.qrc">
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(219, 228, 255);</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
-   <item row="1" column="1">
-    <widget class="QPushButton" name="btnCerrar">
-     <property name="text">
-      <string>Cerrar</string>
-     </property>
-    </widget>
-   </item>
+  <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
     <spacer name="horizontalSpacer">
      <property name="orientation">
@@ -41,841 +34,863 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="currentIndex">
-      <number>0</number>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="btnCerrar">
+     <property name="text">
+      <string>Cerrar</string>
      </property>
-     <widget class="QWidget" name="tabWidgetPage1" native="true">
-      <attribute name="title">
-       <string>Buscar por Nombre Medicamento</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="3" column="0" colspan="6">
-        <widget class="QTableWidget" name="tablamedicamentos">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>152</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QPushButton" name="pushButton">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Consultar Vademécum</string>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5">
-        <widget class="QLabel" name="label_3">
-         <property name="maximumSize">
-          <size>
-           <width>111</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="5">
-        <widget class="QPushButton" name="btnAceptar1">
-         <property name="text">
-          <string>Aceptar</string>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Nombre a buscar:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="3">
-        <widget class="QFrame" name="frame">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(197, 205, 255);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Criterios de Búsqueda:</string>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QFrame" name="frame">
+     <property name="styleSheet">
+      <string notr="true">background: #4c6088</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_8">
+      <item row="0" column="0">
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tabWidgetPage1">
+         <attribute name="title">
+          <string>Buscar por Nombre Medicamento</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="3" column="0" colspan="6">
+           <widget class="QTableWidget" name="tablamedicamentos">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>152</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QRadioButton" name="radioButton">
-            <property name="text">
-             <string>Empieza por</string>
+          <item row="1" column="4">
+           <widget class="QPushButton" name="pushButton">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>32</height>
+             </size>
             </property>
-            <property name="checked">
+            <property name="text">
+             <string>Consultar Vademécum</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../terra.qrc">
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="5">
+           <widget class="QLabel" name="label_3">
+            <property name="maximumSize">
+             <size>
+              <width>111</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+            </property>
+            <property name="scaledContents">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QRadioButton" name="radioButton_2">
+          <item row="1" column="3">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="4" column="5">
+           <widget class="QPushButton" name="btnAceptar1">
             <property name="text">
-             <string>Contiene</string>
+             <string>Aceptar</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../terra.qrc">
+              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Nombre a buscar:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="3">
+           <widget class="QFrame" name="frame_2">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(197, 205, 255);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Criterios de Búsqueda:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="radioButton">
+               <property name="text">
+                <string>Empieza por</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="radioButton_2">
+               <property name="text">
+                <string>Contiene</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="6">
+           <widget class="QWebView" name="webView_ProspectoBuscarPorMedicamento">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="url">
+             <url>
+              <string>about:blank</string>
+             </url>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="5">
+           <widget class="QLabel" name="label_11">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(192, 192, 255);</string>
+            </property>
+            <property name="text">
+             <string>prospecto</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="6">
+           <widget class="QLabel" name="label_4">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(192, 192, 255);</string>
+            </property>
+            <property name="text">
+             <string>Medicamentos en vademécum (pulse Click para cargar prospecto)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="5">
+           <widget class="QLineEdit" name="txtBuscar">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
-       </item>
-       <item row="5" column="0" colspan="6">
-        <widget class="QWebView" name="webView_ProspectoBuscarPorMedicamento">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="url">
-          <url>
-           <string>about:blank</string>
-          </url>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="5">
-        <widget class="QLabel" name="label_11">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(192, 192, 255);</string>
-         </property>
-         <property name="text">
-          <string>prospecto</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="6">
-        <widget class="QLabel" name="label_4">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(192, 192, 255);</string>
-         </property>
-         <property name="text">
-          <string>Medicamentos en vademécum (pulse Click para cargar prospecto)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="5">
-        <widget class="QLineEdit" name="txtBuscar">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tabWidgetPage2" native="true">
-      <attribute name="title">
-       <string>Buscar por patología</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_6">
-       <item row="2" column="0">
-        <widget class="QTabWidget" name="tabBuscarporPatologia">
-         <property name="tabPosition">
-          <enum>QTabWidget::West</enum>
-         </property>
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <widget class="QWidget" name="tab">
-          <attribute name="title">
-           <string>Selección</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_4">
-           <item row="1" column="0" colspan="3">
-            <widget class="QLineEdit" name="txtBuscarPatologia">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);</string>
-             </property>
+        <widget class="QWidget" name="tabWidgetPage2">
+         <attribute name="title">
+          <string>Buscar por patología</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="2" column="0">
+           <widget class="QTabWidget" name="tabBuscarporPatologia">
+            <property name="tabPosition">
+             <enum>QTabWidget::West</enum>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="QWidget" name="tab">
+             <attribute name="title">
+              <string>Selección</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_4">
+              <item row="1" column="0" colspan="3">
+               <widget class="QLineEdit" name="txtBuscarPatologia">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0" colspan="3">
+               <widget class="QLabel" name="label_7">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(192, 192, 255);</string>
+                </property>
+                <property name="text">
+                 <string>Patologías (dbl Click para mostrar med. asoc)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="4">
+               <widget class="QLabel" name="label_5">
+                <property name="maximumSize">
+                 <size>
+                  <width>176</width>
+                  <height>47</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap resource="../terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+                </property>
+                <property name="scaledContents">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_6">
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Patología a buscar:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="3" colspan="3">
+               <widget class="QLabel" name="label_8">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(192, 192, 255);</string>
+                </property>
+                <property name="text">
+                 <string>Medicamentos asociados a la Patología indicada (click muestra prospecto)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="0" colspan="6">
+               <widget class="QLabel" name="label_10">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(192, 192, 255);</string>
+                </property>
+                <property name="text">
+                 <string>Prospecto</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="3" colspan="3">
+               <widget class="QTableWidget" name="tablamedicamentosPatologia">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="4">
+               <widget class="QLabel" name="label_9">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(255, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Información sumunistrada por:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0" colspan="3">
+               <widget class="QPushButton" name="btnBuscarPatologia">
+                <property name="text">
+                 <string>Buscar Patología</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../terra.qrc">
+                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>24</width>
+                  <height>24</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0" colspan="3">
+               <widget class="QTableWidget" name="tablaPatologias">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="3" colspan="3">
+               <widget class="QPushButton" name="btnVerProspecto">
+                <property name="text">
+                 <string>ver prospeco</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../terra.qrc">
+                  <normaloff>:/Icons/PNG/DefineControls.png</normaloff>:/Icons/PNG/DefineControls.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>24</width>
+                  <height>24</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="5">
+               <widget class="QPushButton" name="pushButton_Aceptarporpatologia">
+                <property name="text">
+                 <string>Aceptar</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../terra.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0" colspan="3">
+               <widget class="QPushButton" name="btnBuscarMedicamentoporPatologia">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Consultar medicamentos patologia señalada</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../terra.qrc">
+                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="0" colspan="6">
+               <widget class="QWebView" name="textProspecto">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>180</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+                <property name="url">
+                 <url>
+                  <string>about:blank</string>
+                 </url>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
-           </item>
-           <item row="3" column="0" colspan="3">
-            <widget class="QLabel" name="label_7">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(192, 192, 255);</string>
-             </property>
-             <property name="text">
-              <string>Patologías (dbl Click para mostrar med. asoc)</string>
-             </property>
+            <widget class="QWidget" name="tab_2">
+             <attribute name="title">
+              <string>prospecto</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_5">
+              <item row="0" column="0">
+               <widget class="QWebView" name="textProspectoPato">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+                <property name="url">
+                 <url>
+                  <string>about:blank</string>
+                 </url>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
-           </item>
-           <item row="2" column="4">
-            <widget class="QLabel" name="label_5">
-             <property name="maximumSize">
-              <size>
-               <width>176</width>
-               <height>47</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
-             </property>
-             <property name="scaledContents">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="label_6">
-             <property name="maximumSize">
-              <size>
-               <width>150</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Patología a buscar:</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="3" colspan="3">
-            <widget class="QLabel" name="label_8">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(192, 192, 255);</string>
-             </property>
-             <property name="text">
-              <string>Medicamentos asociados a la Patología indicada (click muestra prospecto)</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0" colspan="6">
-            <widget class="QLabel" name="label_10">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(192, 192, 255);</string>
-             </property>
-             <property name="text">
-              <string>Prospecto</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="3" colspan="3">
-            <widget class="QTableWidget" name="tablamedicamentosPatologia">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);</string>
-             </property>
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <property name="selectionBehavior">
-              <enum>QAbstractItemView::SelectRows</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="4">
-            <widget class="QLabel" name="label_9">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 0, 0);</string>
-             </property>
-             <property name="text">
-              <string>Información sumunistrada por:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0" colspan="3">
-            <widget class="QPushButton" name="btnBuscarPatologia">
-             <property name="text">
-              <string>Buscar Patología</string>
-             </property>
-             <property name="icon">
-              <iconset resource="terra.qrc">
-               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>24</width>
-               <height>24</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0" colspan="3">
-            <widget class="QTableWidget" name="tablaPatologias">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);</string>
-             </property>
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <property name="selectionBehavior">
-              <enum>QAbstractItemView::SelectRows</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="3" colspan="3">
-            <widget class="QPushButton" name="btnVerProspecto">
-             <property name="text">
-              <string>ver prospeco</string>
-             </property>
-             <property name="icon">
-              <iconset resource="terra.qrc">
-               <normaloff>:/Icons/PNG/DefineControls.png</normaloff>:/Icons/PNG/DefineControls.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>24</width>
-               <height>24</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="5">
-            <widget class="QPushButton" name="pushButton_Aceptarporpatologia">
-             <property name="text">
-              <string>Aceptar</string>
-             </property>
-             <property name="icon">
-              <iconset resource="terra.qrc">
-               <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0" colspan="3">
-            <widget class="QPushButton" name="btnBuscarMedicamentoporPatologia">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Consultar medicamentos patologia señalada</string>
-             </property>
-             <property name="icon">
-              <iconset resource="terra.qrc">
-               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0" colspan="6">
-            <widget class="QWebView" name="textProspecto">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>180</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);</string>
-             </property>
-             <property name="url">
-              <url>
-               <string>about:blank</string>
-              </url>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="tab_2">
-          <attribute name="title">
-           <string>prospecto</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_5">
-           <item row="0" column="0">
-            <widget class="QWebView" name="textProspectoPato">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);</string>
-             </property>
-             <property name="url">
-              <url>
-               <string>about:blank</string>
-              </url>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
+           </widget>
+          </item>
+         </layout>
         </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tabWidgetPage3" native="true">
-      <attribute name="title">
-       <string>Buscar por molécula</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="2" column="0">
-        <widget class="QPushButton" name="btnBuscarMolcula">
-         <property name="maximumSize">
-          <size>
-           <width>346</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Buscar Moléculas</string>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
+        <widget class="QWidget" name="tabWidgetPage3">
+         <attribute name="title">
+          <string>Buscar por molécula</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="2" column="0">
+           <widget class="QPushButton" name="btnBuscarMolcula">
+            <property name="maximumSize">
+             <size>
+              <width>346</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Buscar Moléculas</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../terra.qrc">
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QPushButton" name="pushButton_AceptarPorMolecula">
+            <property name="text">
+             <string>Aceptar</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../terra.qrc">
+              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QPushButton" name="btnBuscarMedicamentoporMolecula">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>346</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Consultar medicamentos molécula señalada</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../terra.qrc">
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QTableWidget" name="tablamedicamentosMolecula">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="label_16">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(192, 192, 255);</string>
+            </property>
+            <property name="text">
+             <string>Medicamentos asociados a la Molécula indicada (click muestra prospecto)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="maximumSize">
+             <size>
+              <width>346</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(192, 192, 255);</string>
+            </property>
+            <property name="text">
+             <string>Moléculas (dbl Click para mostrar med. asoc)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QTableWidget" name="tablaMoleculas">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>150</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>346</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Molécula a buscar</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLineEdit" name="txtBuscarMolecula">
+            <property name="maximumSize">
+             <size>
+              <width>346</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_14">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 0, 0);</string>
+            </property>
+            <property name="text">
+             <string>Información sumunistrada por:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_13">
+            <property name="maximumSize">
+             <size>
+              <width>176</width>
+              <height>47</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <widget class="QWebView" name="textProspectoMolecula">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="url">
+             <url>
+              <string>about:blank</string>
+             </url>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <widget class="QLabel" name="label_17">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(192, 192, 255);</string>
+            </property>
+            <property name="text">
+             <string>Prospecto</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QPushButton" name="pushButton_AceptarPorMolecula">
-         <property name="text">
-          <string>Aceptar</string>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
+        <widget class="QWidget" name="tabWidgetPage4">
+         <attribute name="title">
+          <string>Buscar por principio activo</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="5" column="0">
+           <widget class="QPushButton" name="btnBuscarMedicamentoporPA">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>346</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>C. medicamentos Principio Activo señalado</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../terra.qrc">
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_23">
+            <property name="maximumSize">
+             <size>
+              <width>346</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(192, 192, 255);</string>
+            </property>
+            <property name="text">
+             <string>P. Activos (dbl Click para mostrar med. asoc)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_18">
+            <property name="maximumSize">
+             <size>
+              <width>169</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Principio activo a buscar</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_20">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 0, 0);</string>
+            </property>
+            <property name="text">
+             <string>Información sumunistrada por:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_21">
+            <property name="maximumSize">
+             <size>
+              <width>176</width>
+              <height>47</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QPushButton" name="pushButton_AceptarPorPA">
+            <property name="text">
+             <string>Aceptar</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../terra.qrc">
+              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLineEdit" name="txtBuscarPrincipioActivo">
+            <property name="maximumSize">
+             <size>
+              <width>346</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QTableWidget" name="tablamedicamentospactivos">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QTableWidget" name="tablaPrincipiosActivos">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>150</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>346</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="label_22">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(192, 192, 255);</string>
+            </property>
+            <property name="text">
+             <string>Medicamentos asociados al P.Activo indicado (click muestra prospecto)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="btnBuscarPrincipiosActivos">
+            <property name="maximumSize">
+             <size>
+              <width>346</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Buscar Principios Activos.</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../terra.qrc">
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <widget class="QWebView" name="textProspectopa">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="url">
+             <url>
+              <string>about:blank</string>
+             </url>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <widget class="QLabel" name="label_19">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(192, 192, 255);</string>
+            </property>
+            <property name="text">
+             <string>Prospecto</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QPushButton" name="btnBuscarMedicamentoporMolecula">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>346</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Consultar medicamentos molécula señalada</string>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QTableWidget" name="tablamedicamentosMolecula">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="label_16">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(192, 192, 255);</string>
-         </property>
-         <property name="text">
-          <string>Medicamentos asociados a la Molécula indicada (click muestra prospecto)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_12">
-         <property name="maximumSize">
-          <size>
-           <width>346</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(192, 192, 255);</string>
-         </property>
-         <property name="text">
-          <string>Moléculas (dbl Click para mostrar med. asoc)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QTableWidget" name="tablaMoleculas">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>150</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>346</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_15">
-         <property name="maximumSize">
-          <size>
-           <width>150</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Molécula a buscar</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLineEdit" name="txtBuscarMolecula">
-         <property name="maximumSize">
-          <size>
-           <width>346</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_14">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 0, 0);</string>
-         </property>
-         <property name="text">
-          <string>Información sumunistrada por:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="label_13">
-         <property name="maximumSize">
-          <size>
-           <width>176</width>
-           <height>47</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0" colspan="2">
-        <widget class="QWebView" name="textProspectoMolecula">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="url">
-          <url>
-           <string>about:blank</string>
-          </url>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0" colspan="2">
-        <widget class="QLabel" name="label_17">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(192, 192, 255);</string>
-         </property>
-         <property name="text">
-          <string>Prospecto</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tabWidgetPage4" native="true">
-      <attribute name="title">
-       <string>Buscar por principio activo</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_7">
-       <item row="5" column="0">
-        <widget class="QPushButton" name="btnBuscarMedicamentoporPA">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>346</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>C. medicamentos Principio Activo señalado</string>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_23">
-         <property name="maximumSize">
-          <size>
-           <width>346</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(192, 192, 255);</string>
-         </property>
-         <property name="text">
-          <string>P. Activos (dbl Click para mostrar med. asoc)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_18">
-         <property name="maximumSize">
-          <size>
-           <width>169</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Principio activo a buscar</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_20">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 0, 0);</string>
-         </property>
-         <property name="text">
-          <string>Información sumunistrada por:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="label_21">
-         <property name="maximumSize">
-          <size>
-           <width>176</width>
-           <height>47</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QPushButton" name="pushButton_AceptarPorPA">
-         <property name="text">
-          <string>Aceptar</string>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLineEdit" name="txtBuscarPrincipioActivo">
-         <property name="maximumSize">
-          <size>
-           <width>346</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QTableWidget" name="tablamedicamentospactivos">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QTableWidget" name="tablaPrincipiosActivos">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>150</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>346</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="label_22">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(192, 192, 255);</string>
-         </property>
-         <property name="text">
-          <string>Medicamentos asociados al P.Activo indicado (click muestra prospecto)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="btnBuscarPrincipiosActivos">
-         <property name="maximumSize">
-          <size>
-           <width>346</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Buscar Principios Activos.</string>
-         </property>
-         <property name="icon">
-          <iconset resource="terra.qrc">
-           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0" colspan="2">
-        <widget class="QWebView" name="textProspectopa">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="url">
-          <url>
-           <string>about:blank</string>
-          </url>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0" colspan="2">
-        <widget class="QLabel" name="label_19">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(192, 192, 255);</string>
-         </property>
-         <property name="text">
-          <string>Prospecto</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
@@ -888,7 +903,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="../terra.qrc"/>
  </resources>
  <connections/>
 </ui>
