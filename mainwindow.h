@@ -11,7 +11,7 @@
 #include "configuracion.h"
 #include <QToolButton>
 
-#include "frmClientes.h"
+#include "Zona_Pacientes/frmClientes.h"
 #include "frmfacturas.h"
 #include "frmarticulos.h"
 #include "frmproveedores.h"

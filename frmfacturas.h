@@ -8,7 +8,7 @@
 #include <QItemDelegate>
 #include "configuracion.h"
 #include "factura.h"
-#include "cliente.h"
+#include "Zona_Pacientes/cliente.h"
 namespace Ui {
 class frmFacturas;
 }

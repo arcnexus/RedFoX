@@ -4,7 +4,7 @@
 #include <QtSql>
 #include <QErrorMessage>
 #include<QSqlError>
-#include "cliente.h"
+#include "Zona_Pacientes/cliente.h"
 #include<QDate>
 #include <QSqlQueryModel>
 #include <QDebug>
