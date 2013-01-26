@@ -2,7 +2,7 @@
 #include "ui_frmpresupuestoscli.h"
 #include <QSqlQueryModel>
 #include "configuracion.h"
-#include "frmbuscarcliente.h"
+#include "Busquedas/frmbuscarcliente.h"
 #include "articulo.h"
 #include <QMessageBox>
 #include "frmmodificarlin_precli.h"

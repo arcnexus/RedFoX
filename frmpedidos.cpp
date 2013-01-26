@@ -4,7 +4,7 @@
 #include "configuracion.h"
 #include "articulo.h"
 #include "frmmodificarlin_ped.h"
-#include "frmbuscarcliente.h"
+#include "Busquedas/frmbuscarcliente.h"
 #include <QMessageBox>
 
 

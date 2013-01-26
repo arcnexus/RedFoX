@@ -8,8 +8,8 @@
 #include<QDate>
 #include <QSqlQueryModel>
 #include <QDebug>
-#include "frmbuscarcliente.h"
-#include "frmbuscarpoblacion.h"
+#include "Busquedas/frmbuscarcliente.h"
+#include "Busquedas/frmbuscarpoblacion.h"
 #include <QString>
 #include "columnafecha.h"
 #include <QSettings>

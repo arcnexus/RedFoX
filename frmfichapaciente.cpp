@@ -17,7 +17,7 @@
 #include <QMessageBox>
 #include "frmanadirmedicamento.h"
 #include "vademecum.h"
-#include "frmbuscarcie.h"
+#include "Busquedas/frmbuscarcie.h"
 #include "farmacologia.h"
 #include "frminformacionfarmaco.h"
 #include "frmanadirimagen.h"

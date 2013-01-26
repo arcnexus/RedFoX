@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QHeaderView>
 #include <QSqlQueryModel>
-#include "frmbuscarcliente.h"
+#include "Busquedas/frmbuscarcliente.h"
 #include "configuracion.h"
 
 namespace Ui {
