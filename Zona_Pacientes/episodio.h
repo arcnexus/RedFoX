@@ -3,9 +3,10 @@
 #include <QDate>
 #include <QString>
 #include <QtSql>
-
-class Episodio
+#include <QObject>
+class Episodio : public QObject
 {
+    Q_OBJECT
 private:
     int id;
     int idPaciente;
@@ -21,11 +22,11 @@ private:
     QString codigocie;
 
 public:
-    Episodio();
+    Episodio(QObject* parent = 0);
     int NuevoEpisodio(int idPaciente);
     void RecuperarEpisodio(int idEpisodio);
-    void RecuperarDoctor(int iddoctor);
-    void RecuperarIdDoctor(QString doctor);
+    QString RecuperarDoctor(int iddoctor);
+    int RecuperarIdDoctor(QString doctor);
     void GuardarEpisodio();
     int getid();
     int getidPaciente();

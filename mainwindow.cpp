@@ -583,15 +583,18 @@ void MainWindow::handle_paises()
 void MainWindow::hande_avisos()
 {
     Db_table_View form(this);
-    form.set_db("dbmedica");
+    form.set_db("empresa");
     form.set_table("avisos");
 
     form.setWindowTitle(tr("Avisos"));
 
     QStringList headers;
     headers << tr("Motivo") << tr("Inicio") << tr("Final") << tr("Descripcion") << tr("Estado");
+    headers << tr("Tipo de aviso") << tr("Avisar a");
     form.set_table_headers(headers);
 
+    form.set_relation(6,QSqlRelation("tiposaviso","id","tipoaviso"));
+    form.set_relation(7,QSqlRelation("usuarios","id","nombre"));
     form.set_columnHide(0);
     form.exec();
 }

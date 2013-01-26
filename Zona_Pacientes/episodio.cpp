@@ -2,9 +2,9 @@
 #include "sqlcalls.h"
 #include <QMessageBox>
 #include <QApplication>
-#include <QSql>
+#include <qsql.h>
 #include<QSqlRecord>
-Episodio::Episodio()
+Episodio::Episodio(QObject *parent) : QObject(parent)
 {
 }
 
@@ -51,7 +51,7 @@ void Episodio::RecuperarEpisodio(int idEpisodio)
     delete qEpisodio;
 }
 
-void Episodio::RecuperarDoctor(int iddoctor)
+QString Episodio::RecuperarDoctor(int iddoctor)
 {
     QSqlQuery qDoctor(QSqlDatabase::database("dbmedica"));
     qDoctor.prepare("select nombre from doctores where id = :nId");
@@ -59,7 +59,7 @@ void Episodio::RecuperarDoctor(int iddoctor)
     if(qDoctor.exec()) {
         qDoctor.next();
         QSqlRecord rDoctor = qDoctor.record();
-        this->doctor = rDoctor.field("nombre").value.toString();
+        this->doctor = rDoctor.value("nombre").toString();
         return this->doctor;
     } else {
         QMessageBox::warning(qApp->activeWindow(),tr("Doctores"),tr("No se puede recuperar el Doctor"),tr("Aceptar"));
@@ -67,7 +67,7 @@ void Episodio::RecuperarDoctor(int iddoctor)
     return "";
 }
 
-void Episodio::RecuperarIdDoctor(QString doctor)
+int Episodio::RecuperarIdDoctor(QString doctor)
 {
     QSqlQuery qDoctor(QSqlDatabase::database("dbmedica"));
     qDoctor.prepare("select id from doctores where doctor = :doctor");
@@ -75,12 +75,12 @@ void Episodio::RecuperarIdDoctor(QString doctor)
     if(qDoctor.exec()) {
         qDoctor.next();
         QSqlRecord rDoctor = qDoctor.record();
-        this->iddoctor = rDoctor.field("id").value.toInt();
+        this->iddoctor = rDoctor.value("id").toInt();
         return this->iddoctor;
     } else {
         QMessageBox::warning(qApp->activeWindow(),tr("Doctores"),tr("No se puede recuperar el Doctor"),tr("Aceptar"));
     }
-    return "";
+    return -1;
 }
 
 void Episodio::GuardarEpisodio()
