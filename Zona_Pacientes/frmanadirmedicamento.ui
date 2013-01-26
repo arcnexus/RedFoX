@@ -59,6 +59,9 @@
          <number>0</number>
         </property>
         <widget class="QWidget" name="tabWidgetPage1">
+         <property name="styleSheet">
+          <string notr="true">background-color: #ecefed;</string>
+         </property>
          <attribute name="title">
           <string>Buscar por Nombre Medicamento</string>
          </attribute>
@@ -203,7 +206,8 @@
           <item row="4" column="0" colspan="5">
            <widget class="QLabel" name="label_11">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(192, 192, 255);</string>
+             <string notr="true">background: #304163;
+color: #FFFFFF;</string>
             </property>
             <property name="text">
              <string>prospecto</string>
@@ -213,7 +217,8 @@
           <item row="2" column="0" colspan="6">
            <widget class="QLabel" name="label_4">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(192, 192, 255);</string>
+             <string notr="true">background: #304163;
+color: #FFFFFF;</string>
             </property>
             <property name="text">
              <string>Medicamentos en vademécum (pulse Click para cargar prospecto)</string>
@@ -230,6 +235,9 @@
          </layout>
         </widget>
         <widget class="QWidget" name="tabWidgetPage2">
+         <property name="styleSheet">
+          <string notr="true">background-color: #ecefed;</string>
+         </property>
          <attribute name="title">
           <string>Buscar por patología</string>
          </attribute>
@@ -257,7 +265,8 @@
               <item row="3" column="0" colspan="3">
                <widget class="QLabel" name="label_7">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(192, 192, 255);</string>
+                 <string notr="true">background: #304163;
+color: #FFFFFF;</string>
                 </property>
                 <property name="text">
                  <string>Patologías (dbl Click para mostrar med. asoc)</string>
@@ -302,7 +311,8 @@
               <item row="3" column="3" colspan="3">
                <widget class="QLabel" name="label_8">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(192, 192, 255);</string>
+                 <string notr="true">background: #304163;
+color: #FFFFFF;</string>
                 </property>
                 <property name="text">
                  <string>Medicamentos asociados a la Patología indicada (click muestra prospecto)</string>
@@ -312,7 +322,8 @@
               <item row="8" column="0" colspan="6">
                <widget class="QLabel" name="label_10">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(192, 192, 255);</string>
+                 <string notr="true">background: #304163;
+color: #FFFFFF;</string>
                 </property>
                 <property name="text">
                  <string>Prospecto</string>
@@ -461,6 +472,9 @@
          </layout>
         </widget>
         <widget class="QWidget" name="tabWidgetPage3">
+         <property name="styleSheet">
+          <string notr="true">background-color: #ecefed;</string>
+         </property>
          <attribute name="title">
           <string>Buscar por molécula</string>
          </attribute>
@@ -544,7 +558,8 @@
           <item row="3" column="1">
            <widget class="QLabel" name="label_16">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(192, 192, 255);</string>
+             <string notr="true">background: #304163;
+color: #FFFFFF;</string>
             </property>
             <property name="text">
              <string>Medicamentos asociados a la Molécula indicada (click muestra prospecto)</string>
@@ -560,7 +575,8 @@
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(192, 192, 255);</string>
+             <string notr="true">background: #304163;
+color: #FFFFFF;</string>
             </property>
             <property name="text">
              <string>Moléculas (dbl Click para mostrar med. asoc)</string>
@@ -665,7 +681,8 @@
           <item row="6" column="0" colspan="2">
            <widget class="QLabel" name="label_17">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(192, 192, 255);</string>
+             <string notr="true">background: #304163;
+color: #FFFFFF;</string>
             </property>
             <property name="text">
              <string>Prospecto</string>
@@ -675,6 +692,9 @@
          </layout>
         </widget>
         <widget class="QWidget" name="tabWidgetPage4">
+         <property name="styleSheet">
+          <string notr="true">background-color: #ecefed;</string>
+         </property>
          <attribute name="title">
           <string>Buscar por principio activo</string>
          </attribute>
@@ -711,7 +731,8 @@
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(192, 192, 255);</string>
+             <string notr="true">background: #304163;
+color: #FFFFFF;</string>
             </property>
             <property name="text">
              <string>P. Activos (dbl Click para mostrar med. asoc)</string>
@@ -834,7 +855,8 @@
           <item row="3" column="1">
            <widget class="QLabel" name="label_22">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(192, 192, 255);</string>
+             <string notr="true">background: #304163;
+color: #FFFFFF;</string>
             </property>
             <property name="text">
              <string>Medicamentos asociados al P.Activo indicado (click muestra prospecto)</string>
@@ -879,7 +901,8 @@
           <item row="6" column="0" colspan="2">
            <widget class="QLabel" name="label_19">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(192, 192, 255);</string>
+             <string notr="true">background: #304163;
+color: #FFFFFF;</string>
             </property>
             <property name="text">
              <string>Prospecto</string>

@@ -28,6 +28,7 @@ private:
     QString cCp;
     QString cPoblacion;
     QString cProvincia;
+    int idPais;
     QString cPais;
     QString cTelefono1;
     QString cTelefono2;
@@ -40,12 +41,14 @@ private:
     QString cCPFactura;
     QString cPoblacionFactura;
     QString cProvinciaFactura;
+    int idPaisFactura;
     QString cPaisFactura;
     QString cDireccionAlmacen;
     QString cDireccionAlmacen2;
     QString cCPAlmacen;
     QString cPoblacionAlmacen;
     QString cProvinciaAlmacen;
+    int idPaisAlmacen;
     QString cPaisAlmacen;
     QDate dFechaalta;
     QDate dFechaCompra;
@@ -96,6 +99,8 @@ public slots:
     void DescontarDeuda(int id_deuda,double rPagado);
     void Borrar(int id_cliente);
     QString NuevoCodigoCliente();
+    int BuscaridPais(QString Pais);
+    QString RecuperarPais(int nid);
 
 
     // Gets
@@ -113,6 +118,7 @@ public slots:
     QString getcCP();
     QString getcPoblacion();
     QString getcProvincia();
+    int getidPais(){return this->idPais;}
     QString getcPais();
     QString getcTelefono1();
     QString getcTelefono2();
@@ -125,12 +131,14 @@ public slots:
     QString getcCPFactura();
     QString getcPoblacionFactura();
     QString getcProvinciaFactura();
+    int getidPaisFactura() {return this->idPaisFactura;}
     QString getcPaisFactura();
     QString getcDireccionAlmacen();
     QString getcDireccionAlmacen2();
     QString getcCPAlmacen();
     QString getcPoblacionAlmacen();
     QString getcProvinciaAlmacen();
+    int getidPaisAlmacen() {return this->idPaisAlmacen;}
     QString getcPaisAlmacen();
     QDate getdFechaAlta();
     QDate getdFechaUltimaCompra();
@@ -180,6 +188,7 @@ public slots:
     void setcCp(QString cCp);
     void setcPoblacion(QString cPoblacion);
     void setcProvincia(QString cProvincia);
+    void setidPais(int nid){this->idPais = nid;}
     void setcPais(QString cPais);
     void setcTelefono1(QString cTelefono1);
     void setcTelefono2(QString cTelefono2);
@@ -192,12 +201,14 @@ public slots:
     void setcCPFactura(QString cCPFactura);
     void setcPoblacionFactura(QString cPoblacionFactura);
     void setcProvinciaFactura(QString cProvinciaFactura);
+    void setidPaisFactura(int nid){this->idPaisFactura = nid;}
     void setcPaisFactura(QString cPaisFactura);
     void setcDireccionAlmacen1(QString cDireccionAlmacen);
     void setcDireccionAlmacen2(QString cDireccionAlmacen2);
     void setcCPAlmacen(QString cCPAlmacen);
     void setcPoblacionAlmacen(QString cPoblacionAlmacen);
     void setcProvinciaAlmacen(QString cProvinciaAlmacen);
+    void setidPaisAlmacen(int nid){this->idPaisAlmacen = nid;}
     void setcPaisAlmacen(QString cPaisAlmacen);
     void setdFechaAlta(QDate dFechaAlta);
     void setdFechaUltimaCompra(QDate dFechaUltimaCompra);

@@ -27,7 +27,7 @@ void Cliente::Guardar() {
                    "cCP= :cCP,"
                    "cPoblacion= :cPoblacion,"
                    "cProvincia= :cProvincia,"
-                   "cPais= :cPais,"
+                   "idPais= :idPais,"
                    "cTelefono1 = :cTelefono1,"
                    "cTelefono2 = :cTelefono2,"
                    "cFax=:cFax,"
@@ -39,13 +39,13 @@ void Cliente::Guardar() {
                    "cCPFactura=:cCPFactura,"
                    "cPoblacionFactura=:cPoblacionFactura,"
                    "cProvinciaFactura=:cProvinciaFactura,"
-                   "cPaisFactura=:cPaisFactura,"
+                   "idPaisFactura=:idPaisFactura,"
                    "cDireccionAlmacen=:cDireccionAlmacen1,"
                    "cDireccionAlmacen2=:cDireccionAlmacen2,"
                    "cCPAlmacen=:cCPAlmacen,"
                    "cPoblacionAlmacen=:cPoblacionAlmacen,"
                    "cProvinciaAlmacen=:cProvinciaAlmacen,"
-                   "cPaisAlmacen=:cPaisAlmacen,"
+                   "idPaisAlmacen=:idPaisAlmacen,"
                    "dFechaAlta=:dFechaAlta,"
                    "dFechaUltimaCompra=:dFechaUltimaCompra,"
                    "rAcumuladoVentas=:rAcumuladoVentas,"
@@ -91,7 +91,7 @@ void Cliente::Guardar() {
     query.bindValue(":cCP",this->cCp);
     query.bindValue(":cPoblacion",this->cPoblacion);
     query.bindValue(":cProvincia", this->cProvincia);
-    query.bindValue(":cPais",this->cPais);
+    query.bindValue(":idPais",this->idPais);
     query.bindValue(":cTelefono1", this->cTelefono1);
     query.bindValue(":cTelefono2",this->cTelefono2);
     query.bindValue(":cFax",this->cFax);
@@ -103,13 +103,13 @@ void Cliente::Guardar() {
     query.bindValue(":cCPFactura",this->cCPFactura);
     query.bindValue(":cPoblacionFactura",this->cPoblacionFactura);
     query.bindValue(":cProvinciaFactura", this->cProvinciaFactura);
-    query.bindValue(":cPaisFactura", this->cPaisFactura);
+    query.bindValue(":idPaisFactura", this->idPaisFactura);
     query.bindValue(":cDireccionAlmacen1",this->cDireccionAlmacen);
     query.bindValue(":cDireccionAlmacen2",this->cDireccionAlmacen2);
     query.bindValue(":cCPAlmacen", this->cCPAlmacen);
     query.bindValue(":cPoblacionAlmacen",this->cPoblacionAlmacen);
     query.bindValue(":cProvinciaAlmacen",this->cProvinciaAlmacen);
-    query.bindValue(":cPaisAlmacen",this->cPaisAlmacen);
+    query.bindValue(":idPaisAlmacen",this->idPaisAlmacen);
     query.bindValue(":dFechaAlta",this->dFechaalta);
     query.bindValue(":dFechaUltimaCompra",this->dFechaCompra);
     query.bindValue(":rAcumuladoVentas",this->rAcumuladoVentas);
@@ -163,17 +163,17 @@ void Cliente::Anadir() {
          query.prepare("INSERT INTO clientes (cCodigoCliente, cApellido1, cApellido2,cNombre,cNombreFiscal,cNombreComercial,cPersonaContacto,"
                        " cCifNif,cDireccion1,cDireccion2,cCP,cPoblacion,cProvincia,idpais,cTelefono1,cTelefono2,cFax,"
                        "cMovil,cEmail,cWeb,cDireccionFactura1,cDireccionFactura2,cCPFactura,cPoblacionFactura,cProvinciaFactura,"
-                       "cPaisFactura,cDireccionAlmacen,cDireccionAlmacen2,cCPAlmacen,cPoblacionAlmacen,cProvinciaAlmacen,"
+                       "idPaisFactura,cDireccionAlmacen,cDireccionAlmacen2,cCPAlmacen,cPoblacionAlmacen,cProvinciaAlmacen,"
                        "idPaisAlmacen,dFechaAlta,dFechaUltimaCompra,rAcumuladoVentas,rVentasEjercicio,rRiesgoMaximo,rDeudaActual,"
                        "tComentarios,lBloqueado,tComentarioBloqueo,nPorcDtoCliente,lRecargoEquivalencia,cCuentaContable,cCuentaIvaRepercutido,"
                        "cCuentaDeudas,cCuentaCobros,idFormaPago,nDiapago1,nDiaPago2,nTarifaCliente,rImporteACuenta,rVales,"
                        "cCentidadBancaria,cOficinaBancaria,cDC,cCuentaCorriente,dFechaNacimiento,rImportePendiente,cTipoCliente,cAccesoWeb,"
                        "cPasswordWeb,nIRPF) "
                        "VALUES (:cCodigoCliente, :cApellido1, :cApellido2,:cNombre,:cNombreFiscal,:cNombreComercial,:cPersonaContacto,"
-                       ":cCifNif,:cDireccion1,:cDireccion2,:cCP,:cPoblacion,:cProvincia,:cPais,:cTelefono1,:cTelefono2,:cFax,"
+                       ":cCifNif,:cDireccion1,:cDireccion2,:cCP,:cPoblacion,:cProvincia,:idPais,:cTelefono1,:cTelefono2,:cFax,"
                        ":cMovil,:cEmail,:cWeb,:cDireccionFactura1,:cDireccionFactura2,:cCPFactura,:cPoblacionFactura,:cProvinciaFactura,"
-                       ":cPaisFactura,:cDireccionAlmacen,:cDireccionAlmacen2,:cCPAlmacen,:cPoblacionAlmacen,:cProvinciaAlmacen,"
-                       ":cPaisAlmacen,:dFechaAlta,:dFechaUltimaCompra,:rAcumuladoVentas,:rVentasEjercicio,:rRiesgoMaximo,:rDeudaActual,"
+                       ":idPaisFactura,:cDireccionAlmacen,:cDireccionAlmacen2,:cCPAlmacen,:cPoblacionAlmacen,:cProvinciaAlmacen,"
+                       ":idPaisAlmacen,:dFechaAlta,:dFechaUltimaCompra,:rAcumuladoVentas,:rVentasEjercicio,:rRiesgoMaximo,:rDeudaActual,"
                        ":tComentarios,:lBloqueado,:tComentarioBloqueo,:nPorcDtoCliente,:lRecargoEquivalencia,:cCuentaContable,:cCuentaIvaRepercutido,"
                        ":cCuentaDeudas,:cCuentaCobros,:cFormaPago,:nDiapago1,:nDiaPago2,:nTarifaCliente,:rImporteACuenta,:rVales,"
                        ":cCentidadBancaria,:cOficinaBancaria,:cDC,:cCuentaCorriente,:dFechaNacimiento,:rImportePendiente,"
@@ -191,7 +191,7 @@ void Cliente::Anadir() {
          query.bindValue(":cCP",this->cCp);
          query.bindValue(":cPoblacion",this->cPoblacion);
          query.bindValue(":cProvincia", this->cProvincia);
-         query.bindValue(":idpais",this->cPais);
+         query.bindValue(":idpais",this->idPais);
          query.bindValue(":cTelefono1", this->cTelefono1);
          query.bindValue(":cTelefono2",this->cTelefono2);
          query.bindValue(":cFax",this->cFax);
@@ -203,13 +203,13 @@ void Cliente::Anadir() {
          query.bindValue(":cCPFactura",this->cCPFactura);
          query.bindValue(":cPoblacionFactura",this->cPoblacionFactura);
          query.bindValue(":cProvinciaFactura", this->cProvinciaFactura);
-         query.bindValue(":cPaisFactura", this->cPaisFactura);
+         query.bindValue(":idPaisFactura", this->idPaisFactura);
          query.bindValue(":cDireccionAlmacen1",this->cDireccionAlmacen);
          query.bindValue(":cDireccionAlmacen2",this->cDireccionAlmacen2);
          query.bindValue(":cCPAlmacen", this->cCPAlmacen);
          query.bindValue(":cPoblacionAlmacen",this->cPoblacionAlmacen);
          query.bindValue(":cProvinciaAlmacen",this->cProvinciaAlmacen);
-         query.bindValue(":cPaisAlmacen",this->cPaisAlmacen);
+         query.bindValue(":idPaisAlmacen",this->idPaisAlmacen);
          query.bindValue(":dFechaAlta",this->dFechaalta);
          query.bindValue(":dFechaUltimaCompra",this->dFechaCompra);
          query.bindValue(":rAcumuladoVentas",this->rAcumuladoVentas);
@@ -428,6 +428,38 @@ QString Cliente::NuevoCodigoCliente()
 }
 
    return cCodigo;
+}
+
+int Cliente::BuscaridPais(QString Pais)
+{
+    QSqlQuery qPais(QSqlDatabase::database("empresa"));
+    qPais.prepare("select id from paises where pais =:pais");
+    qPais.bindValue(":pais",Pais);
+    if(qPais.exec()) {
+        qPais.next();
+        QSqlRecord rPais = qPais.record();
+        return rPais.field("id").value().toInt();
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Pacientes"),
+                             tr("No se pudo enconontrar el identificador del pais: %1 ").arg(Pais),tr("Aceptar"));
+    }
+    return 0;
+}
+
+QString Cliente::RecuperarPais(int nid)
+{
+    QSqlQuery qPais(QSqlDatabase::database("empresa"));
+    qPais.prepare("select pais from paises where id =:id");
+    qPais.bindValue(":id",nid);
+    if(qPais.exec()) {
+        qPais.next();
+        QSqlRecord rPais = qPais.record();
+        return rPais.field("pais").value().toString();
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Pacientes"),
+                             tr("No se pudo enconontrar el Pais: %1 ").arg(QString::number(nid)),tr("Aceptar"));
+    }
+    return "";
 }
 
 // Setters

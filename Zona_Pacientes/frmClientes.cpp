@@ -103,7 +103,7 @@ void frmClientes::LLenarCampos()
     ui->txtcCp->setText(oCliente->getcCP());
     ui->txtcPoblacion->setText(oCliente->getcPoblacion());
     ui->txtcProvincia->setText(oCliente->getcProvincia());
-    ui->txtcPais->setText(oCliente->getcPais());
+    ui->txtcPais->setText(oCliente->RecuperarPais(oCliente->getidPais()));
     ui->txtcTelefono1->setText(oCliente->getcTelefono1());
     ui->txtcTelefono2->setText(oCliente->getcTelefono2());
     ui->txtcFax->setText(oCliente->getcFax());
@@ -115,13 +115,13 @@ void frmClientes::LLenarCampos()
     ui->txtcCPFactura->setText(oCliente->getcCPFactura());
     ui->txtcPoblacionFactura->setText(oCliente->getcPoblacionFactura());
     ui->txtcProvinciaFactura->setText(oCliente->getcProvinciaFactura());
-    ui->txtcPaisFactura->setText(oCliente->getcPaisFactura());
+    ui->txtcPaisFactura->setText(oCliente->RecuperarPais(oCliente->getidPaisFactura()));
     ui->txtcDireccionAlmacen1->setText(oCliente->getcDireccionAlmacen());
     ui->txtcDireccionAlmacen2->setText(oCliente->getcDireccionAlmacen2());
     ui->txtcCpPoblacionAlmacen->setText(oCliente->getcCPAlmacen());
     ui->txtcPoblacionAlmacen->setText(oCliente->getcPoblacionAlmacen());
     ui->txtcProvinciaAlmacen->setText(oCliente->getcProvinciaAlmacen());
-    ui->txtcPaisAlmacen->setText(oCliente->getcPaisAlmacen());
+    ui->txtcPaisAlmacen->setText(oCliente->RecuperarPais(oCliente->getidPaisAlmacen()));
     ui->txtdFechaAlta->setDate(oCliente->getdFechaAlta());
     ui->txtdFechaUltimaCompra->setDate(oCliente->getdFechaUltimaCompra());
     ui->txtrImporteAcumulado->setText(o_Configuracion->FormatoNumerico(QString::number( oCliente->getrAcumuladoVentas(),'f',2)));
@@ -623,6 +623,7 @@ void frmClientes::txtcPoblacion_editingFinished()
                      ui->txtcCp->setText(qPoblacion.value(1).toString());
                      ui->txtcProvincia->setText(qPoblacion.value(2).toString());
                      ui->txtcPais->setText("ESPAÑA");
+                     oCliente->setidPais(oCliente->BuscaridPais("ESPAÑA"));
                  }
              }
          }
@@ -835,6 +836,7 @@ void frmClientes::txtcCp_editingFinished()
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
                         ui->txtcProvincia->setText(qPoblacion.value(2).toString());
                         ui->txtcPais->setText("ESPAÑA");
+                        oCliente->setidPais(oCliente->BuscaridPais("ESPAÑA"));
                     }
                 }
             }
@@ -876,6 +878,7 @@ void frmClientes::txtcCPFactura_editingFinished()
                         ui->txtcPoblacionFactura->setText(qPoblacion.value(0).toString());
                         ui->txtcProvinciaFactura->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisFactura->setText("ESPAÑA");
+                        oCliente->setidPaisFactura(oCliente->BuscaridPais("ESPAÑA"));
                     }
                 }
             }
@@ -918,6 +921,7 @@ void frmClientes::txtcPoblacionFactura_editingFinished()
                         ui->txtcCPFactura->setText(qPoblacion.value(1).toString());
                         ui->txtcProvinciaFactura->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisFactura->setText("ESPAÑA");
+                        oCliente->setidPaisFactura(oCliente->BuscaridPais("ESPAÑA"));
                    }
                 }
             }
@@ -958,6 +962,7 @@ void frmClientes::txtcCpPoblacionAlmacen_editingFinished()
                         ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());
                         ui->txtcProvinciaAlmacen->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisAlmacen->setText("ESPAÑA");
+                        oCliente->setidPaisAlmacen(oCliente->BuscaridPais("ESPAÑA"));
                     }
                 }
             }
@@ -1000,6 +1005,7 @@ void frmClientes::txtcPoblacionAlmacen_editingFinished()
                         ui->txtcCpPoblacionAlmacen->setText(qPoblacion.value(1).toString());
                         ui->txtcProvinciaAlmacen->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisAlmacen->setText("ESPAÑA");
+                        oCliente->setidPaisAlmacen(oCliente->BuscaridPais("ESPAÑA"));
                     }
                 }
             }
