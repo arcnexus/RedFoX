@@ -6,6 +6,20 @@
 
 class Episodio
 {
+private:
+    int id;
+    int idPaciente;
+    int cerrado;
+    int privado;
+    int idcie;
+    int iddoctor;
+    QString doctor;
+    QDate fecha;
+    QString cie;
+    QString descripcion;
+    QString historial;
+    QString codigocie;
+
 public:
     Episodio();
     int NuevoEpisodio(int idPaciente);
@@ -15,6 +29,7 @@ public:
     int getidPaciente();
     int getcerrado();
     int getprivado();
+    int getiddoctor() {return this.iddoctor;}
     QString getdoctor();
     QDate getfecha();
     QString getCIE();
@@ -27,6 +42,7 @@ public:
     void setidPaciente(int idPaciente);
     void setcerrado(int cerrado);
     void setprivado(int privado);
+    void setiddoctor(int iddoctor) {this->iddoctor = iddoctor;}
     void setdoctor(QString doctor);
     void setfecha(QDate fecha);
     void setCIE(QString CIE);
@@ -34,26 +50,6 @@ public:
     void sethistorial(QString historial);
     void setidcie(int id);
     void setcodigocie(QString codigo);
-
-
-private:
-    int id;
-    int idPaciente;
-    int cerrado;
-    int privado;
-    int idcie;
-    QString doctor;
-    QDate fecha;
-    QString cie;
-    QString descripcion;
-    QString historial;
-    QString codigocie;
-
-
-
-
-
-
 
 };
 

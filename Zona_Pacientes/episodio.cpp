@@ -37,7 +37,7 @@ void Episodio::RecuperarEpisodio(int idEpisodio)
         this->setcerrado(rEpisodio.field("cerrado").value().toInt());
         this->setCIE(rEpisodio.field("cie").value().toString());
         this->setdescripcion(rEpisodio.field("descripcion").value().toString());
-        this->setdoctor(rEpisodio.field("doctor").value().toString());
+        this->setdoctor(rEpisodio.field("iddoctor").value().toInt());
         this->setfecha(rEpisodio.field("fecha").value().toDate());
         this->sethistorial(rEpisodio.field("historial").value().toString());
         this->setprivado(rEpisodio.field("privado").value().toInt());
@@ -49,6 +49,38 @@ void Episodio::RecuperarEpisodio(int idEpisodio)
     delete qEpisodio;
 }
 
+void Episodio::RecuperarDoctor(int iddoctor)
+{
+    QSqlQuery qDoctor(QSqlDatabase::database("dbmedica"));
+    qDoctor.prepare("select nombre from doctores where id = :nId");
+    qDoctor.bindValue(":nId",iddoctor);
+    if(qDoctor.exec()) {
+        qDoctor.next();
+        QSqlRecord rDoctor = qDoctor.record();
+        this->doctor = rDoctor.field("nombre").value.toString();
+        return this->doctor;
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Doctores"),tr("No se puede recuperar el Doctor"),tr("Aceptar"));
+    }
+    return "";
+}
+
+void Episodio::RecuperarIdDoctor(QString doctor)
+{
+    QSqlQuery qDoctor(QSqlDatabase::database("dbmedica"));
+    qDoctor.prepare("select id from doctores where doctor = :doctor");
+    qDoctor.bindValue(":doctor",doctor);
+    if(qDoctor.exec()) {
+        qDoctor.next();
+        QSqlRecord rDoctor = qDoctor.record();
+        this->iddoctor = rDoctor.field("id").value.toInt();
+        return this->iddoctor;
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Doctores"),tr("No se puede recuperar el Doctor"),tr("Aceptar"));
+    }
+    return "";
+}
+
 void Episodio::GuardarEpisodio()
 {
     QSqlQuery *qEpisodio = new QSqlQuery(QSqlDatabase::database("dbmedica"));
@@ -56,7 +88,7 @@ void Episodio::GuardarEpisodio()
                        "idpaciente = :idpaciente,"
                        "cerrado = :cerrado,"
                        "privado = :privado,"
-                       "doctor = :doctor,"
+                       "iddoctor = :iddoctor,"
                        "fecha = :fecha,"
                        "historial = :historial,"
                        "cie = :cie,"
@@ -65,7 +97,7 @@ void Episodio::GuardarEpisodio()
     qEpisodio->bindValue(":idpaciente",this->idPaciente);
     qEpisodio->bindValue(":cerrado",this->cerrado);
     qEpisodio->bindValue(":privado",this->privado);
-    qEpisodio->bindValue(":doctor",this->doctor);
+    qEpisodio->bindValue(":iddoctor",this->iddoctor);
     qEpisodio->bindValue(":fecha",this->fecha);
     qEpisodio->bindValue(":historial",this->historial);
     qEpisodio->bindValue(":cie",this->cie);
