@@ -40,14 +40,14 @@ SOURCES += main.cpp\
     frmarticulos.cpp \
     cliente.cpp \
     proveedor.cpp \
-    frmbuscarcliente.cpp \
+    Busquedas/frmbuscarcliente.cpp \
     frmfacturas.cpp \
     factura.cpp \
-    frmbuscarpoblacion.cpp \
+    Busquedas/frmbuscarpoblacion.cpp \
     configuracion.cpp \
     empresa.cpp \
     articulo.cpp \
-    frmBuscarFactura.cpp \
+    Busquedas/frmBuscarFactura.cpp \
     frmmodificarlin_fac.cpp \
     columnafecha.cpp \
     Zona_Administrador/frmempresas.cpp \
@@ -68,7 +68,7 @@ SOURCES += main.cpp\
     paciente.cpp \
     episodio.cpp \
     frmanadirmedicamento.cpp \
-    frmbuscarcie.cpp \
+    Busquedas/frmbuscarcie.cpp \
     vademecum.cpp \
     farmacologia.cpp \
     frminformacionfarmaco.cpp \
@@ -95,14 +95,14 @@ HEADERS  += mainwindow.h \
     frmarticulos.h \
     cliente.h \
     proveedor.h \
-    frmbuscarcliente.h \
+    Busquedas/frmbuscarcliente.h \
     frmfacturas.h \
     factura.h \
-    frmbuscarpoblacion.h \
+    Busquedas/frmbuscarpoblacion.h \
     configuracion.h \
     empresa.h \
     articulo.h \
-    frmBuscarFactura.h \
+    Busquedas/frmBuscarFactura.h \
     frmmodificarlin_fac.h \
     columnafecha.h \
     Zona_Administrador/frmempresas.h \
@@ -123,7 +123,7 @@ HEADERS  += mainwindow.h \
     paciente.h \
     episodio.h \
     frmanadirmedicamento.h \
-    frmbuscarcie.h \
+    Busquedas/frmbuscarcie.h \
     vademecum.h \
     farmacologia.h \
     frminformacionfarmaco.h \
@@ -148,11 +148,11 @@ FORMS    += mainwindow.ui \
     login.ui \
     frmproveedores.ui \
     frmarticulos.ui \
-    frmbuscarcliente.ui \
+    Busquedas/frmbuscarcliente.ui \
     frmfacturas.ui \
     pruebas.ui \
-    frmbuscarpoblacion.ui \
-    frmBuscarFactura.ui \
+    Busquedas/frmbuscarpoblacion.ui \
+    Busquedas/frmBuscarFactura.ui \
     frmmodificarlin_fac.ui \
     Zona_Administrador/frmempresas.ui \
     frmconfiguracion.ui \
@@ -166,7 +166,7 @@ FORMS    += mainwindow.ui \
     frmagendavisitas.ui \
     frmfichapaciente.ui \
     frmanadirmedicamento.ui \
-    frmbuscarcie.ui \
+    Busquedas/frmbuscarcie.ui \
     frminformacionfarmaco.ui \
     frmanadirimagen.ui \
     frmanalitica.ui \

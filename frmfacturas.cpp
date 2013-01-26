@@ -8,8 +8,8 @@
 #include<QDate>
 #include <QSqlQueryModel>
 #include <QDebug>
-#include "frmbuscarcliente.h"
-#include "frmBuscarFactura.h"
+#include "Busquedas/frmbuscarcliente.h"
+#include "Busquedas/frmBuscarFactura.h"
 #include <QTableView>
 #include <QHeaderView>
 #include "articulo.h"

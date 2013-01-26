@@ -4,7 +4,7 @@
 #include <QSqlDatabase>
 #include<QSqlQuery>
 #include <QMessageBox>
-#include "frmbuscarpoblacion.h"
+#include "Busquedas/frmbuscarpoblacion.h"
 #include <QFileDialog>
 #include <QApplication>
 #ifdef WIN32

@@ -2,7 +2,7 @@
 #include "ui_frmproveedores.h"
 #include "proveedor.h"
 #include "configuracion.h"
-#include "frmbuscarpoblacion.h"
+#include "Busquedas/frmbuscarpoblacion.h"
 #include <QDebug>
 
 #ifdef WIN32

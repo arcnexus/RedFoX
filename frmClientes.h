@@ -6,7 +6,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <QtSql>
-#include "frmbuscarpoblacion.h"
+#include "Busquedas/frmbuscarpoblacion.h"
 #include "configuracion.h"
 #include "frmfichapaciente.h"
 #include "cliente.h"
