@@ -390,13 +390,7 @@ void FrmFichaPaciente::on_btnGuardarEpisodio_clicked()
 {
     LLenarEpisodio();
     oEpisodio->GuardarEpisodio();
-    // cargar datos Episodios
-    //BUG ? ¿este Model para que?
-//    QSqlQueryModel *EpisodiosModelo = new QSqlQueryModel(this);
-//    EpisodiosModelo->setQuery("Select descripcion from episodios where idpaciente = "+QString::number(oPaciente->getid()),QSqlDatabase::database("dbmedica"));
-//   // ui->listaEpisodios->setModel(EpisodiosModelo);
- BloquearCamposEpisodio(true);
-
+    BloquearCamposEpisodio(true);
 }
 
 
@@ -408,8 +402,8 @@ void FrmFichaPaciente::listaEpisodios_currentItemChanged(QTreeWidgetItem*current
         cargarEpisodio(1);
 
     }
-    else {
-
+    else
+    {
         int nIdVisita = current->text(0).toInt();
         // TODO - Cargar Visita
     }
