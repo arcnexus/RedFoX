@@ -46,30 +46,31 @@ QTabWidget::tab-bar {
 /* Style the tab using the tab sub-control. Note that     it reads QTabBar _not_ QTabWidget */
 
 QTabBar::tab {
-   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,   stop: 0 #9397D8, stop: 0.4 #9BA0E5, stop: 0.5 #A3A8F0, stop: 1.0 #9DA2FF);
-    border: 2px solid #342C89;
-    border-bottom-color: #9DA2FF;
+   ;
+    /*border: 1px solid #342C89;
+    border-bottom-color: #9DA2FF;*/
     color: #FFFFFF;
     /* same as the pane color */
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     min-width: 1ex;
-    padding: 4px;
-    margin:2px;
+    padding: 5px;
+    margin-right:5px;
 }
 
 QTabBar::tab:selected, QTabBar::tab:hover {
     /*background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,   stop: 0 #1d2146, stop: 0.4 #525CB3, stop: 0.5 #3A407E, stop: 1.0 #9DA2FF);*/
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,   stop: 0 #ff7807, stop: 0.4 #fb8e36, stop: 0.5 #ffb071, stop: 1.0 #ffcea7);
+    background:#ecf1f0;
+    color:#000000
 }
 
 QTabBar::tab:selected {
-    border-color: #ff0707;
-    border-bottom-color: #ffcea7;
+    border-color: #4c6088;
+    border-bottom-color: #4c6088;
     /* same as pane color */ }
 
 QTabBar::tab:!selected {
-    margin-top: 2px;
+    margin-top: 1px;
     /* make non-selected tabs look smaller */
 }
 
@@ -443,10 +444,10 @@ QTableView, QTableWidet {
 QLineEdit,QComboBox,QSpinBox,QDateEdit,QTextEdit,QPlainTextEdit,QDateTimeEdit, QListView,QTreeWidget{
       /*background: rgb(255, 255, 255); */
       background-color: rgb(255, 255, 255);
-      border-width: 1.5px;
+      border-width: 1px;
       padding: 1px;
       border-style: solid;
-      border-color: #9DA2FF;
+      border-color: #4c6088;
       border-radius: 5px;
       selection-color: #FFFFFF;
       selection-background-color: #4476C1;
