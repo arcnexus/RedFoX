@@ -5,7 +5,7 @@
 #include "configuracion.h"
 # include <QSqlQueryModel>
 #include "pedidos.h"
-#include "cliente.h"
+#include "Zona_Pacientes/cliente.h"
 namespace Ui {
 class frmPedidos;
 }

@@ -1,7 +1,7 @@
 #include "frmalbaran.h"
 #include "ui_frmalbaran.h"
 #include "albaran.h"
-#include "cliente.h"
+#include "Zona_Pacientes/cliente.h"
 #include "configuracion.h"
 #include "articulo.h"
 #include "frmmodificarlin_alb.h"

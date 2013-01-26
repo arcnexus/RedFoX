@@ -7,7 +7,7 @@
 #include <QTableView>
 #include <QSqlQueryModel>
 #include "presupuesto.h"
-#include "cliente.h"
+#include "Zona_Pacientes/cliente.h"
 
 namespace Ui {
 class FrmPresupuestosCli;

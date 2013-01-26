@@ -34,11 +34,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    frmClientes.cpp \
+    Zona_Pacientes/frmClientes.cpp \
     login.cpp \
     frmproveedores.cpp \
     frmarticulos.cpp \
-    cliente.cpp \
+    Zona_Pacientes/cliente.cpp \
     proveedor.cpp \
     Busquedas/frmbuscarcliente.cpp \
     frmfacturas.cpp \
@@ -62,24 +62,24 @@ SOURCES += main.cpp\
     presupuesto.cpp \
     frmmodificarlin_precli.cpp \
     frmcajaminuta.cpp \
-    frmfichapaciente.cpp \
+    Zona_Pacientes/frmfichapaciente.cpp \
     frmagendavisitas.cpp \
     sqlcalls.cpp \
-    paciente.cpp \
-    episodio.cpp \
-    frmanadirmedicamento.cpp \
+    Zona_Pacientes/paciente.cpp \
+    Zona_Pacientes/episodio.cpp \
+    Zona_Pacientes/frmanadirmedicamento.cpp \
     Busquedas/frmbuscarcie.cpp \
     vademecum.cpp \
-    farmacologia.cpp \
-    frminformacionfarmaco.cpp \
-    frmanadirimagen.cpp \
+    Zona_Pacientes/farmacologia.cpp \
+    Zona_Pacientes/frminformacionfarmaco.cpp \
+    Zona_Pacientes/frmanadirimagen.cpp \
     imagenesdiagnostico.cpp \
     prueba.cpp \
     interconsulta.cpp \
-    frmanalitica.cpp \
-    frmanalitica2.cpp \
-    analitica.cpp \
-    frmveranalitica.cpp \
+    Zona_Pacientes/frmanalitica.cpp \
+    Zona_Pacientes/frmanalitica2.cpp \
+    Zona_Pacientes/analitica.cpp \
+    Zona_Pacientes/frmveranalitica.cpp \
     frmvisitas.cpp \
     Zona_Administrador/arearestringida_form.cpp \
     block_terra_form.cpp \
@@ -89,11 +89,12 @@ SOURCES += main.cpp\
     db_table_view.cpp
 
 HEADERS  += mainwindow.h \
-    frmClientes.h \
+    Zona_Pacientes/analitica.h \
+    Zona_Pacientes/frmClientes.h \
     login.h \
     frmproveedores.h \
     frmarticulos.h \
-    cliente.h \
+    Zona_Pacientes/cliente.h \
     proveedor.h \
     Busquedas/frmbuscarcliente.h \
     frmfacturas.h \
@@ -117,24 +118,23 @@ HEADERS  += mainwindow.h \
     presupuesto.h \
     frmmodificarlin_precli.h \
     frmcajaminuta.h \
-    frmfichapaciente.h \
+    Zona_Pacientes/frmfichapaciente.h \
     frmagendavisitas.h \
     sqlcalls.h \
-    paciente.h \
-    episodio.h \
-    frmanadirmedicamento.h \
+    Zona_Pacientes/paciente.h \
+    Zona_Pacientes/episodio.h \
+    Zona_Pacientes/frmanadirmedicamento.h \
     Busquedas/frmbuscarcie.h \
     vademecum.h \
-    farmacologia.h \
-    frminformacionfarmaco.h \
-    frmanadirimagen.h \
+    Zona_Pacientes/farmacologia.h \
+    Zona_Pacientes/frminformacionfarmaco.h \
+    Zona_Pacientes/frmanadirimagen.h \
     imagenesdiagnostico.h \
     prueba.h \
     interconsulta.h \
-    frmanalitica.h \
-    frmanalitica2.h \
-    analitica.h \
-    frmveranalitica.h \
+    Zona_Pacientes/frmanalitica.h \
+    Zona_Pacientes/frmanalitica2.h \
+    Zona_Pacientes/frmveranalitica.h \
     frmvisitas.h \
     Zona_Administrador/arearestringida_form.h \
     block_terra_form.h \
@@ -144,7 +144,7 @@ HEADERS  += mainwindow.h \
     db_table_view.h
 
 FORMS    += mainwindow.ui \
-    frmClientes.ui \
+    Zona_Pacientes/frmClientes.ui \
     login.ui \
     frmproveedores.ui \
     frmarticulos.ui \
@@ -164,14 +164,14 @@ FORMS    += mainwindow.ui \
     frmmodificarlin_precli.ui \
     frmcajaminuta.ui \
     frmagendavisitas.ui \
-    frmfichapaciente.ui \
-    frmanadirmedicamento.ui \
+    Zona_Pacientes/frmfichapaciente.ui \
+    Zona_Pacientes/frmanadirmedicamento.ui \
     Busquedas/frmbuscarcie.ui \
-    frminformacionfarmaco.ui \
-    frmanadirimagen.ui \
-    frmanalitica.ui \
-    frmanalitica2.ui \
-    frmveranalitica.ui \
+    Zona_Pacientes/frminformacionfarmaco.ui \
+    Zona_Pacientes/frmanadirimagen.ui \
+    Zona_Pacientes/frmanalitica.ui \
+    Zona_Pacientes/frmanalitica2.ui \
+    Zona_Pacientes/frmveranalitica.ui \
     prueba.ui \
     frmvisitas.ui \
     Zona_Administrador/arearestringida_form.ui \
