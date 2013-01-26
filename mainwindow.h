@@ -70,6 +70,11 @@ private slots:
     void on_btn_bloquear_clicked();
 
     void divisiones_almacen();
+
+    void handle_doctores();
+    void handle_bancos();
+    void handle_tiposIVA();
+    void handle_fomasPago();
 private:
     Ui::MainWindow *ui;
 

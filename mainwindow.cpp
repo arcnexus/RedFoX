@@ -13,7 +13,7 @@
 #include <QSettings>
 #include "configuracion.h"
 #include <QSqlQuery>
-#include "frmempresas.h"
+#include "Zona_Administrador/frmempresas.h"
 
 #include "frmconfiguracion.h"
 
@@ -27,6 +27,8 @@
 
 #include "block_terra_form.h"
 #include "Gestion_Almacen/gestion_seccionalmacen.h"
+
+#include "db_table_view.h"
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 #include <QDesktopWidget>
@@ -108,6 +110,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionGestion_de_Secciones,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
     connect(ui->actionGestion_de_Familias,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
     connect(ui->actionGestion_de_subfamilias,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
+    connect(ui->actionDoctores,SIGNAL(triggered()),this,SLOT(handle_doctores()));
+    connect(ui->actionBancos,SIGNAL(triggered()),this,SLOT(handle_bancos()));
+    connect(ui->actionTipos_I_V_A,SIGNAL(triggered()),this,SLOT(handle_tiposIVA()));
+    connect(ui->actionFormas_de_pago,SIGNAL(triggered()),this,SLOT(handle_fomasPago()));
 
 
     QSqlDatabase dbEmp;
@@ -476,4 +482,78 @@ void MainWindow::divisiones_almacen()
         form.setWindowTitle(tr("SubFamilias"));
         form.exec();
     }
+}
+
+void MainWindow::handle_doctores()
+{
+    Db_table_View form(this);
+    form.set_db("dbmedica");
+    form.set_table("doctores");
+
+    form.setWindowTitle(tr("Doctores"));
+
+
+    QStringList headers;
+    headers << tr("Nombre") << tr("Nº Colegiado") << tr("Teléfono") << tr("Especialidad 1");
+    headers << tr("Especialidad 2") << tr("Dirección") << tr("C.P.") << tr("Población");
+    headers << tr("Provincia") << tr("Pais") << tr("Movil");
+    form.set_table_headers(headers);
+
+    form.set_columnHide(0);
+    form.set_columnHide(12);
+    form.set_columnHide(13);
+    form.set_columnHide(14);
+    form.exec();
+}
+
+void MainWindow::handle_bancos()
+{
+    Db_table_View form(this);
+    form.set_db("empresa");
+    form.set_table("bancos");
+
+    form.setWindowTitle(tr("Bancos"));
+
+
+    QStringList headers;
+    headers << tr("Descripción") << tr("Entidad") << tr("Oficina") << tr("Dc");
+    headers << tr("Cuenta") << tr("Saldo");
+    form.set_table_headers(headers);
+
+    form.set_columnHide(0);
+    form.exec();
+}
+
+void MainWindow::handle_tiposIVA()
+{
+    Db_table_View form(this);
+    form.set_db("empresa");
+    form.set_table("tiposiva");
+
+    form.setWindowTitle(tr("Tipos de I.V.A"));
+
+
+    QStringList headers;
+    headers << tr("Tipo") << tr("Decripción") << tr("I.V.A") << tr("Recargo equivalencia");
+    form.set_table_headers(headers);
+
+    form.set_columnHide(0);
+    form.exec();
+}
+
+void MainWindow::handle_fomasPago()
+{
+    Db_table_View form(this);
+    form.set_db("empresa");
+    form.set_table("FormPago");
+
+    form.setWindowTitle(tr("Formas de pago"));
+
+    QStringList headers;
+    headers << tr("Codigo") << tr("Forma de pago") << tr("Dia de pago 1") << tr("Dia de pago 2");
+    headers << tr("Dia de pago 3") << tr("Dia de pago 4") << tr("Dia 1") << tr("Dia 2") << tr("Dia 3")<< tr("Dia 4");
+    form.set_table_headers(headers);
+
+    form.set_columnHide(0);
+    form.exec();
 }

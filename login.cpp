@@ -11,8 +11,8 @@
 #include "configuracion.h"
 #include <QSqlRecord>
 #include <QSqlField>
-#include "frmempresas.h"
-#include "arearestringida_form.h"
+#include "Zona_Administrador/frmempresas.h"
+#include "Zona_Administrador/arearestringida_form.h"
 
 #include <QtCore/QTimer>
 

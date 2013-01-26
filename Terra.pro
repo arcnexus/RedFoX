@@ -50,7 +50,7 @@ SOURCES += main.cpp\
     frmBuscarFactura.cpp \
     frmmodificarlin_fac.cpp \
     columnafecha.cpp \
-    frmempresas.cpp \
+    Zona_Administrador/frmempresas.cpp \
     frmconfiguracion.cpp \
     albaran.cpp \
     frmalbaran.cpp \
@@ -81,11 +81,12 @@ SOURCES += main.cpp\
     analitica.cpp \
     frmveranalitica.cpp \
     frmvisitas.cpp \
-    arearestringida_form.cpp \
+    Zona_Administrador/arearestringida_form.cpp \
     block_terra_form.cpp \
-    copy_db_progressfrm.cpp \
+    Zona_Administrador/copy_db_progressfrm.cpp \
     visitas.cpp \
-    Gestion_Almacen/gestion_seccionalmacen.cpp
+    Gestion_Almacen/gestion_seccionalmacen.cpp \
+    db_table_view.cpp
 
 HEADERS  += mainwindow.h \
     frmClientes.h \
@@ -104,7 +105,7 @@ HEADERS  += mainwindow.h \
     frmBuscarFactura.h \
     frmmodificarlin_fac.h \
     columnafecha.h \
-    frmempresas.h \
+    Zona_Administrador/frmempresas.h \
     frmconfiguracion.h \
     albaran.h \
     frmalbaran.h \
@@ -135,11 +136,12 @@ HEADERS  += mainwindow.h \
     analitica.h \
     frmveranalitica.h \
     frmvisitas.h \
-    arearestringida_form.h \
+    Zona_Administrador/arearestringida_form.h \
     block_terra_form.h \
-    copy_db_progressfrm.h \
+    Zona_Administrador/copy_db_progressfrm.h \
     visitas.h \
-    Gestion_Almacen/gestion_seccionalmacen.h
+    Gestion_Almacen/gestion_seccionalmacen.h \
+    db_table_view.h
 
 FORMS    += mainwindow.ui \
     frmClientes.ui \
@@ -152,7 +154,7 @@ FORMS    += mainwindow.ui \
     frmbuscarpoblacion.ui \
     frmBuscarFactura.ui \
     frmmodificarlin_fac.ui \
-    frmempresas.ui \
+    Zona_Administrador/frmempresas.ui \
     frmconfiguracion.ui \
     frmalbaran.ui \
     frmmodificarlin_alb.ui \
@@ -172,10 +174,11 @@ FORMS    += mainwindow.ui \
     frmveranalitica.ui \
     prueba.ui \
     frmvisitas.ui \
-    arearestringida_form.ui \
+    Zona_Administrador/arearestringida_form.ui \
     block_terra_form.ui \
-    copy_db_progressfrm.ui \
-    Gestion_Almacen/gestion_seccionalmacen.ui
+    Zona_Administrador/copy_db_progressfrm.ui \
+    Gestion_Almacen/gestion_seccionalmacen.ui \
+    db_table_view.ui
 
 RESOURCES += \
     terra.qrc

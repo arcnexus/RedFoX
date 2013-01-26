@@ -761,6 +761,10 @@ background-color: rgb(255, 255, 255);</string>
     <addaction name="btnAgenda"/>
     <addaction name="separator"/>
     <addaction name="btnSalir"/>
+    <addaction name="actionDoctores"/>
+    <addaction name="actionBancos"/>
+    <addaction name="actionTipos_I_V_A"/>
+    <addaction name="actionFormas_de_pago"/>
    </widget>
    <widget class="QMenu" name="menuVentas">
     <property name="title">
@@ -923,6 +927,36 @@ background-color: rgb(255, 255, 255);</string>
   <action name="actionGestion_de_subfamilias">
    <property name="text">
     <string>Gestion de SubFamilias</string>
+   </property>
+  </action>
+  <action name="actionDoctores">
+   <property name="text">
+    <string>Doctores</string>
+   </property>
+  </action>
+  <action name="actionBancos">
+   <property name="text">
+    <string>Bancos</string>
+   </property>
+  </action>
+  <action name="actionTipos_I_V_A">
+   <property name="text">
+    <string>Tipos I.V.A.</string>
+   </property>
+  </action>
+  <action name="actionFormas_de_pago">
+   <property name="text">
+    <string>Formas de pago</string>
+   </property>
+  </action>
+  <action name="actionTallas">
+   <property name="text">
+    <string>Tallas</string>
+   </property>
+  </action>
+  <action name="actionConceptos_tallas">
+   <property name="text">
+    <string>Conceptos tallas</string>
    </property>
   </action>
  </widget>
