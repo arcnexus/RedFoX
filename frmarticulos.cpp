@@ -623,6 +623,8 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
         if(query.next())
             form.filter("Id_Seccion = "+query.record().value(0).toString());
 
+    qDebug () << query.lastQuery();
+    qDebug () << query.lastError();
     if(form.exec() == QDialog::Accepted)
     {
         ui->txtcFamilia->setText(form.value);
