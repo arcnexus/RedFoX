@@ -24,12 +24,14 @@ public:
     Episodio();
     int NuevoEpisodio(int idPaciente);
     void RecuperarEpisodio(int idEpisodio);
+    void RecuperarDoctor(int iddoctor);
+    void RecuperarIdDoctor(QString doctor);
     void GuardarEpisodio();
     int getid();
     int getidPaciente();
     int getcerrado();
     int getprivado();
-    int getiddoctor() {return this.iddoctor;}
+    int getiddoctor() {return this->iddoctor;}
     QString getdoctor();
     QDate getfecha();
     QString getCIE();

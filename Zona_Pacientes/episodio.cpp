@@ -2,6 +2,8 @@
 #include "sqlcalls.h"
 #include <QMessageBox>
 #include <QApplication>
+#include <QSql>
+#include<QSqlRecord>
 Episodio::Episodio()
 {
 }
@@ -37,11 +39,11 @@ void Episodio::RecuperarEpisodio(int idEpisodio)
         this->setcerrado(rEpisodio.field("cerrado").value().toInt());
         this->setCIE(rEpisodio.field("cie").value().toString());
         this->setdescripcion(rEpisodio.field("descripcion").value().toString());
-        this->setdoctor(rEpisodio.field("iddoctor").value().toInt());
+        this->setiddoctor(rEpisodio.field("iddoctor").value().toInt());
         this->setfecha(rEpisodio.field("fecha").value().toDate());
         this->sethistorial(rEpisodio.field("historial").value().toString());
         this->setprivado(rEpisodio.field("privado").value().toInt());
-
+        RecuperarDoctor(this->iddoctor);
     } else {
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR: Recuperar episodio"),QObject::tr("No se pudo recuperar el episodio. ERROR servidor:")+
                              qEpisodio->lastError().text(),QObject::tr("Aceptar"));
@@ -83,6 +85,7 @@ void Episodio::RecuperarIdDoctor(QString doctor)
 
 void Episodio::GuardarEpisodio()
 {
+    RecuperarIdDoctor(this->doctor);
     QSqlQuery *qEpisodio = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     qEpisodio->prepare("UPDATE episodios SET "
                        "idpaciente = :idpaciente,"
