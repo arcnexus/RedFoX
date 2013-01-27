@@ -63,14 +63,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // MODULO VENTAS/ENTRADAS.
     QToolButton *BtnEntradas = new QToolButton(m_modulesBar);
-    BtnEntradas->setText(tr("Entradas"));
+    BtnEntradas->setText(tr("Ventas/\ningresos"));
     BtnEntradas->setIcon(QIcon(":Icons/PNG/ventas2.png"));
     BtnEntradas->setToolTip(tr("Módulo de ventas/entradas clinica"));
     BtnEntradas->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
     // MODULO GASTOS/SALIDAS.
     QToolButton *BtnSalidas = new QToolButton(m_modulesBar);
-    BtnSalidas->setText(tr("Salidas"));
+    BtnSalidas->setText(tr("Compras/\ngastos"));
     BtnSalidas->setIcon(QIcon(":Icons/PNG/Gastos.png"));
     BtnSalidas->setToolTip(tr("Módulo de Gastos/Salidas clinica"));
     BtnSalidas->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);

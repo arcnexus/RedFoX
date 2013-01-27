@@ -11,7 +11,7 @@ Episodio::Episodio(QObject *parent) : QObject(parent)
 int Episodio::NuevoEpisodio(int idPaciente)
 {
     QSqlQuery *qEpisodio = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qEpisodio->prepare("insert into episodios (idpaciente,cerrado) values(:idpaciente,0)");
+    qEpisodio->prepare("insert into episodios (idpaciente,cerrado) values(:idPaciente,0)");
     qEpisodio->bindValue(":idPaciente",idPaciente);
     if(qEpisodio->exec()) {
         int nid;
