@@ -1029,8 +1029,11 @@ void frmClientes::txtrRiesgoPermitido_editingFinished()
 void frmClientes::on_btnFichaPaciente_clicked()
 {
     //NOTE - no mostar subform si no hay ningun cliente select
-    if(ui->txtcCodigoCliente->text().isEmpty())
+    if(ui->txtcCodigoCliente->text().isEmpty()) {
+        QMessageBox::warning(this,tr("Ficha Paciente"),tr("Debe tener un cliente seleccionado para poder acceder a la ficha de paciente"),
+                             tr("Aceptar"));
         return;
+    }
 
     int idPaciente;
     //if not patient record in database, create it now.

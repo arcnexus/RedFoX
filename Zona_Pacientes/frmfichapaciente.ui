@@ -271,7 +271,7 @@ background-color: rgb(255, 255, 255);</string>
          <enum>QTabWidget::North</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab_7">
          <property name="styleSheet">
@@ -2296,6 +2296,112 @@ color: rgb(255,255,255);</string>
             </property>
             <layout class="QGridLayout" name="gridLayout">
              <item row="0" column="0">
+              <widget class="QPushButton" name="btnAnadirEpisodio">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../terra.qrc">
+                 <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="btnEditarEpisodio">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../terra.qrc">
+                 <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="btnGuardarEpisodio">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../terra.qrc">
+                 <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QPushButton" name="btnDeshacerEpisodio">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../terra.qrc">
+                 <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <widget class="QPushButton" name="btnImprimirEpisodio">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../terra.qrc">
+                 <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="5">
               <widget class="QTabWidget" name="tabWidget_4">
                <property name="minimumSize">
                 <size>
@@ -2304,7 +2410,7 @@ color: rgb(255,255,255);</string>
                 </size>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="tabWidget_4Page1">
                 <property name="styleSheet">
@@ -2380,21 +2486,59 @@ color: rgb(255,255,255);</string>
                  <string>Episodio</string>
                 </attribute>
                 <layout class="QGridLayout" name="gridLayout_37">
-                 <item row="4" column="0" colspan="4">
-                  <widget class="QLabel" name="label_86">
+                 <item row="6" column="0">
+                  <widget class="QLabel" name="label_5">
                    <property name="text">
-                    <string>Doctor/Terapeuta:</string>
+                    <string>Fecha:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="0">
-                  <widget class="QLabel" name="label_7">
+                 <item row="2" column="0" colspan="5">
+                  <widget class="QCheckBox" name="chkEpisodioprivado">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(0, 0, 0);</string>
+                   </property>
                    <property name="text">
-                    <string>CIE:</string>
+                    <string>Episodio no visible para 
+ otros terapeutas</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="0" colspan="9">
+                 <item row="7" column="1">
+                  <widget class="QPushButton" name="btnBuscarCIEEpisodio">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../terra.qrc">
+                     <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="2" colspan="4">
+                  <widget class="QDateEdit" name="txtFechaEpisodio">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+                   </property>
+                   <property name="displayFormat">
+                    <string>dd/MM/yyyy</string>
+                   </property>
+                   <property name="calendarPopup">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0" colspan="6">
                   <widget class="QFrame" name="frame_25">
                    <property name="minimumSize">
                     <size>
@@ -2426,183 +2570,14 @@ color: rgb(255,255,255);</string>
                    </layout>
                   </widget>
                  </item>
-                 <item row="9" column="3" colspan="2">
-                  <widget class="QPushButton" name="btnGuardarEpisodio">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
+                 <item row="4" column="0" colspan="4">
+                  <widget class="QLabel" name="label_86">
                    <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../terra.qrc">
-                     <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>24</width>
-                     <height>24</height>
-                    </size>
+                    <string>Doctor/Terapeuta:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="2" colspan="7">
-                  <widget class="QLineEdit" name="txtCIEEpisiodio">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="6" column="2" colspan="7">
-                  <widget class="QDateEdit" name="txtFechaEpisodio">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-                   </property>
-                   <property name="displayFormat">
-                    <string>dd/MM/yyyy</string>
-                   </property>
-                   <property name="calendarPopup">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="9" column="5" colspan="2">
-                  <widget class="QPushButton" name="btnDeshacerEpisodio">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>150</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../terra.qrc">
-                     <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>24</width>
-                     <height>24</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="8" column="0" colspan="9">
-                  <widget class="QTextEdit" name="txtHistorialEpisodio">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0" colspan="6">
-                  <widget class="QCheckBox" name="chkEpisodioprivado">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">color: rgb(0, 0, 0);</string>
-                   </property>
-                   <property name="text">
-                    <string>Episodio no visible para 
- otros terapeutas</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="9" column="7">
-                  <widget class="QPushButton" name="btnImprimirEpisodio">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../terra.qrc">
-                     <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>24</width>
-                     <height>24</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="0" colspan="9">
-                  <widget class="QComboBox" name="cboDoctorEpisodio">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="9" column="0">
-                  <widget class="QPushButton" name="btnAnadirEpisodio">
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../terra.qrc">
-                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>24</width>
-                     <height>24</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="9" column="1" colspan="2">
-                  <widget class="QPushButton" name="btnEditarEpisodio">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>150</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../terra.qrc">
-                     <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>24</width>
-                     <height>24</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="6" column="0">
-                  <widget class="QLabel" name="label_5">
-                   <property name="text">
-                    <string>Fecha:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="2" colspan="7">
+                 <item row="1" column="2" colspan="4">
                   <widget class="QLineEdit" name="txtDescripcionEpisodio">
                    <property name="enabled">
                     <bool>false</bool>
@@ -2613,6 +2588,13 @@ color: rgb(0, 0, 0);</string>
                    </property>
                   </widget>
                  </item>
+                 <item row="7" column="0">
+                  <widget class="QLabel" name="label_7">
+                   <property name="text">
+                    <string>CIE:</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="1" column="0" colspan="2">
                   <widget class="QLabel" name="label_18">
                    <property name="text">
@@ -2620,14 +2602,17 @@ color: rgb(0, 0, 0);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="0" colspan="2">
-                  <widget class="QLabel" name="label_90">
-                   <property name="text">
-                    <string>Identificador:</string>
+                 <item row="5" column="0" colspan="6">
+                  <widget class="QComboBox" name="cboDoctorEpisodio">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="2" colspan="4">
+                 <item row="0" column="2" colspan="3">
                   <widget class="QLineEdit" name="txtIdentificadorEpisodio">
                    <property name="enabled">
                     <bool>false</bool>
@@ -2644,17 +2629,32 @@ color: rgb(0, 0, 128);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="1">
-                  <widget class="QPushButton" name="btnBuscarCIEEpisodio">
+                 <item row="0" column="0" colspan="2">
+                  <widget class="QLabel" name="label_90">
+                   <property name="text">
+                    <string>Identificador:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="8" column="0" colspan="6">
+                  <widget class="QTextEdit" name="txtHistorialEpisodio">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
-                   <property name="text">
-                    <string/>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
                    </property>
-                   <property name="icon">
-                    <iconset resource="../terra.qrc">
-                     <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                  </widget>
+                 </item>
+                 <item row="7" column="2" colspan="4">
+                  <widget class="QLineEdit" name="txtCIEEpisiodio">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
                    </property>
                   </widget>
                  </item>

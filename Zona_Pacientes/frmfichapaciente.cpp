@@ -53,6 +53,11 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     ui->comboBox_tipoImagen->setModel(qTipos);
     ui->txtHistorialEpisodio->setPlainText("");
 
+    // Doctores
+    QSqlQueryModel *qMDoctor = new QSqlQueryModel(this);
+    qMDoctor->setQuery("Select nombre from doctores",QSqlDatabase::database("dbmedica"));
+    ui->cboDoctorEpisodio->setModel(qMDoctor);
+
     // Conexiones
 
     connect(ui->btnCerrar, SIGNAL(clicked()), this, SLOT(close()));

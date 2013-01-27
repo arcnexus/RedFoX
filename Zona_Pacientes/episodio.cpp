@@ -70,7 +70,7 @@ QString Episodio::RecuperarDoctor(int iddoctor)
 int Episodio::RecuperarIdDoctor(QString doctor)
 {
     QSqlQuery qDoctor(QSqlDatabase::database("dbmedica"));
-    qDoctor.prepare("select id from doctores where doctor = :doctor");
+    qDoctor.prepare("select id from doctores where nombre = :doctor");
     qDoctor.bindValue(":doctor",doctor);
     if(qDoctor.exec()) {
         qDoctor.next();
@@ -85,7 +85,8 @@ int Episodio::RecuperarIdDoctor(QString doctor)
 
 void Episodio::GuardarEpisodio()
 {
-    RecuperarIdDoctor(this->doctor);
+    if(!this->doctor.isEmpty())
+        RecuperarIdDoctor(this->doctor);
     QSqlQuery *qEpisodio = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     qEpisodio->prepare("UPDATE episodios SET "
                        "idpaciente = :idpaciente,"
