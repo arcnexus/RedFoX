@@ -632,108 +632,12 @@ void FrmPedidos::on_botBuscarCliente_clicked()
     LLenarCamposCliente();
 }
 
-void FrmPedidos::on_txtcCodigoArticulo_editingFinished()
-{
-    /*
-    if (!ui->txtcCodigoArticulo->text().isEmpty()) {
-        if (ui->txtDescripcionArticulo->text().isEmpty()) {
-            Articulo *oArt =  new Articulo();
-            oArt->Recuperar("Select * from articulos where cCodigo = '"+ui->txtcCodigoArticulo->text()+"'");
-            ui->btnAnadirLinea->setToolTip("Código: "+ oArt->getcCodigo()+"<br>Descripción: "+oArt->getcDescripcion()+
-                                           "<br><b>Stock:</b><font color = 'red'>"+QString::number(oArt->getnStockReal())+"</color>");
-            ui->txtcCodigoArticulo->setText(oArt->getcCodigo());
-            ui->txtDescripcionArticulo->setText(oArt->getcDescripcion());
-            ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrTarifa1(),'f',2)));
-            ui->txtcCantidadArticulo->setText("1");
-            ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrTarifa1(),'f',2)));
-            // Recupero datos cliente para determinar descuento en factura
-            oCliente3->Recuperar("select * from clientes where id="+ QString::number(oPedido->getiId_Cliente()) );
-            ui->txtPorcDtoArticulo->setText(QString::number(oCliente3->getnPorcDtoCliente(),'f',0));
-            // Asigno el descuento mayor seleccionando entre dto ficha artículo y descuento ficha cliente
-            if (oArt->getrDto() > oCliente3->getnPorcDtoCliente()) {
-                ui->txtPorcDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrDto(),'f',0)));
-            }
-            ui->txtPorcIVAArticulo->setText(QString::number(oArt->getnTipoIva(),'f',0));
-
-        }
-        CalcularTotalLinea();
-    }
-    */
-}
-
-void FrmPedidos::on_btnAnadirLinea_clicked()
-{
-    /*
-    if (!ui->txtDescripcionArticulo->text().isEmpty()) {
-        double pvp =ui->txtPVPArticulo->text().replace(".","").toDouble();
-        oPedido->AnadirLineaPedido(oPedido->Getid(),ui->txtcCodigoArticulo->text(),ui->txtcCantidadArticulo->text().replace(".","").toDouble(),
-                                     ui->txtDescripcionArticulo->text(),ui->txtPVPArticulo->text().replace(".","").toDouble(),
-                                     ui->txtSubtotalArticulo->text().replace(".","").toDouble(),ui->txtPorcDtoArticulo->text().replace(".","").toDouble(),
-                                     ui->txtDtoArticulo->text().replace(".","").toDouble(),ui->txtTotalArticulo->text().replace(".","").toDouble(),
-                                     ui->txtPorcIVAArticulo->text().replace(".","").toDouble());
-        ui->txtcCodigoArticulo->setText("");
-        ui->txtcCantidadArticulo->setText(0);
-        ui->txtDescripcionArticulo->setText("");
-        ui->txtPVPArticulo->setText(0);
-        ui->txtSubtotalArticulo->setText(0);
-        ui->txtPorcDtoArticulo->setText(0);
-        ui->txtDtoArticulo->setText(0);
-        ui->txtTotalArticulo->setText(0);
-        ui->txtPorcIVAArticulo->setText(0);
-        ui->txtcCodigoArticulo->setFocus();
-    } else {
-        QMessageBox::critical(qApp->activeWindow(),tr("Insertar Línea"),tr("Debe especificar un artículo y una cantidad"),tr("&Aceptar"));
-        ui->txtcCodigoArticulo->setFocus();
-    }
-    lineasVentas();
-    // Calculo totales Albaran
-    oPedido->calcularPedido();
-    RellenarDespuesCalculo();
-    */
-}
-
-void FrmPedidos::on_botEditarLinea_clicked()
-{
-    /*
-    QModelIndex celda=ui->Lineas->currentIndex();
-    QModelIndex index= ModelLin_ped->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
-
-    QVariant pKey=ModelLin_ped->data(index,Qt::EditRole);
-    int Id_lin =  pKey.toInt();
-    FrmModificarLin_ped *Modificar = new FrmModificarLin_ped();
-    Modificar->PonerCampos(Id_lin);
-    if (Modificar->exec() == QDialog::Accepted)
-
-    {
-        lineasVentas();
-        oPedido->calcularPedido();
-        RellenarDespuesCalculo();
-    }
-    delete Modificar;
-    */
-}
-
-
 void FrmPedidos::on_btnDeshacer_clicked()
 {
     BloquearCampos();
     QString cId = QString::number(oPedido->Getid());
     oPedido->RecuperarPedido("Select * from ped_cli where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
-}
-
-void FrmPedidos::on_botBorrarLinea_clicked()
-{
-    /*
-    QModelIndex celda=ui->Lineas->currentIndex();
-    QModelIndex index=ModelLin_ped->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
-
-    QVariant pKey=ModelLin_ped->data(index,Qt::EditRole);
-    int Id_lin =  pKey.toInt();
-    oPedido->BorrarLineaPedido(Id_lin);
-    lineasVentas();
-    RellenarDespuesCalculo();
-    */
 }
 
 void FrmPedidos::on_pushButton_clicked()

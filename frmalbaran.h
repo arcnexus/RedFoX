@@ -40,24 +40,9 @@ private slots:
 
     void on_btnGuardar_clicked();
 
-    void on_txtcCodigoArticulo_editingFinished();
-
-    void on_txtcCantidadArticulo_editingFinished();
-
-    void on_txtPVPArticulo_editingFinished();
-
-    void on_txtPorcDtoArticulo_editingFinished();
-
-
-    void on_btnAnadirLinea_clicked();
-
     void on_btnDeshacer_clicked();
 
     void on_pushButton_clicked();
-
-    void on_botEditarLinea_clicked();
-
-    void on_botBorrarLinea_clicked();
 
     void totalChanged(QString total);
 private:

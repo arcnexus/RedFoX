@@ -41,25 +41,11 @@ private slots:
 
     void on_btnAnadir_clicked();
 
-    void on_btnEditar_clicked();
-
-    void on_txtPVPArticulo_lostFocus();
-
-    void on_txtcCodigoArticulo_lostFocus();
-
-    void on_txtcCantidadArticulo_lostFocus();
-
     void calcularTotalLinea();
-
-    void on_txtPorcDtoArticulo_lostFocus();
-
-    void on_btnAnadirLinea_clicked();
 
     void on_btnDeshacer_clicked();
 
     void on_btnAnterior_clicked();
-
-    void on_botRecalcular_clicked();
 
     void on_botBuscarCliente_clicked();
 
@@ -71,20 +57,15 @@ private slots:
 
     void on_btnBuscar_clicked();
 
-
-    void on_botEditarLinea_clicked();
-
     void on_txtcCodigoCliente_lostFocus();
 
     void on_btnImprimir_clicked();
 
     void RellenarDespuesCalculo();
 
-    void on_botBorrarLinea_clicked();
-
     void on_botBorrador_clicked();
 
-    void totalChanged(QString total);
+    void totalChanged(QString total);    
 private:
     Ui::frmFacturas *ui;
     QSqlDatabase dbEmp;

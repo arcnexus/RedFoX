@@ -33,16 +33,7 @@ private slots:
 
     void on_botBuscarCliente_clicked();
 
-    void on_txtcCodigoArticulo_editingFinished();
-
-
-    void on_btnAnadirLinea_clicked();
-
-    void on_botEditarLinea_clicked();
-
     void on_btnDeshacer_clicked();
-
-    void on_botBorrarLinea_clicked();
 
     void on_pushButton_clicked();
 

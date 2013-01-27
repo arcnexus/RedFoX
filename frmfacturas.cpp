@@ -581,80 +581,6 @@ void frmFacturas::on_btnAnadir_clicked()
 
 }
 
-
-void frmFacturas::on_btnEditar_clicked()
-{
-    if (oFactura->getcFactura() ==tr("BORRADOR")) {
-        DesbloquearCampos();
-    } else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Editar Factura"),tr("No se puede editar una factura que ha sido numerada, solo los BORRADORES se pueden editar")+
-                             tr("<p><b> Si necesita modificar algo genere una factura nueva y realice el abono correspondiente</b>"),tr("OK"));
-    }
-}
-
-
-
-void frmFacturas::on_txtPVPArticulo_lostFocus()
-{
-    /*
-    if (!ui->txtPVPArticulo->text().isEmpty()) {
-        bool ok;
-        ok = o_configuracion->EsNumero(ui->txtPVPArticulo->text());
-        if(!ok) {
-           QMessageBox::critical(qApp->activeWindow(),tr("Entrada de Importe"),
-                                 tr("No puede entrar letras en un campo monetario. \n"
-                                    "Sólo se aceptan los valores  (-)  (0123456789) (,)  (.)  "),tr("&Aceptar"));
-           ui->txtPVPArticulo->setText("0,00");
-           ui->txtPVPArticulo->setSelection(0,4);
-           ui->txtPVPArticulo->setFocus();
-         } else {
-            ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(ui->txtPVPArticulo->text()) );
-        }
-        calcularTotalLinea();
-    }*/
-}
-
-
-
-void frmFacturas::on_txtcCodigoArticulo_lostFocus()
-{
-    /*
-    if (!ui->txtcCodigoArticulo->text().isEmpty()) {
-        if (ui->txtDescripcionArticulo->text().isEmpty()) {
-            Articulo *oArt =  new Articulo();
-            oArt->Recuperar("Select * from articulos where cCodigo = '"+ui->txtcCodigoArticulo->text()+"'");
-            ui->btnAnadirLinea->setToolTip("Código: "+ oArt->getcCodigo()+"<br>Descripción: "+oArt->getcDescripcion()+
-                                           "<br><b>Stock:</b><font color = 'red'>"+QString::number(oArt->getnStockReal())+"</color>");
-            ui->txtcCodigoArticulo->setText(oArt->getcCodigo());
-            ui->txtDescripcionArticulo->setText(oArt->getcDescripcion());
-            ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrTarifa1(),'f',2)));
-            ui->txtcCantidadArticulo->setText("1");
-            ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrTarifa1(),'f',2)));
-            // Recupero datos cliente para determinar descuento en factura
-            oCliente1->Recuperar("select * from clientes where id="+ QString::number(oFactura->getiId_Cliente()) );
-            ui->txtPorcDtoArticulo->setText(QString::number(oCliente1->getnPorcDtoCliente(),'f',0));
-            // Asigno el descuento mayor seleccionando entre dto ficha artículo y descuento ficha cliente
-            if (oArt->getrDto() > oCliente1->getnPorcDtoCliente()) {
-                ui->txtPorcDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(oArt->getrDto(),'f',0)));
-            }
-            ui->txtPorcIVAArticulo->setText(QString::number(oArt->getnTipoIva(),'f',0));
-
-        }
-        calcularTotalLinea();
-    }
-    */
-}
-
-void frmFacturas::on_txtcCantidadArticulo_lostFocus()
-{
-    /*
-    double nSubtotal;
-    nSubtotal = ui->txtcCantidadArticulo->text().replace(".","").toDouble() * ui->txtPVPArticulo->text().replace(".","").toDouble();
-    ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico( QString::number(nSubtotal,'f',2)));
-    calcularTotalLinea();
-    */
-}
-
 void frmFacturas::calcularTotalLinea()
 {
     /*
@@ -669,63 +595,12 @@ void frmFacturas::calcularTotalLinea()
     */
 }
 
-
-void frmFacturas::on_txtPorcDtoArticulo_lostFocus()
-{
-    /*
-    calcularTotalLinea();
-    ui->txtcCodigoArticulo->setFocus();
-    */
-}
-
-
-void frmFacturas::on_btnAnadirLinea_clicked()
-{
-    /*
-    if (!ui->txtDescripcionArticulo->text().isEmpty()) {
-        double pvp =ui->txtPVPArticulo->text().replace(".","").toDouble();
-        oFactura->AnadirLineaFactura(oFactura->Getid(),ui->txtcCodigoArticulo->text(),ui->txtcCantidadArticulo->text().replace(".","").toDouble(),
-                                     ui->txtDescripcionArticulo->text(),ui->txtPVPArticulo->text().replace(".","").toDouble(),
-                                     ui->txtSubtotalArticulo->text().replace(".","").toDouble(),ui->txtPorcDtoArticulo->text().replace(".","").toDouble(),
-                                     ui->txtDtoArticulo->text().replace(".","").toDouble(),ui->txtTotalArticulo->text().replace(".","").toDouble(),
-                                     ui->txtPorcIVAArticulo->text().replace(".","").toDouble());
-        ui->txtcCodigoArticulo->setText("");
-        ui->txtcCantidadArticulo->setText(0);
-        ui->txtDescripcionArticulo->setText("");
-        ui->txtPVPArticulo->setText(0);
-        ui->txtSubtotalArticulo->setText(0);
-        ui->txtPorcDtoArticulo->setText(0);
-        ui->txtDtoArticulo->setText(0);
-        ui->txtTotalArticulo->setText(0);
-        ui->txtPorcIVAArticulo->setText(0);
-        ui->txtcCodigoArticulo->setFocus();
-    } else {
-        QMessageBox::critical(qApp->activeWindow(),tr("Insertar Línea"),tr("Debe especificar un artículo y una cantidad"),tr("&Aceptar"));
-        ui->txtcCodigoArticulo->setFocus();
-    }
-    lineasVentas();
-    // Calculo totales factura
-    oFactura->calcularFactura();
-    RellenarDespuesCalculo();
-    */
-
-}
-
 void frmFacturas::on_btnDeshacer_clicked()
 {
     BloquearCampos();
     QString cId = QString::number(oFactura->Getid());
     oFactura->RecuperarFactura("Select * from cab_fac where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
-}
-
-
-void frmFacturas::on_botRecalcular_clicked()
-{
-    oFactura->calcularFactura();
-    RellenarDespuesCalculo();
-
-
 }
 
 void frmFacturas::on_botBuscarCliente_clicked()
@@ -795,26 +670,6 @@ void frmFacturas::on_btnBuscar_clicked()
     LLenarCampos();
 }
 
-
-void frmFacturas::on_botEditarLinea_clicked()
-{
-    QModelIndex celda=ui->Lineas->currentIndex();
-    QModelIndex index=ModelLin_fac->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
-
-    QVariant pKey=ModelLin_fac->data(index,Qt::EditRole);
-    int Id_lin =  pKey.toInt();
-    frmModificarLin_fac *Modificar = new frmModificarLin_fac();
-    Modificar->ponerCampos(Id_lin);
-    if (Modificar->exec() == QDialog::Accepted)
-
-    {
-        lineasVentas();
-        oFactura->calcularFactura();
-        RellenarDespuesCalculo();
-    }
-    delete Modificar;
-}
-
 void frmFacturas::on_txtcCodigoCliente_lostFocus()
 {
     if (!ui->txtcCodigoCliente->text().isEmpty() && ui->txtcCliente->text().isEmpty()) {
@@ -860,21 +715,6 @@ void frmFacturas::RellenarDespuesCalculo()
     ui->txtrImporteIRPF->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteIRPF(),'f',2)));
     ui->txtrImporteIRPF_2->setText(o_configuracion->FormatoNumerico(QString::number(oFactura->getrImporteIRPF(),'f',2)));
 }
-
-void frmFacturas::on_botBorrarLinea_clicked()
-{
-    QModelIndex celda=ui->Lineas->currentIndex();
-    QModelIndex index=ModelLin_fac->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
-
-    QVariant pKey=ModelLin_fac->data(index,Qt::EditRole);
-    int Id_lin =  pKey.toInt();
-    oFactura->BorrarLineaFactura(Id_lin);
-    lineasVentas();
-    RellenarDespuesCalculo();
-
-}
-
-
 
 void frmFacturas::on_botBorrador_clicked()
 {
