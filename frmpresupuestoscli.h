@@ -9,6 +9,8 @@
 #include "presupuesto.h"
 #include "Zona_Pacientes/cliente.h"
 
+#include "Auxiliares/table_helper.h"
+#include <QTimer>
 namespace Ui {
 class FrmPresupuestosCli;
 }
@@ -56,12 +58,15 @@ private slots:
 
     void on_botBorrarLinea_clicked();
 
+    void totalChanged(QString total);
 private:
     Ui::FrmPresupuestosCli *ui;
     QSqlQueryModel *model;
     QSortFilterProxyModel *proxyModel;
     QTableView *tableView;
     QSqlQueryModel *ModelLin_pre;
+
+    Table_Helper helper;
 };
 
 #endif // FRMPRESUPUESTOSCLI_H

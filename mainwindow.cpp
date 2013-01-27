@@ -159,24 +159,6 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
 	// Identificación de usuario
-    //Widgets
-    frmClientes1 = new frmClientes(m_config,this);
-    frmFacturas1 = new frmFacturas(m_config,this);
-    frmArticulos1 = new FrmArticulos(m_config,this);
-    frmProveedores1 = new frmProveedores(this);
-    frmAlbaran1 = new FrmAlbaran(this);
-    frmPedidos1 = new FrmPedidos(this);
-    frmPresupcli = new FrmPresupuestosCli(this);
-    frmCajaMinuta = new FrmCajaMinuta(this);
-
-    ui->stackedWidget->addWidget(frmClientes1);
-    ui->stackedWidget->addWidget(frmFacturas1);
-    ui->stackedWidget->addWidget(frmArticulos1);
-    ui->stackedWidget->addWidget(frmProveedores1);
-    ui->stackedWidget->addWidget(frmAlbaran1);
-    ui->stackedWidget->addWidget(frmPedidos1);
-    ui->stackedWidget->addWidget(frmPresupcli);
-    ui->stackedWidget->addWidget(frmCajaMinuta);
     //intit
     QTimer::singleShot(0,this,SLOT(init()));
 }
@@ -216,7 +198,7 @@ void MainWindow::init()
 
             progress.setAlignment(Qt::AlignCenter);
             progress.resize(600 , 40);
-            progress.setMaximum(6);
+            progress.setMaximum(15);
             progress.setVisible(true);
             progress.show();
             progress.move(desktop->width()/2 - progress.width()/2 , desktop->height()/2 - progress.height()/2);
@@ -291,6 +273,32 @@ void MainWindow::init()
 				QMessageBox::critical(0, "error:", dbMedica.lastError().text());
 			}
             progress.setValue(6);
+            //Widgets
+            frmClientes1 = new frmClientes(m_config,this);
+            progress.setValue(7);
+            frmFacturas1 = new frmFacturas(m_config,this);
+            progress.setValue(8);
+            frmArticulos1 = new FrmArticulos(m_config,this);
+            progress.setValue(9);
+            frmProveedores1 = new frmProveedores(this);
+            progress.setValue(10);
+            frmAlbaran1 = new FrmAlbaran(this);
+            progress.setValue(11);
+            frmPedidos1 = new FrmPedidos(this);
+            progress.setValue(12);
+            frmPresupcli = new FrmPresupuestosCli(this);
+            progress.setValue(13);
+            frmCajaMinuta = new FrmCajaMinuta(this);
+            progress.setValue(14);
+            ui->stackedWidget->addWidget(frmClientes1);
+            ui->stackedWidget->addWidget(frmFacturas1);
+            ui->stackedWidget->addWidget(frmArticulos1);
+            ui->stackedWidget->addWidget(frmProveedores1);
+            ui->stackedWidget->addWidget(frmAlbaran1);
+            ui->stackedWidget->addWidget(frmPedidos1);
+            ui->stackedWidget->addWidget(frmPresupcli);
+            ui->stackedWidget->addWidget(frmCajaMinuta);
+            progress.setValue(15);
 			this->show();
             QApplication::processEvents();           
 		} 

@@ -22,7 +22,8 @@
 
 frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::frmFacturas)
+    ui(new Ui::frmFacturas),
+    helper(this)
 {
     oFactura = new Factura();
     oCliente1 = new Cliente();
@@ -55,12 +56,36 @@ frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     ui->txtcFormaPago->setModel(modelFP);
     // valores edicion
     this->Altas = false;
-    ui->txtcCodigoArticulo->setFocus();
+    //ui->txtcCodigoArticulo->setFocus();
     BloquearCampos();
     /* -----------------------------------------
      *CONEXIONES
      *----------------------------------------*/
-    connect(ui->txtcCodigoArticulo,SIGNAL(editingFinished()),this,SLOT(on_txtcCodigoArticulo_lostFocus()));
+    //connect(ui->txtcCodigoArticulo,SIGNAL(editingFinished()),this,SLOT(on_txtcCodigoArticulo_lostFocus()));
+
+    Db_table_View* searcher = new Db_table_View(this);
+    searcher->set_db("empresa");
+    searcher->set_table("articulos");
+
+    searcher->setWindowTitle(tr("Articulos"));
+
+    QStringList headers;
+    headers << tr("Codigo")<< "1" << "2" << tr("Descripción");
+    searcher->set_table_headers(headers);
+
+    searcher->set_columnHide(0);
+    searcher->set_columnHide(2);
+    searcher->set_columnHide(3);
+
+    for(int i = 5; i<50;i++)
+        searcher->set_columnHide(i);
+
+    helper.set_Searcher(searcher);
+    helper.help_table(ui->Lineas);
+
+    connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
+    connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
+    connect(&helper,SIGNAL(totalChanged(QString)),this,SLOT(totalChanged(QString)));
 }
 
 frmFacturas::~frmFacturas()
@@ -81,12 +106,13 @@ void frmFacturas::lineasVentas()
              " where id_Cab = "+cId;
      ModelLin_fac = new QSqlQueryModel();
      ModelLin_fac->setQuery(cSQL,QSqlDatabase::database("empresa"));
+     /*
      ui->Lineas->setModel(ModelLin_fac);
       //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
      Cabecera = new QHeaderView(Qt::Horizontal,this);
      // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
      ui->Lineas->setHorizontalHeader(Cabecera);
-     /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
+     Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario
     // Cabecera->setResizeMode(0,QHeaderView::Fixed);
      Cabecera->resizeSection(0,0);
     // Cabecera->setResizeMode(1,QHeaderView::Fixed);
@@ -116,7 +142,7 @@ void frmFacturas::lineasVentas()
      //ui->Lineas->setItemDelegateForColumn(5, Columna);
      //ui->Lineas->setItemDelegateForColumn(6, Columna);
      //ui->Lineas->setItemDelegateForColumn(7, Columna);
-     //ui->Lineas->setItemDelegateForColumn(8, Columna);
+     //ui->Lineas->setItemDelegateForColumn(8, Columna);*/
 }
 
 
@@ -379,8 +405,8 @@ void frmFacturas::BloquearCampos()
     ui->btnEditar->setEnabled(true);
     ui->btnGuardar->setEnabled(false);
     ui->btnSiguiente->setEnabled(true);
-    ui->botBorrarLinea->setEnabled(false);
-    ui->botEditarLinea->setEnabled(false);
+    //ui->botBorrarLinea->setEnabled(false);
+    //ui->botEditarLinea->setEnabled(false);
     ui->botBuscarCliente->setEnabled(false);
 }
 
@@ -443,8 +469,8 @@ void frmFacturas::DesbloquearCampos()
     ui->btnEditar->setEnabled(false);
     ui->btnGuardar->setEnabled(true);
     ui->btnSiguiente->setEnabled(false);
-    ui->botBorrarLinea->setEnabled(true);
-    ui->botEditarLinea->setEnabled(true);
+    //ui->botBorrarLinea->setEnabled(true);
+    //ui->botEditarLinea->setEnabled(true);
     ui->botBuscarCliente->setEnabled(true);
 }
 
@@ -570,6 +596,7 @@ void frmFacturas::on_btnEditar_clicked()
 
 void frmFacturas::on_txtPVPArticulo_lostFocus()
 {
+    /*
     if (!ui->txtPVPArticulo->text().isEmpty()) {
         bool ok;
         ok = o_configuracion->EsNumero(ui->txtPVPArticulo->text());
@@ -584,13 +611,14 @@ void frmFacturas::on_txtPVPArticulo_lostFocus()
             ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(ui->txtPVPArticulo->text()) );
         }
         calcularTotalLinea();
-    }
+    }*/
 }
 
 
 
 void frmFacturas::on_txtcCodigoArticulo_lostFocus()
 {
+    /*
     if (!ui->txtcCodigoArticulo->text().isEmpty()) {
         if (ui->txtDescripcionArticulo->text().isEmpty()) {
             Articulo *oArt =  new Articulo();
@@ -614,19 +642,22 @@ void frmFacturas::on_txtcCodigoArticulo_lostFocus()
         }
         calcularTotalLinea();
     }
-
+    */
 }
 
 void frmFacturas::on_txtcCantidadArticulo_lostFocus()
 {
+    /*
     double nSubtotal;
     nSubtotal = ui->txtcCantidadArticulo->text().replace(".","").toDouble() * ui->txtPVPArticulo->text().replace(".","").toDouble();
     ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico( QString::number(nSubtotal,'f',2)));
     calcularTotalLinea();
+    */
 }
 
 void frmFacturas::calcularTotalLinea()
 {
+    /*
     // Calculo totales línea
     double impDto,impTot,impSubtotal;
     impSubtotal = (ui->txtcCantidadArticulo->text().replace(".","").toDouble() * ui->txtPVPArticulo->text().replace(".","").toDouble());
@@ -635,19 +666,22 @@ void frmFacturas::calcularTotalLinea()
     ui->txtDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impDto,'f',2)));
     impTot = ui->txtSubtotalArticulo->text().replace(".","").toDouble() - ui->txtDtoArticulo->text().replace(".","").toDouble();
     ui->txtTotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impTot,'f',2)));
-
+    */
 }
 
 
 void frmFacturas::on_txtPorcDtoArticulo_lostFocus()
 {
+    /*
     calcularTotalLinea();
     ui->txtcCodigoArticulo->setFocus();
+    */
 }
 
 
 void frmFacturas::on_btnAnadirLinea_clicked()
 {
+    /*
     if (!ui->txtDescripcionArticulo->text().isEmpty()) {
         double pvp =ui->txtPVPArticulo->text().replace(".","").toDouble();
         oFactura->AnadirLineaFactura(oFactura->Getid(),ui->txtcCodigoArticulo->text(),ui->txtcCantidadArticulo->text().replace(".","").toDouble(),
@@ -673,6 +707,7 @@ void frmFacturas::on_btnAnadirLinea_clicked()
     // Calculo totales factura
     oFactura->calcularFactura();
     RellenarDespuesCalculo();
+    */
 
 }
 
@@ -726,10 +761,12 @@ void frmFacturas::on_btnBuscarArt_clicked()
 
 void frmFacturas::on_tablaBuscaArt_doubleClicked(const QModelIndex &index)
 {
+    /*
     QString texto = index.model()->data(index, Qt::DisplayRole).toString();
     ui->btnEditar->click();
     ui->txtcCodigoArticulo->setText(texto);
     ui->txtcCodigoArticulo->setFocus();
+    */
 }
 
 void frmFacturas::on_chklRecargoEquivalencia_stateChanged(int arg1)
@@ -784,7 +821,7 @@ void frmFacturas::on_txtcCodigoCliente_lostFocus()
         QString cSQL = "Select * from clientes where cCodigoCliente = '"+ui->txtcCodigoCliente->text().trimmed() +"' limit 1";
         oCliente1->Recuperar(cSQL);
         LLenarCamposCliente();
-        ui->txtcCodigoArticulo->setFocus();
+        //ui->txtcCodigoArticulo->setFocus();
     }
 }
 
@@ -848,4 +885,9 @@ void frmFacturas::on_botBorrador_clicked()
     oFactura->GuardarFactura(nId,false);
     oFactura->RecuperarFactura("Select * from cab_fac where Id="+QString::number(nId)+"  limit 1 ");
     LLenarCampos();
+}
+
+void frmFacturas::totalChanged(QString total)
+{
+    ui->lbl_total->setText(total);
 }

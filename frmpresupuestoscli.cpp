@@ -8,11 +8,14 @@
 #include "frmmodificarlin_precli.h"
 
 
+
 FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::FrmPresupuestosCli)
+    ui(new Ui::FrmPresupuestosCli),
+    helper(this)
 {
     ui->setupUi(this);
+
     // cargar datos FormaPago
     ui->cboFormaPago->setInsertPolicy(QComboBox::NoInsert);
     ui->cboFormaPago->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
@@ -20,11 +23,36 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     model->setQuery("Select cFormapago from FormPago",QSqlDatabase::database("empresa"));
     ui->cboFormaPago->setModel(model);
     BloquearCampos();
+
     //-----------------------
     // Conexiones
     //-----------------------
     oPres = new Presupuesto();
     oClientePres = new Cliente();
+
+    Db_table_View* searcher = new Db_table_View(this);
+    searcher->set_db("empresa");
+    searcher->set_table("articulos");
+
+    searcher->setWindowTitle(tr("Articulos"));
+
+    QStringList headers;
+    headers << tr("Codigo")<< "1" << "2" << tr("Descripción");
+    searcher->set_table_headers(headers);
+
+    searcher->set_columnHide(0);
+    searcher->set_columnHide(2);
+    searcher->set_columnHide(3);
+
+    for(int i = 5; i<50;i++)
+        searcher->set_columnHide(i);
+
+    helper.set_Searcher(searcher);
+    helper.help_table(ui->Lineas);
+
+    connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
+    connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
+    connect(&helper,SIGNAL(totalChanged(QString)),this,SLOT(totalChanged(QString)));
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
@@ -319,8 +347,8 @@ void FrmPresupuestosCli::BloquearCampos()
     ui->btnEditar->setEnabled(true);
     ui->btnGuardar->setEnabled(false);
     ui->btnSiguiente->setEnabled(true);
-    ui->botBorrarLinea->setEnabled(false);
-    ui->botEditarLinea->setEnabled(false);
+    //ui->botBorrarLinea->setEnabled(false);
+    //ui->botEditarLinea->setEnabled(false);
     ui->botBuscarCliente->setEnabled(false);
 }
 void FrmPresupuestosCli::DesbloquearCampos()
@@ -382,14 +410,15 @@ void FrmPresupuestosCli::DesbloquearCampos()
     ui->btnEditar->setEnabled(false);
     ui->btnGuardar->setEnabled(true);
     ui->btnSiguiente->setEnabled(false);
-    ui->botBorrarLinea->setEnabled(true);
-    ui->botEditarLinea->setEnabled(true);
+    //ui->botBorrarLinea->setEnabled(true);
+    //ui->botEditarLinea->setEnabled(true);
     ui->botBuscarCliente->setEnabled(true);
 
 }
 
 void FrmPresupuestosCli::CalcularTotalLinea()
 {
+    /*
     // Calculo totales línea
     Configuracion *o_configuracion = new Configuracion();
     double impDto,impTot,impSubtotal;
@@ -399,7 +428,7 @@ void FrmPresupuestosCli::CalcularTotalLinea()
     ui->txtDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impDto,'f',2)));
     impTot = ui->txtSubtotalArticulo->text().replace(".","").toDouble() - ui->txtDtoArticulo->text().replace(".","").toDouble();
     ui->txtTotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impTot,'f',2)));
-    delete o_configuracion;
+    delete o_configuracion;*/
 }
 
 void FrmPresupuestosCli::RellenarDespuesCalculo()
@@ -445,34 +474,34 @@ void FrmPresupuestosCli::RellenarDespuesCalculo()
 }
 
 void FrmPresupuestosCli::LineasVentas()
-{
+{   /*
     // lineas de ventas
-    QString cSQL;
-    QString cId;
+    //QString cSQL;
+    //QString cId;
 
-    cId = cId.number(oPres->getId());
-    cSQL ="select id,cCodigo,nCantidad,cDescripcion,rPvp,rSubtotal,nPorcDto,rDto,rTotal, nPorcIva "
+    //cId = cId.number(oPres->getId());
+     //cSQL ="select id,cCodigo,nCantidad,cDescripcion,rPvp,rSubtotal,nPorcDto,rDto,rTotal, nPorcIva "
             " from lin_pre where Id_Cab = "+cId;
-     ModelLin_pre = new QSqlQueryModel();
-     ModelLin_pre->setQuery(cSQL,QSqlDatabase::database("empresa"));
-     ui->Lineas->setModel(ModelLin_pre);
+     //ModelLin_pre = new QSqlQueryModel();
+     //ModelLin_pre->setQuery(cSQL,QSqlDatabase::database("empresa"));
+     //ui->Lineas->setModel(ModelLin_pre);
       //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
-     QHeaderView *Cabecera = new QHeaderView(Qt::Horizontal,this);
+     //QHeaderView *Cabecera = new QHeaderView(Qt::Horizontal,this);
      // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
-     ui->Lineas->setHorizontalHeader(Cabecera);
-     /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
+     //ui->Lineas->setHorizontalHeader(Cabecera);
+     //Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario
      //Cabecera->setResizeMode(0,QHeaderView::Fixed);
-     Cabecera->resizeSection(0,0);
+     //Cabecera->resizeSection(0,0);
      //Cabecera->setResizeMode(1,QHeaderView::Fixed);
-     Cabecera->resizeSection(1,85);
+     //Cabecera->resizeSection(1,85);
      //Cabecera->setResizeMode(2,QHeaderView::Fixed);
-     Cabecera->resizeSection(2,65);
+     //Cabecera->resizeSection(2,65);
      //Cabecera->setResizeMode(3,QHeaderView::Fixed);
-     Cabecera->resizeSection(3,200);
+     //Cabecera->resizeSection(3,200);
      //Cabecera->setResizeMode(4,QHeaderView::Fixed);
-     Cabecera->resizeSection(4,90);
+     //Cabecera->resizeSection(4,90);
      //Cabecera->setResizeMode(9,QHeaderView::Fixed);
-     Cabecera->resizeSection(9,35);
+     //Cabecera->resizeSection(9,35);
      ModelLin_pre->setHeaderData(1, Qt::Horizontal, QObject::tr("CÓDIGO"));
      ModelLin_pre->setHeaderData(2, Qt::Horizontal, QObject::tr("CANTIDAD"));
      ModelLin_pre->setHeaderData(3, Qt::Horizontal, QObject::tr("DESCRIPCIÓN"));
@@ -490,8 +519,9 @@ void FrmPresupuestosCli::LineasVentas()
     // ui->Lineas->setItemDelegateForColumn(5, ColumnaPres);
     // ui->Lineas->setItemDelegateForColumn(6, ColumnaPres);
      //ui->Lineas->setItemDelegateForColumn(7, ColumnaPres);
-     //ui->Lineas->setItemDelegateForColumn(8, ColumnaPres);
+     //ui->Lineas->setItemDelegateForColumn(8, ColumnaPres);*/
 }
+
 
 void FrmPresupuestosCli::on_chklAprovado_stateChanged(int arg1)
 {
@@ -571,6 +601,7 @@ void FrmPresupuestosCli::on_botBuscarCliente_clicked()
 
 void FrmPresupuestosCli::on_txtcCodigoArticulo_editingFinished()
 {
+    /*
     Configuracion *o_configuracion = new Configuracion();
     if (!ui->txtcCodigoArticulo->text().isEmpty()) {
         if (ui->txtDescripcionArticulo->text().isEmpty()) {
@@ -595,11 +626,12 @@ void FrmPresupuestosCli::on_txtcCodigoArticulo_editingFinished()
         }
         CalcularTotalLinea();
     }
-    delete o_configuracion;
+    delete o_configuracion;*/
 }
 
 void FrmPresupuestosCli::on_btnAnadirLinea_clicked()
 {
+    /*
     if (!ui->txtDescripcionArticulo->text().isEmpty()) {
         //double pvp =ui->txtPVPArticulo->text().replace(".","").toDouble();
         oPres->AnadirLineaPresupuesto(oPres->getId(),ui->txtcCodigoArticulo->text(),ui->txtcCantidadArticulo->text().replace(".","").toDouble(),
@@ -624,7 +656,8 @@ void FrmPresupuestosCli::on_btnAnadirLinea_clicked()
     LineasVentas();
     // Calculo totales Presupuesto
     oPres->calcularPresupuesto();
-    RellenarDespuesCalculo();
+    RellenarDespuesCalculo();*/
+
 }
 
 void FrmPresupuestosCli::on_botEditarLinea_clicked()
@@ -656,4 +689,9 @@ void FrmPresupuestosCli::on_botBorrarLinea_clicked()
     oPres->BorrarLineaPresupuesto(Id_lin);
     LineasVentas();
     RellenarDespuesCalculo();
+}
+
+void FrmPresupuestosCli::totalChanged(QString total)
+{
+    ui->lbl_total->setText(total);
 }

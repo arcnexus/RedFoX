@@ -86,7 +86,12 @@ SOURCES += main.cpp\
     Zona_Administrador/copy_db_progressfrm.cpp \
     visitas.cpp \
     Gestion_Almacen/gestion_seccionalmacen.cpp \
-    db_table_view.cpp
+    db_table_view.cpp \
+    Auxiliares/search_lineedit.cpp \
+    Auxiliares/table_helper.cpp \
+    Auxiliares/readonlydelegate.cpp \
+    Auxiliares/spinboxdelegate.cpp \
+    Auxiliares/searchdelegate.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -141,7 +146,12 @@ HEADERS  += mainwindow.h \
     Zona_Administrador/copy_db_progressfrm.h \
     visitas.h \
     Gestion_Almacen/gestion_seccionalmacen.h \
-    db_table_view.h
+    db_table_view.h \
+    Auxiliares/search_lineedit.h \
+    Auxiliares/table_helper.h \
+    Auxiliares/readonlydelegate.h \
+    Auxiliares/spinboxdelegate.h \
+    Auxiliares/searchdelegate.h
 
 FORMS    += mainwindow.ui \
     Zona_Pacientes/frmClientes.ui \
@@ -178,7 +188,8 @@ FORMS    += mainwindow.ui \
     block_terra_form.ui \
     Zona_Administrador/copy_db_progressfrm.ui \
     Gestion_Almacen/gestion_seccionalmacen.ui \
-    db_table_view.ui
+    db_table_view.ui \
+    Auxiliares/search_lineedit.ui
 
 RESOURCES += \
     terra.qrc

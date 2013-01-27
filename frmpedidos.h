@@ -6,6 +6,7 @@
 # include <QSqlQueryModel>
 #include "pedidos.h"
 #include "Zona_Pacientes/cliente.h"
+#include "Auxiliares/table_helper.h"
 namespace Ui {
 class frmPedidos;
 }
@@ -45,6 +46,7 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void totalChanged(QString total);
 private:
     Ui::frmPedidos *ui;
     Configuracion *o_configuracion;
@@ -60,6 +62,7 @@ private:
     void CalcularTotalLinea();
     void RellenarDespuesCalculo();
 
+    Table_Helper helper;
 };
 
 #endif // FRMPEDIDOS_H

@@ -11,7 +11,8 @@
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::frmPedidos)
+    ui(new Ui::frmPedidos),
+    helper(this)
 {
     ui->setupUi(this);
     // Pongo valores por defecto
@@ -20,12 +21,36 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     ui->lblNumFactura->setVisible(false);
     ui->txtcNumFra->setVisible(false);
     // valores edicion
-    ui->txtcCodigoArticulo->setFocus();
+    //ui->txtcCodigoArticulo->setFocus();
     Configuracion *o_conf = new Configuracion();
     o_configuracion = o_conf;
     BloquearCampos();
     oPedido = new Pedidos();
     oCliente3 = new Cliente();
+
+    Db_table_View* searcher = new Db_table_View(this);
+    searcher->set_db("empresa");
+    searcher->set_table("articulos");
+
+    searcher->setWindowTitle(tr("Articulos"));
+
+    QStringList headers;
+    headers << tr("Codigo")<< "1" << "2" << tr("Descripción");
+    searcher->set_table_headers(headers);
+
+    searcher->set_columnHide(0);
+    searcher->set_columnHide(2);
+    searcher->set_columnHide(3);
+
+    for(int i = 5; i<50;i++)
+        searcher->set_columnHide(i);
+
+    helper.set_Searcher(searcher);
+    helper.help_table(ui->Lineas);
+
+    connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
+    connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
+    connect(&helper,SIGNAL(totalChanged(QString)),this,SLOT(totalChanged(QString)));
 }
 
 FrmPedidos::~FrmPedidos()
@@ -37,6 +62,7 @@ FrmPedidos::~FrmPedidos()
 
 void FrmPedidos::lineasVentas()
 {
+    /*
     // lineas de ventas
     QString cSQL;
     QString cId;
@@ -46,12 +72,12 @@ void FrmPedidos::lineasVentas()
              " where Id_Cab = "+cId;
      ModelLin_ped = new QSqlQueryModel();
      ModelLin_ped->setQuery(cSQL,QSqlDatabase::database("empresa"));
-     ui->Lineas->setModel(ModelLin_ped);
+     //ui->Lineas->setModel(ModelLin_ped);
       //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
      QHeaderView *Cabecera = new QHeaderView(Qt::Horizontal,this);
      // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
      ui->Lineas->setHorizontalHeader(Cabecera);
-     /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
+     //Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario
    //  Cabecera->setResizeMode(0,QHeaderView::Fixed);
      Cabecera->resizeSection(0,0);
     // Cabecera->setResizeMode(1,QHeaderView::Fixed);
@@ -75,7 +101,7 @@ void FrmPedidos::lineasVentas()
      ModelLin_ped->setHeaderData(9, Qt::Horizontal, QObject::tr("%IVA"));
 
     // Hacemos visible la cabecera
-     Cabecera->setVisible(true);
+     Cabecera->setVisible(true);*/
      // Delegamos el control contenido en las columnas al nuevo objeto ColumnaGrid
      //ui->Lineas->setItemDelegateForColumn(4, Columna2);
      //ui->Lineas->setItemDelegateForColumn(5, Columna2);
@@ -193,9 +219,7 @@ void FrmPedidos::LLenarCampos()
 
     ui->txtdFechaLimiteEntrega->setDate(oPedido->getdFechaLimiteEntrega());
     // cargamos líneas de ventas
-   lineasVentas();
-
-
+   //lineasVentas();
 }
 
 void FrmPedidos::LLenarCamposCliente()
@@ -339,8 +363,8 @@ void FrmPedidos::BloquearCampos()
     ui->btnEditar->setEnabled(true);
     ui->btnGuardar->setEnabled(false);
     ui->btnSiguiente->setEnabled(true);
-    ui->botBorrarLinea->setEnabled(false);
-    ui->botEditarLinea->setEnabled(false);
+    //ui->botBorrarLinea->setEnabled(false);
+    //ui->botEditarLinea->setEnabled(false);
     ui->botBuscarCliente->setEnabled(false);
    // ui->btnFacturar->setEnabled(false);
 }
@@ -404,8 +428,8 @@ void FrmPedidos::DesbloquearCampos()
     ui->btnEditar->setEnabled(false);
     ui->btnGuardar->setEnabled(true);
     ui->btnSiguiente->setEnabled(false);
-    ui->botBorrarLinea->setEnabled(true);
-    ui->botEditarLinea->setEnabled(true);
+    //ui->botBorrarLinea->setEnabled(true);
+    //ui->botEditarLinea->setEnabled(true);
     ui->botBuscarCliente->setEnabled(true);
     //ui->btnFacturar->setEnabled(true);
 }
@@ -507,6 +531,7 @@ void FrmPedidos::LLenarPedido()
 
 void FrmPedidos::CalcularTotalLinea()
 {
+    /*
     // Calculo totales línea
     double impDto,impTot,impSubtotal;
     impSubtotal = (ui->txtcCantidadArticulo->text().replace(".","").toDouble() * ui->txtPVPArticulo->text().replace(".","").toDouble());
@@ -515,6 +540,7 @@ void FrmPedidos::CalcularTotalLinea()
     ui->txtDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impDto,'f',2)));
     impTot = ui->txtSubtotalArticulo->text().replace(".","").toDouble() - ui->txtDtoArticulo->text().replace(".","").toDouble();
     ui->txtTotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impTot,'f',2)));
+    */
 }
 
 void FrmPedidos::RellenarDespuesCalculo()
@@ -608,6 +634,7 @@ void FrmPedidos::on_botBuscarCliente_clicked()
 
 void FrmPedidos::on_txtcCodigoArticulo_editingFinished()
 {
+    /*
     if (!ui->txtcCodigoArticulo->text().isEmpty()) {
         if (ui->txtDescripcionArticulo->text().isEmpty()) {
             Articulo *oArt =  new Articulo();
@@ -631,11 +658,12 @@ void FrmPedidos::on_txtcCodigoArticulo_editingFinished()
         }
         CalcularTotalLinea();
     }
-
+    */
 }
 
 void FrmPedidos::on_btnAnadirLinea_clicked()
 {
+    /*
     if (!ui->txtDescripcionArticulo->text().isEmpty()) {
         double pvp =ui->txtPVPArticulo->text().replace(".","").toDouble();
         oPedido->AnadirLineaPedido(oPedido->Getid(),ui->txtcCodigoArticulo->text(),ui->txtcCantidadArticulo->text().replace(".","").toDouble(),
@@ -661,10 +689,12 @@ void FrmPedidos::on_btnAnadirLinea_clicked()
     // Calculo totales Albaran
     oPedido->calcularPedido();
     RellenarDespuesCalculo();
+    */
 }
 
 void FrmPedidos::on_botEditarLinea_clicked()
 {
+    /*
     QModelIndex celda=ui->Lineas->currentIndex();
     QModelIndex index= ModelLin_ped->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
 
@@ -680,6 +710,7 @@ void FrmPedidos::on_botEditarLinea_clicked()
         RellenarDespuesCalculo();
     }
     delete Modificar;
+    */
 }
 
 
@@ -693,6 +724,7 @@ void FrmPedidos::on_btnDeshacer_clicked()
 
 void FrmPedidos::on_botBorrarLinea_clicked()
 {
+    /*
     QModelIndex celda=ui->Lineas->currentIndex();
     QModelIndex index=ModelLin_ped->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
 
@@ -701,6 +733,7 @@ void FrmPedidos::on_botBorrarLinea_clicked()
     oPedido->BorrarLineaPedido(Id_lin);
     lineasVentas();
     RellenarDespuesCalculo();
+    */
 }
 
 void FrmPedidos::on_pushButton_clicked()
@@ -711,5 +744,10 @@ void FrmPedidos::on_pushButton_clicked()
         //Borrar
         QSqlQuery *lin_ped = new QSqlQuery(QSqlDatabase::database("empresa"));
 
-     }
+    }
+}
+
+void FrmPedidos::totalChanged(QString total)
+{
+    ui->lbl_total->setText(total);
 }

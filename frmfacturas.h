@@ -9,6 +9,7 @@
 #include "configuracion.h"
 #include "factura.h"
 #include "Zona_Pacientes/cliente.h"
+#include "Auxiliares/table_helper.h"
 namespace Ui {
 class frmFacturas;
 }
@@ -83,6 +84,7 @@ private slots:
 
     void on_botBorrador_clicked();
 
+    void totalChanged(QString total);
 private:
     Ui::frmFacturas *ui;
     QSqlDatabase dbEmp;
@@ -94,7 +96,7 @@ private:
     QHeaderView *Cabecera;
     double importe;
     Configuracion *o_configuracion;
-
+    Table_Helper helper;
 
 
 public:

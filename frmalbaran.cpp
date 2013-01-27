@@ -4,14 +4,17 @@
 #include "Zona_Pacientes/cliente.h"
 #include "configuracion.h"
 #include "articulo.h"
+
 #include "frmmodificarlin_alb.h"
+
 
 Albaran *oAlbaran = new Albaran();
 Cliente *oCliente2 = new Cliente();
 
 FrmAlbaran::FrmAlbaran(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::FrmAlbaran)
+    ui(new Ui::FrmAlbaran),
+    helper(this)
 {
     ui->setupUi(this);
     // Pongo valores por defecto
@@ -20,10 +23,34 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->lblNumFactura->setVisible(false);
     ui->txtcNumFra->setVisible(false);
     // valores edicion
-    ui->txtcCodigoArticulo->setFocus();
+    //ui->txtcCodigoArticulo->setFocus();
     Configuracion *o_conf = new Configuracion();
     o_configuracion = o_conf;
     BloquearCampos();
+
+    Db_table_View* searcher = new Db_table_View(this);
+    searcher->set_db("empresa");
+    searcher->set_table("articulos");
+
+    searcher->setWindowTitle(tr("Articulos"));
+
+    QStringList headers;
+    headers << tr("Codigo")<< "1" << "2" << tr("Descripción");
+    searcher->set_table_headers(headers);
+
+    searcher->set_columnHide(0);
+    searcher->set_columnHide(2);
+    searcher->set_columnHide(3);
+
+    for(int i = 5; i<50;i++)
+        searcher->set_columnHide(i);
+
+    helper.set_Searcher(searcher);
+    helper.help_table(ui->Lineas);
+
+    connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
+    connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
+    connect(&helper,SIGNAL(totalChanged(QString)),this,SLOT(totalChanged(QString)));
 }
 
 FrmAlbaran::~FrmAlbaran()
@@ -42,12 +69,13 @@ void FrmAlbaran::lineasVentas()
              " where Id_Cab = "+cId;
      ModelLin_alb = new QSqlQueryModel();
      ModelLin_alb->setQuery(cSQL,QSqlDatabase::database("empresa"));
-     ui->Lineas->setModel(ModelLin_alb);
+     //ui->Lineas->setModel(ModelLin_alb);
+     /*
       //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
      QHeaderView *Cabecera = new QHeaderView(Qt::Horizontal,this);
      // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
      ui->Lineas->setHorizontalHeader(Cabecera);
-     /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
+     Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario
    //  Cabecera->setResizeMode(0,QHeaderView::Fixed);
      Cabecera->resizeSection(0,0);
    //  Cabecera->setResizeMode(1,QHeaderView::Fixed);
@@ -78,6 +106,7 @@ void FrmAlbaran::lineasVentas()
      //ui->Lineas->setItemDelegateForColumn(6, Columna1);
      //ui->Lineas->setItemDelegateForColumn(7, Columna1);
      //ui->Lineas->setItemDelegateForColumn(8, Columna1);
+     */
 }
 
 void FrmAlbaran::LLenarCampos() {
@@ -298,8 +327,8 @@ void FrmAlbaran::BloquearCampos()
     ui->btnEditar->setEnabled(true);
     ui->btnGuardar->setEnabled(false);
     ui->btnSiguiente->setEnabled(true);
-    ui->botBorrarLinea->setEnabled(false);
-    ui->botEditarLinea->setEnabled(false);
+    //ui->botBorrarLinea->setEnabled(false);
+    //ui->botEditarLinea->setEnabled(false);
     ui->botBuscarCliente->setEnabled(false);
     ui->btnFacturar->setEnabled(false);
 
@@ -364,8 +393,8 @@ void FrmAlbaran::DesbloquearCampos()
     ui->btnEditar->setEnabled(false);
     ui->btnGuardar->setEnabled(true);
     ui->btnSiguiente->setEnabled(false);
-    ui->botBorrarLinea->setEnabled(true);
-    ui->botEditarLinea->setEnabled(true);
+    //ui->botBorrarLinea->setEnabled(true);
+    //ui->botEditarLinea->setEnabled(true);
     ui->botBuscarCliente->setEnabled(true);
     ui->btnFacturar->setEnabled(true);
 }
@@ -427,6 +456,7 @@ void FrmAlbaran::LLenarAlbaran() {
 
 void FrmAlbaran::calcularTotalLinea()
 {
+    /*
     // Calculo totales línea
     double impDto,impTot,impSubtotal;
     impSubtotal = (ui->txtcCantidadArticulo->text().replace(".","").toDouble() * ui->txtPVPArticulo->text().replace(".","").toDouble());
@@ -435,6 +465,7 @@ void FrmAlbaran::calcularTotalLinea()
     ui->txtDtoArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impDto,'f',2)));
     impTot = ui->txtSubtotalArticulo->text().replace(".","").toDouble() - ui->txtDtoArticulo->text().replace(".","").toDouble();
     ui->txtTotalArticulo->setText(o_configuracion->FormatoNumerico(QString::number(impTot,'f',2)));
+    */
 }
 
 void FrmAlbaran::RellenarDespuesCalculo()
@@ -528,6 +559,7 @@ void FrmAlbaran::on_btnGuardar_clicked()
 
 void FrmAlbaran::on_txtcCodigoArticulo_editingFinished()
 {
+    /*
     if (!ui->txtcCodigoArticulo->text().isEmpty()) {
         if (ui->txtDescripcionArticulo->text().isEmpty()) {
             Articulo *oArt =  new Articulo();
@@ -551,21 +583,23 @@ void FrmAlbaran::on_txtcCodigoArticulo_editingFinished()
         }
         calcularTotalLinea();
     }
-
+*/
 }
 
 void FrmAlbaran::on_txtcCantidadArticulo_editingFinished()
 {
+    /*
     double nSubtotal;
     nSubtotal = ui->txtcCantidadArticulo->text().replace(".","").toDouble() * ui->txtPVPArticulo->text().replace(".","").toDouble();
     ui->txtSubtotalArticulo->setText(o_configuracion->FormatoNumerico( QString::number(nSubtotal,'f',2)));
     calcularTotalLinea();
-
+*/
 
 }
 
 void FrmAlbaran::on_txtPVPArticulo_editingFinished()
 {
+    /*
     if (!ui->txtPVPArticulo->text().isEmpty()) {
         bool ok;
         ok = o_configuracion->EsNumero(ui->txtPVPArticulo->text());
@@ -580,18 +614,20 @@ void FrmAlbaran::on_txtPVPArticulo_editingFinished()
             ui->txtPVPArticulo->setText(o_configuracion->FormatoNumerico(ui->txtPVPArticulo->text()) );
         }
         calcularTotalLinea();
-    }
+    }*/
 }
 
 void FrmAlbaran::on_txtPorcDtoArticulo_editingFinished()
 {
+    /*
     calcularTotalLinea();
-    ui->txtcCodigoArticulo->setFocus();
+    ui->txtcCodigoArticulo->setFocus();*/
 }
 
 
 void FrmAlbaran::on_btnAnadirLinea_clicked()
 {
+    /*
     if (!ui->txtDescripcionArticulo->text().isEmpty()) {
         double pvp =ui->txtPVPArticulo->text().replace(".","").toDouble();
         oAlbaran->AnadirLineaAlbaran(oAlbaran->Getid(),ui->txtcCodigoArticulo->text(),ui->txtcCantidadArticulo->text().replace(".","").toDouble(),
@@ -617,7 +653,7 @@ void FrmAlbaran::on_btnAnadirLinea_clicked()
     // Calculo totales Albaran
     oAlbaran->calcularAlbaran();
     RellenarDespuesCalculo();
-
+*/
 }
 
 void FrmAlbaran::on_btnDeshacer_clicked()
@@ -682,4 +718,9 @@ void FrmAlbaran::on_botBorrarLinea_clicked()
     lineasVentas();
     RellenarDespuesCalculo();
 
+}
+
+void FrmAlbaran::totalChanged(QString total)
+{
+    ui->lbl_total->setText(total);
 }
