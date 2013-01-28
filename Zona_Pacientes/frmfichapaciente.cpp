@@ -678,19 +678,23 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
     }
 }
 
-void FrmFichaPaciente::llenarhistorialvisitas()
+void FrmFichaPaciente::
+llenarhistorialvisitas()
 {
     QSqlQuery qVisitas(QSqlDatabase::database("dbmedica"));
     QSqlQuery qDoctores(QSqlDatabase::database("dbmedica"));
 
     qVisitas.prepare("select * from visitas where idepisodio = :idepisodio");
     qVisitas.bindValue(":idepisodio",oEpisodio->getid());
+
     if(qVisitas.exec()){
         qVisitas.next();
         QSqlRecord rVisitas = qVisitas.record();
         qDoctores.prepare("select nombre from doctores where id =:nId");
 
-        ui->txtFechaHoraVisita->setDate(rVisitas.field("fechahora").value().toDate());
+
+        ui->txtFechaHoraVisita->setDateTime(rVisitas.field("fechahora").value().toDateTime());
+
 
 
         int nIndex = ui->cboRealizadaPorDr->findText(rVisitas.field("doctor").value().toString());
