@@ -28,6 +28,7 @@
 #include "analitica.h"
 #include "frmveranalitica.h"
 #include <QInputDialog>
+#include <QDateTime>
 
 //TODO integrar http://doc.ginkgo-cadx.com/ginkgo-integration/ginkgo-cadx-integration-input-xml-integration/
 
@@ -207,7 +208,7 @@ void FrmFichaPaciente::cargarEpisodio(int control)
     llenartablahistorialfarmacologiaepisodio();
     llenartablahistorialimagenesepisodio();
     llenartablahistorialanalisisepisodio();
-    llenarTablahistorialvisitas();
+    llenarhistorialvisitas();
 }
 
 void FrmFichaPaciente::guardarDatosPaciente()
@@ -681,64 +682,33 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
     }
 }
 
-void FrmFichaPaciente::llenarTablahistorialvisitas()
+void FrmFichaPaciente::llenarhistorialvisitas()
 {
-    // Cargar visitas episodio
-    QStringList list;
-    list <<QObject::tr("FECHA/HORA") << tr("Doctor/Terapeuta") <<tr("EXPLORACIÓN") <<tr("ID");
     QSqlQuery qVisitas(QSqlDatabase::database("dbmedica"));
-    QString cSQL = " Select id,fechahora, medico, exploracion from visitas where idepisodio = :id ";
-    qVisitas.prepare(cSQL);
-    qVisitas.bindValue(":id",oEpisodio->getid());
-    ui->listaVisitas->setRowCount(0);
-    ui->listaVisitas->setColumnCount(4);
-    ui->listaVisitas->setColumnWidth(0,230);
-    ui->listaVisitas->setColumnWidth(1,170);
-    ui->listaVisitas->setColumnWidth(2,120);
-    ui->listaVisitas->setColumnWidth(3,0);
-    ui->listaVisitas->setHorizontalHeaderLabels(list);
-    int pos = 0;
-    QSqlRecord reg ;
-    // Relleno la tabla
-    if (qVisitas.exec()) {
-        while (qVisitas.next()) {
-            // Nombre Medicamento
-            reg = qVisitas.record();
-            // Fecha Hora
-            ui->listaVisitas->setRowCount(pos+1);
-            QTableWidgetItem *newItem = new QTableWidgetItem(reg.field("fechahora").value().toDateTime().toString("dd/MM/yyyy hh:mm"));
-            // para que los elementos no sean editables
-            newItem->setFlags(newItem->flags() & (~Qt::ItemIsEditable));
-            newItem->setTextColor(Qt::blue);
-            ui->listaVisitas->setItem(pos,0,newItem);
+    QSqlQuery qDoctores(QSqlDatabase::database("dbmedica"));
 
-            // MEDICO
-;
-            QTableWidgetItem *newItem1 = new QTableWidgetItem(reg.field("doctor").value().toString());
-            // para que los elementos no sean editables
-            newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
-            newItem1->setTextColor(Qt::blue); // color de los items
-            ui->listaVisitas->setItem(pos,1,newItem1);
+    qVisitas.prepare("select * from visitas where idepisodio = :idepisodio");
+    qVisitas.bindValue(":idepisodio",oEpisodio->getid());
+    if(qVisitas.exec()){
+        qVisitas.next();
+        QSqlRecord rVisitas = qVisitas.record();
+        qDoctores.prepare("select nombre from doctores where id =:nId");
 
-            // EXPLORACIÓN
-            QTableWidgetItem *newItem2 = new QTableWidgetItem(reg.field("exploracion").value().toString());
-            // para que los elementos no sean editables
-            newItem2->setFlags(newItem2->flags() & (~Qt::ItemIsEditable));
-            newItem2->setTextColor(Qt::blue); // color de los items
-            ui->listaVisitas->setItem(pos,2,newItem2);
+        ui->txtFechaHoraVisita->setDate(rVisitas.field("fechahora").value().toDateTime());
 
-            // ID
-            QTableWidgetItem *newItem3 = new QTableWidgetItem(reg.field("id").value().toString());
-            // para que los elementos no sean editables
-            newItem3->setFlags(newItem3->flags() & (~Qt::ItemIsEditable));
-            newItem3->setTextColor(Qt::blue); // color de los items
-            ui->listaVisitas->setItem(pos,3,newItem3);
+        int nIndex = ui->cboRealizadaPorDr->findText(rVisitas.field("doctor").value().toString());
+        if(nIndex >-1)
+            ui->cboDoctorEpisodio->setCurrentIndex(nIndex);
 
-            pos++;
-        }
+        ui->txtExploracion->setPlainText(rVisitas.field("exploracion").value().toString());
+        ui->txtTratamiento->setPlainText(rVisitas.field("tratamiento").value().toString());
+        ui->txtLengua->setPlainText(rVisitas.field("lengua").value().toString());
+        ui->txtPulso->setPlainText(rVisitas.field("pulso").value().toString());
+
     }
-
 }
+
+
 
 void FrmFichaPaciente::BorrarDatosMedicamento()
 {
