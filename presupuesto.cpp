@@ -25,7 +25,7 @@ void Presupuesto::AnadirPresupuesto()
     this->nRecargoEquivalencia4 = Configuracion_global->nRE4;
 
     QSqlQuery cab_pre(QSqlDatabase::database("empresa"));
-     cab_pre.prepare("INSERT INTO  cab_pre (nPresupuesto,nIva1,nIva2,nIva3,nIva4,"
+    cab_pre.prepare("INSERT INTO  cab_pre (nPresupuesto,nIva1,nIva2,nIva3,nIva4,"
                      "nRecargoEquivalencia1,nRecargoEquivalencia2,nRecargoEquivalencia3,nRecargoEquivalencia4)"
                    " VALUES (:nPresupuesto,:nPorcentajeIva1,:nPorcentajeIva2,:nPorcentajeIva3,:nPorcentajeIva4,"
                      ":nPorcentajeRecargoEq1,:nPorcentajeRecargoEq2,:nPorcentajeRecargoEq3,:nPorcentajeRecargoEq4)");

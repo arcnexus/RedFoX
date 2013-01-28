@@ -5,9 +5,6 @@
 //
 #include "articulo.h"
 
-#include "frmmodificarlin_alb.h"
-
-
 Albaran *oAlbaran = new Albaran();
 Cliente *oCliente2 = new Cliente();
 
