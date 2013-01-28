@@ -1,5 +1,6 @@
 #include "table_helper.h"
-
+#include <QDebug>
+#include <QSqlError>
 Table_Helper::Table_Helper(QObject *parent) :
     QObject(parent)
 {
@@ -18,7 +19,7 @@ Table_Helper::~Table_Helper()
 void Table_Helper::help_table(QTableWidget *table)
 {
     this->helped_table = table;    
-
+    //TODO cambia iva delegate
     helped_table->setItemDelegateForColumn(0,new SearchDelegate(helped_table,searcher));
     helped_table->setItemDelegateForColumn(1,new SpinBoxDelegate(helped_table));
     helped_table->setItemDelegateForColumn(3,new SpinBoxDelegate(helped_table,true,0));
@@ -137,6 +138,7 @@ void Table_Helper::comprobarCantidad(int row)
     QString codigo = helped_table->item(row,0)->text();
     QSqlQuery query(QSqlDatabase::database("empresa"));
     QString sql = QString("SELECT * FROM articulos WHERE cCodigo = '%1'").arg(codigo);
+    query.prepare(sql);
     if(query.exec())
     {
         if(query.next())
@@ -150,6 +152,8 @@ void Table_Helper::comprobarCantidad(int row)
             QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),tr("Articulo no encontrado"),tr("Aceptar"));
         }
     }
+    qDebug()<<query.lastQuery();
+    qDebug()<<query.lastError();
     if(comprando)
     {
         if((stock + cantidad) > stockMax)
