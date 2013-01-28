@@ -4,13 +4,10 @@
 Presupuesto::Presupuesto()
 {
     this->id = 0;
-    qCab_pre = 0;
 }
 
 Presupuesto::~Presupuesto()
 {
-    if(this->qCab_pre)
-        delete qCab_pre;
 }
 
 void Presupuesto::AnadirPresupuesto()
@@ -25,23 +22,101 @@ void Presupuesto::AnadirPresupuesto()
     this->nRecargoEquivalencia4 = Configuracion_global->nRE4;
 
     QSqlQuery cab_pre(QSqlDatabase::database("empresa"));
-    cab_pre.prepare("INSERT INTO  cab_pre (nPresupuesto,nIva1,nIva2,nIva3,nIva4,"
-                     "nRecargoEquivalencia1,nRecargoEquivalencia2,nRecargoEquivalencia3,nRecargoEquivalencia4)"
-                   " VALUES (:nPresupuesto,:nPorcentajeIva1,:nPorcentajeIva2,:nPorcentajeIva3,:nPorcentajeIva4,"
-                     ":nPorcentajeRecargoEq1,:nPorcentajeRecargoEq2,:nPorcentajeRecargoEq3,:nPorcentajeRecargoEq4)");
+    cab_pre.prepare("INSERT INTO cab_pre (nPresupuesto, dFecha, dValidoHasta,"
+                    "id_Cliente, cCodigoCliente, cCliente, cCif, cDireccion, cDireccion2, cCP,"
+                    "cPoblacion, cProvincia, idpais, cTelefono, cMovil, cFax, nDto, tComentarios,"
+                    "rImporte, rSubtotal, rDescuento, rTotal, lImpreso, lAprobado, dFechaAprobacion,"
+                    "rImporteFactura, rImportePendiente, cFactura, nAlbaran, nPedido, id_FormaPago,"
+                    "tLugarEntrega, cAtencionde, rBase1, rBase2, rBase3, rBase4, nIva1, nIva2, nIva3,"
+                    "nIva4, rIva1, rIva2, rIva3, rIva4, nRecargoEquivalencia1, nRecargoEquivalencia2,"
+                    "nRecargoEquivalencia3, nRecargoEquivalencia4, rRec1, rRec2, rRec3, rRec4, rTotal1,"
+                    "rTotal2, rTotal3, rTotal4, lRecargoEquivalencia, cEmail, rTotalIva, rTotalRec,"
+                    "rImporte1, rImporte2, rImporte3, rImporte4) "
+                    "VALUES"
+                    "(:nPresupuesto, :dFecha, :dValidoHasta,"
+                    ":id_Cliente, :cCodigoCliente, :cCliente, :cCif, :cDireccion, :cDireccion2, :cCP,"
+                    ":cPoblacion, :cProvincia, :idpais, :cTelefono, :cMovil, :cFax, :nDto, :tComentarios,"
+                    ":rImporte, :rSubtotal, :rDescuento, :rTotal, :lImpreso, :lAprobado, :dFechaAprobacion,"
+                    ":rImporteFactura, :rImportePendiente, :cFactura, :nAlbaran, :nPedido, :id_FormaPago,"
+                    ":tLugarEntrega, :cAtencionde, :rBase1, :rBase2, :rBase3, :rBase4, :nIva1, :nIva2, :nIva3,"
+                    ":nIva4, :rIva1, :rIva2, :rIva3, :rIva4, :nRecargoEquivalencia1, :nRecargoEquivalencia2,"
+                    ":nRecargoEquivalencia3, :nRecargoEquivalencia4, :rRec1, :rRec2, :rRec3, :rRec4, :rTotal1,"
+                    ":rTotal2, :rTotal3, :rTotal4, :lRecargoEquivalencia, :cEmail, :rTotalIva, :rTotalRec,"
+                    ":rImporte1, :rImporte2, :rImporte3, :rImporte4)");
 
-     cab_pre.bindValue(":nPresupuesto",0);
-     cab_pre.bindValue(":nPorcentajeIva1",this->nIva1);
-     cab_pre.bindValue(":nPorcentajeIva2",this->nIva2);
-     cab_pre.bindValue(":nPorcentajeIva3",this->nIva3);
-     cab_pre.bindValue(":nPorcentajeIva4",this->nIva4);
-     cab_pre.bindValue(":nPorcentajeRecargoEq1",this->nRecargoEquivalencia1);
-     cab_pre.bindValue(":nPorcentajeRecargoEq2",this->nRecargoEquivalencia2);
-     cab_pre.bindValue(":nPorcentajeRecargoEq3",this->nRecargoEquivalencia3);
-     cab_pre.bindValue(":nPorcentajeRecargoEq4",this->nRecargoEquivalencia4);
-     if(!cab_pre.exec()){
+    int x = 0;
+    cab_pre.bindValue(":nPresupuesto",nPresupuesto);
+    cab_pre.bindValue(":dFecha",dFecha);
+    cab_pre.bindValue(":dValidoHasta",dValidoHasta);
+    cab_pre.bindValue(":id_Cliente",id_cliente);
+    cab_pre.bindValue(":cCodigoCliente",cCodigoCliente);
+    cab_pre.bindValue(":cCliente",cCliente);
+    cab_pre.bindValue(":cCif",cCif);
+    cab_pre.bindValue(":cDireccion",cDireccion);
+    cab_pre.bindValue(":cDireccion2",cDireccion2);
+    cab_pre.bindValue(":cCP",cCP);
+    cab_pre.bindValue(":cPoblacion",cPoblacion);
+    cab_pre.bindValue(":cProvincia",cProvincia);
+    cab_pre.bindValue(":idpais",idPais);
+    cab_pre.bindValue(":cTelefono",x);
+    cab_pre.bindValue(":cMovil",x);
+    cab_pre.bindValue(":cFax",x);
+    cab_pre.bindValue(":nDto",x);
+    cab_pre.bindValue(":tComentarios",x);
+    cab_pre.bindValue(":rImporte",x);
+    cab_pre.bindValue(":rSubtotal",x);
+    cab_pre.bindValue(":rDescuento",x);
+    cab_pre.bindValue(":rTotal",x);
+    cab_pre.bindValue(":lImpreso",x);
+    cab_pre.bindValue(":lAprobado",x);
+    cab_pre.bindValue(":dFechaAprobacion",x);
+    cab_pre.bindValue(":rImporteFactura",x);
+    cab_pre.bindValue(":rImportePendiente",x);
+    cab_pre.bindValue(":cFactura",x);
+    cab_pre.bindValue(":nAlbaran",x);
+    cab_pre.bindValue(":nPedido",x);
+    cab_pre.bindValue(":id_FormaPago",x);
+    cab_pre.bindValue(":tLugarEntrega",x);
+    cab_pre.bindValue(":cAtencionde",x);
+    cab_pre.bindValue(":rBase1",x);
+    cab_pre.bindValue(":rBase2",x);
+    cab_pre.bindValue(":rBase3",x);
+    cab_pre.bindValue(":rBase4",x);
+    cab_pre.bindValue(":nIva1",x);
+    cab_pre.bindValue(":nIva2",x);
+    cab_pre.bindValue(":nIva3",x);
+    cab_pre.bindValue(":nIva4",x);
+    cab_pre.bindValue(":rIva1",x);
+    cab_pre.bindValue(":rIva2",x);
+    cab_pre.bindValue(":rIva3",x);
+    cab_pre.bindValue(":rIva4",x);
+    cab_pre.bindValue(":nRecargoEquivalencia1",x);
+    cab_pre.bindValue(":nRecargoEquivalencia2",x);
+    cab_pre.bindValue(":nRecargoEquivalencia3",x);
+    cab_pre.bindValue(":nRecargoEquivalencia4",x);
+    cab_pre.bindValue(":rRec1",x);
+    cab_pre.bindValue(":rRec2",x);
+    cab_pre.bindValue(":rRec3",x);
+    cab_pre.bindValue(":rRec4",x);
+    cab_pre.bindValue(":rTotal1",x);
+    cab_pre.bindValue(":rTotal2",x);
+    cab_pre.bindValue(":rTotal3",x);
+    cab_pre.bindValue(":rTotal4",x);
+    cab_pre.bindValue(":lRecargoEquivalencia",x);
+    cab_pre.bindValue(":cEmail",x);
+    cab_pre.bindValue(":rTotalIva",x);
+    cab_pre.bindValue(":rTotalRec",x);
+    cab_pre.bindValue(":rImporte1",x);
+    cab_pre.bindValue(":rImporte2",x);
+    cab_pre.bindValue(":rImporte3",x);
+    cab_pre.bindValue(":rImporte4",x);
+
+     if(!cab_pre.exec())
+     {
          QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Presupuesto:", cab_pre.lastError().text());
-     } else {
+     }
+     else
+     {
          this->id = cab_pre.lastInsertId().toInt();
          QString cSQL = "Select * from cab_pre where id ="+QString::number(this->id);
          RecuperarPresupuesto(cSQL);
@@ -50,13 +125,13 @@ void Presupuesto::AnadirPresupuesto()
 
 void Presupuesto::RecuperarPresupuesto(QString cSQL)
 {
-    qCab_pre = new QSqlQuery(QSqlDatabase::database("empresa"));
-    qCab_pre->prepare(cSQL);
-    if( !qCab_pre->exec() ) {
-        QMessageBox::critical(qApp->activeWindow(), "error:", qCab_pre->lastError().text());
+    QSqlQuery qCab_pre(QSqlDatabase::database("empresa"));
+    qCab_pre.prepare(cSQL);
+    if( !qCab_pre.exec() ) {
+        QMessageBox::critical(qApp->activeWindow(), "error:", qCab_pre.lastError().text());
     } else {
-        if (qCab_pre->next()) {
-            QSqlRecord registro = qCab_pre->record();
+        if (qCab_pre.next()) {
+            QSqlRecord registro = qCab_pre.record();
             this->id = registro.field("Id").value().toInt();
             this->nPresupuesto = registro.field("nPresupuesto").value().toInt();
             this->dFecha = registro.field("dFecha").value().toDate();
@@ -70,7 +145,8 @@ void Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->cCP = registro.field("cCP").value().toString();
             this->cPoblacion = registro.field("cPoblacion").value().toString();
             this->cProvincia = registro.field("cProvincia").value().toString();
-            this->cPais = registro.field("cPais").value().toString();
+            //TODO get pais id
+            //this->cPais = registro.field("cPais").value().toString();
             this->cTelefono = registro.field("cTelefono").value().toString();
             this->cMovil = registro.field("cMovil").value().toString();
             this->cFax = registro.field("cFax").value().toString();
@@ -123,7 +199,7 @@ void Presupuesto::RecuperarPresupuesto(QString cSQL)
         } else {
             QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión de Presupuestos"),
                                      QObject::tr("No se ha podido recuperar el presupuesto. Error: ")+
-                                                 qCab_pre->lastError().text(),QObject::tr("Aceptar"));
+                                                 qCab_pre.lastError().text(),QObject::tr("Aceptar"));
         }
    }
 
@@ -131,13 +207,13 @@ void Presupuesto::RecuperarPresupuesto(QString cSQL)
 
 void Presupuesto::RecuperarPresupuesto(QString cSQL, int nAccion)
 {
-    qCab_pre = new QSqlQuery(QSqlDatabase::database("empresa"));
-    qCab_pre->prepare(cSQL);
-    if( !qCab_pre->exec() ) {
-        QMessageBox::critical(qApp->activeWindow(), "error:", qCab_pre->lastError().text());
+    QSqlQuery qCab_pre(QSqlDatabase::database("empresa"));
+    qCab_pre.prepare(cSQL);
+    if( !qCab_pre.exec() ) {
+        QMessageBox::critical(qApp->activeWindow(), "error:", qCab_pre.lastError().text());
     } else {
-        if (qCab_pre->next()) {
-            QSqlRecord registro = qCab_pre->record();
+        if (qCab_pre.next()) {
+            QSqlRecord registro = qCab_pre.record();
             this->id = registro.field("Id").value().toInt();
             this->nPresupuesto = registro.field("nPresupuesto").value().toInt();
             this->dFecha = registro.field("dFecha").value().toDate();
@@ -150,8 +226,10 @@ void Presupuesto::RecuperarPresupuesto(QString cSQL, int nAccion)
             this->cDireccion2 = registro.field("cDireccion2").value().toString();
             this->cCP = registro.field("cCP").value().toString();
             this->cPoblacion = registro.field("cPoblacion").value().toString();
+
             this->cProvincia = registro.field("cProvincia").value().toString();
-            this->cPais = registro.field("cPais").value().toString();
+            //TODO get pais id
+            //this->cPais = registro.field("cPais").value().toString();
             this->cTelefono = registro.field("cTelefono").value().toString();
             this->cMovil = registro.field("cMovil").value().toString();
             this->cFax = registro.field("cFax").value().toString();
@@ -306,7 +384,8 @@ void Presupuesto::GuardarPres(int nId_Presupuesto)
          cab_pre.bindValue(":cFactura",this->cFactura);
          cab_pre.bindValue("c:cFax",this->cFax);
          cab_pre.bindValue(":cMovil",this->cMovil);
-         cab_pre.bindValue(":cPais",this->cPais);
+         //TODO fix pais
+         //cab_pre.bindValue(":cPais",this->cPais);
          cab_pre.bindValue(":cPoblacion",this->cPoblacion);
          cab_pre.bindValue(":cProvincia",this->cProvincia);
          cab_pre.bindValue(":cTelefono",this->cTelefono);
@@ -603,682 +682,4 @@ void Presupuesto::PresupuestoToAlbaran()
 
 void Presupuesto::PresupuestoToFactura()
 {
-}
-
-void Presupuesto::setId(int id)
-{
-    this->id = id;
-}
-
-void Presupuesto::setnPresupuesto(int nPresupuesto)
-{
-    this->nPresupuesto = nPresupuesto;
-}
-
-void Presupuesto::setdFecha(QDate dFecha)
-{
-    this->dFecha = dFecha;
-}
-
-void Presupuesto::setdValidoHasta(QDate dValidoHasta)
-{
-    this->dValidoHasta = dValidoHasta;
-}
-
-void Presupuesto::setidCliente(int id_cliente)
-{
-    this->id_cliente = id_cliente;
-}
-
-void Presupuesto::setcCodigoCliente(QString cCodigoCliente)
-{
-    this->cCodigoCliente = cCodigoCliente;
-}
-
-void Presupuesto::setcCliente(QString cCliente)
-{
-    this->cCliente = cCliente;
-}
-
-void Presupuesto::setcCif(QString cCif)
-{
-    this->cCif = cCif;
-}
-
-void Presupuesto::setcDireccion(QString cDireccion)
-{
-    this->cDireccion = cDireccion;
-}
-
-void Presupuesto::setcDireccion2(QString cDireccion2)
-{
-    this->cDireccion2 = cDireccion2;
-}
-
-void Presupuesto::setcCP(QString cCP)
-{
-    this->cCP = cCP;
-}
-
-void Presupuesto::setcPoblacion(QString cPoblacion)
-{
-    this->cPoblacion = cPoblacion;
-}
-
-void Presupuesto::setcProvincia(QString cProvincia)
-{
-    this->cProvincia = cProvincia;
-}
-
-void Presupuesto::setcPais(QString cPais)
-{
-    this->cPais = cPais;
-}
-
-void Presupuesto::setcTelefono(QString cTelefono)
-{
-    this->cTelefono = cTelefono;
-}
-
-void Presupuesto::setcMovil(QString cMovil)
-{
-    this->cMovil = cMovil;
-}
-
-void Presupuesto::setcFax(QString cFax)
-{
-    this->cFax = cFax;
-}
-
-void Presupuesto::setnDto(double nDto)
-{
-    this->nDto = nDto;
-}
-
-void Presupuesto::settComentarios(QString tComentarios)
-{
-    this->tComentarios = tComentarios;
-}
-
-void Presupuesto::setrImporte(double rImporte)
-{
-    this->rImporte = rImporte;
-}
-
-void Presupuesto::setrSubtotal(double rSubTotal)
-{
-    this->rSubTotal = rSubTotal;
-}
-
-void Presupuesto::setrDescuento(double rDescuento)
-{
-    this->rDescuento = rDescuento;
-}
-
-void Presupuesto::setrTotal(double rTotal)
-{
-    this->rTotal = rTotal;
-}
-
-void Presupuesto::setlImpreso(int lImpreso)
-{
-    if (lImpreso==0)
-        this->lImpreso = false;
-    else
-        this->lImpreso = true;
-}
-
-void Presupuesto::setlAprobado(int lAprobado)
-{
-    if(lAprobado==0)
-        this->lAprobado = false;
-   else
-        this->lAprobado = true;
-}
-
-void Presupuesto::setdFechaAprobacion(QDate dFechaAprobacion)
-{
-    this->dFechaAprobacion = dFechaAprobacion;
-}
-
-void Presupuesto::setrImporteFactura(double rImporteFactura)
-{
-    this->rImporteFactura = rImporteFactura;
-}
-
-void Presupuesto::setrImportePendiente(double rImportePendiente)
-{
-    this->rImportePendiente = rImportePendiente;
-}
-
-void Presupuesto::setcFactura(QString cFactura)
-{
-    this->cFactura = cFactura;
-}
-
-void Presupuesto::setnAlbaran(int nAlbaran)
-{
-    this->nAlbaran = nAlbaran;
-}
-
-void Presupuesto::setnPedido(int nPedido)
-{
-    this->nPedido = nPedido;
-}
-
-void Presupuesto::setid_FormaPago(int id_FormaPago)
-{
-    this->id_FormaPago = id_FormaPago;
-}
-
-void Presupuesto::setcCodigoFormaPago(QString cCodigoFormaPago)
-{
-    this->cCodigoFormaPago = cCodigoFormaPago;
-}
-
-void Presupuesto::setcDescripcionFormaPago(QString cDescripcionFormaPago)
-{
-    this->cDescripcionFormaPago = cDescripcionFormaPago;
-}
-
-void Presupuesto::settLugarEntrega(QString tLugarEntrega)
-{
-    this->tLugarEntrega = tLugarEntrega;
-}
-
-void Presupuesto::setcAtencionde(QString cAtencionde)
-{
-    this->cAtencionde = cAtencionde;
-}
-
-void Presupuesto::setrbase1(double rBase1)
-{
-    this->rBase1 = rBase1;
-}
-
-void Presupuesto::setrbase2(double rBase2)
-{
-    this->rBase2 = rBase2;
-}
-
-void Presupuesto::setrbase3(double rBase3)
-{
-    this->rBase3 = rBase3;
-}
-
-void Presupuesto::setrbase4(double rBase4)
-{
-    this->rBase4 = rBase4;
-}
-
-void Presupuesto::setnIva1(double nIva1)
-{
-    this->nIva1 = nIva1;
-}
-
-void Presupuesto::setnIva2(double nIva2)
-{
-    this->nIva2 = nIva2;
-}
-
-void Presupuesto::setnIva3(double nIva3)
-{
-    this->nIva3 = nIva3;
-}
-
-void Presupuesto::setnIva4(double nIva4)
-{
-    this->nIva4 = nIva4;
-}
-
-void Presupuesto::setrIva1(double rIva1)
-{
-    this->rIva1 = rIva1;
-}
-
-void Presupuesto::setrIva2(double rIva2)
-{
-    this->rIva2 = rIva2;
-}
-
-void Presupuesto::setrIva3(double rIva3)
-{
-    this->rIva3 = rIva3;
-}
-
-void Presupuesto::setrIva4(double rIva4)
-{
-    this->rIva4 = rIva4;
-}
-
-void Presupuesto::setnRecargoEquivalencia1(double nRecargoEquivalencia1)
-{
-    this->nRecargoEquivalencia1 = nRecargoEquivalencia1;
-}
-
-void Presupuesto::setnRecargoEquivalencia2(double nRecargoEquivalencia2)
-{
-    this->nRecargoEquivalencia2 = nRecargoEquivalencia2;
-}
-
-void Presupuesto::setnRecargoEquivalencia3(double nRecargoEquivalencia3)
-{
-    this->nRecargoEquivalencia3 = nRecargoEquivalencia3;
-}
-
-void Presupuesto::setnRecargoEquivalencia4(double nRecargoEquivalencia4)
-{
-    this->nRecargoEquivalencia4 = nRecargoEquivalencia4;
-}
-
-void Presupuesto::setrRec1(double rRec1)
-{
-    this->rRec1 = rRec1;
-}
-
-void Presupuesto::setrRec2(double rRec2)
-{
-    this->rRec2 = rRec2;
-}
-
-void Presupuesto::setrRec3(double rRec3)
-{
-    this->rRec3 = rRec3;
-}
-
-void Presupuesto::setrRec4(double rRec4)
-{
-    this->rRec4 = rRec4;
-}
-
-void Presupuesto::setrTotal1(double rTotal1)
-{
-    this->rTotal1 = rTotal1;
-}
-
-void Presupuesto::setrTotal2(double rTotal2)
-{
-    this->rTotal2 = rTotal2;
-}
-
-void Presupuesto::setrTotal3(double rTotal3)
-{
-    this->rTotal3 = rTotal3;
-}
-
-void Presupuesto::setrTotal4(double rTotal4)
-{
-    this->rTotal4 = rTotal4;
-}
-
-void Presupuesto::setlRecargoEquivalencia(int lRecargoEquivalencia)
-{
-    if(lRecargoEquivalencia ==0)
-        this->lRecargoEquivalencia = false;
-    else
-        this->lRecargoEquivalencia = true;
-}
-
-void Presupuesto::setcEmail(QString cEmail)
-{
-    this->cEmail = cEmail;
-}
-
-void Presupuesto::setrTotalIva(double rTotalIva)
-{
-    this->rTotalIva = rTotalIva;
-}
-
-void Presupuesto::setrTotalRec(double rTotalRec)
-{
-    this->rTotalRec = rTotalRec;
-}
-
-// GETS
-
-int Presupuesto::getId()
-{
-    return this->id;
-}
-
-int Presupuesto::getnPresupuesto()
-{
-    return this->nPresupuesto;
-}
-
-QDate Presupuesto::getdFecha()
-{
-    return this->dFecha;
-}
-
-QDate Presupuesto::getdValidoHasta()
-{
-    return this->dValidoHasta;
-}
-
-int Presupuesto::getid_cliente()
-{
-    return this->id_cliente;
-}
-
-QString Presupuesto::getcCodigoCliente()
-{
-    return this->cCodigoCliente;
-}
-
-QString Presupuesto::getcCliente()
-{
-    return this->cCliente;
-}
-
-QString Presupuesto::getcCif()
-{
-    return this->cCif;
-}
-
-QString Presupuesto::getcDireccion()
-{
-    return this->cDireccion;
-}
-
-QString Presupuesto::getcDireccion2()
-{
-    return this->cDireccion2;
-}
-
-QString Presupuesto::getcCP()
-{
-    return this->cCP;
-}
-
-QString Presupuesto::getcPoblacion()
-{
-    return this->cPoblacion;
-}
-
-QString Presupuesto::getcProvincia()
-{
-    return this->cProvincia;
-}
-
-QString Presupuesto::getcPais()
-{
-    return this->cPais;
-}
-
-QString Presupuesto::getcTelefono()
-{
-    return this->cTelefono;
-}
-
-QString Presupuesto::getcMovil()
-{
-    return this->cMovil;
-}
-
-QString Presupuesto::getcFax()
-{
-    return this->cFax;
-}
-
-double Presupuesto::getnDto()
-{
-    return this->nDto;
-}
-
-QString Presupuesto::gettComentarios()
-{
-    return this->tComentarios;
-}
-
-double Presupuesto::getrImporte()
-{
-    return this->rImporte;
-}
-
-double Presupuesto::getrSubTotal()
-{
-    return this->rSubTotal;
-}
-
-double Presupuesto::getrDescuento()
-{
-    return this->rDescuento;
-}
-
-double Presupuesto::getrTotal()
-{
-    return this->rTotal;
-}
-
-bool Presupuesto::getlImpreso()
-{
-    return this->lImpreso;
-}
-
-int Presupuesto::getlImpresoInt()
-{
-    if(this->lImpreso)
-        return 1;
-    else
-        return 0;
-}
-
-bool Presupuesto::getlAprobado()
-{
-    return this->lAprobado;
-}
-
-int Presupuesto::getlAprobadoInt()
-{
-    if(this->lAprobado)
-        return 1;
-    else
-        return 0;
-
-}
-
-QDate Presupuesto::getdFechaAprobacion()
-{
-    return this->dFechaAprobacion;
-}
-
-double Presupuesto::getrImporteFactura()
-{
-    return this->rImporteFactura;
-}
-
-double Presupuesto::getrImportePendiente()
-{
-    return this->rImportePendiente;
-}
-
-QString Presupuesto::getcFactura()
-{
-    return this->cFactura;
-}
-
-int Presupuesto::getnAlbaran()
-{
-    return this->nAlbaran;
-}
-
-int Presupuesto::getnPedido()
-{
-    return this->nPedido;
-
-}
-
-int Presupuesto::getid_FormaPago()
-{
-    return this->id_FormaPago;
-}
-
-QString Presupuesto::getcCodigoFormaPago()
-{
-    return this->cCodigoFormaPago;
-}
-
-QString Presupuesto::getcDescripcionFormaPago()
-{
-    return this->cDescripcionFormaPago;
-}
-
-QString Presupuesto::gettLugarEntrega()
-{
-    return this->tLugarEntrega;
-}
-
-QString Presupuesto::getcAtencionde()
-{
-    return this->cAtencionde;
-}
-
-double Presupuesto::getrBase1()
-{
-    return this->rBase1;
-}
-
-double Presupuesto::getrBase2()
-{
-    return this->rBase2;
-}
-
-double Presupuesto::getrBase3()
-{
-    return this->rBase3;
-}
-
-double Presupuesto::getrBase4()
-{
-    return this->rBase4;
-}
-
-double Presupuesto::getnIva1()
-{
-    return this->nIva1;
-}
-
-double Presupuesto::getnIva2()
-{
-    return this->nIva2;
-}
-
-double Presupuesto::getnIva3()
-{
-    return this->nIva3;
-}
-
-double Presupuesto::getnIva4()
-{
-    return this->nIva4;
-}
-
-double Presupuesto::getrIva1()
-{
-    return this->rIva1;
-}
-
-double Presupuesto::getrIva2()
-{
-    return this->rIva2;
-}
-
-double Presupuesto::getrIva3()
-{
-    return this->rIva3;
-}
-
-double Presupuesto::getrIva4()
-{
-    return this->rIva4;
-}
-
-double Presupuesto::getnRecargoEquivalencia1()
-{
-    return this->nRecargoEquivalencia1;
-}
-
-double Presupuesto::getnRecargoEquivalencia2()
-{
-    return this->nRecargoEquivalencia2;
-}
-
-double Presupuesto::getnRecargoEquivalencia3()
-{
-    return this->nRecargoEquivalencia3;
-}
-
-double Presupuesto::getnRecargoEquivalencia4()
-{
-    return this->nRecargoEquivalencia4;
-}
-
-double Presupuesto::getrRec1()
-{
-    return this->rRec1;
-}
-
-double Presupuesto::getrRec2()
-{
-    return this->rRec2;
-}
-
-double Presupuesto::getrRec3()
-{
-    return this->rRec3;
-}
-
-double Presupuesto::getrRec4()
-{
-    return this->rRec4;
-}
-
-double Presupuesto::getrTotal1()
-{
-    return this->rTotal1;
-}
-
-double Presupuesto::getrTotal2()
-{
-    return this->rTotal2;
-}
-
-double Presupuesto::getrTotal3()
-{
-    return this->rTotal3;
-}
-
-double Presupuesto::getrTotal4()
-{
-    return this->rTotal4;
-}
-
-bool Presupuesto::getlRecargoEquivalencia()
-{
-    return this->lRecargoEquivalencia;
-}
-
-int Presupuesto::getlRecargoEquivalenciaInt()
-{
-    if (this->lRecargoEquivalencia == true)
-        return 1;
-    else
-        return 0;
-
-}
-
-QString Presupuesto::getcEmail()
-{
-    return this->cEmail;
-}
-
-double Presupuesto::getrTotalIva()
-{
-    return this->rTotalIva;
-}
-
-double Presupuesto::getrTotalRec()
-{
-    return this->rTotalRec;
 }

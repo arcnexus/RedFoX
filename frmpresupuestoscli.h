@@ -24,9 +24,7 @@ public:
     void VaciarCampos();
     void BloquearCampos();
     void DesbloquearCampos();
-    void CalcularTotalLinea();
     void RellenarDespuesCalculo();
-    void LineasVentas();
     Presupuesto *oPres;
     Cliente *oClientePres;
 private slots:
