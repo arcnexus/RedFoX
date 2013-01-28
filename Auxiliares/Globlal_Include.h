@@ -1,3 +1,4 @@
+
 #ifndef GLOBLAL_INCLUDE_H
 #define GLOBLAL_INCLUDE_H
 
@@ -34,6 +35,16 @@
 #include <QSqlRecord>
 #include <QDate>
 #include <QtSql>
+#include <QGridLayout>
+#include <QToolBar>
+#include <QMainWindow>
+#include <QToolButton>
+#include <QProgressBar>
+#include <QLabel>
+#include <QDateTime>
+#include <QDateTimeEdit>
+#include <QInputDialog>
+#include <QLineEdit>
 
 #include <QXmlStreamAttributes>
 

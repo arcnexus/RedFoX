@@ -84,7 +84,6 @@ SOURCES += main.cpp\
     Zona_Administrador/arearestringida_form.cpp \
     block_terra_form.cpp \
     Zona_Administrador/copy_db_progressfrm.cpp \
-    visitas.cpp \
     Gestion_Almacen/gestion_seccionalmacen.cpp \
     db_table_view.cpp \
     Auxiliares/search_lineedit.cpp \
@@ -145,7 +144,6 @@ HEADERS  += mainwindow.h \
     Zona_Administrador/arearestringida_form.h \
     block_terra_form.h \
     Zona_Administrador/copy_db_progressfrm.h \
-    visitas.h \
     Gestion_Almacen/gestion_seccionalmacen.h \
     db_table_view.h \
     Auxiliares/search_lineedit.h \
