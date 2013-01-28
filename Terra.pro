@@ -91,7 +91,8 @@ SOURCES += main.cpp\
     Auxiliares/table_helper.cpp \
     Auxiliares/readonlydelegate.cpp \
     Auxiliares/spinboxdelegate.cpp \
-    Auxiliares/searchdelegate.cpp
+    Auxiliares/searchdelegate.cpp \
+    Zona_Pacientes/visitas.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -152,7 +153,9 @@ HEADERS  += mainwindow.h \
     Auxiliares/readonlydelegate.h \
     Auxiliares/spinboxdelegate.h \
     Auxiliares/searchdelegate.h \
-    Auxiliares/Globlal_Include.h
+    Auxiliares/Globlal_Include.h\
+    Zona_Pacientes/visitas.h
+
 
 FORMS    += mainwindow.ui \
     Zona_Pacientes/frmClientes.ui \

@@ -49,7 +49,7 @@ private slots:
     void llenartablahistorialfarmacologiaepisodio();
     void llenartablahistorialimagenesepisodio();
     void llenartablahistorialanalisisepisodio();
-    void llenarTablahistorialvisitas();
+    void llenarhistorialvisitas();
     void BorrarDatosMedicamento();
     void MostrarFichaMedicamento();
     void AnadirImagenDiagnostico();
