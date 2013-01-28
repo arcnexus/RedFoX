@@ -284,7 +284,10 @@ void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
    if (oEpisodio->getid() >0)
    {
        cargarEpisodio(1);
-       ui->radEpisodioAbierto->setChecked(true);
+       ui->tab_episodios->setCurrentIndex(1);
+       ui->txtFechaEpisodio->setDate(QDate::currentDate());
+       ui->txtDescripcionEpisodio->setFocus();
+
    }
    else
    {
@@ -342,14 +345,12 @@ void FrmFichaPaciente::BloquearCamposEpisodio(bool state)
      ui->txtHistorialEpisodio->setEnabled(!state);
      ui->txtCIEEpisiodio->setEnabled(!state);
      ui->btnBuscarCIEEpisodio->setEnabled(!state);
-     ui->btnAnadirEpisodio->setEnabled(!state);
-     ui->btnEditarEpisodio->setEnabled(!state);
+     ui->btnAnadirEpisodio->setEnabled(state);
+     ui->btnEditarEpisodio->setEnabled(state);
      ui->btnGuardarEpisodio->setEnabled(!state);
      ui->btnDeshacerEpisodio->setEnabled(!state);
      ui->btnEpisodioAbierto->setEnabled(!state);
      ui->btnEpisodioCerrado->setEnabled(!state);
-
-     ui->btnAnadirEpisodio->setEnabled(state);
 }
 
 void FrmFichaPaciente::LLenarEpisodio()
@@ -393,9 +394,16 @@ void FrmFichaPaciente::on_btnGuardarPaciente_clicked()
 
 void FrmFichaPaciente::on_btnGuardarEpisodio_clicked()
 {
-    LLenarEpisodio();
-    oEpisodio->GuardarEpisodio();
-    BloquearCamposEpisodio(true);
+    if (!ui->txtDescripcionEpisodio->text().isEmpty() && !ui->cboDoctorEpisodio->currentText().isEmpty()) {
+        LLenarEpisodio();
+        oEpisodio->GuardarEpisodio();
+        BloquearCamposEpisodio(true);
+    } else {
+        QMessageBox::warning(this,tr("Guardar Episodio"),tr("Los campos descripción de episodio y paciente no pueden quedar vacios"),
+                             tr("Aceptar"));
+    }
+
+
 }
 
 
@@ -404,7 +412,7 @@ void FrmFichaPaciente::listaEpisodios_currentItemChanged(QTreeWidgetItem*current
     if(current->text(2) == "EPISODIO"){
         int nIdEpisodio = current->text(0).toInt();
         oEpisodio->RecuperarEpisodio(nIdEpisodio);
-        cargarEpisodio(1);
+        cargarEpisodio(0);
 
     }
     else

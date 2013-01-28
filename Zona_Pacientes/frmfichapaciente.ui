@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>683</height>
+    <height>702</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -2402,7 +2402,7 @@ color: rgb(255,255,255);</string>
               </widget>
              </item>
              <item row="1" column="0" colspan="5">
-              <widget class="QTabWidget" name="tabWidget_4">
+              <widget class="QTabWidget" name="tab_episodios">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -2410,7 +2410,7 @@ color: rgb(255,255,255);</string>
                 </size>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="tabWidget_4Page1">
                 <property name="styleSheet">
