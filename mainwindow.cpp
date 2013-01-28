@@ -8,6 +8,8 @@
 #include "Gestion_Almacen/gestion_seccionalmacen.h"
 #include "db_table_view.h"
 
+Configuracion * Configuracion_global = 0;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -95,35 +97,25 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));
 
 
-    QSqlDatabase dbEmp;
-    m_config = new Configuracion();
-    QSettings settings("infint", "terra");
-    // Cambiar por parametros fichero configuración.
-    m_config->cDriverBDTerra = settings.value("cDriverBDTerra").toString();
-    m_config->cRutaBdTerra = settings.value("cRutaDBTerra").toString();
-    m_config->cHostBDTerra = settings.value("cHostBDTerra").toString();
-    m_config->cUsuarioBDTerra  =   settings.value("cUserBDTerra").toString();
-    m_config->cPasswordBDTerra = settings.value("cPasswordBDTerra").toString();
-    m_config->cPais = settings.value("cPais").toString();
-    m_config->cEjercicio = settings.value("cEjercicioActivo").toString();
-    m_config->nDigitosFactura = settings.value(("nDigitosFactura")).toInt();
 
+    Configuracion_global = new Configuracion();
+    Configuracion_global->CargarDatos();
 
     // Abro Base de Datos
-    QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(m_config->cDriverBDTerra,"terra");
-    //dbTerra.addDatabase(m_config->cDriverBDTerra,"terra");
+    QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDTerra,"terra");
+    //dbTerra.addDatabase(Configuracion_global->cDriverBDTerra,"terra");
 
-    if (m_config->cDriverBDTerra == "QSQLITE")
+    if (Configuracion_global->cDriverBDTerra == "QSQLITE")
 	{
-        dbTerra.setDatabaseName(m_config->cRutaBdTerra);
+        dbTerra.setDatabaseName(Configuracion_global->cRutaBdTerra);
         dbTerra.open();
     }
 	else
 	{
-        dbTerra.setDatabaseName(m_config->cNombreBDTerra);
-        dbTerra.setHostName(m_config->cHostBDTerra);
-        dbTerra.open(m_config->cUsuarioBDTerra,m_config->cPasswordBDTerra);
-        dbTerra.open(m_config->cUsuarioBDTerra,m_config->cPasswordBDTerra);
+        dbTerra.setDatabaseName(Configuracion_global->cNombreBDTerra);
+        dbTerra.setHostName(Configuracion_global->cHostBDTerra);
+        dbTerra.open(Configuracion_global->cUsuarioBDTerra,Configuracion_global->cPasswordBDTerra);
+        dbTerra.open(Configuracion_global->cUsuarioBDTerra,Configuracion_global->cPasswordBDTerra);
     }
 
     if (dbTerra.lastError().isValid())
@@ -137,9 +129,9 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 void MainWindow::init()
 {
-    //Login *dlg = new Login(m_config);
+    //Login *dlg = new Login(Configuracion_global);
     //NOTE - Fixed: puntero no borrado
-    QScopedPointer<Login>dlg(new Login(m_config));
+    QScopedPointer<Login>dlg(new Login(this));
 	if ( dlg->exec()==QDialog::Accepted) 
 	{
 		// capturo usuario
@@ -147,7 +139,7 @@ void MainWindow::init()
         user = dlg->getUsuario();
         pass = dlg->getPass();
 		ui->lineUsuarioActivo->setText(usuario);
-		m_config->cUsuarioActivo = ui->lineUsuarioActivo->text();
+        Configuracion_global->cUsuarioActivo = ui->lineUsuarioActivo->text();
 		QSettings settings("infint", "terra");
 		ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
 		ui->txtcCategoria->setText(settings.value("cCategoria").toString());
@@ -178,68 +170,68 @@ void MainWindow::init()
             QApplication::processEvents();
 			QSqlRecord record = QryEmpresa.record();
 			// DBEMpresa
-			m_config->cDriverBDEmpresa = record.field("driverBD").value().toString();
-			m_config->cHostBDEmpresa = record.field("host").value().toString();
-			m_config->cNombreBDEmpresa =record.field("nombreBD").value().toString();
-			m_config->cPasswordBDEmpresa =record.field("contrasena").value().toString();
-			m_config->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
-			m_config->cUsuarioBDEmpresa = record.field("user").value().toString();
+            Configuracion_global->cDriverBDEmpresa = record.field("driverBD").value().toString();
+            Configuracion_global->cHostBDEmpresa = record.field("host").value().toString();
+            Configuracion_global->cNombreBDEmpresa =record.field("nombreBD").value().toString();
+            Configuracion_global->cPasswordBDEmpresa =record.field("contrasena").value().toString();
+            Configuracion_global->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
+            Configuracion_global->cUsuarioBDEmpresa = record.field("user").value().toString();
             progress.setValue(1);
             QApplication::processEvents();
 			//DBMedica
-			m_config->cDriverBDMedica = record.field("driverBDMedica").value().toString();
-			m_config->cHostBDMedica = record.field("hostBDMedica").value().toString();
-			m_config->cNombreBDMedica =record.field("nombreBDMedica").value().toString();
-			m_config->cPasswordBDMedica =record.field("contrasenaBDMedica").value().toString();
-			m_config->cRutaBdMedica = record.field("RutaBDMedicaSqLite").value().toString();
-			m_config->cUsuarioBDMedica = record.field("userBDMedica").value().toString();
+            Configuracion_global->cDriverBDMedica = record.field("driverBDMedica").value().toString();
+            Configuracion_global->cHostBDMedica = record.field("hostBDMedica").value().toString();
+            Configuracion_global->cNombreBDMedica =record.field("nombreBDMedica").value().toString();
+            Configuracion_global->cPasswordBDMedica =record.field("contrasenaBDMedica").value().toString();
+            Configuracion_global->cRutaBdMedica = record.field("RutaBDMedicaSqLite").value().toString();
+            Configuracion_global->cUsuarioBDMedica = record.field("userBDMedica").value().toString();
             progress.setValue(2);
             QApplication::processEvents();
 			// Varios
-			m_config->cSerie = record.field("serie").value().toString();
-			m_config->nDigitosCuentasContables = record.field("ndigitoscuenta").value().toInt();
-			m_config->cCuentaAcreedores = record.field("codigocuentaacreedores").value().toString();
-			m_config->cCuentaClientes = record.field("codigocuentaclientes").value().toString();
-			m_config->cCuentaProveedores = record.field("codigocuentaproveedores").value().toString();
+            Configuracion_global->cSerie = record.field("serie").value().toString();
+            Configuracion_global->nDigitosCuentasContables = record.field("ndigitoscuenta").value().toInt();
+            Configuracion_global->cCuentaAcreedores = record.field("codigocuentaacreedores").value().toString();
+            Configuracion_global->cCuentaClientes = record.field("codigocuentaclientes").value().toString();
+            Configuracion_global->cCuentaProveedores = record.field("codigocuentaproveedores").value().toString();
             progress.setValue(3);
             QApplication::processEvents();
 			// Guardo preferencias
 			QSettings settings("infint", "terra");
-			settings.setValue("cSerie",m_config->cSerie);
-			settings.setValue("nDigitosCuentas",m_config->nDigitosCuentasContables);
-			settings.setValue("cCuentaClientes",m_config->cCuentaClientes);
-			settings.setValue("cCuentaProveedores",m_config->cCuentaProveedores);
-			settings.setValue("cCuentaAcreedores",m_config->cCuentaAcreedores);
+            settings.setValue("cSerie",Configuracion_global->cSerie);
+            settings.setValue("nDigitosCuentas",Configuracion_global->nDigitosCuentasContables);
+            settings.setValue("cCuentaClientes",Configuracion_global->cCuentaClientes);
+            settings.setValue("cCuentaProveedores",Configuracion_global->cCuentaProveedores);
+            settings.setValue("cCuentaAcreedores",Configuracion_global->cCuentaAcreedores);
 			settings.setValue("Clave1",record.field("clave1").value().toString());
             settings.setValue("Clave2",record.field("clave2").value().toString());
             progress.setValue(4);
             QApplication::processEvents();
 			// Abro empresa activa
-			QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"empresa");
-			if (m_config->cDriverBDEmpresa =="QSQLITE") {
-				dbEmpresa.setDatabaseName(m_config->cRutaBdEmpresa);
-				// qDebug() << "Empresa:" << m_config->cRutaBdEmpresa;
+            QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"empresa");
+            if (Configuracion_global->cDriverBDEmpresa =="QSQLITE") {
+                dbEmpresa.setDatabaseName(Configuracion_global->cRutaBdEmpresa);
+                // qDebug() << "Empresa:" << Configuracion_global->cRutaBdEmpresa;
 				dbEmpresa.open();
 			} else {
-				dbEmpresa.setDatabaseName(m_config->cNombreBDEmpresa);
-				dbEmpresa.setHostName(m_config->cHostBDEmpresa);
-				dbEmpresa.open(m_config->cUsuarioBDEmpresa,m_config->cPasswordBDEmpresa);
+                dbEmpresa.setDatabaseName(Configuracion_global->cNombreBDEmpresa);
+                dbEmpresa.setHostName(Configuracion_global->cHostBDEmpresa);
+                dbEmpresa.open(Configuracion_global->cUsuarioBDEmpresa,Configuracion_global->cPasswordBDEmpresa);
 
 			}
             progress.setValue(5);
             QApplication::processEvents();
 			// Abro bdmedica activa
-			QSqlDatabase dbMedica = QSqlDatabase::addDatabase(m_config->cDriverBDEmpresa,"dbmedica");
-			if (m_config->cDriverBDMedica =="QSQLITE") {
-				dbMedica.setDatabaseName(m_config->cRutaBdMedica);
-                qDebug() << "Medica:" << m_config->cRutaBdMedica;
+            QSqlDatabase dbMedica = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"dbmedica");
+            if (Configuracion_global->cDriverBDMedica =="QSQLITE") {
+                dbMedica.setDatabaseName(Configuracion_global->cRutaBdMedica);
+                qDebug() << "Medica:" << Configuracion_global->cRutaBdMedica;
 				if(!dbMedica.open())
 					QMessageBox::warning(qApp->activeWindow(),tr("ERROR DB"),tr("No se ha podido abrir la BD medica"),
 					tr("Aceptar"));
 			} else {
-				dbMedica.setDatabaseName(m_config->cNombreBDMedica);
-				dbMedica.setHostName(m_config->cHostBDMedica);
-				dbMedica.open(m_config->cUsuarioBDMedica,m_config->cPasswordBDMedica);
+                dbMedica.setDatabaseName(Configuracion_global->cNombreBDMedica);
+                dbMedica.setHostName(Configuracion_global->cHostBDMedica);
+                dbMedica.open(Configuracion_global->cUsuarioBDMedica,Configuracion_global->cPasswordBDMedica);
 			}
 			if (dbMedica.lastError().isValid())
 			{
@@ -247,11 +239,11 @@ void MainWindow::init()
 			}
             progress.setValue(6);
             //Widgets
-            frmClientes1 = new frmClientes(m_config,this);
+            frmClientes1 = new frmClientes(this);
             progress.setValue(7);
-            frmFacturas1 = new frmFacturas(m_config,this);
+            frmFacturas1 = new frmFacturas(this);
             progress.setValue(8);
-            frmArticulos1 = new FrmArticulos(m_config,this);
+            frmArticulos1 = new FrmArticulos(this);
             progress.setValue(9);
             frmProveedores1 = new frmProveedores(this);
             progress.setValue(10);
@@ -272,6 +264,7 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmPresupcli);
             ui->stackedWidget->addWidget(frmCajaMinuta);
             progress.setValue(15);
+            Configuracion_global->CargarDatos();
 			this->show();
             QApplication::processEvents();           
 		} 

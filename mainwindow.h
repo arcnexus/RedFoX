@@ -3,7 +3,7 @@
 
 #include "Auxiliares/Globlal_Include.h"
 
-#include "configuracion.h"
+//
 #include "Zona_Pacientes/frmClientes.h"
 #include "frmfacturas.h"
 #include "frmarticulos.h"
@@ -27,7 +27,6 @@ public:
     QString empresa;
     //QSqlDatabase dbConfiguracion;
     QSqlQuery QryConfiguracion;
-    Configuracion *m_config;    
 
 private slots:
 	void init();

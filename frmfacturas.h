@@ -2,7 +2,7 @@
 #define FRMFACTURAS_H
 
 #include "Auxiliares/Globlal_Include.h"
-#include "configuracion.h"
+
 #include "factura.h"
 #include "Zona_Pacientes/cliente.h"
 #include "Auxiliares/table_helper.h"
@@ -23,7 +23,7 @@ public slots:
     void DesbloquearCampos();
 
 public:
-    explicit frmFacturas(Configuracion *o_config, QWidget *parent = 0);
+    explicit frmFacturas(QWidget *parent = 0);
     ~frmFacturas();
     Factura *oFactura;
     Cliente *oCliente1;
@@ -72,7 +72,6 @@ private:
     QSqlQueryModel *ModelLin_fac;
     QHeaderView *Cabecera;
     double importe;
-    Configuracion *o_configuracion;
     Table_Helper helper;
 
 

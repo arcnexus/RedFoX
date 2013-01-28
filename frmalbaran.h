@@ -3,7 +3,7 @@
 
 #include "Auxiliares/Globlal_Include.h"
 #include "Busquedas/frmbuscarcliente.h"
-#include "configuracion.h"
+//
 #include "Auxiliares/table_helper.h"
 namespace Ui {
 class FrmAlbaran;
@@ -46,7 +46,6 @@ private slots:
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;
-    Configuracion *o_configuracion;
     QSqlQueryModel *ModelLin_alb;
     Table_Helper helper;
 };

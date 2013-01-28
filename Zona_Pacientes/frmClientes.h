@@ -5,7 +5,7 @@
 #include "Auxiliares/Globlal_Include.h"
 
 #include "Busquedas/frmbuscarpoblacion.h"
-#include "configuracion.h"
+//
 #include "frmfichapaciente.h"
 #include "cliente.h"
 #include "sqlcalls.h"
@@ -19,7 +19,7 @@ class frmClientes : public QDialog
     Q_OBJECT
 
 public:
-    explicit frmClientes(Configuracion *oConfiguracion, QWidget *parent = 0);
+    explicit frmClientes(QWidget *parent = 0);
     ~frmClientes();
     bool Altas;
 

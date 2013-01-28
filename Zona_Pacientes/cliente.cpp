@@ -1,6 +1,6 @@
 #include "cliente.h"
 
-#include "configuracion.h"
+//
 
 
 Cliente::Cliente(QObject *parent) :
@@ -399,8 +399,6 @@ void Cliente::Borrar(int id_cliente)
 
 QString Cliente::NuevoCodigoCliente()
 {
-    Configuracion *oConfig = new Configuracion();
-    oConfig->CargarDatos();
     QString cCodigo;
     QString cNum;
     int nCodigo;
@@ -416,10 +414,10 @@ QString Cliente::NuevoCodigoCliente()
    }
    if (nCodigo == 0 || nCodigo == 1) {
         cNum = "1";
-        while (cNum.length()< (oConfig->nDigitosCuentasContables - oConfig->cCuentaClientes.length()) ) {
+        while (cNum.length()< (Configuracion_global->nDigitosCuentasContables - Configuracion_global->cCuentaClientes.length()) ) {
             cNum.prepend("0");
         }
-        cCodigo = oConfig->cCuentaClientes + cNum;
+        cCodigo = Configuracion_global->cCuentaClientes + cNum;
 
 }
 

@@ -1,7 +1,7 @@
 #include "frmproveedores.h"
 #include "ui_frmproveedores.h"
 #include "proveedor.h"
-#include "configuracion.h"
+
 #include "Busquedas/frmbuscarpoblacion.h"
 
 
@@ -32,8 +32,6 @@ frmProveedores::~frmProveedores()
 }
 void frmProveedores::LLenarCampos()
 {
-    QScopedPointer<Configuracion> oConf (new Configuracion());
-    //Configuracion *oConf = new Configuracion();
     ui->txtcCodigo->setText(oProveedor->getcCodigo());
     ui->txtcProveedor->setText(oProveedor->getcProveedor());
     ui->txtcCif->setText(oProveedor->getcCif());
@@ -64,7 +62,7 @@ void frmProveedores::LLenarCampos()
         ui->txtcCodigoFormaPago->setCurrentIndex(nIndex);
 
     ui->txtdFechaUltimaCompra->setDate(oProveedor->getdFechaUltimaCompra());
-    ui->txtrAcumuladoCompras->setText(oConf->FormatoNumerico(QString::number(oProveedor->getrAcumuladoCompras(),'f',2)));
+    ui->txtrAcumuladoCompras->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->getrAcumuladoCompras(),'f',2)));
     ui->txtcEntidadBancariaProveedor->setText(oProveedor->getcEntidadBancariaProveedor());
     ui->txtcOficinaBancariaProveedor->setText(oProveedor->getcOficinaBancariaProveedor());
     ui->txtcDCProveedor->setText(oProveedor->getcDCProveedor());
@@ -74,15 +72,15 @@ void frmProveedores::LLenarCampos()
     ui->txtcDCPagoProveedor->setText(oProveedor->getcDCPagoProveedor());
     ui->txtcCuentaPagoProveedor->setText(oProveedor->getcCuentaPagoProveedor());
     ui->txtcCuentaIvaSoportado->setText(oProveedor->getcCuentaIvaSoportado());
-    ui->txtrRetencionIRPF->setText(oConf->FormatoNumerico(QString::number(oProveedor->getrRetencionIRPF(),'f',2)));
+    ui->txtrRetencionIRPF->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->getrRetencionIRPF(),'f',2)));
     ui->txtnTipoRetencionIRPF->setText(QString::number(oProveedor->getnTipoRetencion()));
     ui->txtcCuentaAplicacion->setText(oProveedor->getcCuentaAplicacion());
     ui->txtcCuentaPagos->setText(oProveedor->getcCuentaPagos());
     ui->txttComentarios->setText(oProveedor->gettComentarios());
     ui->txtnDto->setText(QString::number(oProveedor->getnDto()));
     ui->txtdFechaAlta->setDate(oProveedor->getdFechaAlta());
-    ui->txtrDeudaMaxima->setText(oConf->FormatoNumerico(QString::number(oProveedor->getrDeudaMaxima(),'f',2)));
-    ui->txtrDeudaActual->setText(oConf->FormatoNumerico(QString::number(oProveedor->getrDeudaActual(),'f',2)));
+    ui->txtrDeudaMaxima->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->getrDeudaMaxima(),'f',2)));
+    ui->txtrDeudaActual->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->getrDeudaActual(),'f',2)));
     if (oProveedor->getlRecargoEquivalencia()==1)
         ui->chklRecargoEquivalencia->setChecked(true);
     else
@@ -92,7 +90,7 @@ void frmProveedores::LLenarCampos()
     QString cOk;
     if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
             !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
-        cOk = oConf->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
+        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
                                ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
@@ -100,7 +98,7 @@ void frmProveedores::LLenarCampos()
         ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
     if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
             !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
-        cOk = oConf->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
+        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
                                ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
@@ -321,8 +319,8 @@ void frmProveedores::on_txtcPoblacion_editingFinished()
     ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
     if (ui->txtcCP->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty() and !ui->txtcCP->isReadOnly()) {
         FrmBuscarPoblacion BuscarPoblacion;
-        Configuracion *oConfig = new Configuracion();
-        oConfig->CargarDatos();
+
+        Configuracion_global->CargarDatos();
         BuscarPoblacion.setcPoblacion(ui->txtcPoblacion->text(),1);
         if(BuscarPoblacion.exec()) {
             //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
@@ -341,7 +339,7 @@ void frmProveedores::on_txtcPoblacion_editingFinished()
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
                         ui->txtcCP->setText(qPoblacion.value(1).toString());
                         ui->txtcProvincia->setText(qPoblacion.value(2).toString());
-                        ui->txtcPais->setText(oConfig->cPais);
+                        ui->txtcPais->setText(Configuracion_global->cPais);
                     }
                 }
 
@@ -356,8 +354,7 @@ void frmProveedores::on_txtcCP_editingFinished()
 {
     if (!ui->txtcCP->text().isEmpty() and ui->txtcPoblacion->text().isEmpty() and !ui->txtcCP->isReadOnly()){
         FrmBuscarPoblacion BuscarPoblacion;
-        Configuracion *oConfig = new Configuracion();
-        oConfig->CargarDatos();
+
         BuscarPoblacion.setcPoblacion(ui->txtcCP->text(),0);
         if(BuscarPoblacion.exec()) {
             int nId = BuscarPoblacion.DevolverID();
@@ -373,12 +370,11 @@ void frmProveedores::on_txtcCP_editingFinished()
                     if (qPoblacion.next()) {
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
                         ui->txtcProvincia->setText(qPoblacion.value(2).toString());
-                        ui->txtcPais->setText(oConfig->cPais);
+                        ui->txtcPais->setText(Configuracion_global->cPais);
                     }
                 }
 
             }
-            delete oConfig;
         }
     }
     ui->txtcTelefono1->setFocus();
@@ -417,124 +413,118 @@ void frmProveedores::on_btnDeshacer_clicked()
 
 void frmProveedores::on_txtcEntidadBancariaProveedor_editingFinished()
 {
-    Configuracion *oConfig = new Configuracion();
+
     QString cOk;
     if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
             !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
-        cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
+        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
                                  ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
-    delete oConfig;
 }
 
 void frmProveedores::on_txtcOficinaBancariaProveedor_editingFinished()
 {
-    Configuracion *oConfig = new Configuracion();
+
     QString cOk;
     if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
             !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
-        cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
+        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
                                  ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
-    delete oConfig;
+
 }
 
 void frmProveedores::on_txtcDCProveedor_editingFinished()
 {
-    Configuracion *oConfig = new  Configuracion();
+
     QString cOk;
     if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
             !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
-        cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
+        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
                                  ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
-    delete oConfig;
 }
 
 
 
 void frmProveedores::on_txtcCCProveedor_editingFinished()
 {
-    Configuracion *oConfig = new Configuracion();
+
     QString cOk;
     if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
             !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
-        cOk = oConfig->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
+        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
                                  ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
-    delete oConfig;
+
 }
 
 void frmProveedores::on_txtcEntidadPagoProveedor_editingFinished()
 {
-    Configuracion *oConfig = new Configuracion();
+
     QString cOk;
     if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
             !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
-        cOk = oConfig->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
+        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
                                  ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
-    delete oConfig;
+
 }
 
 void frmProveedores::on_txtcOficinaPagoProveedor_editingFinished()
 {
-    Configuracion *oConfig = new Configuracion();
+
     QString cOk;
     if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
             !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
-        cOk = oConfig->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
+        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
                                  ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
-    delete oConfig;
+
 }
 
 void frmProveedores::on_txtcDCPagoProveedor_editingFinished()
 {
-    Configuracion *oConfig = new Configuracion();
     QString cOk;
     if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
             !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
-        cOk = oConfig->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
+        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
                                  ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
-    delete oConfig;
 }
 
 void frmProveedores::on_txtcCuentaPagoProveedor_editingFinished()
 {
-    Configuracion *oConfig = new Configuracion();
     QString cOk;
     if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
             !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
-        cOk = oConfig->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
+        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
                                  ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
-    delete oConfig;
 }
 
 void frmProveedores::on_txtcCPAlmacen_editingFinished()
@@ -542,8 +532,8 @@ void frmProveedores::on_txtcCPAlmacen_editingFinished()
     if (!ui->txtcCPAlmacen->isReadOnly()) {
         if (!ui->txtcCPAlmacen->text().isEmpty() and ui->txtcPoblacionAlmacen->text().isEmpty()) {
             FrmBuscarPoblacion BuscarPoblacion;
-            Configuracion *oConfig = new Configuracion();
-            oConfig->CargarDatos();
+
+            Configuracion_global->CargarDatos();
             BuscarPoblacion.setcPoblacion(ui->txtcCPAlmacen->text(),0);
             if(BuscarPoblacion.exec()) {
                 int nId = BuscarPoblacion.DevolverID();
@@ -559,12 +549,11 @@ void frmProveedores::on_txtcCPAlmacen_editingFinished()
                         if (qPoblacion.next()) {
                             ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());
                             ui->txtcProvinciaAmacen->setText(qPoblacion.value(2).toString());
-                            ui->txtcPaisAlmacen->setText(oConfig->cPais);
+                            ui->txtcPaisAlmacen->setText(Configuracion_global->cPais);
                         }
                     }
 
                 }
-                delete oConfig;
             }
         }
         ui->txtcTelefonoAlmacen->setFocus();

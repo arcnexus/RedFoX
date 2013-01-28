@@ -1,10 +1,10 @@
 #include "frmarticulos.h"
 #include "ui_frmarticulos.h"
-#include "configuracion.h"
+//
 
 #include "Gestion_Almacen/gestion_seccionalmacen.h"
 
-FrmArticulos::FrmArticulos(Configuracion *o_config, QWidget *parent) :
+FrmArticulos::FrmArticulos(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmArticulos)
 {
@@ -12,11 +12,11 @@ FrmArticulos::FrmArticulos(Configuracion *o_config, QWidget *parent) :
     modArt = new QSqlQueryModel();
     ui->setupUi(this);
     // Cargar valores IVA
-    o_config->CargarDatos();
-    ui->cboTipoIVA->addItem(QString::number(o_config->nIVA1));
-    ui->cboTipoIVA->addItem(QString::number(o_config->nIVA2));
-    ui->cboTipoIVA->addItem(QString::number(o_config->nIVA3));
-    ui->cboTipoIVA->addItem(QString::number(o_config->nIVA4));
+    Configuracion_global->CargarDatos();
+    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA1));
+    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA2));
+    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA3));
+    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA4));
     // Control objetos
     ui->lblMensajeRecuperar->setVisible(false);
     ui->botRotarImagen90->setVisible(false);
@@ -214,9 +214,7 @@ void FrmArticulos::desbloquearCampos() {
 
 void FrmArticulos::LLenarCampos()
 {
-    Configuracion *oConfig = new Configuracion();
-    oConfig->CargarDatos();
-    ui->txtcCodigo->setText(oArticulo->getcCodigo());
+   ui->txtcCodigo->setText(oArticulo->getcCodigo());
    ui->txtcCodigoBarras->setText(oArticulo->getcCodigoBarras());
    ui->txtcCodigoFabricante->setText(oArticulo->getcCodigoFabricante());
    ui->txtcDescripcion->setText(oArticulo->getcDescripcion());
@@ -242,9 +240,9 @@ void FrmArticulos::LLenarCampos()
    int nIndex = ui->cboTipoIVA->findText(QString::number(oArticulo->getnTipoIva()));
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
-   ui->txtrCoste->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrCoste(),'f',2)));
-   ui->txtrTarifa1->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrTarifa1(),'f',2)));
-   ui->txtrTarifa1_2->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrTarifa1(),'f',2)));
+   ui->txtrCoste->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrCoste(),'f',2)));
+   ui->txtrTarifa1->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrTarifa1(),'f',2)));
+   ui->txtrTarifa1_2->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrTarifa1(),'f',2)));
    ui->txtrDto->setText(QString::number(oArticulo->getrDto(),'f',2));
    ui->txtnDtoProveedor->setText(QString::number(oArticulo->getnDtoProveedor(),'f',2));
    ui->txtnDtoProveedor2->setText(QString::number(oArticulo->getnDtoProveedor2(),'f',2));
@@ -254,13 +252,13 @@ void FrmArticulos::LLenarCampos()
    ui->txtnMargen1->setText(QString::number(oArticulo->getnMargen1(),'f',2));
    ui->txtnMargen2->setText(QString::number(oArticulo->getnMargen2(),'f',2));
    ui->txtnMargen3->setText(QString::number(oArticulo->getnMargen3(),'f',2));
-   ui->txtrPrecioMedio1->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrPrecioMedio(),'f',2)));
-   ui->txtrPrecioMedio2->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrPrecioMedio2(),'f',2)));
-   ui->txtrPrecioMedio3->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrPrecioMedio3(),'f',2)));
+   ui->txtrPrecioMedio1->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrPrecioMedio(),'f',2)));
+   ui->txtrPrecioMedio2->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrPrecioMedio2(),'f',2)));
+   ui->txtrPrecioMedio3->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrPrecioMedio3(),'f',2)));
    ui->txtnUnidadesCompradas->setText(QString::number(oArticulo->getnUnidadesCompradas()));
    ui->txtnUnidadesVendidas->setText(QString::number(oArticulo->getnUnidadesVendidas()));
-   ui->txtrAcumuladoCompras->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrAcumuladoCompras(),'f',2)));
-   ui->txtrAcumuladoVentas->setText(oConfig->FormatoNumerico(QString::number(oArticulo->getrAcumuladoVentas(),'f',2)));
+   ui->txtrAcumuladoCompras->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrAcumuladoCompras(),'f',2)));
+   ui->txtrAcumuladoVentas->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrAcumuladoVentas(),'f',2)));
    ui->txttComentario->setText(oArticulo->gettComentario());
    ui->txtnStockMaximo->setText(QString::number(oArticulo->getnStockMaximo()));
    ui->txtnStockMinimo->setText(QString::number(oArticulo->getnStockMinimo()));
@@ -288,7 +286,6 @@ void FrmArticulos::LLenarCampos()
    ui->txtcLocalizacion->setText(oArticulo->getcLocalizacion());
 //    // Recuperamos imagen desde BD
    oArticulo->CargarImagen(ui->lblImagenArticulo);
-   delete oConfig;
 }
 
 void FrmArticulos::CargarCamposEnArticulo()
@@ -500,39 +497,29 @@ void FrmArticulos::on_botDeshacer_clicked()
 
 void FrmArticulos::on_txtrTarifa1_editingFinished()
 {
-    Configuracion *oConf = new Configuracion();
-    ui->txtrTarifa1->setText( oConf->FormatoNumerico(ui->txtrTarifa1->text()));
+    ui->txtrTarifa1->setText( Configuracion_global->FormatoNumerico(ui->txtrTarifa1->text()));
     ui->txtrTarifa1_2->setText(ui->txtrTarifa1->text());
-    delete oConf;
 }
 
 void FrmArticulos::on_txtrCoste_editingFinished()
 {
-    Configuracion *oConf = new Configuracion();
-    ui->txtrCoste->setText( oConf->FormatoNumerico(ui->txtrCoste->text()));
-    delete oConf;
+    ui->txtrCoste->setText( Configuracion_global->FormatoNumerico(ui->txtrCoste->text()));
 }
 
 void FrmArticulos::on_txtrTarifa1_2_editingFinished()
 {
-    Configuracion *oConf = new Configuracion();
-    ui->txtrTarifa1_2->setText( oConf->FormatoNumerico(ui->txtrTarifa1_2->text()));
+    ui->txtrTarifa1_2->setText( Configuracion_global->FormatoNumerico(ui->txtrTarifa1_2->text()));
     ui->txtrTarifa1->setText(ui->txtrTarifa1_2->text());
-    delete oConf;
 }
 
 void FrmArticulos::on_txtrTarifa2_editingFinished()
 {
-    Configuracion *oConf = new Configuracion();
-    ui->txtrTarifa2->setText( oConf->FormatoNumerico(ui->txtrTarifa2->text()));
-    delete oConf;
+    ui->txtrTarifa2->setText( Configuracion_global->FormatoNumerico(ui->txtrTarifa2->text()));
 }
 
 void FrmArticulos::on_txtrTarifa3_editingFinished()
 {
-    Configuracion *oConf = new Configuracion();
-    ui->txtrTarifa3->setText( oConf->FormatoNumerico(ui->txtrTarifa3->text()));
-    delete oConf;
+    ui->txtrTarifa3->setText( Configuracion_global->FormatoNumerico(ui->txtrTarifa3->text()));
 }
 
 void FrmArticulos::on_botBuscarArtRapido_clicked()

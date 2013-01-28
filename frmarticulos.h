@@ -2,7 +2,7 @@
 #define FRMARTICULOS_H
 
 #include "Auxiliares/Globlal_Include.h"
-#include "configuracion.h"
+//
 #include "articulo.h"
 namespace Ui {
 class FrmArticulos;
@@ -13,7 +13,7 @@ class FrmArticulos : public QDialog
     Q_OBJECT
     
 public:
-    explicit FrmArticulos(Configuracion *o_config, QWidget *parent = 0);
+    explicit FrmArticulos(QWidget *parent = 0);
     ~FrmArticulos();
     Articulo *oArticulo;
     QSqlQueryModel *modArt;
