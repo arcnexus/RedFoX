@@ -66,7 +66,7 @@ frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     Db_table_View* searcher = new Db_table_View(this);
     searcher->set_db("empresa");
     searcher->set_table("articulos");
-
+    searcher->set_selection("cCodigo");
     searcher->setWindowTitle(tr("Articulos"));
 
     QStringList headers;
@@ -81,6 +81,7 @@ frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
         searcher->set_columnHide(i);
 
     helper.set_Searcher(searcher);
+    helper.set_Tipo(false);
     helper.help_table(ui->Lineas);
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
