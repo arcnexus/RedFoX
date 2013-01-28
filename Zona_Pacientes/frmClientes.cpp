@@ -12,7 +12,7 @@
     #define and &&
 #endif
 
-frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
+frmClientes::frmClientes(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmClientes)
 {
@@ -33,8 +33,8 @@ frmClientes::frmClientes(Configuracion *oConfiguracion,QWidget *parent) :
         ui->btnFichaPaciente->setVisible(true);
     else
         ui->btnFichaPaciente->setVisible(false);
-    oConfiguracion->CargarDatos();
-    if(oConfiguracion->nIRPF)
+    Configuracion_global->CargarDatos();
+    if(Configuracion_global->nIRPF)
         ui->chkClienteEmpresa->setVisible(true);
     else
         ui->chkClienteEmpresa->setVisible(false);
@@ -79,7 +79,6 @@ frmClientes::~frmClientes()
 }
 void frmClientes::LLenarCampos()
 {
-    Configuracion *o_Configuracion = new Configuracion();
     ui->txtcCodigoCliente->setText(oCliente->getcCodigoCliente());
     ui->txtPrimerApellido->setText(oCliente->getcApellido1());
     ui->txtSegundoApellido->setText(oCliente->getcApellido2());
@@ -115,10 +114,10 @@ void frmClientes::LLenarCampos()
     ui->txtcPaisAlmacen->setText(oCliente->RecuperarPais(oCliente->getidPaisAlmacen()));
     ui->txtdFechaAlta->setDate(oCliente->getdFechaAlta());
     ui->txtdFechaUltimaCompra->setDate(oCliente->getdFechaUltimaCompra());
-    ui->txtrImporteAcumulado->setText(o_Configuracion->FormatoNumerico(QString::number( oCliente->getrAcumuladoVentas(),'f',2)));
-    ui->txtrVentasEjercicio->setText(o_Configuracion->FormatoNumerico(QString::number(oCliente->getrVentasEjercicio(),'f',2)));
-    ui->txtrRiesgoPermitido->setText(o_Configuracion->FormatoNumerico(QString::number(oCliente->getrRiesgoMaximo(),'f',2)));
-    ui->txtrDeudaActual->setText(o_Configuracion->FormatoNumerico(QString::number(oCliente->getrDeudaActual(),'f',2)));
+    ui->txtrImporteAcumulado->setText(Configuracion_global->FormatoNumerico(QString::number( oCliente->getrAcumuladoVentas(),'f',2)));
+    ui->txtrVentasEjercicio->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->getrVentasEjercicio(),'f',2)));
+    ui->txtrRiesgoPermitido->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->getrRiesgoMaximo(),'f',2)));
+    ui->txtrDeudaActual->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->getrDeudaActual(),'f',2)));
     ui->txttComentarios->setText(oCliente->gettComentarios());
 
     if(oCliente->islBloqueado())
@@ -147,8 +146,8 @@ void frmClientes::LLenarCampos()
     ui->txtnDiaPago1->setValue(oCliente->getnDiaPago1());
     ui->txtnDiaPago2->setValue(oCliente->getnDiaPago2());
    // ui->cbonTarifaCliente->lineEdit()->setText(oCliente->getnTarifaCliente());
-    ui->txtrImporteACuenta->setText( o_Configuracion->FormatoNumerico(QString::number(oCliente->getrImporteACuenta(),'f',2)));
-    ui->txtrVales->setText(o_Configuracion->FormatoNumerico(QString::number(oCliente->getrVales(),'f',2)));
+    ui->txtrImporteACuenta->setText( Configuracion_global->FormatoNumerico(QString::number(oCliente->getrImporteACuenta(),'f',2)));
+    ui->txtrVales->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->getrVales(),'f',2)));
     ui->txtcEntidadBancaria->setText(oCliente->getcEntidadBancaria());
     ui->txtcOficinaBancaria->setText(oCliente->getcOficinaBancaria());
     ui->txtcDc->setText(oCliente->getcDC());
@@ -359,8 +358,6 @@ void frmClientes::LLenarCampos()
     Tickets->setHeaderData(3, Qt::Horizontal, QObject::tr("HORA"));
     Tickets->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
     CabeceraTic->setVisible(true);
-
-    delete o_Configuracion;
 }
 void frmClientes::VaciarCampos()
 {
@@ -1012,9 +1009,7 @@ void frmClientes::TablaDeudas_clicked(const QModelIndex &index)
 
 void frmClientes::txtrRiesgoPermitido_editingFinished()
 {
-    Configuracion *o_conf = new Configuracion;
-    ui->txtrRiesgoPermitido->setText(o_conf->FormatoNumerico(ui->txtrRiesgoPermitido->text()));
-    delete o_conf;
+    ui->txtrRiesgoPermitido->setText(Configuracion_global->FormatoNumerico(ui->txtrRiesgoPermitido->text()));
 }
 
 void frmClientes::on_btnFichaPaciente_clicked()

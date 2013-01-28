@@ -1,8 +1,14 @@
 #ifndef CONFIGURACION_H
 #define CONFIGURACION_H
 
-#include "Auxiliares/Globlal_Include.h"
-
+#include <QString>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QFileDialog>
+#include <QSettings>
+#include <QVariant>
+#include <QMessageBox>
+#include <QApplication>
 class Configuracion{
 
 public:

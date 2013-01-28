@@ -1,6 +1,6 @@
 #include "proveedor.h"
 
-#include "configuracion.h"
+
 
 Proveedor::Proveedor(QObject *parent) :
     QObject(parent)
@@ -344,8 +344,6 @@ void Proveedor::Borrar(int nId)
 
 QString Proveedor::NuevoCodigoProveedor()
 {
-    Configuracion *oConfig = new Configuracion();
-    oConfig->CargarDatos();
     QString cCodigo;
     QString cNum;
     int nCodigo;
@@ -362,10 +360,10 @@ QString Proveedor::NuevoCodigoProveedor()
    }
    if (nCodigo == 0 || nCodigo == 1) {
         cNum = "1";
-        while (cNum.length()< (oConfig->nDigitosCuentasContables - oConfig->cCuentaProveedores.length()) ) {
+        while (cNum.length()< (Configuracion_global->nDigitosCuentasContables - Configuracion_global->cCuentaProveedores.length()) ) {
             cNum.prepend("0");
         }
-        cCodigo = oConfig->cCuentaProveedores + cNum;
+        cCodigo = Configuracion_global->cCuentaProveedores + cNum;
     }
    return cCodigo;
 }

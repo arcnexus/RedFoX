@@ -3,13 +3,13 @@
 
 #include "mainwindow.h"
 
-#include "configuracion.h"
+
 
 #include "Zona_Administrador/frmempresas.h"
 #include "Zona_Administrador/arearestringida_form.h"
 
 
-Login::Login(Configuracion *m_config,QWidget *parent) :
+Login::Login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Login)
 {

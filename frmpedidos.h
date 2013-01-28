@@ -2,7 +2,7 @@
 #define FRMPEDIDOS_H
 
 #include "Auxiliares/Globlal_Include.h"
-#include "configuracion.h"
+
 #include "pedidos.h"
 #include "Zona_Pacientes/cliente.h"
 #include "Auxiliares/table_helper.h"
@@ -39,7 +39,7 @@ private slots:
     void totalChanged(QString total);
 private:
     Ui::frmPedidos *ui;
-    Configuracion *o_configuracion;
+
     QSqlQueryModel *ModelLin_ped;
 
     void lineasVentas();

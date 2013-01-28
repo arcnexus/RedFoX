@@ -690,7 +690,11 @@ void FrmFichaPaciente::llenarhistorialvisitas()
         QSqlRecord rVisitas = qVisitas.record();
         qDoctores.prepare("select nombre from doctores where id =:nId");
 
+<<<<<<< HEAD
         ui->txtFechaHoraVisita->setDateTime(rVisitas.field("fechahora").value().toDateTime());
+=======
+        ui->txtFechaHoraVisita->setDate(rVisitas.field("fechahora").value().toDate());
+>>>>>>> 5085864d96179fa310fb8184abd85c171648384d
 
         int nIndex = ui->cboRealizadaPorDr->findText(rVisitas.field("doctor").value().toString());
         if(nIndex >-1)

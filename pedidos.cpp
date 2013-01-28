@@ -1,5 +1,5 @@
 #include "pedidos.h"
-#include "configuracion.h"
+
 
 Pedidos::Pedidos()
 {
@@ -13,18 +13,18 @@ Pedidos::~Pedidos()
         delete cab_ped;
 }
 void Pedidos::AnadirPedido() {
-    Configuracion *oConf =  new Configuracion();
-    oConf->CargarDatos();
-    this->nPorcentajeIVA1 = oConf->nIVA1;
-    this->nPorcentajeIVA2 = oConf->nIVA2;
-    this->nPorcentajeIVA3 = oConf->nIVA3;
-    this->nPorcentajeIVA4 = oConf->nIVA4 ;
-    this->nRec1 = oConf->nRE1;
-    this->nRec2 = oConf->nRE2;
-    this->nRec3 = oConf->nRE3;
-    this->nRec4 = oConf->nRE4;
+
+
+    this->nPorcentajeIVA1 = Configuracion_global->nIVA1;
+    this->nPorcentajeIVA2 = Configuracion_global->nIVA2;
+    this->nPorcentajeIVA3 = Configuracion_global->nIVA3;
+    this->nPorcentajeIVA4 = Configuracion_global->nIVA4 ;
+    this->nRec1 = Configuracion_global->nRE1;
+    this->nRec2 = Configuracion_global->nRE2;
+    this->nRec3 = Configuracion_global->nRE3;
+    this->nRec4 = Configuracion_global->nRE4;
     this->lRecargoEquivalencia = 0;
-    delete oConf;
+
     QSqlQuery cab_ped(QSqlDatabase::database("empresa"));
      cab_ped.prepare("INSERT INTO ped_cli (nPedido,nPorcentajeIva1,nPorcentajeIva2,nPorcentajeIva3,nPorcentajeIva4,"
                      "nPorcentajeRecargoEq1,nPorcentajeRecargoEq2,nPorcentajeRecargoEq3,nPorcentajeRecargoEq4)"
@@ -470,9 +470,7 @@ void Pedidos::BorrarLineaPedido(int id_lin)
 
 void Pedidos::calcularPedido()
 {
-QScopedPointer<Configuracion>o_config (new Configuracion());
-//Configuracion *o_config = new Configuracion();
-o_config->CargarDatos();
+Configuracion_global->CargarDatos();
 // Reseteo valores
 this->rSubtotal = 0;
 this->rImporteDescuento =0;

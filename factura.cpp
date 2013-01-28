@@ -1,6 +1,6 @@
 #include "factura.h"
 
-#include "configuracion.h"
+//
 
 #ifdef WIN32
     #define and &&
@@ -15,14 +15,12 @@ Factura::Factura(QObject *parent) :
 
 // Metodos utilidad Clase
 void Factura::AnadirFactura() {
-    Configuracion *oConf =  new Configuracion();
-    oConf->CargarDatos();
-    this->nPorcentajeIVA1 = oConf->nIVA1;
-    this->nPorcentajeIVA2 = oConf->nIVA2;
-    this->nPorcentajeIVA3 = oConf->nIVA3;
-    this->nPorcentajeIVA4 = oConf->nIVA4 ;
+
+    this->nPorcentajeIVA1 = Configuracion_global->nIVA1;
+    this->nPorcentajeIVA2 = Configuracion_global->nIVA2;
+    this->nPorcentajeIVA3 = Configuracion_global->nIVA3;
+    this->nPorcentajeIVA4 = Configuracion_global->nIVA4 ;
     this->lRecargoEquivalencia = 0;
-    delete oConf;
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
      cab_fac.prepare("INSERT INTO cab_fac (cCodigoCliente,cFactura,dFecha,dFechaCobro,iId_Cliente,cCliente,cDireccion,cDireccion2,"
                    "cCp,cPoblacion,cProvincia,cPais,cCif,lRecargoEquivalencia,rSubtotal,nDto,nDtoPP,rImporteDescuento,rImporteDescuentoPP,"
@@ -279,7 +277,7 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
                     Deudacliente.bindValue(":id_cliente",record.field("Id").value().toInt());
                     Deudacliente.bindValue(":dFecha",QDate::currentDate());
                     Deudacliente.bindValue(":dVencimiento",QDate::currentDate());
-                    // TODO Deudacliente->bindValue(":dVencimiento",oConf->CalcularVencimiento());
+                    // TODO Deudacliente->bindValue(":dVencimiento",Configuracion_global->CalcularVencimiento());
                     Deudacliente.bindValue(":cDocumento",this->cFactura);
                     Deudacliente.bindValue(":id_tiquet",0);
                     Deudacliente.bindValue(":id_factura",nId_Factura);
@@ -404,28 +402,24 @@ QString Factura::NuevoNumeroFactura() {
     QString cNum,cSerie;
     QString cNumFac;
     int inum;
-    Configuracion *oConfig = new Configuracion();
-    oConfig->CargarDatos();
+
     cab_fac.prepare("Select cFactura from cab_fac  where cFactura <> '"+QObject::tr("BORRADOR")+"' order by cFactura desc limit 1");
     if(cab_fac.exec()) {
         cab_fac.next();
         cNumFac = cab_fac.value(0).toString();
-        cNum = cNumFac.right(oConfig->nDigitosFactura);
-        cSerie = oConfig->cSerie;
+        cNum = cNumFac.right(Configuracion_global->nDigitosFactura);
+        cSerie = Configuracion_global->cSerie;
         inum = cNum.toInt();
         inum++;
         cNum = cNum.number(inum);
-        while (cNum.length()< oConfig->nDigitosFactura) {
+        while (cNum.length()< Configuracion_global->nDigitosFactura) {
             cNum.prepend("0");
         }
     } else {
          QMessageBox::critical(qApp->activeWindow(), "error:", cab_fac.lastError().text());
     }
-    delete oConfig;
     cNumFac = cSerie + cNum;
     return cNumFac;
-
-
 }
 
 void Factura::AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
@@ -580,8 +574,6 @@ void Factura::BorrarLineaFactura(int id_lin)
 
 void Factura::calcularFactura()
 {
-    Configuracion *o_config = new Configuracion();
-    o_config->CargarDatos();
     // Reseteo valores
     this->rSubtotal = 0;
     this->rImporteDescuento =0;
@@ -642,14 +634,14 @@ void Factura::calcularFactura()
 
             }
             this->rImporteIva =  (this->rIVA1 +  this->rIVA2 + this->rIVA3 + this->rIVA4);
-            if (o_config->lProfesional==1 and this->nIRPF != 0)
+            if (Configuracion_global->lProfesional==1 and this->nIRPF != 0)
                 this->rTotal = this->rBase - this->rImporteIRPF + this->rImporteIva;
             else
                 this->rTotal = this->rBase + this->rImporteIva;
         }
     }
     delete Qlin_fac;
-    delete o_config;
+
 }
 
 void Factura::CobrarFactura()

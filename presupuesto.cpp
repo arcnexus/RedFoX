@@ -1,5 +1,5 @@
 #include "presupuesto.h"
-#include "configuracion.h"
+
 
 Presupuesto::Presupuesto()
 {
@@ -15,18 +15,15 @@ Presupuesto::~Presupuesto()
 
 void Presupuesto::AnadirPresupuesto()
 {
-    Configuracion *oConf =  new Configuracion();
-    oConf->CargarDatos();
-    this->nIva1 = oConf->nIVA1;
-    this->nIva2 = oConf->nIVA2;
-    this->nIva3 = oConf->nIVA3;
-    this->nIva4 = oConf->nIVA4 ;
-    this->nRecargoEquivalencia1 = oConf->nRE1;
-    this->nRecargoEquivalencia2 = oConf->nRE2;
-    this->nRecargoEquivalencia3 = oConf->nRE3;
-    this->nRecargoEquivalencia4 = oConf->nRE4;
+    this->nIva1 = Configuracion_global->nIVA1;
+    this->nIva2 = Configuracion_global->nIVA2;
+    this->nIva3 = Configuracion_global->nIVA3;
+    this->nIva4 = Configuracion_global->nIVA4 ;
+    this->nRecargoEquivalencia1 = Configuracion_global->nRE1;
+    this->nRecargoEquivalencia2 = Configuracion_global->nRE2;
+    this->nRecargoEquivalencia3 = Configuracion_global->nRE3;
+    this->nRecargoEquivalencia4 = Configuracion_global->nRE4;
 
-    delete oConf;
     QSqlQuery cab_pre(QSqlDatabase::database("empresa"));
      cab_pre.prepare("INSERT INTO  cab_pre (nPresupuesto,nIva1,nIva2,nIva3,nIva4,"
                      "nRecargoEquivalencia1,nRecargoEquivalencia2,nRecargoEquivalencia3,nRecargoEquivalencia4)"
@@ -511,8 +508,6 @@ void Presupuesto::BorrarLineaPresupuesto(int id_lin)
 
 void Presupuesto::calcularPresupuesto()
 {
-    Configuracion *o_config = new Configuracion();
-    o_config->CargarDatos();
     // Reseteo valores
     this->rSubTotal = 0;
     this->rDescuento =0;
