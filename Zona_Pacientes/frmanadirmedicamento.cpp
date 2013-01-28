@@ -1,41 +1,7 @@
 #include "frmanadirmedicamento.h"
 #include "ui_frmanadirmedicamento.h"
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QUrl>
-#include <QDebug>
-#include <QXmlStreamReader>
-#include <QtSql>
+
 #include "vademecum.h"
-#include <QDomDocument>
-#include <QDomElement>
-#include <QStandardItemModel>
-#include <QtWebKit>
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-#include <QtWebKitWidgets/QWebView>
-#else
-#include <QWebView>
-#endif
-
-#include "qwebkitglobal.h"
-//#include "qwebpage.h"
-
-
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-    #include <QtWidgets/qwidget.h>
-    #include <QtWebKitWidgets/QWebPage>
-#else
-    #include <QtGui/qwidget.h>
-    #include <QWebPage>
-#endif
-
-#include <QtGui/qicon.h>
-#include <QtGui/qpainter.h>
-#include <QtCore/qurl.h>
-#include <QtNetwork/qnetworkaccessmanager.h>
 
 FrmAnadirMedicamento::FrmAnadirMedicamento(QWidget *parent) :
     QDialog(parent),

@@ -1,9 +1,8 @@
 #ifndef FRMPEDIDOS_H
 #define FRMPEDIDOS_H
 
-#include <QDialog>
+#include "Auxiliares/Globlal_Include.h"
 #include "configuracion.h"
-# include <QSqlQueryModel>
 #include "pedidos.h"
 #include "Zona_Pacientes/cliente.h"
 #include "Auxiliares/table_helper.h"

@@ -1,7 +1,6 @@
 #include "gestion_seccionalmacen.h"
 #include "ui_gestion_seccionalmacen.h"
-#include <QDebug>
-#include <QSqlError>
+
 gestion_SeccionAlmacen::gestion_SeccionAlmacen(QWidget *parent,  QString tabla, int tipo ) :
     QDialog(parent),
     ui(new Ui::gestion_SeccionAlmacen)

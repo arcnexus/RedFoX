@@ -1,11 +1,6 @@
 #include "arearestringida_form.h"
 #include "ui_arearestringida_form.h"
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QSqlRecord>
-#include <QSqlField>
-#include <QMessageBox>
-#include <QSettings>
+
 AreaRestringida_form::AreaRestringida_form(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AreaRestringida_form)

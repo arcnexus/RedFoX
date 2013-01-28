@@ -1,15 +1,12 @@
 #include "frmempresas.h"
 #include "ui_frmempresas.h"
-#include <QtSql>
-#include <QSqlDatabase>
-#include<QSqlQuery>
-#include <QMessageBox>
+
 #include "Busquedas/frmbuscarpoblacion.h"
-#include <QFileDialog>
-#include <QApplication>
+
 #ifdef WIN32
     #define and &&
 #endif
+
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmEmpresas)

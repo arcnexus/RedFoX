@@ -2,17 +2,6 @@
 #include "ui_frmarticulos.h"
 #include "configuracion.h"
 
-#include <QMessageBox>
-#include <QSqlQuery>
-#include <QSqlDatabase>
-
-#include <QSqlRecord>
-#include <QString>
-#include <QPixmap>
-#include <QtGui>
-#include <QListView>
-
-
 #include "Gestion_Almacen/gestion_seccionalmacen.h"
 
 FrmArticulos::FrmArticulos(Configuracion *o_config, QWidget *parent) :

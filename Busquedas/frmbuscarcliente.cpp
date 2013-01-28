@@ -1,15 +1,8 @@
 #include "frmbuscarcliente.h"
 #include "ui_frmbuscarcliente.h"
-#include <QSqlDatabase>
-#include <QtSql>
-#include <QErrorMessage>
-#include<QSqlError>
-#include "Zona_Pacientes/cliente.h"
-#include<QDate>
-#include <QSqlQueryModel>
-#include <QDebug>
 
-//NOTE - TheFox :: Revisado
+#include "Zona_Pacientes/cliente.h"
+
 FrmBuscarCliente::FrmBuscarCliente(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmBuscarCliente)

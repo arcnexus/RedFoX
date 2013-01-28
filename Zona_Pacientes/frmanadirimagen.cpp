@@ -1,9 +1,8 @@
 #include "frmanadirimagen.h"
 #include "ui_frmanadirimagen.h"
-#include <QDebug>
-#include <QFileDialog>
+
 #include "imagenesdiagnostico.h"
-#include <QtSql>
+
 
 ImagenesDiagnostico *oImagenesDiagnostico = new ImagenesDiagnostico(NULL);
 

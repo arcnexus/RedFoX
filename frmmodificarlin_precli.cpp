@@ -3,9 +3,7 @@
 #include "presupuesto.h"
 #include "articulo.h"
 #include "configuracion.h"
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlField>
+
 
 FrmModificarLin_precli::FrmModificarLin_precli(QWidget *parent) :
     QDialog(parent),

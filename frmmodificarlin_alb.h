@@ -1,7 +1,7 @@
 #ifndef FRMMODIFICARLIN_ALB_H
 #define FRMMODIFICARLIN_ALB_H
 
-#include <QDialog>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmModificarLin_alb;

@@ -1,7 +1,7 @@
 #ifndef AREARESTRINGIDA_FORM_H
 #define AREARESTRINGIDA_FORM_H
 
-#include <QDialog>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class AreaRestringida_form;

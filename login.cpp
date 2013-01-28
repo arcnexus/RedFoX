@@ -1,20 +1,13 @@
 #include "login.h"
 #include "ui_login.h"
-#include <QSqlDatabase>
-#include <QtSql>
-#include <QErrorMessage>
-#include <QMessageBox>
-#include<QSqlError>
+
 #include "mainwindow.h"
-#include <QDir>
-#include <QDebug>
+
 #include "configuracion.h"
-#include <QSqlRecord>
-#include <QSqlField>
+
 #include "Zona_Administrador/frmempresas.h"
 #include "Zona_Administrador/arearestringida_form.h"
 
-#include <QtCore/QTimer>
 
 Login::Login(Configuracion *m_config,QWidget *parent) :
     QDialog(parent),

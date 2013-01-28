@@ -1,6 +1,5 @@
 #include "table_helper.h"
-#include <QDebug>
-#include <QSqlError>
+
 Table_Helper::Table_Helper(QObject *parent) :
     QObject(parent)
 {

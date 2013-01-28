@@ -1,8 +1,7 @@
 #ifndef FRMANADIRIMAGEN_H
 #define FRMANADIRIMAGEN_H
 
-#include <QWidget>
-#include <QDialog>
+#include "Auxiliares/Globlal_Include.h"
 namespace Ui {
 class FrmAnadirImagen;
 }

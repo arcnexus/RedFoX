@@ -1,11 +1,7 @@
 #ifndef FACTURA_H
 #define FACTURA_H
 
-#include <QObject>
-#include <QDate>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QMessageBox>
+#include "Auxiliares/Globlal_Include.h"
 
 class Factura : public QObject
 {

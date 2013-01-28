@@ -2,17 +2,13 @@
 #define FRMCLIENTES_H
 
 
-#include <QDialog>
-#include <QtCore>
-#include <QtGui>
-#include <QtSql>
+#include "Auxiliares/Globlal_Include.h"
+
 #include "Busquedas/frmbuscarpoblacion.h"
 #include "configuracion.h"
 #include "frmfichapaciente.h"
 #include "cliente.h"
 #include "sqlcalls.h"
-
-
 
 namespace Ui {
 class frmClientes;

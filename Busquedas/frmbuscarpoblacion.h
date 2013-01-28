@@ -1,10 +1,7 @@
 #ifndef FRMBUSCARPOBLACION_H
 #define FRMBUSCARPOBLACION_H
 
-#include <QDialog>
-#include <QSqlQueryModel>
-#include <QHeaderView>
-#include <QMessageBox>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmBuscarPoblacion;

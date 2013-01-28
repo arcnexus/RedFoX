@@ -1,11 +1,5 @@
 #include "articulo.h"
-#include <QtSql>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QMessageBox>
-#include <QByteArray>
-#include <QApplication>
+
 Articulo::Articulo()
 {
 

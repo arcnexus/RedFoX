@@ -1,12 +1,5 @@
 #include "analitica.h"
-#include <QtSql>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlError>
-#include <QMessageBox>
-#include <QDebug>
-#include <QInputDialog>
-#include <QApplication>
+
 Analitica::Analitica(QObject *parent) :
     QObject(parent)
 {

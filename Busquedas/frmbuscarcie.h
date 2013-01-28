@@ -1,8 +1,7 @@
 #ifndef FRMBUSCARCIE_H
 #define FRMBUSCARCIE_H
 
-#include <QDialog>
-#include <QNetworkReply>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmBuscarCIE;

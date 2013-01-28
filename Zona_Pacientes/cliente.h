@@ -1,10 +1,7 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
 
-#include <QObject>
-#include <QDate>
-#include <QtSql>
-#include <QSqlQueryModel>
+#include "Auxiliares/Globlal_Include.h"
 
 class Cliente : public QObject
 {

@@ -1,8 +1,7 @@
 #ifndef FARMACOLOGIA_H
 #define FARMACOLOGIA_H
 
-#include <QString>
-#include <QDate>
+#include "Auxiliares/Globlal_Include.h"
 
 class Farmacologia
 {

@@ -1,7 +1,7 @@
 #ifndef FRMPROVEEDORES_H
 #define FRMPROVEEDORES_H
 
-#include <QDialog>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class frmProveedores;

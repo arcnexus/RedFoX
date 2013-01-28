@@ -1,24 +1,11 @@
 #include "frmfacturas.h"
 #include "ui_frmfacturas.h"
-
-#include <QSqlDatabase>
-#include <QtSql>
-#include <QErrorMessage>
-#include<QSqlError>
-#include<QDate>
-#include <QSqlQueryModel>
-#include <QDebug>
 #include "Busquedas/frmbuscarcliente.h"
 #include "Busquedas/frmBuscarFactura.h"
-#include <QTableView>
-#include <QHeaderView>
+
 #include "articulo.h"
 
 #include "frmmodificarlin_fac.h"
-
-
-
-
 
 frmFacturas::frmFacturas(Configuracion *o_config, QWidget *parent) :
     QDialog(parent),

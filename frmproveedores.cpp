@@ -3,7 +3,7 @@
 #include "proveedor.h"
 #include "configuracion.h"
 #include "Busquedas/frmbuscarpoblacion.h"
-#include <QDebug>
+
 
 #ifdef WIN32
 #define and &&

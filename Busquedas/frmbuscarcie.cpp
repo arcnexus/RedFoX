@@ -1,8 +1,7 @@
 #include "frmbuscarcie.h"
 #include "ui_frmbuscarcie.h"
-#include <QSettings>
-#include <QNetworkAccessManager>
-# include <QDomDocument>
+
+
 
 FrmBuscarCIE::FrmBuscarCIE(QWidget *parent) :
     QDialog(parent),

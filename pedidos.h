@@ -1,9 +1,6 @@
 #ifndef PEDIDOS_H
 #define PEDIDOS_H
-#include <QDate>
-#include<QString>
-#include <QSqlDatabase>
-#include <QSqlQuery>
+#include "Auxiliares/Globlal_Include.h"
 
 class Pedidos
 {

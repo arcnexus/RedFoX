@@ -1,12 +1,8 @@
 #ifndef FRMARTICULOS_H
 #define FRMARTICULOS_H
 
-#include <QDialog>
-#include <QtSql>
+#include "Auxiliares/Globlal_Include.h"
 #include "configuracion.h"
-#include <QToolButton>
-#include <QListWidget>
-#include <QGridLayout>
 #include "articulo.h"
 namespace Ui {
 class FrmArticulos;

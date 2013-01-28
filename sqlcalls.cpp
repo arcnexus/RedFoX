@@ -1,9 +1,5 @@
 #include "sqlcalls.h"
-#include <QMessageBox>
-#include <QDebug>
-#include <QtSql>
-#include <QStringList>
-#include <QApplication>
+
 static const QString queryPaciente = "SELECT * FROM pacientes WHERE IdCliente = :idCliente";
 
 SqlCalls::SqlCalls(QObject *parent) :

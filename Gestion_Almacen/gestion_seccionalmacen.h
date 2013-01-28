@@ -1,12 +1,7 @@
 #ifndef GESTION_SECCIONALMACEN_H
 #define GESTION_SECCIONALMACEN_H
 
-#include <QDialog>
-#include <QSqlQuery>
-#include <QSqlRelationalTableModel>
-#include <QSqlRelationalDelegate>
-#include <QSqlDatabase>
-#include <QSqlRecord>
+#include "Auxiliares/Globlal_Include.h"
 namespace Ui {
 class gestion_SeccionAlmacen;
 }

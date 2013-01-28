@@ -1,17 +1,8 @@
 #ifndef FRMANADIRMEDICAMENTO_H
 #define FRMANADIRMEDICAMENTO_H
 
-#include <QDialog>
-#include <QWidget>
-#include <QNetworkReply>
-#include <QXmlStreamAttributes>
-#include <QStringList>
+#include "Auxiliares/Globlal_Include.h"
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-#include <QtWebKitWidgets/QWebView>
-#else
-#include <QWebView>
-#endif
 namespace Ui {
 class FrmAnadirMedicamento;
 }
@@ -26,10 +17,6 @@ public:
     int idMedicamento;
     QString cRetMedicamento;
     QStringList cMedicList;
-
-
-
-
 
 signals:
     void datos(int, QString,QString);

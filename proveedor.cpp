@@ -1,12 +1,7 @@
 #include "proveedor.h"
-#include<QtSql>
-#include<QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QMessageBox>
+
 #include "configuracion.h"
-#include <QScopedPointer>
-#include <QApplication>
+
 Proveedor::Proveedor(QObject *parent) :
     QObject(parent)
 {

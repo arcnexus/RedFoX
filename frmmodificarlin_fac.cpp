@@ -3,8 +3,7 @@
 #include "configuracion.h"
 #include  "articulo.h"
 #include "factura.h"
-#include <QSqlRecord>
-#include <QSqlField>
+
 
 frmModificarLin_fac::frmModificarLin_fac(QWidget *parent) :
     QDialog(parent),

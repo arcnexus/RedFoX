@@ -1,8 +1,5 @@
 #include "frmanalitica2.h"
 #include "ui_frmanalitica2.h"
-#include <QtSql>
-#include <QSqlQuery>
-#include <QSqlRecord>
 #include "analitica.h"
 
 Frmanalitica2::Frmanalitica2(QWidget *parent) :

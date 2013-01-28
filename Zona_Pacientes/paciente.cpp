@@ -1,11 +1,7 @@
 #include "paciente.h"
 #include "sqlcalls.h"
-#include <QtSql>
-#include <QSqlRecord>
-#include <QMessageBox>
-#include <QDebug>
 #include"episodio.h"
-#include <QApplication>
+
 Paciente::Paciente()
 {
     qepisodio=0;

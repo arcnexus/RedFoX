@@ -1,7 +1,7 @@
 #ifndef FRMANALITICA_H
 #define FRMANALITICA_H
 
-#include <QDialog>
+#include "Auxiliares/Globlal_Include.h"
 #include "analitica.h"
 
 namespace Ui {

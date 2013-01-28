@@ -1,10 +1,7 @@
 #ifndef PRESUPUESTO_H
 #define PRESUPUESTO_H
 
-#include <QDate>
-#include<QString>
-#include <QSqlDatabase>
-#include <QSqlQuery>
+#include "Auxiliares/Globlal_Include.h"
 
 class Presupuesto
 {

@@ -1,13 +1,7 @@
 #include "factura.h"
-#include <QSqlQuery>
-#include <QSqlDatabase>
-#include <QtSql>
-#include <QSqlRecord>
-#include <QErrorMessage>
-#include <QMessageBox>
-#include <QDebug>
+
 #include "configuracion.h"
-#include <QApplication>
+
 #ifdef WIN32
     #define and &&
 #endif

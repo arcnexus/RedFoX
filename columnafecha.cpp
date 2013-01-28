@@ -6,8 +6,7 @@
  */
 
 #include "columnafecha.h"
-#include <QStyleOptionViewItem>
-#include <QDate>
+
 
 ColumnaFecha::ColumnaFecha()
     {

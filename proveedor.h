@@ -1,9 +1,7 @@
 #ifndef PROVEEDOR_H
 #define PROVEEDOR_H
 
-#include <QObject>
-#include <QString>
-#include <QDate>
+#include "Auxiliares/Globlal_Include.h"
 
 class Proveedor : public QObject
 {

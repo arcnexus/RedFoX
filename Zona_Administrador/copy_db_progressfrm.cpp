@@ -1,6 +1,6 @@
 #include "copy_db_progressfrm.h"
 #include "ui_copy_db_progressfrm.h"
-#include <QApplication>
+
 copy_db_progressFrm::copy_db_progressFrm(QWidget *parent, int barras) :
     QDialog(parent),
     ui(new Ui::copy_db_progressFrm)

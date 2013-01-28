@@ -1,8 +1,5 @@
 #include "interconsulta.h"
-#include <QtSql>
-#include <QSqlQuery>
-#include <QMessageBox>
-#include <QApplication>
+
 Interconsulta::Interconsulta(QObject *parent) :
     QObject(parent)
 {

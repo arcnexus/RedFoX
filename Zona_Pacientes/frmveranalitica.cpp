@@ -1,12 +1,8 @@
 #include "frmveranalitica.h"
 #include "ui_frmveranalitica.h"
-#include <QtSql>
-#include <QDebug>
-#include <QSqlQuery>
-#include <QSqlRecord>
 #include "analitica.h"
 #include "frmanalitica.h"
-#include <QDate>
+
 
 FrmVerAnalitica::FrmVerAnalitica(QWidget *parent) :
     QDialog(parent),

@@ -1,9 +1,8 @@
 #ifndef EPISODIO_H
 #define EPISODIO_H
-#include <QDate>
-#include <QString>
-#include <QtSql>
-#include <QObject>
+
+#include "Auxiliares/Globlal_Include.h"
+
 class Episodio : public QObject
 {
     Q_OBJECT

@@ -1,7 +1,6 @@
 #include "db_table_view.h"
 #include "ui_db_table_view.h"
-#include <QDebug>
-#include <QSqlError>
+
 Db_table_View::Db_table_View(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Db_table_View)

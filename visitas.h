@@ -1,8 +1,7 @@
 #ifndef VISITAS_H
 #define VISITAS_H
 
-#include <QObject>
-#include <QDateTime>
+#include "Auxiliares/Globlal_Include.h"
 
 class Visitas : public QObject
 {

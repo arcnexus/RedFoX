@@ -151,7 +151,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/table_helper.h \
     Auxiliares/readonlydelegate.h \
     Auxiliares/spinboxdelegate.h \
-    Auxiliares/searchdelegate.h
+    Auxiliares/searchdelegate.h \
+    Auxiliares/Globlal_Include.h
 
 FORMS    += mainwindow.ui \
     Zona_Pacientes/frmClientes.ui \

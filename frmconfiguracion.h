@@ -1,8 +1,8 @@
 #ifndef FRMCONFIGURACION_H
 #define FRMCONFIGURACION_H
 
-#include <QDialog>
-#include <QSettings>
+#include "Auxiliares/Globlal_Include.h"
+
 
 namespace Ui {
 class FrmConfiguracion;

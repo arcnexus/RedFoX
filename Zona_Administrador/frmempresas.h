@@ -1,7 +1,8 @@
 #ifndef FRMEMPRESAS_H
 #define FRMEMPRESAS_H
 
-#include <QDialog>
+#include "Auxiliares/Globlal_Include.h"
+
 #include "empresa.h"
 #include "copy_db_progressfrm.h"
 namespace Ui {

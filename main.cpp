@@ -19,19 +19,7 @@
 
 
 #include "mainwindow.h"
-#include <qsql.h>
-#include <QSqlDatabase>
-#include <QMessageBox>
-#include <QTextCodec>
-#include <QtSql>
-//#include <QWindowsStyle>
-#include <QStyleFactory>
-#include <QApplication>
 
-#include <QInputDialog>
-//NOTE - TheFox :: Archivo Revisado
-
-//--
 int main(int argc, char *argv[])
 {
     qDebug() << "drivers: "<< QSqlDatabase::drivers();

@@ -1,7 +1,5 @@
 #include "frmconfiguracion.h"
 #include "ui_frmconfiguracion.h"
-#include <QSettings>
-#include <QMessageBox>
 
 FrmConfiguracion::FrmConfiguracion(QWidget *parent) :
     QDialog(parent),

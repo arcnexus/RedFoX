@@ -5,9 +5,6 @@
 #include "articulo.h"
 #include "frmmodificarlin_ped.h"
 #include "Busquedas/frmbuscarcliente.h"
-#include <QMessageBox>
-
-
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
     QDialog(parent),

@@ -1,9 +1,7 @@
 #ifndef FRMVERANALITICA_H
 #define FRMVERANALITICA_H
 
-#include <QDialog>
-#include <QTableWidgetItem>
-#include <QDate>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmVerAnalitica;

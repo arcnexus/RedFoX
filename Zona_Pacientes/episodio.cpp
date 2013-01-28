@@ -1,9 +1,6 @@
 #include "episodio.h"
 #include "sqlcalls.h"
-#include <QMessageBox>
-#include <QApplication>
-#include <qsql.h>
-#include<QSqlRecord>
+
 Episodio::Episodio(QObject *parent) : QObject(parent)
 {
 }

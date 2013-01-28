@@ -1,7 +1,7 @@
 #ifndef FRMAGENDAVISITAS_H
 #define FRMAGENDAVISITAS_H
 
-#include <QDialog>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class frmAgendaVisitas;

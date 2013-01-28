@@ -1,12 +1,7 @@
 #ifndef DB_TABLE_VIEW_H
 #define DB_TABLE_VIEW_H
 
-#include <QDialog>
-#include <QSqlQuery>
-#include <QSqlRelationalTableModel>
-#include <QSqlRelationalDelegate>
-#include <QSqlDatabase>
-#include <QSqlRecord>
+#include "Auxiliares/Globlal_Include.h"
 namespace Ui {
 class Db_table_View;
 }

@@ -1,7 +1,5 @@
 #include "frmagendavisitas.h"
 #include "ui_frmagendavisitas.h"
-#include "QtSql"
-
 
 frmAgendaVisitas::frmAgendaVisitas(QWidget *parent) :
     QDialog(parent),

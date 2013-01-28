@@ -14,20 +14,18 @@
 #include "sqlcalls.h"
 #include "paciente.h"
 #include "episodio.h"
-#include <QMessageBox>
 #include "frmanadirmedicamento.h"
 #include "vademecum.h"
 #include "Busquedas/frmbuscarcie.h"
 #include "farmacologia.h"
 #include "frminformacionfarmaco.h"
 #include "frmanadirimagen.h"
-#include <QDesktopWidget>
 #include "frmvisitas.h"
 #include "interconsulta.h"
 #include "frmanalitica.h"
 #include "analitica.h"
 #include "frmveranalitica.h"
-#include <QInputDialog>
+
 
 //TODO integrar http://doc.ginkgo-cadx.com/ginkgo-integration/ginkgo-cadx-integration-input-xml-integration/
 

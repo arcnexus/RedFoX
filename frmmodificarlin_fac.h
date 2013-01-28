@@ -1,8 +1,7 @@
 #ifndef FRMMODIFICARLIN_FAC_H
 #define FRMMODIFICARLIN_FAC_H
 
-#include <QDialog>
-#include <QSqlRecord>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class frmModificarLin_fac;

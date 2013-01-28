@@ -1,11 +1,7 @@
 #ifndef FRMPRESUPUESTOSCLI_H
 #define FRMPRESUPUESTOSCLI_H
 
-#include <QDialog>
-#include <QSqlQueryModel>
-#include <QSortFilterProxyModel>
-#include <QTableView>
-#include <QSqlQueryModel>
+#include "Auxiliares/Globlal_Include.h"
 #include "presupuesto.h"
 #include "Zona_Pacientes/cliente.h"
 

@@ -1,10 +1,9 @@
 #ifndef PACIENTE_H
 #define PACIENTE_H
-#include <QtSql>
-#include <QString>
-#include <QDate>
-#include "episodio.h"
 
+#include "Auxiliares/Globlal_Include.h"
+
+#include "episodio.h"
 
 class Paciente
 {

@@ -1,12 +1,4 @@
 #include "vademecum.h"
-#include <QString>
-#include <QStringList>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
-#include <QSettings>
-#include <QUrl>
-
 
 QString cXML;
 vademecum::vademecum(QObject *parent) :

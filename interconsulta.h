@@ -1,8 +1,7 @@
 #ifndef INTERCONSULTA_H
 #define INTERCONSULTA_H
 
-#include <QObject>
-#include <QDate>
+#include "Auxiliares/Globlal_Include.h"
 
 class Interconsulta : public QObject
 {

@@ -1,11 +1,7 @@
 #include "cliente.h"
-#include <QSqlDatabase>
-#include <QtSql>
-#include <QErrorMessage>
-#include <QSqlQuery>
-#include <QMessageBox>
+
 #include "configuracion.h"
-#include <QApplication>
+
 
 Cliente::Cliente(QObject *parent) :
     QObject(parent)

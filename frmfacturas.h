@@ -1,11 +1,7 @@
 #ifndef FRMFACTURAS_H
 #define FRMFACTURAS_H
 
-#include <QDialog>
-#include <QSqlDatabase>
-#include <QSqlQueryModel>
-#include <QHeaderView>
-#include <QItemDelegate>
+#include "Auxiliares/Globlal_Include.h"
 #include "configuracion.h"
 #include "factura.h"
 #include "Zona_Pacientes/cliente.h"

@@ -3,8 +3,7 @@
 #include "albaran.h"
 #include "articulo.h"
 #include "configuracion.h"
-#include <QSqlRecord>
-# include <QSqlField>
+
 
 FrmModificarLin_alb::FrmModificarLin_alb(QWidget *parent) :
     QDialog(parent),

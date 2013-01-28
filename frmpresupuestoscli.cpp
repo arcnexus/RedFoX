@@ -7,8 +7,6 @@
 #include <QMessageBox>
 #include "frmmodificarlin_precli.h"
 
-
-
 FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmPresupuestosCli),

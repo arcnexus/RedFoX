@@ -1,9 +1,7 @@
 #ifndef EMPRESA_H
 #define EMPRESA_H
 
-#include <QObject>
-#include <QString>
-#include <QSqlQuery>
+#include "Auxiliares/Globlal_Include.h"
 
 class Empresa : public QObject
 {

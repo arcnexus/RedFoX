@@ -1,9 +1,7 @@
 #ifndef FRMBUSCARCLIENTE_H
 #define FRMBUSCARCLIENTE_H
 
-#include <QDialog>
-#include <QSqlQueryModel>
-#include <QHeaderView>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmBuscarCliente;

@@ -3,9 +3,7 @@
 #include "pedidos.h"
 #include "articulo.h"
 #include "configuracion.h"
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlField>
+
 
 FrmModificarLin_ped::FrmModificarLin_ped(QWidget *parent) :
     QDialog(parent),

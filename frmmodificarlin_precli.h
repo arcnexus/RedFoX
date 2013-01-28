@@ -1,7 +1,7 @@
 #ifndef FRMMODIFICARLIN_PRECLI_H
 #define FRMMODIFICARLIN_PRECLI_H
 
-#include <QDialog>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmModificarLin_precli;

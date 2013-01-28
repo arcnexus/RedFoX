@@ -1,14 +1,5 @@
 #include "pedidos.h"
-#include <QSqlQuery>
-#include <QSqlDatabase>
-#include <QtSql>
-#include <QSqlRecord>
-#include <QErrorMessage>
-#include <QMessageBox>
-#include <QDebug>
 #include "configuracion.h"
-#include <QString>
-#include <QApplication>
 
 Pedidos::Pedidos()
 {

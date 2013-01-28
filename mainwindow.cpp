@@ -1,39 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QSqlDatabase>
-#include <QtSql>
-#include <QErrorMessage>
-#include<QSqlError>
-
 #include "login.h"
-#include <QMdiArea>
-#include <QMdiSubWindow>
-#include <QFormLayout>
-#include <QDebug>
-#include <QSettings>
-#include "configuracion.h"
-#include <QSqlQuery>
 #include "Zona_Administrador/frmempresas.h"
-
 #include "frmconfiguracion.h"
-
-
 #include "frmagendavisitas.h"
-#include <QStyleFactory>
-#include <QToolBar>
-
-#include <QtCore/QTimer>
-#include <QProgressBar>
-
 #include "block_terra_form.h"
 #include "Gestion_Almacen/gestion_seccionalmacen.h"
-
 #include "db_table_view.h"
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-#include <QDesktopWidget>
-#endif
-#include <QProgressBar>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

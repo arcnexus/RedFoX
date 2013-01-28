@@ -1,11 +1,7 @@
 #ifndef ARTICULO_H
 #define ARTICULO_H
-#include <QString>
-#include <QSqlQuery>
-#include <QDate>
-#include <QLabel>
 
-
+#include "Auxiliares/Globlal_Include.h"
 
 class Articulo
 {

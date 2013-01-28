@@ -1,9 +1,4 @@
 #include "imagenesdiagnostico.h"
-#include <QtSql>
-#include <QSqlRecord>
-#include <QMessageBox>
-#include <QDebug>
-#include <QApplication>
 
 ImagenesDiagnostico::ImagenesDiagnostico(QObject *parent) :
     QObject(parent)

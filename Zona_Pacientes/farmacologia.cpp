@@ -1,11 +1,7 @@
 #include "farmacologia.h"
-#include <QString>
-#include <QtSql>
-#include <QtSql/QSqlQuery>
-#include "QtSql/QSqlDatabase"
-#include <QSqlRecord>
-#include <QMessageBox>
-#include <QApplication>
+
+//#include "QtSql/QSqlDatabase"
+
 
 Farmacologia::Farmacologia()
 {

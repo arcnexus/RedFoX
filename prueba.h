@@ -1,7 +1,7 @@
 #ifndef PRUEBA_H
 #define PRUEBA_H
 
-#include <QWidget>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class Prueba;

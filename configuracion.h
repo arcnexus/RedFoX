@@ -1,13 +1,7 @@
 #ifndef CONFIGURACION_H
 #define CONFIGURACION_H
 
-#include <QObject>
-#include <QString>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QFileDialog>
-#include <QLineEdit>
-
+#include "Auxiliares/Globlal_Include.h"
 
 class Configuracion{
 
@@ -62,9 +56,6 @@ public:
     void CargarDatos();
     QString ValidarCC(QString Entidad,QString Oficina, QString DC, QString CC);
     QString ValidarCC(QString Entidad, QString Oficina, QString CC);
-
-    
-
 };
 
 #endif // CONFIGURACION_H

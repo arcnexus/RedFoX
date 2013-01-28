@@ -1,10 +1,5 @@
 #include "empresa.h"
-#include <QtSql>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QMessageBox>
-#include <QApplication>
+
 Empresa::Empresa(QObject *parent) :
     QObject(parent)
 {

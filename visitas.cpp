@@ -1,9 +1,4 @@
 #include "visitas.h"
-#include <QtSql>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QMessageBox>
-#include <QApplication>
 
 Visitas::Visitas(QObject *parent) :
     QObject(parent)

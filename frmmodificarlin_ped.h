@@ -1,7 +1,7 @@
 #ifndef FRMMODIFICARLIN_PED_H
 #define FRMMODIFICARLIN_PED_H
 
-#include <QDialog>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmModificarLin_ped;

@@ -1,10 +1,7 @@
 #ifndef VADEMECUM_H
 #define VADEMECUM_H
 
-#include <QObject>
-#include <QNetworkReply>
-#include <QString>
-#include <QStringList>
+#include "Auxiliares/Globlal_Include.h"
 
 class vademecum : public QObject
 {

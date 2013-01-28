@@ -1,11 +1,7 @@
 #ifndef ALBARAN_H
 #define ALBARAN_H
 
-#include <QObject>
-#include <QDate>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QMessageBox>
+#include "Auxiliares/Globlal_Include.h"
 
 class Albaran : public QObject
 {

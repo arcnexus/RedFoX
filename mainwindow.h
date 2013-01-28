@@ -1,16 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QtCore>
-#include <QtGui>
-#include <QString>
-#include <QSqlDatabase>
-#include <QtSql>
-#include <QMdiArea>
-#include "configuracion.h"
-#include <QToolButton>
+#include "Auxiliares/Globlal_Include.h"
 
+#include "configuracion.h"
 #include "Zona_Pacientes/frmClientes.h"
 #include "frmfacturas.h"
 #include "frmarticulos.h"

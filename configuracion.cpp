@@ -1,12 +1,4 @@
 #include "configuracion.h"
-#include <QMessageBox>
-#include <QSqlError>
-#include <QSqlQuery>
-#include <QSettings>
-#include <QDebug>
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QApplication>
 
 Configuracion::Configuracion()
 {
@@ -113,7 +105,6 @@ void Configuracion::CargarDatos()
     this->cCuentaClientes = settings.value("cCuentaClientes").toString();
     this->cCuentaAcreedores = settings.value("cCuentaAcreedores").toString();
     this->cCuentaProveedores = settings.value("cCuentaProveedores").toString();
-
 }
 
 QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString DC, QString CC)

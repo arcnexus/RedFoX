@@ -1,13 +1,7 @@
 #ifndef TABLE_HELPER_H
 #define TABLE_HELPER_H
 
-#include <QObject>
-#include <QTableWidget>
-#include <QHeaderView>
-#include <QTableWidgetItem>
-#include <QSpinBox>
-#include <QMessageBox>
-#include <QApplication>
+#include "Globlal_Include.h"
 
 #include "searchdelegate.h"
 #include "spinboxdelegate.h"

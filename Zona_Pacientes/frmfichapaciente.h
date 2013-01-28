@@ -1,18 +1,11 @@
 #ifndef FRMFICHAPACIENTE_H
 #define FRMFICHAPACIENTE_H
 
-#include <QDialog>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QUrl>
-#include <QtNetwork/QNetworkRequest>
-#include <QtNetwork/QNetworkReply>
-#include <QXmlStreamAttribute>
-#include <QXmlStreamReader>
-#include <QtSql>
+#include "Auxiliares/Globlal_Include.h"
+
 #include "paciente.h"
 #include "episodio.h"
 #include "imagenesdiagnostico.h"
-#include <QTreeWidgetItem>
 
 namespace Ui {
 class FrmFichaPaciente;

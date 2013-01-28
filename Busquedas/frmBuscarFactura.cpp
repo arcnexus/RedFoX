@@ -1,12 +1,5 @@
 #include "frmBuscarFactura.h"
 #include "ui_frmBuscarFactura.h"
-#include <QSqlDatabase>
-#include <QtSql>
-#include <QErrorMessage>
-#include<QSqlError>
-#include<QDate>
-#include <QSqlQueryModel>
-#include <QDebug>
 
 FrmBuscarFactura::FrmBuscarFactura(QWidget *parent) :
     QDialog(parent),

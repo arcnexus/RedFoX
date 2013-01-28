@@ -1,8 +1,8 @@
 #ifndef BLOCK_TERRA_FORM_H
 #define BLOCK_TERRA_FORM_H
 
-#include <QDialog>
-#include <QCloseEvent>
+#include "Auxiliares/Globlal_Include.h"
+
 namespace Ui {
 class block_terra_form;
 }

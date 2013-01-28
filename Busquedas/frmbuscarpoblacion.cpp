@@ -1,8 +1,6 @@
 #include "frmbuscarpoblacion.h"
 #include "ui_frmbuscarpoblacion.h"
-#include <QDebug>
-#include <QSqlDatabase>
-#include <QtSql>
+
 
 FrmBuscarPoblacion::FrmBuscarPoblacion(QWidget *parent) :
     QDialog(parent),

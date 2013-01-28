@@ -1,18 +1,9 @@
 #include "frmClientes.h"
 #include "ui_frmClientes.h"
-#include <QSqlDatabase>
-#include <QtSql>
-#include <QErrorMessage>
-#include<QSqlError>
 #include "cliente.h"
-#include<QDate>
-#include <QSqlQueryModel>
-#include <QDebug>
 #include "Busquedas/frmbuscarcliente.h"
 #include "Busquedas/frmbuscarpoblacion.h"
-#include <QString>
 #include "columnafecha.h"
-#include <QSettings>
 #include "frmfichapaciente.h"
 #include "sqlcalls.h"
 #include "paciente.h"

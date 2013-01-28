@@ -1,19 +1,7 @@
 #include "frmanalitica.h"
 #include "ui_frmanalitica.h"
-#include <qsql.h>
-//#include <QSql>
-#include<QSqlQueryModel>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlField>
 #include "frmanalitica2.h"
-#include <QMessageBox>
 #include "analitica.h"
-#include <QDate>
-#include <QMessageBox>
-#include <QSqlError>
-#include <QDebug>
-
 
 FrmAnalitica::FrmAnalitica(QWidget *parent) :
     QDialog(parent),

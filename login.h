@@ -1,11 +1,9 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-#include <QDialog>
-#include <QtCore>
-#include <QtGui>
+#include "Auxiliares/Globlal_Include.h"
+
 #include "configuracion.h"
-#include <QSqlDatabase>
 
 namespace Ui {
 class Login;

@@ -1,9 +1,7 @@
 #ifndef FRMALBARAN_H
 #define FRMALBARAN_H
 
-#include <QDialog>
-#include <QHeaderView>
-#include <QSqlQueryModel>
+#include "Auxiliares/Globlal_Include.h"
 #include "Busquedas/frmbuscarcliente.h"
 #include "configuracion.h"
 #include "Auxiliares/table_helper.h"
