@@ -48,19 +48,15 @@ SOURCES += main.cpp\
     empresa.cpp \
     articulo.cpp \
     Busquedas/frmBuscarFactura.cpp \
-    frmmodificarlin_fac.cpp \
     columnafecha.cpp \
     Zona_Administrador/frmempresas.cpp \
     frmconfiguracion.cpp \
     albaran.cpp \
     frmalbaran.cpp \
-    frmmodificarlin_alb.cpp \
     frmpedidos.cpp \
     pedidos.cpp \
-    frmmodificarlin_ped.cpp \
     frmpresupuestoscli.cpp \
     presupuesto.cpp \
-    frmmodificarlin_precli.cpp \
     frmcajaminuta.cpp \
     Zona_Pacientes/frmfichapaciente.cpp \
     frmagendavisitas.cpp \
@@ -109,19 +105,15 @@ HEADERS  += mainwindow.h \
     empresa.h \
     articulo.h \
     Busquedas/frmBuscarFactura.h \
-    frmmodificarlin_fac.h \
     columnafecha.h \
     Zona_Administrador/frmempresas.h \
     frmconfiguracion.h \
     albaran.h \
     frmalbaran.h \
-    frmmodificarlin_alb.h \
     frmpedidos.h \
     pedidos.h \
-    frmmodificarlin_ped.h \
     frmpresupuestoscli.h \
     presupuesto.h \
-    frmmodificarlin_precli.h \
     frmcajaminuta.h \
     Zona_Pacientes/frmfichapaciente.h \
     frmagendavisitas.h \
@@ -165,15 +157,11 @@ FORMS    += mainwindow.ui \
     pruebas.ui \
     Busquedas/frmbuscarpoblacion.ui \
     Busquedas/frmBuscarFactura.ui \
-    frmmodificarlin_fac.ui \
     Zona_Administrador/frmempresas.ui \
     frmconfiguracion.ui \
     frmalbaran.ui \
-    frmmodificarlin_alb.ui \
     frmpedidos.ui \
-    frmmodificarlin_ped.ui \
     frmpresupuestoscli.ui \
-    frmmodificarlin_precli.ui \
     frmcajaminuta.ui \
     frmagendavisitas.ui \
     Zona_Pacientes/frmfichapaciente.ui \

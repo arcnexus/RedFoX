@@ -5,8 +5,6 @@
 
 #include "articulo.h"
 
-#include "frmmodificarlin_fac.h"
-
 frmFacturas::frmFacturas( QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmFacturas),

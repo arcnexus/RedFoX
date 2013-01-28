@@ -5,7 +5,7 @@
 #include "Busquedas/frmbuscarcliente.h"
 #include "articulo.h"
 #include <QMessageBox>
-#include "frmmodificarlin_precli.h"
+
 
 FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     QDialog(parent),

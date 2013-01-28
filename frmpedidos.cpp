@@ -3,7 +3,7 @@
 
 
 #include "articulo.h"
-#include "frmmodificarlin_ped.h"
+
 #include "Busquedas/frmbuscarcliente.h"
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
