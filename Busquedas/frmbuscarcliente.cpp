@@ -1,7 +1,7 @@
 #include "frmbuscarcliente.h"
 #include "ui_frmbuscarcliente.h"
 
-#include "Zona_Pacientes/cliente.h"
+#include "../Zona_Pacientes/cliente.h"
 
 FrmBuscarCliente::FrmBuscarCliente(QWidget *parent) :
     QDialog(parent),

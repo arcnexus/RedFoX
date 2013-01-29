@@ -1,7 +1,7 @@
 #ifndef FRMVERANALITICA_H
 #define FRMVERANALITICA_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmVerAnalitica;

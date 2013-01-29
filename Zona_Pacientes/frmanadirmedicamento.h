@@ -1,7 +1,7 @@
 #ifndef FRMANADIRMEDICAMENTO_H
 #define FRMANADIRMEDICAMENTO_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmAnadirMedicamento;

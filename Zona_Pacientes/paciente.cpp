@@ -1,5 +1,5 @@
 #include "paciente.h"
-#include "sqlcalls.h"
+#include "../sqlcalls.h"
 #include"episodio.h"
 
 Paciente::Paciente()

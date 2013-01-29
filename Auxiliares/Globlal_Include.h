@@ -71,7 +71,7 @@
 #include <QSqlError>
 # include <QDomDocument>
 
-#include "configuracion.h"
+#include "../configuracion.h"
 extern Configuracion * Configuracion_global;
 
 #endif // GLOBLAL_INCLUDE_H

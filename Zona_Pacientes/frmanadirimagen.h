@@ -1,7 +1,7 @@
 #ifndef FRMANADIRIMAGEN_H
 #define FRMANADIRIMAGEN_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 namespace Ui {
 class FrmAnadirImagen;
 }

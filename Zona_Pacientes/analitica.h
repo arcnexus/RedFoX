@@ -1,7 +1,7 @@
 #ifndef ANALITICA_H
 #define ANALITICA_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class Analitica : public QObject
 {

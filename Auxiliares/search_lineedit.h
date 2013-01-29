@@ -2,7 +2,7 @@
 #define SEARCH_LINEEDIT_H
 
 #include <QWidget>
-#include "db_table_view.h"
+#include "../db_table_view.h"
 namespace Ui {
 class Search_LineEdit;
 }

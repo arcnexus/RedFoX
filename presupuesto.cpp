@@ -471,7 +471,6 @@ int Presupuesto::NuevoNumeroPresupuesto()
          QMessageBox::critical(qApp->activeWindow(), "error:", cab_pre.lastError().text());
     }
     return nPresupuesto;
-
 }
 
 

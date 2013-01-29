@@ -1,9 +1,9 @@
 #ifndef FRMEMPRESAS_H
 #define FRMEMPRESAS_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
-#include "empresa.h"
+#include "../empresa.h"
 #include "copy_db_progressfrm.h"
 namespace Ui {
 class FrmEmpresas;

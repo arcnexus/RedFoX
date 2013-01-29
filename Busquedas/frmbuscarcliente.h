@@ -1,7 +1,7 @@
 #ifndef FRMBUSCARCLIENTE_H
 #define FRMBUSCARCLIENTE_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmBuscarCliente;

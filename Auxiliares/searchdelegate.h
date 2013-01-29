@@ -3,7 +3,7 @@
 
 #include <QItemDelegate>
 
-#include "db_table_view.h"
+#include "../db_table_view.h"
 #include "search_lineedit.h"
 class SearchDelegate : public QItemDelegate
 {

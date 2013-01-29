@@ -22,8 +22,7 @@ public:
     void LLenarCamposCliente();
     void LLenarPresupuesto();
     void VaciarCampos();
-    void BloquearCampos();
-    void DesbloquearCampos();
+    void BloquearCampos(bool state);
     void RellenarDespuesCalculo();
     Presupuesto *oPres;
     Cliente *oClientePres;
@@ -45,6 +44,8 @@ private slots:
     void on_botBuscarCliente_clicked();
 
     void totalChanged(QString total);
+    void on_btnDeshacer_clicked();
+
 private:
     Ui::FrmPresupuestosCli *ui;
     QSqlQueryModel *model;

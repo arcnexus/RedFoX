@@ -1,7 +1,7 @@
 #ifndef COPY_DB_PROGRESSFRM_H
 #define COPY_DB_PROGRESSFRM_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class copy_db_progressFrm;

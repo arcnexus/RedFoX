@@ -1,7 +1,7 @@
 #ifndef FRMBUSCARPOBLACION_H
 #define FRMBUSCARPOBLACION_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmBuscarPoblacion;

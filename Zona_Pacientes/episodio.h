@@ -1,7 +1,7 @@
 #ifndef EPISODIO_H
 #define EPISODIO_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class Episodio : public QObject
 {
@@ -19,7 +19,7 @@ private:
     QString descripcion;
     QString historial;
     QString codigocie;
-    bool Altas = false;
+    bool Altas;
 
 public:
     Episodio(QObject* parent = 0);

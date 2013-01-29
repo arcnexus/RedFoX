@@ -1,11 +1,11 @@
 #include "frmClientes.h"
 #include "ui_frmClientes.h"
 #include "cliente.h"
-#include "Busquedas/frmbuscarcliente.h"
-#include "Busquedas/frmbuscarpoblacion.h"
-#include "columnafecha.h"
+#include "../Busquedas/frmbuscarcliente.h"
+#include "../Busquedas/frmbuscarpoblacion.h"
+#include "../columnafecha.h"
 #include "frmfichapaciente.h"
-#include "sqlcalls.h"
+#include "../sqlcalls.h"
 #include "paciente.h"
 
 #ifdef WIN32

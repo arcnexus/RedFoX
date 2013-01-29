@@ -20,7 +20,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     model=new QSqlQueryModel(this);
     model->setQuery("Select cFormapago from FormPago",QSqlDatabase::database("empresa"));
     ui->cboFormaPago->setModel(model);
-    BloquearCampos();
+    BloquearCampos(true);
 
     //-----------------------
     // Conexiones
@@ -52,6 +52,9 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
     connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
     connect(&helper,SIGNAL(totalChanged(QString)),this,SLOT(totalChanged(QString)));
+
+    oPres->RecuperarPresupuesto("Select * from cab_pre where nPresupuesto > -1 order by nPresupuesto  limit 1 ",0);
+    LLenarCampos();
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
@@ -194,9 +197,9 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     qFormPago.exec("Select id,cCodigo from FormPago where cFormapago ='"+oPres->cDescripcionFormaPago+"'");
     qFormPago.next();
     QSqlRecord rFormPago = qFormPago.record();
-
     oPres->cCodigoFormaPago = (rFormPago.field("cCodigo").value().toString());
     oPres->id_FormaPago = (rFormPago.field("id").value().toInt());
+
     oPres->tLugarEntrega = (ui->txttLugarEntrega->toPlainText());
     oPres->cAtencionde = (ui->txtcAtencionde->text());
     oPres->rBase1 = (ui->txtrBase1->text().replace(".","").toDouble());
@@ -282,21 +285,22 @@ void FrmPresupuestosCli::VaciarCampos()
     ui->txtrTotal3->setText("0,00");
     ui->txtrTotal4->setText("0,00");
     ui->txtcEmail->setText("");
+    ui->txtcCliente->setText("");
 }
 
-void FrmPresupuestosCli::BloquearCampos()
+void FrmPresupuestosCli::BloquearCampos(bool state)
 {
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(true);
+        lineEdit->setReadOnly(state);
     }
 
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
     QComboBox *ComboBox;
     foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(false);
+        ComboBox->setEnabled(!state);
     }
     /*
 //    // SpinBox
@@ -317,101 +321,36 @@ void FrmPresupuestosCli::BloquearCampos()
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
     foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(false);
+        CheckBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
     // QTextEdit
     QList<QTextEdit *> textEditList = this->findChildren<QTextEdit *>();
     QTextEdit *textEdit;
     foreach (textEdit,textEditList) {
-        textEdit->setReadOnly(true);
+        textEdit->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // QDateEdit
     QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(false);
+        DateEdit->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
 
-    ui->btnAnadir->setEnabled(true);
-    ui->btnAnterior->setEnabled(true);
-    ui->btnBorrar->setEnabled(true);
-    ui->btnBuscar->setEnabled(true);
-    ui->btnDeshacer->setEnabled(false);
-    ui->btnEditar->setEnabled(true);
-    ui->btnGuardar->setEnabled(false);
-    ui->btnSiguiente->setEnabled(true);
-    //ui->botBorrarLinea->setEnabled(false);
-    //ui->botEditarLinea->setEnabled(false);
-    ui->botBuscarCliente->setEnabled(false);
+    ui->btnAnadir->setEnabled(state);
+    ui->btnAnterior->setEnabled(state);
+    ui->btnBorrar->setEnabled(state);
+    ui->btnBuscar->setEnabled(state);
+    ui->btnDeshacer->setEnabled(!state);
+    ui->btnEditar->setEnabled(state);
+    ui->btnGuardar->setEnabled(!state);
+    ui->btnSiguiente->setEnabled(state);
+    ui->btnAnadirLinea->setEnabled(!state);
+    ui->btn_borrarLinea->setEnabled(!state);
+    ui->botBuscarCliente->setEnabled(!state);
 }
-void FrmPresupuestosCli::DesbloquearCampos()
-{
-    // LineEdit
-    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
-    QLineEdit *lineEdit;
-    foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // ComboBox
-    QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
-    QComboBox *ComboBox;
-    foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-//    // SpinBox
-//    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-//    QSpinBox *SpinBox;
-//    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(false);
-//        //qDebug() << lineEdit->objectName();
-//    }
-//    // DoubleSpinBox
-//    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-//    QDoubleSpinBox *DSpinBox;
-//    foreach (DSpinBox, DSpinBoxList) {
-//        DSpinBox->setReadOnly(false);
-//        //qDebug() << lineEdit->objectName();
-//    }
-    // CheckBox
-    QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
-    QCheckBox *CheckBox;
-    foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    // QTextEdit
-    QList<QTextEdit *> textEditList = this->findChildren<QTextEdit *>();
-    QTextEdit *textEdit;
-    foreach (textEdit,textEditList) {
-        textEdit->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // QDateEdit
-    QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
-    QDateEdit *DateEdit;
-    foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    ui->btnAnadir->setEnabled(false);
-    ui->btnAnterior->setEnabled(false);
-    ui->btnBorrar->setEnabled(false);
-    ui->btnBuscar->setEnabled(false);
-    ui->btnDeshacer->setEnabled(true);
-    ui->btnEditar->setEnabled(false);
-    ui->btnGuardar->setEnabled(true);
-    ui->btnSiguiente->setEnabled(false);
-    //ui->botBorrarLinea->setEnabled(true);
-    //ui->botEditarLinea->setEnabled(true);
-    ui->botBuscarCliente->setEnabled(true);
-
-}
-
 void FrmPresupuestosCli::RellenarDespuesCalculo()
 {
     ui->txtnDto->setText(QString::number(oPres->nDto));
@@ -482,18 +421,20 @@ void FrmPresupuestosCli::on_btnAnterior_clicked()
 void FrmPresupuestosCli::on_btnAnadir_clicked()
 {
     VaciarCampos();
-    LLenarPresupuesto();
-    oPres->AnadirPresupuesto();
-    LLenarCampos();
-    DesbloquearCampos();
+    BloquearCampos(false);
+    int next = oPres->NuevoNumeroPresupuesto();
+    ui->txtnPresupuesto->setText(QString::number(next));
     ui->txtcCodigoCliente->setFocus();
 }
 
 void FrmPresupuestosCli::on_btnEditar_clicked()
 {
-    if (oPres->cFactura=="0") {
-        DesbloquearCampos();
-    } else {
+    if (oPres->cFactura=="0")
+    {
+        BloquearCampos(false);
+    }
+    else
+    {
         QMessageBox::warning(qApp->activeWindow(),tr("Editar Presupuesto"),tr("No se puede editar un Presupuesto que ha sido facturado, solo los NO facturados se pueden editar")+
                              tr("<p><b> Si necesita modificar algo genere una factura nueva y realice el abono correspondiente</b>")+
                                 tr("y luego si es preciso realice un nuevo presupuesto y facture de nuevo "),tr("OK"));
@@ -502,13 +443,9 @@ void FrmPresupuestosCli::on_btnEditar_clicked()
 
 void FrmPresupuestosCli::on_btnGuardar_clicked()
 {
-    int nId = oPres->id;
-    if (ui->txtnPresupuesto->text().trimmed() =="0")
-        ui->txtnPresupuesto->setText(QString::number(oPres->NuevoNumeroPresupuesto()));
     LLenarPresupuesto();
-    BloquearCampos();
-    oPres->GuardarPres(nId);
-    oPres->RecuperarPresupuesto("Select * from cab_pre where id="+QString::number(nId)+"  limit 1 ");
+    oPres->AnadirPresupuesto();
+    BloquearCampos(true);
     LLenarCampos();
 }
 
@@ -531,4 +468,11 @@ void FrmPresupuestosCli::on_botBuscarCliente_clicked()
 void FrmPresupuestosCli::totalChanged(QString total)
 {
     ui->lbl_total->setText(total);
+}
+
+void FrmPresupuestosCli::on_btnDeshacer_clicked()
+{
+    VaciarCampos();
+    LLenarCampos();
+    BloquearCampos(true);
 }

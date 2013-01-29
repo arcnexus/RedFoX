@@ -1,7 +1,7 @@
 #include "frmanadirimagen.h"
 #include "ui_frmanadirimagen.h"
 
-#include "imagenesdiagnostico.h"
+#include "../imagenesdiagnostico.h"
 
 
 ImagenesDiagnostico *oImagenesDiagnostico = new ImagenesDiagnostico(NULL);
