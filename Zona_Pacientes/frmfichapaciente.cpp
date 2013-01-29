@@ -280,12 +280,6 @@ void FrmFichaPaciente::finishedSlot(QNetworkReply* reply)
      ui->txtHistorialEpisodio->setPlainText(data);
 }
 
-void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
-{
-     VaciarCamposEpisodio();
-     oEpisodio->setAltas(true);
-}
-
 void FrmFichaPaciente::on_btnBuscarCIEEpisodio_clicked()
 {
 //    vademecum *recuperar = new vademecum(this);
@@ -326,6 +320,33 @@ void FrmFichaPaciente::BloquearCamposPaciente(bool state)
     ui->radTrabaja->setEnabled(!state);
     ui->radNoTrabaja->setEnabled(!state);
 }
+
+void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
+{
+     VaciarCamposEpisodio();
+     oEpisodio->setAltas(true);
+     ui->tab_episodios->setCurrentIndex(1);
+     ui->txtDescripcionEpisodio->setFocus();
+}
+
+
+void FrmFichaPaciente::on_btnGuardarEpisodio_clicked()
+{
+    if (!ui->txtDescripcionEpisodio->text().isEmpty() && !ui->cboDoctorEpisodio->currentText().isEmpty()) {
+        LLenarEpisodio();
+        if (oEpisodio->getAltas()==true)
+            oEpisodio->NuevoEpisodio(oPaciente->getid());
+        else
+            oEpisodio->GuardarEpisodio();
+        BloquearCamposEpisodio(true);
+    } else {
+        QMessageBox::warning(this,tr("Guardar Episodio"),tr("Los campos descripción de episodio y paciente no pueden quedar vacios"),
+                             tr("Aceptar"));
+    }
+
+
+}
+
 
 void FrmFichaPaciente::BloquearCamposEpisodio(bool state)
 {
@@ -394,22 +415,6 @@ void FrmFichaPaciente::on_btnGuardarPaciente_clicked()
     oPaciente->GuardarPaciente();
 }
 
-void FrmFichaPaciente::on_btnGuardarEpisodio_clicked()
-{
-    if (!ui->txtDescripcionEpisodio->text().isEmpty() && !ui->cboDoctorEpisodio->currentText().isEmpty()) {
-        LLenarEpisodio(); 
-        if (oEpisodio->getAltas()==true)
-            oEpisodio->NuevoEpisodio(oPaciente->getid());
-        else
-            oEpisodio->GuardarEpisodio();
-        BloquearCamposEpisodio(true);
-    } else {
-        QMessageBox::warning(this,tr("Guardar Episodio"),tr("Los campos descripción de episodio y paciente no pueden quedar vacios"),
-                             tr("Aceptar"));
-    }
-
-
-}
 
 
 void FrmFichaPaciente::listaEpisodios_currentItemChanged(QTreeWidgetItem*current,QTreeWidgetItem*previous)

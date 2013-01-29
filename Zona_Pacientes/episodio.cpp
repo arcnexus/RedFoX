@@ -12,7 +12,7 @@ void Episodio::NuevoEpisodio(int idPaciente)
     qEpisodio->prepare("INSERT INTO episodios (idpaciente,cerrado,privado,fecha,descripcion,cie,iddoctor,historial) "
                        "VALUES (:idpaciente,:cerrado,:privado,:fecha,:descripcion,:cie,:iddoctor,:historial)");
 
-    qEpisodio->bindValue(":idpaciente",this->idPaciente);
+    qEpisodio->bindValue(":idpaciente",idPaciente);
     qEpisodio->bindValue(":cerrado",this->cerrado);
     qEpisodio->bindValue(":privado",this->privado);
     qEpisodio->bindValue(":iddoctor",this->iddoctor);
