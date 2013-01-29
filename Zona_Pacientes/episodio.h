@@ -19,13 +19,17 @@ private:
     QString descripcion;
     QString historial;
     QString codigocie;
+    bool Altas = false;
 
 public:
     Episodio(QObject* parent = 0);
-    int NuevoEpisodio(int idPaciente);
+    void NuevoEpisodio(int idPaciente);
     void RecuperarEpisodio(int idEpisodio);
     QString RecuperarDoctor(int iddoctor);
     int RecuperarIdDoctor(QString doctor);
+    void setAltas(bool state) {this->Altas = state;}
+    bool getAltas() {return this->Altas;}
+
     void GuardarEpisodio();
     int getid();
     int getidPaciente();

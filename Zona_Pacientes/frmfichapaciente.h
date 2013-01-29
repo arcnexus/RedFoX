@@ -76,6 +76,7 @@ private:
     void BloquearCamposPaciente(bool state);
     void BloquearCamposEpisodio(bool state);
     void LLenarEpisodio();
+    void VaciarCamposEpisodio();
     void BloquearCamposImagen();
 };
 

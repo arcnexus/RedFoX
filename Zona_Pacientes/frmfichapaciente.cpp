@@ -282,20 +282,8 @@ void FrmFichaPaciente::finishedSlot(QNetworkReply* reply)
 
 void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
 {
-   int idEpisodio = oEpisodio->NuevoEpisodio(oPaciente->getid());
-   oEpisodio->RecuperarEpisodio(idEpisodio);
-   if (oEpisodio->getid() >0)
-   {
-       cargarEpisodio(1);
-       ui->tab_episodios->setCurrentIndex(1);
-       ui->txtFechaEpisodio->setDate(QDate::currentDate());
-       ui->txtDescripcionEpisodio->setFocus();
-
-   }
-   else
-   {
-       QMessageBox::warning(this,tr("Nuevo episodio"),tr("No se ha podido recuperar el nuevo episodio"),tr("Aceptar"));
-   }
+     VaciarCamposEpisodio();
+     oEpisodio->setAltas(true);
 }
 
 void FrmFichaPaciente::on_btnBuscarCIEEpisodio_clicked()
@@ -370,6 +358,17 @@ void FrmFichaPaciente::LLenarEpisodio()
     oEpisodio->setprivado(ui->chkEpisodioprivado->isChecked());
 }
 
+void FrmFichaPaciente::VaciarCamposEpisodio()
+{
+    ui->txtCIEEpisiodio->setText("");
+    ui->txtDescripcionEpisodio->setText("");
+    ui->cboDoctorEpisodio->setCurrentIndex(-1);
+    ui->txtFechaEpisodio->setDateTime(QDateTime::currentDateTime());
+    ui->txtHistorialEpisodio->setPlainText("");
+    BloquearCamposEpisodio(false);
+    ui->txtDescripcionEpisodio->setFocus();
+}
+
 void FrmFichaPaciente::BloquearCamposImagen()
 {
     ui->lineEdit_descripcionimagen->setEnabled(false);
@@ -398,8 +397,11 @@ void FrmFichaPaciente::on_btnGuardarPaciente_clicked()
 void FrmFichaPaciente::on_btnGuardarEpisodio_clicked()
 {
     if (!ui->txtDescripcionEpisodio->text().isEmpty() && !ui->cboDoctorEpisodio->currentText().isEmpty()) {
-        LLenarEpisodio();
-        oEpisodio->GuardarEpisodio();
+        LLenarEpisodio(); 
+        if (oEpisodio->getAltas()==true)
+            oEpisodio->NuevoEpisodio(oPaciente->getid());
+        else
+            oEpisodio->GuardarEpisodio();
         BloquearCamposEpisodio(true);
     } else {
         QMessageBox::warning(this,tr("Guardar Episodio"),tr("Los campos descripción de episodio y paciente no pueden quedar vacios"),
