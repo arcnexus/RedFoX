@@ -20,7 +20,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     model=new QSqlQueryModel(this);
     model->setQuery("Select cFormapago from FormPago",QSqlDatabase::database("empresa"));
     ui->cboFormaPago->setModel(model);
-    BloquearCampos(true);
+
 
     //-----------------------
     // Conexiones
@@ -52,9 +52,12 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
     connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
     connect(&helper,SIGNAL(totalChanged(QString)),this,SLOT(totalChanged(QString)));
+    connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
+
 
     oPres->RecuperarPresupuesto("Select * from cab_pre where nPresupuesto > -1 order by nPresupuesto  limit 1 ",0);
     LLenarCampos();
+    BloquearCampos(true);
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
@@ -290,6 +293,7 @@ void FrmPresupuestosCli::VaciarCampos()
 
 void FrmPresupuestosCli::BloquearCampos(bool state)
 {
+    helper.blockTable(state);
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {

@@ -6,6 +6,7 @@
 #include "searchdelegate.h"
 #include "spinboxdelegate.h"
 #include "readonlydelegate.h"
+#include "comboboxdelegate.h"
 
 class Table_Helper : public QObject
 {
@@ -17,10 +18,12 @@ public:
     void set_Searcher(Db_table_View* table_view);
     void set_moneda(QString moneda);
     void set_Tipo(bool is_compra);
+    void blockTable(bool state);
     void resizeTable();
 signals:
     void totalChanged(QString newTotal);
 public slots:
+    void set_UsarRE(bool state);
     void addRow();
     void removeRow();
     void handle_cellChanged(int row, int column);
@@ -33,6 +36,8 @@ private:
     void comprobarDescuento(int row);
     double calcularLinea(int row);
     bool comprando;
+    bool use_re;
+    QHash <QString, QSqlRecord> ivas;
 };
 
 #endif // TABLE_HELPER_H

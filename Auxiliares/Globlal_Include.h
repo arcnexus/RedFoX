@@ -7,8 +7,10 @@
 #include <QString>
 #include <QStringList>
 #include <QSettings>
+#include <QHash>
 
 #include <QtGui>
+#include <QComboBox>
 #include <QDesktopWidget>
 #include <QTableWidget>
 #include <QHeaderView>

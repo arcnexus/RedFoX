@@ -7,6 +7,16 @@ Table_Helper::Table_Helper(QObject *parent) :
     searcher = 0;
     moneda = "€";
     comprando = true;
+    use_re = false;
+    QSqlQuery query(QSqlDatabase::database("empresa"));
+    if(query.exec("SELECT * FROM tiposiva"))
+    {
+        while(query.next())
+        {
+            QString key = query.record().value("cTipo").toString();
+            ivas.insert(key,query.record());
+        }
+    }
 }
 
 Table_Helper::~Table_Helper()
@@ -25,7 +35,9 @@ void Table_Helper::help_table(QTableWidget *table)
     helped_table->setItemDelegateForColumn(4,new ReadOnlyDelegate(helped_table));
     helped_table->setItemDelegateForColumn(5,new SpinBoxDelegate(helped_table,true,0));
     helped_table->setItemDelegateForColumn(6,new SpinBoxDelegate(helped_table,true,0,100));
-    helped_table->setItemDelegateForColumn(7,new SpinBoxDelegate(helped_table,true,0,100));
+    comboboxDelegate* comboModel = new comboboxDelegate(helped_table);
+    comboModel->setUpModel("empresa","tiposiva","cTipo");
+    helped_table->setItemDelegateForColumn(7,comboModel);
     helped_table->setItemDelegateForColumn(8,new ReadOnlyDelegate(helped_table));
     connect(helped_table,SIGNAL(cellChanged(int,int)),this,SLOT(handle_cellChanged(int,int)));
 }
@@ -43,6 +55,23 @@ void Table_Helper::set_moneda(QString moneda)
 void Table_Helper::set_Tipo(bool is_compra)
 {
     comprando = is_compra;
+}
+
+void Table_Helper::blockTable(bool state)
+{
+    if(helped_table)
+    {
+        if(state)
+            helped_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        else
+            helped_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
+    }
+}
+
+void Table_Helper::set_UsarRE(bool state)
+{
+    use_re = state;
+    calcularTotal();
 }
 
 void Table_Helper::resizeTable()
@@ -188,16 +217,23 @@ double Table_Helper::calcularLinea(int row)
 
     double dto = helped_table->item(row,5)->text().toDouble();
     double dto_percent = helped_table->item(row,6)->text().toDouble();
-    double iva = helped_table->item(row,7)->text().toDouble();
+
+    double iva = ivas[helped_table->item(row,7)->text()].value("nIVA").toDouble();
+
+    double re = ivas[helped_table->item(row,7)->text()].value("nRegargoEquivalencia").toDouble();
 
     double total = subtotal - dto;
 
     double x = 1 - (dto_percent / 100);
     total = total * x;
 
+    double add_re = (re / 100) * total;
+
     double y = 1 + (iva/100);
     total = total * y;
 
+    if(use_re)
+        total = total + add_re;
     helped_table->item(row,8)->setText(QString::number(total,'f',2));
     return total;
 }

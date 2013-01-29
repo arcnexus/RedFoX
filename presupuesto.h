@@ -27,7 +27,11 @@ public:
     QString cFax;
     double nDto;
     QString tComentarios;
-    double rImporte;
+     double rImporte;
+    double rImporte1;
+    double rImporte2;
+    double rImporte3;
+    double rImporte4;
     double rSubTotal;
     double rDescuento;
     double rTotal;

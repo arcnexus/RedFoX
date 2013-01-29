@@ -7,7 +7,7 @@ Search_LineEdit::Search_LineEdit(QWidget *parent, Db_table_View *table_view) :
 {
     ui->setupUi(this);
     this->table_view = table_view;
-
+    ui->lineEdit->setFocus();
 }
 
 Search_LineEdit::~Search_LineEdit()

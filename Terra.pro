@@ -87,7 +87,8 @@ SOURCES += main.cpp\
     Auxiliares/readonlydelegate.cpp \
     Auxiliares/spinboxdelegate.cpp \
     Auxiliares/searchdelegate.cpp \
-    Zona_Pacientes/visitas.cpp
+    Zona_Pacientes/visitas.cpp \
+    Auxiliares/comboboxdelegate.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -144,7 +145,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/spinboxdelegate.h \
     Auxiliares/searchdelegate.h \
     Auxiliares/Globlal_Include.h\
-    Zona_Pacientes/visitas.h
+    Zona_Pacientes/visitas.h \
+    Auxiliares/comboboxdelegate.h
 
 
 FORMS    += mainwindow.ui \
