@@ -86,7 +86,7 @@ QTabBar::scroller  {
     border-image: url(:Icons/images/spinup.png) 2;
 }
 
-QTabBar Q       ºButton  {
+QTabBar QButton  {
     /* the scroll buttons are tool buttons */
     border-image: url(:Icons/images/spinup.png) 2;
         border-width: 0px;
