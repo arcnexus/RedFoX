@@ -176,6 +176,7 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
                 }
             }
         }
+        BloquearCamposEpisodio(true);
     } else
         QMessageBox::warning(qApp->activeWindow(),tr("Error"),tr("No se pueden cargar los datos del episodio"),tr("aceptar"));
 
@@ -183,8 +184,11 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
 
 void FrmFichaPaciente::cargarEpisodio(int control)
 {
+    // Control 1 = opción cambiar estado campos y botones Cntrl = 0, no cambiar
     if(control==1)
         BloquearCamposEpisodio(false);
+    else
+        BloquearCamposEpisodio(true);
 
     // Cargo valores en pantalla
     ui->txtIdentificadorEpisodio->setText(QString::number(oEpisodio->getid()));
@@ -195,7 +199,9 @@ void FrmFichaPaciente::cargarEpisodio(int control)
 
     int nIndex = ui->cboDoctorEpisodio->findText(oEpisodio->getdoctor());
     if (nIndex !=-1)
-            ui->cboDoctorEpisodio->setCurrentIndex(nIndex);
+        ui->cboDoctorEpisodio->setCurrentIndex(nIndex);
+    else
+        ui->cboDoctorEpisodio->setCurrentIndex(-1);
 
     ui->txtFechaEpisodio->setDate(oEpisodio->getfecha());
     ui->txtHistorialEpisodio->setPlainText(oEpisodio->gethistorial());

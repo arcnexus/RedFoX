@@ -952,6 +952,9 @@ color: rgb(255, 0, 0);</string>
                  </item>
                  <item row="0" column="2" colspan="2">
                   <widget class="QDateTimeEdit" name="txtFechaHoraVisita">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
                    <property name="displayFormat">
                     <string>dd/MM/yyyy HH:mm</string>
                    </property>
@@ -975,7 +978,11 @@ color: rgb(255, 0, 0);</string>
                   </widget>
                  </item>
                  <item row="1" column="2" colspan="6">
-                  <widget class="QTextEdit" name="txtExploracion"/>
+                  <widget class="QTextEdit" name="txtExploracion">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
                  </item>
                  <item row="2" column="0" colspan="2">
                   <widget class="QLabel" name="label_58">
@@ -985,7 +992,11 @@ color: rgb(255, 0, 0);</string>
                   </widget>
                  </item>
                  <item row="2" column="2" colspan="6">
-                  <widget class="QTextEdit" name="txtTratamiento"/>
+                  <widget class="QTextEdit" name="txtTratamiento">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
                  </item>
                  <item row="3" column="0">
                   <widget class="QLabel" name="label_59">
@@ -1002,10 +1013,18 @@ color: rgb(255, 0, 0);</string>
                   </widget>
                  </item>
                  <item row="4" column="0" colspan="5">
-                  <widget class="QTextEdit" name="txtLengua"/>
+                  <widget class="QTextEdit" name="txtLengua">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
                  </item>
                  <item row="4" column="5" colspan="3">
-                  <widget class="QTextEdit" name="txtPulso"/>
+                  <widget class="QTextEdit" name="txtPulso">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
                  </item>
                  <item row="5" column="0">
                   <widget class="QPushButton" name="btnAnadirVisita">
