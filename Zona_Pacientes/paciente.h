@@ -1,7 +1,7 @@
 #ifndef PACIENTE_H
 #define PACIENTE_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 #include "episodio.h"
 

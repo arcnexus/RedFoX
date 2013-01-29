@@ -1,8 +1,7 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
 
-#include "Auxiliares/Globlal_Include.h"
-
+#include "../Auxiliares/Globlal_Include.h"
 class Cliente : public QObject
 {
     Q_OBJECT

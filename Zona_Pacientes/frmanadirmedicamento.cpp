@@ -1,7 +1,7 @@
 #include "frmanadirmedicamento.h"
 #include "ui_frmanadirmedicamento.h"
 
-#include "vademecum.h"
+#include "../vademecum.h"
 
 FrmAnadirMedicamento::FrmAnadirMedicamento(QWidget *parent) :
     QDialog(parent),

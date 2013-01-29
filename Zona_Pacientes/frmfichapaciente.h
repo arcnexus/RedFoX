@@ -1,11 +1,11 @@
 #ifndef FRMFICHAPACIENTE_H
 #define FRMFICHAPACIENTE_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 #include "paciente.h"
 #include "episodio.h"
-#include "imagenesdiagnostico.h"
+#include "../imagenesdiagnostico.h"
 
 namespace Ui {
 class FrmFichaPaciente;

@@ -1,7 +1,7 @@
 #ifndef FRMANALITICA2_H
 #define FRMANALITICA2_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class Frmanalitica2;

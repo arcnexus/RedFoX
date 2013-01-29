@@ -1,7 +1,7 @@
 #ifndef GESTION_SECCIONALMACEN_H
 #define GESTION_SECCIONALMACEN_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 namespace Ui {
 class gestion_SeccionAlmacen;
 }

@@ -1,7 +1,7 @@
 #ifndef FARMACOLOGIA_H
 #define FARMACOLOGIA_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class Farmacologia
 {

@@ -1,7 +1,7 @@
 #include "frmempresas.h"
 #include "ui_frmempresas.h"
 
-#include "Busquedas/frmbuscarpoblacion.h"
+#include "../Busquedas/frmbuscarpoblacion.h"
 
 #ifdef WIN32
     #define and &&

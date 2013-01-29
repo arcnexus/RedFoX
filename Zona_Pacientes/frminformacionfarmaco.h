@@ -1,7 +1,7 @@
 #ifndef FRMINFORMACIONFARMACO_H
 #define FRMINFORMACIONFARMACO_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmInformacionFarmaco;

@@ -2,13 +2,13 @@
 #define FRMCLIENTES_H
 
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
-#include "Busquedas/frmbuscarpoblacion.h"
+#include "../Busquedas/frmbuscarpoblacion.h"
 //
 #include "frmfichapaciente.h"
 #include "cliente.h"
-#include "sqlcalls.h"
+#include "../sqlcalls.h"
 
 namespace Ui {
 class frmClientes;

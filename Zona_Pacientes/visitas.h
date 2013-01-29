@@ -1,8 +1,9 @@
 #ifndef VISITAS_H
 #define VISITAS_H
 
-#include "Auxiliares/Globlal_Include.h"
 
+
+#include "../Auxiliares/Globlal_Include.h"
 class Visitas : public QObject
 {
     Q_OBJECT

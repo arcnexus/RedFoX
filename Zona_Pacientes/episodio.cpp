@@ -1,5 +1,5 @@
 #include "episodio.h"
-#include "sqlcalls.h"
+#include "../sqlcalls.h"
 
 Episodio::Episodio(QObject *parent) : QObject(parent)
 {
