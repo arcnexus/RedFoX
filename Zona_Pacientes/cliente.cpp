@@ -245,6 +245,8 @@ void Cliente::Anadir() {
              QMessageBox::critical(qApp->activeWindow(),"error al insertar:", query.lastError().text());
          } else{
              QMessageBox::information(qApp->activeWindow(),"NuevoCliente","Cliente insertado Correctamente");
+             int nId = query.lastInsertId().toInt();
+             this->id = nId;
          }
 }
 void Cliente::Recuperar(QString cSQL) {
