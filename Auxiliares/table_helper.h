@@ -20,6 +20,7 @@ public:
     void set_Tipo(bool is_compra);
     void blockTable(bool state);
     void resizeTable();
+    bool saveTable(int id_cabecera , QString db , QString db_table);
 signals:
     void totalChanged(QString newTotal);
 public slots:
@@ -35,9 +36,11 @@ private:
     void comprobarCantidad(int row);
     void comprobarDescuento(int row);
     double calcularLinea(int row);
+    void rellenar_con_Articulo(int row);
     bool comprando;
     bool use_re;
-    QHash <QString, QSqlRecord> ivas;
+    QHash <QString, QSqlRecord> ivas;   
+    bool saveLine(int row,int id_cabecera,QString db, QString db_table, QStringList headers);
 };
 
 #endif // TABLE_HELPER_H

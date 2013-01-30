@@ -14,6 +14,11 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QSqlTableModel* modelo = new QSqlTableModel(ui->combo_Pais,QSqlDatabase::database("empresa"));
+    modelo->setTable("paises");
+    modelo->select();
+    ui->combo_Pais->setModel(modelo);
+    ui->combo_Pais->setModelColumn(modelo->fieldIndex("pais"));
     // cargar datos FormaPago
     ui->cboFormaPago->setInsertPolicy(QComboBox::NoInsert);
     ui->cboFormaPago->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
@@ -55,7 +60,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
 
 
-    oPres->RecuperarPresupuesto("Select * from cab_pre where nPresupuesto > -1 order by nPresupuesto  limit 1 ",0);
+    oPres->siguiente();
     LLenarCampos();
     BloquearCampos(true);
 }
@@ -80,7 +85,8 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtcCp->setText(oPres->cCP);
     ui->txtcPoblacion->setText(oPres->cPoblacion);
     ui->txtcProvincia->setText(oPres->cProvincia);
-    ui->txtcPais->setText(QString::number(oPres->idPais));
+    //FIXME pais
+    //ui->txtcPais->setText(QString::number(oPres->idPais));
     ui->txtcTelefono->setText(oPres->cTelefono);
     ui->txtcMovil->setText(oPres->cMovil);
     ui->txtcFax->setText(oPres->cFax);
@@ -146,7 +152,8 @@ void FrmPresupuestosCli::LLenarCamposCliente()
     ui->txtcCp->setText(oClientePres->getcCP());
     ui->txtcPoblacion->setText(oClientePres->getcPoblacion());
     ui->txtcProvincia->setText(oClientePres->getcProvincia());
-    ui->txtcPais->setText(oClientePres->getcPais());
+    //FIXME pais
+    //ui->txtcPais->setText(oClientePres->getcPais());
     ui->txtcCif->setText(oClientePres->getcCifNif());
     ui->txtcTelefono->setText(oClientePres->getcTelefono1());
     ui->txtcFax->setText(oClientePres->getcFax());
@@ -243,7 +250,7 @@ void FrmPresupuestosCli::VaciarCampos()
     ui->txtcCp->setText("");
     ui->txtcPoblacion->setText("");
     ui->txtcProvincia->setText("");
-    ui->txtcPais->setText("");
+    //ui->txtcPais->setText("");
     ui->txtcTelefono->setText("");
     ui->txtcMovil->setText("");
     ui->txtcFax->setText("");
@@ -408,18 +415,22 @@ void FrmPresupuestosCli::on_chklAprovado_stateChanged(int arg1)
 
 void FrmPresupuestosCli::on_btnSiguiente_clicked()
 {
-    int nPresupuesto = oPres->nPresupuesto;
-    oPres->RecuperarPresupuesto("Select * from cab_pre where nPresupuesto >'"+
-                                QString::number(nPresupuesto)+"' order by nPresupuesto  limit 1 ",0);
-    LLenarCampos();
+    if(oPres->siguiente())
+        LLenarCampos();
+    else
+        QMessageBox::information(this,tr("Final del archivo"),
+                                 tr("Se ha llegado al final del archivo.\nNo hay mas presupuestos disponibles"),
+                                 tr("&Aceptar"));
 }
 
 void FrmPresupuestosCli::on_btnAnterior_clicked()
 {
-    int nPresupuesto = oPres->nPresupuesto;
-    oPres->RecuperarPresupuesto("Select * from cab_pre where nPresupuesto <'"+QString::number(nPresupuesto)+
-                                "' order by nPresupuesto desc limit 1 ",1);
-    LLenarCampos();
+    if(oPres->anterior())
+        LLenarCampos();
+    else
+        QMessageBox::information(this,tr("Inicio de archivo"),
+                                 tr("Se ha llegado al principio del archivo.\nNo hay mas presupuestos disponibles"),
+                                 tr("&Aceptar"));
 }
 
 void FrmPresupuestosCli::on_btnAnadir_clicked()
@@ -448,9 +459,11 @@ void FrmPresupuestosCli::on_btnEditar_clicked()
 void FrmPresupuestosCli::on_btnGuardar_clicked()
 {
     LLenarPresupuesto();
-    oPres->AnadirPresupuesto();
-    BloquearCampos(true);
-    LLenarCampos();
+    if(oPres->AnadirPresupuesto())
+    {
+        BloquearCampos(true);
+        LLenarCampos();
+    }
 }
 
 void FrmPresupuestosCli::on_btnBuscar_clicked()
