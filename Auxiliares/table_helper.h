@@ -20,6 +20,7 @@ public:
     void set_Tipo(bool is_compra);
     void blockTable(bool state);
     void resizeTable();
+    void fillTable(QString db , QString table , QString filter);
     bool saveTable(int id_cabecera , QString db , QString db_table);
 signals:
     void totalChanged(QString newTotal);
@@ -41,6 +42,7 @@ private:
     bool use_re;
     QHash <QString, QSqlRecord> ivas;   
     bool saveLine(int row,int id_cabecera,QString db, QString db_table, QStringList headers);
+    void addRow(QSqlRecord r);
 };
 
 #endif // TABLE_HELPER_H

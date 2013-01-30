@@ -94,6 +94,34 @@ void Table_Helper::resizeTable()
     }
 }
 
+void Table_Helper::fillTable(QString db, QString table, QString filter)
+{
+    helped_table->blockSignals(true);
+    helped_table->clear();
+    helped_table->setRowCount(0);
+
+    QStringList headers;
+    headers << "Codigo" << "Cantidad" << "Descripcion" << "P.V.P" << "SubTotal";
+    headers << "DTO" << "DTO%" << "% I.V.A." << "Total";
+
+    helped_table->setHorizontalHeaderLabels(headers);
+
+    QSqlQuery query(QSqlDatabase::database(db));
+    QString sql;
+    if(filter.isEmpty())
+        sql = QString("SELECT * FROM %1").arg(table);
+    else
+        sql = QString("SELECT * FROM %1 WHERE %2").arg(table).arg(filter);
+
+    if(query.exec(sql))
+    {
+        while(query.next())
+            addRow(query.record());
+    }
+    helped_table->blockSignals(false);
+    //calcularTotal();
+}
+
 bool Table_Helper::saveTable(int id_cabecera, QString db, QString db_table)
 {
     bool succes = true;
@@ -101,23 +129,23 @@ bool Table_Helper::saveTable(int id_cabecera, QString db, QString db_table)
     QStringList headers;
     headers.clear();
 
-    if(query.exec("SELECT * FROM "+db_table))
+    if(query.exec("SHOW COLUMNS FROM "+db_table))
     {
-        if(query.next())
+        while(query.next())
         {
             QSqlRecord r = query.record();
-            for(int i = 0; i<r.count();i++)
-                headers << r.fieldName(i);
+            headers << r.value(0).toString();
         }
     }
     else
+    {
         succes = false;
-
+    }
     if(!headers.isEmpty())
     {
         for(int row= 0; row < helped_table->rowCount() ; row++)
         {
-            succes ^= saveLine(row , id_cabecera , db , db_table , headers);
+            succes &= saveLine(row , id_cabecera , db , db_table , headers);
             if(!succes)
                 break;
         }
@@ -214,8 +242,6 @@ void Table_Helper::comprobarCantidad(int row)
             QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),tr("Articulo no encontrado"),tr("Aceptar"));
         }
     }
-    qDebug()<<query.lastQuery();
-    qDebug()<<query.lastError();
     if(comprando)
     {
         if((stock + cantidad) > stockMax)
@@ -294,7 +320,7 @@ bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_tab
     bool succes = true;
 
     QSqlQuery query(QSqlDatabase::database(db));
-    QString item_id = QString("SELECT Id FROM articulos WHERE cCodigo = %1 LIMIT 1")
+    QString item_id = QString("SELECT Id FROM articulos WHERE cCodigo = '%1' LIMIT 1")
             .arg(helped_table->item(row,0)->text());
     int articulo_id = -1;
 
@@ -311,6 +337,7 @@ bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_tab
         QVariantList values;
         values.clear();
         values << "NULL" << id_cabecera << articulo_id;
+        values << helped_table->item(row,0)->text();
         values << helped_table->item(row,1)->text().toInt();
         values << helped_table->item(row,2)->text();
 
@@ -333,20 +360,39 @@ bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_tab
         for (int i=0;i<headers.size();i++)
         {
             if(i!= headers.size()-1)
-                sql.append(":%1,").arg(headers.at(i));
+                sql.append(QString(":%1,").arg(headers.at(i)));
             else
-                sql.append(":%1)").arg(headers.at(i));
+                sql.append(QString(":%1)").arg(headers.at(i)));
         }
         query.prepare(sql);
         for(int i = 0; i<headers.size();i++)
         {
             QString id = QString(":%1").arg(headers.at(i));
-            query.bindValue(id,values.at(i));
+            query.bindValue(id,values.at(i).toString());
         }
         if(!query.exec())
-            succes = false;
+        {
+            succes = false;            
+        }
     }
     return succes;
+}
+
+void Table_Helper::addRow(QSqlRecord r)
+{
+    addRow();
+    helped_table->blockSignals(true);
+    int row = helped_table->rowCount()-1;
+    helped_table->item(row,0)->setText(r.value(3).toString());
+    helped_table->item(row,1)->setText(r.value(4).toString());
+    helped_table->item(row,2)->setText(r.value(5).toString());
+    helped_table->item(row,3)->setText(r.value(6).toString());
+    helped_table->item(row,4)->setText(r.value(7).toString());
+    helped_table->item(row,5)->setText(r.value(8).toString());
+    helped_table->item(row,6)->setText(r.value(9).toString());
+    helped_table->item(row,7)->setText(r.value(10).toString());
+    helped_table->item(row,8)->setText(r.value(11).toString());
+    helped_table->blockSignals(false);
 }
 
 
