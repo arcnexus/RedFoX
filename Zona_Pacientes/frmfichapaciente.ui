@@ -2491,7 +2491,7 @@ color: rgb(255,255,255);</string>
                 </size>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="tabWidget_4Page1">
                 <property name="styleSheet">
@@ -2753,7 +2753,7 @@ color: rgb(0, 0, 0);</string>
           <string notr="true">background-color: #ecefed;</string>
          </property>
          <attribute name="title">
-          <string>Datos Exploración</string>
+          <string>Datos generales primera exploración</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_7">
           <item row="0" column="0" colspan="2">
@@ -3087,7 +3087,7 @@ color: rgb(0, 0, 0);</string>
             <item row="0" column="0" colspan="3">
              <widget class="QLabel" name="label_48">
               <property name="styleSheet">
-               <string notr="true">background-color: rgb(0, 0, 192);
+               <string notr="true">background: #304163;
 color: rgb(255,255,255);</string>
               </property>
               <property name="text">
@@ -3184,7 +3184,7 @@ color: rgb(255,255,255);</string>
           <item row="0" column="0">
            <widget class="QLabel" name="label_49">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(0, 0, 192);
+             <string notr="true">background: #304163;
 color: rgb(255,255,255);</string>
             </property>
             <property name="text">
