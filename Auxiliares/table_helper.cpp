@@ -7,6 +7,16 @@ Table_Helper::Table_Helper(QObject *parent) :
     searcher = 0;
     moneda = "€";
     comprando = true;
+    use_re = false;
+    QSqlQuery query(QSqlDatabase::database("empresa"));
+    if(query.exec("SELECT * FROM tiposiva"))
+    {
+        while(query.next())
+        {
+            QString key = query.record().value("cTipo").toString();
+            ivas.insert(key,query.record());
+        }
+    }
 }
 
 Table_Helper::~Table_Helper()
@@ -18,14 +28,17 @@ Table_Helper::~Table_Helper()
 void Table_Helper::help_table(QTableWidget *table)
 {
     this->helped_table = table;    
-    //TODO cambia iva delegate
     helped_table->setItemDelegateForColumn(0,new SearchDelegate(helped_table,searcher));
     helped_table->setItemDelegateForColumn(1,new SpinBoxDelegate(helped_table));
     helped_table->setItemDelegateForColumn(3,new SpinBoxDelegate(helped_table,true,0));
     helped_table->setItemDelegateForColumn(4,new ReadOnlyDelegate(helped_table));
     helped_table->setItemDelegateForColumn(5,new SpinBoxDelegate(helped_table,true,0));
     helped_table->setItemDelegateForColumn(6,new SpinBoxDelegate(helped_table,true,0,100));
-    helped_table->setItemDelegateForColumn(7,new SpinBoxDelegate(helped_table,true,0,100));
+
+    comboboxDelegate* comboModel = new comboboxDelegate(helped_table);
+    comboModel->setUpModel("empresa","tiposiva","cTipo");
+    helped_table->setItemDelegateForColumn(7,comboModel);
+
     helped_table->setItemDelegateForColumn(8,new ReadOnlyDelegate(helped_table));
     connect(helped_table,SIGNAL(cellChanged(int,int)),this,SLOT(handle_cellChanged(int,int)));
 }
@@ -45,6 +58,23 @@ void Table_Helper::set_Tipo(bool is_compra)
     comprando = is_compra;
 }
 
+void Table_Helper::blockTable(bool state)
+{
+    if(helped_table)
+    {
+        if(state)
+            helped_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        else
+            helped_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
+    }
+}
+
+void Table_Helper::set_UsarRE(bool state)
+{
+    use_re = state;
+    calcularTotal();
+}
+
 void Table_Helper::resizeTable()
 {
     if(helped_table)
@@ -62,6 +92,37 @@ void Table_Helper::resizeTable()
 
         helped_table->horizontalHeader()->setUpdatesEnabled(true);
     }
+}
+
+bool Table_Helper::saveTable(int id_cabecera, QString db, QString db_table)
+{
+    bool succes = true;
+    QSqlQuery query(QSqlDatabase::database(db));
+    QStringList headers;
+    headers.clear();
+
+    if(query.exec("SELECT * FROM "+db_table))
+    {
+        if(query.next())
+        {
+            QSqlRecord r = query.record();
+            for(int i = 0; i<r.count();i++)
+                headers << r.fieldName(i);
+        }
+    }
+    else
+        succes = false;
+
+    if(!headers.isEmpty())
+    {
+        for(int row= 0; row < helped_table->rowCount() ; row++)
+        {
+            succes ^= saveLine(row , id_cabecera , db , db_table , headers);
+            if(!succes)
+                break;
+        }
+    }
+    return succes;
 }
 
 void Table_Helper::addRow()
@@ -113,9 +174,11 @@ void Table_Helper::removeRow()
 
 void Table_Helper::handle_cellChanged(int row, int column)
 {
-    if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
+    if (column == 0)
+        rellenar_con_Articulo(row);
+    else if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
         comprobarCantidad(row);
-    if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
+    else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
         comprobarDescuento(row);
     calcularTotal();
 }
@@ -188,16 +251,102 @@ double Table_Helper::calcularLinea(int row)
 
     double dto = helped_table->item(row,5)->text().toDouble();
     double dto_percent = helped_table->item(row,6)->text().toDouble();
-    double iva = helped_table->item(row,7)->text().toDouble();
+
+    double iva = ivas[helped_table->item(row,7)->text()].value("nIVA").toDouble();
+
+    double re = ivas[helped_table->item(row,7)->text()].value("nRegargoEquivalencia").toDouble();
 
     double total = subtotal - dto;
 
     double x = 1 - (dto_percent / 100);
     total = total * x;
 
+    double add_re = (re / 100) * total;
+
     double y = 1 + (iva/100);
     total = total * y;
 
+    if(use_re)
+        total = total + add_re;
     helped_table->item(row,8)->setText(QString::number(total,'f',2));
     return total;
 }
+
+void Table_Helper::rellenar_con_Articulo(int row)
+{
+    QString codigo = helped_table->item(row,0)->text();
+    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QString sql = QString("SELECT * FROM articulos WHERE cCodigo = '%1'").arg(codigo);
+    query.prepare(sql);
+    if(query.exec())
+    {
+        if(query.next())
+        {
+            QSqlRecord r = query.record();
+            helped_table->item(row,2)->setText(r.value("cDescripcionReducida").toString());
+            //TODO recopilar otros datos del articulo
+        }
+    }
+}
+
+bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_table, QStringList headers)
+{
+    bool succes = true;
+
+    QSqlQuery query(QSqlDatabase::database(db));
+    QString item_id = QString("SELECT Id FROM articulos WHERE cCodigo = %1 LIMIT 1")
+            .arg(helped_table->item(row,0)->text());
+    int articulo_id = -1;
+
+    if(query.exec(item_id))
+    {
+        if(query.next())
+            articulo_id = query.record().value(0).toInt();
+    }
+    else
+        succes = false;
+
+    if(succes)
+    {
+        QVariantList values;
+        values.clear();
+        values << "NULL" << id_cabecera << articulo_id;
+        values << helped_table->item(row,1)->text().toInt();
+        values << helped_table->item(row,2)->text();
+
+        values << helped_table->item(row,3)->text().toDouble();
+        values << helped_table->item(row,4)->text().toDouble();
+        values << helped_table->item(row,5)->text().toDouble();
+        values << helped_table->item(row,6)->text().toDouble();
+
+        values << ivas[helped_table->item(row,7)->text()].value("nIva");
+        values << helped_table->item(row,8)->text().toDouble();
+
+        //cantidad = cantidadaservir por defecto
+        values << helped_table->item(row,1)->text().toInt();
+
+        QString sql = "INSERT INTO ";
+        sql.append(db_table);
+        sql.append("(");
+        sql.append(headers.join(","));
+        sql.append(") VALUES (");
+        for (int i=0;i<headers.size();i++)
+        {
+            if(i!= headers.size()-1)
+                sql.append(":%1,").arg(headers.at(i));
+            else
+                sql.append(":%1)").arg(headers.at(i));
+        }
+        query.prepare(sql);
+        for(int i = 0; i<headers.size();i++)
+        {
+            QString id = QString(":%1").arg(headers.at(i));
+            query.bindValue(id,values.at(i));
+        }
+        if(!query.exec())
+            succes = false;
+    }
+    return succes;
+}
+
+

@@ -9,7 +9,7 @@ QWidget *ReadOnlyDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 {
     Q_UNUSED(option);
     Q_UNUSED(index);
-    //return new QWidget(parent);
-    return 0;
-
+    return 0;    
 }
+
+

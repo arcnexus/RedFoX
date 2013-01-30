@@ -654,16 +654,6 @@ void frmFacturas::on_btnBuscar_clicked()
     LLenarCampos();
 }
 
-void frmFacturas::on_txtcCodigoCliente_lostFocus()
-{
-    if (!ui->txtcCodigoCliente->text().isEmpty() && ui->txtcCliente->text().isEmpty()) {
-        QString cSQL = "Select * from clientes where cCodigoCliente = '"+ui->txtcCodigoCliente->text().trimmed() +"' limit 1";
-        oCliente1->Recuperar(cSQL);
-        LLenarCamposCliente();
-        //ui->txtcCodigoArticulo->setFocus();
-    }
-}
-
 void frmFacturas::on_btnImprimir_clicked()
 {
    // KDReports::Report report;

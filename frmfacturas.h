@@ -53,8 +53,6 @@ private slots:
 
     void on_btnBuscar_clicked();
 
-    void on_txtcCodigoCliente_lostFocus();
-
     void on_btnImprimir_clicked();
 
     void RellenarDespuesCalculo();

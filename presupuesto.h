@@ -28,6 +28,10 @@ public:
     double nDto;
     QString tComentarios;
     double rImporte;
+    double rImporte1;
+    double rImporte2;
+    double rImporte3;
+    double rImporte4;
     double rSubTotal;
     double rDescuento;
     double rTotal;
@@ -75,9 +79,10 @@ public:
 
 public slots:
     // Metodos de trabajo Clase Presupuesto
-    void AnadirPresupuesto();
-    void RecuperarPresupuesto(QString cSQL);
-    void RecuperarPresupuesto(QString cSQL, int nAccion);
+    bool AnadirPresupuesto();
+    bool RecuperarPresupuesto(QString cSQL);
+    bool siguiente();
+    bool anterior();
     void GuardarPres(int nId_Presupuesto);
     int NuevoNumeroPresupuesto();
     void AnadirLineaPresupuesto(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
