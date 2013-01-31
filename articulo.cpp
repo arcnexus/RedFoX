@@ -1,6 +1,6 @@
 #include "articulo.h"
 
-Articulo::Articulo()
+Articulo::Articulo(QObject *parent) : QObject(parent)
 {
 
 }
