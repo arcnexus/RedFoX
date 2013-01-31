@@ -43,6 +43,8 @@ private:
     QHash <QString, QSqlRecord> ivas;   
     bool saveLine(int row,int id_cabecera,QString db, QString db_table, QStringList headers);
     void addRow(QSqlRecord r);
+
+    bool eventFilter(QObject *target, QEvent *event);
 };
 
 #endif // TABLE_HELPER_H

@@ -49,6 +49,8 @@ void Table_Helper::help_table(QTableWidget *table)
     resizeTable();
 
     connect(helped_table,SIGNAL(cellChanged(int,int)),this,SLOT(handle_cellChanged(int,int)));
+
+    helped_table->installEventFilter(this);
 }
 
 void Table_Helper::set_Searcher(Db_table_View *table_view)
@@ -73,7 +75,9 @@ void Table_Helper::blockTable(bool state)
         if(state)
             helped_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
         else
+        {
             helped_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
+        }
     }
 }
 
@@ -410,6 +414,21 @@ void Table_Helper::addRow(QSqlRecord r)
     }
     helped_table->item(row,8)->setText(r.value(11).toString());
     helped_table->blockSignals(false);
+}
+
+bool Table_Helper::eventFilter(QObject *target, QEvent *event)
+{
+    Q_UNUSED(target);
+    if (event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_Down)
+        {
+            if(helped_table->currentRow() == (helped_table->rowCount()-1))
+                addRow();
+        }
+    }
+    return false;
 }
 
 
