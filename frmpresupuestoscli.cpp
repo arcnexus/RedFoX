@@ -59,9 +59,11 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
     connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
-    connect(&helper,SIGNAL(totalChanged(QString)),this,SLOT(totalChanged(QString)));
-    connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
 
+    connect(&helper,SIGNAL(totalChanged(double,double,double,double,double,double,QString)),
+            this,SLOT(totalChanged(double,double,double,double,double,double,QString)));
+
+    connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
 
     if(oPres->siguiente())
     {
@@ -549,9 +551,15 @@ void FrmPresupuestosCli::on_botBuscarCliente_clicked()
     LLenarCamposCliente();
 }
 
-void FrmPresupuestosCli::totalChanged(QString total)
+void FrmPresupuestosCli::totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda)
 {
-    ui->lbl_total->setText(total);
+    ui->txtrBase->setText(QString::number(base)+moneda);
+    ui->txtrDescuento->setText(QString::number(dto)+moneda);
+    ui->txtrSubtotal->setText(QString::number(subTotal)+moneda);
+    ui->txtrImporteIva->setText(QString::number(iva)+moneda);
+    ui->txtrTotalRecargoEq->setText(QString::number(re)+moneda);
+    ui->txtrTotal->setText(QString::number(total)+moneda);
+    ui->lbl_total->setText(QString::number(total)+moneda);
 }
 
 void FrmPresupuestosCli::on_btnDeshacer_clicked()

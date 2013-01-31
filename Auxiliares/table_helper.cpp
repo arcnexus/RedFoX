@@ -93,7 +93,7 @@ void Table_Helper::resizeTable()
     {
         helped_table->horizontalHeader()->setUpdatesEnabled(false);
 
-        for (unsigned int i = 0; i < helped_table->columnCount(); i++)
+        for (int i = 0; i < helped_table->columnCount(); i++)
             helped_table->horizontalHeader()->resizeSection(i, 100);
 
 
@@ -225,10 +225,78 @@ void Table_Helper::handle_cellChanged(int row, int column)
 
 void Table_Helper::calcularTotal()
 {
+    double base = 0;
+    double dto = 0;
     double total = 0;
+    double iva = 0;
+    double re = 0;
     for(int i = 0; i< helped_table->rowCount() ; i++)
-        total += calcularLinea(i);
-    emit totalChanged(QString::number(total,'f',2)+moneda);
+    {
+        base += calcularBaseLinea(i);
+        dto += calcularDtoLinea(i);
+        iva += calcularIVALinea(i);
+        re += calcularRELinea(i);
+        total += calcularTotalLinea(i);
+    }
+    double subtotal = base - dto;
+    emit totalChanged( base , dto , subtotal ,  iva,  re,  total,  moneda);
+}
+
+double Table_Helper::calcularDtoLinea(int row)
+{
+    double base = helped_table->item(row,4)->text().toDouble();
+    double dtoNeto = helped_table->item(row,5)->text().toDouble();
+    double descPerc = helped_table->item(row,6)->text().toDouble();
+
+    double total_descPerc = (base * descPerc) / 100;
+
+    return total_descPerc + dtoNeto;
+}
+
+double Table_Helper::calcularBaseLinea(int row)
+{
+    return helped_table->item(row,4)->text().toDouble();
+}
+
+double Table_Helper::calcularIVALinea(int row)
+{
+    double base = helped_table->item(row,4)->text().toDouble();
+    double dtoNeto = helped_table->item(row,5)->text().toDouble();
+    double descPerc = helped_table->item(row,6)->text().toDouble();
+
+    double total_descPerc = (base * descPerc) / 100;
+
+    base -= total_descPerc;
+    base -= dtoNeto;
+
+    double iva = ivas[helped_table->item(row,7)->text()].value("nIva").toDouble();
+
+    double total_iva = (base * iva)/100;
+
+    return total_iva;
+}
+
+double Table_Helper::calcularRELinea(int row)
+{
+    if(use_re)
+    {
+        double base = helped_table->item(row,4)->text().toDouble();
+        double dtoNeto = helped_table->item(row,5)->text().toDouble();
+        double descPerc = helped_table->item(row,6)->text().toDouble();
+
+        double total_descPerc = (base * descPerc) / 100;
+
+        base -= total_descPerc;
+        base -= dtoNeto;
+
+        double re = ivas[helped_table->item(row,7)->text()].value("nRegargoEquivalencia").toDouble();
+
+        double total_re = (base * re)/100;
+
+        return total_re;
+    }
+    else
+        return 0;
 }
 
 void Table_Helper::comprobarCantidad(int row)
@@ -280,7 +348,7 @@ void Table_Helper::comprobarDescuento(int row)
                              tr("Descuento mayor del valor del producto"),tr("Aceptar"));
 }
 
-double Table_Helper::calcularLinea(int row)
+double Table_Helper::calcularTotalLinea(int row)
 {
     int cantidad = helped_table->item(row,1)->text().toInt();
     double pvp = helped_table->item(row,3)->text().toDouble();

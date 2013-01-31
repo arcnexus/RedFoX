@@ -23,7 +23,7 @@ public:
     void fillTable(QString db , QString table , QString filter);
     bool saveTable(int id_cabecera , QString db , QString db_table);
 signals:
-    void totalChanged(QString newTotal);
+    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
 public slots:
     void set_UsarRE(bool state);
     void addRow();
@@ -33,10 +33,16 @@ private:
     QTableWidget* helped_table;
     Db_table_View* searcher;
     QString moneda;
+
     void calcularTotal();
+    double calcularDtoLinea(int row);
+    double calcularBaseLinea(int row);
+    double calcularIVALinea(int row);
+    double calcularRELinea(int row);
+    double calcularTotalLinea(int row);
+
     void comprobarCantidad(int row);
     void comprobarDescuento(int row);
-    double calcularLinea(int row);
     void rellenar_con_Articulo(int row);
     bool comprando;
     bool use_re;
