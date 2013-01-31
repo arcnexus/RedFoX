@@ -3,10 +3,11 @@
 
 #include "Auxiliares/Globlal_Include.h"
 
-class Articulo
+class Articulo : public QObject
 {
+    Q_OBJECT
 public:
-    Articulo();
+    Articulo(QObject* parent = 0);
     void Anadir();
     void Recuperar(QString cSQL);
     void Recuperar(QString cSQL,int nProcede);
