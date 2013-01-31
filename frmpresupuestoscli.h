@@ -48,9 +48,6 @@ private slots:
 
 private:
     Ui::FrmPresupuestosCli *ui;
-    QSortFilterProxyModel *proxyModel;
-    QTableView *tableView;
-    QSqlQueryModel *ModelLin_pre;
 
     Table_Helper helper;
     bool editando;

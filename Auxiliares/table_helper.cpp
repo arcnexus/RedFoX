@@ -40,6 +40,14 @@ void Table_Helper::help_table(QTableWidget *table)
     helped_table->setItemDelegateForColumn(7,comboModel);
 
     helped_table->setItemDelegateForColumn(8,new ReadOnlyDelegate(helped_table));
+
+    QStringList headers;
+    headers << "Codigo" << "Cantidad" << "Descripcion" << "P.V.P" << "SubTotal";
+    headers << "DTO" << "DTO%" << "% I.V.A." << "Total";
+
+    helped_table->setHorizontalHeaderLabels(headers);
+    resizeTable();
+
     connect(helped_table,SIGNAL(cellChanged(int,int)),this,SLOT(handle_cellChanged(int,int)));
 }
 
@@ -119,7 +127,7 @@ void Table_Helper::fillTable(QString db, QString table, QString filter)
             addRow(query.record());
     }
     helped_table->blockSignals(false);
-    //calcularTotal();
+    calcularTotal();
 }
 
 bool Table_Helper::saveTable(int id_cabecera, QString db, QString db_table)
@@ -390,7 +398,16 @@ void Table_Helper::addRow(QSqlRecord r)
     helped_table->item(row,4)->setText(r.value(7).toString());
     helped_table->item(row,5)->setText(r.value(8).toString());
     helped_table->item(row,6)->setText(r.value(9).toString());
-    helped_table->item(row,7)->setText(r.value(10).toString());
+    //helped_table->item(row,7)->setText(r.value(10).toString());
+    QList<QString> keys = ivas.uniqueKeys();
+    for(int i = 0;i<keys.size();i++)
+    {
+        if(ivas[keys.at(i)].value("nIVA").toDouble() == r.value(10).toDouble())
+        {
+            helped_table->item(row,7)->setText(keys.at(i));
+            break;
+        }
+    }
     helped_table->item(row,8)->setText(r.value(11).toString());
     helped_table->blockSignals(false);
 }

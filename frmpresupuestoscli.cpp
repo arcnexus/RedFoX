@@ -55,7 +55,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
 
     helper.set_Searcher(searcher);
     helper.set_Tipo(false);
-    helper.help_table(ui->Lineas);
+    helper.help_table(ui->tableWidget);
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
     connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
@@ -241,6 +241,7 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     oPres->nRecargoEquivalencia2 = (ui->txtnRec2->text().toDouble());
     oPres->nRecargoEquivalencia3 = (ui->txtnRec3->text().toDouble());
     oPres->nRecargoEquivalencia4 = (ui->txtnRec4->text().toDouble());
+    oPres->lRecargoEquivalencia = ui->chklRecargoEq->isChecked();
     oPres->rRec1 = (ui->txtrRecargoEq1->text().replace(".","").toDouble());
     oPres->rRec2 = (ui->txtrRecargoEq2->text().replace(".","").toDouble());
     oPres->rRec3 = (ui->txtrRecargoEq3->text().replace(".","").toDouble());
@@ -484,7 +485,7 @@ void FrmPresupuestosCli::on_btnEditar_clicked()
 
 void FrmPresupuestosCli::on_btnGuardar_clicked()
 {
-    if(ui->Lineas->rowCount() == 0)
+    if(ui->tableWidget->rowCount() == 0)
     {
         QMessageBox::information(this,tr("Presupuesto vacio"),
                                  tr("Está intentando guardar un presupuesto vacio.\nPor favor, añada alguna linea al presupuesto."),
@@ -496,7 +497,19 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
     bool succes = true;
     if(editando)
     {
-
+        int iPre = ui->txtnPresupuesto->text().toInt();
+        //actualizar cabezera
+        succes &= oPres->GuardarPres(iPre);
+        //Borrar lineas
+        succes &= oPres->BorrarLineas(iPre);
+        //guardar lineas
+        succes &= helper.saveTable(iPre,"empresa","lin_pre");
+        if(succes)
+        {
+            BloquearCampos(true);
+            LLenarCampos();
+            succes = QSqlDatabase::database("empresa").commit();
+        }
     }
     else
     {
@@ -546,4 +559,6 @@ void FrmPresupuestosCli::on_btnDeshacer_clicked()
     VaciarCampos();
     LLenarCampos();
     BloquearCampos(true);
+    QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPresupuesto->text());
+    helper.fillTable("empresa","lin_pre",filter);
 }
