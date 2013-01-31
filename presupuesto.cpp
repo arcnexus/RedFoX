@@ -117,6 +117,7 @@ bool Presupuesto::AnadirPresupuesto()
      }
      else
      {
+         qDebug() << cab_pre.executedQuery();
          this->id = cab_pre.lastInsertId().toInt();
          QString cSQL = "Select * from cab_pre where id ="+QString::number(this->id);
          RecuperarPresupuesto(cSQL);
@@ -168,9 +169,16 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->cFactura = registro.field("cFactura").value().toString();
             this->nAlbaran = registro.field("nAlbaran").value().toInt();
             this->nPedido = registro.field("nPedido").value().toInt();
+
             this->id_FormaPago = registro.field("id_FormaPago").value().toInt();
-            this->cCodigoFormaPago = registro.field("cCodigoFormaPago").value().toString();
-            this->cDescripcionFormaPago = registro.field("cDescripcionFormaPago").value().toString();
+            QSqlQuery q(QSqlDatabase::database("empresa"));
+            if(q.exec("SELECT * FROM formpago WHERE id = "+QString::number(id_FormaPago)))
+                if(q.next())
+                {
+                    this->cCodigoFormaPago = q.record().value("cCodigo").toString();
+                    this->cDescripcionFormaPago = q.record().value("cFormapago").toString();
+                }
+
             this->tLugarEntrega = registro.field("tLugarEntrega").value().toString();
             this->cAtencionde = registro.field("cAtencionde").value().toString();
             this->rBase1 = registro.field("rImporte1").value().toDouble();

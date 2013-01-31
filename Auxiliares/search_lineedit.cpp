@@ -36,7 +36,9 @@ void Search_LineEdit::on_btn_buscar_clicked()
 {
     if(table_view)
         if(table_view->exec() == QDialog::Accepted)
-            ui->lineEdit->setText(table_view->selected_value);
+            if (ui)
+                if(ui->lineEdit)
+                    ui->lineEdit->setText(table_view->selected_value);
 }
 
 void Search_LineEdit::paintEvent(QPaintEvent *)

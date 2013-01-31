@@ -993,6 +993,11 @@ background-color: rgb(255, 255, 255);</string>
     <string>Motivos de interconsulta</string>
    </property>
   </action>
+  <action name="actionTipos_de_IVA">
+   <property name="text">
+    <string>Tipos de I.V.A</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>lineUsuarioActivo</tabstop>

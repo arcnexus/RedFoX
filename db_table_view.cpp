@@ -7,6 +7,7 @@ Db_table_View::Db_table_View(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowState(Qt::WindowMaximized);
+    selected_value = "";
 }
 
 Db_table_View::~Db_table_View()

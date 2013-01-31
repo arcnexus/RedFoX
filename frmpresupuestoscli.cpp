@@ -22,9 +22,12 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     // cargar datos FormaPago
     ui->cboFormaPago->setInsertPolicy(QComboBox::NoInsert);
     ui->cboFormaPago->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
-    model=new QSqlQueryModel(this);
-    model->setQuery("Select cFormapago from FormPago",QSqlDatabase::database("empresa"));
+
+    QSqlTableModel* model = new QSqlTableModel(ui->cboFormaPago,QSqlDatabase::database("empresa"));
+    model->setTable("formpago");
+    model->select();
     ui->cboFormaPago->setModel(model);
+    ui->cboFormaPago->setModelColumn(model->fieldIndex("cFormapago"));
 
 
     //-----------------------
@@ -60,8 +63,12 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
 
 
-    oPres->siguiente();
-    LLenarCampos();
+    if(oPres->siguiente())
+    {
+        LLenarCampos();
+        QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPresupuesto->text());
+        helper.fillTable("empresa","lin_pre",filter);
+    }
     BloquearCampos(true);
 }
 
@@ -103,9 +110,11 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtcFactura->setText(oPres->cFactura);
     ui->txtnAlbaran->setText(QString::number(oPres->nAlbaran));
     ui->txtnPedido->setText(QString::number(oPres->nPedido));
+
     int nIndex =  ui->cboFormaPago->findText(oPres->cDescripcionFormaPago);
-    if (!nIndex ==-1)
+    if (!(nIndex ==-1))
         ui->cboFormaPago->setCurrentIndex(nIndex);
+
     ui->txttLugarEntrega->setPlainText(oPres->tLugarEntrega);
     ui->txtcAtencionde->setText(oPres->cAtencionde);
     ui->txtrBase1->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rBase1,'f',2)));
@@ -182,8 +191,10 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     oPres->cCP = (ui->txtcCp->text());
     oPres->cPoblacion = (ui->txtcPoblacion->text());
     oPres->cProvincia = (ui->txtcProvincia->text());
-    //TODO fix pais
-    //oPres->cPais = (ui->txtcPais->text());
+
+    QSqlTableModel*  modelo = static_cast<QSqlTableModel*>(ui->combo_Pais->model());
+    oPres->idPais = modelo->record(ui->combo_Pais->currentIndex()).value("id").toInt();
+
     oPres->cTelefono = (ui->txtcTelefono->text());
     oPres->cMovil = (ui->txtcMovil->text());
     oPres->cFax = (ui->txtcFax->text());
@@ -198,17 +209,19 @@ void FrmPresupuestosCli::LLenarPresupuesto()
 
     oPres->dFechaAprobacion = (ui->txtdFechaAprovacion->date());
     oPres->rImporteFactura = (ui->txtrImporteFactura->text().replace(".","").toDouble());
-    oPres->cFactura = (ui->txtcFactura->text());
+
+    if(ui->txtcFactura->text()=="")
+        oPres->cFactura = "0";
+    else
+        oPres->cFactura = (ui->txtcFactura->text());
+
     oPres->nAlbaran = (ui->txtnAlbaran->text().toInt());
     oPres->nPedido = (ui->txtnPedido->text().toInt());
-    oPres->cDescripcionFormaPago = (ui->cboFormaPago->currentText());
 
-    QSqlQuery qFormPago(QSqlDatabase::database("empresa"));
-    qFormPago.exec("Select id,cCodigo from FormPago where cFormapago ='"+oPres->cDescripcionFormaPago+"'");
-    qFormPago.next();
-    QSqlRecord rFormPago = qFormPago.record();
-    oPres->cCodigoFormaPago = (rFormPago.field("cCodigo").value().toString());
-    oPres->id_FormaPago = (rFormPago.field("id").value().toInt());
+    QSqlTableModel*  modeloPago = static_cast<QSqlTableModel*>(ui->cboFormaPago->model());
+    oPres->cDescripcionFormaPago = ui->cboFormaPago->currentText();
+    oPres->cCodigoFormaPago = modeloPago->record(ui->combo_Pais->currentIndex()).value("cCodigo").toString();
+    oPres->id_FormaPago = modeloPago->record(ui->combo_Pais->currentIndex()).value("id").toInt();
 
     oPres->tLugarEntrega = (ui->txttLugarEntrega->toPlainText());
     oPres->cAtencionde = (ui->txtcAtencionde->text());
@@ -361,6 +374,7 @@ void FrmPresupuestosCli::BloquearCampos(bool state)
     ui->btnAnadirLinea->setEnabled(!state);
     ui->btn_borrarLinea->setEnabled(!state);
     ui->botBuscarCliente->setEnabled(!state);
+    ui->txtnPresupuesto->setReadOnly(true);
 }
 void FrmPresupuestosCli::RellenarDespuesCalculo()
 {
@@ -416,7 +430,11 @@ void FrmPresupuestosCli::on_chklAprovado_stateChanged(int arg1)
 void FrmPresupuestosCli::on_btnSiguiente_clicked()
 {
     if(oPres->siguiente())
+    {
         LLenarCampos();
+        QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPresupuesto->text());
+        helper.fillTable("empresa","lin_pre",filter);
+    }
     else
         QMessageBox::information(this,tr("Final del archivo"),
                                  tr("Se ha llegado al final del archivo.\nNo hay mas presupuestos disponibles"),
@@ -426,7 +444,11 @@ void FrmPresupuestosCli::on_btnSiguiente_clicked()
 void FrmPresupuestosCli::on_btnAnterior_clicked()
 {
     if(oPres->anterior())
+    {
         LLenarCampos();
+        QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPresupuesto->text());
+        helper.fillTable("empresa","lin_pre",filter);
+    }
     else
         QMessageBox::information(this,tr("Inicio de archivo"),
                                  tr("Se ha llegado al principio del archivo.\nNo hay mas presupuestos disponibles"),
@@ -436,10 +458,13 @@ void FrmPresupuestosCli::on_btnAnterior_clicked()
 void FrmPresupuestosCli::on_btnAnadir_clicked()
 {
     VaciarCampos();
+    QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPresupuesto->text());
+    helper.fillTable("empresa","lin_pre",filter);
     BloquearCampos(false);
     int next = oPres->NuevoNumeroPresupuesto();
     ui->txtnPresupuesto->setText(QString::number(next));
     ui->txtcCodigoCliente->setFocus();
+    editando = false;
 }
 
 void FrmPresupuestosCli::on_btnEditar_clicked()
@@ -447,6 +472,7 @@ void FrmPresupuestosCli::on_btnEditar_clicked()
     if (oPres->cFactura=="0")
     {
         BloquearCampos(false);
+        editando = true;
     }
     else
     {
@@ -458,11 +484,39 @@ void FrmPresupuestosCli::on_btnEditar_clicked()
 
 void FrmPresupuestosCli::on_btnGuardar_clicked()
 {
-    LLenarPresupuesto();
-    if(oPres->AnadirPresupuesto())
+    if(ui->Lineas->rowCount() == 0)
     {
-        BloquearCampos(true);
-        LLenarCampos();
+        QMessageBox::information(this,tr("Presupuesto vacio"),
+                                 tr("Está intentando guardar un presupuesto vacio.\nPor favor, añada alguna linea al presupuesto."),
+                                 tr("&Aceptar"));
+        return;
+    }
+    LLenarPresupuesto();
+    QSqlDatabase::database("empresa").transaction();
+    bool succes = true;
+    if(editando)
+    {
+
+    }
+    else
+    {
+        succes &= oPres->AnadirPresupuesto();
+        succes &= helper.saveTable(oPres->nPresupuesto,"empresa","lin_pre");
+        if(succes)
+        {
+            BloquearCampos(true);
+            LLenarCampos();
+            succes = QSqlDatabase::database("empresa").commit();
+        }
+    }
+    if(succes)
+        QMessageBox::information(this,tr("Guardado"),tr("Guardado con éxito"),tr("&Aceptar"));
+    else
+    {
+        QMessageBox::critical(this,tr("Error"),
+                              tr("Error al guardar el presupuesto.\n")+QSqlDatabase::database("empresa").lastError().text(),
+                              tr("&Aceptar"));
+        QSqlDatabase::database("empresa").rollback();
     }
 }
 
