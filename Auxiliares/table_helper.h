@@ -41,6 +41,7 @@ private:
     double calcularRELinea(int row);
     double calcularTotalLinea(int row);
 
+    void calcularDesglose();
     void comprobarCantidad(int row);
     void comprobarDescuento(int row);
     void rellenar_con_Articulo(int row);

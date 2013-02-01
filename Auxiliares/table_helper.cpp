@@ -76,7 +76,7 @@ void Table_Helper::blockTable(bool state)
             helped_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
         else
         {
-            helped_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
+            helped_table->setEditTriggers(QAbstractItemView::DoubleClicked);
         }
     }
 }
@@ -85,6 +85,7 @@ void Table_Helper::set_UsarRE(bool state)
 {
     use_re = state;
     calcularTotal();
+    calcularDesglose();
 }
 
 void Table_Helper::resizeTable()
@@ -132,6 +133,7 @@ void Table_Helper::fillTable(QString db, QString table, QString filter)
     }
     helped_table->blockSignals(false);
     calcularTotal();
+    calcularDesglose();
 }
 
 bool Table_Helper::saveTable(int id_cabecera, QString db, QString db_table)
@@ -210,6 +212,7 @@ void Table_Helper::removeRow()
             helped_table->removeRow(rowsList.at(i));
     }
     calcularTotal();
+    calcularDesglose();
 }
 
 void Table_Helper::handle_cellChanged(int row, int column)
@@ -221,6 +224,7 @@ void Table_Helper::handle_cellChanged(int row, int column)
     else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
         comprobarDescuento(row);
     calcularTotal();
+    calcularDesglose();
 }
 
 void Table_Helper::calcularTotal()
@@ -376,6 +380,11 @@ double Table_Helper::calcularTotalLinea(int row)
         total = total + add_re;
     helped_table->item(row,8)->setText(QString::number(total,'f',2));
     return total;
+}
+
+void Table_Helper::calcularDesglose()
+{
+
 }
 
 void Table_Helper::rellenar_con_Articulo(int row)

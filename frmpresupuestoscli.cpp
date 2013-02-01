@@ -468,6 +468,7 @@ void FrmPresupuestosCli::on_btnAnadir_clicked()
     ui->txtnPresupuesto->setText(QString::number(next));
     ui->txtcCodigoCliente->setFocus();
     editando = false;
+    emit block();
 }
 
 void FrmPresupuestosCli::on_btnEditar_clicked()
@@ -476,6 +477,7 @@ void FrmPresupuestosCli::on_btnEditar_clicked()
     {
         BloquearCampos(false);
         editando = true;
+        emit block();
     }
     else
     {
@@ -533,6 +535,7 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
                               tr("&Aceptar"));
         QSqlDatabase::database("empresa").rollback();
     }
+    emit unblock();
 }
 
 void FrmPresupuestosCli::on_btnBuscar_clicked()
@@ -560,6 +563,11 @@ void FrmPresupuestosCli::totalChanged(double base , double dto ,double subTotal 
     ui->txtrTotalRecargoEq->setText(QString::number(re)+moneda);
     ui->txtrTotal->setText(QString::number(total)+moneda);
     ui->lbl_total->setText(QString::number(total)+moneda);
+
+    ui->txtrBaseTotal->setText(QString::number(base)+moneda);
+    ui->txtrTotalIVA->setText(QString::number(iva)+moneda);
+    ui->txtrTotalRecargoEq_2->setText(QString::number(re)+moneda);
+    ui->txtrTotal_2->setText(QString::number(total)+moneda);
 }
 
 void FrmPresupuestosCli::on_btnDeshacer_clicked()
@@ -569,4 +577,5 @@ void FrmPresupuestosCli::on_btnDeshacer_clicked()
     BloquearCampos(true);
     QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPresupuesto->text());
     helper.fillTable("empresa","lin_pre",filter);
+    emit unblock();
 }

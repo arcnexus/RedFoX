@@ -14,7 +14,10 @@ class FrmPresupuestosCli;
 class FrmPresupuestosCli : public QDialog
 {
     Q_OBJECT
-    
+
+signals:
+    void block()    ;
+    void unblock();
 public:
     explicit FrmPresupuestosCli(QWidget *parent = 0);
     ~FrmPresupuestosCli();
