@@ -19,7 +19,6 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA4));
     // Control objetos
     ui->lblMensajeRecuperar->setVisible(false);
-    ui->botRotarImagen90->setVisible(false);
 
     bloquearCampos();
     //-----------------------------------------
@@ -138,9 +137,6 @@ void FrmArticulos::bloquearCampos() {
     ui->botBuscarSeccion->setEnabled(false);
     ui->botBuscarFamilia->setEnabled(false);
     ui->botBuscarSubfamilia->setEnabled(false);
-    ui->botBuscarModelo->setEnabled(false);
-    ui->botBuscarTalla->setEnabled(false);
-    ui->botBuscarColor->setEnabled(false);
     ui->botCambiarImagen->setEnabled(false);
 
 }
@@ -206,9 +202,6 @@ void FrmArticulos::desbloquearCampos() {
     ui->botBuscarSeccion->setEnabled(true);
     ui->botBuscarFamilia->setEnabled(true);
     ui->botBuscarSubfamilia->setEnabled(true);
-    ui->botBuscarModelo->setEnabled(true);
-    ui->botBuscarTalla->setEnabled(true);
-    ui->botBuscarColor->setEnabled(true);
     ui->botCambiarImagen->setEnabled(true);
 }
 
@@ -268,9 +261,7 @@ void FrmArticulos::LLenarCampos()
         ui->chklControlarStock->setChecked(true);
    else
        ui->chklControlarStock->setChecked(false);
-   ui->txtcModelo->setText(oArticulo->getcModelo());
-   ui->txtcTalla->setText(oArticulo->getcTalla());
-   ui->txtcColor->setText(oArticulo->getcColor());
+
    if (oArticulo->getlPvpIncluyeIva()== 1)
         ui->chklPvpIncluyeIva->setChecked(true);
    else
@@ -278,12 +269,10 @@ void FrmArticulos::LLenarCampos()
    ui->txtnCantidadPendienteRecibir->setText(QString::number(oArticulo->getnCantidadPendienteRecibir()));
    ui->txtdFechaPrevistaRecepcion->setDate(oArticulo->getdFechaPrevistaRecepcion());
    ui->txtnReservados->setText(QString::number(oArticulo->getnReservados()));
-   ui->txtnEtiquetas->setText(QString::number(oArticulo->getnEtiquetas()));
    if (oArticulo->getlMostrarWeb()==1)
         ui->chklMostrarWeb->setChecked(true);
     else
        ui->chklMostrarWeb->setChecked(false);
-   ui->txtcLocalizacion->setText(oArticulo->getcLocalizacion());
 //    // Recuperamos imagen desde BD
    oArticulo->CargarImagen(ui->lblImagenArticulo);
 }
@@ -326,10 +315,6 @@ void FrmArticulos::CargarCamposEnArticulo()
         oArticulo->setlControlarStock(1);
     else
         oArticulo->setlControlarStock(0);
-
-    oArticulo->setcModelo(ui->txtcModelo->text());
-    oArticulo->setcTalla(ui->txtcTalla->text());
-    oArticulo->setcColor( ui->txtcColor->text());
     if(ui->chklPvpIncluyeIva->isChecked())
         oArticulo->setlPvpIncluyeIva(1);
     else
@@ -337,12 +322,10 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->setnCantidadPendienteRecibir(ui->txtnCantidadPendienteRecibir->text().toInt());
     oArticulo->setdFechaPrevistaRecepcion( ui->txtdFechaPrevistaRecepcion->date());
     oArticulo->setnReservados( ui->txtnReservados->text().toInt());
-    oArticulo->setnEtiquetas( ui->txtnEtiquetas->text().toInt());
     if (ui->chklMostrarWeb->isChecked())
         oArticulo->setlMostrarWeb(1);
     else
         oArticulo->setlMostrarWeb(0);
-    oArticulo->setcLocalizacion( ui->txtcLocalizacion->text());
 
 }
 
@@ -384,16 +367,11 @@ void FrmArticulos::VaciarCampos()
    ui->txtnStockReal->clear();
    ui->txtnStockReal_2->clear();
    ui->chklControlarStock->setChecked(false);
-   ui->txtcModelo->clear();
-   ui->txtcTalla->clear();
-   ui->txtcColor->clear();
    ui->chklPvpIncluyeIva->setChecked(false);
    ui->txtnCantidadPendienteRecibir->clear();
    ui->txtdFechaPrevistaRecepcion->clear();
    ui->txtnReservados->clear();
-   ui->txtnEtiquetas->clear();
    ui->chklMostrarWeb->setChecked(false);
-   ui->txtcLocalizacion->clear();
    ui->lblImagenArticulo->clear();
 
 }

@@ -77,7 +77,7 @@ void Articulo::Anadir()
 
 
          if(!query.exec()) {
-             QMessageBox::warning(qApp->activeWindow(),QObject::tr("Añadir Artículo"),QObject::tr("Falló la inserción de un nuevo artículo"),
+             QMessageBox::warning(qApp->activeWindow(),tr("Añadir Artículo"),tr("Falló la inserción de un nuevo artículo"),
                                   QObject::tr("Ok"));
          } else {
              QString cID = query.lastInsertId().toString();
