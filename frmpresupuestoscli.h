@@ -43,14 +43,11 @@ private slots:
 
     void on_botBuscarCliente_clicked();
 
-    void totalChanged(QString total);
+    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
     void on_btnDeshacer_clicked();
 
 private:
     Ui::FrmPresupuestosCli *ui;
-    QSortFilterProxyModel *proxyModel;
-    QTableView *tableView;
-    QSqlQueryModel *ModelLin_pre;
 
     Table_Helper helper;
     bool editando;

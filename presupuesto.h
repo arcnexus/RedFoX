@@ -83,7 +83,8 @@ public slots:
     bool RecuperarPresupuesto(QString cSQL);
     bool siguiente();
     bool anterior();
-    void GuardarPres(int nId_Presupuesto);
+    bool GuardarPres(int nId_Presupuesto);
+    bool BorrarLineas(int nId_Presupuesto);
     int NuevoNumeroPresupuesto();
     void AnadirLineaPresupuesto(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
                                 double porcdto, double dto, double total, double nPorcIva);
