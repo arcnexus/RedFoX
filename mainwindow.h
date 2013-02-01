@@ -31,6 +31,10 @@ public:
 private slots:
 	void init();
 
+    void block_main();
+
+    void unblock_main();
+
     void btnMantenimientos_clicked();
 
     void btnVentas_clicked();
@@ -76,6 +80,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
+    void blockMe(bool state);
     void Mantenimientos();
     void Ventas();
 

@@ -252,6 +252,8 @@ void MainWindow::init()
             frmPedidos1 = new FrmPedidos(this);
             progress.setValue(12);
             frmPresupcli = new FrmPresupuestosCli(this);
+            connect(frmPresupcli,SIGNAL(block()),this,SLOT(block_main()));
+            connect(frmPresupcli,SIGNAL(unblock()),this,SLOT(unblock_main()));
             progress.setValue(13);
             frmCajaMinuta = new FrmCajaMinuta(this);
             progress.setValue(14);
@@ -266,13 +268,23 @@ void MainWindow::init()
             progress.setValue(15);
             Configuracion_global->CargarDatos();
 			this->show();
-            QApplication::processEvents();           
+            QApplication::processEvents();
 		} 
 		else
 			qDebug() <<"Fallo la conexión al fichero Medico";
 	} 
 	else
         qApp->quit();
+}
+
+void MainWindow::block_main()
+{
+    blockMe(true);
+}
+
+void MainWindow::unblock_main()
+{
+    blockMe(false);
 }
 
 MainWindow::~MainWindow()
@@ -636,4 +648,12 @@ void MainWindow::handle_motivoInterConsulta()
 
     form.set_columnHide(0);
     form.exec();
+}
+
+void MainWindow::blockMe(bool state)
+{
+    m_modulesBar->setEnabled(!state);
+    m_MantenimientosBar->setEnabled(!state);
+    m_VentasBar->setEnabled(!state);
+    ui->menubar->setEnabled(!state);
 }
