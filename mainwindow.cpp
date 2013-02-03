@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    on_edit = false;
     // ----------------------------------------------------------------------------
     // Barra de herramientas Modulos
     // ----------------------------------------------------------------------------
@@ -648,6 +648,24 @@ void MainWindow::handle_motivoInterConsulta()
 
     form.set_columnHide(0);
     form.exec();
+}
+
+void MainWindow::closeEvent(QCloseEvent * e)
+{
+    if(on_edit)
+    {
+        if(!QMessageBox::question(this,
+                                 tr("Cerrando"),
+                                 tr("Existen cambios sin guardar.\n"
+                                    "Si continua se perderan dichos cambios.\n"
+                                    "¿Desea continuar?"),
+                                 tr("&Continuar"),
+                                 tr("Cancelar")) == QMessageBox::Accepted)
+        {
+            e->ignore();
+            return;
+        }
+    }
 }
 
 void MainWindow::blockMe(bool state)

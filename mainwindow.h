@@ -79,7 +79,7 @@ private slots:
     void handle_motivoInterConsulta();
 private:
     Ui::MainWindow *ui;
-
+    void closeEvent(QCloseEvent *e);
     void blockMe(bool state);
     void Mantenimientos();
     void Ventas();
@@ -101,6 +101,7 @@ private:
     FrmCajaMinuta *frmCajaMinuta;
     QString user;
     QString pass;
+    bool on_edit;
 };
 
 #endif // MAINWINDOW_H

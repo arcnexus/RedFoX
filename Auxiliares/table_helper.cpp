@@ -384,7 +384,48 @@ double Table_Helper::calcularTotalLinea(int row)
 
 void Table_Helper::calcularDesglose()
 {
+    calcular_por_Base("base1");
+    calcular_por_Base("base2");
+    calcular_por_Base("base3");
+    calcular_por_Base("base4");
+}
 
+void Table_Helper::calcular_por_Base(QString sbase)
+{
+    double base = 0;
+    double iva = 0;
+    double re = 0;
+    double total = 0;
+    for(int i=0; i<helped_table->rowCount();i++)
+    {
+        QString name = helped_table->item(i,7)->text();
+        if(ivas[name].value("nombre_interno").toString() == sbase)
+        {
+            double row_base = helped_table->item(i,4)->text().toDouble();
+            double iva_value = ivas[name].value("nIVA").toDouble();
+            double aux_iva = (row_base * iva_value) /100;
+            base += row_base;
+            iva += aux_iva;
+            if(use_re)
+            {
+                double re_value = ivas[name].value("nRegargoEquivalencia").toDouble();
+                double aux_re = (row_base * re_value) /100;
+                re += aux_re;
+                total+=aux_re;
+            }
+            total += row_base;
+            total += aux_iva;
+        }
+    }
+
+    if(sbase == "base1")
+        emit desglose1Changed(base, iva, re, total);
+    else if(sbase == "base2")
+        emit desglose2Changed(base, iva, re, total);
+    else if(sbase == "base3")
+        emit desglose3Changed(base, iva, re, total);
+    else if(sbase == "base4")
+        emit desglose4Changed(base, iva, re, total);
 }
 
 void Table_Helper::rellenar_con_Articulo(int row)
@@ -439,7 +480,8 @@ bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_tab
         values << helped_table->item(row,8)->text().toDouble();
 
         //cantidad = cantidadaservir por defecto
-        values << helped_table->item(row,1)->text().toInt();
+        if(helped_table->columnCount()== 10)
+            values << helped_table->item(row,9)->text().toInt();
 
         QString sql = "INSERT INTO ";
         sql.append(db_table);
