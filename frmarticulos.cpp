@@ -17,6 +17,14 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA2));
     ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA3));
     ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA4));
+
+    // Cargar paises
+    QSqlQueryModel qpaises(this);
+    qpaises.setQuery("Select pais from paises",QSqlDatabase::database("empresa"));
+    qDebug() <<qpaises.lastError().text();
+    ui->cboPais1->setModel(&qpaises);
+    ui->cboPais2->setModel(&qpaises);
+
     // Control objetos
     ui->lblMensajeRecuperar->setVisible(false);
 

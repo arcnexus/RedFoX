@@ -372,6 +372,12 @@
             </item>
             <item row="2" column="1">
              <widget class="QLineEdit" name="txtcProveedor">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>27</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
@@ -418,7 +424,7 @@
                   </widget>
                  </item>
                  <item row="0" column="1" colspan="2">
-                  <widget class="QComboBox" name="comboBox_2"/>
+                  <widget class="QComboBox" name="cboPais2"/>
                  </item>
                  <item row="0" column="0">
                   <widget class="QLabel" name="label_46">
@@ -511,6 +517,12 @@ background-color: rgb(254, 255, 205);</string>
             </item>
             <item row="1" column="1" colspan="2">
              <widget class="QLineEdit" name="txtcDescripcionResumida">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>27</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
@@ -518,6 +530,12 @@ background-color: rgb(254, 255, 205);</string>
             </item>
             <item row="0" column="1" colspan="2">
              <widget class="QLineEdit" name="txtcDescripcion">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>27</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
@@ -723,7 +741,7 @@ background-color: rgb(254, 255, 205);</string>
               </widget>
              </item>
              <item row="1" column="0" colspan="2">
-              <widget class="QComboBox" name="comboBox"/>
+              <widget class="QComboBox" name="cboPais1"/>
              </item>
              <item row="2" column="0">
               <widget class="QLabel" name="label_39">
@@ -1705,18 +1723,18 @@ color: rbg(0,0,0);</string>
                   <string notr="true">background-color: rgb(254, 255, 205);
 color: rbg(0,0,0);</string>
                  </property>
+                 <property name="displayFormat">
+                  <string>dd/MM/yyyy</string>
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
+                 </property>
                  <property name="date">
                   <date>
                    <year>1752</year>
                    <month>9</month>
                    <day>14</day>
                   </date>
-                 </property>
-                 <property name="displayFormat">
-                  <string>dd/MM/yyyy</string>
-                 </property>
-                 <property name="calendarPopup">
-                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
