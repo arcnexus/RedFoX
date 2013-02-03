@@ -270,6 +270,19 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="btn_convertir">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Convertir</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -723,7 +736,7 @@ color: rgb(255, 255, 255);</string>
              <enum>QTabWidget::South</enum>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_5">
              <attribute name="title">
@@ -745,13 +758,35 @@ color: rgb(255, 255, 255);</string>
               </item>
               <item row="0" column="0" rowspan="2" colspan="2">
                <layout class="QGridLayout" name="gridLayout_16">
-                <item row="1" column="4">
-                 <widget class="QLabel" name="label_70">
+                <item row="3" column="1">
+                 <widget class="QLineEdit" name="txtrSubtotal">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>1000</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
                   <property name="styleSheet">
-                   <string notr="true">color: rgb(255, 128, 0);</string>
+                   <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 64, 64);</string>
                   </property>
                   <property name="text">
-                   <string>Forma Pago:</string>
+                   <string>0,00</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -762,35 +797,83 @@ color: rgb(255, 255, 255);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="1" colspan="2">
-                 <widget class="QLineEdit" name="txtnDto">
-                  <property name="maximumSize">
-                   <size>
-                    <width>60</width>
-                    <height>16777215</height>
-                   </size>
+                <item row="2" column="3">
+                 <widget class="QLineEdit" name="txtcFactura">
+                  <property name="enabled">
+                   <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
-                  <property name="text">
-                   <string>0.00</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <string notr="true">background-color: rgb(255, 255, 192);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="3">
+                <item row="3" column="2">
+                 <widget class="QLabel" name="label_71">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 128, 0);</string>
+                  </property>
+                  <property name="text">
+                   <string>Importe Facturado:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
                  <widget class="QLineEdit" name="txtrDescuento">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>120</width>
+                    <width>1000</width>
                     <height>16777215</height>
                    </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 64, 64);</string>
+                  </property>
+                  <property name="text">
+                   <string>0,00</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="2">
+                 <widget class="QLabel" name="lblNumFactura_2">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 128, 0);</string>
+                  </property>
+                  <property name="text">
+                   <string>Factura:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="3">
+                 <widget class="QComboBox" name="cboFormaPago">
+                  <property name="minimumSize">
+                   <size>
+                    <width>120</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="2">
+                 <widget class="QLabel" name="label_41">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 128, 0);</string>
+                  </property>
+                  <property name="text">
+                   <string>Albarán:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QLineEdit" name="txtrTotalRecargoEq">
+                  <property name="enabled">
+                   <bool>false</bool>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(255, 255, 192);
@@ -811,26 +894,10 @@ color: rgb(0, 64, 64);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="3">
-                 <widget class="QLineEdit" name="txtrImporteIva">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>120</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
-                  </property>
+                <item row="5" column="0">
+                 <widget class="QLabel" name="label_39">
                   <property name="text">
-                   <string>0,00</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <string>R.E.:</string>
                   </property>
                  </widget>
                 </item>
@@ -841,38 +908,14 @@ color: rgb(0, 64, 64);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="5" column="0">
-                 <widget class="QLabel" name="label_39">
-                  <property name="text">
-                   <string>R.E.:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="3">
-                 <widget class="QLineEdit" name="txtrTotalRecargoEq">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
-                  </property>
-                  <property name="text">
-                   <string>0,00</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="3">
-                 <widget class="QLineEdit" name="txtrTotal">
+                <item row="4" column="1">
+                 <widget class="QLineEdit" name="txtrImporteIva">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>120</width>
+                    <width>1000</width>
                     <height>16777215</height>
                    </size>
                   </property>
@@ -888,93 +931,13 @@ color: rgb(0, 64, 64);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="5">
-                 <widget class="QComboBox" name="cboFormaPago">
-                  <property name="minimumSize">
-                   <size>
-                    <width>120</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="4">
-                 <widget class="QLabel" name="lblNumFactura_2">
+                <item row="1" column="2">
+                 <widget class="QLabel" name="label_70">
                   <property name="styleSheet">
                    <string notr="true">color: rgb(255, 128, 0);</string>
                   </property>
                   <property name="text">
-                   <string>Factura:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="5">
-                 <widget class="QLineEdit" name="txtcFactura">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 192);</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="4">
-                 <widget class="QLabel" name="label_71">
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(255, 128, 0);</string>
-                  </property>
-                  <property name="text">
-                   <string>Importe Facturado:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="5">
-                 <widget class="QLineEdit" name="txtrImporteFactura">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 192);</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="4">
-                 <widget class="QLabel" name="label_41">
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(255, 128, 0);</string>
-                  </property>
-                  <property name="text">
-                   <string>Albarán:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="5">
-                 <widget class="QLineEdit" name="txtnAlbaran">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 192);</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="4">
-                 <widget class="QLabel" name="label_69">
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(255, 128, 0);</string>
-                  </property>
-                  <property name="text">
-                   <string>Pedido:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="5">
-                 <widget class="QLineEdit" name="txtnPedido">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 192);</string>
+                   <string>Forma Pago:</string>
                   </property>
                  </widget>
                 </item>
@@ -985,20 +948,14 @@ color: rgb(0, 64, 64);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="3">
-                 <widget class="QLineEdit" name="txtrSubtotal">
+                <item row="6" column="1">
+                 <widget class="QLineEdit" name="txtrTotal">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>0</height>
-                   </size>
-                  </property>
                   <property name="maximumSize">
                    <size>
-                    <width>120</width>
+                    <width>1000</width>
                     <height>16777215</height>
                    </size>
                   </property>
@@ -1012,19 +969,49 @@ color: rgb(0, 64, 64);</string>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
                  </widget>
                 </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_38">
+                <item row="5" column="2">
+                 <widget class="QLabel" name="label_69">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 128, 0);</string>
+                  </property>
                   <property name="text">
-                   <string>Base Imp:</string>
+                   <string>Pedido:</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="3">
+                <item row="4" column="3">
+                 <widget class="QLineEdit" name="txtnAlbaran">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 192);</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="3">
+                 <widget class="QLineEdit" name="txtrImporteFactura">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 192);</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="3">
+                 <widget class="QLineEdit" name="txtnPedido">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 192);</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
                  <widget class="QLineEdit" name="txtrBase">
                   <property name="enabled">
                    <bool>false</bool>
@@ -1037,7 +1024,7 @@ color: rgb(0, 64, 64);</string>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>120</width>
+                    <width>1000</width>
                     <height>16777215</height>
                    </size>
                   </property>
@@ -1050,6 +1037,13 @@ color: rgb(0, 64, 64);</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_38">
+                  <property name="text">
+                   <string>Base Imp:</string>
                   </property>
                  </widget>
                 </item>
@@ -2102,7 +2096,6 @@ color: rgb(0, 64, 64);</string>
   <tabstop>txtcMovil</tabstop>
   <tabstop>txtcFax</tabstop>
   <tabstop>txtdFecha</tabstop>
-  <tabstop>txtnDto</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnAnterior</tabstop>
   <tabstop>btnSiguiente</tabstop>

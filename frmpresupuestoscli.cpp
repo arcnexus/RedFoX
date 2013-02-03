@@ -19,20 +19,16 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     modelo->select();
     ui->combo_Pais->setModel(modelo);
     ui->combo_Pais->setModelColumn(modelo->fieldIndex("pais"));
+
     // cargar datos FormaPago
     ui->cboFormaPago->setInsertPolicy(QComboBox::NoInsert);
     ui->cboFormaPago->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
-
     QSqlTableModel* model = new QSqlTableModel(ui->cboFormaPago,QSqlDatabase::database("empresa"));
     model->setTable("formpago");
     model->select();
     ui->cboFormaPago->setModel(model);
     ui->cboFormaPago->setModelColumn(model->fieldIndex("cFormapago"));
 
-
-    //-----------------------
-    // Conexiones
-    //-----------------------
     oPres = new Presupuesto();
     oClientePres = new Cliente();
 
@@ -83,6 +79,21 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
         QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPresupuesto->text());
         helper.fillTable("empresa","lin_pre",filter);
     }
+
+    aPedido_action = new QAction(tr("En pedido"),this);
+    aAlbaran_action = new QAction(tr("En albaran"),this);
+    aFactura_action = new QAction(tr("En factura"),this);
+
+    connect(aPedido_action,SIGNAL(triggered()),this,SLOT(convertir_enPedido()));
+    connect(aAlbaran_action,SIGNAL(triggered()),this,SLOT(convertir_enAlbaran()));
+    connect(aFactura_action,SIGNAL(triggered()),this,SLOT(convertir_enFactura()));
+
+    convertir_menu = new QMenu(this);
+    convertir_menu->addAction(aPedido_action);
+    convertir_menu->addAction(aAlbaran_action);
+    convertir_menu->addAction(aFactura_action);
+
+    ui->btn_convertir->setMenu(convertir_menu);
     BloquearCampos(true);
 }
 
@@ -111,7 +122,6 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtcTelefono->setText(oPres->cTelefono);
     ui->txtcMovil->setText(oPres->cMovil);
     ui->txtcFax->setText(oPres->cFax);
-    ui->txtnDto->setText(QString::number(oPres->nDto));
     ui->txttComentario->setPlainText(oPres->tComentarios);
     ui->txtrBase->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rImporte,'f',2)));
     ui->txtrSubtotal->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rSubTotal,'f',2)));
@@ -212,7 +222,6 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     oPres->cTelefono = (ui->txtcTelefono->text());
     oPres->cMovil = (ui->txtcMovil->text());
     oPres->cFax = (ui->txtcFax->text());
-    oPres->nDto = (ui->txtnDto->text().toInt());
     oPres->tComentarios = (ui->txttComentario->toPlainText());
     oPres->rImporte = (ui->txtrBase->text().replace(".","").toDouble());
     oPres->rSubTotal = (ui->txtrSubtotal->text().replace(".","").toDouble());
@@ -282,7 +291,6 @@ void FrmPresupuestosCli::VaciarCampos()
     ui->txtcTelefono->setText("");
     ui->txtcMovil->setText("");
     ui->txtcFax->setText("");
-    ui->txtnDto->setText("0");
     ui->txttComentario->setPlainText("");
     ui->txtrBase->setText("0,00");
     ui->txtrSubtotal->setText("0,00");
@@ -391,45 +399,6 @@ void FrmPresupuestosCli::BloquearCampos(bool state)
     ui->botBuscarCliente->setEnabled(!state);
     ui->txtnPresupuesto->setReadOnly(true);
 }
-void FrmPresupuestosCli::RellenarDespuesCalculo()
-{
-    ui->txtnDto->setText(QString::number(oPres->nDto));
-    ui->txtrBase->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rImporte,'f',2)));
-    ui->txtrSubtotal->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rSubTotal,'f',2)));
-    ui->txtrDescuento->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rDescuento,'f',2)));
-    ui->txtrTotal->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotal,'f',2)));
-    ui->txtrImporteFactura->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rImporteFactura,'f',2)));
-    ui->txtrBase1->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rBase1,'f',2)));
-    ui->txtrBase2->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rBase2,'f',2)));
-    ui->txtrBase3->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rBase3,'f',2)));
-    ui->txtrBase4->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rBase4,'f',2)));
-    ui->txtrBaseTotal->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rImporte,'f',2)));
-    ui->txtnPorcentajeIva1->setText(QString::number(oPres->nIva1));
-    ui->txtnPorcentajeIva2->setText(QString::number(oPres->nIva2));
-    ui->txtnPorcentajeIva3->setText(QString::number(oPres->nIva3));
-    ui->txtnPorcentajeIva4->setText(QString::number(oPres->nIva4));
-    ui->txtrIVA1->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rIva1,'f',2)));
-    ui->txtrIVA2->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rIva2,'f',2)));
-    ui->txtrIVA3->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rIva3,'f',2)));
-    ui->txtrIVA4->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rIva4,'f',2)));
-    ui->txtrTotalIVA->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotalIva,'f',2)));
-    ui->txtrImporteIva->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotalIva,'f',2)));
-    ui->txtnRec1->setText(QString::number(oPres->nRecargoEquivalencia1));
-    ui->txtnRec2->setText(QString::number(oPres->nRecargoEquivalencia2));
-    ui->txtnRec3->setText(QString::number(oPres->nRecargoEquivalencia3));
-    ui->txtnRec4->setText(QString::number(oPres->nRecargoEquivalencia4));
-    ui->txtrTotalRecargoEq->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotalRec,'f',2)));
-    ui->txtrTotalRecargoEq_2->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotalRec,'f',2)));
-    ui->txtrRecargoEq1->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rRec1,'f',2)));
-    ui->txtrRecargoEq2->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rRec2,'f',2)));
-    ui->txtrRecargoEq3->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rRec3,'f',2)));
-    ui->txtrRecargoEq4->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rRec4,'f',2)));
-    ui->txtrTotal1->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotal1,'f',2)));
-    ui->txtrTotal2->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotal2,'f',2)));
-    ui->txtrTotal3->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotal3,'f',2)));
-    ui->txtrTotal4->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotal4,'f',2)));
-    ui->txtrTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotal,'f',2)));
-}
 
 void FrmPresupuestosCli::on_chklAprovado_stateChanged(int arg1)
 {
@@ -522,7 +491,6 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
         succes &= helper.saveTable(iPre,"empresa","lin_pre");
         if(succes)
         {
-            BloquearCampos(true);
             LLenarCampos();
             succes = QSqlDatabase::database("empresa").commit();
         }
@@ -533,13 +501,16 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
         succes &= helper.saveTable(oPres->nPresupuesto,"empresa","lin_pre");
         if(succes)
         {
-            BloquearCampos(true);
             LLenarCampos();
             succes = QSqlDatabase::database("empresa").commit();
         }
     }
     if(succes)
+    {
         QMessageBox::information(this,tr("Guardado"),tr("Guardado con éxito"),tr("&Aceptar"));
+        BloquearCampos(true);
+        emit unblock();
+    }
     else
     {
         QMessageBox::critical(this,tr("Error"),
@@ -547,7 +518,6 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
                               tr("&Aceptar"));
         QSqlDatabase::database("empresa").rollback();
     }
-    emit unblock();
 }
 
 void FrmPresupuestosCli::on_btnBuscar_clicked()
@@ -622,4 +592,19 @@ void FrmPresupuestosCli::on_btnDeshacer_clicked()
     QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPresupuesto->text());
     helper.fillTable("empresa","lin_pre",filter);
     emit unblock();
+}
+
+void FrmPresupuestosCli::convertir_enPedido()
+{
+    //TODO FrmPresupuestosCli::convertir_enPresupuesto()
+}
+
+void FrmPresupuestosCli::convertir_enAlbaran()
+{
+    //TODO FrmPresupuestosCli::convertir_enAlbaran()
+}
+
+void FrmPresupuestosCli::convertir_enFactura()
+{
+    //TODO FrmPresupuestosCli::convertir_enFactura()
 }

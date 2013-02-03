@@ -19,6 +19,9 @@ public:
     ~FrmPedidos();
     Pedidos *oPedido;
     Cliente *oCliente3;
+signals:
+    void block();
+    void unblock();
 private slots:
     void on_btnSiguiente_clicked();
 
@@ -34,25 +37,31 @@ private slots:
 
     void on_btnDeshacer_clicked();
 
-    void on_pushButton_clicked();
+    void on_btn_borrar_clicked();
 
-    void totalChanged(QString total);
+    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
+    void desglose1Changed(double base, double iva, double re, double total);
+    void desglose2Changed(double base, double iva, double re, double total);
+    void desglose3Changed(double base, double iva, double re, double total);
+    void desglose4Changed(double base, double iva, double re, double total);
+
+    void convertir_enAlbaran();
+    void convertir_enFactura();
 private:
     Ui::frmPedidos *ui;
 
-    QSqlQueryModel *ModelLin_ped;
-
-    void lineasVentas();
     void LLenarCampos();
     void LLenarCamposCliente();
     void VaciarCampos();
-    void BloquearCampos();
-    void DesbloquearCampos();
+    void BloquearCampos(bool state);
     void LLenarPedido();
-    void CalcularTotalLinea();
-    void RellenarDespuesCalculo();
 
     Table_Helper helper;
+    QAction * aAlbaran_action;
+    QAction * aFactura_action;
+    QMenu * convertir_menu;
+
+    bool editando;
 };
 
 #endif // FRMPEDIDOS_H

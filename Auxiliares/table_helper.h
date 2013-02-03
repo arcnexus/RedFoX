@@ -49,6 +49,7 @@ private:
     void calcular_por_Base(QString base);
 
     void comprobarCantidad(int row);
+    void comprobarStock(int row);
     void comprobarDescuento(int row);
     void rellenar_con_Articulo(int row);
     bool comprando;

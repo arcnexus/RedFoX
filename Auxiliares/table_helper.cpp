@@ -45,6 +45,11 @@ void Table_Helper::help_table(QTableWidget *table)
     headers << "Codigo" << "Cantidad" << "Descripcion" << "P.V.P" << "SubTotal";
     headers << "DTO" << "DTO%" << "% I.V.A." << "Total";
 
+    if(helped_table->columnCount() == 10)
+    {
+        headers << "A servir";
+        helped_table->setItemDelegateForColumn(9,new SpinBoxDelegate(helped_table,true,0));
+    }
     helped_table->setHorizontalHeaderLabels(headers);
     resizeTable();
 
@@ -95,13 +100,14 @@ void Table_Helper::resizeTable()
         helped_table->horizontalHeader()->setUpdatesEnabled(false);
 
         for (int i = 0; i < helped_table->columnCount(); i++)
-            helped_table->horizontalHeader()->resizeSection(i, 100);
+            helped_table->horizontalHeader()->resizeSection(i, 80);
 
 
+        int columnCount = helped_table->columnCount()-1;
         int wDesc = helped_table->horizontalHeader()->sectionSize(2);
-        int wLast = helped_table->horizontalHeader()->sectionSize(8);
+        int wLast = helped_table->horizontalHeader()->sectionSize(columnCount)-10;
         helped_table->horizontalHeader()->resizeSection(2,wLast);
-        helped_table->horizontalHeader()->resizeSection(8,wDesc);
+        helped_table->horizontalHeader()->resizeSection(columnCount,wDesc);
 
         helped_table->horizontalHeader()->setUpdatesEnabled(true);
     }
@@ -116,6 +122,9 @@ void Table_Helper::fillTable(QString db, QString table, QString filter)
     QStringList headers;
     headers << "Codigo" << "Cantidad" << "Descripcion" << "P.V.P" << "SubTotal";
     headers << "DTO" << "DTO%" << "% I.V.A." << "Total";
+
+    if(helped_table->columnCount() == 10)
+        headers << "A servir";
 
     helped_table->setHorizontalHeaderLabels(headers);
 
@@ -223,6 +232,9 @@ void Table_Helper::handle_cellChanged(int row, int column)
         comprobarCantidad(row);
     else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
         comprobarDescuento(row);
+    else if(column == 9)
+        comprobarStock(row);
+
     calcularTotal();
     calcularDesglose();
 }
@@ -306,6 +318,8 @@ double Table_Helper::calcularRELinea(int row)
 void Table_Helper::comprobarCantidad(int row)
 {
     int cantidad = helped_table->item(row,1)->text().toInt();
+    if (helped_table->columnCount() == 10)
+        helped_table->item(row,9)->setText(QString::number(cantidad));
     int stock = 0;
     int stockMax = 0;
     int stockMin = 0;
@@ -335,11 +349,51 @@ void Table_Helper::comprobarCantidad(int row)
     else
     {
         if((stock - cantidad) < 0)
+        {
             QMessageBox::warning(qApp->activeWindow(),tr("Stock insuficiente"),
                                  tr("No existe suficiente stock para satisfacer esta cantidad"),tr("Aceptar"));
+            if (helped_table->columnCount() == 10)
+                helped_table->item(row,9)->setText(QString::number(stock));
+        }
         else if ((stock - cantidad) < stockMin)
+        {
             QMessageBox::warning(qApp->activeWindow(),tr("Stock bajo minimos"),
                                  tr("Con esta cantidad el stock estará por debajo del minimo establecido"),tr("Aceptar"));
+            if (helped_table->columnCount() == 10)
+                helped_table->item(row,9)->setText(QString::number(cantidad));
+        }
+    }
+}
+
+void Table_Helper::comprobarStock(int row)
+{
+    int cantidad = helped_table->item(row,1)->text().toInt();
+    int aServir = helped_table->item(row,9)->text().toInt();
+    int stock = 0;
+    int stockMax = 0;
+    int stockMin = 0;
+    QString codigo = helped_table->item(row,0)->text();
+    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QString sql = QString("SELECT * FROM articulos WHERE cCodigo = '%1'").arg(codigo);
+    query.prepare(sql);
+    if(query.exec())
+    {
+        if(query.next())
+        {
+            stock = query.record().value("nStockReal").toInt();
+        }
+        else
+        {
+            QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),tr("Articulo no encontrado"),tr("Aceptar"));
+        }
+    }
+    if(aServir > cantidad)
+        helped_table->item(row,9)->setText(QString::number(cantidad));
+    if(aServir > stock)
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Stock insuficiente"),
+                             tr("No existe suficiente stock para satisfacer esta cantidad"),tr("Aceptar"));
+        helped_table->item(row,9)->setText(QString::number(cantidad));
     }
 }
 

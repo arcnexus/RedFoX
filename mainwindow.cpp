@@ -250,6 +250,8 @@ void MainWindow::init()
             frmAlbaran1 = new FrmAlbaran(this);
             progress.setValue(11);
             frmPedidos1 = new FrmPedidos(this);
+            connect(frmPedidos1,SIGNAL(block()),this,SLOT(block_main()));
+            connect(frmPedidos1,SIGNAL(unblock()),this,SLOT(unblock_main()));
             progress.setValue(12);
             frmPresupcli = new FrmPresupuestosCli(this);
             connect(frmPresupcli,SIGNAL(block()),this,SLOT(block_main()));
@@ -658,9 +660,9 @@ void MainWindow::closeEvent(QCloseEvent * e)
                                  tr("Cerrando"),
                                  tr("Existen cambios sin guardar.\n"
                                     "Si continua se perderan dichos cambios.\n"
-                                    "¿Desea continuar?"),
-                                 tr("&Continuar"),
-                                 tr("Cancelar")) == QMessageBox::Accepted)
+                                    "¿Desea continuar?"),                                 
+                                 tr("Cancelar"),
+                                  tr("&Continuar"))== QMessageBox::Accepted)
         {
             e->ignore();
             return;
@@ -674,4 +676,5 @@ void MainWindow::blockMe(bool state)
     m_MantenimientosBar->setEnabled(!state);
     m_VentasBar->setEnabled(!state);
     ui->menubar->setEnabled(!state);
+    on_edit = state;
 }
