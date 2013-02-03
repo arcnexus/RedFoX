@@ -24,7 +24,7 @@
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(219, 228, 255);
+   <string notr="true">background-color: rgb(220, 220, 220);
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout_14">
@@ -301,7 +301,7 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="tabWidget_2">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_5">
       <attribute name="title">
@@ -635,7 +635,7 @@
           <item row="1" column="0">
            <widget class="QTabWidget" name="tabWidget">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 192, 114);</string>
+             <string notr="true">background-color: rgb(231, 231, 173);</string>
             </property>
             <property name="tabPosition">
              <enum>QTabWidget::South</enum>
@@ -648,102 +648,6 @@
               <string>Totales</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_13">
-              <item row="0" column="0">
-               <layout class="QGridLayout" name="gridLayout_4">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_8">
-                  <property name="text">
-                   <string>SubTotal:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_9">
-                  <property name="text">
-                   <string>Dto:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="3">
-                 <widget class="QLineEdit" name="txtrSubtotal">
-                  <property name="minimumSize">
-                   <size>
-                    <width>100</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>120</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
-                  <property name="text">
-                   <string>0,00</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="3">
-                 <widget class="QLineEdit" name="txtrImporteDescuento">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>120</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
-                  <property name="text">
-                   <string>0,00</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1" colspan="2">
-                 <widget class="QLineEdit" name="txtnDto">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>60</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
-                  <property name="text">
-                   <string>0.00</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
               <item row="0" column="1" rowspan="2">
                <widget class="QFrame" name="frame_2">
                 <property name="minimumSize">
@@ -767,30 +671,16 @@
                 <layout class="QGridLayout" name="gridLayout_8">
                  <item row="0" column="0">
                   <layout class="QGridLayout" name="gridLayout_6">
-                   <item row="0" column="0" colspan="3">
-                    <widget class="QLabel" name="lblImpreso">
+                   <item row="2" column="1" rowspan="2" colspan="2">
+                    <widget class="QLineEdit" name="txtcNumFra">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>27</height>
+                      </size>
+                     </property>
                      <property name="styleSheet">
-                      <string notr="true">color: rgb(255, 0, 0);</string>
-                     </property>
-                     <property name="text">
-                      <string>IMPRESO</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="4" column="0" colspan="3">
-                    <widget class="Line" name="line_2">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="0" rowspan="2">
-                    <widget class="QLabel" name="lblNumFactura">
-                     <property name="styleSheet">
-                      <string notr="true">color: rgb(255, 128, 0);</string>
-                     </property>
-                     <property name="text">
-                      <string>NUM FRA:</string>
+                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
                     </widget>
                    </item>
@@ -804,16 +694,23 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="2" column="1" rowspan="2" colspan="2">
-                    <widget class="QLineEdit" name="txtcNumFra">
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>27</height>
-                      </size>
-                     </property>
+                   <item row="2" column="0" rowspan="2">
+                    <widget class="QLabel" name="lblNumFactura">
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      <string notr="true">color: rgb(255, 128, 0);</string>
+                     </property>
+                     <property name="text">
+                      <string>NUM FRA:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="0" colspan="3">
+                    <widget class="QLabel" name="lblImpreso">
+                     <property name="styleSheet">
+                      <string notr="true">color: rgb(255, 0, 0);</string>
+                     </property>
+                     <property name="text">
+                      <string>IMPRESO</string>
                      </property>
                     </widget>
                    </item>
@@ -838,6 +735,19 @@
                    </item>
                   </layout>
                  </item>
+                 <item row="1" column="0">
+                  <spacer name="verticalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
                 </layout>
                </widget>
               </item>
@@ -849,42 +759,17 @@
                 <property name="verticalSpacing">
                  <number>6</number>
                 </property>
-                <item row="4" column="0">
-                 <widget class="QLabel" name="label_12">
+                <item row="5" column="0">
+                 <widget class="QLabel" name="label_10">
                   <property name="text">
-                   <string>Total</string>
+                   <string>R.E.:</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="0" rowspan="2">
+                <item row="3" column="0" rowspan="2">
                  <widget class="QLabel" name="label_11">
                   <property name="text">
                    <string>Iva:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1" rowspan="2">
-                 <widget class="QLineEdit" name="txtrImporteIva">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>120</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
-                  <property name="text">
-                   <string>0,00</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -895,8 +780,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="1">
-                 <widget class="QLineEdit" name="txtrTotal">
+                <item row="3" column="1" rowspan="2">
+                 <widget class="QLineEdit" name="txtrImporteIva">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -951,14 +836,32 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_10">
+                <item row="6" column="1">
+                 <widget class="QLineEdit" name="txtrTotal">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>27</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>120</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
                   <property name="text">
-                   <string>R.E.:</string>
+                   <string>0,00</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="1">
+                <item row="5" column="1">
                  <widget class="QLineEdit" name="txtrTotalRecargoEq">
                   <property name="minimumSize">
                    <size>
@@ -977,7 +880,94 @@
                   </property>
                  </widget>
                 </item>
+                <item row="6" column="0">
+                 <widget class="QLabel" name="label_12">
+                  <property name="text">
+                   <string>Total</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="txtrImporteDescuento">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>27</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>120</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>0,00</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_9">
+                  <property name="text">
+                   <string>Dto:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_8">
+                  <property name="text">
+                   <string>SubTotal:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="txtrSubtotal">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>27</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>120</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>0,00</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
                </layout>
+              </item>
+              <item row="2" column="0">
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
              </layout>
             </widget>
@@ -1005,26 +995,6 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="3">
-               <widget class="QLineEdit" name="txtcPedidoCliente">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>27</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLabel" name="label_24">
-                <property name="text">
-                 <string>Pedido Cliente:</string>
-                </property>
-               </widget>
-              </item>
               <item row="2" column="0">
                <spacer name="verticalSpacer_2">
                 <property name="orientation">
@@ -1042,6 +1012,26 @@
                <widget class="QLabel" name="label_20">
                 <property name="text">
                  <string>Entregado a Cuenta:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLabel" name="label_24">
+                <property name="text">
+                 <string>Pedido Cliente:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QLineEdit" name="txtcPedidoCliente">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>27</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
@@ -2215,11 +2205,7 @@ color: rgb(0, 64, 64);</string>
   <tabstop>txtrBase</tabstop>
   <tabstop>txtrTotal</tabstop>
   <tabstop>txtrImporteIva</tabstop>
-  <tabstop>txtrSubtotal</tabstop>
-  <tabstop>txtrImporteDescuento</tabstop>
-  <tabstop>txtnDto</tabstop>
   <tabstop>txtrACuenta</tabstop>
-  <tabstop>txtcPedidoCliente</tabstop>
   <tabstop>txtrBase1</tabstop>
   <tabstop>txtrTotalRecargoEq_2</tabstop>
   <tabstop>txtnRec1</tabstop>

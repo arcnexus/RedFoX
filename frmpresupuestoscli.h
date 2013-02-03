@@ -55,6 +55,8 @@ private slots:
     void convertir_enPedido();
     void convertir_enAlbaran();
     void convertir_enFactura();
+    void on_btnBorrar_clicked();
+
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;

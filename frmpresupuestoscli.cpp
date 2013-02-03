@@ -608,3 +608,28 @@ void FrmPresupuestosCli::convertir_enFactura()
 {
     //TODO FrmPresupuestosCli::convertir_enFactura()
 }
+
+void FrmPresupuestosCli::on_btnBorrar_clicked()
+{
+    if (QMessageBox::question(this,tr("Borrar"),
+                              tr("Esta acción no se puede deshacer.\n¿Desea continuar?"),
+                              tr("Cancelar"),
+                               tr("&Continuar"))== QMessageBox::Accepted)
+    {
+        bool succes = true;
+        QSqlDatabase::database("empresa").transaction();
+
+        QSqlQuery q(QSqlDatabase::database("empresa"));
+        q.prepare("DELETE FROM cab_pre WHERE nPresupuesto = "+ui->txtnPresupuesto->text());
+        succes &= q.exec();
+        succes &= oPres->BorrarLineas(ui->txtnPresupuesto->text().toInt());
+
+        if(succes)
+            succes &= QSqlDatabase::database("empresa").commit();
+
+        if(succes)
+            QMessageBox::information(this,tr("Borrado"),tr("Borrado con exito"));
+        else
+            QSqlDatabase::database("empresa").rollback();
+    }
+}

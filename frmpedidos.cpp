@@ -510,11 +510,26 @@ void FrmPedidos::on_btnDeshacer_clicked()
 
 void FrmPedidos::on_btn_borrar_clicked()
 {
-    int iRespuesta = QMessageBox::question(NULL,tr("Gestión de pedidos"),tr("Esta opción borrará el pedido y sus líneas de detalle\n"
-                                                                            "¿Desea continuar?"),tr("Sí"),tr("no"));
-    if(iRespuesta == 0)
+    if (QMessageBox::question(this,tr("Borrar"),
+                              tr("Esta acción no se puede deshacer.\n¿Desea continuar?"),
+                              tr("Cancelar"),
+                               tr("&Continuar"))== QMessageBox::Accepted)
     {
-        //Borrar
+        bool succes = true;
+        QSqlDatabase::database("empresa").transaction();
+
+        QSqlQuery q(QSqlDatabase::database("empresa"));
+        q.prepare("DELETE FROM ped_cli WHERE nPedido = "+ui->txtnPedido->text());
+        succes &= q.exec();
+        succes &= oPedido->BorrarLineas(ui->txtnPedido->text().toInt());
+
+        if(succes)
+            succes &= QSqlDatabase::database("empresa").commit();
+
+        if(succes)
+            QMessageBox::information(this,tr("Borrado"),tr("Borrado con exito"));
+        else
+            QSqlDatabase::database("empresa").rollback();
     }
 }
 
