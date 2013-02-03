@@ -24,6 +24,10 @@ public:
     bool saveTable(int id_cabecera , QString db , QString db_table);
 signals:
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
+    void desglose1Changed(double base, double iva, double re, double total);
+    void desglose2Changed(double base, double iva, double re, double total);
+    void desglose3Changed(double base, double iva, double re, double total);
+    void desglose4Changed(double base, double iva, double re, double total);
 public slots:
     void set_UsarRE(bool state);
     void addRow();
@@ -42,6 +46,8 @@ private:
     double calcularTotalLinea(int row);
 
     void calcularDesglose();
+    void calcular_por_Base(QString base);
+
     void comprobarCantidad(int row);
     void comprobarDescuento(int row);
     void rellenar_con_Articulo(int row);
