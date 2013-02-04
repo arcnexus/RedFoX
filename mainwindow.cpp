@@ -248,6 +248,8 @@ void MainWindow::init()
             frmProveedores1 = new frmProveedores(this);
             progress.setValue(10);
             frmAlbaran1 = new FrmAlbaran(this);
+            connect(frmAlbaran1,SIGNAL(block()),this,SLOT(block_main()));
+            connect(frmAlbaran1,SIGNAL(unblock()),this,SLOT(unblock_main()));
             progress.setValue(11);
             frmPedidos1 = new FrmPedidos(this);
             connect(frmPedidos1,SIGNAL(block()),this,SLOT(block_main()));

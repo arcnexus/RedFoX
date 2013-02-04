@@ -330,7 +330,7 @@ bool Presupuesto::GuardarPres(int nId_Presupuesto)
 
     if(!cab_pre.exec())
     {
-        QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Presupuesto:", cab_pre.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(),"Error al guardar datos Presupuesto:", cab_pre.lastError().text());
         return false;
     }
     else

@@ -5,861 +5,313 @@ Albaran::Albaran(QObject *parent) :
     QObject(parent)
 {
     this->id =0;
-    cab_alb = 0;
 }
 
 Albaran::~Albaran()
 {
-    if(cab_alb)
-        delete cab_alb;
+
 }
 // Metodos utilidad Clase
-void Albaran::AnadirAlbaran()
+bool Albaran::AnadirAlbaran()
 {
-    Configuracion_global->CargarDatos();
-    this->nPorcentajeIVA1 = Configuracion_global->nIVA1;
-    this->nPorcentajeIVA2 = Configuracion_global->nIVA2;
-    this->nPorcentajeIVA3 = Configuracion_global->nIVA3;
-    this->nPorcentajeIVA4 = Configuracion_global->nIVA4 ;
-    this->nRec1 = Configuracion_global->nRE1;
-    this->nRec2 = Configuracion_global->nRE2;
-    this->nRec3 = Configuracion_global->nRE3;
-    this->nRec4 = Configuracion_global->nRE4;
-    this->lRecargoEquivalencia = 0;
-    QSqlQuery cab_alb(QSqlDatabase::database("empresa"));
-     cab_alb.prepare("INSERT INTO cab_alb (nAlbaran,nPorcentajeIva1,nPorcentajeIva2,nPorcentajeIva3,nPorcentajeIva4,"
-                     "nPorcentajeRecargoEq1,nPorcentajeRecargoEq2,nPorcentajeRecargoEq3,nPorcentajeRecargoEq4)"
-                   " VALUES (:nAlbaran,:nPorcentajeIva1,:nPorcentajeIva2,:nPorcentajeIva3,:nPorcentajeIva4,"
-                     ":nPorcentajeRecargoEq1,:nPorcentajeRecargoEq2,:nPorcentajeRecargoEq3,:nPorcentajeRecargoEq4)");
+    int x = NuevoNumeroAlbaran();
+    QSqlQuery q(QSqlDatabase::database("empresa"));
+    q.prepare("INSERT INTO cab_alb"
+              "(nAlbaran, dFecha, cPedidoCli, id_Cliente, cCodigoCliente, cCliente,"
+              "cDireccion, cDireccion2, cPoblacion, cProvincia, cCP, idpais, cCif,"
+              "lRecargoEquivalencia, rSubtotal, rDto, nDto, rBase1, rBase2, rBase3,"
+              "rBase4, nPorcentajeIva1, nPorcentajeIva2, nPorcentajeIva3, nPorcentajeIva4,"
+              "rImporteIva1, rImporteIva2, rImporteIva3, rImporteIva4, nPorcentajeRecargoEq1,"
+              "nPorcentajeRecargoEq2, nPorcentajeRecargoEq3, nPorcentajeRecargoEq4,"
+              "rImporteRecargoEq1, rImporteRecargoEq2, rImporteRecargoEq3, rImporteRecargoEq4,"
+              "rTotal1, rTotal2, rTotal3, rTotal4, rBaseTotal, rIvaTotal, rRecargoEqTotal,"
+              "rTotalAlbaran, lImpreso, lFacturado, cFactura, dFechaFactura, tComentario,"
+              "rACuenta) "
+              "VALUES"
+              "(:nAlbaran, :dFecha, :cPedidoCli, :id_Cliente, :cCodigoCliente, :cCliente,"
+              ":cDireccion, :cDireccion2, :cPoblacion, :cProvincia, :cCP, :idpais, :cCif,"
+              ":lRecargoEquivalencia, :rSubtotal, :rDto, :nDto, :rBase1, :rBase2, :rBase3,"
+              ":rBase4, :nPorcentajeIva1, :nPorcentajeIva2, :nPorcentajeIva3, :nPorcentajeIva4,"
+              ":rImporteIva1, :rImporteIva2, :rImporteIva3, :rImporteIva4, :nPorcentajeRecargoEq1,"
+              ":nPorcentajeRecargoEq2, :nPorcentajeRecargoEq3, :nPorcentajeRecargoEq4,"
+              ":rImporteRecargoEq1, :rImporteRecargoEq2, :rImporteRecargoEq3, :rImporteRecargoEq4,"
+              ":rTotal1, :rTotal2, :rTotal3, :rTotal4, :rBaseTotal, :rIvaTotal, :rRecargoEqTotal,"
+              ":rTotalAlbaran, :lImpreso, :lFacturado, :cFactura, :dFechaFactura, :tComentario,"
+              ":rACuenta) ");
+    q.bindValue(":nAlbaran",x);
+    q.bindValue(":dFecha",dFecha);
+    q.bindValue(":cPedidoCli",cPedidoCli);
+    q.bindValue(":id_Cliente",iId_Cliente);
+    q.bindValue(":cCodigoCliente",cCodigoCliente);
+    q.bindValue(":cCliente",cCliente);
 
-     cab_alb.bindValue(":nAlbaran",this->nAlbaran);
-     cab_alb.bindValue(":nPorcentajeIva1",this->nPorcentajeIVA1);
-     cab_alb.bindValue(":nPorcentajeIva2",this->nPorcentajeIVA2);
-     cab_alb.bindValue(":nPorcentajeIva3",this->nPorcentajeIVA3);
-     cab_alb.bindValue(":nPorcentajeIva4",this->nPorcentajeIVA4);
-     cab_alb.bindValue(":nPorcentajeRecargoEq1",this->nRec1);
-     cab_alb.bindValue(":nPorcentajeRecargoEq2",this->nRec2);
-     cab_alb.bindValue(":nPorcentajeRecargoEq3",this->nRec3);
-     cab_alb.bindValue(":nPorcentajeRecargoEq4",this->nRec4);
-     if(!cab_alb.exec()){
-         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Albaran:", cab_alb.lastError().text());
-     } else {
-         this->id = cab_alb.lastInsertId().toInt();
-         QString cSQL = "Select * from cab_alb where id ="+QString::number(this->id);
-         RecuperarAlbaran(cSQL);
-     }
+    q.bindValue(":cDireccion",cDireccion);
+    q.bindValue(":cDireccion2",cDireccion2);
+    q.bindValue(":cPoblacion",cPoblacion);
+    q.bindValue(":cProvincia",cProvincia);
+    q.bindValue(":cCP",cCp);
+    q.bindValue(":idpais",idPais);
+    q.bindValue(":cCif",cCif);
 
-}
-// Guardar el Albaran
-void Albaran::GuardarAlbaran(int nId_Albaran) {
-    QSqlQuery cab_alb(QSqlDatabase::database("empresa"));
-    cab_alb.prepare( "update cab_alb set "
-                     "cCif = :cCif,"
-                     "cCliente = :cCliente,"
-                     "cCodigoCliente =:cCodigoCliente,"
-                     "cCP = :cCP,"
-                     "cDireccion = :cDireccion,"
-                     "cDireccion2 = :cDireccion2,"
-                     "cPais = :cPais,"
-                     "cPedidoCli = :cPedidoCli,"
-                     "cPoblacion = :cPoblacion,"
-                     "cProvincia = :cProvincia,"
-                     "dFecha = :dFecha,"
-                     "dFechaFactura = :dFechaFactura,"
-                     "id_Cliente = :id_Cliente,"
-                     "lFacturado = :lFacturado,"
-                     "lImpreso = :lImpreso,"
-                     "lRecargoEquivalencia =:lRecargoEquivalencia,"
-                    "nAlbaran = :nAlbaran,"
-                     "cFactura =:cFactura,"
-                       "nDto = :nDto,"
-                       "rDto = :rDto,"
-                    "nPorcentajeIva1 = :nPorcentajeIva1,"
-                     "nPorcentajeIva2 = :nPorcentajeIva2,"
-                     "nPorcentajeIva3 = :nPorcentajeIva3,"
-                     "nPorcentajeIva4 = :nPorcentajeIva4,"
-                     "nPorcentajeRecargoEq1 = :nPorcentajeRecargoEq1,"
-                    "nPorcentajeRecargoEq2 = :nPorcentajeRecargoEq2,"
-                     "nPorcentajeRecargoEq3 = :nPorcentajeRecargoEq3,"
-                     "nPorcentajeRecargoEq4 = :nPorcentajeRecargoEq4,"
-                     "rACuenta = :rACuenta,"
-                     "rBase1 = :rBase1,"
-                     "rBase2 = :rBase2,"
-                    "rBase3 = :rBase3,"
-                     "rBase4 = :rBase4,"
-                     "rBaseTotal = :rBaseTotal,"
-                     "rDto = :rDto,"
-                     "rImporteIva1 = :rImporteIva1,"
-                     "rImporteIva2 = :rImporteIva2,"
-                     "rImporteIva3 = :rImporteIva3,"
-                    "rImporteIva4 = :rImporteIva4,"
-                     "rImporteRecargoEq1 = :rImporteRecargoEq1,"
-                     "rImporteRecargoEq2 = :rImporteRecargoEq2,"
-                     "rImporteRecargoEq3 = :rImporteRecargoEq3,"
-                     "rImporteRecargoEq4 = :rImporteRecargoEq4,"
-                     "rIvaTotal = :rIvaTotal,"
-                     "rRecargoEqTotal = :rRecargoEqTotal,"
-                     "rSubtotal = :rSubtotal,"
-                     "rTotal1 = :rTotal1,"
-                   "rTotal2 = :rTotal2,"
-                     "rTotal3 = :rTotal3,"
-                     "rTotal4 = :rTotal4,"
-                     "rTotalAlbaran = :rTotalAlbaran,"
-                     "tComentario = :tComentario"
-                     " where id =:Id");
+    q.bindValue(":lRecargoEquivalencia",lRecargoEquivalencia);
+    q.bindValue(":rSubtotal",rSubtotal);
+    q.bindValue(":rDto",rDto);
+    q.bindValue(":nDto",nDto);
+    q.bindValue(":rBase1",rBase1);
+    q.bindValue(":rBase2",rBase2);
+    q.bindValue(":rBase3",rBase3);
+    q.bindValue(":rBase4",rBase4);
+    q.bindValue(":nPorcentajeIva1",nPorcentajeIVA1);
+    q.bindValue(":nPorcentajeIva2",nPorcentajeIVA2);
+    q.bindValue(":nPorcentajeIva3",nPorcentajeIVA3);
+    q.bindValue(":nPorcentajeIva4",nPorcentajeIVA4);
 
+    q.bindValue(":rImporteIva1",rImporteIva1);
+    q.bindValue(":rImporteIva2",rImporteIva2);
+    q.bindValue(":rImporteIva3",rImporteIva3);
+    q.bindValue(":rImporteIva4",rImporteIva4);
+    q.bindValue(":nPorcentajeRecargoEq1",nPorcentajeRecargoEq1);
+    q.bindValue(":nPorcentajeRecargoEq2",nPorcentajeRecargoEq2);
+    q.bindValue(":nPorcentajeRecargoEq3",nPorcentajeRecargoEq3);
+    q.bindValue(":nPorcentajeRecargoEq4",nPorcentajeRecargoEq4);
 
+    q.bindValue(":rImporteRecargoEq1",rImporteRecargoEq1);
+    q.bindValue(":rImporteRecargoEq2",rImporteRecargoEq2);
+    q.bindValue(":rImporteRecargoEq3",rImporteRecargoEq3);
+    q.bindValue(":rImporteRecargoEq4",rImporteRecargoEq4);
 
+    q.bindValue(":rTotal1",rTotal1);
+    q.bindValue(":rTotal2",rTotal2);
+    q.bindValue(":rTotal3",rTotal3);
+    q.bindValue(":rTotal4",rTotal4);
+    q.bindValue(":rBaseTotal",rBaseTotal);
+    q.bindValue(":rIvaTotal",rIvaTotal);
+    q.bindValue(":rRecargoEqTotal",rRecargoEqTotal);
 
-    // Pasamos valores reales a la Select
-    cab_alb.bindValue(":cCif",this->cCif);
-    cab_alb.bindValue(":cCliente", this->cCliente);
-    cab_alb.bindValue(":cCodigoCliente",this->cCodigoCliente);
-    cab_alb.bindValue(":cCP",this->cCp);
-    cab_alb.bindValue(":cDireccion", this->cDireccion);
-    cab_alb.bindValue(":cDireccion2", this->cDireccion2);
-    cab_alb.bindValue(":cPais",this->cPais);
-    cab_alb.bindValue(":cPedidoCli", this->cPedidoCli);
-    cab_alb.bindValue(":cPoblacion", this->cPoblacion);
-    cab_alb.bindValue(":cProvincia",this->cProvincia);
-    cab_alb.bindValue(":dFecha",this->dFecha);
-    cab_alb.bindValue(":dFechaFactura",this->dFechaFactura);
-    cab_alb.bindValue(":lFacturado",this->lFacturado);
-    cab_alb.bindValue(":lImpreso", this->lImpreso);
-    cab_alb.bindValue(":lRecargoEquivalencia", this->lRecargoEquivalencia);
-    cab_alb.bindValue(":nAlbaran",this->nAlbaran);
-    cab_alb.bindValue(":cFactura",this->cFactura);
-    cab_alb.bindValue(":nDto",this->nDto);
-    cab_alb.bindValue(":rDto",this->rImporteDescuento);
-    cab_alb.bindValue(":nPorcentajeIva1",this->nPorcentajeIVA1);
-    cab_alb.bindValue(":nPorcentajeIva2", this->nPorcentajeIVA2);
-    cab_alb.bindValue(":nPorcentajeIva3",this->nPorcentajeIVA3);
-    cab_alb.bindValue(":nPorcentajeIva4",this->nPorcentajeIVA4);
-   cab_alb.bindValue(":nPorcentajeRecargoEq1",this->nRec1);
-    cab_alb.bindValue(":nPorcentajeRecargoEq2",this->nRec2);
-    cab_alb.bindValue(":nPorcentajeRecargoEq3",this->nRec3);
-    cab_alb.bindValue(":nPorcentajeRecargoEq4",this->nRec4);
-    cab_alb.bindValue(":rACuenta",this->rACuenta);
-    cab_alb.bindValue(":rBase1",this->rBase1);
-    cab_alb.bindValue(":rBase2", this->rBase2);
-    cab_alb.bindValue(":rBase3",this->rBase3);
-    cab_alb.bindValue(":rBase4",this->rBase4);
-    cab_alb.bindValue(":rBaseTotal",this->rBase);
-    cab_alb.bindValue(":rDto",this->rImporteDescuento);
-    cab_alb.bindValue(":rImporteIva1",this->rIVA1);
-    cab_alb.bindValue(":rImporteIva2",this->rIVA2);
-    cab_alb.bindValue(":rImporteIva3",this->rIVA3);
-   cab_alb.bindValue(":rImporteIva4",this->rIVA4);
-    cab_alb.bindValue(":rImporteRecargoEq1",this->rRecargoEq1);
-   cab_alb.bindValue(":rImporteRecargoEq2",this->rRecargoEq2);
-    cab_alb.bindValue(":rImporteRecargoEq3",this->rRecargoEq3);
-    cab_alb.bindValue(":rImporteRecargoEq4",this->rRecargoEq4);
-    cab_alb.bindValue(":rIvaTotal", this->rImporteIva);
-    cab_alb.bindValue(":rRecargoEqTotal",this->rRecargoEqTotal);
-    cab_alb.bindValue(":rSubtotal",this->rSubtotal);
-   cab_alb.bindValue(":rTotal1",this->rTotal1);
-    cab_alb.bindValue(":rTotal2",this->rTotal2);
-    cab_alb.bindValue(":rTotal3",this->rTotal3);
-    cab_alb.bindValue(":rTotal4",this->rTotal4);
-    cab_alb.bindValue(":rTotalAlbaran",this->rTotal);
-    cab_alb.bindValue(":tComentario", this->tComentario);
-    cab_alb.bindValue(":Id", this->id);
+    q.bindValue(":rTotalAlbaran",rTotalAlbaran);
+    q.bindValue(":lImpreso",lImpreso);
+    q.bindValue(":lFacturado",0);
+    q.bindValue(":cFactura",cFactura);
+    q.bindValue(":dFechaFactura",dFechaFactura);
+    q.bindValue(":tComentario",tComentario);
 
-    if(!cab_alb.exec()){
-        QMessageBox::critical(qApp->activeWindow(),tr("error al guardar datos Albaran:"), cab_alb.lastError().text());
-        qDebug() << cab_alb.lastQuery();
-    } else {
-        QMessageBox::information(qApp->activeWindow(),tr("Guardar datos"),tr("El Albaran se ha guardado correctamente:"),tr("Ok"));
-        QString cSQL = "Select * from cab_alb where id ="+QString::number(nId_Albaran);
-        RecuperarAlbaran(cSQL);
-    }
+    q.bindValue(":rACuenta",rACuenta);
 
-
-}
-
-void Albaran::RecuperarAlbaran(QString cSQL){
-        cab_alb = new QSqlQuery(QSqlDatabase::database("empresa"));
-        cab_alb->prepare(cSQL);
-        if( !cab_alb->exec() ) {
-            QMessageBox::critical(qApp->activeWindow(), "error:", cab_alb->lastError().text());
-        } else {
-            if (cab_alb->next()) {
-                QSqlRecord registro = cab_alb->record();
-                this->id = registro.field("id").value().toInt();
-                this->cCodigoCliente= registro.field("cCodigoCliente").value().toString();
-                this->nAlbaran = registro.field("nAlbaran").value().toInt();
-                this->dFecha = registro.field("dFecha").value().toDate();
-                this->dFechaFactura = registro.field("dFechaFactura").value().toDate();
-                this->iId_Cliente = registro.field("iId_Cliente").value().toInt();
-                this->cCliente = registro.field("cCliente").value().toString();
-                this->cDireccion = registro.field("cDireccion").value().toString();
-                this->cDireccion2 = registro.field("cDireccion2").value().toString();
-                this->cCp = registro.field("cCp").value().toString();
-                this->cPoblacion = registro.field("cPoblacion").value().toString();
-                this->cProvincia = registro.field("cProvincia").value().toString();
-                this->cPais = registro.field("cPais").value().toString();
-                this->cCif =registro.field("cCif").value().toString();
-                this->lRecargoEquivalencia = registro.field("lRecargoEquivalencia").value().toInt();
-                this->rSubtotal = registro.field("rSubtotal").value().toDouble();
-                this->nDto = registro.field("nDto").value().toInt();
-                this->rImporteDescuento = registro.field("rDto").value().toDouble();
-                this->rBase = registro.field("rBaseTotal").value().toDouble();
-                this->nIva = registro.field("nIva").value().toInt();
-                this->rImporteIva = registro.field("rIvaTotal").value().toDouble();
-                this->rTotal = registro.field("rTotalAlbaran").value().toDouble();
-                this->lImpreso = registro.field("lImpreso").value().toInt();
-                this->lFacturado = registro.field("lFacturado").value().toInt();
-                this->tComentario = registro.field("tComentario").value().toString();
-                this->rBase1 = registro.field("rBase1").value().toDouble();
-                this->rBase2 = registro.field("rBase2").value().toDouble();
-                this->rBase3 = registro.field("rBase3").value().toDouble();
-                this->rBase4 = registro.field("rBase4").value().toDouble();
-                this->nPorcentajeIVA1 = registro.field("nPorcentajeIVA1").value().toInt();
-                this->nPorcentajeIVA2 = registro.field("nPorcentajeIVA2").value().toInt();
-                this->nPorcentajeIVA3 = registro.field("nPorcentajeIVA3").value().toInt();
-                this->nPorcentajeIVA4 = registro.field("nPorcentajeIVA4").value().toInt();
-                this->rIVA1 = registro.field("rImporteIva1").value().toDouble();
-                this->rIVA2 = registro.field("rImporteIva2").value().toDouble();
-                this->rIVA3 = registro.field("rImporteIva3").value().toDouble();
-                this->rIVA4 = registro.field("rImporteIva4").value().toDouble();
-                this->rTotal1 = registro.field("rTotal1").value().toDouble();
-                this->rTotal2 = registro.field("rTotal2").value().toDouble();
-                this->rTotal3 = registro.field("rTotal3").value().toDouble();
-                this->rTotal4 = registro.field("rTotal4").value().toDouble();
-                this->nRec1 = registro.field("nPorcentajeRecargoEq1").value().toDouble();
-                this->nRec2 = registro.field("nPorcentajeRecargoEq2").value().toDouble();
-                this->nRec3 = registro.field("nPorcentajeRecargoEq3").value().toDouble();
-                this->nRec4 = registro.field("nPorcentajeRecargoEq4").value().toDouble();
-                this->rRecargoEq1 = registro.field("rImporteRecargoEq1").value().toDouble();
-                this->rRecargoEq2 = registro.field("rImporteRecargoEq2").value().toDouble();
-                this->rRecargoEq3 = registro.field("nImporteRecargoEq3").value().toDouble();
-                this->rRecargoEq4 = registro.field("rImporteRecargoEq4").value().toDouble();
-                this->rRecargoEqTotal = registro.field("rRecargoEqTotal").value().toDouble();
-                this->rACuenta = registro.field("rACuenta").value().toDouble();
-                this->cPedidoCli = registro.field("cPedidoCli").value().toString();
-
-
-               }
-        }
-}
-
-int Albaran::NuevoNumeroAlbaran() {
-    QSqlQuery cab_alb(QSqlDatabase::database("empresa"));
-    int nAlbaran;
-    cab_alb.prepare("Select nAlbaran from cab_alb order by nAlbaran desc limit 1");
-    if(cab_alb.exec()) {
-        cab_alb.next();
-        nAlbaran= cab_alb.value(0).toInt();
-        nAlbaran ++;
-    } else {
-         QMessageBox::critical(qApp->activeWindow(), "error:", cab_alb.lastError().text());
-    }
-    return nAlbaran;
-
-
-}
-
-void Albaran::AnadirLineaAlbaran(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
-                                 double porcdto, double dto, double total, double nPorcIva)
-{
-    QSqlDatabase::database("empresa").transaction();
-    bool lCorrecto;
-    lCorrecto = true;
-    QSqlQuery *Qlin_alb = new QSqlQuery(QSqlDatabase::database("empresa"));
-    Qlin_alb->prepare("INSERT INTO lin_alb (Id_Cab,cCodigo,nCantidad,cDescripcion,rPvp,nDto,rDto,rSubTotal,rTotal,nPorcIva)"
-                      " VALUES(:id_cab,:cCodigo,:nCantidad,:cDescripcion,:rPvp,:nDto,:rDto,:rSubTotal,:rTotal,:nPorcIva)");
-    Qlin_alb->bindValue(":id_cab",id_cab);
-    Qlin_alb->bindValue(":cCodigo",cCodigo);
-    Qlin_alb->bindValue(":nCantidad",nCantidad);
-    Qlin_alb->bindValue(":cDescripcion",cDescripcion);
-    Qlin_alb->bindValue(":rPvp",pvp);
-    Qlin_alb->bindValue(":nDto",porcdto);
-    Qlin_alb->bindValue(":rDto",dto);
-    Qlin_alb->bindValue(":rSubTotal",subtotal);
-    Qlin_alb->bindValue(":rTotal",total);
-    Qlin_alb->bindValue(":nPorcIva",nPorcIva);
-    if (!Qlin_alb->exec()){
-       QMessageBox::critical(qApp->activeWindow(),"error al guardar datos línea Albaran:", Qlin_alb->lastError().text());
-       lCorrecto = false;
-    }
-    delete Qlin_alb;
-    QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
-    QArticulos->prepare("update articulos set "
-                        "dUltimaVenta = :dUltimaVenta,"
-                        "nUnidadesVendidas = nUnidadesVendidas +:nCantidad,"
-                        "nStockReal = nStockReal - :nCantidad2, "
-                        "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
-                        "where cCodigo= :cCodigo");
-    QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
-    QArticulos->bindValue(":nCantidad",nCantidad);
-    QArticulos->bindValue(":nCantidad2",nCantidad);
-    QArticulos->bindValue(":rTotal",total);
-    QArticulos->bindValue(":cCodigo",cCodigo);
-
-    if (!QArticulos->exec()) {
-        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Albaranes"),QObject::tr("No se puede actualizar la ficha del artículo")+
-                             QArticulos->lastError().text(),QObject::tr("Aceptar"));
-        lCorrecto = false;
-    }
-    if(lCorrecto) {
-        QSqlDatabase::database("empresa").commit();
-    } else {
-        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Albaranes"),QObject::tr("Se desharán los últimos cambios"));
-        QSqlDatabase::database("empresa").rollback();
-    }
-}
-
-void Albaran::ModificarLineaAlbaran(int id_lin, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal, double porcdto, double dto, double total, double nPorcIva)
-{
-    // Borro valores anteriores registro Artículo (Los valores se sacan del registro de lin_alb ya que aun no se ha modificado)uhjmkk,kl,,
-    QSqlQuery *Lin_alb = new QSqlQuery(QSqlDatabase::database("empresa"));
-    Lin_alb->prepare("Select * from lin_alb where id =:nId");
-    Lin_alb->bindValue(":nId",id_lin);
-    if(Lin_alb->exec()) {
-        Lin_alb->next();
-        QSqlRecord record = Lin_alb->record();
-
-        QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
-        QArticulos->prepare("update articulos set "
-                            "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
-                            "nStockReal = nStockReal - :nCantidad2, "
-                            "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
-                            "where cCodigo= :cCodigo");
-        QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
-        QArticulos->bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
-        QArticulos->bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
-        QArticulos->bindValue(":rTotal",record.field("rTotal").value().toDouble());
-        QArticulos->bindValue(":cCodigo",record.field("cCodigo").value().toString());
-        QArticulos->exec();
-        delete QArticulos;
-        delete Lin_alb;
-
-    }
-    // Actualizo Línea Albaran
-    QSqlQuery *Qlin_alb = new QSqlQuery(QSqlDatabase::database("empresa"));
-    Qlin_alb->prepare("update lin_alb  set "
-                      "cCodigo =:cCodigo,"
-                      "nCantidad =:nCantidad,"
-                      "cDescripcion =:cDescripcion,"
-                      "rPvp =:rPvp,"
-                      "nDto =:nDto,"
-                      "rDto =:rDto,"
-                      "rSubTotal =:rSubTotal,"
-                      "rTotal =:rTotal,"
-                      "nPorcIva =:nPorcIva where id = :id_lin");
-    Qlin_alb->bindValue(":id_lin",id_lin);
-    Qlin_alb->bindValue(":cCodigo",cCodigo);
-    Qlin_alb->bindValue(":nCantidad",nCantidad);
-    Qlin_alb->bindValue(":cDescripcion",cDescripcion);
-    Qlin_alb->bindValue(":rPvp",pvp);
-    Qlin_alb->bindValue(":nDto",porcdto);
-    Qlin_alb->bindValue(":rDto",dto);
-    Qlin_alb->bindValue(":rSubTotal",subtotal);
-    Qlin_alb->bindValue(":rTotal",total);
-    Qlin_alb->bindValue(":nPorcIva",nPorcIva);
-    if (!Qlin_alb->exec()){
-       QMessageBox::critical(qApp->activeWindow(),"error al modificar datos línea Albaran:", Qlin_alb->lastError().text());
-    }
-    delete Qlin_alb;
-    // Actualizo ficha artículo
-    QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
-    QArticulos->prepare("update articulos set "
-                        "dUltimaVenta = :dUltimaVenta,"
-                        "nUnidadesVendidas = nUnidadesVendidas +:nCantidad,"
-                        "nStockReal = nStockReal - :nCantidad2, "
-                        "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
-                        "where cCodigo= :cCodigo");
-    QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
-    QArticulos->bindValue(":nCantidad",nCantidad);
-    QArticulos->bindValue(":nCantidad2",nCantidad);
-    QArticulos->bindValue(":rTotal",total);
-    QArticulos->bindValue(":cCodigo",cCodigo);
-
-    QArticulos->exec();
-    delete QArticulos;
-
-}
-
-void Albaran::BorrarLineaAlbaran(int id_lin)
-{
-    if (id_lin !=0)
+    if(!q.exec())
     {
-        if(QMessageBox::question(qApp->activeWindow(),tr("Borrar línea"),
-                                 tr("Está a punto de borrar la línea de la Albaran"),
-                                 tr("No"),tr("Si")) == QMessageBox::Accepted)
-        {
-            QSqlQuery qrylin_alb(QSqlDatabase::database("empresa"));
-            qrylin_alb.prepare("Select * from lin_alb where id = :id_lin");
-            qrylin_alb.bindValue(":id_lin",id_lin);
-            if (qrylin_alb.exec()) {
-                QSqlRecord record = qrylin_alb.record();
-                // Reponer Artículo
-                QSqlQuery QArticulos(QSqlDatabase::database("empresa"));
-                QArticulos.prepare("update articulos set "
-                                    "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
-                                    "nStockReal = nStockReal - :nCantidad2, "
-                                    "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
-                                    "where cCodigo= :cCodigo");
-                QArticulos.bindValue(":dUltimaVenta",QDate::currentDate());
-                QArticulos.bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
-                QArticulos.bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
-                QArticulos.bindValue(":rTotal",record.field("rTotal").value().toDouble());
-                QArticulos.bindValue(":cCodigo",record.field("cCodigo").value().toString());
-                QArticulos.exec();
-            }
-            qrylin_alb.prepare("Delete from lin_alb where id = :id_lin");
-            qrylin_alb.bindValue(":id_lin",id_lin);
-            if(!qrylin_alb.exec()){
-                QMessageBox::critical(qApp->activeWindow(),tr("Borrar línea"),tr("Falló el borrado de la línea de Albaran"),tr("&Aceptar"));
-            }
-            calcularAlbaran();
-        }
+        QMessageBox::critical(qApp->activeWindow(),"Error al guardar datos Albaran:", q.lastError().text());
+        return false;
     }
     else
     {
-        QMessageBox::critical(qApp->activeWindow(),tr("Borrar Línea Albaran"),tr("Debe seleccionar una línea para poder borrar"),tr("OK"));
+        return true;
     }
 }
 
-
-
-void Albaran::calcularAlbaran()
+bool Albaran::GuardarAlbaran(int nId_Albaran)
 {
+    QSqlQuery q(QSqlDatabase::database("empresa"));
+    q.prepare("UPDATE cab_alb SET "
+              "dFecha=:dFecha, cPedidoCli=:cPedidoCli, id_Cliente=:id_Cliente,"
+              "cCodigoCliente=:cCodigoCliente, cCliente=:cCliente,"
+              "cDireccion=:cDireccion,cDireccion2=:cDireccion2, cPoblacion=:cPoblacion,"
+              "cProvincia=:cProvincia, cCP=:cCP, idpais=:idpais, cCif=:cCif,"
+              "lRecargoEquivalencia=:lRecargoEquivalencia, rSubtotal=:rSubtotal,"
+              "rDto=:rDto, nDto=:nDto, rBase1=:rBase1, rBase2=:rBase2, rBase3=:rBase3,"
+              "rBase4=:rBase4, nPorcentajeIva1=:nPorcentajeIva1, nPorcentajeIva2=:nPorcentajeIva2,"
+              "nPorcentajeIva3=:nPorcentajeIva3, nPorcentajeIva4=:nPorcentajeIva4,"
+              "rImporteIva1=:rImporteIva1, rImporteIva2=:rImporteIva2, rImporteIva3=:rImporteIva3,"
+              "rImporteIva4=:rImporteIva4, nPorcentajeRecargoEq1=:nPorcentajeRecargoEq1,"
+              "nPorcentajeRecargoEq2=:nPorcentajeRecargoEq2, nPorcentajeRecargoEq3=:nPorcentajeRecargoEq3,"
+              "nPorcentajeRecargoEq4=:nPorcentajeRecargoEq4,"
+              "rImporteRecargoEq1=:rImporteRecargoEq1, rImporteRecargoEq2=:rImporteRecargoEq2,"
+              "rImporteRecargoEq3=:rImporteRecargoEq3, rImporteRecargoEq4=:rImporteRecargoEq4,"
+              "rTotal1=:rTotal1, rTotal2=:rTotal2, rTotal3=:rTotal3, rTotal4=:rTotal4,"
+              "rBaseTotal=:rBaseTotal, rIvaTotal=:rIvaTotal, rRecargoEqTotal=:rRecargoEqTotal,"
+              "rTotalAlbaran=:rTotalAlbaran, lImpreso=:lImpreso, lFacturado=:lFacturado,"
+              "cFactura=:cFactura, dFechaFactura=:dFechaFactura, tComentario=:tComentario,"
+              "rACuenta=:rACuenta"
+              " WHERE nAlbaran = :nAlbaran");
 
-    Configuracion_global->CargarDatos();
-    // Reseteo valores
-    this->rSubtotal = 0;
-    this->rImporteDescuento =0;
-    this->rBase = 0;
-    this->rImporteIva = 0;
-    this->rRecargoEqTotal = 0;
-    this->rTotal = 0;
-    this->rBase1 =0;
-    this->rBase2 =0;
-    this->rBase3 = 0;
-    this->rBase4 = 0;
-    this->rIVA1 = 0;
-    this->rIVA2 = 0;
-    this->rIVA3 = 0;
-    this->rIVA4 = 0;
-    this->rRecargoEq1 = 0;
-    this->rRecargoEq2 = 0;
-    this->rRecargoEq3 = 0;
-    this->rRecargoEq4 = 0;
-    this->rTotal1 =0;
-    this->rTotal2 =0;
-    this->rTotal3 =0;
-    this->rTotal4 = 0;
+    q.bindValue(":nAlbaran",nId_Albaran);
+    q.bindValue(":dFecha",dFecha);
+    q.bindValue(":cPedidoCli",cPedidoCli);
+    q.bindValue(":id_Cliente",iId_Cliente);
+    q.bindValue(":cCodigoCliente",cCodigoCliente);
+    q.bindValue(":cCliente",cCliente);
 
-    QSqlQuery *Qlin_alb = new QSqlQuery(QSqlDatabase::database("empresa"));
-    Qlin_alb->prepare("Select * from lin_alb where id_cab = :nId");
-    Qlin_alb->bindValue(":nId",this->id);
-    if (Qlin_alb->exec()) {
-        QSqlRecord record = Qlin_alb->record();
-        while (Qlin_alb->next()) {
-            record = Qlin_alb->record();
+    q.bindValue(":cDireccion",cDireccion);
+    q.bindValue(":cDireccion2",cDireccion2);
+    q.bindValue(":cPoblacion",cPoblacion);
+    q.bindValue(":cProvincia",cProvincia);
+    q.bindValue(":cCP",cCp);
+    q.bindValue(":idpais",idPais);
+    q.bindValue(":cCif",cCif);
 
-            this->rSubtotal = this->rSubtotal + record.field("rSubtotal").value().toDouble();
-            this->rImporteDescuento = this->rImporteDescuento + record.field("rDto").value().toDouble();
-            this->rBase = (this->rSubtotal - this->rImporteDescuento);
+    q.bindValue(":lRecargoEquivalencia",lRecargoEquivalencia);
+    q.bindValue(":rSubtotal",rSubtotal);
+    q.bindValue(":rDto",rDto);
+    q.bindValue(":nDto",nDto);
+    q.bindValue(":rBase1",rBase1);
+    q.bindValue(":rBase2",rBase2);
+    q.bindValue(":rBase3",rBase3);
+    q.bindValue(":rBase4",rBase4);
+    q.bindValue(":nPorcentajeIva1",nPorcentajeIVA1);
+    q.bindValue(":nPorcentajeIva2",nPorcentajeIVA2);
+    q.bindValue(":nPorcentajeIva3",nPorcentajeIVA3);
+    q.bindValue(":nPorcentajeIva4",nPorcentajeIVA4);
 
+    q.bindValue(":rImporteIva1",rImporteIva1);
+    q.bindValue(":rImporteIva2",rImporteIva2);
+    q.bindValue(":rImporteIva3",rImporteIva3);
+    q.bindValue(":rImporteIva4",rImporteIva4);
+    q.bindValue(":nPorcentajeRecargoEq1",nPorcentajeRecargoEq1);
+    q.bindValue(":nPorcentajeRecargoEq2",nPorcentajeRecargoEq2);
+    q.bindValue(":nPorcentajeRecargoEq3",nPorcentajeRecargoEq3);
+    q.bindValue(":nPorcentajeRecargoEq4",nPorcentajeRecargoEq4);
 
-            // IVA 1
-            if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA1) {
-                this->rBase1 = this->rBase1 + record.field("rTotal").value().toDouble();
-                // RE 1
-                if(this->lRecargoEquivalencia == 1)
-                    this->rRecargoEq1 = (this->rBase1 * this->nRec1)/100;
+    q.bindValue(":rImporteRecargoEq1",rImporteRecargoEq1);
+    q.bindValue(":rImporteRecargoEq2",rImporteRecargoEq2);
+    q.bindValue(":rImporteRecargoEq3",rImporteRecargoEq3);
+    q.bindValue(":rImporteRecargoEq4",rImporteRecargoEq4);
 
-                this->rIVA1 = (this->rBase1 * this->nPorcentajeIVA1)/100;
-                this->rTotal1 = this->rBase1 + this->rIVA1 + this->rRecargoEq1;
-            }
-            // IVA 2
-            if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA2) {
-                this->rBase2 = this->rBase2 + record.field("rTotal").value().toDouble();
-                // RE 2
-                if(this->lRecargoEquivalencia == 1)
-                    this->rRecargoEq2 = (this->rBase2 * this->nRec2)/100;
-                this->rIVA2 = (this->rBase2 * this->nPorcentajeIVA2)/100;
-                this->rTotal2 = this->rBase2 + this->rIVA2 + this->rRecargoEq2;
-            }
-            // IVA 3
-            if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA3) {
-                this->rBase3 = this->rBase3 + record.field("rTotal").value().toDouble();
-                // RE 3
-                if(this->lRecargoEquivalencia == 1)
-                    this->rRecargoEq3 = (this->rBase3 * this->nRec3)/100;
+    q.bindValue(":rTotal1",rTotal1);
+    q.bindValue(":rTotal2",rTotal2);
+    q.bindValue(":rTotal3",rTotal3);
+    q.bindValue(":rTotal4",rTotal4);
+    q.bindValue(":rBaseTotal",rBaseTotal);
+    q.bindValue(":rIvaTotal",rIvaTotal);
+    q.bindValue(":rRecargoEqTotal",rRecargoEqTotal);
 
-                this->rIVA3 = (this->rBase3 * this->nPorcentajeIVA3)/100;
-                this->rTotal3 = this->rBase3 + this->rIVA3 + this->rRecargoEq3;
-            }
-            // IVA 4
-            if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA4) {
-                this->rBase4 = this->rBase4 + record.field("rTotal").value().toDouble();
+    q.bindValue(":rTotalAlbaran",rTotalAlbaran);
+    q.bindValue(":lImpreso",lImpreso);
+    q.bindValue(":lFacturado",lFacturado);
+    q.bindValue(":cFactura",cFactura);
+    q.bindValue(":dFechaFactura",dFechaFactura);
+    q.bindValue(":tComentario",tComentario);
 
-                // RE 4
-                if(this->lRecargoEquivalencia == 1)
-                    this->rRecargoEq4 = (this->rBase4 * this->nRec4)/100;
+    q.bindValue(":rACuenta",rACuenta);
 
-                this->rIVA4 = (this->rBase4 * this->nPorcentajeIVA4)/100;
-                this->rTotal4 = this->rBase4 + this->rIVA4 + this->rRecargoEq4;
-
-            }
-            this->rImporteIva =  (this->rIVA1 +  this->rIVA2 + this->rIVA3 + this->rIVA4);
-            this->rRecargoEqTotal = (this->rRecargoEq1 + this->rRecargoEq2 + this->rRecargoEq3 + this->rRecargoEq4);
-            this->rTotal = this->rBase + this->rImporteIva + this->rRecargoEqTotal;
-        }
+    if(!q.exec())
+    {
+        QMessageBox::critical(qApp->activeWindow(),"Error al guardar datos Albaran:", q.lastError().text());
+        qDebug() << q.lastError();
+        qDebug() << q.executedQuery();
+        return false;
     }
+    else
+    {
+        return true;
+    }
+}
+
+bool Albaran::RecuperarAlbaran(QString cSQL)
+{
+        QSqlQuery cab_alb(QSqlDatabase::database("empresa"));
+        cab_alb.prepare(cSQL);
+        if( !cab_alb.exec() )
+        {
+            QMessageBox::critical(qApp->activeWindow(), "Error:", cab_alb.lastError().text());
+            return false;
+        }
+        else
+        {
+            if (cab_alb.next())
+            {
+                QSqlRecord r = cab_alb.record();
+                id = r.value("Id").toInt();;
+                nAlbaran= r.value("nAlbaran").toInt();
+                dFecha= r.value("dFecha").toDate();
+                cPedidoCli= r.value("cPedidoCli").toString();
+                iId_Cliente= r.value("id_Cliente").toInt();
+                cCodigoCliente= r.value("cCodigoCliente").toString();
+                cCliente= r.value("cCliente").toString();
+                cDireccion= r.value("cDireccion").toString();
+                cDireccion2= r.value("cDireccion2").toString();
+                cPoblacion= r.value("cPoblacion").toString();
+                cProvincia= r.value("cProvincia").toString();
+                cCp= r.value("cCp").toString();
+                idPais= r.value("idPais").toInt();
+                //cPais= r.value("");
+                cCif= r.value("cCif").toString();
+                lRecargoEquivalencia= r.value("lRecargoEquivalencia").toInt();
+                rSubtotal= r.value("rSubtotal").toDouble();
+                nDto= r.value("nDto").toDouble();
+                rDto= r.value("rDto").toDouble();
+                rBase1= r.value("rBase1").toDouble();
+                rBase2= r.value("rBase2").toDouble();
+                rBase3= r.value("rBase3").toDouble();
+                rBase4= r.value("rBase4").toDouble();
+                nPorcentajeIVA1= r.value("nPorcentajeIVA1").toDouble();
+                nPorcentajeIVA2= r.value("nPorcentajeIVA2").toDouble();
+                nPorcentajeIVA3= r.value("nPorcentajeIVA3").toDouble();
+                nPorcentajeIVA4= r.value("nPorcentajeIVA4").toDouble();
+                rImporteIva1= r.value("rImporteIva1").toDouble();
+                rImporteIva2= r.value("rImporteIva2").toDouble();
+                rImporteIva3= r.value("rImporteIva3").toDouble();
+                rImporteIva4= r.value("rImporteIva4").toDouble();
+                nPorcentajeRecargoEq1= r.value("nPorcentajeRecargoEq1").toDouble();
+                nPorcentajeRecargoEq2= r.value("nPorcentajeRecargoEq2").toDouble();
+                nPorcentajeRecargoEq3= r.value("nPorcentajeRecargoEq3").toDouble();
+                nPorcentajeRecargoEq4= r.value("nPorcentajeRecargoEq4").toDouble();
+                rImporteRecargoEq1= r.value("rImporteRecargoEq1").toDouble();
+                rImporteRecargoEq2= r.value("rImporteRecargoEq2").toDouble();
+                rImporteRecargoEq3= r.value("rImporteRecargoEq3").toDouble();
+                rImporteRecargoEq4= r.value("rImporteRecargoEq4").toDouble();
+                rTotal1= r.value("rTotal1").toDouble();
+                rTotal2= r.value("rTotal2").toDouble();
+                rTotal3= r.value("rTotal3").toDouble();
+                rTotal4= r.value("rTotal4").toDouble();
+                rBaseTotal= r.value("rBaseTotal").toDouble();
+                rIvaTotal= r.value("rIvaTotal").toDouble();
+                rRecargoEqTotal= r.value("rRecargoEqTotal").toDouble();
+                rTotalAlbaran= r.value("rTotalAlbaran").toDouble();
+                lImpreso= r.value("lImpreso").toInt();
+                lFacturado= r.value("lFacturado").toInt();
+                cFactura= r.value("cFactura").toString();
+                dFechaFactura= r.value("dFechaFactura").toDate();
+                tComentario= r.value("tComentario").toString();
+                rACuenta= r.value("rACuenta").toDouble();
+                return true;
+               }
+            else
+                return false;
+        }
+}
+
+bool Albaran::borrarLineas(int nId_Albaran)
+{
+    QSqlQuery query(QSqlDatabase::database("empresa"));
+        QString sql = QString("DELETE FROM lin_alb WHERE Id_Cab = %1").arg(nId_Albaran);
+        query.prepare(sql);
+        if(query.exec())
+            return true;
+        else
+        {
+            QMessageBox::critical(qApp->activeWindow(), "Error:",query.lastError().text());
+            return false;
+        }
+}
+
+int Albaran::NuevoNumeroAlbaran()
+{
+    QSqlQuery cab_alb(QSqlDatabase::database("empresa"));
+    int nAlbaran = 1;
+    cab_alb.prepare("Select nAlbaran from cab_alb order by nAlbaran desc limit 1");
+    if(cab_alb.exec())
+    {
+        cab_alb.next();
+        nAlbaran= cab_alb.value(0).toInt();
+        nAlbaran ++;
+    }
+    else
+    {
+         QMessageBox::critical(qApp->activeWindow(), "error:", cab_alb.lastError().text());
+    }
+    return nAlbaran;
 }
 
 void Albaran::FacturarAlbaran()
 {
-
- }
-
-// getters
-int  Albaran::Getid() {
-   return this->id;
+    //TODO Albaran::FacturarAlbaran()
 }
-
-QString Albaran::getcCodigoCliente() {
-    return this->cCodigoCliente;
-}
-
-int Albaran::getnAlbaran()
-{
-    return this->nAlbaran;
-}
-
-
-QDate Albaran::getdFecha() {
-    return this->dFecha;
-}
-QDate Albaran::getdFechaFactura() {
-    return this->dFechaFactura;
-}
-
-QString Albaran::getcFactura()
-{
-    return this->cFactura;
-}
-int Albaran::getiId_Cliente() {
-    return this->iId_Cliente;
-}
-QString Albaran::getcCliente() {
-    return this->cCliente;
-}
-QString Albaran::getcDireccion() {
-    return this->cDireccion;
-}
-QString Albaran::getcDireccion2() {
-    return this->cDireccion2;
-}
-QString Albaran::getcCp() {
-    return this->cCp;
-}
-QString Albaran::getcPoblacion() {
-    return this->cPoblacion;
-}
-QString Albaran::getcProvincia() {
-    return this->cProvincia;
-}
-QString Albaran::getcPais() {
-    return this->cPais;
-}
-QString Albaran::getcCif() {
-    return this->cCif;
-}
-int Albaran::getlRecargoEquivalencia() {
-    return this->lRecargoEquivalencia;
-}
-double Albaran::getrSubtotal() {
-    return this->rSubtotal;
-}
-int Albaran::getnDto() {
-    return this->nDto;
-}
-
-double Albaran::getrImporteDescuento() {
-    return this->rImporteDescuento;
-}
-double Albaran::getrBase() {
-    return this->rBase;
-}
-int Albaran::getnIva() {
-    return this->nIva;
-}
-double Albaran::getrImporteIva() {
-    return this->rImporteIva;
-}
-double Albaran::getrTotal() {
-    return this->rTotal;
-}
-int Albaran::getlImpreso() {
-    return this->lImpreso;
-}
-int Albaran::getlFacturado() {
-    return this->lFacturado;
-}
-QString Albaran::gettComentario() {
-    return this->tComentario;
-}
-double Albaran::getrBase1() {
-    return this->rBase1;
-}
-double Albaran::getrBase2() {
-    return this->rBase2;
-}
-double Albaran::getrBase3() {
-    return this->rBase3;
-}
-double Albaran::getrBase4() {
-    return this->rBase4;
-}
-int Albaran::getnPorcentajeIVA1() {
-    return this->nPorcentajeIVA1;
-}
-int Albaran::getnPorcentajeIVA2() {
-    return this->nPorcentajeIVA2;
-}
-int Albaran::getnPorcentajeIVA3() {
-    return this->nPorcentajeIVA3;
-}
-int Albaran::getnPorcentajeIVA4() {
-    return this->nPorcentajeIVA4;
-}
-double Albaran::getrIVA1() {
-    return this->rIVA1;
-}
-double Albaran::getrIVA2() {
-    return this->rIVA2;
-}
-double Albaran::getrIVA3() {
-    return this->rIVA3;
-}
-double Albaran::getrIVA4() {
-    return this->rIVA4;
-}
-double Albaran::getrTotal1() {
-    return this->rTotal1;
-}
-double Albaran::getrTotal2() {
-    return this->rTotal2;
-}
-double Albaran::getrTotal3() {
-    return this->rTotal3;
-}
-double Albaran::getrTotal4() {
-    return this->rTotal4;
-}
-double Albaran::getnRec1() {
-    return this->nRec1;
-}
-double Albaran::getnRec2() {
-    return this->nRec2;
-}
-double Albaran::getnRec3() {
-    return this->nRec3;
-}
-double Albaran::getnRec4() {
-    return this->nRec4;
-}
-double Albaran::getrRecargoEq1() {
-    return this->rRecargoEq1;
-}
-double Albaran::getrRecargoEq2() {
-    return this->rRecargoEq2;
-}
-double Albaran::getrRecargoEq3() {
-    return this->rRecargoEq3;
-}
-double Albaran::getrRecargoEq4() {
-    return this->rRecargoEq4;
-}
-double Albaran::getrRecargoEqTotal() {
-    return this->rRecargoEqTotal;
-}
-double Albaran::getrACuenta() {
-    return this->rACuenta;
-}
-double Albaran::getrImportePendiente() {
-    return this->rImportePendiente;
-}
-
-QString Albaran::getcPedidoCli() {
-    return this->cPedidoCli;
-}
-
-
-// setters
-void Albaran::setid( int iID_Albaran) {
-    this->id = iID_Albaran;
-}
-void Albaran::setcCodigoCliente(QString cCodigoCliente) {
-    this->cCodigoCliente = cCodigoCliente;
-}
-
-void Albaran::setnAlbaran(int nAlbaran)
-{
-    this->nAlbaran = nAlbaran;
-}
-
-void Albaran::setdFecha(QDate dFecha) {
-    this->dFecha = dFecha;
-}
-void Albaran::setdFechaFactura(QDate dFechaFactura) {
-    this->dFechaFactura = dFechaFactura;
-}
-
-void Albaran::setcFactura(QString cFactura)
-{
-    this->cFactura = cFactura;
-}
-void Albaran::setiId_Cliente(int iId_Cliente) {
-    this->iId_Cliente = iId_Cliente;
-}
-void Albaran::setcCliente(QString cCliente) {
-    this->cCliente = cCliente;
-}
-void Albaran::setcDireccion(QString cDireccion) {
-    this->cDireccion = cDireccion;
-}
-void Albaran::setcDireccion2(QString cDireccion2) {
-    this->cDireccion2 = cDireccion2;
-}
-void Albaran::setcCp(QString cCp) {
-    this->cCp = cCp;
-}
-void Albaran::setcPoblacion(QString cPoblacion) {
-    this->cPoblacion = cPoblacion;
-}
-void Albaran::setcProvincia(QString cProvincia) {
-    this->cProvincia = cProvincia;}
-void Albaran::setcPais(QString cPais) {
-    this->cPais = cPais;
-}
-void Albaran::setcCif(QString cCif) {
-    this->cCif = cCif;
-}
-
-void Albaran::setlRecargoEquivalencia(int lRecargoEquivalencia)
-{
-    this->lRecargoEquivalencia = lRecargoEquivalencia;
-}
-
-void Albaran::setrSubtotal(double rSubtotal) {
-    this->rSubtotal = rSubtotal;
-}
-void Albaran::setnDto(int nDto) {
-    this->nDto = nDto;
-}
-void Albaran::setrImporteDescuento(double rImporteDescuento) {
-    this->rImporteDescuento = rImporteDescuento;
-}
-
-void Albaran::setrBase(double rBase) {
-    this->rBase = rBase;
-}
-void Albaran::setnIva(int nIva) {
-    this->nIva = nIva;
-}
-void Albaran::setrImporteIva(double rImporteIva) {
-    this->rImporteIva = rImporteIva;
-}
-void Albaran::setrTotal(double rTotal) {
-    this->rTotal = rTotal;
-}
-void Albaran::setlImpreso(int lImpreso) {
-    this->lImpreso = lImpreso;
-}
-void Albaran::setlFacturado(int lFacturado) {
-    this->lFacturado = lFacturado;
-}
-void Albaran::settComentario(QString tComentario) {
-    this->tComentario = tComentario;
-}
-void Albaran::setrBase1(double rBase1) {
-    this->rBase1 = rBase1;
-}
-void Albaran::setrBase2(double rBase2) {
-    this->rBase2 = rBase2;
-}
-void Albaran::setrBase3(double rBase3) {
-    this->rBase3 = rBase3;
-}
-void Albaran::setrBase4(double rBase4) {
-    this->rBase4 = rBase4;
-}
-void Albaran::setnPorcentajeIVA1(int nPorcentajeIVA1) {
-    this->nPorcentajeIVA1 = nPorcentajeIVA1;
-}
-void Albaran::setnPorcentajeIVA2(int nPorcentajeIVA2) {
-    this->nPorcentajeIVA2 = nPorcentajeIVA2;
-}
-void Albaran::setnPorcentajeIVA3(int nPorcentajeIVA3) {
-    this->nPorcentajeIVA3 = nPorcentajeIVA3;
-}
-void Albaran::setnPorcentajeIVA4(int nPorcentajeIVA4) {
-    this->nPorcentajeIVA4 = nPorcentajeIVA4;
-}
-void Albaran::setrIVA1( double rIVA1) {
-    this->rIVA1 = rIVA1;
-}
-void Albaran::setrIVA2( double rIVA2) {
-    this->rIVA2 = rIVA2;
-}
-void Albaran::setrIVA3( double rIVA3) {
-    this->rIVA3 = rIVA3;
-}
-void Albaran::setrIVA4( double rIVA4) {
-    this->rIVA4 = rIVA4;
-}
-void Albaran::setrTotal1(double rTotal1) {
-    this->rTotal1 = rTotal1;
-}
-void Albaran::setrTotal2(double rTotal2) {
-    this->rTotal2 = rTotal2;
-}
-void Albaran::setrTotal3(double rTotal3) {
-    this->rTotal3 = rTotal3;
-}
-void Albaran::setrTotal4(double rTotal4) {
-    this->rTotal4 = rTotal4;
-}
-void Albaran::setnRec1(int nRec1) {
-    this->nRec1 = nRec1;
-}
-void Albaran::setnRec2(int nRec2) {
-    this->nRec2 = nRec2;
-}
-void Albaran::setnRec3(int nRec3) {
-    this->nRec3 = nRec3;
-}
-void Albaran::setnRec4(int nRec4) {
-    this->nRec4 = nRec4;
-}
-void Albaran::setrRecargoEq1(double rRecargoEq1) {
-    this->rRecargoEq1 = rRecargoEq1;
-}
-void Albaran::setrRecargoEq2(double rRecargoEq2) {
-    this->rRecargoEq2 = rRecargoEq2;
-}
-void Albaran::setrRecargoEq3(double rRecargoEq3) {
-    this->rRecargoEq3 = rRecargoEq3;
-}
-void Albaran::setrRecargoEq4(double rRecargoEq4) {
-    this->rRecargoEq4 = rRecargoEq4;
-}
-
-void Albaran::setrRecargoEqTotal(double rRecargoEqTotal)
-{
-    this->rRecargoEqTotal = rRecargoEqTotal;
-}
-
-void Albaran::setrACuenta(double rACuenta) {
-    this->rACuenta = rACuenta;
-}
-void Albaran::setcPedidoCli(QString cPedidoCli) {
-    this->cPedidoCli = cPedidoCli;
-}
-

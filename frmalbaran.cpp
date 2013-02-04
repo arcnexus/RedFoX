@@ -22,7 +22,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     // valores edicion
     //ui->txtcCodigoArticulo->setFocus();
 
-    BloquearCampos();
+    BloquearCampos(true);
 
     Db_table_View* searcher = new Db_table_View(this);
     searcher->set_db("empresa");
@@ -47,7 +47,30 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
     connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
-    connect(&helper,SIGNAL(totalChanged(QString)),this,SLOT(totalChanged(QString)));
+
+    connect(&helper,SIGNAL(totalChanged(double,double,double,double,double,double,QString)),
+            this,SLOT(totalChanged(double,double,double,double,double,double,QString)));
+
+    connect(&helper,SIGNAL(desglose1Changed(double,double,double,double)),
+            this,SLOT(desglose1Changed(double,double,double,double)));
+
+    connect(&helper,SIGNAL(desglose2Changed(double,double,double,double)),
+            this,SLOT(desglose2Changed(double,double,double,double)));
+
+    connect(&helper,SIGNAL(desglose3Changed(double,double,double,double)),
+            this,SLOT(desglose3Changed(double,double,double,double)));
+
+    connect(&helper,SIGNAL(desglose4Changed(double,double,double,double)),
+            this,SLOT(desglose4Changed(double,double,double,double)));
+
+    connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
+
+    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran > -1 order by nAlbaran  limit 1 "))
+    {
+        LLenarCampos();
+        QString filter = QString("Id_Cab = '%1'").arg(ui->txtcAlbaran->text());
+        helper.fillTable("empresa","lin_alb",filter);
+    }
 }
 
 FrmAlbaran::~FrmAlbaran()
@@ -55,87 +78,37 @@ FrmAlbaran::~FrmAlbaran()
     delete ui;
 }
 
-void FrmAlbaran::lineasVentas()
-{
-    // lineas de ventas
-    QString cSQL;
-    QString cId;
-
-    cId = cId.number(oAlbaran->Getid());
-     cSQL ="select id,cCodigo,nCantidad,cDescripcion,rPvp,rSubtotal,nDto,rDto,rTotal, nPorcIva from lin_alb "
-             " where Id_Cab = "+cId;
-     ModelLin_alb = new QSqlQueryModel();
-     ModelLin_alb->setQuery(cSQL,QSqlDatabase::database("empresa"));
-     //ui->Lineas->setModel(ModelLin_alb);
-     /*
-      //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
-     QHeaderView *Cabecera = new QHeaderView(Qt::Horizontal,this);
-     // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
-     ui->Lineas->setHorizontalHeader(Cabecera);
-     Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario
-   //  Cabecera->setResizeMode(0,QHeaderView::Fixed);
-     Cabecera->resizeSection(0,0);
-   //  Cabecera->setResizeMode(1,QHeaderView::Fixed);
-     Cabecera->resizeSection(1,85);
-   //  Cabecera->setResizeMode(2,QHeaderView::Fixed);
-     Cabecera->resizeSection(2,65);
-    // Cabecera->setResizeMode(3,QHeaderView::Fixed);
-     Cabecera->resizeSection(3,413);
-   //  Cabecera->setResizeMode(4,QHeaderView::Fixed);
-     Cabecera->resizeSection(4,120);
-   //  Cabecera->setResizeMode(9,QHeaderView::Fixed);
-     Cabecera->resizeSection(9,35);
-     ModelLin_alb->setHeaderData(1, Qt::Horizontal, QObject::tr("CÓDIGO"));
-     ModelLin_alb->setHeaderData(2, Qt::Horizontal, QObject::tr("CANTIDAD"));
-     ModelLin_alb->setHeaderData(3, Qt::Horizontal, QObject::tr("DESCRIPCIÓN"));
-     ModelLin_alb->setHeaderData(4, Qt::Horizontal, QObject::tr("PVP"));
-     ModelLin_alb->setHeaderData(5, Qt::Horizontal, QObject::tr("SUBTOTAL"));
-     ModelLin_alb->setHeaderData(6, Qt::Horizontal, QObject::tr("%DTO"));
-     ModelLin_alb->setHeaderData(7, Qt::Horizontal, QObject::tr("DTO"));
-     ModelLin_alb->setHeaderData(8, Qt::Horizontal, QObject::tr("BASE"));
-     ModelLin_alb->setHeaderData(9, Qt::Horizontal, QObject::tr("%IVA"));
-
-    // Hacemos visible la cabecera
-     Cabecera->setVisible(true);
-     // Delegamos el control contenido en las columnas al nuevo objeto ColumnaGrid
-     //ui->Lineas->setItemDelegateForColumn(4, Columna1);
-     //ui->Lineas->setItemDelegateForColumn(5, Columna1);
-     //ui->Lineas->setItemDelegateForColumn(6, Columna1);
-     //ui->Lineas->setItemDelegateForColumn(7, Columna1);
-     //ui->Lineas->setItemDelegateForColumn(8, Columna1);
-     */
-}
 
 void FrmAlbaran::LLenarCampos() {
     int lEstado;
-    ui->txtcCodigoCliente->setText(oAlbaran->getcCodigoCliente());
-    ui->txtcAlbaran->setText(QString::number(oAlbaran->getnAlbaran()));
-    ui->txtdFecha->setDate(oAlbaran->getdFecha());
-    ui->txtdFechaFactura->setDate(oAlbaran->getdFechaFactura());
-    ui->txtcCliente->setText(oAlbaran->getcCliente());
-    ui->txtcDireccion->setText(oAlbaran->getcDireccion());
-    ui->txtcDireccion2->setText(oAlbaran->getcDireccion2());
-    ui->txtcCp->setText(oAlbaran->getcCp());
-    ui->txtcPoblacion->setText(oAlbaran->getcPoblacion());
-    ui->txtcProvincia->setText(oAlbaran->getcProvincia());
-    ui->txtcPais->setText(oAlbaran->getcPais());
-    ui->txtcCif->setText(oAlbaran->getcCif());
-    ui->txtrSubtotal->setText(Configuracion_global->FormatoNumerico( QString::number(oAlbaran->getrSubtotal(),'f',2)));
-    ui->txtrImporteDescuento->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrImporteDescuento(),'f',2)));
-    ui->txtrBase->setText(Configuracion_global->FormatoNumerico(QString::number( oAlbaran->getrBase(),'f',2)));
-    ui->txtrBaseTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number( oAlbaran->getrBase(),'f',2)));
+    ui->txtcCodigoCliente->setText(oAlbaran->cCodigoCliente);
+    ui->txtcAlbaran->setText(QString::number(oAlbaran->nAlbaran));
+    ui->txtdFecha->setDate(oAlbaran->dFecha);
+    ui->txtdFechaFactura->setDate(oAlbaran->dFechaFactura);
+    ui->txtcCliente->setText(oAlbaran->cCliente);
+    ui->txtcDireccion->setText(oAlbaran->cDireccion);
+    ui->txtcDireccion2->setText(oAlbaran->cDireccion2);
+    ui->txtcCp->setText(oAlbaran->cCp);
+    ui->txtcPoblacion->setText(oAlbaran->cPoblacion);
+    ui->txtcProvincia->setText(oAlbaran->cProvincia);
+    ui->txtcPais->setText(oAlbaran->cPais);
+    ui->txtcCif->setText(oAlbaran->cCif);
+    ui->txtrSubtotal->setText(Configuracion_global->FormatoNumerico( QString::number(oAlbaran->rSubtotal,'f',2)));
+    ui->txtrImporteDescuento->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rDto,'f',2)));
+    ui->txtrBase->setText(Configuracion_global->FormatoNumerico(QString::number( oAlbaran->rBaseTotal,'f',2)));
+    ui->txtrBaseTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number( oAlbaran->rBaseTotal,'f',2)));
 
-    ui->txtrImporteIva->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrImporteIva(),'f',2)));
-    ui->txtrTotal->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrTotal(),'f',2)));
-    ui->txtrTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrTotal(),'f',2)));
-    ui->txtrTotalRecargoEq_2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrRecargoEqTotal(),'f',2)));
-    lEstado = oAlbaran->getlImpreso();
+    ui->txtrImporteIva->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rIvaTotal,'f',2)));
+    ui->txtrTotal->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rTotalAlbaran,'f',2)));
+    ui->txtrTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rTotalAlbaran,'f',2)));
+    ui->txtrTotalRecargoEq_2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rRecargoEqTotal,'f',2)));
+    lEstado = oAlbaran->lImpreso;
     if((lEstado == 1)) {
         ui->lblImpreso->setVisible(true);
     } else {
         ui->lblImpreso->setVisible(false);
     }
-    lEstado = oAlbaran->getlFacturado();
+    lEstado = oAlbaran->lFacturado;
     if ((lEstado == 1)) {
         ui->lblFacturado->setVisible(true);
         ui->txtdFechaFactura->setVisible(true);
@@ -146,42 +119,41 @@ void FrmAlbaran::LLenarCampos() {
         ui->txtcNumFra->setVisible(false);
 
     }
-    ui->txttComentario->setText(oAlbaran->gettComentario());
-    ui->txtrBase1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrBase1(),'f',2)));
-    ui->txtrBase2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrBase2(),'f',2)));
-    ui->txtrBase3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrBase3(),'f',2)));
-    ui->txtrBase4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrBase4(),'f',2)));
-    ui->txtnPorcentajeIva1->setText(QString::number(oAlbaran->getnPorcentajeIVA1()));
-    ui->txtnPorcentajeIva2->setText(QString::number(oAlbaran->getnPorcentajeIVA2()));
-    ui->txtnPorcentajeIva3->setText(QString::number(oAlbaran->getnPorcentajeIVA3()));
-    ui->txtnPorcentajeIva4->setText(QString::number(oAlbaran->getnPorcentajeIVA4()));
-    ui->txtrIVA1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrIVA1(),'f',2)));
-    ui->txtrIVA2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrIVA2(),'f',2)));
-    ui->txtrIVA3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrIVA3(),'f',2)));
-    ui->txtrIVA4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrIVA4(),'f',2)));
-    ui->txtrTotal1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrTotal1(),'f',2)));
-    ui->txtrTotal2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrTotal2(),'f',2)));
-    ui->txtrTotal3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrTotal3(),'f',2)));
-    ui->txtrTotal4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrTotal4(),'f',2)));
-    ui->txtnRec1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getnRec1(),'f',2)));
-    ui->txtnRec2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getnRec2(),'f',2)));
-    ui->txtnRec3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getnRec3(),'f',2)));
-    ui->txtnRec4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getnRec4(),'f',2)));
-    ui->txtrRecargoEq1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrRecargoEq1(),'f',2)));
-    ui->txtrRecargoEq2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrRecargoEq2(),'f',2)));
-    ui->txtrRecargoEq3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrRecargoEq3(),'f',2)));
-    ui->txtrRecargoEq4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrRecargoEq4(),'f',2)));
-    ui->txtrTotalRecargoEq->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrRecargoEqTotal(),'f',2)));
-    ui->txtrTotalIVA_2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrImporteIva(),'f',2)));
-    ui->txtcPedidoCliente->setText(oAlbaran->getcPedidoCli());
-    if(oAlbaran->getlRecargoEquivalencia()==1)
+    ui->txttComentario->setText(oAlbaran->tComentario);
+    ui->txtrBase1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rBase1,'f',2)));
+    ui->txtrBase2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rBase2,'f',2)));
+    ui->txtrBase3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rBase3,'f',2)));
+    ui->txtrBase4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rBase4,'f',2)));
+    ui->txtnPorcentajeIva1->setText(QString::number(oAlbaran->nPorcentajeIVA1));
+    ui->txtnPorcentajeIva2->setText(QString::number(oAlbaran->nPorcentajeIVA2));
+    ui->txtnPorcentajeIva3->setText(QString::number(oAlbaran->nPorcentajeIVA3));
+    ui->txtnPorcentajeIva4->setText(QString::number(oAlbaran->nPorcentajeIVA4));
+    ui->txtrIVA1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteIva1,'f',2)));
+    ui->txtrIVA2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteIva2,'f',2)));
+    ui->txtrIVA3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteIva3,'f',2)));
+    ui->txtrIVA4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteIva4,'f',2)));
+    ui->txtrTotal1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rTotal1,'f',2)));
+    ui->txtrTotal2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rTotal2,'f',2)));
+    ui->txtrTotal3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rTotal3,'f',2)));
+    ui->txtrTotal4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rTotal4,'f',2)));
+    ui->txtnRec1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->nPorcentajeRecargoEq1,'f',2)));
+    ui->txtnRec2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->nPorcentajeRecargoEq2,'f',2)));
+    ui->txtnRec3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->nPorcentajeRecargoEq3,'f',2)));
+    ui->txtnRec4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->nPorcentajeRecargoEq4,'f',2)));
+    ui->txtrRecargoEq1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteRecargoEq1,'f',2)));
+    ui->txtrRecargoEq2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteRecargoEq2,'f',2)));
+    ui->txtrRecargoEq3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteRecargoEq3,'f',2)));
+    ui->txtrRecargoEq4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteRecargoEq4,'f',2)));
+    ui->txtrTotalRecargoEq->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rRecargoEqTotal,'f',2)));
+    ui->txtrTotalIVA_2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rIvaTotal,'f',2)));
+    ui->txtcPedidoCliente->setText(oAlbaran->cPedidoCli);
+    if(oAlbaran->lRecargoEquivalencia==1)
         ui->chklRecargoEq->setChecked(true);
     else
         ui->chklRecargoEq->setChecked(false);
-    // cargamos líneas de ventas
-   lineasVentas();
 
-
+    QString filter = QString("Id_Cab = '%1'").arg(ui->txtcAlbaran->text());
+    helper.fillTable("empresa","lin_alb",filter);
 }
 void FrmAlbaran::LLenarCamposCliente()
 {
@@ -196,10 +168,10 @@ void FrmAlbaran::LLenarCamposCliente()
     ui->txtcCif->setText(oCliente2->getcCifNif());
     if (oCliente2->getlIRPF()==1) {
         ui->chklRecargoEq->setChecked(true);
-        oAlbaran->setlRecargoEquivalencia(1);
+        oAlbaran->lRecargoEquivalencia = (1);
     } else {
         ui->chklRecargoEq->setChecked(false);
-        oAlbaran->setlRecargoEquivalencia(0);
+        oAlbaran->lRecargoEquivalencia = (0);
     }
 }
 
@@ -262,19 +234,19 @@ void FrmAlbaran::VaciarCampos() {
     ui->txtrSubtotal->setText("0,00");
 }
 
-void FrmAlbaran::BloquearCampos()
+void FrmAlbaran::BloquearCampos(bool state)
 {
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(true);
+        lineEdit->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
     QComboBox *ComboBox;
     foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(false);
+        ComboBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
     /*
@@ -296,222 +268,124 @@ void FrmAlbaran::BloquearCampos()
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
     foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(false);
+        CheckBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
     // QTextEdit
     QList<QTextEdit *> textEditList = this->findChildren<QTextEdit *>();
     QTextEdit *textEdit;
     foreach (textEdit,textEditList) {
-        textEdit->setReadOnly(true);
+        textEdit->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // QDateEdit
     QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(false);
+        DateEdit->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
 
-    ui->btnAnadir->setEnabled(true);
-    ui->btnAnterior->setEnabled(true);
+    ui->btnAnadir->setEnabled(state);
+    ui->btnAnterior->setEnabled(state);
    // ui->btnBorrar->setEnabled(true);
-    ui->btnBuscar->setEnabled(true);
-    ui->btnDeshacer->setEnabled(false);
-    ui->btnEditar->setEnabled(true);
-    ui->btnGuardar->setEnabled(false);
-    ui->btnSiguiente->setEnabled(true);
+    ui->btnBuscar->setEnabled(state);
+    ui->btnDeshacer->setEnabled(!state);
+    ui->btnEditar->setEnabled(state);
+    ui->btnGuardar->setEnabled(!state);
+    ui->btnSiguiente->setEnabled(state);
     //ui->botBorrarLinea->setEnabled(false);
     //ui->botEditarLinea->setEnabled(false);
-    ui->botBuscarCliente->setEnabled(false);
-    ui->btnFacturar->setEnabled(false);
+    ui->botBuscarCliente->setEnabled(!state);
+    ui->btnFacturar->setEnabled(!state);
 
+    ui->txtcAlbaran->setReadOnly(true);
 }
 
-void FrmAlbaran::DesbloquearCampos()
+void FrmAlbaran::LLenarAlbaran()
 {
-    // LineEdit
-    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
-    QLineEdit *lineEdit;
-    foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // ComboBox
-    QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
-    QComboBox *ComboBox;
-    foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-//    // SpinBox
-//    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-//    QSpinBox *SpinBox;
-//    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(false);
-//        //qDebug() << lineEdit->objectName();
-//    }
-//    // DoubleSpinBox
-//    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-//    QDoubleSpinBox *DSpinBox;
-//    foreach (DSpinBox, DSpinBoxList) {
-//        DSpinBox->setReadOnly(false);
-//        //qDebug() << lineEdit->objectName();
-//    }
-    // CheckBox
-    QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
-    QCheckBox *CheckBox;
-    foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    // QTextEdit
-    QList<QTextEdit *> textEditList = this->findChildren<QTextEdit *>();
-    QTextEdit *textEdit;
-    foreach (textEdit,textEditList) {
-        textEdit->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // QDateEdit
-    QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
-    QDateEdit *DateEdit;
-    foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    ui->btnAnadir->setEnabled(false);
-    ui->btnAnterior->setEnabled(false);
-   // ui->btnBorrar->setEnabled(false);
-    ui->btnBuscar->setEnabled(false);
-    ui->btnDeshacer->setEnabled(true);
-    ui->btnEditar->setEnabled(false);
-    ui->btnGuardar->setEnabled(true);
-    ui->btnSiguiente->setEnabled(false);
-    //ui->botBorrarLinea->setEnabled(true);
-    //ui->botEditarLinea->setEnabled(true);
-    ui->botBuscarCliente->setEnabled(true);
-    ui->btnFacturar->setEnabled(true);
-}
-
-void FrmAlbaran::LLenarAlbaran() {
-    oAlbaran->setcCodigoCliente(ui->txtcCodigoCliente->text());
-    oAlbaran->setnAlbaran(ui->txtcAlbaran->text().toInt());
-    oAlbaran->setdFecha(ui->txtdFecha->date());
-    oAlbaran->setdFechaFactura(ui->txtdFechaFactura->date());
-    oAlbaran->setcCliente(ui->txtcCliente->text());
-    oAlbaran->setcDireccion(ui->txtcDireccion->text());
-    oAlbaran->setcDireccion2(ui->txtcDireccion2->text());
-    oAlbaran->setcCp(ui->txtcCp->text());
-    oAlbaran->setcPoblacion(ui->txtcPoblacion->text());
-    oAlbaran->setcProvincia(ui->txtcProvincia->text());
-    oAlbaran->setcPais(ui->txtcPais->text());
-    oAlbaran->setcCif(ui->txtcCif->text());
-    oAlbaran->setrSubtotal(ui->txtrSubtotal->text().replace(".","").toDouble());
-    oAlbaran->setrImporteDescuento(ui->txtrImporteDescuento->text().replace(".","").toDouble());
-    oAlbaran->setrBase(ui->txtrBase->text().replace(".","").toDouble());
-    oAlbaran->setrImporteIva(ui->txtrImporteIva->text().replace(".","").toDouble());
-    oAlbaran->setrTotal(ui->txtrTotal->text().replace(".","").toDouble());
-    oAlbaran->settComentario(ui->txttComentario->toPlainText());
-    oAlbaran->setrBase1(ui->txtrBase1->text().replace(".","").toDouble());
-    oAlbaran->setrBase2(ui->txtrBase2->text().replace(".","").toDouble());
-    oAlbaran->setrBase3(ui->txtrBase3->text().replace(".","").toDouble());
-    oAlbaran->setrBase4(ui->txtrBase4->text().replace(".","").toDouble());
-    oAlbaran->setnPorcentajeIVA1(ui->txtnPorcentajeIva1->text().replace(".","").toDouble());
-    oAlbaran->setnPorcentajeIVA2(ui->txtnPorcentajeIva2->text().replace(".","").toDouble());
-    oAlbaran->setnPorcentajeIVA3(ui->txtnPorcentajeIva3->text().replace(".","").toDouble());
-    oAlbaran->setnPorcentajeIVA4(ui->txtnPorcentajeIva4->text().replace(".","").toDouble());
-    oAlbaran->setrIVA1(ui->txtrIVA1->text().replace(".","").toDouble());
-    oAlbaran->setrIVA2(ui->txtrIVA2->text().replace(".","").toDouble());
-    oAlbaran->setrIVA3(ui->txtrIVA3->text().replace(".","").toDouble());
-    oAlbaran->setrIVA4(ui->txtrIVA4->text().replace(".","").toDouble());
-    oAlbaran->setrTotal1(ui->txtrTotal1->text().replace(".","").toDouble());
-    oAlbaran->setrTotal2(ui->txtrTotal2->text().replace(".","").toDouble());
-    oAlbaran->setrTotal3(ui->txtrTotal3->text().replace(".","").toDouble());
-    oAlbaran->setrTotal4(ui->txtrTotal4->text().replace(".","").toDouble());
-    oAlbaran->setnRec1(ui->txtnRec1->text().replace(".","").toDouble());
-    oAlbaran->setnRec2(ui->txtnRec2->text().replace(".","").toDouble());
-    oAlbaran->setnRec3(ui->txtnRec3->text().replace(".","").toDouble());
-    oAlbaran->setnRec4(ui->txtnRec4->text().replace(".","").toDouble());
-    oAlbaran->setrRecargoEq1(ui->txtrRecargoEq1->text().replace(".","").toDouble());
-    oAlbaran->setrRecargoEq2(ui->txtrRecargoEq2->text().replace(".","").toDouble());
-    oAlbaran->setrRecargoEq3(ui->txtrRecargoEq3->text().replace(".","").toDouble());
-    oAlbaran->setrRecargoEq4(ui->txtrRecargoEq4->text().replace(".","").toDouble());
-    oAlbaran->setrRecargoEqTotal(ui->txtrTotalRecargoEq->text().replace(".","").toDouble());
+    oAlbaran->cCodigoCliente= (ui->txtcCodigoCliente->text());
+    oAlbaran->nAlbaran= (ui->txtcAlbaran->text().toInt());
+    oAlbaran->dFecha= (ui->txtdFecha->date());
+    oAlbaran->dFechaFactura= (ui->txtdFechaFactura->date());
+    oAlbaran->cCliente= (ui->txtcCliente->text());
+    oAlbaran->cDireccion= (ui->txtcDireccion->text());
+    oAlbaran->cDireccion2= (ui->txtcDireccion2->text());
+    oAlbaran->cCp= (ui->txtcCp->text());
+    oAlbaran->cPoblacion= (ui->txtcPoblacion->text());
+    oAlbaran->cProvincia= (ui->txtcProvincia->text());
+    oAlbaran->cPais= (ui->txtcPais->text());
+    oAlbaran->cCif= (ui->txtcCif->text());
+    oAlbaran->rSubtotal= (ui->txtrSubtotal->text().replace(".","").toDouble());
+    oAlbaran->rDto= (ui->txtrImporteDescuento->text().replace(".","").toDouble());
+    oAlbaran->rBaseTotal= (ui->txtrBase->text().replace(".","").toDouble());
+    oAlbaran->rIvaTotal= (ui->txtrImporteIva->text().replace(".","").toDouble());
+    oAlbaran->rTotalAlbaran= (ui->txtrTotal->text().replace(".","").toDouble());
+    oAlbaran->tComentario= (ui->txttComentario->toPlainText());
+    oAlbaran->rBase1= (ui->txtrBase1->text().replace(".","").toDouble());
+    oAlbaran->rBase2= (ui->txtrBase2->text().replace(".","").toDouble());
+    oAlbaran->rBase3= (ui->txtrBase3->text().replace(".","").toDouble());
+    oAlbaran->rBase4= (ui->txtrBase4->text().replace(".","").toDouble());
+    oAlbaran->nPorcentajeIVA1= (ui->txtnPorcentajeIva1->text().replace(".","").toDouble());
+    oAlbaran->nPorcentajeIVA2= (ui->txtnPorcentajeIva2->text().replace(".","").toDouble());
+    oAlbaran->nPorcentajeIVA3= (ui->txtnPorcentajeIva3->text().replace(".","").toDouble());
+    oAlbaran->nPorcentajeIVA4= (ui->txtnPorcentajeIva4->text().replace(".","").toDouble());
+    oAlbaran->rImporteIva1= (ui->txtrIVA1->text().replace(".","").toDouble());
+    oAlbaran->rImporteIva2= (ui->txtrIVA2->text().replace(".","").toDouble());
+    oAlbaran->rImporteIva3= (ui->txtrIVA3->text().replace(".","").toDouble());
+    oAlbaran->rImporteIva4= (ui->txtrIVA4->text().replace(".","").toDouble());
+    oAlbaran->rTotal1= (ui->txtrTotal1->text().replace(".","").toDouble());
+    oAlbaran->rTotal2= (ui->txtrTotal2->text().replace(".","").toDouble());
+    oAlbaran->rTotal3= (ui->txtrTotal3->text().replace(".","").toDouble());
+    oAlbaran->rTotal4= (ui->txtrTotal4->text().replace(".","").toDouble());
+    oAlbaran->nPorcentajeRecargoEq1= (ui->txtnRec1->text().replace(".","").toDouble());
+    oAlbaran->nPorcentajeRecargoEq2= (ui->txtnRec2->text().replace(".","").toDouble());
+    oAlbaran->nPorcentajeRecargoEq3= (ui->txtnRec3->text().replace(".","").toDouble());
+    oAlbaran->nPorcentajeRecargoEq4= (ui->txtnRec4->text().replace(".","").toDouble());
+    oAlbaran->rImporteRecargoEq1= (ui->txtrRecargoEq1->text().replace(".","").toDouble());
+    oAlbaran->rImporteRecargoEq2= (ui->txtrRecargoEq2->text().replace(".","").toDouble());
+    oAlbaran->rImporteRecargoEq3= (ui->txtrRecargoEq3->text().replace(".","").toDouble());
+    oAlbaran->rImporteRecargoEq4= (ui->txtrRecargoEq4->text().replace(".","").toDouble());
+    oAlbaran->rRecargoEqTotal= (ui->txtrTotalRecargoEq->text().replace(".","").toDouble());
     if (ui->chklRecargoEq->isChecked())
-        oAlbaran->setlRecargoEquivalencia(1);
+        oAlbaran->lRecargoEquivalencia = (1);
     else
-        oAlbaran->setlRecargoEquivalencia(0);
+        oAlbaran->lRecargoEquivalencia = (0);
 
-    oAlbaran->setcPedidoCli(ui->txtcPedidoCliente->text());
-
-
-}
-
-void FrmAlbaran::calcularTotalLinea()
-{
-    /*
-    // Calculo totales línea
-    double impDto,impTot,impSubtotal;
-    impSubtotal = (ui->txtcCantidadArticulo->text().replace(".","").toDouble() * ui->txtPVPArticulo->text().replace(".","").toDouble());
-    ui->txtSubtotalArticulo->setText(Configuracion_global->FormatoNumerico(QString::number(impSubtotal,'f',2)));
-    impDto = (ui->txtSubtotalArticulo->text().replace(".","").toDouble() * ui->txtPorcDtoArticulo->text().replace(".","").toDouble())/100 ;
-    ui->txtDtoArticulo->setText(Configuracion_global->FormatoNumerico(QString::number(impDto,'f',2)));
-    impTot = ui->txtSubtotalArticulo->text().replace(".","").toDouble() - ui->txtDtoArticulo->text().replace(".","").toDouble();
-    ui->txtTotalArticulo->setText(Configuracion_global->FormatoNumerico(QString::number(impTot,'f',2)));
-    */
-}
-
-void FrmAlbaran::RellenarDespuesCalculo()
-{
-    ui->txtrSubtotal->setText(Configuracion_global->FormatoNumerico( QString::number(oAlbaran->getrSubtotal(),'f',2)));
-    ui->txtrImporteDescuento->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrImporteDescuento(),'f',2)));
-    ui->txtrBase->setText(Configuracion_global->FormatoNumerico(QString::number( oAlbaran->getrBase(),'f',2)));
-    ui->txtrImporteIva->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrImporteIva(),'f',2)));
-    ui->txtrTotal->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrTotal(),'f',2)));
-
-    ui->txtrBase1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrBase1(),'f',2)));
-    ui->txtrBase2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrBase2(),'f',2)));
-    ui->txtrBase3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrBase3(),'f',2)));
-    ui->txtrBase4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrBase4(),'f',2)));
-    ui->txtrIVA1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrIVA1(),'f',2)));
-    ui->txtrIVA2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrIVA2(),'f',2)));
-    ui->txtrIVA3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrIVA3(),'f',2)));
-    ui->txtrIVA4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrIVA4(),'f',2)));
-    ui->txtrTotal1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrTotal1(),'f',2)));
-    ui->txtrTotal2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrTotal2(),'f',2)));
-    ui->txtrTotal3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrTotal3(),'f',2)));
-    ui->txtrTotal4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrTotal4(),'f',2)));
-    ui->txtrRecargoEq1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrRecargoEq1(),'f',2)));
-    ui->txtrRecargoEq2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrRecargoEq2(),'f',2)));
-    ui->txtrRecargoEq3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrRecargoEq3(),'f',2)));
-    ui->txtrRecargoEq4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrRecargoEq4(),'f',2)));
-    ui->txtrTotalRecargoEq->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrRecargoEqTotal(),'f',2)));
-
+    oAlbaran->cPedidoCli= (ui->txtcPedidoCliente->text());
 }
 
 void FrmAlbaran::on_btnSiguiente_clicked()
 {
-    int nAlbaran = oAlbaran->getnAlbaran();
-    oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran >'"+QString::number(nAlbaran)+"' order by nAlbaran  limit 1 ");
-    LLenarCampos();
+    int nAlbaran = oAlbaran->nAlbaran;
+    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran >'"+QString::number(nAlbaran)+"' order by nAlbaran  limit 1 "))
+    {
+        LLenarCampos();
+        QString filter = QString("Id_Cab = '%1'").arg(ui->txtcAlbaran->text());
+        helper.fillTable("empresa","lin_alb",filter);
+    }
 }
 
 void FrmAlbaran::on_btnAnterior_clicked()
 {
-    int nAlbaran = oAlbaran->getnAlbaran();
-    oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran <'"+QString::number(nAlbaran)+"' order by nAlbaran desc limit 1 ");
-    LLenarCampos();
+    int nAlbaran = oAlbaran->nAlbaran;
+    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran <'"+QString::number(nAlbaran)+"' order by nAlbaran desc limit 1 "))
+    {
+        LLenarCampos();
+        QString filter = QString("Id_Cab = '%1'").arg(ui->txtcAlbaran->text());
+        helper.fillTable("empresa","lin_alb",filter);
+    }
 }
 
 void FrmAlbaran::on_btnAnadir_clicked()
 {
+    in_edit = false;
     VaciarCampos();
     LLenarAlbaran();
-    oAlbaran->AnadirAlbaran();
-    LLenarCampos();
-    DesbloquearCampos();
+    BloquearCampos(false);
+    ui->txtcAlbaran->setText(QString::number(oAlbaran->NuevoNumeroAlbaran()));
     ui->txtcCodigoCliente->setFocus();
+    emit block();
 }
 
 void FrmAlbaran::on_botBuscarCliente_clicked()
@@ -520,7 +394,7 @@ void FrmAlbaran::on_botBuscarCliente_clicked()
     BuscarClientes.exec();
     int nId = BuscarClientes.DevolverID();
     QString cId = QString::number(nId);
-    oAlbaran->setiId_Cliente(cId.toInt());
+    oAlbaran->iId_Cliente=(cId.toInt());
     oCliente2->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
     LLenarCamposCliente();
 }
@@ -529,9 +403,14 @@ void FrmAlbaran::on_botBuscarCliente_clicked()
 
 void FrmAlbaran::on_btnEditar_clicked()
 {
-    if (!oAlbaran->getlFacturado()) {
-        DesbloquearCampos();
-    } else {
+    in_edit = true;
+    if (!oAlbaran->lFacturado == 1)
+    {
+            BloquearCampos(false);
+            emit block();
+    }
+    else
+    {
         QMessageBox::warning(qApp->activeWindow(),tr("Editar Albarán"),tr("No se puede editar un albarán que ha sido facturado, solo los NO facturados se pueden editar")+
                              tr("<p><b> Si necesita modificar algo genere una factura nueva y realice el abono correspondiente</b>")+
                                 tr("y luego si es preciso realice un nuevo albarán y facture de nuevo "),tr("OK"));
@@ -540,50 +419,122 @@ void FrmAlbaran::on_btnEditar_clicked()
 }
 
 void FrmAlbaran::on_btnGuardar_clicked()
-{
-    int nId = oAlbaran->Getid();
-    if (ui->txtcAlbaran->text().trimmed() =="0")
-        ui->txtcAlbaran->setText(QString::number(oAlbaran->NuevoNumeroAlbaran()));
+{        
+
     LLenarAlbaran();
-    BloquearCampos();
-    oAlbaran->GuardarAlbaran(nId);
-    oAlbaran->RecuperarAlbaran("Select * from cab_alb where Id="+QString::number(nId)+"  limit 1 ");
-    LLenarCampos();
+    bool succes = true;
+    if(in_edit)
+    {
+        succes &= oAlbaran->GuardarAlbaran(ui->txtcAlbaran->text().toInt());
+        succes &= oAlbaran->borrarLineas(ui->txtcAlbaran->text().toInt()) ;
+        succes &= helper.saveTable(ui->txtcAlbaran->text().toInt(),"empresa","lin_alb");
+    }
+    else
+    {
+        succes &= oAlbaran->AnadirAlbaran();
+        succes &= helper.saveTable(ui->txtcAlbaran->text().toInt(),"empresa","lin_alb");
+    }
+    if(succes)
+    {
+        LLenarCampos();
+        succes = QSqlDatabase::database("empresa").commit();
+    }
+    if(succes)
+    {
+        QMessageBox::information(this,tr("Guardado"),tr("Guardado con éxito"),tr("&Aceptar"));
+        BloquearCampos(true);
+        emit unblock();
+    }
+    else
+    {
+        QMessageBox::critical(this,tr("Error"),
+                              tr("Error al guardar el albaran.\n")+QSqlDatabase::database("empresa").lastError().text(),
+                              tr("&Aceptar"));
+        QSqlDatabase::database("empresa").rollback();
+    }
+
 }
 
 void FrmAlbaran::on_btnDeshacer_clicked()
 {
-    BloquearCampos();
-    QString cId = QString::number(oAlbaran->Getid());
+    BloquearCampos(true);
+    QString cId = QString::number(oAlbaran->id);
     oAlbaran->RecuperarAlbaran("Select * from cab_alb where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
+    emit unblock();
 }
 
 void FrmAlbaran::on_pushButton_clicked()
 {
-    int Salida = QMessageBox::question(NULL,tr("Gestión Albaranes"),tr("¿Está seguro/a de borrar el albarán?"),tr("Borrar"),tr("No Borrar"));
-    if (Salida ==0) {
-        QSqlQuery *qCab_alb = new QSqlQuery(QSqlDatabase::database("empresa"));
-        QSqlQuery *qLin_alb = new QSqlQuery(QSqlDatabase::database("empresa"));
-        qLin_alb->prepare("delete from lin_alb where Id_Cab = :id_cab");
-        qCab_alb->prepare("delete from cab_alb where id =:nId");
+    if (QMessageBox::question(this,tr("Borrar"),
+                              tr("Esta acción no se puede deshacer.\n¿Desea continuar?"),
+                              tr("Cancelar"),
+                               tr("&Continuar"))== QMessageBox::Accepted)
+    {
+        bool succes = true;
         QSqlDatabase::database("empresa").transaction();
-        qCab_alb->bindValue(":nId",oAlbaran->Getid());
-        qLin_alb->bindValue(":id_cab",oAlbaran->Getid());
-        if (!qCab_alb->exec() || !qLin_alb->exec()){
-            QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Albaranes"),tr("Error al borrar albarán :")+qCab_alb->lastError().text()+ tr("\n No se Borrará"),tr("Aceptar"));
+
+        QSqlQuery q(QSqlDatabase::database("empresa"));
+        q.prepare("DELETE FROM cab_alb WHERE nAlbaran = "+ui->txtcAlbaran->text());
+        succes &= q.exec();
+        succes &= oAlbaran->borrarLineas(ui->txtcAlbaran->text().toInt());
+
+        if(succes)
+            succes &= QSqlDatabase::database("empresa").commit();
+
+        if(succes)
+            QMessageBox::information(this,tr("Borrado"),tr("Borrado con exito"));
+        else
             QSqlDatabase::database("empresa").rollback();
-        } else {
-            QSqlDatabase::database("empresa").commit();
-            VaciarCampos();
-        }
-        delete qCab_alb;
-        delete qLin_alb;
-    } else
-        QMessageBox::information(qApp->activeWindow(),tr("Gestión de Albaranes"),tr("No se borrará el albarán"),tr("Aceptar"));
+    }
 }
 
-void FrmAlbaran::totalChanged(QString total)
+void FrmAlbaran::totalChanged(double base, double dto, double subTotal, double iva, double re, double total, QString moneda)
 {
-    ui->lbl_total->setText(total);
+    ui->txtrBase->setText(QString::number(base)+moneda);
+    ui->txtrImporteDescuento->setText(QString::number(dto)+moneda);
+    ui->txtrSubtotal->setText(QString::number(subTotal)+moneda);
+    ui->txtrImporteIva->setText(QString::number(iva)+moneda);
+    ui->txtrTotalRecargoEq->setText(QString::number(re)+moneda);
+    ui->txtrTotal->setText(QString::number(total)+moneda);
+    ui->lbl_total->setText(QString::number(total)+moneda);
+
+    ui->txtrBaseTotal_2->setText(QString::number(base)+moneda);
+    ui->txtrTotalIVA_2->setText(QString::number(iva)+moneda);
+    ui->txtrTotalRecargoEq_2->setText(QString::number(re)+moneda);
+    ui->txtrTotal_2->setText(QString::number(total)+moneda);
 }
+
+void FrmAlbaran::desglose1Changed(double base, double iva, double re, double total)
+{
+    ui->txtrBase1->setText(QString::number(base));
+    ui->txtrIVA1->setText(QString::number(iva));
+    ui->txtrRecargoEq1->setText(QString::number(re));
+    ui->txtrTotal1->setText(QString::number(total));
+}
+
+void FrmAlbaran::desglose2Changed(double base, double iva, double re, double total)
+{
+    ui->txtrBase2->setText(QString::number(base));
+    ui->txtrIVA2->setText(QString::number(iva));
+    ui->txtrRecargoEq2->setText(QString::number(re));
+    ui->txtrTotal2->setText(QString::number(total));
+}
+
+void FrmAlbaran::desglose3Changed(double base, double iva, double re, double total)
+{
+    ui->txtrBase3->setText(QString::number(base));
+    ui->txtrIVA3->setText(QString::number(iva));
+    ui->txtrRecargoEq3->setText(QString::number(re));
+    ui->txtrTotal3->setText(QString::number(total));
+}
+
+void FrmAlbaran::desglose4Changed(double base, double iva, double re, double total)
+{
+    ui->txtrBase4->setText(QString::number(base));
+    ui->txtrIVA4->setText(QString::number(iva));
+    ui->txtrRecargoEq4->setText(QString::number(re));
+    ui->txtrTotal4->setText(QString::number(total));
+}
+
+
