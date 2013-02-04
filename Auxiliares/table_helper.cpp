@@ -188,12 +188,12 @@ void Table_Helper::addRow()
         QTableWidgetItem * item0 = new QTableWidgetItem;
         helped_table->setItem(row,0,item0);
 
-        QTableWidgetItem * item = new QTableWidgetItem("1");
+        QTableWidgetItem * item = new QTableWidgetItem;
         helped_table->setItem(row,1,item);
         for(int i = 2;i < helped_table->columnCount();i++)
         {
-            QTableWidgetItem * item = new QTableWidgetItem;
-            helped_table->setItem(row,i,item);
+            QTableWidgetItem * itemX = new QTableWidgetItem;
+            helped_table->setItem(row,i,itemX);
         }
         QTableWidgetItem * subtotal = helped_table->item(row,4);
         subtotal->setFlags(subtotal->flags()^Qt::ItemIsEnabled);
@@ -201,6 +201,7 @@ void Table_Helper::addRow()
         QTableWidgetItem * total = helped_table->item(row,8);
         total->setFlags(total->flags()^Qt::ItemIsEnabled);
         helped_table->blockSignals(false);
+        item->setText("1");
     }
 }
 

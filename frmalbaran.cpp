@@ -232,6 +232,8 @@ void FrmAlbaran::VaciarCampos() {
     ui->txtrTotalRecargoEq_2->setText("0,00");
     ui->txtrTotal_2->setText("0,00");
     ui->txtrSubtotal->setText("0,00");
+
+    helper.fillTable("empresa","lin_alb","Id_Cab = -1");
 }
 
 void FrmAlbaran::BloquearCampos(bool state)
@@ -247,59 +249,40 @@ void FrmAlbaran::BloquearCampos(bool state)
     QComboBox *ComboBox;
     foreach (ComboBox, ComboBoxList) {
         ComboBox->setEnabled(!state);
-        //qDebug() << lineEdit->objectName();
     }
-    /*
-//    // SpinBox
-//    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-//    QSpinBox *SpinBox;
-//    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(true);
-//        //qDebug() << lineEdit->objectName();
-//    }
-//    // DoubleSpinBox
-//    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-//    QDoubleSpinBox *DSpinBox;
-//    foreach (DSpinBox, DSpinBoxList) {
-//        DSpinBox->setReadOnly(true);
-//        //qDebug() << lineEdit->objectName();
-//    } */
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
     foreach (CheckBox, CheckBoxList) {
         CheckBox->setEnabled(!state);
-        //qDebug() << lineEdit->objectName();
     }
     // QTextEdit
     QList<QTextEdit *> textEditList = this->findChildren<QTextEdit *>();
     QTextEdit *textEdit;
     foreach (textEdit,textEditList) {
         textEdit->setReadOnly(state);
-        //qDebug() << lineEdit->objectName();
     }
     // QDateEdit
     QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
         DateEdit->setEnabled(!state);
-        //qDebug() << lineEdit->objectName();
     }
 
     ui->btnAnadir->setEnabled(state);
     ui->btnAnterior->setEnabled(state);
-   // ui->btnBorrar->setEnabled(true);
     ui->btnBuscar->setEnabled(state);
     ui->btnDeshacer->setEnabled(!state);
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
-    //ui->botBorrarLinea->setEnabled(false);
-    //ui->botEditarLinea->setEnabled(false);
     ui->botBuscarCliente->setEnabled(!state);
     ui->btnFacturar->setEnabled(!state);
-
     ui->txtcAlbaran->setReadOnly(true);
+    ui->btnAnadirLinea->setEnabled(!state);
+    ui->btn_borrarLinea->setEnabled(!state);
+
+    helper.blockTable(state);
 }
 
 void FrmAlbaran::LLenarAlbaran()
@@ -420,7 +403,7 @@ void FrmAlbaran::on_btnEditar_clicked()
 
 void FrmAlbaran::on_btnGuardar_clicked()
 {        
-
+    QSqlDatabase::database("empresa").transaction();
     LLenarAlbaran();
     bool succes = true;
     if(in_edit)

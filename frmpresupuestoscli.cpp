@@ -332,6 +332,8 @@ void FrmPresupuestosCli::VaciarCampos()
     ui->txtrTotal4->setText("0,00");
     ui->txtcEmail->setText("");
     ui->txtcCliente->setText("");
+
+    helper.fillTable("empresa","lin_pre","Id_Cab = -1");
 }
 
 void FrmPresupuestosCli::BloquearCampos(bool state)
@@ -349,41 +351,23 @@ void FrmPresupuestosCli::BloquearCampos(bool state)
     foreach (ComboBox, ComboBoxList) {
         ComboBox->setEnabled(!state);
     }
-    /*
-//    // SpinBox
-//    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-//    QSpinBox *SpinBox;
-//    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(true);
-//        //qDebug() << lineEdit->objectName();
-//    }
-//    // DoubleSpinBox
-//    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-//    QDoubleSpinBox *DSpinBox;
-//    foreach (DSpinBox, DSpinBoxList) {
-//        DSpinBox->setReadOnly(true);
-//        //qDebug() << lineEdit->objectName();
-//    } */
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
     foreach (CheckBox, CheckBoxList) {
         CheckBox->setEnabled(!state);
-        //qDebug() << lineEdit->objectName();
     }
     // QTextEdit
     QList<QTextEdit *> textEditList = this->findChildren<QTextEdit *>();
     QTextEdit *textEdit;
     foreach (textEdit,textEditList) {
         textEdit->setReadOnly(state);
-        //qDebug() << lineEdit->objectName();
     }
     // QDateEdit
     QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
         DateEdit->setEnabled(!state);
-        //qDebug() << lineEdit->objectName();
     }
 
     ui->btnAnadir->setEnabled(state);

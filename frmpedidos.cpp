@@ -249,6 +249,8 @@ void FrmPedidos::VaciarCampos()
     ui->txtrTotal_2->setText("0,00");
     ui->txtrSubtotal->setText("0,00");
     ui->txtnPedido->setReadOnly(true);
+
+    helper.fillTable("empresa","lin_ped","Id_Cab = -1");
 }
 
 void FrmPedidos::BloquearCampos(bool state)
@@ -260,7 +262,6 @@ void FrmPedidos::BloquearCampos(bool state)
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
         lineEdit->setReadOnly(state);
-        //qDebug() << lineEdit->objectName();
     }
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
@@ -269,27 +270,11 @@ void FrmPedidos::BloquearCampos(bool state)
         ComboBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
-    /*
-//    // SpinBox
-//    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-//    QSpinBox *SpinBox;
-//    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(true);
-//        //qDebug() << lineEdit->objectName();
-//    }
-//    // DoubleSpinBox
-//    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-//    QDoubleSpinBox *DSpinBox;
-//    foreach (DSpinBox, DSpinBoxList) {
-//        DSpinBox->setReadOnly(true);
-//        //qDebug() << lineEdit->objectName();
-//    } */
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
     foreach (CheckBox, CheckBoxList) {
         CheckBox->setEnabled(!state);
-        //qDebug() << lineEdit->objectName();
     }
     // QTextEdit
     QList<QTextEdit *> textEditList = this->findChildren<QTextEdit *>();
@@ -303,21 +288,16 @@ void FrmPedidos::BloquearCampos(bool state)
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
         DateEdit->setEnabled(!state);
-        //qDebug() << lineEdit->objectName();
     }
 
     ui->btnAnadir->setEnabled(state);
     ui->btnAnterior->setEnabled(state);
-   // ui->btnBorrar->setEnabled(true);
     ui->btnBuscar->setEnabled(state);
     ui->btnDeshacer->setEnabled(!state);
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
-    //ui->botBorrarLinea->setEnabled(false);
-    //ui->botEditarLinea->setEnabled(false);
     ui->botBuscarCliente->setEnabled(!state);
-   // ui->btnFacturar->setEnabled(false);
     ui->txtnPedido->setReadOnly(true);
 }
 
@@ -505,6 +485,8 @@ void FrmPedidos::on_btnDeshacer_clicked()
     QString cId = (ui->txtnPedido->text());
     oPedido->RecuperarPedido("Select * from ped_cli where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
+    QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPedido->text());
+    helper.fillTable("empresa","lin_ped",filter);
     emit unblock();
 }
 
