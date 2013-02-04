@@ -16,7 +16,7 @@ class FrmPresupuestosCli : public QDialog
     Q_OBJECT
 
 signals:
-    void block()    ;
+    void block();
     void unblock();
 public:
     explicit FrmPresupuestosCli(QWidget *parent = 0);
@@ -26,7 +26,6 @@ public:
     void LLenarPresupuesto();
     void VaciarCampos();
     void BloquearCampos(bool state);
-    void RellenarDespuesCalculo();
     Presupuesto *oPres;
     Cliente *oClientePres;
 private slots:
@@ -53,9 +52,17 @@ private slots:
     void desglose4Changed(double base, double iva, double re, double total);
     void on_btnDeshacer_clicked();
 
+    void convertir_enPedido();
+    void convertir_enAlbaran();
+    void convertir_enFactura();
+    void on_btnBorrar_clicked();
+
 private:
     Ui::FrmPresupuestosCli *ui;
-
+    QAction * aPedido_action;
+    QAction * aAlbaran_action;
+    QAction * aFactura_action;
+    QMenu * convertir_menu;
     Table_Helper helper;
     bool editando;
 };

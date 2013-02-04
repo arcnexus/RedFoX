@@ -121,7 +121,6 @@ void FrmAlbaran::LLenarCampos() {
     ui->txtcPais->setText(oAlbaran->getcPais());
     ui->txtcCif->setText(oAlbaran->getcCif());
     ui->txtrSubtotal->setText(Configuracion_global->FormatoNumerico( QString::number(oAlbaran->getrSubtotal(),'f',2)));
-    ui->txtnDto->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getnDto(),'f',2)));
     ui->txtrImporteDescuento->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->getrImporteDescuento(),'f',2)));
     ui->txtrBase->setText(Configuracion_global->FormatoNumerico(QString::number( oAlbaran->getrBase(),'f',2)));
     ui->txtrBaseTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number( oAlbaran->getrBase(),'f',2)));
@@ -219,7 +218,6 @@ void FrmAlbaran::VaciarCampos() {
     ui->txtcPais->setText("");
     ui->txtcCif->setText("");
     ui->txtrSubtotal->setText(0);
-    ui->txtnDto->setText(0);
     ui->txtrImporteDescuento->setText("0,00");
     ui->txtrBase->setText("0,00");
     ui->txtrImporteIva->setText("0,00");
@@ -410,7 +408,6 @@ void FrmAlbaran::LLenarAlbaran() {
     oAlbaran->setcPais(ui->txtcPais->text());
     oAlbaran->setcCif(ui->txtcCif->text());
     oAlbaran->setrSubtotal(ui->txtrSubtotal->text().replace(".","").toDouble());
-    oAlbaran->setnDto(ui->txtnDto->text().replace(".","").toDouble());
     oAlbaran->setrImporteDescuento(ui->txtrImporteDescuento->text().replace(".","").toDouble());
     oAlbaran->setrBase(ui->txtrBase->text().replace(".","").toDouble());
     oAlbaran->setrImporteIva(ui->txtrImporteIva->text().replace(".","").toDouble());
