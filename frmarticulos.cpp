@@ -18,12 +18,23 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA3));
     ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA4));
 
+    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->nIVA1));
+    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->nIVA2));
+    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->nIVA3));
+    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->nIVA4));
+
+    if(internacional == false) {
+        ui->cboPais1->setVisible(false);
+        ui->cboPais2->setVisible(false);
+        ui->textoPais1->setVisible(false);
+        ui->textopais2->setVisible(false);
+        ui->btnVerTarifasporPais->setVisible(false);
+    }
     // Cargar paises
-    QSqlQueryModel qpaises(this);
-    qpaises.setQuery("Select pais from paises",QSqlDatabase::database("empresa"));
-    qDebug() <<qpaises.lastError().text();
-    ui->cboPais1->setModel(&qpaises);
-    ui->cboPais2->setModel(&qpaises);
+    QSqlQueryModel *qpaises = new QSqlQueryModel(this);
+    qpaises->setQuery("Select pais from paises",QSqlDatabase::database("empresa"));
+    ui->cboPais1->setModel(qpaises);
+    ui->cboPais2->setModel(qpaises);
 
     // Control objetos
     ui->lblMensajeRecuperar->setVisible(false);
@@ -51,6 +62,7 @@ void FrmArticulos::on_botAnadir_clicked()
 {
     desbloquearCampos();
     VaciarCampos();
+    this->anadir = true;
     //LLenarCampos();
     //ui->lblImagenArticulo->setPixmap(QPixmap::fromImage());
     ui->txtcCodigo->setFocus();
@@ -59,9 +71,13 @@ void FrmArticulos::on_botAnadir_clicked()
 void FrmArticulos::on_botGuardar_clicked()
 {
     bloquearCampos();
-    oArticulo->Anadir();
     CargarCamposEnArticulo();
-    oArticulo->Guardar();
+    if(this->anadir){
+        this->anadir = false;
+        oArticulo->Anadir();
+    } else {
+        oArticulo->Guardar();
+    }
 }
 
 void FrmArticulos::on_botSiguiente_clicked()
@@ -563,6 +579,17 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
     if(form.exec() == QDialog::Accepted)
     {
         ui->txtcSeccion->setText(form.value);
+        QSqlQuery qSeccion(QSqlDatabase::database("empresa"));
+        qSeccion.prepare("select id from secciones where cSeccion = :seccion");
+        qSeccion.bindValue(":seccion",form.value);
+        if(qSeccion.exec()) {
+            qSeccion.next();
+            oArticulo->setid_Seccion(qSeccion.value(0).toInt());
+        }else {
+            QMessageBox::warning(this,tr("Secciones"),tr("No se ha podido vincular la seccion: %1").arg(qSeccion.lastError().text()));
+        }
+
+
     }
 }
 

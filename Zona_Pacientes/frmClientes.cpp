@@ -29,7 +29,11 @@ frmClientes::frmClientes(QWidget *parent) :
     QSettings settings("infint", "terra");
     int nNivel = settings.value("nNivelAcceso").toInt();
     //QString cCategoria = settings.value("cCategoria").toString();
-    if (nNivel >7)
+    if(medic == false) {
+        this->setWindowTitle(tr("Gestion de clientes"));
+        ui->textoTitulo->setText(("GESTIÓN de CLIENTES - Datos Administrativos"));
+    }
+    if (nNivel >7 && medic == true)
         ui->btnFichaPaciente->setVisible(true);
     else
         ui->btnFichaPaciente->setVisible(false);

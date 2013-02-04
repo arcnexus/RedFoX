@@ -43,7 +43,11 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="label_40">
+    <widget class="QLabel" name="textoTitulo">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 85, 0);
+font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
+     </property>
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE PACIENTES - Datos Administrativos&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>

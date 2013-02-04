@@ -59,7 +59,7 @@
       <string notr="true">background-color: rgb(215, 215, 215);</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="Empresas">
       <attribute name="title">
@@ -98,19 +98,6 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1" colspan="3">
-          <widget class="QLineEdit" name="txtEmpresa">
-           <property name="minimumSize">
-            <size>
-             <width>380</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="3">
           <widget class="QSpinBox" name="txtnEjercicio">
            <property name="styleSheet">
@@ -136,6 +123,19 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="1" column="1" colspan="4">
+          <widget class="QLineEdit" name="txtEmpresa">
+           <property name="minimumSize">
+            <size>
+             <width>380</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -178,7 +178,7 @@
             <string>Añadir</string>
            </property>
            <property name="icon">
-            <iconset resource="terra.qrc">
+            <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
            </property>
            <property name="iconSize">
@@ -213,7 +213,7 @@
             <string>Siguiente</string>
            </property>
            <property name="icon">
-            <iconset resource="terra.qrc">
+            <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
            </property>
            <property name="iconSize">
@@ -248,7 +248,7 @@
             <string>Anterior</string>
            </property>
            <property name="icon">
-            <iconset resource="terra.qrc">
+            <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
            </property>
            <property name="iconSize">
@@ -283,7 +283,7 @@
             <string>Buscar</string>
            </property>
            <property name="icon">
-            <iconset resource="terra.qrc">
+            <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
            </property>
            <property name="iconSize">
@@ -353,7 +353,7 @@
             <string>Guardar</string>
            </property>
            <property name="icon">
-            <iconset resource="terra.qrc">
+            <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
            </property>
            <property name="iconSize">
@@ -388,7 +388,7 @@
             <string>Cerrar</string>
            </property>
            <property name="icon">
-            <iconset resource="terra.qrc">
+            <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/alert.png</normaloff>:/Icons/PNG/alert.png</iconset>
            </property>
           </widget>
@@ -489,7 +489,7 @@
        <item row="3" column="1">
         <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tabWidgetPage1">
           <attribute name="title">
@@ -677,13 +677,6 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_19">
-               <property name="text">
-                <string>Fax:</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="2">
               <spacer name="horizontalSpacer_3">
                <property name="orientation">
@@ -696,6 +689,13 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_19">
+               <property name="text">
+                <string>Fax:</string>
+               </property>
+              </widget>
              </item>
              <item row="3" column="1" colspan="2">
               <widget class="QLineEdit" name="txtcMail">
@@ -723,6 +723,20 @@
                </property>
                <property name="text">
                 <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QCheckBox" name="dboEmpresaMedica">
+               <property name="text">
+                <string>Empresa Médica</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QCheckBox" name="cboGestionInternacional">
+               <property name="text">
+                <string>Gestión internacional</string>
                </property>
               </widget>
              </item>
@@ -1229,7 +1243,7 @@
             <string>Añadir</string>
            </property>
            <property name="icon">
-            <iconset resource="terra.qrc">
+            <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
            </property>
            <property name="iconSize">
@@ -1277,7 +1291,7 @@
             <string>Siguiente</string>
            </property>
            <property name="icon">
-            <iconset resource="terra.qrc">
+            <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
            </property>
            <property name="iconSize">
@@ -1325,7 +1339,7 @@
             <string>Anterior</string>
            </property>
            <property name="icon">
-            <iconset resource="terra.qrc">
+            <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
            </property>
            <property name="iconSize">
@@ -1373,7 +1387,7 @@
             <string>Buscar</string>
            </property>
            <property name="icon">
-            <iconset resource="terra.qrc">
+            <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
            </property>
            <property name="iconSize">
@@ -1421,7 +1435,7 @@
             <string>Guardar</string>
            </property>
            <property name="icon">
-            <iconset resource="terra.qrc">
+            <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
            </property>
            <property name="iconSize">
@@ -1517,7 +1531,7 @@
             <string>Cerrar</string>
            </property>
            <property name="icon">
-            <iconset resource="terra.qrc">
+            <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/alert.png</normaloff>:/Icons/PNG/alert.png</iconset>
            </property>
           </widget>
@@ -1656,7 +1670,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="../terra.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -9,6 +9,8 @@
 #include "db_table_view.h"
 
 Configuracion * Configuracion_global = 0;
+bool medic = true;
+bool internacional = true;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     on_edit = false;
+
     // ----------------------------------------------------------------------------
     // Barra de herramientas Modulos
     // ----------------------------------------------------------------------------
@@ -49,14 +52,15 @@ MainWindow::MainWindow(QWidget *parent) :
     BtnSalidas->setIcon(QIcon(":Icons/PNG/Gastos.png"));
     BtnSalidas->setToolTip(tr("Módulo de Gastos/Salidas clinica"));
     BtnSalidas->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-
-    // INF. MEDICA.
     QToolButton *BtnMedica = new QToolButton(m_modulesBar);
-    BtnMedica->setText(tr("Clínica"));
-    BtnMedica->setIcon(QIcon(":Icons/PNG/PatientFile2.png"));
-    BtnMedica->setToolTip(tr("Módulo de Gestión especificamente clínica"));
-    BtnMedica->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    if (medic == true) {
+        // INF. MEDICA.
 
+        BtnMedica->setText(tr("Clínica"));
+        BtnMedica->setIcon(QIcon(":Icons/PNG/PatientFile2.png"));
+        BtnMedica->setToolTip(tr("Módulo de Gestión especificamente clínica"));
+        BtnMedica->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    }
     // Salir
     QToolButton *BtnCerrar = new QToolButton(m_modulesBar);
     BtnCerrar->setText(tr("Salir"));
@@ -66,7 +70,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_modulesBar->addWidget(BtnMantenimiento);
     m_modulesBar->addWidget(BtnEntradas);
     m_modulesBar->addWidget(BtnSalidas);
-    m_modulesBar->addWidget(BtnMedica);
+    if (medic ==true)
+        m_modulesBar->addWidget(BtnMedica);
     m_modulesBar->addWidget(BtnCerrar);
     //-------------------------------
     // Cargo Barras Herramientas
@@ -176,6 +181,18 @@ void MainWindow::init()
             Configuracion_global->cPasswordBDEmpresa =record.field("contrasena").value().toString();
             Configuracion_global->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
             Configuracion_global->cUsuarioBDEmpresa = record.field("user").value().toString();
+            if(record.field("medica").value().toInt()==1) {
+                medic = true;
+            } else {
+                medic = false;
+            }
+            if(record.field("internacional").value().toInt()==1) {
+                internacional = true;
+            } else {
+                internacional = false;
+            }
+
+
             progress.setValue(1);
             QApplication::processEvents();
 			//DBMedica
@@ -325,6 +342,11 @@ void MainWindow::Mantenimientos()
 
     // PACIENTES
     m_MantenimientosBar->addAction(ui->btnClientes);
+    if(medic == true){
+        ui->btnClientes->setText(tr("Pacientes"));
+    } else {
+        ui->btnClientes->setText(tr("Clientes"));
+    }
 
     // PROVEEDORES
     m_MantenimientosBar->addAction(ui->btnProveedores);
