@@ -16,15 +16,15 @@ class FrmAlbaran : public QDialog
 public:
     explicit FrmAlbaran(QWidget *parent = 0);
     ~FrmAlbaran();
-    void lineasVentas();
     void LLenarCampos();
     void LLenarCamposCliente();
     void VaciarCampos();
-    void BloquearCampos();
+    void BloquearCampos(bool state);
     void DesbloquearCampos();
     void LLenarAlbaran();
-    void calcularTotalLinea();
-    void RellenarDespuesCalculo();
+signals:
+    void block();
+    void unblock();
 private slots:
     void on_btnSiguiente_clicked();
 
@@ -42,12 +42,17 @@ private slots:
 
     void on_pushButton_clicked();
 
-    void totalChanged(QString total);
+    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
+    void desglose1Changed(double base, double iva, double re, double total);
+    void desglose2Changed(double base, double iva, double re, double total);
+    void desglose3Changed(double base, double iva, double re, double total);
+    void desglose4Changed(double base, double iva, double re, double total);
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;
     QSqlQueryModel *ModelLin_alb;
     Table_Helper helper;
+    bool in_edit;
 };
 
 #endif // FRMALBARAN_H
