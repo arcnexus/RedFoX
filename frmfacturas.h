@@ -19,9 +19,10 @@ public slots:
     void LLenarCamposCliente();
     void LLenarFactura();
     void VaciarCampos();
-    void BloquearCampos();
-    void DesbloquearCampos();
-
+    void BloquearCampos(bool state);
+signals:
+    void block();
+    void unblock();
 public:
     explicit frmFacturas(QWidget *parent = 0);
     ~frmFacturas();
@@ -29,15 +30,11 @@ public:
     Cliente *oCliente1;
     
 private slots:
-    void lineasVentas();
-
     void on_btnSiguiente_clicked();
 
-    void on_btnGuardar_clicked();
+    void Guardar_factura();
 
     void on_btnAnadir_clicked();
-
-    void calcularTotalLinea();
 
     void on_btnDeshacer_clicked();
 
@@ -45,37 +42,23 @@ private slots:
 
     void on_botBuscarCliente_clicked();
 
-    void on_btnBuscarArt_clicked();
-
-    void on_tablaBuscaArt_doubleClicked(const QModelIndex &index);
-
-    void on_chklRecargoEquivalencia_stateChanged(int arg1);
-
     void on_btnBuscar_clicked();
 
     void on_btnImprimir_clicked();
 
-    void RellenarDespuesCalculo();
-
     void on_botBorrador_clicked();
 
     void totalChanged(QString total);    
+    void on_btnEditar_clicked();
+
 private:
     Ui::frmFacturas *ui;
-    QSqlDatabase dbEmp;
-    QSqlDatabase dbTerra;
-    QSqlQueryModel *modelFP;
-    QSqlQueryModel *modArt;
+    QAction * actionGuardaBorrador;
+    QAction * actionGuardaFactura;
+    QMenu* menu_guardar;
     bool Altas;
-    QSqlQueryModel *ModelLin_fac;
-    QHeaderView *Cabecera;
-    double importe;
     Table_Helper helper;
-
-
-public:
-    QString TextoNumero(QString cTexto);
-
+    bool in_edit;
 };
 
 #endif // FRMFACTURAS_H

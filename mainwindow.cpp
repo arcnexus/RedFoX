@@ -259,6 +259,8 @@ void MainWindow::init()
             frmClientes1 = new frmClientes(this);
             progress.setValue(7);
             frmFacturas1 = new frmFacturas(this);
+            connect(frmFacturas1,SIGNAL(block()),this,SLOT(block_main()));
+            connect(frmFacturas1,SIGNAL(unblock()),this,SLOT(unblock_main()));
             progress.setValue(8);
             frmArticulos1 = new FrmArticulos(this);
             progress.setValue(9);

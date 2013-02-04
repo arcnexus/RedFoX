@@ -10,11 +10,11 @@
 Factura::Factura(QObject *parent) :
     QObject(parent)
 {
-    this->id =0;
+    this->Id =0;
 }
 
 // Metodos utilidad Clase
-void Factura::AnadirFactura() {
+bool Factura::AnadirFactura() {
 
     this->nPorcentajeIVA1 = Configuracion_global->nIVA1;
     this->nPorcentajeIVA2 = Configuracion_global->nIVA2;
@@ -96,17 +96,24 @@ void Factura::AnadirFactura() {
      cab_fac.bindValue(":cDCCuenta",this->cDCCuenta);
      cab_fac.bindValue(":cNumeroCuenta",this->cNumeroCuenta);
      cab_fac.bindValue(":cPedidoCliente",this->cPedidoCliente);
-     if(!cab_fac.exec()){
+     if(!cab_fac.exec())
+     {
          QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Factura:", cab_fac.lastError().text());
-     } else {
-         this->id = cab_fac.lastInsertId().toInt();
-         QString cSQL = "Select * from cab_fac where id ="+QString::number(this->id);
+         return false;
+     }
+     else
+     {
+         this->Id = cab_fac.lastInsertId().toInt();
+         QString cSQL = "Select * from cab_fac where id ="+QString::number(this->Id);
          RecuperarFactura(cSQL);
+         return true;
      }
 
 }
 // Guardar la factura
-void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
+bool Factura::GuardarFactura(int nId_Factura, bool FacturaLegal)
+{
+    bool succes = true;
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
     cab_fac.prepare( "UPDATE cab_fac set "
                      "cCodigoCliente = :cCodigoCliente,"
@@ -242,6 +249,7 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
     if(!cab_fac.exec())
     {
         QMessageBox::critical(qApp->activeWindow(),tr("error al guardar datos Factura:"), cab_fac.lastError().text());
+        succes =  false;
     }
     else
     {
@@ -254,7 +262,7 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
                                      tr("¿Desea cobrar la factura ahora o generar una deuda al cliente?"),
                                      tr("Cobrar"),tr("Generar deuda")) == QMessageBox::Accepted)
             {
-                CobrarFactura();
+                succes = CobrarFactura();
             }
             else
             {
@@ -293,6 +301,7 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
                     {
                         qDebug() << Deudacliente.lastQuery();
                         QMessageBox::warning(qApp->activeWindow(),tr("Añadir deuda"),tr("No se ha podido añadir la deuda ")+Deudacliente.lastError().text() ,tr("OK"));
+                        succes = false;
                     }
                     else
                     {
@@ -309,26 +318,35 @@ void Factura::GuardarFactura(int nId_Factura, bool FacturaLegal) {
                         Cliente.bindValue(":Id_Cliente",record.field("Id").value().toInt());
                         if (!Cliente.exec())
                         {
+                            succes =  false;
                             QMessageBox::warning(qApp->activeWindow(),tr("Añadir Acumulados"),
                                                  tr("No se ha podido añadir los correspondientes acumulados a la ficha del cliente"),
                                                  tr("OK"));
                         }
                     }
                 }
+                else
+                    succes = false;
             }
         }
     }
+    return succes;
 }
 
-void Factura::RecuperarFactura(QString cSQL){
-        cab_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
-        cab_fac->prepare(cSQL);
-        if( !cab_fac->exec() ) {
-            QMessageBox::critical(qApp->activeWindow(), "error:", cab_fac->lastError().text());
-        } else {
-            if (cab_fac->next()) {
-                QSqlRecord registro = cab_fac->record();
-                this->id = registro.field("id").value().toInt();
+bool Factura::RecuperarFactura(QString cSQL){
+        QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
+        cab_fac.prepare(cSQL);
+        if( !cab_fac.exec() )
+        {
+            QMessageBox::critical(qApp->activeWindow(), "error:", cab_fac.lastError().text());
+            return false;
+        }
+        else
+        {
+            if (cab_fac.next())
+            {
+                QSqlRecord registro = cab_fac.record();
+                this->Id = registro.field("id").value().toInt();
                 this->cCodigoCliente= registro.field("cCodigoCliente").value().toString();
                 this->cFactura = registro.field("cFactura").value().toString();
                 this->dFecha = registro.field("dFecha").value().toDate();
@@ -392,8 +410,12 @@ void Factura::RecuperarFactura(QString cSQL){
                 this->cPedidoCliente = registro.field("cPedidoCliente").value().toString();
                 this->nIRPF = registro.field("nIRPF").value().toInt();
                 this->rImporteIRPF = registro.field("rImporteIRPF").value().toDouble();
-
+                return true;
                }
+            else
+            {
+                return false;
+            }
         }
 }
 
@@ -422,652 +444,49 @@ QString Factura::NuevoNumeroFactura() {
     return cNumFac;
 }
 
-void Factura::AnadirLineaFactura(int id_cab, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal,
-                                 double porcdto, double dto, double total, double nPorcIva)
+bool Factura::BorrarLineasFactura(int id_lin)
 {
-    QSqlQuery *Qlin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
-    Qlin_fac->prepare("INSERT INTO lin_fac (id_Cab,cCodigo,nCantidad,cDescripcion,rPvp,nDto,rDto,rSubTotal,rTotal,nPorcIva)"
-                      " VALUES(:id_cab,:cCodigo,:nCantidad,:cDescripcion,:rPvp,:nDto,:rDto,:rSubTotal,:rTotal,:nPorcIva)");
-    Qlin_fac->bindValue(":id_cab",id_cab);
-    Qlin_fac->bindValue(":cCodigo",cCodigo);
-    Qlin_fac->bindValue(":nCantidad",nCantidad);
-    Qlin_fac->bindValue(":cDescripcion",cDescripcion);
-    Qlin_fac->bindValue(":rPvp",pvp);
-    Qlin_fac->bindValue(":nDto",porcdto);
-    Qlin_fac->bindValue(":rDto",dto);
-    Qlin_fac->bindValue(":rSubTotal",subtotal);
-    Qlin_fac->bindValue(":rTotal",total);
-    Qlin_fac->bindValue(":nPorcIva",nPorcIva);
-    if (!Qlin_fac->exec()){
-       QMessageBox::critical(qApp->activeWindow(),"error al guardar datos línea Factura:", Qlin_fac->lastError().text());
-    }
-    delete Qlin_fac;
-    QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
-    QArticulos->prepare("update articulos set "
-                        "dUltimaVenta = :dUltimaVenta,"
-                        "nUnidadesVendidas = nUnidadesVendidas +:nCantidad,"
-                        "nStockReal = nStockReal - :nCantidad2, "
-                        "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
-                        "where cCodigo= :cCodigo");
-    QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
-    QArticulos->bindValue(":nCantidad",nCantidad);
-    QArticulos->bindValue(":nCantidad2",nCantidad);
-    QArticulos->bindValue(":rTotal",total);
-    QArticulos->bindValue(":cCodigo",cCodigo);
-
-    QArticulos->exec();
-    delete QArticulos;
-}
-
-void Factura::ModificarLineaFactura(int id_lin, QString cCodigo, double nCantidad, QString cDescripcion, double pvp, double subtotal, double porcdto, double dto, double total, double nPorcIva)
-{
-    // Borro valores anteriores registro Artículo (Los valores se sacan del registro de lin_fac ya que aun no se ha modificado)uhjmkk,kl,,
-    QSqlQuery *Lin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
-    Lin_fac->prepare("Select * from lin_fac where id =:nId");
-    Lin_fac->bindValue(":nId",id_lin);
-    if(Lin_fac->exec()) {
-        Lin_fac->next();
-        QSqlRecord record = Lin_fac->record();
-
-        QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
-        QArticulos->prepare("update articulos set "
-                            "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
-                            "nStockReal = nStockReal - :nCantidad2, "
-                            "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
-                            "where cCodigo= :cCodigo");
-        QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
-        QArticulos->bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
-        QArticulos->bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
-        QArticulos->bindValue(":rTotal",record.field("rTotal").value().toDouble());
-        QArticulos->bindValue(":cCodigo",record.field("cCodigo").value().toString());
-        QArticulos->exec();
-        delete QArticulos;
-        delete Lin_fac;
-
-    }
-    // Actualizo Línea factura
-    QSqlQuery *Qlin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
-    Qlin_fac->prepare("update lin_fac  set "
-                      "cCodigo =:cCodigo,"
-                      "nCantidad =:nCantidad,"
-                      "cDescripcion =:cDescripcion,"
-                      "rPvp =:rPvp,"
-                      "nDto =:nDto,"
-                      "rDto =:rDto,"
-                      "rSubTotal =:rSubTotal,"
-                      "rTotal =:rTotal,"
-                      "nPorcIva =:nPorcIva where id = :id_lin");
-    Qlin_fac->bindValue(":id_lin",id_lin);
-    Qlin_fac->bindValue(":cCodigo",cCodigo);
-    Qlin_fac->bindValue(":nCantidad",nCantidad);
-    Qlin_fac->bindValue(":cDescripcion",cDescripcion);
-    Qlin_fac->bindValue(":rPvp",pvp);
-    Qlin_fac->bindValue(":nDto",porcdto);
-    Qlin_fac->bindValue(":rDto",dto);
-    Qlin_fac->bindValue(":rSubTotal",subtotal);
-    Qlin_fac->bindValue(":rTotal",total);
-    Qlin_fac->bindValue(":nPorcIva",nPorcIva);
-    if (!Qlin_fac->exec()){
-       QMessageBox::critical(qApp->activeWindow(),"error al modificar datos línea Factura:", Qlin_fac->lastError().text());
-    }
-    delete Qlin_fac;
-    // Actualizo ficha artículo
-    QSqlQuery *QArticulos = new QSqlQuery(QSqlDatabase::database("empresa"));
-    QArticulos->prepare("update articulos set "
-                        "dUltimaVenta = :dUltimaVenta,"
-                        "nUnidadesVendidas = nUnidadesVendidas +:nCantidad,"
-                        "nStockReal = nStockReal - :nCantidad2, "
-                        "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
-                        "where cCodigo= :cCodigo");
-    QArticulos->bindValue(":dUltimaVenta",QDate::currentDate());
-    QArticulos->bindValue(":nCantidad",nCantidad);
-    QArticulos->bindValue(":nCantidad2",nCantidad);
-    QArticulos->bindValue(":rTotal",total);
-    QArticulos->bindValue(":cCodigo",cCodigo);
-
-    QArticulos->exec();
-    delete QArticulos;
-
-}
-
-void Factura::BorrarLineaFactura(int id_lin)
-{
-    if (id_lin !=0)
-    {
-        if(QMessageBox::question(qApp->activeWindow(),tr("Borrar línea"),
-                                 tr("Está a punto de borrar la línea de la factura\n¿Desea continuar?"),
-                                 tr("No"),tr("Si")) == QMessageBox::Accepted)
+    QSqlQuery query(QSqlDatabase::database("empresa"));
+        QString sql = QString("DELETE FROM lin_fac WHERE id_Cab = %1").arg(id_lin);
+        query.prepare(sql);
+        if(query.exec())
+            return true;
+        else
         {
-            QSqlQuery qrylin_fac(QSqlDatabase::database("empresa"));
-            qrylin_fac.prepare("Select * from lin_fac where id = :id_lin");
-            qrylin_fac.bindValue(":id_lin",id_lin);
-            if (qrylin_fac.exec())
-            {
-                QSqlRecord record = qrylin_fac.record();
-                // Reponer Artículo
-                QSqlQuery QArticulos(QSqlDatabase::database("empresa"));
-                QArticulos.prepare("update articulos set "
-                                   "nUnidadesVendidas = nUnidadesVendidas -:nCantidad,"
-                                   "nStockReal = nStockReal - :nCantidad2, "
-                                   "rAcumuladoVentas = rAcumuladoVentas + :rTotal "
-                                   "where cCodigo= :cCodigo");
-                QArticulos.bindValue(":dUltimaVenta",QDate::currentDate());
-                QArticulos.bindValue(":nCantidad",record.field("nCantidad").value().toDouble());
-                QArticulos.bindValue(":nCantidad2",record.field("nCantidad").value().toDouble());
-                QArticulos.bindValue(":rTotal",record.field("rTotal").value().toDouble());
-                QArticulos.bindValue(":cCodigo",record.field("cCodigo").value().toString());
-                QArticulos.exec();
-            }
-            qrylin_fac.prepare("Delete from lin_fac where id = :id_lin");
-            qrylin_fac.bindValue(":id_lin",id_lin);
-            if(!qrylin_fac.exec()){
-                QMessageBox::critical(qApp->activeWindow(),tr("Borrar línea"),tr("Falló el borrado de la línea de factura"),tr("&Aceptar"));
-            }
-            calcularFactura();
+            QMessageBox::critical(qApp->activeWindow(), "Error:",query.lastError().text());
+            return false;
         }
-    }
-    else
-    {
-        QMessageBox::critical(qApp->activeWindow(),tr("Borrar Línea factura"),tr("Debe seleccionar una línea para poder borrar"),tr("OK"));
-    }
 }
 
-void Factura::calcularFactura()
-{
-    // Reseteo valores
-    this->rSubtotal = 0;
-    this->rImporteDescuento =0;
-    this->rBase = 0;
-    this->rTotal = 0;
-    this->rBase1 =0;
-    this->rBase2 =0;
-    this->rBase3 = 0;
-    this->rBase4 = 0;
-    this->rIVA1 = 0;
-    this->rIVA2 = 0;
-    this->rIVA3 = 0;
-    this->rIVA4 = 0;
-    this->rTotal1 =0;
-    this->rTotal2 =0;
-    this->rTotal3 =0;
-    this->rTotal4 = 0;
-    this->rImporteIRPF = 0;
-
-    QSqlQuery *Qlin_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
-    Qlin_fac->prepare("Select * from lin_fac where id_cab = :nId");
-    Qlin_fac->bindValue(":nId",this->id);
-    if (Qlin_fac->exec()) {
-        QSqlRecord record = Qlin_fac->record();
-        while (Qlin_fac->next()) {
-            record = Qlin_fac->record();
-
-            this->rSubtotal = this->rSubtotal + record.field("rSubtotal").value().toDouble();
-            this->rImporteDescuento = this->rImporteDescuento + record.field("rDto").value().toDouble();
-            this->rBase = (this->rSubtotal - this->rImporteDescuento) - this->rImporteDescuentoPP;
-            if (this->nIRPF !=0) {
-                this->rImporteIRPF = (this->rBase * this->nIRPF)/100;
-            }
-
-            // IVA 1
-            if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA1) {
-                this->rBase1 = this->rBase1 + record.field("rTotal").value().toDouble();
-                this->rIVA1 = (this->rBase1 * this->nPorcentajeIVA1)/100;
-                this->rTotal1 = this->rBase1 + this->rIVA1;
-            }
-            // IVA 2
-            if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA2) {
-                this->rBase2 = this->rBase2 + record.field("rTotal").value().toDouble();
-                this->rIVA2 = (this->rBase2 * this->nPorcentajeIVA2)/100;
-                this->rTotal2 = this->rBase2 + this->rIVA2;
-            }
-            // IVA 3
-            if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA3) {
-                this->rBase3 = this->rBase3 + record.field("rTotal").value().toDouble();
-                this->rIVA3 = (this->rBase3 * this->nPorcentajeIVA3)/100;
-                this->rTotal3 = this->rBase3 + this->rIVA3;
-            }
-            // IVA 4
-            if (record.field("nPorcIva").value().toDouble() == this->nPorcentajeIVA4) {
-                this->rBase4 = this->rBase4 + record.field("rTotal").value().toDouble();
-                this->rIVA4 = (this->rBase4 * this->nPorcentajeIVA4)/100;
-                this->rTotal4 = this->rBase4 + this->rIVA4;
-
-            }
-            this->rImporteIva =  (this->rIVA1 +  this->rIVA2 + this->rIVA3 + this->rIVA4);
-            if (Configuracion_global->lProfesional==1 and this->nIRPF != 0)
-                this->rTotal = this->rBase - this->rImporteIRPF + this->rImporteIva;
-            else
-                this->rTotal = this->rBase + this->rImporteIva;
-        }
-    }
-    delete Qlin_fac;
-
-}
-
-void Factura::CobrarFactura()
+bool Factura::CobrarFactura()
 {
     // marcar factura como cobrada
     this->lCobrada = true;
-    QSqlQuery *Cliente = new QSqlQuery(QSqlDatabase::database("empresa"));
+    QSqlQuery Cliente(QSqlDatabase::database("empresa"));
 
     // Añadimos acumulados ficha cliente.
-    Cliente->prepare("Update clientes set dFechaUltimaCompra = :dFechaUltimaCompra, "
+    Cliente.prepare("Update clientes set dFechaUltimaCompra = :dFechaUltimaCompra, "
                              "rAcumuladoVentas = rAcumuladoVentas + :rAcumuladoVentas,"
                              "rVentasEjercicio = rVentasEjercicio + :rVentasEjercicio "
                              " where cCodigoCliente = :cCodigoCliente");
-    Cliente->bindValue(":dFechaUltimaCompra",QDate::currentDate());
-    Cliente->bindValue(":rAcumuladoVentas",this->rTotal);
-    Cliente->bindValue(":rVentasEjercicio",this->rTotal);
-    Cliente->bindValue(":cCodigoCliente",this->cCodigoCliente);
-    if (!Cliente->exec()){
+    Cliente.bindValue(":dFechaUltimaCompra",QDate::currentDate());
+    Cliente.bindValue(":rAcumuladoVentas",this->rTotal);
+    Cliente.bindValue(":rVentasEjercicio",this->rTotal);
+    Cliente.bindValue(":cCodigoCliente",this->cCodigoCliente);
+    if (!Cliente.exec())
+    {
         QMessageBox::warning(qApp->activeWindow(),tr("Añadir Acumulados"),
                              tr("No se ha podido añadir los correspondientes acumulados a la ficha del cliente"),
                              tr("OK"));
+        return false;
     }
-    QSqlQuery *cab_fac = new QSqlQuery(QSqlDatabase::database("empresa"));
-    cab_fac->prepare("update cab_fac set lCobrada = 1 where Id =:id_cab");
-    cab_fac->bindValue(":id_cab",this->id);
-    if(!cab_fac->exec()) {
+    QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
+    cab_fac.prepare("update cab_fac set lCobrada = 1 where Id =:id_cab");
+    cab_fac.bindValue(":id_cab",this->Id);
+    if(!cab_fac.exec())
+    {
         QMessageBox::warning(qApp->activeWindow(),tr("Guardar Factura"),tr("No se ha podido marcar la factura como cobrada"),tr("OK"));
+        return false;
     }
-    delete Cliente;
-    delete cab_fac;
+    return true;
  }
-
-// getters
-int  Factura::Getid() {
-   return this->id;
-}
-
-QString Factura::getcCodigoCliente() {
-   return this->cCodigoCliente;
-}
-
-QString Factura::getcFactura() {
-    return this->cFactura;
-}
-QDate Factura::getdFecha() {
-    return this->dFecha;
-}
-QDate Factura::getdFechaCobro() {
-    return this->dFechaCobro;
-}
-int Factura::getiId_Cliente() {
-    return this->iId_Cliente;
-}
-QString Factura::getcCliente() {
-    return this->cCliente;
-}
-QString Factura::getcDireccion() {
-    return this->cDireccion;
-}
-QString Factura::getcDireccion2() {
-    return this->cDireccion2;
-}
-QString Factura::getcCp() {
-    return this->cCp;
-}
-QString Factura::getcPoblacion() {
-    return this->cPoblacion;
-}
-QString Factura::getcProvincia() {
-    return this->cProvincia;
-}
-QString Factura::getcPais() {
-    return this->cPais;
-}
-QString Factura::getcCif() {
-    return this->cCif;
-}
-int Factura::getlRecargoEquivalencia() {
-    return this->lRecargoEquivalencia;
-}
-double Factura::getrSubtotal() {
-    return this->rSubtotal;
-}
-int Factura::getnDto() {
-    return this->nDto;
-}
-int Factura::getnDtoPP() {
-    return this->nDtoPP;
-}
-double Factura::getrImporteDescuento() {
-    return this->rImporteDescuento;
-}
-double Factura::getrImporteDescuentoPP() {
-    return this->rImporteDescuentoPP;
-}
-double Factura::getrBase() {
-    return this->rBase;
-}
-int Factura::getnIva() {
-    return this->nIva;
-}
-double Factura::getrImporteIva() {
-    return this->rImporteIva;
-}
-double Factura::getrTotal() {
-    return this->rTotal;
-}
-int Factura::getlImpresa() {
-    return this->lImpresa;
-}
-int Factura::getlCobrada() {
-    return this->lCobrada;
-}
-int Factura::getlContablilizada() {
-    return this->lContablilizada;
-}
-int Factura::getid_FormaPago() {
-    return this->id_FormaPago;
-}
-QString Factura::getcFormaPago() {
-    return this->cFormaPago;
-}
-QString Factura::gettComentario() {
-    return this->tComentario;
-}
-double Factura::getrBase1() {
-    return this->rBase1;
-}
-double Factura::getrBase2() {
-    return this->rBase2;
-}
-double Factura::getrBase3() {
-    return this->rBase3;
-}
-double Factura::getrBase4() {
-    return this->rBase4;
-}
-int Factura::getnPorcentajeIVA1() {
-    return this->nPorcentajeIVA1;
-}
-int Factura::getnPorcentajeIVA2() {
-    return this->nPorcentajeIVA2;
-}
-int Factura::getnPorcentajeIVA3() {
-    return this->nPorcentajeIVA3;
-}
-int Factura::getnPorcentajeIVA4() {
-    return this->nPorcentajeIVA4;
-}
-double Factura::getrIVA1() {
-    return this->rIVA1;
-}
-double Factura::getrIVA2() {
-    return this->rIVA2;
-}
-double Factura::getrIVA3() {
-    return this->rIVA3;
-}
-double Factura::getrIVA4() {
-    return this->rIVA4;
-}
-double Factura::getrTotal1() {
-    return this->rTotal1;
-}
-double Factura::getrTotal2() {
-    return this->rTotal2;
-}
-double Factura::getrTotal3() {
-    return this->rTotal3;
-}
-double Factura::getrTotal4() {
-    return this->rTotal4;
-}
-double Factura::getnRec1() {
-    return this->nRec1;
-}
-double Factura::getnRec2() {
-    return this->nRec2;
-}
-double Factura::getnRec3() {
-    return this->nRec3;
-}
-double Factura::getnRec4() {
-    return this->nRec4;
-}
-double Factura::getrRecargoEq1() {
-    return this->rRecargoEq1;
-}
-double Factura::getrRecargoEq2() {
-    return this->rRecargoEq2;
-}
-double Factura::getrRecargoEq3() {
-    return this->rRecargoEq3;
-}
-double Factura::getrRecargoEq4() {
-    return this->rRecargoEq4;
-}
-double Factura::getrTotalRecargoEq() {
-    return this->rTotalRecargoEq;
-}
-double Factura::getrEntregadoaCuenta() {
-    return this->rEntregadoaCuenta;
-}
-double Factura::getrImportePendiente() {
-    return this->rImportePendiente;
-}
-QString Factura::getcCodigoEntidad() {
-    return this->cCodigoEntidad;
-}
-QString Factura::getcOficinaEntidad() {
-    return this->cOficinaEntidad;
-}
-QString Factura::getcDCCuenta() {
-    return this->cDCCuenta;
-}
-QString Factura::getcNumeroCuenta() {
-    return this->cNumeroCuenta;
-}
-QString Factura::getcPedidoCliente() {
-    return this->cPedidoCliente;
-}
-
-int Factura::getnIRPF()
-{
-    return this->nIRPF;
-}
-
-double Factura::getrImporteIRPF()
-{
-    return this->rImporteIRPF;
-}
-
-
-// setters
-void Factura::setid( int iID_Factura) {
-    this->id = iID_Factura;
-}
-void Factura::setcCodigoCliente(QString cCodigoCliente) {
-    this->cCodigoCliente = cCodigoCliente;
-}
-void Factura::setcFactura( QString cFactura) {
-    this->cFactura = cFactura;
-}
-void Factura::setdFecha(QDate dFecha) {
-    this->dFecha = dFecha;
-}
-void Factura::setdFechaCobro(QDate dFechaCobro) {
-    this->dFechaCobro = dFechaCobro;
-}
-void Factura::setiId_Cliente(int iId_Cliente) {
-    this->iId_Cliente = iId_Cliente;
-}
-void Factura::setcCliente(QString cCliente) {
-    this->cCliente = cCliente;
-}
-void Factura::setcDireccion(QString cDireccion) {
-    this->cDireccion = cDireccion;
-}
-void Factura::setcDireccion2(QString cDireccion2) {
-    this->cDireccion2 = cDireccion2;
-}
-void Factura::setcCp(QString cCp) {
-    this->cCp = cCp;
-}
-void Factura::setcPoblacion(QString cPoblacion) {
-    this->cPoblacion = cPoblacion;
-}
-void Factura::setcProvincia(QString cProvincia) {
-    this->cProvincia = cProvincia;}
-void Factura::setcPais(QString cPais) {
-    this->cPais = cPais;
-}
-void Factura::setcCif(QString cCif) {
-    this->cCif = cCif;
-}
-void Factura::setlRecargoEquivalencia(int lRecargoEquivalencia) {
-    this->lRecargoEquivalencia = lRecargoEquivalencia;
-}
-void Factura::setrSubtotal(double rSubtotal) {
-    this->rSubtotal = rSubtotal;
-}
-void Factura::setnDto(int nDto) {
-    this->nDto = nDto;
-}
-void Factura::setnDtoPP(int nDtoPP) {
-    this->nDtoPP = nDtoPP;
-}
-void Factura::setrImporteDescuento(double rImporteDescuento) {
-    this->rImporteDescuento = rImporteDescuento;
-}
-void Factura::setrImporteDescuentoPP(double rImporteDescuentoPP) {
-    this->rImporteDescuentoPP = rImporteDescuentoPP;
-}
-void Factura::setrBase(double rBase) {
-    this->rBase = rBase;
-}
-void Factura::setnIva(int nIva) {
-    this->nIva = nIva;
-}
-void Factura::setrImporteIva(double rImporteIva) {
-    this->rImporteIva = rImporteIva;
-}
-void Factura::setrTotal(double rTotal) {
-    this->rTotal = rTotal;
-}
-void Factura::setlImpresa(int lImpresa) {
-    this->lImpresa = lImpresa;
-}
-void Factura::setlCobrada(int lCobrada) {
-    this->lCobrada = lCobrada;
-}
-void Factura::setlContablilizada(int lContablilizada) {
-    this->lContablilizada = lContablilizada;
-}
-void Factura::setid_FormaPago(int id_FormaPago) {
-    this->id_FormaPago = id_FormaPago;
-}
-void Factura::setcFormaPago(QString cFormaPago) {
-    this->cFormaPago = cFormaPago;
-}
-void Factura::settComentario(QString tComentario) {
-    this->tComentario = tComentario;
-}
-void Factura::setrBase1(double rBase1) {
-    this->rBase1 = rBase1;
-}
-void Factura::setrBase2(double rBase2) {
-    this->rBase2 = rBase2;
-}
-void Factura::setrBase3(double rBase3) {
-    this->rBase3 = rBase3;
-}
-void Factura::setrBase4(double rBase4) {
-    this->rBase4 = rBase4;
-}
-void Factura::setnPorcentajeIVA1(int nPorcentajeIVA1) {
-    this->nPorcentajeIVA1 = nPorcentajeIVA1;
-}
-void Factura::setnPorcentajeIVA2(int nPorcentajeIVA2) {
-    this->nPorcentajeIVA2 = nPorcentajeIVA2;
-}
-void Factura::setnPorcentajeIVA3(int nPorcentajeIVA3) {
-    this->nPorcentajeIVA3 = nPorcentajeIVA3;
-}
-void Factura::setnPorcentajeIVA4(int nPorcentajeIVA4) {
-    this->nPorcentajeIVA4 = nPorcentajeIVA4;
-}
-void Factura::setrIVA1( double rIVA1) {
-    this->rIVA1 = rIVA1;
-}
-void Factura::setrIVA2( double rIVA2) {
-    this->rIVA2 = rIVA2;
-}
-void Factura::setrIVA3( double rIVA3) {
-    this->rIVA3 = rIVA3;
-}
-void Factura::setrIVA4( double rIVA4) {
-    this->rIVA4 = rIVA4;
-}
-void Factura::setrTotal1(double rTotal1) {
-    this->rTotal1 = rTotal1;
-}
-void Factura::setrTotal2(double rTotal2) {
-    this->rTotal2 = rTotal2;
-}
-void Factura::setrTotal3(double rTotal3) {
-    this->rTotal3 = rTotal3;
-}
-void Factura::setrTotal4(double rTotal4) {
-    this->rTotal4 = rTotal4;
-}
-void Factura::setnRec1(int nRec1) {
-    this->nRec1 = nRec1;
-}
-void Factura::setnRec2(int nRec2) {
-    this->nRec2 = nRec2;
-}
-void Factura::setnRec3(int nRec3) {
-    this->nRec3 = nRec3;
-}
-void Factura::setnRec4(int nRec4) {
-    this->nRec4 = nRec4;
-}
-void Factura::setrRecargoEq1(double rRecargoEq1) {
-    this->rRecargoEq1 = rRecargoEq1;
-}
-void Factura::setrRecargoEq2(double rRecargoEq2) {
-    this->rRecargoEq2 = rRecargoEq2;
-}
-void Factura::setrRecargoEq3(double rRecargoEq3) {
-    this->rRecargoEq3 = rRecargoEq3;
-}
-void Factura::setrRecargoEq4(double rRecargoEq4) {
-    this->rRecargoEq4 = rRecargoEq4;
-}
-void Factura::setrTotalRecargoEq(double rTotalRecargoEq) {
-    this->rTotalRecargoEq;
-}
-void Factura::setrEntregadoaCuenta(double rEntregadoaCuenta) {
-    this->rEntregadoaCuenta = rEntregadoaCuenta;
-}
-void Factura::setrImportePendiente(double rImportePendiente) {
-    this->rImportePendiente = rImportePendiente;
-}
-void Factura::setcCodigoEntidad(QString cCodigoEntidad) {
-    this->cCodigoEntidad = cCodigoEntidad;
-}
-void Factura::setcOficinaEntidad(QString cOficinaEntidad) {
-    this->cOficinaEntidad = cOficinaEntidad;
-}
-void Factura::setcDCCuenta(QString cDCCuenta) {
-     this->cDCCuenta = cDCCuenta;
-}
-void Factura::setcNumeroCuenta(QString cNumeroCuenta) {
-    this->cNumeroCuenta = cNumeroCuenta;
-}
-void Factura::setcPedidoCliente(QString cPedidoCliente) {
-    this->cPedidoCliente = cPedidoCliente;
-}
-
-void Factura::setnIRPF(int nIRPF)
-{
-    this->nIRPF = nIRPF;
-}
-
-void Factura::setrImporteIRPF(double rImporteIRPF)
-{
-    this->rImporteIRPF = rImporteIRPF;
-}
