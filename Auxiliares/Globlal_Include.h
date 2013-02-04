@@ -47,6 +47,7 @@
 #include <QDateTimeEdit>
 #include <QInputDialog>
 #include <QLineEdit>
+#include <QMenu>
 
 #include <QXmlStreamAttributes>
 
@@ -56,6 +57,9 @@
 #include <QtNetwork/QNetworkReply>
 #include <QXmlStreamAttribute>
 #include <QXmlStreamReader>
+
+// Public variables
+
 
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
@@ -75,5 +79,7 @@
 
 #include "../configuracion.h"
 extern Configuracion * Configuracion_global;
+extern bool medic;
+extern bool internacional;
 
 #endif // GLOBLAL_INCLUDE_H
