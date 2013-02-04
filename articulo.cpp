@@ -9,19 +9,19 @@ void Articulo::Anadir()
 {
     QSqlQuery query(QSqlDatabase::database("empresa"));
          query.prepare("INSERT INTO articulos (cCodigo,cCodigoBarras,cCodigoFabricante,cDescripcion,cDescripcionReducida,"
-                       "id_Proveedor,id_Familia,cFamilia,id_Seccion,cSeccion,id_Subfamilia,cSubfamilia,nTipoIva,rCoste,"
+                       "id_Proveedor,id_Familia,id_Seccion,id_Subfamilia,nTipoIva,rCoste,"
                        "rTarifa1,rTarifa2,rTarifa3,rDto,nDtoProveedor,nDtoproveedor2,nDtoProveedor3,dUltimaCompra,"
                        "dUltimaVenta,nMargen1,nMargen2,nMargen3,rPrecioMedio,rPrecioMedio2,rPrecioMedio3,nUnidadesCompradas,"
                        "nUnidadesVendidas,rAcumuladoCompras,rAcumuladoVentas,tComentario,nStockMaximo,nStockMinimo,"
-                       "nStockReal,lControlarStock,cModelo,cTalla,cColor,cComposicion,lPvpIncluyeIva,"
+                       "nStockReal,lControlarStock,lPvpIncluyeIva,"
                        "dFechaPrevistaRecepcion,nCantidadPendienteRecibir,nReservados,lMostrarWeb,nEtiquetas,"
                        "cLocalizacion)"
                        " VALUES (:cCodigo,:cCodigoBarras,:cCodigoFabricante,:cDescripcion,:cDescripcionReducida,"
-                       ":id_Proveedor,:id_Familia,:cFamilia,:id_Seccion,:cSeccion,:id_Subfamilia,:cSubfamilia,:nTipoIva,:rCoste,"
+                       ":id_Proveedor,:id_Familia,:id_Seccion,:id_Subfamilia,:nTipoIva,:rCoste,"
                        ":rTarifa1,:rTarifa2,:rTarifa3,:rDto,:nDtoProveedor,:nDtoproveedor2,:nDtoProveedor3,:dUltimaCompra,"
                        ":dUltimaVenta,:nMargen1,:nMargen2,:nMargen3,:rPrecioMedio,:rPrecioMedio2,:rPrecioMedio3,:nUnidadesCompradas,"
                        ":nUnidadesVendidas,:rAcumuladoCompras,:rAcumuladoVentas,:tComentario,:nStockMaximo,:nStockMinimo,"
-                       ":nStockReal,:lControlarStock,:cModelo,:cTalla,:cColor,:cComposicion,:lPvpIncluyeIva,"
+                       ":nStockReal,:lControlarStock,:lPvpIncluyeIva,"
                        ":dFechaPrevistaRecepcion,:nCantidadPendienteRecibir,:nReservados,:lMostrarWeb,:nEtiquetas,"
                        ":cLocalizacion)");
 
@@ -31,12 +31,11 @@ void Articulo::Anadir()
          query.bindValue(":cDescripcion",this->cDescripcion);
          query.bindValue(":cDescripcionReducida",this->cDescripcionReducida);
          query.bindValue(":id_Proveedor",this->id_Proveedor);
-         query.bindValue(":id_Familia",this->id_Familia);
-         query.bindValue(":cFamilia",this->cFamilia);
+         if (!this->id_Familia ==0)
+            query.bindValue(":id_Familia",this->id_Familia);
          query.bindValue(":id_Seccion",this->id_Seccion);
-         query.bindValue(":cSeccion",this->cSeccion);
-         query.bindValue(":id_Subfamilia",this->id_SubFamilia);
-         query.bindValue(":cSubfamilia",this->cSubfamilia);
+         if(!this->id_SubFamilia ==0)
+             query.bindValue(":id_Subfamilia",this->id_SubFamilia);
          query.bindValue(":nTipoIva",this->nTipoIva);
          query.bindValue(":rCoste",this->rCoste);
          query.bindValue(":rTarifa1",this->rTarifa1);
@@ -63,10 +62,6 @@ void Articulo::Anadir()
          query.bindValue(":nStockMinimo",this->nStockMinimo);
          query.bindValue(":nStockReal",this->nStockReal);
          query.bindValue(":lControlarStock",this->lControlarStock);
-         query.bindValue(":cModelo",this->cModelo);
-         query.bindValue(":cTalla",this->cTalla);
-         query.bindValue(":cColor",this->cColor);
-         query.bindValue(":cComposicion",this->cComposicion);
          query.bindValue(":lPvpIncluyeIva",this->lPvpIncluyeIva);
          query.bindValue(":dFechaPrevistaRecepcion",this->dFechaPrevistaRecepcion);
          query.bindValue(":nCantidadPendienteRecibir",this->nCantidadPendienteRecibir);
@@ -77,7 +72,8 @@ void Articulo::Anadir()
 
 
          if(!query.exec()) {
-             QMessageBox::warning(qApp->activeWindow(),tr("Añadir Artículo"),tr("Falló la inserción de un nuevo artículo"),
+             QMessageBox::warning(qApp->activeWindow(),tr("Añadir Artículo"),
+                                  tr("Falló la inserción de un nuevo artículo : %1").arg(query.lastError().text()),
                                   QObject::tr("Ok"));
          } else {
              QString cID = query.lastInsertId().toString();

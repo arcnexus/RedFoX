@@ -73,6 +73,7 @@ private:
     QDialog *ventana;
     QString *Devolucion;
     QGridLayout *layout;
+    bool anadir = false;
 };
 
 #endif // FRMARTICULOS_H
