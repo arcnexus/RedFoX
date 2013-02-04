@@ -111,12 +111,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //dbTerra.addDatabase(Configuracion_global->cDriverBDTerra,"terra");
 
     if (Configuracion_global->cDriverBDTerra == "QSQLITE")
-	{
+    {
         dbTerra.setDatabaseName(Configuracion_global->cRutaBdTerra);
         dbTerra.open();
     }
-	else
-	{
+    else
+    {
         dbTerra.setDatabaseName(Configuracion_global->cNombreBDTerra);
         dbTerra.setHostName(Configuracion_global->cHostBDTerra);
         dbTerra.open(Configuracion_global->cUsuarioBDTerra,Configuracion_global->cPasswordBDTerra);
