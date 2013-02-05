@@ -496,6 +496,8 @@ void Table_Helper::rellenar_con_Articulo(int row)
             QSqlRecord r = query.record();
             helped_table->item(row,2)->setText(r.value("cDescripcionReducida").toString());
             //TODO recopilar otros datos del articulo
+            //NOTE yo lo haría sobre la clase articulo así nos serviría en líneas de detalle y fuera de ellas. Cargaría en las líneas el valor de las propiedades del objeto en lugar de leer aquí la BD.
+
         }
     }
 }
