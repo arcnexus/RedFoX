@@ -14,11 +14,8 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QSqlTableModel* modelo = new QSqlTableModel(ui->combo_Pais,QSqlDatabase::database("empresa"));
-    modelo->setTable("paises");
-    modelo->select();
-    ui->combo_Pais->setModel(modelo);
-    ui->combo_Pais->setModelColumn(modelo->fieldIndex("pais"));
+    ui->combo_Pais->setModel(Configuracion_global->paises_model);
+    ui->combo_Pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
     // cargar datos FormaPago
     ui->cboFormaPago->setInsertPolicy(QComboBox::NoInsert);
@@ -116,8 +113,16 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtcCp->setText(oPres->cCP);
     ui->txtcPoblacion->setText(oPres->cPoblacion);
     ui->txtcProvincia->setText(oPres->cProvincia);
-    //FIXME pais
-    //ui->txtcPais->setText(QString::number(oPres->idPais));
+
+    QList<QString> keys = Configuracion_global->paises.uniqueKeys();
+    for (int i = 0;i<keys.size();i++)
+    {
+        if(Configuracion_global->paises[keys.at(i)].value("id").toInt() == oPres->idPais)
+        {
+            int index = ui->combo_Pais->findText(keys.at(i));
+            ui->combo_Pais->setCurrentIndex(index);
+        }
+    }
     ui->txtcTelefono->setText(oPres->cTelefono);
     ui->txtcMovil->setText(oPres->cMovil);
     ui->txtcFax->setText(oPres->cFax);
@@ -184,8 +189,16 @@ void FrmPresupuestosCli::LLenarCamposCliente()
     ui->txtcCp->setText(oClientePres->getcCP());
     ui->txtcPoblacion->setText(oClientePres->getcPoblacion());
     ui->txtcProvincia->setText(oClientePres->getcProvincia());
-    //FIXME pais
-    //ui->txtcPais->setText(oClientePres->getcPais());
+
+    QList<QString> keys = Configuracion_global->paises.uniqueKeys();
+    for (int i = 0;i<keys.size();i++)
+    {
+        if(Configuracion_global->paises[keys.at(i)].value("id").toInt() == oPres->idPais)
+        {
+            int index = ui->combo_Pais->findText(keys.at(i));
+            ui->combo_Pais->setCurrentIndex(index);
+        }
+    }
     ui->txtcCif->setText(oClientePres->getcCifNif());
     ui->txtcTelefono->setText(oClientePres->getcTelefono1());
     ui->txtcFax->setText(oClientePres->getcFax());
@@ -215,8 +228,7 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     oPres->cPoblacion = (ui->txtcPoblacion->text());
     oPres->cProvincia = (ui->txtcProvincia->text());
 
-    QSqlTableModel*  modelo = static_cast<QSqlTableModel*>(ui->combo_Pais->model());
-    oPres->idPais = modelo->record(ui->combo_Pais->currentIndex()).value("id").toInt();
+    oPres->idPais = Configuracion_global->paises[ui->combo_Pais->currentText()].value("id").toInt();
 
     oPres->cTelefono = (ui->txtcTelefono->text());
     oPres->cMovil = (ui->txtcMovil->text());

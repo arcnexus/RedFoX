@@ -19,6 +19,9 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->lblImpreso->setVisible(false);
     ui->lblNumFactura->setVisible(false);
     ui->txtcNumFra->setVisible(false);
+
+    ui->comboPais->setModel(Configuracion_global->paises_model);
+    ui->comboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
     // valores edicion
     //ui->txtcCodigoArticulo->setFocus();
 
@@ -91,7 +94,17 @@ void FrmAlbaran::LLenarCampos() {
     ui->txtcCp->setText(oAlbaran->cCp);
     ui->txtcPoblacion->setText(oAlbaran->cPoblacion);
     ui->txtcProvincia->setText(oAlbaran->cProvincia);
-    ui->txtcPais->setText(oAlbaran->cPais);
+
+    QList<QString> keys = Configuracion_global->paises.uniqueKeys();
+    for (int i = 0;i<keys.size();i++)
+    {
+        if(Configuracion_global->paises[keys.at(i)].value("id").toInt() == oAlbaran->idPais)
+        {
+            int index = ui->comboPais->findText(keys.at(i));
+            ui->comboPais->setCurrentIndex(index);
+        }
+    }
+
     ui->txtcCif->setText(oAlbaran->cCif);
     ui->txtrSubtotal->setText(Configuracion_global->FormatoNumerico( QString::number(oAlbaran->rSubtotal,'f',2)));
     ui->txtrImporteDescuento->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rDto,'f',2)));
@@ -164,7 +177,8 @@ void FrmAlbaran::LLenarCamposCliente()
     ui->txtcCp->setText(oCliente2->getcCP());
     ui->txtcPoblacion->setText(oCliente2->getcPoblacion());
     ui->txtcProvincia->setText(oCliente2->getcProvincia());
-    ui->txtcPais->setText(oCliente2->getcPais());
+    int index = ui->comboPais->findText(oAlbaran->cPais);
+    ui->comboPais->setCurrentIndex(index);
     ui->txtcCif->setText(oCliente2->getcCifNif());
     if (oCliente2->getlIRPF()==1) {
         ui->chklRecargoEq->setChecked(true);
@@ -187,7 +201,7 @@ void FrmAlbaran::VaciarCampos() {
     ui->txtcCp->setText("");
     ui->txtcPoblacion->setText("");
     ui->txtcProvincia->setText("");
-    ui->txtcPais->setText("");
+    ui->comboPais->setCurrentIndex(0);
     ui->txtcCif->setText("");
     ui->txtrSubtotal->setText(0);
     ui->txtrImporteDescuento->setText("0,00");
@@ -299,7 +313,8 @@ void FrmAlbaran::LLenarAlbaran()
     oAlbaran->cCp= (ui->txtcCp->text());
     oAlbaran->cPoblacion= (ui->txtcPoblacion->text());
     oAlbaran->cProvincia= (ui->txtcProvincia->text());
-    oAlbaran->cPais= (ui->txtcPais->text());
+    oAlbaran->cPais= (ui->comboPais->currentText());
+    oAlbaran->idPais = Configuracion_global->paises[ui->comboPais->currentText()].value("id").toInt();
     oAlbaran->cCif= (ui->txtcCif->text());
     oAlbaran->rSubtotal= (ui->txtrSubtotal->text().replace(".","").toDouble());
     oAlbaran->rDto= (ui->txtrImporteDescuento->text().replace(".","").toDouble());

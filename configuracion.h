@@ -54,6 +54,12 @@ public:
     QFileDialog dialogo;
 
     QHash <QString,QSqlRecord> ivas;
+    QSqlTableModel* iva_model;
+    void Cargar_iva();
+
+    QHash <QString,QSqlRecord> paises;
+    QSqlTableModel* paises_model;
+    void Cargar_paises();
 
     bool lProfesional;
     int nIRPF;
@@ -68,8 +74,8 @@ public:
     void CargarDatos();
     QString ValidarCC(QString Entidad,QString Oficina, QString DC, QString CC);
     QString ValidarCC(QString Entidad, QString Oficina, QString CC);
-    void Cargar_iva();
-    QSqlTableModel* iva_model;
+
+
 };
 
 #endif // CONFIGURACION_H

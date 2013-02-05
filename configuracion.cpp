@@ -4,6 +4,7 @@ Configuracion::Configuracion(QObject* parent) :
     QObject(parent)
 {
     iva_model = 0;
+    paises_model = 0;
 }
 
 
@@ -94,6 +95,24 @@ void Configuracion::Cargar_iva()
         iva_model = new QSqlTableModel(this,QSqlDatabase::database("empresa"));
     iva_model->setTable("tiposiva");
     iva_model->select();
+}
+
+void Configuracion::Cargar_paises()
+{
+    paises.clear();
+    QSqlQuery query(QSqlDatabase::database("empresa"));
+    if(query.exec("SELECT * FROM paises"))
+    {
+        while(query.next())
+        {
+            QString key = query.record().value("cTipo").toString();
+            paises.insert(key,query.record());
+        }
+    }
+    if(paises_model == 0)
+        paises_model = new QSqlTableModel(this,QSqlDatabase::database("empresa"));
+    paises_model->setTable("paises");
+    paises_model->select();
 }
 
 void Configuracion::CargarDatos()

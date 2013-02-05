@@ -28,7 +28,8 @@ frmFacturas::frmFacturas( QWidget *parent) :
         ui->lblIRPF_2->setVisible(false);
     }
 
-
+    ui->comboPais->setModel(Configuracion_global->paises_model);
+    ui->comboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
     // Pongo valores por defecto
     ui->lblContabilizada->setVisible(false);
     ui->lblFacturaCobrada->setVisible(false);
@@ -132,7 +133,17 @@ void frmFacturas::LLenarCampos() {
     ui->txtcCp->setText(oFactura->cCp);
     ui->txtcPoblacion->setText(oFactura->cPoblacion);
     ui->txtcProvincia->setText(oFactura->cProvincia);
-    //ui->txtcPais->setText(oFactura->cPais);
+
+    QList<QString> keys = Configuracion_global->paises.uniqueKeys();
+    for (int i = 0;i<keys.size();i++)
+    {
+        if(Configuracion_global->paises[keys.at(i)].value("id").toInt() == oFactura->idPais)
+        {
+            int index = ui->comboPais->findText(keys.at(i));
+            ui->comboPais->setCurrentIndex(index);
+        }
+    }
+
     ui->txtcCif->setText(oFactura->cCif);
      lEstado = oFactura->lRecargoEquivalencia;
     if ((lEstado= 1)) {
@@ -382,7 +393,7 @@ void frmFacturas::LLenarFactura() {
     oFactura->cCp = (ui->txtcCp->text());
     oFactura->cPoblacion = (ui->txtcPoblacion->text());
     oFactura->cProvincia = (ui->txtcProvincia->text());
-    //oFactura->cPais = (ui->txtcPais->text());
+    oFactura->idPais = Configuracion_global->paises[ui->comboPais->currentText()].value("id").toInt();
     oFactura->cCif = (ui->txtcCif->text());
     if  (ui->chklRecargoEquivalencia->isChecked())
     {
