@@ -21,6 +21,7 @@ public:
     void set_readOnly(bool state);
     void set_selection(QString column_name);
     void set_columnHide(int column);
+    void set_noInsertDeleteRows();
     QString selected_value;
 private slots:
     void on_btn_add_clicked();

@@ -256,6 +256,7 @@ void MainWindow::init()
 			}
             progress.setValue(6);
             Configuracion_global->Cargar_iva();
+            Configuracion_global->Cargar_paises();
             //Widgets
             frmClientes1 = new frmClientes(this);
             progress.setValue(7);
@@ -556,10 +557,12 @@ void MainWindow::handle_tiposIVA()
 
 
     QStringList headers;
-    headers << tr("Tipo") << tr("Decripción") << tr("I.V.A") << tr("Recargo equivalencia");
+    headers << "" << tr("Tipo") << tr("Decripción") << tr("I.V.A") << tr("Recargo equivalencia");
     form.set_table_headers(headers);
 
     form.set_columnHide(0);
+    form.set_columnHide(1);
+    form.set_noInsertDeleteRows();
     form.exec();
     Configuracion_global->Cargar_iva();
 }
@@ -595,6 +598,7 @@ void MainWindow::handle_paises()
 
     form.set_columnHide(0);
     form.exec();
+    Configuracion_global->Cargar_paises();
 }
 
 void MainWindow::hande_avisos()

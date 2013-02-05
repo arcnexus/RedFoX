@@ -343,30 +343,10 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="2">
-           <widget class="QCheckBox" name="chklRecargoEq">
-            <property name="text">
-             <string>Recargo de equivalencia</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_3">
             <property name="text">
              <string>Código cliente:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="3">
-           <widget class="QLineEdit" name="txtcPais">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
@@ -550,6 +530,16 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="5" column="3">
+           <widget class="QComboBox" name="comboPais"/>
+          </item>
+          <item row="6" column="3">
+           <widget class="QCheckBox" name="chklRecargoEq">
+            <property name="text">
+             <string>Recargo de equivalencia</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -2187,9 +2177,7 @@ color: rgb(0, 64, 64);</string>
   <tabstop>txtcCp</tabstop>
   <tabstop>txtcPoblacion</tabstop>
   <tabstop>txtcProvincia</tabstop>
-  <tabstop>txtcPais</tabstop>
   <tabstop>txtcCif</tabstop>
-  <tabstop>chklRecargoEq</tabstop>
   <tabstop>btnSiguiente</tabstop>
   <tabstop>btnFacturar</tabstop>
   <tabstop>btnAnterior</tabstop>

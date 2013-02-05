@@ -68,6 +68,12 @@ void Db_table_View::set_columnHide(int column)
     ui->resultado_list->resizeColumnsToContents();
 }
 
+void Db_table_View::set_noInsertDeleteRows()
+{
+    ui->btn_add->hide();
+    ui->btn_remove->hide();
+}
+
 void Db_table_View::on_btn_add_clicked()
 {
     model->insertRow(model->rowCount());
@@ -85,6 +91,8 @@ void Db_table_View::on_btn_save_clicked()
 
 void Db_table_View::on_btn_aceptar_clicked()
 {
+    if(model->isDirty())
+        model->submitAll();
     Db_table_View::done(QDialog::Accepted);
 }
 

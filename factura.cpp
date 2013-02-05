@@ -25,7 +25,7 @@ bool Factura::AnadirFactura()
     this->lRecargoEquivalencia = 0;
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
      cab_fac.prepare("INSERT INTO cab_fac (cCodigoCliente,cFactura,dFecha,dFechaCobro,iId_Cliente,cCliente,cDireccion,cDireccion2,"
-                   "cCp,cPoblacion,cProvincia,cPais,cCif,lRecargoEquivalencia,rSubtotal,nDto,nDtoPP,rImporteDescuento,rImporteDescuentoPP,"
+                   "cCp,cPoblacion,cProvincia,idPais,cCif,lRecargoEquivalencia,rSubtotal,nDto,nDtoPP,rImporteDescuento,rImporteDescuentoPP,"
                    "rBase,nIva,rImporteIva,rTotal,lImpresa,lCobrada,lContabilizada,id_FormaPago,cFormaPago,tComentario,"
                    "rBase1,rBase2,rBase3,rBase4,nPorcentajeIVA1,nPorcentajeIVA2,nPorcentajeIVA3,nPorcentajeIVA4,rIVA1,rIVA2,rIVA3,rIVA4,"
                    "rTotal1,rTotal2,rTotal3,rTotal4,nRec1,nRec2,nRec3,nRec4,rRecargoEq1,rRecargoEq2,rRecargoEq3,rRecargoEq4,"
@@ -48,7 +48,7 @@ bool Factura::AnadirFactura()
      cab_fac.bindValue(":cCp",this->cCp);
      cab_fac.bindValue(":cPoblacion",this->cPoblacion);
      cab_fac.bindValue(":cProvincia",this->cProvincia);
-     cab_fac.bindValue(":cPais",this->cPais);
+     cab_fac.bindValue(":cPais",this->idPais);
      cab_fac.bindValue(":cCif",this->cCif);
      cab_fac.bindValue(":lRecargoEquivalencia",this->lRecargoEquivalencia);
      cab_fac.bindValue(":rSubtotal",this->rSubtotal);
@@ -129,7 +129,7 @@ bool Factura::GuardarFactura(int nId_Factura, bool FacturaLegal)
                      "cCp=:cCp,"
                      "cPoblacion =:cPoblacion,"
                      "cProvincia =:cProvincia,"
-                     "cPais = :cPais,"
+                     "idPais = :cPais,"
                      "cCif = :cCif,"
                      "lRecargoEquivalencia = :lRecargoEquivalencia,"
                      "rSubtotal =:rSubtotal,"
@@ -196,7 +196,7 @@ bool Factura::GuardarFactura(int nId_Factura, bool FacturaLegal)
     cab_fac.bindValue(":cCp",this->cCp);
     cab_fac.bindValue(":cPoblacion",this->cPoblacion);
     cab_fac.bindValue(":cProvincia",this->cProvincia);
-    cab_fac.bindValue(":cPais",this->cPais);
+    cab_fac.bindValue(":cPais",this->idPais);
     cab_fac.bindValue(":cCif",this->cCif);
     cab_fac.bindValue(":lRecargoEquivalencia",this->lRecargoEquivalencia);
     cab_fac.bindValue(":rSubtotal",this->rSubtotal);
@@ -360,7 +360,7 @@ bool Factura::RecuperarFactura(QString cSQL){
                 this->cCp = registro.field("cCp").value().toString();
                 this->cPoblacion = registro.field("cPoblacion").value().toString();
                 this->cProvincia = registro.field("cProvincia").value().toString();
-                this->cPais = registro.field("cPais").value().toString();
+                this->idPais = registro.field("idPais").value().toInt();
                 this->cCif =registro.field("cCif").value().toString();
                 this->lRecargoEquivalencia = registro.field("lRecargoEquivalencia").value().toInt();
                 this->rSubtotal = registro.field("rSubtotal").value().toDouble();

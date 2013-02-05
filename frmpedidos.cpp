@@ -12,11 +12,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     helper(this)
 {
     ui->setupUi(this);
-    QSqlTableModel* modelo = new QSqlTableModel(ui->combo_pais,QSqlDatabase::database("empresa"));
-    modelo->setTable("paises");
-    modelo->select();
-    ui->combo_pais->setModel(modelo);
-    ui->combo_pais->setModelColumn(modelo->fieldIndex("pais"));
+    ui->combo_pais->setModel(Configuracion_global->paises_model);
+    ui->combo_pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
     // Pongo valores por defecto
     ui->lblFacturado->setVisible(false);
     ui->lblImpreso->setVisible(false);
@@ -109,7 +106,15 @@ void FrmPedidos::LLenarCampos()
     ui->txtcProvincia->setText(oPedido->cProvincia);
     ui->txtcCp->setText(oPedido->cCp);
 
-    //oPedido->id_pais;
+    QList<QString> keys = Configuracion_global->paises.uniqueKeys();
+    for (int i = 0;i<keys.size();i++)
+    {
+        if(Configuracion_global->paises[keys.at(i)].value("id").toInt() == oPedido->id_pais)
+        {
+            int index = ui->combo_pais->findText(keys.at(i));
+            ui->combo_pais->setCurrentIndex(index);
+        }
+    }
 
     ui->txtcCif->setText(oPedido->cCif);
     ui->chklRecargoEq->setChecked(oPedido->lRecargoEquivalencia==1);
@@ -317,7 +322,9 @@ void FrmPedidos::LLenarPedido()
     oPedido->cProvincia=ui->txtcProvincia->text();
     oPedido->cCp=ui->txtcCp->text();
 
-    //oPedido->id_pais;
+
+    oPedido->id_pais = Configuracion_global->paises[ui->combo_pais->currentText()].value("id").toInt();
+
     int i = ui->combo_pais->findText(oPedido->cPais);
     ui->combo_pais->setCurrentIndex(i);
 

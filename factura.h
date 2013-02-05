@@ -20,7 +20,7 @@ public:
     QString cCp;
     QString cPoblacion;
     QString cProvincia;
-    QString cPais;
+    int idPais;
     QString cCif;
     int lRecargoEquivalencia;
     double rSubtotal;
