@@ -289,8 +289,10 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmPedidos1);
             ui->stackedWidget->addWidget(frmPresupcli);
             ui->stackedWidget->addWidget(frmCajaMinuta);
-            progress.setValue(15);            
+            progress.setValue(15);
+
 			this->show();
+           // this->resize(desktop->width(),desktop->height());
             QApplication::processEvents();
 		} 
 		else

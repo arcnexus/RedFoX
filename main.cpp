@@ -47,8 +47,8 @@ int main(int argc, char *argv[])
 
 
 
-    MainWindow w;
-    w.setWindowState(Qt::WindowMaximized );
+   MainWindow w;
+   // w.setWindowState(Qt::WindowMaximized );
     
     return a.exec();
 }
