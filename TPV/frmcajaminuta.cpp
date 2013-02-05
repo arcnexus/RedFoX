@@ -22,6 +22,8 @@ FrmCajaMinuta::FrmCajaMinuta(QWidget *parent) :
     ui->txtDescripcionArticulo->installEventFilter(this);
     ui->txtDescripcionArticulo->installEventFilter(this);
 
+    ui->txtPorcIVAArticulo->setModel(Configuracion_global->iva_model);
+    ui->txtPorcIVAArticulo->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
     ticket.set_table(ui->lineas);
 }
 

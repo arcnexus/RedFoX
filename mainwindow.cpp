@@ -255,7 +255,7 @@ void MainWindow::init()
 				QMessageBox::critical(0, "error:", dbMedica.lastError().text());
 			}
             progress.setValue(6);
-            Configuracion_global->CargarDatos();
+            Configuracion_global->Cargar_iva();
             //Widgets
             frmClientes1 = new frmClientes(this);
             progress.setValue(7);

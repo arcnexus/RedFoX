@@ -48,7 +48,11 @@ private slots:
 
     void on_botBorrador_clicked();
 
-    void totalChanged(QString total);    
+    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
+    void desglose1Changed(double base, double iva, double re, double total);
+    void desglose2Changed(double base, double iva, double re, double total);
+    void desglose3Changed(double base, double iva, double re, double total);
+    void desglose4Changed(double base, double iva, double re, double total);
     void on_btnEditar_clicked();
 
 private:

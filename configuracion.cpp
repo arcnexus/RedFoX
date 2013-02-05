@@ -3,8 +3,7 @@
 Configuracion::Configuracion(QObject* parent) :
     QObject(parent)
 {
-    iva_model = new QSqlTableModel(this,QSqlDatabase::database("empresa"));
-    iva_model->setTable("tiposiva");
+    iva_model = 0;
 }
 
 
@@ -91,6 +90,9 @@ void Configuracion::Cargar_iva()
             ivas.insert(key,query.record());
         }
     }
+    if(iva_model == 0)
+        iva_model = new QSqlTableModel(this,QSqlDatabase::database("empresa"));
+    iva_model->setTable("tiposiva");
     iva_model->select();
 }
 
@@ -105,8 +107,6 @@ void Configuracion::CargarDatos()
     this->cPais = settings.value("cPais").toString();
     this->cEjercicio = settings.value("cEjercicioActivo").toString();
     this->nDigitosFactura = settings.value(("nDigitosFactura")).toInt();
-
-    Cargar_iva();
 
     if(settings.value("lProfesional").toInt()==1)
         this->lProfesional = true;
