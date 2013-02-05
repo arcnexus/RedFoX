@@ -12,14 +12,17 @@ Presupuesto::~Presupuesto()
 
 bool Presupuesto::AnadirPresupuesto()
 {
-    this->nIva1 = Configuracion_global->nIVA1;
-    this->nIva2 = Configuracion_global->nIVA2;
-    this->nIva3 = Configuracion_global->nIVA3;
-    this->nIva4 = Configuracion_global->nIVA4 ;
-    this->nRecargoEquivalencia1 = Configuracion_global->nRE1;
-    this->nRecargoEquivalencia2 = Configuracion_global->nRE2;
-    this->nRecargoEquivalencia3 = Configuracion_global->nRE3;
-    this->nRecargoEquivalencia4 = Configuracion_global->nRE4;
+    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+
+    this->nIva1 = Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble();
+    this->nIva2 = Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble();
+    this->nIva3 = Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble();
+    this->nIva4 = Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble();
+
+    this->nRecargoEquivalencia1 = Configuracion_global->ivas[keys.at(0)].value("nRegargoEquivalencia").toDouble();
+    this->nRecargoEquivalencia2 = Configuracion_global->ivas[keys.at(1)].value("nRegargoEquivalencia").toDouble();
+    this->nRecargoEquivalencia3 = Configuracion_global->ivas[keys.at(2)].value("nRegargoEquivalencia").toDouble();
+    this->nRecargoEquivalencia4 = Configuracion_global->ivas[keys.at(3)].value("nRegargoEquivalencia").toDouble();
 
     QSqlQuery cab_pre(QSqlDatabase::database("empresa"));
     cab_pre.prepare("INSERT INTO cab_pre (nPresupuesto, dFecha, dValidoHasta,"

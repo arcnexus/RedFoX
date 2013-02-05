@@ -71,10 +71,11 @@ frmFacturas::frmFacturas( QWidget *parent) :
     connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
     connect(&helper,SIGNAL(totalChanged(QString)),this,SLOT(totalChanged(QString)));
 
-    ui->txtnRec1->setText(QString::number(Configuracion_global->nRE1,'f',1));
-    ui->txtnRec2->setText(QString::number(Configuracion_global->nRE2,'f',1));
-    ui->txtnRec3->setText(QString::number(Configuracion_global->nRE3,'f',1));
-    ui->txtnRec4->setText(QString::number(Configuracion_global->nRE4,'f',1));
+    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+    ui->txtnRec1->setText(QString::number(Configuracion_global->ivas[keys.at(0)].value("nRegargoEquivalencia").toDouble(),'f',1));
+    ui->txtnRec2->setText(QString::number(Configuracion_global->ivas[keys.at(1)].value("nRegargoEquivalencia").toDouble(),'f',1));
+    ui->txtnRec3->setText(QString::number(Configuracion_global->ivas[keys.at(2)].value("nRegargoEquivalencia").toDouble(),'f',1));
+    ui->txtnRec4->setText(QString::number(Configuracion_global->ivas[keys.at(3)].value("nRegargoEquivalencia").toDouble(),'f',1));
 
 
     actionGuardaBorrador = new QAction("Guardar borrador",this);
@@ -272,10 +273,14 @@ void frmFacturas::VaciarCampos() {
     ui->txtrBase2->setText(0);
     ui->txtrBase3->setText(0);
     ui->txtrBase4->setText(0);
-    ui->txtnPorcentajeIva1->setText(QString::number(Configuracion_global->nIVA1));
-    ui->txtnPorcentajeIva2->setText(QString::number(Configuracion_global->nIVA2));
-    ui->txtnPorcentajeIva3->setText(QString::number(Configuracion_global->nIVA3));
-    ui->txtnPorcentajeIva4->setText(QString::number(Configuracion_global->nIVA4));
+
+    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+
+
+    ui->txtnPorcentajeIva1->setText(QString::number(Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble()));
+    ui->txtnPorcentajeIva2->setText(QString::number(Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble()));
+    ui->txtnPorcentajeIva3->setText(QString::number(Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble()));
+    ui->txtnPorcentajeIva4->setText(QString::number(Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble()));
     ui->txtnRec1->clear();
     ui->txtnRec2->clear();
     ui->txtnRec3->clear();

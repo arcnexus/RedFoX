@@ -20,6 +20,7 @@ greaterThan(QT_MAJOR_VERSION, 4):INCLUDEPATH += /home/arcnexus/Qt5.0.0/5.0.0/gcc
 
 
 
+
 LIBS += -LC:/Qt/Qwt/5.2.1/lib
 LIBS += -L/usr/local/Qxt/lib
 greaterThan(QT_MAJOR_VERSION, 4):LIBS += -L/home/arcnexus/Qt5.0.0/Tools/QtCreator/lib/qtcreator/ -lQt5WebKitWidgets
@@ -57,7 +58,6 @@ SOURCES += main.cpp\
     pedidos.cpp \
     frmpresupuestoscli.cpp \
     presupuesto.cpp \
-    frmcajaminuta.cpp \
     Zona_Pacientes/frmfichapaciente.cpp \
     frmagendavisitas.cpp \
     sqlcalls.cpp \
@@ -88,7 +88,10 @@ SOURCES += main.cpp\
     Auxiliares/spinboxdelegate.cpp \
     Auxiliares/searchdelegate.cpp \
     Zona_Pacientes/visitas.cpp \
-    Auxiliares/comboboxdelegate.cpp
+    Auxiliares/comboboxdelegate.cpp \
+    TPV/frmcajaminuta.cpp \
+    TPV/ticket.cpp \
+    TPV/lineaticket.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -115,7 +118,6 @@ HEADERS  += mainwindow.h \
     pedidos.h \
     frmpresupuestoscli.h \
     presupuesto.h \
-    frmcajaminuta.h \
     Zona_Pacientes/frmfichapaciente.h \
     frmagendavisitas.h \
     sqlcalls.h \
@@ -146,7 +148,10 @@ HEADERS  += mainwindow.h \
     Auxiliares/searchdelegate.h \
     Auxiliares/Globlal_Include.h\
     Zona_Pacientes/visitas.h \
-    Auxiliares/comboboxdelegate.h
+    Auxiliares/comboboxdelegate.h \
+    TPV/frmcajaminuta.h \
+    TPV/ticket.h \
+    TPV/lineaticket.h
 
 
 FORMS    += mainwindow.ui \
@@ -164,7 +169,6 @@ FORMS    += mainwindow.ui \
     frmalbaran.ui \
     frmpedidos.ui \
     frmpresupuestoscli.ui \
-    frmcajaminuta.ui \
     frmagendavisitas.ui \
     Zona_Pacientes/frmfichapaciente.ui \
     Zona_Pacientes/frmanadirmedicamento.ui \
@@ -181,7 +185,8 @@ FORMS    += mainwindow.ui \
     Zona_Administrador/copy_db_progressfrm.ui \
     Gestion_Almacen/gestion_seccionalmacen.ui \
     db_table_view.ui \
-    Auxiliares/search_lineedit.ui
+    Auxiliares/search_lineedit.ui \
+    TPV/frmcajaminuta.ui
 
 RESOURCES += \
     terra.qrc

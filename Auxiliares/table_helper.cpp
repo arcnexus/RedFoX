@@ -8,15 +8,6 @@ Table_Helper::Table_Helper(QObject *parent) :
     moneda = "€";
     comprando = true;
     use_re = false;
-    QSqlQuery query(QSqlDatabase::database("empresa"));
-    if(query.exec("SELECT * FROM tiposiva"))
-    {
-        while(query.next())
-        {
-            QString key = query.record().value("cTipo").toString();
-            ivas.insert(key,query.record());
-        }
-    }
 }
 
 Table_Helper::~Table_Helper()
@@ -116,17 +107,8 @@ void Table_Helper::resizeTable()
 void Table_Helper::fillTable(QString db, QString table, QString filter)
 {
     helped_table->blockSignals(true);
-    helped_table->clear();
+    helped_table->clearContents();
     helped_table->setRowCount(0);
-
-    QStringList headers;
-    headers << "Codigo" << "Cantidad" << "Descripcion" << "P.V.P" << "SubTotal";
-    headers << "DTO" << "DTO%" << "% I.V.A." << "Total";
-
-    if(helped_table->columnCount() == 10)
-        headers << "A servir";
-
-    helped_table->setHorizontalHeaderLabels(headers);
 
     QSqlQuery query(QSqlDatabase::database(db));
     QString sql;
@@ -286,7 +268,7 @@ double Table_Helper::calcularIVALinea(int row)
     base -= total_descPerc;
     base -= dtoNeto;
 
-    double iva = ivas[helped_table->item(row,7)->text()].value("nIva").toDouble();
+    double iva = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nIva").toDouble();
 
     double total_iva = (base * iva)/100;
 
@@ -306,7 +288,7 @@ double Table_Helper::calcularRELinea(int row)
         base -= total_descPerc;
         base -= dtoNeto;
 
-        double re = ivas[helped_table->item(row,7)->text()].value("nRegargoEquivalencia").toDouble();
+        double re = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nRegargoEquivalencia").toDouble();
 
         double total_re = (base * re)/100;
 
@@ -417,9 +399,9 @@ double Table_Helper::calcularTotalLinea(int row)
     double dto = helped_table->item(row,5)->text().toDouble();
     double dto_percent = helped_table->item(row,6)->text().toDouble();
 
-    double iva = ivas[helped_table->item(row,7)->text()].value("nIVA").toDouble();
+    double iva = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nIVA").toDouble();
 
-    double re = ivas[helped_table->item(row,7)->text()].value("nRegargoEquivalencia").toDouble();
+    double re = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nRegargoEquivalencia").toDouble();
 
     double total = subtotal - dto;
 
@@ -454,16 +436,16 @@ void Table_Helper::calcular_por_Base(QString sbase)
     for(int i=0; i<helped_table->rowCount();i++)
     {
         QString name = helped_table->item(i,7)->text();
-        if(ivas[name].value("nombre_interno").toString() == sbase)
+        if(Configuracion_global->ivas[name].value("nombre_interno").toString() == sbase)
         {
             double row_base = helped_table->item(i,4)->text().toDouble();
-            double iva_value = ivas[name].value("nIVA").toDouble();
+            double iva_value = Configuracion_global->ivas[name].value("nIVA").toDouble();
             double aux_iva = (row_base * iva_value) /100;
             base += row_base;
             iva += aux_iva;
             if(use_re)
             {
-                double re_value = ivas[name].value("nRegargoEquivalencia").toDouble();
+                double re_value = Configuracion_global->ivas[name].value("nRegargoEquivalencia").toDouble();
                 double aux_re = (row_base * re_value) /100;
                 re += aux_re;
                 total+=aux_re;
@@ -531,7 +513,7 @@ bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_tab
         values << helped_table->item(row,5)->text().toDouble();
         values << helped_table->item(row,6)->text().toDouble();
 
-        values << ivas[helped_table->item(row,7)->text()].value("nIva");
+        values << Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nIva");
         values << helped_table->item(row,8)->text().toDouble();
 
         //cantidad = cantidadaservir por defecto
@@ -577,10 +559,10 @@ void Table_Helper::addRow(QSqlRecord r)
     helped_table->item(row,5)->setText(r.value(8).toString());
     helped_table->item(row,6)->setText(r.value(9).toString());
     //helped_table->item(row,7)->setText(r.value(10).toString());
-    QList<QString> keys = ivas.uniqueKeys();
+    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
     for(int i = 0;i<keys.size();i++)
     {
-        if(ivas[keys.at(i)].value("nIVA").toDouble() == r.value(10).toDouble())
+        if(Configuracion_global->ivas[keys.at(i)].value("nIVA").toDouble() == r.value(10).toDouble())
         {
             helped_table->item(row,7)->setText(keys.at(i));
             break;

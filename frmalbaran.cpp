@@ -204,10 +204,12 @@ void FrmAlbaran::VaciarCampos() {
     ui->txtrBase3->setText(0);
     ui->txtrBase4->setText(0);
     Configuracion_global->CargarDatos();
-    ui->txtnPorcentajeIva1->setText(QString::number(Configuracion_global->nIVA1));
-    ui->txtnPorcentajeIva2->setText(QString::number(Configuracion_global->nIVA2));
-    ui->txtnPorcentajeIva3->setText(QString::number(Configuracion_global->nIVA3));
-    ui->txtnPorcentajeIva4->setText(QString::number(Configuracion_global->nIVA4));
+
+    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+    ui->txtnPorcentajeIva1->setText(QString::number(Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble()));
+    ui->txtnPorcentajeIva2->setText(QString::number(Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble()));
+    ui->txtnPorcentajeIva3->setText(QString::number(Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble()));
+    ui->txtnPorcentajeIva4->setText(QString::number(Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble()));
     ui->txtnRec1->clear();
     ui->txtnRec2->clear();
     ui->txtnRec3->clear();

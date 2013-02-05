@@ -37,7 +37,6 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     searcher->set_table("articulos");
     searcher->set_selection("cCodigo");
     searcher->setWindowTitle(tr("Articulos"));
-    searcher->set_selection("cCodigo");
     QStringList headers;
     headers << tr("Codigo")<< "1" << "2" << tr("Descripción");
     searcher->set_table_headers(headers);

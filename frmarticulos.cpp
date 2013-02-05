@@ -13,15 +13,17 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->setupUi(this);
     // Cargar valores IVA
     Configuracion_global->CargarDatos();
-    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA1));
-    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA2));
-    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA3));
-    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->nIVA4));
 
-    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->nIVA1));
-    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->nIVA2));
-    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->nIVA3));
-    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->nIVA4));
+    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble()));
+    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble()));
+    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble()));
+    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble()));
+
+    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble()));
+    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble()));
+    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble()));
+    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble()));
 
     if(internacional == false) {
         ui->cboPais1->setVisible(false);

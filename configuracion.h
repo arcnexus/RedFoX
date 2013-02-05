@@ -9,10 +9,14 @@
 #include <QVariant>
 #include <QMessageBox>
 #include <QApplication>
-class Configuracion{
-
+#include <QSqlRecord>
+#include <QSqlTableModel>
+#include <QObject>
+class Configuracion: public QObject
+{
+    Q_OBJECT
 public:
-    Configuracion();
+    Configuracion(QObject * parent = 0);
     QString cRutaBdTerra;
     QString cSerie;
     int nDigitosFactura;
@@ -48,7 +52,9 @@ public:
     QSqlDatabase dbConfiguracion;
     QSqlQuery *QryConfiguracion;
     QFileDialog dialogo;
-    double nIVA1,nIVA2,nIVA3,nIVA4,nRE1,nRE2,nRE3,nRE4;
+
+    QHash <QString,QSqlRecord> ivas;
+
     bool lProfesional;
     int nIRPF;
     int nDigitosCuentasContables;
@@ -62,6 +68,8 @@ public:
     void CargarDatos();
     QString ValidarCC(QString Entidad,QString Oficina, QString DC, QString CC);
     QString ValidarCC(QString Entidad, QString Oficina, QString CC);
+    void Cargar_iva();
+    QSqlTableModel* iva_model;
 };
 
 #endif // CONFIGURACION_H

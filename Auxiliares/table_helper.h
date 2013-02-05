@@ -53,8 +53,7 @@ private:
     void comprobarDescuento(int row);
     void rellenar_con_Articulo(int row);
     bool comprando;
-    bool use_re;
-    QHash <QString, QSqlRecord> ivas;   
+    bool use_re;  
     bool saveLine(int row,int id_cabecera,QString db, QString db_table, QStringList headers);
     void addRow(QSqlRecord r);
 

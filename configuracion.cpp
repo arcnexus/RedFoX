@@ -1,7 +1,10 @@
 #include "configuracion.h"
 
-Configuracion::Configuracion()
+Configuracion::Configuracion(QObject* parent) :
+    QObject(parent)
 {
+    iva_model = new QSqlTableModel(this,QSqlDatabase::database("empresa"));
+    iva_model->setTable("tiposiva");
 }
 
 
@@ -76,6 +79,21 @@ bool Configuracion::EsNumero(QString texto)
        return true;
 }
 
+void Configuracion::Cargar_iva()
+{
+    ivas.clear();
+    QSqlQuery query(QSqlDatabase::database("empresa"));
+    if(query.exec("SELECT * FROM tiposiva"))
+    {
+        while(query.next())
+        {
+            QString key = query.record().value("cTipo").toString();
+            ivas.insert(key,query.record());
+        }
+    }
+    iva_model->select();
+}
+
 void Configuracion::CargarDatos()
 {
     QSettings settings("infint", "terra");
@@ -87,14 +105,9 @@ void Configuracion::CargarDatos()
     this->cPais = settings.value("cPais").toString();
     this->cEjercicio = settings.value("cEjercicioActivo").toString();
     this->nDigitosFactura = settings.value(("nDigitosFactura")).toInt();
-    this->nIVA1 = settings.value("nIVA1").toDouble();
-    this->nIVA2 = settings.value("nIVA2").toDouble();
-    this->nIVA3 = settings.value("nIVA3").toDouble();
-    this->nIVA4 = settings.value("nIVA4").toDouble();
-    this->nRE1 = settings.value("nRE1").toDouble();
-    this->nRE2 = settings.value("nRE2").toDouble();
-    this->nRE3 = settings.value("nRE3").toDouble();
-    this->nRE4 = settings.value("nRE4").toDouble();
+
+    Cargar_iva();
+
     if(settings.value("lProfesional").toInt()==1)
         this->lProfesional = true;
     else

@@ -11,7 +11,7 @@
 #include "frmalbaran.h"
 #include "frmpedidos.h"
 #include "frmpresupuestoscli.h"
-#include "frmcajaminuta.h"
+#include "TPV/frmcajaminuta.h"
 namespace Ui {
 class MainWindow;
 }

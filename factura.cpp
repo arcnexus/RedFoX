@@ -14,12 +14,14 @@ Factura::Factura(QObject *parent) :
 }
 
 // Metodos utilidad Clase
-bool Factura::AnadirFactura() {
+bool Factura::AnadirFactura()
+{
+    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+    this->nPorcentajeIVA1 = Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble();
+    this->nPorcentajeIVA2 = Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble();
+    this->nPorcentajeIVA3 = Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble();
+    this->nPorcentajeIVA4 = Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble();
 
-    this->nPorcentajeIVA1 = Configuracion_global->nIVA1;
-    this->nPorcentajeIVA2 = Configuracion_global->nIVA2;
-    this->nPorcentajeIVA3 = Configuracion_global->nIVA3;
-    this->nPorcentajeIVA4 = Configuracion_global->nIVA4 ;
     this->lRecargoEquivalencia = 0;
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
      cab_fac.prepare("INSERT INTO cab_fac (cCodigoCliente,cFactura,dFecha,dFechaCobro,iId_Cliente,cCliente,cDireccion,cDireccion2,"

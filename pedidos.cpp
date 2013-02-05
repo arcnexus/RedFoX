@@ -25,14 +25,16 @@ bool Pedidos::BorrarLineas(int Iped)
 }
 bool Pedidos::AnadirPedido()
 {
-    this->nPorcentajeIVA1 = Configuracion_global->nIVA1;
-    this->nPorcentajeIVA2 = Configuracion_global->nIVA2;
-    this->nPorcentajeIVA3 = Configuracion_global->nIVA3;
-    this->nPorcentajeIVA4 = Configuracion_global->nIVA4 ;
-    this->nPorcentajeRecargoEq1 = Configuracion_global->nRE1;
-    this->nPorcentajeRecargoEq1 = Configuracion_global->nRE2;
-    this->nPorcentajeRecargoEq1 = Configuracion_global->nRE3;
-    this->nPorcentajeRecargoEq1 = Configuracion_global->nRE4;
+    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+    this->nPorcentajeIVA1 = Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble();
+    this->nPorcentajeIVA2 = Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble();
+    this->nPorcentajeIVA3 = Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble();
+    this->nPorcentajeIVA4 = Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble();
+
+    this->nPorcentajeRecargoEq1 = Configuracion_global->ivas[keys.at(0)].value("nRegargoEquivalencia").toDouble();
+    this->nPorcentajeRecargoEq1 = Configuracion_global->ivas[keys.at(1)].value("nRegargoEquivalencia").toDouble();
+    this->nPorcentajeRecargoEq1 = Configuracion_global->ivas[keys.at(2)].value("nRegargoEquivalencia").toDouble();
+    this->nPorcentajeRecargoEq1 = Configuracion_global->ivas[keys.at(3)].value("nRegargoEquivalencia").toDouble();
     this->lRecargoEquivalencia = 0;
 
     QSqlQuery cab_ped(QSqlDatabase::database("empresa"));

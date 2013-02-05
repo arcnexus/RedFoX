@@ -103,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    Configuracion_global = new Configuracion();
+    Configuracion_global = new Configuracion(this);
     Configuracion_global->CargarDatos();
 
     // Abro Base de Datos
@@ -255,6 +255,7 @@ void MainWindow::init()
 				QMessageBox::critical(0, "error:", dbMedica.lastError().text());
 			}
             progress.setValue(6);
+            Configuracion_global->CargarDatos();
             //Widgets
             frmClientes1 = new frmClientes(this);
             progress.setValue(7);
@@ -288,8 +289,7 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmPedidos1);
             ui->stackedWidget->addWidget(frmPresupcli);
             ui->stackedWidget->addWidget(frmCajaMinuta);
-            progress.setValue(15);
-            Configuracion_global->CargarDatos();
+            progress.setValue(15);            
 			this->show();
             QApplication::processEvents();
 		} 
@@ -559,6 +559,7 @@ void MainWindow::handle_tiposIVA()
 
     form.set_columnHide(0);
     form.exec();
+    Configuracion_global->Cargar_iva();
 }
 
 void MainWindow::handle_fomasPago()
