@@ -91,8 +91,7 @@ void Db_table_View::on_btn_save_clicked()
 
 void Db_table_View::on_btn_aceptar_clicked()
 {
-    if(model->isDirty())
-        model->submitAll();
+    model->submitAll();
     Db_table_View::done(QDialog::Accepted);
 }
 

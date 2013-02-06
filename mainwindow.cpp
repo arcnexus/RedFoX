@@ -5,11 +5,10 @@
 #include "frmconfiguracion.h"
 #include "frmagendavisitas.h"
 #include "block_terra_form.h"
-#include "Gestion_Almacen/gestion_seccionalmacen.h"
 #include "db_table_view.h"
 
 Configuracion * Configuracion_global = 0;
-bool medic = true;
+bool medic = false;
 bool internacional = true;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -18,78 +17,30 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     on_edit = false;
+    ui->ventas_toolBar->hide();
 
-    // ----------------------------------------------------------------------------
-    // Barra de herramientas Modulos
-    // ----------------------------------------------------------------------------
-    m_modulesBar = new QToolBar(tr("Modulos"), this);
-    m_modulesBar->setAllowedAreas(Qt::LeftToolBarArea);
-    m_modulesBar->setIconSize(QSize(80, 48));
-    m_modulesBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    m_modulesBar->setMovable(false);
-    m_modulesBar->setFloatable(false);
-    m_modulesBar->setStyleSheet("background-color:rgb(219, 228, 255)");
-
-   this->addToolBar(Qt::LeftToolBarArea, m_modulesBar);
-
-    // MODULO MANTENIMIENTO.
-    QToolButton *BtnMantenimiento = new QToolButton(m_modulesBar);
-    BtnMantenimiento->setText(tr("Manten."));
-    BtnMantenimiento->setIcon(QIcon(":Icons/PNG/Maintenance.png"));
-    BtnMantenimiento->setToolTip(tr("Módulo de mantenimientos"));
-    BtnMantenimiento->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-
-    // MODULO VENTAS/ENTRADAS.
-    QToolButton *BtnEntradas = new QToolButton(m_modulesBar);
-    BtnEntradas->setText(tr("Ventas/\ningresos"));
-    BtnEntradas->setIcon(QIcon(":Icons/PNG/ventas2.png"));
-    BtnEntradas->setToolTip(tr("Módulo de ventas/entradas clinica"));
-    BtnEntradas->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-
-    // MODULO GASTOS/SALIDAS.
-    QToolButton *BtnSalidas = new QToolButton(m_modulesBar);
-    BtnSalidas->setText(tr("Compras/\ngastos"));
-    BtnSalidas->setIcon(QIcon(":Icons/PNG/Gastos.png"));
-    BtnSalidas->setToolTip(tr("Módulo de Gastos/Salidas clinica"));
-    BtnSalidas->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    QToolButton *BtnMedica = new QToolButton(m_modulesBar);
-    //if (medic == true) {
-        // INF. MEDICA.
-
-        BtnMedica->setText(tr("Clínica"));
-        BtnMedica->setIcon(QIcon(":Icons/PNG/PatientFile2.png"));
-        BtnMedica->setToolTip(tr("Módulo de Gestión especificamente clínica"));
-        BtnMedica->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-   // }
-    // Salir
-    QToolButton *BtnCerrar = new QToolButton(m_modulesBar);
-    BtnCerrar->setText(tr("Salir"));
-    BtnCerrar->setIcon(QIcon(":Icons/PNG/Exit.png"));
-    BtnCerrar->setToolTip(tr("Salir de Terra"));
-    BtnCerrar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    m_modulesBar->addWidget(BtnMantenimiento);
-    m_modulesBar->addWidget(BtnEntradas);
-    m_modulesBar->addWidget(BtnSalidas);
-   // if (medic ==true)
-        m_modulesBar->addWidget(BtnMedica);
-    m_modulesBar->addWidget(BtnCerrar);
-    //-------------------------------
-    // Cargo Barras Herramientas
-    //-------------------------------
-    Mantenimientos();
-    Ventas();
-    btnMantenimientos_clicked();
+    if (medic)
+        ui->btnClientes->setText(tr("Pacientes"));
+    else
+    {
+        ui->actionClinica->deleteLater();
+        ui->btnClientes->setText(tr("Clientes"));
+        ui->menuClinica->deleteLater();
+    }
 
     // ----------------------------------------------------------------------------
     // Conexiones
     // ----------------------------------------------------------------------------
     connect(ui->btnSalir,SIGNAL(triggered()),this,SLOT(close()));
-    connect(BtnMantenimiento,SIGNAL(clicked()),this,SLOT(btnMantenimientos_clicked()));
-    connect(BtnEntradas,SIGNAL(clicked()),this,SLOT(btnVentas_clicked()));
-    connect(BtnCerrar,SIGNAL(clicked()),this,SLOT(close()));
+    connect(ui->actionManten,SIGNAL(triggered()),this,SLOT(btnMantenimientos_clicked()));
+    connect(ui->action_ventas,SIGNAL(triggered()),this,SLOT(btnVentas_clicked()));
+
     connect(ui->actionGestion_de_Secciones,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
     connect(ui->actionGestion_de_Familias,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
     connect(ui->actionGestion_de_subfamilias,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
+    connect(ui->actionSubSubFamilias,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
+    connect(ui->actionGrupos,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
+
     connect(ui->actionDoctores,SIGNAL(triggered()),this,SLOT(handle_doctores()));
     connect(ui->actionBancos,SIGNAL(triggered()),this,SLOT(handle_bancos()));
     connect(ui->btnTipos_de_Iva,SIGNAL(triggered()),this,SLOT(handle_tiposIVA()));
@@ -102,13 +53,21 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));
 
 
+    connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
+    connect(ui->btnArt_culos,SIGNAL(triggered()),this,SLOT(btnArticulos_clicked()));
+    connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
+
+    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
+    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
+    connect(ui->actionAlbaranes,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
+    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
+    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
 
     Configuracion_global = new Configuracion(this);
     Configuracion_global->CargarDatos();
 
     // Abro Base de Datos
     QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDTerra,"terra");
-    //dbTerra.addDatabase(Configuracion_global->cDriverBDTerra,"terra");
 
     if (Configuracion_global->cDriverBDTerra == "QSQLITE")
     {
@@ -128,24 +87,19 @@ MainWindow::MainWindow(QWidget *parent) :
         QMessageBox::critical(0, "error:", dbTerra.lastError().text());
     }
 
-	// Identificación de usuario
-    //intit
-    //this->setWindowState(Qt::WindowMaximized);
     QTimer::singleShot(0,this,SLOT(init()));
 }
 void MainWindow::init()
 {
-    //Login *dlg = new Login(Configuracion_global);
-    //NOTE - Fixed: puntero no borrado
-    QScopedPointer<Login>dlg(new Login(this));
-	if ( dlg->exec()==QDialog::Accepted) 
+    Login dlg(this);
+    if ( dlg.exec()==QDialog::Accepted)
 	{
 		// capturo usuario
-		QString usuario = dlg->getUsuario();
-        user = dlg->getUsuario();
-        pass = dlg->getPass();
-		ui->lineUsuarioActivo->setText(usuario);
-        Configuracion_global->cUsuarioActivo = ui->lineUsuarioActivo->text();
+        user = dlg.getUsuario();
+        pass = dlg.getPass();
+        ui->lineUsuarioActivo->setText(user);
+        Configuracion_global->cUsuarioActivo = user;
+
 		QSettings settings("infint", "terra");
 		ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
 		ui->txtcCategoria->setText(settings.value("cCategoria").toString());
@@ -153,7 +107,7 @@ void MainWindow::init()
 		//TODO - Ocultar controles
 
 		// capturo empresa
-		QString Empresa = dlg->getEmpresa();
+        QString Empresa = dlg.getEmpresa();
 		ui->lineEmpresaActiva->setText(Empresa);
 
 		// Configuramos valores empresa activa
@@ -165,8 +119,8 @@ void MainWindow::init()
 			QryEmpresa.next();
             QDesktopWidget *desktop = QApplication::desktop();
             QProgressBar progress;
-            progress.setWindowFlags(Qt::FramelessWindowHint);
 
+            progress.setWindowFlags(Qt::FramelessWindowHint);
             progress.setAlignment(Qt::AlignCenter);
             progress.resize(600 , 40);
             progress.setMaximum(15);
@@ -182,17 +136,16 @@ void MainWindow::init()
             Configuracion_global->cPasswordBDEmpresa =record.field("contrasena").value().toString();
             Configuracion_global->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
             Configuracion_global->cUsuarioBDEmpresa = record.field("user").value().toString();
-            if(record.field("medica").value().toInt()==1) {
-                medic = true;
-            } else {
-                medic = false;
-            }
-            if(record.field("internacional").value().toInt()==1) {
-                internacional = true;
-            } else {
-                internacional = false;
-            }
 
+            if(record.field("medica").value().toInt()==1)
+                medic = true;
+            else
+                medic = false;
+
+            if(record.field("internacional").value().toInt()==1)
+                internacional = true;
+            else
+                internacional = false;
 
             progress.setValue(1);
             QApplication::processEvents();
@@ -226,27 +179,31 @@ void MainWindow::init()
             QApplication::processEvents();
 			// Abro empresa activa
             QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"empresa");
-            if (Configuracion_global->cDriverBDEmpresa =="QSQLITE") {
+            if (Configuracion_global->cDriverBDEmpresa =="QSQLITE")
+            {
                 dbEmpresa.setDatabaseName(Configuracion_global->cRutaBdEmpresa);
-                // qDebug() << "Empresa:" << Configuracion_global->cRutaBdEmpresa;
 				dbEmpresa.open();
-			} else {
+            }
+            else
+            {
                 dbEmpresa.setDatabaseName(Configuracion_global->cNombreBDEmpresa);
                 dbEmpresa.setHostName(Configuracion_global->cHostBDEmpresa);
                 dbEmpresa.open(Configuracion_global->cUsuarioBDEmpresa,Configuracion_global->cPasswordBDEmpresa);
-
 			}
             progress.setValue(5);
             QApplication::processEvents();
 			// Abro bdmedica activa
             QSqlDatabase dbMedica = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"dbmedica");
-            if (Configuracion_global->cDriverBDMedica =="QSQLITE") {
+            if (Configuracion_global->cDriverBDMedica =="QSQLITE")
+            {
                 dbMedica.setDatabaseName(Configuracion_global->cRutaBdMedica);
                 qDebug() << "Medica:" << Configuracion_global->cRutaBdMedica;
 				if(!dbMedica.open())
 					QMessageBox::warning(qApp->activeWindow(),tr("ERROR DB"),tr("No se ha podido abrir la BD medica"),
 					tr("Aceptar"));
-			} else {
+            }
+            else
+            {
                 dbMedica.setDatabaseName(Configuracion_global->cNombreBDMedica);
                 dbMedica.setHostName(Configuracion_global->cHostBDMedica);
                 dbMedica.open(Configuracion_global->cUsuarioBDMedica,Configuracion_global->cPasswordBDMedica);
@@ -256,33 +213,43 @@ void MainWindow::init()
 				QMessageBox::critical(0, "error:", dbMedica.lastError().text());
 			}
             progress.setValue(6);
+
             Configuracion_global->Cargar_iva();
             Configuracion_global->Cargar_paises();
+
             //Widgets
             frmClientes1 = new frmClientes(this);
             progress.setValue(7);
+
             frmFacturas1 = new frmFacturas(this);
             connect(frmFacturas1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmFacturas1,SIGNAL(unblock()),this,SLOT(unblock_main()));
             progress.setValue(8);
+
             frmArticulos1 = new FrmArticulos(this);
             progress.setValue(9);
+
             frmProveedores1 = new frmProveedores(this);
             progress.setValue(10);
+
             frmAlbaran1 = new FrmAlbaran(this);
             connect(frmAlbaran1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmAlbaran1,SIGNAL(unblock()),this,SLOT(unblock_main()));
             progress.setValue(11);
+
             frmPedidos1 = new FrmPedidos(this);
             connect(frmPedidos1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmPedidos1,SIGNAL(unblock()),this,SLOT(unblock_main()));
             progress.setValue(12);
+
             frmPresupcli = new FrmPresupuestosCli(this);
             connect(frmPresupcli,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmPresupcli,SIGNAL(unblock()),this,SLOT(unblock_main()));
             progress.setValue(13);
+
             frmCajaMinuta = new FrmCajaMinuta(this);
             progress.setValue(14);
+
             ui->stackedWidget->addWidget(frmClientes1);
             ui->stackedWidget->addWidget(frmFacturas1);
             ui->stackedWidget->addWidget(frmArticulos1);
@@ -295,7 +262,6 @@ void MainWindow::init()
 
             this->show();
             QApplication::processEvents();
-            QTimer::singleShot(500,this,SLOT(addbars()));
 		} 
 		else
 			qDebug() <<"Fallo la conexión al fichero Medico";
@@ -321,98 +287,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::btnMantenimientos_clicked()
 {
-    m_MantenimientosBar->show();
-    m_VentasBar->hide();
+    ui->manten_ToolBar->show();
+    ui->ventas_toolBar->hide();
 }
 
 void MainWindow::btnVentas_clicked()
 {
-    m_MantenimientosBar->hide();
-    m_VentasBar->show();
+    ui->manten_ToolBar->hide();
+    ui->ventas_toolBar->show();
 }
-
-void MainWindow::Mantenimientos()
-{
-    // ----------------------------------------------------------------------------
-    // Barra de herramientas Mantenimientos
-    // ----------------------------------------------------------------------------
-    m_MantenimientosBar = new QToolBar(tr("Mantenimiento"), this);
-    m_MantenimientosBar->setAllowedAreas(Qt::TopToolBarArea);
-    m_MantenimientosBar->setIconSize(QSize(32,32));
-    m_MantenimientosBar->setStyleSheet("background-color:rgb(255, 235, 167)");
-    m_MantenimientosBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    m_MantenimientosBar->setMovable(false);
-    m_MantenimientosBar->setFloatable(false);
-
-
-    // PACIENTES
-    m_MantenimientosBar->addAction(ui->btnClientes);
-    if(medic == true){
-        ui->btnClientes->setText(tr("Pacientes"));
-    } else {
-        ui->btnClientes->setText(tr("Clientes"));
-    }
-
-    // PROVEEDORES
-    m_MantenimientosBar->addAction(ui->btnProveedores);
-
-    // ARTICULOS
-    m_MantenimientosBar->addAction(ui->btnArt_culos);
-
-    m_MantenimientosBar->addSeparator();
-
-    // AGENDA
-    m_MantenimientosBar->addAction(ui->btnAgenda);
-
-    //--------------------------
-    // Conexiones
-    //--------------------------
-    connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
-    connect(ui->btnArt_culos,SIGNAL(triggered()),this,SLOT(btnArticulos_clicked()));
-    connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
-    //TODO conexion boton agenda
-}
-
-
-void MainWindow::Ventas()
-{
-    // ----------------------------------------------------------------------------
-    // Barra de herramientas Ventas
-    // ----------------------------------------------------------------------------
-    m_VentasBar = new QToolBar(tr("Ventas"), this);
-    m_VentasBar->setAllowedAreas(Qt::TopToolBarArea);
-    m_VentasBar->setIconSize(QSize(32,32));
-    m_VentasBar->setStyleSheet("background-color:rgb(255, 235, 167)");
-    m_VentasBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    m_VentasBar->setMovable(false);
-    m_VentasBar->setFloatable(false);
-
-
-    // PRESUPUESTOS
-    m_VentasBar->addAction(ui->actionPresupuestos);
-
-    // PEDIDOS
-    m_VentasBar->addAction(ui->actionPedidos);
-
-    // ALBARANES
-    m_VentasBar->addAction(ui->actionAlbaranes);
-
-    // FACTURA
-    m_VentasBar->addAction(ui->actionFacturas);
-
-    // CAJA
-    m_VentasBar->addAction(ui->actionVentas_Contado);
-
-    //--------------------------
-    // Conexiones
-    //--------------------------
-    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
-    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
-    connect(ui->actionAlbaranes,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
-    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
-    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
-}
-
 
 void MainWindow::btnClientes_clicked()
 {
@@ -488,20 +371,86 @@ void MainWindow::divisiones_almacen()
 {
     if(sender()== ui->actionGestion_de_Secciones)
     {
-        gestion_SeccionAlmacen form(this,"secciones",editar);
+        Db_table_View form(this);
+        form.set_db("empresa");
+        form.set_table("secciones");
+
         form.setWindowTitle(tr("Secciones"));
+
+        QStringList headers;
+        headers << tr("Seccion");
+        form.set_table_headers(headers);
+
+        form.set_columnHide(0);
+        form.set_columnHide(2);
         form.exec();
     }
     else if (sender() == ui->actionGestion_de_Familias)
     {
-        gestion_SeccionAlmacen form(this,"familias",editar);
+        Db_table_View form(this);
+        form.set_db("empresa");
+        form.set_table("familias");
+
         form.setWindowTitle(tr("Familias"));
+
+        QStringList headers;
+        headers << tr("Codigo") << tr("Familia") << tr("Pertenece a");
+        form.set_table_headers(headers);
+
+        form.set_relation(3,QSqlRelation("secciones","id","cSeccion"));
+
+        form.set_columnHide(0);
         form.exec();
     }
     else if (sender() == ui->actionGestion_de_subfamilias)
     {
-        gestion_SeccionAlmacen form(this,"subfamilias",editar);
-        form.setWindowTitle(tr("SubFamilias"));
+        Db_table_View form(this);
+        form.set_db("empresa");
+        form.set_table("subfamilias");
+
+        form.setWindowTitle(tr("Subfamilias"));
+
+        QStringList headers;
+        headers << tr("SubFamilia") << tr("Pertenece a");
+        form.set_table_headers(headers);
+
+        form.set_relation(2,QSqlRelation("familias","id","cFamilia"));
+
+        form.set_columnHide(0);
+        form.exec();
+    }
+    else if (sender() == ui->actionSubSubFamilias)
+    {
+        Db_table_View form(this);
+        form.set_db("empresa");
+        form.set_table("subsubfamilias");
+
+        form.setWindowTitle(tr("SubSubfamilias"));
+
+        QStringList headers;
+        headers << tr("SubSubFamilia") << tr("Pertenece a");
+        form.set_table_headers(headers);
+
+        form.set_relation(2,QSqlRelation("subfamilias","id","cSubfamilia"));
+
+        form.set_columnHide(0);
+        form.exec();
+    }
+    else if (sender() == ui->actionGrupos)
+    {
+        Db_table_View form(this);
+        form.set_db("empresa");
+        form.set_table("grupoart");
+
+        form.setWindowTitle(tr("Grupo de Articulos"));
+
+        QStringList headers;
+        headers << tr("Grupo") << tr("Pertenece a");
+        form.set_table_headers(headers);
+
+        form.set_relation(2,QSqlRelation("subsubfamilias","id","subsubfamilia"));
+
+        form.set_columnHide(0);
         form.exec();
     }
 }
@@ -513,7 +462,6 @@ void MainWindow::handle_doctores()
     form.set_table("doctores");
 
     form.setWindowTitle(tr("Doctores"));
-
 
     QStringList headers;
     headers << tr("Nombre") << tr("Nº Colegiado") << tr("Teléfono") << tr("Especialidad 1");
@@ -535,7 +483,6 @@ void MainWindow::handle_bancos()
     form.set_table("bancos");
 
     form.setWindowTitle(tr("Bancos"));
-
 
     QStringList headers;
     headers << tr("Descripción") << tr("Entidad") << tr("Oficina") << tr("Dc");
@@ -684,12 +631,6 @@ void MainWindow::handle_motivoInterConsulta()
     form.exec();
 }
 
-void MainWindow::addbars()
-{
-    this->addToolBar(Qt::TopToolBarArea, m_MantenimientosBar);
-        this->addToolBar(Qt::TopToolBarArea, m_VentasBar);
-}
-
 void MainWindow::closeEvent(QCloseEvent * e)
 {
     if(on_edit)
@@ -710,9 +651,9 @@ void MainWindow::closeEvent(QCloseEvent * e)
 
 void MainWindow::blockMe(bool state)
 {
-    m_modulesBar->setEnabled(!state);
-    m_MantenimientosBar->setEnabled(!state);
-    m_VentasBar->setEnabled(!state);
+    ui->main_toolBar->setEnabled(!state);
+    ui->manten_ToolBar->setEnabled(!state);
+    ui->ventas_toolBar->setEnabled(!state);
     ui->menubar->setEnabled(!state);
     on_edit = state;
 }

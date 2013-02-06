@@ -2,7 +2,7 @@
 #include "ui_frmarticulos.h"
 //
 
-#include "Gestion_Almacen/gestion_seccionalmacen.h"
+#include "db_table_view.h"
 
 FrmArticulos::FrmArticulos(QWidget *parent) :
     QDialog(parent),
@@ -576,22 +576,23 @@ void FrmArticulos::on_TablaBuscarArt_doubleClicked(const QModelIndex &index)
 
 void FrmArticulos::on_botBuscarSeccion_clicked()
 {
-    gestion_SeccionAlmacen form(this,"secciones",editar);
+    Db_table_View form(this);
+    form.set_db("empresa");
+    form.set_table("secciones");
+
     form.setWindowTitle(tr("Secciones"));
+
+    QStringList headers;
+    headers << tr("Seccion");
+    form.set_table_headers(headers);
+
+    form.set_columnHide(0);
+    form.set_columnHide(2);
+
+    form.set_selection("cSeccion");
     if(form.exec() == QDialog::Accepted)
     {
-        ui->txtcSeccion->setText(form.value);
-        QSqlQuery qSeccion(QSqlDatabase::database("empresa"));
-        qSeccion.prepare("select id from secciones where cSeccion = :seccion");
-        qSeccion.bindValue(":seccion",form.value);
-        if(qSeccion.exec()) {
-            qSeccion.next();
-            oArticulo->setid_Seccion(qSeccion.value(0).toInt());
-        }else {
-            QMessageBox::warning(this,tr("Secciones"),tr("No se ha podido vincular la seccion: %1").arg(qSeccion.lastError().text()));
-        }
-
-
+        ui->txtcSeccion->setText(form.selected_value);
     }
 }
 
@@ -601,39 +602,62 @@ void FrmArticulos::AnadirSeccion()
 {
     QLineEdit *txtcSeccionNueva = new QLineEdit(ventana);
     layout->addWidget(txtcSeccionNueva,2,1,2,1);
-
 }
 
 void FrmArticulos::on_botBuscarFamilia_clicked()
 {
-    gestion_SeccionAlmacen form(this,"familias",editar);
+    Db_table_View form(this);
+    form.set_db("empresa");
+    form.set_table("familias");
+
     form.setWindowTitle(tr("Familias"));
+
+    QStringList headers;
+    headers << tr("Codigo") << tr("Familia") << tr("Pertenece a");
+    form.set_table_headers(headers);
+
+    form.set_relation(3,QSqlRelation("secciones","id","cSeccion"));
+
+    form.set_columnHide(0);
+
+    form.set_selection("cCodigo");//FIXME cCodigo o cFamilia???
     QSqlQuery query(QSqlDatabase::database("empresa"));
     query.prepare(QString("SELECT id FROM secciones WHERE cSeccion = '%1' ").arg(ui->txtcSeccion->text()));
     if (query.exec())
         if(query.next())
-            form.filter("Id_Seccion = "+query.record().value(0).toString());
+            form.set_filter("Id_Seccion = "+query.record().value(0).toString());
 
-    qDebug () << query.lastQuery();
-    qDebug () << query.lastError();
     if(form.exec() == QDialog::Accepted)
     {
-        ui->txtcFamilia->setText(form.value);
+        ui->txtcFamilia->setText(form.selected_value);
     }
 }
 
 void FrmArticulos::on_botBuscarSubfamilia_clicked()
 {
-    gestion_SeccionAlmacen form(this,"subfamilias",editar);
-    form.setWindowTitle(tr("SubFamilias"));
+    Db_table_View form(this);
+    form.set_db("empresa");
+    form.set_table("subfamilias");
+
+    form.setWindowTitle(tr("Subfamilias"));
+
+    QStringList headers;
+    headers << tr("SubFamilia") << tr("Pertenece a");
+    form.set_table_headers(headers);
+
+    form.set_relation(2,QSqlRelation("familias","id","cFamilia"));
+
+    form.set_columnHide(0);
+
+    form.set_selection("cSubfamilia");
     QSqlQuery query(QSqlDatabase::database("empresa"));
     query.prepare(QString("SELECT id FROM familias WHERE cFamilia = '%1'").arg(ui->txtcFamilia->text()));
     if (query.exec())
         if(query.next())
-            form.filter("Id_Seccion = "+query.record().value(0).toString());
+            form.set_filter("Id_Seccion = "+query.record().value(0).toString());
 
     if(form.exec() == QDialog::Accepted)
     {
-        ui->txtcSubFamilia->setText(form.value);
+        ui->txtcSubFamilia->setText(form.selected_value);
     }
-}
+ }

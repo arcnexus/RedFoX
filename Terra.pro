@@ -80,7 +80,6 @@ SOURCES += main.cpp\
     Zona_Administrador/arearestringida_form.cpp \
     block_terra_form.cpp \
     Zona_Administrador/copy_db_progressfrm.cpp \
-    Gestion_Almacen/gestion_seccionalmacen.cpp \
     db_table_view.cpp \
     Auxiliares/search_lineedit.cpp \
     Auxiliares/table_helper.cpp \
@@ -139,7 +138,6 @@ HEADERS  += mainwindow.h \
     Zona_Administrador/arearestringida_form.h \
     block_terra_form.h \
     Zona_Administrador/copy_db_progressfrm.h \
-    Gestion_Almacen/gestion_seccionalmacen.h \
     db_table_view.h \
     Auxiliares/search_lineedit.h \
     Auxiliares/table_helper.h \
@@ -183,7 +181,6 @@ FORMS    += mainwindow.ui \
     Zona_Administrador/arearestringida_form.ui \
     block_terra_form.ui \
     Zona_Administrador/copy_db_progressfrm.ui \
-    Gestion_Almacen/gestion_seccionalmacen.ui \
     db_table_view.ui \
     Auxiliares/search_lineedit.ui \
     TPV/frmcajaminuta.ui

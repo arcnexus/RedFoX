@@ -46,8 +46,6 @@ private slots:
 
     void on_btnImprimir_clicked();
 
-    void on_botBorrador_clicked();
-
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);

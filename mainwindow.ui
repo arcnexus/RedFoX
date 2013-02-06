@@ -29,8 +29,20 @@
    <iconset resource="terra.qrc">
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
+  <property name="iconSize">
+   <size>
+    <width>36</width>
+    <height>36</height>
+   </size>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonTextUnderIcon</enum>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>true</bool>
+  </property>
   <property name="dockOptions">
-   <set>QMainWindow::AnimatedDocks</set>
+   <set>QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::ForceTabbedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -747,7 +759,7 @@ background-color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>1034</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivos">
@@ -761,14 +773,9 @@ background-color: rgb(255, 255, 255);</string>
     <addaction name="btnAgenda"/>
     <addaction name="separator"/>
     <addaction name="btnSalir"/>
-    <addaction name="actionDoctores"/>
     <addaction name="actionBancos"/>
     <addaction name="actionPaises"/>
     <addaction name="actionAvisos"/>
-    <addaction name="actionTipos_de_imagen"/>
-    <addaction name="actionTipos_de_anal_tica"/>
-    <addaction name="actionCampos_de_analitica"/>
-    <addaction name="actionMotivos_de_interconsulta"/>
    </widget>
    <widget class="QMenu" name="menuVentas">
     <property name="title">
@@ -795,16 +802,120 @@ background-color: rgb(255, 255, 255);</string>
     <property name="title">
      <string>Almacen</string>
     </property>
+    <widget class="QMenu" name="menuDivisiones">
+     <property name="title">
+      <string>Divisiones</string>
+     </property>
+     <addaction name="actionGestion_de_Secciones"/>
+     <addaction name="actionGestion_de_Familias"/>
+     <addaction name="actionGestion_de_subfamilias"/>
+     <addaction name="actionSubSubFamilias"/>
+     <addaction name="actionGrupos"/>
+    </widget>
     <addaction name="btnArt_culos"/>
-    <addaction name="actionGestion_de_Secciones"/>
-    <addaction name="actionGestion_de_Familias"/>
-    <addaction name="actionGestion_de_subfamilias"/>
+    <addaction name="menuDivisiones"/>
+   </widget>
+   <widget class="QMenu" name="menuClinica">
+    <property name="title">
+     <string>Clinica</string>
+    </property>
+    <addaction name="actionDoctores"/>
+    <addaction name="actionTipos_de_anal_tica"/>
+    <addaction name="actionCampos_de_analitica"/>
+    <addaction name="actionMotivos_de_interconsulta"/>
+    <addaction name="actionTipos_de_imagen"/>
    </widget>
    <addaction name="menuArchivos"/>
    <addaction name="menuVentas"/>
    <addaction name="menuCompras"/>
    <addaction name="menuAlmacen"/>
    <addaction name="menuAdministrador"/>
+   <addaction name="menuClinica"/>
+  </widget>
+  <widget class="QToolBar" name="main_toolBar">
+   <property name="windowTitle">
+    <string>Modulos</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(219, 228, 255)</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftToolBarArea</set>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>60</width>
+     <height>60</height>
+    </size>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionManten"/>
+   <addaction name="action_ventas"/>
+   <addaction name="actionCompras_Gastos"/>
+   <addaction name="actionClinica"/>
+   <addaction name="btnSalir"/>
+  </widget>
+  <widget class="QToolBar" name="manten_ToolBar">
+   <property name="windowTitle">
+    <string>Mantenimiento</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(255, 235, 167)</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::TopToolBarArea</set>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="btnClientes"/>
+   <addaction name="btnProveedores"/>
+   <addaction name="btnArt_culos"/>
+   <addaction name="separator"/>
+   <addaction name="btnAgenda"/>
+  </widget>
+  <widget class="QToolBar" name="ventas_toolBar">
+   <property name="windowTitle">
+    <string>Ventas</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(255, 235, 167)</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::TopToolBarArea</set>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionPedidos"/>
+   <addaction name="actionPresupuestos"/>
+   <addaction name="actionAlbaranes"/>
+   <addaction name="actionFacturas"/>
+   <addaction name="separator"/>
+   <addaction name="actionVentas_Contado"/>
   </widget>
   <action name="btnClientes">
    <property name="icon">
@@ -920,17 +1031,17 @@ background-color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionGestion_de_Secciones">
    <property name="text">
-    <string>Gestion de Secciones</string>
+    <string>Secciones</string>
    </property>
   </action>
   <action name="actionGestion_de_Familias">
    <property name="text">
-    <string>Gestion de Familias</string>
+    <string>Familias</string>
    </property>
   </action>
   <action name="actionGestion_de_subfamilias">
    <property name="text">
-    <string>Gestion de SubFamilias</string>
+    <string>SubFamilias</string>
    </property>
   </action>
   <action name="actionDoctores">
@@ -941,11 +1052,6 @@ background-color: rgb(255, 255, 255);</string>
   <action name="actionBancos">
    <property name="text">
     <string>Bancos</string>
-   </property>
-  </action>
-  <action name="actionTipos_I_V_A">
-   <property name="text">
-    <string>Tipos I.V.A.</string>
    </property>
   </action>
   <action name="actionFormas_de_pago">
@@ -996,6 +1102,52 @@ background-color: rgb(255, 255, 255);</string>
   <action name="actionTipos_de_IVA">
    <property name="text">
     <string>Tipos de I.V.A</string>
+   </property>
+  </action>
+  <action name="actionManten">
+   <property name="icon">
+    <iconset resource="terra.qrc">
+     <normaloff>:/Icons/PNG/Maintenance.png</normaloff>:/Icons/PNG/Maintenance.png</iconset>
+   </property>
+   <property name="text">
+    <string>Manten.</string>
+   </property>
+  </action>
+  <action name="action_ventas">
+   <property name="icon">
+    <iconset resource="terra.qrc">
+     <normaloff>:/Icons/PNG/ventas2.png</normaloff>:/Icons/PNG/ventas2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Ventas - Ingresos</string>
+   </property>
+  </action>
+  <action name="actionCompras_Gastos">
+   <property name="icon">
+    <iconset resource="terra.qrc">
+     <normaloff>:/Icons/PNG/Gastos.png</normaloff>:/Icons/PNG/Gastos.png</iconset>
+   </property>
+   <property name="text">
+    <string>Compras - Gastos</string>
+   </property>
+  </action>
+  <action name="actionClinica">
+   <property name="icon">
+    <iconset resource="terra.qrc">
+     <normaloff>:/Icons/PNG/PatientFile2.png</normaloff>:/Icons/PNG/PatientFile2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clinica</string>
+   </property>
+  </action>
+  <action name="actionSubSubFamilias">
+   <property name="text">
+    <string>SubSubFamilias</string>
+   </property>
+  </action>
+  <action name="actionGrupos">
+   <property name="text">
+    <string>Grupos</string>
    </property>
   </action>
  </widget>

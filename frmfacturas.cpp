@@ -563,17 +563,6 @@ void frmFacturas::on_btnImprimir_clicked()
     //TODO Reports
 }
 
-void frmFacturas::on_botBorrador_clicked()
-{
-    int nId = oFactura->Id;
-    LLenarFactura();
-    BloquearCampos(true);
-    oFactura->cFactura=("BORRADOR");
-    oFactura->GuardarFactura(nId,false);
-    oFactura->RecuperarFactura("Select * from cab_fac where Id="+QString::number(nId)+"  limit 1 ");
-    LLenarCampos();
-}
-
 void frmFacturas::totalChanged(double base, double dto, double subTotal, double iva, double re, double total, QString moneda)
 {
     ui->txtrBase->setText(QString::number(base)+moneda);

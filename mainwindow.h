@@ -77,20 +77,11 @@ private slots:
     void handle_tipoAnalitica();
     void handle_campoAnalitica();
     void handle_motivoInterConsulta();
-    void addbars();
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);
     void blockMe(bool state);
-    void Mantenimientos();
-    void Ventas();
 
-    //TOOLBARS
-    QToolBar *m_modulesBar;
-    QToolBar *m_MantenimientosBar;
-    QToolBar *m_VentasBar;
-    QToolBar *m_ComprasBar;
-    QToolBar *m_AdminBar;
     //WIDGETS
     frmClientes *frmClientes1;
     frmFacturas *frmFacturas1;
