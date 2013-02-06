@@ -67,7 +67,7 @@ void Ticket::set_table(QTableWidget *table)
     this->table = table;
 }
 
-void Ticket::add_linea(QString cCodigo, QString cDescripcion,  double rPvp, double nCantidad, double  rImporte, double  nPorcentajeIva, double  nPorcDto, double  nTotal, QString cTipo, double  rSubTotal, QDate dFechaLinea)
+void Ticket::add_linea(QString cCodigo, QString cDescripcion,  double rPvp, double nCantidad, double  rImporte, double  nPorcentajeIva, double  nPorcDto, double  nTotal, double  rSubTotal, QDate dFechaLinea)
 {
     LineaTicket * newLinea = new LineaTicket(this);
 
@@ -86,7 +86,6 @@ void Ticket::add_linea(QString cCodigo, QString cDescripcion,  double rPvp, doub
     newLinea->nPorcentajeIva = nPorcentajeIva;
     newLinea->nPorcDto = nPorcDto;
     newLinea->nTotal = nTotal;
-    newLinea->cTipo = cTipo;
     newLinea->rSubTotal = rSubTotal;
     newLinea->dFechaLinea =  dFechaLinea;
 

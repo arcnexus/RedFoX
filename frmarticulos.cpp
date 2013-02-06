@@ -593,6 +593,18 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
     if(form.exec() == QDialog::Accepted)
     {
         ui->txtcSeccion->setText(form.selected_value);
+        QSqlQuery qSeccion(QSqlDatabase::database("empresa"));
+        qSeccion.prepare("select id from secciones where cSeccion = :seccion");
+        qSeccion.bindValue(":seccion",form.selected_value);
+        if(qSeccion.exec())
+        {
+            qSeccion.next();
+            oArticulo->setid_Seccion(qSeccion.value(0).toInt());
+        }
+        else
+        {
+            QMessageBox::warning(this,tr("Secciones"),tr("No se ha podido vincular la seccion: %1").arg(qSeccion.lastError().text()));
+        }
     }
 }
 
@@ -629,7 +641,7 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
 
     if(form.exec() == QDialog::Accepted)
     {
-        ui->txtcFamilia->setText(form.selected_value);
+        ui->txtcFamilia->setText(form.selected_value);        
     }
 }
 

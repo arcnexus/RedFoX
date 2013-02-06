@@ -35,7 +35,6 @@ public slots:
     void handle_cellChanged(int row, int column);
 private:
     QTableWidget* helped_table;
-    Db_table_View* searcher;
     QString moneda;
 
     void calcularTotal();

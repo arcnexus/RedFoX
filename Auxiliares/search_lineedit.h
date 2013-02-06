@@ -12,9 +12,8 @@ class Search_LineEdit : public QWidget
     Q_OBJECT
     Q_PROPERTY(QString m_text READ Text WRITE setText USER true)
 public:
-    explicit Search_LineEdit(QWidget *parent = 0,Db_table_View* table_view=0);
+    explicit Search_LineEdit(QWidget *parent = 0);
     ~Search_LineEdit();
-    void setDb_table_View(Db_table_View* table_view);
 
 public slots:
     QString Text();
@@ -29,7 +28,6 @@ private:
     Ui::Search_LineEdit *ui;
     QString db;
     QString tabla;
-    Db_table_View* table_view;
     QString m_text;
 };
 

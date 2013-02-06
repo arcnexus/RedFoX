@@ -47,24 +47,6 @@ frmFacturas::frmFacturas( QWidget *parent) :
      *----------------------------------------*/
     //connect(ui->txtcCodigoArticulo,SIGNAL(editingFinished()),this,SLOT(on_txtcCodigoArticulo_lostFocus()));
 
-    Db_table_View* searcher = new Db_table_View(this);
-    searcher->set_db("empresa");
-    searcher->set_table("articulos");
-    searcher->set_selection("cCodigo");
-    searcher->setWindowTitle(tr("Articulos"));
-
-    QStringList headers;
-    headers << tr("Codigo")<< "1" << "2" << tr("Descripción");
-    searcher->set_table_headers(headers);
-
-    searcher->set_columnHide(0);
-    searcher->set_columnHide(2);
-    searcher->set_columnHide(3);
-
-    for(int i = 5; i<50;i++)
-        searcher->set_columnHide(i);
-
-    helper.set_Searcher(searcher);
     helper.set_Tipo(false);
     helper.help_table(ui->Lineas);
 
@@ -378,6 +360,8 @@ void frmFacturas::BloquearCampos(bool state)
     ui->btnSiguiente->setEnabled(state);
     ui->botBuscarCliente->setEnabled(!state);
 
+    ui->btnAnadirLinea->setEnabled(!state);
+    ui->btn_borrarLinea->setEnabled(!state);
     helper.blockTable(state);
     ui->txtcFactura->setReadOnly(true);
 }

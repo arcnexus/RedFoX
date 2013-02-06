@@ -4,7 +4,6 @@ Table_Helper::Table_Helper(QObject *parent) :
     QObject(parent)
 {
     helped_table = 0;
-    searcher = 0;
     moneda = "€";
     comprando = true;
     use_re = false;
@@ -12,14 +11,13 @@ Table_Helper::Table_Helper(QObject *parent) :
 
 Table_Helper::~Table_Helper()
 {
-    if(searcher)
-        searcher->deleteLater();
+
 }
 
 void Table_Helper::help_table(QTableWidget *table)
 {
     this->helped_table = table;    
-    helped_table->setItemDelegateForColumn(0,new SearchDelegate(helped_table,searcher));
+    helped_table->setItemDelegateForColumn(0,new SearchDelegate(helped_table));
     helped_table->setItemDelegateForColumn(1,new SpinBoxDelegate(helped_table));
     helped_table->setItemDelegateForColumn(3,new SpinBoxDelegate(helped_table,true,0));
     helped_table->setItemDelegateForColumn(4,new ReadOnlyDelegate(helped_table));
@@ -49,11 +47,6 @@ void Table_Helper::help_table(QTableWidget *table)
     helped_table->installEventFilter(this);
 }
 
-void Table_Helper::set_Searcher(Db_table_View *table_view)
-{
-    searcher = table_view;
-}
-
 void Table_Helper::set_moneda(QString moneda)
 {
     this->moneda = moneda;
@@ -72,7 +65,7 @@ void Table_Helper::blockTable(bool state)
             helped_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
         else
         {
-            helped_table->setEditTriggers(QAbstractItemView::DoubleClicked);
+            helped_table->setEditTriggers(QAbstractItemView::CurrentChanged|QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked);
         }
     }
 }
@@ -172,18 +165,29 @@ void Table_Helper::addRow()
 
         QTableWidgetItem * item = new QTableWidgetItem;
         helped_table->setItem(row,1,item);
+        item->setText("1");
+
         for(int i = 2;i < helped_table->columnCount();i++)
         {
             QTableWidgetItem * itemX = new QTableWidgetItem;
             helped_table->setItem(row,i,itemX);
         }
+
         QTableWidgetItem * subtotal = helped_table->item(row,4);
         subtotal->setFlags(subtotal->flags()^Qt::ItemIsEnabled);
+        subtotal->setText("0");
 
         QTableWidgetItem * total = helped_table->item(row,8);
         total->setFlags(total->flags()^Qt::ItemIsEnabled);
-        helped_table->blockSignals(false);
-        item->setText("1");
+        total->setText("0");
+        helped_table->item(row,3)->setText("0");
+        helped_table->item(row,5)->setText("0");
+        helped_table->item(row,6)->setText("0");
+        QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+        for (int i=0;i<keys.size();i++)
+            if(Configuracion_global->ivas[keys.at(i)].value("nombre_interno") == "base1")
+                helped_table->item(row,7)->setText(keys.at(i));
+        helped_table->blockSignals(false);              
     }
 }
 

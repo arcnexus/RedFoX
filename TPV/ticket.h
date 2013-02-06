@@ -20,7 +20,6 @@ public:
             double 	nPorcentajeIva,
             double 	nPorcDto,
             double 	nTotal,
-            QString cTipo,
             double 	rSubTotal,
             QDate 	dFechaLinea);
 

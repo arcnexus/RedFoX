@@ -17,15 +17,14 @@ public:
     int 	Id;
     int 	id_Cab;
     int 	id_Articulo;
-    QString 	cCodigo;
-    QString 	cDescripcion;
+    QString cCodigo;
+    QString cDescripcion;
     double 	rPvp;
     double 	nCantidad;
     double 	rImporte;//< esto que es en la bd
     double 	nPorcentajeIva;
     double 	nPorcDto;
     double 	nTotal;
-    QString 	cTipo;
     double 	rSubTotal;
     QDate 	dFechaLinea;
 signals:

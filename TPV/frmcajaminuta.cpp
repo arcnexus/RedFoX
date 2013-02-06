@@ -70,7 +70,6 @@ void FrmCajaMinuta::keys_onCodigo(int key)
                          21,//FIXME iva en linea tpv
                          ui->txtPorcDtoArticulo->text().toDouble(),
                          ui->txtSubtotalArticulo->text().toDouble(),
-                         "",//FIXME cTipo en linea tpv
                          ui->txtSubtotalArticulo->text().toDouble(),
                          QDate::currentDate());
     }
