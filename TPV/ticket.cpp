@@ -90,6 +90,19 @@ void Ticket::add_linea(QString cCodigo, QString cDescripcion,  double rPvp, doub
     newLinea->dFechaLinea =  dFechaLinea;
 
     lineas.append(newLinea);
+    table->setRowCount(table->rowCount()+1);
+    int row = table->rowCount()-1;
+    QTableWidgetItem * cod = new QTableWidgetItem(cCodigo);
+    QTableWidgetItem * cant = new QTableWidgetItem(QString::number(nCantidad));
+    QTableWidgetItem * pvp = new QTableWidgetItem(QString::number(rPvp));
+    QTableWidgetItem * tot = new QTableWidgetItem(QString::number(nTotal));
+    QTableWidgetItem * desc = new QTableWidgetItem(cDescripcion);
+
+    table->setItem(row,0,cod);
+    table->setItem(row,1,desc);
+    table->setItem(row,2,cant);
+    table->setItem(row,3,pvp);
+    table->setItem(row,4,tot);
 }
 
 void Ticket::remove_linea(int row)

@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     on_edit = false;
-    ui->ventas_toolBar->hide();
+    //ui->ventas_toolBar->hide();
 
     if (medic)
         ui->btnClientes->setText(tr("Pacientes"));
@@ -32,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // Conexiones
     // ----------------------------------------------------------------------------
     connect(ui->btnSalir,SIGNAL(triggered()),this,SLOT(close()));
+    connect(ui->btn_salir,SIGNAL(clicked()),this,SLOT(close()));
+    connect(ui->btn_salir_2,SIGNAL(clicked()),this,SLOT(close()));
+
     connect(ui->actionManten,SIGNAL(triggered()),this,SLOT(btnMantenimientos_clicked()));
     connect(ui->action_ventas,SIGNAL(triggered()),this,SLOT(btnVentas_clicked()));
 
@@ -56,12 +59,20 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
     connect(ui->btnArt_culos,SIGNAL(triggered()),this,SLOT(btnArticulos_clicked()));
     connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
+    connect(ui->btn_clientes,SIGNAL(clicked()),this,SLOT(btnClientes_clicked()));
+    connect(ui->btn_almacen,SIGNAL(clicked()),this,SLOT(btnArticulos_clicked()));
+    connect(ui->btn_proovedores,SIGNAL(clicked()),this,SLOT(btnProveedores_clicked()));
 
     connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
     connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
     connect(ui->actionAlbaranes,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
     connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
     connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+    connect(ui->btn_presupuesto,SIGNAL(clicked()),this,SLOT(btnPresup_clientes_clicked()));
+    connect(ui->btn_pedido,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
+    connect(ui->btn_albaran,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
+    connect(ui->btn_factura,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
+    connect(ui->btn_tpv,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
 
     Configuracion_global = new Configuracion(this);
     Configuracion_global->CargarDatos();
@@ -287,14 +298,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::btnMantenimientos_clicked()
 {
-    ui->manten_ToolBar->show();
-    ui->ventas_toolBar->hide();
+    //ui->manten_ToolBar->show();
+    //ui->ventas_toolBar->hide();
 }
 
 void MainWindow::btnVentas_clicked()
 {
-    ui->manten_ToolBar->hide();
-    ui->ventas_toolBar->show();
+   // ui->manten_ToolBar->hide();
+   // ui->ventas_toolBar->show();
 }
 
 void MainWindow::btnClientes_clicked()
@@ -651,9 +662,7 @@ void MainWindow::closeEvent(QCloseEvent * e)
 
 void MainWindow::blockMe(bool state)
 {
-    ui->main_toolBar->setEnabled(!state);
-    ui->manten_ToolBar->setEnabled(!state);
-    ui->ventas_toolBar->setEnabled(!state);
+    ui->tabWidget->setEnabled(!state);
     ui->menubar->setEnabled(!state);
     on_edit = state;
 }

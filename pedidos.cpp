@@ -172,9 +172,7 @@ bool Pedidos::GuardarPedido(int nId_Pedido)
         return false;
     }
     else
-    {
-        QMessageBox::information(qApp->activeWindow(),QObject::tr("Guardar datos"),QObject::tr("El Pedido se ha guardado correctamente:"),
-                                 QObject::tr("Ok"));
+    {      
         return true;
     }
 }

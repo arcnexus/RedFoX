@@ -1,6 +1,6 @@
 #include "frmcajaminuta.h"
 #include "ui_frmcajaminuta.h"
-
+#include "../articulo.h"
 
 /*Pendiente de cobro:
 background-color: rgb(192, 0, 0);
@@ -25,6 +25,7 @@ FrmCajaMinuta::FrmCajaMinuta(QWidget *parent) :
     ui->txtPorcIVAArticulo->setModel(Configuracion_global->iva_model);
     ui->txtPorcIVAArticulo->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
     ticket.set_table(ui->lineas);
+    ui->txtcCodigoArticulo->setFocus();
 }
 
 FrmCajaMinuta::~FrmCajaMinuta()
@@ -62,16 +63,19 @@ void FrmCajaMinuta::keys_onCodigo(int key)
     if(key == Qt::Key_Return)
     {
         rellenarArticulo(ui->txtcCodigoArticulo->text());
+
         ticket.add_linea(ui->txtcCodigoArticulo->text(),
                          ui->txtDescripcionArticulo->text(),
                          ui->txtPVPArticulo->text().toDouble(),
                          ui->txtcCantidadArticulo->text().toInt(),
-                         0,//FIXME rImporte en linea tpv?
-                         21,//FIXME iva en linea tpv
+                         ui->txtPVPArticulo->text().toDouble() * ui->txtcCantidadArticulo->text().toInt(),
+                         Configuracion_global->ivas[ui->txtPorcIVAArticulo->currentText()].value("nIVA").toDouble(),
                          ui->txtPorcDtoArticulo->text().toDouble(),
-                         ui->txtSubtotalArticulo->text().toDouble(),
+                         ui->txttotalArticulo->text().toDouble(),
                          ui->txtSubtotalArticulo->text().toDouble(),
                          QDate::currentDate());
+
+        ui->txtcCantidadArticulo->setValue(0);
     }
 }
 
@@ -85,6 +89,44 @@ void FrmCajaMinuta::keys_onPvp(int key)
 
 void FrmCajaMinuta::rellenarArticulo(QString cCodigo)
 {
+    Articulo art(this);
+    art.Recuperar(QString("SELECT * FROM articulos WHERE cCodigo = '%1'").arg(cCodigo));
+    ui->txtDescripcionArticulo->setText(art.getcDescripcion());
+    ui->txtPVPArticulo->setValue(art.getrPrecioMedio());//FIXME que precio uso??
+    if(ui->txtcCantidadArticulo->value()==0)
+        ui->txtcCantidadArticulo->setValue(1);
+
+    double iva = 0;
+    double re = 0;
+    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+    for (int i=0;i<keys.size();i++)
+    {
+        if(Configuracion_global->ivas[keys.at(i)].value("id").toInt() == art.getnTipoIva())
+        {
+            iva = Configuracion_global->ivas[keys.at(i)].value("nIVA").toDouble();
+            re = Configuracion_global->ivas[keys.at(i)].value("nRegargoEquivalencia").toDouble();
+            int index = ui->txtPorcIVAArticulo->findText(keys.at(i));
+            ui->txtPorcIVAArticulo->setCurrentIndex(index);
+            break;
+        }
+    }
+    ui->txtPorcDtoArticulo->setValue(art.getrDto());//FIXME dto ??
+    double subtotal = ui->txtPVPArticulo->value() *  ui->txtcCantidadArticulo->value();
+
+    subtotal -= ui->txtDtoArticulo->value();
+    double dtoperc = ui->txtPorcDtoArticulo->value();
+    dtoperc =  1 - (dtoperc / 100);
+    iva = 1 + (iva /100);
+    double total = subtotal * dtoperc * iva;
+
+    if(ui->chklRecargoEq->isChecked())
+    {
+        re = 1 + (re/100);
+        total = total * re;
+    }
+
+    ui->txttotalArticulo->setText(QString::number(total));
+    ui->txtSubtotalArticulo->setText(QString::number(subtotal));
 }
 
 void FrmCajaMinuta::on_btnBuscarArt_clicked()
