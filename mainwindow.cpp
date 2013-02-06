@@ -53,14 +53,14 @@ MainWindow::MainWindow(QWidget *parent) :
     BtnSalidas->setToolTip(tr("Módulo de Gastos/Salidas clinica"));
     BtnSalidas->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     QToolButton *BtnMedica = new QToolButton(m_modulesBar);
-    if (medic == true) {
+    //if (medic == true) {
         // INF. MEDICA.
 
         BtnMedica->setText(tr("Clínica"));
         BtnMedica->setIcon(QIcon(":Icons/PNG/PatientFile2.png"));
         BtnMedica->setToolTip(tr("Módulo de Gestión especificamente clínica"));
         BtnMedica->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    }
+   // }
     // Salir
     QToolButton *BtnCerrar = new QToolButton(m_modulesBar);
     BtnCerrar->setText(tr("Salir"));
@@ -70,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_modulesBar->addWidget(BtnMantenimiento);
     m_modulesBar->addWidget(BtnEntradas);
     m_modulesBar->addWidget(BtnSalidas);
-    if (medic ==true)
+   // if (medic ==true)
         m_modulesBar->addWidget(BtnMedica);
     m_modulesBar->addWidget(BtnCerrar);
     //-------------------------------
@@ -130,6 +130,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	// Identificación de usuario
     //intit
+    //this->setWindowState(Qt::WindowMaximized);
     QTimer::singleShot(0,this,SLOT(init()));
 }
 void MainWindow::init()
@@ -292,9 +293,9 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmCajaMinuta);
             progress.setValue(15);
 
-			this->show();
-           // this->resize(desktop->width(),desktop->height());
+            this->show();
             QApplication::processEvents();
+            QTimer::singleShot(500,this,SLOT(addbars()));
 		} 
 		else
 			qDebug() <<"Fallo la conexión al fichero Medico";
@@ -343,7 +344,6 @@ void MainWindow::Mantenimientos()
     m_MantenimientosBar->setMovable(false);
     m_MantenimientosBar->setFloatable(false);
 
-    this->addToolBar(Qt::TopToolBarArea, m_MantenimientosBar);
 
     // PACIENTES
     m_MantenimientosBar->addAction(ui->btnClientes);
@@ -387,7 +387,6 @@ void MainWindow::Ventas()
     m_VentasBar->setMovable(false);
     m_VentasBar->setFloatable(false);
 
-    this->addToolBar(Qt::TopToolBarArea, m_VentasBar);
 
     // PRESUPUESTOS
     m_VentasBar->addAction(ui->actionPresupuestos);
@@ -683,6 +682,12 @@ void MainWindow::handle_motivoInterConsulta()
 
     form.set_columnHide(0);
     form.exec();
+}
+
+void MainWindow::addbars()
+{
+    this->addToolBar(Qt::TopToolBarArea, m_MantenimientosBar);
+        this->addToolBar(Qt::TopToolBarArea, m_VentasBar);
 }
 
 void MainWindow::closeEvent(QCloseEvent * e)

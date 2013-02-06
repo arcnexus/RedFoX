@@ -77,6 +77,7 @@ private slots:
     void handle_tipoAnalitica();
     void handle_campoAnalitica();
     void handle_motivoInterConsulta();
+    void addbars();
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);

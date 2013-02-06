@@ -21,7 +21,7 @@ public:
     QString 	cDescripcion;
     double 	rPvp;
     double 	nCantidad;
-    double 	rImporte;
+    double 	rImporte;//< esto que es en la bd
     double 	nPorcentajeIva;
     double 	nPorcDto;
     double 	nTotal;

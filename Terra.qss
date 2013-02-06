@@ -208,6 +208,34 @@ QSpinBox::down-button {
 }
 
 
+QDoubleSpinBox::up-button {
+    subcontrol-origin: border;
+    subcontrol-position: top right;
+
+    width: 16px; /* 16 + 2*1px border-width = 15px padding + 3px parent border */
+    border-image: url(:Icons/images/spinup.png) 1;
+    border-width: 1px;
+}
+
+QDoubleSpinBox::up-button:hover {
+    border-image: url(:Icons/images/spinup_hover.png) 1;
+}
+
+QDoubleSpinBox::up-button:pressed {
+    border-image: url(:Icons/images/spinup_pressed.png) 1;
+}
+
+QDoubleSpinBox::down-button {
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+
+    width: 16px;
+    border-image: url(:Icons/images/spindown.png) 1;
+    border-width: 1px;
+    border-top-width: 0;
+}
+
+
 QDateEdit::up-button {
     subcontrol-origin: border;
     subcontrol-position: top right;
@@ -447,7 +475,7 @@ QTableView, QTableWidet {
      alternate-background-color: rgb(255, 255, 127);
  }
 
-QLineEdit,QComboBox,QSpinBox,QDateEdit,QTextEdit,QPlainTextEdit,QDateTimeEdit, QListView,QTreeWidget{
+QLineEdit,QComboBox,QSpinBox,QDoubleSpinBox,QDateEdit,QTextEdit,QPlainTextEdit,QDateTimeEdit, QListView,QTreeWidget{
       /*background: rgb(255, 255, 255); */
       background-color: rgb(255, 255, 255);
       border-width: 1px;
