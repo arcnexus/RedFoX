@@ -61,7 +61,6 @@ private slots:
 
  //4   void on_btnAgenda_clicked();
 
-    void cambiarEstilo(int);
 
     void on_btn_bloquear_clicked();
 

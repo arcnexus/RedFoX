@@ -91,8 +91,8 @@ void FrmCajaMinuta::rellenarArticulo(QString cCodigo)
 {
     Articulo art(this);
     art.Recuperar(QString("SELECT * FROM articulos WHERE cCodigo = '%1'").arg(cCodigo));
-    ui->txtDescripcionArticulo->setText(art.getcDescripcion());
-    ui->txtPVPArticulo->setValue(art.getrPrecioMedio());//FIXME que precio uso??
+    ui->txtDescripcionArticulo->setText(art.cDescripcion);
+    ui->txtPVPArticulo->setValue(art.rTarifa1);//FIXME que precio uso??
     if(ui->txtcCantidadArticulo->value()==0)
         ui->txtcCantidadArticulo->setValue(1);
 
@@ -101,7 +101,7 @@ void FrmCajaMinuta::rellenarArticulo(QString cCodigo)
     QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
     for (int i=0;i<keys.size();i++)
     {
-        if(Configuracion_global->ivas[keys.at(i)].value("id").toInt() == art.getnTipoIva())
+        if(Configuracion_global->ivas[keys.at(i)].value("id").toInt() == art.nTipoIva)
         {
             iva = Configuracion_global->ivas[keys.at(i)].value("nIVA").toDouble();
             re = Configuracion_global->ivas[keys.at(i)].value("nRegargoEquivalencia").toDouble();
@@ -110,7 +110,7 @@ void FrmCajaMinuta::rellenarArticulo(QString cCodigo)
             break;
         }
     }
-    ui->txtPorcDtoArticulo->setValue(art.getrDto());//FIXME dto ??
+    ui->txtPorcDtoArticulo->setValue(art.rDto);//FIXME dto ??
     double subtotal = ui->txtPVPArticulo->value() *  ui->txtcCantidadArticulo->value();
 
     subtotal -= ui->txtDtoArticulo->value();

@@ -43,13 +43,13 @@ void FrmBuscarPoblacion::setcPoblacion(QString cPoblacion, int nPoblacion)
     this->cPoblacion = cPoblacion;
     if (nPoblacion ==1)
     {
-       cSQL = "Select  col_1 as id,col_3 as Poblacion,col_4 as CP from poblaciones where col_3 like '"+cPoblacion.trimmed()+
+       cSQL = "Select  id,poblacion,cp from poblaciones where poblacion like '"+cPoblacion.trimmed()+
                     "%'";
     }
     else
     {
        //NOTE - Busqueda mas amplia
-       cSQL = "Select  col_1 as id,col_3 as Poblacion,col_4 as CP from poblaciones where col_4 like '"+cPoblacion.trimmed()+
+       cSQL = "Select  id,poblacion,cp from poblaciones where poblacion like '"+cPoblacion.trimmed()+
                  "%'";
     }
     ui->ListaPoblaciones->setSelectionBehavior(QAbstractItemView::SelectRows);

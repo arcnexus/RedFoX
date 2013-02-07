@@ -34,7 +34,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     }
     // Cargar paises
     QSqlQueryModel *qpaises = new QSqlQueryModel(this);
-    qpaises->setQuery("Select pais from paises",QSqlDatabase::database("empresa"));
+    qpaises->setQuery("Select pais from paises",QSqlDatabase::database("terra"));
     ui->cboPais1->setModel(qpaises);
     ui->cboPais2->setModel(qpaises);
 
@@ -84,13 +84,13 @@ void FrmArticulos::on_botGuardar_clicked()
 
 void FrmArticulos::on_botSiguiente_clicked()
 {
-    QString cId = QString::number(oArticulo->getId());
+    QString cId = QString::number(oArticulo->id);
     oArticulo->Recuperar("Select * from articulos where id >"+cId+" order by id limit 1 ",1);
     LLenarCampos();
 }
 void FrmArticulos::on_botAnterior_clicked()
 {
-    QString cId = QString::number(oArticulo->getId());
+    QString cId = QString::number(oArticulo->id);
     oArticulo->Recuperar("Select * from articulos where id <"+cId+" order by id desc limit 1 ",2);
     LLenarCampos();
 }
@@ -116,13 +116,13 @@ void FrmArticulos::bloquearCampos() {
 //        SpinBox->setReadOnly(true);
 //        //qDebug() << lineEdit->objectName();
 //   }
-    // DoubleSpinBox
-//    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-//    QDoubleSpinBox *DSpinBox;
-//    foreach (DSpinBox, DSpinBoxList) {
-//        DSpinBox->setReadOnly(true);
-//        //qDebug() << lineEdit->objectName();
-//    }
+//DoubleSpinBox
+    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
+    QDoubleSpinBox *DSpinBox;
+    foreach (DSpinBox, DSpinBoxList) {
+        DSpinBox->setReadOnly(true);
+        //qDebug() << lineEdit->objectName();
+    }
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
@@ -189,12 +189,12 @@ void FrmArticulos::desbloquearCampos() {
 //        //qDebug() << lineEdit->objectName();
 //    }
     // DoubleSpinBox
-//    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-//    QDoubleSpinBox *DSpinBox;
-//    foreach (DSpinBox, DSpinBoxList) {
-//        DSpinBox->setReadOnly(false);
-//        //qDebug() << lineEdit->objectName();
-//    }
+    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
+    QDoubleSpinBox *DSpinBox;
+    foreach (DSpinBox, DSpinBoxList) {
+        DSpinBox->setReadOnly(false);
+        //qDebug() << lineEdit->objectName();
+    }
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
@@ -233,15 +233,15 @@ void FrmArticulos::desbloquearCampos() {
 
 void FrmArticulos::LLenarCampos()
 {
-   ui->txtcCodigo->setText(oArticulo->getcCodigo());
-   ui->txtcCodigoBarras->setText(oArticulo->getcCodigoBarras());
-   ui->txtcCodigoFabricante->setText(oArticulo->getcCodigoFabricante());
-   ui->txtcDescripcion->setText(oArticulo->getcDescripcion());
-   ui->txtcDescripcionResumida->setText(oArticulo->getcDescripcionReducida());
+   ui->txtcCodigo->setText(oArticulo->cCodigo);
+   ui->txtcCodigoBarras->setText(oArticulo->cCodigoBarras);
+   ui->txtcCodigoFabricante->setText(oArticulo->cCodigoFabricante);
+   ui->txtcDescripcion->setText(oArticulo->cDescripcion);
+   ui->txtcDescripcionResumida->setText(oArticulo->cDescripcionReducida);
    // Recupero proveedor
-   QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("empresa"));
+   QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
    qryProveedor->prepare("select id,cProveedor from Proveedores where id = :id");
-   qryProveedor->bindValue(":id",oArticulo->getid_Proveedor());
+   qryProveedor->bindValue(":id",oArticulo->id_Proveedor);
    if (!qryProveedor->exec()) {
        QMessageBox::warning(qApp->activeWindow(),tr("Error Datos"),tr("No se encuentra el proveedor asociado \n Deberá comprovar ficha producto"),tr("OK"));
 
@@ -253,49 +253,49 @@ void FrmArticulos::LLenarCampos()
    delete qryProveedor;
    //Busco index
 
-   ui->txtcFamilia->setText(oArticulo->getcFamilia());
-   ui->txtcSeccion->setText(oArticulo->getcSeccion());
-   ui->txtcSubFamilia->setText(oArticulo->getcSubfamilia());
-   int nIndex = ui->cboTipoIVA->findText(QString::number(oArticulo->getnTipoIva()));
+   ui->txtcFamilia->setText(oArticulo->cFamilia);
+   ui->txtcSeccion->setText(oArticulo->cSeccion);
+   ui->txtcSubFamilia->setText(oArticulo->cSubfamilia);
+   int nIndex = ui->cboTipoIVA->findText(QString::number(oArticulo->nTipoIva));
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
-   ui->txtrCoste->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrCoste(),'f',2)));
-   ui->txtrTarifa1->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrTarifa1(),'f',2)));
-   ui->txtrTarifa1_2->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrTarifa1(),'f',2)));
-   ui->txtrDto->setText(QString::number(oArticulo->getrDto(),'f',2));
-   ui->txtnDtoProveedor->setText(QString::number(oArticulo->getnDtoProveedor(),'f',2));
-   ui->txtnDtoProveedor2->setText(QString::number(oArticulo->getnDtoProveedor2(),'f',2));
-   ui->txtnDtoProveedor3->setText(QString::number(oArticulo->getnDtoProveedor3(),'f',2));
-   ui->txtdFechaUltimaCompra->setDate(oArticulo->getdUltimaCompra());
-   ui->txtdFechaUltimaVenta->setDate(oArticulo->getdUltimaVenta());
-   ui->txtnMargen1->setText(QString::number(oArticulo->getnMargen1(),'f',2));
-   ui->txtnMargen2->setText(QString::number(oArticulo->getnMargen2(),'f',2));
-   ui->txtnMargen3->setText(QString::number(oArticulo->getnMargen3(),'f',2));
-   ui->txtrPrecioMedio1->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrPrecioMedio(),'f',2)));
-   ui->txtrPrecioMedio2->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrPrecioMedio2(),'f',2)));
-   ui->txtrPrecioMedio3->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrPrecioMedio3(),'f',2)));
-   ui->txtnUnidadesCompradas->setText(QString::number(oArticulo->getnUnidadesCompradas()));
-   ui->txtnUnidadesVendidas->setText(QString::number(oArticulo->getnUnidadesVendidas()));
-   ui->txtrAcumuladoCompras->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrAcumuladoCompras(),'f',2)));
-   ui->txtrAcumuladoVentas->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->getrAcumuladoVentas(),'f',2)));
-   ui->txttComentario->setText(oArticulo->gettComentario());
-   ui->txtnStockMaximo->setText(QString::number(oArticulo->getnStockMaximo()));
-   ui->txtnStockMinimo->setText(QString::number(oArticulo->getnStockMinimo()));
-   ui->txtnStockReal->setText(QString::number(oArticulo->getnStockReal()));
-   ui->txtnStockReal_2->setText(QString::number(oArticulo->getnStockReal()));
-   if (oArticulo->getlControlarStock()==1)
+   ui->txtrCoste->setValue(oArticulo->rCoste);
+   ui->txtrTarifa1->setValue(oArticulo->rTarifa1);
+   ui->txtrTarifa1_2->setText(QString::number(oArticulo->rTarifa1,'f',2));
+   ui->txtrDto->setText(QString::number(oArticulo->rDto,'f',2));
+   ui->txtnDtoProveedor->setText(QString::number(oArticulo->nDtoProveedor,'f',2));
+   ui->txtnDtoProveedor2->setText(QString::number(oArticulo->nDtoProveedor2,'f',2));
+   ui->txtnDtoProveedor3->setText(QString::number(oArticulo->nDtoProveedor3,'f',2));
+   ui->txtdFechaUltimaCompra->setDate(oArticulo->dUltimaCompra);
+   ui->txtdFechaUltimaVenta->setDate(oArticulo->dUltimaVenta);
+   ui->txtnMargen1->setText(QString::number(oArticulo->nMargen1,'f',2));
+   ui->txtnMargen2->setText(QString::number(oArticulo->nMargen2,'f',2));
+   ui->txtnMargen3->setText(QString::number(oArticulo->nMargen3,'f',2));
+   ui->txtrPrecioMedio1->setText(QString::number(oArticulo->rPrecioMedio,'f',2));
+   ui->txtrPrecioMedio2->setText(QString::number(oArticulo->rPrecioMedio2,'f',2));
+   ui->txtrPrecioMedio3->setText(QString::number(oArticulo->rPrecioMedio3,'f',2));
+   ui->txtnUnidadesCompradas->setText(QString::number(oArticulo->nUnidadesCompradas));
+   ui->txtnUnidadesVendidas->setText(QString::number(oArticulo->nUnidadesVendidas));
+   ui->txtrAcumuladoCompras->setText(QString::number(oArticulo->rAcumuladoCompras,'f',2));
+   ui->txtrAcumuladoVentas->setText(QString::number(oArticulo->rAcumuladoVentas,'f',2));
+   ui->txttComentario->setText(oArticulo->tComentario);
+   ui->txtnStockMaximo->setText(QString::number(oArticulo->nStockMaximo));
+   ui->txtnStockMinimo->setText(QString::number(oArticulo->nStockMinimo));
+   ui->txtnStockReal->setText(QString::number(oArticulo->nStockReal));
+   ui->txtnStockReal_2->setText(QString::number(oArticulo->nStockReal));
+   if (oArticulo->lControlarStock==1)
         ui->chklControlarStock->setChecked(true);
    else
        ui->chklControlarStock->setChecked(false);
 
-   if (oArticulo->getlPvpIncluyeIva()== 1)
+   if (oArticulo->lPvpIncluyeIva== 1)
         ui->chklPvpIncluyeIva->setChecked(true);
    else
         ui->chklPvpIncluyeIva->setChecked(false);
-   ui->txtnCantidadPendienteRecibir->setText(QString::number(oArticulo->getnCantidadPendienteRecibir()));
-   ui->txtdFechaPrevistaRecepcion->setDate(oArticulo->getdFechaPrevistaRecepcion());
-   ui->txtnReservados->setText(QString::number(oArticulo->getnReservados()));
-   if (oArticulo->getlMostrarWeb()==1)
+   ui->txtnCantidadPendienteRecibir->setText(QString::number(oArticulo->nCantidadPendienteRecibir));
+   ui->txtdFechaPrevistaRecepcion->setDate(oArticulo->dFechaPrevistaRecepcion);
+   ui->txtnReservados->setText(QString::number(oArticulo->nReservados));
+   if (oArticulo->lMostrarWeb==1)
         ui->chklMostrarWeb->setChecked(true);
     else
        ui->chklMostrarWeb->setChecked(false);
@@ -305,53 +305,53 @@ void FrmArticulos::LLenarCampos()
 
 void FrmArticulos::CargarCamposEnArticulo()
 {
-    oArticulo->setcCodigo(ui->txtcCodigo->text());
-    oArticulo->setcCodigoBarras(ui->txtcCodigoBarras->text());
-    oArticulo->setcCodigoFabricante(ui->txtcCodigoFabricante->text());
-    oArticulo->setcDescripcion( ui->txtcDescripcion->text());
-    oArticulo->setcDescripcionReducida( ui->txtcDescripcionResumida->text());
-    oArticulo->setcFamilia(ui->txtcFamilia->text());
-    oArticulo->setcSeccion(ui->txtcSeccion->text());
-    oArticulo->setcSubfamilia(ui->txtcSubFamilia->text());
-    oArticulo->setnTipoIva(ui->cboTipoIVA->currentText().toDouble());
-    oArticulo->setrCoste(ui->txtrCoste->text().toDouble());
-    oArticulo->setrTarifa1(ui->txtrTarifa1->text().toDouble());
-    oArticulo->setrTarifa2(ui->txtrTarifa1_2->text().toDouble());
-    oArticulo->setrTarifa3(ui->txtrDto->text().toDouble());
-    oArticulo->setnDtoProveedor(ui->txtnDtoProveedor->text().toDouble());
-    oArticulo->setnDtoProveedor2(ui->txtnDtoProveedor2->text().toDouble());
-    oArticulo->setnDtoProveedor3(ui->txtnDtoProveedor3->text().toDouble());
-    oArticulo->setdUltimaCompra( ui->txtdFechaUltimaCompra->date());
-    oArticulo->setdUltimaVenta( ui->txtdFechaUltimaVenta->date());
-    oArticulo->setnMargen1( ui->txtnMargen1->text().toDouble());
-    oArticulo->setnMargen2( ui->txtnMargen2->text().toDouble());
-    oArticulo->setnMargen3( ui->txtnMargen3->text().toDouble());
-    oArticulo->setrPrecioMedio( ui->txtrPrecioMedio1->text().toDouble());
-    oArticulo->setrPrecioMedio2( ui->txtrPrecioMedio2->text().toDouble());
-    oArticulo->setrPrecioMedio3( ui->txtrPrecioMedio3->text().toDouble());
-    oArticulo->setnUnidadesCompradas( ui->txtnUnidadesCompradas->text().toDouble());
-    oArticulo->setnUnidadesVendidas(ui->txtnUnidadesVendidas->text().toDouble());
-    oArticulo->setrAcumuladoCompras( ui->txtrAcumuladoCompras->text().toDouble());
-    oArticulo->setrAcumuladoVentas( ui->txtrAcumuladoVentas->text().toDouble());
-    oArticulo->settComentario( ui->txttComentario->toPlainText());
-    oArticulo->setnStockMaximo(ui->txtnStockMaximo->text().toInt());
-    oArticulo->setnStockMinimo( ui->txtnStockMinimo->text().toInt());
-    oArticulo->setnStockReal( ui->txtnStockReal->text().toInt());
+    oArticulo->cCodigo= ui->txtcCodigo->text();
+    oArticulo->cCodigoBarras =ui->txtcCodigoBarras->text();
+    oArticulo->cCodigoFabricante=ui->txtcCodigoFabricante->text();
+    oArticulo->cDescripcion =ui->txtcDescripcion->text();
+    oArticulo->cDescripcionReducida = ui->txtcDescripcionResumida->text();
+    oArticulo->cFamilia=ui->txtcFamilia->text();
+    oArticulo->cSeccion=ui->txtcSeccion->text();
+    oArticulo->cSubfamilia=ui->txtcSubFamilia->text();
+    oArticulo->nTipoIva=ui->cboTipoIVA->currentText().toDouble();
+    oArticulo->rCoste=ui->txtrCoste->text().toDouble();
+    oArticulo->rTarifa1=ui->txtrTarifa1->text().toDouble();
+    oArticulo->rTarifa2=ui->txtrTarifa1_2->text().toDouble();
+    oArticulo->rTarifa3=ui->txtrDto->text().toDouble();
+    oArticulo->nDtoProveedor=ui->txtnDtoProveedor->text().toDouble();
+    oArticulo->nDtoProveedor2=ui->txtnDtoProveedor2->text().toDouble();
+    oArticulo->nDtoProveedor3=ui->txtnDtoProveedor3->text().toDouble();
+    oArticulo->dUltimaCompra= ui->txtdFechaUltimaCompra->date();
+    oArticulo->dUltimaVenta= ui->txtdFechaUltimaVenta->date();
+    oArticulo->nMargen1= ui->txtnMargen1->text().toDouble();
+    oArticulo->nMargen2= ui->txtnMargen2->text().toDouble();
+    oArticulo->nMargen3= ui->txtnMargen3->text().toDouble();
+    oArticulo->rPrecioMedio= ui->txtrPrecioMedio1->text().toDouble();
+    oArticulo->rPrecioMedio2= ui->txtrPrecioMedio2->text().toDouble();
+    oArticulo->rPrecioMedio3= ui->txtrPrecioMedio3->text().toDouble();
+    oArticulo->nUnidadesCompradas= ui->txtnUnidadesCompradas->text().toDouble();
+    oArticulo->nUnidadesVendidas=ui->txtnUnidadesVendidas->text().toDouble();
+    oArticulo->rAcumuladoCompras= ui->txtrAcumuladoCompras->text().toDouble();
+    oArticulo->rAcumuladoVentas= ui->txtrAcumuladoVentas->text().toDouble();
+    oArticulo->tComentario=ui->txttComentario->toPlainText();
+    oArticulo->nStockMaximo=ui->txtnStockMaximo->text().toInt();
+    oArticulo->nStockMinimo=ui->txtnStockMinimo->text().toInt();
+    oArticulo->nStockReal=ui->txtnStockReal->text().toInt();
     if (ui->chklControlarStock->isChecked())
-        oArticulo->setlControlarStock(1);
+        oArticulo->lControlarStock=1;
     else
-        oArticulo->setlControlarStock(0);
+        oArticulo->lControlarStock=0;
     if(ui->chklPvpIncluyeIva->isChecked())
-        oArticulo->setlPvpIncluyeIva(1);
+        oArticulo->lPvpIncluyeIva = 1;
     else
-        oArticulo->setlPvpIncluyeIva(0);
-    oArticulo->setnCantidadPendienteRecibir(ui->txtnCantidadPendienteRecibir->text().toInt());
-    oArticulo->setdFechaPrevistaRecepcion( ui->txtdFechaPrevistaRecepcion->date());
-    oArticulo->setnReservados( ui->txtnReservados->text().toInt());
+        oArticulo->lPvpIncluyeIva=0;
+    oArticulo->nCantidadPendienteRecibir=ui->txtnCantidadPendienteRecibir->text().toInt();
+    oArticulo->dFechaPrevistaRecepcion =ui->txtdFechaPrevistaRecepcion->date();
+    oArticulo->nReservados =ui->txtnReservados->text().toInt();
     if (ui->chklMostrarWeb->isChecked())
-        oArticulo->setlMostrarWeb(1);
+        oArticulo->lMostrarWeb = 1;
     else
-        oArticulo->setlMostrarWeb(0);
+        oArticulo->lMostrarWeb = 0;
 
 }
 
@@ -410,8 +410,8 @@ void FrmArticulos::on_botEditar_clicked()
 
 void FrmArticulos::on_botBorrar_clicked()
 {
-    oArticulo->Borrar(oArticulo->getId());
-    oArticulo->Recuperar("Select * from articulos where id = "+QString::number(oArticulo->getId()));
+    oArticulo->Borrar(oArticulo->id);
+    oArticulo->Recuperar("Select * from articulos where id = "+QString::number(oArticulo->id));
     LLenarCampos();
 }
 
@@ -433,10 +433,10 @@ void FrmArticulos::on_botCambiarImagen_clicked()
             ba = f.readAll();
             f.close();
         }
-        QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("empresa"));
+        QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("terra"));
         Articulo->prepare("update articulos set bImagen =:imagen where Id = :nid");
         Articulo->bindValue(":imagen",ba);
-        Articulo->bindValue(":nid",oArticulo->getId());
+        Articulo->bindValue(":nid",oArticulo->id);
         if (!Articulo->exec())
             QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
         delete Articulo;
@@ -480,10 +480,10 @@ void FrmArticulos::on_botRotarImagen90_clicked()
     buffer.open( QIODevice::WriteOnly );
     pixmap.save( &buffer, "PNG" );
 
-    QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("empresa"));
+    QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("terra"));
     Articulo->prepare("update articulos set bImagen =:imagen where Id = :nid");
    Articulo->bindValue(":imagen",bArray);
-    Articulo->bindValue(":nid",oArticulo->getId());
+    Articulo->bindValue(":nid",oArticulo->id);
    if (!Articulo->exec())
         QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
     delete Articulo;
@@ -493,7 +493,7 @@ void FrmArticulos::on_botRotarImagen90_clicked()
 
 void FrmArticulos::on_botDeshacer_clicked()
 {
-    QString cSql = "Select * from articulos where Id =" +QString::number(oArticulo->getId());
+    QString cSql = "Select * from articulos where Id =" +QString::number(oArticulo->id);
     oArticulo->Recuperar(cSql);
     LLenarCampos();
     bloquearCampos();
@@ -501,19 +501,18 @@ void FrmArticulos::on_botDeshacer_clicked()
 
 void FrmArticulos::on_txtrTarifa1_editingFinished()
 {
-    ui->txtrTarifa1->setText( Configuracion_global->FormatoNumerico(ui->txtrTarifa1->text()));
     ui->txtrTarifa1_2->setText(ui->txtrTarifa1->text());
 }
 
 void FrmArticulos::on_txtrCoste_editingFinished()
 {
-    ui->txtrCoste->setText( Configuracion_global->FormatoNumerico(ui->txtrCoste->text()));
+    ui->txtrCoste->setValue(ui->txtrCoste->text().toDouble());
 }
 
 void FrmArticulos::on_txtrTarifa1_2_editingFinished()
 {
     ui->txtrTarifa1_2->setText( Configuracion_global->FormatoNumerico(ui->txtrTarifa1_2->text()));
-    ui->txtrTarifa1->setText(ui->txtrTarifa1_2->text());
+    ui->txtrTarifa1->setValue(ui->txtrTarifa1_2->text().toDouble());
 }
 
 void FrmArticulos::on_txtrTarifa2_editingFinished()
@@ -539,7 +538,7 @@ void FrmArticulos::on_botBuscarArtRapido_clicked()
             cSQL = "select id,cDescripcion,rTarifa1 from articulos where cDescripcion like '%" +
                     ui->txtBuscarArticulo->text().trimmed()+"%' order by rTarifa1";
 
-        modArt->setQuery(cSQL,QSqlDatabase::database("empresa"));
+        modArt->setQuery(cSQL,QSqlDatabase::database("terra"));
         ui->TablaBuscarArt->setModel(modArt);
         QHeaderView *Cabecera = new QHeaderView(Qt::Horizontal,this);
         // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
@@ -577,7 +576,7 @@ void FrmArticulos::on_TablaBuscarArt_doubleClicked(const QModelIndex &index)
 void FrmArticulos::on_botBuscarSeccion_clicked()
 {
     Db_table_View form(this);
-    form.set_db("empresa");
+    form.set_db("terra");
     form.set_table("secciones");
 
     form.setWindowTitle(tr("Secciones"));
@@ -593,13 +592,13 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
     if(form.exec() == QDialog::Accepted)
     {
         ui->txtcSeccion->setText(form.selected_value);
-        QSqlQuery qSeccion(QSqlDatabase::database("empresa"));
+        QSqlQuery qSeccion(QSqlDatabase::database("terra"));
         qSeccion.prepare("select id from secciones where cSeccion = :seccion");
         qSeccion.bindValue(":seccion",form.selected_value);
         if(qSeccion.exec())
         {
             qSeccion.next();
-            oArticulo->setid_Seccion(qSeccion.value(0).toInt());
+            oArticulo->id_Seccion= qSeccion.value(0).toInt();
         }
         else
         {
@@ -619,7 +618,7 @@ void FrmArticulos::AnadirSeccion()
 void FrmArticulos::on_botBuscarFamilia_clicked()
 {
     Db_table_View form(this);
-    form.set_db("empresa");
+    form.set_db("terra");
     form.set_table("familias");
 
     form.setWindowTitle(tr("Familias"));
@@ -633,7 +632,7 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
     form.set_columnHide(0);
 
     form.set_selection("cCodigo");//FIXME cCodigo o cFamilia???
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(QSqlDatabase::database("terra"));
     query.prepare(QString("SELECT id FROM secciones WHERE cSeccion = '%1' ").arg(ui->txtcSeccion->text()));
     if (query.exec())
         if(query.next())
@@ -648,7 +647,7 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
 void FrmArticulos::on_botBuscarSubfamilia_clicked()
 {
     Db_table_View form(this);
-    form.set_db("empresa");
+    form.set_db("terra");
     form.set_table("subfamilias");
 
     form.setWindowTitle(tr("Subfamilias"));
@@ -662,7 +661,7 @@ void FrmArticulos::on_botBuscarSubfamilia_clicked()
     form.set_columnHide(0);
 
     form.set_selection("cSubfamilia");
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(QSqlDatabase::database("terra"));
     query.prepare(QString("SELECT id FROM familias WHERE cFamilia = '%1'").arg(ui->txtcFamilia->text()));
     if (query.exec())
         if(query.next())

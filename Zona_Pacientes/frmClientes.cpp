@@ -23,7 +23,7 @@ frmClientes::frmClientes(QWidget *parent) :
 
     // Rellenar formas de pago
     modelFP = new QSqlQueryModel();
-    modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("empresa"));
+    modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("terra"));
 
     // Ocultar campos según configuración
     QSettings settings("infint", "terra");
@@ -61,7 +61,7 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->txtPrimerApellido,SIGNAL(editingFinished()),this,SLOT(txtPrimerApellido_editingFinished()));
     connect(ui->txtSegundoApellido,SIGNAL(editingFinished()),this,SLOT(txtSegundoApellido_editingFinished()));
     connect(ui->txtcNombre,SIGNAL(editingFinished()),this,SLOT(txtcNombre_editingFinished()));
-
+    connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(txtcPoblacion_editingFinished()));
     connect(ui->txtcProvincia,SIGNAL(editingFinished()),this,SLOT(txtcProvincia_editingFinished()));
     connect(ui->txtcCifNif,SIGNAL(editingFinished()),this,SLOT(txtcCifNif_editingFinished()));
     connect(ui->txtcCp,SIGNAL(editingFinished()),this,SLOT(txtcCp_editingFinished()));
@@ -172,7 +172,7 @@ void frmClientes::LLenarCampos()
     QSqlQueryModel *deudas = new QSqlQueryModel(this);
     QString cSQL;
     cSQL= "Select id,cDocumento,rPendienteCobro,dFecha,dVencimiento from clientes_deuda where Id_cliente =" + QString::number(oCliente->getId());
-    deudas->setQuery(cSQL,QSqlDatabase::database("empresa"));
+    deudas->setQuery(cSQL,QSqlDatabase::database("terra"));
     ColumnaFecha *columnaFecha = new ColumnaFecha();
     ui->TablaDeudas->setModel(deudas);
     //  ui->TablaDeudas->setItemDelegateForColumn(2,columnaMoneda);
@@ -304,7 +304,7 @@ void frmClientes::LLenarCampos()
     QSqlQueryModel *Vales = new QSqlQueryModel(this);
 
     cSQL= "Select id,nNumero,dFecha,dVto,rImporte from vales where id_Cliente =" + QString::number(oCliente->getId());
-    Vales->setQuery(cSQL,QSqlDatabase::database("empresa"));
+    Vales->setQuery(cSQL,QSqlDatabase::database("terra"));
     ui->tablaVales->setModel(Vales);
     ui->tablaVales->setItemDelegateForColumn(2,columnaFecha);
     ui->tablaVales->setItemDelegateForColumn(3,columnaFecha);
@@ -599,7 +599,7 @@ void frmClientes::txtcPoblacion_editingFinished()
              QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
              QString cId;
              cId = QString::number(nId);
-             qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+             qPoblacion.prepare("select poblacion,cp,provincia from poblaciones where id = :cId");
              qPoblacion.bindValue(":cId",cId);
              if(!qPoblacion.exec())
              {

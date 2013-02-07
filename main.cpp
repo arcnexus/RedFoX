@@ -48,7 +48,8 @@ int main(int argc, char *argv[])
 
 
    MainWindow w;
-   w.setWindowState(Qt::WindowMaximized );
+   w.setWindowState(Qt::WindowMaximized);
+   w.setWindowFlags(Qt::WindowCloseButtonHint | Qt::WindowMinMaxButtonsHint);
    w.show();
     return a.exec();
 }

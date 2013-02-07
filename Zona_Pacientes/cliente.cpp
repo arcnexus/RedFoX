@@ -8,7 +8,7 @@ Cliente::Cliente(QObject *parent) :
 {
 }
 void Cliente::Guardar() {
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(QSqlDatabase::database("terra"));
     query.prepare( "UPDATE clientes set "
                    "cCodigoCliente = :cCodigoCliente,"
                    "cApellido1 = :cApellido1,"
@@ -57,7 +57,6 @@ void Cliente::Guardar() {
                    "cCuentaIvaRepercutido=:cCuentaIvaRepercutido,"
                    "cCuentaDeudas=:cCuentaDeudas,"
                    "cCuentaCobros=:cCuentaCobros,"
-                   "cFormaPago=:cFormaPago,"
                    "nDiaPago1=:nDiaPago1,"
                    "nDiaPago2=:nDiaPago2,"
                    "nTarifaCliente=:nTarifaCliente,"
@@ -121,7 +120,6 @@ void Cliente::Guardar() {
     query.bindValue(":cCuentaIvaRepercutido",this->cCuentaIvaRepercutido);
     query.bindValue(":cCuentaDeudas", this->cCuentaDeudas);
     query.bindValue(":cCuentaCobros", this->cCuentaCobros);
-    query.bindValue(":cFormaPago",this->cFormaPago);
     query.bindValue(":nDiaPago1",this->nDiaPago1);
     query.bindValue(":nDiaPago2",this->nDiaPago2);
     query.bindValue(":nTarifaCliente",this->nTarifaCliente);
@@ -155,7 +153,7 @@ void Cliente::Guardar() {
 
 }
 void Cliente::Anadir() {
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(QSqlDatabase::database("terra"));
          query.prepare("INSERT INTO clientes (cCodigoCliente, cApellido1, cApellido2,cNombre,cNombreFiscal,cNombreComercial,cPersonaContacto,"
                        " cCifNif,cDireccion1,cDireccion2,cCP,cPoblacion,cProvincia,idpais,cTelefono1,cTelefono2,cFax,"
                        "cMovil,cEmail,cWeb,cDireccionFactura1,cDireccionFactura2,cCPFactura,cPoblacionFactura,cProvinciaFactura,"
@@ -250,7 +248,7 @@ void Cliente::Anadir() {
          }
 }
 void Cliente::Recuperar(QString cSQL) {
-    qryCliente = new QSqlQuery(QSqlDatabase::database("empresa"));
+    qryCliente = new QSqlQuery(QSqlDatabase::database("terra"));
     qryCliente->prepare(cSQL);
     if( !qryCliente->exec() ) {
         QMessageBox::critical(qApp->activeWindow(), "error:", qryCliente->lastError().text());
@@ -336,7 +334,7 @@ void Cliente::Recuperar(QString cSQL) {
 void Cliente::AnadirDeuda(int id_cliente, QDate dFechaDeuda, QDate dFechaVto, QString cDocumento, int id_Tiquet,
                           int id_Factura, int nTipo, double rImporteDeuda, double rPagado = 0, double rPendienteCobro = 0,
                           QString cEntidad = "", QString cOficina = "", QString cDC="", QString cCuenta = "") {
-    QSqlQuery qCliente(QSqlDatabase::database("empresa"));
+    QSqlQuery qCliente(QSqlDatabase::database("terra"));
     double rImporte;
     rImporte = this->rDeudaActual + rImporteDeuda;
     qCliente.prepare("Update clientes set  rDeudaActual = :rImporte where id =:id_cliente");
@@ -346,7 +344,7 @@ void Cliente::AnadirDeuda(int id_cliente, QDate dFechaDeuda, QDate dFechaVto, QS
         QMessageBox::critical(qApp->activeWindow(),tr("Añadir deuda cliente"),tr("Ha fallado la inserción de la deuda en la ficha del paciente"),tr("&Aceptar"));
     }
 
-    QSqlQuery qClientes_Deuda(QSqlDatabase::database("empresa"));
+    QSqlQuery qClientes_Deuda(QSqlDatabase::database("terra"));
     qClientes_Deuda.prepare("Insert into clientes_deuda (Id_Cliente,dFecha,dVencimiento,cDocumento,Id_Ticket,Id_Factura,nTipo,"
                             "rImporte,rPagado,rPendienteCobro,cEntidad,cOficina,cDC,cCuenta Values (:Id_Cliente,:dFecha,:dVencimiento,"
                             ":cDocumento,:Id_Ticket,:Id_Factura,:nTipo,:rImporte,:rPagado,:rPendienteCobro,:cEntidad,:cOficina,"
@@ -371,7 +369,7 @@ void Cliente::AnadirDeuda(int id_cliente, QDate dFechaDeuda, QDate dFechaVto, QS
 
 }
 void Cliente::DescontarDeuda(int id_deuda, double rPagado){
-    QSqlQuery qClientes_deuda(QSqlDatabase::database("empresa"));
+    QSqlQuery qClientes_deuda(QSqlDatabase::database("terra"));
     qClientes_deuda.prepare("Select * from clientes_deuda where id =:id_deuda");
     qClientes_deuda.bindValue(":id_deuda",id_deuda);
     if (!qClientes_deuda.exec()) {
@@ -387,7 +385,7 @@ void Cliente::Borrar(int id_cliente)
                           tr("Está apunto de borrar la ficha de un cliente\n¿Desea continuar?"),
                           tr("No"),tr("Si")) == QMessageBox::Accepted)
     {
-        QSqlQuery qryCliente(QSqlDatabase::database("empresa"));
+        QSqlQuery qryCliente(QSqlDatabase::database("terra"));
         qryCliente.prepare("Delete from clientes where id = :id_Cliente");
         qryCliente.bindValue(":id",id_cliente);
         if(!qryCliente.exec())
@@ -404,7 +402,7 @@ QString Cliente::NuevoCodigoCliente()
     QString cCodigo;
     QString cNum;
     int nCodigo;
-    QSqlQuery *qClientes = new QSqlQuery(QSqlDatabase::database("empresa"));
+    QSqlQuery *qClientes = new QSqlQuery(QSqlDatabase::database("terra"));
     if(qClientes->exec("select cCodigoCliente from clientes  order by cCodigoCliente desc limit 1")) {
         if (qClientes->next()) {
             QSqlRecord registro = qClientes->record();
@@ -428,7 +426,7 @@ QString Cliente::NuevoCodigoCliente()
 
 int Cliente::BuscaridPais(QString Pais)
 {
-    QSqlQuery qPais(QSqlDatabase::database("empresa"));
+    QSqlQuery qPais(QSqlDatabase::database("terra"));
     qPais.prepare("select id from paises where pais =:pais");
     qPais.bindValue(":pais",Pais);
     if(qPais.exec()) {
@@ -444,7 +442,7 @@ int Cliente::BuscaridPais(QString Pais)
 
 QString Cliente::RecuperarPais(int nid)
 {
-    QSqlQuery qPais(QSqlDatabase::database("empresa"));
+    QSqlQuery qPais(QSqlDatabase::database("terra"));
     qPais.prepare("select pais from paises where id =:id");
     qPais.bindValue(":id",nid);
     if(qPais.exec()) {

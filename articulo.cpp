@@ -7,7 +7,7 @@ Articulo::Articulo(QObject *parent) : QObject(parent)
 
 void Articulo::Anadir()
 {
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(QSqlDatabase::database("terra"));
          query.prepare("INSERT INTO articulos (cCodigo,cCodigoBarras,cCodigoFabricante,cDescripcion,cDescripcionReducida,"
                        "id_Proveedor,id_Familia,id_Seccion,id_Subfamilia,nTipoIva,rCoste,"
                        "rTarifa1,rTarifa2,rTarifa3,rDto,nDtoProveedor,nDtoproveedor2,nDtoProveedor3,dUltimaCompra,"
@@ -87,7 +87,7 @@ void Articulo::Anadir()
 
 void Articulo::Recuperar(QString cSQL)
 {
-    QSqlQuery qryArticulo(QSqlDatabase::database("empresa"));
+    QSqlQuery qryArticulo(QSqlDatabase::database("terra"));
     qryArticulo.prepare(cSQL);
     if (qryArticulo.exec()) {
            if (qryArticulo.next()){
@@ -155,7 +155,7 @@ void Articulo::Recuperar(QString cSQL)
 
 void Articulo::Recuperar(QString cSQL, int nProcede)
 {
-    QSqlQuery qryArticulo(QSqlDatabase::database("empresa"));
+    QSqlQuery qryArticulo(QSqlDatabase::database("terra"));
     qryArticulo.prepare(cSQL);
     if (qryArticulo.exec()) {
            if (qryArticulo.next()){
@@ -226,7 +226,7 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
 
 void Articulo::Guardar()
 {
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(QSqlDatabase::database("terra"));
     query.prepare( "UPDATE articulos set "
                    "cCodigo =:cCodigo,"
                    "cCodigoBarras=:cCodigoBarras,"
@@ -332,7 +332,8 @@ void Articulo::Guardar()
 
 
     if(!query.exec()) {
-        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Guardar Artículo"),QObject::tr("No se puede guardar el artículo "),
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Guardar Artículo"),
+                             QObject::tr("No se puede guardar el artículo ERROR: &1 ").arg(query.lastError().text()),
                              QObject::tr("Ok"));
 
     } else {
@@ -403,7 +404,7 @@ void Articulo::Borrar(int nId)
                              qApp->tr("¿Desea realmente Borrar este artículo?\nEsta opción no se puede deshacer"),
                              qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted)
     {
-        QSqlQuery qryArticulo(QSqlDatabase::database("empresa"));
+        QSqlQuery qryArticulo(QSqlDatabase::database("terra"));
         qryArticulo.prepare("Delete from articulos where id = :nId");
         qryArticulo.bindValue(":id",nId);
         if(!qryArticulo.exec())
@@ -432,7 +433,7 @@ void Articulo::Devolucion(int id, int cantidad, double rImporte, QString cMotivo
 
 void Articulo::CargarImagen(QLabel *label)
 {
-    QSqlQuery qryArticulo(QSqlDatabase::database("empresa"));
+    QSqlQuery qryArticulo(QSqlDatabase::database("terra"));
     qryArticulo.prepare("Select bImagen from articulos where Id = :id");
     qryArticulo.bindValue(":id",this->id);
     if (qryArticulo.exec()) {
@@ -453,537 +454,6 @@ void Articulo::CargarImagen(QLabel *label)
 
 
 
-
-
-// geters
-int Articulo::getId()
-{
-    return this->id;
-}
-
-QString Articulo::getcCodigo()
-{
-    return this->cCodigo;
-}
-
-QString Articulo::getcCodigoBarras()
-{
-    return this->cCodigoBarras;
-}
-
-QString Articulo::getcCodigoFabricante()
-{
-    return this->cCodigoFabricante;
-}
-
-QString Articulo::getcDescripcion()
-{
-    return this->cDescripcion;
-}
-
-QString Articulo::getcDescripcionReducida()
-{
-    return this->cDescripcionReducida;
-}
-
-int Articulo::getid_Proveedor()
-{
-    return this->id_Proveedor;
-}
-
-int Articulo::getid_Seccion()
-{
-    return this->id_Seccion;
-}
-
-QString Articulo::getcFamilia()
-{
-    return this->cFamilia;
-}
-
-int Articulo::getid_SubFamilia()
-{
-    return this->id_SubFamilia;
-}
-
-QString Articulo::getcSeccion()
-{
-    return this->cSeccion;
-}
-
-int Articulo::getid_Familia()
-{
-    return this->id_Familia;
-}
-
-
-QString Articulo::getcSubfamilia()
-{
-    return this->cSubfamilia;
-}
-
-
-double Articulo::getnTipoIva()
-{
-    return this->nTipoIva;
-}
-
-double Articulo::getrCoste()
-{
-    return this->rCoste;
-}
-
-double Articulo::getrTarifa1()
-{
-    return this->rTarifa1;
-}
-
-double Articulo::getrTarifa2()
-{
-    return this->rTarifa2;
-}
-
-double Articulo::getrTarifa3()
-{
-    return this->rTarifa3;
-}
-
-double Articulo::getrDto()
-{
-    return this->rDto;
-}
-
-double Articulo::getnDtoProveedor()
-{
-    return this->nDtoProveedor;
-}
-
-double Articulo::getnDtoProveedor2()
-{
-    return this->nDtoProveedor2;
-}
-
-double Articulo::getnDtoProveedor3()
-{
-    return this->nDtoProveedor3;
-}
-
-QDate Articulo::getdUltimaCompra()
-{
-    return this->dUltimaCompra;
-}
-
-QDate Articulo::getdUltimaVenta()
-{
-    return this->dUltimaVenta;
-}
-
-double Articulo::getnMargen1()
-{
-    return this->nMargen1;
-}
-
-double Articulo::getnMargen2()
-{
-    return this->nMargen2;
-}
-
-double Articulo::getnMargen3()
-{
-    return this->nMargen3;
-}
-
-double Articulo::getrPrecioMedio()
-{
-    return this->rPrecioMedio;
-}
-
-double Articulo::getnUnidadesCompradas()
-{
-    return this->nUnidadesCompradas;
-}
-
-double Articulo::getrPrecioMedio2()
-{
-    return this->rPrecioMedio2;
-}
-
-double Articulo::getnUnidadesVendidas()
-{
-    return this->nUnidadesVendidas;
-}
-
-double Articulo::getrPrecioMedio3()
-{
-    return this->rPrecioMedio3;
-}
-
-double Articulo::getrAcumuladoCompras()
-{
-    return this->rAcumuladoCompras;
-}
-
-double Articulo::getrAcumuladoVentas()
-{
-    return this->rAcumuladoVentas;
-}
-
-QString Articulo::gettComentario()
-{
-    return this->tComentario;
-}
-
-int Articulo::getnStockMaximo()
-{
-    return this->nStockMaximo;
-}
-
-int Articulo::getnStockMinimo()
-{
-    return this->nStockMinimo;
-}
-
-int Articulo::getnStockReal()
-{
-    return this->nStockReal;
-}
-
-QString Articulo::getcTipoUnidad()
-{
-    return this->cTipoUnidad;
-}
-
-int Articulo::getlControlarStock()
-{
-    return this->lControlarStock;
-}
-
-QString Articulo::getcModelo()
-{
-    return this->cModelo;
-}
-
-QString Articulo::getcTalla()
-{
-    return this->cTalla;
-}
-
-QString Articulo::getcColor()
-{
-    return this->cColor;
-}
-
-QString Articulo::getcComposicion()
-{
-    return this->cComposicion;
-}
-
-int Articulo::getlPvpIncluyeIva()
-{
-    return this->lPvpIncluyeIva;
-}
-
-QDate Articulo::getdFechaPrevistaRecepcion()
-{
-    return this->dFechaPrevistaRecepcion;
-}
-
-
-int Articulo::getnCantidadPendienteRecibir()
-{
-    return this->nCantidadPendienteRecibir;
-}
-
-int Articulo::getnReservados()
-{
-    return this->nReservados;
-}
-
-int Articulo::getlMostrarWeb()
-{
-    return this->lMostrarWeb;
-}
-
-int Articulo::getnEtiquetas()
-{
-    return this->nEtiquetas;
-}
-
-int Articulo::getnPaquetes()
-{
-    return this->nPaquetes;
-}
-
-QString Articulo::getcLocalizacion()
-{
-    return this->cLocalizacion;
-}
-
-
-
-// setters
-void Articulo::setId(int nId)
-{
-    this->id = nId;
-}
-
-void Articulo::setcCodigo(QString cCodigo)
-{
-    this->cCodigo = cCodigo;
-}
-
-void Articulo::setcCodigoBarras(QString cCodigoBarras)
-{
-    this->cCodigoBarras = cCodigoBarras;
-}
-
-void Articulo::setcCodigoFabricante(QString cCodigoFabricante)
-{
-    this->cCodigoFabricante = cCodigoFabricante;
-}
-
-void Articulo::setcDescripcion(QString cDescripcion)
-{
-    this->cDescripcion = cDescripcion;
-}
-
-void Articulo::setcDescripcionReducida(QString cDescripcionReducida)
-{
-    this->cDescripcionReducida = cDescripcionReducida;
-}
-
-void Articulo::setid_Proveedor(int id_Proveedor)
-{
-    this->id_Proveedor = id_Proveedor;
-}
-
-void Articulo::setid_Seccion(int id_Seccion)
-{
-    this->id_Seccion = id_Seccion;
-}
-
-void Articulo::setcSeccion(QString cSeccion)
-{
-    this->cSeccion = cSeccion;
-}
-
-void Articulo::setid_Familia(int id_familia)
-{
-    this->id_Familia = id_familia;
-}
-
-void Articulo::setcFamilia(QString cFamilia)
-{
-    this->cFamilia = cFamilia;
-}
-
-void Articulo::setid_SubFamilia(int id_SubFamilia)
-{
-    this->id_SubFamilia = id_SubFamilia;
-}
-
-
-void Articulo::setcSubfamilia(QString cSubfamilia)
-{
-    this->cSubfamilia = cSubfamilia;
-}
-
-
-void Articulo::setnTipoIva(double nTipoIva)
-{
-    this->nTipoIva = nTipoIva;
-}
-
-void Articulo::setrCoste(double rCoste)
-{
-    this->rCoste = rCoste;
-}
-
-void Articulo::setrTarifa1(double rTarifa1)
-{
-    this->rTarifa1 = rTarifa1;
-}
-
-void Articulo::setrTarifa2(double rTarifa2)
-{
-    this->rTarifa2 = rTarifa2;
-}
-
-void Articulo::setrTarifa3(double rTarifa3)
-{
-    this->rTarifa3 = rTarifa3;
-}
-
-void Articulo::setrDto(double rDto)
-{
-    this->rDto = rDto;
-}
-
-void Articulo::setnDtoProveedor(double nDtoProveedor)
-{
-    this->nDtoProveedor = nDtoProveedor;
-}
-
-void Articulo::setnDtoProveedor2(double nDtoProveedor2)
-{
-    this->nDtoProveedor2 = nDtoProveedor2;
-}
-
-void Articulo::setnDtoProveedor3(double nDtoProveedor3)
-{
-    this->nDtoProveedor3 = nDtoProveedor3;
-}
-
-void Articulo::setdUltimaCompra(QDate dUltimaCompra)
-{
-    this->dUltimaCompra = dUltimaCompra;
-}
-
-void Articulo::setdUltimaVenta(QDate dUltimaVenta)
-{
-    this->dUltimaVenta = dUltimaVenta;
-}
-
-void Articulo::setnMargen1(double nMargen1)
-{
-    this->nMargen1 = nMargen1;
-}
-
-void Articulo::setnMargen2(double nMargen2)
-{
-    this->nMargen2 = nMargen2;
-}
-
-void Articulo::setnMargen3(double nMargen3)
-{
-    this->nMargen3 = nMargen3;
-}
-
-void Articulo::setrPrecioMedio(double rPrecioMedio)
-{
-    this->rPrecioMedio = rPrecioMedio;
-}
-
-void Articulo::setnUnidadesCompradas(double nUnidadesCompradas)
-{
-    this->nUnidadesCompradas = nUnidadesCompradas;
-}
-
-void Articulo::setrPrecioMedio2(double rPrecioMedio2)
-{
-    this->rPrecioMedio = rPrecioMedio2;
-}
-
-void Articulo::setnUnidadesVendidas(double nUnidadesVendidas)
-{
-    this->nUnidadesVendidas = nUnidadesVendidas;
-}
-
-void Articulo::setrPrecioMedio3(double rPrecioMedio3)
-{
-    this->rPrecioMedio3 = rPrecioMedio3;
-}
-
-void Articulo::setrAcumuladoCompras(double rAcumuladoCompras)
-{
-    this->rAcumuladoCompras = rAcumuladoCompras;
-}
-
-void Articulo::setrAcumuladoVentas(double rAcumuladoVentas)
-{
-    this->rAcumuladoVentas = rAcumuladoVentas;
-}
-
-void Articulo::settComentario(QString tComentario)
-{
-    this->tComentario = tComentario;
-}
-
-void Articulo::setnStockMaximo(int nStockMaximo)
-{
-    this->nStockMaximo = nStockMaximo;
-}
-
-void Articulo::setnStockMinimo(int nStockMinimo)
-{
-    this->nStockMinimo = nStockMinimo;
-}
-
-void Articulo::setnStockReal(int nStockReal)
-{
-    this->nStockReal = nStockReal;
-}
-
-void Articulo::setcTipoUnidad(QString cTipoUnidad)
-{
-    this->cTipoUnidad = cTipoUnidad;
-}
-
-void Articulo::setlControlarStock(int lControlarStock)
-{
-    this->lControlarStock = lControlarStock;
-}
-
-void Articulo::setcModelo(QString cModelo)
-{
-    this->cModelo = cModelo;
-}
-
-void Articulo::setcTalla(QString cTalla)
-{
-    this->cTalla = cTalla;
-}
-
-void Articulo::setcColor(QString cColor)
-{
-    this->cColor = cColor;
-}
-
-void Articulo::setcComposicion(QString cComposicion)
-{
-    this->cComposicion = cComposicion;
-}
-
-void Articulo::setlPvpIncluyeIva(int lPvpIncluyeIva)
-{
-    this->lPvpIncluyeIva = lPvpIncluyeIva;
-}
-
-void Articulo::setdFechaPrevistaRecepcion(QDate dFechaPrevistaRecepcion)
-{
-    this->dFechaPrevistaRecepcion = dFechaPrevistaRecepcion;
-}
-
-
-void Articulo::setnCantidadPendienteRecibir(int nCantidadPendienteRecibir)
-{
-    this->nCantidadPendienteRecibir = nCantidadPendienteRecibir;
-}
-
-void Articulo::setnReservados(int nReservados)
-{
-    this->nReservados = nReservados;
-}
-
-void Articulo::setlMostrarWeb(int lMostrarWeb)
-{
-    this->lMostrarWeb = this->lMostrarWeb;
-}
-
-void Articulo::setnEtiquetas(int nEtiquetas)
-{
-    this->nEtiquetas = nEtiquetas;
-}
-
-void Articulo::setnPaquetes(int nPaquetes)
-{
-    this->nPaquetes = nPaquetes;
-}
-
-void Articulo::setcLocalizacion(QString cLocalizacion)
-{
-    this->cLocalizacion = cLocalizacion;
-}
 
 
 

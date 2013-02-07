@@ -17,9 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     on_edit = false;
-    //this->setWindowFlags(Qt::WindowMinMaxButtonsHint);
     //ui->ventas_toolBar->hide();
-
+this->setWindowFlags(Qt::WindowCloseButtonHint | Qt::WindowMinMaxButtonsHint);
     if (medic)
         ui->btnClientes->setText(tr("Pacientes"));
     else
@@ -88,7 +87,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     else
     {
-        dbTerra.setDatabaseName(Configuracion_global->cNombreBDTerra);
+        dbTerra.setDatabaseName("TerraGeneral");
         dbTerra.setHostName(Configuracion_global->cHostBDTerra);
         dbTerra.open(Configuracion_global->cUsuarioBDTerra,Configuracion_global->cPasswordBDTerra);
         dbTerra.open(Configuracion_global->cUsuarioBDTerra,Configuracion_global->cPasswordBDTerra);
@@ -104,8 +103,8 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::init()
 {
     Login * dlg= new Login();
-    if ( dlg->exec()==QDialog::Accepted)
-	{
+    if ( dlg->exec()==QDialog::Accepted) {
+
 		// capturo usuario
         user = dlg->getUsuario();
         pass = dlg->getPass();
@@ -141,6 +140,7 @@ void MainWindow::init()
             progress.move(desktop->width()/2 - progress.width()/2 , desktop->height()/2 - progress.height()/2);
             QApplication::processEvents();
 			QSqlRecord record = QryEmpresa.record();
+
 			// DBEMpresa
             Configuracion_global->cDriverBDEmpresa = record.field("driverBD").value().toString();
             Configuracion_global->cHostBDEmpresa = record.field("host").value().toString();
@@ -161,6 +161,7 @@ void MainWindow::init()
 
             progress.setValue(1);
             QApplication::processEvents();
+
 			//DBMedica
             Configuracion_global->cDriverBDMedica = record.field("driverBDMedica").value().toString();
             Configuracion_global->cHostBDMedica = record.field("hostBDMedica").value().toString();
@@ -170,6 +171,7 @@ void MainWindow::init()
             Configuracion_global->cUsuarioBDMedica = record.field("userBDMedica").value().toString();
             progress.setValue(2);
             QApplication::processEvents();
+
 			// Varios
             Configuracion_global->cSerie = record.field("serie").value().toString();
             Configuracion_global->nDigitosCuentasContables = record.field("ndigitoscuenta").value().toInt();
@@ -178,6 +180,7 @@ void MainWindow::init()
             Configuracion_global->cCuentaProveedores = record.field("codigocuentaproveedores").value().toString();
             progress.setValue(3);
             QApplication::processEvents();
+
 			// Guardo preferencias
 			QSettings settings("infint", "terra");
             settings.setValue("cSerie",Configuracion_global->cSerie);
@@ -189,6 +192,7 @@ void MainWindow::init()
             settings.setValue("Clave2",record.field("clave2").value().toString());
             progress.setValue(4);
             QApplication::processEvents();
+
 			// Abro empresa activa
             QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"empresa");
             if (Configuracion_global->cDriverBDEmpresa =="QSQLITE")
@@ -204,6 +208,7 @@ void MainWindow::init()
 			}
             progress.setValue(5);
             QApplication::processEvents();
+
 			// Abro bdmedica activa
             QSqlDatabase dbMedica = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"dbmedica");
             if (Configuracion_global->cDriverBDMedica =="QSQLITE")
@@ -273,13 +278,14 @@ void MainWindow::init()
             progress.setValue(15);
 
             //resize(desktop->width(),height());
-            this->showMaximized();
+           // this->showMaximized();
             QApplication::processEvents();
             dlg->deleteLater();
 		} 
 		else
 			qDebug() <<"Fallo la conexión al fichero Medico";
-	} 
+
+    }
 	else
         qApp->quit();
 }
@@ -360,17 +366,6 @@ void MainWindow::btnCajaMinuta_clicked()
 //    ui->btnAgenda->setEnabled(true);
 //}
 
-void MainWindow::cambiarEstilo(int estado)
-{
-//    QString style;
-
-//    if (estado ==2)
-//        style = "GTK+";
-//    else
-//        style = "fusion";
-
-//    QApplication::setStyle(style);
-}
 
 void MainWindow::on_btn_bloquear_clicked()
 {

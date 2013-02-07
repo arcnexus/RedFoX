@@ -92,7 +92,8 @@ void Login::Crearconfiguracion_clicked()
     //NOTE - Hacer esto por defecto la primera vez que se ejecute Terra?
 
     QSettings settings("infint", "terra");
-    settings.setValue("cDriverBDTerra","QSQLITE");
+    //settings.setValue("cDriverBDTerra","QSQLITE");
+    settings.setValue("cDriverBDTerra","QMYSQL");
     settings.setValue("cRutaDBTerra",qApp->applicationDirPath()+"/DB/terra.sqlite");
 
     QDir directorioBd(qApp->applicationDirPath()+"/DB");
