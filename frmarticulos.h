@@ -39,8 +39,6 @@ private slots:
 
     void on_txtrTarifa1_editingFinished();
 
-    void on_txtrCoste_editingFinished();
-
     void on_txtrTarifa1_2_editingFinished();
 
     void on_txtrTarifa2_editingFinished();

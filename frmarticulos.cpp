@@ -45,11 +45,6 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     //-----------------------------------------
     // CONEXIONES
     //-----------------------------------------
-    connect(ui->txtrTarifa1,SIGNAL(editingFinished()),this,SLOT(on_txtrTarifa1_editingFinished()));
-    connect(ui->txtrCoste,SIGNAL(editingFinished()),this,SLOT(on_txtrCoste_editingFinished()));
-    connect(ui->txtrTarifa1_2,SIGNAL(editingFinished()),this,SLOT(on_txtrTarifa1_2_editingFinished()));
-    connect(ui->txtrTarifa2,SIGNAL(editingFinished()),this,SLOT(on_txtrTarifa2_editingFinished()));
-    connect(ui->txtrTarifa3,SIGNAL(editingFinished()),this,SLOT(on_txtrTarifa3_editingFinished()));
 
 }
 
@@ -261,16 +256,9 @@ void FrmArticulos::LLenarCampos()
            ui->cboTipoIVA->setCurrentIndex(nIndex);
    ui->txtrCoste->setValue(oArticulo->rCoste);
    ui->txtrTarifa1->setValue(oArticulo->rTarifa1);
-   ui->txtrTarifa1_2->setText(QString::number(oArticulo->rTarifa1,'f',2));
    ui->txtrDto->setText(QString::number(oArticulo->rDto,'f',2));
-   ui->txtnDtoProveedor->setText(QString::number(oArticulo->nDtoProveedor,'f',2));
-   ui->txtnDtoProveedor2->setText(QString::number(oArticulo->nDtoProveedor2,'f',2));
-   ui->txtnDtoProveedor3->setText(QString::number(oArticulo->nDtoProveedor3,'f',2));
    ui->txtdFechaUltimaCompra->setDate(oArticulo->dUltimaCompra);
    ui->txtdFechaUltimaVenta->setDate(oArticulo->dUltimaVenta);
-   ui->txtnMargen1->setText(QString::number(oArticulo->nMargen1,'f',2));
-   ui->txtnMargen2->setText(QString::number(oArticulo->nMargen2,'f',2));
-   ui->txtnMargen3->setText(QString::number(oArticulo->nMargen3,'f',2));
    ui->txtrPrecioMedio1->setText(QString::number(oArticulo->rPrecioMedio,'f',2));
    ui->txtrPrecioMedio2->setText(QString::number(oArticulo->rPrecioMedio2,'f',2));
    ui->txtrPrecioMedio3->setText(QString::number(oArticulo->rPrecioMedio3,'f',2));
@@ -504,10 +492,6 @@ void FrmArticulos::on_txtrTarifa1_editingFinished()
     ui->txtrTarifa1_2->setText(ui->txtrTarifa1->text());
 }
 
-void FrmArticulos::on_txtrCoste_editingFinished()
-{
-    ui->txtrCoste->setValue(ui->txtrCoste->text().toDouble());
-}
 
 void FrmArticulos::on_txtrTarifa1_2_editingFinished()
 {
