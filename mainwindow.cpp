@@ -662,7 +662,7 @@ void MainWindow::closeEvent(QCloseEvent * e)
 
 void MainWindow::blockMe(bool state)
 {
-    ui->tabWidget->setEnabled(!state);
+    ui->toolBox->setEnabled(!state);
     ui->menubar->setEnabled(!state);
     on_edit = state;
 }

@@ -45,14 +45,26 @@
    <set>QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::ForceTabbedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_7">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <widget class="QFrame" name="frame_3">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>120</width>
+        <height>16777215</height>
+       </size>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: #4C6088;</string>
@@ -67,43 +79,48 @@
        <property name="spacing">
         <number>1</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
         <number>1</number>
        </property>
        <item>
-        <widget class="QTabWidget" name="tabWidget">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>105</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="tabPosition">
-          <enum>QTabWidget::North</enum>
-         </property>
+        <widget class="QToolBox" name="toolBox">
          <property name="currentIndex">
           <number>0</number>
          </property>
-         <widget class="QWidget" name="tab">
-          <attribute name="title">
-           <string>Mantenimiento</string>
+         <widget class="QWidget" name="page_3">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>116</width>
+            <height>638</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Mantenimientos</string>
           </attribute>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <property name="topMargin">
-            <number>3</number>
-           </property>
-           <property name="bottomMargin">
-            <number>3</number>
-           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
            <item>
             <widget class="QFrame" name="frame_2">
              <property name="minimumSize">
               <size>
                <width>90</width>
-               <height>0</height>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>73</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -129,7 +146,16 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -196,7 +222,13 @@ margin: 0px;</string>
              <property name="minimumSize">
               <size>
                <width>90</width>
-               <height>0</height>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>73</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -222,7 +254,16 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -289,7 +330,13 @@ margin: 0px;</string>
              <property name="minimumSize">
               <size>
                <width>90</width>
-               <height>0</height>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -315,7 +362,16 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -380,7 +436,7 @@ margin: 0px;</string>
            <item>
             <widget class="Line" name="line">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -389,7 +445,13 @@ margin: 0px;</string>
              <property name="minimumSize">
               <size>
                <width>90</width>
-               <height>0</height>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -415,7 +477,16 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -478,14 +549,14 @@ margin: 0px;</string>
             </widget>
            </item>
            <item>
-            <spacer name="horizontalSpacer_3">
+            <spacer name="verticalSpacer_12">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>601</width>
-               <height>20</height>
+               <width>20</width>
+               <height>178</height>
               </size>
              </property>
             </spacer>
@@ -495,7 +566,13 @@ margin: 0px;</string>
              <property name="minimumSize">
               <size>
                <width>90</width>
-               <height>0</height>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -521,7 +598,16 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -585,23 +671,31 @@ margin: 0px;</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="Ventas">
-          <attribute name="title">
+         <widget class="QWidget" name="page_4">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>116</width>
+            <height>633</height>
+           </rect>
+          </property>
+          <attribute name="label">
            <string>Ventas</string>
           </attribute>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <property name="topMargin">
-            <number>3</number>
-           </property>
-           <property name="bottomMargin">
-            <number>3</number>
-           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_15">
            <item>
             <widget class="QFrame" name="frame_7">
              <property name="minimumSize">
               <size>
                <width>90</width>
-               <height>0</height>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -627,7 +721,16 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -694,7 +797,13 @@ margin: 0px;</string>
              <property name="minimumSize">
               <size>
                <width>90</width>
-               <height>0</height>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -720,7 +829,16 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -787,7 +905,13 @@ margin: 0px;</string>
              <property name="minimumSize">
               <size>
                <width>90</width>
-               <height>0</height>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -813,7 +937,16 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -880,7 +1013,13 @@ margin: 0px;</string>
              <property name="minimumSize">
               <size>
                <width>90</width>
-               <height>0</height>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -906,7 +1045,16 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -971,7 +1119,7 @@ margin: 0px;</string>
            <item>
             <widget class="Line" name="line_2">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -980,7 +1128,13 @@ margin: 0px;</string>
              <property name="minimumSize">
               <size>
                <width>90</width>
-               <height>0</height>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -1006,7 +1160,16 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -1069,14 +1232,14 @@ margin: 0px;</string>
             </widget>
            </item>
            <item>
-            <spacer name="horizontalSpacer_4">
+            <spacer name="verticalSpacer_13">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>505</width>
-               <height>20</height>
+               <width>20</width>
+               <height>87</height>
               </size>
              </property>
             </spacer>
@@ -1086,7 +1249,13 @@ margin: 0px;</string>
              <property name="minimumSize">
               <size>
                <width>90</width>
-               <height>0</height>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -1112,7 +1281,16 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -1881,18 +2059,12 @@ background-color: rgb(255, 255, 255);</string>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(219, 228, 255);</string>
         </property>
-        <widget class="QWidget" name="stackedWidgetPage1">
-         <zorder>tabWidget</zorder>
-         <zorder>tabWidget</zorder>
-         <zorder>frame</zorder>
-        </widget>
+        <widget class="QWidget" name="stackedWidgetPage1"/>
        </widget>
       </item>
      </layout>
     </item>
    </layout>
-   <zorder>stackedWidget</zorder>
-   <zorder>frame_3</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
