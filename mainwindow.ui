@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1139</width>
+    <width>1160</width>
     <height>735</height>
    </rect>
   </property>
@@ -79,30 +79,21 @@
        <property name="spacing">
         <number>1</number>
        </property>
-       <property name="leftMargin">
-        <number>1</number>
-       </property>
-       <property name="topMargin">
-        <number>1</number>
-       </property>
-       <property name="rightMargin">
-        <number>1</number>
-       </property>
-       <property name="bottomMargin">
+       <property name="margin">
         <number>1</number>
        </property>
        <item>
         <widget class="QToolBox" name="toolBox">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page_3">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>116</width>
-            <height>638</height>
+            <width>114</width>
+            <height>633</height>
            </rect>
           </property>
           <attribute name="label">
@@ -125,7 +116,7 @@
              </property>
              <property name="styleSheet">
               <string notr="true">QFrame {
-border: 2px;
+border:1px;
 border-style:solid;
 border-radius: 10px;
 padding: 2px;
@@ -146,16 +137,7 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -233,7 +215,7 @@ margin: 0px;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QFrame {
-border: 2px;
+border: 1px;
 border-style:solid;
 border-radius: 10px;
 padding: 2px;
@@ -254,16 +236,7 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -341,7 +314,7 @@ margin: 0px;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QFrame {
-border: 2px;
+border: 1px;
 border-style:solid;
 border-radius: 10px;
 padding: 2px;
@@ -362,16 +335,7 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -456,7 +420,7 @@ margin: 0px;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QFrame {
-border: 2px;
+border: 1px;
 border-style:solid;
 border-radius: 10px;
 padding: 2px;
@@ -477,16 +441,7 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -598,16 +553,7 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -676,7 +622,7 @@ margin: 0px;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>116</width>
+            <width>114</width>
             <height>633</height>
            </rect>
           </property>
@@ -700,7 +646,7 @@ margin: 0px;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QFrame {
-border: 2px;
+border: 1px;
 border-style:solid;
 border-radius: 10px;
 padding: 2px;
@@ -721,16 +667,7 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -808,7 +745,7 @@ margin: 0px;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QFrame {
-border: 2px;
+border: 1px;
 border-style:solid;
 border-radius: 10px;
 padding: 2px;
@@ -829,16 +766,7 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -916,7 +844,7 @@ margin: 0px;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QFrame {
-border: 2px;
+border: 1px;
 border-style:solid;
 border-radius: 10px;
 padding: 2px;
@@ -937,16 +865,7 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -1024,7 +943,7 @@ margin: 0px;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QFrame {
-border: 2px;
+border: 1px;
 border-style:solid;
 border-radius: 10px;
 padding: 2px;
@@ -1045,16 +964,7 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -1139,7 +1049,7 @@ margin: 0px;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QFrame {
-border: 2px;
+border: 1px;
 border-style:solid;
 border-radius: 10px;
 padding: 2px;
@@ -1160,16 +1070,7 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -1260,7 +1161,7 @@ margin: 0px;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QFrame {
-border: 2px;
+border: 1px;
 border-style:solid;
 border-radius: 10px;
 padding: 2px;
@@ -1281,16 +1182,7 @@ background-color:#AFC3E1;
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -2071,8 +1963,8 @@ background-color: rgb(255, 255, 255);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1139</width>
-     <height>21</height>
+     <width>1160</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivos">

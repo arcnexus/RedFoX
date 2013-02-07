@@ -17,8 +17,8 @@
 // Email   : marcmirallesbiosca +(simboloarroba)+ gmail DOT com
 // Web-Site: http://www.informatica-intelligent.com
 
-
 #include "mainwindow.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 
    MainWindow w;
    w.setWindowState(Qt::WindowMaximized );
-    
+   w.show();
     return a.exec();
 }
 

@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     on_edit = false;
+    //this->setWindowFlags(Qt::WindowMinMaxButtonsHint);
     //ui->ventas_toolBar->hide();
 
     if (medic)
@@ -102,12 +103,12 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 void MainWindow::init()
 {
-    Login dlg(this);
-    if ( dlg.exec()==QDialog::Accepted)
+    Login * dlg= new Login();
+    if ( dlg->exec()==QDialog::Accepted)
 	{
 		// capturo usuario
-        user = dlg.getUsuario();
-        pass = dlg.getPass();
+        user = dlg->getUsuario();
+        pass = dlg->getPass();
         ui->lineUsuarioActivo->setText(user);
         Configuracion_global->cUsuarioActivo = user;
 
@@ -118,7 +119,7 @@ void MainWindow::init()
 		//TODO - Ocultar controles
 
 		// capturo empresa
-        QString Empresa = dlg.getEmpresa();
+        QString Empresa = dlg->getEmpresa();
 		ui->lineEmpresaActiva->setText(Empresa);
 
 		// Configuramos valores empresa activa
@@ -184,7 +185,7 @@ void MainWindow::init()
             settings.setValue("cCuentaClientes",Configuracion_global->cCuentaClientes);
             settings.setValue("cCuentaProveedores",Configuracion_global->cCuentaProveedores);
             settings.setValue("cCuentaAcreedores",Configuracion_global->cCuentaAcreedores);
-			settings.setValue("Clave1",record.field("clave1").value().toString());
+            settings.setValue("Clave1",record.field("clave1").value().toString());
             settings.setValue("Clave2",record.field("clave2").value().toString());
             progress.setValue(4);
             QApplication::processEvents();
@@ -271,8 +272,10 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmCajaMinuta);
             progress.setValue(15);
 
-            this->show();
+            //resize(desktop->width(),height());
+            this->showMaximized();
             QApplication::processEvents();
+            dlg->deleteLater();
 		} 
 		else
 			qDebug() <<"Fallo la conexión al fichero Medico";
