@@ -1,6 +1,6 @@
 #include "frmcajaminuta.h"
 #include "ui_frmcajaminuta.h"
-#include "../articulo.h"
+#include "Almacen/articulo.h"
 
 /*Pendiente de cobro:
 background-color: rgb(192, 0, 0);

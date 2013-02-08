@@ -82,7 +82,7 @@ bool Configuracion::EsNumero(QString texto)
 void Configuracion::Cargar_iva()
 {
     ivas.clear();
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(QSqlDatabase::database("terra"));
     if(query.exec("SELECT * FROM tiposiva"))
     {
         while(query.next())
@@ -92,7 +92,7 @@ void Configuracion::Cargar_iva()
         }
     }
     if(iva_model == 0)
-        iva_model = new QSqlTableModel(this,QSqlDatabase::database("empresa"));
+        iva_model = new QSqlTableModel(this,QSqlDatabase::database("terra"));
     iva_model->setTable("tiposiva");
     iva_model->select();
 }
@@ -100,7 +100,7 @@ void Configuracion::Cargar_iva()
 void Configuracion::Cargar_paises()
 {
     paises.clear();
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(QSqlDatabase::database("terra"));
     if(query.exec("SELECT * FROM paises"))
     {
         while(query.next())
@@ -110,7 +110,7 @@ void Configuracion::Cargar_paises()
         }
     }
     if(paises_model == 0)
-        paises_model = new QSqlTableModel(this,QSqlDatabase::database("empresa"));
+        paises_model = new QSqlTableModel(this,QSqlDatabase::database("terra"));
     paises_model->setTable("paises");
     paises_model->select();
 }

@@ -3,7 +3,7 @@
 #include "albaran.h"
 #include "Zona_Pacientes/cliente.h"
 //
-#include "articulo.h"
+#include "Almacen/articulo.h"
 
 Albaran *oAlbaran = new Albaran();
 Cliente *oCliente2 = new Cliente();

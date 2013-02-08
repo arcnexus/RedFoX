@@ -62,7 +62,7 @@
            <string>Añadir</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
           </property>
           <property name="iconSize">
@@ -91,7 +91,7 @@
            <string>Siguiente</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
           </property>
           <property name="iconSize">
@@ -120,7 +120,7 @@
            <string>Anterior</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
           </property>
           <property name="iconSize">
@@ -149,7 +149,7 @@
            <string>Buscar</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
           </property>
           <property name="iconSize">
@@ -178,7 +178,7 @@
            <string>Editar</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
           </property>
           <property name="iconSize">
@@ -207,7 +207,7 @@
            <string>Guardar</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
           </property>
           <property name="iconSize">
@@ -236,7 +236,7 @@
            <string>Deshacer</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
           </property>
           <property name="iconSize">
@@ -265,7 +265,7 @@
            <string>Borrar</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
           </property>
           <property name="iconSize">
@@ -294,7 +294,7 @@
            <string>Listados</string>
           </property>
           <property name="icon">
-           <iconset resource="terra.qrc">
+           <iconset resource="../terra.qrc">
             <normaloff>:/Icons/PNG/List.png</normaloff>:/Icons/PNG/List.png</iconset>
           </property>
           <property name="iconSize">
@@ -553,7 +553,7 @@ background-color: rgb(254, 255, 205);</string>
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="terra.qrc">
+               <iconset resource="../terra.qrc">
                 <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
               </property>
               <property name="iconSize">
@@ -987,7 +987,7 @@ color: rgb(0, 0, 0);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="terra.qrc">
+                <iconset resource="../terra.qrc">
                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                </property>
                <property name="iconSize">
@@ -1046,7 +1046,7 @@ color: rgb(0, 0, 0);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="terra.qrc">
+                <iconset resource="../terra.qrc">
                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                </property>
                <property name="iconSize">
@@ -1105,7 +1105,7 @@ color: rgb(0, 0, 0);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="terra.qrc">
+                <iconset resource="../terra.qrc">
                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                </property>
                <property name="iconSize">
@@ -1164,7 +1164,7 @@ color: rgb(0, 0, 0);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="terra.qrc">
+                <iconset resource="../terra.qrc">
                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                </property>
                <property name="iconSize">
@@ -1223,7 +1223,7 @@ color: rgb(0, 0, 0);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="terra.qrc">
+                <iconset resource="../terra.qrc">
                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                </property>
                <property name="iconSize">
@@ -1674,34 +1674,6 @@ color: rbg(0,0,0);</string>
             </layout>
            </widget>
           </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QFrame" name="frame_15">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>253</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_4">
-             <item row="0" column="0">
-              <widget class="QLineEdit" name="lineEdit_16">
-               <property name="text">
-                <string>AQUÍ VA LA GRÁFICA DE COMPRAS VENTAS</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QFrame" name="frame_4">
             <property name="styleSheet">
@@ -1747,8 +1719,66 @@ color: rbg(0,0,0);</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_17">
-             <item row="0" column="0">
+             <item row="1" column="0">
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="0" colspan="2">
               <widget class="QTableView" name="TablaTarifas"/>
+             </item>
+             <item row="1" column="1">
+              <widget class="QPushButton" name="btnNuevaTarifa">
+               <property name="text">
+                <string>Nueva Tarifa</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../terra.qrc">
+                 <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QFrame" name="frame_15">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>253</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <item row="0" column="0">
+              <widget class="QLineEdit" name="lineEdit_16">
+               <property name="text">
+                <string>AQUÍ VA LA GRÁFICA DE COMPRAS VENTAS</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -1762,6 +1792,19 @@ color: rbg(0,0,0);</string>
          <attribute name="title">
           <string>Promociones artículo</string>
          </attribute>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="geometry">
+           <rect>
+            <x>80</x>
+            <y>70</y>
+            <width>80</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>PushButton</string>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="tab_5">
          <property name="styleSheet">
@@ -1817,7 +1860,7 @@ Imagen.</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="terra.qrc">:/Icons/PNG/paquete.png</pixmap>
+             <pixmap resource="../terra.qrc">:/Icons/PNG/paquete.png</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -1862,7 +1905,7 @@ Imagen.</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="terra.qrc">:/Icons/PNG/paquete.png</pixmap>
+             <pixmap resource="../terra.qrc">:/Icons/PNG/paquete.png</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -1918,7 +1961,7 @@ Imagen.</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="terra.qrc">:/Icons/PNG/paquete.png</pixmap>
+             <pixmap resource="../terra.qrc">:/Icons/PNG/paquete.png</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -1952,7 +1995,7 @@ Imagen.</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="terra.qrc">:/Icons/PNG/paquete.png</pixmap>
+             <pixmap resource="../terra.qrc">:/Icons/PNG/paquete.png</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -1991,7 +2034,7 @@ Imagen.</string>
               <string notr="true">background-color: #ecefed;</string>
              </property>
              <attribute name="icon">
-              <iconset resource="terra.qrc">
+              <iconset resource="../terra.qrc">
                <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
              </attribute>
              <attribute name="title">
@@ -2028,7 +2071,7 @@ Imagen.</string>
               <item row="0" column="2">
                <widget class="QPushButton" name="botBuscarArtRapido">
                 <property name="icon">
-                 <iconset resource="terra.qrc">
+                 <iconset resource="../terra.qrc">
                   <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                 </property>
                </widget>
@@ -2158,7 +2201,7 @@ Imagen.</string>
   <tabstop>radDescripcion</tabstop>
  </tabstops>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="../terra.qrc"/>
  </resources>
  <connections/>
 </ui>

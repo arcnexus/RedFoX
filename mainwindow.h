@@ -6,7 +6,7 @@
 //
 #include "Zona_Pacientes/frmClientes.h"
 #include "frmfacturas.h"
-#include "frmarticulos.h"
+#include "Almacen/frmarticulos.h"
 #include "frmproveedores.h"
 #include "frmalbaran.h"
 #include "frmpedidos.h"
@@ -76,6 +76,7 @@ private slots:
     void handle_tipoAnalitica();
     void handle_campoAnalitica();
     void handle_motivoInterConsulta();
+    void handle_tipostarifa();
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);

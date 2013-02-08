@@ -38,7 +38,6 @@ SOURCES += main.cpp\
     Zona_Pacientes/frmClientes.cpp \
     login.cpp \
     frmproveedores.cpp \
-    frmarticulos.cpp \
     Zona_Pacientes/cliente.cpp \
     proveedor.cpp \
     Busquedas/frmbuscarcliente.cpp \
@@ -47,7 +46,6 @@ SOURCES += main.cpp\
     Busquedas/frmbuscarpoblacion.cpp \
     configuracion.cpp \
     empresa.cpp \
-    articulo.cpp \
     Busquedas/frmBuscarFactura.cpp \
     columnafecha.cpp \
     Zona_Administrador/frmempresas.cpp \
@@ -90,14 +88,16 @@ SOURCES += main.cpp\
     Auxiliares/comboboxdelegate.cpp \
     TPV/frmcajaminuta.cpp \
     TPV/ticket.cpp \
-    TPV/lineaticket.cpp
+    TPV/lineaticket.cpp \
+    Almacen/frmtarifas.cpp \
+    Almacen/frmarticulos.cpp \
+    Almacen/articulo.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
     Zona_Pacientes/frmClientes.h \
     login.h \
     frmproveedores.h \
-    frmarticulos.h \
     Zona_Pacientes/cliente.h \
     proveedor.h \
     Busquedas/frmbuscarcliente.h \
@@ -106,7 +106,6 @@ HEADERS  += mainwindow.h \
     Busquedas/frmbuscarpoblacion.h \
     configuracion.h \
     empresa.h \
-    articulo.h \
     Busquedas/frmBuscarFactura.h \
     columnafecha.h \
     Zona_Administrador/frmempresas.h \
@@ -149,14 +148,16 @@ HEADERS  += mainwindow.h \
     Auxiliares/comboboxdelegate.h \
     TPV/frmcajaminuta.h \
     TPV/ticket.h \
-    TPV/lineaticket.h
+    TPV/lineaticket.h \
+    Almacen/frmtarifas.h \
+    Almacen/frmarticulos.h \
+    Almacen/articulo.h
 
 
 FORMS    += mainwindow.ui \
     Zona_Pacientes/frmClientes.ui \
     login.ui \
     frmproveedores.ui \
-    frmarticulos.ui \
     Busquedas/frmbuscarcliente.ui \
     frmfacturas.ui \
     pruebas.ui \
@@ -183,10 +184,12 @@ FORMS    += mainwindow.ui \
     Zona_Administrador/copy_db_progressfrm.ui \
     db_table_view.ui \
     Auxiliares/search_lineedit.ui \
-    TPV/frmcajaminuta.ui
+    TPV/frmcajaminuta.ui \
+    Almacen/frmtarifas.ui \
+    Almacen/frmarticulos.ui
 
 RESOURCES += \
-    terra.qrc
+    terra.qrc \
 
 OTHER_FILES += \
     TODO.txt

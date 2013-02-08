@@ -2,7 +2,7 @@
 #include "ui_frmpedidos.h"
 
 
-#include "articulo.h"
+#include "Almacen/articulo.h"
 
 #include "Busquedas/frmbuscarcliente.h"
 

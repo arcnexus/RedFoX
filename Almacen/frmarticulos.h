@@ -37,14 +37,6 @@ private slots:
 
     void on_botDeshacer_clicked();
 
-    void on_txtrTarifa1_editingFinished();
-
-    void on_txtrTarifa1_2_editingFinished();
-
-    void on_txtrTarifa2_editingFinished();
-
-    void on_txtrTarifa3_editingFinished();
-
     void on_botBuscarArtRapido_clicked();
 
     void on_TablaBuscarArt_doubleClicked(const QModelIndex &index);
@@ -54,6 +46,9 @@ private slots:
     void on_botBuscarFamilia_clicked();
 
     void on_botBuscarSubfamilia_clicked();
+
+    void on_btnNuevaTarifa_clicked();
+
 
 public slots:
     void AnadirSeccion();

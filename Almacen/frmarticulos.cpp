@@ -1,6 +1,6 @@
 #include "frmarticulos.h"
 #include "ui_frmarticulos.h"
-//
+#include "Almacen/frmtarifas.h"
 
 #include "db_table_view.h"
 
@@ -276,10 +276,6 @@ void FrmArticulos::LLenarCampos()
    else
        ui->chklControlarStock->setChecked(false);
 
-   if (oArticulo->lPvpIncluyeIva== 1)
-        ui->chklPvpIncluyeIva->setChecked(true);
-   else
-        ui->chklPvpIncluyeIva->setChecked(false);
    ui->txtnCantidadPendienteRecibir->setText(QString::number(oArticulo->nCantidadPendienteRecibir));
    ui->txtdFechaPrevistaRecepcion->setDate(oArticulo->dFechaPrevistaRecepcion);
    ui->txtnReservados->setText(QString::number(oArticulo->nReservados));
@@ -304,16 +300,9 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->nTipoIva=ui->cboTipoIVA->currentText().toDouble();
     oArticulo->rCoste=ui->txtrCoste->text().toDouble();
     oArticulo->rTarifa1=ui->txtrTarifa1->text().toDouble();
-    oArticulo->rTarifa2=ui->txtrTarifa1_2->text().toDouble();
     oArticulo->rTarifa3=ui->txtrDto->text().toDouble();
-    oArticulo->nDtoProveedor=ui->txtnDtoProveedor->text().toDouble();
-    oArticulo->nDtoProveedor2=ui->txtnDtoProveedor2->text().toDouble();
-    oArticulo->nDtoProveedor3=ui->txtnDtoProveedor3->text().toDouble();
     oArticulo->dUltimaCompra= ui->txtdFechaUltimaCompra->date();
     oArticulo->dUltimaVenta= ui->txtdFechaUltimaVenta->date();
-    oArticulo->nMargen1= ui->txtnMargen1->text().toDouble();
-    oArticulo->nMargen2= ui->txtnMargen2->text().toDouble();
-    oArticulo->nMargen3= ui->txtnMargen3->text().toDouble();
     oArticulo->rPrecioMedio= ui->txtrPrecioMedio1->text().toDouble();
     oArticulo->rPrecioMedio2= ui->txtrPrecioMedio2->text().toDouble();
     oArticulo->rPrecioMedio3= ui->txtrPrecioMedio3->text().toDouble();
@@ -329,10 +318,7 @@ void FrmArticulos::CargarCamposEnArticulo()
         oArticulo->lControlarStock=1;
     else
         oArticulo->lControlarStock=0;
-    if(ui->chklPvpIncluyeIva->isChecked())
-        oArticulo->lPvpIncluyeIva = 1;
-    else
-        oArticulo->lPvpIncluyeIva=0;
+
     oArticulo->nCantidadPendienteRecibir=ui->txtnCantidadPendienteRecibir->text().toInt();
     oArticulo->dFechaPrevistaRecepcion =ui->txtdFechaPrevistaRecepcion->date();
     oArticulo->nReservados =ui->txtnReservados->text().toInt();
@@ -358,16 +344,9 @@ void FrmArticulos::VaciarCampos()
    ui->cboTipoIVA->setEditText("");
    ui->txtrCoste->clear();
    ui->txtrTarifa1->clear();
-   ui->txtrTarifa1_2->clear();
    ui->txtrDto->clear();
-   ui->txtnDtoProveedor->clear();
-   ui->txtnDtoProveedor2->clear();
-   ui->txtnDtoProveedor3->clear();
    ui->txtdFechaUltimaCompra->clear();
    ui->txtdFechaUltimaVenta->clear();
-   ui->txtnMargen1->clear();
-   ui->txtnMargen2->clear();
-   ui->txtnMargen3->clear();
    ui->txtrPrecioMedio1->clear();
    ui->txtrPrecioMedio2->clear();
    ui->txtrPrecioMedio3->clear();
@@ -381,7 +360,6 @@ void FrmArticulos::VaciarCampos()
    ui->txtnStockReal->clear();
    ui->txtnStockReal_2->clear();
    ui->chklControlarStock->setChecked(false);
-   ui->chklPvpIncluyeIva->setChecked(false);
    ui->txtnCantidadPendienteRecibir->clear();
    ui->txtdFechaPrevistaRecepcion->clear();
    ui->txtnReservados->clear();
@@ -487,27 +465,6 @@ void FrmArticulos::on_botDeshacer_clicked()
     bloquearCampos();
 }
 
-void FrmArticulos::on_txtrTarifa1_editingFinished()
-{
-    ui->txtrTarifa1_2->setText(ui->txtrTarifa1->text());
-}
-
-
-void FrmArticulos::on_txtrTarifa1_2_editingFinished()
-{
-    ui->txtrTarifa1_2->setText( Configuracion_global->FormatoNumerico(ui->txtrTarifa1_2->text()));
-    ui->txtrTarifa1->setValue(ui->txtrTarifa1_2->text().toDouble());
-}
-
-void FrmArticulos::on_txtrTarifa2_editingFinished()
-{
-    ui->txtrTarifa2->setText( Configuracion_global->FormatoNumerico(ui->txtrTarifa2->text()));
-}
-
-void FrmArticulos::on_txtrTarifa3_editingFinished()
-{
-    ui->txtrTarifa3->setText( Configuracion_global->FormatoNumerico(ui->txtrTarifa3->text()));
-}
 
 void FrmArticulos::on_botBuscarArtRapido_clicked()
 {
@@ -655,4 +612,10 @@ void FrmArticulos::on_botBuscarSubfamilia_clicked()
     {
         ui->txtcSubFamilia->setText(form.selected_value);
     }
- }
+}
+
+void FrmArticulos::on_btnNuevaTarifa_clicked()
+{
+    FrmTarifas ntar;
+    ntar.exec();
+}

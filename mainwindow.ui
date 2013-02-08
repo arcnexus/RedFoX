@@ -84,8 +84,11 @@
        </property>
        <item>
         <widget class="QToolBox" name="toolBox">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
+         </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="page_3">
           <property name="geometry">
@@ -180,7 +183,7 @@ background-color:#AFC3E1;
                <widget class="QLabel" name="label_6">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(255, 255, 255);
-background-color: #4C6088;
+background-color: #304163;
 border-color: #4C6088;
 border-top-left-radius:0px;
  border-top-right-radius:0px;
@@ -279,7 +282,7 @@ background-color:#AFC3E1;
                <widget class="QLabel" name="label_7">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(255, 255, 255);
-background-color: #4C6088;
+background-color: #304163;
 border-color: #4C6088;
 border-top-left-radius:0px;
  border-top-right-radius:0px;
@@ -378,7 +381,7 @@ background-color:#AFC3E1;
                <widget class="QLabel" name="label_8">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(255, 255, 255);
-background-color: #4C6088;
+background-color: #304163;
 border-color: #4C6088;
 border-top-left-radius:0px;
  border-top-right-radius:0px;
@@ -484,7 +487,7 @@ background-color:#AFC3E1;
                <widget class="QLabel" name="label_9">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(255, 255, 255);
-background-color: #4C6088;
+background-color:#304163;
 border-color: #4C6088;
 border-top-left-radius:0px;
  border-top-right-radius:0px;
@@ -596,7 +599,7 @@ background-color:#AFC3E1;
                <widget class="QLabel" name="label_16">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(255, 255, 255);
-background-color: #4C6088;
+background-color: #304163;
 border-color: #4C6088;
 border-top-left-radius:0px;
  border-top-right-radius:0px;
@@ -710,7 +713,7 @@ background-color:#AFC3E1;
                <widget class="QLabel" name="label_10">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(255, 255, 255);
-background-color: #4C6088;
+background-color: #304163;
 border-color: #4C6088;
 border-top-left-radius:0px;
  border-top-right-radius:0px;
@@ -809,7 +812,7 @@ background-color:#AFC3E1;
                <widget class="QLabel" name="label_11">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(255, 255, 255);
-background-color: #4C6088;
+background-color: #304163;
 border-color: #4C6088;
 border-top-left-radius:0px;
  border-top-right-radius:0px;
@@ -908,7 +911,7 @@ background-color:#AFC3E1;
                <widget class="QLabel" name="label_12">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(255, 255, 255);
-background-color: #4C6088;
+background-color:#304163;
 border-color: #4C6088;
 border-top-left-radius:0px;
  border-top-right-radius:0px;
@@ -1007,7 +1010,7 @@ background-color:#AFC3E1;
                <widget class="QLabel" name="label_13">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(255, 255, 255);
-background-color: #4C6088;
+background-color: #304163;
 border-color: #4C6088;
 border-top-left-radius:0px;
  border-top-right-radius:0px;
@@ -1113,7 +1116,7 @@ background-color:#AFC3E1;
                <widget class="QLabel" name="label_14">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(255, 255, 255);
-background-color: #4C6088;
+background-color:#304163;
 border-color: #4C6088;
 border-top-left-radius:0px;
  border-top-right-radius:0px;
@@ -1225,7 +1228,7 @@ background-color:#AFC3E1;
                <widget class="QLabel" name="label_15">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(255, 255, 255);
-background-color: #4C6088;
+background-color:#304163;
 border-color: #4C6088;
 border-top-left-radius:0px;
  border-top-right-radius:0px;
@@ -1981,6 +1984,7 @@ background-color: rgb(255, 255, 255);</string>
     <addaction name="actionBancos"/>
     <addaction name="actionPaises"/>
     <addaction name="actionAvisos"/>
+    <addaction name="actionTarifas"/>
    </widget>
    <widget class="QMenu" name="menuVentas">
     <property name="title">
@@ -2268,6 +2272,11 @@ background-color: rgb(255, 255, 255);</string>
   <action name="actionGrupos">
    <property name="text">
     <string>Grupos</string>
+   </property>
+  </action>
+  <action name="actionTarifas">
+   <property name="text">
+    <string>Grupos de Tarifa</string>
    </property>
   </action>
  </widget>

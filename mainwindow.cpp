@@ -52,6 +52,7 @@ this->setWindowFlags(Qt::WindowCloseButtonHint | Qt::WindowMinMaxButtonsHint);
     connect(ui->actionAvisos,SIGNAL(triggered()),this,SLOT(hande_avisos()));
     connect(ui->actionTipos_de_imagen,SIGNAL(triggered()),this,SLOT(handle_tiposImagen()));
     connect(ui->actionTipos_de_anal_tica,SIGNAL(triggered()),this,SLOT(handle_tipoAnalitica()));
+    connect(ui->actionTarifas,SIGNAL(triggered()), this,SLOT(handle_tipostarifa()));
     connect(ui->actionCampos_de_analitica,SIGNAL(triggered()),this,SLOT(handle_campoAnalitica()));
     connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));
 
@@ -381,7 +382,7 @@ void MainWindow::divisiones_almacen()
     if(sender()== ui->actionGestion_de_Secciones)
     {
         Db_table_View form(this);
-        form.set_db("empresa");
+        form.set_db("terra");
         form.set_table("secciones");
 
         form.setWindowTitle(tr("Secciones"));
@@ -397,7 +398,7 @@ void MainWindow::divisiones_almacen()
     else if (sender() == ui->actionGestion_de_Familias)
     {
         Db_table_View form(this);
-        form.set_db("empresa");
+        form.set_db("terra");
         form.set_table("familias");
 
         form.setWindowTitle(tr("Familias"));
@@ -414,7 +415,7 @@ void MainWindow::divisiones_almacen()
     else if (sender() == ui->actionGestion_de_subfamilias)
     {
         Db_table_View form(this);
-        form.set_db("empresa");
+        form.set_db("terra");
         form.set_table("subfamilias");
 
         form.setWindowTitle(tr("Subfamilias"));
@@ -431,7 +432,7 @@ void MainWindow::divisiones_almacen()
     else if (sender() == ui->actionSubSubFamilias)
     {
         Db_table_View form(this);
-        form.set_db("empresa");
+        form.set_db("terra");
         form.set_table("subsubfamilias");
 
         form.setWindowTitle(tr("SubSubfamilias"));
@@ -448,7 +449,7 @@ void MainWindow::divisiones_almacen()
     else if (sender() == ui->actionGrupos)
     {
         Db_table_View form(this);
-        form.set_db("empresa");
+        form.set_db("terra");
         form.set_table("grupoart");
 
         form.setWindowTitle(tr("Grupo de Articulos"));
@@ -488,7 +489,7 @@ void MainWindow::handle_doctores()
 void MainWindow::handle_bancos()
 {
     Db_table_View form(this);
-    form.set_db("empresa");
+    form.set_db("terra");
     form.set_table("bancos");
 
     form.setWindowTitle(tr("Bancos"));
@@ -505,7 +506,7 @@ void MainWindow::handle_bancos()
 void MainWindow::handle_tiposIVA()
 {
     Db_table_View form(this);
-    form.set_db("empresa");
+    form.set_db("terra");
     form.set_table("tiposiva");
 
     form.setWindowTitle(tr("Tipos de I.V.A"));
@@ -525,7 +526,7 @@ void MainWindow::handle_tiposIVA()
 void MainWindow::handle_fomasPago()
 {
     Db_table_View form(this);
-    form.set_db("empresa");
+    form.set_db("terra");
     form.set_table("FormPago");
 
     form.setWindowTitle(tr("Formas de pago"));
@@ -542,7 +543,7 @@ void MainWindow::handle_fomasPago()
 void MainWindow::handle_paises()
 {
     Db_table_View form(this);
-    form.set_db("empresa");
+    form.set_db("terra");
     form.set_table("paises");
 
     form.setWindowTitle(tr("Paises"));
@@ -559,7 +560,7 @@ void MainWindow::handle_paises()
 void MainWindow::hande_avisos()
 {
     Db_table_View form(this);
-    form.set_db("empresa");
+    form.set_db("terra");
     form.set_table("avisos");
 
     form.setWindowTitle(tr("Avisos"));
@@ -637,6 +638,23 @@ void MainWindow::handle_motivoInterConsulta()
     form.set_table_headers(headers);
 
     form.set_columnHide(0);
+    form.exec();
+}
+
+
+void MainWindow::handle_tipostarifa()
+{
+    Db_table_View form(this);
+    form.set_db("terra");
+    form.set_table("codigotarifa");
+
+    form.setWindowTitle(tr("Tipos de tarifa"));
+
+    QStringList headers;
+    headers << tr("Descripción Tarifa");
+    form.set_table_headers(headers);
+
+    form.set_columnHide(400);
     form.exec();
 }
 

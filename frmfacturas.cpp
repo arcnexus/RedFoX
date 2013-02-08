@@ -3,7 +3,7 @@
 #include "Busquedas/frmbuscarcliente.h"
 #include "Busquedas/frmBuscarFactura.h"
 
-#include "articulo.h"
+#include "Almacen/articulo.h"
 
 frmFacturas::frmFacturas( QWidget *parent) :
     QDialog(parent),

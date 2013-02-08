@@ -3,7 +3,7 @@
 #include <QSqlQueryModel>
 
 #include "Busquedas/frmbuscarcliente.h"
-#include "articulo.h"
+#include "Almacen/articulo.h"
 #include <QMessageBox>
 
 
