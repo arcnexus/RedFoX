@@ -1,15 +1,18 @@
 #include "configuracion.h"
-
+#include <QLineEdit>
 Configuracion::Configuracion(QObject* parent) :
     QObject(parent)
 {
     iva_model = 0;
     paises_model = 0;
+    validator_cantidad = new QDoubleValidator(-99999999999999999.00,99999999999999999.00,2,this);
+    validator_porciento = new QDoubleValidator(0,100,2,this);
 }
 
 
 QString Configuracion::FormatoNumerico(QString cTexto)
 {
+    /*
     // Cambio . por , o por signo elegido por los usuarios
     int tamano = cTexto.length();
     int posDec;
@@ -59,7 +62,33 @@ QString Configuracion::FormatoNumerico(QString cTexto)
 
         cTexto.insert(1, ".");
     }
-    return cTexto;
+    return cTexto;*/
+    cTexto = cTexto.remove(".");
+    QString ret = "";
+    int pos=cTexto.size()-1;
+
+    int inicio = -1;
+    if(cTexto.contains("-"))
+        inicio++;
+
+    if(cTexto.contains(","))
+    {
+        pos = cTexto.lastIndexOf(",");
+        ret.prepend(cTexto.mid(pos));
+        pos--;
+    }
+    int b = 0;
+    for (int i = pos;i>inicio;i--)
+    {
+        ret.prepend(cTexto.at(i));
+
+        if((((b+1)%3) == 0)&& (i!=inicio+1))
+            ret.prepend(".");
+        b++;
+    }
+    if(cTexto.contains("-"))
+        ret.prepend("-");
+    return ret;
 }
 
 bool Configuracion::EsNumero(QString texto)
@@ -206,7 +235,7 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
     int primerdigito = 11 - resto;
     if (primerdigito == 10)
             primerdigito = 1;
-    if (primerdigito = 11)
+    if (primerdigito == 11)
         primerdigito = 0;
 
     longitud = CC.length();
@@ -227,6 +256,18 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
     //Digitos de Control
     QString cdc = QString::number(primerdigito) + QString::number(segundodigito);
     return cdc;
+}
+
+void Configuracion::format_text()
+{
+    QLineEdit * lineEdit = qobject_cast<QLineEdit*>(sender());
+    if(lineEdit)
+    {
+        lineEdit->blockSignals(true);        
+        lineEdit->setText(FormatoNumerico(lineEdit->text()));
+        QApplication::processEvents();
+        lineEdit->blockSignals(false);
+    }
 }
 
 

@@ -4,7 +4,7 @@
 #include "../Busquedas/frmbuscarpoblacion.h"
 
 #ifdef WIN32
-    #define and &&
+    //#define and &&
 #endif
 
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
@@ -206,7 +206,7 @@ void FrmEmpresas::on_botGuardar_clicked()
 void FrmEmpresas::txtcPoblacion_editingFinished()
 {
     ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
-    if (ui->txtcCP->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty())
+    if (ui->txtcCP->text().isEmpty() && !ui->txtcPoblacion->text().isEmpty())
     {
        FrmBuscarPoblacion BuscarPoblacion;
        BuscarPoblacion.setcPoblacion(ui->txtcPoblacion->text(),1);
@@ -244,7 +244,7 @@ void FrmEmpresas::txtcPoblacion_editingFinished()
 }
 void FrmEmpresas::txtcCp_editingFinished()
 {
-    if (!ui->txtcCP->text().isEmpty() and ui->txtcPoblacion->text().isEmpty())
+    if (!ui->txtcCP->text().isEmpty() && ui->txtcPoblacion->text().isEmpty())
     {
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcCP->text(),0);

@@ -65,7 +65,7 @@ public:
 
     Articulo(QObject* parent = 0);
     void Anadir();
-    void Recuperar(QString cSQL);
+    bool Recuperar(QString cSQL);
     void Recuperar(QString cSQL,int nProcede);
     void Guardar();
     void Vaciar();

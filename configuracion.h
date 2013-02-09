@@ -12,6 +12,7 @@
 #include <QSqlRecord>
 #include <QSqlTableModel>
 #include <QObject>
+#include <QDoubleValidator>
 class Configuracion: public QObject
 {
     Q_OBJECT
@@ -75,7 +76,10 @@ public:
     QString ValidarCC(QString Entidad,QString Oficina, QString DC, QString CC);
     QString ValidarCC(QString Entidad, QString Oficina, QString CC);
 
-
+    QDoubleValidator *validator_cantidad;
+    QDoubleValidator *validator_porciento;
+public slots:
+    void format_text();
 };
 
 #endif // CONFIGURACION_H
