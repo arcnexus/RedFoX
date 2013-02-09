@@ -719,7 +719,7 @@ background-color: rgb(254, 255, 205);</string>
               <item row="1" column="0">
                <widget class="QCheckBox" name="checkBox">
                 <property name="text">
-                 <string>CheckBox</string>
+                 <string>Controlar stock</string>
                 </property>
                </widget>
               </item>
