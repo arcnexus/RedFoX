@@ -21,7 +21,27 @@ Login::Login(QWidget *parent) :
     connect(ui->btnEmpresa,SIGNAL(clicked()),this,SLOT(btnEmpresa_clicked()));
     connect(ui->Crearconfiguracin,SIGNAL(clicked()),this,SLOT(Crearconfiguracion_clicked()));
 
-	QTimer::singleShot(0,this,SLOT(init()));
+    Configuracion_global = new Configuracion;
+    Configuracion_global->CargarDatos();
+    QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDTerra,"terra");
+
+    if (Configuracion_global->cDriverBDTerra == "QSQLITE")
+    {
+        dbTerra.setDatabaseName(Configuracion_global->cRutaBdTerra);
+        dbTerra.open();
+    }
+    else
+    {
+        dbTerra.setDatabaseName("TerraGeneral");
+        dbTerra.setHostName(Configuracion_global->cHostBDTerra);
+        dbTerra.open(Configuracion_global->cUsuarioBDTerra,Configuracion_global->cPasswordBDTerra);
+        dbTerra.open(Configuracion_global->cUsuarioBDTerra,Configuracion_global->cPasswordBDTerra);
+    }
+    if (dbTerra.lastError().isValid())
+    {
+        QMessageBox::critical(0, "error:", dbTerra.lastError().text());
+    }
+    init();
 }
 
 Login::~Login()
@@ -48,6 +68,7 @@ const QString Login::getEmpresa() const
 
 void Login::on_btnAcceder_clicked()
 {
+
     QSqlQuery qryUsers(QSqlDatabase::database("terra"));
 
     qryUsers.prepare( "SELECT * FROM usuarios where nombre =:Nombre" );

@@ -1,6 +1,6 @@
 #include "frmcajaminuta.h"
 #include "ui_frmcajaminuta.h"
-#include "Almacen/articulo.h"
+#include "../Almacen/articulo.h"
 #include "../Auxiliares/spinboxdelegate.h"
 
 /*Pendiente de cobro:
@@ -23,7 +23,7 @@ FrmCajaMinuta::FrmCajaMinuta(QWidget *parent) :
 
     ui->setupUi(this);
     connect(ui->lineas,SIGNAL(itemSelectionChanged()),this,SLOT(linea_itemSelectionChanged()));
-    ui->txtPVPArticulo->setValidator(Configuracion_global->validator_cantidad);
+    //ui->txtPVPArticulo->setValidator(Configuracion_global->validator_cantidad);
     connect(ui->txtPVPArticulo,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
     QList<QWidget*> childs = this->findChildren<QWidget*>();
     QWidget* wid;
@@ -98,7 +98,8 @@ bool FrmCajaMinuta::eventFilter(QObject *target, QEvent *event)
 
         else if(target == ui->txtcCodigoArticulo)
         {
-            keys_onCodigo(key);
+            if(keys_onCodigo(key))
+                return true;
         }
         else if(target == ui->lineas)
         {
@@ -136,9 +137,9 @@ bool FrmCajaMinuta::eventFilter(QObject *target, QEvent *event)
     return false;
 }
 
-void FrmCajaMinuta::keys_onCodigo(int key)
+bool FrmCajaMinuta::keys_onCodigo(int key)
 {
-    if((key==Qt::Key_Return)||(key==Qt::Key_Enter))
+    if((key==Qt::Key_Return)||(key==Qt::Key_Enter)|| key==Qt::Key_Tab)
     {
         if(rellenarArticulo(ui->txtcCodigoArticulo->text()))
         {
@@ -161,7 +162,10 @@ void FrmCajaMinuta::keys_onCodigo(int key)
         ui->txtDtoArticulo->setValue(0);
         ui->txttotalArticulo->setText("");
         ui->txtSubtotalArticulo->setText("");
+        ui->txtcCodigoArticulo->setFocus();
+        return true;
     }
+    return false;
 }
 
 bool FrmCajaMinuta::keys_lineas(int key)

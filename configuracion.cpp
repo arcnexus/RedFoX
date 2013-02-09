@@ -12,83 +12,52 @@ Configuracion::Configuracion(QObject* parent) :
 
 QString Configuracion::FormatoNumerico(QString cTexto)
 {
-    /*
-    // Cambio . por , o por signo elegido por los usuarios
-    int tamano = cTexto.length();
-    int posDec;
-    posDec = tamano -3;
-    if ((cTexto.midRef(posDec,1) !=".") && (cTexto.midRef(posDec,1) != ",") &&  (cTexto.midRef((posDec+1),1) !=".")
-            &&  (cTexto.midRef((posDec+1),1) !=".")) {
-
-        cTexto.append(",00") ;
-    } else {
-        if ((cTexto.midRef((posDec+1),1) =="."))
-            cTexto.append("0");
-    }
-    cTexto.replace(".",",");
-    //qDebug() << "Tamaño: " << tamano << "PosDec" <<posDec << cTexto.midRef(posDec,1);
-
-    if (cTexto.length()==14) {
-        cTexto.insert(2,".");
-        cTexto.insert(6,".");
-        cTexto.insert(10,".");
-    }
-    if (cTexto.length()==13) {
-        cTexto.insert(1,".");
-        cTexto.insert(5,".");
-        cTexto.insert(9,".");
-    }
-    if (cTexto.length()==12) {
-        cTexto.insert(3,".");
-        cTexto.insert(7,".");
-    }
-    if (cTexto.length()==11) {
-        cTexto.insert(2,".");
-        cTexto.insert(6,".");
-    }
-    if (cTexto.length()== 10) {
-        cTexto.insert(1,".");
-        cTexto.insert(5,".");
-    }
-    if (cTexto.length() == 9 ) {
-
-        cTexto.insert(3, ".");
-    }
-    if (cTexto.length() == 8 ) {
-
-        cTexto.insert(2, ".");
-    }
-    if (cTexto.length() == 7 ) {
-
-        cTexto.insert(1, ".");
-    }
-    return cTexto;*/
-    cTexto = cTexto.remove(".");
-    QString ret = "";
-    int pos=cTexto.size()-1;
-
-    int inicio = -1;
-    if(cTexto.contains("-"))
-        inicio++;
-
-    if(cTexto.contains(","))
+    QString aux = cTexto;
+    aux.remove(",");
+    aux.remove(".");
+    aux.remove("-");
+    aux.remove("$");
+    aux.remove("€");
+    aux.remove("£");
+    bool is_num;
+    aux.toDouble(&is_num);
+    if(is_num)
     {
-        pos = cTexto.lastIndexOf(",");
-        ret.prepend(cTexto.mid(pos));
-        pos--;
-    }
-    int b = 0;
-    for (int i = pos;i>inicio;i--)
-    {
-        ret.prepend(cTexto.at(i));
+        int last_dot = cTexto.lastIndexOf(".");
+        int last_comma = cTexto.lastIndexOf(",");
+        int pos = qMax(last_dot,last_comma);
 
-        if((((b+1)%3) == 0)&& (i!=inicio+1))
-            ret.prepend(".");
-        b++;
+        QString ret = "";
+
+        int inicio = -1;
+        if(cTexto.contains("-"))
+            inicio++;
+
+        if(pos!=-1)
+        {
+            ret.prepend(cTexto.mid(pos));
+            pos--;
+        }
+
+        int b = 0;
+        for (int i = pos;i>inicio;i--)
+        {
+            if(!((cTexto.at(i)!='.') && (cTexto.at(i)!= ',')))
+                continue;
+
+            ret.prepend(cTexto.at(i));
+
+            if((((b+1)%3) == 0)&& (i!=inicio+1))
+                ret.prepend(".");
+            b++;
+        }
+        if(cTexto.contains("-"))
+            ret.prepend("-");
+
+        return ret;
     }
-    if(cTexto.contains("-"))
-        ret.prepend("-");
-    return ret;
+    else
+        return "";
 }
 
 bool Configuracion::EsNumero(QString texto)

@@ -17,8 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     on_edit = false;
-    //ui->ventas_toolBar->hide();
-this->setWindowFlags(Qt::WindowCloseButtonHint | Qt::WindowMinMaxButtonsHint);
+
     if (medic)
         ui->btnClientes->setText(tr("Pacientes"));
     else
@@ -33,7 +32,6 @@ this->setWindowFlags(Qt::WindowCloseButtonHint | Qt::WindowMinMaxButtonsHint);
     // ----------------------------------------------------------------------------
     connect(ui->btnSalir,SIGNAL(triggered()),this,SLOT(close()));
     connect(ui->btn_salir,SIGNAL(clicked()),this,SLOT(close()));
-    connect(ui->btn_salir_2,SIGNAL(clicked()),this,SLOT(close()));
 
     connect(ui->actionManten,SIGNAL(triggered()),this,SLOT(btnMantenimientos_clicked()));
     connect(ui->action_ventas,SIGNAL(triggered()),this,SLOT(btnVentas_clicked()));
@@ -75,57 +73,23 @@ this->setWindowFlags(Qt::WindowCloseButtonHint | Qt::WindowMinMaxButtonsHint);
     connect(ui->btn_factura,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
     connect(ui->btn_tpv,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
 
-    Configuracion_global = new Configuracion(this);
-    Configuracion_global->CargarDatos();
-
-    // Abro Base de Datos
-    QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDTerra,"terra");
-
-    if (Configuracion_global->cDriverBDTerra == "QSQLITE")
-    {
-        dbTerra.setDatabaseName(Configuracion_global->cRutaBdTerra);
-        dbTerra.open();
-    }
-    else
-    {
-        dbTerra.setDatabaseName("TerraGeneral");
-        dbTerra.setHostName(Configuracion_global->cHostBDTerra);
-        dbTerra.open(Configuracion_global->cUsuarioBDTerra,Configuracion_global->cPasswordBDTerra);
-        dbTerra.open(Configuracion_global->cUsuarioBDTerra,Configuracion_global->cPasswordBDTerra);
-    }
-
-    if (dbTerra.lastError().isValid())
-    {
-        QMessageBox::critical(0, "error:", dbTerra.lastError().text());
-    }
-
     QTimer::singleShot(0,this,SLOT(init()));
 }
 void MainWindow::init()
 {
-    Login * dlg= new Login();
-    if ( dlg->exec()==QDialog::Accepted) {
-
-		// capturo usuario
-        user = dlg->getUsuario();
-        pass = dlg->getPass();
         ui->lineUsuarioActivo->setText(user);
         Configuracion_global->cUsuarioActivo = user;
 
 		QSettings settings("infint", "terra");
 		ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
 		ui->txtcCategoria->setText(settings.value("cCategoria").toString());
-		// Oculto controles según categoría
-		//TODO - Ocultar controles
 
-		// capturo empresa
-        QString Empresa = dlg->getEmpresa();
-		ui->lineEmpresaActiva->setText(Empresa);
+        ui->lineEmpresaActiva->setText(empresa);
 
 		// Configuramos valores empresa activa
 		QSqlQuery QryEmpresa(QSqlDatabase::database("terra"));
 		QryEmpresa.prepare("Select * from empresas where nombre = :nombre");
-		QryEmpresa.bindValue(":nombre",Empresa.trimmed());
+        QryEmpresa.bindValue(":nombre",empresa.trimmed());
 		if (QryEmpresa.exec()) 
         {
 			QryEmpresa.next();
@@ -228,7 +192,7 @@ void MainWindow::init()
 			}
 			if (dbMedica.lastError().isValid())
 			{
-				QMessageBox::critical(0, "error:", dbMedica.lastError().text());
+                QMessageBox::critical(this, "error:", dbMedica.lastError().text());
 			}
             progress.setValue(6);
 
@@ -278,17 +242,11 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmCajaMinuta);
             progress.setValue(15);
 
-            //resize(desktop->width(),height());
-           // this->showMaximized();
             QApplication::processEvents();
-            dlg->deleteLater();
+            this->showMaximized();
 		} 
 		else
-			qDebug() <<"Fallo la conexión al fichero Medico";
-
-    }
-	else
-        qApp->quit();
+            QMessageBox::critical(this,"Error","Fallo la conexión al fichero Medico");
 }
 
 void MainWindow::block_main()

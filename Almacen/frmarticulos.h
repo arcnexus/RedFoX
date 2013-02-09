@@ -1,7 +1,7 @@
 #ifndef FRMARTICULOS_H
 #define FRMARTICULOS_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 //
 #include "articulo.h"
 namespace Ui {

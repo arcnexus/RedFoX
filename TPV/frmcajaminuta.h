@@ -23,7 +23,7 @@ private:
     Ui::FrmCajaMinuta *ui;
     void focusInEvent(QFocusEvent * e);
     bool eventFilter(QObject *target, QEvent *event);
-    void keys_onCodigo(int key);
+    bool keys_onCodigo(int key);
     bool keys_lineas(int key);
 
     bool rellenarArticulo(QString cCodigo);

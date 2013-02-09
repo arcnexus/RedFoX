@@ -1,8 +1,8 @@
 #include "frmarticulos.h"
 #include "ui_frmarticulos.h"
-#include "Almacen/frmtarifas.h"
+#include "../Almacen/frmtarifas.h"
 
-#include "db_table_view.h"
+#include "../db_table_view.h"
 
 FrmArticulos::FrmArticulos(QWidget *parent) :
     QDialog(parent),

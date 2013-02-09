@@ -90,6 +90,15 @@ void Ticket::add_linea(QString cCodigo, QString cDescripcion,  double rPvp, doub
     newLinea->dFechaLinea =  dFechaLinea;
 
     lineas.append(newLinea);
+    int width = table->width();
+    int c_width = width / 6;
+
+    table->horizontalHeader()->setUpdatesEnabled(false);
+    for (int i =0 ; i< table->columnCount();i++)
+        table->setColumnWidth(i,c_width);
+    table->setColumnWidth(1,c_width*2);
+    table->horizontalHeader()->setUpdatesEnabled(true);
+
     table->setRowCount(table->rowCount()+1);
     int row = table->rowCount()-1;
     QTableWidgetItem * cod = new QTableWidgetItem(cCodigo);

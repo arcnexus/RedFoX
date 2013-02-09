@@ -25,7 +25,7 @@ void Table_Helper::help_table(QTableWidget *table)
     helped_table->setItemDelegateForColumn(6,new SpinBoxDelegate(helped_table,true,0,100));
 
     comboboxDelegate* comboModel = new comboboxDelegate(helped_table);
-    comboModel->setUpModel("empresa","tiposiva","cTipo");
+    comboModel->setUpModel("terra","tiposiva","cTipo");
     helped_table->setItemDelegateForColumn(7,comboModel);
 
     helped_table->setItemDelegateForColumn(8,new ReadOnlyDelegate(helped_table));
