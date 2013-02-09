@@ -93,6 +93,7 @@ void MainWindow::init()
 		if (QryEmpresa.exec()) 
         {
 			QryEmpresa.next();
+            /*
             QDesktopWidget *desktop = QApplication::desktop();
             QProgressBar progress;
 
@@ -103,6 +104,7 @@ void MainWindow::init()
             progress.setVisible(true);
             progress.show();
             progress.move(desktop->width()/2 - progress.width()/2 , desktop->height()/2 - progress.height()/2);
+            */
             QApplication::processEvents();
 			QSqlRecord record = QryEmpresa.record();
 
@@ -124,7 +126,7 @@ void MainWindow::init()
             else
                 internacional = false;
 
-            progress.setValue(1);
+            //progress.setValue(1);
             QApplication::processEvents();
 
 			//DBMedica
@@ -134,7 +136,7 @@ void MainWindow::init()
             Configuracion_global->cPasswordBDMedica =record.field("contrasenaBDMedica").value().toString();
             Configuracion_global->cRutaBdMedica = record.field("RutaBDMedicaSqLite").value().toString();
             Configuracion_global->cUsuarioBDMedica = record.field("userBDMedica").value().toString();
-            progress.setValue(2);
+            //progress.setValue(2);
             QApplication::processEvents();
 
 			// Varios
@@ -143,7 +145,7 @@ void MainWindow::init()
             Configuracion_global->cCuentaAcreedores = record.field("codigocuentaacreedores").value().toString();
             Configuracion_global->cCuentaClientes = record.field("codigocuentaclientes").value().toString();
             Configuracion_global->cCuentaProveedores = record.field("codigocuentaproveedores").value().toString();
-            progress.setValue(3);
+            //progress.setValue(3);
             QApplication::processEvents();
 
 			// Guardo preferencias
@@ -155,7 +157,7 @@ void MainWindow::init()
             settings.setValue("cCuentaAcreedores",Configuracion_global->cCuentaAcreedores);
             settings.setValue("Clave1",record.field("clave1").value().toString());
             settings.setValue("Clave2",record.field("clave2").value().toString());
-            progress.setValue(4);
+            //progress.setValue(4);
             QApplication::processEvents();
 
 			// Abro empresa activa
@@ -171,7 +173,7 @@ void MainWindow::init()
                 dbEmpresa.setHostName(Configuracion_global->cHostBDEmpresa);
                 dbEmpresa.open(Configuracion_global->cUsuarioBDEmpresa,Configuracion_global->cPasswordBDEmpresa);
 			}
-            progress.setValue(5);
+            //progress.setValue(5);
             QApplication::processEvents();
 
 			// Abro bdmedica activa
@@ -194,43 +196,44 @@ void MainWindow::init()
 			{
                 QMessageBox::critical(this, "error:", dbMedica.lastError().text());
 			}
-            progress.setValue(6);
+           // progress.setValue(6);
 
             Configuracion_global->Cargar_iva();
             Configuracion_global->Cargar_paises();
 
             //Widgets
+
             frmClientes1 = new frmClientes(this);
-            progress.setValue(7);
+            //progress.setValue(7);
 
             frmFacturas1 = new frmFacturas(this);
             connect(frmFacturas1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmFacturas1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-            progress.setValue(8);
+           // progress.setValue(8);
 
             frmArticulos1 = new FrmArticulos(this);
-            progress.setValue(9);
+           // progress.setValue(9);
 
             frmProveedores1 = new frmProveedores(this);
-            progress.setValue(10);
+           // progress.setValue(10);
 
             frmAlbaran1 = new FrmAlbaran(this);
             connect(frmAlbaran1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmAlbaran1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-            progress.setValue(11);
+           // progress.setValue(11);
 
             frmPedidos1 = new FrmPedidos(this);
             connect(frmPedidos1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmPedidos1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-            progress.setValue(12);
+           // progress.setValue(12);
 
             frmPresupcli = new FrmPresupuestosCli(this);
             connect(frmPresupcli,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmPresupcli,SIGNAL(unblock()),this,SLOT(unblock_main()));
-            progress.setValue(13);
+            //progress.setValue(13);
 
             frmCajaMinuta = new FrmCajaMinuta(this);
-            progress.setValue(14);
+            ///progress.setValue(14);
 
             ui->stackedWidget->addWidget(frmClientes1);
             ui->stackedWidget->addWidget(frmFacturas1);
@@ -240,10 +243,11 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmPedidos1);
             ui->stackedWidget->addWidget(frmPresupcli);
             ui->stackedWidget->addWidget(frmCajaMinuta);
-            progress.setValue(15);
+            //progress.setValue(15);
 
             QApplication::processEvents();
-            this->showMaximized();
+            //this->showMaximized();
+            this->setWindowState(Qt::WindowMaximized);
 		} 
 		else
             QMessageBox::critical(this,"Error","Fallo la conexión al fichero Medico");

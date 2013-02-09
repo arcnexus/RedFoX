@@ -1,5 +1,6 @@
 QDialog {
-   background-color :rgb(219, 228, 255);
+  /* background-color :rgb(219, 228, 255); */
+  background-color :#4c6088
 
 }
 

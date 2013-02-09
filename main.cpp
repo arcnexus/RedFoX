@@ -53,7 +53,8 @@ int main(int argc, char *argv[])
        w.empresa = l.getEmpresa();
        w.user = l.getUsuario();
        w.pass = l.getPass();
-       w.setWindowState(Qt::WindowMaximized);
+       //w.setWindowState(Qt::WindowMaximized);
+       w.show();
        return a.exec();
    }
    return 0;
