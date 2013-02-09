@@ -382,7 +382,7 @@ void MainWindow::divisiones_almacen()
         QStringList headers;
         headers << tr("SubFamilia") << tr("Pertenece a");
         form.set_table_headers(headers);
-
+                                 //tabla a buscar, columna relacionada y lo que quiero mostar
         form.set_relation(2,QSqlRelation("familias","id","cFamilia"));
 
         form.set_columnHide(0);

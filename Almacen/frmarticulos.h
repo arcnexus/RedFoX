@@ -17,6 +17,8 @@ public:
     ~FrmArticulos();
     Articulo *oArticulo;
     QSqlQueryModel *modArt;
+    QSqlQueryModel *qTarifas;
+    QSqlRelationalTableModel * tarifa_model;
     
 private slots:
     void on_botSiguiente_clicked();
@@ -46,8 +48,6 @@ private slots:
     void on_botBuscarFamilia_clicked();
 
     void on_botBuscarSubfamilia_clicked();
-
-    void on_btnNuevaTarifa_clicked();
 
 
 public slots:

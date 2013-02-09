@@ -1292,65 +1292,14 @@ color: rgb(0, 0, 0);</string>
             </layout>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QFrame" name="frame_7">
-            <property name="minimumSize">
-             <size>
-              <width>233</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>60</height>
-             </size>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">
-background-color: rgb(255, 255, 127);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_8">
-             <item>
-              <widget class="QLabel" name="label_14">
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
-               <property name="text">
-                <string>Coste:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QDoubleSpinBox" name="txtrCoste">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="maximum">
-                <double>999999999.990000009536743</double>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
           <item row="1" column="2" rowspan="2">
            <widget class="QFrame" name="frame_9">
+            <property name="maximumSize">
+             <size>
+              <width>262</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(175,195,225);</string>
             </property>
@@ -1367,6 +1316,12 @@ background-color: rgb(255, 255, 127);</string>
                 <widget class="QLineEdit" name="txtnCantidadPendienteRecibir">
                  <property name="enabled">
                   <bool>false</bool>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
                  </property>
                  <property name="styleSheet">
                   <string>background-color: rgb(254, 255, 205);
@@ -1402,6 +1357,12 @@ color: rbg(0,0,0);</string>
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(254, 255, 205);
 color: rbg(0,0,0);</string>
@@ -1426,6 +1387,12 @@ color: rbg(0,0,0);</string>
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(254, 255, 205);
 color: rbg(0,0,0);</string>
@@ -1440,6 +1407,12 @@ color: rbg(0,0,0);</string>
                </item>
                <item row="5" column="1">
                 <widget class="QLineEdit" name="txtnStockMinimo">
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
@@ -1460,6 +1433,12 @@ color: rbg(0,0,0);</string>
                </item>
                <item row="6" column="1">
                 <widget class="QLineEdit" name="txtnStockMaximo">
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
@@ -1482,6 +1461,12 @@ color: rbg(0,0,0);</string>
                 <widget class="QLineEdit" name="txtnStockReal_2">
                  <property name="enabled">
                   <bool>false</bool>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(254, 255, 205);
@@ -1506,6 +1491,12 @@ color: rbg(0,0,0);</string>
                 <widget class="QDateEdit" name="txtdFechaUltimaCompra">
                  <property name="enabled">
                   <bool>false</bool>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(254, 255, 205);
@@ -1538,6 +1529,12 @@ color: rbg(0,0,0);</string>
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(254, 255, 205);
 color: rbg(0,0,0);</string>
@@ -1568,6 +1565,12 @@ color: rbg(0,0,0);</string>
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="styleSheet">
                   <string>background-color: rgb(254, 255, 205);
 color: rbg(0,0,0);</string>
@@ -1584,6 +1587,12 @@ color: rbg(0,0,0);</string>
                 <widget class="QLineEdit" name="txtrAcumuladoVentas">
                  <property name="enabled">
                   <bool>false</bool>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
                  </property>
                  <property name="styleSheet">
                   <string>background-color: rgb(254, 255, 205);
@@ -1627,6 +1636,15 @@ color: rbg(0,0,0);</string>
                </item>
                <item row="9" column="1">
                 <widget class="QDateEdit" name="txtdFechaPrevistaRecepcion">
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
                  <property name="maximumDateTime">
                   <datetime>
                    <hour>23</hour>
@@ -1649,6 +1667,12 @@ color: rbg(0,0,0);</string>
                 <widget class="QLineEdit" name="txtnReservados">
                  <property name="enabled">
                   <bool>false</bool>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
                  </property>
                  <property name="styleSheet">
                   <string>background-color: rgb(254, 255, 205);
@@ -1719,36 +1743,20 @@ color: rbg(0,0,0);</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_17">
-             <item row="1" column="0">
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
              <item row="0" column="0" colspan="2">
-              <widget class="QTableView" name="TablaTarifas"/>
-             </item>
-             <item row="1" column="1">
-              <widget class="QPushButton" name="btnNuevaTarifa">
-               <property name="text">
-                <string>Nueva Tarifa</string>
+              <widget class="QTableView" name="TablaTarifas">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 202);</string>
                </property>
-               <property name="icon">
-                <iconset resource="../terra.qrc">
-                 <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+               <property name="alternatingRowColors">
+                <bool>true</bool>
                </property>
-               <property name="iconSize">
-                <size>
-                 <width>16</width>
-                 <height>16</height>
-                </size>
+               <property name="selectionMode">
+                <enum>QAbstractItemView::SingleSelection</enum>
+               </property>
+               <property name="selectionBehavior">
+                <enum>QAbstractItemView::SelectRows</enum>
                </property>
               </widget>
              </item>
@@ -1777,6 +1785,69 @@ color: rbg(0,0,0);</string>
               <widget class="QLineEdit" name="lineEdit_16">
                <property name="text">
                 <string>AQUÍ VA LA GRÁFICA DE COMPRAS VENTAS</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QFrame" name="frame_7">
+            <property name="minimumSize">
+             <size>
+              <width>180</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>261</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">
+background-color: rgb(255, 255, 127);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <item>
+              <widget class="QLabel" name="label_14">
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>Coste:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtrCoste">
+               <property name="maximumSize">
+                <size>
+                 <width>120</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>

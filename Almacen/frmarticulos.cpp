@@ -38,13 +38,37 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->cboPais1->setModel(qpaises);
     ui->cboPais2->setModel(qpaises);
 
+
     // Control objetos
     ui->lblMensajeRecuperar->setVisible(false);
+    // --------------------
+    // TARIFAS
+    //---------------------
+    tarifa_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
+    tarifa_model->setTable("viewTarifa");
+    tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
+    tarifa_model->select();
+    ui->TablaTarifas->setModel(tarifa_model);
+    ui->TablaTarifas->setColumnHidden(0,true);
+    QStringList headers;
+    headers << "Pais" << "Moneda" << "Codigo de tarifa" << "Descripción";
+    headers<< "Margen" << "Margen minimo" << "P.V.P";
+    for (int i = 0; i< headers.size();i++)
+        tarifa_model->setHeaderData(i+1, Qt::Horizontal, headers.at(i));
+
+
 
     bloquearCampos();
+
+    //--------------------------------
+    // CAMPOS MONEDA
+    //--------------------------------
+    ui->txtrCoste->setValidator(Configuracion_global->validator_cantidad);
+
     //-----------------------------------------
     // CONEXIONES
     //-----------------------------------------
+    connect(ui->txtrCoste,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
 
 }
 
@@ -79,15 +103,20 @@ void FrmArticulos::on_botGuardar_clicked()
 
 void FrmArticulos::on_botSiguiente_clicked()
 {
-    QString cId = QString::number(oArticulo->id);
-    oArticulo->Recuperar("Select * from articulos where id >"+cId+" order by id limit 1 ",1);
+    QString cCodigo = oArticulo->cCodigo;
+    oArticulo->Recuperar("Select * from articulos where cCodigo >'"+cCodigo+"' order by cCodigo limit 1 ",1);
     LLenarCampos();
+    tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
+    tarifa_model->select();
 }
 void FrmArticulos::on_botAnterior_clicked()
 {
-    QString cId = QString::number(oArticulo->id);
-    oArticulo->Recuperar("Select * from articulos where id <"+cId+" order by id desc limit 1 ",2);
+    QString cCodigo =oArticulo->cCodigo;
+    oArticulo->Recuperar("Select * from articulos where cCodigo <'"+cCodigo+"' order by cCodigo desc limit 1 ",2);
     LLenarCampos();
+    tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
+    tarifa_model->select();
+
 }
 
 void FrmArticulos::bloquearCampos() {
@@ -254,7 +283,7 @@ void FrmArticulos::LLenarCampos()
    int nIndex = ui->cboTipoIVA->findText(QString::number(oArticulo->nTipoIva));
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
-   ui->txtrCoste->setValue(oArticulo->rCoste);
+   ui->txtrCoste->setText(QString::number(oArticulo->rCoste,'f',2));
    ui->txtrTarifa1->setValue(oArticulo->rTarifa1);
    ui->txtrDto->setText(QString::number(oArticulo->rDto,'f',2));
    ui->txtdFechaUltimaCompra->setDate(oArticulo->dUltimaCompra);
@@ -614,8 +643,4 @@ void FrmArticulos::on_botBuscarSubfamilia_clicked()
     }
 }
 
-void FrmArticulos::on_btnNuevaTarifa_clicked()
-{
-    FrmTarifas ntar;
-    ntar.exec();
-}
+
