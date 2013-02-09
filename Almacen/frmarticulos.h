@@ -17,6 +17,8 @@ public:
     ~FrmArticulos();
     Articulo *oArticulo;
     QSqlQueryModel *modArt;
+    QSqlQueryModel *qTarifas;
+    QSqlRelationalTableModel * tarifa_model;
     
 private slots:
     void on_botSiguiente_clicked();
