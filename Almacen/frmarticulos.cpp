@@ -14,7 +14,8 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     // Cargar valores IVA
     Configuracion_global->CargarDatos();
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
-    ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("iva"));
+    ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("nIva"));
+
 
 
 
