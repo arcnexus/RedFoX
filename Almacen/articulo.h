@@ -61,6 +61,7 @@ public:
     int nEtiquetas;
     int nPaquetes;
     QString cLocalizacion;
+    double pvp;
 
 
     Articulo(QObject* parent = 0);

@@ -25,18 +25,6 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble()));
     ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble()));
 
-    if(internacional == false) {
-        ui->cboPais1->setVisible(false);
-        ui->cboPais2->setVisible(false);
-        ui->textoPais1->setVisible(false);
-        ui->textopais2->setVisible(false);
-        ui->btnVerTarifasporPais->setVisible(false);
-    }
-    // Cargar paises
-    QSqlQueryModel *qpaises = new QSqlQueryModel(this);
-    qpaises->setQuery("Select pais from paises",QSqlDatabase::database("terra"));
-    ui->cboPais1->setModel(qpaises);
-    ui->cboPais2->setModel(qpaises);
 
 
     // Control objetos
@@ -258,9 +246,11 @@ void FrmArticulos::desbloquearCampos() {
 void FrmArticulos::LLenarCampos()
 {
    ui->txtcCodigo->setText(oArticulo->cCodigo);
+   ui->lblCodigo->setText(oArticulo->cCodigo);
    ui->txtcCodigoBarras->setText(oArticulo->cCodigoBarras);
    ui->txtcCodigoFabricante->setText(oArticulo->cCodigoFabricante);
    ui->txtcDescripcion->setText(oArticulo->cDescripcion);
+   ui->lblDescripcion->setText(oArticulo->cDescripcion);
    ui->txtcDescripcionResumida->setText(oArticulo->cDescripcionReducida);
    // Recupero proveedor
    QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
@@ -284,13 +274,9 @@ void FrmArticulos::LLenarCampos()
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
    ui->txtrCoste->setText(QString::number(oArticulo->rCoste,'f',2));
-   ui->txtrTarifa1->setValue(oArticulo->rTarifa1);
    ui->txtrDto->setText(QString::number(oArticulo->rDto,'f',2));
    ui->txtdFechaUltimaCompra->setDate(oArticulo->dUltimaCompra);
    ui->txtdFechaUltimaVenta->setDate(oArticulo->dUltimaVenta);
-   ui->txtrPrecioMedio1->setText(QString::number(oArticulo->rPrecioMedio,'f',2));
-   ui->txtrPrecioMedio2->setText(QString::number(oArticulo->rPrecioMedio2,'f',2));
-   ui->txtrPrecioMedio3->setText(QString::number(oArticulo->rPrecioMedio3,'f',2));
    ui->txtnUnidadesCompradas->setText(QString::number(oArticulo->nUnidadesCompradas));
    ui->txtnUnidadesVendidas->setText(QString::number(oArticulo->nUnidadesVendidas));
    ui->txtrAcumuladoCompras->setText(QString::number(oArticulo->rAcumuladoCompras,'f',2));
@@ -327,14 +313,10 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->cSeccion=ui->txtcSeccion->text();
     oArticulo->cSubfamilia=ui->txtcSubFamilia->text();
     oArticulo->nTipoIva=ui->cboTipoIVA->currentText().toDouble();
-    oArticulo->rCoste=ui->txtrCoste->text().toDouble();
-    oArticulo->rTarifa1=ui->txtrTarifa1->text().toDouble();
+    oArticulo->rCoste=ui->txtrCoste->text().toDouble();;
     oArticulo->rTarifa3=ui->txtrDto->text().toDouble();
     oArticulo->dUltimaCompra= ui->txtdFechaUltimaCompra->date();
     oArticulo->dUltimaVenta= ui->txtdFechaUltimaVenta->date();
-    oArticulo->rPrecioMedio= ui->txtrPrecioMedio1->text().toDouble();
-    oArticulo->rPrecioMedio2= ui->txtrPrecioMedio2->text().toDouble();
-    oArticulo->rPrecioMedio3= ui->txtrPrecioMedio3->text().toDouble();
     oArticulo->nUnidadesCompradas= ui->txtnUnidadesCompradas->text().toDouble();
     oArticulo->nUnidadesVendidas=ui->txtnUnidadesVendidas->text().toDouble();
     oArticulo->rAcumuladoCompras= ui->txtrAcumuladoCompras->text().toDouble();
@@ -372,13 +354,9 @@ void FrmArticulos::VaciarCampos()
    ui->txtcSubFamilia->clear();
    ui->cboTipoIVA->setEditText("");
    ui->txtrCoste->clear();
-   ui->txtrTarifa1->clear();
    ui->txtrDto->clear();
    ui->txtdFechaUltimaCompra->clear();
    ui->txtdFechaUltimaVenta->clear();
-   ui->txtrPrecioMedio1->clear();
-   ui->txtrPrecioMedio2->clear();
-   ui->txtrPrecioMedio3->clear();
    ui->txtnUnidadesCompradas->clear();
    ui->txtnUnidadesVendidas->clear();
    ui->txtrAcumuladoCompras->clear();

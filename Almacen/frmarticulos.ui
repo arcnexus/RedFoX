@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1039</width>
-    <height>570</height>
+    <height>588</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -32,6 +32,12 @@
    </item>
    <item row="1" column="0">
     <widget class="QFrame" name="frame_16">
+     <property name="maximumSize">
+      <size>
+       <width>140</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 235, 167);</string>
      </property>
@@ -340,8 +346,24 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_20">
-      <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="1">
+       <widget class="QLabel" name="lblCodigo">
+        <property name="maximumSize">
+         <size>
+          <width>130</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(208, 233, 255)</string>
+        </property>
+        <property name="text">
+         <string>código</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="7">
        <widget class="QTabWidget" name="tabWidget_2">
         <property name="font">
          <font>
@@ -362,30 +384,30 @@
           <string>Artículo</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_12">
-          <item row="1" column="0" rowspan="2" colspan="6">
+          <item row="1" column="0" rowspan="2" colspan="4">
            <layout class="QGridLayout" name="gridLayout_9">
-            <item row="1" column="0">
+            <item row="0" column="0">
              <widget class="QLabel" name="label_6">
               <property name="text">
                <string>Descripción:</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="0">
+            <item row="1" column="0">
              <widget class="QLabel" name="label_7">
               <property name="text">
                <string>Descripción Resumida:</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="0">
+            <item row="2" column="0">
              <widget class="QLabel" name="label_8">
               <property name="text">
                <string>Proveedor Habitual:</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="2">
+            <item row="2" column="2">
              <widget class="QLineEdit" name="txtcProveedor">
               <property name="maximumSize">
                <size>
@@ -398,20 +420,7 @@
               </property>
              </widget>
             </item>
-            <item row="4" column="0">
-             <spacer name="verticalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="5" rowspan="3">
+            <item row="0" column="5" rowspan="3">
              <widget class="QFrame" name="frame_2">
               <property name="minimumSize">
                <size>
@@ -432,13 +441,20 @@
                <item row="0" column="0">
                 <layout class="QGridLayout" name="gridLayout_11">
                  <item row="1" column="0">
-                  <widget class="QLabel" name="label_12">
+                  <widget class="QLabel" name="label_13">
                    <property name="text">
-                    <string>PVP:</string>
+                    <string>Stock:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="2">
+                 <item row="1" column="4">
+                  <widget class="QLabel" name="label_38">
+                   <property name="text">
+                    <string>Unidades</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="3">
                   <widget class="QLineEdit" name="txtnStockReal">
                    <property name="enabled">
                     <bool>false</bool>
@@ -461,51 +477,13 @@ background-color: rgb(254, 255, 205);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="3">
-                  <widget class="QLabel" name="label_38">
-                   <property name="text">
-                    <string>Unidades</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="2" colspan="2">
-                  <widget class="QComboBox" name="cboPais2"/>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="label_13">
-                   <property name="text">
-                    <string>Stock:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="textoPais1">
-                   <property name="text">
-                    <string>Tarifa Pais:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="4">
-                  <widget class="QPushButton" name="btnVerTarifasporPais">
-                   <property name="text">
-                    <string>ver todas</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="3">
-                  <widget class="QLabel" name="label_37">
-                   <property name="text">
-                    <string>€     / T.IVA:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="4">
+                 <item row="0" column="3" colspan="2">
                   <widget class="QComboBox" name="cboTipoIVA_2"/>
                  </item>
-                 <item row="1" column="2">
-                  <widget class="QDoubleSpinBox" name="txtrTarifa1">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_37">
+                   <property name="text">
+                    <string>T.IVA:</string>
                    </property>
                   </widget>
                  </item>
@@ -514,14 +492,14 @@ background-color: rgb(254, 255, 205);</string>
               </layout>
              </widget>
             </item>
-            <item row="3" column="4">
+            <item row="2" column="4">
              <widget class="QPushButton" name="pushButton">
               <property name="text">
                <string>P.Frecuentes</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="1" colspan="4">
+            <item row="1" column="1" colspan="4">
              <widget class="QLineEdit" name="txtcDescripcionResumida">
               <property name="maximumSize">
                <size>
@@ -534,7 +512,7 @@ background-color: rgb(254, 255, 205);</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="1" colspan="4">
+            <item row="0" column="1" colspan="4">
              <widget class="QLineEdit" name="txtcDescripcion">
               <property name="maximumSize">
                <size>
@@ -547,7 +525,7 @@ background-color: rgb(254, 255, 205);</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="3">
+            <item row="2" column="3">
              <widget class="QPushButton" name="btnBuscarProveedor">
               <property name="text">
                <string/>
@@ -564,7 +542,7 @@ background-color: rgb(254, 255, 205);</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
+            <item row="2" column="1">
              <widget class="QLineEdit" name="txtCodigoProveedor">
               <property name="minimumSize">
                <size>
@@ -583,27 +561,22 @@ background-color: rgb(254, 255, 205);</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="0" colspan="6">
-             <widget class="QLabel" name="label_17">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 85, 0);
-font: 75 9pt &quot;Cantarell&quot;;
-color: rgb(255, 255, 255);</string>
+            <item row="3" column="0">
+             <spacer name="verticalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
               </property>
-              <property name="locale">
-               <locale language="Spanish" country="Spain"/>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
               </property>
-              <property name="text">
-               <string>ARTÍCULO EN PROMOCIÓN</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
+             </spacer>
             </item>
            </layout>
           </item>
-          <item row="0" column="0" colspan="6">
+          <item row="0" column="0" colspan="4">
            <layout class="QHBoxLayout" name="horizontalLayout_6">
             <item>
              <widget class="QFrame" name="frame_13">
@@ -740,7 +713,7 @@ color: rgb(255, 255, 255);</string>
             </item>
            </layout>
           </item>
-          <item row="3" column="4" rowspan="3" colspan="2">
+          <item row="3" column="2" rowspan="2" colspan="2">
            <widget class="QFrame" name="frame_10">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(175,195,225);
@@ -780,141 +753,7 @@ color: rgb(255, 255, 255);</string>
             </layout>
            </widget>
           </item>
-          <item row="3" column="2" rowspan="3" colspan="2">
-           <widget class="QFrame" name="frame_14">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(175,195,225);
-</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_10">
-             <item row="0" column="0">
-              <widget class="QLabel" name="textopais2">
-               <property name="text">
-                <string>Pais:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0" colspan="2">
-              <widget class="QComboBox" name="cboPais1"/>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_39">
-               <property name="minimumSize">
-                <size>
-                 <width>101</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Precio Med. T1:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="txtrPrecioMedio1">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>80</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(254, 255, 205);
-color: rgb(0, 0, 0);</string>
-               </property>
-               <property name="text">
-                <string>0,00</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_40">
-               <property name="minimumSize">
-                <size>
-                 <width>101</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Precio Med. T2:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QLineEdit" name="txtrPrecioMedio2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>80</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(254, 255, 205);
-color: rgb(0, 0, 0);</string>
-               </property>
-               <property name="text">
-                <string>0,00</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_41">
-               <property name="minimumSize">
-                <size>
-                 <width>101</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Precio Med. T3:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QLineEdit" name="txtrPrecioMedio3">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>80</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(254, 255, 205);
-color: rgb(0, 0, 0);</string>
-               </property>
-               <property name="text">
-                <string>0,00</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="3" column="0" rowspan="3" colspan="2">
+          <item row="3" column="0" rowspan="2" colspan="2">
            <widget class="QFrame" name="frame_3">
             <property name="minimumSize">
              <size>
@@ -1249,6 +1088,12 @@ color: rgb(0, 0, 0);</string>
          <layout class="QGridLayout" name="gridLayout_16">
           <item row="0" column="1">
            <widget class="QFrame" name="frame_5">
+            <property name="minimumSize">
+             <size>
+              <width>395</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(175,195,225);</string>
             </property>
@@ -1258,36 +1103,32 @@ color: rgb(0, 0, 0);</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_9">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_2">
-               <item>
-                <widget class="QLabel" name="label_20">
-                 <property name="text">
-                  <string>%Descuento Promocional:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="txtrDto">
-                 <property name="maximumSize">
-                  <size>
-                   <width>80</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                 <property name="text">
-                  <string>0</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+            <layout class="QGridLayout" name="gridLayout_15">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_20">
+               <property name="text">
+                <string>%Descuento Promocional:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="txtrDto">
+               <property name="maximumSize">
+                <size>
+                 <width>80</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -1709,24 +1550,20 @@ color: rbg(0,0,0);</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_10">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout">
-               <item>
-                <widget class="QLabel" name="label_19">
-                 <property name="text">
-                  <string>Tipo IVA:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="cboTipoIVA">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_19">
+               <property name="text">
+                <string>Tipo IVA:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="cboTipoIVA">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -1763,34 +1600,6 @@ alternate-background-color: rgb(255, 255, 202);</string>
             </layout>
            </widget>
           </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QFrame" name="frame_15">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>253</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_4">
-             <item row="0" column="0">
-              <widget class="QLineEdit" name="lineEdit_16">
-               <property name="text">
-                <string>AQUÍ VA LA GRÁFICA DE COMPRAS VENTAS</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
           <item row="0" column="2">
            <widget class="QFrame" name="frame_7">
             <property name="minimumSize">
@@ -1801,8 +1610,8 @@ alternate-background-color: rgb(255, 255, 202);</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>261</width>
-              <height>60</height>
+              <width>262</width>
+              <height>55</height>
              </size>
             </property>
             <property name="autoFillBackground">
@@ -1848,6 +1657,40 @@ background-color: rgb(255, 255, 127);</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QFrame" name="frame_15">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>253</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>274</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <item row="0" column="0">
+              <widget class="QLineEdit" name="lineEdit_16">
+               <property name="text">
+                <string>AQUÍ VA LA GRÁFICA DE COMPRAS VENTAS</string>
                </property>
               </widget>
              </item>
@@ -2201,6 +2044,68 @@ Imagen.</string>
         </widget>
        </widget>
       </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_21">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Artículo:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="lblDescripcion">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(208, 233, 255)</string>
+        </property>
+        <property name="text">
+         <string>Descripcion</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QLabel" name="lblPromocion">
+        <property name="minimumSize">
+         <size>
+          <width>205</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 85, 0);
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Artículo en promoción&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
     </widget>
    </item>
@@ -2223,10 +2128,7 @@ Imagen.</string>
   <tabstop>txtcDescripcionResumida</tabstop>
   <tabstop>txtcProveedor</tabstop>
   <tabstop>pushButton</tabstop>
-  <tabstop>cboPais2</tabstop>
-  <tabstop>btnVerTarifasporPais</tabstop>
   <tabstop>cboTipoIVA_2</tabstop>
-  <tabstop>txtnStockReal</tabstop>
   <tabstop>txtcSeccion</tabstop>
   <tabstop>botBuscarSeccion</tabstop>
   <tabstop>txtcFamilia</tabstop>
@@ -2237,10 +2139,6 @@ Imagen.</string>
   <tabstop>botBuscarSubfamilia_2</tabstop>
   <tabstop>txtcSubFamilia_3</tabstop>
   <tabstop>botBuscarSubfamilia_3</tabstop>
-  <tabstop>cboPais1</tabstop>
-  <tabstop>txtrPrecioMedio1</tabstop>
-  <tabstop>txtrPrecioMedio2</tabstop>
-  <tabstop>txtrPrecioMedio3</tabstop>
   <tabstop>chklMostrarWeb</tabstop>
   <tabstop>txttComentario</tabstop>
   <tabstop>cboTipoIVA</tabstop>
