@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1068</width>
-    <height>513</height>
+    <height>553</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -138,7 +138,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="tab">
         <property name="sizePolicy">
@@ -1480,6 +1480,16 @@ color: rgb(0, 64, 64);</string>
            </property>
           </widget>
          </item>
+         <item row="1" column="3">
+          <widget class="QLineEdit" name="txtcAtendidoPor">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
          <item row="6" column="6" rowspan="3" colspan="2">
           <widget class="QFrame" name="frame_7">
            <property name="frameShape">
@@ -1489,20 +1499,11 @@ color: rgb(0, 64, 64);</string>
             <enum>QFrame::Raised</enum>
            </property>
            <layout class="QGridLayout" name="gridLayout_14">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
             <property name="verticalSpacing">
              <number>3</number>
+            </property>
+            <property name="margin">
+             <number>0</number>
             </property>
             <item row="1" column="0">
              <widget class="QLineEdit" name="lineEdit_4">
@@ -1545,16 +1546,6 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
            </layout>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QLineEdit" name="txtcAtendidoPor">
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
           </widget>
          </item>
         </layout>
@@ -1915,6 +1906,12 @@ color: rgb(255, 255, 255);</string>
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>600</width>
+       <height>0</height>
+      </size>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 192);</string>

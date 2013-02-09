@@ -18,7 +18,7 @@
 // Web-Site: http://www.informatica-intelligent.com
 
 #include "mainwindow.h"
-
+#include "login.h"
 
 int main(int argc, char *argv[])
 {
@@ -46,11 +46,16 @@ int main(int argc, char *argv[])
 	
 
 
-
-   MainWindow w;
-   w.setWindowState(Qt::WindowMaximized);
-   w.setWindowFlags(Qt::WindowCloseButtonHint | Qt::WindowMinMaxButtonsHint);
-   w.show();
-    return a.exec();
+   Login l;
+   if ( l.exec()==QDialog::Accepted)
+   {
+       MainWindow w;
+       w.empresa = l.getEmpresa();
+       w.user = l.getUsuario();
+       w.pass = l.getPass();
+       w.setWindowState(Qt::WindowMaximized);
+       return a.exec();
+   }
+   return 0;
 }
 

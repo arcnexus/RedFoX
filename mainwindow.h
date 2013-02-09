@@ -25,6 +25,10 @@ public:
     ~MainWindow();
     QString usuario;
     QString empresa;
+
+    QString user;
+    QString pass;
+
     //QSqlDatabase dbConfiguracion;
     QSqlQuery QryConfiguracion;
 
@@ -91,8 +95,7 @@ private:
     FrmPedidos *frmPedidos1;
     FrmPresupuestosCli *frmPresupcli;
     FrmCajaMinuta *frmCajaMinuta;
-    QString user;
-    QString pass;
+
     bool on_edit;
 };
 

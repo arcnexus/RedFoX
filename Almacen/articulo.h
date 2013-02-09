@@ -1,7 +1,7 @@
 #ifndef ARTICULO_H
 #define ARTICULO_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class Articulo : public QObject
 {
