@@ -47,8 +47,6 @@ private slots:
 
     void on_botBuscarSubfamilia_clicked();
 
-    void on_btnNuevaTarifa_clicked();
-
 
 public slots:
     void AnadirSeccion();

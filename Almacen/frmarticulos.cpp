@@ -40,6 +40,12 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
 
     // Control objetos
     ui->lblMensajeRecuperar->setVisible(false);
+    // --------------------
+    // TARIFAS
+    //---------------------
+    QSqlQueryModel *qTarifas(this);
+    qTarifas->setQuery("Select * from tarifas where id_Articulos = "+QString::number(oArticulo->id));
+    ui->TablaTarifas->setModel(qTarifas);
 
     bloquearCampos();
     //-----------------------------------------
@@ -614,8 +620,4 @@ void FrmArticulos::on_botBuscarSubfamilia_clicked()
     }
 }
 
-void FrmArticulos::on_btnNuevaTarifa_clicked()
-{
-    FrmTarifas ntar;
-    ntar.exec();
-}
+
