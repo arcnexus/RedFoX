@@ -29,6 +29,12 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="3">
     <widget class="QLabel" name="label_5">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ARTÍCULOS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
@@ -1159,6 +1165,12 @@ color: rgb(0, 0, 0);</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(175,195,225);</string>
          </property>
@@ -1198,6 +1210,12 @@ color: rgb(0, 0, 0);</string>
           <size>
            <width>395</width>
            <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -1256,7 +1274,7 @@ color: rgb(0, 0, 0);</string>
          <property name="maximumSize">
           <size>
            <width>262</width>
-           <height>55</height>
+           <height>40</height>
           </size>
          </property>
          <property name="autoFillBackground">
@@ -1311,7 +1329,7 @@ background-color: rgb(255, 255, 127);</string>
        <item row="1" column="0" colspan="2">
         <widget class="QFrame" name="frame_8">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -1328,6 +1346,12 @@ background-color: rgb(255, 255, 127);</string>
          <layout class="QGridLayout" name="gridLayout_17">
           <item row="0" column="0" colspan="2">
            <widget class="QTableView" name="TablaTarifas">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);
 alternate-background-color: rgb(255, 255, 202);</string>
