@@ -9,7 +9,7 @@
 #include "paciente.h"
 
 #ifdef WIN32
-    #define and &&
+    //#define and &&
 #endif
 
 frmClientes::frmClientes(QWidget *parent) :
@@ -546,8 +546,8 @@ void frmClientes::txtPrimerApellido_editingFinished()
     ui->txtPrimerApellido->setText(ui->txtPrimerApellido->text().toUpper());
 
     if(!ui->txtPrimerApellido->text().isEmpty()
-       and !ui->txtSegundoApellido->text().isEmpty()
-       and !ui->txtcNombre->text().isEmpty())
+       && !ui->txtSegundoApellido->text().isEmpty()
+       && !ui->txtcNombre->text().isEmpty())
     {
         ui->txtcNombreFiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtcNombre->text());
         ui->txtNombreFiscal->setText(ui->txtcNombreFiscal->text());
@@ -559,8 +559,8 @@ void frmClientes::txtSegundoApellido_editingFinished()
     ui->txtSegundoApellido->setText(ui->txtSegundoApellido->text().toUpper());
 
     if(!ui->txtPrimerApellido->text().isEmpty()
-        and !ui->txtSegundoApellido->text().isEmpty()
-        and !ui->txtcNombre->text().isEmpty())
+        && !ui->txtSegundoApellido->text().isEmpty()
+        && !ui->txtcNombre->text().isEmpty())
     {
         ui->txtcNombreFiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtcNombre->text());
         ui->txtNombreFiscal->setText(ui->txtcNombreFiscal->text());
@@ -573,8 +573,8 @@ void frmClientes::txtcNombre_editingFinished()
     ui->txtcNombre->setText(ui->txtcNombre->text().toUpper());
 
     if(!ui->txtPrimerApellido->text().isEmpty()
-       and !ui->txtSegundoApellido->text().isEmpty()
-       and !ui->txtcNombre->text().isEmpty())
+       && !ui->txtSegundoApellido->text().isEmpty()
+       && !ui->txtcNombre->text().isEmpty())
     {
         ui->txtcNombreFiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtcNombre->text());
         ui->txtNombreFiscal->setText(ui->txtcNombreFiscal->text());
@@ -585,7 +585,7 @@ void frmClientes::txtcNombre_editingFinished()
 void frmClientes::txtcPoblacion_editingFinished()
 {
     ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
-    if (ui->txtcCp->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty())
+    if (ui->txtcCp->text().isEmpty() && !ui->txtcPoblacion->text().isEmpty())
     {
        FrmBuscarPoblacion BuscarPoblacion;
        BuscarPoblacion.setcPoblacion(ui->txtcPoblacion->text(),1);
@@ -797,7 +797,7 @@ void frmClientes::on_btnBuscar_clicked()
 
 void frmClientes::txtcCp_editingFinished()
 {
-    if (!ui->txtcCp->text().isEmpty() and ui->txtcPoblacion->text().isEmpty())
+    if (!ui->txtcCp->text().isEmpty() && ui->txtcPoblacion->text().isEmpty())
     {
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
@@ -839,7 +839,7 @@ void frmClientes::txtcCp_editingFinished()
 
 void frmClientes::txtcCPFactura_editingFinished()
 {
-    if (!ui->txtcCPFactura->text().isEmpty() and ui->txtcPoblacionFactura->text().isEmpty())
+    if (!ui->txtcCPFactura->text().isEmpty() && ui->txtcPoblacionFactura->text().isEmpty())
     {
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcCPFactura->text(),0);
@@ -882,7 +882,7 @@ void frmClientes::txtcCPFactura_editingFinished()
 void frmClientes::txtcPoblacionFactura_editingFinished()
 {
     ui->txtcPoblacionFactura->setText(ui->txtcPoblacionFactura->text().toUpper());
-    if (ui->txtcCPFactura->text().isEmpty() and !ui->txtcPoblacionFactura->text().isEmpty())
+    if (ui->txtcCPFactura->text().isEmpty() && !ui->txtcPoblacionFactura->text().isEmpty())
     {
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcPoblacionFactura->text(),1);
@@ -924,7 +924,7 @@ void frmClientes::txtcPoblacionFactura_editingFinished()
 
 void frmClientes::txtcCpPoblacionAlmacen_editingFinished()
 {
-    if (!ui->txtcCpPoblacionAlmacen->text().isEmpty() and ui->txtcPoblacionAlmacen->text().isEmpty())
+    if (!ui->txtcCpPoblacionAlmacen->text().isEmpty() && ui->txtcPoblacionAlmacen->text().isEmpty())
     {
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcCpPoblacionAlmacen->text(),0);
@@ -966,7 +966,7 @@ void frmClientes::txtcCpPoblacionAlmacen_editingFinished()
 void frmClientes::txtcPoblacionAlmacen_editingFinished()
 {
     ui->txtcPoblacionAlmacen->setText(ui->txtcPoblacionAlmacen->text().toUpper());
-    if (ui->txtcCpPoblacionAlmacen->text().isEmpty() and !ui->txtcPoblacionAlmacen->text().isEmpty())
+    if (ui->txtcCpPoblacionAlmacen->text().isEmpty() && !ui->txtcPoblacionAlmacen->text().isEmpty())
     {
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcPoblacionAlmacen->text(),1);

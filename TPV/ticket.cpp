@@ -107,6 +107,8 @@ void Ticket::add_linea(QString cCodigo, QString cDescripcion,  double rPvp, doub
 
 void Ticket::remove_linea(int row)
 {
+    lineas.remove(row);
+    table->removeRow(row);
 }
 
 bool Ticket::save_Ticket(int ID)

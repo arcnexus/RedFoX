@@ -1609,14 +1609,14 @@ color: rgb(255, 255, 255);</string>
           <item row="0" column="1">
            <widget class="QLabel" name="label_54">
             <property name="text">
-             <string>%DTO</string>
+             <string>%DTO[F4]</string>
             </property>
            </widget>
           </item>
           <item row="0" column="2">
            <widget class="QLabel" name="label_50">
             <property name="text">
-             <string>DTO</string>
+             <string>DTO[F5]</string>
             </property>
            </widget>
           </item>
@@ -1656,7 +1656,7 @@ color: rgb(255, 255, 255);</string>
           <item row="0" column="3">
            <widget class="QLabel" name="label_66">
             <property name="text">
-             <string>%IVA</string>
+             <string>%IVA[F6]</string>
             </property>
            </widget>
           </item>
@@ -1677,10 +1677,17 @@ color: rgb(255, 255, 255);</string>
         </item>
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_4">
+          <item row="2" column="4">
+           <widget class="QLineEdit" name="txtPVPArticulo">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="4">
            <widget class="QLabel" name="label_52">
             <property name="text">
-             <string>P.V.P.</string>
+             <string>P.V.P.[F3]</string>
             </property>
            </widget>
           </item>
@@ -1752,14 +1759,14 @@ color: rgb(255, 255, 255);</string>
           <item row="1" column="3">
            <widget class="QLabel" name="label_51">
             <property name="text">
-             <string>Descripción</string>
+             <string>Descripción[F2]</string>
             </property>
            </widget>
           </item>
           <item row="1" column="2">
            <widget class="QLabel" name="label_49">
             <property name="text">
-             <string>Cantid.</string>
+             <string>Cantid.[F1]</string>
             </property>
            </widget>
           </item>
@@ -1773,19 +1780,6 @@ color: rgb(255, 255, 255);</string>
             </property>
             <property name="value">
              <number>1</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <widget class="QDoubleSpinBox" name="txtPVPArticulo">
-            <property name="suffix">
-             <string/>
-            </property>
-            <property name="minimum">
-             <double>-999999999.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>999999999.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -2182,13 +2176,19 @@ font: 28pt &quot;Sans Serif&quot;;</string>
      </layout>
     </widget>
    </item>
+   <item row="1" column="0" colspan="6">
+    <widget class="QLabel" name="label_19">
+     <property name="text">
+      <string>Resumen. Editar:[F7]   Borrar Linea: [Suprimir]   Flechas ariba/abajo: Cambiar linea</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <tabstops>
   <tabstop>txtcCodigoArticulo</tabstop>
   <tabstop>txtcCantidadArticulo</tabstop>
   <tabstop>txtDescripcionArticulo</tabstop>
-  <tabstop>txtPVPArticulo</tabstop>
   <tabstop>txtSubtotalArticulo</tabstop>
   <tabstop>txtPorcDtoArticulo</tabstop>
   <tabstop>txtDtoArticulo</tabstop>

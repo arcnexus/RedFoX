@@ -18,16 +18,18 @@ public:
     
 private slots:
     void on_btnBuscarArt_clicked();
-
+    void linea_itemSelectionChanged();
 private:
     Ui::FrmCajaMinuta *ui;
+    void focusInEvent(QFocusEvent * e);
     bool eventFilter(QObject *target, QEvent *event);
     void keys_onCodigo(int key);
-    void keys_onDescripcion(int key);
-    void keys_onPvp(int key);
+    bool keys_lineas(int key);
 
-    void rellenarArticulo(QString cCodigo);
+    bool rellenarArticulo(QString cCodigo);
     Ticket ticket;
+    int linea_row;
+    int linea_column;
 };
 
 #endif // FRMCAJAMINUTA_H

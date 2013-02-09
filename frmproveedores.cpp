@@ -6,7 +6,8 @@
 
 
 #ifdef WIN32
-#define and &&
+//#define and && 4005401548072
+
 #endif
 Proveedor *oProveedor = new Proveedor();
 
@@ -317,7 +318,7 @@ void frmProveedores::on_btnAnadir_clicked()
 void frmProveedores::on_txtcPoblacion_editingFinished()
 {
     ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
-    if (ui->txtcCP->text().isEmpty() and !ui->txtcPoblacion->text().isEmpty() and !ui->txtcCP->isReadOnly()) {
+    if (ui->txtcCP->text().isEmpty() && !ui->txtcPoblacion->text().isEmpty() && !ui->txtcCP->isReadOnly()) {
         FrmBuscarPoblacion BuscarPoblacion;
 
         Configuracion_global->CargarDatos();
@@ -352,7 +353,7 @@ void frmProveedores::on_txtcPoblacion_editingFinished()
 
 void frmProveedores::on_txtcCP_editingFinished()
 {
-    if (!ui->txtcCP->text().isEmpty() and ui->txtcPoblacion->text().isEmpty() and !ui->txtcCP->isReadOnly()){
+    if (!ui->txtcCP->text().isEmpty() && ui->txtcPoblacion->text().isEmpty() && !ui->txtcCP->isReadOnly()){
         FrmBuscarPoblacion BuscarPoblacion;
 
         BuscarPoblacion.setcPoblacion(ui->txtcCP->text(),0);
@@ -530,7 +531,7 @@ void frmProveedores::on_txtcCuentaPagoProveedor_editingFinished()
 void frmProveedores::on_txtcCPAlmacen_editingFinished()
 {
     if (!ui->txtcCPAlmacen->isReadOnly()) {
-        if (!ui->txtcCPAlmacen->text().isEmpty() and ui->txtcPoblacionAlmacen->text().isEmpty()) {
+        if (!ui->txtcCPAlmacen->text().isEmpty() && ui->txtcPoblacionAlmacen->text().isEmpty()) {
             FrmBuscarPoblacion BuscarPoblacion;
 
             Configuracion_global->CargarDatos();

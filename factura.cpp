@@ -3,7 +3,7 @@
 //
 
 #ifdef WIN32
-    #define and &&
+    //#define and &&
 #endif
 
 

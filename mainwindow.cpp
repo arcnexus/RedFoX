@@ -355,6 +355,7 @@ void MainWindow::btnPresup_clientes_clicked()
 void MainWindow::btnCajaMinuta_clicked()
 {
     ui->stackedWidget->setCurrentWidget(frmCajaMinuta);
+    frmCajaMinuta->setFocus();
 }
 
 //void MainWindow::on_btnAgenda_clicked()

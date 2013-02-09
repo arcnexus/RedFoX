@@ -85,12 +85,14 @@ void Articulo::Anadir()
 }
 
 
-void Articulo::Recuperar(QString cSQL)
+bool Articulo::Recuperar(QString cSQL)
 {
     QSqlQuery qryArticulo(QSqlDatabase::database("terra"));
     qryArticulo.prepare(cSQL);
-    if (qryArticulo.exec()) {
-           if (qryArticulo.next()){
+    if (qryArticulo.exec())
+    {
+           if (qryArticulo.next())
+           {
                QSqlRecord registro =  qryArticulo.record();
                this->id = registro.field("id").value().toInt();
                this->cCodigo = registro.field("cCodigo").value().toString();
@@ -144,12 +146,18 @@ void Articulo::Recuperar(QString cSQL)
                this->nEtiquetas = registro.field("nEtiquetas").value().toInt();
                this->nPaquetes = registro.field("nPaquetes").value().toInt();
                this->cLocalizacion = registro.field("cLocalizacion").value().toString();
-
-           } else {
-               QMessageBox::critical(qApp->activeWindow(),"Búsqueda de artículos", "No se encuentra el artículo");
+               return true;
            }
-    } else {
+           else
+           {
+               QMessageBox::critical(qApp->activeWindow(),"Búsqueda de artículos", "No se encuentra el artículo");
+               return false;
+           }
+    }
+    else
+    {
         QMessageBox::critical(qApp->activeWindow(),"error al leer datos artículo:", qryArticulo.lastError().text());
+        return false;
     }
 }
 
