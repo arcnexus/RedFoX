@@ -13,17 +13,8 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->setupUi(this);
     // Cargar valores IVA
     Configuracion_global->CargarDatos();
-
-    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
-    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble()));
-    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble()));
-    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble()));
-    ui->cboTipoIVA->addItem(QString::number(Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble()));
-
-    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble()));
-    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble()));
-    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble()));
-    ui->cboTipoIVA_2->addItem(QString::number(Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble()));
+    ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
+    ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("iva"));
 
 
 

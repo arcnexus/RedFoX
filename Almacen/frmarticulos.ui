@@ -27,55 +27,330 @@
    <string notr="true">background: #4c6088</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" colspan="3">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ARTÍCULOS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_21">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="2" column="0">
+    <widget class="QFrame" name="frame_16">
      <property name="maximumSize">
       <size>
-       <width>100</width>
+       <width>140</width>
        <height>16777215</height>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
+      <string notr="true">background-color: #304163;</string>
      </property>
-     <property name="text">
-      <string>Artículo:</string>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLabel" name="lblCodigo">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>130</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(208, 233, 255)</string>
-     </property>
-     <property name="text">
-      <string>código</string>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="botAnadir">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>Añadir</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="botSiguiente">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>Siguiente</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="botAnterior">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>Anterior</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="botBuscar">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>Buscar</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="botEditar">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>Editar</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="botGuardar">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>Guardar</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="botDeshacer">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>Deshacer</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="botBorrar">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>Borrar</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="botListados">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>Listados</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/List.png</normaloff>:/Icons/PNG/List.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
    </item>
    <item row="1" column="2">
@@ -123,303 +398,55 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QFrame" name="frame_16">
+   <item row="1" column="1">
+    <widget class="QLabel" name="lblCodigo">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>140</width>
+       <width>130</width>
        <height>16777215</height>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 235, 167);</string>
+      <string notr="true">color: rgb(208, 233, 255)</string>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+     <property name="text">
+      <string>código</string>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_21">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QPushButton" name="botAnadir">
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Añadir</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="botSiguiente">
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Siguiente</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="botAnterior">
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Anterior</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="botBuscar">
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Buscar</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="botEditar">
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Editar</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="botGuardar">
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Guardar</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="botDeshacer">
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Deshacer</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="botBorrar">
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Borrar</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="botListados">
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Listados</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/List.png</normaloff>:/Icons/PNG/List.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-     </layout>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Artículo:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ARTÍCULOS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
     </widget>
    </item>
    <item row="2" column="1" colspan="3">
@@ -439,7 +466,7 @@ color: rgb(255, 255, 255);</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <property name="styleSheet">
@@ -1137,11 +1164,57 @@ color: rgb(0, 0, 0);</string>
       <attribute name="title">
        <string>Tarifas/Almacén</string>
       </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_9">
+      <attribute name="title">
+       <string>Page</string>
+      </attribute>
+      <widget class="QFrame" name="frame_4">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>30</y>
+         <width>163</width>
+         <height>46</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(175,195,225);</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_19">
+          <property name="text">
+           <string>Tipo IVA:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="cboTipoIVA">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QFrame" name="frame_5">
        <property name="geometry">
         <rect>
-         <x>178</x>
-         <y>9</y>
+         <x>399</x>
+         <y>30</y>
          <width>395</width>
          <height>46</height>
         </rect>
@@ -1199,10 +1272,10 @@ color: rgb(0, 0, 0);</string>
       <widget class="QFrame" name="frame_9">
        <property name="geometry">
         <rect>
-         <x>535</x>
-         <y>61</y>
+         <x>822</x>
+         <y>82</y>
          <width>262</width>
-         <height>372</height>
+         <height>432</height>
         </rect>
        </property>
        <property name="maximumSize">
@@ -1604,52 +1677,11 @@ color: rbg(0,0,0);</string>
         </item>
        </layout>
       </widget>
-      <widget class="QFrame" name="frame_4">
-       <property name="geometry">
-        <rect>
-         <x>9</x>
-         <y>9</y>
-         <width>163</width>
-         <height>46</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(175,195,225);</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_19">
-          <property name="text">
-           <string>Tipo IVA:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QComboBox" name="cboTipoIVA">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
       <widget class="QFrame" name="frame_8">
        <property name="geometry">
         <rect>
-         <x>9</x>
-         <y>61</y>
+         <x>230</x>
+         <y>82</y>
          <width>278</width>
          <height>214</height>
         </rect>
@@ -1692,8 +1724,8 @@ alternate-background-color: rgb(255, 255, 202);</string>
       <widget class="QFrame" name="frame_7">
        <property name="geometry">
         <rect>
-         <x>535</x>
-         <y>9</y>
+         <x>822</x>
+         <y>30</y>
          <width>187</width>
          <height>46</height>
         </rect>
@@ -2142,24 +2174,9 @@ Imagen.</string>
   <tabstop>botBuscarSubfamilia_3</tabstop>
   <tabstop>chklMostrarWeb</tabstop>
   <tabstop>txttComentario</tabstop>
-  <tabstop>cboTipoIVA</tabstop>
-  <tabstop>txtrDto</tabstop>
-  <tabstop>txtnUnidadesCompradas</tabstop>
-  <tabstop>txtrAcumuladoCompras</tabstop>
   <tabstop>botAnadir</tabstop>
-  <tabstop>txtnUnidadesVendidas</tabstop>
-  <tabstop>txtrAcumuladoVentas</tabstop>
-  <tabstop>chklControlarStock</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>botSiguiente</tabstop>
-  <tabstop>txtnReservados</tabstop>
-  <tabstop>txtnStockMinimo</tabstop>
-  <tabstop>txtnStockMaximo</tabstop>
-  <tabstop>txtnStockReal_2</tabstop>
-  <tabstop>txtnCantidadPendienteRecibir</tabstop>
-  <tabstop>txtdFechaPrevistaRecepcion</tabstop>
-  <tabstop>txtdFechaUltimaCompra</tabstop>
-  <tabstop>txtdFechaUltimaVenta</tabstop>
   <tabstop>botCambiarImagen</tabstop>
   <tabstop>botCambiarImagen_2</tabstop>
   <tabstop>botCambiarImagen_3</tabstop>
