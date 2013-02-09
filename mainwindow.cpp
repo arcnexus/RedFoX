@@ -77,6 +77,8 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 void MainWindow::init()
 {
+   // ui->toolBox->setStyleSheet("QToolBox::tab {background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);	border-radius: 5px;color: darkgray;}QToolBox::tab:selected { /* italicize selected tabs */font: italic;color: black;}");
+    ui->toolBox->setStyleSheet("QToolBox::tab {background:#304163; 	border-radius: 5px;color: darkgray;}QToolBox::tab:selected { /* italicize selected tabs */font: italic;color: #FFFFFF;}");
         ui->lineUsuarioActivo->setText(user);
         Configuracion_global->cUsuarioActivo = user;
 
