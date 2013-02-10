@@ -1,32 +1,21 @@
 QDialog {
-  /* background-color :rgb(219, 228, 255); */
   background-color :#4c6088
-
 }
-
 QWidget {
     background-color: #ecefed;
 }
-
 /* Nice Windows-XP-style password character. */
 QLineEdit[echoMode="2"] {
     lineedit-password-character: 9679;
 }
-
-QLabel, QAbstractButton {
+QLabel, QAbstractButton , QStatusBar{
     font: normal;
 }
-
-
 /* Mark mandatory fields with a brownish color. */
 .mandatory {
     color: brown;
 }
 
-/* Bold text on status bar looks awful. */
-QStatusBar QLabel {
-   font: normal;
-}
 
 QStatusBar::item {
     border-width: 1;
@@ -92,53 +81,26 @@ QTabBar QButton {
     border-image: url(:Icons/images/spinup.png) 2;
         border-width: 0px;
     }
-
 QListView {
-    show-decoration-selected: 1;
+       show-decoration-selected: 1;
 }
 
 QListView::item:hover {
     background-color: white;
 }
-
-
 QFrame {
     border-radius: 5px;
-    background: rgb(175,195,225);
+    background-color: rgb(175,195,225);
 }
-QLabel {
-    border-radius: 5px;
-}
-
-/* As mentioned above, eliminate the padding and increase the border. */
-QLineEdit:focus, QFrame:focus {
-    border-width: 1.5px;
-    padding: 0px;
-}
-
-/* A QLabel is a QFrame ... */
 QLabel {
     border: none;
     padding: 0;
     background: none;
 }
-
-/* Nice to have the background color change when hovered. */
-QRadioButton:hover, QCheckBox:hover {
-    background-color: white;
+QLineEdit:focus, QFrame:focus {
+    border-width: 1.5px;
+    padding: 0px;
 }
-
-
-/*
-QDateEdit::up-button {
-    subcontrol-origin: border;
-    subcontrol-position: top right;
-
-    width: 16px; /* 16 + 2*1px border-width = 15px padding + 3px parent border */
-    border-image: url(:Icons/images/spinup.png) 1;
-    border-width: 1px;
-}
-
 
 QTabWidget::up-button {
     subcontrol-origin: border;
@@ -303,5 +265,3 @@ QTableView, QTableWidet {
      selection-color: white;
      alternate-background-color: rgb(255, 255, 127);
  }
-
-

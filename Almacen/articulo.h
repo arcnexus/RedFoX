@@ -77,11 +77,6 @@ public:
     void Devolucion(int id, int cantidad, double rImporte, QString cMotivo, QString dFechaDevolucion);
     void CargarImagen(QLabel *label);
 
-
-
-
-
-
 private:
 
     QSqlQuery qryArticulo;

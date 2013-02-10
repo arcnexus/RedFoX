@@ -26,14 +26,13 @@
    <string>Frame</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QFrame {
-border:1px;
+   <string notr="true">border:1px;
 border-style:solid;
 border-radius: 10px;
 padding: 2px;
 border-color: rgb(0, 0, 127);
 background-color:#AFC3E1;
- }</string>
+</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
@@ -60,7 +59,8 @@ background-color:#AFC3E1;
    <item>
     <widget class="QLabel" name="lbl_icon">
      <property name="styleSheet">
-      <string notr="true">border-color: rgba(255, 255, 255, 0);</string>
+      <string notr="true">border-color: rgba(0,0,0,0);
+</string>
      </property>
      <property name="text">
       <string/>

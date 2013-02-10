@@ -29,6 +29,12 @@
    <iconset resource="terra.qrc">
     <normaloff>:/Icons/PNG/clientes.png</normaloff>:/Icons/PNG/clientes.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QFrame {
+    border-radius: 5px;
+    background-color: rgb(175,195,225);
+}</string>
+  </property>
   <property name="modal">
    <bool>false</bool>
   </property>
@@ -48,8 +54,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(31, 60, 117);
-border-color: rgb(0, 0, 0);</string>
+      <string notr="true">background-color: rgb(31, 60, 117);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
