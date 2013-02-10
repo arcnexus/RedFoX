@@ -146,6 +146,21 @@ bool Articulo::Recuperar(QString cSQL)
                this->nEtiquetas = registro.field("nEtiquetas").value().toInt();
                this->nPaquetes = registro.field("nPaquetes").value().toInt();
                this->cLocalizacion = registro.field("cLocalizacion").value().toString();
+               // Recupero proveedor
+               QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
+               qryProveedor->prepare("select id,cCodigo,cProveedor from proveedores where id = :id");
+               qryProveedor->bindValue(":id",this->id_Proveedor);
+               if (!qryProveedor->exec()) {
+                   QMessageBox::warning(qApp->activeWindow(),tr("Error Datos"),tr("No se encuentra el proveedor asociado \n Deberá comprovar ficha producto"),tr("OK"));
+
+               } else {
+                   qryProveedor->next();
+                   QSqlRecord record = qryProveedor->record();
+                   this->cProveedor = record.field("cProveedor").value().toString();
+                   this->cCodProveedor = record.field("cCodigo").value().toString();
+               }
+               delete qryProveedor;
+
                return true;
            }
            else
@@ -220,6 +235,20 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->nEtiquetas = registro.field("nEtiquetas").value().toInt();
                this->nPaquetes = registro.field("nPaquetes").value().toInt();
                this->cLocalizacion = registro.field("cLocalizacion").value().toString();
+               // Recupero proveedor
+               QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
+               qryProveedor->prepare("select id,cCodigo,cProveedor from proveedores where id = :id");
+               qryProveedor->bindValue(":id",this->id_Proveedor);
+               if (!qryProveedor->exec()) {
+                   QMessageBox::warning(qApp->activeWindow(),tr("Error Datos"),tr("No se encuentra el proveedor asociado \n Deberá comprovar ficha producto"),tr("OK"));
+
+               } else {
+                   qryProveedor->next();
+                   QSqlRecord record = qryProveedor->record();
+                   this->cProveedor = record.field("cProveedor").value().toString();
+                   this->cCodProveedor = record.field("cCodigo").value().toString();
+               }
+               delete qryProveedor;
 
            } else {
                if (nProcede ==1)

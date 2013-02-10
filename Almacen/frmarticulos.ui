@@ -150,6 +150,12 @@ color: rgb(255, 255, 255);</string>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QFrame" name="frame_16">
+       <property name="minimumSize">
+        <size>
+         <width>132</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>140</width>
@@ -166,284 +172,267 @@ color: #ffffff</string>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QPushButton" name="botAnadir">
-            <property name="minimumSize">
-             <size>
-              <width>115</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>118</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Añadir</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../terra.qrc">
-              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="botSiguiente">
-            <property name="minimumSize">
-             <size>
-              <width>115</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>118</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Siguiente</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../terra.qrc">
-              <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="botAnterior">
-            <property name="minimumSize">
-             <size>
-              <width>115</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>118</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Anterior</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../terra.qrc">
-              <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="botBuscar">
-            <property name="minimumSize">
-             <size>
-              <width>115</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>118</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Buscar</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../terra.qrc">
-              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="botEditar">
-            <property name="minimumSize">
-             <size>
-              <width>115</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>118</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Editar</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../terra.qrc">
-              <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="botGuardar">
-            <property name="minimumSize">
-             <size>
-              <width>115</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>118</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Guardar</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../terra.qrc">
-              <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="botDeshacer">
-            <property name="minimumSize">
-             <size>
-              <width>115</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>118</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Deshacer</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../terra.qrc">
-              <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="botBorrar">
-            <property name="minimumSize">
-             <size>
-              <width>115</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>118</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Borrar</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../terra.qrc">
-              <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="botListados">
-            <property name="minimumSize">
-             <size>
-              <width>115</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>118</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Listados</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../terra.qrc">
-              <normaloff>:/Icons/PNG/List.png</normaloff>:/Icons/PNG/List.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="3" column="0">
+         <widget class="QPushButton" name="botBuscar">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Buscar</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QPushButton" name="botDeshacer">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Deshacer</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QPushButton" name="botEditar">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Editar</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="botAnterior">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Anterior</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="botAnadir">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Añadir</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QPushButton" name="botGuardar">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Guardar</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QPushButton" name="botListados">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Listados</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/List.png</normaloff>:/Icons/PNG/List.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QPushButton" name="botBorrar">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Borrar</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="botSiguiente">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Siguiente</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -684,7 +673,7 @@ background-color: rgb(254, 255, 205);</string>
                </layout>
               </item>
               <item row="1" column="0">
-               <widget class="QCheckBox" name="checkBox">
+               <widget class="QCheckBox" name="chklControlarStock">
                 <property name="text">
                  <string>Controlar stock</string>
                 </property>

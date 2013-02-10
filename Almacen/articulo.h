@@ -15,6 +15,8 @@ public:
     QString cDescripcion;
     QString cDescripcionReducida;
     int id_Proveedor;
+    QString cProveedor;
+    QString cCodProveedor;
     int id_Familia;
     QString cFamilia;
     int id_Seccion;

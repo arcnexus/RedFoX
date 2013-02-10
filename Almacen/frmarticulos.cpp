@@ -244,21 +244,8 @@ void FrmArticulos::LLenarCampos()
    ui->txtcDescripcion->setText(oArticulo->cDescripcion);
    ui->lblDescripcion->setText(oArticulo->cDescripcion);
    ui->txtcDescripcionResumida->setText(oArticulo->cDescripcionReducida);
-   // Recupero proveedor
-   QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
-   qryProveedor->prepare("select id,cProveedor from Proveedores where id = :id");
-   qryProveedor->bindValue(":id",oArticulo->id_Proveedor);
-   if (!qryProveedor->exec()) {
-       QMessageBox::warning(qApp->activeWindow(),tr("Error Datos"),tr("No se encuentra el proveedor asociado \n Deberá comprovar ficha producto"),tr("OK"));
-
-   } else {
-       qryProveedor->next();
-       QSqlRecord record = qryProveedor->record();
-       ui->txtcProveedor->setText(record.field("cProveedor").value().toString());
-   }
-   delete qryProveedor;
-   //Busco index
-
+   ui->txtcProveedor->setText(oArticulo->cProveedor);
+   ui->txtCodigoProveedor->setText(oArticulo->cCodProveedor);
    ui->txtcFamilia->setText(oArticulo->cFamilia);
    ui->txtcSeccion->setText(oArticulo->cSeccion);
    ui->txtcSubFamilia->setText(oArticulo->cSubfamilia);
@@ -266,26 +253,26 @@ void FrmArticulos::LLenarCampos()
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
    ui->txtrCoste->setText(QString::number(oArticulo->rCoste,'f',2));
-   //ui->txtrDto->setText(QString::number(oArticulo->rDto,'f',2));
-//   ui->txtdFechaUltimaCompra->setDate(oArticulo->dUltimaCompra);
-//   ui->txtdFechaUltimaVenta->setDate(oArticulo->dUltimaVenta);
-//   ui->txtnUnidadesCompradas->setText(QString::number(oArticulo->nUnidadesCompradas));
-//   ui->txtnUnidadesVendidas->setText(QString::number(oArticulo->nUnidadesVendidas));
-//   ui->txtrAcumuladoCompras->setText(QString::number(oArticulo->rAcumuladoCompras,'f',2));
-//   ui->txtrAcumuladoVentas->setText(QString::number(oArticulo->rAcumuladoVentas,'f',2));
-//   ui->txttComentario->setText(oArticulo->tComentario);
-//   ui->txtnStockMaximo->setText(QString::number(oArticulo->nStockMaximo));
-//   ui->txtnStockMinimo->setText(QString::number(oArticulo->nStockMinimo));
-//   ui->txtnStockReal->setText(QString::number(oArticulo->nStockReal));
-//   ui->txtnStockReal_2->setText(QString::number(oArticulo->nStockReal));
-//   if (oArticulo->lControlarStock==1)
-//        ui->chklControlarStock->setChecked(true);
-//   else
-//       ui->chklControlarStock->setChecked(false);
+   ui->txtrDto->setText(QString::number(oArticulo->rDto,'f',2));
+   ui->txtdFechaUltimaCompra->setDate(oArticulo->dUltimaCompra);
+   ui->txtdFechaUltimaVenta->setDate(oArticulo->dUltimaVenta);
+   ui->txtnUnidadesCompradas->setText(QString::number(oArticulo->nUnidadesCompradas));
+   ui->txtnUnidadesVendidas->setText(QString::number(oArticulo->nUnidadesVendidas));
+   ui->txtrAcumuladoCompras->setText(QString::number(oArticulo->rAcumuladoCompras,'f',2));
+   ui->txtrAcumuladoVentas->setText(QString::number(oArticulo->rAcumuladoVentas,'f',2));
+   ui->txttComentario->setText(oArticulo->tComentario);
+   ui->txtnStockMaximo->setText(QString::number(oArticulo->nStockMaximo));
+   ui->txtnStockMinimo->setText(QString::number(oArticulo->nStockMinimo));
+   ui->txtnStockReal->setText(QString::number(oArticulo->nStockReal));
+   ui->txtnStockReal_2->setText(QString::number(oArticulo->nStockReal));
+   if (oArticulo->lControlarStock==1)
+        ui->chklControlarStock->setChecked(true);
+   else
+       ui->chklControlarStock->setChecked(false);
 
-//   ui->txtnCantidadPendienteRecibir->setText(QString::number(oArticulo->nCantidadPendienteRecibir));
-//   ui->txtdFechaPrevistaRecepcion->setDate(oArticulo->dFechaPrevistaRecepcion);
-//   ui->txtnReservados->setText(QString::number(oArticulo->nReservados));
+   ui->txtnCantidadPendienteRecibir->setText(QString::number(oArticulo->nCantidadPendienteRecibir));
+   ui->txtdFechaPrevistaRecepcion->setDate(oArticulo->dFechaPrevistaRecepcion);
+   ui->txtnReservados->setText(QString::number(oArticulo->nReservados));
    if (oArticulo->lMostrarWeb==1)
         ui->chklMostrarWeb->setChecked(true);
     else
@@ -306,25 +293,25 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->cSubfamilia=ui->txtcSubFamilia->text();
     oArticulo->nTipoIva=ui->cboTipoIVA->currentText().toDouble();
     oArticulo->rCoste=ui->txtrCoste->text().toDouble();;
-    //oArticulo->rTarifa3=ui->txtrDto->text().toDouble();
-//    oArticulo->dUltimaCompra= ui->txtdFechaUltimaCompra->date();
-//    oArticulo->dUltimaVenta= ui->txtdFechaUltimaVenta->date();
-//    oArticulo->nUnidadesCompradas= ui->txtnUnidadesCompradas->text().toDouble();
-//    oArticulo->nUnidadesVendidas=ui->txtnUnidadesVendidas->text().toDouble();
-//    oArticulo->rAcumuladoCompras= ui->txtrAcumuladoCompras->text().toDouble();
-//    oArticulo->rAcumuladoVentas= ui->txtrAcumuladoVentas->text().toDouble();
-//    oArticulo->tComentario=ui->txttComentario->toPlainText();
-//    oArticulo->nStockMaximo=ui->txtnStockMaximo->text().toInt();
-//    oArticulo->nStockMinimo=ui->txtnStockMinimo->text().toInt();
-//    oArticulo->nStockReal=ui->txtnStockReal->text().toInt();
-//   if (ui->chklControlarStock->isChecked())
-//       oArticulo->lControlarStock=1;
-//    else
-//        oArticulo->lControlarStock=0;
+    oArticulo->rTarifa3=ui->txtrDto->text().toDouble();
+    oArticulo->dUltimaCompra= ui->txtdFechaUltimaCompra->date();
+    oArticulo->dUltimaVenta= ui->txtdFechaUltimaVenta->date();
+    oArticulo->nUnidadesCompradas= ui->txtnUnidadesCompradas->text().toDouble();
+    oArticulo->nUnidadesVendidas=ui->txtnUnidadesVendidas->text().toDouble();
+    oArticulo->rAcumuladoCompras= ui->txtrAcumuladoCompras->text().toDouble();
+    oArticulo->rAcumuladoVentas= ui->txtrAcumuladoVentas->text().toDouble();
+    oArticulo->tComentario=ui->txttComentario->toPlainText();
+    oArticulo->nStockMaximo=ui->txtnStockMaximo->text().toInt();
+    oArticulo->nStockMinimo=ui->txtnStockMinimo->text().toInt();
+    oArticulo->nStockReal=ui->txtnStockReal->text().toInt();
+   if (ui->chklControlarStock->isChecked())
+       oArticulo->lControlarStock=1;
+    else
+        oArticulo->lControlarStock=0;
 
-//    oArticulo->nCantidadPendienteRecibir=ui->txtnCantidadPendienteRecibir->text().toInt();
-//    oArticulo->dFechaPrevistaRecepcion =ui->txtdFechaPrevistaRecepcion->date();
-//    oArticulo->nReservados =ui->txtnReservados->text().toInt();
+    oArticulo->nCantidadPendienteRecibir=ui->txtnCantidadPendienteRecibir->text().toInt();
+    oArticulo->dFechaPrevistaRecepcion =ui->txtdFechaPrevistaRecepcion->date();
+    oArticulo->nReservados =ui->txtnReservados->text().toInt();
     if (ui->chklMostrarWeb->isChecked())
         oArticulo->lMostrarWeb = 1;
     else
@@ -346,24 +333,24 @@ void FrmArticulos::VaciarCampos()
    ui->txtcSubFamilia->clear();
    ui->cboTipoIVA->setEditText("");
    ui->txtrCoste->clear();
-   //ui->txtrDto->clear();
-//   ui->txtdFechaUltimaCompra->clear();
-//   ui->txtdFechaUltimaVenta->clear();
-//   ui->txtnUnidadesCompradas->clear();
-//   ui->txtnUnidadesVendidas->clear();
-//   ui->txtrAcumuladoCompras->clear();
-//   ui->txtrAcumuladoVentas->clear();
-//   ui->txttComentario->clear();
-//   ui->txtnStockMaximo->clear();
-//   ui->txtnStockMinimo->clear();
-//   ui->txtnStockReal->clear();
-//   ui->txtnStockReal_2->clear();
-//   ui->chklControlarStock->setChecked(false);
-//   ui->txtnCantidadPendienteRecibir->clear();
-//   ui->txtdFechaPrevistaRecepcion->clear();
-//   ui->txtnReservados->clear();
-//   ui->chklMostrarWeb->setChecked(false);
-//   ui->lblImagenArticulo->clear();
+   ui->txtrDto->clear();
+   ui->txtdFechaUltimaCompra->clear();
+   ui->txtdFechaUltimaVenta->clear();
+   ui->txtnUnidadesCompradas->clear();
+   ui->txtnUnidadesVendidas->clear();
+   ui->txtrAcumuladoCompras->clear();
+   ui->txtrAcumuladoVentas->clear();
+   ui->txttComentario->clear();
+   ui->txtnStockMaximo->clear();
+   ui->txtnStockMinimo->clear();
+   ui->txtnStockReal->clear();
+   ui->txtnStockReal_2->clear();
+   ui->chklControlarStock->setChecked(false);
+   ui->txtnCantidadPendienteRecibir->clear();
+   ui->txtdFechaPrevistaRecepcion->clear();
+   ui->txtnReservados->clear();
+   ui->chklMostrarWeb->setChecked(false);
+   ui->lblImagenArticulo->clear();
 
 }
 

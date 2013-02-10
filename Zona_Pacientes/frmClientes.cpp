@@ -20,7 +20,7 @@ frmClientes::frmClientes(QWidget *parent) :
 
     oCliente = new Cliente(this);
     oCliente->setId(0);
-
+    ui->txtNombreFiscal->setText("");
     // Rellenar formas de pago
     modelFP = new QSqlQueryModel();
     modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("terra"));
