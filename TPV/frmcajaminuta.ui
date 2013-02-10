@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1068</width>
+    <width>1225</width>
     <height>553</height>
    </rect>
   </property>
@@ -18,12 +18,15 @@
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(219, 228, 255);
+   <string notr="true">background-color: #4C6088;
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout_8">
    <item row="0" column="0">
     <widget class="QPushButton" name="btnCambioUsuario">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
      <property name="text">
       <string>c.Usuario</string>
      </property>
@@ -31,6 +34,9 @@
    </item>
    <item row="0" column="1">
     <widget class="QLabel" name="label_12">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
      <property name="text">
       <string>Ticket:</string>
      </property>
@@ -74,6 +80,9 @@ color: rgb(0, 0, 192);</string>
    </item>
    <item row="0" column="4">
     <widget class="QLabel" name="label_16">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
      <property name="text">
       <string>Fecha/Hora:</string>
      </property>
@@ -138,7 +147,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
         </size>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <property name="sizePolicy">
@@ -146,6 +155,9 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #ecefed;</string>
         </property>
         <attribute name="title">
          <string>Cliente</string>
@@ -314,8 +326,14 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
             <widget class="QLabel" name="label">
              <property name="minimumSize">
               <size>
-               <width>91</width>
+               <width>30</width>
                <height>91</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>30</width>
+               <height>16777215</height>
               </size>
              </property>
              <property name="text">
@@ -385,6 +403,9 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #ecefed;</string>
         </property>
         <attribute name="title">
          <string>Dirección</string>
@@ -539,6 +560,9 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #ecefed;</string>
         </property>
         <attribute name="title">
          <string>Desglose</string>
@@ -1301,6 +1325,9 @@ color: rgb(0, 64, 64);</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #ecefed;</string>
+        </property>
         <attribute name="title">
          <string>Detalle del cobro</string>
         </attribute>
@@ -1653,16 +1680,27 @@ color: rgb(255, 255, 255);</string>
           </item>
           <item row="1" column="1">
            <widget class="QDoubleSpinBox" name="txtPorcDtoArticulo">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
             <property name="maximum">
              <double>100.000000000000000</double>
             </property>
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QDoubleSpinBox" name="txtDtoArticulo"/>
+           <widget class="QDoubleSpinBox" name="txtDtoArticulo">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
           </item>
           <item row="1" column="3">
-           <widget class="QComboBox" name="txtPorcIVAArticulo"/>
+           <widget class="QComboBox" name="txtPorcIVAArticulo">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -1699,6 +1737,12 @@ color: rgb(255, 255, 255);</string>
             <property name="icon">
              <iconset resource="../terra.qrc">
               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>15</width>
+              <height>15</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -1763,6 +1807,9 @@ color: rgb(255, 255, 255);</string>
           </item>
           <item row="2" column="2">
            <widget class="QSpinBox" name="txtcCantidadArticulo">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
             <property name="minimum">
              <number>-999999999</number>
             </property>
@@ -1795,6 +1842,9 @@ color: rgb(255, 255, 255);</string>
            <height>0</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
+         </property>
          <property name="text">
           <string>Poner en Espera</string>
          </property>
@@ -1813,6 +1863,9 @@ color: rgb(255, 255, 255);</string>
            <width>0</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
          </property>
          <property name="text">
           <string>Ver Agenda</string>
@@ -1833,6 +1886,9 @@ color: rgb(255, 255, 255);</string>
            <height>0</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
+         </property>
          <property name="text">
           <string>Cobrar Ticket</string>
          </property>
@@ -1851,6 +1907,9 @@ color: rgb(255, 255, 255);</string>
            <width>0</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
          </property>
          <property name="text">
           <string>Nueva Visita</string>
@@ -1871,6 +1930,9 @@ color: rgb(255, 255, 255);</string>
            <height>0</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
+         </property>
          <property name="text">
           <string>Imprimir Informe</string>
          </property>
@@ -1889,6 +1951,9 @@ color: rgb(255, 255, 255);</string>
            <width>0</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
          </property>
          <property name="text">
           <string>Recuperar en Espera</string>
@@ -2175,6 +2240,9 @@ font: 28pt &quot;Sans Serif&quot;;</string>
    </item>
    <item row="1" column="0" colspan="6">
     <widget class="QLabel" name="label_19">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 127);</string>
+     </property>
      <property name="text">
       <string>Resumen. Editar:[F7]   Borrar Linea: [Suprimir]   Flechas ariba/abajo: Cambiar linea</string>
      </property>
