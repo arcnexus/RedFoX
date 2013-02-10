@@ -129,7 +129,7 @@ QRadioButton:hover, QCheckBox:hover {
 }
 
 
-
+/*
 QDateEdit::up-button {
     subcontrol-origin: border;
     subcontrol-position: top right;
@@ -139,48 +139,6 @@ QDateEdit::up-button {
     border-width: 1px;
 }
 
-QDateEdit::up-button:hover {
-    border-image: url(:Icons/images/spinup_hover.png) 1;
-}
-
-QDateEdit::up-button:pressed {
-    border-image: url(:Icons/images/spinup_pressed.png) 1;
-}
-
-QDateEdit::down-button {
-    subcontrol-origin: border;
-    subcontrol-position: bottom right;
-    width: 16px;
-    border-image: url(:Icons/images/spindown.png) 1;
-    border-width: 1px;
-    border-top-width: 0;
-}
-
-QDateEdit::drop-down {
-    border-image: url(:Icons/images/spindown.png) 1;
-}
-
-QDateTimeEdit::drop-down {
-    border-image: url(:Icons/images/spindown.png) 1;
-}
-
-QDateTimeEdit::up-button {
-    subcontrol-origin: border;
-    subcontrol-position: top right;
-
-    width: 16px; /* 16 + 2*1px border-width = 15px padding + 3px parent border */
-    border-image: url(:Icons/images/spinup.png) 1;
-    border-width: 1px;
-}
-
-QDateTimeEdit::down-button {
-    subcontrol-origin: border;
-    subcontrol-position: bottom right;
-    width: 16px;
-    border-image: url(:Icons/images/spindown.png) 1;
-    border-width: 1px;
-    border-top-width: 0;
-}
 
 QTabWidget::up-button {
     subcontrol-origin: border;
