@@ -6,6 +6,7 @@
 #include "frmagendavisitas.h"
 #include "block_terra_form.h"
 #include "db_table_view.h"
+#include <QSplashScreen>
 
 Configuracion * Configuracion_global = 0;
 bool medic = false;
@@ -96,21 +97,15 @@ void MainWindow::init()
         {
 			QryEmpresa.next();
 
-            QDesktopWidget *desktop = QApplication::desktop();
-            QProgressBar progress;
-
-            progress.setWindowFlags(Qt::FramelessWindowHint);
-            progress.setAlignment(Qt::AlignCenter);
-            progress.resize(600 , 40);
-            progress.setMaximum(15);
-            progress.setVisible(true);
-            progress.show();
-            progress.move(desktop->width()/2 - progress.width()/2 , desktop->height()/2 - progress.height()/2);
+            QPixmap pixmap(":/Icons/PNG/logo2.png");
+            QSplashScreen splash(pixmap);
+            splash.show();
 
             QApplication::processEvents();
 			QSqlRecord record = QryEmpresa.record();
 
 			// DBEMpresa
+            splash.showMessage(tr("Cargando configuración de base de datos"),Qt::AlignBottom);
             Configuracion_global->cDriverBDEmpresa = record.field("driverBD").value().toString();
             Configuracion_global->cHostBDEmpresa = record.field("host").value().toString();
             Configuracion_global->cNombreBDEmpresa =record.field("nombreBD").value().toString();
@@ -128,26 +123,28 @@ void MainWindow::init()
             else
                 internacional = false;
 
-            progress.setValue(1);
+
             QApplication::processEvents();
 
 			//DBMedica
+            splash.showMessage(tr("Cargando configuración médica"),Qt::AlignBottom);
             Configuracion_global->cDriverBDMedica = record.field("driverBDMedica").value().toString();
             Configuracion_global->cHostBDMedica = record.field("hostBDMedica").value().toString();
             Configuracion_global->cNombreBDMedica =record.field("nombreBDMedica").value().toString();
             Configuracion_global->cPasswordBDMedica =record.field("contrasenaBDMedica").value().toString();
             Configuracion_global->cRutaBdMedica = record.field("RutaBDMedicaSqLite").value().toString();
             Configuracion_global->cUsuarioBDMedica = record.field("userBDMedica").value().toString();
-            progress.setValue(2);
+
             QApplication::processEvents();
 
 			// Varios
+            splash.showMessage(tr("Cargando configuración financiera"),Qt::AlignBottom);
             Configuracion_global->cSerie = record.field("serie").value().toString();
             Configuracion_global->nDigitosCuentasContables = record.field("ndigitoscuenta").value().toInt();
             Configuracion_global->cCuentaAcreedores = record.field("codigocuentaacreedores").value().toString();
             Configuracion_global->cCuentaClientes = record.field("codigocuentaclientes").value().toString();
             Configuracion_global->cCuentaProveedores = record.field("codigocuentaproveedores").value().toString();
-            progress.setValue(3);
+
             QApplication::processEvents();
 
 			// Guardo preferencias
@@ -159,10 +156,11 @@ void MainWindow::init()
             settings.setValue("cCuentaAcreedores",Configuracion_global->cCuentaAcreedores);
             settings.setValue("Clave1",record.field("clave1").value().toString());
             settings.setValue("Clave2",record.field("clave2").value().toString());
-            //progress.setValue(4);
+
             QApplication::processEvents();
 
 			// Abro empresa activa
+            splash.showMessage(tr("Cargando datos de la empresa activa"),Qt::AlignBottom);
             QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"empresa");
             if (Configuracion_global->cDriverBDEmpresa =="QSQLITE")
             {
@@ -175,10 +173,11 @@ void MainWindow::init()
                 dbEmpresa.setHostName(Configuracion_global->cHostBDEmpresa);
                 dbEmpresa.open(Configuracion_global->cUsuarioBDEmpresa,Configuracion_global->cPasswordBDEmpresa);
 			}
-            progress.setValue(5);
+
             QApplication::processEvents();
 
 			// Abro bdmedica activa
+            splash.showMessage(tr("Abriendo base de datos médica"),Qt::AlignBottom);
             QSqlDatabase dbMedica = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"dbmedica");
             if (Configuracion_global->cDriverBDMedica =="QSQLITE")
             {
@@ -198,45 +197,44 @@ void MainWindow::init()
 			{
                 QMessageBox::critical(this, "error:", dbMedica.lastError().text());
 			}
-            progress.setValue(6);
 
             Configuracion_global->Cargar_iva();
             Configuracion_global->Cargar_paises();
 
             //Widgets
-
+            splash.showMessage(tr("Cargando modulos... Modulo de clientes"),Qt::AlignBottom);
             frmClientes1 = new frmClientes(this);
-            progress.setValue(7);
 
+            splash.showMessage(tr("Cargando modulos... Modulo de facturas"),Qt::AlignBottom);
             frmFacturas1 = new frmFacturas(this);
             connect(frmFacturas1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmFacturas1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-            progress.setValue(8);
 
+            splash.showMessage(tr("Cargando modulos... Modulo de articulos"),Qt::AlignBottom);
             frmArticulos1 = new FrmArticulos(this);
-            progress.setValue(9);
 
+            splash.showMessage(tr("Cargando modulos... Modulo de proveedores"),Qt::AlignBottom);
             frmProveedores1 = new frmProveedores(this);
-            progress.setValue(10);
 
+            splash.showMessage(tr("Cargando modulos... Modulo de albaranes"),Qt::AlignBottom);
             frmAlbaran1 = new FrmAlbaran(this);
             connect(frmAlbaran1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmAlbaran1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-            progress.setValue(11);
 
+            splash.showMessage(tr("Cargando modulos... Modulo de pedidos"),Qt::AlignBottom);
             frmPedidos1 = new FrmPedidos(this);
             connect(frmPedidos1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmPedidos1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-            progress.setValue(12);
 
+            splash.showMessage(tr("Cargando modulos... Modulo de presupuestos"),Qt::AlignBottom);
             frmPresupcli = new FrmPresupuestosCli(this);
             connect(frmPresupcli,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmPresupcli,SIGNAL(unblock()),this,SLOT(unblock_main()));
-            progress.setValue(13);
 
+            splash.showMessage(tr("Cargando modulos... Modulo de TPV"),Qt::AlignBottom);
             frmCajaMinuta = new FrmCajaMinuta(this);
-            progress.setValue(14);
 
+            splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
             ui->stackedWidget->addWidget(frmClientes1);
             ui->stackedWidget->addWidget(frmFacturas1);
             ui->stackedWidget->addWidget(frmArticulos1);
@@ -245,10 +243,11 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmPedidos1);
             ui->stackedWidget->addWidget(frmPresupcli);
             ui->stackedWidget->addWidget(frmCajaMinuta);
-            //progress.setValue(15);
+            TerraForm = new init_form(this);
+            ui->stackedWidget->addWidget(TerraForm);
+            ui->stackedWidget->setCurrentWidget(TerraForm);
 
             QApplication::processEvents();
-            //this->showMaximized();
             this->setWindowState(Qt::WindowMaximized);
             this->show();
 		} 

@@ -91,7 +91,8 @@ SOURCES += main.cpp\
     TPV/lineaticket.cpp \
     Almacen/frmtarifas.cpp \
     Almacen/frmarticulos.cpp \
-    Almacen/articulo.cpp
+    Almacen/articulo.cpp \
+    Auxiliares/init_form.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -151,7 +152,8 @@ HEADERS  += mainwindow.h \
     TPV/lineaticket.h \
     Almacen/frmtarifas.h \
     Almacen/frmarticulos.h \
-    Almacen/articulo.h
+    Almacen/articulo.h \
+    Auxiliares/init_form.h
 
 
 FORMS    += mainwindow.ui \
@@ -186,7 +188,8 @@ FORMS    += mainwindow.ui \
     Auxiliares/search_lineedit.ui \
     TPV/frmcajaminuta.ui \
     Almacen/frmtarifas.ui \
-    Almacen/frmarticulos.ui
+    Almacen/frmarticulos.ui \
+    Auxiliares/init_form.ui
 
 RESOURCES += \
     terra.qrc \

@@ -12,6 +12,7 @@
 #include "frmpedidos.h"
 #include "frmpresupuestoscli.h"
 #include "TPV/frmcajaminuta.h"
+#include "Auxiliares/init_form.h"
 namespace Ui {
 class MainWindow;
 }
@@ -95,6 +96,7 @@ private:
     FrmPedidos *frmPedidos1;
     FrmPresupuestosCli *frmPresupcli;
     FrmCajaMinuta *frmCajaMinuta;
+    init_form * TerraForm;
 
     bool on_edit;
 };
