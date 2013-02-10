@@ -92,7 +92,8 @@ SOURCES += main.cpp\
     Almacen/frmtarifas.cpp \
     Almacen/frmarticulos.cpp \
     Almacen/articulo.cpp \
-    Auxiliares/init_form.cpp
+    Auxiliares/init_form.cpp \
+    Auxiliares/toolbarbutton.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -153,7 +154,8 @@ HEADERS  += mainwindow.h \
     Almacen/frmtarifas.h \
     Almacen/frmarticulos.h \
     Almacen/articulo.h \
-    Auxiliares/init_form.h
+    Auxiliares/init_form.h \
+    Auxiliares/toolbarbutton.h
 
 
 FORMS    += mainwindow.ui \
@@ -189,7 +191,8 @@ FORMS    += mainwindow.ui \
     TPV/frmcajaminuta.ui \
     Almacen/frmtarifas.ui \
     Almacen/frmarticulos.ui \
-    Auxiliares/init_form.ui
+    Auxiliares/init_form.ui \
+    Auxiliares/toolbarbutton.ui
 
 RESOURCES += \
     terra.qrc \

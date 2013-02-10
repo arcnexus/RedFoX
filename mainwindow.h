@@ -13,6 +13,7 @@
 #include "frmpresupuestoscli.h"
 #include "TPV/frmcajaminuta.h"
 #include "Auxiliares/init_form.h"
+#include "Auxiliares/toolbarbutton.h"
 namespace Ui {
 class MainWindow;
 }
@@ -32,7 +33,6 @@ public:
 
     //QSqlDatabase dbConfiguracion;
     QSqlQuery QryConfiguracion;
-
 private slots:
 	void init();
 
@@ -87,6 +87,19 @@ private:
     void closeEvent(QCloseEvent *e);
     void blockMe(bool state);
 
+    //Barra de mantenimiento
+    ToolBarButton * btn_clientes;
+    ToolBarButton * btn_almacen;
+    ToolBarButton * btn_proovedores;
+    ToolBarButton * btn_agenda;
+    void crear_barraMantenimiento();
+    //Barra de ventas
+    ToolBarButton * btn_presupuestos;
+    ToolBarButton * btn_pedidos;
+    ToolBarButton * btn_albaranes;
+    ToolBarButton * btn_facturas;
+    ToolBarButton * btn_tpv;
+    void crear_barraVentas();
     //WIDGETS
     frmClientes *frmClientes1;
     frmFacturas *frmFacturas1;

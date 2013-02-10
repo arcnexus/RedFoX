@@ -9,8 +9,70 @@
 #include <QSplashScreen>
 
 Configuracion * Configuracion_global = 0;
-bool medic = false;
+bool medic = true;
 bool internacional = true;
+
+void MainWindow::crear_barraMantenimiento()
+{
+    btn_clientes = new ToolBarButton(tr("Clientes"),":/Icons/PNG/clientes_2.png",this);
+    btn_proovedores = new ToolBarButton(tr("Proveedores"),":/Icons/PNG/proveedores_2.png",this);
+    btn_almacen = new ToolBarButton(tr("Almacen"),":/Icons/PNG/Box.png",this);
+    btn_agenda = new ToolBarButton(tr("Agenda"),":/Icons/PNG/Calender.png",this);
+
+    QFrame*  line = new QFrame(ui->page_3);
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
+
+    ui->verticalLayout_7->addWidget(btn_clientes);
+    ui->verticalLayout_7->addWidget(btn_proovedores);
+    ui->verticalLayout_7->addWidget(btn_almacen);
+    ui->verticalLayout_7->addWidget(line);
+    ui->verticalLayout_7->addWidget(btn_agenda);
+    ui->verticalLayout_7->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
+
+    connect(btn_clientes,SIGNAL(clicked()),this,SLOT(btnClientes_clicked()));
+    connect(btn_almacen,SIGNAL(clicked()),this,SLOT(btnArticulos_clicked()));
+    connect(btn_proovedores,SIGNAL(clicked()),this,SLOT(btnProveedores_clicked()));
+
+    //Barra de menu
+    connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
+    connect(ui->btnArt_culos,SIGNAL(triggered()),this,SLOT(btnArticulos_clicked()));
+    connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
+}
+
+void MainWindow::crear_barraVentas()
+{
+    btn_presupuestos = new ToolBarButton(tr("Presupuestos"),":/Icons/PNG/presupuestos.png",this);
+    btn_pedidos = new ToolBarButton(tr("Pedidos"),":/Icons/PNG/pedidos_cli.png",this);
+    btn_albaranes = new ToolBarButton(tr("Albaranes"),":/Icons/PNG/albaran.png",this);
+    btn_facturas = new ToolBarButton(tr("Facturas"),":/Icons/PNG/Factura.png",this);
+    btn_tpv = new ToolBarButton(tr("TPV"),":/Icons/PNG/tpv.png",this);
+
+    QFrame*  line = new QFrame(ui->page_4);
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
+
+    ui->verticalLayout_15->addWidget(btn_presupuestos);
+    ui->verticalLayout_15->addWidget(btn_pedidos);
+    ui->verticalLayout_15->addWidget(btn_albaranes);
+    ui->verticalLayout_15->addWidget(btn_facturas);
+    ui->verticalLayout_15->addWidget(line);
+    ui->verticalLayout_15->addWidget(btn_tpv);
+    ui->verticalLayout_15->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
+
+    connect(btn_presupuestos,SIGNAL(clicked()),this,SLOT(btnPresup_clientes_clicked()));
+    connect(btn_pedidos,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
+    connect(btn_albaranes,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
+    connect(btn_facturas,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
+    connect(btn_tpv,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
+
+    //barra de menu
+    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
+    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
+    connect(ui->actionAlbaranes,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
+    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
+    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,11 +81,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     on_edit = false;
 
+    crear_barraMantenimiento();
+
+    crear_barraVentas();
+
+    ui->toolBox->setCurrentIndex(0);
     if (medic)
+    {
         ui->btnClientes->setText(tr("Pacientes"));
+        btn_clientes->setText(tr("Pacientes"));
+    }
     else
     {
-        ui->actionClinica->deleteLater();
         ui->btnClientes->setText(tr("Clientes"));
         ui->menuClinica->deleteLater();
     }
@@ -33,9 +102,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // ----------------------------------------------------------------------------
     connect(ui->btnSalir,SIGNAL(triggered()),this,SLOT(close()));
     connect(ui->btn_salir,SIGNAL(clicked()),this,SLOT(close()));
-
-    connect(ui->actionManten,SIGNAL(triggered()),this,SLOT(btnMantenimientos_clicked()));
-    connect(ui->action_ventas,SIGNAL(triggered()),this,SLOT(btnVentas_clicked()));
 
     connect(ui->actionGestion_de_Secciones,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
     connect(ui->actionGestion_de_Familias,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
@@ -53,26 +119,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionTipos_de_anal_tica,SIGNAL(triggered()),this,SLOT(handle_tipoAnalitica()));
     connect(ui->actionTarifas,SIGNAL(triggered()), this,SLOT(handle_tipostarifa()));
     connect(ui->actionCampos_de_analitica,SIGNAL(triggered()),this,SLOT(handle_campoAnalitica()));
-    connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));
-
-
-    connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
-    connect(ui->btnArt_culos,SIGNAL(triggered()),this,SLOT(btnArticulos_clicked()));
-    connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
-    connect(ui->btn_clientes,SIGNAL(clicked()),this,SLOT(btnClientes_clicked()));
-    connect(ui->btn_almacen,SIGNAL(clicked()),this,SLOT(btnArticulos_clicked()));
-    connect(ui->btn_proovedores,SIGNAL(clicked()),this,SLOT(btnProveedores_clicked()));
-
-    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
-    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
-    connect(ui->actionAlbaranes,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
-    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
-    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
-    connect(ui->btn_presupuesto,SIGNAL(clicked()),this,SLOT(btnPresup_clientes_clicked()));
-    connect(ui->btn_pedido,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
-    connect(ui->btn_albaran,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
-    connect(ui->btn_factura,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
-    connect(ui->btn_tpv,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
+    connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));  
 
     QTimer::singleShot(0,this,SLOT(init()));
 }

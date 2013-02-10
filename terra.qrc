@@ -113,5 +113,9 @@
         <file>PNG/logo2.png</file>
         <file>PNG/logo-mini.png</file>
         <file>PNG/logo-blocked.png</file>
+        <file>PNG/Box.png</file>
+        <file>PNG/Calender.png</file>
+        <file>PNG/clientes_2.png</file>
+        <file>PNG/proveedores_2.png</file>
     </qresource>
 </RCC>
