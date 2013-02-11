@@ -79,16 +79,7 @@
        <property name="spacing">
         <number>1</number>
        </property>
-       <property name="leftMargin">
-        <number>1</number>
-       </property>
-       <property name="topMargin">
-        <number>1</number>
-       </property>
-       <property name="rightMargin">
-        <number>1</number>
-       </property>
-       <property name="bottomMargin">
+       <property name="margin">
         <number>1</number>
        </property>
        <item>
@@ -97,15 +88,15 @@
           <string notr="true">color: rgb(255, 255, 255);</string>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="page_3">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>116</width>
-            <height>638</height>
+            <width>114</width>
+            <height>577</height>
            </rect>
           </property>
           <attribute name="label">
@@ -118,14 +109,26 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>116</width>
-            <height>638</height>
+            <width>114</width>
+            <height>577</height>
            </rect>
           </property>
           <attribute name="label">
            <string>Ventas</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_15"/>
+         </widget>
+         <widget class="QWidget" name="Page_Compras">
+          <attribute name="label">
+           <string>Compras</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="LayoutCompras"/>
+         </widget>
+         <widget class="QWidget" name="page_Almacen">
+          <attribute name="label">
+           <string>Almacen</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="Layout_Almacen"/>
          </widget>
         </widget>
        </item>
@@ -868,7 +871,7 @@ background-color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>1160</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivos">
@@ -881,11 +884,12 @@ background-color: rgb(255, 255, 255);</string>
     <addaction name="btnTipos_de_Iva"/>
     <addaction name="btnAgenda"/>
     <addaction name="separator"/>
-    <addaction name="btnSalir"/>
     <addaction name="actionBancos"/>
     <addaction name="actionPaises"/>
     <addaction name="actionAvisos"/>
     <addaction name="actionTarifas"/>
+    <addaction name="separator"/>
+    <addaction name="btnSalir"/>
    </widget>
    <widget class="QMenu" name="menuVentas">
     <property name="title">
@@ -902,11 +906,16 @@ background-color: rgb(255, 255, 255);</string>
     <property name="title">
      <string>Compras</string>
     </property>
+    <addaction name="actionGesti_n_de_pedidos_a_proveedores"/>
+    <addaction name="actionAlbaranes_de_proveedores"/>
+    <addaction name="actionFacturas_de_proveedores_Acreedores"/>
    </widget>
    <widget class="QMenu" name="menuAdministrador">
     <property name="title">
      <string>Administrador</string>
     </property>
+    <addaction name="actionGesti_n_de_Usuarios"/>
+    <addaction name="actionPermisos"/>
    </widget>
    <widget class="QMenu" name="menuAlmacen">
     <property name="title">
@@ -924,6 +933,14 @@ background-color: rgb(255, 255, 255);</string>
     </widget>
     <addaction name="btnArt_culos"/>
     <addaction name="menuDivisiones"/>
+    <addaction name="separator"/>
+    <addaction name="actionRecepci_n_de_pedidos"/>
+    <addaction name="actionGesti_n_de_devoluciones"/>
+    <addaction name="actionRegularizaci_n_de_inventario"/>
+    <addaction name="separator"/>
+    <addaction name="actionTraspasos_entre_almacenes"/>
+    <addaction name="separator"/>
+    <addaction name="actionGesti_n_de_Pagos"/>
    </widget>
    <widget class="QMenu" name="menuClinica">
     <property name="title">
@@ -934,6 +951,12 @@ background-color: rgb(255, 255, 255);</string>
     <addaction name="actionCampos_de_analitica"/>
     <addaction name="actionMotivos_de_interconsulta"/>
     <addaction name="actionTipos_de_imagen"/>
+    <addaction name="separator"/>
+    <addaction name="actionEmisi_n_de_recetas_a_pacientes"/>
+    <addaction name="actionCertificados"/>
+    <addaction name="actionGesti_n_de_comisiones"/>
+    <addaction name="separator"/>
+    <addaction name="actionTipos_de_paciente"/>
    </widget>
    <addaction name="menuArchivos"/>
    <addaction name="menuVentas"/>
@@ -1142,6 +1165,81 @@ background-color: rgb(255, 255, 255);</string>
   <action name="actionTarifas">
    <property name="text">
     <string>Grupos de Tarifa</string>
+   </property>
+  </action>
+  <action name="actionGesti_n_de_pedidos_a_proveedores">
+   <property name="text">
+    <string>Gestión de pedidos a proveedores</string>
+   </property>
+  </action>
+  <action name="actionAlbaranes_de_proveedores">
+   <property name="text">
+    <string>Albaranes de proveedores</string>
+   </property>
+  </action>
+  <action name="actionFacturas_de_proveedores_Acreedores">
+   <property name="text">
+    <string>Facturas de proveedores/Acreedores</string>
+   </property>
+  </action>
+  <action name="actionRecepci_n_de_Pedidos">
+   <property name="text">
+    <string>Recepción de Pedidos</string>
+   </property>
+  </action>
+  <action name="actionRecepci_n_de_pedidos">
+   <property name="text">
+    <string>Recepción  de pedidos</string>
+   </property>
+  </action>
+  <action name="actionGesti_n_de_devoluciones">
+   <property name="text">
+    <string>Gestión de devoluciones</string>
+   </property>
+  </action>
+  <action name="actionRegularizaci_n_de_inventario">
+   <property name="text">
+    <string>Regularización de inventario</string>
+   </property>
+  </action>
+  <action name="actionGesti_n_de_Usuarios">
+   <property name="text">
+    <string>Gestión de Usuarios</string>
+   </property>
+  </action>
+  <action name="actionPermisos">
+   <property name="text">
+    <string>Permisos</string>
+   </property>
+  </action>
+  <action name="actionEmisi_n_de_recetas_a_pacientes">
+   <property name="text">
+    <string>Emisión de recetas a pacientes</string>
+   </property>
+  </action>
+  <action name="actionCertificados">
+   <property name="text">
+    <string>Certificados</string>
+   </property>
+  </action>
+  <action name="actionGesti_n_de_comisiones">
+   <property name="text">
+    <string>Gestión de comisiones</string>
+   </property>
+  </action>
+  <action name="actionTipos_de_paciente">
+   <property name="text">
+    <string>Tipos de paciente</string>
+   </property>
+  </action>
+  <action name="actionTraspasos_entre_almacenes">
+   <property name="text">
+    <string>Traspasos entre almacenes</string>
+   </property>
+  </action>
+  <action name="actionGesti_n_de_Pagos">
+   <property name="text">
+    <string>Gestión de Pagos</string>
    </property>
   </action>
  </widget>

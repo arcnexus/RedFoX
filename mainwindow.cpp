@@ -47,6 +47,7 @@ void MainWindow::crear_barraVentas()
     btn_albaranes = new ToolBarButton(tr("Albaranes"),":/Icons/PNG/albaran.png",this);
     btn_facturas = new ToolBarButton(tr("Facturas"),":/Icons/PNG/Factura.png",this);
     btn_tpv = new ToolBarButton(tr("TPV"),":/Icons/PNG/tpv.png",this);
+    btn_gestionCobros = new ToolBarButton(tr("Gest. Cobros"),":/Icons/PNG/Cobros.png",this);
 
     QFrame*  line = new QFrame(ui->page_4);
     line->setFrameShape(QFrame::HLine);
@@ -58,6 +59,8 @@ void MainWindow::crear_barraVentas()
     ui->verticalLayout_15->addWidget(btn_facturas);
     ui->verticalLayout_15->addWidget(line);
     ui->verticalLayout_15->addWidget(btn_tpv);
+    ui->verticalLayout_15->addWidget(line);
+    ui->verticalLayout_15->addWidget(btn_gestionCobros);
     ui->verticalLayout_15->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
     connect(btn_presupuestos,SIGNAL(clicked()),this,SLOT(btnPresup_clientes_clicked()));
@@ -65,6 +68,35 @@ void MainWindow::crear_barraVentas()
     connect(btn_albaranes,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
     connect(btn_facturas,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
     connect(btn_tpv,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
+
+    //barra de menu
+    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
+    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
+    connect(ui->actionAlbaranes,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
+    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
+    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+}
+
+void MainWindow::crear_barraCompras()
+{
+    btn_pedidos_pro= new ToolBarButton(tr("Pedidos Prov."),":/Icons/PNG/pedidos_cli.png",this);
+    btn_albaranes_pro = new ToolBarButton(tr("Albaranes Prov."),":/Icons/PNG/albaran.png",this);
+    btn_facturas_pro = new ToolBarButton(tr("Facturas Prov."),":/Icons/PNG/Factura.png",this);
+
+
+    QFrame*  line = new QFrame(ui->Page_Compras);
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
+
+    ui->LayoutCompras->addWidget(btn_pedidos_pro);
+    ui->LayoutCompras->addWidget(btn_albaranes_pro);
+    ui->LayoutCompras->addWidget(btn_facturas_pro);
+
+    ui->LayoutCompras->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
+
+    connect(btn_pedidos_pro,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
+    connect(btn_albaranes_pro,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
+    connect(btn_facturas_pro,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
 
     //barra de menu
     connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
@@ -84,6 +116,9 @@ MainWindow::MainWindow(QWidget *parent) :
     crear_barraMantenimiento();
 
     crear_barraVentas();
+
+    crear_barraCompras();
+    {
 
     ui->toolBox->setCurrentIndex(0);
     if (medic)
@@ -122,6 +157,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));  
 
     QTimer::singleShot(0,this,SLOT(init()));
+}
 }
 void MainWindow::init()
 {
