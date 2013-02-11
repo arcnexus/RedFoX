@@ -99,7 +99,22 @@ private:
     ToolBarButton * btn_albaranes;
     ToolBarButton * btn_facturas;
     ToolBarButton * btn_tpv;
+    ToolBarButton * btn_gestionCobros;
+
     void crear_barraVentas();
+    // Barra de Compras
+    ToolBarButton * btn_pedidos_pro;
+    ToolBarButton * btn_albaranes_pro;
+    ToolBarButton * btn_facturas_pro;
+    void crear_barraCompras();
+
+    // Barra de Almacen
+    ToolBarButton * btn_recepcionPedidos;
+    ToolBarButton * btn_gestionDevoluciones;
+    ToolBarButton * btn_inventario;
+    ToolBarButton * btn_traspasoAlmacen;
+    ToolBarButton * btn_gestionPagos;
+
     //WIDGETS
     frmClientes *frmClientes1;
     frmFacturas *frmFacturas1;

@@ -117,5 +117,6 @@
         <file>PNG/Calender.png</file>
         <file>PNG/clientes_2.png</file>
         <file>PNG/proveedores_2.png</file>
+        <file>PNG/Cobros.png</file>
     </qresource>
 </RCC>

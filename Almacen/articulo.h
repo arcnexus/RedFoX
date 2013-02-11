@@ -73,7 +73,7 @@ public:
     void Guardar();
     void Vaciar();
     void Borrar(int nId);
-    void Vender(int id, int cantidad, double rPVP);
+    static void Vender(int id, int cantidad, double rPVP);
     void Devolucion(int id, int cantidad, double rImporte, QString cMotivo, QString dFechaDevolucion);
     void CargarImagen(QLabel *label);
 
