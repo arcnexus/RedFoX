@@ -79,56 +79,37 @@
        <property name="spacing">
         <number>1</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
         <number>1</number>
        </property>
        <item>
-        <widget class="QToolBox" name="toolBox">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
-         </property>
+        <widget class="QComboBox" name="comboBox"/>
+       </item>
+       <item>
+        <widget class="QStackedWidget" name="stackedWidget_2">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
-         <widget class="QWidget" name="page_3">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>114</width>
-            <height>577</height>
-           </rect>
-          </property>
-          <attribute name="label">
-           <string>Mantenimientos</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_7"/>
+         <widget class="QWidget" name="page_manten">
+          <layout class="QVBoxLayout" name="verticalLayout_manten"/>
          </widget>
-         <widget class="QWidget" name="page_4">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>114</width>
-            <height>577</height>
-           </rect>
-          </property>
-          <attribute name="label">
-           <string>Ventas</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_15"/>
+         <widget class="QWidget" name="page_compras">
+          <layout class="QVBoxLayout" name="verticalLayout_compras"/>
          </widget>
-         <widget class="QWidget" name="Page_Compras">
-          <attribute name="label">
-           <string>Compras</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="LayoutCompras"/>
+         <widget class="QWidget" name="page_ventas">
+          <layout class="QVBoxLayout" name="verticalLayout_ventas"/>
          </widget>
-         <widget class="QWidget" name="page_Almacen">
-          <attribute name="label">
-           <string>Almacen</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="Layout_Almacen"/>
+         <widget class="QWidget" name="page_almacen">
+          <layout class="QVBoxLayout" name="verticalLayout_almacen"/>
          </widget>
         </widget>
        </item>
@@ -871,7 +852,7 @@ background-color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>1160</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivos">

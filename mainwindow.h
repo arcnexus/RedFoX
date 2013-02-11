@@ -82,6 +82,8 @@ private slots:
     void handle_campoAnalitica();
     void handle_motivoInterConsulta();
     void handle_tipostarifa();
+    void on_comboBox_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);

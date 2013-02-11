@@ -19,16 +19,16 @@ void MainWindow::crear_barraMantenimiento()
     btn_almacen = new ToolBarButton(tr("Almacen"),":/Icons/PNG/Box.png",this);
     btn_agenda = new ToolBarButton(tr("Agenda"),":/Icons/PNG/Calender.png",this);
 
-    QFrame*  line = new QFrame(ui->page_3);
+    QFrame*  line = new QFrame(ui->page_manten);
     line->setFrameShape(QFrame::HLine);
     line->setFrameShadow(QFrame::Sunken);
 
-    ui->verticalLayout_7->addWidget(btn_clientes);
-    ui->verticalLayout_7->addWidget(btn_proovedores);
-    ui->verticalLayout_7->addWidget(btn_almacen);
-    ui->verticalLayout_7->addWidget(line);
-    ui->verticalLayout_7->addWidget(btn_agenda);
-    ui->verticalLayout_7->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    ui->verticalLayout_manten->addWidget(btn_clientes);
+    ui->verticalLayout_manten->addWidget(btn_proovedores);
+    ui->verticalLayout_manten->addWidget(btn_almacen);
+    ui->verticalLayout_manten->addWidget(line);
+    ui->verticalLayout_manten->addWidget(btn_agenda);
+    ui->verticalLayout_manten->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
     connect(btn_clientes,SIGNAL(clicked()),this,SLOT(btnClientes_clicked()));
     connect(btn_almacen,SIGNAL(clicked()),this,SLOT(btnArticulos_clicked()));
@@ -49,19 +49,19 @@ void MainWindow::crear_barraVentas()
     btn_tpv = new ToolBarButton(tr("TPV"),":/Icons/PNG/tpv.png",this);
     btn_gestionCobros = new ToolBarButton(tr("Gest. Cobros"),":/Icons/PNG/Cobros.png",this);
 
-    QFrame*  line = new QFrame(ui->page_4);
+    QFrame*  line = new QFrame(ui->page_ventas);
     line->setFrameShape(QFrame::HLine);
     line->setFrameShadow(QFrame::Sunken);
 
-    ui->verticalLayout_15->addWidget(btn_presupuestos);
-    ui->verticalLayout_15->addWidget(btn_pedidos);
-    ui->verticalLayout_15->addWidget(btn_albaranes);
-    ui->verticalLayout_15->addWidget(btn_facturas);
-    ui->verticalLayout_15->addWidget(line);
-    ui->verticalLayout_15->addWidget(btn_tpv);
-    ui->verticalLayout_15->addWidget(line);
-    ui->verticalLayout_15->addWidget(btn_gestionCobros);
-    ui->verticalLayout_15->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    ui->verticalLayout_ventas->addWidget(btn_presupuestos);
+    ui->verticalLayout_ventas->addWidget(btn_pedidos);
+    ui->verticalLayout_ventas->addWidget(btn_albaranes);
+    ui->verticalLayout_ventas->addWidget(btn_facturas);
+    ui->verticalLayout_ventas->addWidget(line);
+    ui->verticalLayout_ventas->addWidget(btn_tpv);
+    ui->verticalLayout_ventas->addWidget(line);
+    ui->verticalLayout_ventas->addWidget(btn_gestionCobros);
+    ui->verticalLayout_ventas->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
     connect(btn_presupuestos,SIGNAL(clicked()),this,SLOT(btnPresup_clientes_clicked()));
     connect(btn_pedidos,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
@@ -84,15 +84,15 @@ void MainWindow::crear_barraCompras()
     btn_facturas_pro = new ToolBarButton(tr("Facturas Prov."),":/Icons/PNG/Factura.png",this);
 
 
-    QFrame*  line = new QFrame(ui->Page_Compras);
+    QFrame*  line = new QFrame(ui->page_compras);
     line->setFrameShape(QFrame::HLine);
     line->setFrameShadow(QFrame::Sunken);
 
-    ui->LayoutCompras->addWidget(btn_pedidos_pro);
-    ui->LayoutCompras->addWidget(btn_albaranes_pro);
-    ui->LayoutCompras->addWidget(btn_facturas_pro);
+    ui->verticalLayout_compras->addWidget(btn_pedidos_pro);
+    ui->verticalLayout_compras->addWidget(btn_albaranes_pro);
+    ui->verticalLayout_compras->addWidget(btn_facturas_pro);
 
-    ui->LayoutCompras->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    ui->verticalLayout_compras->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
     connect(btn_pedidos_pro,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
     connect(btn_albaranes_pro,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
@@ -113,6 +113,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     on_edit = false;
 
+    QStringList modulos;
+    modulos << "Mantenimiento"  << "Compras" << "Ventas" << "Almacen";
+    ui->comboBox->addItems(modulos);
     crear_barraMantenimiento();
 
     crear_barraVentas();
@@ -120,7 +123,7 @@ MainWindow::MainWindow(QWidget *parent) :
     crear_barraCompras();
     {
 
-    ui->toolBox->setCurrentIndex(0);
+    ui->stackedWidget_2->setCurrentIndex(0);
     if (medic)
     {
         ui->btnClientes->setText(tr("Pacientes"));
@@ -162,7 +165,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::init()
 {
    // ui->toolBox->setStyleSheet("QToolBox::tab {background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);	border-radius: 5px;color: darkgray;}QToolBox::tab:selected { /* italicize selected tabs */font: italic;color: black;}");
-    ui->toolBox->setStyleSheet("QToolBox::tab {background:#304163; 	border-radius: 5px;color: darkgray;}QToolBox::tab:selected { /* italicize selected tabs */font: italic;color: #FFFFFF;}");
+    //ui->toolBox->setStyleSheet("QToolBox::tab {background:#304163; 	border-radius: 5px;color: darkgray;}QToolBox::tab:selected { /* italicize selected tabs */font: italic;color: #FFFFFF;}");
         ui->lineUsuarioActivo->setText(user);
         Configuracion_global->cUsuarioActivo = user;
 
@@ -316,6 +319,8 @@ void MainWindow::init()
 
             splash.showMessage(tr("Cargando modulos... Modulo de TPV"),Qt::AlignBottom);
             frmCajaMinuta = new FrmCajaMinuta(this);
+            connect(frmCajaMinuta,SIGNAL(block()),this,SLOT(block_main()));
+            connect(frmCajaMinuta,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
             splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
             ui->stackedWidget->addWidget(frmClientes1);
@@ -726,7 +731,13 @@ void MainWindow::closeEvent(QCloseEvent * e)
 
 void MainWindow::blockMe(bool state)
 {
-    ui->toolBox->setEnabled(!state);
+    ui->stackedWidget_2->setEnabled(!state);
+    ui->comboBox->setEnabled(!state);
     ui->menubar->setEnabled(!state);
     on_edit = state;
+}
+
+void MainWindow::on_comboBox_currentIndexChanged(int index)
+{
+    ui->stackedWidget_2->setCurrentIndex(index);
 }
