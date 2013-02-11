@@ -37,6 +37,8 @@ FrmCajaMinuta::FrmCajaMinuta(QWidget *parent) :
     ui->txtPorcIVAArticulo->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
     ticket.set_table(ui->lineas);
     ui->txtcCodigoArticulo->setFocus();
+
+    bloquearCaja(true);
 }
 
 FrmCajaMinuta::~FrmCajaMinuta()
@@ -170,37 +172,41 @@ bool FrmCajaMinuta::keys_onCodigo(int key)
 
 bool FrmCajaMinuta::keys_lineas(int key)
 {
-    if((key==Qt::Key_Return)||(key==Qt::Key_Enter))
-        return false;
-    if((key==Qt::Key_Down)||(key==Qt::Key_Up)||(key==Qt::Key_Left)||(key==Qt::Key_Right))
-        return false;
-    else
+    if(caja_abierta)
     {
-        if((key == Qt::Key_Delete)||(key == Qt::Key_Backspace))
+        if((key==Qt::Key_Return)||(key==Qt::Key_Enter))
+            return false;
+        if((key==Qt::Key_Down)||(key==Qt::Key_Up)||(key==Qt::Key_Left)||(key==Qt::Key_Right))
+            return false;
+        else
         {
-            if(ui->lineas->rowCount() != 0)
+            if((key == Qt::Key_Delete)||(key == Qt::Key_Backspace))
             {
-                ticket.remove_linea(ui->lineas->currentRow());
+                if(ui->lineas->rowCount() != 0)
+                {
+                    ticket.remove_linea(ui->lineas->currentRow());
+                }
             }
-        }
-        else if(key== Qt::Key_Plus)
-        {
-            if(ui->lineas->currentColumn() == 2)
+            else if(key== Qt::Key_Plus)
             {
-                int value = ui->lineas->currentItem()->text().toInt();
-                ui->lineas->currentItem()->setText(QString::number(++value));
+                if(ui->lineas->currentColumn() == 2)
+                {
+                    int value = ui->lineas->currentItem()->text().toInt();
+                    ui->lineas->currentItem()->setText(QString::number(++value));
+                }
             }
-        }
-        else if(key== Qt::Key_Minus)
-        {
-            if(ui->lineas->currentColumn() == 2)
+            else if(key== Qt::Key_Minus)
             {
-                int value = ui->lineas->currentItem()->text().toInt();
-                ui->lineas->currentItem()->setText(QString::number(--value));
+                if(ui->lineas->currentColumn() == 2)
+                {
+                    int value = ui->lineas->currentItem()->text().toInt();
+                    ui->lineas->currentItem()->setText(QString::number(--value));
+                }
             }
+            return true;
         }
-        return true;
     }
+    return true;
 }
 
 bool FrmCajaMinuta::rellenarArticulo(QString cCodigo)
@@ -209,7 +215,7 @@ bool FrmCajaMinuta::rellenarArticulo(QString cCodigo)
     if(art.Recuperar(QString("SELECT * FROM articulos WHERE cCodigo = '%1'").arg(cCodigo)))
     {
         ui->txtDescripcionArticulo->setText(art.cDescripcion);
-        ui->txtPVPArticulo->setText(QString::number(art.rTarifa1));//FIXME que precio uso??
+        ui->txtPVPArticulo->setText(QString::number(art.pvp));
         if(ui->txtcCantidadArticulo->value()==0)
             ui->txtcCantidadArticulo->setValue(1);
 
@@ -282,4 +288,60 @@ void FrmCajaMinuta::focusInEvent(QFocusEvent *e)
     Q_UNUSED(e);
     ui->txtcCodigoArticulo->setFocus();
     ui->lineas->clearSelection();
+}
+
+void FrmCajaMinuta::on_btn_abrirCerrarCaja_clicked()
+{
+    if(ui->btn_abrirCerrarCaja->text() == tr("Abrir Caja"))
+    {
+        ui->btn_abrirCerrarCaja->setText(tr("Cerrar caja"));
+        ui->btn_abrirCerrarCaja->setIcon(QIcon(":/Icons/PNG/cierrecaja.png"));
+        bloquearCaja(false);
+        emit block();
+    }
+    else
+    {
+        ui->btn_abrirCerrarCaja->setText(tr("Abrir Caja"));
+        ui->btn_abrirCerrarCaja->setIcon(QIcon(":/Icons/PNG/abrecaja.png"));
+        //TODO Control de cierre de caja
+        bloquearCaja(true);
+        emit unblock();
+    }
+
+}
+
+void FrmCajaMinuta::bloquearCaja(bool state)
+{
+    caja_abierta = !state;
+    if(state)
+        ui->lineas->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    else
+        ui->lineas->setEditTriggers(QAbstractItemView::AllEditTriggers);
+
+    ui->btnCambioUsuario->setEnabled(!state);
+    ui->btnCobrarTicket->setEnabled(!state);
+    ui->btnPonerEspera->setEnabled(!state);
+    ui->btnRecuperarEspera->setEnabled(!state);
+    ui->btnVerAgenda->setEnabled(!state);
+    ui->btnNuevaVisita->setEnabled(!state);
+    ui->btnImprimirInforme->setEnabled(!state);
+    ui->botBuscarCliente->setEnabled(!state);
+
+    ui->frame_3->setEnabled(!state);
+
+    ui->chklRecargoEq->setEnabled(!state);
+
+    QList<QLineEdit *> lineEditList = ui->tabWidget->findChildren<QLineEdit *>();
+    QLineEdit *lineEdit;
+    foreach (lineEdit, lineEditList) {
+        lineEdit->setReadOnly(state);
+    }
+    lineEditList = ui->tab_desglose->findChildren<QLineEdit *>();
+    foreach (lineEdit, lineEditList) {
+        lineEdit->setReadOnly(true);
+    }
+    lineEditList = ui->tab_detalle->findChildren<QLineEdit *>();
+    foreach (lineEdit, lineEditList) {
+        lineEdit->setReadOnly(true);
+    }
 }
