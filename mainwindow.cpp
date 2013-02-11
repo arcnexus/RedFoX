@@ -81,8 +81,8 @@ void MainWindow::crear_barraVentas()
 void MainWindow::crear_barraCompras()
 {
     btn_pedidos_pro= new ToolBarButton(tr("Pedidos \nProv."),":/Icons/PNG/pedidos_cli.png",this);
-    btn_albaranes_pro = new ToolBarButton(tr("Albaranes Prov."),":/Icons/PNG/albaran.png",this);
-    btn_facturas_pro = new ToolBarButton(tr("Facturas Prov."),":/Icons/PNG/Factura.png",this);
+    btn_albaranes_pro = new ToolBarButton(tr("Albaranes \nProv."),":/Icons/PNG/albaran.png",this);
+    btn_facturas_pro = new ToolBarButton(tr("Facturas \nProv."),":/Icons/PNG/Factura.png",this);
 
 
     QFrame*  line = new QFrame(ui->page_compras);
@@ -96,8 +96,8 @@ void MainWindow::crear_barraCompras()
     ui->verticalLayout_compras->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
     connect(btn_pedidos_pro,SIGNAL(clicked()),this,SLOT(btn_pedidos_pro_clicked()));
-    connect(btn_albaranes_pro,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
-    connect(btn_facturas_pro,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
+    connect(btn_albaranes_pro,SIGNAL(clicked()),this,SLOT(btn_albaranes_pro_clicked()));
+    connect(btn_facturas_pro,SIGNAL(clicked()),this,SLOT(btn_facturas_pro_clicked()));
 
     //barra de menu
     connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
@@ -326,6 +326,13 @@ void MainWindow::init()
             splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos"),Qt::AlignBottom);
             FrmPedidos_pro = new FrmPedidosProveedor(this);
 
+            splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes"),Qt::AlignBottom);
+            FrmAlbaran_pro = new FrmAlbaranProveedor(this);
+
+
+            splash.showMessage(tr("Cargando modulos... Modulo de Compras: facturas"),Qt::AlignBottom);
+            frmFacturas_pro = new FrmFacturasProveedor(this);
+
             splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
             ui->stackedWidget->addWidget(frmClientes1);
             ui->stackedWidget->addWidget(frmFacturas1);
@@ -336,6 +343,8 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmPresupcli);
             ui->stackedWidget->addWidget(frmCajaMinuta);
             ui->stackedWidget->addWidget(FrmPedidos_pro);
+            ui->stackedWidget->addWidget(FrmAlbaran_pro);
+            ui->stackedWidget->addWidget(frmFacturas_pro);
             TerraForm = new init_form(this);
             ui->stackedWidget->addWidget(TerraForm);
             ui->stackedWidget->setCurrentWidget(TerraForm);
@@ -418,6 +427,16 @@ void MainWindow::btnCajaMinuta_clicked()
 void MainWindow::btn_pedidos_pro_clicked()
 {
     ui->stackedWidget->setCurrentWidget(FrmPedidos_pro);
+}
+
+void MainWindow::btn_albaranes_pro_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(FrmAlbaran_pro);
+}
+
+void MainWindow::btn_facturas_pro_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(frmFacturas_pro);
 }
 
 //void MainWindow::on_btnAgenda_clicked()

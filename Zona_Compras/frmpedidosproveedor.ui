@@ -24,6 +24,39 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="4">
+    <spacer name="horizontalSpacer_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>259</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="5">
+    <widget class="QLabel" name="label_22">
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 170, 0);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>AREA DE COMPRAS</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label_18">
      <property name="maximumSize">
@@ -82,7 +115,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="4">
+   <item row="2" column="0" colspan="6">
     <widget class="QTabWidget" name="tabWidget_2">
      <property name="styleSheet">
       <string notr="true"/>
@@ -1975,7 +2008,7 @@ color: rgb(0, 64, 64);</string>
      </widget>
     </widget>
    </item>
-   <item row="3" column="0" colspan="4">
+   <item row="3" column="0" colspan="6">
     <widget class="QFrame" name="frame_4">
      <property name="minimumSize">
       <size>
@@ -2232,20 +2265,6 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QLabel" name="label_22">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 170, 0);
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>AREA DE COMPRAS</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
     </widget>
    </item>
   </layout>
