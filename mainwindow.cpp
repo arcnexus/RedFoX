@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "login.h"
 #include "Zona_Administrador/frmempresas.h"
+#include "Zona_Compras/frmpedidosproveedor.h"
 #include "frmconfiguracion.h"
 #include "frmagendavisitas.h"
 #include "block_terra_form.h"
@@ -79,7 +80,7 @@ void MainWindow::crear_barraVentas()
 
 void MainWindow::crear_barraCompras()
 {
-    btn_pedidos_pro= new ToolBarButton(tr("Pedidos Prov."),":/Icons/PNG/pedidos_cli.png",this);
+    btn_pedidos_pro= new ToolBarButton(tr("Pedidos \nProv."),":/Icons/PNG/pedidos_cli.png",this);
     btn_albaranes_pro = new ToolBarButton(tr("Albaranes Prov."),":/Icons/PNG/albaran.png",this);
     btn_facturas_pro = new ToolBarButton(tr("Facturas Prov."),":/Icons/PNG/Factura.png",this);
 
@@ -94,7 +95,7 @@ void MainWindow::crear_barraCompras()
 
     ui->LayoutCompras->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
-    connect(btn_pedidos_pro,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
+    connect(btn_pedidos_pro,SIGNAL(clicked()),this,SLOT(btn_pedidos_pro_clicked()));
     connect(btn_albaranes_pro,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
     connect(btn_facturas_pro,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
 
@@ -317,6 +318,9 @@ void MainWindow::init()
             splash.showMessage(tr("Cargando modulos... Modulo de TPV"),Qt::AlignBottom);
             frmCajaMinuta = new FrmCajaMinuta(this);
 
+            splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos"),Qt::AlignBottom);
+            FrmPedidos_pro = new FrmPedidosProveedor(this);
+
             splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
             ui->stackedWidget->addWidget(frmClientes1);
             ui->stackedWidget->addWidget(frmFacturas1);
@@ -326,6 +330,7 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmPedidos1);
             ui->stackedWidget->addWidget(frmPresupcli);
             ui->stackedWidget->addWidget(frmCajaMinuta);
+            ui->stackedWidget->addWidget(FrmPedidos_pro);
             TerraForm = new init_form(this);
             ui->stackedWidget->addWidget(TerraForm);
             ui->stackedWidget->setCurrentWidget(TerraForm);
@@ -403,6 +408,11 @@ void MainWindow::btnCajaMinuta_clicked()
 {
     ui->stackedWidget->setCurrentWidget(frmCajaMinuta);
     frmCajaMinuta->setFocus();
+}
+
+void MainWindow::btn_pedidos_pro_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(FrmPedidos_pro);
 }
 
 //void MainWindow::on_btnAgenda_clicked()

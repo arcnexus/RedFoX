@@ -14,6 +14,7 @@
 #include "TPV/frmcajaminuta.h"
 #include "Auxiliares/init_form.h"
 #include "Auxiliares/toolbarbutton.h"
+#include "Zona_Compras/frmpedidosproveedor.h"
 namespace Ui {
 class MainWindow;
 }
@@ -63,6 +64,8 @@ private slots:
     void btnPresup_clientes_clicked();
 
     void btnCajaMinuta_clicked();
+
+    void btn_pedidos_pro_clicked();
 
  //4   void on_btnAgenda_clicked();
 
@@ -124,6 +127,7 @@ private:
     FrmPedidos *frmPedidos1;
     FrmPresupuestosCli *frmPresupcli;
     FrmCajaMinuta *frmCajaMinuta;
+    FrmPedidosProveedor *FrmPedidos_pro;
     init_form * TerraForm;
 
     bool on_edit;
