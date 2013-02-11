@@ -22,89 +22,7 @@
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout_8">
-   <item row="0" column="0">
-    <widget class="QPushButton" name="btnCambioUsuario">
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>c.Usuario</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="label_12">
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>Ticket:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QLineEdit" name="txtnTicket">
-     <property name="maximumSize">
-      <size>
-       <width>130</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 192);</string>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <spacer name="horizontalSpacer_7">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="4">
-    <widget class="QLabel" name="label_16">
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>Fecha/Hora:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="5">
-    <widget class="QDateTimeEdit" name="txtdFechaHora">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-     <property name="displayFormat">
-      <string>dd/MM/yyyy HH:mm</string>
-     </property>
-     <property name="calendarPopup">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="6" rowspan="3">
+   <item row="0" column="7" rowspan="3">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLabel" name="label_67">
@@ -147,7 +65,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="tab">
         <property name="sizePolicy">
@@ -554,7 +472,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="tab_2">
+       <widget class="QWidget" name="tab_desglose">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -1318,7 +1236,7 @@ color: rgb(0, 64, 64);</string>
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="tab_6">
+       <widget class="QWidget" name="tab_detalle">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -1973,7 +1891,100 @@ color: rgb(255, 255, 255);</string>
      </item>
     </layout>
    </item>
-   <item row="2" column="0" colspan="6">
+   <item row="0" column="5">
+    <widget class="QLabel" name="label_16">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Fecha/Hora:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLabel" name="label_12">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Ticket:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLineEdit" name="txtnTicket">
+     <property name="maximumSize">
+      <size>
+       <width>130</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 192);</string>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="btnCambioUsuario">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>c.Usuario</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QDateTimeEdit" name="txtdFechaHora">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="displayFormat">
+      <string>dd/MM/yyyy HH:mm</string>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <spacer name="horizontalSpacer_7">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0">
+    <widget class="QPushButton" name="btn_abrirCerrarCaja">
+     <property name="text">
+      <string>Abrir Caja</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../terra.qrc">
+       <normaloff>:/Icons/PNG/abrecaja.png</normaloff>:/Icons/PNG/abrecaja.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="7">
     <widget class="QFrame" name="frame">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
@@ -2053,7 +2064,7 @@ font: 28pt &quot;Sans Serif&quot;;</string>
      </layout>
     </widget>
    </item>
-   <item row="3" column="0" colspan="7">
+   <item row="3" column="0" colspan="8">
     <widget class="QFrame" name="frame_4">
      <property name="minimumSize">
       <size>
@@ -2250,7 +2261,7 @@ font: 28pt &quot;Sans Serif&quot;;</string>
      </layout>
     </widget>
    </item>
-   <item row="1" column="0" colspan="6">
+   <item row="1" column="0" colspan="7">
     <widget class="QLabel" name="label_19">
      <property name="styleSheet">
       <string notr="true">color: rgb(255, 255, 127);</string>
