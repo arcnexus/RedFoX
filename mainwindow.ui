@@ -79,20 +79,17 @@
        <property name="spacing">
         <number>1</number>
        </property>
-       <property name="leftMargin">
-        <number>1</number>
-       </property>
-       <property name="topMargin">
-        <number>1</number>
-       </property>
-       <property name="rightMargin">
-        <number>1</number>
-       </property>
-       <property name="bottomMargin">
+       <property name="margin">
         <number>1</number>
        </property>
        <item>
-        <widget class="QComboBox" name="comboBox"/>
+        <widget class="QComboBox" name="comboBox">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);
+selection-background-color: rgb(255, 255, 127);
+selection-color: rgb(0, 0, 0);</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QStackedWidget" name="stackedWidget_2">
@@ -852,7 +849,7 @@ background-color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>1160</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivos">

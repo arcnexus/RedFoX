@@ -80,9 +80,9 @@ void MainWindow::crear_barraVentas()
 
 void MainWindow::crear_barraCompras()
 {
-    btn_pedidos_pro= new ToolBarButton(tr("Pedidos \nProv."),":/Icons/PNG/pedidos_cli.png",this);
-    btn_albaranes_pro = new ToolBarButton(tr("Albaranes \nProv."),":/Icons/PNG/albaran.png",this);
-    btn_facturas_pro = new ToolBarButton(tr("Facturas \nProv."),":/Icons/PNG/Factura.png",this);
+    btn_pedidos_pro= new ToolBarButton(tr("Pedidos \nProv."),":/Icons/PNG/pedido_pro.png",this);
+    btn_albaranes_pro = new ToolBarButton(tr("Albaranes \nProv."),":/Icons/PNG/albaran_pro.png",this);
+    btn_facturas_pro = new ToolBarButton(tr("Facturas \nProv."),":/Icons/PNG/Factura_pro.png",this);
 
 
     QFrame*  line = new QFrame(ui->page_compras);

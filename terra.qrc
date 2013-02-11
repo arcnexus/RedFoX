@@ -118,5 +118,8 @@
         <file>PNG/clientes_2.png</file>
         <file>PNG/proveedores_2.png</file>
         <file>PNG/Cobros.png</file>
+        <file>PNG/pedido_pro.png</file>
+        <file>PNG/Factura_pro.png</file>
+        <file>PNG/albaran_pro.png</file>
     </qresource>
 </RCC>
