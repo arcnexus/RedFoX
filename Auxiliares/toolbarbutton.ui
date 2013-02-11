@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>100</width>
-    <height>85</height>
+    <height>77</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>100</width>
-    <height>85</height>
+    <height>77</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>100</width>
-    <height>97</height>
+    <height>98</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -44,20 +44,14 @@ background-color:#AFC3E1;
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <spacer name="horizontalSpacer_3">
        <property name="orientation">

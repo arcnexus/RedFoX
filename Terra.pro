@@ -94,7 +94,8 @@ SOURCES += main.cpp\
     Almacen/articulo.cpp \
     Auxiliares/init_form.cpp \
     Auxiliares/toolbarbutton.cpp \
-    Zona_Compras/frmpedidosproveedor.cpp
+    Zona_Compras/frmpedidosproveedor.cpp \
+    Zona_Compras/frmalbaranproveedor.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -157,7 +158,8 @@ HEADERS  += mainwindow.h \
     Almacen/articulo.h \
     Auxiliares/init_form.h \
     Auxiliares/toolbarbutton.h \
-    Zona_Compras/frmpedidosproveedor.h
+    Zona_Compras/frmpedidosproveedor.h \
+    Zona_Compras/frmalbaranproveedor.h
 
 
 FORMS    += mainwindow.ui \
@@ -195,7 +197,8 @@ FORMS    += mainwindow.ui \
     Almacen/frmarticulos.ui \
     Auxiliares/init_form.ui \
     Auxiliares/toolbarbutton.ui \
-    Zona_Compras/frmpedidosproveedor.ui
+    Zona_Compras/frmpedidosproveedor.ui \
+    Zona_Compras/frmalbaranproveedor.ui
 
 RESOURCES += \
     terra.qrc \
