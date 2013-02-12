@@ -17,6 +17,7 @@
 #include "Zona_Compras/frmpedidosproveedor.h"
 #include "Zona_Compras/frmalbaranproveedor.h"
 #include "Zona_Compras/frmfacturasproveedor.h"
+#include "Zona_Ventas/frmfacturaralabaranes.h"
 namespace Ui {
 class MainWindow;
 }
@@ -61,6 +62,8 @@ private slots:
 
     void btnAlbaran_clientes_clicked();
 
+    void btnFactura_multiple_clicked();
+
     void btn_Pedido_cliente_clicked();
 
     void btnPresup_clientes_clicked();
@@ -72,7 +75,8 @@ private slots:
 
     void btn_albaranes_pro_clicked();
     void btn_facturas_pro_clicked();
-
+    // Zona Almacen
+    void btnArticulos_2_clicked();
 
  //4   void on_btnAgenda_clicked();
 
@@ -109,6 +113,7 @@ private:
     ToolBarButton * btn_presupuestos;
     ToolBarButton * btn_pedidos;
     ToolBarButton * btn_albaranes;
+    ToolBarButton * btn_factura_mult;
     ToolBarButton * btn_facturas;
     ToolBarButton * btn_tpv;
     ToolBarButton * btn_gestionCobros;
@@ -126,6 +131,8 @@ private:
     ToolBarButton * btn_inventario;
     ToolBarButton * btn_traspasoAlmacen;
     ToolBarButton * btn_gestionPagos;
+    ToolBarButton * btn_articulos_2;
+    void crear_barraAlmacen();
 
     //WIDGETS
     frmClientes *frmClientes1;
@@ -139,6 +146,8 @@ private:
     FrmPedidosProveedor *FrmPedidos_pro;
     FrmAlbaranProveedor *FrmAlbaran_pro;
     FrmFacturasProveedor * frmFacturas_pro;
+    FrmFacturarAlabaranes *frmFactura_multiple;
+
     init_form * TerraForm;
 
     bool on_edit;

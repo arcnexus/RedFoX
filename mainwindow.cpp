@@ -46,6 +46,7 @@ void MainWindow::crear_barraVentas()
     btn_presupuestos = new ToolBarButton(tr("Presupuestos"),":/Icons/PNG/presupuestos.png",this);
     btn_pedidos = new ToolBarButton(tr("Pedidos"),":/Icons/PNG/pedidos_cli.png",this);
     btn_albaranes = new ToolBarButton(tr("Albaranes"),":/Icons/PNG/albaran.png",this);
+    btn_factura_mult = new ToolBarButton(tr("Fact. \nalbaranes"),":Icons/PNG/factmult.png",this);
     btn_facturas = new ToolBarButton(tr("Facturas"),":/Icons/PNG/Factura.png",this);
     btn_tpv = new ToolBarButton(tr("TPV"),":/Icons/PNG/tpv.png",this);
     btn_gestionCobros = new ToolBarButton(tr("Gest. Cobros"),":/Icons/PNG/Cobros.png",this);
@@ -57,6 +58,7 @@ void MainWindow::crear_barraVentas()
     ui->verticalLayout_ventas->addWidget(btn_presupuestos);
     ui->verticalLayout_ventas->addWidget(btn_pedidos);
     ui->verticalLayout_ventas->addWidget(btn_albaranes);
+    ui->verticalLayout_ventas->addWidget(btn_factura_mult);
     ui->verticalLayout_ventas->addWidget(btn_facturas);
     ui->verticalLayout_ventas->addWidget(line);
     ui->verticalLayout_ventas->addWidget(btn_tpv);
@@ -68,12 +70,13 @@ void MainWindow::crear_barraVentas()
     connect(btn_pedidos,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
     connect(btn_albaranes,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
     connect(btn_facturas,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
+    connect(btn_factura_mult,SIGNAL(clicked()),this,SLOT(btnFactura_multiple_clicked()));
     connect(btn_tpv,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
 
     //barra de menu
     connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
     connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
-    connect(ui->actionAlbaranes,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
+    connect(ui->actionAlbaranes_2,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
     connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
     connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
 }
@@ -102,9 +105,31 @@ void MainWindow::crear_barraCompras()
     //barra de menu
     connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
     connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
-    connect(ui->actionAlbaranes,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
+    connect(ui->actionAlbaranes_2,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
     connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
     connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+}
+
+void MainWindow::crear_barraAlmacen()
+{
+    btn_articulos_2 = new ToolBarButton(tr("Artículos "),":/Icons/PNG/Box.png",this);
+
+    QFrame*  line = new QFrame(ui->page_almacen);
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
+
+    ui->verticalLayout_almacen->addWidget(btn_articulos_2);
+
+    ui->verticalLayout_almacen->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
+
+    connect(btn_articulos_2,SIGNAL(clicked()),this,SLOT(btnArticulos_2_clicked()));
+
+    //barra de menu
+//    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
+//    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
+//    connect(ui->actionAlbaranes_2,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
+//    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
+//    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -122,6 +147,9 @@ MainWindow::MainWindow(QWidget *parent) :
     crear_barraVentas();
 
     crear_barraCompras();
+
+    crear_barraAlmacen();
+
     {
 
     ui->stackedWidget_2->setCurrentIndex(0);
@@ -308,6 +336,12 @@ void MainWindow::init()
             connect(frmAlbaran1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmAlbaran1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
+
+            splash.showMessage(tr("Cargando modulos... Modulo de facturación de albaranes"),Qt::AlignBottom);
+            frmFactura_multiple = new FrmFacturarAlabaranes(this);
+            connect(frmFactura_multiple,SIGNAL(block()),this,SLOT(block_main()));
+            connect(frmFactura_multiple,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
             splash.showMessage(tr("Cargando modulos... Modulo de pedidos"),Qt::AlignBottom);
             frmPedidos1 = new FrmPedidos(this);
             connect(frmPedidos1,SIGNAL(block()),this,SLOT(block_main()));
@@ -345,6 +379,7 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(FrmPedidos_pro);
             ui->stackedWidget->addWidget(FrmAlbaran_pro);
             ui->stackedWidget->addWidget(frmFacturas_pro);
+            ui->stackedWidget->addWidget(frmFactura_multiple);
             TerraForm = new init_form(this);
             ui->stackedWidget->addWidget(TerraForm);
             ui->stackedWidget->setCurrentWidget(TerraForm);
@@ -408,6 +443,11 @@ void MainWindow::btnAlbaran_clientes_clicked()
     ui->stackedWidget->setCurrentWidget(frmAlbaran1);
 }
 
+void MainWindow::btnFactura_multiple_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(frmFactura_multiple);
+}
+
 void MainWindow::btn_Pedido_cliente_clicked()
 {
     ui->stackedWidget->setCurrentWidget(frmPedidos1);
@@ -437,6 +477,11 @@ void MainWindow::btn_albaranes_pro_clicked()
 void MainWindow::btn_facturas_pro_clicked()
 {
     ui->stackedWidget->setCurrentWidget(frmFacturas_pro);
+}
+
+void MainWindow::btnArticulos_2_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(frmArticulos1);
 }
 
 //void MainWindow::on_btnAgenda_clicked()

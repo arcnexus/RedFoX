@@ -94,7 +94,7 @@ selection-color: rgb(0, 0, 0);</string>
        <item>
         <widget class="QStackedWidget" name="stackedWidget_2">
          <property name="currentIndex">
-          <number>1</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="page_manten">
           <layout class="QVBoxLayout" name="verticalLayout_manten"/>
@@ -873,9 +873,16 @@ background-color: rgb(255, 255, 255);</string>
     <property name="title">
      <string>Ventas</string>
     </property>
+    <widget class="QMenu" name="menuAlbaranes">
+     <property name="title">
+      <string>Albaranes</string>
+     </property>
+     <addaction name="actionAlbaranes_2"/>
+     <addaction name="actionFacturaci_n_multiple_de_albaranes"/>
+    </widget>
     <addaction name="actionPresupuestos"/>
     <addaction name="actionPedidos"/>
-    <addaction name="actionAlbaranes"/>
+    <addaction name="menuAlbaranes"/>
     <addaction name="actionFacturas"/>
     <addaction name="separator"/>
     <addaction name="actionVentas_Contado"/>
@@ -1026,15 +1033,6 @@ background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>Pedidos</string>
-   </property>
-  </action>
-  <action name="actionAlbaranes">
-   <property name="icon">
-    <iconset resource="terra.qrc">
-     <normaloff>:/Icons/PNG/albaran.png</normaloff>:/Icons/PNG/albaran.png</iconset>
-   </property>
-   <property name="text">
-    <string>Albaranes</string>
    </property>
   </action>
   <action name="actionFacturas">
@@ -1218,6 +1216,16 @@ background-color: rgb(255, 255, 255);</string>
   <action name="actionGesti_n_de_Pagos">
    <property name="text">
     <string>Gestión de Pagos</string>
+   </property>
+  </action>
+  <action name="actionFacturaci_n_multiple_de_albaranes">
+   <property name="text">
+    <string>Facturación multiple de albaranes</string>
+   </property>
+  </action>
+  <action name="actionAlbaranes_2">
+   <property name="text">
+    <string>Albaranes</string>
    </property>
   </action>
  </widget>

@@ -96,7 +96,8 @@ SOURCES += main.cpp\
     Auxiliares/toolbarbutton.cpp \
     Zona_Compras/frmpedidosproveedor.cpp \
     Zona_Compras/frmalbaranproveedor.cpp \
-    Zona_Compras/frmfacturasproveedor.cpp
+    Zona_Compras/frmfacturasproveedor.cpp \
+    Zona_Ventas/frmfacturaralabaranes.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -161,7 +162,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/toolbarbutton.h \
     Zona_Compras/frmpedidosproveedor.h \
     Zona_Compras/frmalbaranproveedor.h \
-    Zona_Compras/frmfacturasproveedor.h
+    Zona_Compras/frmfacturasproveedor.h \
+    Zona_Ventas/frmfacturaralabaranes.h
 
 
 FORMS    += mainwindow.ui \
@@ -201,7 +203,8 @@ FORMS    += mainwindow.ui \
     Auxiliares/toolbarbutton.ui \
     Zona_Compras/frmpedidosproveedor.ui \
     Zona_Compras/frmalbaranproveedor.ui \
-    Zona_Compras/frmfacturasproveedor.ui
+    Zona_Compras/frmfacturasproveedor.ui \
+    Zona_Ventas/frmfacturaralabaranes.ui
 
 RESOURCES += \
     terra.qrc \
