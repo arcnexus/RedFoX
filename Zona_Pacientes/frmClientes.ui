@@ -52,16 +52,6 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QLabel" name="txtNombreFiscal">
-     <property name="styleSheet">
-      <string notr="true">color: rgb(208, 233, 255)</string>
-     </property>
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="0">
     <widget class="QFrame" name="frame_3">
      <property name="sizePolicy">
@@ -294,6 +284,16 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
      </property>
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE PACIENTES - Datos Administrativos&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLabel" name="txtNombreFiscal">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(208, 233, 255)</string>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
      </property>
     </widget>
    </item>
@@ -733,7 +733,7 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <property name="styleSheet">
@@ -743,14 +743,30 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
        <string>Cliente</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="9" column="6">
-        <widget class="QLabel" name="label_21">
+       <item row="2" column="11">
+        <widget class="QLabel" name="label_45">
          <property name="text">
-          <string>Fax:</string>
+          <string>Tipo:</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="7" colspan="2">
+       <item row="2" column="12" colspan="4">
+        <widget class="QComboBox" name="dboTipoCliente"/>
+       </item>
+       <item row="10" column="10" colspan="6">
+        <widget class="QLineEdit" name="txtcEMail">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="9" colspan="2">
         <widget class="QLineEdit" name="txtcFax">
          <property name="minimumSize">
           <size>
@@ -763,49 +779,15 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="9">
+       <item row="9" column="11">
         <widget class="QLabel" name="label_22">
          <property name="text">
           <string>Móvil:</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="10" colspan="2">
-        <widget class="QLineEdit" name="txtcMovil">
-         <property name="minimumSize">
-          <size>
-           <width>166</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="3">
-        <widget class="QLabel" name="label_16">
-         <property name="text">
-          <string>Población:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Cif/Nif:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_19">
-         <property name="text">
-          <string>Teléfono1:                   </string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QLineEdit" name="txtcTelefono1">
+       <item row="4" column="11" colspan="2">
+        <widget class="QLineEdit" name="txtcPersonaContacto">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -817,350 +799,7 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="2" colspan="2">
-        <widget class="QLabel" name="label_20">
-         <property name="text">
-          <string>Teléfono 2:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="4" colspan="2">
-        <widget class="QLineEdit" name="txtcTelefono2">
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="label_17">
-         <property name="text">
-          <string>Provincia:                    </string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="10" colspan="2">
-        <widget class="QLineEdit" name="txtcNombre">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="echoMode">
-          <enum>QLineEdit::Normal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Primer Apellido:       </string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5" colspan="3">
-        <widget class="QLineEdit" name="txtcCifNif">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);
-</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Nombre Fiscal:          </string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1" colspan="11">
-        <widget class="QLineEdit" name="txtcNombreFiscal">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>Nombre Comercial:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="12">
-        <widget class="QPushButton" name="btnFichaPaciente">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>29</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string>Historial Clínico del Paciente</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../terra.qrc">
-           <normaloff>:/Icons/PNG/medic.png</normaloff>:/Icons/PNG/medic.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>21</width>
-           <height>21</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Código:                        </string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtPrimerApellido">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>67</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="1" colspan="6">
-        <widget class="QLineEdit" name="txtcNombreComercial">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>367</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="4">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Segundo Apellido:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="5" colspan="3">
-        <widget class="QLineEdit" name="txtSegundoApellido">
-         <property name="minimumSize">
-          <size>
-           <width>125</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="9">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Nombre</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="txtcCp">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="4" colspan="8">
-        <widget class="QLineEdit" name="txtcPoblacion">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>Dirección:                   </string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_14">
-         <property name="text">
-          <string>Direccion 2:                </string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1" colspan="11">
-        <widget class="QLineEdit" name="txtcDireccion2">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_15">
-         <property name="text">
-          <string>CP:                                 </string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtcCodigoCliente">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="readOnly">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="8">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>52</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="8" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtcProvincia">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>150</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="3">
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>67</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="8" column="9">
-        <widget class="QLabel" name="label_18">
-         <property name="text">
-          <string>Pais:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="10" colspan="2">
-        <widget class="QLineEdit" name="txtcPais">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="11">
+       <item row="4" column="15">
         <widget class="QPushButton" name="btnOtrosContactos">
          <property name="maximumSize">
           <size>
@@ -1186,11 +825,214 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1" colspan="11">
-        <widget class="QLineEdit" name="txtcDireccion1">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Código:                        </string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="6">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Segundo Apellido:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="7" colspan="3">
+        <widget class="QLineEdit" name="txtSegundoApellido">
+         <property name="minimumSize">
+          <size>
+           <width>125</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>67</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="6">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Cif/Nif:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="12" colspan="4">
+        <widget class="QLineEdit" name="txtcNombre">
          <property name="minimumSize">
           <size>
            <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="echoMode">
+          <enum>QLineEdit::Normal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Primer Apellido:       </string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3" colspan="13">
+        <widget class="QLineEdit" name="txtcNombreFiscal">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3" colspan="2">
+        <widget class="QLineEdit" name="txtPrimerApellido">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="10">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>52</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="7" colspan="3">
+        <widget class="QLineEdit" name="txtcCifNif">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="6" colspan="2">
+        <widget class="QLineEdit" name="txtcTelefono2">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="8">
+        <widget class="QLabel" name="label_21">
+         <property name="text">
+          <string>Fax:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_17">
+         <property name="text">
+          <string>Provincia:                    </string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="3" colspan="2">
+        <widget class="QLineEdit" name="txtcProvincia">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Nombre Fiscal:          </string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Nombre Comercial:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="5">
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>67</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="8" column="11">
+        <widget class="QLabel" name="label_18">
+         <property name="text">
+          <string>Pais:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="12" colspan="4">
+        <widget class="QLineEdit" name="txtcMovil">
+         <property name="minimumSize">
+          <size>
+           <width>166</width>
            <height>27</height>
           </size>
          </property>
@@ -1206,7 +1048,142 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="10" column="1" colspan="6">
+       <item row="1" column="3" colspan="2">
+        <widget class="QLineEdit" name="txtcCodigoCliente">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Direccion 2:                </string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="12" colspan="4">
+        <widget class="QLineEdit" name="txtcPais">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_19">
+         <property name="text">
+          <string>Teléfono1:                   </string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Dirección:                   </string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="10">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>67</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="7" column="3">
+        <widget class="QLineEdit" name="txtcCp">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="5">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>Población:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3" colspan="6">
+        <widget class="QLineEdit" name="txtcNombreComercial">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>367</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="9">
+        <widget class="QLabel" name="label_41">
+         <property name="text">
+          <string>Persona Contacto:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="3">
+        <widget class="QLineEdit" name="txtcTelefono1">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="4" colspan="2">
+        <widget class="QLabel" name="label_20">
+         <property name="text">
+          <string>Teléfono 2:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="3" colspan="6">
         <widget class="QLineEdit" name="txtcWeb">
          <property name="minimumSize">
           <size>
@@ -1222,15 +1199,69 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="10" column="7">
+       <item row="10" column="9">
         <widget class="QLabel" name="label_24">
          <property name="text">
           <string>Mail:</string>
          </property>
         </widget>
        </item>
-       <item row="10" column="8" colspan="4">
-        <widget class="QLineEdit" name="txtcEMail">
+       <item row="0" column="0" colspan="16">
+        <widget class="QPushButton" name="btnFichaPaciente">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>29</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Historial Clínico del Paciente</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../terra.qrc">
+           <normaloff>:/Icons/PNG/medic.png</normaloff>:/Icons/PNG/medic.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>CP:                                 </string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="11">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Nombre</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="15">
+        <widget class="QPushButton" name="pushButton_4">
+         <property name="text">
+          <string>A.Tipo</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="15">
+        <widget class="QPushButton" name="pushButton_5">
+         <property name="text">
+          <string>B.Tipo</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3" colspan="7">
+        <widget class="QLineEdit" name="txtcDireccion1">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1242,35 +1273,8 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="8">
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>67</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="2" column="9">
-        <widget class="QLabel" name="label_45">
-         <property name="text">
-          <string>Tipo:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="7">
-        <widget class="QLabel" name="label_41">
-         <property name="text">
-          <string>Persona Contacto:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="9" colspan="2">
-        <widget class="QLineEdit" name="txtcPersonaContacto">
+       <item row="6" column="3" colspan="7">
+        <widget class="QLineEdit" name="txtcDireccion2">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1282,8 +1286,31 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="10" colspan="2">
-        <widget class="QComboBox" name="dboTipoCliente"/>
+       <item row="7" column="6" colspan="4">
+        <widget class="QLineEdit" name="txtcPoblacion">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="10" rowspan="3" colspan="5">
+        <widget class="QFrame" name="frame">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(175,195,225);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

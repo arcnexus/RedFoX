@@ -32,8 +32,8 @@ int main(int argc, char *argv[])
    #endif
    QTextCodec::setCodecForLocale(linuxCodec);;
 
-   a.setStyle("fusion");
-
+   //a.setStyle("fusion");
+     a.setStyle("Plastique");
    QFile file(":Icons/Terra.qss");
 
    if(file.open(QFile::ReadOnly))
