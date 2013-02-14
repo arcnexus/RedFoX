@@ -1,6 +1,8 @@
 #include "db_table_view.h"
 #include "ui_db_table_view.h"
 
+
+
 Db_table_View::Db_table_View(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Db_table_View)
@@ -8,6 +10,17 @@ Db_table_View::Db_table_View(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowState(Qt::WindowMaximized);
     selected_value = "";
+    print_menu = new QMenu(this);
+    toPaper = new QAction(tr("Imprimir"),this);
+    toPDF =new QAction(tr("Exportar a PDF"),this);
+
+    connect(toPaper,SIGNAL(triggered()),this,SLOT(print_clicked()));
+    connect(toPDF,SIGNAL(triggered()),this,SLOT(print_clicked()));
+
+    print_menu->addAction(toPaper);
+    print_menu->addAction(toPDF);
+
+    ui->btn_print->setMenu(print_menu);
 }
 
 Db_table_View::~Db_table_View()
@@ -17,6 +30,7 @@ Db_table_View::~Db_table_View()
 
 void Db_table_View::set_db(QString db)
 {
+    this->db = db;
     model = new QSqlRelationalTableModel(this,QSqlDatabase::database(db));
     model->setEditStrategy(QSqlRelationalTableModel::OnManualSubmit);
     ui->resultado_list->setItemDelegate(new QSqlRelationalDelegate(ui->resultado_list));
@@ -74,6 +88,16 @@ void Db_table_View::set_noInsertDeleteRows()
     ui->btn_remove->hide();
 }
 
+void Db_table_View::set_printFile(QString file)
+{
+    QFile f(file);
+    if (f.exists())
+    {
+        ui->btn_print->setEnabled(true);
+        this->file = file;
+    }
+}
+
 void Db_table_View::on_btn_add_clicked()
 {
     model->insertRow(model->rowCount());
@@ -105,4 +129,12 @@ void Db_table_View::on_resultado_list_clicked(const QModelIndex &index)
 void Db_table_View::on_btn_cancel_clicked()
 {
     Db_table_View::done(QDialog::Rejected);
+}
+
+void Db_table_View::print_clicked()
+{
+    if(sender() == toPDF)
+        Configuracion::imprimir(db,file,true,true,this);
+    else
+        Configuracion::imprimir(db,file,false,true,this);
 }

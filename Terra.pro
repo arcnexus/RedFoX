@@ -29,8 +29,8 @@ greaterThan(QT_MAJOR_VERSION, 4):LIBS += -L/home/arcnexus/Qt5.0.0/Tools/QtCreato
 TARGET = Terra
 TEMPLATE = app
 
- CONFIG  += qxt
- QXT     += core gui
+# CONFIG  += qxt
+# QXT     += core gui
 
 
 SOURCES += main.cpp\
@@ -214,3 +214,26 @@ RESOURCES += \
 
 OTHER_FILES += \
     TODO.txt
+
+win32: LIBS += -L$$PWD/openrptLibs/win32/ -lwrtembed
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+win32: PRE_TARGETDEPS += $$PWD/openrptLibs/win32/wrtembed.lib
+
+unix:!macx|win32: LIBS += -L$$PWD/openrptLibs/win32/ -lcommon
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+win32: PRE_TARGETDEPS += $$PWD/openrptLibs/win32/common.lib
+else:unix:!macx: PRE_TARGETDEPS += $$PWD/openrptLibs/win32/libcommon.a
+
+unix:!macx|win32: LIBS += -L$$PWD/openrptLibs/win32/ -lrenderer
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+win32: PRE_TARGETDEPS += $$PWD/openrptLibs/win32/renderer.lib
+else:unix:!macx: PRE_TARGETDEPS += $$PWD/openrptLibs/win32/librenderer.a
