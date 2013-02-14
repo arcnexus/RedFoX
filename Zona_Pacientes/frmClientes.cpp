@@ -1053,7 +1053,7 @@ void frmClientes::AddCustomerType()
 {
     FrmAddTipoCliente AddTipoCliente(this);
    AddTipoCliente.exec();
-   if(AddTipoCliente.Accepted())
+   if(AddTipoCliente.Accepted)
        QMessageBox::information(this,"OK","OK","OK");
 
 }
