@@ -786,21 +786,8 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="11" colspan="2">
-        <widget class="QLineEdit" name="txtcPersonaContacto">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="15">
-        <widget class="QPushButton" name="btnOtrosContactos">
+        <widget class="QPushButton" name="btnver_OtrosContactos">
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -819,8 +806,8 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          </property>
          <property name="iconSize">
           <size>
-           <width>13</width>
-           <height>24</height>
+           <width>15</width>
+           <height>15</height>
           </size>
          </property>
         </widget>
@@ -1247,16 +1234,36 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
         </widget>
        </item>
        <item row="5" column="15">
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="btnAdd_TipoCliente">
          <property name="text">
-          <string>A.Tipo</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../terra.qrc">
+           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
          </property>
         </widget>
        </item>
        <item row="6" column="15">
-        <widget class="QPushButton" name="pushButton_5">
+        <widget class="QPushButton" name="btndel_TipoCliente">
          <property name="text">
-          <string>B.Tipo</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../terra.qrc">
+           <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -1309,6 +1316,31 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_21">
+          <item row="1" column="0">
+           <widget class="QListView" name="listView"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_46">
+            <property name="text">
+             <string>Tipo de cliente</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="11" colspan="4">
+        <widget class="QLineEdit" name="txtcPersonaContacto">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
@@ -1595,170 +1627,6 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
           </widget>
          </item>
         </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_8">
-      <property name="styleSheet">
-       <string notr="true">background-color: #ecefed;</string>
-      </property>
-      <attribute name="title">
-       <string>Categoría </string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_23">
-       <item row="0" column="2">
-        <widget class="QLabel" name="label_47">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(26, 22, 84);
-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="text">
-          <string>SUBFAMILIA</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="label_46">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>19</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(26, 22, 84);
-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="text">
-          <string>FAMILIA</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QFrame" name="frame_familias">
-         <property name="minimumSize">
-          <size>
-           <width>120</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>120</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(175,195,225);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="maximumSize">
-          <size>
-           <width>30</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Borrar Familia</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../terra.qrc">
-           <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>15</width>
-           <height>15</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QFrame" name="frame_subfamilias">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 127);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_20">
-          <item row="1" column="1">
-           <spacer name="verticalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="maximumSize">
-          <size>
-           <width>30</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Agregar Familia</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../terra.qrc">
-           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>15</width>
-           <height>15</height>
-          </size>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>
@@ -3297,5 +3165,25 @@ color: rgb(0, 0, 0);</string>
  <resources>
   <include location="../terra.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnAdd_TipoCliente</sender>
+   <signal>clicked()</signal>
+   <receiver>frmClientes</receiver>
+   <slot>AddCustomerType()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>988</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>961</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>AddCustomerType()</slot>
+ </slots>
 </ui>

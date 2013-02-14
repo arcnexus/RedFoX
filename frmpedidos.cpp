@@ -159,16 +159,16 @@ void FrmPedidos::LLenarCampos()
 
 void FrmPedidos::LLenarCamposCliente()
 {
-    ui->txtcCodigoCliente->setText(oCliente3->getcCodigoCliente());
-    ui->txtcCliente->setText(oCliente3->getcNombreFiscal());
-    ui->txtcDireccion->setText(oCliente3->getcDireccion1());
-    ui->txtcDireccion2->setText(oCliente3->getcDireccion2());
-    ui->txtcCp->setText(oCliente3->getcCP());
-    ui->txtcPoblacion->setText(oCliente3->getcPoblacion());
-    ui->txtcProvincia->setText(oCliente3->getcProvincia());
-    //ui->txtcPais->setText(oCliente3->getcPais());
-    ui->txtcCif->setText(oCliente3->getcCifNif());
-    if (oCliente3->getlIRPF()==1) {
+    ui->txtcCodigoCliente->setText(oCliente3->cCodigoCliente);
+    ui->txtcCliente->setText(oCliente3->cNombreFiscal);
+    ui->txtcDireccion->setText(oCliente3->cDireccion1);
+    ui->txtcDireccion2->setText(oCliente3->cDireccion2);
+    ui->txtcCp->setText(oCliente3->cCp);
+    ui->txtcPoblacion->setText(oCliente3->cPoblacion);
+    ui->txtcProvincia->setText(oCliente3->cProvincia);
+    //ui->txtcPais->setText(oCliente3->cPais);
+    ui->txtcCif->setText(oCliente3->cCifNif);
+    if (oCliente3->lIRPF==1) {
         ui->chklRecargoEq->setChecked(true);
         oPedido->lRecargoEquivalencia = (1);
     } else {

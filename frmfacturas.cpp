@@ -220,23 +220,23 @@ void frmFacturas::LLenarCampos() {
 
 void frmFacturas::LLenarCamposCliente()
 {
-    ui->txtcCodigoCliente->setText(oCliente1->getcCodigoCliente());
-    ui->txtcCliente->setText(oCliente1->getcNombreFiscal());
-    ui->txtcDireccion->setText(oCliente1->getcDireccion1());
-    ui->txtcDireccion2->setText(oCliente1->getcDireccion2());
-    ui->txtcCp->setText(oCliente1->getcCP());
-    ui->txtcPoblacion->setText(oCliente1->getcPoblacion());
-    ui->txtcProvincia->setText(oCliente1->getcProvincia());
+    ui->txtcCodigoCliente->setText(oCliente1->cCodigoCliente);
+    ui->txtcCliente->setText(oCliente1->cNombreFiscal);
+    ui->txtcDireccion->setText(oCliente1->cDireccion1);
+    ui->txtcDireccion2->setText(oCliente1->cDireccion2);
+    ui->txtcCp->setText(oCliente1->cCp);
+    ui->txtcPoblacion->setText(oCliente1->cPoblacion);
+    ui->txtcProvincia->setText(oCliente1->cProvincia);
     //ui->txtcPais->setText(oCliente1->getcPais());
-    ui->txtcCif->setText(oCliente1->getcCifNif());
+    ui->txtcCif->setText(oCliente1->cCifNif);
     int lEstado = 0;
-     lEstado = oCliente1->islRecargoEquivalencia();
+     lEstado = oCliente1->lRecargoEquivalencia;
     if ((lEstado= 1)) {
         ui->chklRecargoEquivalencia->setChecked(true);
     } else {
         ui->chklRecargoEquivalencia->setChecked(false);
     }
-    if (oCliente1->getlIRPF() == true) {
+    if (oCliente1->lIRPF == true) {
         ui->lblIRPF_3->setVisible(true);
         ui->txtnIRPF->setText(QString::number(Configuracion_global->nIRPF));
         oFactura->nIRPF = (Configuracion_global->nIRPF);

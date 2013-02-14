@@ -152,17 +152,17 @@ void FrmAlbaran::LLenarCampos() {
 }
 void FrmAlbaran::LLenarCamposCliente()
 {
-    ui->txtcCodigoCliente->setText(oCliente2->getcCodigoCliente());
-    ui->txtcCliente->setText(oCliente2->getcNombreFiscal());
-    ui->txtcDireccion->setText(oCliente2->getcDireccion1());
-    ui->txtcDireccion2->setText(oCliente2->getcDireccion2());
-    ui->txtcCp->setText(oCliente2->getcCP());
-    ui->txtcPoblacion->setText(oCliente2->getcPoblacion());
-    ui->txtcProvincia->setText(oCliente2->getcProvincia());
+    ui->txtcCodigoCliente->setText(oCliente2->cCodigoCliente);
+    ui->txtcCliente->setText(oCliente2->cNombreFiscal);
+    ui->txtcDireccion->setText(oCliente2->cDireccion1);
+    ui->txtcDireccion2->setText(oCliente2->cDireccion2);
+    ui->txtcCp->setText(oCliente2->cCp);
+    ui->txtcPoblacion->setText(oCliente2->cPoblacion);
+    ui->txtcProvincia->setText(oCliente2->cProvincia);
     int index = ui->comboPais->findText(oAlbaran->cPais);
     ui->comboPais->setCurrentIndex(index);
-    ui->txtcCif->setText(oCliente2->getcCifNif());
-    if (oCliente2->getlIRPF()==1) {
+    ui->txtcCif->setText(oCliente2->cCifNif);
+    if (oCliente2->lIRPF==1) {
         ui->chklRecargoEq->setChecked(true);
         oAlbaran->lRecargoEquivalencia = (1);
     } else {

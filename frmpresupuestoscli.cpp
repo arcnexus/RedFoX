@@ -165,13 +165,13 @@ void FrmPresupuestosCli::LLenarCampos()
 
 void FrmPresupuestosCli::LLenarCamposCliente()
 {
-    ui->txtcCodigoCliente->setText(oClientePres->getcCodigoCliente());
-    ui->txtcCliente->setText(oClientePres->getcNombreFiscal());
-    ui->txtcDireccion->setText(oClientePres->getcDireccion1());
-    ui->txtcDireccion2->setText(oClientePres->getcDireccion2());
-    ui->txtcCp->setText(oClientePres->getcCP());
-    ui->txtcPoblacion->setText(oClientePres->getcPoblacion());
-    ui->txtcProvincia->setText(oClientePres->getcProvincia());
+    ui->txtcCodigoCliente->setText(oClientePres->cCodigoCliente);
+    ui->txtcCliente->setText(oClientePres->cNombreFiscal);
+    ui->txtcDireccion->setText(oClientePres->cDireccion1);
+    ui->txtcDireccion2->setText(oClientePres->cDireccion2);
+    ui->txtcCp->setText(oClientePres->cCp);
+    ui->txtcPoblacion->setText(oClientePres->cPoblacion);
+    ui->txtcProvincia->setText(oClientePres->cProvincia);
 
     QList<QString> keys = Configuracion_global->paises.uniqueKeys();
     for (int i = 0;i<keys.size();i++)
@@ -182,13 +182,13 @@ void FrmPresupuestosCli::LLenarCamposCliente()
             ui->combo_Pais->setCurrentIndex(index);
         }
     }
-    ui->txtcCif->setText(oClientePres->getcCifNif());
-    ui->txtcTelefono->setText(oClientePres->getcTelefono1());
-    ui->txtcFax->setText(oClientePres->getcFax());
-    ui->txtcMovil->setText(oClientePres->getcMovil());
-    ui->txtcEmail->setText(oClientePres->getcEmail());
+    ui->txtcCif->setText(oClientePres->cCifNif);
+    ui->txtcTelefono->setText(oClientePres->cTelefono1);
+    ui->txtcFax->setText(oClientePres->cFax);
+    ui->txtcMovil->setText(oClientePres->cMovil);
+    ui->txtcEmail->setText(oClientePres->cEmail);
 
-    if (oClientePres->getlIRPF()==1) {
+    if (oClientePres->lIRPF==1) {
         ui->chklRecargoEq->setChecked(true);
         oPres->lRecargoEquivalencia = 1;
     } else {

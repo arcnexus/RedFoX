@@ -132,7 +132,7 @@ void Login::Crearconfiguracion_clicked()
 
     settings.setValue("cHostBDTerra","localhost");
     settings.setValue("cUserBDTerra","root");
-    settings.setValue("cPasswordBDTerra","");
+    settings.setValue("cPasswordBDTerra","PatataBullida_99");
     settings.setValue("cPais","España");
     settings.setValue("cEjercicioActivo","2012");
     settings.setValue("nDigitosFactura",5);

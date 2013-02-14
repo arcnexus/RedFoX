@@ -79,6 +79,7 @@ private slots:
     void txtrRiesgoPermitido_editingFinished();
 
     void on_btnFichaPaciente_clicked();
+    void AddCustomerType();
 
 
 private:

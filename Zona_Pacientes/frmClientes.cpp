@@ -7,6 +7,7 @@
 #include "frmfichapaciente.h"
 #include "../sqlcalls.h"
 #include "paciente.h"
+#include "frmaddtipocliente.h"
 
 #ifdef WIN32
     //#define and &&
@@ -19,7 +20,7 @@ frmClientes::frmClientes(QWidget *parent) :
     ui->setupUi(this);
 
     oCliente = new Cliente(this);
-    oCliente->setId(0);
+    oCliente->id = 0;
     ui->txtNombreFiscal->setText("");
     // Rellenar formas de pago
     modelFP = new QSqlQueryModel();
@@ -83,83 +84,83 @@ frmClientes::~frmClientes()
 }
 void frmClientes::LLenarCampos()
 {
-    ui->txtcCodigoCliente->setText(oCliente->getcCodigoCliente());
-    ui->txtPrimerApellido->setText(oCliente->getcApellido1());
-    ui->txtSegundoApellido->setText(oCliente->getcApellido2());
-    ui->txtcNombre->setText(oCliente->getcNombre());
-    ui->txtcNombreFiscal->setText(oCliente->getcNombreFiscal());
-    ui->txtNombreFiscal->setText(oCliente->getcNombreFiscal());
-    ui->txtcNombreComercial->setText(oCliente->getcNombreComercial());
-    ui->txtcPersonaContacto->setText(oCliente->getcPersonaContacto());
-    ui->txtcCifNif->setText(oCliente->getcCifNif());
-    ui->txtcDireccion1->setText(oCliente->getcDireccion1());
-    ui->txtcDireccion2->setText(oCliente->getcDireccion2());
-    ui->txtcCp->setText(oCliente->getcCP());
-    ui->txtcPoblacion->setText(oCliente->getcPoblacion());
-    ui->txtcProvincia->setText(oCliente->getcProvincia());
-    ui->txtcPais->setText(oCliente->RecuperarPais(oCliente->getidPais()));
-    ui->txtcTelefono1->setText(oCliente->getcTelefono1());
-    ui->txtcTelefono2->setText(oCliente->getcTelefono2());
-    ui->txtcFax->setText(oCliente->getcFax());
-    ui->txtcMovil->setText(oCliente->getcMovil());
-    ui->txtcEMail->setText(oCliente->getcEmail());
-    ui->txtcWeb->setText(oCliente->getcWeb());
-    ui->txtcDireccionFactura1->setText(oCliente->getcDireccionFactura1());
-    ui->txtcDireccionFactura2->setText(oCliente->getcDireccionFactura2());
-    ui->txtcCPFactura->setText(oCliente->getcCPFactura());
-    ui->txtcPoblacionFactura->setText(oCliente->getcPoblacionFactura());
-    ui->txtcProvinciaFactura->setText(oCliente->getcProvinciaFactura());
-    ui->txtcPaisFactura->setText(oCliente->RecuperarPais(oCliente->getidPaisFactura()));
-    ui->txtcDireccionAlmacen1->setText(oCliente->getcDireccionAlmacen());
-    ui->txtcDireccionAlmacen2->setText(oCliente->getcDireccionAlmacen2());
-    ui->txtcCpPoblacionAlmacen->setText(oCliente->getcCPAlmacen());
-    ui->txtcPoblacionAlmacen->setText(oCliente->getcPoblacionAlmacen());
-    ui->txtcProvinciaAlmacen->setText(oCliente->getcProvinciaAlmacen());
-    ui->txtcPaisAlmacen->setText(oCliente->RecuperarPais(oCliente->getidPaisAlmacen()));
-    ui->txtdFechaAlta->setDate(oCliente->getdFechaAlta());
-    ui->txtdFechaUltimaCompra->setDate(oCliente->getdFechaUltimaCompra());
-    ui->txtrImporteAcumulado->setText(Configuracion_global->FormatoNumerico(QString::number( oCliente->getrAcumuladoVentas(),'f',2)));
-    ui->txtrVentasEjercicio->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->getrVentasEjercicio(),'f',2)));
-    ui->txtrRiesgoPermitido->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->getrRiesgoMaximo(),'f',2)));
-    ui->txtrDeudaActual->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->getrDeudaActual(),'f',2)));
-    ui->txttComentarios->setText(oCliente->gettComentarios());
+    ui->txtcCodigoCliente->setText(oCliente->cCodigoCliente);
+    ui->txtPrimerApellido->setText(oCliente->cApellido1);
+    ui->txtSegundoApellido->setText(oCliente->cApellido2);
+    ui->txtcNombre->setText(oCliente->cNombre);
+    ui->txtcNombreFiscal->setText(oCliente->cNombreFiscal);;
+    ui->txtNombreFiscal->setText(oCliente->cNombreFiscal);;
+    ui->txtcNombreComercial->setText(oCliente->cNombreComercial);
+    ui->txtcPersonaContacto->setText(oCliente->cPersonaContacto);
+    ui->txtcCifNif->setText(oCliente->cCifNif);
+    ui->txtcDireccion1->setText(oCliente->cDireccion1);
+    ui->txtcDireccion2->setText(oCliente->cDireccion2);
+    ui->txtcCp->setText(oCliente->cCp);
+    ui->txtcPoblacion->setText(oCliente->cPoblacion);
+    ui->txtcProvincia->setText(oCliente->cProvincia);
+    ui->txtcPais->setText(oCliente->RecuperarPais(oCliente->idPais));
+    ui->txtcTelefono1->setText(oCliente->cTelefono1);
+    ui->txtcTelefono2->setText(oCliente->cTelefono2);
+    ui->txtcFax->setText(oCliente->cFax);
+    ui->txtcMovil->setText(oCliente->cMovil);
+    ui->txtcEMail->setText(oCliente->cEmail);
+    ui->txtcWeb->setText(oCliente->cWeb);
+    ui->txtcDireccionFactura1->setText(oCliente->cDireccionFactura1);
+    ui->txtcDireccionFactura2->setText(oCliente->cDireccionFactura2);
+    ui->txtcCPFactura->setText(oCliente->cCPFactura);
+    ui->txtcPoblacionFactura->setText(oCliente->cPoblacionFactura);
+    ui->txtcProvinciaFactura->setText(oCliente->cProvinciaFactura);
+    ui->txtcPaisFactura->setText(oCliente->RecuperarPais(oCliente->idPaisFactura));
+    ui->txtcDireccionAlmacen1->setText(oCliente->cDireccionAlmacen);
+    ui->txtcDireccionAlmacen2->setText(oCliente->cDireccionAlmacen2);
+    ui->txtcCpPoblacionAlmacen->setText(oCliente->cCPAlmacen);
+    ui->txtcPoblacionAlmacen->setText(oCliente->cPoblacionAlmacen);
+    ui->txtcProvinciaAlmacen->setText(oCliente->cProvinciaAlmacen);
+    ui->txtcPaisAlmacen->setText(oCliente->RecuperarPais(oCliente->idPaisAlmacen));
+    ui->txtdFechaAlta->setDate(oCliente->dFechaalta);
+    ui->txtdFechaUltimaCompra->setDate(oCliente->dFechaCompra);
+    ui->txtrImporteAcumulado->setText(Configuracion_global->FormatoNumerico(QString::number( oCliente->rAcumuladoVentas)));
+    ui->txtrVentasEjercicio->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->rVentasEjercicio)));
+    ui->txtrRiesgoPermitido->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->rRiesgoMaximo)));
+    ui->txtrDeudaActual->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->rDeudaActual)));
+    ui->txttComentarios->setText(oCliente->tComentarios);
 
-    if(oCliente->islBloqueado())
+    if(oCliente->lBloqueado)
         ui->chklBloqueoCliente->setChecked(true);
     else
         ui->chklBloqueoCliente->setChecked(false);
 
-    ui->txttComentarioBloqueo->setText(oCliente->gettComentarioBloqueo());
-    ui->txtnPorcDtoCliente->setText(QString::number(oCliente->getnPorcDtoCliente()));
+    ui->txttComentarioBloqueo->setText(oCliente->tComentarioBloqueo);
+    ui->txtnPorcDtoCliente->setText(QString::number(oCliente->nPorcDtoCliente));
 
-    if(oCliente->islRecargoEquivalencia())
+    if(oCliente->lRecargoEquivalencia)
         ui->chklRecargoEquivalencia->setChecked(true);
     else
         ui->chklRecargoEquivalencia->setChecked(false);
 
-    ui->txtcCuentaContable->setText(oCliente->getcCuentaContable());
-    ui->txtcCuentaIvaRepercutido->setText(oCliente->getcCuentaIvaRepercutido());
-    ui->txtcCuentaDeudas->setText(oCliente->getcCuentaDeudas());
-    ui->txtcCuentaCobros->setText(oCliente->getcCuentaCobros());
-    int indice=ui->cbocFormaPago->findText(oCliente->getcFormaPago());
+    ui->txtcCuentaContable->setText(oCliente->cCuentaContable);
+    ui->txtcCuentaIvaRepercutido->setText(oCliente->cCuentaIvaRepercutido);
+    ui->txtcCuentaDeudas->setText(oCliente->cCuentaDeudas);
+    ui->txtcCuentaCobros->setText(oCliente->cCuentaCobros);
+    int indice=ui->cbocFormaPago->findText(oCliente->cFormaPago);
 
     if(indice!=-1)
         ui->cbocFormaPago->setCurrentIndex(indice);
 
-    //ui->cbocFormaPago->setItemText();
-    ui->txtnDiaPago1->setValue(oCliente->getnDiaPago1());
-    ui->txtnDiaPago2->setValue(oCliente->getnDiaPago2());
-   // ui->cbonTarifaCliente->lineEdit()->setText(oCliente->getnTarifaCliente());
-    ui->txtrImporteACuenta->setText( Configuracion_global->FormatoNumerico(QString::number(oCliente->getrImporteACuenta(),'f',2)));
-    ui->txtrVales->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->getrVales(),'f',2)));
-    ui->txtcEntidadBancaria->setText(oCliente->getcEntidadBancaria());
-    ui->txtcOficinaBancaria->setText(oCliente->getcOficinaBancaria());
-    ui->txtcDc->setText(oCliente->getcDC());
-    ui->txtcCuentaCorriente->setText(oCliente->getcCuentaCorriente());
-    ui->txtdFechaNacimiento->setDate(oCliente->getdFechaNacimiento());
-    ui->txtcAccesoWeb->setText(oCliente->getcAccesoWeb());
-    ui->txtcPasswordWeb->setText(oCliente->getcPasswordweb());
-    if (oCliente->getlIRPF())
+    //ui->cbocFormaPago->setItemText);
+    ui->txtnDiaPago1->setValue(oCliente->nDiaPago1);
+    ui->txtnDiaPago2->setValue(oCliente->nDiaPago2);
+   // ui->cbonTarifaCliente->lineEdit)->setText(oCliente->nTarifaCliente));
+    ui->txtrImporteACuenta->setText( Configuracion_global->FormatoNumerico(QString::number(oCliente->rImporteACuenta,'f',2)));
+    ui->txtrVales->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->rVales,'f',2)));
+    ui->txtcEntidadBancaria->setText(oCliente->cEntidadBancaria);
+    ui->txtcOficinaBancaria->setText(oCliente->cOficinaBancaria);
+    ui->txtcDc->setText(oCliente->cDc);
+    ui->txtcCuentaCorriente->setText(oCliente->cCuentaCorriente);
+    ui->txtdFechaNacimiento->setDate(oCliente->dFechaNacimiento);
+    ui->txtcAccesoWeb->setText(oCliente->cAccesoWeb);
+    ui->txtcPasswordWeb->setText(oCliente->cPasswordWeb);
+    if (oCliente->lIRPF)
         ui->chkClienteEmpresa->setChecked(true);
     else
         ui->chkClienteEmpresa->setChecked(false);
@@ -171,7 +172,8 @@ void frmClientes::LLenarCampos()
 
     QSqlQueryModel *deudas = new QSqlQueryModel(this);
     QString cSQL;
-    cSQL= "Select id,cDocumento,rPendienteCobro,dFecha,dVencimiento from clientes_deuda where Id_cliente =" + QString::number(oCliente->getId());
+    cSQL= "Select id,cDocumento,rPendienteCobro,dFecha,dVencimiento from clientes_deuda where Id_cliente = "
+            + QString::number(oCliente->id);
     deudas->setQuery(cSQL,QSqlDatabase::database("terra"));
     ColumnaFecha *columnaFecha = new ColumnaFecha();
     ui->TablaDeudas->setModel(deudas);
@@ -204,7 +206,7 @@ void frmClientes::LLenarCampos()
     *******************************************************************/
 
     QSqlQueryModel *Albaranes = new QSqlQueryModel(this);
-    cSQL= "Select id,nAlbaran,dFecha,nFactura,rTotalAlbaran from cab_alb where id_Cliente =" + QString::number(oCliente->getId());
+    cSQL= "Select id,nAlbaran,dFecha,nFactura,rTotalAlbaran from cab_alb where id_Cliente =" + QString::number(oCliente->id);
     Albaranes->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->TablaAlbaranes->setModel(Albaranes);
     ui->TablaAlbaranes->setItemDelegateForColumn(2,columnaFecha);
@@ -235,7 +237,7 @@ void frmClientes::LLenarCampos()
    *******************************************************************/
 
     QSqlQueryModel *Facturas = new QSqlQueryModel(this);
-    cSQL= "Select id,cFactura,dFecha,dFechaCobro,rTotal from cab_fac where iId_Cliente =" + QString::number(oCliente->getId());
+    cSQL= "Select id,cFactura,dFecha,dFechaCobro,rTotal from cab_fac where iId_Cliente =" + QString::number(oCliente->id);
     Facturas->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->tablaFacturas->setModel(Facturas);
     ui->tablaFacturas->setItemDelegateForColumn(2,columnaFecha);
@@ -268,7 +270,7 @@ void frmClientes::LLenarCampos()
 
     QSqlQueryModel *Presupuestos = new QSqlQueryModel(this);
 
-    cSQL= "Select id,nPresupuesto,dFecha,dValidoHasta,rTotal from cab_pre where id_Cliente =" + QString::number(oCliente->getId());
+    cSQL= "Select id,nPresupuesto,dFecha,dValidoHasta,rTotal from cab_pre where id_Cliente =" + QString::number(oCliente->id);
     Presupuestos->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->tablaPresupuestos->setModel(Presupuestos);
     ui->tablaPresupuestos->setItemDelegateForColumn(2,columnaFecha);
@@ -303,7 +305,7 @@ void frmClientes::LLenarCampos()
 
     QSqlQueryModel *Vales = new QSqlQueryModel(this);
 
-    cSQL= "Select id,nNumero,dFecha,dVto,rImporte from vales where id_Cliente =" + QString::number(oCliente->getId());
+    cSQL= "Select id,nNumero,dFecha,dVto,rImporte from vales where id_Cliente =" + QString::number(oCliente->id);
     Vales->setQuery(cSQL,QSqlDatabase::database("terra"));
     ui->tablaVales->setModel(Vales);
     ui->tablaVales->setItemDelegateForColumn(2,columnaFecha);
@@ -336,7 +338,7 @@ void frmClientes::LLenarCampos()
 
     QSqlQueryModel *Tickets = new QSqlQueryModel(this);
 
-    cSQL= "Select id,nTicket,dFecha,cHora,rImporte from cab_tpv where id_Cliente =" + QString::number(oCliente->getId());
+    cSQL= "Select id,nTicket,dFecha,cHora,rImporte from cab_tpv where id_Cliente =" + QString::number(oCliente->id);
     Tickets->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->tablaTickets->setModel(Tickets);
     ui->tablaTickets->setItemDelegateForColumn(2,columnaFecha);
@@ -434,85 +436,85 @@ void frmClientes::VaciarCampos()
 
 void frmClientes::LLenarCliente()
 {
-    oCliente->setcCodigoCliente(ui->txtcCodigoCliente->text());
-    oCliente->setcApellido1(ui->txtPrimerApellido->text());
-    oCliente->setcApellido2(ui->txtSegundoApellido->text());
-    oCliente->setcNombre(ui->txtcNombre->text());
-    oCliente->setcNombreFiscal(ui->txtcNombreFiscal->text());
-    oCliente->setcNombreComercial(ui->txtcNombreComercial->text());
-    oCliente->setcPersonaContacto(ui->txtcPersonaContacto->text());
-    oCliente->setcCifNif(ui->txtcCifNif->text());
-    oCliente->setcDireccion1(ui->txtcDireccion1->text());
-    oCliente->setcDireccion2(ui->txtcDireccion2->text());
-    oCliente->setcCp(ui->txtcCp->text());
-    oCliente->setcPoblacion(ui->txtcPoblacion->text());
-    oCliente->setcProvincia(ui->txtcProvincia->text());
-    oCliente->setcPais(ui->txtcPais->text());
-    oCliente->setcTelefono1(ui->txtcTelefono1->text());
-    oCliente->setcTelefono2(ui->txtcTelefono2->text());
-    oCliente->setcFax(ui->txtcFax->text());
-    oCliente->setcMovil(ui->txtcMovil->text());
-    oCliente->setcEmail(ui->txtcEMail->text());
-    oCliente->setcWeb(ui->txtcWeb->text());
-    oCliente->setcDireccionFactura1(ui->txtcDireccionFactura1->text());
-    oCliente->setcDireccionFactura2(ui->txtcDireccionFactura2->text());
-    oCliente->setcCPFactura(ui->txtcCPFactura->text());
-    oCliente->setcPoblacionFactura(ui->txtcPoblacionFactura->text());
-    oCliente->setcProvinciaFactura(ui->txtcProvinciaFactura->text());
-    oCliente->setcPaisFactura(ui->txtcPaisFactura->text());
-    oCliente->setcDireccionAlmacen1(ui->txtcDireccionAlmacen1->text());
-    oCliente->setcDireccionAlmacen2(ui->txtcDireccionAlmacen2->text());
-    oCliente->setcCPAlmacen(ui->txtcCpPoblacionAlmacen->text());
-    oCliente->setcPoblacionAlmacen(ui->txtcPoblacionAlmacen->text());
-    oCliente->setcProvinciaAlmacen(ui->txtcProvinciaAlmacen->text());
-    oCliente->setcPaisAlmacen(ui->txtcPaisAlmacen->text());
-    oCliente->setdFechaAlta(ui->txtdFechaAlta->date());
-    oCliente->setdFechaUltimaCompra(ui->txtdFechaUltimaCompra->date());
-    oCliente->setrAcumuladoVentas(ui->txtrImporteAcumulado->text().replace(".","").toDouble());
-    oCliente->setrVentasEjercicio(ui->txtrVentasEjercicio->text().replace(".","").toDouble());
-    oCliente->setrRiesgoMaximo(ui->txtrRiesgoPermitido->text().replace(".","").toDouble());
-    oCliente->setrDeudaActual(ui->txtrDeudaActual->text().replace(".","").toDouble());
-    oCliente->settComentarios(ui->txttComentarios->toPlainText());
-    oCliente->setisBloqueado(ui->chklBloqueoCliente->isChecked());
-    oCliente->settComentarioBloqueo(ui->txttComentarioBloqueo->toPlainText());
-    oCliente->setnPorcDtoCliente(ui->txtnPorcDtoCliente->text().toInt());
-    oCliente->setislRecargoEquivalencia(ui->chklRecargoEquivalencia->isChecked());
-    oCliente->setcCuentaContable(ui->txtcCuentaContable->text());
-    oCliente->setcCuentaIvaRepercutido(ui->txtcCuentaIvaRepercutido->text());
-    oCliente->setcCuentaDeudas(ui->txtcCuentaDeudas->text());
-    oCliente->setcCuentaCobros(ui->txtcCuentaCobros->text());
-    oCliente->setcFormaPago(ui->cbocFormaPago->currentText());
-    oCliente->setnDiaPago1(ui->txtnDiaPago1->value());
-    oCliente->setnDiaPago2(ui->txtnDiaPago2->value());
-    oCliente->setnTarifaCliente(ui->cbonTarifaCliente->currentText().toDouble());
-    oCliente->setrImporteaCuenta(ui->txtrImporteACuenta->text().toDouble());
-    oCliente->setrVales( ui->txtrVales->text().replace(".","").toDouble());
-    oCliente->setcEntidadBancaria(ui->txtcEntidadBancaria->text());
-    oCliente->setcOficinaBancaria(ui->txtcOficinaBancaria->text());
-    oCliente->setcDC(ui->txtcDc->text());
-    oCliente->setcCuentaCorriente(ui->txtcCuentaCorriente->text());
-    oCliente->setdFechaNacimiento(ui->txtdFechaNacimiento->date());
-    oCliente->setrImportePendiente(ui->txtrImporteAcumulado->text().toDouble());
-    oCliente->setcAccesoWeb(ui->txtcAccesoWeb->text());
-    oCliente->setcPasswordWeb(ui->txtcPasswordWeb->text());
+    oCliente->cCodigoCliente= ui->txtcCodigoCliente->text();
+    oCliente->cApellido1=ui->txtPrimerApellido->text();
+    oCliente->cApellido2=ui->txtSegundoApellido->text();
+    oCliente->cNombre=ui->txtcNombre->text();
+    oCliente->cNombreFiscal=ui->txtcNombreFiscal->text();
+    oCliente->cNombreComercial=ui->txtcNombreComercial->text();
+    oCliente->cPersonaContacto=ui->txtcPersonaContacto->text();
+    oCliente->cCifNif=ui->txtcCifNif->text();
+    oCliente->cDireccion1=ui->txtcDireccion1->text();
+    oCliente->cDireccion2=ui->txtcDireccion2->text();
+    oCliente->cCp=ui->txtcCp->text();
+    oCliente->cPoblacion=ui->txtcPoblacion->text();
+    oCliente->cProvincia=ui->txtcProvincia->text();
+    oCliente->cPais=ui->txtcPais->text();
+    oCliente->cTelefono1=ui->txtcTelefono1->text();
+    oCliente->cTelefono2=ui->txtcTelefono2->text();
+    oCliente->cFax=ui->txtcFax->text();
+    oCliente->cMovil=ui->txtcMovil->text();
+    oCliente->cEmail=ui->txtcEMail->text();
+    oCliente->cWeb=ui->txtcWeb->text();
+    oCliente->cDireccionFactura1=ui->txtcDireccionFactura1->text();
+    oCliente->cDireccionFactura2=ui->txtcDireccionFactura2->text();
+    oCliente->cCPFactura=ui->txtcCPFactura->text();
+    oCliente->cPoblacionFactura=ui->txtcPoblacionFactura->text();
+    oCliente->cProvinciaFactura=ui->txtcProvinciaFactura->text();
+    oCliente->cPaisFactura=ui->txtcPaisFactura->text();
+    oCliente->cDireccionAlmacen=ui->txtcDireccionAlmacen1->text();
+    oCliente->cDireccionAlmacen2=ui->txtcDireccionAlmacen2->text();
+    oCliente->cCPAlmacen=ui->txtcCpPoblacionAlmacen->text();
+    oCliente->cPoblacionAlmacen=ui->txtcPoblacionAlmacen->text();
+    oCliente->cProvinciaAlmacen=ui->txtcProvinciaAlmacen->text();
+    oCliente->cPaisAlmacen=ui->txtcPaisAlmacen->text();
+    oCliente->dFechaalta=ui->txtdFechaAlta->date();
+    oCliente->dFechaCompra=ui->txtdFechaUltimaCompra->date();
+    oCliente->rAcumuladoVentas=ui->txtrImporteAcumulado->text().replace(".","").toDouble();
+    oCliente->rVentasEjercicio=ui->txtrVentasEjercicio->text().replace(".","").toDouble();
+    oCliente->rRiesgoMaximo=ui->txtrRiesgoPermitido->text().replace(".","").toDouble();
+    oCliente->rDeudaActual=ui->txtrDeudaActual->text().replace(".","").toDouble();
+    oCliente->tComentarios=ui->txttComentarios->toPlainText();
+    oCliente->lBloqueado=ui->chklBloqueoCliente->isChecked();
+    oCliente->tComentarioBloqueo=ui->txttComentarioBloqueo->toPlainText();
+    oCliente->nPorcDtoCliente=ui->txtnPorcDtoCliente->text().toInt();
+    oCliente->lRecargoEquivalencia=ui->chklRecargoEquivalencia->isChecked();
+    oCliente->cCuentaContable=ui->txtcCuentaContable->text();
+    oCliente->cCuentaIvaRepercutido=ui->txtcCuentaIvaRepercutido->text();
+    oCliente->cCuentaDeudas=ui->txtcCuentaDeudas->text();
+    oCliente->cCuentaCobros=ui->txtcCuentaCobros->text();
+    oCliente->cFormaPago=ui->cbocFormaPago->currentText();
+    oCliente->nDiaPago1=ui->txtnDiaPago1->value();
+    oCliente->nDiaPago2=ui->txtnDiaPago2->value();
+    oCliente->nTarifaCliente=ui->cbonTarifaCliente->currentText().toDouble();
+    oCliente->rImporteACuenta=ui->txtrImporteACuenta->text().toDouble();
+    oCliente->rVales= ui->txtrVales->text().replace(".","").toDouble();
+    oCliente->cEntidadBancaria=ui->txtcEntidadBancaria->text();
+    oCliente->cOficinaBancaria=ui->txtcOficinaBancaria->text();
+    oCliente->cDc=ui->txtcDc->text();
+    oCliente->cCuentaCorriente=ui->txtcCuentaCorriente->text();
+    oCliente->dFechaNacimiento=ui->txtdFechaNacimiento->date();
+    oCliente->rImportePendiente=ui->txtrImporteAcumulado->text().toDouble();
+    oCliente->cAccesoWeb=ui->txtcAccesoWeb->text();
+    oCliente->cPasswordWeb=ui->txtcPasswordWeb->text();
 
     if (ui->chkClienteEmpresa)
-        oCliente->setlIRPF(true);
+        oCliente->lIRPF =true;
     else
-        oCliente->setlIRPF(false);
+        oCliente->lIRPF=false;
 }
 
 
 void frmClientes::on_btnSiguiente_clicked()
 {
-    QString cId = QString::number(oCliente->getId());
+    QString cId = QString::number(oCliente->id);
     oCliente->Recuperar("Select * from clientes where id >"+cId+" order by id limit 1 ");
     LLenarCampos();
 }
 
 void frmClientes::on_btnAnterior_clicked()
 {
-    QString cId = QString::number(oCliente->getId());
+    QString cId = QString::number(oCliente->id);
     oCliente->Recuperar("Select * from clientes where id <"+cId+" order by id desc limit 1 ");
     LLenarCampos();
 }
@@ -615,7 +617,7 @@ void frmClientes::txtcPoblacion_editingFinished()
                      ui->txtcCp->setText(qPoblacion.value(1).toString());
                      ui->txtcProvincia->setText(qPoblacion.value(2).toString());
                      ui->txtcPais->setText("ESPAÑA");
-                     oCliente->setidPais(oCliente->BuscaridPais("ESPAÑA"));
+                     oCliente->idPais =oCliente->BuscaridPais("ESPAÑA");
                  }
              }
          }
@@ -766,7 +768,7 @@ void frmClientes::desbloquearCampos()
 
 void frmClientes::on_btnDeshacer_clicked()
 {
-    QString cId = QString::number(oCliente->getId());
+    QString cId = QString::number(oCliente->id);
     oCliente->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
     bloquearCampos();
@@ -774,10 +776,10 @@ void frmClientes::on_btnDeshacer_clicked()
 
 void frmClientes::on_btnBorrar_clicked()
 {
-    int id_Cliente = oCliente->getId();
+    int id_Cliente = oCliente->id;
     id_Cliente --;
 
-    oCliente->Borrar(oCliente->getId());
+    oCliente->Borrar(oCliente->id);
     VaciarCampos();
 }
 
@@ -828,7 +830,7 @@ void frmClientes::txtcCp_editingFinished()
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
                         ui->txtcProvincia->setText(qPoblacion.value(2).toString());
                         ui->txtcPais->setText("ESPAÑA");
-                        oCliente->setidPais(oCliente->BuscaridPais("ESPAÑA"));
+                        oCliente->idPais =oCliente->BuscaridPais("ESPAÑA");
                     }
                 }
             }
@@ -870,7 +872,7 @@ void frmClientes::txtcCPFactura_editingFinished()
                         ui->txtcPoblacionFactura->setText(qPoblacion.value(0).toString());
                         ui->txtcProvinciaFactura->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisFactura->setText("ESPAÑA");
-                        oCliente->setidPaisFactura(oCliente->BuscaridPais("ESPAÑA"));
+                        oCliente->idPaisFactura =oCliente->BuscaridPais("ESPAÑA");
                     }
                 }
             }
@@ -913,7 +915,7 @@ void frmClientes::txtcPoblacionFactura_editingFinished()
                         ui->txtcCPFactura->setText(qPoblacion.value(1).toString());
                         ui->txtcProvinciaFactura->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisFactura->setText("ESPAÑA");
-                        oCliente->setidPaisFactura(oCliente->BuscaridPais("ESPAÑA"));
+                        oCliente->idPaisFactura = oCliente->BuscaridPais("ESPAÑA");
                    }
                 }
             }
@@ -954,7 +956,7 @@ void frmClientes::txtcCpPoblacionAlmacen_editingFinished()
                         ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());
                         ui->txtcProvinciaAlmacen->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisAlmacen->setText("ESPAÑA");
-                        oCliente->setidPaisAlmacen(oCliente->BuscaridPais("ESPAÑA"));
+                        oCliente->idPaisAlmacen = oCliente->BuscaridPais("ESPAÑA");
                     }
                 }
             }
@@ -997,7 +999,7 @@ void frmClientes::txtcPoblacionAlmacen_editingFinished()
                         ui->txtcCpPoblacionAlmacen->setText(qPoblacion.value(1).toString());
                         ui->txtcProvinciaAlmacen->setText(qPoblacion.value(2).toString());
                         ui->txtcPaisAlmacen->setText("ESPAÑA");
-                        oCliente->setidPaisAlmacen(oCliente->BuscaridPais("ESPAÑA"));
+                        oCliente->idPaisAlmacen = oCliente->BuscaridPais("ESPAÑA");
                     }
                 }
             }
@@ -1028,10 +1030,10 @@ void frmClientes::on_btnFichaPaciente_clicked()
     int idPaciente;
     //if not patient record in database, create it now.
     Paciente oPaciente;
-    oPaciente.RecuperarPaciente(oCliente->getId());
+    oPaciente.RecuperarPaciente(oCliente->id);
 
     if(oPaciente.getid()==0){
-        int idCliente = oCliente->getId();
+        int idCliente = oCliente->id;
         idPaciente = oPaciente.AnadirPaciente(idCliente);
         if (idPaciente!=0)
             oPaciente.RecuperarPaciente(idPaciente);
@@ -1042,7 +1044,16 @@ void frmClientes::on_btnFichaPaciente_clicked()
     FrmFichaPaciente frmPaciente(this);
     frmPaciente.setWindowModality(Qt::WindowModal);
 
-    frmPaciente.recibedatospaciente(oCliente->getId(),oCliente->getcNombreFiscal());
-    frmPaciente.cargarDatos(oCliente->getId());
+    frmPaciente.recibedatospaciente(oCliente->id,oCliente->cNombreFiscal);
+    frmPaciente.cargarDatos(oCliente->id);
     frmPaciente.exec();
+}
+
+void frmClientes::AddCustomerType()
+{
+    FrmAddTipoCliente AddTipoCliente(this);
+   AddTipoCliente.exec();
+   if(AddTipoCliente.Accepted())
+       QMessageBox::information(this,"OK","OK","OK");
+
 }
