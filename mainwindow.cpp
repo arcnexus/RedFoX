@@ -680,6 +680,8 @@ void MainWindow::handle_paises()
     form.set_table_headers(headers);
 
     form.set_columnHide(0);
+
+    form.set_printFile("/home/arcnexus/TerraReports/clientes.xml");//TODO hacer directorio general de reports
     form.exec();
     Configuracion_global->Cargar_paises();
 }

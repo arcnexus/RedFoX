@@ -22,6 +22,7 @@ public:
     void set_selection(QString column_name);
     void set_columnHide(int column);
     void set_noInsertDeleteRows();
+    void set_printFile(QString file);
     QString selected_value;
 private slots:
     void on_btn_add_clicked();
@@ -36,10 +37,18 @@ private slots:
 
     void on_btn_cancel_clicked();
 
+    void print_clicked();
+
 private:
     Ui::Db_table_View *ui;
+    QString db;
     QSqlRelationalTableModel* model;
     QString selection_column;
+    QString file;
+
+    QMenu * print_menu;
+    QAction* toPaper;
+    QAction* toPDF;
 };
 
 #endif // DB_TABLE_VIEW_H

@@ -19,10 +19,11 @@
 
 #include "mainwindow.h"
 #include "login.h"
-
+#include <QStyleFactory>
 int main(int argc, char *argv[])
 {
     qDebug() << "drivers: "<< QSqlDatabase::drivers();
+    qDebug() << QStyleFactory::keys();
     QApplication a(argc, argv);
 	
     QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
@@ -33,7 +34,9 @@ int main(int argc, char *argv[])
    QTextCodec::setCodecForLocale(linuxCodec);;
 
    //a.setStyle("fusion");
+
      a.setStyle("Plastique");
+
    QFile file(":Icons/Terra.qss");
 
    if(file.open(QFile::ReadOnly))

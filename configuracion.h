@@ -78,6 +78,8 @@ public:
 
     QDoubleValidator *validator_cantidad;
     QDoubleValidator *validator_porciento;
+
+    static void imprimir(QString db , QString report , bool toPDF , bool preview = true, QWidget* parent = 0);
 public slots:
     void format_text();
 };

@@ -1,4 +1,11 @@
-#include "configuracion.h"
+#include "Auxiliares/Globlal_Include.h"
+
+#include "openrptLibs/include/orprerender.h"
+#include "openrptLibs/include/parameteredit.h"
+#include "openrptLibs/include/orprintrender.h"
+#include "openrptLibs/include/previewdialog.h"
+#include "openrptLibs/include/renderobjects.h"
+
 #include <QLineEdit>
 Configuracion::Configuracion(QObject* parent) :
     QObject(parent)
@@ -225,6 +232,77 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
     //Digitos de Control
     QString cdc = QString::number(primerdigito) + QString::number(segundodigito);
     return cdc;
+}
+
+void Configuracion::imprimir(QString db, QString report, bool toPDF,bool preview, QWidget *parent)
+{
+    QFile f(report);
+    if(f.open(QFile::ReadOnly))
+    {
+        QDomDocument ddoc;
+        if(ddoc.setContent(f.readAll()))
+        {
+            ORPreRender pre;
+            pre.setDom(ddoc);
+            pre.setDatabase(QSqlDatabase::database(db));
+
+            ParameterEdit paramEdit(0);
+            QDialog *dlgEdit = ParameterEdit::ParameterEditDialog(&paramEdit, parent);
+            if (paramEdit.setDocument(ddoc))
+                if (dlgEdit->exec() != QDialog::Accepted)
+                    return;
+
+            pre.setParamList(paramEdit.getParameterList());
+            ORODocument * doc = pre.generate();
+
+            if(doc)
+            {
+                QPrinter printer(QPrinter::HighResolution);
+                if(preview)
+                {
+                    PreviewDialog preview (doc, &printer, parent);
+                    if (preview.exec() == QDialog::Rejected)
+                        return;
+                }
+                ORPrintRender render;
+                render.setupPrinter(doc, &printer);
+
+                if(printer.printerName().isEmpty())
+                {
+                    QPrintDialog pd(&printer);
+                    if(pd.exec() != QDialog::Accepted)
+                    {
+                        qDebug() << "no printer, can't preview";
+                        return; // no printer, can't preview
+                    }
+                }
+
+                if(toPDF)
+                {
+                    QString output = QFileDialog::getSaveFileName(parent);
+
+                    if(output.isEmpty())
+                        return;
+
+                    if ( QFileInfo( output ).suffix().isEmpty() )
+                      output.append(".pdf");
+
+                    ORPrintRender::exportToPDF(doc, output );
+                }
+                else
+                {
+                    QPrintDialog pd(&printer);
+                    pd.setMinMax(1, doc->pages());
+                    if(pd.exec() == QDialog::Accepted)
+                    {
+                        render.setPrinter(&printer);
+                        render.render(doc);
+                    }
+                }
+                delete doc;
+            }
+        }
+    }
 }
 
 void Configuracion::format_text()

@@ -1051,9 +1051,13 @@ void frmClientes::on_btnFichaPaciente_clicked()
 
 void frmClientes::AddCustomerType()
 {
-    FrmAddTipoCliente AddTipoCliente(this);
-   AddTipoCliente.exec();
-   if(AddTipoCliente.Accepted)
+//<<<<<<< HEAD
+//    FrmAddTipoCliente AddTipoCliente(this);
+//   AddTipoCliente.exec();
+//   if(AddTipoCliente.Accepted)
+//=======
+   FrmAddTipoCliente AddTipoCliente(this);
+   if(AddTipoCliente.exec() == QDialog::Accepted)
        QMessageBox::information(this,"OK","OK","OK");
 
 }

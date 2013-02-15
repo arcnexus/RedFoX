@@ -29,8 +29,8 @@ greaterThan(QT_MAJOR_VERSION, 4):LIBS += -L/home/arcnexus/Qt5.0.0/Tools/QtCreato
 TARGET = Terra
 TEMPLATE = app
 
- CONFIG  += qxt
- QXT     += core gui
+# CONFIG  += qxt
+# QXT     += core gui
 
 
 SOURCES += main.cpp\
@@ -214,3 +214,16 @@ RESOURCES += \
 
 OTHER_FILES += \
     TODO.txt
+
+
+
+
+unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lcommon
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lrenderer
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
