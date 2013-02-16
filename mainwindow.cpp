@@ -375,6 +375,8 @@ void MainWindow::init()
             splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
             frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
 
+            reportWindow = new ReportWriterWindow();
+
             splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
             ui->stackedWidget->addWidget(frmClientes1);
             ui->stackedWidget->addWidget(frmFacturas1);
@@ -389,9 +391,10 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmFacturas_pro);
             ui->stackedWidget->addWidget(frmFactura_multiple);
             ui->stackedWidget->addWidget(frmOrden_Ped_pro);
+            ui->stackedWidget->addWidget(reportWindow);
             TerraForm = new init_form(this);
             ui->stackedWidget->addWidget(TerraForm);
-            ui->stackedWidget->setCurrentWidget(TerraForm);
+            ui->stackedWidget->setCurrentWidget(/*TerraForm*/reportWindow);
 
             QApplication::processEvents();
             this->setWindowState(Qt::WindowMaximized);

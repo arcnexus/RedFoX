@@ -99,7 +99,8 @@ SOURCES += main.cpp\
     Zona_Compras/frmfacturasproveedor.cpp \
     Zona_Ventas/frmfacturaralabaranes.cpp \
     Zona_Pacientes/frmaddtipocliente.cpp \
-    Zona_Compras/frmorden_pedido_producto.cpp
+    Zona_Compras/frmorden_pedido_producto.cpp \
+    openrptLibs/Auxiliares/reportwriterwindow.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -167,7 +168,8 @@ HEADERS  += mainwindow.h \
     Zona_Compras/frmfacturasproveedor.h \
     Zona_Ventas/frmfacturaralabaranes.h \
     Zona_Pacientes/frmaddtipocliente.h \
-    Zona_Compras/frmorden_pedido_producto.h
+    Zona_Compras/frmorden_pedido_producto.h \
+    openrptLibs/Auxiliares/reportwriterwindow.h
 
 
 FORMS    += mainwindow.ui \
@@ -227,6 +229,34 @@ INCLUDEPATH += $$PWD/openrptLibs/include
 DEPENDPATH += $$PWD/openrptLibs/include
 
 unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lrenderer
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+
+
+win32: LIBS += -L$$PWD/openrptLibs/win32/ -lcommon
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+win32: PRE_TARGETDEPS += $$PWD/openrptLibs/win32/common.lib
+
+win32: LIBS += -L$$PWD/openrptLibs/win32/ -lMetaSQL
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+win32: PRE_TARGETDEPS += $$PWD/openrptLibs/win32/MetaSQL.lib
+
+win32: LIBS += -L$$PWD/openrptLibs/win32/ -lrenderer
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+win32: PRE_TARGETDEPS += $$PWD/openrptLibs/win32/renderer.lib
+
+win32: LIBS += -L$$PWD/openrptLibs/win32/ -lwrtembed
 
 INCLUDEPATH += $$PWD/openrptLibs/include
 DEPENDPATH += $$PWD/openrptLibs/include

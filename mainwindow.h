@@ -19,6 +19,9 @@
 #include "Zona_Compras/frmfacturasproveedor.h"
 #include "Zona_Ventas/frmfacturaralabaranes.h"
 #include "Zona_Compras/frmorden_pedido_producto.h"
+
+#include "openrptLibs/Auxiliares/reportwriterwindow.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -151,6 +154,8 @@ private:
     FrmFacturasProveedor * frmFacturas_pro;
     FrmFacturarAlabaranes *frmFactura_multiple;
     FrmOrden_Pedido_Producto * frmOrden_Ped_pro;
+
+    ReportWriterWindow * reportWindow;
 
     init_form * TerraForm;
 
