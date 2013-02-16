@@ -1,0 +1,26 @@
+/* XPM */
+/* $Id: document.xpm,v 1.1.1.1 2005-04-15 17:01:07 cryan Exp $ */
+static const char * document_xpm[] = {
+"16 16 6 1",
+" 	c #040404",
+".	c None",
+"X	c white",
+"o	c #808304",
+"O	c black",
+"+	c #f3f7f3",
+"..        ......",
+".. XXXXXX  .....",
+".. XXXXXX X ....",
+".. XXXXXX XX ...",
+".. XooXXX    O..",
+".. X+XXXX+XXXO..",
+".. XXXXXXXXXXO..",
+".. XooXoXooXXO..",
+".. XXXXXXXXXXO..",
+".. XXXXXXXXXXO..",
+".. XoXXXoooXXO..",
+".. XXXXXXXXXXO..",
+"..OXXXXXXXXXXO..",
+"..OXXXXXXXXXXO..",
+"..OOOOOOOOOOOO..",
+"................"};

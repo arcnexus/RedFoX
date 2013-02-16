@@ -1,0 +1,27 @@
+/* XPM */
+/* $Id: fileprint.xpm,v 1.1.1.1 2005-04-15 17:01:07 cryan Exp $ */
+static const char *fileprint_xpm[] = {
+"    16    16        6            1",
+". c #000000",
+"# c #848284",
+"a c #c6c3c6",
+"b c #ffff00",
+"c c #ffffff",
+"d c None",
+"dddddddddddddddd"
+"ddddd.........dd",
+"dddd.cccccccc.dd",
+"dddd.c.....c.ddd",
+"ddd.cccccccc.ddd",
+"ddd.c.....c....d",
+"dd.cccccccc.a.a.",
+"d..........a.a..",
+".aaaaaaaaaa.a.a.",
+".............aa.",
+".aaaaaa###aa.a.d",
+".aaaaaabbbaa...d",
+".............a.d",
+"d.aaaaaaaaa.a.dd",
+"dd...........ddd",
+"dddddddddddddddd"
+};

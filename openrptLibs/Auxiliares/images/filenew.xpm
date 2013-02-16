@@ -1,0 +1,24 @@
+/* XPM */
+/* $Id: filenew.xpm,v 1.1.1.1 2005-04-15 17:01:07 cryan Exp $ */
+static const char * filenew_xpm[] = {
+"16 16 4 1",
+" 	c #040404",
+".	c None",
+"X	c white",
+"O	c black",
+"..        ......",
+".. XXXXXX  .....",
+".. XXXXXX X ....",
+".. XXXXXX XX ...",
+".. XXXXXX    O..",
+".. XXXXXXXXXXO..",
+".. XXXXXXXXXXO..",
+".. XXXXXXXXXXO..",
+".. XXXXXXXXXXO..",
+".. XXXXXXXXXXO..",
+".. XXXXXXXXXXO..",
+".. XXXXXXXXXXO..",
+"..OXXXXXXXXXXO..",
+"..OXXXXXXXXXXO..",
+"..OOOOOOOOOOOO..",
+"................"};

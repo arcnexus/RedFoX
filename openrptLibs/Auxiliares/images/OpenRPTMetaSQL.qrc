@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="/icons" >
+    <file>printer_32.png</file>
+    <file>undo_32.png</file>
+    <file>help_32.png</file>
+    <file>paste_32.png</file>
+    <file>folder_32.png</file>
+    <file>scissors_32.png</file>
+    <file>copy_32.png</file>
+    <file>diskette_32.png</file>
+    <file>document_32.png</file>
+  </qresource>
+</RCC>
