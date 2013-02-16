@@ -2,6 +2,7 @@
 #define FRMADDTIPOCLIENTE_H
 
 #include <QDialog>
+#include <QModelIndex>
 
 namespace Ui {
 class FrmAddTipoCliente;
@@ -17,7 +18,8 @@ public:
     
 private:
     Ui::FrmAddTipoCliente *ui;
-    void LLenarTablaSubfamilias(QString cFamilia);
+private slots:
+    void LLenarTablaSubfamilias(QModelIndex);
 };
 
 #endif // FRMADDTIPOCLIENTE_H

@@ -2,6 +2,7 @@ QDialog {
   background-color :#4c6088
 }
 QWidget {
+
     background-color: #ecefed;
 }
 /* Nice Windows-XP-style password character. */
@@ -269,7 +270,7 @@ QTableView, QTableWidet {
 
 QMenu::item:selected {
     background-color: rgb(175,195,225);
-    /* background-color: #3399CC; */
      color: rgb(0, 0, 0);
      selection-color: rgb(255,255,255);
+     border-radius:5px;
 }

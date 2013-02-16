@@ -122,5 +122,6 @@
         <file>PNG/Factura_pro.png</file>
         <file>PNG/albaran_pro.png</file>
         <file>PNG/factmult.png</file>
+        <file>PNG/opedido.png</file>
     </qresource>
 </RCC>

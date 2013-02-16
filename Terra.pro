@@ -98,7 +98,8 @@ SOURCES += main.cpp\
     Zona_Compras/frmalbaranproveedor.cpp \
     Zona_Compras/frmfacturasproveedor.cpp \
     Zona_Ventas/frmfacturaralabaranes.cpp \
-    Zona_Pacientes/frmaddtipocliente.cpp
+    Zona_Pacientes/frmaddtipocliente.cpp \
+    Zona_Compras/frmorden_pedido_producto.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -165,7 +166,8 @@ HEADERS  += mainwindow.h \
     Zona_Compras/frmalbaranproveedor.h \
     Zona_Compras/frmfacturasproveedor.h \
     Zona_Ventas/frmfacturaralabaranes.h \
-    Zona_Pacientes/frmaddtipocliente.h
+    Zona_Pacientes/frmaddtipocliente.h \
+    Zona_Compras/frmorden_pedido_producto.h
 
 
 FORMS    += mainwindow.ui \
@@ -207,7 +209,8 @@ FORMS    += mainwindow.ui \
     Zona_Compras/frmalbaranproveedor.ui \
     Zona_Compras/frmfacturasproveedor.ui \
     Zona_Ventas/frmfacturaralabaranes.ui \
-    Zona_Pacientes/frmaddtipocliente.ui
+    Zona_Pacientes/frmaddtipocliente.ui \
+    Zona_Compras/frmorden_pedido_producto.ui
 
 RESOURCES += \
     terra.qrc \

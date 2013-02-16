@@ -18,6 +18,7 @@
 #include "Zona_Compras/frmalbaranproveedor.h"
 #include "Zona_Compras/frmfacturasproveedor.h"
 #include "Zona_Ventas/frmfacturaralabaranes.h"
+#include "Zona_Compras/frmorden_pedido_producto.h"
 namespace Ui {
 class MainWindow;
 }
@@ -77,6 +78,7 @@ private slots:
     void btn_facturas_pro_clicked();
     // Zona Almacen
     void btnArticulos_2_clicked();
+    void btnOrden_pedido_clicked();
 
  //4   void on_btnAgenda_clicked();
 
@@ -120,6 +122,7 @@ private:
 
     void crear_barraVentas();
     // Barra de Compras
+    ToolBarButton * btn_Orden_pedido;
     ToolBarButton * btn_pedidos_pro;
     ToolBarButton * btn_albaranes_pro;
     ToolBarButton * btn_facturas_pro;
@@ -147,6 +150,7 @@ private:
     FrmAlbaranProveedor *FrmAlbaran_pro;
     FrmFacturasProveedor * frmFacturas_pro;
     FrmFacturarAlabaranes *frmFactura_multiple;
+    FrmOrden_Pedido_Producto * frmOrden_Ped_pro;
 
     init_form * TerraForm;
 
