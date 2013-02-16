@@ -94,7 +94,7 @@ selection-color: rgb(0, 0, 0);</string>
        <item>
         <widget class="QStackedWidget" name="stackedWidget_2">
          <property name="currentIndex">
-          <number>3</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="page_manten">
           <layout class="QVBoxLayout" name="verticalLayout_manten"/>
@@ -107,6 +107,9 @@ selection-color: rgb(0, 0, 0);</string>
          </widget>
          <widget class="QWidget" name="page_almacen">
           <layout class="QVBoxLayout" name="verticalLayout_almacen"/>
+         </widget>
+         <widget class="QWidget" name="page_admin">
+          <layout class="QVBoxLayout" name="verticalLayout_admin"/>
          </widget>
         </widget>
        </item>

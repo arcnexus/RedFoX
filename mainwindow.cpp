@@ -134,7 +134,25 @@ void MainWindow::crear_barraAlmacen()
 //    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
 //    connect(ui->actionAlbaranes_2,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
 //    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
-//    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+    //    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+}
+
+void MainWindow::crear_barraAdmin()
+{
+    btn_reports = new ToolBarButton(tr("Editar \nreportes "),":/Icons/PNG/reports.png",this);
+
+    QFrame*  line = new QFrame(ui->page_admin);
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
+
+    ui->verticalLayout_admin->addWidget(btn_reports);
+
+    ui->verticalLayout_admin->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
+
+    connect(btn_reports,SIGNAL(clicked()),this,SLOT(btn_reports_clicked()));
+
+    //barra de menu
+//    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -145,7 +163,7 @@ MainWindow::MainWindow(QWidget *parent) :
     on_edit = false;
 
     QStringList modulos;
-    modulos << "Mantenimiento"  << "Compras" << "Ventas" << "Almacen";
+    modulos << "Mantenimiento"  << "Compras" << "Ventas" << "Almacen " << "Administrador";
     ui->comboBox->addItems(modulos);
     crear_barraMantenimiento();
 
@@ -154,6 +172,8 @@ MainWindow::MainWindow(QWidget *parent) :
     crear_barraCompras();
 
     crear_barraAlmacen();
+
+    crear_barraAdmin();
 
     {
 
@@ -394,7 +414,7 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(reportWindow);
             TerraForm = new init_form(this);
             ui->stackedWidget->addWidget(TerraForm);
-            ui->stackedWidget->setCurrentWidget(/*TerraForm*/reportWindow);
+            ui->stackedWidget->setCurrentWidget(TerraForm);
 
             QApplication::processEvents();
             this->setWindowState(Qt::WindowMaximized);
@@ -498,7 +518,12 @@ void MainWindow::btnArticulos_2_clicked()
 
 void MainWindow::btnOrden_pedido_clicked()
 {
-       ui->stackedWidget->setCurrentWidget(frmOrden_Ped_pro);
+    ui->stackedWidget->setCurrentWidget(frmOrden_Ped_pro);
+}
+
+void MainWindow::btn_reports_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(reportWindow);
 }
 
 //void MainWindow::on_btnAgenda_clicked()

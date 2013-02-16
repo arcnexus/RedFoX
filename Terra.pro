@@ -260,3 +260,13 @@ win32: LIBS += -L$$PWD/openrptLibs/win32/ -lwrtembed
 
 INCLUDEPATH += $$PWD/openrptLibs/include
 DEPENDPATH += $$PWD/openrptLibs/include
+
+unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lMetaSQL
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lwrtembed
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include

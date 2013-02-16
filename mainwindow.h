@@ -82,6 +82,8 @@ private slots:
     // Zona Almacen
     void btnArticulos_2_clicked();
     void btnOrden_pedido_clicked();
+    // zona Administrador
+    void btn_reports_clicked();
 
  //4   void on_btnAgenda_clicked();
 
@@ -139,6 +141,12 @@ private:
     ToolBarButton * btn_gestionPagos;
     ToolBarButton * btn_articulos_2;
     void crear_barraAlmacen();
+
+    //Barra de Administrador
+    ToolBarButton * btn_reports;
+    void crear_barraAdmin();
+
+
 
     //WIDGETS
     frmClientes *frmClientes1;

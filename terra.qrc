@@ -123,5 +123,6 @@
         <file>PNG/albaran_pro.png</file>
         <file>PNG/factmult.png</file>
         <file>PNG/opedido.png</file>
+        <file>PNG/reports.png</file>
     </qresource>
 </RCC>
