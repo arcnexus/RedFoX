@@ -86,7 +86,8 @@ QListView {
 }
 
 QListView::item:hover {
-    background-color: white;
+    background-color: Yellow;
+    color:blue;
 }
 QFrame {
     border-radius: 5px;
@@ -265,3 +266,10 @@ QTableView, QTableWidet {
      selection-color: white;
      alternate-background-color: rgb(255, 255, 127);
  }
+
+QMenu::item:selected {
+    background-color: rgb(175,195,225);
+    /* background-color: #3399CC; */
+     color: rgb(0, 0, 0);
+     selection-color: rgb(255,255,255);
+}

@@ -21,3 +21,8 @@ FrmAddTipoCliente::~FrmAddTipoCliente()
 {
     delete ui;
 }
+
+void FrmAddTipoCliente::LLenarTablaSubfamilias(QString cFamilia)
+{
+
+}

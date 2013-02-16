@@ -17,6 +17,7 @@ public:
     
 private:
     Ui::FrmAddTipoCliente *ui;
+    void LLenarTablaSubfamilias(QString cFamilia);
 };
 
 #endif // FRMADDTIPOCLIENTE_H
