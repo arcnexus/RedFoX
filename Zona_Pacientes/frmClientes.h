@@ -66,13 +66,9 @@ private slots:
 
     void txtcCp_editingFinished();
 
-    void txtcCPFactura_editingFinished();
+    void txtcCPAlternativa_editingFinished();
 
-    void txtcPoblacionFactura_editingFinished();
-
-    void txtcCpPoblacionAlmacen_editingFinished();
-
-    void txtcPoblacionAlmacen_editingFinished();
+    void txtcPoblacionAlternativa_editingFinished();
 
     void TablaDeudas_clicked(const QModelIndex &index);
 
@@ -80,6 +76,11 @@ private slots:
 
     void on_btnFichaPaciente_clicked();
     void AddCustomerType();
+    void AnadirDireccionAlternativa();
+    void GuardarDireccionAlternativa();
+    void DeshacerDireccionAlternativa();
+    void BorrarDireccionAlternativa();
+    void CargarDireccionAlternativa(QModelIndex);
 
 
 private:
@@ -92,6 +93,8 @@ private:
     QSqlQuery tbpaciente;
     Cliente* oCliente;
     SqlCalls *llamadasSQL;
+    bool AnadirDireccion = false;
+    int idDireccionAlternativa;
 
 
 };

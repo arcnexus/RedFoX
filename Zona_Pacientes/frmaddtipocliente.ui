@@ -81,30 +81,14 @@
  </resources>
  <connections>
   <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>FrmAddTipoCliente</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>506</x>
-     <y>262</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>316</x>
-     <y>251</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
    <receiver>FrmAddTipoCliente</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>565</x>
-     <y>268</y>
+     <x>587</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
      <x>179</x>
@@ -112,5 +96,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>FrmAddTipoCliente</receiver>
+   <slot>validar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>456</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>validar()</slot>
+ </slots>
 </ui>

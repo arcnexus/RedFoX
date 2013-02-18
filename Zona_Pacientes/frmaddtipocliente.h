@@ -15,11 +15,13 @@ class FrmAddTipoCliente : public QDialog
 public:
     explicit FrmAddTipoCliente(QWidget *parent = 0);
     ~FrmAddTipoCliente();
+    QString cFamiliaRetorno;
     
 private:
     Ui::FrmAddTipoCliente *ui;
 private slots:
     void LLenarTablaSubfamilias(QModelIndex);
+    void validar();
 };
 
 #endif // FRMADDTIPOCLIENTE_H
