@@ -1,5 +1,6 @@
 #include "graphicsevent.h"
 #include "graphicstable.h"
+#include "editeventform.h"
 #include <QPointF>
 #include <QGraphicsScene>
 #include <QWidget>
@@ -65,6 +66,7 @@ void GraphicsEvent::setTime(QDateTime start, QDateTime end)
 {
     this->start = start;
     this->end = end;
+    updateThis();
 }
 
 void GraphicsEvent::setHGrid(QVector<qreal> grid, qreal size)
@@ -113,22 +115,7 @@ QRectF GraphicsEvent::Rect()
 void GraphicsEvent::setAsunto(QString s)
 {
     asunto = s;
-    QString st = QString(
-    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
-    "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
-    "p, li { white-space: pre-wrap; }"
-    "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">"
-    "<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Cliente: %1</li>"
-                "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Telefonos: %2</li>"
-    "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Hora de comienzo: %3</li>"
-    "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Hora de finalizaci&oacute;n: %4</li></ul>"
-    "Asunto:<br>%5</body></html>").
-            arg(/*cliente*/"")
-            .arg(/*Telefonos*/900100100)
-            .arg(/*Hora inicio*/start.toString("hh:mm"))
-            .arg(/*Hora final*/end.toString("hh:mm"))
-            .arg(/*Asunto*/s);
-    this->setToolTip(st);
+
 }
 
 void GraphicsEvent::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -310,14 +297,25 @@ void GraphicsEvent::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 void GraphicsEvent::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
    QMenu menu;
-   menu.addAction("Action 1");
-   menu.addAction("Action 2");
+   menu.addAction("Editar");
+   menu.addAction("Eliminar");
    QAction *a = menu.exec(event->screenPos());
-  // qDebug("User clicked %s", qPrintable(a->text()));
+   if(a)
+   {
+       if(a->text() == "Editar")
+       {
+            EditThis();
+       }
+       else
+       {
+
+       }
+   }
 }
 
 void GraphicsEvent::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
+    EditThis();
 }
 
 void GraphicsEvent::checkJail()
@@ -343,6 +341,37 @@ bool GraphicsEvent::isInJail(QPointF pos)
                 && pos.rx() > main_jail.left()
                 && pos.rx() < main_jail.right()
                 );
+}
+
+void GraphicsEvent::EditThis()
+{
+    EditEventForm form(qApp->activeWindow());
+    if(form.exec() == QDialog::Accepted)
+    {
+        this->asunto = form.asunto;
+        updateThis();
+    }
+
+}
+
+void GraphicsEvent::updateThis()
+{
+    QString st = QString(
+    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
+    "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
+    "p, li { white-space: pre-wrap; }"
+    "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">"
+    "<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Cliente: %1</li>"
+                "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Telefonos: %2</li>"
+    "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Hora de comienzo: %3</li>"
+    "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Hora de finalizaci&oacute;n: %4</li></ul>"
+    "Asunto:<br>%5</body></html>").
+            arg(/*cliente*/"")
+            .arg(/*Telefonos*/900100100)
+            .arg(/*Hora inicio*/start.toString("hh:mm"))
+            .arg(/*Hora final*/end.toString("hh:mm"))
+            .arg(/*Asunto*/asunto);
+    this->setToolTip(st);
 }
 
 void GraphicsEvent::checkCollisions()
@@ -416,11 +445,6 @@ void GraphicsEvent::checkCollisions()
                 }
             }
         }
-        foreach(_collideItem,heigth_o_Events)
-        {
-            qDebug()<< "Altos:" << QString("H:%2").arg(_collideItem->Heigth());
-        }
-
         QList<qreal> Hlist1;
         foreach(_collideItem,heigth_o_Events)
         {
@@ -518,7 +542,7 @@ void GraphicsEvent::checkCollisions()
             usedEvents.append(_collideItem);
         }
     }
-    qDebug()<<"end call";
+    //qDebug()<<"end call";
 }
 
 

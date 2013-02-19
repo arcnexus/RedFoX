@@ -43,8 +43,7 @@ AgendaForm::AgendaForm(QWidget *parent) :
     ui->calendarWidget->setSelectedDate(today);
     table->setDate(today);
 
-    bool isMedic=false;
-    if(!isMedic)
+    if(!medic)
     {
         ui->especialidad_group->hide();
         ui->reunion_group->setTitle("Reunion con:");

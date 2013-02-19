@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QMenu>
 #include <QAction>
+#include "../Auxiliares/Globlal_Include.h"
 class GraphicsEvent : public QGraphicsObject
 {
     Q_OBJECT
@@ -24,6 +25,12 @@ public:
     QRectF Rect();
     void setAsunto(QString s);
     void setCliente(int id);
+
+    bool isCita;
+    int id_user;
+    int id_cliente;
+    int id_spec;
+    int id_depart;
 signals:
     void updateScene();
     void checkForCollisions();
@@ -64,7 +71,9 @@ private:
     static QVector<qreal> h_grid;
     static qreal h_gridSize;
     QString asunto;
-    int id_cliente;
+
+    void EditThis();
+    void updateThis();
 };
 
 #endif // GRAPHICSEVENT_H
