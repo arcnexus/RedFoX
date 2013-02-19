@@ -93,7 +93,7 @@ private:
     QSqlQuery tbpaciente;
     Cliente* oCliente;
     SqlCalls *llamadasSQL;
-    bool AnadirDireccion = false;
+    bool AnadirDireccion /*= false*/;
     int idDireccionAlternativa;
 
 

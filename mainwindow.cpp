@@ -36,6 +36,7 @@ void MainWindow::crear_barraMantenimiento()
     connect(btn_clientes,SIGNAL(clicked()),this,SLOT(btnClientes_clicked()));
     connect(btn_almacen,SIGNAL(clicked()),this,SLOT(btnArticulos_clicked()));
     connect(btn_proovedores,SIGNAL(clicked()),this,SLOT(btnProveedores_clicked()));
+    connect(btn_agenda,SIGNAL(clicked()),this,SLOT(showAgenda()));
 
     //Barra de menu
     connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
@@ -397,7 +398,11 @@ void MainWindow::init()
             splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
             frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
 
+            splash.showMessage(tr("Cargando modulos... Editor de reportes"),Qt::AlignBottom);
             reportWindow = new ReportWriterWindow();
+
+            splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
+            agendaForm = new AgendaForm(this);
 
             splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
             ui->stackedWidget->addWidget(frmClientes1);
@@ -414,6 +419,7 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmFactura_multiple);
             ui->stackedWidget->addWidget(frmOrden_Ped_pro);
             ui->stackedWidget->addWidget(reportWindow);
+            ui->stackedWidget->addWidget(agendaForm);
             TerraForm = new init_form(this);
             ui->stackedWidget->addWidget(TerraForm);
             ui->stackedWidget->setCurrentWidget(TerraForm);
@@ -439,6 +445,7 @@ void MainWindow::unblock_main()
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete reportWindow;
 }
 
 void MainWindow::btnMantenimientos_clicked()
@@ -860,4 +867,9 @@ void MainWindow::blockMe(bool state)
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
     ui->stackedWidget_2->setCurrentIndex(index);
+}
+
+void MainWindow::showAgenda()
+{
+    ui->stackedWidget->setCurrentWidget(agendaForm);
 }
