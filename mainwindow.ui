@@ -860,7 +860,9 @@ background-color: rgb(255, 255, 255);</string>
      <string>Archivos</string>
     </property>
     <addaction name="btnClientes"/>
+    <addaction name="separator"/>
     <addaction name="btnProveedores"/>
+    <addaction name="separator"/>
     <addaction name="btnFormas_de_Pago"/>
     <addaction name="btnTipos_de_Iva"/>
     <addaction name="btnAgenda"/>

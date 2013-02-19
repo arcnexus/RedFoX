@@ -75,6 +75,7 @@ public:
     QString cAccesoWeb;
     QString cPasswordWeb;
     bool lIRPF;
+    int idTarifa;
 
     QSqlDatabase db;
     QSqlQuery *qryCliente;
@@ -91,6 +92,8 @@ public slots:
     void AnadirDeuda(int id_cliente, QDate dFechaDeuda,QDate dFechaVto,QString cDocumento, int id_Tiquet,
                      int id_Factura, int nTipo, double rImporteDeuda, double rPagado, double rPendienteCobro,
                      QString cEntidad, QString cOficina,QString cDC ,QString cCuenta);
+    void GuardarDireccion(bool Anadir, QString Descripcion, QString Direccion1, QString Direccion2, QString CP, QString Poblacion,
+                         QString Provincia, QString Pais, int idcliente, int id);
     void DescontarDeuda(int id_deuda,double rPagado);
     void Borrar(int id_cliente);
     QString NuevoCodigoCliente();

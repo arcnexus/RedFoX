@@ -368,6 +368,44 @@ void Cliente::AnadirDeuda(int id_cliente, QDate dFechaDeuda, QDate dFechaVto, QS
     }
 
 }
+
+void Cliente::GuardarDireccion(bool Anadir, QString Descripcion, QString Direccion1, QString Direccion2, QString CP, QString Poblacion,
+                               QString Provincia, QString Pais,int idcliente,int id)
+{
+    QSqlQuery qDirecciones(QSqlDatabase::database("terra"));
+    if(Anadir){
+        qDirecciones.prepare("INSERT INTO cliente_direcciones (`descripcion`, `direccion1`, `direccion2`, `cp`, `poblacion`,"
+                         "`provincia`, `idpais`, `idcliente`) "
+                         "VALUES (:descripcion,:direccion1,:direccion2,:cp, :poblacion,:provincia,:idpais,:idcliente)");
+
+    } else {
+        qDirecciones.prepare("UPDATE cliente_direcciones SET "
+                             "descripcion = :descripcion,"
+                             "direccion1 = :direccion1,"
+                             "direccion2 = :direccion2,"
+                             "cp = :cp,"
+                             "poblacion = :poblacion,"
+                             "provincia = :provincia,"
+                             "idpais = :idpais,"
+                             "idcliente =:idcliente "
+                             "WHERE id =:id)");
+    }
+    qDirecciones.bindValue(":descripcion",Descripcion);
+    qDirecciones.bindValue(":direccion1",Direccion1);
+    qDirecciones.bindValue(":direccion2",Direccion2);
+    qDirecciones.bindValue(":cp",CP);
+    qDirecciones.bindValue(":poblacion",Poblacion);
+    qDirecciones.bindValue(":provincia",Provincia);
+    qDirecciones.bindValue(":idpais",BuscaridPais(Pais));
+    qDirecciones.bindValue(":idcliente",idcliente);
+    if(!Anadir)
+        qDirecciones.bindValue(":id",id);
+
+    if(!qDirecciones.exec())
+        QMessageBox::warning(qApp->activeWindow(),tr("Añadir/Guardar dirección"),
+                             tr("Ocurrió un error al guardar los datos de dirección: %1").arg(qDirecciones.lastError().text()),
+                             tr("Aceptar"));
+}
 void Cliente::DescontarDeuda(int id_deuda, double rPagado){
     QSqlQuery qClientes_deuda(QSqlDatabase::database("terra"));
     qClientes_deuda.prepare("Select * from clientes_deuda where id =:id_deuda");

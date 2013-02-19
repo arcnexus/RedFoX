@@ -3,6 +3,7 @@
 //#include "/Auxiliares/Globlal_Include.h"
 #include  "QtSql"
 #include "QSqlDatabase"
+#include <QMessageBox>
 
 FrmAddTipoCliente::FrmAddTipoCliente(QWidget *parent) :
     QDialog(parent),
@@ -32,7 +33,7 @@ void FrmAddTipoCliente::LLenarTablaSubfamilias(QModelIndex index)
 
     QSqlQueryModel* modelo = (QSqlQueryModel*)ui->list_Familia->model();
     int nId = modelo->record(index.row()).value("id").toInt();
-    qDebug() << nId;
+    cFamiliaRetorno = modelo->record(index.row()).value("descripcion").toString();
     QSqlQuery qFamilia(QSqlDatabase::database("terra"));
     qFamilia.prepare(QString("select * from maestro_subfamilia_cliente where id_maestro_familia_cliente = %1 ").arg(nId));
     if (qFamilia.exec()) {
@@ -71,5 +72,17 @@ void FrmAddTipoCliente::LLenarTablaSubfamilias(QModelIndex index)
     } else {
         qDebug() <<"omg an error:"<< qFamilia.lastError() << "||" << qFamilia.executedQuery();
 
+    }
+}
+
+void FrmAddTipoCliente::validar()
+{
+    if(ui->table_Subfamilia->currentRow()>-1){
+        QAbstractItemModel* model = ui->table_Subfamilia->model() ;
+        QString valorSubfamilia =  model->index( ui->table_Subfamilia->currentRow(), 1 ).data( Qt::DisplayRole ).toString();
+        cFamiliaRetorno = cFamiliaRetorno + " - "+ valorSubfamilia;
+      accept();
+    } else {
+        QMessageBox::warning(this,tr("Tipo Cliente"),tr("Debe tener seleccionada una subfamilia"),tr("Aceptar"));
     }
 }
