@@ -10,6 +10,8 @@
 #include <QSplashScreen>
 
 Configuracion * Configuracion_global = 0;
+
+
 bool medic = true;
 bool internacional = true;
 
@@ -162,7 +164,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     on_edit = false;
-
+    Configuracion_global->CargarDatos();
     QStringList modulos;
     modulos << "Mantenimiento"  << "Compras" << "Ventas" << "Almacen " << "Administrador";
     ui->comboBox->addItems(modulos);

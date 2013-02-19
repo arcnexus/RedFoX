@@ -101,7 +101,7 @@ SOURCES += main.cpp\
     Zona_Pacientes/frmaddtipocliente.cpp \
     Zona_Compras/frmorden_pedido_producto.cpp \
     openrptLibs/Auxiliares/reportwriterwindow.cpp \
-    Agenda/main.cpp \
+    Zona_Administrador/frmconfigterra.cpp \
     Agenda/graphicstable.cpp \
     Agenda/graphicsevent.cpp \
     Agenda/editeventform.cpp \
@@ -175,7 +175,8 @@ HEADERS  += mainwindow.h \
     Zona_Pacientes/frmaddtipocliente.h \
     Zona_Compras/frmorden_pedido_producto.h \
     openrptLibs/Auxiliares/reportwriterwindow.h \
-    Agenda/graphicstable.h \
+    Zona_Administrador/frmconfigterra.h \   
+     Agenda/graphicstable.h \
     Agenda/graphicsevent.h \
     Agenda/editeventform.h \
     Agenda/agendaform.h
@@ -222,6 +223,7 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmfacturaralabaranes.ui \
     Zona_Pacientes/frmaddtipocliente.ui \
     Zona_Compras/frmorden_pedido_producto.ui \
+    Zona_Administrador/frmconfigterra.ui \
     Agenda/editeventform.ui \
     Agenda/agendaform.ui
 

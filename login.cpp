@@ -22,7 +22,7 @@ Login::Login(QWidget *parent) :
     connect(ui->Crearconfiguracin,SIGNAL(clicked()),this,SLOT(Crearconfiguracion_clicked()));
 
     Configuracion_global = new Configuracion;
-    Configuracion_global->CargarDatos();
+    Configuracion_global->CargarDatosBD();
     QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDTerra,"terra");
 
     if (Configuracion_global->cDriverBDTerra == "QSQLITE")
@@ -47,6 +47,7 @@ Login::Login(QWidget *parent) :
 Login::~Login()
 {
     delete ui;
+
     //dbTerra.close();
 }
 
@@ -68,6 +69,13 @@ const QString Login::getEmpresa() const
 
 void Login::on_btnAcceder_clicked()
 {
+    QSqlQuery qEmpresa(QSqlDatabase::database("terra"));
+    qEmpresa.prepare("select id from empresas where nombre = :nombreemp");
+    qEmpresa.bindValue(":nombreemp",ui->cboEmpresa->currentText());
+    if(qEmpresa.exec())
+        Configuracion_global->idEmpresa = qEmpresa.record().field("id").value().toInt();
+    else
+        QMessageBox::warning(this,tr("ABRIR EMPRESA"),tr("No se encuentra la empresa"),tr("Aceptar"));
 
     QSqlQuery qryUsers(QSqlDatabase::database("terra"));
 
