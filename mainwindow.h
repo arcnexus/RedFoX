@@ -21,7 +21,7 @@
 #include "Zona_Compras/frmorden_pedido_producto.h"
 
 #include "openrptLibs/Auxiliares/reportwriterwindow.h"
-
+#include "Agenda/agendaform.h"
 namespace Ui {
 class MainWindow;
 }
@@ -105,6 +105,7 @@ private slots:
     void handle_tipostarifa();
     void on_comboBox_currentIndexChanged(int index);
 
+    void showAgenda();
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);
@@ -164,6 +165,7 @@ private:
     FrmOrden_Pedido_Producto * frmOrden_Ped_pro;
 
     ReportWriterWindow * reportWindow;
+    AgendaForm * agendaForm;
 
     init_form * TerraForm;
 

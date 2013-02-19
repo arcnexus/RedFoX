@@ -100,7 +100,12 @@ SOURCES += main.cpp\
     Zona_Ventas/frmfacturaralabaranes.cpp \
     Zona_Pacientes/frmaddtipocliente.cpp \
     Zona_Compras/frmorden_pedido_producto.cpp \
-    openrptLibs/Auxiliares/reportwriterwindow.cpp
+    openrptLibs/Auxiliares/reportwriterwindow.cpp \
+    Agenda/main.cpp \
+    Agenda/graphicstable.cpp \
+    Agenda/graphicsevent.cpp \
+    Agenda/editeventform.cpp \
+    Agenda/agendaform.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -169,7 +174,11 @@ HEADERS  += mainwindow.h \
     Zona_Ventas/frmfacturaralabaranes.h \
     Zona_Pacientes/frmaddtipocliente.h \
     Zona_Compras/frmorden_pedido_producto.h \
-    openrptLibs/Auxiliares/reportwriterwindow.h
+    openrptLibs/Auxiliares/reportwriterwindow.h \
+    Agenda/graphicstable.h \
+    Agenda/graphicsevent.h \
+    Agenda/editeventform.h \
+    Agenda/agendaform.h
 
 
 FORMS    += mainwindow.ui \
@@ -212,7 +221,9 @@ FORMS    += mainwindow.ui \
     Zona_Compras/frmfacturasproveedor.ui \
     Zona_Ventas/frmfacturaralabaranes.ui \
     Zona_Pacientes/frmaddtipocliente.ui \
-    Zona_Compras/frmorden_pedido_producto.ui
+    Zona_Compras/frmorden_pedido_producto.ui \
+    Agenda/editeventform.ui \
+    Agenda/agendaform.ui
 
 RESOURCES += \
     terra.qrc \
