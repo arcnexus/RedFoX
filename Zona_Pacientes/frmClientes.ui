@@ -733,7 +733,7 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <property name="styleSheet">
@@ -794,6 +794,9 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
        </item>
        <item row="4" column="14">
         <widget class="QPushButton" name="btnver_OtrosContactos">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -1225,6 +1228,9 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
        </item>
        <item row="5" column="14">
         <widget class="QPushButton" name="btnAdd_TipoCliente">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -1242,6 +1248,9 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
        </item>
        <item row="6" column="14">
         <widget class="QPushButton" name="btndel_TipoCliente">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -1358,6 +1367,16 @@ color: rgb(255,255,255);</string>
            <width>200</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 127);</string>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
          </property>
         </widget>
        </item>

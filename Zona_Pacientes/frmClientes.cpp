@@ -523,15 +523,7 @@ void frmClientes::on_btnAnterior_clicked()
 void frmClientes::on_btnGuardar_clicked()
 {
     LLenarCliente();
-    if(this->Altas)
-    {
-       this->Altas = false;
-       oCliente->Anadir();
-    }
-    else
-    {
-       oCliente->Guardar();
-    }
+    oCliente->Guardar();
     bloquearCampos();
 }
 
@@ -541,7 +533,11 @@ void frmClientes::on_btnAnadir_clicked()
     VaciarCampos();
     this->Altas = true;
     ui->txtcCodigoCliente->setText(oCliente->NuevoCodigoCliente());
+    ui->txtcCuentaContable->setText(ui->txtcCodigoCliente->text());
     ui->txtcCodigoCliente->setFocus();
+    LLenarCliente();
+    oCliente->Anadir();
+
 }
 
 void frmClientes::txtPrimerApellido_editingFinished()
@@ -704,6 +700,9 @@ void frmClientes::bloquearCampos() {
     ui->btnSiguiente->setEnabled(true);
     ui->btnAnadirDireccion->setEnabled(false);
     ui->btnBorrarDireccion->setEnabled(false);
+    ui->btnver_OtrosContactos->setEnabled(false);
+    ui->btnAdd_TipoCliente->setEnabled(false);
+    ui->btndel_TipoCliente->setEnabled(false);
 }
 void frmClientes::desbloquearCampos()
 {
@@ -769,10 +768,17 @@ void frmClientes::desbloquearCampos()
     ui->txtrVentasEjercicio->setEnabled(false);
     ui->btnAnadirDireccion->setEnabled(true);
     ui->btnBorrarDireccion->setEnabled(true);
+    ui->btnver_OtrosContactos->setEnabled(true);
+    ui->btnAdd_TipoCliente->setEnabled(true);
+    ui->btndel_TipoCliente->setEnabled(true);
 }
 
 void frmClientes::on_btnDeshacer_clicked()
 {
+    if(this->Altas){
+        oCliente->Borrar(oCliente->id);
+        this->Altas = false;
+    }
     QString cId = QString::number(oCliente->id);
     oCliente->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
