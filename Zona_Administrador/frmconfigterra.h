@@ -2,7 +2,7 @@
 #define FRMCONFIGTERRA_H
 
 #include <QDialog>
-
+#include "../Auxiliares/Globlal_Include.h"
 namespace Ui {
 class frmConfigTerra;
 }
@@ -17,6 +17,7 @@ public:
     
 private:
     Ui::frmConfigTerra *ui;
+    void configurar();
 };
 
 #endif // FRMCONFIGTERRA_H

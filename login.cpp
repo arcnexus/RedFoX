@@ -7,6 +7,7 @@
 
 #include "Zona_Administrador/frmempresas.h"
 #include "Zona_Administrador/arearestringida_form.h"
+#include <Zona_Administrador/frmconfigterra.h>
 
 
 Login::Login(QWidget *parent) :
@@ -21,7 +22,8 @@ Login::Login(QWidget *parent) :
     connect(ui->btnEmpresa,SIGNAL(clicked()),this,SLOT(btnEmpresa_clicked()));
     connect(ui->Crearconfiguracin,SIGNAL(clicked()),this,SLOT(Crearconfiguracion_clicked()));
 
-    Configuracion_global = new Configuracion;
+    if(!Configuracion_global)
+        Configuracion_global = new Configuracion;
     Configuracion_global->CargarDatosBD();
     QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDTerra,"terra");
 
@@ -118,52 +120,8 @@ void Login::on_btnAcceder_clicked()
 
 void Login::Crearconfiguracion_clicked()
 {
-    //NOTE - Hacer esto por defecto la primera vez que se ejecute Terra?
-
-    QSettings settings("infint", "terra");
-    //settings.setValue("cDriverBDTerra","QSQLITE");
-    settings.setValue("cDriverBDTerra","QMYSQL");
-    settings.setValue("cRutaDBTerra",qApp->applicationDirPath()+"/DB/terra.sqlite");
-
-    QDir directorioBd(qApp->applicationDirPath()+"/DB");
-    if(!directorioBd.exists())
-    {
-        QDir path(qApp->applicationDirPath());
-        path.mkdir(qApp->applicationDirPath()+"/DB");
-    }
-
-    QFile bd(qApp->applicationDirPath()+"/DB/terra.sqlite");
-    if(!bd.exists())
-    {
-       //TODO - Descargar terra.sqlite del servidor??
-    }
-
-    settings.setValue("cHostBDTerra","localhost");
-    settings.setValue("cUserBDTerra","root");
-    settings.setValue("cPasswordBDTerra","PatataBullida_99");
-    settings.setValue("cPais","España");
-    settings.setValue("cEjercicioActivo","2012");
-    settings.setValue("nDigitosFactura",5);
-    settings.setValue("nIVA1",21);
-    settings.setValue("nIVA2",10);
-    settings.setValue("nIVA3",4);
-    settings.setValue("nIVA4",0);
-    settings.setValue("nRE1",5.2);
-    settings.setValue("nRE2",1.4);
-    settings.setValue("nRE3",0.5);
-    settings.setValue("nRE4",0);
-    settings.setValue("lProfesional",1);
-    settings.setValue("nIRPF",21);
-    settings.setValue("cSerie","2012");
-    settings.setValue("nDigitosCuentas",0);
-    settings.setValue("cCuentaClientes","430");
-    settings.setValue("cCuentaProveedores","400");
-    settings.setValue("cCuentaAcreedores","410");
-    settings.setValue("cUsuarioActivo","");
-    settings.setValue("nNivelAcceso",0);
-    settings.setValue("cCategoria","");
-    settings.setValue("Clave1","");
-    settings.setValue("Clave2","");
+ frmConfigTerra frmConf;
+ frmConf.exec();
 
     //Note - notificar al usuario que el boton hace algo
     QMessageBox::information(this,

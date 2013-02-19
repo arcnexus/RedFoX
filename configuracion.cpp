@@ -6,6 +6,7 @@
 #include "openrptLibs/include/previewdialog.h"
 #include "openrptLibs/include/renderobjects.h"
 
+
 #include <QLineEdit>
 Configuracion::Configuracion(QObject* parent) :
     QObject(parent)
