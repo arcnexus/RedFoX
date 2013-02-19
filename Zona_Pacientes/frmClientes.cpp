@@ -27,7 +27,7 @@ frmClientes::frmClientes(QWidget *parent) :
     modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("terra"));
 
     // Ocultar campos según configuración
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     int nNivel = settings.value("nNivelAcceso").toInt();
     //QString cCategoria = settings.value("cCategoria").toString();
     if(medic == false) {

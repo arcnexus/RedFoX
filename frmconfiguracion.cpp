@@ -6,7 +6,7 @@ FrmConfiguracion::FrmConfiguracion(QWidget *parent) :
     ui(new Ui::FrmConfiguracion)
 {
      ui->setupUi(this);
-     QSettings settings("infint", "terra");
+     QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     int nIndex = ui->txtcDriver->findText(settings.value("cDriverBDTerra").toString());
     if (nIndex !=-1)
         ui->txtcDriver->setCurrentIndex(nIndex);
@@ -40,7 +40,7 @@ FrmConfiguracion::~FrmConfiguracion()
 
 void FrmConfiguracion::on_btnGuardar_clicked()
 {
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     settings.setValue("cDriverBDTerra",ui->txtcDriver->currentText());
     settings.setValue("cRutaDBTerra",ui->txtcRutaSQLITE->text());
     settings.setValue("cHostBDTerra",ui->txtcHost->text());

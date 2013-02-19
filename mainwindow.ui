@@ -855,6 +855,9 @@ background-color: rgb(255, 255, 255);</string>
      <height>22</height>
     </rect>
    </property>
+   <property name="nativeMenuBar">
+    <bool>true</bool>
+   </property>
    <widget class="QMenu" name="menuArchivos">
     <property name="title">
      <string>Archivos</string>
@@ -1004,12 +1007,15 @@ background-color: rgb(255, 255, 255);</string>
   </widget>
   <action name="btnClientes">
    <property name="icon">
-    <iconset>
-     <normalon>:/Icons/PNG/clientes.png</normalon>
-    </iconset>
+    <iconset resource="terra.qrc">
+     <normaloff>:/Icons/PNG/clientes.png</normaloff>
+     <normalon>:/Icons/PNG/clientes.png</normalon>:/Icons/PNG/clientes.png</iconset>
    </property>
    <property name="text">
     <string>Gestión de Pacientes</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="btnProveedores">
@@ -1021,6 +1027,9 @@ background-color: rgb(255, 255, 255);</string>
    <property name="text">
     <string>Gestión de Proveedores</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="btnArt_culos">
    <property name="icon">
@@ -1030,6 +1039,9 @@ background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>Gestión de Artículos</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="btnFormas_de_Pago">
@@ -1041,6 +1053,9 @@ background-color: rgb(255, 255, 255);</string>
    <property name="text">
     <string>Gestión de Formas de Pago</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="btnTipos_de_Iva">
    <property name="icon">
@@ -1049,6 +1064,9 @@ background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>Gestión de Tipos de Iva</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="btnAgenda">
@@ -1059,6 +1077,9 @@ background-color: rgb(255, 255, 255);</string>
    <property name="text">
     <string>Gestión de la Agenda</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="btnSalir">
    <property name="icon">
@@ -1067,6 +1088,9 @@ background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>Salir de Terra</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionPresupuestos">
@@ -1077,6 +1101,9 @@ background-color: rgb(255, 255, 255);</string>
    <property name="text">
     <string>Presupuestos</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionPedidos">
    <property name="icon">
@@ -1085,6 +1112,9 @@ background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>Pedidos</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionFacturas">
@@ -1095,6 +1125,9 @@ background-color: rgb(255, 255, 255);</string>
    <property name="text">
     <string>Facturas</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionVentas_Contado">
    <property name="icon">
@@ -1104,30 +1137,48 @@ background-color: rgb(255, 255, 255);</string>
    <property name="text">
     <string>Ventas Contado</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionGestion_de_Secciones">
    <property name="text">
     <string>Secciones</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionGestion_de_Familias">
    <property name="text">
     <string>Familias</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionGestion_de_subfamilias">
    <property name="text">
     <string>SubFamilias</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionDoctores">
    <property name="text">
     <string>Doctores</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionBancos">
    <property name="text">
     <string>Bancos</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionFormas_de_pago">
@@ -1149,30 +1200,48 @@ background-color: rgb(255, 255, 255);</string>
    <property name="text">
     <string>Paises</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionAvisos">
    <property name="text">
     <string>Avisos</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionTipos_de_imagen">
    <property name="text">
     <string>Tipos de imagen</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionTipos_de_anal_tica">
    <property name="text">
     <string>Tipos de analítica</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionCampos_de_analitica">
    <property name="text">
     <string>Campos de analitica</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionMotivos_de_interconsulta">
    <property name="text">
     <string>Motivos de interconsulta</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionTipos_de_IVA">
@@ -1184,30 +1253,48 @@ background-color: rgb(255, 255, 255);</string>
    <property name="text">
     <string>SubSubFamilias</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionGrupos">
    <property name="text">
     <string>Grupos</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionTarifas">
    <property name="text">
     <string>Grupos de Tarifa</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionGesti_n_de_pedidos_a_proveedores">
    <property name="text">
     <string>Gestión de pedidos a proveedores</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionAlbaranes_de_proveedores">
    <property name="text">
     <string>Albaranes de proveedores</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionFacturas_de_proveedores_Acreedores">
    <property name="text">
     <string>Facturas de proveedores/Acreedores</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionRecepci_n_de_Pedidos">
@@ -1219,95 +1306,152 @@ background-color: rgb(255, 255, 255);</string>
    <property name="text">
     <string>Recepción  de pedidos</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionGesti_n_de_devoluciones">
    <property name="text">
     <string>Gestión de devoluciones</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionRegularizaci_n_de_inventario">
    <property name="text">
     <string>Regularización de inventario</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionGesti_n_de_Usuarios">
    <property name="text">
     <string>Gestión de Usuarios</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionPermisos">
    <property name="text">
     <string>Permisos</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionEmisi_n_de_recetas_a_pacientes">
    <property name="text">
     <string>Emisión de recetas a pacientes</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionCertificados">
    <property name="text">
     <string>Certificados</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionGesti_n_de_comisiones">
    <property name="text">
     <string>Gestión de comisiones</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionTipos_de_paciente">
    <property name="text">
     <string>Tipos de paciente</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionTraspasos_entre_almacenes">
    <property name="text">
     <string>Traspasos entre almacenes</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionGesti_n_de_Pagos">
    <property name="text">
     <string>Gestión de Pagos</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionFacturaci_n_multiple_de_albaranes">
    <property name="text">
     <string>Facturación multiple de albaranes</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionAlbaranes_2">
    <property name="text">
     <string>Albaranes</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionEdici_n_de_Reports">
    <property name="text">
     <string>Edición de 'Reports'</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionOrdenes_de_pedidos">
    <property name="text">
     <string>Ordenes de pedidos</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionCompras_por_producto">
    <property name="text">
     <string>compras por producto</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionCompras_por_proveedor">
    <property name="text">
     <string>Compras por proveedor</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionPor_proveedor">
    <property name="text">
     <string>por proveedor</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionPor_fecha">
    <property name="text">
     <string>por fecha</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionPor_producto">
@@ -1319,50 +1463,80 @@ background-color: rgb(255, 255, 255);</string>
    <property name="text">
     <string>Por proveedor</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionPor_fecha_2">
    <property name="text">
     <string>Por fecha</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionPendientes">
    <property name="text">
     <string>Pendientes</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionCompletos">
    <property name="text">
     <string>Completos</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionPor_Proveedor">
    <property name="text">
     <string>Por Proveedor</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionPor_fecha_3">
    <property name="text">
     <string>Por fecha</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionPor_Proveedor_2">
    <property name="text">
     <string>Por Proveedor</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionPor_Fecha">
    <property name="text">
     <string>Por Fecha</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionPendientes_de_pago">
    <property name="text">
     <string>Pendientes de pago</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionPor_grupos_de_gasto">
    <property name="text">
     <string>Por grupos de gasto</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
  </widget>

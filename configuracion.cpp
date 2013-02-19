@@ -124,7 +124,7 @@ void Configuracion::Cargar_paises()
 
 void Configuracion::CargarDatosBD()
 {
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     this->cDriverBDTerra = settings.value("cDriverBDTerra").toString();
     this->cRutaBdTerra = settings.value("cRutaDBTerra").toString();
     this->cHostBDTerra = settings.value("cHostBDTerra").toString();

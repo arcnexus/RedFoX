@@ -40,7 +40,7 @@ void AreaRestringida_form::login()
             QSqlRecord rUsuario = qryUsers.record();
             if (ui->linePassword->text() == qryUsers.value(2).toString())
             {
-                QSettings settings("infint", "terra");
+                QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
                 settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
                 settings.setValue("nNivelAcceso",rUsuario.field("nivelacceso").value().toInt());
                 settings.setValue("cCategoria",rUsuario.field("categoria").value().toString());

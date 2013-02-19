@@ -28,7 +28,7 @@ void FrmAnadirMedicamento::on_pushButton_clicked()
 
 
     // Recupero valores conexión Vademecum
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     QString cClave1 = settings.value("Clave1").toString();
     QString cClave2 = settings.value("Clave2").toString();
 
@@ -147,7 +147,7 @@ void FrmAnadirMedicamento::BuscarProspectoMedicamento(int irow, int icol)
 
 
     // Recupero valores conexión Vademecum
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     QString cClave1 = settings.value("Clave1").toString();
     QString cClave2 = settings.value("Clave2").toString();
 
@@ -246,7 +246,7 @@ void FrmAnadirMedicamento::on_btnBuscarMedicamentoporPatologia_clicked()
 
 
     // Recupero valores conexión Vademecum
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     QString cClave1 = settings.value("Clave1").toString();
     QString cClave2 = settings.value("Clave2").toString();
 
@@ -354,7 +354,7 @@ void FrmAnadirMedicamento::on_btnBuscarPatologia_clicked()
 
 
     // Recupero valores conexión Vademecum
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     QString cClave1 = settings.value("Clave1").toString();
     QString cClave2 = settings.value("Clave2").toString();
 
@@ -453,7 +453,7 @@ void FrmAnadirMedicamento::on_tablamedicamentosPatologia_clicked()
 
 
     // Recupero valores conexión Vademecum
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     QString cClave1 = settings.value("Clave1").toString();
     QString cClave2 = settings.value("Clave2").toString();
 
@@ -550,7 +550,7 @@ void FrmAnadirMedicamento::on_btnBuscarMolcula_clicked()
 
 
     // Recupero valores conexión Vademecum
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     QString cClave1 = settings.value("Clave1").toString();
     QString cClave2 = settings.value("Clave2").toString();
 
@@ -644,7 +644,7 @@ void FrmAnadirMedicamento::on_btnBuscarMedicamentoporMolecula_clicked()
 
     ui->tablamedicamentosMolecula->clear();
      // Recupero valores conexión Vademecum
-     QSettings settings("infint", "terra");
+     QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
      QString cClave1 = settings.value("Clave1").toString();
      QString cClave2 = settings.value("Clave2").toString();
 
@@ -751,7 +751,7 @@ void FrmAnadirMedicamento::on_tablamedicamentosMolecula_clicked()
     ui->textProspectoMolecula->setHtml("");
 
     // Recupero valores conexión Vademecum
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     QString cClave1 = settings.value("Clave1").toString();
     QString cClave2 = settings.value("Clave2").toString();
 
@@ -841,7 +841,7 @@ void FrmAnadirMedicamento::on_btnBuscarPrincipiosActivos_clicked()
 
 
     // Recupero valores conexión Vademecum
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     QString cClave1 = settings.value("Clave1").toString();
     QString cClave2 = settings.value("Clave2").toString();
 
@@ -933,7 +933,7 @@ void FrmAnadirMedicamento::on_btnBuscarMedicamentoporPA_clicked()
 
     ui->tablamedicamentospactivos->clear();
      // Recupero valores conexión Vademecum
-     QSettings settings("infint", "terra");
+     QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
      QString cClave1 = settings.value("Clave1").toString();
      QString cClave2 = settings.value("Clave2").toString();
 
@@ -1040,7 +1040,7 @@ void FrmAnadirMedicamento::on_tablamedicamentospactivos_clicked()
     ui->textProspectopa->setHtml("");
 
     // Recupero valores conexión Vademecum
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     QString cClave1 = settings.value("Clave1").toString();
     QString cClave2 = settings.value("Clave2").toString();
 

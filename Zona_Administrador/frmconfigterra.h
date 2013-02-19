@@ -17,6 +17,7 @@ public:
     
 private:
     Ui::frmConfigTerra *ui;
+private slots:
     void configurar();
 };
 

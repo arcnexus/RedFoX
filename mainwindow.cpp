@@ -226,7 +226,7 @@ void MainWindow::init()
         ui->lineUsuarioActivo->setText(user);
         Configuracion_global->cUsuarioActivo = user;
 
-		QSettings settings("infint", "terra");
+		QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
 		ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
 		ui->txtcCategoria->setText(settings.value("cCategoria").toString());
 
@@ -291,7 +291,7 @@ void MainWindow::init()
             QApplication::processEvents();
 
 			// Guardo preferencias
-			QSettings settings("infint", "terra");
+			QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
             settings.setValue("cSerie",Configuracion_global->cSerie);
             settings.setValue("nDigitosCuentas",Configuracion_global->nDigitosCuentasContables);
             settings.setValue("cCuentaClientes",Configuracion_global->cCuentaClientes);

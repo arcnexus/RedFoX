@@ -25,7 +25,7 @@ void FrmBuscarCIE::sltBuscarCie()
 
 
     // Recupero valores conexión Vademecum
-    QSettings settings("infint", "terra");
+    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     QString cClave1 = settings.value("Clave1").toString();
     QString cClave2 = settings.value("Clave2").toString();
 

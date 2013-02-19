@@ -21,6 +21,9 @@ Login::Login(QWidget *parent) :
     //--------------------------------------------
     connect(ui->btnEmpresa,SIGNAL(clicked()),this,SLOT(btnEmpresa_clicked()));
     connect(ui->Crearconfiguracin,SIGNAL(clicked()),this,SLOT(Crearconfiguracion_clicked()));
+    if (! QFile::exists(qApp->applicationDirPath()+"/TerraConfig.ini")){
+        Crearconfiguracion_clicked();
+    }
 
     if(!Configuracion_global)
         Configuracion_global = new Configuracion;
@@ -96,7 +99,7 @@ void Login::on_btnAcceder_clicked()
             QSqlRecord rUsuario = qryUsers.record();
             if (ui->linePassword->text() == qryUsers.value(2).toString()) 
 			{
-                QSettings settings("infint", "terra");
+                QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
                 settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
                 settings.setValue("nNivelAcceso",rUsuario.field("nivelacceso").value().toInt());
                 settings.setValue("cCategoria",rUsuario.field("categoria").value().toString());
