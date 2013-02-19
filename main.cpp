@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
 
    QFile file(":Icons/Terra.qss");
 
+
    if(file.open(QFile::ReadOnly))
         a.setStyleSheet(file.readAll());
    else
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
                             QObject::tr("Terra"),
                             QObject::tr("No se puede cargar el archivo de tema"),
                             QObject::tr("Aceptar"));
-	
+
 
 
    Login l;

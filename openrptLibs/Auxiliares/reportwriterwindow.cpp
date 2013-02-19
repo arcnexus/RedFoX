@@ -60,10 +60,11 @@ ReportWriterWindow::ReportWriterWindow()
     setCentralWidget(ws);
 
     // setup the menubar
+    /*
     fileExitAction = new QAction(tr("E&xit"), this);
     fileExitAction->setObjectName("file exit");
     fileExitAction->setShortcut(Qt::ALT+Qt::Key_F4);
-    connect(fileExitAction, SIGNAL(activated()), this, SLOT(appExit()));
+    connect(fileExitAction, SIGNAL(activated()), this, SLOT(appExit()));*/
 
     handler = new ReportHandler(this, "report handler");
 
@@ -71,7 +72,7 @@ ReportWriterWindow::ReportWriterWindow()
     handler->setNoDatabase(true);
 #endif
 
-    QAction * sepid = handler->populateMenuBar(menuBar(), fileExitAction);
+    QAction * sepid = handler->populateMenuBar(menuBar(),/* fileExitAction*/0);
 
     windowMenu = new QMenu(tr("&Windows"));
     //windowMenu->setCheckable(TRUE);
