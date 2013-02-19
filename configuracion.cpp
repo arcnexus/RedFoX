@@ -84,6 +84,7 @@ bool Configuracion::EsNumero(QString texto)
        return true;
 }
 
+
 void Configuracion::Cargar_iva()
 {
     ivas.clear();
@@ -120,7 +121,7 @@ void Configuracion::Cargar_paises()
     paises_model->select();
 }
 
-void Configuracion::CargarDatos()
+void Configuracion::CargarDatosBD()
 {
     QSettings settings("infint", "terra");
     this->cDriverBDTerra = settings.value("cDriverBDTerra").toString();
@@ -128,20 +129,33 @@ void Configuracion::CargarDatos()
     this->cHostBDTerra = settings.value("cHostBDTerra").toString();
     this->cUsuarioBDTerra  =   settings.value("cUserBDTerra").toString();
     this->cPasswordBDTerra = settings.value("cPasswordBDTerra").toString();
-    this->cPais = settings.value("cPais").toString();
-    this->cEjercicio = settings.value("cEjercicioActivo").toString();
-    this->nDigitosFactura = settings.value(("nDigitosFactura")).toInt();
 
-    if(settings.value("lProfesional").toInt()==1)
-        this->lProfesional = true;
-    else
-        this->lProfesional = false;
-    this->nIRPF = settings.value("nIRPF").toInt();
-    this->cSerie = settings.value("cSerie").toString();
-    this->nDigitosCuentasContables = settings.value("nDigitosCuentas").toInt();
-    this->cCuentaClientes = settings.value("cCuentaClientes").toString();
-    this->cCuentaAcreedores = settings.value("cCuentaAcreedores").toString();
-    this->cCuentaProveedores = settings.value("cCuentaProveedores").toString();
+}
+void Configuracion::CargarDatos()
+{
+    QSqlQuery qEmpresa(QSqlDatabase::database("terra"));
+    qEmpresa.prepare("Select * from empresas where id =:id");
+    idEmpresa = 1;
+    qEmpresa.bindValue(":id",idEmpresa);
+    if (qEmpresa.exec()) {
+        this->cPais = qEmpresa.record().field("pais").value().toString();
+        this->cEjercicio = qEmpresa.record().field("ejercicio").value().toString();
+        this->nDigitosFactura = qEmpresa.record().field("digitosfactura").value().toInt();
+
+        if(qEmpresa.record().field("lProfesional").value().toInt()==1)
+            this->lProfesional = true;
+        else
+            this->lProfesional = false;
+        this->nIRPF = qEmpresa.record().field("IIRPF").value().toInt();
+        this->cSerie = qEmpresa.record().field("serie").value().toString();
+        this->nDigitosCuentasContables = qEmpresa.record().field("nDigitosCuentas").value().toInt();
+        this->cCuentaClientes = qEmpresa.record().field("codigocuentaclientes").value().toString();
+        this->cCuentaAcreedores = qEmpresa.record().field("codigocuentaacreedores").value().toString();
+        this->cCuentaProveedores = qEmpresa.record().field("codigocuentaproveedores").value().toString();
+    } else {
+        qDebug() << qEmpresa.lastError().text();
+        QMessageBox::warning(qApp->activeWindow(),tr("EMPRESA"),tr("Falló la carga de datos de empresa"),tr("Aceptar"));
+    }
 }
 
 QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString DC, QString CC)

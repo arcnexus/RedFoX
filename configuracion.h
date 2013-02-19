@@ -68,11 +68,20 @@ public:
     QString cCuentaClientes;
     QString cCuentaProveedores;
     QString cCuentaAcreedores;
+    QString cCuentaIvaRepercutido;
+    QString cCuentaIvaSoportado;
+    QString cCuentaDeudasClientes;
+    QString cCuentaCobrosClientes;
+    QString cCuentaDeudasProveedor;
+    QString cCuentaPagosProveedor;
+
+
 
 
     QString FormatoNumerico(QString cTexto);
     bool EsNumero(QString texto);
     void CargarDatos();
+    void CargarDatosBD();
     QString ValidarCC(QString Entidad,QString Oficina, QString DC, QString CC);
     QString ValidarCC(QString Entidad, QString Oficina, QString CC);
 

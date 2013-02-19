@@ -100,7 +100,8 @@ SOURCES += main.cpp\
     Zona_Ventas/frmfacturaralabaranes.cpp \
     Zona_Pacientes/frmaddtipocliente.cpp \
     Zona_Compras/frmorden_pedido_producto.cpp \
-    openrptLibs/Auxiliares/reportwriterwindow.cpp
+    openrptLibs/Auxiliares/reportwriterwindow.cpp \
+    Zona_Administrador/frmconfigterra.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -169,7 +170,8 @@ HEADERS  += mainwindow.h \
     Zona_Ventas/frmfacturaralabaranes.h \
     Zona_Pacientes/frmaddtipocliente.h \
     Zona_Compras/frmorden_pedido_producto.h \
-    openrptLibs/Auxiliares/reportwriterwindow.h
+    openrptLibs/Auxiliares/reportwriterwindow.h \
+    Zona_Administrador/frmconfigterra.h
 
 
 FORMS    += mainwindow.ui \
@@ -212,7 +214,8 @@ FORMS    += mainwindow.ui \
     Zona_Compras/frmfacturasproveedor.ui \
     Zona_Ventas/frmfacturaralabaranes.ui \
     Zona_Pacientes/frmaddtipocliente.ui \
-    Zona_Compras/frmorden_pedido_producto.ui
+    Zona_Compras/frmorden_pedido_producto.ui \
+    Zona_Administrador/frmconfigterra.ui
 
 RESOURCES += \
     terra.qrc \
