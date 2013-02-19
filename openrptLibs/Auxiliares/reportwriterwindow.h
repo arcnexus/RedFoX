@@ -55,7 +55,7 @@ class ReportWriterWindow : public QMainWindow {
         QWorkspace * ws;
         int dbTimerId;
 
-        QAction * fileExitAction;
+        //QAction * fileExitAction;
 
         ReportHandler * handler;
 
