@@ -250,6 +250,71 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
     return cdc;
 }
 
+QString Configuracion::ValidarnifE(QString nif)
+{
+//    QString cDNI;
+//    if(nif.left(1).isSimpleText()) { // CIF o NIE
+
+//    } else {
+//        cDNI = nif.left(8);
+//    }
+//    QString letra;
+//    int nDni = cDNI.toInt();
+//    int nCalc = nDni % 23;
+//    switch(nCalc){
+//    case nCalc ==0 :letra ="T";
+//        break;
+//    case nCalc ==1 :letra ="R";
+//        break;
+//    case nCalc ==2 :letra ="W";
+//        break;
+//    case nCalc ==3 :letra ="A";
+//        break;
+//    case nCalc ==4 :letra ="G";
+//        break;
+//    case nCalc ==5 :letra ="M";
+//        break;
+//    case nCalc ==6 :letra ="Y";
+//        break;
+//    case nCalc ==7 :letra ="F";
+//        break;
+//    case nCalc ==8 :letra ="P";
+//        break;
+//    case nCalc ==9 :letra ="D";
+//        break;
+//    case nCalc ==10 :letra ="X";
+//        break;
+//    case nCalc ==11 :letra ="B";
+//        break;
+//    case nCalc ==12 :letra ="N";
+//        break;
+//    case nCalc ==13 :letra ="J";
+//        break;
+//    case nCalc ==14 :letra ="Z";
+//        break;
+//    case nCalc ==15 :letra ="S";
+//        break;
+//    case nCalc ==16 :letra ="Q";
+//        break;
+//    case nCalc ==17 :letra ="V";
+//        break;
+//    case nCalc ==18 :letra ="H";
+//        break;
+//    case nCalc ==19 :letra ="L";
+//        break;
+//    case nCalc ==20 :letra ="C";
+//        break;
+//    case nCalc ==21 :letra ="K";
+//        break;
+//    case nCalc ==22 :letra ="E";
+//        break;
+//    }
+    return nif;
+
+
+
+}
+
 void Configuracion::imprimir(QString db, QString report, bool toPDF,bool preview, QWidget *parent)
 {
     QFile f(report);

@@ -792,35 +792,6 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="14">
-        <widget class="QPushButton" name="btnver_OtrosContactos">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>30</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Otras personas de contacto</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../terra.qrc">
-           <normaloff>:/Icons/PNG/users.png</normaloff>:/Icons/PNG/users.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>15</width>
-           <height>15</height>
-          </size>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
@@ -1117,32 +1088,6 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="3" colspan="6">
-        <widget class="QLineEdit" name="txtcNombreComercial">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>367</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="9">
-        <widget class="QLabel" name="label_41">
-         <property name="text">
-          <string>Persona Contacto:</string>
-         </property>
-        </widget>
-       </item>
        <item row="9" column="3">
         <widget class="QLineEdit" name="txtcTelefono1">
          <property name="minimumSize">
@@ -1337,12 +1282,47 @@ color: rgb(255,255,255);</string>
          </layout>
         </widget>
        </item>
-       <item row="4" column="11" colspan="3">
-        <widget class="QLineEdit" name="txtcPersonaContacto">
+       <item row="4" column="13" colspan="2">
+        <widget class="QPushButton" name="btnVer_OtrosContactos">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>157</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Otras personas de contacto</string>
+         </property>
+         <property name="text">
+          <string>Personas de contacto</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../terra.qrc">
+           <normaloff>:/Icons/PNG/users.png</normaloff>:/Icons/PNG/users.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3" colspan="10">
+        <widget class="QLineEdit" name="txtcNombreComercial">
          <property name="minimumSize">
           <size>
            <width>0</width>
            <height>27</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>584</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -3182,8 +3162,7 @@ color: rgb(0, 0, 0);</string>
   <tabstop>txtSegundoApellido</tabstop>
   <tabstop>txtcNombreFiscal</tabstop>
   <tabstop>txtcNombreComercial</tabstop>
-  <tabstop>txtcPersonaContacto</tabstop>
-  <tabstop>btnver_OtrosContactos</tabstop>
+  <tabstop>btnVer_OtrosContactos</tabstop>
   <tabstop>txtcDireccion1</tabstop>
   <tabstop>txtcDireccion2</tabstop>
   <tabstop>txtcCp</tabstop>

@@ -84,6 +84,7 @@ public:
     void CargarDatosBD();
     QString ValidarCC(QString Entidad,QString Oficina, QString DC, QString CC);
     QString ValidarCC(QString Entidad, QString Oficina, QString CC);
+    QString ValidarnifE(QString Nif);
 
     QDoubleValidator *validator_cantidad;
     QDoubleValidator *validator_porciento;

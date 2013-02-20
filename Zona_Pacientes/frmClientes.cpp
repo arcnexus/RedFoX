@@ -8,6 +8,8 @@
 #include "../sqlcalls.h"
 #include "paciente.h"
 #include "frmaddtipocliente.h"
+#include "frmpersonascontactocliente.h"
+
 
 #ifdef WIN32
     //#define and &&
@@ -75,6 +77,7 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->btnGuardarDireccionAlternativa,SIGNAL(clicked()),this,SLOT(GuardarDireccionAlternativa()));
     connect(ui->btnDeshacerDireccionAlternativa,SIGNAL(clicked()),this,SLOT(DeshacerDireccionAlternativa()));
     connect(ui->lista_DireccionesAlternativas,SIGNAL(clicked(QModelIndex)),this,SLOT(CargarDireccionAlternativa(QModelIndex)));
+    connect(ui->btnVer_OtrosContactos,SIGNAL(clicked()),this,SLOT(Contactos()));
 }
 
 frmClientes::~frmClientes()
@@ -96,7 +99,6 @@ void frmClientes::LLenarCampos()
     ui->txtcNombreFiscal->setText(oCliente->cNombreFiscal);;
     ui->txtNombreFiscal->setText(oCliente->cNombreFiscal);;
     ui->txtcNombreComercial->setText(oCliente->cNombreComercial);
-    ui->txtcPersonaContacto->setText(oCliente->cPersonaContacto);
     ui->txtcCifNif->setText(oCliente->cCifNif);
     ui->txtcDireccion1->setText(oCliente->cDireccion1);
     ui->txtcDireccion2->setText(oCliente->cDireccion2);
@@ -383,7 +385,6 @@ void frmClientes::VaciarCampos()
     ui->txtcNombre->setText("");
     ui->txtcNombreFiscal->setText("");
     ui->txtcNombreComercial->setText("");
-    ui->txtcPersonaContacto->setText("");
     ui->txtcCifNif->setText("");
     ui->txtcDireccion1->setText("");
     ui->txtcDireccion2->setText("");
@@ -448,7 +449,6 @@ void frmClientes::LLenarCliente()
     oCliente->cNombre=ui->txtcNombre->text();
     oCliente->cNombreFiscal=ui->txtcNombreFiscal->text();
     oCliente->cNombreComercial=ui->txtcNombreComercial->text();
-    oCliente->cPersonaContacto=ui->txtcPersonaContacto->text();
     oCliente->cCifNif=ui->txtcCifNif->text();
     oCliente->cDireccion1=ui->txtcDireccion1->text();
     oCliente->cDireccion2=ui->txtcDireccion2->text();
@@ -632,7 +632,8 @@ void frmClientes::txtcProvincia_editingFinished()
 
 void frmClientes::txtcCifNif_editingFinished()
 {
-    ui->txtcCifNif->setText(ui->txtcCifNif->text().toUpper());
+    QString cCIF = Configuracion_global->ValidarnifE(ui->txtcCifNif->text());
+    ui->txtcCifNif->setText(cCIF.toUpper());
 }
 
 void frmClientes::on_btnEditar_clicked()
@@ -703,7 +704,6 @@ void frmClientes::bloquearCampos() {
     ui->btnSiguiente->setEnabled(true);
     ui->btnAnadirDireccion->setEnabled(false);
     ui->btnBorrarDireccion->setEnabled(false);
-    ui->btnver_OtrosContactos->setEnabled(false);
     ui->btnAdd_TipoCliente->setEnabled(false);
     ui->btndel_TipoCliente->setEnabled(false);
 }
@@ -771,7 +771,6 @@ void frmClientes::desbloquearCampos()
     ui->txtrVentasEjercicio->setEnabled(false);
     ui->btnAnadirDireccion->setEnabled(true);
     ui->btnBorrarDireccion->setEnabled(true);
-    ui->btnver_OtrosContactos->setEnabled(true);
     ui->btnAdd_TipoCliente->setEnabled(true);
     ui->btndel_TipoCliente->setEnabled(true);
 }
@@ -1095,4 +1094,11 @@ void frmClientes::CargarDireccionAlternativa(QModelIndex index)
             ui->combopaisAlternativa->setCurrentIndex(nIndex);
 
     }
+}
+
+void frmClientes::Contactos()
+{
+    frmPersonasContactoCliente contacto;
+    contacto.nIdCliente = oCliente->id;
+   contacto.exec();
 }
