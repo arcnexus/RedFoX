@@ -18,6 +18,12 @@ AgendaForm::AgendaForm(QWidget *parent) :
     connect(ui->time_start,SIGNAL(timeChanged(QTime)),this,SLOT(timeChanged(QTime)));
     connect(ui->time_end,SIGNAL(timeChanged(QTime)),this,SLOT(timeChanged(QTime)));
 
+    QSqlRelationalTableModel* client_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
+    client_model->setTable("clientes");
+    client_model->select();
+    ui->combo_cliente->setModel(client_model);
+    ui->combo_cliente->setModelColumn(client_model->fieldIndex("cNombreFiscal"));
+
     ui->time_start->setTime(QTime(QTime::currentTime().hour()+1,0));
 
     event_color = QColor::fromRgb(qRgb(51,102,255));
@@ -131,4 +137,9 @@ void AgendaForm::on_btn_getColor_clicked()
         event_color = d.currentColor();
         setButtonColor();
     }
+}
+
+void AgendaForm::on_calendarWidget_activated(const QDate &date)
+{
+    table->setDate(date);
 }

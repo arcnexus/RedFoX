@@ -22,6 +22,8 @@ private slots:
     void timeChanged(const QTime &time);
 
     void on_btn_getColor_clicked();
+    void on_calendarWidget_activated(const QDate &date);
+
 private:
     Ui::AgendaForm *ui;
     QGraphicsScene * scene;
