@@ -344,7 +344,8 @@ void MainWindow::init()
 
             Configuracion_global->Cargar_iva();
             Configuracion_global->Cargar_paises();
-
+            Configuracion_global->CargarClientes();
+            Configuracion_global->CargarUsuarios();
             //Widgets
             splash.showMessage(tr("Cargando modulos... Modulo de clientes"),Qt::AlignBottom);
             frmClientes1 = new frmClientes(this);

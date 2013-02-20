@@ -525,6 +525,7 @@ void frmClientes::on_btnGuardar_clicked()
     LLenarCliente();
     oCliente->Guardar();
     bloquearCampos();
+    Configuracion_global->CargarClientes();
     emit unblock();
 }
 

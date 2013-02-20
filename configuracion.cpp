@@ -13,6 +13,8 @@ Configuracion::Configuracion(QObject* parent) :
 {
     iva_model = 0;
     paises_model = 0;
+    client_model = 0;
+    usuarios_model = 0;
     validator_cantidad = new QDoubleValidator(-99999999999999999.00,99999999999999999.00,2,this);
     validator_porciento = new QDoubleValidator(0,100,2,this);
 }
@@ -120,6 +122,22 @@ void Configuracion::Cargar_paises()
         paises_model = new QSqlTableModel(this,QSqlDatabase::database("terra"));
     paises_model->setTable("paises");
     paises_model->select();
+}
+
+void Configuracion::CargarClientes()
+{
+    if(client_model == 0)
+        client_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
+    client_model->setTable("clientes");
+    client_model->select();
+}
+
+void Configuracion::CargarUsuarios()
+{
+    if(usuarios_model == 0)
+        usuarios_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
+    usuarios_model->setTable("usuarios");
+    usuarios_model->select();
 }
 
 void Configuracion::CargarDatosBD()
@@ -248,6 +266,52 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
     //Digitos de Control
     QString cdc = QString::number(primerdigito) + QString::number(segundodigito);
     return cdc;
+}
+
+QString Configuracion::letraDNI(QString Nif)
+{
+    int nSuma, nSumaPar, nSumaNon;
+
+    if (Nif.isEmpty())
+        return ("");
+
+    if (Nif[0].isDigit() || Nif.mid(1,1).contains("[KLMXYZ]"))  // Persona física
+    {
+        if (Nif.mid(1,1).contains("[XYZ]"))
+            //Nif = iif(Nif.SubString(1, 1) == "Z", "2", iif(Nif.SubString(1, 1) == "Y", "1", "0")) + Nif.SubString(2, Nif.Length());
+            Nif = Nif.mid(1,1) == "Z" ? "2" : Nif.mid(1,1) == "Y" ? "1" : "0";
+        else if (Nif.mid(1,1).contains("[KLM]"))
+            Nif = Nif.mid(2);
+
+        return ("TRWAGMYFPDXBNJZSQVHLCKE"[Nif.trimmed().toInt() % 23]);
+    }
+    else      // Persona jurídica
+    {
+        if (Nif.mid(1,1).contains("[ABCDEFGHJNPQRSUVW]"))
+            return ("");
+
+        nSumaPar = 0;
+        nSumaNon = 0;
+        for (int nLetra = 2; nLetra < 9; nLetra += 2)
+        {
+            if (nLetra < 8)
+                //nSumaPar += StrToInt(Nif.SubString(nLetra + 1, 1));
+                nSumaPar += Nif.mid(nLetra + 1, 1).toInt();
+
+            nSumaNon += ((2 * Nif.mid(nLetra, 1).toInt() % 10) + ((2 * Nif.mid(nLetra, 1).toInt())) / 10);
+        }
+
+        nSuma = nSumaPar + nSumaNon;
+        nSuma = 10 - (nSuma % 10);
+        if (nSuma == 10)
+            nSuma = 0;
+
+        if (!Nif.mid(1,1).contains("[ABDEFGHJUV]"))
+            return ("ABCDEFGHIJ"[nSuma]);
+        else
+            return /*(FormatFloat("0", nSuma))*/QString::number(nSuma);
+    }
+
 }
 
 void Configuracion::imprimir(QString db, QString report, bool toPDF,bool preview, QWidget *parent)

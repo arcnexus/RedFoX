@@ -62,6 +62,12 @@ public:
     QSqlTableModel* paises_model;
     void Cargar_paises();
 
+    QSqlTableModel* client_model;
+    void CargarClientes();
+
+    QSqlTableModel* usuarios_model;
+    void CargarUsuarios();
+
     bool lProfesional;
     int nIRPF;
     int nDigitosCuentasContables;
@@ -88,6 +94,7 @@ public:
     QDoubleValidator *validator_cantidad;
     QDoubleValidator *validator_porciento;
 
+    static QString letraDNI(QString Nif);
     static void imprimir(QString db , QString report , bool toPDF , bool preview = true, QWidget* parent = 0);
 public slots:
     void format_text();

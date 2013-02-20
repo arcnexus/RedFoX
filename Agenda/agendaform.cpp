@@ -18,11 +18,11 @@ AgendaForm::AgendaForm(QWidget *parent) :
     connect(ui->time_start,SIGNAL(timeChanged(QTime)),this,SLOT(timeChanged(QTime)));
     connect(ui->time_end,SIGNAL(timeChanged(QTime)),this,SLOT(timeChanged(QTime)));
 
-    QSqlRelationalTableModel* client_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
-    client_model->setTable("clientes");
-    client_model->select();
-    ui->combo_cliente->setModel(client_model);
-    ui->combo_cliente->setModelColumn(client_model->fieldIndex("cNombreFiscal"));
+    ui->combo_cliente->setModel(Configuracion_global->client_model);
+    ui->combo_cliente->setModelColumn(Configuracion_global->client_model->fieldIndex("cNombreFiscal"));
+
+    ui->combo_user->setModel(Configuracion_global->usuarios_model);
+    ui->combo_user->setModelColumn(Configuracion_global->usuarios_model->fieldIndex("nombre"));
 
     ui->time_start->setTime(QTime(QTime::currentTime().hour()+1,0));
 
