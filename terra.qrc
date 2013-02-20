@@ -129,4 +129,12 @@
         <file>images/scroll_up.png</file>
         <file>images/scroll_up_disabled.png</file>
     </qresource>
+    <qresource prefix="/openRPTLangs">
+        <file>openrptLibs/traduccion/common_es.qm</file>
+        <file>openrptLibs/traduccion/metasql_es.qm</file>
+        <file>openrptLibs/traduccion/renderapp_es.qm</file>
+        <file>openrptLibs/traduccion/renderer_es.qm</file>
+        <file>openrptLibs/traduccion/writer_es.qm</file>
+        <file>openrptLibs/traduccion/wrtembed_es.qm</file>
+    </qresource>
 </RCC>

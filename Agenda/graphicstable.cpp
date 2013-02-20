@@ -68,6 +68,9 @@ qreal GraphicsTable::timeToPos( int hour , int minute)
 void GraphicsTable::setDate(QDate d)
 {
     //this->scene()->clear();
+    GraphicsEvent * e;
+    foreach(e,eventos)
+        e->deleteLater();
     this->eventos.clear();
     this->m_date = d;
     //TODO load "date" events
