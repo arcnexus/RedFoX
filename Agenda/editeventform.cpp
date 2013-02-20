@@ -8,11 +8,9 @@ EditEventForm::EditEventForm(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Editar evento");
-    QSqlRelationalTableModel* client_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
-    client_model->setTable("clientes");
-    client_model->select();
-    ui->combo_cliente->setModel(client_model);
-    ui->combo_cliente->setModelColumn(client_model->fieldIndex("cNombreFiscal"));
+
+    ui->combo_cliente->setModel(Configuracion_global->client_model);
+    ui->combo_cliente->setModelColumn(Configuracion_global->client_model->fieldIndex("cNombreFiscal"));
     if(!medic)
     {
         ui->especialidad_group->hide();
