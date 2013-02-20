@@ -124,5 +124,9 @@
         <file>PNG/factmult.png</file>
         <file>PNG/opedido.png</file>
         <file>PNG/reports.png</file>
+        <file>images/scroll_down.png</file>
+        <file>images/scroll_down_disabled.png</file>
+        <file>images/scroll_up.png</file>
+        <file>images/scroll_up_disabled.png</file>
     </qresource>
 </RCC>

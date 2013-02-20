@@ -236,43 +236,12 @@ RESOURCES += \
 OTHER_FILES += \
     TODO.txt
 
-
-
-
 unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lcommon
 
 INCLUDEPATH += $$PWD/openrptLibs/include
 DEPENDPATH += $$PWD/openrptLibs/include
 
 unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lrenderer
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-
-
-win32: LIBS += -L$$PWD/openrptLibs/win32/ -lcommon
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-win32: PRE_TARGETDEPS += $$PWD/openrptLibs/win32/common.lib
-
-win32: LIBS += -L$$PWD/openrptLibs/win32/ -lMetaSQL
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-win32: PRE_TARGETDEPS += $$PWD/openrptLibs/win32/MetaSQL.lib
-
-win32: LIBS += -L$$PWD/openrptLibs/win32/ -lrenderer
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-win32: PRE_TARGETDEPS += $$PWD/openrptLibs/win32/renderer.lib
-
-win32: LIBS += -L$$PWD/openrptLibs/win32/ -lwrtembed
 
 INCLUDEPATH += $$PWD/openrptLibs/include
 DEPENDPATH += $$PWD/openrptLibs/include
@@ -286,3 +255,42 @@ unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lwrtembed
 
 INCLUDEPATH += $$PWD/openrptLibs/include
 DEPENDPATH += $$PWD/openrptLibs/include
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lcommon
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/openrptLibs/win32/debug/ -lcommon
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/release/common.lib
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/debug/common.lib
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lMetaSQL
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/openrptLibs/win32/debug/ -lMetaSQL
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/release/MetaSQL.lib
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/debug/MetaSQL.lib
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lrenderer
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/openrptLibs/win32/debug/ -lrenderer
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/release/renderer.lib
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/debug/renderer.lib
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lwrtembed
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/openrptLibs/win32/debug/ -lwrtembed
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/release/wrtembed.lib
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/debug/wrtembed.lib
