@@ -326,7 +326,7 @@ void frmProveedores::on_txtcPoblacion_editingFinished()
     if (ui->txtcCP->text().isEmpty() && !ui->txtcPoblacion->text().isEmpty() && !ui->txtcCP->isReadOnly()) {
         FrmBuscarPoblacion BuscarPoblacion;
 
-        Configuracion_global->CargarDatos();
+        //Configuracion_global->CargarDatos();
         BuscarPoblacion.setcPoblacion(ui->txtcPoblacion->text(),1);
         if(BuscarPoblacion.exec()) {
             //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
@@ -539,7 +539,7 @@ void frmProveedores::on_txtcCPAlmacen_editingFinished()
         if (!ui->txtcCPAlmacen->text().isEmpty() && ui->txtcPoblacionAlmacen->text().isEmpty()) {
             FrmBuscarPoblacion BuscarPoblacion;
 
-            Configuracion_global->CargarDatos();
+            //Configuracion_global->CargarDatos();
             BuscarPoblacion.setcPoblacion(ui->txtcCPAlmacen->text(),0);
             if(BuscarPoblacion.exec()) {
                 int nId = BuscarPoblacion.DevolverID();

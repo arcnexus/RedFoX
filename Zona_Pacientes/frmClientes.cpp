@@ -38,7 +38,7 @@ frmClientes::frmClientes(QWidget *parent) :
         ui->btnFichaPaciente->setVisible(true);
     else
         ui->btnFichaPaciente->setVisible(false);
-    Configuracion_global->CargarDatos();
+    //Configuracion_global->CargarDatos();
     if(Configuracion_global->nIRPF)
         ui->chkClienteEmpresa->setVisible(true);
     else

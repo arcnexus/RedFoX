@@ -139,6 +139,7 @@ void Configuracion::CargarDatos()
     idEmpresa = 1;
     qEmpresa.bindValue(":id",idEmpresa);
     if (qEmpresa.exec()) {
+        qEmpresa.next();
         this->cPais = qEmpresa.record().field("pais").value().toString();
         this->cEjercicio = qEmpresa.record().field("ejercicio").value().toString();
         this->nDigitosFactura = qEmpresa.record().field("digitosfactura").value().toInt();
@@ -149,7 +150,7 @@ void Configuracion::CargarDatos()
             this->lProfesional = false;
         this->nIRPF = qEmpresa.record().field("IIRPF").value().toInt();
         this->cSerie = qEmpresa.record().field("serie").value().toString();
-        this->nDigitosCuentasContables = qEmpresa.record().field("nDigitosCuentas").value().toInt();
+        this->nDigitosCuentasContables = qEmpresa.record()./*field("ndigitoscuenta").*/value("ndigitoscuenta").toInt();
         this->cCuentaClientes = qEmpresa.record().field("codigocuentaclientes").value().toString();
         this->cCuentaAcreedores = qEmpresa.record().field("codigocuentaacreedores").value().toString();
         this->cCuentaProveedores = qEmpresa.record().field("codigocuentaproveedores").value().toString();

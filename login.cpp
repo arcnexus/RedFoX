@@ -28,6 +28,7 @@ Login::Login(QWidget *parent) :
     if(!Configuracion_global)
         Configuracion_global = new Configuracion;
     Configuracion_global->CargarDatosBD();
+
     QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDTerra,"terra");
 
     if (Configuracion_global->cDriverBDTerra == "QSQLITE")
@@ -46,6 +47,7 @@ Login::Login(QWidget *parent) :
     {
         QMessageBox::critical(0, "error:", dbTerra.lastError().text());
     }
+    Configuracion_global->CargarDatos();
     init();
 }
 

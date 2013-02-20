@@ -283,7 +283,8 @@ void MainWindow::init()
 			// Varios
             splash.showMessage(tr("Cargando configuración financiera"),Qt::AlignBottom);
             Configuracion_global->cSerie = record.field("serie").value().toString();
-            Configuracion_global->nDigitosCuentasContables = record.field("ndigitoscuenta").value().toInt();
+            qDebug() << "desde db mainwindow" << record./*field("ndigitoscuenta").*/value("ndigitoscuenta").toInt();
+            Configuracion_global->nDigitosCuentasContables = record./*field("ndigitoscuenta").*/value("ndigitoscuenta").toInt();
             Configuracion_global->cCuentaAcreedores = record.field("codigocuentaacreedores").value().toString();
             Configuracion_global->cCuentaClientes = record.field("codigocuentaclientes").value().toString();
             Configuracion_global->cCuentaProveedores = record.field("codigocuentaproveedores").value().toString();
@@ -293,7 +294,7 @@ void MainWindow::init()
 			// Guardo preferencias
 			QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
             settings.setValue("cSerie",Configuracion_global->cSerie);
-            settings.setValue("nDigitosCuentas",Configuracion_global->nDigitosCuentasContables);
+            settings.setValue("ndigitoscuenta",Configuracion_global->nDigitosCuentasContables);
             settings.setValue("cCuentaClientes",Configuracion_global->cCuentaClientes);
             settings.setValue("cCuentaProveedores",Configuracion_global->cCuentaProveedores);
             settings.setValue("cCuentaAcreedores",Configuracion_global->cCuentaAcreedores);

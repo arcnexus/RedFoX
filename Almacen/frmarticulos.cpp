@@ -12,7 +12,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     modArt = new QSqlQueryModel();
     ui->setupUi(this);
     // Cargar valores IVA
-    Configuracion_global->CargarDatos();
+    //Configuracion_global->CargarDatos();
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
     ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("nIva"));
 

@@ -364,8 +364,10 @@ QString Cliente::NuevoCodigoCliente()
     QString cNum;
     int nCodigo;
     QSqlQuery *qClientes = new QSqlQuery(QSqlDatabase::database("terra"));
-    if(qClientes->exec("select cCodigoCliente from clientes  order by cCodigoCliente desc limit 1")) {
-        if (qClientes->next()) {
+    if(qClientes->exec("select cCodigoCliente from clientes  order by cCodigoCliente desc limit 1"))
+    {
+        if (qClientes->next())
+        {
             QSqlRecord registro = qClientes->record();
             cCodigo = registro.field("cCodigoCliente").value().toString();
             nCodigo = cCodigo.toInt();
@@ -373,16 +375,24 @@ QString Cliente::NuevoCodigoCliente()
             cCodigo = QString::number(nCodigo);
         }
    }
-   if (nCodigo == 0 || nCodigo == 1) {
+    qDebug() <<"ncodigo"<< nCodigo;
+    if(cCodigo.length() == Configuracion_global->nDigitosCuentasContables)
+        cCodigo = cCodigo.mid(Configuracion_global->cCuentaClientes.length());
+    if (nCodigo == 0 || nCodigo == 1)
+    {
         cNum = "1";
-        while (cNum.length()< (Configuracion_global->nDigitosCuentasContables - Configuracion_global->cCuentaClientes.length()) ) {
-            cNum.prepend("0");
-        }
-        cCodigo = Configuracion_global->cCuentaClientes + cNum;
-        cCuentaIvaRepercutido = Configuracion_global->cCuentaIvaRepercutido +cNum;
-}
+    }
+    else
+        cNum = cCodigo;
 
-   return cCodigo;
+    while (cNum.length()< (Configuracion_global->nDigitosCuentasContables - Configuracion_global->cCuentaClientes.length()) )
+    {
+        cNum.prepend("0");
+    }
+    cCodigo = Configuracion_global->cCuentaClientes + cNum;
+    cCuentaIvaRepercutido = Configuracion_global->cCuentaIvaRepercutido +cNum;
+
+    return cCodigo;
 }
 
 int Cliente::BuscaridPais(QString Pais)

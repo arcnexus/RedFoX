@@ -1,6 +1,7 @@
 #include "editeventform.h"
 #include "ui_editeventform.h"
-
+#include "../Busquedas/frmbuscarcliente.h"
+#include "./Zona_Pacientes/cliente.h"
 EditEventForm::EditEventForm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::EditEventForm)
@@ -11,6 +12,7 @@ EditEventForm::EditEventForm(QWidget *parent) :
     client_model->setTable("clientes");
     client_model->select();
     ui->combo_cliente->setModel(client_model);
+    ui->combo_cliente->setModelColumn(client_model->fieldIndex("cNombreFiscal"));
     if(!medic)
     {
         ui->especialidad_group->hide();
@@ -66,5 +68,16 @@ void EditEventForm::on_btn_guardar_clicked()
 
 void EditEventForm::on_pushButton_clicked()
 {
+    FrmBuscarCliente BuscarClientes(this);
+    if(BuscarClientes.exec() == QDialog::Accepted)
+    {
+        int nId = BuscarClientes.DevolverID();
+        QString cId = QString::number(nId);
 
+        Cliente oCliente;
+        oCliente.Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
+        QString name = oCliente.cNombreFiscal;
+        int i = ui->combo_cliente->findText(name);
+        ui->combo_cliente->setCurrentIndex(i);
+    }
 }
