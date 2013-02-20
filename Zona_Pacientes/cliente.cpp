@@ -362,7 +362,7 @@ QString Cliente::NuevoCodigoCliente()
 {
     QString cCodigo;
     QString cNum;
-    int nCodigo;
+    unsigned long nCodigo;
     QSqlQuery *qClientes = new QSqlQuery(QSqlDatabase::database("terra"));
     if(qClientes->exec("select cCodigoCliente from clientes  order by cCodigoCliente desc limit 1"))
     {
@@ -370,7 +370,7 @@ QString Cliente::NuevoCodigoCliente()
         {
             QSqlRecord registro = qClientes->record();
             cCodigo = registro.field("cCodigoCliente").value().toString();
-            nCodigo = cCodigo.toInt();
+            nCodigo = cCodigo.toULong();
             nCodigo ++;
             cCodigo = QString::number(nCodigo);
         }

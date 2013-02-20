@@ -22,7 +22,9 @@ public:
     explicit frmClientes(QWidget *parent = 0);
     ~frmClientes();
     bool Altas;
-
+signals:
+    void block();
+    void unblock();
 public slots:
     void LLenarCampos();
     void LLenarCliente();
