@@ -212,14 +212,14 @@ QDialogButtonBox {
       height: 10px;
       background: white;
       width: 10px;
-      border-image: url(:Icons/images/spinup.png) 2;
+      image: url(:/Icons/images/scroll_up.png) 2;
   }
   QScrollBar::down-arrow:vertical{
         border: 2px solid grey;
         height: 10px;
         background: white;
         width: 10px;
-        border-image: url(:Icons/images/spindown.png) 2;
+        image: url(:/Icons/images/scroll_down.png) 2;
     }
 
   QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
