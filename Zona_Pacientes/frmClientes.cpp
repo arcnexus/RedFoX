@@ -525,10 +525,12 @@ void frmClientes::on_btnGuardar_clicked()
     LLenarCliente();
     oCliente->Guardar();
     bloquearCampos();
+    emit unblock();
 }
 
 void frmClientes::on_btnAnadir_clicked()
 {
+    emit block();
     desbloquearCampos();
     VaciarCampos();
     this->Altas = true;
@@ -635,6 +637,7 @@ void frmClientes::txtcCifNif_editingFinished()
 
 void frmClientes::on_btnEditar_clicked()
 {
+    emit block();
         desbloquearCampos();
         ui->txtcCodigoCliente->setEnabled(false);
         ui->txtcCifNif->setFocus();
@@ -783,6 +786,7 @@ void frmClientes::on_btnDeshacer_clicked()
     oCliente->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
     bloquearCampos();
+    emit unblock();
 }
 
 void frmClientes::on_btnBorrar_clicked()

@@ -348,6 +348,8 @@ void MainWindow::init()
             //Widgets
             splash.showMessage(tr("Cargando modulos... Modulo de clientes"),Qt::AlignBottom);
             frmClientes1 = new frmClientes(this);
+            connect(frmClientes1,SIGNAL(block()),this,SLOT(block_main()));
+            connect(frmClientes1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
             splash.showMessage(tr("Cargando modulos... Modulo de facturas"),Qt::AlignBottom);
             frmFacturas1 = new frmFacturas(this);
