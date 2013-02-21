@@ -28,7 +28,7 @@ void frmPersonasContactoCliente::RefrescarTabla()
 
 void frmPersonasContactoCliente::Anadir()
 {
-
+   //oCliente.
 }
 
 void frmPersonasContactoCliente::Borrar()

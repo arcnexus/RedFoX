@@ -92,6 +92,9 @@ public slots:
     void AnadirDeuda(int id_cliente, QDate dFechaDeuda,QDate dFechaVto,QString cDocumento, int id_Tiquet,
                      int id_Factura, int nTipo, double rImporteDeuda, double rPagado, double rPendienteCobro,
                      QString cEntidad, QString cOficina,QString cDC ,QString cCuenta);
+    void AnadirPersonaContacto(int Id,QString Nombre, QString descTelefono1, QString Telefono1, QString descTelefono2,
+                               QString Telefono2,QString descTelefono3, QString Telefono3,
+                               QString descMovil1, QString Movil1, QString descMovil2, QString Movil2);
     void GuardarDireccion(bool Anadir, QString Descripcion, QString Direccion1, QString Direccion2, QString CP, QString Poblacion,
                          QString Provincia, QString Pais, int idcliente, int id);
     void DescontarDeuda(int id_deuda,double rPagado);

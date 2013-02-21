@@ -259,6 +259,15 @@ void Cliente::AnadirDeuda(int id_cliente, QDate dFechaDeuda, QDate dFechaVto, QS
 
 }
 
+void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
+                                    QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3,
+                                    QString descMovil1, QString Movil1, QString descMovil2, QString Movil2)
+{
+    QSqlQuery qContactos(QSqlDatabase::database("terra"));
+    qContactos.prepare("");
+
+}
+
 void Cliente::GuardarDireccion(bool Anadir, QString Descripcion, QString Direccion1, QString Direccion2, QString CP, QString Poblacion,
                                QString Provincia, QString Pais,int idcliente,int id)
 {

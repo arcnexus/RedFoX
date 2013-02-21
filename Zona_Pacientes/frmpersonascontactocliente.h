@@ -2,6 +2,7 @@
 #define FRMPERSONASCONTACTOCLIENTE_H
 
 #include <QDialog>
+#include <Zona_Pacientes/cliente.h>
 
 namespace Ui {
 class frmPersonasContactoCliente;
@@ -15,6 +16,7 @@ public:
     explicit frmPersonasContactoCliente(QWidget *parent = 0);
     ~frmPersonasContactoCliente();
     int nIdCliente;
+    Cliente oCliente;
 
 private:
     Ui::frmPersonasContactoCliente *ui;
