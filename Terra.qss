@@ -354,3 +354,6 @@ QTableView, QTableWidet {
   QMenu::indicator:exclusive:checked:selected {
       image: url(:/images/radiobutton_checked_hover.png);
   }
+
+QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }

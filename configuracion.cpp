@@ -268,6 +268,7 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
     return cdc;
 }
 
+
 QString Configuracion::letraDNI(QString Nif)
 {
     int nSuma, nSumaPar, nSumaNon;
@@ -283,7 +284,8 @@ QString Configuracion::letraDNI(QString Nif)
         else if (Nif.mid(1,1).contains("[KLM]"))
             Nif = Nif.mid(2);
 
-        return ("TRWAGMYFPDXBNJZSQVHLCKE"[Nif.trimmed().toInt() % 23]);
+        QString x1 = "TRWAGMYFPDXBNJZSQVHLCKE";
+        return (x1.mid(Nif.trimmed().toInt() % 23,1));
     }
     else      // Persona jurídica
     {
@@ -307,11 +309,13 @@ QString Configuracion::letraDNI(QString Nif)
             nSuma = 0;
 
         if (!Nif.mid(1,1).contains("[ABDEFGHJUV]"))
-            return ("ABCDEFGHIJ"[nSuma]);
+        {
+            const char x[] = {'A','B','C','D','E','F','G','H','I','J'};
+            return (QString(x[nSuma]));
+        }
         else
             return /*(FormatFloat("0", nSuma))*/QString::number(nSuma);
     }
-
 }
 
 void Configuracion::imprimir(QString db, QString report, bool toPDF,bool preview, QWidget *parent)

@@ -83,6 +83,7 @@ private slots:
     void DeshacerDireccionAlternativa();
     void BorrarDireccionAlternativa();
     void CargarDireccionAlternativa(QModelIndex);
+    void Contactos();
 
 
 private:
