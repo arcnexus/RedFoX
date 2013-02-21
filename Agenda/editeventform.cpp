@@ -37,6 +37,36 @@ void EditEventForm::setButtonColor()
     ui->btn_getColor->setStyleSheet(style);
 }
 
+void EditEventForm::setColor(QColor c)
+{
+    event_color = c;
+    setButtonColor();
+}
+
+void EditEventForm::setCita(bool is, int id)
+{
+    isCita = is;
+    id_cliente = id;
+    ui->reunion_group->setChecked(is);
+
+    for (int i=0;i<Configuracion_global->client_model->rowCount();i++)
+    {
+        if (Configuracion_global->client_model->record(i).value("Id").toInt() == id)
+        {
+                ui->combo_cliente->setCurrentIndex(i);
+                break;
+        }
+    }
+}
+
+void EditEventForm::setAsunto(QString t, QString a)
+{
+    titulo = t;
+    asunto = a;
+    ui->txt_asunto->setPlainText(a);
+    ui->txt_tituloEvento->setText(t);
+}
+
 void EditEventForm::on_btn_getColor_clicked()
 {
     QColorDialog d(this);
@@ -54,13 +84,15 @@ void EditEventForm::on_btn_cancelar_clicked()
 
 void EditEventForm::on_btn_guardar_clicked()
 {
+    isCita = ui->reunion_group->isChecked();
+    titulo = ui->txt_tituloEvento->text();
     asunto = ui->txt_asunto->toPlainText();
     asunto.replace("\n","<br>");
     isCita = ui->reunion_group->isChecked();
     QSqlRelationalTableModel* client_model = (QSqlRelationalTableModel*)ui->combo_cliente->model();
     id_cliente = client_model->record(ui->combo_cliente->currentIndex()).value("Id").toInt();
-    id_spec;
-    id_depart;
+    id_spec = 0;//FIXME especialidad / departamento en agenda
+    id_depart = 0;
     EditEventForm::done(QDialog::Accepted);
 }
 

@@ -128,6 +128,7 @@
         <file>images/scroll_down_disabled.png</file>
         <file>images/scroll_up.png</file>
         <file>images/scroll_up_disabled.png</file>
+        <file>images/close.png</file>
     </qresource>
     <qresource prefix="/openRPTLangs">
         <file>openrptLibs/traduccion/common_es.qm</file>

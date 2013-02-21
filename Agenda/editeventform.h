@@ -15,7 +15,11 @@ public:
     explicit EditEventForm(QWidget *parent = 0);
     ~EditEventForm();
     void setButtonColor();
+    void setColor(QColor);
+    void setCita(bool,int);
+    void setAsunto(QString t,QString a);
     QColor event_color;
+    QString titulo;
     QString asunto;
     QTime start;
     QTime end;

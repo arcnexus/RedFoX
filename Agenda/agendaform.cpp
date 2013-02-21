@@ -14,7 +14,10 @@ AgendaForm::AgendaForm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AgendaForm)
 {
-    ui->setupUi(this);
+    table = new GraphicsTable;
+    table->setObjectName("MainTable");
+
+    ui->setupUi(this);    
     connect(ui->time_start,SIGNAL(timeChanged(QTime)),this,SLOT(timeChanged(QTime)));
     connect(ui->time_end,SIGNAL(timeChanged(QTime)),this,SLOT(timeChanged(QTime)));
 
@@ -35,8 +38,7 @@ AgendaForm::AgendaForm(QWidget *parent) :
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setSceneRect(0,0,ui->graphicsView->frameSize().width()-20,1008);
 
-    table = new GraphicsTable;
-    table->setObjectName("MainTable");
+
 
     scene->addItem(table);
 
@@ -47,6 +49,7 @@ AgendaForm::AgendaForm(QWidget *parent) :
 
     connect(ui->calendarWidget,SIGNAL(clicked(QDate)),table,SLOT(setDate(QDate)));
     ui->calendarWidget->setSelectedDate(today);
+    int id_user = Configuracion_global->usuarios_model->record(ui->combo_user->currentIndex()).value("id").toInt();
     table->setDate(today);
 
     if(!medic)
@@ -68,6 +71,7 @@ AgendaForm::~AgendaForm()
 
 void AgendaForm::resizeEvent(QResizeEvent *e)
 {
+    Q_UNUSED(e);
     ui->graphicsView->setSceneRect(0,0,ui->graphicsView->frameSize().width()-20,2000);
     table->setSize(ui->graphicsView->frameSize().width() - 21,1998);
 }
@@ -78,8 +82,12 @@ void AgendaForm::on_pushButton_clicked()
     QDateTime s(date,ui->time_start->time());
     QDateTime e(date,ui->time_end->time());
     QString asunto = ui->txt_asunto->toPlainText();
+    QString tituloEvento = ui->txt_tituloEvento->text();
     asunto.replace("\n","<br>");
-    table->addEvento(event_color,s,e,asunto);
+    int id_user = Configuracion_global->usuarios_model->record(ui->combo_user->currentIndex()).value("id").toInt();
+    bool isCita = ui->reunion_group->isChecked();
+    int id_cliente = Configuracion_global->client_model->record(ui->combo_cliente->currentIndex()).value("Id").toInt();
+    table->addEvento(event_color,s,e,tituloEvento,asunto,isCita,id_cliente);
 }
 
 void AgendaForm::timeChanged(const QTime &time)
@@ -142,4 +150,10 @@ void AgendaForm::on_btn_getColor_clicked()
 void AgendaForm::on_calendarWidget_activated(const QDate &date)
 {
     table->setDate(date);
+}
+
+void AgendaForm::on_combo_user_currentIndexChanged(int index)
+{
+    int id_user = Configuracion_global->usuarios_model->record(index).value("id").toInt();
+    table->setUser(id_user);
 }

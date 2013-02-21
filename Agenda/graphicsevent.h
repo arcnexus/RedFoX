@@ -23,10 +23,11 @@ public:
     void adjustBottomGrid();
     qreal Heigth();
     QRectF Rect();
-    void setAsunto(QString s);
+    void setAsunto(QString t, QString s);
     void setCliente(int id);
 
     bool isCita;
+    int id;
     int id_user;
     int id_cliente;
     int id_spec;
@@ -34,10 +35,11 @@ public:
 signals:
     void updateScene();
     void checkForCollisions();
+    void aboutClose();
 public slots:
     void setMain_jail(QRectF jail);
     void setHGrid(QVector<qreal> grid , qreal size);
-    void checkCollisions();
+    void checkCollisions();    
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
@@ -70,6 +72,7 @@ private:
 
     static QVector<qreal> h_grid;
     static qreal h_gridSize;
+    QString titulo;
     QString asunto;
 
     void EditThis();

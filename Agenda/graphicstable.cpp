@@ -21,17 +21,28 @@ void GraphicsTable::setSize(qreal w, qreal h)
     QRectF jail(80,62,w-90,h-81);
    // GraphicsEvent::setWidth(width-90);
     emit main_jail(jail);
+    checkCollisions();
 }
 
-void GraphicsTable::addEvento(QColor color, QDateTime start, QDateTime end , QString asunto)
+void GraphicsTable::appendEvento(int id ,QDateTime start, QDateTime end, QColor color,QString titulo, QString asunto ,int id_cliente , bool isCita)
 {
-    GraphicsEvent * evento = new GraphicsEvent(this); 
+    GraphicsEvent * evento = new GraphicsEvent(this);
+
+    evento->id = id;
+
+    evento->id_cliente = id_cliente;
+
+    evento->id_user = m_user;
+
+    evento->isCita = isCita;
 
     evento->setColor(color);
 
     evento->setTime(start,end);
 
-    evento->setAsunto(asunto);
+    evento->setAsunto(titulo,asunto);
+
+    connect(evento,SIGNAL(aboutClose()),this,SLOT(eventClosing()));
 
     connect(evento,SIGNAL(updateScene()),this->scene(),SLOT(update()));
 
@@ -49,11 +60,47 @@ void GraphicsTable::addEvento(QColor color, QDateTime start, QDateTime end , QSt
 
     evento->setMain_jail(QRectF(80,62,width-90,heigth-81));
     evento->setSize(width-90,h);
-    evento->setHGrid(h_grids,20);    
+    evento->setHGrid(h_grids,20);
     evento->setPos(80,y0);
 
     eventos.append(evento);
     checkCollisions();
+}
+
+void GraphicsTable::addEvento(QColor color, QDateTime start, QDateTime end ,QString titulo, QString asunto, bool isCita , int id_cliente )
+{
+    QSqlQuery q(QSqlDatabase::database("terra"));
+    q.prepare("INSERT INTO agenda"
+              "(dFecha, cHora, id_Usuario, cInicio, cFin, cAsunto,"
+              "cDescripcionAsunto, cEstado, cAvisarTiempo, cImportancia, color,"
+              "id_especialidad, id_departamento, isMedica, Id_Cliente, isCita)"
+              "VALUES "
+              "(:dFecha, :cHora, :id_Usuario, :cInicio, :cFin, :cAsunto,"
+              ":cDescripcionAsunto, :cEstado, :cAvisarTiempo, :cImportancia, :color,"
+              ":id_especialidad, :id_departamento, :isMedica, :Id_Cliente, :isCita)");
+
+    QString sColor = QString("%1;%2;%3").arg(color.red()).arg(color.green()).arg(color.blue());
+    q.bindValue(":dFecha",m_date);
+    q.bindValue(":cHora",0);
+    q.bindValue(":id_Usuario",m_user);
+    q.bindValue(":cInicio",start);
+    q.bindValue(":cFin",end);
+    q.bindValue(":cAsunto",titulo);
+    q.bindValue(":cDescripcionAsunto",asunto);
+    q.bindValue(":cEstado",0);
+    q.bindValue(":cAvisarTiempo",0);
+    q.bindValue(":cImportancia",0);
+    q.bindValue(":color",sColor);
+    q.bindValue(":id_especialidad",0);//FIXME - Agenda: parametros evento
+    q.bindValue(":id_departamento",0);
+    q.bindValue(":isMedica",medic);
+    q.bindValue(":Id_Cliente",id_cliente);
+    q.bindValue(":isCita",isCita);
+
+    int id = 0;
+    if(q.exec())
+        id = q.lastInsertId().toInt();
+    appendEvento(id , start, end, color,titulo, asunto , isCita , id_cliente);
 }
 
 qreal GraphicsTable::timeToPos( int hour , int minute)
@@ -65,15 +112,53 @@ qreal GraphicsTable::timeToPos( int hour , int minute)
     return h_pos;
 }
 
-void GraphicsTable::setDate(QDate d)
+void GraphicsTable::UpdateEventos()
 {
-    //this->scene()->clear();
     GraphicsEvent * e;
     foreach(e,eventos)
-        e->deleteLater();
+        /*e->deleteLater()*/delete e;
     this->eventos.clear();
+
+    QSqlQuery q(QSqlDatabase::database("terra"));
+    QString fecha = m_date.toString("yyyy-MM-dd");
+    QString sql = QString("SELECT * FROM agenda where dFecha = '%1' and id_Usuario = %2")
+            .arg(fecha).arg(m_user);
+    q.prepare(sql);
+    if(q.exec())
+    {
+        while(q.next())
+            showEvento(q.record());
+    }
+    checkCollisions();
+}
+
+void GraphicsTable::setDate(QDate d)
+{
     this->m_date = d;
-    //TODO load "date" events
+
+    UpdateEventos();
+}
+
+void GraphicsTable::setUser(int user)
+{
+    m_user = user;
+
+    UpdateEventos();
+}
+
+void GraphicsTable::eventClosing()
+{
+    GraphicsEvent* e = qobject_cast<GraphicsEvent*>(sender());
+    if(e)
+    {
+        eventos.remove(eventos.indexOf(e));
+        int id = e->id;
+        QSqlQuery q(QSqlDatabase::database("terra"));
+        QString sql = QString("DELETE FROM agenda WHERE Id = %1").arg(id);
+        if(!q.exec(sql))
+            qDebug() << q.lastError();
+        e->deleteLater();
+    }
 }
 
 QDateTime GraphicsTable::posToTime(qreal pos)
@@ -139,6 +224,31 @@ void GraphicsTable::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
    painter->setPen(Qt::darkRed);
    painter->drawLine(QLine(5,h_pos,this->boundingRect().width()-5,h_pos));
    painter->restore();
+}
+
+void GraphicsTable::showEvento(QSqlRecord r)
+{
+    int id = r.value("Id").toInt();
+
+    bool isCita = r.value("isCita").toBool();
+    int id_cliente = r.value("Id_Cliente").toInt();
+    QDateTime start = r.value("cInicio").toDateTime();
+    QDateTime end = r.value("cFin").toDateTime();
+    QString auxColor = r.value("color").toString();
+    QStringList desglose_color = auxColor.split(";");
+    int red = 100;
+    int green = 100;
+    int blue = 100;
+    if(desglose_color.size() == 3)
+    {
+        red = desglose_color.at(0).toInt();
+        green = desglose_color.at(1).toInt();
+        blue = desglose_color.at(2).toInt();
+    }
+    QColor color = QColor::fromRgb(red,green,blue);
+    QString titulo = r.value("cAsunto").toString();
+    QString asunto = r.value("cDescripcionAsunto").toString();
+    appendEvento(id,start,end,color,titulo,asunto,id_cliente,isCita);
 }
 
 
