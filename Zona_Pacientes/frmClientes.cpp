@@ -633,7 +633,7 @@ void frmClientes::txtcProvincia_editingFinished()
 
 void frmClientes::txtcCifNif_editingFinished()
 {
-    QString cCIF = Configuracion_global->ValidarnifE(ui->txtcCifNif->text());
+    QString cCIF = Configuracion::letraDNI(ui->txtcCifNif->text());
     ui->txtcCifNif->setText(cCIF.toUpper());
 }
 

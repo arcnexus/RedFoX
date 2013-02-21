@@ -1444,20 +1444,11 @@ color: rgb(0, 64, 64);</string>
             <enum>QFrame::Raised</enum>
            </property>
            <layout class="QGridLayout" name="gridLayout_14">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
             <property name="verticalSpacing">
              <number>3</number>
+            </property>
+            <property name="margin">
+             <number>0</number>
             </property>
             <item row="1" column="0">
              <widget class="QLineEdit" name="lineEdit_4">
@@ -1801,6 +1792,9 @@ color: rgb(255, 255, 255);</string>
        </item>
        <item row="1" column="0">
         <widget class="QPushButton" name="btnCobrarTicket">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -1814,7 +1808,8 @@ color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
+          <string notr="true">color: rgb(255, 255, 255);
+</string>
          </property>
          <property name="text">
           <string>Cobrar Ticket</string>

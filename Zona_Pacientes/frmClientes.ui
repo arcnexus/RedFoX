@@ -74,7 +74,7 @@
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: #304163;
-color: #ffffff</string>
+</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -1140,7 +1140,7 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true"/>
+          <string notr="true">color: rgb(0, 0, 0);</string>
          </property>
          <property name="text">
           <string>Historial Clínico del Paciente</string>
@@ -1295,6 +1295,9 @@ color: rgb(255,255,255);</string>
          </property>
          <property name="toolTip">
           <string>Otras personas de contacto</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);</string>
          </property>
          <property name="text">
           <string>Personas de contacto</string>

@@ -268,70 +268,7 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
     return cdc;
 }
 
-<<<<<<< HEAD
-QString Configuracion::ValidarnifE(QString nif)
-{
-//    QString cDNI;
-//    if(nif.left(1).isSimpleText()) { // CIF o NIE
 
-//    } else {
-//        cDNI = nif.left(8);
-//    }
-//    QString letra;
-//    int nDni = cDNI.toInt();
-//    int nCalc = nDni % 23;
-//    switch(nCalc){
-//    case nCalc ==0 :letra ="T";
-//        break;
-//    case nCalc ==1 :letra ="R";
-//        break;
-//    case nCalc ==2 :letra ="W";
-//        break;
-//    case nCalc ==3 :letra ="A";
-//        break;
-//    case nCalc ==4 :letra ="G";
-//        break;
-//    case nCalc ==5 :letra ="M";
-//        break;
-//    case nCalc ==6 :letra ="Y";
-//        break;
-//    case nCalc ==7 :letra ="F";
-//        break;
-//    case nCalc ==8 :letra ="P";
-//        break;
-//    case nCalc ==9 :letra ="D";
-//        break;
-//    case nCalc ==10 :letra ="X";
-//        break;
-//    case nCalc ==11 :letra ="B";
-//        break;
-//    case nCalc ==12 :letra ="N";
-//        break;
-//    case nCalc ==13 :letra ="J";
-//        break;
-//    case nCalc ==14 :letra ="Z";
-//        break;
-//    case nCalc ==15 :letra ="S";
-//        break;
-//    case nCalc ==16 :letra ="Q";
-//        break;
-//    case nCalc ==17 :letra ="V";
-//        break;
-//    case nCalc ==18 :letra ="H";
-//        break;
-//    case nCalc ==19 :letra ="L";
-//        break;
-//    case nCalc ==20 :letra ="C";
-//        break;
-//    case nCalc ==21 :letra ="K";
-//        break;
-//    case nCalc ==22 :letra ="E";
-//        break;
-//    }
-    return nif;
-
-
-=======
 QString Configuracion::letraDNI(QString Nif)
 {
     int nSuma, nSumaPar, nSumaNon;
@@ -347,7 +284,8 @@ QString Configuracion::letraDNI(QString Nif)
         else if (Nif.mid(1,1).contains("[KLM]"))
             Nif = Nif.mid(2);
 
-        return ("TRWAGMYFPDXBNJZSQVHLCKE"[Nif.trimmed().toInt() % 23]);
+        QString x1 = "TRWAGMYFPDXBNJZSQVHLCKE";
+        return (x1.mid(Nif.trimmed().toInt() % 23,1));
     }
     else      // Persona jurídica
     {
@@ -371,12 +309,13 @@ QString Configuracion::letraDNI(QString Nif)
             nSuma = 0;
 
         if (!Nif.mid(1,1).contains("[ABDEFGHJUV]"))
-            return ("ABCDEFGHIJ"[nSuma]);
+        {
+            const char x[] = {'A','B','C','D','E','F','G','H','I','J'};
+            return (QString(x[nSuma]));
+        }
         else
             return /*(FormatFloat("0", nSuma))*/QString::number(nSuma);
     }
->>>>>>> d71a3bd27a794c7f696d9752a818a6d72b06e81a
-
 }
 
 void Configuracion::imprimir(QString db, QString report, bool toPDF,bool preview, QWidget *parent)
