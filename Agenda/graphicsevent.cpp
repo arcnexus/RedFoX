@@ -112,10 +112,11 @@ QRectF GraphicsEvent::Rect()
     return r;
 }
 
-void GraphicsEvent::setAsunto(QString s)
+void GraphicsEvent::setAsunto(QString t, QString s)
 {
+    titulo = t;
     asunto = s;
-
+    updateThis();
 }
 
 void GraphicsEvent::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -149,7 +150,7 @@ void GraphicsEvent::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
             painter->drawLine(width-7,heigth/4,width-7,heigth/4*3);
             painter->drawLine(width-4,heigth/4,width-4,heigth/4*3);
             painter->restore();
-            painter->drawPixmap(width-20,4,16,16,QPixmap(":/icons/close.png"));
+            painter->drawPixmap(width-20,4,16,16,QPixmap(":/Icons/images/close.png"));
 
             if(width > 100)
             {
@@ -179,7 +180,14 @@ void GraphicsEvent::mousePressEvent(QGraphicsSceneMouseEvent *event)
         {
             if((event->pos().rx() > (width-20)) && event->pos().ry() < 20 )
             {
-                //TODO close evento
+                if(QMessageBox::question(qApp->activeWindow(),
+                                      tr("Eliminar"),
+                                      tr("¿Borrar el evento?"),
+                                      tr("No"),
+                                      tr("Si")) == QMessageBox::Accepted)
+                {
+                    emit aboutClose();
+                }
             }
             else if( (width/4 ) < event->pos().rx()
                      && event->pos().rx() < (width/4 * 3)
@@ -345,10 +353,22 @@ bool GraphicsEvent::isInJail(QPointF pos)
 
 void GraphicsEvent::EditThis()
 {
+    QString aux = asunto.replace("<br>","\n");
     EditEventForm form(qApp->activeWindow());
+    form.setColor(QColor::fromRgb(red,green,blue));
+    form.setCita(isCita,id_cliente);
+    form.setAsunto(titulo,asunto);
     if(form.exec() == QDialog::Accepted)
     {
-        this->asunto = form.asunto;
+        this->id_spec = form.id_spec;
+        this->id_depart = form.id_depart;
+        this->id_cliente = form.id_cliente;
+        this->isCita = form.isCita;
+        this->red = form.event_color.red();
+        this->green = form.event_color.green();
+        this->blue = form.event_color.blue();
+        this->titulo = form.titulo;
+        this->asunto = form.asunto.replace("\n","<br>");
         updateThis();
     }
 
@@ -356,22 +376,93 @@ void GraphicsEvent::EditThis()
 
 void GraphicsEvent::updateThis()
 {
-    QString st = QString(
-    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
-    "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
-    "p, li { white-space: pre-wrap; }"
-    "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">"
-    "<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Cliente: %1</li>"
-                "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Telefonos: %2</li>"
-    "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Hora de comienzo: %3</li>"
-    "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Hora de finalizaci&oacute;n: %4</li></ul>"
-    "Asunto:<br>%5</body></html>").
-            arg(/*cliente*/"")
-            .arg(/*Telefonos*/900100100)
-            .arg(/*Hora inicio*/start.toString("hh:mm"))
-            .arg(/*Hora final*/end.toString("hh:mm"))
-            .arg(/*Asunto*/asunto);
+    QString st;
+    if(isCita)
+    {
+        QString nombre_cliente;
+        QString telefono_cliente;
+        for (int i=0;i<Configuracion_global->client_model->rowCount();i++)
+        {
+            if(Configuracion_global->client_model->record(i).value("Id").toInt() == id_cliente)
+            {
+                nombre_cliente = Configuracion_global->client_model->record(i).value("cNombreFiscal").toString();
+                telefono_cliente = QString("%1 , %2 , %3")
+                        .arg(Configuracion_global->client_model->record(i).value("cTelefono1").toString())
+                        .arg(Configuracion_global->client_model->record(i).value("cTelefono2").toString())
+                        .arg(Configuracion_global->client_model->record(i).value("cMovil").toString());
+                break;
+            }
+        }
+
+        st = QString(
+                    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
+                    "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
+                    "p, li { white-space: pre-wrap; }"
+                    "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">"
+                    "<p style=\"text-align: center;-qt-block-indent:1\"><b>%1</b></p>"
+                    "<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\">"
+                    "<li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Cliente: %2</li>"
+                    "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Telefonos: %3</li>"
+                    "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Hora de comienzo: %4</li>"
+                    "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Hora de finalizaci&oacute;n: %5</li></ul>"
+                    "<br>%6</body></html>")
+                .arg(/*titulo*/titulo)
+                .arg(/*cliente*/nombre_cliente)
+                .arg(/*Telefonos*/telefono_cliente)
+                .arg(/*Hora inicio*/start.toString("hh:mm"))
+                .arg(/*Hora final*/end.toString("hh:mm"))
+                .arg(/*Asunto*/asunto);
+    }
+    else
+    {
+        st = QString(
+                    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
+                    "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
+                    "p, li { white-space: pre-wrap; }"
+                    "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">"
+                    "<p style=\"text-align: center;-qt-block-indent:1\"><b>%1</b></p>"
+                    "<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\">"
+                    "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Hora de comienzo: %2</li>"
+                    "<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Hora de finalizaci&oacute;n: %3</li></ul>"
+                    "<br>%6</body></html>")
+                .arg(/*titulo*/titulo)
+                .arg(/*Hora inicio*/start.toString("hh:mm"))
+                .arg(/*Hora final*/end.toString("hh:mm"))
+                .arg(/*Asunto*/asunto);
+    }
     this->setToolTip(st);
+
+    QSqlQuery q(QSqlDatabase::database("terra"));
+    q.prepare("UPDATE agenda SET "
+              " cHora=:cHora, cInicio=:cInicio, cFin=:cFin, cAsunto=:cAsunto,"
+              "cDescripcionAsunto=:cDescripcionAsunto, cEstado=:cEstado, cAvisarTiempo=:cAvisarTiempo,"
+              "cImportancia=:cImportancia, color=:color,"
+              "id_especialidad=:id_especialidad, id_departamento=:id_departamento,"
+              "isMedica=:isMedica, Id_Cliente=:Id_Cliente, isCita=:isCita "
+              " WHERE Id =:id;");
+
+    QString sColor = QString("%1;%2;%3").arg(red).arg(green).arg(blue);
+    q.bindValue(":cHora",0);
+    q.bindValue(":cInicio",start);
+    q.bindValue(":cFin",end);
+    q.bindValue(":cAsunto",titulo);
+    q.bindValue(":cDescripcionAsunto",asunto);
+    q.bindValue(":cEstado",0);
+    q.bindValue(":cAvisarTiempo",0);
+    q.bindValue(":cImportancia",0);
+    q.bindValue(":color",sColor);
+    q.bindValue(":id_especialidad",0);//FIXME - Agenda: parametros evento
+    q.bindValue(":id_departamento",0);
+    q.bindValue(":isMedica",medic);
+    q.bindValue(":Id_Cliente",id_cliente);
+    q.bindValue(":isCita",isCita);
+    q.bindValue(":id",id);
+
+    if(!q.exec())
+    {
+        qDebug() << q.executedQuery();
+        qDebug() << q.lastError();
+    }
 }
 
 void GraphicsEvent::checkCollisions()
