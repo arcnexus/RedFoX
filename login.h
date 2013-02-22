@@ -20,7 +20,7 @@ public:
     const QString getUsuario() const;
     const QString getPass() const;
     const QString getEmpresa() const;
-
+    int getIdUser();
 private slots:
 	void init();
     void on_btnAcceder_clicked();
@@ -35,6 +35,7 @@ private:
     Ui::Login *ui;
     QString path;
     QSqlDatabase dbTerra;
+    int m_id;
 
 };
 

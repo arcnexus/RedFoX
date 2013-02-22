@@ -67,6 +67,7 @@ int main(int argc, char *argv[])
        w.empresa = l.getEmpresa();
        w.user = l.getUsuario();
        w.pass = l.getPass();
+       Configuracion_global->id_usuario_activo = l.getIdUser();
        //w.setWindowState(Qt::WindowMaximized);
        //w.show();
        return a.exec();

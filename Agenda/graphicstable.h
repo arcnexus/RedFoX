@@ -22,6 +22,7 @@ public:
 signals:
     void main_jail(QRectF jail);
     void horizontalGrid(QVector<qreal>,qreal);
+    void allowEdits(bool);
 public slots:
     void checkCollisions();
     void setDate(QDate);

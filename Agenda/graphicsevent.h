@@ -26,6 +26,7 @@ public:
     void setAsunto(QString t, QString s);
     void setCliente(int id);
 
+    void setReadOnly(bool);
     bool isCita;
     int id;
     int id_user;
@@ -75,6 +76,7 @@ private:
     QString titulo;
     QString asunto;
 
+    bool isReadOnly;
     void EditThis();
     void updateThis();
 };

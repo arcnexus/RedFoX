@@ -18,6 +18,7 @@ class Configuracion: public QObject
     Q_OBJECT
 public:
     Configuracion(QObject * parent = 0);
+
     QString cRutaBdTerra;
     QString cSerie;
     int nDigitosFactura;
@@ -49,6 +50,7 @@ public:
     QString cEjercicio;
     QString cEmpresaActiva;
     QString cUsuarioActivo;
+    int id_usuario_activo;
     QString cNivelUsuarioActivo;
     QSqlDatabase dbConfiguracion;
     QSqlQuery *QryConfiguracion;
