@@ -290,7 +290,8 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->cFamilia=ui->txtcFamilia->text();
     oArticulo->cSeccion=ui->txtcSeccion->text();
     oArticulo->cSubfamilia=ui->txtcSubFamilia->text();
-    oArticulo->nTipoIva=ui->cboTipoIVA->currentText().toDouble();
+    oArticulo->nTipoIva=Configuracion_global->ivas[ui->cboTipoIVA->currentText()].value("nIva").toDouble();
+    oArticulo->id_tiposiva = Configuracion_global->getIdIva(ui->cboTipoIVA->currentText().toDouble());
     oArticulo->rCoste=ui->txtrCoste->text().toDouble();
     oArticulo->dUltimaCompra= ui->txtdFechaUltimaCompra->date();
     oArticulo->dUltimaVenta= ui->txtdFechaUltimaVenta->date();

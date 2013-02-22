@@ -57,6 +57,7 @@ public:
     QHash <QString,QSqlRecord> ivas;
     QSqlTableModel* iva_model;
     void Cargar_iva();
+    int getIdIva(double nIva);
 
     QHash <QString,QSqlRecord> paises;
     QSqlTableModel* paises_model;

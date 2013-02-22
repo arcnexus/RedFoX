@@ -106,6 +106,22 @@ void Configuracion::Cargar_iva()
     iva_model->select();
 }
 
+int Configuracion::getIdIva(double nIva)
+{
+    QSqlQuery qIVA(QSqlDatabase::database("terra"));
+    qIVA.prepare("select id from tiposiva where nIva = :nIva");
+    qIVA.bindValue(":nIva",nIva);
+    if(!qIVA.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("RECUPERAR ID IVA"),
+                             tr("Falló la recuperación del identificador del IVA : %1").arg(qIVA.lastError().text()));
+        return 0;
+    } else {
+        qIVA.next();
+        return qIVA.record().field("id").value().toDouble();
+    }
+
+}
+
 void Configuracion::Cargar_paises()
 {
     paises.clear();
