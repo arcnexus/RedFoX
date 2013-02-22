@@ -91,6 +91,9 @@ bool Configuracion::EsNumero(QString texto)
 void Configuracion::Cargar_iva()
 {
     ivas.clear();
+    ivaList.clear();
+    reList.clear();
+
     QSqlQuery query(QSqlDatabase::database("terra"));
     if(query.exec("SELECT * FROM tiposiva"))
     {
@@ -100,10 +103,43 @@ void Configuracion::Cargar_iva()
             ivas.insert(key,query.record());
         }
     }
+    if(ivas.size()!=4)
+        qFatal(tr("Cantidad de tipos de iva incompatibles con Terra").toAscii().constData());
+
     if(iva_model == 0)
         iva_model = new QSqlTableModel(this,QSqlDatabase::database("terra"));
     iva_model->setTable("tiposiva");
     iva_model->select();
+
+    QString base1 , base2 , base3 ,base4;
+    QString re1 , re2 , re3 , re4;
+    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+    for (int i = 0;i<keys.size();i++)
+    {
+        QString aux = Configuracion_global->ivas[keys.at(i)].value("nombre_interno").toString();
+        if(aux == "base1")
+        {
+            base1 = Configuracion_global->ivas[keys.at(i)].value("nIVA").toString();
+            re1 = Configuracion_global->ivas[keys.at(i)].value("nRegargoEquivalencia").toString();
+        }
+        else if(aux == "base2")
+        {
+            base2 = Configuracion_global->ivas[keys.at(i)].value("nIVA").toString();
+            re2 = Configuracion_global->ivas[keys.at(i)].value("nRegargoEquivalencia").toString();
+        }
+        else if(aux == "base3")
+        {
+            base3 = Configuracion_global->ivas[keys.at(i)].value("nIVA").toString();
+            re3 = Configuracion_global->ivas[keys.at(i)].value("nRegargoEquivalencia").toString();
+        }
+        else if(aux == "base4")
+        {
+            base4 = Configuracion_global->ivas[keys.at(i)].value("nIVA").toString();
+            re4 = Configuracion_global->ivas[keys.at(i)].value("nRegargoEquivalencia").toString();
+        }
+    }
+    ivaList << base1 << base2 << base3 << base4;
+    reList << re1 << re2 << re3 << re4;
 }
 
 void Configuracion::Cargar_paises()

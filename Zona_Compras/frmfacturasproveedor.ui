@@ -322,7 +322,7 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboPais"/>
+             <widget class="QComboBox" name="combo_pais"/>
             </item>
            </layout>
           </item>
@@ -353,7 +353,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="7" column="1">
-           <widget class="QCheckBox" name="chklRecargoEquivalencia">
+           <widget class="QCheckBox" name="chklRecargoEq">
             <property name="text">
              <string>Recargo Equivalencia</string>
             </property>
@@ -985,7 +985,7 @@ background-color: rgb(253, 0, 4);</string>
                   </widget>
                  </item>
                  <item row="5" column="4">
-                  <widget class="QLineEdit" name="txtnIva_2">
+                  <widget class="QLineEdit" name="txtrTotalIVA_2">
                    <property name="styleSheet">
                     <string notr="true">color: rgb(17, 82, 2);</string>
                    </property>
@@ -1179,7 +1179,7 @@ background-color: rgb(253, 0, 4);</string>
                   </widget>
                  </item>
                  <item row="5" column="6">
-                  <widget class="QLineEdit" name="txtrTotalRecargoEq">
+                  <widget class="QLineEdit" name="txtrTotalRecargoEq_2">
                    <property name="styleSheet">
                     <string notr="true">color: rgb(17, 82, 2);</string>
                    </property>

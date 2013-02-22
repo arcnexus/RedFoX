@@ -58,6 +58,8 @@ public:
 
     QHash <QString,QSqlRecord> ivas;
     QSqlTableModel* iva_model;
+    QStringList ivaList;
+    QStringList reList;
     void Cargar_iva();
 
     QHash <QString,QSqlRecord> paises;
