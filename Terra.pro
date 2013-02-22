@@ -106,7 +106,8 @@ SOURCES += main.cpp\
     Agenda/graphicsevent.cpp \
     Agenda/editeventform.cpp \
     Agenda/agendaform.cpp \
-    Zona_Pacientes/frmpersonascontactocliente.cpp
+    Zona_Pacientes/frmpersonascontactocliente.cpp \
+    Agenda/permisosagendaform.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -181,7 +182,8 @@ HEADERS  += mainwindow.h \
     Agenda/graphicsevent.h \
     Agenda/editeventform.h \
     Agenda/agendaform.h \
-    Zona_Pacientes/frmpersonascontactocliente.h
+    Zona_Pacientes/frmpersonascontactocliente.h \
+    Agenda/permisosagendaform.h
 
 
 FORMS    += mainwindow.ui \
@@ -226,7 +228,8 @@ FORMS    += mainwindow.ui \
     Zona_Administrador/frmconfigterra.ui \
     Agenda/editeventform.ui \
     Agenda/agendaform.ui \
-    Zona_Pacientes/frmpersonascontactocliente.ui
+    Zona_Pacientes/frmpersonascontactocliente.ui \
+    Agenda/permisosagendaform.ui
 
 RESOURCES += \
     terra.qrc \

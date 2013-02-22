@@ -130,6 +130,25 @@ void GraphicsTable::UpdateEventos()
             showEvento(q.record());
     }
     checkCollisions();
+
+    if(m_user == Configuracion_global->id_usuario_activo)
+    {
+        emit allowEdits(true);
+    }
+    else
+    {
+        QString sPermision = QString("SELECT * FROM permisos_agenda WHERE id_Usuario_editor = %1 AND id_Usuario_agenda= %2")
+                .arg(Configuracion_global->id_usuario_activo).arg(m_user);
+        if(q.exec(sPermision))
+        {
+            if(!q.next())
+            {
+                for (int i=0;i<eventos.size();i++)
+                    eventos.at(i)->setReadOnly(true);
+                emit allowEdits(false);
+            }
+        }
+    }
 }
 
 void GraphicsTable::setDate(QDate d)

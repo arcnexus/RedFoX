@@ -64,6 +64,16 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
         QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPedido->text());
         helper.fillTable("empresa","lin_ped",filter);
     }
+
+    ui->txtnPorcentajeIva1->setText(Configuracion_global->ivaList.at(0));
+    ui->txtnPorcentajeIva2->setText(Configuracion_global->ivaList.at(1));
+    ui->txtnPorcentajeIva3->setText(Configuracion_global->ivaList.at(2));
+    ui->txtnPorcentajeIva4->setText(Configuracion_global->ivaList.at(3));
+
+    ui->txtnRec1->setText(Configuracion_global->reList.at(0));
+    ui->txtnRec2->setText(Configuracion_global->reList.at(1));
+    ui->txtnRec3->setText(Configuracion_global->reList.at(2));
+    ui->txtnRec4->setText(Configuracion_global->reList.at(3));
 }
 
 FrmPedidos::~FrmPedidos()
@@ -540,7 +550,7 @@ void FrmPedidos::desglose2Changed(double base, double iva, double re, double tot
 void FrmPedidos::desglose3Changed(double base, double iva, double re, double total)
 {
     ui->txtrBase3->setText(QString::number(base));
-    ui->txtrIVA4->setText(QString::number(iva));
+    ui->txtrIVA3->setText(QString::number(iva));
     ui->txtrRecargoEq3->setText(QString::number(re));
     ui->txtrTotal3->setText(QString::number(total));
 }

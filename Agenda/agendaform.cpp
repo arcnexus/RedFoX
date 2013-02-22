@@ -18,6 +18,7 @@ AgendaForm::AgendaForm(QWidget *parent) :
     table->setObjectName("MainTable");
 
     ui->setupUi(this);    
+    connect(table,SIGNAL(allowEdits(bool)),ui->pushButton,SLOT(setEnabled(bool)));
     connect(ui->time_start,SIGNAL(timeChanged(QTime)),this,SLOT(timeChanged(QTime)));
     connect(ui->time_end,SIGNAL(timeChanged(QTime)),this,SLOT(timeChanged(QTime)));
 
@@ -38,8 +39,6 @@ AgendaForm::AgendaForm(QWidget *parent) :
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setSceneRect(0,0,ui->graphicsView->frameSize().width()-20,1008);
 
-
-
     scene->addItem(table);
 
     QTextCharFormat currentDayHighlight;
@@ -49,7 +48,7 @@ AgendaForm::AgendaForm(QWidget *parent) :
 
     connect(ui->calendarWidget,SIGNAL(clicked(QDate)),table,SLOT(setDate(QDate)));
     ui->calendarWidget->setSelectedDate(today);
-    int id_user = Configuracion_global->usuarios_model->record(ui->combo_user->currentIndex()).value("id").toInt();
+    //int id_user = Configuracion_global->usuarios_model->record(ui->combo_user->currentIndex()).value("id").toInt();
     table->setDate(today);
 
     if(!medic)

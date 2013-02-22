@@ -29,6 +29,7 @@ GraphicsEvent::GraphicsEvent(QGraphicsItem * parent) :
     blue = qrand()%255;
 
     this->setToolTip("Test Tooltip");
+    isReadOnly = false;
 }
 
 QRectF GraphicsEvent::boundingRect() const
@@ -167,6 +168,9 @@ void GraphicsEvent::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void GraphicsEvent::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(isReadOnly)
+        return;
+
     QGraphicsItem::mousePressEvent(event);
 
     on_click = false;
@@ -211,6 +215,9 @@ void GraphicsEvent::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsEvent::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(isReadOnly)
+        return;
+
     QGraphicsItem::mouseReleaseEvent(event);
     if(on_moving)
     {
@@ -232,6 +239,8 @@ void GraphicsEvent::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsEvent::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(isReadOnly)
+        return;
 
     if(on_click)
     {
@@ -304,6 +313,8 @@ void GraphicsEvent::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 
 void GraphicsEvent::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
+    if(isReadOnly)
+        return;
    QMenu menu;
    menu.addAction("Editar");
    menu.addAction("Eliminar");
@@ -316,7 +327,7 @@ void GraphicsEvent::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
        }
        else
        {
-
+            emit aboutClose();
        }
    }
 }
@@ -353,6 +364,8 @@ bool GraphicsEvent::isInJail(QPointF pos)
 
 void GraphicsEvent::EditThis()
 {
+    if(isReadOnly)
+        return;
     QString aux = asunto.replace("<br>","\n");
     EditEventForm form(qApp->activeWindow());
     form.setColor(QColor::fromRgb(red,green,blue));
@@ -654,4 +667,10 @@ void GraphicsEvent::setMain_jail(QRectF jail)
     }
     this->main_jail = jail;
     checkJail();
+}
+
+
+void GraphicsEvent::setReadOnly(bool b)
+{
+    isReadOnly = b;
 }

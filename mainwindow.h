@@ -106,6 +106,7 @@ private slots:
     void on_comboBox_currentIndexChanged(int index);
 
     void showAgenda();
+    void handle_permisosAgenda();
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);

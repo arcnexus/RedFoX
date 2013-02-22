@@ -73,6 +73,11 @@ const QString Login::getEmpresa() const
     return ui->cboEmpresa->currentText();
 }
 
+int Login::getIdUser()
+{
+    return m_id;
+}
+
 
 void Login::on_btnAcceder_clicked()
 {
@@ -101,6 +106,7 @@ void Login::on_btnAcceder_clicked()
             QSqlRecord rUsuario = qryUsers.record();
             if (ui->linePassword->text() == qryUsers.value(2).toString()) 
 			{
+                m_id = qryUsers.value(0).toInt();
                 QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
                 settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
                 settings.setValue("nNivelAcceso",rUsuario.field("nivelacceso").value().toInt());

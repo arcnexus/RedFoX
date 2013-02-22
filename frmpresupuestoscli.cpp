@@ -73,6 +73,16 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     convertir_menu->addAction(aFactura_action);
 
     ui->btn_convertir->setMenu(convertir_menu);
+
+    ui->txtnPorcentajeIva1->setText(Configuracion_global->ivaList.at(0));
+    ui->txtnPorcentajeIva2->setText(Configuracion_global->ivaList.at(1));
+    ui->txtnPorcentajeIva3->setText(Configuracion_global->ivaList.at(2));
+    ui->txtnPorcentajeIva4->setText(Configuracion_global->ivaList.at(3));
+
+    ui->txtnRec1->setText(Configuracion_global->reList.at(0));
+    ui->txtnRec2->setText(Configuracion_global->reList.at(1));
+    ui->txtnRec3->setText(Configuracion_global->reList.at(2));
+    ui->txtnRec4->setText(Configuracion_global->reList.at(3));
     BloquearCampos(true);
 }
 

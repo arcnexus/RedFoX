@@ -7,6 +7,7 @@
 #include "frmagendavisitas.h"
 #include "block_terra_form.h"
 #include "db_table_view.h"
+#include "Agenda/permisosagendaform.h"
 #include <QSplashScreen>
 
 Configuracion * Configuracion_global = 0;
@@ -42,6 +43,8 @@ void MainWindow::crear_barraMantenimiento()
     connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
     connect(ui->btnArt_culos,SIGNAL(triggered()),this,SLOT(btnArticulos_clicked()));
     connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
+    connect(ui->btnAgenda,SIGNAL(triggered()),this,SLOT(showAgenda()));
+    connect(ui->actionPermisos_de_Agenda,SIGNAL(triggered()),this,SLOT(handle_permisosAgenda()));
 }
 
 void MainWindow::crear_barraVentas()
@@ -876,4 +879,10 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 void MainWindow::showAgenda()
 {
     ui->stackedWidget->setCurrentWidget(agendaForm);
+}
+
+void MainWindow::handle_permisosAgenda()
+{
+    PermisosAgendaForm form(this);
+    form.exec();
 }

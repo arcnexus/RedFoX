@@ -79,7 +79,16 @@
        <property name="spacing">
         <number>1</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
         <number>1</number>
        </property>
        <item>
@@ -852,7 +861,7 @@ background-color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>1160</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="nativeMenuBar">
@@ -956,6 +965,7 @@ background-color: rgb(255, 255, 255);</string>
     <addaction name="actionGesti_n_de_Usuarios"/>
     <addaction name="actionPermisos"/>
     <addaction name="actionEdici_n_de_Reports"/>
+    <addaction name="actionPermisos_de_Agenda"/>
    </widget>
    <widget class="QMenu" name="menuAlmacen">
     <property name="title">
@@ -1537,6 +1547,11 @@ background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionPermisos_de_Agenda">
+   <property name="text">
+    <string>Permisos de Agenda</string>
    </property>
   </action>
  </widget>

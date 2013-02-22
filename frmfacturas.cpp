@@ -69,11 +69,15 @@ frmFacturas::frmFacturas( QWidget *parent) :
 
     connect(ui->chklRecargoEquivalencia,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
 
-    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
-    ui->txtnRec1->setText(QString::number(Configuracion_global->ivas[keys.at(0)].value("nRegargoEquivalencia").toDouble(),'f',1));
-    ui->txtnRec2->setText(QString::number(Configuracion_global->ivas[keys.at(1)].value("nRegargoEquivalencia").toDouble(),'f',1));
-    ui->txtnRec3->setText(QString::number(Configuracion_global->ivas[keys.at(2)].value("nRegargoEquivalencia").toDouble(),'f',1));
-    ui->txtnRec4->setText(QString::number(Configuracion_global->ivas[keys.at(3)].value("nRegargoEquivalencia").toDouble(),'f',1));
+    ui->txtnPorcentajeIva1->setText(Configuracion_global->ivaList.at(0));
+    ui->txtnPorcentajeIva2->setText(Configuracion_global->ivaList.at(1));
+    ui->txtnPorcentajeIva3->setText(Configuracion_global->ivaList.at(2));
+    ui->txtnPorcentajeIva4->setText(Configuracion_global->ivaList.at(3));
+
+    ui->txtnRec1->setText(Configuracion_global->reList.at(0));
+    ui->txtnRec2->setText(Configuracion_global->reList.at(1));
+    ui->txtnRec3->setText(Configuracion_global->reList.at(2));
+    ui->txtnRec4->setText(Configuracion_global->reList.at(3));
 
 
     actionGuardaBorrador = new QAction("Guardar borrador",this);
