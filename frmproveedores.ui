@@ -87,6 +87,10 @@ color : #ffffff</string>
           <height>45</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+        </property>
         <property name="text">
          <string>Añadir</string>
         </property>
@@ -109,6 +113,10 @@ color : #ffffff</string>
           <width>0</width>
           <height>45</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
         </property>
         <property name="text">
          <string>Siguiente</string>
@@ -133,6 +141,10 @@ color : #ffffff</string>
           <height>45</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+        </property>
         <property name="text">
          <string>Anterior</string>
         </property>
@@ -155,6 +167,10 @@ color : #ffffff</string>
           <width>0</width>
           <height>45</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
         </property>
         <property name="text">
          <string>Buscar</string>
@@ -179,6 +195,10 @@ color : #ffffff</string>
           <height>45</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+        </property>
         <property name="text">
          <string>Editar</string>
         </property>
@@ -196,11 +216,18 @@ color : #ffffff</string>
       </item>
       <item row="5" column="0">
        <widget class="QPushButton" name="btnGuardar">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
           <height>45</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
         </property>
         <property name="text">
          <string>Guardar</string>
@@ -219,11 +246,18 @@ color : #ffffff</string>
       </item>
       <item row="6" column="0">
        <widget class="QPushButton" name="btnDeshacer">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
           <height>45</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
         </property>
         <property name="text">
          <string>Deshacer</string>
@@ -247,6 +281,10 @@ color : #ffffff</string>
           <width>0</width>
           <height>45</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
         </property>
         <property name="text">
          <string>Borrar</string>

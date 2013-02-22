@@ -187,6 +187,10 @@ color: #ffffff</string>
             <height>16777215</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+          </property>
           <property name="text">
            <string>Buscar</string>
           </property>
@@ -204,6 +208,9 @@ color: #ffffff</string>
         </item>
         <item row="6" column="0">
          <widget class="QPushButton" name="botDeshacer">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="minimumSize">
            <size>
             <width>115</width>
@@ -215,6 +222,10 @@ color: #ffffff</string>
             <width>118</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
           </property>
           <property name="text">
            <string>Deshacer</string>
@@ -245,6 +256,10 @@ color: #ffffff</string>
             <height>16777215</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+          </property>
           <property name="text">
            <string>Editar</string>
           </property>
@@ -273,6 +288,10 @@ color: #ffffff</string>
             <width>118</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
           </property>
           <property name="text">
            <string>Anterior</string>
@@ -303,6 +322,10 @@ color: #ffffff</string>
             <height>16777215</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+          </property>
           <property name="text">
            <string>Añadir</string>
           </property>
@@ -320,6 +343,9 @@ color: #ffffff</string>
         </item>
         <item row="5" column="0">
          <widget class="QPushButton" name="botGuardar">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="minimumSize">
            <size>
             <width>115</width>
@@ -331,6 +357,10 @@ color: #ffffff</string>
             <width>118</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
           </property>
           <property name="text">
            <string>Guardar</string>
@@ -361,6 +391,10 @@ color: #ffffff</string>
             <height>16777215</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+          </property>
           <property name="text">
            <string>Listados</string>
           </property>
@@ -390,6 +424,10 @@ color: #ffffff</string>
             <height>16777215</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+          </property>
           <property name="text">
            <string>Borrar</string>
           </property>
@@ -418,6 +456,10 @@ color: #ffffff</string>
             <width>118</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
           </property>
           <property name="text">
            <string>Siguiente</string>
@@ -623,21 +665,21 @@ color: #ffffff</string>
              <layout class="QGridLayout" name="gridLayout_5">
               <item row="0" column="0">
                <layout class="QGridLayout" name="gridLayout_11">
-                <item row="1" column="0">
+                <item row="0" column="0">
                  <widget class="QLabel" name="label_13">
                   <property name="text">
                    <string>Stock:</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="4">
+                <item row="0" column="4">
                  <widget class="QLabel" name="label_38">
                   <property name="text">
                    <string>Unidades</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="3">
+                <item row="0" column="3">
                  <widget class="QLineEdit" name="txtnStockReal">
                   <property name="enabled">
                    <bool>false</bool>
@@ -657,16 +699,6 @@ background-color: rgb(254, 255, 205);</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="3" colspan="2">
-                 <widget class="QComboBox" name="cboTipoIVA_2"/>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_37">
-                  <property name="text">
-                   <string>T.IVA:</string>
                   </property>
                  </widget>
                 </item>
@@ -1273,106 +1305,6 @@ background-color: rgb(255, 255, 127);</string>
            </layout>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QFrame" name="frame_5">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>361</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(175,195,225);</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_15">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_20">
-              <property name="text">
-               <string>%Descuento Promocional:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="txtrDto">
-              <property name="maximumSize">
-               <size>
-                <width>80</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-              <property name="text">
-               <string>0</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QFrame" name="frame_4">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(175,195,225);</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_2">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_19">
-              <property name="text">
-               <string>Tipo IVA:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QComboBox" name="cboTipoIVA">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
          <item row="1" column="2">
           <widget class="QFrame" name="frame_9">
            <property name="maximumSize">
@@ -1390,10 +1322,7 @@ background-color: rgb(255, 255, 127);</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QFormLayout" name="formLayout">
-            <property name="fieldGrowthPolicy">
-             <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-            </property>
+           <layout class="QGridLayout" name="gridLayout_3">
             <item row="0" column="0">
              <widget class="QLabel" name="label_28">
               <property name="text">
@@ -1831,6 +1760,106 @@ color: rbg(0,0,0);</string>
            </layout>
           </widget>
          </item>
+         <item row="0" column="1">
+          <widget class="QFrame" name="frame_5">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>361</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(175,195,225);</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_15">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_20">
+              <property name="text">
+               <string>%Descuento Promocional:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="txtrDto">
+              <property name="maximumSize">
+               <size>
+                <width>80</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QFrame" name="frame_4">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(175,195,225);</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_19">
+              <property name="text">
+               <string>Tipo IVA:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="cboTipoIVA">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="tab_8">
@@ -2199,7 +2228,6 @@ Imagen.</string>
   <tabstop>txtcDescripcionResumida</tabstop>
   <tabstop>txtcProveedor</tabstop>
   <tabstop>pushButton</tabstop>
-  <tabstop>cboTipoIVA_2</tabstop>
   <tabstop>txtcSeccion</tabstop>
   <tabstop>botBuscarSeccion</tabstop>
   <tabstop>txtcFamilia</tabstop>

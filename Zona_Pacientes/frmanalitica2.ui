@@ -14,28 +14,36 @@
    <string>Añadir campos de analítica</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="terra.qrc">
+   <iconset resource="../terra.qrc">
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="1">
     <widget class="QPushButton" name="btnAnadir">
+     <property name="styleSheet">
+      <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+     </property>
      <property name="text">
       <string>Añadir</string>
      </property>
      <property name="icon">
-      <iconset resource="terra.qrc">
+      <iconset resource="../terra.qrc">
        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
      </property>
     </widget>
    </item>
    <item row="1" column="2">
     <widget class="QPushButton" name="btnCancelar">
+     <property name="styleSheet">
+      <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+     </property>
      <property name="text">
       <string>Cancelar</string>
      </property>
      <property name="icon">
-      <iconset resource="terra.qrc">
+      <iconset resource="../terra.qrc">
        <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
      </property>
     </widget>
@@ -59,7 +67,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="../terra.qrc"/>
  </resources>
  <connections/>
 </ui>

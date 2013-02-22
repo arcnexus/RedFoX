@@ -194,11 +194,9 @@ FORMS    += mainwindow.ui \
     Busquedas/frmbuscarpoblacion.ui \
     Busquedas/frmBuscarFactura.ui \
     Zona_Administrador/frmempresas.ui \
-    frmconfiguracion.ui \
     frmalbaran.ui \
     frmpedidos.ui \
     frmpresupuestoscli.ui \
-    frmagendavisitas.ui \
     Zona_Pacientes/frmfichapaciente.ui \
     Zona_Pacientes/frmanadirmedicamento.ui \
     Busquedas/frmbuscarcie.ui \

@@ -286,6 +286,10 @@
        <height>33</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+     </property>
      <property name="text">
       <string>Aceptar</string>
      </property>

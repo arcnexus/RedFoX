@@ -111,7 +111,7 @@
         <string>Buscar</string>
        </property>
        <property name="icon">
-        <iconset resource="terra.qrc">
+        <iconset resource="../terra.qrc">
          <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
        </property>
       </widget>
@@ -125,6 +125,10 @@
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QPushButton" name="btnAceptar">
+       <property name="styleSheet">
+        <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+       </property>
        <property name="text">
         <string>&amp;Aceptar</string>
        </property>
@@ -132,6 +136,10 @@
      </item>
      <item>
       <widget class="QPushButton" name="btnCancelar">
+       <property name="styleSheet">
+        <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+       </property>
        <property name="text">
         <string>&amp;Cancelar</string>
        </property>
@@ -173,7 +181,7 @@
   <tabstop>Grid</tabstop>
  </tabstops>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="../terra.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -16,16 +16,18 @@ public:
     explicit frmPersonasContactoCliente(QWidget *parent = 0);
     ~frmPersonasContactoCliente();
     int nIdCliente;
+   void  RefrescarTabla();
     Cliente oCliente;
 
 private:
     Ui::frmPersonasContactoCliente *ui;
-   void  RefrescarTabla();
+
 
 
 private slots:
     void Anadir();
     void Borrar();
+
 };
 
 #endif // FRMPERSONASCONTACTOCLIENTE_H

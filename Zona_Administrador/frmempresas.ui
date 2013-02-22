@@ -174,6 +174,10 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+           </property>
            <property name="text">
             <string>Añadir</string>
            </property>
@@ -208,6 +212,10 @@
              <width>115</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
            </property>
            <property name="text">
             <string>Siguiente</string>
@@ -244,6 +252,10 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+           </property>
            <property name="text">
             <string>Anterior</string>
            </property>
@@ -278,6 +290,10 @@
              <width>115</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
            </property>
            <property name="text">
             <string>Buscar</string>
@@ -314,12 +330,16 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+           </property>
            <property name="text">
             <string>Borrar</string>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+            <iconset resource="../terra.qrc">
+             <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -348,6 +368,10 @@
              <width>115</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
            </property>
            <property name="text">
             <string>Guardar</string>
@@ -384,12 +408,16 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+           </property>
            <property name="text">
             <string>Cerrar</string>
            </property>
            <property name="icon">
             <iconset resource="../terra.qrc">
-             <normaloff>:/Icons/PNG/alert.png</normaloff>:/Icons/PNG/alert.png</iconset>
+             <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
            </property>
           </widget>
          </item>

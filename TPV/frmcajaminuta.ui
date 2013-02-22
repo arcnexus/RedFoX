@@ -1761,7 +1761,8 @@ color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
+          <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
          </property>
          <property name="text">
           <string>Poner en Espera</string>
@@ -1783,7 +1784,8 @@ color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
+          <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
          </property>
          <property name="text">
           <string>Ver Agenda</string>
@@ -1808,8 +1810,8 @@ color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);
-</string>
+          <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
          </property>
          <property name="text">
           <string>Cobrar Ticket</string>
@@ -1831,7 +1833,8 @@ color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
+          <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
          </property>
          <property name="text">
           <string>Nueva Visita</string>
@@ -1853,7 +1856,8 @@ color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
+          <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
          </property>
          <property name="text">
           <string>Imprimir Informe</string>
@@ -1875,7 +1879,8 @@ color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
+          <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
          </property>
          <property name="text">
           <string>Recuperar en Espera</string>

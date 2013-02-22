@@ -25,24 +25,9 @@ public:
     QString cSubfamilia;
     QString cCodigoIva;
     double nTipoIva;
-    double rCoste;
-    double rTarifa1;
-    double rTarifa2;
-    double rTarifa3;
     double rDto;
-    double nDtoProveedor;
-    double nDtoProveedor2;
-    double nDtoProveedor3;
     QDate dUltimaCompra;
     QDate dUltimaVenta;
-    double nMargen1;
-    double nMargen2;
-    double nMargen3;
-    double rPrecioMedio;
-    double nUnidadesCompradas;
-    double rPrecioMedio2;
-    double nUnidadesVendidas;
-    double rPrecioMedio3;
     double rAcumuladoCompras;
     double rAcumuladoVentas;
     QString tComentario;
@@ -64,7 +49,14 @@ public:
     int nPaquetes;
     QString cLocalizacion;
     double pvp;
-
+    int id_tiposiva;
+    int idsubsubfamilia;
+    int idgrupoart;
+    int idweb;
+    int stockfisico;
+    int nUnidadesCompradas;
+    int nUnidadesVendidas;
+    double rCoste;
 
     Articulo(QObject* parent = 0);
     void Anadir();

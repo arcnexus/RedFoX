@@ -14,7 +14,7 @@
    <string>Buscar CIE</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="terra.qrc">
+   <iconset resource="../terra.qrc">
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -41,7 +41,7 @@
       <string>Buscar CIE</string>
      </property>
      <property name="icon">
-      <iconset resource="terra.qrc">
+      <iconset resource="../terra.qrc">
        <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
      </property>
     </widget>
@@ -51,22 +51,30 @@
    </item>
    <item row="2" column="1" colspan="2">
     <widget class="QPushButton" name="btnAceptar">
+     <property name="styleSheet">
+      <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+     </property>
      <property name="text">
       <string>Aceptar</string>
      </property>
      <property name="icon">
-      <iconset resource="terra.qrc">
+      <iconset resource="../terra.qrc">
        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
      </property>
     </widget>
    </item>
    <item row="2" column="3">
     <widget class="QPushButton" name="btnCancelar">
+     <property name="styleSheet">
+      <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+     </property>
      <property name="text">
       <string>Cancelar</string>
      </property>
      <property name="icon">
-      <iconset resource="terra.qrc">
+      <iconset resource="../terra.qrc">
        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
      </property>
     </widget>
@@ -87,7 +95,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="../terra.qrc"/>
  </resources>
  <connections/>
 </ui>

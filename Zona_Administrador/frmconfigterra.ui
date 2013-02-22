@@ -80,7 +80,9 @@
    <item row="3" column="2">
     <widget class="QPushButton" name="pushButton">
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
+      <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }
+</string>
      </property>
      <property name="text">
       <string>Guardar</string>
@@ -90,7 +92,9 @@
    <item row="3" column="3">
     <widget class="QPushButton" name="pushButton_2">
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
+      <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }
+</string>
      </property>
      <property name="text">
       <string>Cancelar</string>
@@ -165,8 +169,7 @@ color: rgb(255,255,255);</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">
-</string>
+      <string notr="true"/>
      </property>
      <property name="currentIndex">
       <number>2</number>

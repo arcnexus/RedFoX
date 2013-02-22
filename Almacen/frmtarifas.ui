@@ -111,6 +111,9 @@
        <height>54</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 127);</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -120,6 +123,10 @@
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
        <widget class="QPushButton" name="pushButton">
+        <property name="styleSheet">
+         <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+        </property>
         <property name="text">
          <string>Guardar</string>
         </property>
@@ -127,6 +134,10 @@
       </item>
       <item row="0" column="1">
        <widget class="QPushButton" name="pushButton_2">
+        <property name="styleSheet">
+         <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+        </property>
         <property name="text">
          <string>Cancelar</string>
         </property>

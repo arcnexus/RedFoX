@@ -1101,5 +1101,6 @@ void frmClientes::Contactos()
 {
     frmPersonasContactoCliente contacto;
     contacto.nIdCliente = oCliente->id;
+    contacto.RefrescarTabla();
    contacto.exec();
 }

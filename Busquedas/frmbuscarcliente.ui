@@ -29,7 +29,7 @@
     <string>Buscar</string>
    </property>
    <property name="icon">
-    <iconset resource="terra.qrc">
+    <iconset resource="../terra.qrc">
      <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
    </property>
   </widget>
@@ -91,6 +91,10 @@
      <height>24</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+   </property>
    <property name="text">
     <string>&amp;Aceptar</string>
    </property>
@@ -103,6 +107,10 @@
      <width>91</width>
      <height>24</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
    </property>
    <property name="text">
     <string>&amp;Cancelar</string>
@@ -117,7 +125,7 @@
   <tabstop>Grid</tabstop>
  </tabstops>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="../terra.qrc"/>
  </resources>
  <connections>
   <connection>

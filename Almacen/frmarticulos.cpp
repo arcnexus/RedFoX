@@ -252,7 +252,6 @@ void FrmArticulos::LLenarCampos()
    int nIndex = ui->cboTipoIVA->findText(QString::number(oArticulo->nTipoIva));
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
-   ui->txtrCoste->setText(QString::number(oArticulo->rCoste,'f',2));
    ui->txtrDto->setText(QString::number(oArticulo->rDto,'f',2));
    ui->txtdFechaUltimaCompra->setDate(oArticulo->dUltimaCompra);
    ui->txtdFechaUltimaVenta->setDate(oArticulo->dUltimaVenta);
@@ -292,8 +291,7 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->cSeccion=ui->txtcSeccion->text();
     oArticulo->cSubfamilia=ui->txtcSubFamilia->text();
     oArticulo->nTipoIva=ui->cboTipoIVA->currentText().toDouble();
-    oArticulo->rCoste=ui->txtrCoste->text().toDouble();;
-    oArticulo->rTarifa3=ui->txtrDto->text().toDouble();
+    oArticulo->rCoste=ui->txtrCoste->text().toDouble();
     oArticulo->dUltimaCompra= ui->txtdFechaUltimaCompra->date();
     oArticulo->dUltimaVenta= ui->txtdFechaUltimaVenta->date();
     oArticulo->nUnidadesCompradas= ui->txtnUnidadesCompradas->text().toDouble();
