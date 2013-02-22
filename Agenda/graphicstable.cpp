@@ -100,7 +100,7 @@ void GraphicsTable::addEvento(QColor color, QDateTime start, QDateTime end ,QStr
     int id = 0;
     if(q.exec())
         id = q.lastInsertId().toInt();
-    appendEvento(id , start, end, color,titulo, asunto , isCita , id_cliente);
+    appendEvento(id , start, end, color,titulo, asunto , id_cliente, isCita );
 }
 
 qreal GraphicsTable::timeToPos( int hour , int minute)

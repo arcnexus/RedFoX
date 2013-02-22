@@ -84,7 +84,7 @@ void AgendaForm::on_pushButton_clicked()
     QString asunto = ui->txt_asunto->toPlainText();
     QString tituloEvento = ui->txt_tituloEvento->text();
     asunto.replace("\n","<br>");
-    int id_user = Configuracion_global->usuarios_model->record(ui->combo_user->currentIndex()).value("id").toInt();
+    int id_user = Configuracion_global->usuarios_model->record(ui->combo_user->currentIndex()).value("Id").toInt();
     bool isCita = ui->reunion_group->isChecked();
     int id_cliente = Configuracion_global->client_model->record(ui->combo_cliente->currentIndex()).value("Id").toInt();
     table->addEvento(event_color,s,e,tituloEvento,asunto,isCita,id_cliente);
