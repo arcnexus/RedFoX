@@ -41,23 +41,13 @@ SOURCES += main.cpp\
     Zona_Pacientes/cliente.cpp \
     proveedor.cpp \
     Busquedas/frmbuscarcliente.cpp \
-    frmfacturas.cpp \
-    factura.cpp \
     Busquedas/frmbuscarpoblacion.cpp \
     configuracion.cpp \
     empresa.cpp \
     Busquedas/frmBuscarFactura.cpp \
     columnafecha.cpp \
     Zona_Administrador/frmempresas.cpp \
-    frmconfiguracion.cpp \
-    albaran.cpp \
-    frmalbaran.cpp \
-    frmpedidos.cpp \
-    pedidos.cpp \
-    frmpresupuestoscli.cpp \
-    presupuesto.cpp \
     Zona_Pacientes/frmfichapaciente.cpp \
-    frmagendavisitas.cpp \
     sqlcalls.cpp \
     Zona_Pacientes/paciente.cpp \
     Zona_Pacientes/episodio.cpp \
@@ -107,7 +97,15 @@ SOURCES += main.cpp\
     Agenda/editeventform.cpp \
     Agenda/agendaform.cpp \
     Zona_Pacientes/frmpersonascontactocliente.cpp \
-    Agenda/permisosagendaform.cpp
+    Agenda/permisosagendaform.cpp \
+    Zona_Ventas/presupuesto.cpp \
+    Zona_Ventas/pedidos.cpp \
+    Zona_Ventas/frmpresupuestoscli.cpp \
+    Zona_Ventas/frmpedidos.cpp \
+    Zona_Ventas/frmfacturas.cpp \
+    Zona_Ventas/frmalbaran.cpp \
+    Zona_Ventas/factura.cpp \
+    Zona_Ventas/albaran.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -117,21 +115,12 @@ HEADERS  += mainwindow.h \
     Zona_Pacientes/cliente.h \
     proveedor.h \
     Busquedas/frmbuscarcliente.h \
-    frmfacturas.h \
-    factura.h \
     Busquedas/frmbuscarpoblacion.h \
     configuracion.h \
     empresa.h \
     Busquedas/frmBuscarFactura.h \
     columnafecha.h \
     Zona_Administrador/frmempresas.h \
-    frmconfiguracion.h \
-    albaran.h \
-    frmalbaran.h \
-    frmpedidos.h \
-    pedidos.h \
-    frmpresupuestoscli.h \
-    presupuesto.h \
     Zona_Pacientes/frmfichapaciente.h \
     frmagendavisitas.h \
     sqlcalls.h \
@@ -183,7 +172,15 @@ HEADERS  += mainwindow.h \
     Agenda/editeventform.h \
     Agenda/agendaform.h \
     Zona_Pacientes/frmpersonascontactocliente.h \
-    Agenda/permisosagendaform.h
+    Agenda/permisosagendaform.h \
+    Zona_Ventas/presupuesto.h \
+    Zona_Ventas/pedidos.h \
+    Zona_Ventas/frmpresupuestoscli.h \
+    Zona_Ventas/frmpedidos.h \
+    Zona_Ventas/frmfacturas.h \
+    Zona_Ventas/frmalbaran.h \
+    Zona_Ventas/factura.h \
+    Zona_Ventas/albaran.h
 
 
 FORMS    += mainwindow.ui \
@@ -191,14 +188,10 @@ FORMS    += mainwindow.ui \
     login.ui \
     frmproveedores.ui \
     Busquedas/frmbuscarcliente.ui \
-    frmfacturas.ui \
     pruebas.ui \
     Busquedas/frmbuscarpoblacion.ui \
     Busquedas/frmBuscarFactura.ui \
     Zona_Administrador/frmempresas.ui \
-    frmalbaran.ui \
-    frmpedidos.ui \
-    frmpresupuestoscli.ui \
     Zona_Pacientes/frmfichapaciente.ui \
     Zona_Pacientes/frmanadirmedicamento.ui \
     Busquedas/frmbuscarcie.ui \
@@ -229,10 +222,14 @@ FORMS    += mainwindow.ui \
     Agenda/editeventform.ui \
     Agenda/agendaform.ui \
     Zona_Pacientes/frmpersonascontactocliente.ui \
-    Agenda/permisosagendaform.ui
+    Agenda/permisosagendaform.ui \
+    Zona_Ventas/frmpresupuestoscli.ui \
+    Zona_Ventas/frmpedidos.ui \
+    Zona_Ventas/frmfacturas.ui \
+    Zona_Ventas/frmalbaran.ui
 
 RESOURCES += \
-    terra.qrc \
+    terra.qrc
 
 OTHER_FILES += \
     TODO.txt

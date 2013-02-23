@@ -472,7 +472,6 @@ void frmFacturas::Guardar_factura()
 
     if(in_edit)
     {
-        //FIXME factura legal?
         succes &= oFactura->GuardarFactura(oFactura->Id,false);
         succes &= oFactura->BorrarLineasFactura(oFactura->Id);
         succes &= helper.saveTable(oFactura->Id,"empresa","lin_fac");

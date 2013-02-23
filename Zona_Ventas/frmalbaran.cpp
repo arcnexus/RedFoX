@@ -423,6 +423,8 @@ void FrmAlbaran::on_btnGuardar_clicked()
     }
     else
     {
+        ui->txtcAlbaran->setText(QString::number(oAlbaran->NuevoNumeroAlbaran()));
+        LLenarAlbaran();
         succes &= oAlbaran->AnadirAlbaran();
         succes &= helper.saveTable(ui->txtcAlbaran->text().toInt(),"empresa","lin_alb");
     }
