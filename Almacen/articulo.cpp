@@ -77,6 +77,12 @@ bool Articulo::Recuperar(QString cSQL)
                this->nEtiquetas = registro.field("nEtiquetas").value().toInt();
                this->nPaquetes = registro.field("nPaquetes").value().toInt();
                this->cLocalizacion = registro.field("cLocalizacion").value().toString();
+               this->id_tiposiva = registro.field("id_tiposiva").value().toInt();
+               this->idsubsubfamilia = registro.field("idsubsubfamilia").value().toInt();
+               this->idgrupoart = registro.field("idgrupoart").value().toInt();
+               this->idweb = registro.field("idweb").value().toInt();
+               this->stockfisico = registro.field("stockfisco").value().toInt();
+
                // Recupero proveedor
                QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
                qryProveedor->prepare("select id,cCodigo,cProveedor from proveedores where id = :id");
@@ -153,7 +159,12 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->lMostrarWeb = registro.field("lMostrarWeb").value().toInt();
                this->nEtiquetas = registro.field("nEtiquetas").value().toInt();
                this->nPaquetes = registro.field("nPaquetes").value().toInt();
-               this->cLocalizacion = registro.field("cLocalizacion").value().toString();
+               this->cLocalizacion = registro.field("cLocalizacion").value().toString(); 
+               this->id_tiposiva = registro.field("id_tiposiva").value().toInt();
+               this->idsubsubfamilia = registro.field("idsubsubfamilia").value().toInt();
+               this->idgrupoart = registro.field("idgrupoart").value().toInt();
+               this->idweb = registro.field("idweb").value().toInt();
+               this->stockfisico = registro.field("stockfisco").value().toInt();
                // Recupero proveedor
                QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
                qryProveedor->prepare("select id,cCodigo,cProveedor from proveedores where id = :id");

@@ -61,7 +61,8 @@ public:
     QStringList ivaList;
     QStringList reList;
     void Cargar_iva();
-    int getIdIva(double nIva);
+    int getIdIva(QString cIva);
+    QString setTipoIva(int idIva);
 
     QHash <QString,QSqlRecord> paises;
     QSqlTableModel* paises_model;

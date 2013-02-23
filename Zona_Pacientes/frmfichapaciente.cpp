@@ -10,7 +10,6 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamAttributes>
 #include <QtXml/QtXml>
-#include "../frmagendavisitas.h"
 #include "../sqlcalls.h"
 #include "paciente.h"
 #include "episodio.h"

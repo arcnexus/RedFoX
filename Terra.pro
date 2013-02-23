@@ -122,7 +122,6 @@ HEADERS  += mainwindow.h \
     columnafecha.h \
     Zona_Administrador/frmempresas.h \
     Zona_Pacientes/frmfichapaciente.h \
-    frmagendavisitas.h \
     sqlcalls.h \
     Zona_Pacientes/paciente.h \
     Zona_Pacientes/episodio.h \

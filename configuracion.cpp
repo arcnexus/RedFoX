@@ -142,11 +142,11 @@ void Configuracion::Cargar_iva()
     reList << re1 << re2 << re3 << re4;
 }
 
-int Configuracion::getIdIva(double nIva)
+int Configuracion::getIdIva(QString cIva)
 {
     QSqlQuery qIVA(QSqlDatabase::database("terra"));
-    qIVA.prepare("select id from tiposiva where nIva = :nIva");
-    qIVA.bindValue(":nIva",nIva);
+    qIVA.prepare("select id from tiposiva where cTipo = :cIva");
+    qIVA.bindValue(":cIva",cIva);
     if(!qIVA.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("RECUPERAR ID IVA"),
                              tr("Falló la recuperación del identificador del IVA : %1").arg(qIVA.lastError().text()));
@@ -156,6 +156,21 @@ int Configuracion::getIdIva(double nIva)
         return qIVA.record().field("id").value().toDouble();
     }
 
+}
+
+QString Configuracion::setTipoIva(int idIva)
+{
+    QSqlQuery qIVA(QSqlDatabase::database("terra"));
+    qIVA.prepare("select cTipo from tiposiva where id = :id");
+    qIVA.bindValue(":id",idIva);
+    if(!qIVA.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("RECUPERAR ID IVA"),
+                             tr("Falló la recuperación del identificador del IVA : %1").arg(qIVA.lastError().text()));
+        return 0;
+    } else {
+        qIVA.next();
+        return qIVA.record().field("cTipo").value().toString();
+    }
 }
 
 void Configuracion::Cargar_paises()

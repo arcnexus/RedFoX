@@ -668,7 +668,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_13">
                   <property name="text">
-                   <string>Stock:</string>
+                   <string>Stock Real:</string>
                   </property>
                  </widget>
                 </item>
@@ -699,6 +699,40 @@ background-color: rgb(254, 255, 205);</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_12">
+                  <property name="text">
+                   <string>Stock Fisico:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="3">
+                 <widget class="QLineEdit" name="txtStockFisico">
+                  <property name="maximumSize">
+                   <size>
+                    <width>80</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(254, 255, 205);</string>
+                  </property>
+                  <property name="text">
+                   <string>0</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="4">
+                 <widget class="QLabel" name="label_17">
+                  <property name="text">
+                   <string>Unidades</string>
                   </property>
                  </widget>
                 </item>
@@ -1029,7 +1063,7 @@ color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLineEdit" name="txtcSubFamilia_2">
+             <widget class="QLineEdit" name="txtcSubSubFamilia">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -1055,7 +1089,7 @@ color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item row="3" column="2">
-             <widget class="QPushButton" name="botBuscarSubfamilia_2">
+             <widget class="QPushButton" name="botBuscarSubsubfamilia">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -1088,7 +1122,7 @@ color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QLineEdit" name="txtcSubFamilia_3">
+             <widget class="QLineEdit" name="txtcGupoArt">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -1114,7 +1148,7 @@ color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item row="4" column="2">
-             <widget class="QPushButton" name="botBuscarSubfamilia_3">
+             <widget class="QPushButton" name="botBuscarGrupo">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -2234,10 +2268,10 @@ Imagen.</string>
   <tabstop>botBuscarFamilia</tabstop>
   <tabstop>txtcSubFamilia</tabstop>
   <tabstop>botBuscarSubfamilia</tabstop>
-  <tabstop>txtcSubFamilia_2</tabstop>
-  <tabstop>botBuscarSubfamilia_2</tabstop>
-  <tabstop>txtcSubFamilia_3</tabstop>
-  <tabstop>botBuscarSubfamilia_3</tabstop>
+  <tabstop>txtcSubSubFamilia</tabstop>
+  <tabstop>botBuscarSubsubfamilia</tabstop>
+  <tabstop>txtcGupoArt</tabstop>
+  <tabstop>botBuscarGrupo</tabstop>
   <tabstop>chklMostrarWeb</tabstop>
   <tabstop>txttComentario</tabstop>
   <tabstop>cboTipoIVA</tabstop>

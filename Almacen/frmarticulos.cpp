@@ -14,7 +14,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     // Cargar valores IVA
     //Configuracion_global->CargarDatos();
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
-    ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("nIva"));
+    ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
 
 
 
@@ -278,6 +278,10 @@ void FrmArticulos::LLenarCampos()
        ui->chklMostrarWeb->setChecked(false);
 //    // Recuperamos imagen desde BD
    oArticulo->CargarImagen(ui->lblImagenArticulo);
+    // llenamos combo iva
+  nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tiposiva));
+  if(nIndex >-1)
+      ui->cboTipoIVA->setCurrentIndex(nIndex);
 }
 
 void FrmArticulos::CargarCamposEnArticulo()
@@ -291,7 +295,7 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->cSeccion=ui->txtcSeccion->text();
     oArticulo->cSubfamilia=ui->txtcSubFamilia->text();
     oArticulo->nTipoIva=Configuracion_global->ivas[ui->cboTipoIVA->currentText()].value("nIva").toDouble();
-    oArticulo->id_tiposiva = Configuracion_global->getIdIva(ui->cboTipoIVA->currentText().toDouble());
+    oArticulo->id_tiposiva = Configuracion_global->getIdIva(ui->cboTipoIVA->currentText());
     oArticulo->rCoste=ui->txtrCoste->text().toDouble();
     oArticulo->dUltimaCompra= ui->txtdFechaUltimaCompra->date();
     oArticulo->dUltimaVenta= ui->txtdFechaUltimaVenta->date();
@@ -315,6 +319,11 @@ void FrmArticulos::CargarCamposEnArticulo()
         oArticulo->lMostrarWeb = 1;
     else
         oArticulo->lMostrarWeb = 0;
+    oArticulo->id_tiposiva = Configuracion_global->getIdIva(ui->cboTipoIVA->currentText());
+//    this->idsubsubfamilia = registro.field("idsubsubfamilia").value().toInt();
+//    this->idgrupoart = registro.field("idgrupoart").value.toInt();
+//    this->idweb = registro.field("idweb").value().toInt();
+    oArticulo->stockfisico = ui->txtStockFisico->text().toInt();
 
 }
 
@@ -592,6 +601,35 @@ void FrmArticulos::on_botBuscarSubfamilia_clicked()
     if (query.exec())
         if(query.next())
             form.set_filter("Id_Seccion = "+query.record().value(0).toString());
+
+    if(form.exec() == QDialog::Accepted)
+    {
+        ui->txtcSubFamilia->setText(form.selected_value);
+    }
+}
+
+void FrmArticulos::on_botBuscarSubSubFamilia_clicked()
+{
+    Db_table_View form(this);
+    form.set_db("terra");
+    form.set_table("subsubfamilias");
+
+    form.setWindowTitle(tr("Subsubfamilias"));
+
+    QStringList headers;
+    headers << tr("SubsubFamilia") << tr("Pertenece a");
+    form.set_table_headers(headers);
+
+    form.set_relation(2,QSqlRelation("subfamilias","id","cSubfamilia"));
+
+    form.set_columnHide(0);
+
+    form.set_selection("cSubsubfamilia");
+    QSqlQuery query(QSqlDatabase::database("terra"));
+    query.prepare(QString("SELECT id FROM subfamilias WHERE cFamilia = '%1'").arg(ui->txtcFamilia->text()));
+    if (query.exec())
+        if(query.next())
+            form.set_filter("idsubfamilia = "+query.record().value(0).toString());
 
     if(form.exec() == QDialog::Accepted)
     {
