@@ -104,7 +104,7 @@ void Configuracion::Cargar_iva()
         }
     }
     if(ivas.size()!=4)
-        qFatal(tr("Cantidad de tipos de iva incompatibles con Terra").toAscii().constData());
+        qWarning(tr("Cantidad de tipos de iva incompatibles con Terra").toAscii().constData());
 
     if(iva_model == 0)
         iva_model = new QSqlTableModel(this,QSqlDatabase::database("terra"));

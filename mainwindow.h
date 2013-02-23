@@ -2,23 +2,27 @@
 #define MAINWINDOW_H
 
 #include "Auxiliares/Globlal_Include.h"
-
-//
-#include "Zona_Pacientes/frmClientes.h"
-#include "frmfacturas.h"
-#include "Almacen/frmarticulos.h"
-#include "frmproveedores.h"
-#include "frmalbaran.h"
-#include "frmpedidos.h"
-#include "frmpresupuestoscli.h"
-#include "TPV/frmcajaminuta.h"
 #include "Auxiliares/init_form.h"
 #include "Auxiliares/toolbarbutton.h"
+//
+#include "Zona_Pacientes/frmClientes.h"
+
+#include "Almacen/frmarticulos.h"
+#include "frmproveedores.h"
+
+#include "TPV/frmcajaminuta.h"
+
 #include "Zona_Compras/frmpedidosproveedor.h"
 #include "Zona_Compras/frmalbaranproveedor.h"
 #include "Zona_Compras/frmfacturasproveedor.h"
-#include "Zona_Ventas/frmfacturaralabaranes.h"
 #include "Zona_Compras/frmorden_pedido_producto.h"
+
+#include "Zona_Ventas/frmfacturaralabaranes.h"
+#include "Zona_Ventas/frmalbaran.h"
+#include "Zona_Ventas/frmpedidos.h"
+#include "Zona_Ventas/frmpresupuestoscli.h"
+#include "Zona_Ventas/frmfacturas.h"
+
 
 #include "openrptLibs/Auxiliares/reportwriterwindow.h"
 #include "Agenda/agendaform.h"

@@ -444,6 +444,8 @@ void FrmPedidos::on_btnGuardar_clicked()
     }
     else
     {
+        ui->txtnPedido->setText(QString::number(oPedido->NuevoNumeroPedido()));
+        LLenarPedido();
         succes &= oPedido->AnadirPedido();
         succes &= oPedido->GuardarPedido(iPed);
         succes &= helper.saveTable(iPed,"empresa","lin_ped");

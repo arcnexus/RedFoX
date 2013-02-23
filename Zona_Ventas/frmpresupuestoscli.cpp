@@ -485,6 +485,9 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
     }
     else
     {
+        int next = oPres->NuevoNumeroPresupuesto();
+        ui->txtnPresupuesto->setText(QString::number(next));
+        LLenarPresupuesto();
         succes &= oPres->AnadirPresupuesto();
         succes &= helper.saveTable(oPres->nPresupuesto,"empresa","lin_pre");
         if(succes)

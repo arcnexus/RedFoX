@@ -3,7 +3,7 @@
 #include "login.h"
 #include "Zona_Administrador/frmempresas.h"
 #include "Zona_Compras/frmpedidosproveedor.h"
-#include "frmconfiguracion.h"
+//#include "frmconfiguracion.h"
 #include "frmagendavisitas.h"
 #include "block_terra_form.h"
 #include "db_table_view.h"
