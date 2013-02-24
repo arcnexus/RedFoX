@@ -105,7 +105,9 @@ SOURCES += main.cpp\
     Zona_Ventas/frmfacturas.cpp \
     Zona_Ventas/frmalbaran.cpp \
     Zona_Ventas/factura.cpp \
-    Zona_Ventas/albaran.cpp
+    Zona_Ventas/albaran.cpp \
+    Busquedas/frmbuscarproveedor.cpp \
+    Almacen/frmtipostarifa.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -179,7 +181,9 @@ HEADERS  += mainwindow.h \
     Zona_Ventas/frmfacturas.h \
     Zona_Ventas/frmalbaran.h \
     Zona_Ventas/factura.h \
-    Zona_Ventas/albaran.h
+    Zona_Ventas/albaran.h \
+    Busquedas/frmbuscarproveedor.h \
+    Almacen/frmtipostarifa.h
 
 
 FORMS    += mainwindow.ui \
@@ -225,7 +229,9 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmpresupuestoscli.ui \
     Zona_Ventas/frmpedidos.ui \
     Zona_Ventas/frmfacturas.ui \
-    Zona_Ventas/frmalbaran.ui
+    Zona_Ventas/frmalbaran.ui \
+    Busquedas/frmbuscarproveedor.ui \
+    Almacen/frmtipostarifa.ui
 
 RESOURCES += \
     terra.qrc

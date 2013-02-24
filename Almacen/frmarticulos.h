@@ -50,6 +50,7 @@ private slots:
     void on_botBuscarSubfamilia_clicked();
 
     void on_botBuscarSubSubFamilia_clicked();
+    void on_btnBuscarProveedor_clicked();
 
 
 public slots:

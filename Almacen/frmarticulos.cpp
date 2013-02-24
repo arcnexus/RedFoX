@@ -1,6 +1,7 @@
 #include "frmarticulos.h"
 #include "ui_frmarticulos.h"
 #include "../Almacen/frmtarifas.h"
+#include "Busquedas/frmbuscarproveedor.h"
 
 #include "../db_table_view.h"
 
@@ -15,9 +16,6 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     //Configuracion_global->CargarDatos();
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
     ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
-
-
-
 
     // Control objetos
     ui->lblMensajeRecuperar->setVisible(false);
@@ -167,7 +165,10 @@ void FrmArticulos::bloquearCampos() {
     ui->botBuscarSeccion->setEnabled(false);
     ui->botBuscarFamilia->setEnabled(false);
     ui->botBuscarSubfamilia->setEnabled(false);
+    ui->botBuscarSubSubFamilia->setEnabled(false);
     ui->botCambiarImagen->setEnabled(false);
+    ui->botBuscarGrupo->setEnabled(false);
+    ui->btnBuscarProveedor->setEnabled(false);
 
 }
 void FrmArticulos::desbloquearCampos() {
@@ -232,7 +233,10 @@ void FrmArticulos::desbloquearCampos() {
     ui->botBuscarSeccion->setEnabled(true);
     ui->botBuscarFamilia->setEnabled(true);
     ui->botBuscarSubfamilia->setEnabled(true);
+    ui->botBuscarSubSubFamilia->setEnabled(true);
+    ui->botBuscarGrupo->setEnabled(true);
     ui->botCambiarImagen->setEnabled(true);
+    ui->btnBuscarProveedor->setEnabled(true);
 }
 
 void FrmArticulos::LLenarCampos()
@@ -272,6 +276,11 @@ void FrmArticulos::LLenarCampos()
    ui->txtnCantidadPendienteRecibir->setText(QString::number(oArticulo->nCantidadPendienteRecibir));
    ui->txtdFechaPrevistaRecepcion->setDate(oArticulo->dFechaPrevistaRecepcion);
    ui->txtnReservados->setText(QString::number(oArticulo->nReservados));
+   ui->txtcSeccion->setText(oArticulo->getcSeccion(oArticulo->id_Seccion));
+   ui->txtcFamilia->setText(oArticulo->getcFamilia(oArticulo->id_Familia));
+   ui->txtcSubFamilia->setText(oArticulo->getcSubFamilia(oArticulo->id_SubFamilia));
+   ui->txtcSubSubFamilia->setText((oArticulo->getcSubSubFamilia(oArticulo->idsubsubfamilia)));
+   ui->txtcGupoArt->setText(oArticulo->getcGrupo(oArticulo->idgrupoart));
    if (oArticulo->lMostrarWeb==1)
         ui->chklMostrarWeb->setChecked(true);
     else
@@ -320,8 +329,14 @@ void FrmArticulos::CargarCamposEnArticulo()
     else
         oArticulo->lMostrarWeb = 0;
     oArticulo->id_tiposiva = Configuracion_global->getIdIva(ui->cboTipoIVA->currentText());
-//    this->idsubsubfamilia = registro.field("idsubsubfamilia").value().toInt();
-//    this->idgrupoart = registro.field("idgrupoart").value.toInt();
+    oArticulo->id_Seccion = oArticulo->getIdSeccion(ui->txtcSeccion->text());
+    oArticulo->id_Familia  = oArticulo->getIdFamilia(ui->txtcFamilia->text());
+    oArticulo->id_SubFamilia = oArticulo->getIdSubFamilia(ui->txtcSubFamilia->text());
+    oArticulo->idsubsubfamilia = oArticulo->getIdSubSufFamilia(ui->txtcSubSubFamilia->text());
+    oArticulo->idgrupoart = oArticulo->getIdGrupo(ui->txtcGupoArt->text());
+    oArticulo->cCodProveedor = ui->txtCodigoProveedor->text();
+    oArticulo->cProveedor = ui->txtcProveedor->text();
+
 //    this->idweb = registro.field("idweb").value().toInt();
     oArticulo->stockfisico = ui->txtStockFisico->text().toInt();
 
@@ -566,9 +581,9 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
 
     form.set_columnHide(0);
 
-    form.set_selection("cCodigo");//FIXME cCodigo o cFamilia???
+    form.set_selection("cFamilia");
     QSqlQuery query(QSqlDatabase::database("terra"));
-    query.prepare(QString("SELECT id FROM secciones WHERE cSeccion = '%1' ").arg(ui->txtcSeccion->text()));
+    query.prepare(QString("SELECT id FROM secciones WHERE cFamilia = '%1' ").arg(ui->txtcFamilia->text()));
     if (query.exec())
         if(query.next())
             form.set_filter("Id_Seccion = "+query.record().value(0).toString());
@@ -635,6 +650,24 @@ void FrmArticulos::on_botBuscarSubSubFamilia_clicked()
     {
         ui->txtcSubFamilia->setText(form.selected_value);
     }
+}
+
+void FrmArticulos::on_btnBuscarProveedor_clicked()
+{
+    FrmBuscarProveedor buscar(this);
+    if(buscar.exec()==QDialog::Accepted)
+    {
+        QSqlQuery qProv(QSqlDatabase::database("terra"));
+        qProv.prepare("Select * from proveedores where id =:nId");
+        qProv.bindValue(":nId",buscar.nIdProv);
+        if(qProv.exec()){
+            qProv.next();
+            ui->txtCodigoProveedor->setText(qProv.record().field("cCodigo").value().toString());
+            ui->txtcProveedor->setText(qProv.record().field("cProveedor").value().toString());
+            oArticulo->id_Proveedor = buscar.nIdProv;
+        }
+    }
+
 }
 
 

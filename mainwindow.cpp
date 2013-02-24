@@ -8,6 +8,7 @@
 #include "db_table_view.h"
 #include "Agenda/permisosagendaform.h"
 #include <QSplashScreen>
+#include <Almacen/frmtipostarifa.h>
 
 Configuracion * Configuracion_global = 0;
 
@@ -214,9 +215,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAvisos,SIGNAL(triggered()),this,SLOT(hande_avisos()));
     connect(ui->actionTipos_de_imagen,SIGNAL(triggered()),this,SLOT(handle_tiposImagen()));
     connect(ui->actionTipos_de_anal_tica,SIGNAL(triggered()),this,SLOT(handle_tipoAnalitica()));
-    connect(ui->actionTarifas,SIGNAL(triggered()), this,SLOT(handle_tipostarifa()));
+    connect(ui->actionTarifas,SIGNAL(triggered()), this,SLOT(tipostarifa()));
     connect(ui->actionCampos_de_analitica,SIGNAL(triggered()),this,SLOT(handle_campoAnalitica()));
-    connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));  
+    connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));
+    connect(ui->actionMonedas,SIGNAL(triggered()),this,SLOT(handle_monedas()));
 
     QTimer::singleShot(0,this,SLOT(init()));
 }
@@ -733,11 +735,11 @@ void MainWindow::handle_paises()
     form.setWindowTitle(tr("Paises"));
 
     QStringList headers;
-    headers << tr("Pais");
+    headers << tr("Pais") << tr("Moneda");
     form.set_table_headers(headers);
 
     form.set_columnHide(0);
-
+    form.set_relation(2,QSqlRelation("monedas","id","moneda"));
     form.set_printFile("/home/arcnexus/TerraReports/clientes.xml");//TODO hacer directorio general de reports
     form.exec();
     Configuracion_global->Cargar_paises();
@@ -828,16 +830,35 @@ void MainWindow::handle_motivoInterConsulta()
 }
 
 
-void MainWindow::handle_tipostarifa()
+void MainWindow::tipostarifa()
+{
+//    Db_table_View form(this);
+//    form.set_db("terra");
+//    form.set_table("codigotarifa");
+
+//    form.setWindowTitle(tr("Tipos de tarifa"));
+
+//    QStringList headers;
+//    headers << tr("Descripción Tarifa");
+//    form.set_table_headers(headers);
+
+//    form.set_columnHide(400);
+//    form.exec();
+    FrmTiposTarifa tipotar(this);
+    tipotar.exec();
+
+}
+
+void MainWindow::handle_monedas()
 {
     Db_table_View form(this);
     form.set_db("terra");
-    form.set_table("codigotarifa");
+    form.set_table("monedas");
 
-    form.setWindowTitle(tr("Tipos de tarifa"));
+    form.setWindowTitle(tr("Monedas"));
 
     QStringList headers;
-    headers << tr("Descripción Tarifa");
+    headers << tr("Moneda");
     form.set_table_headers(headers);
 
     form.set_columnHide(400);

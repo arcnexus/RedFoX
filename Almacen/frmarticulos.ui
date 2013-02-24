@@ -79,7 +79,8 @@
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(208, 233, 255)</string>
+        <string notr="true">color: rgb(208, 233, 255);
+font: 12pt &quot;Sans Serif&quot;;</string>
        </property>
        <property name="text">
         <string>código</string>
@@ -95,7 +96,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(208, 233, 255)</string>
+        <string notr="true">color: rgb(208, 233, 255);
+font: 12pt &quot;Sans Serif&quot;;</string>
        </property>
        <property name="text">
         <string>Descripcion</string>
@@ -668,7 +670,8 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_13">
                   <property name="text">
-                   <string>Stock Real:</string>
+                   <string>Stock Real:
+(fisico + pendiente recibir)</string>
                   </property>
                  </widget>
                 </item>
@@ -809,6 +812,9 @@ background-color: rgb(254, 255, 205);</string>
            </item>
            <item row="2" column="3">
             <widget class="QPushButton" name="btnBuscarProveedor">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -1089,7 +1095,7 @@ color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item row="3" column="2">
-             <widget class="QPushButton" name="botBuscarSubsubfamilia">
+             <widget class="QPushButton" name="botBuscarSubSubFamilia">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -1286,7 +1292,7 @@ alternate-background-color: rgb(255, 255, 202);</string>
            </property>
            <property name="maximumSize">
             <size>
-             <width>262</width>
+             <width>300</width>
              <height>40</height>
             </size>
            </property>
@@ -2269,7 +2275,7 @@ Imagen.</string>
   <tabstop>txtcSubFamilia</tabstop>
   <tabstop>botBuscarSubfamilia</tabstop>
   <tabstop>txtcSubSubFamilia</tabstop>
-  <tabstop>botBuscarSubsubfamilia</tabstop>
+  <tabstop>botBuscarSubSubFamilia</tabstop>
   <tabstop>txtcGupoArt</tabstop>
   <tabstop>botBuscarGrupo</tabstop>
   <tabstop>chklMostrarWeb</tabstop>

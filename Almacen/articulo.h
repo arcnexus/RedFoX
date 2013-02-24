@@ -68,7 +68,16 @@ public:
     static void Vender(int id, int cantidad, double rPVP);
     void Devolucion(int id, int cantidad, double rImporte, QString cMotivo, QString dFechaDevolucion);
     void CargarImagen(QLabel *label);
-
+    int getIdSeccion(QString cSeccion_);
+    int getIdFamilia(QString cFamilia_);
+    int getIdSubFamilia(QString cSubfamilia_);
+    int getIdSubSufFamilia(QString cSubSubFamilia_);
+    int getIdGrupo(QString cGrupo_);
+    QString getcSeccion(int nId);
+    QString getcFamilia(int nId);
+    QString getcSubFamilia(int nId);
+    QString getcSubSubFamilia(int nId);
+    QString getcGrupo(int nId);
 private:
 
     QSqlQuery qryArticulo;
