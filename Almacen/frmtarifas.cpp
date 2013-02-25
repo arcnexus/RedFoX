@@ -42,7 +42,7 @@ void FrmTarifas::cargarDatosTarifa(QModelIndex indice)
         this->codigoTarifa = qTarifa.record().field("codigo_tarifa").value().toString();
         this->margen = ui->spinMargen->value();
         this->margen_min = ui->spinMargenMinimo->value();
-        this->pvp =ui->txtPVPDivisa->text().toDouble();
+        this->pvp =Configuracion_global->FormatoNumerico(ui->txtPVPDivisa->text()).toDouble();
 
     }
 }

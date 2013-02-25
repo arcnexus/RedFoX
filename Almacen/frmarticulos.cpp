@@ -708,8 +708,6 @@ void FrmArticulos::on_btnAnadirTarifa_clicked()
         qTarifa.bindValue(":pvp",addTarifa.pvp);
         qTarifa.bindValue(":id_codigotarifa",addTarifa.codigoTarifa);
         if(qTarifa.exec()) {
-            QMessageBox::information(this,tr("Gestión de Productos/Servicios"),
-                                 tr("Se ha agregado una nueva tarifa"),tr("Aceptar"));
             QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
             modelTarifa->setQuery("select codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp "
                                  "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
