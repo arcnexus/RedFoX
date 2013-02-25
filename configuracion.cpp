@@ -191,6 +191,32 @@ void Configuracion::Cargar_paises()
     paises_model->select();
 }
 
+QString Configuracion::Devolver_pais(int id)
+{
+    QSqlQuery qPais(QSqlDatabase::database("terra"));
+    qPais.prepare("select pais from paises where id = :nId");
+    qPais.bindValue(":nId",id);
+    if(qPais.exec())
+    {
+        qPais.next();
+        return qPais.record().field("pais").value().toString();
+    }
+    return "";
+}
+
+QString Configuracion::Devolver_moneda(int id)
+{
+    QSqlQuery qMoneda(QSqlDatabase::database("terra"));
+    qMoneda.prepare("select moneda from monedas where id = :nId");
+    qMoneda.bindValue(":nId",id);
+    if(qMoneda.exec())
+    {
+        qMoneda.next();
+        return qMoneda.record().field("moneda").value().toString();
+    }
+    return "";
+}
+
 void Configuracion::CargarClientes()
 {
     if(client_model == 0)

@@ -61,21 +61,25 @@ void FrmArticulos::on_botAnadir_clicked()
 {
     desbloquearCampos();
     VaciarCampos();
+    oArticulo->Anadir();
     this->anadir = true;
-    //LLenarCampos();
+    LLenarCampos();
     //ui->lblImagenArticulo->setPixmap(QPixmap::fromImage());
     ui->txtcCodigo->setFocus();
 }
 
 void FrmArticulos::on_botGuardar_clicked()
 {
-    bloquearCampos();
-    CargarCamposEnArticulo();
-    if(this->anadir){
-        this->anadir = false;
-        oArticulo->Anadir();
-    } else {
+    if(!ui->txtcSeccion->text().isEmpty())
+    {
+        bloquearCampos();
+        CargarCamposEnArticulo();
         oArticulo->Guardar();
+    } else
+    {
+        QMessageBox::warning(this,tr("Gestion de Productos/servicios"),
+                             tr("Es necesario que asocie el registro a una sección antes de poder guardar"),
+                             tr("Aceptar"));
     }
 }
 
@@ -291,6 +295,11 @@ void FrmArticulos::LLenarCampos()
   nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tiposiva));
   if(nIndex >-1)
       ui->cboTipoIVA->setCurrentIndex(nIndex);
+  QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
+  modelTarifa->setQuery("select codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp "
+                       "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
+                       QSqlDatabase::database("terra"));
+  ui->TablaTarifas->setModel(modelTarifa);
 }
 
 void FrmArticulos::CargarCamposEnArticulo()
@@ -374,6 +383,7 @@ void FrmArticulos::VaciarCampos()
    ui->txtnReservados->clear();
    ui->chklMostrarWeb->setChecked(false);
    ui->lblImagenArticulo->clear();
+   ui->txtCodigoProveedor->clear();
 
 }
 
@@ -468,9 +478,20 @@ void FrmArticulos::on_botRotarImagen90_clicked()
 
 void FrmArticulos::on_botDeshacer_clicked()
 {
-    QString cSql = "Select * from articulos where Id =" +QString::number(oArticulo->id);
-    oArticulo->Recuperar(cSql);
-    LLenarCampos();
+    if(this->anadir)
+    {
+        QSqlQuery qArt(QSqlDatabase::database("terra"));
+        qArt.prepare("delete from articulos where id = :nId");
+        qArt.bindValue("nId",oArticulo->id);
+        if(qArt.exec());
+            VaciarCampos();
+        this->anadir = false;
+    } else
+        {
+        QString cSql = "Select * from articulos where Id =" +QString::number(oArticulo->id);
+        oArticulo->Recuperar(cSql);
+        LLenarCampos();
+    }
     bloquearCampos();
 }
 
@@ -668,6 +689,38 @@ void FrmArticulos::on_btnBuscarProveedor_clicked()
         }
     }
 
+}
+
+void FrmArticulos::on_btnAnadirTarifa_clicked()
+{
+    FrmTarifas addTarifa(this);
+    if(addTarifa.exec() ==QDialog::Accepted)
+    {
+        QSqlQuery qTarifa(QSqlDatabase::database("terra"));
+        qTarifa.prepare("INSERT INTO `TerraGeneral`.`tarifas` (`id_Articulo`, `id_pais`,"
+                        "`id_monedas`, `margen`, `margenminimo`, `pvp`, `id_codigotarifa`) "
+                        "VALUES (:id, :id_pais,:id_monedas,:margen,:margenminimo,:pvp,:id_codigotarifa);");
+        qTarifa.bindValue(":id",oArticulo->id);
+        qTarifa.bindValue(":id_pais",addTarifa.id_pais);
+        qTarifa.bindValue(":id_monedas",addTarifa.id_moneda);
+        qTarifa.bindValue(":margen",addTarifa.margen);
+        qTarifa.bindValue(":margenminimo",addTarifa.margen_min);
+        qTarifa.bindValue(":pvp",addTarifa.pvp);
+        qTarifa.bindValue(":id_codigotarifa",addTarifa.codigoTarifa);
+        if(qTarifa.exec()) {
+            QMessageBox::information(this,tr("Gestión de Productos/Servicios"),
+                                 tr("Se ha agregado una nueva tarifa"),tr("Aceptar"));
+            QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
+            modelTarifa->setQuery("select codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp "
+                                 "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
+                                 QSqlDatabase::database("terra"));
+            ui->TablaTarifas->setModel(modelTarifa);
+        } else {
+            QMessageBox::information(this,tr("Gestión de Productos/Servicios"),
+                                      tr("Ocurrió un error al insertar una tarifa en el artículo: %1").arg(qTarifa.lastError().text()),
+                                     tr("Acceptar"));
+        }
+    }
 }
 
 

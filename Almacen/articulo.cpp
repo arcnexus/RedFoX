@@ -8,8 +8,8 @@ Articulo::Articulo(QObject *parent) : QObject(parent)
 void Articulo::Anadir()
 {
     QSqlQuery query(QSqlDatabase::database("terra"));
-         query.prepare("INSERT INTO articulos (cCodigo)"
-                       " VALUES (:cCodigo)");
+         query.prepare("INSERT INTO articulos (cCodigo,id_Seccion)"
+                       " VALUES (:cCodigo,1)");
 
          query.bindValue(":cCodigo",this->cCodigo);
 
