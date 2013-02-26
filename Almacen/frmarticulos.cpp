@@ -34,8 +34,6 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     for (int i = 0; i< headers.size();i++)
         tarifa_model->setHeaderData(i+1, Qt::Horizontal, headers.at(i));
 
-
-
     bloquearCampos();
 
     //--------------------------------
@@ -295,11 +293,22 @@ void FrmArticulos::LLenarCampos()
   nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tiposiva));
   if(nIndex >-1)
       ui->cboTipoIVA->setCurrentIndex(nIndex);
+  //---------------------
+  // Tarifas
+  //---------------------
   QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
   modelTarifa->setQuery("select codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp "
                        "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
                        QSqlDatabase::database("terra"));
   ui->TablaTarifas->setModel(modelTarifa);
+
+  //-----------------------
+  // Proveedores frecuentes
+  //-----------------------
+  QSqlQueryModel *pr_frecuentes = new QSqlQueryModel(this);
+  pr_frecuentes->setQuery("select id, cProveedor from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
+                          QSqlDatabase::database("terra"));
+  ui->tablaProveedores->setModel(pr_frecuentes);
 }
 
 void FrmArticulos::CargarCamposEnArticulo()
