@@ -2,7 +2,7 @@
 #define FRMTARIFAS_H
 
 #include <QDialog>
-
+#include "Auxiliares/Globlal_Include.h"
 namespace Ui {
 class FrmTarifas;
 }
@@ -14,9 +14,18 @@ class FrmTarifas : public QDialog
 public:
     explicit FrmTarifas(QWidget *parent = 0);
     ~FrmTarifas();
+    int id_tarifa;
+    double margen;
+    double margen_min;
+    double pvp;
+    int id_pais;
+    int id_moneda;
+    QString codigoTarifa;
     
 private:
     Ui::FrmTarifas *ui;
+private slots:
+    void cargarDatosTarifa(QModelIndex);
 };
 
 #endif // FRMTARIFAS_H

@@ -106,7 +106,8 @@ private slots:
     void handle_tipoAnalitica();
     void handle_campoAnalitica();
     void handle_motivoInterConsulta();
-    void handle_tipostarifa();
+    void tipostarifa();
+    void handle_monedas();
     void on_comboBox_currentIndexChanged(int index);
 
     void showAgenda();

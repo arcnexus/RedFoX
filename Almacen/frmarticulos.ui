@@ -26,8 +26,8 @@
   <property name="styleSheet">
    <string notr="true">background: #4c6088</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
-   <item>
+  <layout class="QGridLayout" name="gridLayout_8">
+   <item row="0" column="0">
     <widget class="QLabel" name="label_5">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -40,7 +40,7 @@
      </property>
     </widget>
    </item>
-   <item>
+   <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label_21">
@@ -79,7 +79,8 @@
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(208, 233, 255)</string>
+        <string notr="true">color: rgb(208, 233, 255);
+font: 12pt &quot;Sans Serif&quot;;</string>
        </property>
        <property name="text">
         <string>código</string>
@@ -95,7 +96,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(208, 233, 255)</string>
+        <string notr="true">color: rgb(208, 233, 255);
+font: 12pt &quot;Sans Serif&quot;;</string>
        </property>
        <property name="text">
         <string>Descripcion</string>
@@ -146,7 +148,7 @@ color: rgb(255, 255, 255);</string>
      </item>
     </layout>
    </item>
-   <item>
+   <item row="2" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QFrame" name="frame_16">
@@ -668,7 +670,8 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_13">
                   <property name="text">
-                   <string>Stock Real:</string>
+                   <string>Stock Real:
+(fisico + pendiente recibir)</string>
                   </property>
                  </widget>
                 </item>
@@ -748,13 +751,6 @@ background-color: rgb(254, 255, 205);</string>
              </layout>
             </widget>
            </item>
-           <item row="2" column="4">
-            <widget class="QPushButton" name="pushButton">
-             <property name="text">
-              <string>P.Frecuentes</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="1" colspan="4">
             <widget class="QLineEdit" name="txtcDescripcion">
              <property name="maximumSize">
@@ -809,6 +805,9 @@ background-color: rgb(254, 255, 205);</string>
            </item>
            <item row="2" column="3">
             <widget class="QPushButton" name="btnBuscarProveedor">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -853,7 +852,119 @@ background-color: rgb(254, 255, 205);</string>
            </item>
           </layout>
          </item>
-         <item row="2" column="0">
+         <item row="2" column="0" rowspan="2">
+          <widget class="QFrame" name="frame_6">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>129</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(175,195,225);
+</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_12">
+            <item row="1" column="0">
+             <widget class="QTableView" name="tablaProveedores">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255,210);</string>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_23">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>19</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+              </property>
+              <property name="text">
+               <string>Proveedores Frecuentes</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QFrame" name="frame_10">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(175,195,225);
+</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_13">
+            <item row="0" column="0">
+             <widget class="QCheckBox" name="chklMostrarWeb">
+              <property name="toolTip">
+               <string>Seleccionar si se desea que el artículo aparezca en la tienda virtual en su web</string>
+              </property>
+              <property name="text">
+               <string>Mostrar artículo en la web</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="3" column="1" rowspan="2">
+          <widget class="QFrame" name="frame">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(175,195,225);
+</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_10">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>Comentarios:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QTextEdit" name="txttComentario">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="4" column="0">
           <widget class="QFrame" name="frame_3">
            <property name="minimumSize">
             <size>
@@ -1089,7 +1200,7 @@ color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item row="3" column="2">
-             <widget class="QPushButton" name="botBuscarSubsubfamilia">
+             <widget class="QPushButton" name="botBuscarSubSubFamilia">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -1176,46 +1287,6 @@ color: rgb(0, 0, 0);</string>
            </layout>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QFrame" name="frame_10">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(175,195,225);
-</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_13">
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_18">
-              <property name="text">
-               <string>Comentarios:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QTextEdit" name="txttComentario">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QCheckBox" name="chklMostrarWeb">
-              <property name="toolTip">
-               <string>Seleccionar si se desea que el artículo aparezca en la tienda virtual en su web</string>
-              </property>
-              <property name="text">
-               <string>Mostrar artículo en la web</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="tab_4">
@@ -1267,6 +1338,40 @@ alternate-background-color: rgb(255, 255, 202);</string>
               </property>
              </widget>
             </item>
+            <item row="1" column="0">
+             <widget class="QPushButton" name="btnAnadirTarifa">
+              <property name="text">
+               <string>Añadir Tarifa</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../terra.qrc">
+                <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>14</width>
+                <height>14</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPushButton" name="btnBorrarTarifa">
+              <property name="text">
+               <string>Borrar Tarifa</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../terra.qrc">
+                <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>14</width>
+                <height>14</height>
+               </size>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -1286,7 +1391,7 @@ alternate-background-color: rgb(255, 255, 202);</string>
            </property>
            <property name="maximumSize">
             <size>
-             <width>262</width>
+             <width>300</width>
              <height>40</height>
             </size>
            </property>
@@ -1568,14 +1673,15 @@ color: rbg(0,0,0);</string>
               </property>
              </widget>
             </item>
-            <item row="6" column="0">
+            <item row="7" column="0">
              <widget class="QLabel" name="label_32">
               <property name="text">
-               <string>Stock Real:</string>
+               <string>Stock Real:
+(fisico+ pendiente recibir)</string>
               </property>
              </widget>
             </item>
-            <item row="6" column="1">
+            <item row="7" column="1">
              <widget class="QLineEdit" name="txtnStockReal_2">
               <property name="enabled">
                <bool>false</bool>
@@ -1604,14 +1710,14 @@ color: rbg(0,0,0);</string>
               </property>
              </widget>
             </item>
-            <item row="7" column="0">
+            <item row="8" column="0">
              <widget class="QLabel" name="label_44">
               <property name="text">
                <string>Pendientes recibir:</string>
               </property>
              </widget>
             </item>
-            <item row="7" column="1">
+            <item row="8" column="1">
              <widget class="QLineEdit" name="txtnCantidadPendienteRecibir">
               <property name="enabled">
                <bool>false</bool>
@@ -1640,15 +1746,18 @@ color: rbg(0,0,0);</string>
               </property>
              </widget>
             </item>
-            <item row="8" column="0">
+            <item row="9" column="0">
              <widget class="QLabel" name="lblFechaPrevistaRecepcion">
               <property name="text">
                <string>Fecha Prev. Recepc.:</string>
               </property>
              </widget>
             </item>
-            <item row="8" column="1">
+            <item row="9" column="1">
              <widget class="QDateEdit" name="txtdFechaPrevistaRecepcion">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -1682,14 +1791,14 @@ color: rbg(0,0,0);</string>
               </property>
              </widget>
             </item>
-            <item row="9" column="0">
+            <item row="10" column="0">
              <widget class="QLabel" name="label_45">
               <property name="text">
                <string>Cantidad reservada:</string>
               </property>
              </widget>
             </item>
-            <item row="9" column="1">
+            <item row="10" column="1">
              <widget class="QLineEdit" name="txtnReservados">
               <property name="enabled">
                <bool>false</bool>
@@ -1718,14 +1827,14 @@ color: rbg(0,0,0);</string>
               </property>
              </widget>
             </item>
-            <item row="10" column="0">
+            <item row="11" column="0">
              <widget class="QLabel" name="label_33">
               <property name="text">
                <string>Fecha últ. Compra:</string>
               </property>
              </widget>
             </item>
-            <item row="10" column="1">
+            <item row="11" column="1">
              <widget class="QDateEdit" name="txtdFechaUltimaCompra">
               <property name="enabled">
                <bool>false</bool>
@@ -1761,14 +1870,14 @@ color: rbg(0,0,0);</string>
               </property>
              </widget>
             </item>
-            <item row="11" column="0">
+            <item row="12" column="0">
              <widget class="QLabel" name="label_34">
               <property name="text">
                <string>Fecha últ. Venta:</string>
               </property>
              </widget>
             </item>
-            <item row="11" column="1">
+            <item row="12" column="1">
              <widget class="QDateEdit" name="txtdFechaUltimaVenta">
               <property name="enabled">
                <bool>false</bool>
@@ -1788,6 +1897,27 @@ color: rbg(0,0,0);</string>
               </property>
               <property name="calendarPopup">
                <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_22">
+              <property name="text">
+               <string>Stock Fisico:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLineEdit" name="txtStockfisico">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(254, 255, 205);
+color: rbg(0,0,0);</string>
+              </property>
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -2261,7 +2391,6 @@ Imagen.</string>
   <tabstop>txtcDescripcion</tabstop>
   <tabstop>txtcDescripcionResumida</tabstop>
   <tabstop>txtcProveedor</tabstop>
-  <tabstop>pushButton</tabstop>
   <tabstop>txtcSeccion</tabstop>
   <tabstop>botBuscarSeccion</tabstop>
   <tabstop>txtcFamilia</tabstop>
@@ -2269,11 +2398,10 @@ Imagen.</string>
   <tabstop>txtcSubFamilia</tabstop>
   <tabstop>botBuscarSubfamilia</tabstop>
   <tabstop>txtcSubSubFamilia</tabstop>
-  <tabstop>botBuscarSubsubfamilia</tabstop>
+  <tabstop>botBuscarSubSubFamilia</tabstop>
   <tabstop>txtcGupoArt</tabstop>
   <tabstop>botBuscarGrupo</tabstop>
   <tabstop>chklMostrarWeb</tabstop>
-  <tabstop>txttComentario</tabstop>
   <tabstop>cboTipoIVA</tabstop>
   <tabstop>txtrDto</tabstop>
   <tabstop>txtnUnidadesCompradas</tabstop>

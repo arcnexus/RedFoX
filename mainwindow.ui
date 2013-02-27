@@ -79,16 +79,7 @@
        <property name="spacing">
         <number>1</number>
        </property>
-       <property name="leftMargin">
-        <number>1</number>
-       </property>
-       <property name="topMargin">
-        <number>1</number>
-       </property>
-       <property name="rightMargin">
-        <number>1</number>
-       </property>
-       <property name="bottomMargin">
+       <property name="margin">
         <number>1</number>
        </property>
        <item>
@@ -861,7 +852,7 @@ background-color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>1160</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="nativeMenuBar">
@@ -882,7 +873,9 @@ background-color: rgb(255, 255, 255);</string>
     <addaction name="actionBancos"/>
     <addaction name="actionPaises"/>
     <addaction name="actionAvisos"/>
+    <addaction name="separator"/>
     <addaction name="actionTarifas"/>
+    <addaction name="actionMonedas"/>
     <addaction name="separator"/>
     <addaction name="btnSalir"/>
    </widget>
@@ -1277,7 +1270,7 @@ background-color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionTarifas">
    <property name="text">
-    <string>Grupos de Tarifa</string>
+    <string>Tipos de Tarifa</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -1552,6 +1545,11 @@ background-color: rgb(255, 255, 255);</string>
   <action name="actionPermisos_de_Agenda">
    <property name="text">
     <string>Permisos de Agenda</string>
+   </property>
+  </action>
+  <action name="actionMonedas">
+   <property name="text">
+    <string>Monedas</string>
    </property>
   </action>
  </widget>

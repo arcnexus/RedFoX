@@ -8,8 +8,8 @@ Articulo::Articulo(QObject *parent) : QObject(parent)
 void Articulo::Anadir()
 {
     QSqlQuery query(QSqlDatabase::database("terra"));
-         query.prepare("INSERT INTO articulos (cCodigo)"
-                       " VALUES (:cCodigo)");
+         query.prepare("INSERT INTO articulos (cCodigo,id_Seccion)"
+                       " VALUES (:cCodigo,1)");
 
          query.bindValue(":cCodigo",this->cCodigo);
 
@@ -390,20 +390,134 @@ void Articulo::CargarImagen(QLabel *label)
     }
 }
 
+int Articulo::getIdSeccion(QString cSeccion_)
+{
+    QSqlQuery Query(QSqlDatabase::database("terra"));
+    Query.prepare("select id from secciones where cSeccion = :cValor ");
+    Query.bindValue(":cValor",cSeccion_);
+    if(!Query.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Seccion"),
+                             tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
+    } else
+      Query.next();
+    return Query.record().field("id").value().toInt();
+}
+
+int Articulo::getIdFamilia(QString cFamilia_)
+{
+    QSqlQuery Query(QSqlDatabase::database("terra"));
+    Query.prepare("select id from familias where cFamilia = :cValor ");
+    Query.bindValue(":cValor",cFamilia_);
+    if(!Query.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Familia"),
+                             tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
+    } else
+      Query.next();
+    return Query.record().field("id").value().toInt();
+}
+
+int Articulo::getIdSubFamilia(QString cSubfamilia_)
+{
+    QSqlQuery Query(QSqlDatabase::database("terra"));
+    Query.prepare("select id from subfamilias where cSubfamilia = :cValor ");
+    Query.bindValue(":cValor",cSubfamilia_);
+    if(!Query.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Sub-Familia"),
+                             tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
+    } else
+      Query.next();
+    return Query.record().field("id").value().toInt();
+}
+
+int Articulo::getIdSubSufFamilia(QString cSubSubFamilia_)
+{
+    QSqlQuery Query(QSqlDatabase::database("terra"));
+    Query.prepare("select id from subsubfamilias where subsubfamilia = :cValor ");
+    Query.bindValue(":cValor",cSubSubFamilia_);
+    if(!Query.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Sub-Sub-Familia"),
+                             tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
+    } else
+      Query.next();
+    return Query.record().field("id").value().toInt();
+}
+
+int Articulo::getIdGrupo(QString cGrupo_)
+{
+    QSqlQuery Query(QSqlDatabase::database("terra"));
+    Query.prepare("select id from gruposart where grupoart = :cValor ");
+    Query.bindValue(":cValor",cGrupo_);
+    if(!Query.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Grupo Artículo"),
+                             tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
+    } else
+      Query.next();
+    return Query.record().field("id").value().toInt();
+}
+
+QString Articulo::getcSeccion(int nId)
+{
+    QSqlQuery Query(QSqlDatabase::database("terra"));
+    Query.prepare("select cSeccion from secciones where id = :cValor ");
+    Query.bindValue(":cValor",nId);
+    if(!Query.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Secciones"),
+                             tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
+    } else
+      Query.next();
+    return Query.record().field("cSeccion").value().toString();
+}
+QString Articulo::getcFamilia(int nId)
+{
+    QSqlQuery Query(QSqlDatabase::database("terra"));
+    Query.prepare("select cFamilia from familias where id = :cValor ");
+    Query.bindValue(":cValor",nId);
+    if(!Query.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Familias"),
+                             tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
+    } else
+      Query.next();
+    return Query.record().field("cFamilia").value().toString();
+}
 
 
 
+QString Articulo::getcSubFamilia(int nId)
+{
+    QSqlQuery Query(QSqlDatabase::database("terra"));
+    Query.prepare("select cSubfamilia from subfamilias where id = :cValor ");
+    Query.bindValue(":cValor",nId);
+    if(!Query.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Sub-Familias"),
+                             tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
+    } else
+      Query.next();
+    return Query.record().field("cSubfamilia").value().toString();
 
+}
 
+QString Articulo::getcSubSubFamilia(int nId)
+{
+    QSqlQuery Query(QSqlDatabase::database("terra"));
+    Query.prepare("select subsubfamilia from subsubfamilias where id = :cValor ");
+    Query.bindValue(":cValor",nId);
+    if(!Query.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Sub-sub-Familias"),
+                             tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
+    } else
+      Query.next();
+    return Query.record().field("subsubfamilia").value().toString();
+}
 
-
-
-
-
-
-
-
-
-
-
-
+QString Articulo::getcGrupo(int nId)
+{
+    QSqlQuery Query(QSqlDatabase::database("terra"));
+    Query.prepare("select grupoart from gruposart where id = :cValor ");
+    Query.bindValue(":cValor",nId);
+    if(!Query.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Grupo Artículo"),
+                             tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
+    } else
+      Query.next();
+    return Query.record().field("grupoart").value().toString();
+}

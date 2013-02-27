@@ -1,6 +1,7 @@
 #include "frmarticulos.h"
 #include "ui_frmarticulos.h"
 #include "../Almacen/frmtarifas.h"
+#include "Busquedas/frmbuscarproveedor.h"
 
 #include "../db_table_view.h"
 
@@ -15,9 +16,6 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     //Configuracion_global->CargarDatos();
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
     ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
-
-
-
 
     // Control objetos
     ui->lblMensajeRecuperar->setVisible(false);
@@ -35,8 +33,6 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     headers<< "Margen" << "Margen minimo" << "P.V.P";
     for (int i = 0; i< headers.size();i++)
         tarifa_model->setHeaderData(i+1, Qt::Horizontal, headers.at(i));
-
-
 
     bloquearCampos();
 
@@ -63,21 +59,25 @@ void FrmArticulos::on_botAnadir_clicked()
 {
     desbloquearCampos();
     VaciarCampos();
+    oArticulo->Anadir();
     this->anadir = true;
-    //LLenarCampos();
+    LLenarCampos();
     //ui->lblImagenArticulo->setPixmap(QPixmap::fromImage());
     ui->txtcCodigo->setFocus();
 }
 
 void FrmArticulos::on_botGuardar_clicked()
 {
-    bloquearCampos();
-    CargarCamposEnArticulo();
-    if(this->anadir){
-        this->anadir = false;
-        oArticulo->Anadir();
-    } else {
+    if(!ui->txtcSeccion->text().isEmpty())
+    {
+        bloquearCampos();
+        CargarCamposEnArticulo();
         oArticulo->Guardar();
+    } else
+    {
+        QMessageBox::warning(this,tr("Gestion de Productos/servicios"),
+                             tr("Es necesario que asocie el registro a una sección antes de poder guardar"),
+                             tr("Aceptar"));
     }
 }
 
@@ -167,7 +167,10 @@ void FrmArticulos::bloquearCampos() {
     ui->botBuscarSeccion->setEnabled(false);
     ui->botBuscarFamilia->setEnabled(false);
     ui->botBuscarSubfamilia->setEnabled(false);
+    ui->botBuscarSubSubFamilia->setEnabled(false);
     ui->botCambiarImagen->setEnabled(false);
+    ui->botBuscarGrupo->setEnabled(false);
+    ui->btnBuscarProveedor->setEnabled(false);
 
 }
 void FrmArticulos::desbloquearCampos() {
@@ -232,7 +235,10 @@ void FrmArticulos::desbloquearCampos() {
     ui->botBuscarSeccion->setEnabled(true);
     ui->botBuscarFamilia->setEnabled(true);
     ui->botBuscarSubfamilia->setEnabled(true);
+    ui->botBuscarSubSubFamilia->setEnabled(true);
+    ui->botBuscarGrupo->setEnabled(true);
     ui->botCambiarImagen->setEnabled(true);
+    ui->btnBuscarProveedor->setEnabled(true);
 }
 
 void FrmArticulos::LLenarCampos()
@@ -272,6 +278,11 @@ void FrmArticulos::LLenarCampos()
    ui->txtnCantidadPendienteRecibir->setText(QString::number(oArticulo->nCantidadPendienteRecibir));
    ui->txtdFechaPrevistaRecepcion->setDate(oArticulo->dFechaPrevistaRecepcion);
    ui->txtnReservados->setText(QString::number(oArticulo->nReservados));
+   ui->txtcSeccion->setText(oArticulo->getcSeccion(oArticulo->id_Seccion));
+   ui->txtcFamilia->setText(oArticulo->getcFamilia(oArticulo->id_Familia));
+   ui->txtcSubFamilia->setText(oArticulo->getcSubFamilia(oArticulo->id_SubFamilia));
+   ui->txtcSubSubFamilia->setText((oArticulo->getcSubSubFamilia(oArticulo->idsubsubfamilia)));
+   ui->txtcGupoArt->setText(oArticulo->getcGrupo(oArticulo->idgrupoart));
    if (oArticulo->lMostrarWeb==1)
         ui->chklMostrarWeb->setChecked(true);
     else
@@ -282,6 +293,22 @@ void FrmArticulos::LLenarCampos()
   nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tiposiva));
   if(nIndex >-1)
       ui->cboTipoIVA->setCurrentIndex(nIndex);
+  //---------------------
+  // Tarifas
+  //---------------------
+  QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
+  modelTarifa->setQuery("select codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp "
+                       "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
+                       QSqlDatabase::database("terra"));
+  ui->TablaTarifas->setModel(modelTarifa);
+
+  //-----------------------
+  // Proveedores frecuentes
+  //-----------------------
+  QSqlQueryModel *pr_frecuentes = new QSqlQueryModel(this);
+  pr_frecuentes->setQuery("select id, cProveedor from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
+                          QSqlDatabase::database("terra"));
+  ui->tablaProveedores->setModel(pr_frecuentes);
 }
 
 void FrmArticulos::CargarCamposEnArticulo()
@@ -320,8 +347,14 @@ void FrmArticulos::CargarCamposEnArticulo()
     else
         oArticulo->lMostrarWeb = 0;
     oArticulo->id_tiposiva = Configuracion_global->getIdIva(ui->cboTipoIVA->currentText());
-//    this->idsubsubfamilia = registro.field("idsubsubfamilia").value().toInt();
-//    this->idgrupoart = registro.field("idgrupoart").value.toInt();
+    oArticulo->id_Seccion = oArticulo->getIdSeccion(ui->txtcSeccion->text());
+    oArticulo->id_Familia  = oArticulo->getIdFamilia(ui->txtcFamilia->text());
+    oArticulo->id_SubFamilia = oArticulo->getIdSubFamilia(ui->txtcSubFamilia->text());
+    oArticulo->idsubsubfamilia = oArticulo->getIdSubSufFamilia(ui->txtcSubSubFamilia->text());
+    oArticulo->idgrupoart = oArticulo->getIdGrupo(ui->txtcGupoArt->text());
+    oArticulo->cCodProveedor = ui->txtCodigoProveedor->text();
+    oArticulo->cProveedor = ui->txtcProveedor->text();
+
 //    this->idweb = registro.field("idweb").value().toInt();
     oArticulo->stockfisico = ui->txtStockFisico->text().toInt();
 
@@ -359,6 +392,7 @@ void FrmArticulos::VaciarCampos()
    ui->txtnReservados->clear();
    ui->chklMostrarWeb->setChecked(false);
    ui->lblImagenArticulo->clear();
+   ui->txtCodigoProveedor->clear();
 
 }
 
@@ -453,9 +487,20 @@ void FrmArticulos::on_botRotarImagen90_clicked()
 
 void FrmArticulos::on_botDeshacer_clicked()
 {
-    QString cSql = "Select * from articulos where Id =" +QString::number(oArticulo->id);
-    oArticulo->Recuperar(cSql);
-    LLenarCampos();
+    if(this->anadir)
+    {
+        QSqlQuery qArt(QSqlDatabase::database("terra"));
+        qArt.prepare("delete from articulos where id = :nId");
+        qArt.bindValue("nId",oArticulo->id);
+        if(qArt.exec());
+            VaciarCampos();
+        this->anadir = false;
+    } else
+        {
+        QString cSql = "Select * from articulos where Id =" +QString::number(oArticulo->id);
+        oArticulo->Recuperar(cSql);
+        LLenarCampos();
+    }
     bloquearCampos();
 }
 
@@ -566,9 +611,9 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
 
     form.set_columnHide(0);
 
-    form.set_selection("cCodigo");//FIXME cCodigo o cFamilia???
+    form.set_selection("cFamilia");
     QSqlQuery query(QSqlDatabase::database("terra"));
-    query.prepare(QString("SELECT id FROM secciones WHERE cSeccion = '%1' ").arg(ui->txtcSeccion->text()));
+    query.prepare(QString("SELECT id FROM secciones WHERE cFamilia = '%1' ").arg(ui->txtcFamilia->text()));
     if (query.exec())
         if(query.next())
             form.set_filter("Id_Seccion = "+query.record().value(0).toString());
@@ -634,6 +679,54 @@ void FrmArticulos::on_botBuscarSubSubFamilia_clicked()
     if(form.exec() == QDialog::Accepted)
     {
         ui->txtcSubFamilia->setText(form.selected_value);
+    }
+}
+
+void FrmArticulos::on_btnBuscarProveedor_clicked()
+{
+    FrmBuscarProveedor buscar(this);
+    if(buscar.exec()==QDialog::Accepted)
+    {
+        QSqlQuery qProv(QSqlDatabase::database("terra"));
+        qProv.prepare("Select * from proveedores where id =:nId");
+        qProv.bindValue(":nId",buscar.nIdProv);
+        if(qProv.exec()){
+            qProv.next();
+            ui->txtCodigoProveedor->setText(qProv.record().field("cCodigo").value().toString());
+            ui->txtcProveedor->setText(qProv.record().field("cProveedor").value().toString());
+            oArticulo->id_Proveedor = buscar.nIdProv;
+        }
+    }
+
+}
+
+void FrmArticulos::on_btnAnadirTarifa_clicked()
+{
+    FrmTarifas addTarifa(this);
+    if(addTarifa.exec() ==QDialog::Accepted)
+    {
+        QSqlQuery qTarifa(QSqlDatabase::database("terra"));
+        qTarifa.prepare("INSERT INTO `TerraGeneral`.`tarifas` (`id_Articulo`, `id_pais`,"
+                        "`id_monedas`, `margen`, `margenminimo`, `pvp`, `id_codigotarifa`) "
+                        "VALUES (:id, :id_pais,:id_monedas,:margen,:margenminimo,:pvp,:id_codigotarifa);");
+        qTarifa.bindValue(":id",oArticulo->id);
+        qTarifa.bindValue(":id_pais",addTarifa.id_pais);
+        qTarifa.bindValue(":id_monedas",addTarifa.id_moneda);
+        qTarifa.bindValue(":margen",addTarifa.margen);
+        qTarifa.bindValue(":margenminimo",addTarifa.margen_min);
+        qTarifa.bindValue(":pvp",addTarifa.pvp);
+        qTarifa.bindValue(":id_codigotarifa",addTarifa.codigoTarifa);
+        if(qTarifa.exec()) {
+            QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
+            modelTarifa->setQuery("select codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp "
+                                 "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
+                                 QSqlDatabase::database("terra"));
+            ui->TablaTarifas->setModel(modelTarifa);
+        } else {
+            QMessageBox::information(this,tr("Gestión de Productos/Servicios"),
+                                      tr("Ocurrió un error al insertar una tarifa en el artículo: %1").arg(qTarifa.lastError().text()),
+                                     tr("Acceptar"));
+        }
     }
 }
 

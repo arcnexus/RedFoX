@@ -6,18 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>738</width>
-    <height>185</height>
+    <width>764</width>
+    <height>216</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
     <width>16777215</width>
-    <height>185</height>
+    <height>216</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Tarifas</string>
+   <string>valoración de Tarifas</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../terra.qrc">
@@ -26,78 +26,225 @@
   <property name="windowOpacity">
    <double>1.000000000000000</double>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background: #4c6088</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Pais:</string>
+   <item row="0" column="0" colspan="2">
+    <widget class="QFrame" name="frame_2">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(175,195,225);</string>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="1" colspan="3">
-    <widget class="QComboBox" name="cboPais"/>
-   </item>
-   <item row="0" column="6">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Moneda:</string>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="3" column="3">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Margen:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Código tarifa:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Moneda:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLabel" name="label">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Pais:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="7">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Margen Mínimo:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" rowspan="6">
+       <widget class="QListView" name="listaTarifa">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4" colspan="3">
+       <widget class="QLineEdit" name="txtPVPDivisa">
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="8">
+       <widget class="QLineEdit" name="txtPVP">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(115, 115, 115);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLineEdit" name="txtCodTarifa">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>49</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(115, 115, 115);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>PVP en Divisa Tarifa:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3" colspan="6">
+       <widget class="QLineEdit" name="txtDescTarifa">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(115, 115, 115);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="7">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Importe local:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="8">
+       <widget class="QDoubleSpinBox" name="spinMargenMinimo">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>96</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4" colspan="3">
+       <widget class="QLineEdit" name="txtPais">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>123</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(115, 115, 115);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="8">
+       <widget class="QLineEdit" name="txtMoneda">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(115, 115, 115);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QDoubleSpinBox" name="spinMargen">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>105</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
-   </item>
-   <item row="0" column="7" colspan="2">
-    <widget class="QComboBox" name="cboMoneda"/>
    </item>
    <item row="1" column="0" colspan="2">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Código tarifa:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QLineEdit" name="lineEdit"/>
-   </item>
-   <item row="1" column="4" colspan="2">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Margen:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="6" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
-   </item>
-   <item row="2" column="2" colspan="4">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Margen Mínimo:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="6" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
-   </item>
-   <item row="3" column="3" colspan="2">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>PVP:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="5" colspan="3">
-    <widget class="QLineEdit" name="lineEdit_2"/>
-   </item>
-   <item row="3" column="8">
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>Importe local:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="9">
-    <widget class="QLineEdit" name="lineEdit_3"/>
-   </item>
-   <item row="4" column="0" colspan="10">
     <widget class="QFrame" name="frame">
      <property name="minimumSize">
       <size>
@@ -112,7 +259,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 0, 127);</string>
+      <string notr="true">background-color: rgb(175,195,225);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -120,26 +267,69 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <widget class="QPushButton" name="pushButton">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnAceptar">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>33</height>
+         </size>
+        </property>
         <property name="styleSheet">
-         <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
+         <string notr="true"/>
         </property>
         <property name="text">
-         <string>Guardar</string>
+         <string>Aceptar</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../terra.qrc">
+          <normaloff>:/Icons/PNG/OK.png</normaloff>:/Icons/PNG/OK.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>14</width>
+          <height>14</height>
+         </size>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="pushButton_2">
+      <item>
+       <widget class="QPushButton" name="btnCancelar">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>33</height>
+         </size>
+        </property>
         <property name="styleSheet">
-         <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Cancelar</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../terra.qrc">
+          <normaloff>:/Icons/PNG/Cancel.png</normaloff>:/Icons/PNG/Cancel.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>14</width>
+          <height>14</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -151,5 +341,38 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
  <resources>
   <include location="../terra.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnAceptar</sender>
+   <signal>clicked()</signal>
+   <receiver>FrmTarifas</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>331</x>
+     <y>210</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnCancelar</sender>
+   <signal>clicked()</signal>
+   <receiver>FrmTarifas</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>491</x>
+     <y>192</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>530</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
