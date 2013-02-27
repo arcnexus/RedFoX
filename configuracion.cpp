@@ -104,7 +104,11 @@ void Configuracion::Cargar_iva()
         }
     }
     if(ivas.size()!=4)
-        qWarning(tr("Cantidad de tipos de iva incompatibles con Terra").toAscii().constData());
+    {
+        query.prepare("INSERT INTO `tiposiva` (`id`, `nombre_interno`, `cTipo`, `cDescripcionTipoIVA`, `nIVA`, `nRegargoEquivalencia`) VALUES (1, 'base1', 'NORMAL', '21%', 21.00, 4.00), (2, 'base2', 'Reducido', '10%', 10.00, 2.00), (3, 'base3', 'Superreducido', '4%', 4.00, 1.00), (4, 'base4', 'Exento', 'Exento', 0.00, 0.00);");
+        query.exec();
+        return Cargar_iva();
+    }
 
     if(iva_model == 0)
         iva_model = new QSqlTableModel(this,QSqlDatabase::database("terra"));

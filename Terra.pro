@@ -105,7 +105,8 @@ SOURCES += main.cpp\
     Zona_Ventas/frmfacturas.cpp \
     Zona_Ventas/frmalbaran.cpp \
     Zona_Ventas/factura.cpp \
-    Zona_Ventas/albaran.cpp
+    Zona_Ventas/albaran.cpp \
+    Zona_Compras/pedidoproveedor.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -179,7 +180,8 @@ HEADERS  += mainwindow.h \
     Zona_Ventas/frmfacturas.h \
     Zona_Ventas/frmalbaran.h \
     Zona_Ventas/factura.h \
-    Zona_Ventas/albaran.h
+    Zona_Ventas/albaran.h \
+    Zona_Compras/pedidoproveedor.h
 
 
 FORMS    += mainwindow.ui \

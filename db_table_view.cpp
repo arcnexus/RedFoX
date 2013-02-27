@@ -51,6 +51,8 @@ void Db_table_View::set_table_headers(QStringList headers)
     for (int i = 0; i< headers.size();i++)
         model->setHeaderData(i+1, Qt::Horizontal, headers.at(i));
     ui->resultado_list->resizeColumnsToContents();
+
+    this->headers = headers;
 }
 
 void Db_table_View::set_relation(int colum, QSqlRelation relation)
@@ -68,6 +70,7 @@ void Db_table_View::set_filter(QString filter)
 
 void Db_table_View::set_readOnly(bool state)
 {
+    Q_UNUSED(state);
     //TODO read-only
 }
 
@@ -80,6 +83,8 @@ void Db_table_View::set_columnHide(int column)
 {
     ui->resultado_list->setColumnHidden(column, true);
     ui->resultado_list->resizeColumnsToContents();
+
+    hide_headers.append(column);
 }
 
 void Db_table_View::set_noInsertDeleteRows()

@@ -49,6 +49,9 @@ private:
     QMenu * print_menu;
     QAction* toPaper;
     QAction* toPDF;
+
+    QStringList headers;
+    QVector<int> hide_headers;
 };
 
 #endif // DB_TABLE_VIEW_H
