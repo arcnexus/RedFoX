@@ -522,11 +522,21 @@ void frmClientes::on_btnAnterior_clicked()
 
 void frmClientes::on_btnGuardar_clicked()
 {
-    LLenarCliente();
-    oCliente->Guardar();
-    bloquearCampos();
-    Configuracion_global->CargarClientes();
-    emit unblock();
+    if(!ui->txtcCifNif->text().isEmpty() && !ui->txtcNombreComercial->text().isEmpty()
+            && !ui->txtcDireccion1->text().isEmpty() && !ui->txtcCp->text().isEmpty()
+            && !ui->txtcPoblacion->text().isEmpty() && !ui->txtcProvincia->text().isEmpty()&&
+            !ui->txtcPais->text().isEmpty()){
+        LLenarCliente();
+        oCliente->Guardar();
+        bloquearCampos();
+        Configuracion_global->CargarClientes();
+        emit unblock();
+    } else
+    {
+        QMessageBox::warning(this,tr("Guardar ficha"),tr("tiene campos en blanco que no pueden quedar vacíos"),
+                             tr("Aceptar"));
+        ui->txtcCifNif->setFocus();
+    }
 }
 
 void frmClientes::on_btnAnadir_clicked()
@@ -903,7 +913,7 @@ void frmClientes::txtcPoblacionAlternativa_editingFinished()
     {
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcPoblacionAlternativa->text(),1);
-        if(BuscarPoblacion.exec())
+        if(BuscarPoblacion.exec() == QDialog::Accepted)
         {
             //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
             int nId = BuscarPoblacion.DevolverID();

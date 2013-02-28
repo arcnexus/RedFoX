@@ -24,6 +24,7 @@ int FrmBuscarPoblacion::DevolverID()
         QModelIndex index=ModelPoblaciones->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
 
         QVariant pKey=ModelPoblaciones->data(index,Qt::EditRole);
+        this->id = pKey.toInt();
         return pKey.toInt();
     }
     return -1;
@@ -43,14 +44,15 @@ void FrmBuscarPoblacion::setcPoblacion(QString cPoblacion, int nPoblacion)
     this->cPoblacion = cPoblacion;
     if (nPoblacion ==1)
     {
+        // Busqueda por población
        cSQL = "Select  id,poblacion,cp from poblaciones where poblacion like '"+cPoblacion.trimmed()+
                     "%'";
     }
     else
     {
-       //NOTE - Busqueda mas amplia
-       cSQL = "Select  id,poblacion,cp from poblaciones where poblacion like '"+cPoblacion.trimmed()+
-                 "%'";
+       //NOTE - Busqueda por codigo postal
+       cSQL = "Select  id,poblacion,cp from poblaciones where cp  = '"+cPoblacion.trimmed()+
+                 "'";
     }
     ui->ListaPoblaciones->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->ListaPoblaciones->setAlternatingRowColors(true);

@@ -389,12 +389,12 @@ QString Configuracion::letraDNI(QString Nif)
             Nif = Nif.mid(2);
 
         QString x1 = "TRWAGMYFPDXBNJZSQVHLCKE";
-        return (x1.mid(Nif.trimmed().toInt() % 23,1));
+        return (Nif +x1.mid(Nif.trimmed().toInt() % 23,1));
     }
     else      // Persona jurídica
     {
         if (Nif.mid(1,1).contains("[ABCDEFGHJNPQRSUVW]"))
-            return ("");
+            return (Nif);
 
         nSumaPar = 0;
         nSumaNon = 0;
@@ -415,7 +415,7 @@ QString Configuracion::letraDNI(QString Nif)
         if (!Nif.mid(1,1).contains("[ABDEFGHJUV]"))
         {
             const char x[] = {'A','B','C','D','E','F','G','H','I','J'};
-            return (QString(x[nSuma]));
+            return (QString(Nif +x[nSuma]));
         }
         else
             return /*(FormatFloat("0", nSuma))*/QString::number(nSuma);

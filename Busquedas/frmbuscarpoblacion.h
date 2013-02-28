@@ -15,6 +15,7 @@ public:
     explicit FrmBuscarPoblacion(QWidget *parent = 0);
     ~FrmBuscarPoblacion();
     int DevolverID();
+    int id;
 
 public slots:
     void  setcPoblacion(QString cPoblacion,int nPoblacion);

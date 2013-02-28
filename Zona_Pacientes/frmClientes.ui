@@ -833,6 +833,18 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
        </item>
        <item row="2" column="6">
         <widget class="QLabel" name="label_5">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777214</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string>Segundo Apellido:</string>
          </property>
@@ -1321,7 +1333,7 @@ color: rgb(255,255,255);</string>
          </property>
          <property name="maximumSize">
           <size>
-           <width>157</width>
+           <width>170</width>
            <height>16777215</height>
           </size>
          </property>
