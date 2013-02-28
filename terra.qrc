@@ -110,7 +110,6 @@
         <file>sql/Db_empresa_sqlite.sql</file>
         <file>sql/Db_empresa_mysql.sql</file>
         <file>sql/Db_empresa_medica_mysql.sql</file>
-        <file>PNG/logo2.png</file>
         <file>PNG/logo-mini.png</file>
         <file>PNG/logo-blocked.png</file>
         <file>PNG/Box.png</file>

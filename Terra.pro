@@ -184,7 +184,7 @@ HEADERS  += mainwindow.h \
     Zona_Ventas/factura.h \
     Zona_Ventas/albaran.h \
     Busquedas/frmbuscarproveedor.h \
-    Zona_Compras/pedidoproveedor.h
+    Zona_Compras/pedidoproveedor.h \
     Almacen/frmtipostarifa.h
 
 

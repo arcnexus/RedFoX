@@ -8,7 +8,7 @@
 #include "Zona_Administrador/frmempresas.h"
 #include "Zona_Administrador/arearestringida_form.h"
 #include <Zona_Administrador/frmconfigterra.h>
-
+#include "mainwindow.h"
 
 Login::Login(QWidget *parent) :
     QDialog(parent),
@@ -47,7 +47,8 @@ Login::Login(QWidget *parent) :
     {
         QMessageBox::critical(0, "error:", dbTerra.lastError().text());
     }
-    Configuracion_global->CargarDatos();
+    if(dbTerra.isOpen())
+        Configuracion_global->CargarDatos();
     init();
 }
 

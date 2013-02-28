@@ -90,6 +90,13 @@ bool Configuracion::EsNumero(QString texto)
 
 void Configuracion::Cargar_iva()
 {
+    static int tries = 0;
+    tries++;
+    if(tries == 5)
+    {
+        //qFatal(tr("Fue imposible crear tipos de iva").toAscii().constData());
+        return;
+    }
     ivas.clear();
     ivaList.clear();
     reList.clear();

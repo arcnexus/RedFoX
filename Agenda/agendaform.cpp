@@ -156,3 +156,8 @@ void AgendaForm::on_combo_user_currentIndexChanged(int index)
     int id_user = Configuracion_global->usuarios_model->record(index).value("id").toInt();
     table->setUser(id_user);
 }
+
+void AgendaForm::on_btn_hoy_clicked()
+{
+    ui->calendarWidget->setSelectedDate(QDate::currentDate());
+}

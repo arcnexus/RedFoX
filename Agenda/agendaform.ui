@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>885</width>
-    <height>663</height>
+    <height>873</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,74 +35,15 @@ QLabel{background-color: #4C6088;}</string>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="4" column="0">
-       <widget class="QGroupBox" name="especialidad_group">
-        <property name="title">
-         <string>Especialidad</string>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
-         <item>
-          <widget class="QComboBox" name="combo_espec"/>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QGroupBox" name="departamento_group">
-        <property name="title">
-         <string>Departamento</string>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_8">
-         <item>
-          <widget class="QComboBox" name="combo_dto"/>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QGroupBox" name="reunion_group">
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="title">
-         <string>Cita/Reunion con</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_6">
-         <item>
-          <widget class="QComboBox" name="combo_cliente"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_3">
-           <property name="maximumSize">
-            <size>
-             <width>30</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../terra.qrc">
-             <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_4">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QPushButton" name="btn_hoy">
         <property name="text">
-         <string>Ver agenda de:</string>
+         <string>Ver agenda de hoy</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
+      <item>
        <widget class="QCalendarWidget" name="calendarWidget">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -139,7 +80,14 @@ QLabel{background-color: #4C6088;}</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Ver agenda de:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
          <widget class="QComboBox" name="combo_user"/>
@@ -163,7 +111,69 @@ QLabel{background-color: #4C6088;}</string>
         </item>
        </layout>
       </item>
-      <item row="7" column="0">
+      <item>
+       <widget class="QGroupBox" name="reunion_group">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="title">
+         <string>Cita/Reunion con</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QComboBox" name="combo_cliente"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../terra.qrc">
+             <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="especialidad_group">
+        <property name="title">
+         <string>Especialidad</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QComboBox" name="combo_espec"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="departamento_group">
+        <property name="title">
+         <string>Departamento</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <item>
+          <widget class="QComboBox" name="combo_dto"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="txt_tituloEvento"/>
+      </item>
+      <item>
        <widget class="QPlainTextEdit" name="txt_asunto">
         <property name="maximumSize">
          <size>
@@ -176,7 +186,7 @@ QLabel{background-color: #4C6088;}</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="0">
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QLabel" name="label_3">
@@ -200,7 +210,7 @@ QLabel{background-color: #4C6088;}</string>
         </item>
        </layout>
       </item>
-      <item row="9" column="0">
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QLabel" name="label">
@@ -224,7 +234,7 @@ QLabel{background-color: #4C6088;}</string>
         </item>
        </layout>
       </item>
-      <item row="10" column="0">
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QLabel" name="label_2">
@@ -242,7 +252,7 @@ QLabel{background-color: #4C6088;}</string>
         </item>
        </layout>
       </item>
-      <item row="11" column="0">
+      <item>
        <widget class="QPushButton" name="pushButton">
         <property name="text">
          <string>Añadir cita</string>
@@ -253,9 +263,6 @@ QLabel{background-color: #4C6088;}</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
-       <widget class="QLineEdit" name="txt_tituloEvento"/>
-      </item>
      </layout>
      <zorder>calendarWidget</zorder>
      <zorder>txt_asunto</zorder>
@@ -265,6 +272,7 @@ QLabel{background-color: #4C6088;}</string>
      <zorder>especialidad_group</zorder>
      <zorder>departamento_group</zorder>
      <zorder>txt_tituloEvento</zorder>
+     <zorder>btn_hoy</zorder>
     </widget>
    </item>
    <item row="1" column="2">

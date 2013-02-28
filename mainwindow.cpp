@@ -244,7 +244,7 @@ void MainWindow::init()
         {
 			QryEmpresa.next();
 
-            QPixmap pixmap(":/Icons/PNG/logo2.png");
+            QPixmap pixmap(":/Icons/PNG/Logo2.png");
             QSplashScreen splash(pixmap);
             splash.show();
 
@@ -414,6 +414,7 @@ void MainWindow::init()
             agendaForm = new AgendaForm(this);
 
             splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
+
             ui->stackedWidget->addWidget(frmClientes1);
             ui->stackedWidget->addWidget(frmFacturas1);
             ui->stackedWidget->addWidget(frmArticulos1);

@@ -26,6 +26,8 @@ private slots:
 
     void on_combo_user_currentIndexChanged(int index);
 
+    void on_btn_hoy_clicked();
+
 private:
     Ui::AgendaForm *ui;
     QGraphicsScene * scene;
