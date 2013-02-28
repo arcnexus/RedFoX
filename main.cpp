@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
    //a.setStyle("fusion");
 
-     a.setStyle("Plastique");
+     a.setStyle("Oxygen");
 
    QFile file(":Icons/Terra.qss");
 
@@ -60,20 +60,30 @@ int main(int argc, char *argv[])
    OpenRPT::languages.addTranslationToDefault(":/openRPTLangs/openrptLibs/traduccion/writer_es.qm");
    OpenRPT::languages.installSelected();
 
+
+
+
+
+
    Login l;
-   l.setVisible(true);
-/*
-   if ( l.exec()==QDialog::Accepted)
-   {
-       MainWindow w;
-       w.empresa = l.getEmpresa();
-       w.user = l.getUsuario();
-       w.pass = l.getPass();
-       Configuracion_global->id_usuario_activo = l.getIdUser();
+   l.exec();
+
+   MainWindow   w ;
+   w.empresa = l.getEmpresa();
+   w.user = l.getUsuario();
+   w.pass = l.getPass();
+  // w.show();
+ //  if ( l.exec()==QDialog::Accepted)
+ //  {
+ //      MainWindow w;
+ //      w.empresa = "Empresa de pruebas";//l.getEmpresa();
+ //      w.user ="marc";// l.getUsuario();
+ //      w.pass = "patata";//l.getPass();
+ //      Configuracion_global->id_usuario_activo = 1;//l.getIdUser();
       // w.setWindowState(Qt::WindowMaximized);
-      // w.show();*/
+ //      w.show();
        return a.exec();
-   //}
-   //return 0;
+//   }
+ //  return 0;
 }
 

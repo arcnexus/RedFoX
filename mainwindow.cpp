@@ -245,14 +245,14 @@ void MainWindow::init()
 			QryEmpresa.next();
 
             QPixmap pixmap(":/Icons/PNG/Logo2.png");
-            QSplashScreen splash(pixmap);
-            splash.show();
+           // QSplashScreen splash(pixmap);
+           // splash.show();
 
             QApplication::processEvents();
 			QSqlRecord record = QryEmpresa.record();
 
 			// DBEMpresa
-            splash.showMessage(tr("Cargando configuración de base de datos"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando configuración de base de datos"),Qt::AlignBottom);
             Configuracion_global->cDriverBDEmpresa = record.field("driverBD").value().toString();
             Configuracion_global->cHostBDEmpresa = record.field("host").value().toString();
             Configuracion_global->cNombreBDEmpresa =record.field("nombreBD").value().toString();
@@ -274,7 +274,7 @@ void MainWindow::init()
             QApplication::processEvents();
 
 			//DBMedica
-            splash.showMessage(tr("Cargando configuración médica"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando configuración médica"),Qt::AlignBottom);
             Configuracion_global->cDriverBDMedica = record.field("driverBDMedica").value().toString();
             Configuracion_global->cHostBDMedica = record.field("hostBDMedica").value().toString();
             Configuracion_global->cNombreBDMedica =record.field("nombreBDMedica").value().toString();
@@ -285,7 +285,7 @@ void MainWindow::init()
             QApplication::processEvents();
 
 			// Varios
-            splash.showMessage(tr("Cargando configuración financiera"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando configuración financiera"),Qt::AlignBottom);
             Configuracion_global->cSerie = record.field("serie").value().toString();
             qDebug() << "desde db mainwindow" << record./*field("ndigitoscuenta").*/value("ndigitoscuenta").toInt();
             Configuracion_global->nDigitosCuentasContables = record./*field("ndigitoscuenta").*/value("ndigitoscuenta").toInt();
@@ -308,7 +308,7 @@ void MainWindow::init()
             QApplication::processEvents();
 
 			// Abro empresa activa
-            splash.showMessage(tr("Cargando datos de la empresa activa"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando datos de la empresa activa"),Qt::AlignBottom);
             QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"empresa");
             if (Configuracion_global->cDriverBDEmpresa =="QSQLITE")
             {
@@ -325,7 +325,7 @@ void MainWindow::init()
             QApplication::processEvents();
 
 			// Abro bdmedica activa
-            splash.showMessage(tr("Abriendo base de datos médica"),Qt::AlignBottom);
+            //splash.showMessage(tr("Abriendo base de datos médica"),Qt::AlignBottom);
             QSqlDatabase dbMedica = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"dbmedica");
             if (Configuracion_global->cDriverBDMedica =="QSQLITE")
             {
@@ -353,68 +353,68 @@ void MainWindow::init()
             Configuracion_global->CargarUsuarios();
             //Widgets
 
-            splash.showMessage(tr("Cargando modulos... Modulo de clientes"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de clientes"),Qt::AlignBottom);
             frmClientes1 = new frmClientes(this);
             connect(frmClientes1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmClientes1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-            splash.showMessage(tr("Cargando modulos... Modulo de facturas"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de facturas"),Qt::AlignBottom);
             frmFacturas1 = new frmFacturas(this);
             connect(frmFacturas1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmFacturas1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-            splash.showMessage(tr("Cargando modulos... Modulo de articulos"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de articulos"),Qt::AlignBottom);
             frmArticulos1 = new FrmArticulos(this);
 
-            splash.showMessage(tr("Cargando modulos... Modulo de proveedores"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de proveedores"),Qt::AlignBottom);
             frmProveedores1 = new frmProveedores(this);
 
-            splash.showMessage(tr("Cargando modulos... Modulo de albaranes"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de albaranes"),Qt::AlignBottom);
             frmAlbaran1 = new FrmAlbaran(this);
             connect(frmAlbaran1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmAlbaran1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
 
-            splash.showMessage(tr("Cargando modulos... Modulo de facturación de albaranes"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de facturación de albaranes"),Qt::AlignBottom);
             frmFactura_multiple = new FrmFacturarAlabaranes(this);
             connect(frmFactura_multiple,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmFactura_multiple,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-            splash.showMessage(tr("Cargando modulos... Modulo de pedidos"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de pedidos"),Qt::AlignBottom);
             frmPedidos1 = new FrmPedidos(this);
             connect(frmPedidos1,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmPedidos1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-            splash.showMessage(tr("Cargando modulos... Modulo de presupuestos"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de presupuestos"),Qt::AlignBottom);
             frmPresupcli = new FrmPresupuestosCli(this);
             connect(frmPresupcli,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmPresupcli,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-            splash.showMessage(tr("Cargando modulos... Modulo de TPV"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de TPV"),Qt::AlignBottom);
             frmCajaMinuta = new FrmCajaMinuta(this);
             connect(frmCajaMinuta,SIGNAL(block()),this,SLOT(block_main()));
             connect(frmCajaMinuta,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-            splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos"),Qt::AlignBottom);
             FrmPedidos_pro = new FrmPedidosProveedor(this);
 
-            splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes"),Qt::AlignBottom);
             FrmAlbaran_pro = new FrmAlbaranProveedor(this);
 
 
-            splash.showMessage(tr("Cargando modulos... Modulo de Compras: facturas"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de Compras: facturas"),Qt::AlignBottom);
             frmFacturas_pro = new FrmFacturasProveedor(this);
 
-            splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
             frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
 
-            splash.showMessage(tr("Cargando modulos... Editor de reportes"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Editor de reportes"),Qt::AlignBottom);
             reportWindow = new ReportWriterWindow();
 
-            splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
+            //splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
             agendaForm = new AgendaForm(this);
 
-            splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
+            //splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
 
             ui->stackedWidget->addWidget(frmClientes1);
             ui->stackedWidget->addWidget(frmFacturas1);
@@ -430,15 +430,15 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmFactura_multiple);
             ui->stackedWidget->addWidget(frmOrden_Ped_pro);
             ui->stackedWidget->addWidget(reportWindow);
-          ui->stackedWidget->addWidget(agendaForm);
+     //     ui->stackedWidget->addWidget(agendaForm);
             TerraForm = new init_form(this);
             ui->stackedWidget->addWidget(TerraForm);
             ui->stackedWidget->setCurrentWidget(TerraForm);
 
-            QApplication::processEvents();
-            this->setWindowState(Qt::WindowMaximized);
-            this->move(0,0);
-            this->showMaximized();
+//            QApplication::processEvents();
+//           // this->setWindowState(Qt::WindowMaximized);
+//           // this->move(0,0);
+            this->show();
 		} 
 		else
             QMessageBox::critical(this,"Error","Fallo la conexión al fichero Medico");
