@@ -61,8 +61,8 @@ int main(int argc, char *argv[])
    OpenRPT::languages.installSelected();
 
    Login l;
-   //l.setVisible(true);
-
+   l.setVisible(true);
+/*
    if ( l.exec()==QDialog::Accepted)
    {
        MainWindow w;
@@ -71,9 +71,9 @@ int main(int argc, char *argv[])
        w.pass = l.getPass();
        Configuracion_global->id_usuario_activo = l.getIdUser();
       // w.setWindowState(Qt::WindowMaximized);
-      // w.show();
+      // w.show();*/
        return a.exec();
-   }
-   return 0;
+   //}
+   //return 0;
 }
 

@@ -136,11 +136,11 @@ void MainWindow::crear_barraAlmacen()
     connect(btn_articulos_2,SIGNAL(clicked()),this,SLOT(btnArticulos_2_clicked()));
 
     //barra de menu
-//    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
-//    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
-//    connect(ui->actionAlbaranes_2,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
-//    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
-    //    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
+    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
+    connect(ui->actionAlbaranes_2,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
+    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
+        connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
 }
 
 void MainWindow::crear_barraAdmin()
@@ -352,6 +352,7 @@ void MainWindow::init()
             Configuracion_global->CargarClientes();
             Configuracion_global->CargarUsuarios();
             //Widgets
+
             splash.showMessage(tr("Cargando modulos... Modulo de clientes"),Qt::AlignBottom);
             frmClientes1 = new frmClientes(this);
             connect(frmClientes1,SIGNAL(block()),this,SLOT(block_main()));
@@ -429,14 +430,15 @@ void MainWindow::init()
             ui->stackedWidget->addWidget(frmFactura_multiple);
             ui->stackedWidget->addWidget(frmOrden_Ped_pro);
             ui->stackedWidget->addWidget(reportWindow);
-            ui->stackedWidget->addWidget(agendaForm);
+          ui->stackedWidget->addWidget(agendaForm);
             TerraForm = new init_form(this);
             ui->stackedWidget->addWidget(TerraForm);
             ui->stackedWidget->setCurrentWidget(TerraForm);
 
             QApplication::processEvents();
             this->setWindowState(Qt::WindowMaximized);
-            this->show();
+            this->move(0,0);
+            this->showMaximized();
 		} 
 		else
             QMessageBox::critical(this,"Error","Fallo la conexión al fichero Medico");
