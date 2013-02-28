@@ -26,11 +26,9 @@
 
 #include "parameter.h"
 
-#ifdef Q_OS_LINUX
-#include "/home/arcnexus/TerraProject/openrpt-build-Qt4_8_4_Gcc_64-Debug/common/tmp/ui_parameteredit.h"
-#else
-#include "C:\openrpt-build-Desktop_Qt_4_8_2_in_PATH_4_8_2-Debug\common\tmp/ui_parameteredit.h"
-#endif
+
+#include "ui_parameteredit.h"
+
 
 class ParameterEdit : public QWidget, public Ui::ParameterEdit
 {
