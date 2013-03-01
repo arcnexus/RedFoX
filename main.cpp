@@ -72,18 +72,18 @@ int main(int argc, char *argv[])
    w.empresa = l.getEmpresa();
    w.user = l.getUsuario();
    w.pass = l.getPass();
-  // w.show();
- //  if ( l.exec()==QDialog::Accepted)
- //  {
- //      MainWindow w;
- //      w.empresa = "Empresa de pruebas";//l.getEmpresa();
- //      w.user ="marc";// l.getUsuario();
- //      w.pass = "patata";//l.getPass();
- //      Configuracion_global->id_usuario_activo = 1;//l.getIdUser();
-      // w.setWindowState(Qt::WindowMaximized);
- //      w.show();
+   w.showMaximized();
+//   if ( l.exec()==QDialog::Accepted)
+//   {
+//       MainWindow w;
+//       w.empresa = l.getEmpresa();
+//       w.user =l.getUsuario();
+//       w.pass =l.getPass();
+//       Configuracion_global->id_usuario_activo = l.getIdUser();
+//       w.setWindowState(Qt::WindowMaximized);
+//       w.show();
        return a.exec();
-//   }
- //  return 0;
+//  }
+//   return 0;
 }
 
