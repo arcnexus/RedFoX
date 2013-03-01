@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
    //a.setStyle("fusion");
 
-     a.setStyle("Oxygen");
+     a.setStyle("Plastique");
 
    QFile file(":Icons/Terra.qss");
 
