@@ -56,6 +56,8 @@ frmClientes::frmClientes(QWidget *parent) :
     ui->cbonTarifaCliente->setModel(qTarifa);
 
     // Rellenar Paises:
+    ui->cboPais->setModel(Configuracion_global->paises_model);
+    ui->cboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
     ui->combopaisAlternativa->setModel(Configuracion_global->paises_model);
     ui->combopaisAlternativa->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
@@ -105,7 +107,9 @@ void frmClientes::LLenarCampos()
     ui->txtcCp->setText(oCliente->cCp);
     ui->txtcPoblacion->setText(oCliente->cPoblacion);
     ui->txtcProvincia->setText(oCliente->cProvincia);
-    ui->txtcPais->setText(oCliente->RecuperarPais(oCliente->idPais));
+    int nindex = ui->cboPais->findText(oCliente->RecuperarPais(oCliente->idPais));
+    if (nindex >-1)
+        ui->cboPais->setCurrentIndex(nindex);
     ui->txtcTelefono1->setText(oCliente->cTelefono1);
     ui->txtcTelefono2->setText(oCliente->cTelefono2);
     ui->txtcFax->setText(oCliente->cFax);
@@ -390,7 +394,7 @@ void frmClientes::VaciarCampos()
     ui->txtcDireccion2->setText("");
     ui->txtcPoblacion->setText("");
     ui->txtcProvincia->setText("");
-    ui->txtcPais->setText("");
+    ui->cboPais->clearEditText();
     ui->txtcTelefono1->setText("");
     ui->txtcTelefono2->setText("");
     ui->txtcFax->setText("");
@@ -455,7 +459,8 @@ void frmClientes::LLenarCliente()
     oCliente->cCp=ui->txtcCp->text();
     oCliente->cPoblacion=ui->txtcPoblacion->text();
     oCliente->cProvincia=ui->txtcProvincia->text();
-    oCliente->cPais=ui->txtcPais->text();
+    oCliente->cPais=ui->cboPais->currentText();
+    oCliente->idPais = oCliente->BuscaridPais(oCliente->cPais);
     oCliente->cTelefono1=ui->txtcTelefono1->text();
     oCliente->cTelefono2=ui->txtcTelefono2->text();
     oCliente->cFax=ui->txtcFax->text();
@@ -525,7 +530,7 @@ void frmClientes::on_btnGuardar_clicked()
     if(!ui->txtcCifNif->text().isEmpty() && !ui->txtcNombreComercial->text().isEmpty()
             && !ui->txtcDireccion1->text().isEmpty() && !ui->txtcCp->text().isEmpty()
             && !ui->txtcPoblacion->text().isEmpty() && !ui->txtcProvincia->text().isEmpty()&&
-            !ui->txtcPais->text().isEmpty()){
+            !ui->cboPais->currentText().isEmpty()){
         LLenarCliente();
         oCliente->Guardar();
         bloquearCampos();
@@ -626,7 +631,7 @@ void frmClientes::txtcPoblacion_editingFinished()
                      ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
                      ui->txtcCp->setText(qPoblacion.value(1).toString());
                      ui->txtcProvincia->setText(qPoblacion.value(2).toString());
-                     ui->txtcPais->setText("ESPAÑA");
+                    // ui->txtcPais->setText("ESPAÑA");
                      oCliente->idPais =oCliente->BuscaridPais("ESPAÑA");
                  }
              }
@@ -854,7 +859,8 @@ void frmClientes::txtcCp_editingFinished()
                         ui->txtcCp->setText(qPoblacion.value(1).toString());
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
                         ui->txtcProvincia->setText(qPoblacion.value(2).toString());
-                        ui->txtcPais->setText("ESPAÑA");
+
+                       // ui->txtcPais->setText("ESPAÑA");
                         oCliente->idPais =oCliente->BuscaridPais("ESPAÑA");
                     }
                 }

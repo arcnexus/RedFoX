@@ -172,6 +172,7 @@ void Cliente::Recuperar(QString cSQL) {
             this->cPoblacion = registro.field("cPoblacion").value().toString();
             this->cProvincia = registro.field("cProvincia").value().toString();
             this->cPais = registro.field("cPais").value().toString();
+            this->idPais = registro.field("idpais").value().toInt();
             this->cTelefono1 = registro.field("cTelefono1").value().toString();
             this->cTelefono2 = registro.field("cTelefono2").value().toString();
             this->cFax =registro.field("cFax").value().toString();
