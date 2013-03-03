@@ -21,6 +21,127 @@
 #include "login.h"
 #include <QStyleFactory>
 #include "openrptLibs/include/data.h"
+
+bool cargarEmpresa(QString empresa)
+{
+    QSqlQuery QryEmpresa(QSqlDatabase::database("terra"));
+    QryEmpresa.prepare("Select * from empresas where nombre = :nombre");
+    QryEmpresa.bindValue(":nombre",empresa.trimmed());
+    if (QryEmpresa.exec())
+    {
+        QryEmpresa.next();
+
+        QApplication::processEvents();
+        QSqlRecord record = QryEmpresa.record();
+
+        // DBEMpresa
+        //splash.showMessage(tr("Cargando configuración de base de datos"),Qt::AlignBottom);
+        Configuracion_global->cDriverBDEmpresa = record.field("driverBD").value().toString();
+        Configuracion_global->cHostBDEmpresa = record.field("host").value().toString();
+        Configuracion_global->cNombreBDEmpresa =record.field("nombreBD").value().toString();
+        Configuracion_global->cPasswordBDEmpresa =record.field("contrasena").value().toString();
+        Configuracion_global->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
+        Configuracion_global->cUsuarioBDEmpresa = record.field("user").value().toString();
+
+        if(record.field("medica").value().toInt()==1)
+            medic = true;
+        else
+            medic = false;
+
+        if(record.field("internacional").value().toInt()==1)
+            internacional = true;
+        else
+            internacional = false;
+
+
+        QApplication::processEvents();
+
+        //DBMedica
+        //splash.showMessage(tr("Cargando configuración médica"),Qt::AlignBottom);
+        Configuracion_global->cDriverBDMedica = record.field("driverBDMedica").value().toString();
+        Configuracion_global->cHostBDMedica = record.field("hostBDMedica").value().toString();
+        Configuracion_global->cNombreBDMedica =record.field("nombreBDMedica").value().toString();
+        Configuracion_global->cPasswordBDMedica =record.field("contrasenaBDMedica").value().toString();
+        Configuracion_global->cRutaBdMedica = record.field("RutaBDMedicaSqLite").value().toString();
+        Configuracion_global->cUsuarioBDMedica = record.field("userBDMedica").value().toString();
+
+        QApplication::processEvents();
+
+        // Varios
+        //splash.showMessage(tr("Cargando configuración financiera"),Qt::AlignBottom);
+        Configuracion_global->cSerie = record.field("serie").value().toString();
+        qDebug() << "desde db mainwindow" << record./*field("ndigitoscuenta").*/value("ndigitoscuenta").toInt();
+        Configuracion_global->nDigitosCuentasContables = record./*field("ndigitoscuenta").*/value("ndigitoscuenta").toInt();
+        Configuracion_global->cCuentaAcreedores = record.field("codigocuentaacreedores").value().toString();
+        Configuracion_global->cCuentaClientes = record.field("codigocuentaclientes").value().toString();
+        Configuracion_global->cCuentaProveedores = record.field("codigocuentaproveedores").value().toString();
+
+        QApplication::processEvents();
+
+        // Guardo preferencias
+        QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
+        settings.setValue("cSerie",Configuracion_global->cSerie);
+        settings.setValue("ndigitoscuenta",Configuracion_global->nDigitosCuentasContables);
+        settings.setValue("cCuentaClientes",Configuracion_global->cCuentaClientes);
+        settings.setValue("cCuentaProveedores",Configuracion_global->cCuentaProveedores);
+        settings.setValue("cCuentaAcreedores",Configuracion_global->cCuentaAcreedores);
+        settings.setValue("Clave1",record.field("clave1").value().toString());
+        settings.setValue("Clave2",record.field("clave2").value().toString());
+
+        QApplication::processEvents();
+
+        // Abro empresa activa
+        //splash.showMessage(tr("Cargando datos de la empresa activa"),Qt::AlignBottom);
+        QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"empresa");
+        if (Configuracion_global->cDriverBDEmpresa =="QSQLITE")
+        {
+            dbEmpresa.setDatabaseName(Configuracion_global->cRutaBdEmpresa);
+            dbEmpresa.open();
+        }
+        else
+        {
+            dbEmpresa.setDatabaseName(Configuracion_global->cNombreBDEmpresa);
+            dbEmpresa.setHostName(Configuracion_global->cHostBDEmpresa);
+            dbEmpresa.open(Configuracion_global->cUsuarioBDEmpresa,Configuracion_global->cPasswordBDEmpresa);
+        }
+
+        QApplication::processEvents();
+
+        // Abro bdmedica activa
+        //splash.showMessage(tr("Abriendo base de datos médica"),Qt::AlignBottom);
+        QSqlDatabase dbMedica = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"dbmedica");
+        if (Configuracion_global->cDriverBDMedica =="QSQLITE")
+        {
+            dbMedica.setDatabaseName(Configuracion_global->cRutaBdMedica);
+            qDebug() << "Medica:" << Configuracion_global->cRutaBdMedica;
+            if(!dbMedica.open())
+                QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR DB"),QObject::tr("No se ha podido abrir la BD medica"),
+                QObject::tr("Aceptar"));
+        }
+        else
+        {
+            dbMedica.setDatabaseName(Configuracion_global->cNombreBDMedica);
+            dbMedica.setHostName(Configuracion_global->cHostBDMedica);
+            dbMedica.open(Configuracion_global->cUsuarioBDMedica,Configuracion_global->cPasswordBDMedica);
+        }
+        if (dbMedica.lastError().isValid())
+        {
+            QMessageBox::critical(qApp->activeWindow(), "error:", dbMedica.lastError().text());
+        }
+
+        Configuracion_global->Cargar_iva();
+        Configuracion_global->Cargar_paises();
+        Configuracion_global->CargarClientes();
+        Configuracion_global->CargarUsuarios();
+        return true;
+    }
+    else
+    {
+        QMessageBox::critical(qApp->activeWindow(),"Error","Fallo la conexión al fichero Medico");
+        return false;
+    }
+}
+
 int main(int argc, char *argv[])
 {
     qDebug() << "drivers: "<< QSqlDatabase::drivers();
@@ -36,7 +157,7 @@ int main(int argc, char *argv[])
 
    //a.setStyle("fusion");
 
-     a.setStyle("Plastique");
+   //a.setStyle("Plastique");
 
    QFile file(":Icons/Terra.qss");
 
@@ -60,30 +181,21 @@ int main(int argc, char *argv[])
    OpenRPT::languages.addTranslationToDefault(":/openRPTLangs/openrptLibs/traduccion/writer_es.qm");
    OpenRPT::languages.installSelected();
 
-
-
-
-
-
    Login l;
-   l.exec();
-
-   MainWindow   w ;
-   w.empresa = l.getEmpresa();
-   w.user = l.getUsuario();
-   w.pass = l.getPass();
-   w.showMaximized();
-//   if ( l.exec()==QDialog::Accepted)
-//   {
-//       MainWindow w;
-//       w.empresa = l.getEmpresa();
-//       w.user =l.getUsuario();
-//       w.pass =l.getPass();
-//       Configuracion_global->id_usuario_activo = l.getIdUser();
-//       w.setWindowState(Qt::WindowMaximized);
-//       w.show();
-       return a.exec();
-//  }
-//   return 0;
+   if ( l.exec()==QDialog::Accepted)
+   {
+       if(cargarEmpresa(l.getEmpresa()))
+       {
+           MainWindow w;
+           w.empresa = l.getEmpresa();
+           w.user =l.getUsuario();
+           w.pass =l.getPass();
+           Configuracion_global->id_usuario_activo = l.getIdUser();
+           //w.setWindowState(Qt::WindowMaximized);
+           w.show();
+           return a.exec();
+       }
+   }
+   return 0;
 }
 

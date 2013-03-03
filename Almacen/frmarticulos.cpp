@@ -270,6 +270,7 @@ void FrmArticulos::LLenarCampos()
    ui->txtnStockMinimo->setText(QString::number(oArticulo->nStockMinimo));
    ui->txtnStockReal->setText(QString::number(oArticulo->nStockReal));
    ui->txtnStockReal_2->setText(QString::number(oArticulo->nStockReal));
+
    if (oArticulo->lControlarStock==1)
         ui->chklControlarStock->setChecked(true);
    else
@@ -334,7 +335,8 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->nStockMaximo=ui->txtnStockMaximo->text().toInt();
     oArticulo->nStockMinimo=ui->txtnStockMinimo->text().toInt();
     oArticulo->nStockReal=ui->txtnStockReal->text().toInt();
-   if (ui->chklControlarStock->isChecked())
+
+    if (ui->chklControlarStock->isChecked())
        oArticulo->lControlarStock=1;
     else
         oArticulo->lControlarStock=0;

@@ -26,21 +26,38 @@
   <property name="styleSheet">
    <string notr="true">background: #4c6088</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_8">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_5">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ARTÍCULOS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ARTÍCULOS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
-   <item row="1" column="0">
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label_21">
@@ -65,6 +82,23 @@
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="lblDescripcion">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(208, 233, 255);
+font: 12pt &quot;Sans Serif&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Descripcion</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="lblCodigo">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -84,23 +118,6 @@ font: 12pt &quot;Sans Serif&quot;;</string>
        </property>
        <property name="text">
         <string>código</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="lblDescripcion">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(208, 233, 255);
-font: 12pt &quot;Sans Serif&quot;;</string>
-       </property>
-       <property name="text">
-        <string>Descripcion</string>
        </property>
       </widget>
      </item>
@@ -148,8 +165,8 @@ color: rgb(255, 255, 255);</string>
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QFrame" name="frame_16">
        <property name="minimumSize">
@@ -174,143 +191,8 @@ color: #ffffff</string>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="3" column="0">
-         <widget class="QPushButton" name="botBuscar">
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>45</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-          </property>
-          <property name="text">
-           <string>Buscar</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QPushButton" name="botDeshacer">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>45</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-          </property>
-          <property name="text">
-           <string>Deshacer</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QPushButton" name="botEditar">
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>45</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-          </property>
-          <property name="text">
-           <string>Editar</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QPushButton" name="botAnterior">
-          <property name="minimumSize">
-           <size>
-            <width>115</width>
-            <height>45</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>118</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-          </property>
-          <property name="text">
-           <string>Anterior</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
          <widget class="QPushButton" name="botAnadir">
           <property name="minimumSize">
            <size>
@@ -343,7 +225,139 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
           </property>
          </widget>
         </item>
-        <item row="5" column="0">
+        <item>
+         <widget class="QPushButton" name="botSiguiente">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+          </property>
+          <property name="text">
+           <string>Siguiente</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="botAnterior">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+          </property>
+          <property name="text">
+           <string>Anterior</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="botBuscar">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+          </property>
+          <property name="text">
+           <string>Buscar</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="botEditar">
+          <property name="minimumSize">
+           <size>
+            <width>115</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>118</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+          </property>
+          <property name="text">
+           <string>Editar</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../terra.qrc">
+            <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="botGuardar">
           <property name="enabled">
            <bool>false</bool>
@@ -379,8 +393,11 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
           </property>
          </widget>
         </item>
-        <item row="8" column="0">
-         <widget class="QPushButton" name="botListados">
+        <item>
+         <widget class="QPushButton" name="botDeshacer">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="minimumSize">
            <size>
             <width>115</width>
@@ -398,11 +415,11 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
 QPushButton:enabled{color: rgb(255,255,255); }</string>
           </property>
           <property name="text">
-           <string>Listados</string>
+           <string>Deshacer</string>
           </property>
           <property name="icon">
            <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/List.png</normaloff>:/Icons/PNG/List.png</iconset>
+            <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -412,7 +429,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
           </property>
          </widget>
         </item>
-        <item row="7" column="0">
+        <item>
          <widget class="QPushButton" name="botBorrar">
           <property name="minimumSize">
            <size>
@@ -445,8 +462,8 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="botSiguiente">
+        <item>
+         <widget class="QPushButton" name="botListados">
           <property name="minimumSize">
            <size>
             <width>115</width>
@@ -464,11 +481,11 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
 QPushButton:enabled{color: rgb(255,255,255); }</string>
           </property>
           <property name="text">
-           <string>Siguiente</string>
+           <string>Listados</string>
           </property>
           <property name="icon">
            <iconset resource="../terra.qrc">
-            <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
+            <normaloff>:/Icons/PNG/List.png</normaloff>:/Icons/PNG/List.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -498,7 +515,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
         <string notr="true"/>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab_3">
         <property name="styleSheet">
@@ -507,9 +524,9 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
         <attribute name="title">
          <string>Artículo</string>
         </attribute>
-        <layout class="QGridLayout" name="gridLayout_4">
+        <layout class="QGridLayout" name="gridLayout_9">
          <item row="0" column="0" colspan="2">
-          <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
            <item>
             <widget class="QFrame" name="frame_13">
              <property name="maximumSize">
@@ -527,7 +544,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
               <item>
                <widget class="QLabel" name="label_2">
                 <property name="text">
@@ -569,7 +586,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
                <widget class="QLabel" name="label_3">
                 <property name="text">
@@ -613,7 +630,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
               <item>
                <widget class="QLabel" name="label_4">
                 <property name="text">
@@ -645,113 +662,16 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
            </item>
           </layout>
          </item>
-         <item row="1" column="0" colspan="2">
-          <layout class="QGridLayout" name="gridLayout_9">
-           <item row="0" column="5" rowspan="3">
-            <widget class="QFrame" name="frame_2">
-             <property name="minimumSize">
-              <size>
-               <width>67</width>
-               <height>0</height>
-              </size>
+         <item row="1" column="0">
+          <layout class="QGridLayout" name="gridLayout_8">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Descripción:</string>
              </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(187, 187, 187);</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_5">
-              <item row="0" column="0">
-               <layout class="QGridLayout" name="gridLayout_11">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_13">
-                  <property name="text">
-                   <string>Stock Real:
-(fisico + pendiente recibir)</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="4">
-                 <widget class="QLabel" name="label_38">
-                  <property name="text">
-                   <string>Unidades</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="3">
-                 <widget class="QLineEdit" name="txtnStockReal">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>80</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(254, 255, 205);</string>
-                  </property>
-                  <property name="text">
-                   <string>0</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_12">
-                  <property name="text">
-                   <string>Stock Fisico:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="3">
-                 <widget class="QLineEdit" name="txtStockFisico">
-                  <property name="maximumSize">
-                   <size>
-                    <width>80</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(254, 255, 205);</string>
-                  </property>
-                  <property name="text">
-                   <string>0</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="4">
-                 <widget class="QLabel" name="label_17">
-                  <property name="text">
-                   <string>Unidades</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="1" column="0">
-               <widget class="QCheckBox" name="chklControlarStock">
-                <property name="text">
-                 <string>Controlar stock</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
             </widget>
            </item>
-           <item row="0" column="1" colspan="4">
+           <item row="0" column="1" colspan="3">
             <widget class="QLineEdit" name="txtcDescripcion">
              <property name="maximumSize">
               <size>
@@ -761,6 +681,33 @@ background-color: rgb(254, 255, 205);</string>
              </property>
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>Descripción Resumida:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1" colspan="3">
+            <widget class="QLineEdit" name="txtcDescripcionResumida">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Proveedor Habitual:</string>
              </property>
             </widget>
            </item>
@@ -796,13 +743,6 @@ background-color: rgb(254, 255, 205);</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>Proveedor Habitual:</string>
-             </property>
-            </widget>
-           </item>
            <item row="2" column="3">
             <widget class="QPushButton" name="btnBuscarProveedor">
              <property name="enabled">
@@ -823,36 +763,121 @@ background-color: rgb(254, 255, 205);</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="1" colspan="4">
-            <widget class="QLineEdit" name="txtcDescripcionResumida">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_6">
-             <property name="text">
-              <string>Descripción:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_7">
-             <property name="text">
-              <string>Descripción Resumida:</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </item>
-         <item row="2" column="0" rowspan="2">
+         <item row="1" column="1" rowspan="2">
+          <widget class="QFrame" name="frame_2">
+           <property name="minimumSize">
+            <size>
+             <width>67</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(187, 187, 187);</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <item row="0" column="2">
+             <widget class="QLineEdit" name="txtnStockReal">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>80</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(254, 255, 205);</string>
+              </property>
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="2">
+             <widget class="QLabel" name="label_13">
+              <property name="text">
+               <string>Stock Real:
+(fisico + pendiente recibir)</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QLabel" name="label_38">
+              <property name="text">
+               <string>Unidades</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2" rowspan="2">
+             <widget class="QLineEdit" name="txtStockFisico">
+              <property name="maximumSize">
+               <size>
+                <width>80</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(254, 255, 205);</string>
+              </property>
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" rowspan="2" colspan="2">
+             <widget class="QLabel" name="label_12">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Stock Fisico:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3" rowspan="2">
+             <widget class="QLabel" name="label_17">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Unidades</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QCheckBox" name="chklControlarStock">
+              <property name="text">
+               <string>Controlar stock</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="2" column="0" rowspan="3">
           <widget class="QFrame" name="frame_6">
            <property name="minimumSize">
             <size>
@@ -870,21 +895,7 @@ background-color: rgb(254, 255, 205);</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QGridLayout" name="gridLayout_12">
-            <item row="1" column="0">
-             <widget class="QTableView" name="tablaProveedores">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(255, 255,210);</string>
-              </property>
-              <property name="alternatingRowColors">
-               <bool>true</bool>
-              </property>
-              <property name="selectionBehavior">
-               <enum>QAbstractItemView::SelectRows</enum>
-              </property>
-             </widget>
-            </item>
+           <layout class="QGridLayout" name="gridLayout_11">
             <item row="0" column="0">
              <widget class="QLabel" name="label_23">
               <property name="maximumSize">
@@ -905,10 +916,24 @@ color: rgb(255,255,255);</string>
               </property>
              </widget>
             </item>
+            <item row="1" column="0">
+             <widget class="QTableView" name="tablaProveedores">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255,210);</string>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="3" column="1">
           <widget class="QFrame" name="frame_10">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(175,195,225);
@@ -920,8 +945,8 @@ color: rgb(255,255,255);</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QGridLayout" name="gridLayout_13">
-            <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
              <widget class="QCheckBox" name="chklMostrarWeb">
               <property name="toolTip">
                <string>Seleccionar si se desea que el artículo aparezca en la tienda virtual en su web</string>
@@ -934,7 +959,7 @@ color: rgb(255,255,255);</string>
            </layout>
           </widget>
          </item>
-         <item row="3" column="1" rowspan="2">
+         <item row="4" column="1" rowspan="2">
           <widget class="QFrame" name="frame">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(175,195,225);
@@ -946,7 +971,7 @@ color: rgb(255,255,255);</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QGridLayout" name="gridLayout_10">
+           <layout class="QGridLayout" name="gridLayout_7">
             <item row="0" column="0">
              <widget class="QLabel" name="label_18">
               <property name="text">
@@ -964,7 +989,7 @@ color: rgb(255,255,255);</string>
            </layout>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="5" column="0">
           <widget class="QFrame" name="frame_3">
            <property name="minimumSize">
             <size>
@@ -982,7 +1007,7 @@ color: rgb(255,255,255);</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QGridLayout" name="gridLayout_6">
+           <layout class="QGridLayout" name="gridLayout_10">
             <item row="0" column="0">
              <widget class="QLabel" name="label_9">
               <property name="text">
@@ -1296,14 +1321,26 @@ color: rgb(0, 0, 0);</string>
         <attribute name="title">
          <string>Tarifas/Almacén</string>
         </attribute>
-        <layout class="QGridLayout" name="gridLayout_7">
-         <item row="1" column="0" colspan="2">
-          <widget class="QFrame" name="frame_8">
+        <layout class="QGridLayout" name="gridLayout_5">
+         <property name="leftMargin">
+          <number>9</number>
+         </property>
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QFrame" name="frame_4">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(175,195,225);</string>
@@ -1314,68 +1351,25 @@ color: rgb(0, 0, 0);</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QGridLayout" name="gridLayout_17">
-            <item row="0" column="0" colspan="2">
-             <widget class="QTableView" name="TablaTarifas">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="label_19">
+              <property name="text">
+               <string>Tipo IVA:</string>
               </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cboTipoIVA">
               <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(255, 255, 202);</string>
-              </property>
-              <property name="alternatingRowColors">
-               <bool>true</bool>
-              </property>
-              <property name="selectionMode">
-               <enum>QAbstractItemView::SingleSelection</enum>
-              </property>
-              <property name="selectionBehavior">
-               <enum>QAbstractItemView::SelectRows</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QPushButton" name="btnAnadirTarifa">
-              <property name="text">
-               <string>Añadir Tarifa</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../terra.qrc">
-                <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>14</width>
-                <height>14</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QPushButton" name="btnBorrarTarifa">
-              <property name="text">
-               <string>Borrar Tarifa</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../terra.qrc">
-                <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>14</width>
-                <height>14</height>
-               </size>
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
              </widget>
             </item>
            </layout>
           </widget>
          </item>
-         <item row="0" column="2">
+         <item row="0" column="1">
           <widget class="QFrame" name="frame_7">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1391,7 +1385,7 @@ alternate-background-color: rgb(255, 255, 202);</string>
            </property>
            <property name="maximumSize">
             <size>
-             <width>300</width>
+             <width>16777215</width>
              <height>40</height>
             </size>
            </property>
@@ -1408,7 +1402,7 @@ background-color: rgb(255, 255, 127);</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
             <item>
              <widget class="QLabel" name="label_14">
               <property name="autoFillBackground">
@@ -1444,11 +1438,11 @@ background-color: rgb(255, 255, 127);</string>
            </layout>
           </widget>
          </item>
-         <item row="1" column="2">
+         <item row="0" column="2" rowspan="3">
           <widget class="QFrame" name="frame_9">
            <property name="maximumSize">
             <size>
-             <width>300</width>
+             <width>350</width>
              <height>16777215</height>
             </size>
            </property>
@@ -1461,7 +1455,7 @@ background-color: rgb(255, 255, 127);</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QGridLayout" name="gridLayout_3">
+           <layout class="QFormLayout" name="formLayout">
             <item row="0" column="0">
              <widget class="QLabel" name="label_28">
               <property name="text">
@@ -1664,6 +1658,33 @@ color: rbg(0,0,0);</string>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_22">
+              <property name="text">
+               <string>Stock Fisico:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLineEdit" name="txtStockfisico">
+              <property name="maximumSize">
+               <size>
+                <width>120</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(254, 255, 205);
+color: rbg(0,0,0);</string>
               </property>
               <property name="text">
                <string>0</string>
@@ -1900,31 +1921,10 @@ color: rbg(0,0,0);</string>
               </property>
              </widget>
             </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="label_22">
-              <property name="text">
-               <string>Stock Fisico:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <widget class="QLineEdit" name="txtStockfisico">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(254, 255, 205);
-color: rbg(0,0,0);</string>
-              </property>
-              <property name="text">
-               <string>0</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item row="1" column="0" colspan="2">
           <widget class="QFrame" name="frame_5">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1953,15 +1953,15 @@ color: rbg(0,0,0);</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QGridLayout" name="gridLayout_15">
-            <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
              <widget class="QLabel" name="label_20">
               <property name="text">
                <string>%Descuento Promocional:</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
+            <item>
              <widget class="QLineEdit" name="txtrDto">
               <property name="maximumSize">
                <size>
@@ -1983,19 +1983,13 @@ color: rbg(0,0,0);</string>
            </layout>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QFrame" name="frame_4">
+         <item row="2" column="0" colspan="2">
+          <widget class="QFrame" name="frame_8">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>40</height>
-            </size>
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(175,195,225);</string>
@@ -2006,18 +2000,61 @@ color: rbg(0,0,0);</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QGridLayout" name="gridLayout_2">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_19">
-              <property name="text">
-               <string>Tipo IVA:</string>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0" colspan="2">
+             <widget class="QTableView" name="TablaTarifas">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 202);</string>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::SingleSelection</enum>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QComboBox" name="cboTipoIVA">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <item row="1" column="0">
+             <widget class="QPushButton" name="btnAnadirTarifa">
+              <property name="text">
+               <string>Añadir Tarifa</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../terra.qrc">
+                <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>14</width>
+                <height>14</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPushButton" name="btnBorrarTarifa">
+              <property name="text">
+               <string>Borrar Tarifa</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../terra.qrc">
+                <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>14</width>
+                <height>14</height>
+               </size>
               </property>
              </widget>
             </item>
@@ -2062,194 +2099,240 @@ color: rbg(0,0,0);</string>
         <attribute name="title">
          <string>Imagenes Artículo</string>
         </attribute>
-        <layout class="QGridLayout" name="gridLayout_14">
-         <item row="0" column="0">
-          <widget class="QPushButton" name="botCambiarImagen">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Cambiar
+        <widget class="QPushButton" name="botCambiarImagen">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>39</x>
+           <y>153</y>
+           <width>85</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Cambiar
 Imagen.</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="lblImagenArticulo">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>255</horstretch>
-             <verstretch>255</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>120</width>
-             <height>120</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>256</width>
-             <height>256</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../terra.qrc">:/Icons/PNG/paquete.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="botCambiarImagen_3">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Cambiar
+         </property>
+        </widget>
+        <widget class="QLabel" name="lblImagenArticulo">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>119</y>
+           <width>256</width>
+           <height>120</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>255</horstretch>
+           <verstretch>255</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>120</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>256</width>
+           <height>256</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../terra.qrc">:/Icons/PNG/paquete.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="botCambiarImagen_3">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>39</x>
+           <y>389</y>
+           <width>85</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Cambiar
 Imagen.</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="lblImagenArticulo_3">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>255</horstretch>
-             <verstretch>255</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>120</width>
-             <height>120</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>256</width>
-             <height>256</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../terra.qrc">:/Icons/PNG/paquete.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="botCambiarImagen_4">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Cambiar
+         </property>
+        </widget>
+        <widget class="QLabel" name="lblImagenArticulo_3">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>355</y>
+           <width>256</width>
+           <height>120</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>255</horstretch>
+           <verstretch>255</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>120</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>256</width>
+           <height>256</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../terra.qrc">:/Icons/PNG/paquete.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="botCambiarImagen_4">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>452</x>
+           <y>389</y>
+           <width>85</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Cambiar
 Imagen.</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="botCambiarImagen_2">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Cambiar
+         </property>
+        </widget>
+        <widget class="QPushButton" name="botCambiarImagen_2">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>452</x>
+           <y>153</y>
+           <width>85</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Cambiar
 Imagen.</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QLabel" name="lblImagenArticulo_2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>255</horstretch>
-             <verstretch>255</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>120</width>
-             <height>120</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>256</width>
-             <height>256</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../terra.qrc">:/Icons/PNG/paquete.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QLabel" name="lblImagenArticulo_4">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>255</horstretch>
-             <verstretch>255</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>120</width>
-             <height>120</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>256</width>
-             <height>256</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../terra.qrc">:/Icons/PNG/paquete.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
+         </property>
+        </widget>
+        <widget class="QLabel" name="lblImagenArticulo_2">
+         <property name="geometry">
+          <rect>
+           <x>573</x>
+           <y>119</y>
+           <width>256</width>
+           <height>120</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>255</horstretch>
+           <verstretch>255</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>120</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>256</width>
+           <height>256</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../terra.qrc">:/Icons/PNG/paquete.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="lblImagenArticulo_4">
+         <property name="geometry">
+          <rect>
+           <x>573</x>
+           <y>355</y>
+           <width>256</width>
+           <height>120</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>255</horstretch>
+           <verstretch>255</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>120</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>256</width>
+           <height>256</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../terra.qrc">:/Icons/PNG/paquete.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="tab">
         <attribute name="title">
          <string>Búsqueda</string>
         </attribute>
-        <layout class="QGridLayout" name="gridLayout_21">
+        <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="0">
           <widget class="QTabWidget" name="tabWidget">
            <property name="minimumSize">
@@ -2281,7 +2364,7 @@ Imagen.</string>
             <attribute name="title">
              <string>Búsqueda Rápida</string>
             </attribute>
-            <layout class="QGridLayout" name="gridLayout_19">
+            <layout class="QGridLayout" name="gridLayout_3">
              <item row="0" column="0">
               <widget class="QLabel" name="label">
                <property name="text">
@@ -2289,10 +2372,18 @@ Imagen.</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="0" colspan="3">
-              <widget class="QTableView" name="TablaBuscarArt">
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="txtBuscarArticulo">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="botBuscarArtRapido">
+               <property name="icon">
+                <iconset resource="../terra.qrc">
+                 <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                </property>
               </widget>
              </item>
@@ -2309,21 +2400,6 @@ Imagen.</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="2">
-              <widget class="QPushButton" name="botBuscarArtRapido">
-               <property name="icon">
-                <iconset resource="../terra.qrc">
-                 <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="txtBuscarArticulo">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="1">
               <widget class="QRadioButton" name="radDescripcion">
                <property name="minimumSize">
@@ -2334,6 +2410,13 @@ Imagen.</string>
                </property>
                <property name="text">
                 <string>Descripción</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0" colspan="2">
+              <widget class="QTableView" name="TablaBuscarArt">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
@@ -2359,8 +2442,8 @@ Imagen.</string>
             <attribute name="title">
              <string>Historial</string>
             </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="0">
               <widget class="QTableView" name="tableView"/>
              </item>
             </layout>
