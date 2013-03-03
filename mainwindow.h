@@ -8,7 +8,7 @@
 #include "Zona_Pacientes/frmClientes.h"
 
 #include "Almacen/frmarticulos.h"
-#include "frmproveedores.h"
+#include "Zona_Compras/frmproveedores.h"
 
 #include "TPV/frmcajaminuta.h"
 

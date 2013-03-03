@@ -37,7 +37,7 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     Zona_Pacientes/frmClientes.cpp \
     login.cpp \
-    frmproveedores.cpp \
+    Zona_Compras/frmproveedores.cpp \
     Zona_Pacientes/cliente.cpp \
     proveedor.cpp \
     Busquedas/frmbuscarcliente.cpp \
@@ -108,13 +108,14 @@ SOURCES += main.cpp\
     Zona_Ventas/albaran.cpp \
     Busquedas/frmbuscarproveedor.cpp \
     Zona_Compras/pedidoproveedor.cpp \ 
-    Almacen/frmtipostarifa.cpp
+    Almacen/frmtipostarifa.cpp \
+    Zona_Ventas/frmcajaabierta.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
     Zona_Pacientes/frmClientes.h \
     login.h \
-    frmproveedores.h \
+    Zona_Compras/frmproveedores.h \
     Zona_Pacientes/cliente.h \
     proveedor.h \
     Busquedas/frmbuscarcliente.h \
@@ -185,13 +186,14 @@ HEADERS  += mainwindow.h \
     Zona_Ventas/albaran.h \
     Busquedas/frmbuscarproveedor.h \
     Zona_Compras/pedidoproveedor.h \
-    Almacen/frmtipostarifa.h
+    Almacen/frmtipostarifa.h \
+    Zona_Ventas/frmcajaabierta.h
 
 
 FORMS    += mainwindow.ui \
     Zona_Pacientes/frmClientes.ui \
     login.ui \
-    frmproveedores.ui \
+    Zona_Compras/frmproveedores.ui \
     Busquedas/frmbuscarcliente.ui \
     pruebas.ui \
     Busquedas/frmbuscarpoblacion.ui \
@@ -233,7 +235,8 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmfacturas.ui \
     Zona_Ventas/frmalbaran.ui \
     Busquedas/frmbuscarproveedor.ui \
-    Almacen/frmtipostarifa.ui
+    Almacen/frmtipostarifa.ui \
+    Zona_Ventas/frmcajaabierta.ui
 
 RESOURCES += \
     terra.qrc
