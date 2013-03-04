@@ -11,7 +11,7 @@ void Articulo::Anadir()
          query.prepare("INSERT INTO articulos (cCodigo,id_Seccion)"
                        " VALUES (:cCodigo,1)");
 
-         query.bindValue(":cCodigo",this->cCodigo);
+         query.bindValue(":cCodigo","nuevo");
 
 
          if(!query.exec()) {
@@ -20,6 +20,7 @@ void Articulo::Anadir()
                                   QObject::tr("Ok"));
          } else {
              this->id = query.lastInsertId().toInt();
+             Recuperar("Select * from articulos where id = "+QString::number(this->id));
          }
 
 

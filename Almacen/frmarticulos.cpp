@@ -365,36 +365,37 @@ void FrmArticulos::CargarCamposEnArticulo()
 void FrmArticulos::VaciarCampos()
 {
    oArticulo->Vaciar();
-   ui->txtcCodigo->clear();
-   ui->txtcCodigoBarras->clear();
-   ui->txtcCodigoFabricante->clear();
-   ui->txtcDescripcion->clear();
-   ui->txtcDescripcionResumida->clear();
-   ui->txtcProveedor->clear();
-   ui->txtcFamilia->clear();
-   ui->txtcSeccion->clear();
-   ui->txtcSubFamilia->clear();
+   ui->txtcCodigo->setText("");
+   ui->txtcCodigoBarras->setText("");
+   ui->txtcCodigoFabricante->setText("");
+   ui->txtcDescripcion->setText("");
+   ui->txtcDescripcionResumida->setText("");
+   ui->txtcProveedor->setText("");
+   ui->txtcFamilia->setText("");
+   ui->txtcSeccion->setText("");
+   ui->txtcSubFamilia->setText("");
    ui->cboTipoIVA->setEditText("");
-   ui->txtrCoste->clear();
-   ui->txtrDto->clear();
-   ui->txtdFechaUltimaCompra->clear();
-   ui->txtdFechaUltimaVenta->clear();
-   ui->txtnUnidadesCompradas->clear();
-   ui->txtnUnidadesVendidas->clear();
-   ui->txtrAcumuladoCompras->clear();
-   ui->txtrAcumuladoVentas->clear();
-   ui->txttComentario->clear();
-   ui->txtnStockMaximo->clear();
-   ui->txtnStockMinimo->clear();
-   ui->txtnStockReal->clear();
-   ui->txtnStockReal_2->clear();
+   ui->txtrCoste->setText("0,00");
+   ui->txtrDto->setText("0");
+   ui->txtdFechaUltimaCompra->setDate(QDate::currentDate());
+   ui->txtdFechaUltimaVenta->setDate(QDate::currentDate());
+   ui->txtnUnidadesCompradas->setText("0");
+   ui->txtnUnidadesVendidas->setText("0");
+   ui->txtrAcumuladoCompras->setText("0,00");
+   ui->txtrAcumuladoVentas->setText("0,00");
+   ui->txttComentario->setText("");
+   ui->txtnStockMaximo->setText("0");
+   ui->txtnStockMinimo->setText("0");
+   ui->txtnStockReal->setText("0");
+   ui->txtnStockReal_2->setText("0");
+   ui->txtStockFisico->setText("0");
    ui->chklControlarStock->setChecked(false);
-   ui->txtnCantidadPendienteRecibir->clear();
-   ui->txtdFechaPrevistaRecepcion->clear();
-   ui->txtnReservados->clear();
+   ui->txtnCantidadPendienteRecibir->setText("0");
+   ui->txtdFechaPrevistaRecepcion->setDate(QDate::currentDate());
+   ui->txtnReservados->setText("0");
    ui->chklMostrarWeb->setChecked(false);
-   ui->lblImagenArticulo->clear();
-   ui->txtCodigoProveedor->clear();
+   ui->lblImagenArticulo->setText("");
+   ui->txtCodigoProveedor->setText("");
 
 }
 
