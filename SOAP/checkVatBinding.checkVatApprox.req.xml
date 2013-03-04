@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ns1="urn:ec.europa.eu:taxud:vies:services:checkVat"
+ xmlns:ns2="urn:ec.europa.eu:taxud:vies:services:checkVat:types">
+ <SOAP-ENV:Body>
+   <ns2:checkVatApprox>
+    <ns2:countryCode></ns2:countryCode>
+    <ns2:vatNumber></ns2:vatNumber>
+    <ns2:traderName></ns2:traderName>
+    <ns2:traderCompanyType></ns2:traderCompanyType>
+    <ns2:traderStreet></ns2:traderStreet>
+    <ns2:traderPostcode></ns2:traderPostcode>
+    <ns2:traderCity></ns2:traderCity>
+    <ns2:requesterCountryCode></ns2:requesterCountryCode>
+    <ns2:requesterVatNumber></ns2:requesterVatNumber>
+   </ns2:checkVatApprox>
+
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

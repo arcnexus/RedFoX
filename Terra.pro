@@ -109,7 +109,10 @@ SOURCES += main.cpp\
     Busquedas/frmbuscarproveedor.cpp \
     Zona_Compras/pedidoproveedor.cpp \ 
     Almacen/frmtipostarifa.cpp \
-    Zona_Ventas/frmcajaabierta.cpp
+    Zona_Ventas/frmcajaabierta.cpp \
+    SOAP/stdsoap2.cpp \
+    SOAP/soapcheckVatBindingProxy.cpp \
+    SOAP/soapC.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -187,7 +190,12 @@ HEADERS  += mainwindow.h \
     Busquedas/frmbuscarproveedor.h \
     Zona_Compras/pedidoproveedor.h \
     Almacen/frmtipostarifa.h \
-    Zona_Ventas/frmcajaabierta.h
+    Zona_Ventas/frmcajaabierta.h \
+    SOAP/stdsoap2.h \
+    SOAP/soapStub.h \
+    SOAP/soapH.h \
+    SOAP/soapcheckVatBindingProxy.h \
+    SOAP/checkVatBinding.nsmap
 
 
 FORMS    += mainwindow.ui \
@@ -242,7 +250,11 @@ RESOURCES += \
     terra.qrc
 
 OTHER_FILES += \
-    TODO.txt
+    TODO.txt \
+    SOAP/checkVatBinding.checkVatApprox.res.xml \
+    SOAP/checkVatBinding.checkVatApprox.req.xml \
+    SOAP/checkVatBinding.checkVat.res.xml \
+    SOAP/checkVatBinding.checkVat.req.xml
 
 unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lcommon
 

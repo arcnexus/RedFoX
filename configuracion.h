@@ -105,6 +105,9 @@ public:
 
     static QString letraDNI(QString Nif);
     static void imprimir(QString db , QString report , bool toPDF , bool preview = true, QWidget* parent = 0);
+    static bool comprobarNIF(QString country_code, QString nif);
+    static QString Crypt(QString input);
+    static QString DeCrypt(QString input);
 public slots:
     void format_text();
 };

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ns1="urn:ec.europa.eu:taxud:vies:services:checkVat"
+ xmlns:ns2="urn:ec.europa.eu:taxud:vies:services:checkVat:types">
+ <SOAP-ENV:Body>
+  <ns2:checkVatApproxResponse>
+   <ns2:countryCode></ns2:countryCode>
+   <ns2:vatNumber></ns2:vatNumber>
+   <ns2:requestDate></ns2:requestDate>
+   <ns2:valid>false</ns2:valid>
+   <ns2:traderName></ns2:traderName>
+   <ns2:traderCompanyType></ns2:traderCompanyType>
+   <ns2:traderAddress></ns2:traderAddress>
+   <ns2:traderStreet></ns2:traderStreet>
+   <ns2:traderPostcode></ns2:traderPostcode>
+   <ns2:traderCity></ns2:traderCity>
+   <ns2:traderNameMatch>1</ns2:traderNameMatch>
+   <ns2:traderCompanyTypeMatch>1</ns2:traderCompanyTypeMatch>
+   <ns2:traderStreetMatch>1</ns2:traderStreetMatch>
+   <ns2:traderPostcodeMatch>1</ns2:traderPostcodeMatch>
+   <ns2:traderCityMatch>1</ns2:traderCityMatch>
+   <ns2:requestIdentifier></ns2:requestIdentifier>
+  </ns2:checkVatApproxResponse>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
