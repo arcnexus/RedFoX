@@ -181,7 +181,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     crear_barraAdmin();
 
-
     ui->stackedWidget_2->setCurrentIndex(0);
     if (medic)
     {

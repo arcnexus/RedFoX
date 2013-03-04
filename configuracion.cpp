@@ -6,6 +6,8 @@
 #include "openrptLibs/include/previewdialog.h"
 #include "openrptLibs/include/renderobjects.h"
 
+#include "SOAP/soapcheckVatBindingProxy.h"
+#include "SOAP/checkVatBinding.nsmap"
 
 #include <QLineEdit>
 Configuracion::Configuracion(QObject* parent) :
@@ -491,6 +493,48 @@ void Configuracion::imprimir(QString db, QString report, bool toPDF,bool preview
             }
         }
     }
+}
+
+bool Configuracion::comprobarNIF(QString country_code, QString nif)
+{
+    _ns2__checkVat ns2__checkVat;
+    QByteArray   code_bytes;
+    QByteArray  nif_bytes = nif.toAscii();
+    ns2__checkVat.vatNumber = nif_bytes.data();
+
+    QSqlQuery q(QSqlDatabase::database("terra"));
+    QString sql = QString("SELECT * FROM paises where pais = '%1'").arg(country_code);
+    q.prepare(sql);
+    if(q.exec())
+    {
+        if(q.next())
+        {
+            QString code = q.record().value("countryCode").toString();
+            code_bytes = code.toAscii();
+            ns2__checkVat.countryCode = code_bytes.data();
+        }
+        else return false;
+    }
+
+    checkVatBindingProxy cheker;
+
+    _ns2__checkVatResponse ns2__checkVatResponse;
+
+    if(cheker.checkVat(&ns2__checkVat,&ns2__checkVatResponse) == SOAP_OK)
+    {
+        return ns2__checkVatResponse.valid;
+    }
+    return false;
+}
+
+QString Configuracion::Crypt(QString input)
+{
+    return "";
+}
+
+QString Configuracion::DeCrypt(QString input)
+{
+    return "";
 }
 
 void Configuracion::format_text()

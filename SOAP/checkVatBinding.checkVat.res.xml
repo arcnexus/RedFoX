@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ns1="urn:ec.europa.eu:taxud:vies:services:checkVat"
+ xmlns:ns2="urn:ec.europa.eu:taxud:vies:services:checkVat:types">
+ <SOAP-ENV:Body>
+  <ns2:checkVatResponse>
+   <ns2:countryCode></ns2:countryCode>
+   <ns2:vatNumber></ns2:vatNumber>
+   <ns2:requestDate></ns2:requestDate>
+   <ns2:valid>false</ns2:valid>
+   <ns2:name></ns2:name>
+   <ns2:address></ns2:address>
+  </ns2:checkVatResponse>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
