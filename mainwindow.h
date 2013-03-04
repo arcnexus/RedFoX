@@ -42,7 +42,7 @@ public:
 
     QString user;
     QString pass;
-
+    void showInfo();
     //QSqlDatabase dbConfiguracion;
     QSqlQuery QryConfiguracion;
 private slots:

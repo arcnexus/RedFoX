@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
 
    //a.setStyle("fusion");
 
-   //a.setStyle("Plastique");
+   a.setStyle("Plastique");
 
    QFile file(":Icons/Terra.qss");
 
@@ -190,8 +190,10 @@ int main(int argc, char *argv[])
            w.empresa = l.getEmpresa();
            w.user =l.getUsuario();
            w.pass =l.getPass();
+           w.showInfo();
            Configuracion_global->id_usuario_activo = l.getIdUser();
            //w.setWindowState(Qt::WindowMaximized);
+           w.move(0,0);
            w.show();
            return a.exec();
        }

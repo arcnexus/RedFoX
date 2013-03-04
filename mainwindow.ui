@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1160</width>
-    <height>735</height>
+    <width>988</width>
+    <height>263</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -75,10 +75,7 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
-       <property name="spacing">
-        <number>1</number>
-       </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
        <property name="margin">
         <number>1</number>
        </property>
@@ -94,7 +91,7 @@ selection-color: rgb(0, 0, 0);</string>
        <item>
         <widget class="QStackedWidget" name="stackedWidget_2">
          <property name="currentIndex">
-          <number>4</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="page_manten">
           <layout class="QVBoxLayout" name="verticalLayout_manten"/>
@@ -103,7 +100,11 @@ selection-color: rgb(0, 0, 0);</string>
           <layout class="QVBoxLayout" name="verticalLayout_compras"/>
          </widget>
          <widget class="QWidget" name="page_ventas">
-          <layout class="QVBoxLayout" name="verticalLayout_ventas"/>
+          <layout class="QVBoxLayout" name="verticalLayout_ventas">
+           <property name="spacing">
+            <number>5</number>
+           </property>
+          </layout>
          </widget>
          <widget class="QWidget" name="page_almacen">
           <layout class="QVBoxLayout" name="verticalLayout_almacen"/>
@@ -117,16 +118,7 @@ selection-color: rgb(0, 0, 0);</string>
      </widget>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
-      <property name="spacing">
-       <number>2</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QFrame" name="frame">
         <property name="minimumSize">
@@ -822,24 +814,13 @@ background-color: rgb(255, 255, 255);</string>
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>1014</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(219, 228, 255);</string>
-        </property>
-        <widget class="QWidget" name="stackedWidgetPage1"/>
+        <widget class="QWidget" name="page"/>
+        <widget class="QWidget" name="page_2"/>
        </widget>
       </item>
      </layout>
@@ -851,8 +832,8 @@ background-color: rgb(255, 255, 255);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1160</width>
-     <height>22</height>
+     <width>988</width>
+     <height>27</height>
     </rect>
    </property>
    <property name="nativeMenuBar">
@@ -1553,9 +1534,6 @@ background-color: rgb(255, 255, 255);</string>
    </property>
   </action>
  </widget>
- <tabstops>
-  <tabstop>lineUsuarioActivo</tabstop>
- </tabstops>
  <resources>
   <include location="terra.qrc"/>
  </resources>

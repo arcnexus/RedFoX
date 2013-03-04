@@ -307,14 +307,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QApplication::processEvents();
 
-    ui->lineUsuarioActivo->setText(user);
-    Configuracion_global->cUsuarioActivo = user;
+
 
     QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
 
-    ui->lineEmpresaActiva->setText(empresa);
+
 }
 void MainWindow::init()
 {
@@ -550,6 +549,13 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete reportWindow;
+}
+
+void MainWindow::showInfo()
+{
+    ui->lineEmpresaActiva->setText(empresa);
+    ui->lineUsuarioActivo->setText(user);
+    Configuracion_global->cUsuarioActivo = user;
 }
 
 void MainWindow::btnMantenimientos_clicked()
