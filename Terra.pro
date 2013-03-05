@@ -112,7 +112,8 @@ SOURCES += main.cpp\
     Zona_Ventas/frmcajaabierta.cpp \
     SOAP/stdsoap2.cpp \
     SOAP/soapcheckVatBindingProxy.cpp \
-    SOAP/soapC.cpp
+    SOAP/soapC.cpp \
+    Almacen/frmasociarproveedor.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -195,7 +196,8 @@ HEADERS  += mainwindow.h \
     SOAP/soapStub.h \
     SOAP/soapH.h \
     SOAP/soapcheckVatBindingProxy.h \
-    SOAP/checkVatBinding.nsmap
+    SOAP/checkVatBinding.nsmap \
+    Almacen/frmasociarproveedor.h
 
 
 FORMS    += mainwindow.ui \
@@ -244,7 +246,8 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmalbaran.ui \
     Busquedas/frmbuscarproveedor.ui \
     Almacen/frmtipostarifa.ui \
-    Zona_Ventas/frmcajaabierta.ui
+    Zona_Ventas/frmcajaabierta.ui \
+    Almacen/frmasociarproveedor.ui
 
 RESOURCES += \
     terra.qrc

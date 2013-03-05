@@ -192,9 +192,14 @@ int main(int argc, char *argv[])
            w.pass =l.getPass();
            w.showInfo();
            Configuracion_global->id_usuario_activo = l.getIdUser();
-           //w.setWindowState(Qt::WindowMaximized);
-           w.move(0,0);
+          //w.setWindowState(Qt::WindowMaximized);
+
+#if Q_OS_WIN
            w.showMaximized();
+#else
+           w.showMaximized();
+#endif
+            w.move(0,0);
            return a.exec();
        }
    }
