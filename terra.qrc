@@ -130,6 +130,7 @@
         <file>PNG/Cancel.png</file>
         <file>PNG/Logo2.png</file>
         <file>PNG/borrar.png</file>
+        <file>PNG/filtrar.png</file>
     </qresource>
     <qresource prefix="/openRPTLangs">
         <file>openrptLibs/traduccion/common_es.qm</file>

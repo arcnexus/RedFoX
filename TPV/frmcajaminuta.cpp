@@ -21,7 +21,7 @@ FrmCajaMinuta::FrmCajaMinuta(QWidget *parent) :
     linea_column  =0;
     this->setFocusPolicy(Qt::ClickFocus);
 
-    ui->setupUi(this);
+   ui->setupUi(this);
     connect(ui->lineas,SIGNAL(itemSelectionChanged()),this,SLOT(linea_itemSelectionChanged()));
     //ui->txtPVPArticulo->setValidator(Configuracion_global->validator_cantidad);
     connect(ui->txtPVPArticulo,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
