@@ -2347,7 +2347,7 @@ background-color: rgb(255, 249, 173);</string>
          </item>
         </layout>
        </item>
-       <item row="0" column="1">
+       <item row="0" column="1" colspan="2">
         <widget class="QLabel" name="label_82">
          <property name="maximumSize">
           <size>
@@ -2363,7 +2363,7 @@ background-color: rgb(255, 249, 173);</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="1" column="1" colspan="3">
         <widget class="QTextEdit" name="txttComentarios">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -2402,7 +2402,17 @@ background-color: rgb(255, 249, 173);</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="0" colspan="2">
+       <item row="3" column="2">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Idioma Documentos:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QComboBox" name="cboIdiomaDocumentos"/>
+       </item>
+       <item row="4" column="0" colspan="4">
         <widget class="QFrame" name="frame_5">
          <property name="minimumSize">
           <size>

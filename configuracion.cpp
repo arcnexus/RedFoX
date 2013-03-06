@@ -230,6 +230,36 @@ QString Configuracion::Devolver_moneda(int id)
     return "";
 }
 
+QString Configuracion::Devolver_idioma(int id)
+{
+    QSqlQuery qIdioma(QSqlDatabase::database("terra"));
+    if(qIdioma.exec("select idioma from idiomas where id = "+QString::number(id))) {
+        qIdioma.next();
+        return qIdioma.record().value("idioma").toString();
+    }
+    else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Idioma"),
+                             tr("Fallo la recuperacion del idioma: ")+qIdioma.lastError().text(),
+                             tr("Aceptar"));
+    }
+    return "";
+}
+
+int Configuracion::Devolver_id_idioma(QString idioma)
+{
+    QSqlQuery qIdioma(QSqlDatabase::database("terra"));
+    if(qIdioma.exec("select id from idiomas where idioma = '"+idioma+"'")){
+        qIdioma.next();
+        return qIdioma.record().value("id").toInt();
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Idioma"),
+                             tr("Fallo la recuperacion del idioma: ")+qIdioma.lastError().text(),
+                             tr("Aceptar"));
+    }
+    return 0;
+
+}
+
 void Configuracion::CargarClientes()
 {
     if(client_model == 0)

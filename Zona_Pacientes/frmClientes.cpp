@@ -62,8 +62,13 @@ frmClientes::frmClientes(QWidget *parent) :
     ui->combopaisAlternativa->setModel(Configuracion_global->paises_model);
     ui->combopaisAlternativa->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
+    // rellenar combo idiomas
+    QSqlQueryModel *qmIdiomas = new QSqlQueryModel(this);
+    qmIdiomas->setQuery("select idioma from idiomas", QSqlDatabase::database("terra"));
+    ui->cboIdiomaDocumentos->setModel(qmIdiomas);
     //oCliente->Recuperar("Select * from clientes");
     //LLenarCampos();
+
     bloquearCampos();
     this->Altas = false;
     //Connect signals /slots.
@@ -163,6 +168,11 @@ void frmClientes::LLenarCampos()
         ui->chkClienteEmpresa->setChecked(true);
     else
         ui->chkClienteEmpresa->setChecked(false);
+    indice = ui->cboIdiomaDocumentos->findText(oCliente->idioma);
+    if(indice >-1)
+        ui->cboIdiomaDocumentos->setCurrentIndex(indice);
+    else
+        ui->cboIdiomaDocumentos->setCurrentIndex(-1);
 
     // Tablas
     /********************************************************************
@@ -496,7 +506,8 @@ void frmClientes::LLenarCliente()
     oCliente->rImportePendiente=ui->txtrImporteAcumulado->text().toDouble();
     oCliente->cAccesoWeb=ui->txtcAccesoWeb->text();
     oCliente->cPasswordWeb=ui->txtcPasswordWeb->text();
-
+    oCliente->idIdioma = Configuracion_global->Devolver_id_idioma(ui->cboIdiomaDocumentos->currentText());
+    oCliente->idioma = ui->cboIdiomaDocumentos->currentText();
     if (ui->chkClienteEmpresa)
         oCliente->lIRPF =true;
     else

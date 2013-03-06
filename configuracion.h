@@ -69,6 +69,8 @@ public:
     void Cargar_paises();
     QString Devolver_pais(int id);
     QString Devolver_moneda(int id);
+    QString Devolver_idioma(int id);
+    int Devolver_id_idioma(QString idioma);
 
     QSqlTableModel* client_model;
     void CargarClientes();

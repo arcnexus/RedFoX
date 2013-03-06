@@ -76,6 +76,8 @@ public:
     QString cPasswordWeb;
     bool lIRPF;
     int idTarifa;
+    int idIdioma;
+    QString idioma;
 
     QSqlDatabase db;
     QSqlQuery *qryCliente;

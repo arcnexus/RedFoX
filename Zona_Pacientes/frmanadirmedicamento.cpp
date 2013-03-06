@@ -33,7 +33,7 @@ void FrmAnadirMedicamento::on_pushButton_clicked()
     QString cClave2 = settings.value("Clave2").toString();
 
     cUrl = cUrl + "&id_ent=" + cClave1;
-
+    qDebug() << cUrl;
 
 
         QNetworkAccessManager *manager = new QNetworkAccessManager(this);

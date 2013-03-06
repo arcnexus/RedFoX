@@ -58,6 +58,7 @@ void Cliente::Guardar() {
                    "rImportePendiente=:rImportePendiente,"
                    "cAccesoWeb =:cAccesoWeb,"
                    "cPasswordWeb=:cPasswordWeb,"
+                   "id_idiomadocumentos=:id_idioma,"
                    "nIRPF =:nIRPF"
                    " WHERE id =:id" );
 
@@ -112,6 +113,7 @@ void Cliente::Guardar() {
     query.bindValue(":dFechaNacimiento",this->dFechaNacimiento);
     query.bindValue(":rImportePendiente",this->rImportePendiente);
     query.bindValue(":cAccesoWeb",this->cAccesoWeb);
+    query.bindValue(":id_idioma",this->idIdioma);
     query.bindValue(":cPasswordWeb",this->cPasswordWeb);
     if (this->lIRPF)
         query.bindValue(":nIRPF",1);
@@ -208,6 +210,8 @@ void Cliente::Recuperar(QString cSQL) {
             this->rImportePendiente = registro.field("rImportePendiente").value().toDouble();
             this->cAccesoWeb = registro.field("cAccesoWeb").value().toString();
             this->cPasswordWeb = registro.field("cPasswordWeb").value().toString();
+            this->idIdioma = registro.field("id_idiomadocumentos").value().toInt();
+            this->idioma = Configuracion_global->Devolver_idioma(this->idIdioma);
             int nIRPF =registro.field("nIRPF").value().toInt();
             if (nIRPF==1)
                 this->lIRPF = true;
