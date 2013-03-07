@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Terra Gestión empresarial open-source.  If not, see <http://www.gnu.org/licenses/>.
 //
-// Email   : marcmirallesbiosca +(simboloarroba)+ gmail DOT com
-// Web-Site: http://www.informatica-intelligent.com
+// Email   : mmiralles +(simboloarroba)+ terramedicproject DOT org
+// Web-Site: http://www.terramedicproject.org
 
 #include "mainwindow.h"
 #include "login.h"

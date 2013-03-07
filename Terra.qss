@@ -1,9 +1,9 @@
 QDialog {
-  background-color :#4c6088
+ /* background-color :#4c6088 */
 }
 QWidget {
 
-    background-color: #ecefed;
+ /*   background-color: #ecefed */;
 }
 /* Nice Windows-XP-style password character. */
 QLineEdit[echoMode="2"] {

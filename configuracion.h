@@ -67,6 +67,7 @@ public:
     QHash <QString,QSqlRecord> paises;
     QSqlTableModel* paises_model;
     void Cargar_paises();
+
     QString Devolver_pais(int id);
     QString Devolver_moneda(int id);
     QString Devolver_idioma(int id);

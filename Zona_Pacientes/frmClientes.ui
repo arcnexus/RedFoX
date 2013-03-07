@@ -879,14 +879,14 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
         </widget>
        </item>
        <item row="1" column="7">
-        <widget class="QLineEdit" name="lineEdit">
+        <widget class="QLineEdit" name="txtCifIntracomunitario">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
        <item row="1" column="8">
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="btnValidarVIES">
          <property name="text">
           <string>Validar VIES</string>
          </property>
@@ -1662,7 +1662,7 @@ color: rgb(0, 0, 255);</string>
           </widget>
          </item>
          <item row="4" column="3" colspan="2">
-          <widget class="QComboBox" name="combopaisAlternativa">
+          <widget class="QComboBox" name="cbopaisAlternativa">
            <property name="minimumSize">
             <size>
              <width>200</width>
@@ -1682,6 +1682,20 @@ color: rgb(0, 0, 255);</string>
            <property name="icon">
             <iconset resource="../terra.qrc">
              <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QPushButton" name="btnEditarDireccionAlternativa">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Editar</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../terra.qrc">
+             <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
            </property>
           </widget>
          </item>
@@ -2172,7 +2186,7 @@ color: rgb(255,255,255);</string>
             <item row="6" column="0">
              <widget class="QLabel" name="label_81">
               <property name="text">
-               <string>Cuenta:</string>
+               <string>Cuenta</string>
               </property>
              </widget>
             </item>
@@ -2248,6 +2262,17 @@ background-color: rgb(255, 249, 173);</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0" colspan="3">
+             <widget class="QLabel" name="lblCuentavalida">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(0, 123, 37);
+color: rgb(255, 255, 255);</string>
+              </property>
+              <property name="text">
+               <string>Cuenta Valida</string>
               </property>
              </widget>
             </item>
@@ -3264,8 +3289,8 @@ color: rgb(0, 0, 0);</string>
   <tabstop>btnFichaPaciente</tabstop>
   <tabstop>txtcCodigoCliente</tabstop>
   <tabstop>txtcCifNif</tabstop>
-  <tabstop>lineEdit</tabstop>
-  <tabstop>pushButton_2</tabstop>
+  <tabstop>txtCifIntracomunitario</tabstop>
+  <tabstop>btnValidarVIES</tabstop>
   <tabstop>txtcNombre</tabstop>
   <tabstop>txtPrimerApellido</tabstop>
   <tabstop>txtSegundoApellido</tabstop>
@@ -3295,7 +3320,7 @@ color: rgb(0, 0, 0);</string>
   <tabstop>txtcCpPoblacionAlternativa</tabstop>
   <tabstop>txtcPoblacionAlternativa</tabstop>
   <tabstop>txtcProvinciaAlternativa</tabstop>
-  <tabstop>combopaisAlternativa</tabstop>
+  <tabstop>cbopaisAlternativa</tabstop>
   <tabstop>btnGuardarDireccionAlternativa</tabstop>
   <tabstop>btnDeshacerDireccionAlternativa</tabstop>
   <tabstop>txtnPorcDtoCliente</tabstop>

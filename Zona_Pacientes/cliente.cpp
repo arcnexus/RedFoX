@@ -59,6 +59,7 @@ void Cliente::Guardar() {
                    "cAccesoWeb =:cAccesoWeb,"
                    "cPasswordWeb=:cPasswordWeb,"
                    "id_idiomadocumentos=:id_idioma,"
+                   "cif_vies=:cif_vies,"
                    "nIRPF =:nIRPF"
                    " WHERE id =:id" );
 
@@ -114,6 +115,7 @@ void Cliente::Guardar() {
     query.bindValue(":rImportePendiente",this->rImportePendiente);
     query.bindValue(":cAccesoWeb",this->cAccesoWeb);
     query.bindValue(":id_idioma",this->idIdioma);
+    query.bindValue(":cif_vies",this->cCifVies);
     query.bindValue(":cPasswordWeb",this->cPasswordWeb);
     if (this->lIRPF)
         query.bindValue(":nIRPF",1);
@@ -212,6 +214,7 @@ void Cliente::Recuperar(QString cSQL) {
             this->cPasswordWeb = registro.field("cPasswordWeb").value().toString();
             this->idIdioma = registro.field("id_idiomadocumentos").value().toInt();
             this->idioma = Configuracion_global->Devolver_idioma(this->idIdioma);
+            this->cCifVies = registro.field("cif_vies").value().toString();
             int nIRPF =registro.field("nIRPF").value().toInt();
             if (nIRPF==1)
                 this->lIRPF = true;
@@ -333,7 +336,7 @@ void Cliente::GuardarDireccion(bool Anadir, QString Descripcion, QString Direcci
                              "provincia = :provincia,"
                              "idpais = :idpais,"
                              "idcliente =:idcliente "
-                             "WHERE id =:id)");
+                             "WHERE id =:id");
     }
     qDirecciones.bindValue(":descripcion",Descripcion);
     qDirecciones.bindValue(":direccion1",Direccion1);
@@ -346,10 +349,12 @@ void Cliente::GuardarDireccion(bool Anadir, QString Descripcion, QString Direcci
     if(!Anadir)
         qDirecciones.bindValue(":id",id);
 
-    if(!qDirecciones.exec())
+    if(!qDirecciones.exec()){
+        qDebug() << qDirecciones.lastQuery();
         QMessageBox::warning(qApp->activeWindow(),tr("Añadir/Guardar dirección"),
                              tr("Ocurrió un error al guardar los datos de dirección: %1").arg(qDirecciones.lastError().text()),
                              tr("Aceptar"));
+    }
 }
 void Cliente::DescontarDeuda(int id_deuda, double rPagado){
     QSqlQuery qClientes_deuda(QSqlDatabase::database("terra"));

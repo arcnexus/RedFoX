@@ -24,6 +24,7 @@ frmClientes::frmClientes(QWidget *parent) :
     oCliente = new Cliente(this);
     oCliente->id = 0;
     ui->txtNombreFiscal->setText("");
+    ValidarCC();
     // Rellenar formas de pago
     modelFP = new QSqlQueryModel();
     modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("terra"));
@@ -59,8 +60,8 @@ frmClientes::frmClientes(QWidget *parent) :
     ui->cboPais->setModel(Configuracion_global->paises_model);
     ui->cboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
-    ui->combopaisAlternativa->setModel(Configuracion_global->paises_model);
-    ui->combopaisAlternativa->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+    ui->cbopaisAlternativa->setModel(Configuracion_global->paises_model);
+    ui->cbopaisAlternativa->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
     // rellenar combo idiomas
     QSqlQueryModel *qmIdiomas = new QSqlQueryModel(this);
@@ -85,6 +86,14 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->btnDeshacerDireccionAlternativa,SIGNAL(clicked()),this,SLOT(DeshacerDireccionAlternativa()));
     connect(ui->lista_DireccionesAlternativas,SIGNAL(clicked(QModelIndex)),this,SLOT(CargarDireccionAlternativa(QModelIndex)));
     connect(ui->btnVer_OtrosContactos,SIGNAL(clicked()),this,SLOT(Contactos()));
+    connect(ui->txtcCpPoblacionAlternativa,SIGNAL(editingFinished()),this,SLOT(txtcCPAlternativa_editingFinished()));
+    connect(ui->txtcPoblacionAlternativa,SIGNAL(editingFinished()),this,SLOT(txtcPoblacionAlternativa_editingFinished()));
+    connect(ui->btnEditarDireccionAlternativa,SIGNAL(clicked()),this,SLOT(EditarDireccionAlternativa()));
+    connect(ui->txtcEntidadBancaria,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
+    connect(ui->txtcOficinaBancaria,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
+    connect(ui->txtcDc,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
+    connect(ui->txtcCuentaContable,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
+    connect(ui->btnValidarVIES,SIGNAL(clicked()),this,SLOT(validarNifIntrac()));
 }
 
 frmClientes::~frmClientes()
@@ -107,6 +116,7 @@ void frmClientes::LLenarCampos()
     ui->txtNombreFiscal->setText(oCliente->cNombreFiscal);;
     ui->txtcNombreComercial->setText(oCliente->cNombreComercial);
     ui->txtcCifNif->setText(oCliente->cCifNif);
+    ui->txtCifIntracomunitario->setText(oCliente->cCifVies);
     ui->txtcDireccion1->setText(oCliente->cDireccion1);
     ui->txtcDireccion2->setText(oCliente->cDireccion2);
     ui->txtcCp->setText(oCliente->cCp);
@@ -128,6 +138,7 @@ void frmClientes::LLenarCampos()
     ui->txtrRiesgoPermitido->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->rRiesgoMaximo)));
     ui->txtrDeudaActual->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->rDeudaActual)));
     ui->txttComentarios->setText(oCliente->tComentarios);
+
 
     if(oCliente->lBloqueado)
         ui->chklBloqueoCliente->setChecked(true);
@@ -173,6 +184,7 @@ void frmClientes::LLenarCampos()
         ui->cboIdiomaDocumentos->setCurrentIndex(indice);
     else
         ui->cboIdiomaDocumentos->setCurrentIndex(-1);
+    ValidarCC();
 
     // Tablas
     /********************************************************************
@@ -400,6 +412,7 @@ void frmClientes::VaciarCampos()
     ui->txtcNombreFiscal->setText("");
     ui->txtcNombreComercial->setText("");
     ui->txtcCifNif->setText("");
+    ui->txtCifIntracomunitario->setText("");
     ui->txtcDireccion1->setText("");
     ui->txtcDireccion2->setText("");
     ui->txtcPoblacion->setText("");
@@ -464,6 +477,7 @@ void frmClientes::LLenarCliente()
     oCliente->cNombreFiscal=ui->txtcNombreFiscal->text();
     oCliente->cNombreComercial=ui->txtcNombreComercial->text();
     oCliente->cCifNif=ui->txtcCifNif->text();
+    oCliente->cCifVies = ui->txtCifIntracomunitario->text();
     oCliente->cDireccion1=ui->txtcDireccion1->text();
     oCliente->cDireccion2=ui->txtcDireccion2->text();
     oCliente->cCp=ui->txtcCp->text();
@@ -538,10 +552,23 @@ void frmClientes::on_btnAnterior_clicked()
 
 void frmClientes::on_btnGuardar_clicked()
 {
-    if(!ui->txtcCifNif->text().isEmpty() && !ui->txtcNombreComercial->text().isEmpty()
-            && !ui->txtcDireccion1->text().isEmpty() && !ui->txtcCp->text().isEmpty()
-            && !ui->txtcPoblacion->text().isEmpty() && !ui->txtcProvincia->text().isEmpty()&&
-            !ui->cboPais->currentText().isEmpty()){
+    QString cVacios;
+    if(ui->txtcCifNif->text().isEmpty())
+        cVacios = "Falta rellenar CIF/NIF\n";
+    if(ui->txtcNombreFiscal->text().isEmpty())
+        cVacios = cVacios + "Falta rellenar NombreFiscal\n";
+    if (ui->txtcDireccion1->text().isEmpty())
+        cVacios = cVacios + "Falta rellenar Dirección\n";
+    if (ui->txtcCp->text().isEmpty())
+        cVacios = cVacios + "Falta rellenar CP\n";
+    if(ui->txtcPoblacion->text().isEmpty())
+        cVacios = cVacios + "Falta rellenar Población\n";
+    if (ui->txtcProvincia->text().isEmpty())
+        cVacios = cVacios + "Falta rellenar Provincia\n";
+    if(ui->cboPais->currentText().isEmpty())
+        cVacios = cVacios + "Falta rellenar Pais";
+
+    if(cVacios.isEmpty()){
         LLenarCliente();
         oCliente->Guardar();
         bloquearCampos();
@@ -549,7 +576,7 @@ void frmClientes::on_btnGuardar_clicked()
         emit unblock();
     } else
     {
-        QMessageBox::warning(this,tr("Guardar ficha"),tr("tiene campos en blanco que no pueden quedar vacíos"),
+        QMessageBox::warning(this,tr("Guardar ficha"),tr("tiene campos en blanco que no pueden quedar vacíos\n")+ cVacios,
                              tr("Aceptar"));
         ui->txtcCifNif->setFocus();
     }
@@ -659,8 +686,10 @@ void frmClientes::txtcProvincia_editingFinished()
 
 void frmClientes::txtcCifNif_editingFinished()
 {
-    QString cCIF = Configuracion::letraDNI(ui->txtcCifNif->text());
-    ui->txtcCifNif->setText(cCIF.toUpper());
+    if (ui->txtcCifNif->text().length() == 8){
+        QString cCIF = Configuracion::letraDNI(ui->txtcCifNif->text());
+        ui->txtcCifNif->setText(cCIF.toUpper());
+   }
 }
 
 void frmClientes::on_btnEditar_clicked()
@@ -731,6 +760,9 @@ void frmClientes::bloquearCampos() {
     ui->btnSiguiente->setEnabled(true);
     ui->btnAnadirDireccion->setEnabled(false);
     ui->btnBorrarDireccion->setEnabled(false);
+    ui->btnEditarDireccionAlternativa->setEnabled(false);
+    ui->btnGuardarDireccionAlternativa->setEnabled(false);
+    ui->btnDeshacerDireccionAlternativa->setEnabled(false);
     ui->btnAdd_TipoCliente->setEnabled(false);
     ui->btndel_TipoCliente->setEnabled(false);
 }
@@ -798,6 +830,7 @@ void frmClientes::desbloquearCampos()
     ui->txtrVentasEjercicio->setEnabled(false);
     ui->btnAnadirDireccion->setEnabled(true);
     ui->btnBorrarDireccion->setEnabled(true);
+    ui->btnEditarDireccionAlternativa->setEnabled(true);
     ui->btnAdd_TipoCliente->setEnabled(true);
     ui->btndel_TipoCliente->setEnabled(true);
 }
@@ -854,7 +887,7 @@ void frmClientes::txtcCp_editingFinished()
                 QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
                 QString cId;
                 cId = QString::number(nId);
-                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+                qPoblacion.prepare("select poblacion, cp,provincia from poblaciones where id = :cId");
                 qPoblacion.bindValue(":cId",cId);
                 if(!qPoblacion.exec())
                 {
@@ -897,7 +930,7 @@ void frmClientes::txtcCPAlternativa_editingFinished()
                 QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
                 QString cId;
                 cId = QString::number(nId);
-                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP, col_6 as provincia from poblaciones where col_1 = :cId");
+                qPoblacion.prepare("select poblacion, cp,provincia from poblaciones where id = :cId");
                 qPoblacion.bindValue(":cId",cId);
                 if(!qPoblacion.exec())
                 {
@@ -925,9 +958,9 @@ void frmClientes::txtcCPAlternativa_editingFinished()
 
 void frmClientes::txtcPoblacionAlternativa_editingFinished()
 {
-    ui->txtcPoblacionAlternativa->setText(ui->txtcPoblacionAlternativa->text().toUpper());
     if (ui->txtcCpPoblacionAlternativa->text().isEmpty() && !ui->txtcPoblacionAlternativa->text().isEmpty())
     {
+        ui->txtcPoblacionAlternativa->setText(ui->txtcPoblacionAlternativa->text().toUpper());
         FrmBuscarPoblacion BuscarPoblacion;
         BuscarPoblacion.setcPoblacion(ui->txtcPoblacionAlternativa->text(),1);
         if(BuscarPoblacion.exec() == QDialog::Accepted)
@@ -940,7 +973,7 @@ void frmClientes::txtcPoblacionAlternativa_editingFinished()
                 QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
                 QString cId;
                 cId = QString::number(nId);
-                qPoblacion.prepare("select poblacion,CP,provincia from poblaciones where id = :cId");
+                qPoblacion.prepare("select poblacion,cp,provincia from poblaciones where id = :cId");
                 qPoblacion.bindValue(":cId",cId);
                 if(!qPoblacion.exec())
                 {
@@ -953,11 +986,12 @@ void frmClientes::txtcPoblacionAlternativa_editingFinished()
                     // qDebug() << qPoblacion.lastQuery();
                     if (qPoblacion.next())
                     {
-                        ui->txtcPoblacionAlternativa->setText(qPoblacion.value(0).toString());
-                        ui->txtcCpPoblacionAlternativa->setText(qPoblacion.value(1).toString());
-                        ui->txtcProvinciaAlternativa->setText(qPoblacion.value(2).toString());
-                        // TODO guardar pais segun parametros
-                        //ui->txtcPaisAlternativa->setText("ESPAÑA");
+                        ui->txtcPoblacionAlternativa->setText(qPoblacion.record().value("poblacion").toString());
+                        ui->txtcCpPoblacionAlternativa->setText(qPoblacion.record().value("cp").toString());
+                        ui->txtcProvinciaAlternativa->setText(qPoblacion.record().value("provincia").toString());
+                        int indice;
+                        indice = ui->cbopaisAlternativa->findText(Configuracion_global->cPais);
+                        ui->cbopaisAlternativa->setCurrentIndex(indice);
                    }
                 }
             }
@@ -1056,7 +1090,7 @@ void frmClientes::AnadirDireccionAlternativa()
 
 void frmClientes::GuardarDireccionAlternativa()
 {
-    if(ui->combopaisAlternativa->currentText().isEmpty()){
+    if(ui->cbopaisAlternativa->currentText().isEmpty()){
         QMessageBox::information(this,tr("Direcciones Alternativas"),
                                  tr("Debe rellenar el campo pais para poder guardar"),tr("Aceptar"));
     } else {
@@ -1066,21 +1100,18 @@ void frmClientes::GuardarDireccionAlternativa()
         ui->txtcCpPoblacionAlternativa->setEnabled(false);
         ui->txtcPoblacionAlternativa->setEnabled(false);
         ui->txtcProvinciaAlternativa->setEnabled(false);
-        ui->combopaisAlternativa->setEnabled(false);
-        ui->btnGuardarDireccionAlternativa->setEnabled(false);
-        ui->btnDeshacerDireccionAlternativa->setEnabled(false);
-        ui->btnAnadirDireccion->setEnabled(true);
-        ui->btnBorrarDireccion->setEnabled(true);
+        ui->cbopaisAlternativa->setEnabled(false);
+
         if (AnadirDireccion)
             oCliente->GuardarDireccion(true,ui->txtcDescripcionDireccion->text(),ui->txtcDireccionAlternativa1->text(),
                                    ui->txtcDireccionAlternativa2->text(),ui->txtcCpPoblacionAlternativa->text(),
                                    ui->txtcPoblacionAlternativa->text(),ui->txtcProvinciaAlternativa->text(),
-                                   ui->combopaisAlternativa->currentText(),oCliente->id,NULL);
+                                   ui->cbopaisAlternativa->currentText(),oCliente->id,NULL);
         else
             oCliente->GuardarDireccion(false,ui->txtcDescripcionDireccion->text(),ui->txtcDireccionAlternativa1->text(),
                                    ui->txtcDireccionAlternativa2->text(),ui->txtcCpPoblacionAlternativa->text(),
                                    ui->txtcPoblacionAlternativa->text(),ui->txtcProvinciaAlternativa->text(),
-                                   ui->combopaisAlternativa->currentText(),oCliente->id,idDireccionAlternativa);
+                                   ui->cbopaisAlternativa->currentText(),oCliente->id,idDireccionAlternativa);
         AnadirDireccion = false;
         //-----------------
         // Direcciones
@@ -1089,16 +1120,63 @@ void frmClientes::GuardarDireccionAlternativa()
         qModelDireccion->setQuery("select descripcion,id from cliente_direcciones where idcliente = "+QString::number(oCliente->id),
                                   QSqlDatabase::database("terra"));
         ui->lista_DireccionesAlternativas->setModel(qModelDireccion);
+        ui->btnGuardar->setEnabled(true);
+        ui->btnDeshacer->setEnabled(true);
+        ui->btnGuardarDireccionAlternativa->setEnabled(false);
+        ui->btnDeshacerDireccionAlternativa->setEnabled(false);
+        ui->btnAnadirDireccion->setEnabled(true);
+        ui->btnBorrarDireccion->setEnabled(true);
+        ui->btnEditarDireccionAlternativa->setEnabled(true);
     }
 }
 
 void frmClientes::DeshacerDireccionAlternativa()
 {
+    //-----------------
+    // Direcciones
+    //-----------------
+    QSqlQueryModel *qModelDireccion = new QSqlQueryModel(this);
+    qModelDireccion->setQuery("select descripcion,id from cliente_direcciones where idcliente = "+QString::number(oCliente->id),
+                              QSqlDatabase::database("terra"));
+    ui->lista_DireccionesAlternativas->setModel(qModelDireccion);
+    ui->btnGuardar->setEnabled(true);
+    ui->btnDeshacer->setEnabled(true);
+    ui->btnGuardarDireccionAlternativa->setEnabled(false);
+    ui->btnDeshacerDireccionAlternativa->setEnabled(false);
+    ui->btnEditarDireccionAlternativa->setEnabled(true);
+
+    QSqlQuery diralt(QSqlDatabase::database("terra"));
+    diralt.prepare("select * from cliente_direcciones where id = :id");
+    diralt.bindValue(":id",idDireccionAlternativa);
+    if(diralt.exec()){
+        diralt.next();
+        ui->txtcDescripcionDireccion->setText(diralt.record().value("descripcion").toString());
+        ui->txtcDireccionAlternativa1->setText(diralt.record().value("direccion1").toString());
+        ui->txtcDireccionAlternativa2->setText(diralt.record().value("direccion2").toString());
+        ui->txtcCpPoblacionAlternativa->setText(diralt.record().value("cp").toString());
+        ui->txtcPoblacionAlternativa->setText(diralt.record().value("poblacion").toString());
+        int indice;
+        indice = ui->cbopaisAlternativa->findText(diralt.record().value("pais").toString());
+        ui->cbopaisAlternativa->setCurrentIndex(indice);
+
+    }
+
 }
+
 
 
 void frmClientes::BorrarDireccionAlternativa()
 {
+}
+
+void frmClientes::EditarDireccionAlternativa()
+{
+    ui->btnGuardar->setEnabled(false);
+    ui->btnDeshacer->setEnabled(false);
+    ui->btnEditarDireccionAlternativa->setEnabled(false);
+    ui->btnGuardarDireccionAlternativa->setEnabled(true);
+    ui->btnDeshacerDireccionAlternativa->setEnabled(true);
+    AnadirDireccion = false;
 }
 
 void frmClientes::CargarDireccionAlternativa(QModelIndex index)
@@ -1110,6 +1188,7 @@ void frmClientes::CargarDireccionAlternativa(QModelIndex index)
     qDirecciones.bindValue(":id",nId);
     if(qDirecciones.exec()){
         qDirecciones.next();
+        idDireccionAlternativa = nId;
         ui->txtcDescripcionDireccion->setText(qDirecciones.record().field("descripcion").value().toString());
         ui->txtcDireccionAlternativa1->setText(qDirecciones.record().field("direccion1").value().toString());
         ui->txtcDireccionAlternativa2->setText(qDirecciones.record().field("direccion2").value().toString());
@@ -1117,11 +1196,37 @@ void frmClientes::CargarDireccionAlternativa(QModelIndex index)
         ui->txtcPoblacionAlternativa->setText(qDirecciones.record().field("poblacion").value().toString());
         ui->txtcProvinciaAlternativa->setText(qDirecciones.record().field("provincia").value().toString());
         QString cPais = oCliente->RecuperarPais(qDirecciones.record().field("idpais").value().toInt());
-        int nIndex = ui->combopaisAlternativa->findText(cPais);
+        int nIndex = ui->cbopaisAlternativa->findText(cPais);
         if (nIndex <-1)
-            ui->combopaisAlternativa->setCurrentIndex(nIndex);
+            ui->cbopaisAlternativa->setCurrentIndex(nIndex);
 
     }
+}
+
+bool frmClientes::ValidarCC()
+{
+    QString cOk;
+    if(!ui->txtcEntidadBancaria->text().isEmpty() && !ui->txtcOficinaBancaria->text().isEmpty() &&
+            !ui->txtcDc->text().isEmpty() && !ui->txtcCuentaCorriente->text().isEmpty())
+        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadBancaria->text(),ui->txtcOficinaBancaria->text(),
+                                 ui->txtcDc->text(),ui->txtcCuentaCorriente->text());
+    if(cOk == "1"){
+        ui->lblCuentavalida->setText(tr("La cuenta es válida"));
+        ui->lblCuentavalida->setStyleSheet("QLabel { background-color :rgb(0,170,0)}");
+    }
+    else {
+        ui->lblCuentavalida->setText(tr("La cuenta no es válida"));
+        ui->lblCuentavalida->setStyleSheet("QLabel { background-color :rgb(170,0,0)}");
+    }
+}
+
+void frmClientes::validarNifIntrac()
+{
+    bool Ok = Configuracion_global->comprobarNIF(ui->cboPais->currentText(),ui->txtCifIntracomunitario->text());
+    if(!Ok)
+        QMessageBox::warning(this,tr("Validación VIES"),tr("El cif introducido no es válido a nive de la UE"),tr("Aceptar"));
+    else
+        QMessageBox::warning(this,tr("Validacion VIES"),tr("El Cif VIES introducido es correcto"),tr("Aceptar"));
 }
 
 void frmClientes::Contactos()

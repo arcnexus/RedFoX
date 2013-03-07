@@ -47,7 +47,7 @@
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
+QPushButton:enabled{color: rgb(0,0,0); }</string>
       </property>
       <property name="text">
        <string>Aceptar</string>
@@ -68,7 +68,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
+QPushButton:enabled{color: rgb(0,0,0); }</string>
       </property>
       <property name="text">
        <string>Cancelar</string>

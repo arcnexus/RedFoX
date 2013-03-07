@@ -82,7 +82,10 @@ private slots:
     void GuardarDireccionAlternativa();
     void DeshacerDireccionAlternativa();
     void BorrarDireccionAlternativa();
+    void EditarDireccionAlternativa();
     void CargarDireccionAlternativa(QModelIndex);
+    bool ValidarCC();
+    void validarNifIntrac();
     void Contactos();
 
 

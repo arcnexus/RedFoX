@@ -18,6 +18,7 @@ public:
     QString cNombreComercial;
     QString cPersonaContacto;
     QString cCifNif;
+    QString cCifVies;
     QString cDireccion1;
     QString cDireccion2;
     QString cCp;

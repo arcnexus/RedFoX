@@ -48,6 +48,8 @@ QString Configuracion::FormatoNumerico(QString cTexto)
         if(pos!=-1)
         {
             ret.prepend(cTexto.mid(pos));
+            if(ret.left(1)==".")
+                ret =ret.replace(".",",");
             pos--;
         }
 
@@ -66,10 +68,14 @@ QString Configuracion::FormatoNumerico(QString cTexto)
         if(cTexto.contains("-"))
             ret.prepend("-");
 
+        if(!ret.contains(","))
+            ret = cTexto+",00";
+
         return ret;
     }
     else
         return "";
+
 }
 
 bool Configuracion::EsNumero(QString texto)
