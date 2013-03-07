@@ -94,6 +94,7 @@ private:
     QSqlQueryModel *modelFP;
     QSqlQueryModel *modelFacturas;
     QSqlQueryModel *modelPoblaciones;
+    QSqlQueryModel *qModelDireccion;
     QSqlDatabase dbCliente;
     FrmBuscarPoblacion BuscarPoblacion;
     QSqlQuery tbpaciente;

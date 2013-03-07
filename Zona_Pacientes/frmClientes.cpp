@@ -833,6 +833,13 @@ void frmClientes::desbloquearCampos()
     ui->btnEditarDireccionAlternativa->setEnabled(true);
     ui->btnAdd_TipoCliente->setEnabled(true);
     ui->btndel_TipoCliente->setEnabled(true);
+    ui->txtcDescripcionDireccion->setEnabled(false);
+    ui->txtcDireccionAlternativa1->setEnabled(false);
+    ui->txtcDireccionAlternativa2->setEnabled(false);
+    ui->txtcCpPoblacionAlternativa->setEnabled(false);
+    ui->txtcPoblacionAlternativa->setEnabled(false);
+    ui->txtcProvinciaAlternativa->setEnabled(false);
+    ui->cbopaisAlternativa->setEnabled(false);
 }
 
 void frmClientes::on_btnDeshacer_clicked()
@@ -1079,13 +1086,19 @@ void frmClientes::AnadirDireccionAlternativa()
  ui->txtcPoblacionAlternativa->setEnabled(true);
  ui->txtcProvinciaAlternativa->setText("");
  ui->txtcProvinciaAlternativa->setEnabled(true);
-// ui->txtcPaisAlternativa->setText("");
-// ui->txtcPaisAlternativa->setEnabled(true);
+ ui->cbopaisAlternativa->setEnabled(true);
  ui->btnGuardarDireccionAlternativa->setEnabled(true);
  ui->btnDeshacerDireccionAlternativa->setEnabled(true);
  ui->btnAnadirDireccion->setEnabled(false);
  ui->btnBorrarDireccion->setEnabled(false);
  ui->txtcDescripcionDireccion->setFocus();
+ ui->btnGuardarDireccionAlternativa->setEnabled(true);
+ ui->btnDeshacerDireccionAlternativa->setEnabled(true);
+ ui->btnAnadirDireccion->setEnabled(false);
+ ui->btnBorrarDireccion->setEnabled(false);
+ ui->btnGuardar->setEnabled(false);
+ ui->btnDeshacer->setEnabled(false);
+ ui->btnEditarDireccionAlternativa->setEnabled(false);
 }
 
 void frmClientes::GuardarDireccionAlternativa()
@@ -1135,7 +1148,7 @@ void frmClientes::DeshacerDireccionAlternativa()
     //-----------------
     // Direcciones
     //-----------------
-    QSqlQueryModel *qModelDireccion = new QSqlQueryModel(this);
+    qModelDireccion = new QSqlQueryModel(this);
     qModelDireccion->setQuery("select descripcion,id from cliente_direcciones where idcliente = "+QString::number(oCliente->id),
                               QSqlDatabase::database("terra"));
     ui->lista_DireccionesAlternativas->setModel(qModelDireccion);
@@ -1155,6 +1168,7 @@ void frmClientes::DeshacerDireccionAlternativa()
         ui->txtcDireccionAlternativa2->setText(diralt.record().value("direccion2").toString());
         ui->txtcCpPoblacionAlternativa->setText(diralt.record().value("cp").toString());
         ui->txtcPoblacionAlternativa->setText(diralt.record().value("poblacion").toString());
+        ui->txtcProvinciaAlternativa->setText(diralt.record().value("provincia").toString());
         int indice;
         indice = ui->cbopaisAlternativa->findText(diralt.record().value("pais").toString());
         ui->cbopaisAlternativa->setCurrentIndex(indice);
@@ -1167,6 +1181,26 @@ void frmClientes::DeshacerDireccionAlternativa()
 
 void frmClientes::BorrarDireccionAlternativa()
 {
+    if(QMessageBox::question(this,tr("Direcciones alternativas"),tr("va a borrar una dirección alternativa\n"
+                                                                    "¿desea continuar?"),
+                             tr("Cancelar"),tr("Borrar"))==QMessageBox::Accepted)
+    {
+        QSqlQuery qDireccion(QSqlDatabase::database("terra"));
+        if(!qDireccion.exec("delete from cliente_direcciones where id="+QString::number(idDireccionAlternativa)))
+            QMessageBox::warning(this,tr("Direcciones Alternativas"),tr("No se ha podido borrar la direccion"),tr("Aceptar"));
+
+    }
+    QString cSQL = "select descripcion,id from cliente_direcciones where idcliente = "+QString::number(oCliente->id);
+    qModelDireccion = new QSqlQueryModel();
+    qModelDireccion->setQuery(cSQL,QSqlDatabase::database("terra"));
+    ui->lista_DireccionesAlternativas->setModel(qModelDireccion);
+    ui->txtcDescripcionDireccion->setText("");
+    ui->txtcDireccionAlternativa1->setText("");
+    ui->txtcDireccionAlternativa2->setText("");
+    ui->txtcCpPoblacionAlternativa->setText("");
+    ui->txtcPoblacionAlternativa->setText("");
+    ui->txtcProvinciaAlternativa->setText("");
+    ui->cbopaisAlternativa->setCurrentIndex(-1);
 }
 
 void frmClientes::EditarDireccionAlternativa()
@@ -1176,6 +1210,13 @@ void frmClientes::EditarDireccionAlternativa()
     ui->btnEditarDireccionAlternativa->setEnabled(false);
     ui->btnGuardarDireccionAlternativa->setEnabled(true);
     ui->btnDeshacerDireccionAlternativa->setEnabled(true);
+    ui->txtcDescripcionDireccion->setEnabled(true);
+    ui->txtcDireccionAlternativa1->setEnabled(true);
+    ui->txtcDireccionAlternativa2->setEnabled(true);
+    ui->txtcCpPoblacionAlternativa->setEnabled(true);
+    ui->txtcPoblacionAlternativa->setEnabled(true);
+    ui->txtcProvinciaAlternativa->setEnabled(true);
+    ui->cbopaisAlternativa->setEnabled(true);
     AnadirDireccion = false;
 }
 
