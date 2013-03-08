@@ -2,7 +2,7 @@
 #define FRMASOCIARPROVEEDOR_H
 
 #include <QDialog>
-
+#include "Auxiliares/Globlal_Include.h"
 namespace Ui {
 class FrmAsociarProveedor;
 }
@@ -17,6 +17,7 @@ public:
     
 private:
     Ui::FrmAsociarProveedor *ui;
+    QSqlQueryModel *modelProveedor;
 };
 
 #endif // FRMASOCIARPROVEEDOR_H

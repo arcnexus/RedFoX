@@ -2,6 +2,7 @@
 #include "ui_frmarticulos.h"
 #include "../Almacen/frmtarifas.h"
 #include "Busquedas/frmbuscarproveedor.h"
+#include "Almacen/frmasociarproveedor.h"
 
 #include "../db_table_view.h"
 
@@ -45,6 +46,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     // CONEXIONES
     //-----------------------------------------
     connect(ui->txtrCoste,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
+    connect(ui->btnAnadirProveedores,SIGNAL(clicked()),this,SLOT(anadir_proveedor_clicked()));
 
 }
 
@@ -731,6 +733,13 @@ void FrmArticulos::on_btnAnadirTarifa_clicked()
                                      tr("Acceptar"));
         }
     }
+}
+
+void FrmArticulos::anadir_proveedor_clicked()
+{
+    FrmAsociarProveedor frmAsociar;
+    if(frmAsociar.exec() == QDialog::Accepted)
+        QMessageBox::warning(this,tr("añadir"),tr("aceptado"),tr("Aceptar"));
 }
 
 

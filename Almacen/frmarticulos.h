@@ -52,6 +52,7 @@ private slots:
     void on_botBuscarSubSubFamilia_clicked();
     void on_btnBuscarProveedor_clicked();
     void on_btnAnadirTarifa_clicked();
+    void anadir_proveedor_clicked();
 
 
 public slots:
