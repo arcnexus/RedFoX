@@ -18,8 +18,8 @@ INCLUDEPATH += /usr/local/Qxt/include/QxtCore
 DEPENDPATH += /Qwt/5.2.1/lib
 greaterThan(QT_MAJOR_VERSION, 4):INCLUDEPATH += /home/arcnexus/Qt5.0.0/5.0.0/gcc_64/include/QtWebKitWidgets
 
-
-
+QTPLUGIN+=qsqlite
+QTPLUGIN+=qsqlmysql
 
 LIBS += -LC:/Qt/Qwt/5.2.1/lib
 LIBS += -L/usr/local/Qxt/lib
@@ -317,3 +317,19 @@ DEPENDPATH += $$PWD/openrptLibs/include
 
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/release/wrtembed.lib
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/debug/wrtembed.lib
+
+
+
+win32: LIBS += -L$$PWD/SQLlibs/ -llibmysql
+
+INCLUDEPATH += $$PWD/SQLlibs
+DEPENDPATH += $$PWD/SQLlibs
+
+win32: PRE_TARGETDEPS += $$PWD/SQLlibs/libmysql.lib
+
+win32: LIBS += -L$$PWD/SQLlibs/ -lqsqlite
+
+INCLUDEPATH += $$PWD/SQLlibs
+DEPENDPATH += $$PWD/SQLlibs
+
+win32: PRE_TARGETDEPS += $$PWD/SQLlibs/qsqlite.lib
