@@ -73,4 +73,25 @@ void FrmAsociarProveedor::seleccionarPro(QModelIndex indice)
     }
 
 }
+void FrmAsociarProveedor::Aceptar()
+{
+    QString cMensajeError;
+    if(this->id_proveedor == 0)
+        cMensajeError =tr("Falta seleccionar un proveedor\n");
+    if(this->codigo.isEmpty())
+        cMensajeError = cMensajeError +tr("Falta el código del artículo en el proveedor\n");
+    if(ui->txtPVD->text().isEmpty())
+        cMensajeError = cMensajeError + tr("Falta el precio de coste");
+    if (cMensajeError.isEmpty()) {
+        QDialog::accepted();
+    } else {
+        //QMessageBox::warning(this,tr("Añadir proveedor frecuente"),cMensajeError,tr("aceptar"));
+        QMessageBox msgBox;
+        msgBox.setStyleSheet("color: blue; background-color: yellow");
+        msgBox.setText(cMensajeError);
+        msgBox.setWindowTitle(tr("Añadir Proveedor frecuente"));
+        msgBox.exec();
+    }
+
+}
 

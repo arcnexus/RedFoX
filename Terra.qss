@@ -1,10 +1,3 @@
-QDialog {
- /* background-color :#4c6088 */
-}
-QWidget {
-
- /*   background-color: #ecefed */;
-}
 /* Nice Windows-XP-style password character. */
 QLineEdit[echoMode="2"] {
     lineedit-password-character: 9679;
@@ -31,7 +24,6 @@ tab {
 
 }
 QTabWidget::pane { /* The tab widget frame */
-    /*border-top: 2px solid #1e2c4a;*/
     border-radius:5px;
 }
 
@@ -357,3 +349,7 @@ QTableView, QTableWidet {
 
 /*QPushButton:disabled{color: 0; }
 QPushButton:enabled{color: rgb(255,255,255); }*/
+
+QMessageBox {
+background-color:rgb(192,192,192);
+}

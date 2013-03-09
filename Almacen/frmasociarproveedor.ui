@@ -212,22 +212,6 @@
  </resources>
  <connections>
   <connection>
-   <sender>btnAnadir</sender>
-   <signal>clicked()</signal>
-   <receiver>FrmAsociarProveedor</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>512</x>
-     <y>291</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>299</x>
-     <y>179</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>BtnCancelar</sender>
    <signal>clicked()</signal>
    <receiver>FrmAsociarProveedor</receiver>
@@ -243,5 +227,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnAnadir</sender>
+   <signal>clicked()</signal>
+   <receiver>FrmAsociarProveedor</receiver>
+   <slot>Aceptar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>454</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>242</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>Aceptar()</slot>
+ </slots>
 </ui>

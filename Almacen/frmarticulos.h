@@ -19,6 +19,7 @@ public:
     QSqlQueryModel *modArt;
     QSqlQueryModel *qTarifas;
     QSqlRelationalTableModel * tarifa_model;
+    QSqlQueryModel *modelProv;
     
 private slots:
     void on_botSiguiente_clicked();

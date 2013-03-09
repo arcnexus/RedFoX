@@ -35,12 +35,15 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     for (int i = 0; i< headers.size();i++)
         tarifa_model->setHeaderData(i+1, Qt::Horizontal, headers.at(i));
 
+
     bloquearCampos();
+
 
     //--------------------------------
     // CAMPOS MONEDA
     //--------------------------------
-    ui->txtrCoste->setValidator(Configuracion_global->validator_cantidad);
+    //ui->txtrCoste->setValidator(Configuracion_global->validator_cantidad);
+
 
     //-----------------------------------------
     // CONEXIONES
@@ -308,10 +311,10 @@ void FrmArticulos::LLenarCampos()
   //-----------------------
   // Proveedores frecuentes
   //-----------------------
-  QSqlQueryModel *pr_frecuentes = new QSqlQueryModel(this);
-  pr_frecuentes->setQuery("select id, cProveedor from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
-                          QSqlDatabase::database("terra"));
-  ui->tablaProveedores->setModel(pr_frecuentes);
+  modelProv = new QSqlQueryModel(this);
+  modelProv->setQuery("select  codpro,cProveedor,codigo,pvd,descoferta,oferta from proveedores_frecuentes where id_art = "+
+                      QString::number(oArticulo->id),QSqlDatabase::database("terra"));
+  ui->tablaProveedores->setModel(modelProv);
 }
 
 void FrmArticulos::CargarCamposEnArticulo()
@@ -746,8 +749,13 @@ void FrmArticulos::anadir_proveedor_clicked()
 
     }
 
-
-        QMessageBox::warning(this,tr("añadir"),tr("aceptado"),tr("Aceptar"));
+    //-----------------------
+    // Proveedores frecuentes
+    //-----------------------
+    modelProv = new QSqlQueryModel(this);
+    modelProv->setQuery("select  codpro,cProveedor,codigo,pvd,descoferta,oferta from proveedores_frecuentes where id_art = "+
+                        QString::number(oArticulo->id),QSqlDatabase::database("terra"));
+    ui->tablaProveedores->setModel(modelProv);
 }
 
 
