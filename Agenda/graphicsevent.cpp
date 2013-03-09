@@ -153,16 +153,23 @@ void GraphicsEvent::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
             painter->restore();
             painter->drawPixmap(width-20,4,16,16,QPixmap(":/Icons/images/close.png"));
 
-            if(width > 100)
-            {
-                QString sDate = QString("%1 - %2").arg(start.toString("hh:mm")).arg(end.toString("hh:mm"));
-                QFont font = painter->font() ;
-                font.setPointSize ( 10 );
-                painter->setFont(font);
-                painter->setPen(Qt::black);
-                painter->drawText(this->boundingRect(),Qt::AlignHCenter,sDate);
-            }
         }
+    }
+    if(width > 100) //tir privado : 03:0 -> 17 length
+    {
+        int l = (width * 16)/100;
+        QString sDate = QString("%1 : %2-%3").arg(titulo).arg(start.toString("hh:mm")).arg(end.toString("hh:mm"));
+        if(sDate.length()>l)
+        {
+            QString aux = sDate.left(l-4);
+            aux.append("...");
+            sDate = aux;
+        }
+        QFont font = painter->font() ;
+        font.setPointSize ( 10 );
+        painter->setFont(font);
+        painter->setPen(Qt::black);
+        painter->drawText(this->boundingRect(),Qt::AlignHCenter,sDate);
     }
 }
 

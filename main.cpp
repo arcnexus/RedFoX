@@ -22,6 +22,11 @@
 #include <QStyleFactory>
 #include "openrptLibs/include/data.h"
 
+#ifdef staticSql
+#include <QtPlugin>
+Q_IMPORT_PLUGIN(qsqlmysql)
+Q_IMPORT_PLUGIN(qsqlite)
+#endif
 bool cargarEmpresa(QString empresa)
 {
     QSqlQuery QryEmpresa(QSqlDatabase::database("terra"));
@@ -145,15 +150,20 @@ bool cargarEmpresa(QString empresa)
 int main(int argc, char *argv[])
 {
     qDebug() << "drivers: "<< QSqlDatabase::drivers();
+    QStringList d = QSqlDatabase::drivers();
+
     qDebug() << QStyleFactory::keys();
     QApplication a(argc, argv);
-	
+
     QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
     #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
         QTextCodec::setCodecForTr(linuxCodec);
         QTextCodec::setCodecForCStrings(linuxCodec);
    #endif
    QTextCodec::setCodecForLocale(linuxCodec);;
+
+   if(d.isEmpty())
+       QMessageBox::information(0,"Driver","No sql drivers");
 
    //a.setStyle("fusion");
 

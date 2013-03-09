@@ -13,11 +13,14 @@ QT       += webkit
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+#DEFINES+= staticSql
+#QTPLUGIN+=qsqlite
+#QTPLUGIN+=qsqlmysql
+
 INCLUDEPATH += /Qwt/5.2.1/include
 INCLUDEPATH += /usr/local/Qxt/include/QxtCore
 DEPENDPATH += /Qwt/5.2.1/lib
 greaterThan(QT_MAJOR_VERSION, 4):INCLUDEPATH += /home/arcnexus/Qt5.0.0/5.0.0/gcc_64/include/QtWebKitWidgets
-
 
 
 
@@ -317,3 +320,34 @@ DEPENDPATH += $$PWD/openrptLibs/include
 
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/release/wrtembed.lib
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/debug/wrtembed.lib
+
+
+
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/SQLlibs/ -lqsqlite
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/SQLlibs/ -lqsqlited
+
+INCLUDEPATH += $$PWD/SQLlibs
+DEPENDPATH += $$PWD/SQLlibs
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/SQLlibs/qsqlite.lib
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/SQLlibs/qsqlited.lib
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/SQLlibs/ -llibmysql
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/SQLlibs/ -llibmysqld
+
+INCLUDEPATH += $$PWD/SQLlibs
+DEPENDPATH += $$PWD/SQLlibs
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/SQLlibs/libmysql.lib
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/SQLlibs/libmysqld.lib
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/SQLlibs/ -lqsqlmysql
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/SQLlibs/ -lqsqlmysqld
+
+INCLUDEPATH += $$PWD/SQLlibs
+DEPENDPATH += $$PWD/SQLlibs
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/SQLlibs/qsqlmysql.lib
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/SQLlibs/qsqlmysqld.lib
