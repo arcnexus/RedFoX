@@ -103,6 +103,7 @@ void Configuracion::Cargar_iva()
     if(tries == 5)
     {
         //qFatal(tr("Fue imposible crear tipos de iva").toAscii().constData());
+        tries=0;
         return;
     }
     ivas.clear();

@@ -21,9 +21,12 @@
 #include "login.h"
 #include <QStyleFactory>
 #include "openrptLibs/include/data.h"
+
+#ifdef staticSql
 #include <QtPlugin>
 Q_IMPORT_PLUGIN(qsqlmysql)
 Q_IMPORT_PLUGIN(qsqlite)
+#endif
 bool cargarEmpresa(QString empresa)
 {
     QSqlQuery QryEmpresa(QSqlDatabase::database("terra"));
