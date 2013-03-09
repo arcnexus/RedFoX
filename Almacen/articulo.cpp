@@ -523,7 +523,26 @@ QString Articulo::getcGrupo(int nId)
     return Query.record().field("grupoart").value().toString();
 }
 
-void Articulo::agregar_proveedor_alternativo(int id_art, int id_Proveedor, QString codigo, double pvd, QString descoferta, QString oferta)
+bool Articulo::agregar_proveedor_alternativo(int id_art, int id_Proveedor, QString codigo, double pvd, QString descoferta, QString oferta)
 {
+    QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("terra"));
+
+    query_proveedor_alternativo.prepare("INSERT INTO articulos_prov_frec "
+                                        "(id_Articulo,id_Proveedor,pvd,oferta,codigo,descoferta)"
+                                        " VALUES (:id_Articulo,:id_Proveedor,:pvd, :oferta,:codigo,:descoferta)");
+    query_proveedor_alternativo.bindValue(":id_Articulo",id_art);
+    query_proveedor_alternativo.bindValue(":id_Proveedor",id_Proveedor);
+    query_proveedor_alternativo.bindValue(":pvd",pvd);
+    query_proveedor_alternativo.bindValue(":oferta",oferta);
+    query_proveedor_alternativo.bindValue(":descoferta",descoferta);
+    if(!query_proveedor_alternativo.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Insertar proveedor frecuente"),
+                             tr("Falló la inserción de un nuevo proveedor: %1").arg(query_proveedor_alternativo.lastError().text()));
+        return false;
+
+
+    } else
+        return true;
+
 }
 

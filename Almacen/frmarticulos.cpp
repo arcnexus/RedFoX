@@ -739,6 +739,10 @@ void FrmArticulos::anadir_proveedor_clicked()
 {
     FrmAsociarProveedor frmAsociar;
     if(frmAsociar.exec() == QDialog::Accepted) {
+        bool ok = oArticulo->agregar_proveedor_alternativo(oArticulo->id,frmAsociar.id_proveedor,frmAsociar.codigo,frmAsociar.pvd,
+                                                 frmAsociar.DescOferta,frmAsociar.Oferta);
+        if (!ok)
+            QMessageBox::warning(this,tr("Nuevo proveedor frecuente"),tr("Falló la inserción del proveedor"),tr("Aceptar"));
 
     }
 
