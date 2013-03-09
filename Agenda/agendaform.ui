@@ -34,11 +34,20 @@
         <x>0</x>
         <y>0</y>
         <width>220</width>
-        <height>853</height>
+        <height>836</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -64,11 +73,35 @@ QLabel{background-color: #4C6088;}</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="QPushButton" name="btn_hoy">
+           <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>Ver agenda de hoy</string>
+             <string>Ver agenda de:</string>
             </property>
            </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QComboBox" name="combo_user"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_2">
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../terra.qrc">
+                <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QCalendarWidget" name="calendarWidget">
@@ -108,176 +141,11 @@ QLabel{background-color: #4C6088;}</string>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_4">
+           <widget class="QPushButton" name="btn_hoy">
             <property name="text">
-             <string>Ver agenda de:</string>
+             <string>Ver agenda de hoy</string>
             </property>
            </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
-            <item>
-             <widget class="QComboBox" name="combo_user"/>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_2">
-              <property name="maximumSize">
-               <size>
-                <width>30</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../terra.qrc">
-                <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="reunion_group">
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="title">
-             <string>Cita/Reunion con</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_6">
-             <item>
-              <widget class="QComboBox" name="combo_cliente"/>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_3">
-               <property name="maximumSize">
-                <size>
-                 <width>30</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../terra.qrc">
-                 <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="especialidad_group">
-            <property name="title">
-             <string>Especialidad</string>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <item>
-              <widget class="QComboBox" name="combo_espec"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="departamento_group">
-            <property name="title">
-             <string>Departamento</string>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_8">
-             <item>
-              <widget class="QComboBox" name="combo_dto"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="txt_tituloEvento"/>
-          </item>
-          <item>
-           <widget class="QPlainTextEdit" name="txt_asunto">
-            <property name="maximumSize">
-             <size>
-              <width>201</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>Color</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btn_getColor">
-              <property name="styleSheet">
-               <string notr="true">background-color: red</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>Desde</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QTimeEdit" name="time_start">
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::UpDownArrows</enum>
-              </property>
-              <property name="displayFormat">
-               <string>H:mm</string>
-              </property>
-              <property name="calendarPopup">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Hasta</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QTimeEdit" name="time_end">
-              <property name="displayFormat">
-               <string>H:mm</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
           </item>
           <item>
            <widget class="QPushButton" name="pushButton">
@@ -290,16 +158,20 @@ QLabel{background-color: #4C6088;}</string>
             </property>
            </widget>
           </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
-         <zorder>calendarWidget</zorder>
-         <zorder>txt_asunto</zorder>
-         <zorder>pushButton</zorder>
-         <zorder>reunion_group</zorder>
-         <zorder>label_4</zorder>
-         <zorder>especialidad_group</zorder>
-         <zorder>departamento_group</zorder>
-         <zorder>txt_tituloEvento</zorder>
-         <zorder>btn_hoy</zorder>
         </widget>
        </item>
       </layout>

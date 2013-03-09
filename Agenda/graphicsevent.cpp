@@ -168,7 +168,7 @@ void GraphicsEvent::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void GraphicsEvent::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(isReadOnly)
+    if(isReadOnly || (isPrivado && (id_user != Configuracion_global->id_usuario_activo)))
         return;
 
     QGraphicsItem::mousePressEvent(event);
@@ -215,7 +215,7 @@ void GraphicsEvent::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsEvent::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(isReadOnly)
+    if(isReadOnly || (isPrivado && (id_user != Configuracion_global->id_usuario_activo)))
         return;
 
     QGraphicsItem::mouseReleaseEvent(event);
@@ -239,7 +239,7 @@ void GraphicsEvent::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsEvent::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(isReadOnly)
+    if(isReadOnly || (isPrivado && (id_user != Configuracion_global->id_usuario_activo)))
         return;
 
     if(on_click)
@@ -313,10 +313,12 @@ void GraphicsEvent::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 
 void GraphicsEvent::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
-    if(isReadOnly)
+    if(isReadOnly || (isPrivado && (id_user != Configuracion_global->id_usuario_activo)))
         return;
    QMenu menu;
    menu.addAction("Editar");
+   menu.addAction("Compartir evento");
+   menu.addSeparator();
    menu.addAction("Eliminar");
    QAction *a = menu.exec(event->screenPos());
    if(a)
@@ -324,6 +326,10 @@ void GraphicsEvent::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
        if(a->text() == "Editar")
        {
             EditThis();
+       }
+       else if(a->text() == "Compartir evento")
+       {
+           shareThis();
        }
        else
        {
@@ -364,13 +370,14 @@ bool GraphicsEvent::isInJail(QPointF pos)
 
 void GraphicsEvent::EditThis()
 {
-    if(isReadOnly)
+    if(isReadOnly || (isPrivado && (id_user != Configuracion_global->id_usuario_activo)))
         return;
     QString aux = asunto.replace("<br>","\n");
     EditEventForm form(qApp->activeWindow());
     form.setColor(QColor::fromRgb(red,green,blue));
     form.setCita(isCita,id_cliente);
     form.setAsunto(titulo,asunto);
+    form.setIsPrivado(isPrivado);
     if(form.exec() == QDialog::Accepted)
     {
         this->id_spec = form.id_spec;
@@ -382,6 +389,7 @@ void GraphicsEvent::EditThis()
         this->blue = form.event_color.blue();
         this->titulo = form.titulo;
         this->asunto = form.asunto.replace("\n","<br>");
+        this->isPrivado = form.isPrivado;
         updateThis();
     }
 
@@ -390,6 +398,11 @@ void GraphicsEvent::EditThis()
 void GraphicsEvent::updateThis()
 {
     QString st;
+    if(isPrivado && (id_user != Configuracion_global->id_usuario_activo))
+    {
+        this->setToolTip(tr("Evento privado"));
+        return;
+    }
     if(isCita)
     {
         QString nombre_cliente;
@@ -451,7 +464,7 @@ void GraphicsEvent::updateThis()
               "cDescripcionAsunto=:cDescripcionAsunto, cEstado=:cEstado, cAvisarTiempo=:cAvisarTiempo,"
               "cImportancia=:cImportancia, color=:color,"
               "id_especialidad=:id_especialidad, id_departamento=:id_departamento,"
-              "isMedica=:isMedica, Id_Cliente=:Id_Cliente, isCita=:isCita "
+              "isMedica=:isMedica, Id_Cliente=:Id_Cliente, isCita=:isCita, isPrivado=:isPrivado "
               " WHERE Id =:id;");
 
     QString sColor = QString("%1;%2;%3").arg(red).arg(green).arg(blue);
@@ -470,11 +483,87 @@ void GraphicsEvent::updateThis()
     q.bindValue(":Id_Cliente",id_cliente);
     q.bindValue(":isCita",isCita);
     q.bindValue(":id",id);
+    q.bindValue(":isPrivado",isPrivado);
 
     if(!q.exec())
     {
         qDebug() << q.executedQuery();
         qDebug() << q.lastError();
+    }
+}
+
+void GraphicsEvent::shareThis()
+{
+    QList<int> id_users;
+    QSqlQuery getUser(QSqlDatabase::database("terra"));
+    QString sGetUser = QString("SELECT id_Usuario_agenda FROM  permisos_agenda WHERE id_Usuario_editor = %1").arg(Configuracion_global->id_usuario_activo);
+    if(getUser.exec(sGetUser))
+    {
+        while(getUser.next())
+        {
+            id_users << getUser.record().value("id_Usuario_agenda").toInt();
+        }
+    }
+    QStringList users;
+    if(getUser.exec("SELECT * FROM usuarios"))
+    {
+        while (getUser.next())
+        {
+            QSqlRecord r = getUser.record();
+            if(id_users.contains(r.value("id").toInt()))
+                users << r.value("nombre").toString();
+        }
+    }
+
+    bool ok;
+    QString sUser = QInputDialog::getItem(qApp->activeWindow(),"Seleccionar usuario","Seleccionar usuario",users,0,false,&ok);
+    if(ok)
+    {
+        int iUser;
+        QSqlQuery user(QSqlDatabase::database("terra"));
+        QString sql = QString("SELECT id FROM usuarios WHERE nombre = '%1'").arg(sUser);
+        if(user.exec(sql))
+        {
+            if(user.next())
+            {
+                iUser = user.record().value("id").toInt();
+            }
+            else
+            {
+                QMessageBox::critical(qApp->activeWindow(),tr("Error"),tr("Error al recuperar usuario"));
+                return;
+            }
+        }
+        QSqlQuery q(QSqlDatabase::database("terra"));
+        q.prepare("INSERT INTO agenda"
+                  "(dFecha, cHora, id_Usuario, cInicio, cFin, cAsunto,"
+                  "cDescripcionAsunto, cEstado, cAvisarTiempo, cImportancia, color,"
+                  "id_especialidad, id_departamento, isMedica, Id_Cliente, isCita , isPrivado)"
+                  "VALUES "
+                  "(:dFecha, :cHora, :id_Usuario, :cInicio, :cFin, :cAsunto,"
+                  ":cDescripcionAsunto, :cEstado, :cAvisarTiempo, :cImportancia, :color,"
+                  ":id_especialidad, :id_departamento, :isMedica, :Id_Cliente, :isCita , :isPrivado)");
+
+        QString sColor = QString("%1;%2;%3").arg(red).arg(green).arg(blue);
+        q.bindValue(":dFecha",start.date());
+        q.bindValue(":cHora",0);
+        q.bindValue(":id_Usuario",iUser);
+        q.bindValue(":cInicio",start);
+        q.bindValue(":cFin",end);
+        q.bindValue(":cAsunto",titulo);
+        q.bindValue(":cDescripcionAsunto",asunto);
+        q.bindValue(":cEstado",0);
+        q.bindValue(":cAvisarTiempo",0);
+        q.bindValue(":cImportancia",0);
+        q.bindValue(":color",sColor);
+        q.bindValue(":id_especialidad",0);//FIXME - Agenda: parametros evento
+        q.bindValue(":id_departamento",0);
+        q.bindValue(":isMedica",medic);
+        q.bindValue(":Id_Cliente",id_cliente);
+        q.bindValue(":isCita",isCita);
+        q.bindValue(":isPrivado",isPrivado);
+
+        q.exec();
     }
 }
 

@@ -29,6 +29,9 @@ public:
     int id_cliente;
     int id_spec;
     int id_depart;
+
+    bool isPrivado;
+    void setIsPrivado(bool b);
 private slots:
     void on_btn_getColor_clicked();
 
@@ -37,6 +40,8 @@ private slots:
     void on_btn_guardar_clicked();
 
     void on_pushButton_clicked();
+
+    void timeChanged(const QTime &time);
 
 private:
     Ui::EditEventForm *ui;

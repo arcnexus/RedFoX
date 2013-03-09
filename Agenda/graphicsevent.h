@@ -33,6 +33,8 @@ public:
     int id_cliente;
     int id_spec;
     int id_depart;
+    bool isPrivado;
+
 signals:
     void updateScene();
     void checkForCollisions();
@@ -79,6 +81,7 @@ private:
     bool isReadOnly;
     void EditThis();
     void updateThis();
+    void shareThis();
 };
 
 #endif // GRAPHICSEVENT_H
