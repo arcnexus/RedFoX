@@ -798,7 +798,6 @@ void MainWindow::handle_tiposIVA()
 
     form.setWindowTitle(tr("Tipos de I.V.A"));
 
-
     QStringList headers;
     headers << "" << tr("Tipo") << tr("Decripción") << tr("I.V.A") << tr("Recargo equivalencia");
     form.set_table_headers(headers);

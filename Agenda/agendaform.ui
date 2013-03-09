@@ -85,7 +85,7 @@ QLabel{background-color: #4C6088;}</string>
              <widget class="QComboBox" name="combo_user"/>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="btn_buscaUser">
               <property name="maximumSize">
                <size>
                 <width>30</width>

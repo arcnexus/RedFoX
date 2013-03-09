@@ -44,6 +44,8 @@ void Db_table_View::set_table(QString tabla)
     if(!model->select())
         qDebug () << model->lastError();
     ui->resultado_list->hideColumn(0);
+
+    colums = model->columnCount();
 }
 
 void Db_table_View::set_table_headers(QStringList headers)
@@ -70,8 +72,12 @@ void Db_table_View::set_filter(QString filter)
 
 void Db_table_View::set_readOnly(bool state)
 {
-    Q_UNUSED(state);
-    //TODO read-only
+    if(state)
+    {
+        ui->resultado_list->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->btn_add->hide();
+        ui->btn_remove->hide();
+    }
 }
 
 void Db_table_View::set_selection(QString column_name)
@@ -85,6 +91,7 @@ void Db_table_View::set_columnHide(int column)
     ui->resultado_list->resizeColumnsToContents();
 
     hide_headers.append(column);
+    colums--;
 }
 
 void Db_table_View::set_noInsertDeleteRows()
@@ -142,4 +149,17 @@ void Db_table_View::print_clicked()
         Configuracion::imprimir(db,file,true,true,this);
     else
         Configuracion::imprimir(db,file,false,true,this);
+}
+
+void Db_table_View::resizeEvent(QResizeEvent *)
+{
+    int w = ui->resultado_list->width();
+    int _w = w/colums;
+
+    ui->resultado_list->horizontalHeader()->setUpdatesEnabled(false);
+
+    for (int i = 0; i < ui->resultado_list->model()->columnCount(); i++)
+        ui->resultado_list->horizontalHeader()->resizeSection(i, _w);
+
+    ui->resultado_list->horizontalHeader()->setUpdatesEnabled(true);
 }

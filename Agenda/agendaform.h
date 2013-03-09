@@ -26,6 +26,8 @@ private slots:
 
     void on_btn_hoy_clicked();
 
+    void on_btn_buscaUser_clicked();
+
 private:
     Ui::AgendaForm *ui;
     QGraphicsScene * scene;

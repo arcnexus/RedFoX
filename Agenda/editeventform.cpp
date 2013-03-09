@@ -27,6 +27,9 @@ EditEventForm::EditEventForm(QWidget *parent) :
         ui->departamento_group->hide();
         ui->reunion_group->setTitle("Cita con:");
     }
+
+    event_color = QColor(170,170,255);
+    setButtonColor();
 }
 
 EditEventForm::~EditEventForm()

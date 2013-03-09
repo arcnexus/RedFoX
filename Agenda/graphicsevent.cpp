@@ -511,10 +511,17 @@ void GraphicsEvent::shareThis()
         {
             QSqlRecord r = getUser.record();
             if(id_users.contains(r.value("id").toInt()))
-                users << r.value("nombre").toString();
+                if(r.value("id")!= id_user)
+                    users << r.value("nombre").toString();
         }
     }
-
+    if(id_user != Configuracion_global->id_usuario_activo)
+        users << Configuracion_global->cUsuarioActivo;
+    if(users.isEmpty())
+    {
+        QMessageBox::information(qApp->activeWindow(),"Compartir evento","No puede compartir eventos con ningun usuario.\nConsulte al administrador de sistema");
+        return;
+    }
     bool ok;
     QString sUser = QInputDialog::getItem(qApp->activeWindow(),"Seleccionar usuario","Seleccionar usuario",users,0,false,&ok);
     if(ok)

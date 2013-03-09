@@ -1,6 +1,7 @@
 #include "agendaform.h"
 #include "ui_agendaform.h"
 #include "editeventform.h"
+#include "../db_table_view.h"
 AgendaForm::AgendaForm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AgendaForm)
@@ -82,4 +83,36 @@ void AgendaForm::on_combo_user_currentIndexChanged(int index)
 void AgendaForm::on_btn_hoy_clicked()
 {
     ui->calendarWidget->setSelectedDate(QDate::currentDate());
+    table->setDate(ui->calendarWidget->selectedDate());
+}
+
+void AgendaForm::on_btn_buscaUser_clicked()
+{
+    QString s = QInputDialog::getText(this,"Nombre","Nombre de usuario");
+    Db_table_View form(this);
+    form.set_db("terra");
+    form.set_table("usuarios");
+
+    form.setWindowTitle(tr("Usuarios"));
+
+    QStringList headers;
+    headers << tr("Nombre");
+    form.set_table_headers(headers);
+
+    form.set_columnHide(0);
+    form.set_columnHide(2);
+    form.set_columnHide(3);
+    form.set_columnHide(4);
+    form.set_noInsertDeleteRows();
+    form.set_readOnly(true);
+
+    form.set_selection("nombre");
+
+    QString filt = QString("nombre like '%%1%'").arg(s);
+    form.set_filter(filt);
+    if(form.exec()==QDialog::Accepted)
+    {
+        int i = ui->combo_user->findText(form.selected_value);
+        ui->combo_user->setCurrentIndex(i);
+    }
 }

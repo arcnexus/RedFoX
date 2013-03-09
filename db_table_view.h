@@ -38,7 +38,8 @@ private slots:
     void on_btn_cancel_clicked();
 
     void print_clicked();
-
+protected:
+    void resizeEvent(QResizeEvent *);
 private:
     Ui::Db_table_View *ui;
     QString db;
@@ -52,6 +53,8 @@ private:
 
     QStringList headers;
     QVector<int> hide_headers;
+
+    int colums;
 };
 
 #endif // DB_TABLE_VIEW_H
