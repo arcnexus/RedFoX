@@ -16,8 +16,6 @@ AgendaForm::AgendaForm(QWidget *parent) :
     ui->combo_user->setModel(Configuracion_global->usuarios_model);
     ui->combo_user->setModelColumn(Configuracion_global->usuarios_model->fieldIndex("nombre"));
 
-
-
     event_color = QColor::fromRgb(qRgb(51,102,255));
 
     scene = new QGraphicsScene(this);
@@ -36,7 +34,6 @@ AgendaForm::AgendaForm(QWidget *parent) :
     ui->calendarWidget->setSelectedDate(today);
     //int id_user = Configuracion_global->usuarios_model->record(ui->combo_user->currentIndex()).value("id").toInt();
     table->setDate(today);
-
 }
 
 AgendaForm::~AgendaForm()
@@ -115,4 +112,16 @@ void AgendaForm::on_btn_buscaUser_clicked()
         int i = ui->combo_user->findText(form.selected_value);
         ui->combo_user->setCurrentIndex(i);
     }
+}
+
+void AgendaForm::on_btn_zoomIn_clicked()
+{
+    double scaleFactor = 1.15;
+    ui->graphicsView->scale(scaleFactor, scaleFactor);
+}
+
+void AgendaForm::on_btn_zoomOut_clicked()
+{
+    double scaleFactor = 1.15;
+    ui->graphicsView->scale(1/scaleFactor, 1/scaleFactor);
 }

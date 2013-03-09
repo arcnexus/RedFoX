@@ -5,6 +5,7 @@
 #include <QtGui>
 #include <QGraphicsScene>
 #include "graphicstable.h"
+
 namespace Ui {
 class AgendaForm;
 }
@@ -27,6 +28,9 @@ private slots:
     void on_btn_hoy_clicked();
 
     void on_btn_buscaUser_clicked();
+
+    void on_btn_zoomIn_clicked();
+    void on_btn_zoomOut_clicked();
 
 private:
     Ui::AgendaForm *ui;

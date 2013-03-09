@@ -14,14 +14,15 @@ QT       += webkit
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 #DEFINES+= staticSql
+#QTPLUGIN+=qsqlite
+#QTPLUGIN+=qsqlmysql
 
 INCLUDEPATH += /Qwt/5.2.1/include
 INCLUDEPATH += /usr/local/Qxt/include/QxtCore
 DEPENDPATH += /Qwt/5.2.1/lib
 greaterThan(QT_MAJOR_VERSION, 4):INCLUDEPATH += /home/arcnexus/Qt5.0.0/5.0.0/gcc_64/include/QtWebKitWidgets
 
-QTPLUGIN+=qsqlite
-QTPLUGIN+=qsqlmysql
+
 
 LIBS += -LC:/Qt/Qwt/5.2.1/lib
 LIBS += -L/usr/local/Qxt/lib

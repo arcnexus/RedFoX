@@ -139,7 +139,7 @@ void Login::Crearconfiguracion_clicked()
 {
 
  frmConfigTerra frmConf;
- frmConf.exec();
+ if(frmConf.exec()==QDialog::Accepted)
     //Note - notificar al usuario que el boton hace algo
     QMessageBox::information(this,
                              tr("Configurado"),
