@@ -16,12 +16,10 @@ class AgendaForm : public QDialog
 public:
     explicit AgendaForm(QWidget *parent = 0);
     ~AgendaForm();
-    void setButtonColor();
+
 private slots:
     void on_pushButton_clicked();
-    void timeChanged(const QTime &time);
 
-    void on_btn_getColor_clicked();
     void on_calendarWidget_activated(const QDate &date);
 
     void on_combo_user_currentIndexChanged(int index);

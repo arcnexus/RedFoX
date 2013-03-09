@@ -11,6 +11,12 @@ EditEventForm::EditEventForm(QWidget *parent) :
 
     ui->combo_cliente->setModel(Configuracion_global->client_model);
     ui->combo_cliente->setModelColumn(Configuracion_global->client_model->fieldIndex("cNombreFiscal"));
+
+    connect(ui->time_start,SIGNAL(timeChanged(QTime)),this,SLOT(timeChanged(QTime)));
+    connect(ui->time_end,SIGNAL(timeChanged(QTime)),this,SLOT(timeChanged(QTime)));
+
+    ui->time_start->setTime(QTime(QTime::currentTime().hour()+1,0));
+
     if(!medic)
     {
         ui->especialidad_group->hide();
@@ -67,6 +73,11 @@ void EditEventForm::setAsunto(QString t, QString a)
     ui->txt_tituloEvento->setText(t);
 }
 
+void EditEventForm::setIsPrivado(bool b)
+{
+    ui->chk_isPrivado->setChecked(b);
+}
+
 void EditEventForm::on_btn_getColor_clicked()
 {
     QColorDialog d(this);
@@ -84,6 +95,7 @@ void EditEventForm::on_btn_cancelar_clicked()
 
 void EditEventForm::on_btn_guardar_clicked()
 {
+    isPrivado = ui->chk_isPrivado->isChecked();
     isCita = ui->reunion_group->isChecked();
     titulo = ui->txt_tituloEvento->text();
     asunto = ui->txt_asunto->toPlainText();
@@ -93,6 +105,8 @@ void EditEventForm::on_btn_guardar_clicked()
     id_cliente = client_model->record(ui->combo_cliente->currentIndex()).value("Id").toInt();
     id_spec = 0;//FIXME especialidad / departamento en agenda
     id_depart = 0;
+    start = ui->time_start->time();
+    end = ui->time_end->time();
     EditEventForm::done(QDialog::Accepted);
 }
 
@@ -109,5 +123,53 @@ void EditEventForm::on_pushButton_clicked()
         QString name = oCliente.cNombreFiscal;
         int i = ui->combo_cliente->findText(name);
         ui->combo_cliente->setCurrentIndex(i);
+    }
+}
+
+void EditEventForm::timeChanged(const QTime &time)
+{
+
+    int h = time.hour();
+    int m = time.minute();
+
+    if(m<= 14)
+    switch (m)
+    {
+    case 1:
+    case 29:
+        m=15;
+        break;
+    case 14:
+        m=0;
+        break;
+    case 16:
+    case 44:
+        m=30;
+        break;
+    case 31:
+        m=45;
+        break;
+    case 46:
+        m=0;
+        h++;
+        break;
+    default:
+        m=0;
+    }
+
+    QTimeEdit * timeEd = qobject_cast<QTimeEdit *>(sender());
+    if(timeEd)
+    {
+        timeEd->setTime(QTime(h,m));
+        if(timeEd == ui->time_start)
+            ui->time_end->setTime(QTime(h,m+15));
+        else
+        {
+            if(ui->time_start->time() >= ui->time_end->time())
+            {
+                QTime t = ui->time_start->time();
+                ui->time_end->setTime(QTime(t.hour(),t.minute()+15));
+            }
+        }
     }
 }

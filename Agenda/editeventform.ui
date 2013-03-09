@@ -13,8 +13,15 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" colspan="2">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QCheckBox" name="chk_isPrivado">
+     <property name="text">
+      <string>Evento privado</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="reunion_group">
      <property name="title">
       <string>Cita con</string>
@@ -46,7 +53,7 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
+   <item>
     <widget class="QGroupBox" name="especialidad_group">
      <property name="title">
       <string>Especialidad</string>
@@ -58,7 +65,7 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
+   <item>
     <widget class="QGroupBox" name="departamento_group">
      <property name="title">
       <string>Departamento</string>
@@ -70,33 +77,52 @@
      </layout>
     </widget>
    </item>
-   <item row="6" column="0">
-    <widget class="QPushButton" name="btn_cancelar">
-     <property name="text">
-      <string>Cancelar</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../terra.qrc">
-       <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+   <item>
+    <widget class="QLineEdit" name="txt_tituloEvento">
+     <property name="placeholderText">
+      <string>Titulo...</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="1">
-    <widget class="QPushButton" name="btn_guardar">
-     <property name="text">
-      <string>Guardar</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../terra.qrc">
-       <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
+   <item>
     <widget class="QPlainTextEdit" name="txt_asunto"/>
    </item>
-   <item row="5" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Desde</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTimeEdit" name="time_start">
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::UpDownArrows</enum>
+       </property>
+       <property name="displayFormat">
+        <string>H:mm</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Hasta</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTimeEdit" name="time_end">
+       <property name="displayFormat">
+        <string>H:mm</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
@@ -117,10 +143,59 @@
        </property>
       </widget>
      </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
     </layout>
    </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QLineEdit" name="txt_tituloEvento"/>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_cancelar">
+       <property name="text">
+        <string>Cancelar</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../terra.qrc">
+         <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_guardar">
+       <property name="text">
+        <string>Guardar</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../terra.qrc">
+         <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
   <zorder>reunion_group</zorder>
@@ -130,6 +205,10 @@
   <zorder>btn_cancelar</zorder>
   <zorder>btn_guardar</zorder>
   <zorder>txt_tituloEvento</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget_2</zorder>
+  <zorder>horizontalSpacer_2</zorder>
+  <zorder>chk_isPrivado</zorder>
  </widget>
  <resources>
   <include location="../terra.qrc"/>

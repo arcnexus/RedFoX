@@ -1244,7 +1244,7 @@ void frmClientes::CargarDireccionAlternativa(QModelIndex index)
     }
 }
 
-bool frmClientes::ValidarCC()
+void frmClientes::ValidarCC()
 {
     QString cOk;
     if(!ui->txtcEntidadBancaria->text().isEmpty() && !ui->txtcOficinaBancaria->text().isEmpty() &&
