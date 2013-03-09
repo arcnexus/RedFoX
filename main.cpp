@@ -21,7 +21,7 @@
 #include "login.h"
 #include <QStyleFactory>
 #include "openrptLibs/include/data.h"
-
+//Fox branch test
 bool cargarEmpresa(QString empresa)
 {
     QSqlQuery QryEmpresa(QSqlDatabase::database("terra"));
