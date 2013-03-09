@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Asociar proveedor-Artículo</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../terra.qrc">
+    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background: #4c6088</string>
@@ -62,7 +66,6 @@
       </item>
      </layout>
      <zorder>tablaproveedores</zorder>
-     <zorder>tablaproveedores</zorder>
      <zorder>txtBuscarProveedores</zorder>
      <zorder>btnFiltrar</zorder>
     </widget>
@@ -101,7 +104,7 @@
        </widget>
       </item>
       <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="txtDescripcion">
+       <widget class="QLineEdit" name="txtCodigo">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -117,7 +120,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Descrpción:</string>
+         <string>Código</string>
         </property>
        </widget>
       </item>
@@ -193,6 +196,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>txtBuscarProveedores</tabstop>
+  <tabstop>btnFiltrar</tabstop>
+  <tabstop>tablaproveedores</tabstop>
+  <tabstop>txtCodigo</tabstop>
+  <tabstop>txtPVD</tabstop>
+  <tabstop>txtDescoferta</tabstop>
+  <tabstop>txtOferta</tabstop>
+  <tabstop>btnAnadir</tabstop>
+  <tabstop>BtnCancelar</tabstop>
+ </tabstops>
  <resources>
   <include location="../terra.qrc"/>
  </resources>
@@ -204,8 +218,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>351</x>
-     <y>212</y>
+     <x>512</x>
+     <y>291</y>
     </hint>
     <hint type="destinationlabel">
      <x>299</x>
@@ -220,8 +234,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>539</x>
-     <y>216</y>
+     <x>653</x>
+     <y>291</y>
     </hint>
     <hint type="destinationlabel">
      <x>583</x>

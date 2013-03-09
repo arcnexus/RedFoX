@@ -738,7 +738,11 @@ void FrmArticulos::on_btnAnadirTarifa_clicked()
 void FrmArticulos::anadir_proveedor_clicked()
 {
     FrmAsociarProveedor frmAsociar;
-    if(frmAsociar.exec() == QDialog::Accepted)
+    if(frmAsociar.exec() == QDialog::Accepted) {
+
+    }
+
+
         QMessageBox::warning(this,tr("añadir"),tr("aceptado"),tr("Aceptar"));
 }
 

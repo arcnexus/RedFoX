@@ -522,3 +522,8 @@ QString Articulo::getcGrupo(int nId)
       Query.next();
     return Query.record().field("grupoart").value().toString();
 }
+
+void Articulo::agregar_proveedor_alternativo(int id_art, int id_Proveedor, QString codigo, double pvd, QString descoferta, QString oferta)
+{
+}
+
