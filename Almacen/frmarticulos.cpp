@@ -62,13 +62,28 @@ FrmArticulos::~FrmArticulos()
 
 void FrmArticulos::on_botAnadir_clicked()
 {
-    desbloquearCampos();
-    VaciarCampos();
-    oArticulo->Anadir();
-    this->anadir = true;
-    LLenarCampos();
-    //ui->lblImagenArticulo->setPixmap(QPixmap::fromImage());
-    ui->txtcCodigo->setFocus();
+    QSqlQuery querySecciones(QSqlDatabase::database("terra"));
+    querySecciones.prepare("select id from secciones order by id desc limit 1 ");
+    if (querySecciones.exec()){
+        querySecciones.next();
+        int id = querySecciones.record().value("id").toInt();
+        if(id <= 0){
+                QMessageBox message;
+                message.setWindowTitle(tr("Gestión de artículos"));
+                message.setText("Para poder añadir artículos debe tener registros de sección");
+                message.setAutoFillBackground(true);
+                message.setButtonText(1,tr("Aceptar"));
+                message.exec();
+        } else {
+            desbloquearCampos();
+            VaciarCampos();
+            oArticulo->Anadir();
+            this->anadir = true;
+            LLenarCampos();
+            //ui->lblImagenArticulo->setPixmap(QPixmap::fromImage());
+            ui->txtcCodigo->setFocus();
+        }
+    }
 }
 
 void FrmArticulos::on_botGuardar_clicked()

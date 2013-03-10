@@ -532,6 +532,7 @@ bool Articulo::agregar_proveedor_alternativo(int id_art, int id_Proveedor, QStri
                                         " VALUES (:id_Articulo,:id_Proveedor,:pvd, :oferta,:codigo,:descoferta)");
     query_proveedor_alternativo.bindValue(":id_Articulo",id_art);
     query_proveedor_alternativo.bindValue(":id_Proveedor",id_Proveedor);
+    query_proveedor_alternativo.bindValue(":codigo",codigo);
     query_proveedor_alternativo.bindValue(":pvd",pvd);
     query_proveedor_alternativo.bindValue(":oferta",oferta);
     query_proveedor_alternativo.bindValue(":descoferta",descoferta);
