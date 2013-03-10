@@ -157,7 +157,7 @@ void GraphicsEvent::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     }
     if(width > 100) //tir privado : 03:0 -> 17 length
     {
-        int l = (width * 16)/100;
+        int l = (width * 15)/100;
         QString sDate = QString("%1 : %2-%3").arg(titulo).arg(start.toString("hh:mm")).arg(end.toString("hh:mm"));
         if(sDate.length()>l)
         {
@@ -166,10 +166,37 @@ void GraphicsEvent::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
             sDate = aux;
         }
         QFont font = painter->font() ;
-        font.setPointSize ( 10 );
+        font.setPointSize ( 8 );
         painter->setFont(font);
         painter->setPen(Qt::black);
         painter->drawText(this->boundingRect(),Qt::AlignHCenter,sDate);
+
+        l= ((width-10) * 15)/100;
+        QRectF body(5,15,width-5,Heigth()-20);
+        QStringList lines = asunto.split("<br>",QString::SkipEmptyParts);
+        QString display;
+        QString line;
+        int aux = 0;
+        for (int i=0;i<lines.size();i++)
+        {
+            QStringList words = lines.at(i).split(" ",QString::SkipEmptyParts);
+            for (int a = 0; a< words.size();a++)
+            {
+                if(aux>l)
+                {
+                    aux=0;
+                    line.append("\n");
+                }
+                line.append(words.at(a));
+                line.append(" ");
+                aux+= words.at(a).size();
+                aux++;
+            }
+            display.append(line);
+            display.append("\n");
+            aux=0;
+        }
+        painter->drawText(body,Qt::AlignHCenter,display,&body);
     }
 }
 
