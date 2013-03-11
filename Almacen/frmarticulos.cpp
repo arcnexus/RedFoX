@@ -18,6 +18,20 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
     ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
 
+
+    ui->grafica->EnableLeyenda(true);
+    ui->grafica->addItem("En",Qt::red,10);
+    ui->grafica->addItem("Fe",Qt::red,15);
+    ui->grafica->addItem("Ma",Qt::red,10);
+    ui->grafica->addItem("Ab",Qt::red,25);
+    ui->grafica->addItem("Ma",Qt::red,40);
+    ui->grafica->addItem("Ju",Qt::red,30);
+    ui->grafica->addItem("Jul",Qt::red,20);
+    ui->grafica->addItem("Ag",Qt::red,60);
+    ui->grafica->addItem("Se",Qt::red,50);
+    ui->grafica->addItem("Oc",Qt::red,70);
+    ui->grafica->addItem("No",Qt::red,75);
+    ui->grafica->addItem("Di",Qt::red,90);
     // Control objetos
     ui->lblMensajeRecuperar->setVisible(false);
     // --------------------
@@ -66,8 +80,8 @@ void FrmArticulos::on_botAnadir_clicked()
     querySecciones.prepare("select id from secciones order by id desc limit 1 ");
     if (querySecciones.exec()){
         querySecciones.next();
-        int id = querySecciones.record().value("id").toInt();
-        if(id <= 0){
+        if (querySecciones.record().value("id").toInt()<=0)
+        {
                 QMessageBox message;
                 message.setWindowTitle(tr("Gestión de artículos"));
                 message.setText("Para poder añadir artículos debe tener registros de sección");
@@ -771,6 +785,27 @@ void FrmArticulos::anadir_proveedor_clicked()
     modelProv->setQuery("select  codpro,cProveedor,codigo,pvd,descoferta,oferta from proveedores_frecuentes where id_art = "+
                         QString::number(oArticulo->id),QSqlDatabase::database("terra"));
     ui->tablaProveedores->setModel(modelProv);
+}
+
+void FrmArticulos::calcular_codigo()
+{
+    if (Configuracion_global->Autocodigoart == true) {
+        if(!ui->txtcSeccion->text().isEmpty() && (ui->txtcCodigo->text().isEmpty() || ui->txtcCodigo->text() =="autocodigo"))
+                ui->txtcCodigo->setText(oArticulo->autocodigo());
+        else {
+
+            QMessageBox mensaje;
+            mensaje.setWindowTitle(tr("Nuevo código"));
+            mensaje.setText(tr("Para autogenerar un código de producto como mínimo debe haber insertado una sección"));
+            mensaje.setAutoFillBackground(true);
+            mensaje.warning(this,tr("Nuevo código"),
+                            tr("Para autogenerar un código de producto como mínimo debe haber insertado una sección"),
+                            tr("Aceptar"));
+
+        }
+
+    }
+
 }
 
 

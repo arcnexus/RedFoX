@@ -9,6 +9,7 @@
 #include "Agenda/permisosagendaform.h"
 #include <QSplashScreen>
 #include <Almacen/frmtipostarifa.h>
+#include "Zona_Administrador/frmconfigterra.h"
 
 Configuracion * Configuracion_global = 0;
 
@@ -146,16 +147,23 @@ void MainWindow::crear_barraAlmacen()
 void MainWindow::crear_barraAdmin()
 {
     btn_reports = new ToolBarButton(tr("Editar \nreportes "),":/Icons/PNG/reports.png",this);
+    btn_empresa = new ToolBarButton(tr("Empresas"),":/Icons/PNG/empresa.png",this);
+    btn_config = new ToolBarButton(tr("configuración"),":/Icons/PNG/Config.png",this);
+
 
     QFrame*  line = new QFrame(ui->page_admin);
     line->setFrameShape(QFrame::HLine);
     line->setFrameShadow(QFrame::Sunken);
 
     ui->verticalLayout_admin->addWidget(btn_reports);
+    ui->verticalLayout_admin->addWidget(btn_empresa);
+    ui->verticalLayout_admin->addWidget(btn_config);
 
     ui->verticalLayout_admin->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
     connect(btn_reports,SIGNAL(clicked()),this,SLOT(btn_reports_clicked()));
+    connect(btn_empresa,SIGNAL(clicked()),this,SLOT(editar_empresas()));
+    connect(btn_config,SIGNAL(clicked()),this,SLOT(configuracion()));
 
     //barra de menu
 //    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
@@ -751,6 +759,18 @@ void MainWindow::divisiones_almacen()
         form.exec();
     }
 }
+
+void MainWindow::editar_empresas()
+{
+    FrmEmpresas frmEmpresa(this);
+    frmEmpresa.exec();
+}
+void MainWindow::configuracion()
+{
+    frmConfigTerra frmConfig(this);
+    frmConfig.exec();
+}
+
 
 void MainWindow::handle_doctores()
 {

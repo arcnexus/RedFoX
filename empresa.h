@@ -107,7 +107,7 @@ signals:
     
 public slots:
 
-private:
+public:
     // Propiedades
     //Empresa
     QSqlQuery qEmpresa;
@@ -133,7 +133,8 @@ private:
     QString cComentarioFactura;
     QString cComentarioAlbaran;
     QString cComentarioTicket;
-
+    bool Autocodificar;
+    int Tamanocodigo;
 
     // ConexiónBD
     QString cRutaBDSqLite;
@@ -155,7 +156,9 @@ private:
     int nDigitosCuentas;
     QString cCuentaClientes;
     QString cCuentaProveedores;
-    QString cCuentaAcreeedores;    
+    QString cCuentaAcreeedores;
+    QString cCuentaCobros;
+    QString cCuentaPagos;
 };
 
 #endif // EMPRESA_H

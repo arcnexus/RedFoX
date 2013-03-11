@@ -72,6 +72,10 @@ void Empresa::Recuperar(QString cSQL)
             this->cCuentaClientes = registro.field("codigocuentaclientes").value().toString();
             this->cCuentaAcreeedores = registro.field("codigocuentaacreedores").value().toString();
             this->cCuentaProveedores = registro.field("codigocuentaproveedores").value().toString();
+            this->Autocodificar = registro.field("autocodigo").value().toBool();
+            this->Tamanocodigo = registro.field("tamanocodigo").value().toInt();
+            this->cCuentaCobros = registro.field("cCuentaCobros").value().toString();
+            this->cCuentaPagos = registro.field("cCuentaPagos").value().toString();
 		} 
 		else 
 		{
@@ -129,6 +133,10 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->cCuentaClientes = registro.field("codigocuentaclientes").value().toString();
             this->cCuentaAcreeedores = registro.field("codigocuentaacreedores").value().toString();
             this->cCuentaProveedores = registro.field("codigocuentaproveedores").value().toString();
+            this->Autocodificar = registro.field("autocodigo").value().toBool();
+            this->Tamanocodigo = registro.field("tamanocodigo").value().toInt();
+            this->cCuentaCobros = registro.field("cCuentaCobros").value().toString();
+            this->cCuentaPagos = registro.field("cCuentaPagos").value().toString();
         } else {
             if (nProcede == 1)
                 QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Empresas"),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
@@ -179,8 +187,12 @@ void Empresa::Guardar()
                      "ndigitoscuenta =:ndigitoscuentas,"
                      "codigocuentaclientes =:codigocuentaclientes,"
                      "codigocuentaproveedores =:codigocuentaproveedores,"
-                     "codigocuentaacreedores =:codigocuentaacreedores "
-                     "where id=:nID");
+                     "codigocuentaacreedores =:codigocuentaacreedores, "
+                     "autocodigo=:autocodigo,"
+                     "tamanocodigo =:tamanocodigo,"
+                     "cCuentaCobros =:cCuentaCobros,"
+                     "cCuentaPagos =:cCuentaPagos"
+                     " where id=:nID");
 
     qEmpresa.bindValue(":cCodigo",this->cCodigo);
     qEmpresa.bindValue(":cNombre",this->cNombre);
@@ -219,6 +231,10 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":codigocuentaclientes", this->cCuentaClientes);
     qEmpresa.bindValue(":codigocuentaproveedores", this->cCuentaProveedores);
     qEmpresa.bindValue(":codigocuentaacreedores", this->cCuentaAcreeedores);
+    qEmpresa.bindValue(":autocodigo",this->Autocodificar);
+    qEmpresa.bindValue(":tamanocodigo",this->Tamanocodigo);
+    qEmpresa.bindValue(":cCuentaCobros",this->cCuentaCobros);
+    qEmpresa.bindValue(":cCuentaPagos",this->cCuentaPagos);
     qEmpresa.bindValue(":nID",this->id);
 
 
@@ -268,6 +284,10 @@ void Empresa::Vaciar()
     this->cCuentaAcreeedores = "410";
     this->cCuentaClientes = "430";
     this->cCuentaProveedores= "400";
+    this->Autocodificar = true;
+    this->Tamanocodigo = 13;
+    this->cCuentaCobros = "";
+    this->cCuentaPagos = "";
 }
 
 bool Empresa::Borrar(int nId)

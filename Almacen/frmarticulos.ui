@@ -630,6 +630,19 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          </item>
         </layout>
        </item>
+       <item row="5" column="0">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>271</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="3" column="4">
         <widget class="QFrame" name="frame_10">
          <property name="styleSheet">
@@ -788,19 +801,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
           </item>
          </layout>
         </widget>
-       </item>
-       <item row="5" column="0">
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>271</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item row="5" column="2">
         <widget class="QPushButton" name="btnAnadirProveedores">
@@ -1496,8 +1496,8 @@ background-color: rgb(255, 255, 127);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>341</width>
-            <height>576</height>
+            <width>307</width>
+            <height>392</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2465,10 +2465,34 @@ Imagen.</string>
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_grafica">
+      <property name="styleSheet">
+       <string notr="true">background-color: #ecefed;</string>
+      </property>
+      <attribute name="title">
+       <string>Grafica</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_12">
+       <item row="0" column="0">
+        <widget class="Grafica" name="grafica">
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Grafica</class>
+   <extends>QWidget</extends>
+   <header>grafica.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>TablaBuscarArt</tabstop>
   <tabstop>tableView</tabstop>

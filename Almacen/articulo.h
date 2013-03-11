@@ -23,6 +23,10 @@ public:
     QString cSeccion;
     int id_SubFamilia;
     QString cSubfamilia;
+    int id_subSubFamilia;
+    QString cSubSubFamilia;
+    int id_grupoart;
+    QString cGrupoArt;
     QString cCodigoIva;
     double nTipoIva;
     double rDto;
@@ -80,7 +84,7 @@ public:
     QString getcGrupo(int nId);
     bool agregar_proveedor_alternativo(int id_art,int id_Proveedor,QString codigo,double pvd,QString descoferta,
                                        QString oferta);
-
+    QString autocodigo();
 private:
 
     QSqlQuery qryArticulo;

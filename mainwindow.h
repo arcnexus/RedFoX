@@ -95,6 +95,8 @@ private slots:
     void on_btn_bloquear_clicked();
 
     void divisiones_almacen();
+    void editar_empresas();
+    void configuracion();
 
     void handle_doctores();
     void handle_bancos();
@@ -151,6 +153,8 @@ private:
 
     //Barra de Administrador
     ToolBarButton * btn_reports;
+    ToolBarButton * btn_empresa;
+    ToolBarButton * btn_config;
     void crear_barraAdmin();
 
 

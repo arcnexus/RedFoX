@@ -54,10 +54,12 @@ private slots:
     void on_btnBuscarProveedor_clicked();
     void on_btnAnadirTarifa_clicked();
     void anadir_proveedor_clicked();
+    void calcular_codigo();
 
 
 public slots:
     void AnadirSeccion();
+
 
 private:
     Ui::FrmArticulos *ui;

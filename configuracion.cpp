@@ -315,6 +315,10 @@ void Configuracion::CargarDatos()
         this->cCuentaClientes = qEmpresa.record().field("codigocuentaclientes").value().toString();
         this->cCuentaAcreedores = qEmpresa.record().field("codigocuentaacreedores").value().toString();
         this->cCuentaProveedores = qEmpresa.record().field("codigocuentaproveedores").value().toString();
+        this->Autocodigoart = qEmpresa.record().value("autocodigo").toBool();
+        this->tamanocodigo = qEmpresa.record().value("tamanocodigo").toInt();
+        this->cCuentaCobrosClientes = qEmpresa.record().value("cCuentaCobros").toString();
+        this->cCuentaPagosProveedor = qEmpresa.record().value("cCuentaPagos").toString();
     } else {
         qDebug() << qEmpresa.lastError().text();
         QMessageBox::warning(qApp->activeWindow(),tr("EMPRESA"),tr("Falló la carga de datos de empresa"),tr("Aceptar"));

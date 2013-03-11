@@ -8,20 +8,22 @@ Articulo::Articulo(QObject *parent) : QObject(parent)
 void Articulo::Anadir()
 {
     QSqlQuery query(QSqlDatabase::database("terra"));
-         query.prepare("INSERT INTO articulos (cCodigo,id_Seccion)"
-                       " VALUES (:cCodigo,1)");
+    query.prepare("INSERT INTO articulos (cCodigo)"
+                       " VALUES (:cCodigo)");
+    if(Configuracion_global->Autocodigoart ==false)
+         query.bindValue(":cCodigo","");
+    else
+        query.bindValue(":cCodigo","autocodigo");
 
-         query.bindValue(":cCodigo","nuevo");
 
-
-         if(!query.exec()) {
-             QMessageBox::warning(qApp->activeWindow(),tr("Añadir Artículo"),
-                                  tr("Falló la inserción de un nuevo artículo : %1").arg(query.lastError().text()),
-                                  QObject::tr("Ok"));
-         } else {
-             this->id = query.lastInsertId().toInt();
-             Recuperar("Select * from articulos where id = "+QString::number(this->id));
-         }
+     if(!query.exec()) {
+         QMessageBox::warning(qApp->activeWindow(),tr("Añadir Artículo"),
+                              tr("Falló la inserción de un nuevo artículo : %1").arg(query.lastError().text()),
+                              QObject::tr("Ok"));
+     } else {
+         this->id = query.lastInsertId().toInt();
+         Recuperar("Select * from articulos where id = "+QString::number(this->id));
+     }
 
 
 }
@@ -544,6 +546,31 @@ bool Articulo::agregar_proveedor_alternativo(int id_art, int id_Proveedor, QStri
 
     } else
         return true;
+
+}
+
+QString Articulo::autocodigo()
+{
+    QString codigoIni;
+    int tamanocodigoIni;
+    codigoIni = this->cSeccion+this->cFamilia+this->cSubfamilia+this->cSubSubFamilia+this->cGrupoArt;
+    tamanocodigoIni = codigoIni.length();
+    QSqlQuery queryArt("select codigo from articulos where codigo like '"+codigoIni+"%' order by codigo desc limit 1",
+                       QSqlDatabase::database("terra"));
+    if(queryArt.exec()){
+        queryArt.next();
+        QString lastcode = queryArt.record().value("codigo").toString();
+        int Realsize = lastcode.length();
+        QString code = lastcode.mid(tamanocodigoIni,(Realsize-tamanocodigoIni));
+        int icode = code.toInt();
+        icode++;
+        code = QString::number(icode);
+        while (code.length()< ( Realsize - tamanocodigoIni) )
+        {
+            code.prepend("0");
+        }
+        return codigoIni + code;
+    }
 
 }
 

@@ -351,3 +351,10 @@ DEPENDPATH += $$PWD/SQLlibs
 
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/SQLlibs/qsqlmysql.lib
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/SQLlibs/qsqlmysqld.lib
+
+
+
+unix:!macx: LIBS += -L$$PWD/LibsGraficas/ -lgraficaplugin
+
+INCLUDEPATH += $$PWD/LibsGraficas
+DEPENDPATH += $$PWD/LibsGraficas

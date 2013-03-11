@@ -55,6 +55,8 @@ public:
     QSqlDatabase dbConfiguracion;
     QSqlQuery *QryConfiguracion;
     QFileDialog dialogo;
+    bool Autocodigoart;
+    int tamanocodigo;
 
     QHash <QString,QSqlRecord> ivas;
     QSqlTableModel* iva_model;
