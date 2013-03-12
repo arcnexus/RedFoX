@@ -18,6 +18,7 @@ QStatusBar::item {
     border-radius: 2;
 }
 
+QPushButton::QWidget { color: black;}
 
 tab {
     border-radius:5px;

@@ -19,6 +19,7 @@ FrmAsociarProveedor::FrmAsociarProveedor(QWidget *parent) :
     connect(ui->txtOferta,SIGNAL(editingFinished()),this,SLOT(setOferta()));
     connect(ui->txtPVD,SIGNAL(editingFinished()),this,SLOT(setpvd()));
     connect(ui->tablaproveedores,SIGNAL(clicked(QModelIndex)), this,SLOT(seleccionarPro(QModelIndex)));
+    connect(ui->btnAnadir,SIGNAL(clicked()),this,SLOT(accept()));
 
 }
 

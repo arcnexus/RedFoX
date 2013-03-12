@@ -3,7 +3,7 @@
 #include "../Almacen/frmtarifas.h"
 #include "Busquedas/frmbuscarproveedor.h"
 #include "Almacen/frmasociarproveedor.h"
-
+#include "../Auxiliares/spinboxdelegate.h"
 #include "../db_table_view.h"
 
 FrmArticulos::FrmArticulos(QWidget *parent) :
@@ -25,7 +25,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->grafica->addItem("Ma",Qt::red,10);
     ui->grafica->addItem("Ab",Qt::red,25);
     ui->grafica->addItem("Ma",Qt::red,40);
-    ui->grafica->addItem("Ju",Qt::red,30);
+    ui->grafica->addItem("Ju",Qt::red,-10);
     ui->grafica->addItem("Jul",Qt::red,20);
     ui->grafica->addItem("Ag",Qt::red,60);
     ui->grafica->addItem("Se",Qt::red,50);
@@ -64,6 +64,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     //-----------------------------------------
     connect(ui->txtrCoste,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
     connect(ui->btnAnadirProveedores,SIGNAL(clicked()),this,SLOT(anadir_proveedor_clicked()));
+
 
 }
 
@@ -205,6 +206,10 @@ void FrmArticulos::bloquearCampos() {
     ui->botCambiarImagen->setEnabled(false);
     ui->botBuscarGrupo->setEnabled(false);
     ui->btnBuscarProveedor->setEnabled(false);
+    ui->btnAnadirProveedores->setEnabled(false);
+    ui->btnBorrarProveedores->setEnabled(false);
+    ui->btnEditarProveedorFrecuente->setEnabled(false);
+
 
 }
 void FrmArticulos::desbloquearCampos() {
@@ -273,6 +278,12 @@ void FrmArticulos::desbloquearCampos() {
     ui->botBuscarGrupo->setEnabled(true);
     ui->botCambiarImagen->setEnabled(true);
     ui->btnBuscarProveedor->setEnabled(true);
+    ui->btnAnadirProveedores->setEnabled(true);
+    ui->btnBorrarProveedores->setEnabled(true);
+    ui->btnEditarProveedorFrecuente->setEnabled(true);
+
+    ui->txtcProveedor->setEnabled(false);
+    ui->txtCodigoProveedor->setEnabled(false);
 }
 
 void FrmArticulos::LLenarCampos()
@@ -337,6 +348,7 @@ void FrmArticulos::LLenarCampos()
                        QSqlDatabase::database("terra"));
   ui->TablaTarifas->setModel(modelTarifa);
 
+
   //-----------------------
   // Proveedores frecuentes
   //-----------------------
@@ -344,6 +356,20 @@ void FrmArticulos::LLenarCampos()
   modelProv->setQuery("select  codpro,cProveedor,codigo,pvd,descoferta,oferta from proveedores_frecuentes where id_art = "+
                       QString::number(oArticulo->id),QSqlDatabase::database("terra"));
   ui->tablaProveedores->setModel(modelProv);
+  ui->tablaProveedores->setItemDelegateForColumn(3,new SpinBoxDelegate(ui->tablaProveedores,true));
+    ui->graf_prov->clear();
+  QSqlQuery queryProveed("select  codpro,cProveedor,codigo,pvd,descoferta,oferta from proveedores_frecuentes where id_art = "+
+                         QString::number(oArticulo->id),QSqlDatabase::database("terra"));
+  if(queryProveed.exec()){
+
+      while (queryProveed.next()) {
+          ui->graf_prov->addItem(queryProveed.record().value("cProveedor").toString().left(4),
+                                 Qt::blue ,queryProveed.record().value("pvd").toDouble());
+
+      }
+
+      ui->graf_prov->repaint();
+  }
 }
 
 void FrmArticulos::CargarCamposEnArticulo()
@@ -775,6 +801,7 @@ void FrmArticulos::anadir_proveedor_clicked()
                                                  frmAsociar.DescOferta,frmAsociar.Oferta);
         if (!ok)
             QMessageBox::warning(this,tr("Nuevo proveedor frecuente"),tr("Falló la inserción del proveedor"),tr("Aceptar"));
+        LLenarCampos();
 
     }
 
