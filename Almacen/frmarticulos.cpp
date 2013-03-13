@@ -64,6 +64,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     //-----------------------------------------
     connect(ui->txtrCoste,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
     connect(ui->btnAnadirProveedores,SIGNAL(clicked()),this,SLOT(anadir_proveedor_clicked()));
+    connect(ui->tablaLotes,SIGNAL(clicked(QModelIndex)),this,SLOT(TablaTrazabilidad_clicked(QModelIndex)));
 
 
 }
@@ -370,6 +371,15 @@ void FrmArticulos::LLenarCampos()
 
       ui->graf_prov->repaint();
   }
+  // ------------------
+  // TRAZABILIDAD
+  // ------------------
+  modelTrazabilidad1 = new QSqlQueryModel(this);
+  modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_Articulo = "+QString::number(oArticulo->id),
+                                QSqlDatabase::database("terra"));
+  ui->tablaLotes->setModel(modelTrazabilidad1);
+
+
 }
 
 void FrmArticulos::CargarCamposEnArticulo()
@@ -833,6 +843,20 @@ void FrmArticulos::calcular_codigo()
 
     }
 
+}
+
+void FrmArticulos::trazabilidad2(int id)
+{
+    modelTrazabilidad2 = new QSqlQueryModel(this);
+    modelTrazabilidad2->setQuery("select codigocuentacliente,cliente, documento_venta,numero_ticket,unidades_vendidas,"
+                                 "fecha_venta from trazabilidad2 where id_trazabilidad1 ="+QString::number(id),
+                                 QSqlDatabase::database("terra"));
+    ui->tablaVentas->setModel(modelTrazabilidad2);
+}
+
+void FrmArticulos::TablaTrazabilidad_clicked(QModelIndex)
+{
+    trazabilidad2(1);
 }
 
 

@@ -20,7 +20,9 @@ public:
     QSqlQueryModel *qTarifas;
     QSqlRelationalTableModel * tarifa_model;
     QSqlQueryModel *modelProv;
-    
+    QSqlQueryModel *modelTrazabilidad1;
+    QSqlQueryModel *modelTrazabilidad2;
+
 private slots:
     void on_botSiguiente_clicked();
 
@@ -55,6 +57,8 @@ private slots:
     void on_btnAnadirTarifa_clicked();
     void anadir_proveedor_clicked();
     void calcular_codigo();
+    void trazabilidad2(int id);
+    void TablaTrazabilidad_clicked(QModelIndex);
 
 
 public slots:

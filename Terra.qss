@@ -219,6 +219,7 @@ QDialogButtonBox {
       background: none;
   }
 
+/*
 QScrollBar:horizontal {
       border: none;
       background: #32CC99;
@@ -262,7 +263,7 @@ QScrollBar:horizontal {
 
   QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
       background: none;
-  }
+  }*/
 
 QTableView, QTableWidet {
      background-color: white;
