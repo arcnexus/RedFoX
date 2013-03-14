@@ -18,20 +18,9 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
     ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
 
+    GraficaUnidades();
 
-    ui->grafica->EnableLeyenda(true);
-    ui->grafica->addItem("En",Qt::red,10);
-    ui->grafica->addItem("Fe",Qt::red,15);
-    ui->grafica->addItem("Ma",Qt::red,10);
-    ui->grafica->addItem("Ab",Qt::red,25);
-    ui->grafica->addItem("Ma",Qt::red,40);
-    ui->grafica->addItem("Ju",Qt::red,-10);
-    ui->grafica->addItem("Jul",Qt::red,20);
-    ui->grafica->addItem("Ag",Qt::red,60);
-    ui->grafica->addItem("Se",Qt::red,50);
-    ui->grafica->addItem("Oc",Qt::red,70);
-    ui->grafica->addItem("No",Qt::red,75);
-    ui->grafica->addItem("Di",Qt::red,90);
+
     // Control objetos
     ui->lblMensajeRecuperar->setVisible(false);
     // --------------------
@@ -65,6 +54,8 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     connect(ui->txtrCoste,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
     connect(ui->btnAnadirProveedores,SIGNAL(clicked()),this,SLOT(anadir_proveedor_clicked()));
     connect(ui->tablaLotes,SIGNAL(clicked(QModelIndex)),this,SLOT(TablaTrazabilidad_clicked(QModelIndex)));
+    connect(ui->radGrafica_unidades,SIGNAL(clicked()),this,SLOT(GraficaUnidades()));
+    connect(ui->radGrafica_importes,SIGNAL(clicked()),this,SLOT(GraficaImportes()));
 
 
 }
@@ -859,4 +850,126 @@ void FrmArticulos::TablaTrazabilidad_clicked(QModelIndex)
     trazabilidad2(1);
 }
 
+void FrmArticulos::GraficaUnidades()
+{
+    ui->grafica->clear();
+    QVector <float> enero;
+    enero << ui->txtUnid_compras_enero->text().toInt()<<ui->txtUnid_ventas_enero->text().toInt();
 
+    ui->grafica->addItem("Ene",enero);
+    ui->grafica->addColorMultibarras("Ventas",Qt::darkYellow);
+    ui->grafica->addColorMultibarras("Compras",Qt::darkGreen);
+
+    QVector <float> febrero;
+    febrero <<ui->txtUnid_compras_febrero->text().toInt() <<ui->txtUnid_ventas_febrero->text().toInt();
+
+    ui->grafica->addItem("Feb",febrero);
+
+    QVector <float> marzo;
+    marzo <<ui->txtUnid_compras_marzo->text().toInt() <<ui->txtUnid_ventas_marzo->text().toInt();
+
+    ui->grafica->addItem("Mar",marzo);
+
+    QVector <float> abril;
+    abril <<ui->txtUnid_compras_abril->text().toInt() <<ui->txtUnid_ventas_abril->text().toInt();
+
+    ui->grafica->addItem("Abr",abril);
+
+    QVector <float> mayo;
+    mayo <<ui->txtUnid_compras_mayo->text().toInt() <<ui->txtUnid_ventas_mayo->text().toInt();
+
+    ui->grafica->addItem("May",mayo);
+
+    QVector <float> junio;
+    junio <<ui->txtUnid_compras_junio->text().toInt() <<ui->txtUnid_ventas_junio->text().toInt();
+
+    ui->grafica->addItem("jun",junio);
+
+    QVector <float> julio;
+    julio <<ui->txtUnid_compras_julio->text().toInt() <<ui->txtUnid_ventas_julio->text().toInt();
+
+    ui->grafica->addItem("Jul",julio);
+
+    QVector <float> agosto;
+    agosto <<ui->txtUnid_compras_agosto->text().toInt() <<ui->txtUnid_ventas_agosto->text().toInt();
+    ui->grafica->addItem("Ago",agosto);
+
+    QVector <float> septiembre;
+    septiembre <<ui->txtUnid_compras_septiembre->text().toInt() <<ui->txtUnid_ventas_septiembre->text().toInt();
+    ui->grafica->addItem("Sep",septiembre);
+
+    QVector <float> octubre;
+    octubre <<ui->txtUnid_compras_octubre->text().toInt()<<ui->txtUnid_ventas_octubre->text().toInt();
+    ui->grafica->addItem("Oct",octubre);
+
+    QVector <float> noviembre;
+    noviembre <<ui->txtUnid_compras_noviembre->text().toInt() <<ui->txtUnid_ventas_noviembre->text().toInt();
+    ui->grafica->addItem("Nov",noviembre);
+
+    QVector <float> diciembre;
+    diciembre <<ui->txtUnid_compras_diciembre->text().toInt() <<ui->txtUnid_ventas_diciembre->text().toInt();
+    ui->grafica->addItem("Dic",diciembre);
+
+}
+
+void FrmArticulos::GraficaImportes()
+{
+    ui->grafica->clear();
+    QVector <float> enero;
+    enero << ui->txtImporte_compras_enero->text().toFloat() <<ui->txtImporte_ventas_enero->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+
+    ui->grafica->addItem("Ene",enero);
+    ui->grafica->addColorMultibarras("Ventas",Qt::darkYellow);
+    ui->grafica->addColorMultibarras("Compras",Qt::darkGreen);
+
+    QVector <float> febrero;
+    febrero <<ui->txtImporte_compras_febrero->text().toFloat() <<ui->txtImporte_ventas_febrero->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+
+    ui->grafica->addItem("Feb",febrero);
+
+    QVector <float> marzo;
+    marzo <<ui->txtImporte_compras_marzo->text().toFloat() << ui->txtImporte_ventas_marzo->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+
+    ui->grafica->addItem("Mar",marzo);
+
+    QVector <float> abril;
+    abril <<ui->txtImporte_compras_abril->text().toFloat() << ui->txtImporte_ventas_abril->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+
+    ui->grafica->addItem("Abr",abril);
+
+    QVector <float> mayo;
+    mayo <<ui->txtImporte_compras_mayo->text().toFloat() <<ui->txtImporte_ventas_mayo->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+
+    ui->grafica->addItem("May",mayo);
+
+    QVector <float> junio;
+    junio <<ui->txtImporte_compras_junio->text().toFloat() <<ui->txtImporte_ventas_junio->text().toFloat();
+
+    ui->grafica->addItem("jun",junio);
+
+    QVector <float> julio;
+    julio <<ui->txtImporte_compras_julio->text().toFloat() << ui->txtImporte_ventas_julio->text().toFloat();
+
+    ui->grafica->addItem("Jul",julio);
+
+    QVector <float> agosto;
+    agosto <<ui->txtImporte_compras_agosto->text().toFloat() <<ui->txtImporte_ventas_agosto->text().toFloat();
+    ui->grafica->addItem("Ago",agosto);
+
+    QVector <float> septiembre;
+    septiembre <<ui->txtImporte_compras_septiembre->text().toFloat() <<ui->txtImporte_ventas_septiembre->text().toFloat();
+    ui->grafica->addItem("Sep",septiembre);
+
+    QVector <float> octubre;
+    octubre <<ui->txtImporte_compras_octubre->text().toFloat() << ui->txtImporte_ventas_octubre->text().toFloat();
+    ui->grafica->addItem("Oct",octubre);
+
+    QVector <float> noviembre;
+    noviembre <<ui->txtImporte_compras_noviembre->text().toFloat() <<ui->txtImporte_ventas_noviembre->text().toFloat();
+    ui->grafica->addItem("Nov",noviembre);
+
+    QVector <float> diciembre;
+    diciembre <<ui->txtImporte_compras_diciembre->text().toFloat() <<ui->txtImporte_ventas_diciembre->text().toFloat();
+    ui->grafica->addItem("Dic",diciembre);
+
+}

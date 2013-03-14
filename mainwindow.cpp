@@ -13,10 +13,6 @@
 
 Configuracion * Configuracion_global = 0;
 
-
-bool medic = true;
-bool internacional = true;
-
 void MainWindow::crear_barraMantenimiento()
 {
     btn_clientes = new ToolBarButton(tr("Clientes"),":/Icons/PNG/clientes_2.png",this);
@@ -190,7 +186,7 @@ MainWindow::MainWindow(QWidget *parent) :
     crear_barraAdmin();
 
     ui->stackedWidget_2->setCurrentIndex(0);
-    if (medic)
+    if (Configuracion_global->medic)
     {
         ui->btnClientes->setText(tr("Pacientes"));
         btn_clientes->setText(tr("Pacientes"));

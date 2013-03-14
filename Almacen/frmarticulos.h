@@ -59,7 +59,8 @@ private slots:
     void calcular_codigo();
     void trazabilidad2(int id);
     void TablaTrazabilidad_clicked(QModelIndex);
-
+    void GraficaUnidades();
+    void GraficaImportes();
 
 public slots:
     void AnadirSeccion();

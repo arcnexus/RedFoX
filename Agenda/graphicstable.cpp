@@ -95,7 +95,7 @@ void GraphicsTable::addEvento(QColor color, QDateTime start, QDateTime end ,QStr
     q.bindValue(":color",sColor);
     q.bindValue(":id_especialidad",0);//FIXME - Agenda: parametros evento
     q.bindValue(":id_departamento",0);
-    q.bindValue(":isMedica",medic);
+    q.bindValue(":isMedica",Configuracion_global->medic);
     q.bindValue(":Id_Cliente",id_cliente);
     q.bindValue(":isCita",isCita);
     q.bindValue(":isPrivado",isPrivado);

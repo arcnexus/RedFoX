@@ -48,15 +48,15 @@ bool cargarEmpresa(QString empresa)
         Configuracion_global->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
         Configuracion_global->cUsuarioBDEmpresa = record.field("user").value().toString();
 
-        if(record.field("medica").value().toInt()==1)
-            medic = true;
-        else
-            medic = false;
+//        if(record.field("medica").value().toInt()==1)
+//            medic = true;
+//        else
+//            medic = false;
 
-        if(record.field("internacional").value().toInt()==1)
-            internacional = true;
-        else
-            internacional = false;
+//        if(record.field("internacional").value().toInt()==1)
+//            internacional = true;
+//        else
+//            internacional = false;
 
 
         QApplication::processEvents();

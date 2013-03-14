@@ -17,7 +17,7 @@ EditEventForm::EditEventForm(QWidget *parent) :
 
     ui->time_start->setTime(QTime(QTime::currentTime().hour()+1,0));
 
-    if(!medic)
+    if(!Configuracion_global->medic)
     {
         ui->especialidad_group->hide();
         ui->reunion_group->setTitle("Reunion con:");

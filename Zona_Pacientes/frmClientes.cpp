@@ -33,11 +33,11 @@ frmClientes::frmClientes(QWidget *parent) :
     QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     int nNivel = settings.value("nNivelAcceso").toInt();
     //QString cCategoria = settings.value("cCategoria").toString();
-    if(medic == false) {
+    if( Configuracion_global->medic == false) {
         this->setWindowTitle(tr("Gestion de clientes"));
         ui->textoTitulo->setText(("GESTIÓN de CLIENTES - Datos Administrativos"));
     }
-    if (nNivel >7 && medic == true)
+    if (nNivel >7 && Configuracion_global->medic == true)
         ui->btnFichaPaciente->setVisible(true);
     else
         ui->btnFichaPaciente->setVisible(false);

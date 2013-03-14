@@ -57,6 +57,8 @@ public:
     QFileDialog dialogo;
     bool Autocodigoart;
     int tamanocodigo;
+    bool medic;
+    bool internacional;
 
     QHash <QString,QSqlRecord> ivas;
     QSqlTableModel* iva_model;
