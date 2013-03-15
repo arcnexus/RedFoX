@@ -5,6 +5,7 @@
 #include "Almacen/frmasociarproveedor.h"
 #include "../Auxiliares/spinboxdelegate.h"
 #include "../db_table_view.h"
+#include "grafica.h"
 
 FrmArticulos::FrmArticulos(QWidget *parent) :
     QDialog(parent),
@@ -17,6 +18,8 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     //Configuracion_global->CargarDatos();
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
     ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
+    ui->lblCodigo->setVisible(false);
+    ui->lblDescripcion->setVisible(false);
 
     GraficaUnidades();
 
@@ -280,12 +283,15 @@ void FrmArticulos::desbloquearCampos() {
 
 void FrmArticulos::LLenarCampos()
 {
+
    ui->txtcCodigo->setText(oArticulo->cCodigo);
    ui->lblCodigo->setText(oArticulo->cCodigo);
    ui->txtcCodigoBarras->setText(oArticulo->cCodigoBarras);
    ui->txtcCodigoFabricante->setText(oArticulo->cCodigoFabricante);
    ui->txtcDescripcion->setText(oArticulo->cDescripcion);
    ui->lblDescripcion->setText(oArticulo->cDescripcion);
+   ui->lblCodigo->setVisible(true);
+   ui->lblDescripcion->setVisible(true);
    ui->txtcDescripcionResumida->setText(oArticulo->cDescripcionReducida);
    ui->txtcProveedor->setText(oArticulo->cProveedor);
    ui->txtCodigoProveedor->setText(oArticulo->cCodProveedor);
@@ -852,6 +858,10 @@ void FrmArticulos::TablaTrazabilidad_clicked(QModelIndex)
 
 void FrmArticulos::GraficaUnidades()
 {
+
+//    if(ui->cboTipoGrafica->currentText()=tr("Grafica de Barras"))
+//        ui->grafica->setTipo(Tipos::);
+
     ui->grafica->clear();
     QVector <float> enero;
     enero << ui->txtUnid_compras_enero->text().toInt()<<ui->txtUnid_ventas_enero->text().toInt();

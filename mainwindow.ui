@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>TERRA - Software médico profesional</string>
+   <string>TERRA - ERP/GNU para los profesionales de la Salud</string>
   </property>
   <property name="windowIcon">
    <iconset resource="terra.qrc">
@@ -841,7 +841,7 @@ background-color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>1133</width>
-     <height>27</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="nativeMenuBar">

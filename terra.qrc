@@ -135,6 +135,7 @@
         <file>PNG/magnifier_zoom_out.png</file>
         <file>PNG/empresa.png</file>
         <file>PNG/Config.png</file>
+        <file>PNG/logoagupunt.png</file>
     </qresource>
     <qresource prefix="/openRPTLangs">
         <file>openrptLibs/traduccion/common_es.qm</file>
