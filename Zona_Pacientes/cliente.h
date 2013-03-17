@@ -10,6 +10,7 @@ public:
     explicit Cliente(QObject *parent = 0);
         QSqlQueryModel *model;
     int id;
+    int id_web;
     QString cCodigoCliente;
     QString cApellido1;
     QString cApellido2;
@@ -79,7 +80,7 @@ public:
     int idTarifa;
     int idIdioma;
     QString idioma;
-
+    QSqlQuery queryClienteWeb;
     QSqlDatabase db;
     QSqlQuery *qryCliente;
 
@@ -91,7 +92,9 @@ public slots:
     // Funciones de clase
     void Recuperar(QString cSQL);
     void Guardar();
+    void GuardarWeb();
     void Anadir();
+    void anadirWeb();
     void AnadirDeuda(int id_cliente, QDate dFechaDeuda,QDate dFechaVto,QString cDocumento, int id_Tiquet,
                      int id_Factura, int nTipo, double rImporteDeuda, double rPagado, double rPendienteCobro,
                      QString cEntidad, QString cOficina,QString cDC ,QString cCuenta);
@@ -102,6 +105,7 @@ public slots:
                          QString Provincia, QString Pais, int idcliente, int id);
     void DescontarDeuda(int id_deuda,double rPagado);
     void Borrar(int id_cliente);
+    void BorrarWeb(int id_web);
     QString NuevoCodigoCliente();
     int BuscaridPais(QString Pais);
     QString RecuperarPais(int nid);

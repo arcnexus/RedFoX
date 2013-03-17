@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>782</width>
+    <width>877</width>
     <height>475</height>
    </rect>
   </property>
@@ -162,6 +162,9 @@ color: rgb(255,255,255);</string>
    </item>
    <item row="2" column="1" colspan="3">
     <widget class="QTabWidget" name="tabWidget_3">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -172,7 +175,7 @@ color: rgb(255,255,255);</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="Pagina_general">
       <property name="styleSheet">
@@ -192,7 +195,7 @@ color: rgb(255,255,255);</string>
        <item row="0" column="3" colspan="2">
         <widget class="QCheckBox" name="chkPrestaShop">
          <property name="text">
-          <string>Enlazar 'onTime' con PrestaShop</string>
+          <string>Enlazar 'onTime' con TiendaWEB</string>
          </property>
         </widget>
        </item>
@@ -499,6 +502,86 @@ color: rgb(255,255,255);</string>
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab">
+      <property name="styleSheet">
+       <string notr="true">background-color: #ecefed;</string>
+      </property>
+      <attribute name="title">
+       <string>BD TiendaWEB</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Host:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>usuario:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Password:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Nombre BD web:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Puerto:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="2">
+        <widget class="QLineEdit" name="txtHostWeb">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="2">
+        <widget class="QLineEdit" name="txtUsuarioDBweb">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" colspan="2">
+        <widget class="QLineEdit" name="txtPasswordDBWeb">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" colspan="2">
+        <widget class="QLineEdit" name="txtPuerto_DBWeb">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QLineEdit" name="txtNombreBDWeb">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item row="0" column="0" colspan="4">
@@ -513,6 +596,26 @@ color: rgb(255,255,255);</string>
       <string notr="true">background-color: rgb(175,195,225);</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="1" colspan="4">
+       <widget class="QLabel" name="label_33">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>Configuración BD</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
       <item row="6" column="2">
        <widget class="QLineEdit" name="txtPuerto">
         <property name="styleSheet">
@@ -572,6 +675,13 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Host:</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
        <widget class="QRadioButton" name="radMysql">
         <property name="text">
@@ -586,37 +696,10 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Host:</string>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="1">
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>usuario:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1" colspan="4">
-       <widget class="QLabel" name="label_33">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background: #304163;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>Configuración BD</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -625,6 +708,50 @@ color: rgb(255,255,255);</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>radMysql</tabstop>
+  <tabstop>radSqlite</tabstop>
+  <tabstop>txtHost</tabstop>
+  <tabstop>txtUsuario</tabstop>
+  <tabstop>txtPassword</tabstop>
+  <tabstop>txtPuerto</tabstop>
+  <tabstop>txtDireccionBD</tabstop>
+  <tabstop>chkmedicum</tabstop>
+  <tabstop>chkconta</tabstop>
+  <tabstop>cboUsuarioActivo</tabstop>
+  <tabstop>txtContrasenaActiva</tabstop>
+  <tabstop>tabWidget_3</tabstop>
+  <tabstop>cboPaises</tabstop>
+  <tabstop>chkPrestaShop</tabstop>
+  <tabstop>chkProfesional</tabstop>
+  <tabstop>txtPorcIRPF</tabstop>
+  <tabstop>spinDigitosFactura</tabstop>
+  <tabstop>spinDigitosCuentaContable</tabstop>
+  <tabstop>txtCuentaClientes</tabstop>
+  <tabstop>txtCuentaProveedores</tabstop>
+  <tabstop>txtCuentaAcreedores</tabstop>
+  <tabstop>txtCuentaCobros</tabstop>
+  <tabstop>txtCuentaPagos</tabstop>
+  <tabstop>chkVademecum_alopatico</tabstop>
+  <tabstop>txtclaveV1_1</tabstop>
+  <tabstop>txtclaveV1_2</tabstop>
+  <tabstop>chkVademecum_homeopatia</tabstop>
+  <tabstop>txtclaveV2_1</tabstop>
+  <tabstop>txtclaveV2_2</tabstop>
+  <tabstop>chk_vademecum_fitoterapia</tabstop>
+  <tabstop>txtclaveV3_1</tabstop>
+  <tabstop>txtclaveV3_2</tabstop>
+  <tabstop>chkVademecum_MTC</tabstop>
+  <tabstop>txtclaveV4_1</tabstop>
+  <tabstop>txtclaveV4_2</tabstop>
+  <tabstop>txtNombreBDWeb</tabstop>
+  <tabstop>txtHostWeb</tabstop>
+  <tabstop>txtUsuarioDBweb</tabstop>
+  <tabstop>txtPasswordDBWeb</tabstop>
+  <tabstop>txtPuerto_DBWeb</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>pushButton</tabstop>
+ </tabstops>
  <resources>
   <include location="../terra.qrc"/>
  </resources>

@@ -292,6 +292,36 @@ void Configuracion::CargarDatosBD()
     this->cUsuarioBDTerra  =   settings.value("cUserBDTerra").toString();
     this->cPasswordBDTerra = settings.value("cPasswordBDTerra").toString();
 
+    this->cNombreBDTiendaWeb = settings.value("nombreBDTiendaWeb").toString();
+    this->cHostBDTiendaWeb = settings.value("hostTiendaWeb").toString();
+    this->cUsuarioTiendaWeb =settings.value("usuarioTiendaWeb").toString();
+    this->cPasswordTiendaWeb = settings.value("Pass_web").toString();
+    this->cPuertoTiendaWeb =settings.value("puertoTiendaWeb").toString();
+    this->EnlaceWeb = settings.value("EnlaceWeb").toBool();
+
+
+}
+
+void Configuracion::AbrirDbWeb()
+{
+    //--------------
+    // abrir BD WEB
+    //--------------
+    QSqlDatabase dbWeb = QSqlDatabase::addDatabase("QMYSQL","dbweb");
+    dbWeb.setDatabaseName(Configuracion_global->cNombreBDTiendaWeb);
+        dbWeb.setDatabaseName(Configuracion_global->cNombreBDTiendaWeb);
+        dbWeb.setHostName(Configuracion_global->cHostBDTiendaWeb);
+        dbWeb.setPassword(Configuracion_global->cPasswordTiendaWeb);
+        dbWeb.setUserName(Configuracion_global->cUsuarioTiendaWeb);
+        if(!dbWeb.open())
+            QMessageBox::warning(qApp->activeWindow(),tr("Conectar con servidor web"),
+                                 tr("Imposible abrir la Base de Datos del servidor: %1").arg(dbWeb.lastError().text()));
+
+}
+
+void Configuracion::CerrarDbWeb()
+{
+    dbWeb.close();
 }
 void Configuracion::CargarDatos()
 {

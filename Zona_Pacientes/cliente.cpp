@@ -60,6 +60,7 @@ void Cliente::Guardar() {
                    "cPasswordWeb=:cPasswordWeb,"
                    "id_idiomadocumentos=:id_idioma,"
                    "cif_vies=:cif_vies,"
+                   "id_web =:id_web"
                    "nIRPF =:nIRPF"
                    " WHERE id =:id" );
 
@@ -117,6 +118,7 @@ void Cliente::Guardar() {
     query.bindValue(":id_idioma",this->idIdioma);
     query.bindValue(":cif_vies",this->cCifVies);
     query.bindValue(":cPasswordWeb",this->cPasswordWeb);
+    query.bindValue("id_web",this->id_web);
     if (this->lIRPF)
         query.bindValue(":nIRPF",1);
     else
@@ -127,10 +129,142 @@ void Cliente::Guardar() {
     if(!query.exec()){
         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos cliente. Descripción Error: ", query.executedQuery());
     } else {
-        QMessageBox::information(qApp->activeWindow(),"Guardar datos","Los datos se han guardado correctamente:","Ok");
+        if (Configuracion_global->EnlaceWeb)
+            GuardarWeb();
+       // QMessageBox::information(qApp->activeWindow(),"Guardar datos","Los datos se han guardado correctamente:","Ok");
     }
         ;
 
+}
+
+void Cliente::GuardarWeb()
+{
+   Configuracion_global->AbrirDbWeb();
+   QSqlQuery query(QSqlDatabase::database("dbweb"));
+   query.prepare( "UPDATE clientes set "
+                  "cCodigoCliente = :cCodigoCliente,"
+                  "cApellido1 = :cApellido1,"
+                  "cApellido2 = :cApellido2,"
+                  "cNombre= :cNombre,"
+                  "cNombreFiscal= :cNombreFiscal,"
+                  "cNombreComercial= :cNombreComercial,"
+                  "cPersonaContacto= :cPersonaContacto,"
+                  "cCifNif =:cCifNif,"
+                  "cDireccion1= :cDireccion1,"
+                  "cDireccion2= :cDireccion2,"
+                  "cCP= :cCP,"
+                  "cPoblacion= :cPoblacion,"
+                  "cProvincia= :cProvincia,"
+                  "idPais= :idPais,"
+                  "cTelefono1 = :cTelefono1,"
+                  "cTelefono2 = :cTelefono2,"
+                  "cFax=:cFax,"
+                  "cMovil=:cMovil,"
+                  "cEmail=:cEmail,"
+                  "cWeb=:cWeb,"
+                  "dFechaAlta=:dFechaAlta,"
+                  "dFechaUltimaCompra=:dFechaUltimaCompra,"
+                  "rAcumuladoVentas=:rAcumuladoVentas,"
+                  "rVentasEjercicio=:rVentasEjercicio,"
+                  "rRiesgoMaximo=:rRiesgoMaximo,"
+                  "rDeudaActual=:rDeudaActual,"
+                  "tComentarios=:tComentarios,"
+                  "lBloqueado=:lBloqueado,"
+                  "tComentarioBloqueo =:tComentarioBloqueo,"
+                  "nPorcDtoCliente=:nPorcDtoCliente,"
+                  "lRecargoEquivalencia=:lRecargoEquivalencia,"
+                  "cCuentaContable=:cCuentaContable,"
+                  "cCuentaIvaRepercutido=:cCuentaIvaRepercutido,"
+                  "cCuentaDeudas=:cCuentaDeudas,"
+                  "cCuentaCobros=:cCuentaCobros,"
+                  "nDiaPago1=:nDiaPago1,"
+                  "nDiaPago2=:nDiaPago2,"
+                  "nTarifaCliente=:nTarifaCliente,"
+                  "rImporteACuenta=:rImporteaCuenta,"
+                  "rVales=:rVales,"
+                  "cCentidadBancaria=:cEntidadBancaria,"
+                  "cOficinaBancaria=:cOficinaBancaria,"
+                  "cDC=:cDC,"
+                  "cCuentaCorriente=:cCuentaCorriente,"
+                  "dFechaNacimiento=:dFechaNacimiento,"
+                  "rImportePendiente=:rImportePendiente,"
+                  "cAccesoWeb =:cAccesoWeb,"
+                  "cPasswordWeb=:cPasswordWeb,"
+                  "id_idiomadocumentos=:id_idioma,"
+                  "cif_vies=:cif_vies,"
+                  "id_local =:id_local,"
+                  "nIRPF =:nIRPF"
+                  " WHERE id =:id_web" );
+
+   query.bindValue(":cCodigoCliente", this->cCodigoCliente);
+   query.bindValue(":cApellido1", this->cApellido1);
+   query.bindValue(":cApellido2",this->cApellido2);
+   query.bindValue(":cNombre",this->cNombre);
+   query.bindValue(":cNombreFiscal",this->cNombreFiscal);
+   query.bindValue(":cNombreComercial",this->cNombreComercial);
+   query.bindValue(":cPersonaContacto",this->cPersonaContacto);
+   query.bindValue(":cCifNif",this->cCifNif);
+   query.bindValue(":cDireccion1",this->cDireccion1);
+   query.bindValue(":cDireccion2",this->cDireccion2);
+   query.bindValue(":cCP",this->cCp);
+   query.bindValue(":cPoblacion",this->cPoblacion);
+   query.bindValue(":cProvincia", this->cProvincia);
+   query.bindValue(":idPais",this->idPais);
+   query.bindValue(":cTelefono1", this->cTelefono1);
+   query.bindValue(":cTelefono2",this->cTelefono2);
+   query.bindValue(":cFax",this->cFax);
+   query.bindValue(":cMovil",this->cMovil);
+   query.bindValue(":cEmail",this->cEmail);
+   query.bindValue(":cWeb",this->cWeb);
+   query.bindValue(":dFechaAlta",this->dFechaalta);
+   query.bindValue(":dFechaUltimaCompra",this->dFechaCompra);
+   query.bindValue(":rAcumuladoVentas",this->rAcumuladoVentas);
+   query.bindValue(":rVentasEjercicio",this->rVentasEjercicio);
+   query.bindValue(":rRiesgoMaximo",this->rRiesgoMaximo);
+   query.bindValue(":rDeudaActual",this->rDeudaActual);
+   query.bindValue(":tComentarios",this->tComentarios);
+   query.bindValue(":lBloqueado",this->lBloqueado);
+   query.bindValue(":tComentarioBloqueo",this->tComentarioBloqueo);
+   query.bindValue(":nPorcDtoCliente", this->nPorcDtoCliente);
+   query.bindValue(":lRecargoEquivalencia",this->lRecargoEquivalencia);
+   query.bindValue(":cCuentaContable",this->cCuentaContable);
+   query.bindValue(":cCuentaIvaRepercutido",this->cCuentaIvaRepercutido);
+   query.bindValue(":cCuentaDeudas", this->cCuentaDeudas);
+   query.bindValue(":cCuentaCobros", this->cCuentaCobros);
+   query.bindValue(":nDiaPago1",this->nDiaPago1);
+   query.bindValue(":nDiaPago2",this->nDiaPago2);
+   query.bindValue(":nTarifaCliente",this->nTarifaCliente);
+   QString rImporteACuenta;
+   rImporteACuenta = QString::number(this->rImporteACuenta);
+   rImporteACuenta = rImporteACuenta.replace(".","");
+   this->rImporteACuenta = rImporteACuenta.toDouble();
+   query.bindValue(":rImporteACuenta",this->rImporteACuenta);
+   query.bindValue(":rVales",this->rVales);
+   query.bindValue(":cEntidadBancaria", this->cEntidadBancaria);
+   query.bindValue(":cOficinaBancaria",this->cOficinaBancaria);
+   query.bindValue(":cDC",this->cDc);
+   query.bindValue(":cCuentaCorriente",this->cCuentaCorriente);
+   query.bindValue(":dFechaNacimiento",this->dFechaNacimiento);
+   query.bindValue(":rImportePendiente",this->rImportePendiente);
+   query.bindValue(":cAccesoWeb",this->cAccesoWeb);
+   query.bindValue(":id_idioma",this->idIdioma);
+   query.bindValue(":cif_vies",this->cCifVies);
+   query.bindValue(":cPasswordWeb",this->cPasswordWeb);
+   if (this->lIRPF)
+       query.bindValue(":nIRPF",1);
+   else
+       query.bindValue(":nIRPF",0);
+   query.bindValue(":idweb",this->id_web);
+   query.bindValue(":id_local",this->id);
+
+
+   if(!query.exec()){
+       QMessageBox::critical(qApp->activeWindow(),"error al guardar datos cliente en la web. Descripción Error: ", query.executedQuery());
+   } else {
+      // QMessageBox::information(qApp->activeWindow(),"Guardar datos","Los datos se han guardado correctamente:","Ok");
+   }
+       ;
+   Configuracion_global->CerrarDbWeb();
 }
 void Cliente::Anadir() {
     QSqlQuery query(QSqlDatabase::database("terra"));
@@ -151,7 +285,33 @@ void Cliente::Anadir() {
              QMessageBox::information(qApp->activeWindow(),"NuevoCliente","Cliente insertado Correctamente");
              int nId = query.lastInsertId().toInt();
              this->id = nId;
+             if (Configuracion_global->EnlaceWeb)
+                 anadirWeb();
          }
+}
+
+void Cliente::anadirWeb()
+{
+
+    Configuracion_global->AbrirDbWeb();
+    QSqlQuery queryClienteWeb(QSqlDatabase::database("dbweb"));
+    queryClienteWeb.prepare("INSERT INTO clientes (cCodigoCliente,id_local) VALUES (:cCodigoCliente,:id_local)");
+    queryClienteWeb.bindValue(":cCodigoCliente",this->cCodigoCliente);
+    queryClienteWeb.bindValue(":id_local",this->id);
+
+    if(!queryClienteWeb.exec())
+        QMessageBox::warning(qApp->activeWindow(),tr("Añadir en web"),
+                             tr("No se ha podido crear el registro en la web: %1").arg(queryClienteWeb.lastError().text()),
+                             tr("Aceptar"));
+    else
+        this->id_web = queryClienteWeb.lastInsertId().toInt();
+        QMessageBox::information(qApp->activeWindow(),tr("Añadir en web"),
+                                 tr("Se ha creado el cliente en la web"), tr("Aceptar"));
+
+    Configuracion_global->CerrarDbWeb();
+
+
+
 }
 void Cliente::Recuperar(QString cSQL) {
     qryCliente = new QSqlQuery(QSqlDatabase::database("terra"));
@@ -162,6 +322,7 @@ void Cliente::Recuperar(QString cSQL) {
         if (qryCliente->next()) {
             QSqlRecord registro = qryCliente->record();
             this->id = registro.field("id").value().toInt();
+            this->id_web = registro.field("id_web").value().toInt();
             this->cCodigoCliente= registro.field("cCodigoCliente").value().toString();
             this->cApellido1 = registro.field("cApellido1").value().toString();
             this->cApellido2 = registro.field("cApellido2").value().toString();
@@ -322,7 +483,7 @@ void Cliente::GuardarDireccion(bool Anadir, QString Descripcion, QString Direcci
 {
     QSqlQuery qDirecciones(QSqlDatabase::database("terra"));
     if(Anadir){
-        qDirecciones.prepare("INSERT INTO cliente_direcciones (`descripcion`, `direccion1`, `direccion2`, `cp`, `poblacion`,"
+        qDirecciones.prepare("INSERT INTO cliente_direcciones (`descripcion,` `direccion1`, `direccion2`, `cp`, `poblacion`,"
                          "`provincia`, `idpais`, `idcliente`) "
                          "VALUES (:descripcion,:direccion1,:direccion2,:cp, :poblacion,:provincia,:idpais,:idcliente)");
 
@@ -384,7 +545,8 @@ void Cliente::Borrar(int id_cliente)
                                  tr("Aceptar"));
             borrado_ok = false;
         }
-
+        if (Configuracion_global->EnlaceWeb)
+            BorrarWeb(this->id_web);
 
 
         QSqlQuery qDirecciones(QSqlDatabase::database("terra"));
@@ -415,6 +577,26 @@ void Cliente::Borrar(int id_cliente)
                                   tr("Falló el borrado del cliente \ndeberá contactar con el administrador para su borrado manual"),tr("&Aceptar"));
         }
 
+    }
+}
+
+void Cliente::BorrarWeb(int id_web)
+{
+
+    if(QMessageBox::question(qApp->activeWindow(),tr("Borrar Ficha en la web"),
+                          tr("Está apunto de borrar la ficha de un cliente en la web \n¿Desea continuar?"),
+                          tr("No"),tr("Si")) == QMessageBox::Accepted)
+    {
+        Configuracion_global->AbrirDbWeb();
+        QSqlQuery queryClienteWeb(QSqlDatabase::database("dbweb"));
+        queryClienteWeb.prepare("delete from clientes where id =:id");
+        queryClienteWeb.bindValue(":id",id_web);
+        if (!queryClienteWeb.exec()) {
+            QMessageBox::warning(qApp->activeWindow(),tr("Borrado web"),
+                                 tr("Ocurrió un error al borrar: %1").arg(queryClienteWeb.lastError().text()),
+                                 tr("Aceptar"));
+        }
+        Configuracion_global->CerrarDbWeb();
     }
 }
 

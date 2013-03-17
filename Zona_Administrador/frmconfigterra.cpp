@@ -32,6 +32,13 @@ frmConfigTerra::frmConfigTerra(QWidget *parent) :
     ui->txtPuerto->setText(settings.value("cPuertoDBTerra").toString());
     ui->txtDireccionBD->setText(settings.value("cRutaDBTerra").toString());
 
+
+    ui->txtHostWeb->setText(settings.value("hostTiendaWeb").toString());
+    ui->txtUsuarioDBweb->setText(settings.value("usuarioTiendaWeb").toString());
+    ui->txtPasswordDBWeb->setText(settings.value("Pass_web").toString());
+    ui->txtPuerto_DBWeb->setText(settings.value("puertoTiendaWeb").toString());
+    ui->txtNombreBDWeb->setText((settings.value("nombreBDTiendaWeb").toString()));
+
     int nindex = ui->cboPaises->findText(settings.value("cPais").toString());
     if (nindex > -1)
         ui->cboPaises->setCurrentIndex(nindex);
@@ -98,6 +105,7 @@ frmConfigTerra::frmConfigTerra(QWidget *parent) :
         ui->chk_vademecum_fitoterapia->setChecked(true);
     else
         ui->chk_vademecum_fitoterapia->setChecked(false);
+
 
 }
 
@@ -186,7 +194,12 @@ void frmConfigTerra::configurar()
        settings.setValue("vad_fito",1);
    else
        settings.setValue("vad_fito",0);
-
+   settings.setValue("hostTiendaWeb", ui->txtHostWeb->text());
+   settings.setValue("usuarioTiendaWeb",ui->txtUsuarioDBweb->text());
+   settings.setValue("Pass_web",ui->txtPasswordDBWeb->text());
+   settings.setValue("puertoTiendaWeb",ui->txtPuerto_DBWeb->text());
+   settings.setValue("nombreBDTiendaWeb",ui->txtNombreBDWeb->text());
+   settings.setValue("EnlaceWeb",ui->chkPrestaShop->isEnabled());
 
     accept();
 }

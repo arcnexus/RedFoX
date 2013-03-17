@@ -46,6 +46,12 @@ public:
     QString cPasswordBDTerra;
     QString cNombreBDTerra;
     QString cPuertoBDTerra;
+    QString cNombreBDTiendaWeb;
+    QString cHostBDTiendaWeb;
+    QString cUsuarioTiendaWeb;
+    QString cPasswordTiendaWeb;
+    QString cPuertoTiendaWeb;
+    bool EnlaceWeb;
     QString cPais;
     QString cEjercicio;
     QString cEmpresaActiva;
@@ -53,6 +59,7 @@ public:
     int id_usuario_activo;
     QString cNivelUsuarioActivo;
     QSqlDatabase dbConfiguracion;
+    QSqlDatabase dbWeb;
     QSqlQuery *QryConfiguracion;
     QFileDialog dialogo;
     bool Autocodigoart;
@@ -103,6 +110,8 @@ public:
     bool EsNumero(QString texto);
     void CargarDatos();
     void CargarDatosBD();
+    void AbrirDbWeb();
+    void CerrarDbWeb();
     QString ValidarCC(QString Entidad,QString Oficina, QString DC, QString CC);
     QString ValidarCC(QString Entidad, QString Oficina, QString CC);
     QString ValidarnifE(QString Nif);
