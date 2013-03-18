@@ -25,6 +25,7 @@ frmClientes::frmClientes(QWidget *parent) :
     oCliente->id = 0;
     ui->txtNombreFiscal->setText("");
     ValidarCC();
+    //oCliente->Actualizar_de_web();
     // Rellenar formas de pago
     modelFP = new QSqlQueryModel();
     modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("terra"));
@@ -108,6 +109,12 @@ frmClientes::~frmClientes()
 }
 void frmClientes::LLenarCampos()
 {
+    if (oCliente->cCodigoCliente.isEmpty()){
+        oCliente->cCodigoCliente = oCliente->NuevoCodigoCliente();
+        QMessageBox::warning(this,tr("ATENCIÓN"),tr("Faltan datos en la ficha del cliente, deberá rellenarlos ahora"),
+                             tr("Aceptar"));
+        ui->btnEditar->click();
+    }
     ui->txtcCodigoCliente->setText(oCliente->cCodigoCliente);
     ui->txtPrimerApellido->setText(oCliente->cApellido1);
     ui->txtSegundoApellido->setText(oCliente->cApellido2);
@@ -765,6 +772,7 @@ void frmClientes::bloquearCampos() {
     ui->btnDeshacerDireccionAlternativa->setEnabled(false);
     ui->btnAdd_TipoCliente->setEnabled(false);
     ui->btndel_TipoCliente->setEnabled(false);
+
 }
 void frmClientes::desbloquearCampos()
 {
@@ -840,6 +848,7 @@ void frmClientes::desbloquearCampos()
     ui->txtcPoblacionAlternativa->setEnabled(false);
     ui->txtcProvinciaAlternativa->setEnabled(false);
     ui->cbopaisAlternativa->setEnabled(false);
+
 }
 
 void frmClientes::on_btnDeshacer_clicked()

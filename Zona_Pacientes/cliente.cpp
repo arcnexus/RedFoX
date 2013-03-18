@@ -322,7 +322,6 @@ void Cliente::Recuperar(QString cSQL) {
         if (qryCliente->next()) {
             QSqlRecord registro = qryCliente->record();
             this->id = registro.field("id").value().toInt();
-            this->id_web = registro.field("id_web").value().toInt();
             this->cCodigoCliente= registro.field("cCodigoCliente").value().toString();
             this->cApellido1 = registro.field("cApellido1").value().toString();
             this->cApellido2 = registro.field("cApellido2").value().toString();
@@ -376,6 +375,7 @@ void Cliente::Recuperar(QString cSQL) {
             this->idIdioma = registro.field("id_idiomadocumentos").value().toInt();
             this->idioma = Configuracion_global->Devolver_idioma(this->idIdioma);
             this->cCifVies = registro.field("cif_vies").value().toString();
+            this->id_web = registro.value("id_web").toInt();
             int nIRPF =registro.field("nIRPF").value().toInt();
             if (nIRPF==1)
                 this->lIRPF = true;
@@ -430,7 +430,7 @@ void Cliente::AnadirDeuda(int id_cliente, QDate dFechaDeuda, QDate dFechaVto, QS
 
 void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
                                     QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3,
-                                    QString descMovil1, QString Movil1, QString descMovil2, QString Movil2)
+                                    QString descMovil1, QString Movil1, QString descMovil2, QString Movil2,QString cargo)
 {
     QSqlQuery qContactos(QSqlDatabase::database("terra"));
     qContactos.prepare("INSERT INTO Personascontactocliente "
@@ -445,7 +445,8 @@ void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono
                        "desctelefono2,"
                        "desctelefono3,"
                        "descmovil1,"
-                       "descmovil2)"
+                       "descmovil2,"
+                       "cargo_empresa)"
                        " VALUES ("
                       ":nombre,"
                       ":telefono1,"
@@ -458,7 +459,8 @@ void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono
                       ":desctelefono2,"
                       ":desctelefono3,"
                       ":descmovil1,"
-                      ":descmovil2);");
+                      ":descmovil2,"
+                       ":cargo);");
 
 
                        qContactos.bindValue(":nombre",Nombre);
@@ -473,6 +475,7 @@ void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono
                        qContactos.bindValue(":desctelefono3",descTelefono3);
                        qContactos.bindValue(":descmovil1",descMovil1);
                        qContactos.bindValue(":descmovil2",descMovil2);
+                       qContactos.bindValue(":cargo",cargo);
                        if(!qContactos.exec())
                            QMessageBox::warning(qApp->activeWindow(),tr("Añadir personas de contacto"),
                                                 tr("Falló el añadir una persona de contacto: %1").arg(qContactos.lastError().text()));
@@ -598,6 +601,28 @@ void Cliente::BorrarWeb(int id_web)
         }
         Configuracion_global->CerrarDbWeb();
     }
+}
+
+void Cliente::Actualizar_de_web()
+{
+    Configuracion_global->AbrirDbWeb();
+    QSqlQuery queryClienteWeb(QSqlDatabase::database("dbweb"));
+    queryClienteWeb.prepare("select * from clientes where id_local = 0");
+    if (!queryClienteWeb.exec()) {
+        if (queryClienteWeb.next()) {
+            QMessageBox::information(qApp->activeWindow(),tr("Clientes web"),
+                                     tr("Hay clientes nuevos en la web"),tr("Aceptar"));
+            int id = queryClienteWeb.record().value("id").toInt();
+            Recuperar("select * from clientes where id = "+QString::number(id));
+            Guardar();
+
+        }
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Insertar desde web"),
+                             tr("ERROR: %1").arg(queryClienteWeb.lastError().text()));
+    }
+
+    Configuracion_global->CerrarDbWeb();
 }
 
 QString Cliente::NuevoCodigoCliente()

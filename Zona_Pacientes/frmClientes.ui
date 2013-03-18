@@ -984,7 +984,7 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
        <item row="4" column="8">
         <widget class="QPushButton" name="btnVer_OtrosContactos">
          <property name="enabled">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <property name="minimumSize">
           <size>
