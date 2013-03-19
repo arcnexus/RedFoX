@@ -237,6 +237,18 @@ QString Configuracion::Devolver_moneda(int id)
     return "";
 }
 
+int Configuracion::Devolver_id_moneda(QString cDivisa)
+{
+    QSqlQuery queryMoneda(QSqlDatabase::database("terra"));
+    queryMoneda.prepare("select id from monedas where moneda = :cDivisa");
+    queryMoneda.bindValue(":cDivisa",cDivisa);
+    if(queryMoneda.exec())
+    {
+        queryMoneda.next();
+        return queryMoneda.record().value("id").toInt();
+    }
+}
+
 QString Configuracion::Devolver_idioma(int id)
 {
     QSqlQuery qIdioma(QSqlDatabase::database("terra"));

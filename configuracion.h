@@ -81,6 +81,7 @@ public:
 
     QString Devolver_pais(int id);
     QString Devolver_moneda(int id);
+    int Devolver_id_moneda(QString cDivisa);
     QString Devolver_idioma(int id);
     int Devolver_id_idioma(QString idioma);
 

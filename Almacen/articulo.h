@@ -82,8 +82,8 @@ public:
     QString getcSubFamilia(int nId);
     QString getcSubSubFamilia(int nId);
     QString getcGrupo(int nId);
-    bool agregar_proveedor_alternativo(int id_art,int id_Proveedor,QString codigo,double pvd,QString descoferta,
-                                       QString oferta);
+    bool agregar_proveedor_alternativo(int id_art, int id_Proveedor, QString codigo, double pvd, QString descoferta,
+                                       QString oferta, double pvdreal, int id_divisa);
     QString autocodigo();
 private:
 

@@ -10,6 +10,12 @@ FrmAsociarProveedor::FrmAsociarProveedor(QWidget *parent) :
     modelProveedor = new QSqlQueryModel(this);
     modelProveedor->setQuery("select cProveedor from proveedores",QSqlDatabase::database("terra"));
     ui->tablaproveedores->setModel(modelProveedor);
+    // -----------------------------
+    // Divisa
+    //------------------------------
+    QSqlQueryModel *modelDivisa = new QSqlQueryModel(this);
+    modelDivisa->setQuery("Select moneda from monedas",QSqlDatabase::database("terra"));
+    ui->cboDivisa->setModel(modelDivisa);
     //------------------------------
     // Conexiones
     //------------------------------
@@ -17,7 +23,10 @@ FrmAsociarProveedor::FrmAsociarProveedor(QWidget *parent) :
     connect(ui->txtCodigo,SIGNAL(editingFinished()),this,SLOT(setcodigo()));
     connect(ui->txtDescoferta,SIGNAL(editingFinished()),this,SLOT(setDescOferta()));
     connect(ui->txtOferta,SIGNAL(editingFinished()),this,SLOT(setOferta()));
+    connect(ui->txtPVD,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
+    connect(ui->txtPVDReal,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
     connect(ui->txtPVD,SIGNAL(editingFinished()),this,SLOT(setpvd()));
+    connect(ui->txtPVDReal,SIGNAL(editingFinished()),this,SLOT(setpvdReal()));
     connect(ui->tablaproveedores,SIGNAL(clicked(QModelIndex)), this,SLOT(seleccionarPro(QModelIndex)));
     connect(ui->btnAnadir,SIGNAL(clicked()),this,SLOT(accept()));
 
@@ -74,15 +83,31 @@ void FrmAsociarProveedor::seleccionarPro(QModelIndex indice)
     }
 
 }
+
+void FrmAsociarProveedor::setpvdReal()
+{
+    this->pvdreal = ui->txtPVDReal->text().toDouble();
+}
+
+void FrmAsociarProveedor::setIdDivisa()
+{
+    this->id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
+}
 void FrmAsociarProveedor::Aceptar()
 {
     QString cMensajeError;
+    this->id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
+
     if(this->id_proveedor == 0)
         cMensajeError =tr("Falta seleccionar un proveedor\n");
     if(this->codigo.isEmpty())
         cMensajeError = cMensajeError +tr("Falta el código del artículo en el proveedor\n");
     if(ui->txtPVD->text().isEmpty())
         cMensajeError = cMensajeError + tr("Falta el precio de coste");
+    if(ui->txtPVDReal->text().isEmpty())
+        cMensajeError = cMensajeError + tr("Falta poner el precio de coste real");
+    if(ui->cboDivisa->currentText().isEmpty())
+        cMensajeError = cMensajeError + tr("Falta establecer Divisa tarifa proveedor");
     if (cMensajeError.isEmpty()) {
         QDialog::accepted();
     } else {

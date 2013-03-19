@@ -204,6 +204,7 @@ void FrmArticulos::bloquearCampos() {
     ui->btnAnadirProveedores->setEnabled(false);
     ui->btnBorrarProveedores->setEnabled(false);
     ui->btnEditarProveedorFrecuente->setEnabled(false);
+    ui->btnAsignarProveedor->setEnabled(false);
 
 
 }
@@ -279,6 +280,7 @@ void FrmArticulos::desbloquearCampos() {
 
     ui->txtcProveedor->setEnabled(false);
     ui->txtCodigoProveedor->setEnabled(false);
+    ui->btnAsignarProveedor->setEnabled(true);
 }
 
 void FrmArticulos::LLenarCampos()
@@ -351,12 +353,11 @@ void FrmArticulos::LLenarCampos()
   // Proveedores frecuentes
   //-----------------------
   modelProv = new QSqlQueryModel(this);
-  modelProv->setQuery("select  codpro,cProveedor,codigo,pvd,descoferta,oferta from proveedores_frecuentes where id_art = "+
+  modelProv->setQuery("select  codpro,cProveedor,codigo,pvd, pvdreal,moneda,descoferta,oferta from proveedores_frecuentes where id_art = "+
                       QString::number(oArticulo->id),QSqlDatabase::database("terra"));
   ui->tablaProveedores->setModel(modelProv);
-  ui->tablaProveedores->setItemDelegateForColumn(3,new SpinBoxDelegate(ui->tablaProveedores,true));
     ui->graf_prov->clear();
-  QSqlQuery queryProveed("select  codpro,cProveedor,codigo,pvd,descoferta,oferta from proveedores_frecuentes where id_art = "+
+  QSqlQuery queryProveed("select  codpro,cProveedor,codigo,pvd, pvdreal,moneda,descoferta,oferta from proveedores_frecuentes where id_art = "+
                          QString::number(oArticulo->id),QSqlDatabase::database("terra"));
   if(queryProveed.exec()){
 
@@ -805,7 +806,7 @@ void FrmArticulos::anadir_proveedor_clicked()
     FrmAsociarProveedor frmAsociar;
     if(frmAsociar.exec() == QDialog::Accepted) {
         bool ok = oArticulo->agregar_proveedor_alternativo(oArticulo->id,frmAsociar.id_proveedor,frmAsociar.codigo,frmAsociar.pvd,
-                                                 frmAsociar.DescOferta,frmAsociar.Oferta);
+                                                 frmAsociar.DescOferta,frmAsociar.Oferta,frmAsociar.pvdreal,frmAsociar.id_divisa);
         if (!ok)
             QMessageBox::warning(this,tr("Nuevo proveedor frecuente"),tr("Falló la inserción del proveedor"),tr("Aceptar"));
         LLenarCampos();
@@ -816,7 +817,7 @@ void FrmArticulos::anadir_proveedor_clicked()
     // Proveedores frecuentes
     //-----------------------
     modelProv = new QSqlQueryModel(this);
-    modelProv->setQuery("select  codpro,cProveedor,codigo,pvd,descoferta,oferta from proveedores_frecuentes where id_art = "+
+    modelProv->setQuery("select  codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta,oferta from proveedores_frecuentes where id_art = "+
                         QString::number(oArticulo->id),QSqlDatabase::database("terra"));
     ui->tablaProveedores->setModel(modelProv);
 }

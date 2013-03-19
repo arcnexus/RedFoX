@@ -16,9 +16,11 @@ public:
     ~FrmAsociarProveedor();
     QString codigo;
     double pvd;
+    double pvdreal;
     QString DescOferta;
     QString Oferta;
     int id_proveedor = 0;
+    int id_divisa;
     
 private:
     Ui::FrmAsociarProveedor *ui;
@@ -31,6 +33,8 @@ private slots:
     void setDescOferta();
     void setOferta();
     void seleccionarPro(QModelIndex indicde);
+    void setpvdReal();
+    void setIdDivisa();
 public slots:
     void Aceptar();
 };

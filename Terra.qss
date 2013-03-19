@@ -219,51 +219,50 @@ QDialogButtonBox {
       background: none;
   }
 
-/*
 QScrollBar:horizontal {
-      border: none;
-      background: #32CC99;
-      width: 10px;
-      margin: 12px 0 12px 0;
+    border: none solid grey;
+    background: #32CC99;
+    height: 10px;
+    margin: 0px 10px 0px 10px;
 }
-  QScrollBar::handle:horizontal {
-      background: #506d76;
-      border-radius:5;
-      min-height: 10px;
-  }
-  QScrollBar::add-line:horizontal {
-      border: none solid grey;
-      background: #32CC99;
-      height: 10px;
-      subcontrol-position: bottom;
-      subcontrol-origin: margin;
-  }
+QScrollBar::handle:horizontal {
+    background: #506d76;
+    border-radius:5;
+    min-width: 10px;
+}
+QScrollBar::add-line:horizontal {
+    border: none solid grey;
+    background: #32CC99;
+    width: 10px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
 
-  QScrollBar::sub-line:horizontal {
-      border: none solid grey;
-      background: #32CC99;
-      height: 10px;
-      subcontrol-position: top;
-      subcontrol-origin: margin;
-  }
-  QScrollBar::up-arrow:horizontal {
-      border: 2px solid grey;
-      height: 10px;
-      background: white;
-      width: 10px;
-      border-image: url(:Icons/images/spinup.png) 2;
-  }
-  QScrollBar::down-arrow:horizontal{
-        border: 2px solid grey;
-        height: 10px;
-        background: white;
-        width: 10px;
-        border-image: url(:Icons/images/spindown.png) 2;
-    }
-
+QScrollBar::sub-line:horizontal {
+    border: none solid grey;
+    background: #32CC99;
+    width: 10px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
   QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
       background: none;
-  }*/
+  }
+
+ QScrollBar:left-arrow:horizontal {
+     border: none solid grey;
+     height: 10px;
+     background: white;
+     width: 10px;
+     image: url(:/Icons/images/left_arrow.png) 2;
+ }
+  QScrollBar::right-arrow:horizontal {
+      border: none solid grey;
+      width: 10px;
+      height: 10px;
+      background: white;
+      image: url(:/Icons/images/right_arrow.png) 2;
+  }
 
 QTableView, QTableWidet {
      background-color: white;
