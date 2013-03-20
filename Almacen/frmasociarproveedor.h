@@ -19,7 +19,7 @@ public:
     double pvdreal;
     QString DescOferta;
     QString Oferta;
-    int id_proveedor = 0;
+    int id_proveedor ;
     int id_divisa;
     
 private:

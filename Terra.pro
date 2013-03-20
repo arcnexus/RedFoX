@@ -354,7 +354,8 @@ else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/SQLlibs/qsqlmys
 
 
 
-unix:!macx: LIBS += -L$$PWD/LibsGraficas/ -lgraficaplugin
+
+unix:!macx: LIBS += -L$$PWD/LibsGraficas/ -lopenchartplugin
 
 INCLUDEPATH += $$PWD/LibsGraficas
 DEPENDPATH += $$PWD/LibsGraficas

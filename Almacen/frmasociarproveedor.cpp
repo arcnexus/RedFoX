@@ -28,7 +28,7 @@ FrmAsociarProveedor::FrmAsociarProveedor(QWidget *parent) :
     connect(ui->txtPVD,SIGNAL(editingFinished()),this,SLOT(setpvd()));
     connect(ui->txtPVDReal,SIGNAL(editingFinished()),this,SLOT(setpvdReal()));
     connect(ui->tablaproveedores,SIGNAL(clicked(QModelIndex)), this,SLOT(seleccionarPro(QModelIndex)));
-    connect(ui->btnAnadir,SIGNAL(clicked()),this,SLOT(accept()));
+//    connect(ui->btnAnadir,SIGNAL(clicked()),this,SLOT(accept()));
 
 }
 
@@ -102,16 +102,15 @@ void FrmAsociarProveedor::Aceptar()
         cMensajeError =tr("Falta seleccionar un proveedor\n");
     if(this->codigo.isEmpty())
         cMensajeError = cMensajeError +tr("Falta el código del artículo en el proveedor\n");
-    if(ui->txtPVD->text().isEmpty())
-        cMensajeError = cMensajeError + tr("Falta el precio de coste");
-    if(ui->txtPVDReal->text().isEmpty())
-        cMensajeError = cMensajeError + tr("Falta poner el precio de coste real");
+    if(ui->txtPVD->text().trimmed()=="0,00")
+        cMensajeError = cMensajeError + tr("Falta el precio de coste\n");
+    if(ui->txtPVDReal->text().trimmed() == "0,00")
+        cMensajeError = cMensajeError + tr("Falta poner el precio de coste real\n");
     if(ui->cboDivisa->currentText().isEmpty())
         cMensajeError = cMensajeError + tr("Falta establecer Divisa tarifa proveedor");
     if (cMensajeError.isEmpty()) {
-        QDialog::accepted();
+        QDialog::accept();
     } else {
-        //QMessageBox::warning(this,tr("Añadir proveedor frecuente"),cMensajeError,tr("aceptar"));
         QMessageBox msgBox;
         msgBox.setStyleSheet("color: blue; background-color: yellow");
         msgBox.setText(cMensajeError);

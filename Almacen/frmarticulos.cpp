@@ -6,6 +6,7 @@
 #include "../Auxiliares/spinboxdelegate.h"
 #include "../db_table_view.h"
 #include "grafica.h"
+#include"../Auxiliares/readonlydelegate.h"
 
 FrmArticulos::FrmArticulos(QWidget *parent) :
     QDialog(parent),
@@ -41,7 +42,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     for (int i = 0; i< headers.size();i++)
         tarifa_model->setHeaderData(i+1, Qt::Horizontal, headers.at(i));
 
-
+    ui->tablaProveedores->setEditTriggers(QAbstractItemView::NoEditTriggers);
     bloquearCampos();
 
 
@@ -59,6 +60,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     connect(ui->tablaLotes,SIGNAL(clicked(QModelIndex)),this,SLOT(TablaTrazabilidad_clicked(QModelIndex)));
     connect(ui->radGrafica_unidades,SIGNAL(clicked()),this,SLOT(GraficaUnidades()));
     connect(ui->radGrafica_importes,SIGNAL(clicked()),this,SLOT(GraficaImportes()));
+    connect(ui->btnEditarProveedorFrecuente,SIGNAL(clicked()), this, SLOT(editar_proveedor_clicked()));
 
 
 }
@@ -352,23 +354,37 @@ void FrmArticulos::LLenarCampos()
   //-----------------------
   // Proveedores frecuentes
   //-----------------------
-  modelProv = new QSqlQueryModel(this);
-  modelProv->setQuery("select  codpro,cProveedor,codigo,pvd, pvdreal,moneda,descoferta,oferta from proveedores_frecuentes where id_art = "+
-                      QString::number(oArticulo->id),QSqlDatabase::database("terra"));
+  modelProv = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
+  modelProv->setTable("proveedores_frecuentes");
+  modelProv->setFilter("id_art="+QString::number(oArticulo->id));
   ui->tablaProveedores->setModel(modelProv);
-    ui->graf_prov->clear();
-  QSqlQuery queryProveed("select  codpro,cProveedor,codigo,pvd, pvdreal,moneda,descoferta,oferta from proveedores_frecuentes where id_art = "+
+  ui->tablaProveedores->setColumnHidden(0,true);
+  ui->tablaProveedores->setColumnHidden(3,true);
+  ui->tablaProveedores->horizontalHeader()->moveSection(6,3);
+  ui->tablaProveedores->horizontalHeader()->moveSection(7,4);
+  ui->tablaProveedores->horizontalHeader()->moveSection(8,7);
+  modelProv->select();
+    ui->graf_prov->Clear();
+    ui->graf_prov->verValoresEjeY(false);
+  //----------------------
+  // GRAFICA SEGÚN PVDREAL
+  //----------------------
+  QSqlQuery queryProveed("select cProveedor,pvdreal from proveedores_frecuentes where id_art = "+
                          QString::number(oArticulo->id),QSqlDatabase::database("terra"));
   if(queryProveed.exec()){
 
       while (queryProveed.next()) {
           ui->graf_prov->addItem(queryProveed.record().value("cProveedor").toString().left(4),
-                                 Qt::blue ,queryProveed.record().value("pvd").toDouble());
+                                 queryProveed.record().value("pvdreal").toFloat()/*,Qt::blue*/);
 
-      }
+
+      }      
 
       ui->graf_prov->repaint();
   }
+  else
+      qDebug()<< queryProveed.lastError();
+
   // ------------------
   // TRAZABILIDAD
   // ------------------
@@ -816,10 +832,24 @@ void FrmArticulos::anadir_proveedor_clicked()
     //-----------------------
     // Proveedores frecuentes
     //-----------------------
-    modelProv = new QSqlQueryModel(this);
-    modelProv->setQuery("select  codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta,oferta from proveedores_frecuentes where id_art = "+
-                        QString::number(oArticulo->id),QSqlDatabase::database("terra"));
+    modelProv = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
+    modelProv->setTable("proveedores_frecuentes");
+    modelProv->setFilter("id_art="+QString::number(oArticulo->id));
     ui->tablaProveedores->setModel(modelProv);
+    ui->tablaProveedores->setColumnHidden(0,true);
+    ui->tablaProveedores->setColumnHidden(3,true);
+    modelProv->select();
+}
+
+void FrmArticulos::editar_proveedor_clicked()
+{
+    ui->tablaProveedores->setEditTriggers(QAbstractItemView::CurrentChanged|QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked);
+    ReadOnlyDelegate *delegado = new ReadOnlyDelegate(this);
+    ui->tablaProveedores->setItemDelegateForColumn(1,delegado);
+    ui->tablaProveedores->setItemDelegateForColumn(2,delegado);
+
+    ui->tablaProveedores->setFocus();
+
 }
 
 void FrmArticulos::calcular_codigo()
@@ -863,13 +893,13 @@ void FrmArticulos::GraficaUnidades()
 //    if(ui->cboTipoGrafica->currentText()=tr("Grafica de Barras"))
 //        ui->grafica->setTipo(Tipos::);
 
-    ui->grafica->clear();
+    ui->grafica->Clear();
     QVector <float> enero;
     enero << ui->txtUnid_compras_enero->text().toInt()<<ui->txtUnid_ventas_enero->text().toInt();
 
     ui->grafica->addItem("Ene",enero);
-    ui->grafica->addColorMultibarras("Ventas",Qt::darkYellow);
-    ui->grafica->addColorMultibarras("Compras",Qt::darkGreen);
+    ui->grafica->addMulibarColor("Ventas",Qt::darkYellow);
+    ui->grafica->addMulibarColor("Compras",Qt::darkGreen);
 
     QVector <float> febrero;
     febrero <<ui->txtUnid_compras_febrero->text().toInt() <<ui->txtUnid_ventas_febrero->text().toInt();
@@ -920,18 +950,20 @@ void FrmArticulos::GraficaUnidades()
     QVector <float> diciembre;
     diciembre <<ui->txtUnid_compras_diciembre->text().toInt() <<ui->txtUnid_ventas_diciembre->text().toInt();
     ui->grafica->addItem("Dic",diciembre);
+    ui->grafica->repaint();
 
 }
 
 void FrmArticulos::GraficaImportes()
 {
-    ui->grafica->clear();
+
+    ui->grafica->Clear();
     QVector <float> enero;
     enero << ui->txtImporte_compras_enero->text().toFloat() <<ui->txtImporte_ventas_enero->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
 
     ui->grafica->addItem("Ene",enero);
-    ui->grafica->addColorMultibarras("Ventas",Qt::darkYellow);
-    ui->grafica->addColorMultibarras("Compras",Qt::darkGreen);
+    ui->grafica->addMulibarColor("Ventas",Qt::darkYellow);
+    ui->grafica->addMulibarColor("Compras",Qt::darkGreen);
 
     QVector <float> febrero;
     febrero <<ui->txtImporte_compras_febrero->text().toFloat() <<ui->txtImporte_ventas_febrero->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
