@@ -19,7 +19,7 @@ public:
     QSqlQueryModel *modArt;
     QSqlQueryModel *qTarifas;
     QSqlRelationalTableModel * tarifa_model;
-    QSqlRelationalTableModel *modelProv;
+    QSqlQueryModel *modelProv;
     QSqlQueryModel *modelTrazabilidad1;
     QSqlQueryModel *modelTrazabilidad2;
 
@@ -75,12 +75,15 @@ private:
     void LLenarCampos();
     void CargarCamposEnArticulo();
     void VaciarCampos();
+    void ChangeValues_TablaProveedores(int row, int column);
 
     QListView *lista;
     QDialog *ventana;
     QString *Devolucion;
     QGridLayout *layout;
     bool anadir;
+    bool reformateado;
+    void rellenar_grafica_proveedores();
 };
 
 #endif // FRMARTICULOS_H

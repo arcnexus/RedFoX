@@ -45,6 +45,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->tablaProveedores->setEditTriggers(QAbstractItemView::NoEditTriggers);
     bloquearCampos();
 
+    reformateado = false;
 
     //--------------------------------
     // CAMPOS MONEDA
@@ -354,36 +355,16 @@ void FrmArticulos::LLenarCampos()
   //-----------------------
   // Proveedores frecuentes
   //-----------------------
-  modelProv = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
-  modelProv->setTable("proveedores_frecuentes");
-  modelProv->setFilter("id_art="+QString::number(oArticulo->id));
+  modelProv = new QSqlQueryModel(this);
+  modelProv->setQuery("Select id,codpro,cProveedor,pvd,pvdreal,moneda,descoferta from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
+                      QSqlDatabase::database("terra"));
+
   ui->tablaProveedores->setModel(modelProv);
   ui->tablaProveedores->setColumnHidden(0,true);
-  ui->tablaProveedores->setColumnHidden(3,true);
-  ui->tablaProveedores->horizontalHeader()->moveSection(6,3);
-  ui->tablaProveedores->horizontalHeader()->moveSection(7,4);
-  ui->tablaProveedores->horizontalHeader()->moveSection(8,7);
-  modelProv->select();
+
     ui->graf_prov->Clear();
     ui->graf_prov->verValoresEjeY(false);
-  //----------------------
-  // GRAFICA SEGÚN PVDREAL
-  //----------------------
-  QSqlQuery queryProveed("select cProveedor,pvdreal from proveedores_frecuentes where id_art = "+
-                         QString::number(oArticulo->id),QSqlDatabase::database("terra"));
-  if(queryProveed.exec()){
-
-      while (queryProveed.next()) {
-          ui->graf_prov->addItem(queryProveed.record().value("cProveedor").toString().left(4),
-                                 queryProveed.record().value("pvdreal").toFloat()/*,Qt::blue*/);
-
-
-      }      
-
-      ui->graf_prov->repaint();
-  }
-  else
-      qDebug()<< queryProveed.lastError();
+    rellenar_grafica_proveedores();
 
   // ------------------
   // TRAZABILIDAD
@@ -480,6 +461,43 @@ void FrmArticulos::VaciarCampos()
    ui->chklMostrarWeb->setChecked(false);
    ui->lblImagenArticulo->setText("");
    ui->txtCodigoProveedor->setText("");
+
+}
+
+void FrmArticulos::ChangeValues_TablaProveedores(int row, int column)
+{
+    if (column == 4)
+        QMessageBox::information(this,tr("Se ha cambiado el valor"),tr("Valor cambiado"),tr("Aceptar"));
+//    else if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
+//        comprobarCantidad(row);
+//    else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
+//        comprobarDescuento(row);
+//    else if(column == 9)
+//        comprobarStock(row);
+
+    rellenar_grafica_proveedores();
+}
+
+void FrmArticulos::rellenar_grafica_proveedores()
+{
+    //----------------------
+    // GRAFICA SEGÚN PVDREAL
+    //----------------------
+    QSqlQuery queryProveed("select cProveedor,pvdreal from proveedores_frecuentes where id_art = "+
+                           QString::number(oArticulo->id),QSqlDatabase::database("terra"));
+    if(queryProveed.exec()){
+
+        while (queryProveed.next()) {
+            ui->graf_prov->addItem(queryProveed.record().value("cProveedor").toString().left(4),
+                                   queryProveed.record().value("pvdreal").toFloat()/*,Qt::blue*/);
+
+
+        }
+
+        ui->graf_prov->repaint();
+    }
+    else
+        qDebug()<< queryProveed.lastError();
 
 }
 
@@ -820,6 +838,7 @@ void FrmArticulos::on_btnAnadirTarifa_clicked()
 void FrmArticulos::anadir_proveedor_clicked()
 {
     FrmAsociarProveedor frmAsociar;
+    frmAsociar.setAnadir();
     if(frmAsociar.exec() == QDialog::Accepted) {
         bool ok = oArticulo->agregar_proveedor_alternativo(oArticulo->id,frmAsociar.id_proveedor,frmAsociar.codigo,frmAsociar.pvd,
                                                  frmAsociar.DescOferta,frmAsociar.Oferta,frmAsociar.pvdreal,frmAsociar.id_divisa);
@@ -832,24 +851,30 @@ void FrmArticulos::anadir_proveedor_clicked()
     //-----------------------
     // Proveedores frecuentes
     //-----------------------
-    modelProv = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
-    modelProv->setTable("proveedores_frecuentes");
-    modelProv->setFilter("id_art="+QString::number(oArticulo->id));
+    modelProv = new QSqlQueryModel(this);
+    modelProv->setQuery("Select id,codpro,cProveedor,pvd,pvdreal,moneda,descoferta where id_art",
+                        QSqlDatabase::database("terra"));
+
     ui->tablaProveedores->setModel(modelProv);
     ui->tablaProveedores->setColumnHidden(0,true);
-    ui->tablaProveedores->setColumnHidden(3,true);
-    modelProv->select();
 }
 
 void FrmArticulos::editar_proveedor_clicked()
 {
-    ui->tablaProveedores->setEditTriggers(QAbstractItemView::CurrentChanged|QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked);
-    ReadOnlyDelegate *delegado = new ReadOnlyDelegate(this);
-    ui->tablaProveedores->setItemDelegateForColumn(1,delegado);
-    ui->tablaProveedores->setItemDelegateForColumn(2,delegado);
+    QModelIndex celda=ui->tablaProveedores->currentIndex();
+    QModelIndex index1=modelProv->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
 
-    ui->tablaProveedores->setFocus();
+    QVariant pKey=modelProv->data(index1,Qt::EditRole);
+    FrmAsociarProveedor frmAsociar;
+    frmAsociar.seteditar();
+    if(frmAsociar.exec() == QDialog::Accepted) {
+        bool ok = oArticulo->guardarProveedorAlternativo(pKey.toInt(),frmAsociar.codigo,frmAsociar.pvd,
+                                                 frmAsociar.DescOferta,frmAsociar.Oferta,frmAsociar.pvdreal,frmAsociar.id_divisa);
+        if (!ok)
+            QMessageBox::warning(this,tr("Guardar proveedor frecuente"),tr("Falló la edición del proveedor"),tr("Aceptar"));
+        LLenarCampos();
 
+    }
 }
 
 void FrmArticulos::calcular_codigo()

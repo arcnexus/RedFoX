@@ -37,6 +37,17 @@ FrmAsociarProveedor::~FrmAsociarProveedor()
     delete ui;
 }
 
+void FrmAsociarProveedor::setAnadir()
+{
+    ui->btnAnadir->setText(tr("Añadir"));
+
+}
+
+void FrmAsociarProveedor::seteditar()
+{
+    ui->btnAnadir->setText(tr("Editar"));
+}
+
 void FrmAsociarProveedor::filtrar_proveedor()
 {
     modelProveedor = new QSqlQueryModel(this);

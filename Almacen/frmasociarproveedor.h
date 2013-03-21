@@ -21,6 +21,8 @@ public:
     QString Oferta;
     int id_proveedor ;
     int id_divisa;
+    void setAnadir();
+    void seteditar();
     
 private:
     Ui::FrmAsociarProveedor *ui;

@@ -502,7 +502,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <property name="styleSheet">
@@ -1626,8 +1626,8 @@ background-color: rgb(255, 255, 127);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>336</width>
-            <height>592</height>
+            <width>317</width>
+            <height>448</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">

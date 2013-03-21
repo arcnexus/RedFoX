@@ -552,6 +552,33 @@ bool Articulo::agregar_proveedor_alternativo(int id_art, int id_Proveedor, QStri
 
 }
 
+bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta, QString oferta, double pvdreal, int id_divisa)
+{
+    QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("terra"));
+
+    query_proveedor_alternativo.prepare("UPDATE articulos_prov_frec  set pvd = :pvd,oferta = :oferta, codigo = :codigo, "
+                                        "descoferta = :descoferta, pvdreal = pvdreal, id_divisa =:id_divisa "
+                                        "where id = :id");
+    query_proveedor_alternativo.bindValue(":codigo",codigo);
+    query_proveedor_alternativo.bindValue(":pvd",pvd);
+    query_proveedor_alternativo.bindValue(":oferta",oferta);
+    query_proveedor_alternativo.bindValue(":descoferta",descoferta);
+    query_proveedor_alternativo.bindValue(":pvdreal",pvdreal);
+    query_proveedor_alternativo.bindValue(":id_divisa",id_divisa);
+    query_proveedor_alternativo.bindValue(":id",id);
+    if(!query_proveedor_alternativo.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Actualizar proveedor frecuente"),
+                             tr("Falló la modificación de un nuevo proveedor: %1").arg(query_proveedor_alternativo.lastError().text()));
+        return false;
+
+
+    } else
+        return true;
+
+
+
+}
+
 QString Articulo::autocodigo()
 {
     QString codigoIni;

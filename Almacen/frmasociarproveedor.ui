@@ -14,7 +14,7 @@
    <string>Asociar proveedor-Artículo</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../terra.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <property name="styleSheet">
@@ -46,7 +46,7 @@
          <string>Filtrar</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset>
           <normaloff>:/Icons/PNG/filtrar.png</normaloff>:/Icons/PNG/filtrar.png</iconset>
         </property>
         <property name="iconSize">
@@ -199,7 +199,7 @@
       <string>Añadir</string>
      </property>
      <property name="icon">
-      <iconset resource="../terra.qrc">
+      <iconset>
        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
      </property>
      <property name="iconSize">
@@ -219,7 +219,7 @@
       <string>Cancelar</string>
      </property>
      <property name="icon">
-      <iconset resource="../terra.qrc">
+      <iconset>
        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
      </property>
      <property name="iconSize">
@@ -245,9 +245,7 @@
   <tabstop>btnAnadir</tabstop>
   <tabstop>BtnCancelar</tabstop>
  </tabstops>
- <resources>
-  <include location="../terra.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>BtnCancelar</sender>
