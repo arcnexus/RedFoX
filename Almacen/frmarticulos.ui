@@ -1425,13 +1425,19 @@ color: rgb(0, 0, 0);</string>
             </sizepolicy>
            </property>
            <property name="Tipo">
-            <enum>OpenChart::Barras</enum>
+            <enum>OpenChart::Sectores_2D</enum>
            </property>
            <property name="Title">
             <string>PVD Distribuidores</string>
            </property>
+           <property name="Etiquetas" stdset="0">
+            <bool>true</bool>
+           </property>
            <property name="ValoresEjeY" stdset="0">
-            <bool>false</bool>
+            <bool>true</bool>
+           </property>
+           <property name="Leyenda" stdset="0">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1626,8 +1632,8 @@ background-color: rgb(255, 255, 127);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>317</width>
-            <height>448</height>
+            <width>343</width>
+            <height>588</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">

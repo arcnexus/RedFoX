@@ -557,7 +557,7 @@ bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, Q
     QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("terra"));
 
     query_proveedor_alternativo.prepare("UPDATE articulos_prov_frec  set pvd = :pvd,oferta = :oferta, codigo = :codigo, "
-                                        "descoferta = :descoferta, pvdreal = pvdreal, id_divisa =:id_divisa "
+                                        "descoferta = :descoferta, pvdreal = :pvdreal, id_divisa =:id_divisa "
                                         "where id = :id");
     query_proveedor_alternativo.bindValue(":codigo",codigo);
     query_proveedor_alternativo.bindValue(":pvd",pvd);

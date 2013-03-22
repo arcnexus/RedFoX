@@ -61,7 +61,6 @@ SOURCES += main.cpp\
     Zona_Pacientes/frminformacionfarmaco.cpp \
     Zona_Pacientes/frmanadirimagen.cpp \
     imagenesdiagnostico.cpp \
-    prueba.cpp \
     interconsulta.cpp \
     Zona_Pacientes/frmanalitica.cpp \
     Zona_Pacientes/frmanalitica2.cpp \
@@ -116,7 +115,8 @@ SOURCES += main.cpp\
     SOAP/stdsoap2.cpp \
     SOAP/soapcheckVatBindingProxy.cpp \
     SOAP/soapC.cpp \
-    Almacen/frmasociarproveedor.cpp
+    Almacen/frmasociarproveedor.cpp \
+    Auxiliares/monetarydelegate.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -143,7 +143,6 @@ HEADERS  += mainwindow.h \
     Zona_Pacientes/frminformacionfarmaco.h \
     Zona_Pacientes/frmanadirimagen.h \
     imagenesdiagnostico.h \
-    prueba.h \
     interconsulta.h \
     Zona_Pacientes/frmanalitica.h \
     Zona_Pacientes/frmanalitica2.h \
@@ -200,7 +199,8 @@ HEADERS  += mainwindow.h \
     SOAP/soapH.h \
     SOAP/soapcheckVatBindingProxy.h \
     SOAP/checkVatBinding.nsmap \
-    Almacen/frmasociarproveedor.h
+    Almacen/frmasociarproveedor.h \
+    Auxiliares/monetarydelegate.h
 
 
 FORMS    += mainwindow.ui \

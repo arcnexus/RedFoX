@@ -6,12 +6,13 @@
 #include "../Auxiliares/spinboxdelegate.h"
 #include "../db_table_view.h"
 #include "grafica.h"
-#include"../Auxiliares/readonlydelegate.h"
+#include"../Auxiliares/monetarydelegate.h"
 
 FrmArticulos::FrmArticulos(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmArticulos)
 {
+    modelProv = new QSqlQueryModel(this);
     oArticulo = new Articulo();
     modArt = new QSqlQueryModel();
     ui->setupUi(this);
@@ -350,20 +351,27 @@ void FrmArticulos::LLenarCampos()
                        "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
                        QSqlDatabase::database("terra"));
   ui->TablaTarifas->setModel(modelTarifa);
+  //MonetaryDelegate *Delegado = new MonetaryDelegate(this);
+
 
 
   //-----------------------
   // Proveedores frecuentes
   //-----------------------
-  modelProv = new QSqlQueryModel(this);
-  modelProv->setQuery("Select id,codpro,cProveedor,pvd,pvdreal,moneda,descoferta from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
+
+  modelProv->setQuery("Select id,codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
                       QSqlDatabase::database("terra"));
 
   ui->tablaProveedores->setModel(modelProv);
   ui->tablaProveedores->setColumnHidden(0,true);
+   ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
+    //--------------------
+    // Grafica proveedores
+    //--------------------
 
     ui->graf_prov->Clear();
     ui->graf_prov->verValoresEjeY(false);
+
     rellenar_grafica_proveedores();
 
   // ------------------
@@ -852,7 +860,8 @@ void FrmArticulos::anadir_proveedor_clicked()
     // Proveedores frecuentes
     //-----------------------
     modelProv = new QSqlQueryModel(this);
-    modelProv->setQuery("Select id,codpro,cProveedor,pvd,pvdreal,moneda,descoferta where id_art",
+    modelProv->setQuery("Select id,codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta from proveedores_frecuentes where id_art = "+
+                        QString::number(oArticulo->id),
                         QSqlDatabase::database("terra"));
 
     ui->tablaProveedores->setModel(modelProv);
@@ -865,8 +874,9 @@ void FrmArticulos::editar_proveedor_clicked()
     QModelIndex index1=modelProv->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
 
     QVariant pKey=modelProv->data(index1,Qt::EditRole);
+
     FrmAsociarProveedor frmAsociar;
-    frmAsociar.seteditar();
+    frmAsociar.seteditar(pKey.toString());
     if(frmAsociar.exec() == QDialog::Accepted) {
         bool ok = oArticulo->guardarProveedorAlternativo(pKey.toInt(),frmAsociar.codigo,frmAsociar.pvd,
                                                  frmAsociar.DescOferta,frmAsociar.Oferta,frmAsociar.pvdreal,frmAsociar.id_divisa);

@@ -2,6 +2,7 @@
 #define FRMARTICULOS_H
 
 #include "../Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/monetarydelegate.h"
 //
 #include "articulo.h"
 namespace Ui {
@@ -84,6 +85,7 @@ private:
     bool anadir;
     bool reformateado;
     void rellenar_grafica_proveedores();
+    MonetaryDelegate *Delegado;
 };
 
 #endif // FRMARTICULOS_H

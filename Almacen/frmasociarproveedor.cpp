@@ -43,9 +43,33 @@ void FrmAsociarProveedor::setAnadir()
 
 }
 
-void FrmAsociarProveedor::seteditar()
+void FrmAsociarProveedor::seteditar(QString id)
 {
-    ui->btnAnadir->setText(tr("Editar"));
+    ui->btnAnadir->setText(tr("Guardar"));
+    ui->txtBuscarProveedores->setVisible(false);
+    ui->btnFiltrar->setVisible(false);
+    QSqlQuery queryProvAlt(QSqlDatabase::database("terra"));
+    queryProvAlt.prepare("select * from proveedores_frecuentes where id= "+id);
+    if (queryProvAlt.exec()){
+        if( queryProvAlt.next()){
+            ui->txtCodigo->setText(queryProvAlt.record().value("codigo").toString());
+            this->codigo = ui->txtCodigo->text();
+            ui->txtPVD->setText(QString::number(queryProvAlt.record().value("pvd").toDouble(),'f',2));
+            this->pvd = ui->txtPVD->text().toDouble();
+            ui->txtPVDReal->setText(QString::number(queryProvAlt.record().value("pvdreal").toDouble(),'f',2));
+            this->pvdreal = ui->txtPVDReal->text().toDouble();
+            ui->txtDescoferta->setText(queryProvAlt.record().value("descoferta").toString());
+            this->DescOferta = ui->txtDescoferta->text();
+            ui->txtOferta->setText(queryProvAlt.record().value("oferta").toString());
+            this->Oferta = ui->txtOferta->text();
+            int index = ui->cboDivisa->findText(queryProvAlt.record().value("moneda").toString());
+            ui->cboDivisa->setCurrentIndex(index);
+            modelProveedor->setQuery("select cProveedor from proveedores where id="+
+                                     queryProvAlt.record().value("id_prov").toString(),QSqlDatabase::database("terra"));
+            ui->tablaproveedores->setModel(modelProveedor);
+            ui->tablaproveedores->selectRow(0);
+        }
+    }
 }
 
 void FrmAsociarProveedor::filtrar_proveedor()

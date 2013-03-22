@@ -22,7 +22,7 @@ public:
     int id_proveedor ;
     int id_divisa;
     void setAnadir();
-    void seteditar();
+    void seteditar(QString id);
     
 private:
     Ui::FrmAsociarProveedor *ui;
