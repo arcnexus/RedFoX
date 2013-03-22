@@ -362,9 +362,10 @@ void FrmArticulos::LLenarCampos()
   modelProv->setQuery("Select id,codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
                       QSqlDatabase::database("terra"));
 
+  ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
   ui->tablaProveedores->setModel(modelProv);
   ui->tablaProveedores->setColumnHidden(0,true);
-   ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
+
     //--------------------
     // Grafica proveedores
     //--------------------
@@ -885,6 +886,18 @@ void FrmArticulos::editar_proveedor_clicked()
         LLenarCampos();
 
     }
+}
+
+void FrmArticulos::borrar_proveedor_clicked()
+{
+//    QModelIndex celda=ui->tablaProveedores->currentIndex();
+//    QModelIndex index1=modelProv->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+
+//    QVariant pKey=modelProv->data(index1,Qt::EditRole);
+//    if(QMessageBox::question(this,tr("Borrar proveedor frecuente"),tr("¿Desea borrar la ficha del proveedor ?"),
+//                             tr("Aceptar"))==QMessageBox::Accept) {
+
+   // }
 }
 
 void FrmArticulos::calcular_codigo()

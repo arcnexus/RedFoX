@@ -58,6 +58,7 @@ private slots:
     void on_btnAnadirTarifa_clicked();
     void anadir_proveedor_clicked();
     void editar_proveedor_clicked();
+    void borrar_proveedor_clicked();
     void calcular_codigo();
     void trazabilidad2(int id);
     void TablaTrazabilidad_clicked(QModelIndex);
