@@ -2,17 +2,11 @@
 #define OPENCHART_H
 
 
-#define SHAREDLIB_LIBRARY
-
-#if defined(SHAREDLIB_LIBRARY)
-#  define SHAREDLIBSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define SHAREDLIBSHARED_EXPORT Q_DECL_IMPORT
-#endif
+#include "global_header.h"
 #include <QWidget>
 #include <QPainter>
 #include "qchartpiece.h"
-
+/*
 class ChartPiece
 {
 public:
@@ -25,7 +19,7 @@ public:
     QColor color;
 private:
     QVector<float> values;
-};
+};*/
 struct roundLabelPoints
 {
     QString name;
@@ -117,7 +111,7 @@ public:
     void addLineaStop(QString s){lineasStops.append(s);}
     void addLineaStops(QStringList sl){lineasStops = sl;}
 
-    void Clear(){pieces.clear();multibarColors.clear();lineasStops.clear();}
+    void Clear();
 protected:
     void paintEvent(QPaintEvent *);
     void drawBar(QPainter* painter);
