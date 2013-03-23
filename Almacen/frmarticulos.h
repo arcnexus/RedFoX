@@ -59,11 +59,13 @@ private slots:
     void anadir_proveedor_clicked();
     void editar_proveedor_clicked();
     void borrar_proveedor_clicked();
+    void asignar_proveedor_pricipal_clicked();
     void calcular_codigo();
     void trazabilidad2(int id);
     void TablaTrazabilidad_clicked(QModelIndex);
     void GraficaUnidades();
     void GraficaImportes();
+    void LlenarTablas();
 
 public slots:
     void AnadirSeccion();

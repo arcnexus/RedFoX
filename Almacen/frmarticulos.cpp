@@ -22,6 +22,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
     ui->lblCodigo->setVisible(false);
     ui->lblDescripcion->setVisible(false);
+    ui->graf_prov->Clear();
 
     GraficaUnidades();
 
@@ -63,6 +64,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     connect(ui->radGrafica_unidades,SIGNAL(clicked()),this,SLOT(GraficaUnidades()));
     connect(ui->radGrafica_importes,SIGNAL(clicked()),this,SLOT(GraficaImportes()));
     connect(ui->btnEditarProveedorFrecuente,SIGNAL(clicked()), this, SLOT(editar_proveedor_clicked()));
+    connect(ui->btnBorrarProveedores,SIGNAL(clicked()),this,SLOT(borrar_proveedor_clicked()));
 
 
 }
@@ -343,49 +345,12 @@ void FrmArticulos::LLenarCampos()
   nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tiposiva));
   if(nIndex >-1)
       ui->cboTipoIVA->setCurrentIndex(nIndex);
-  //---------------------
-  // Tarifas
-  //---------------------
-  QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
-  modelTarifa->setQuery("select codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp "
-                       "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
-                       QSqlDatabase::database("terra"));
-  ui->TablaTarifas->setModel(modelTarifa);
-  //MonetaryDelegate *Delegado = new MonetaryDelegate(this);
-
-
-
-  //-----------------------
-  // Proveedores frecuentes
-  //-----------------------
-
-  modelProv->setQuery("Select id,codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
-                      QSqlDatabase::database("terra"));
-
-  ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
-  ui->tablaProveedores->setItemDelegateForColumn(4,new MonetaryDelegate);
-  ui->tablaProveedores->setModel(modelProv);
-
-  modelProv->setHeaderData(1,Qt::Horizontal,tr("COD.PROV."));
-  modelProv->setHeaderData(2,Qt::Horizontal,tr("PROVEEDOR"));
-  ui->tablaProveedores->setColumnHidden(0,true);
-
-    //--------------------
-    // Grafica proveedores
-    //--------------------
-
-    ui->graf_prov->Clear();
-    ui->graf_prov->verValoresEjeY(false);
-
-    rellenar_grafica_proveedores();
 
   // ------------------
-  // TRAZABILIDAD
-  // ------------------
-  modelTrazabilidad1 = new QSqlQueryModel(this);
-  modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_Articulo = "+QString::number(oArticulo->id),
-                                QSqlDatabase::database("terra"));
-  ui->tablaLotes->setModel(modelTrazabilidad1);
+  // LLENO TABLAS DATOS
+  //-------------------
+  LlenarTablas();
+
 
 
 }
@@ -894,14 +859,57 @@ void FrmArticulos::editar_proveedor_clicked()
 
 void FrmArticulos::borrar_proveedor_clicked()
 {
-//    QModelIndex celda=ui->tablaProveedores->currentIndex();
-//    QModelIndex index1=modelProv->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+    QModelIndex celda=ui->tablaProveedores->currentIndex();
+    QModelIndex index1=modelProv->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
 
-//    QVariant pKey=modelProv->data(index1,Qt::EditRole);
-//    if(QMessageBox::question(this,tr("Borrar proveedor frecuente"),tr("¿Desea borrar la ficha del proveedor ?"),
-//                             tr("Aceptar"))==QMessageBox::Accept) {
+    QVariant pKey=modelProv->data(index1,Qt::EditRole);
 
-   // }
+
+    QMessageBox mensaje(this);
+    mensaje.setStyleSheet("background-color: rgb(221,221,221)");
+    mensaje.setWindowTitle(tr("Borrar proveedor frecuente"));
+    mensaje.setText(tr("¿Desea borrar la ficha del proveedor ?"));
+    mensaje.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
+    mensaje.setButtonText(0,tr("No"));
+    mensaje.setButtonText(1,tr("Sí"));
+
+    mensaje.setIcon(QMessageBox::Question);
+
+    if(mensaje.exec()==QMessageBox::Yes) {
+        QSqlQuery queryProv(QSqlDatabase::database("terra"));
+        queryProv.prepare("delete from articulos_prov_frec where id =:id");
+        queryProv.bindValue(":id",pKey.toString());
+        if(!queryProv.exec())
+            QMessageBox::warning(this,tr("Borrar proveedor frecuente"),
+                                 tr("Se ha producido un error al borrar el proveedor frecuente: %1").arg(queryProv.lastError().text()),
+                                 tr("Aceptar"));
+        else
+
+            LlenarTablas();
+    }
+}
+
+void FrmArticulos::asignar_proveedor_pricipal_clicked()
+{
+    QModelIndex celda=ui->tablaProveedores->currentIndex();
+    QModelIndex index1=modelProv->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+
+    QVariant pKey=modelProv->data(index1,Qt::EditRole);
+
+
+    QMessageBox mensaje(this);
+    mensaje.setStyleSheet("background-color: rgb(221,221,221)");
+    mensaje.setWindowTitle(tr("Assignar proveedor"));
+    mensaje.setText(tr("¿Desea hacer de este proveedor el principal?"));
+    mensaje.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
+    mensaje.setButtonText(0,tr("No"));
+    mensaje.setButtonText(1,tr("Sí"));
+
+    mensaje.setIcon(QMessageBox::Question);
+
+    if(mensaje.exec()==QMessageBox::Yes) {
+
+    }
 }
 
 void FrmArticulos::calcular_codigo()
@@ -1066,5 +1074,92 @@ void FrmArticulos::GraficaImportes()
     QVector <float> diciembre;
     diciembre <<ui->txtImporte_compras_diciembre->text().toFloat() <<ui->txtImporte_ventas_diciembre->text().toFloat();
     ui->grafica->addItem("Dic",diciembre);
+
+}
+
+void FrmArticulos::LlenarTablas()
+{
+    //---------------------
+    // Tarifas
+    //---------------------
+    QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
+    modelTarifa->setQuery("select codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp "
+                         "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
+                         QSqlDatabase::database("terra"));
+    ui->TablaTarifas->setModel(modelTarifa);
+    MonetaryDelegate *Delegado = new MonetaryDelegate(this);
+    ui->TablaTarifas->setItemDelegateForColumn(6,Delegado);
+    modelTarifa->setHeaderData(0,Qt::Horizontal,tr("CODIGO"));
+    modelTarifa->setHeaderData(1,Qt::Horizontal,tr("DESCRIPCIÓN"));
+    modelTarifa->setHeaderData(2,Qt::Horizontal,tr("PAIS"));
+    modelTarifa->setHeaderData(3,Qt::Horizontal,tr("DIVISA"));
+    modelTarifa->setHeaderData(4,Qt::Horizontal,tr("%MARG."));
+    modelTarifa->setHeaderData(5,Qt::Horizontal,tr("%M. MÍN."));
+    modelTarifa->setHeaderData(6,Qt::Horizontal,tr("PVP"));
+    ui->TablaTarifas->horizontalHeader()->setResizeMode(0,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(0,110);
+    ui->TablaTarifas->horizontalHeader()->setResizeMode(1,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(1,170);
+    ui->TablaTarifas->horizontalHeader()->setResizeMode(2,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(2,70);
+    ui->TablaTarifas->horizontalHeader()->setResizeMode(3,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(3,70);
+    ui->TablaTarifas->horizontalHeader()->setResizeMode(4,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(4,70);
+    ui->TablaTarifas->horizontalHeader()->setResizeMode(5,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(5,70);
+    ui->TablaTarifas->horizontalHeader()->setResizeMode(6,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(6,90);
+
+    //-----------------------
+    // Proveedores frecuentes
+    //-----------------------
+
+    modelProv->setQuery("Select id,codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
+                        QSqlDatabase::database("terra"));
+
+    ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
+    ui->tablaProveedores->setItemDelegateForColumn(4,new MonetaryDelegate);
+    ui->tablaProveedores->setModel(modelProv);
+
+    modelProv->setHeaderData(1,Qt::Horizontal,tr("COD.PROV."));
+    modelProv->setHeaderData(2,Qt::Horizontal,tr("PROVEEDOR"));
+    modelProv->setHeaderData(3,Qt::Horizontal,tr("COD.ART.PRO."));
+    modelProv->setHeaderData(4,Qt::Horizontal,tr("COSTE"));
+    modelProv->setHeaderData(5,Qt::Horizontal,tr("C.REAL"));
+    modelProv->setHeaderData(6,Qt::Horizontal,tr("DIVISA"));
+    modelProv->setHeaderData(7,Qt::Horizontal,tr("D.OFERTA"));
+    ui->tablaProveedores->setColumnHidden(0,true);
+
+    ui->tablaProveedores->horizontalHeader()->setResizeMode(1,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->resizeSection(1,90);
+    ui->tablaProveedores->horizontalHeader()->setResizeMode(2,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->resizeSection(2,130);
+    ui->tablaProveedores->horizontalHeader()->setResizeMode(3,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->resizeSection(3,95);
+    ui->tablaProveedores->horizontalHeader()->setResizeMode(4,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->resizeSection(4,80);
+    ui->tablaProveedores->horizontalHeader()->setResizeMode(5,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->resizeSection(5,80);
+    ui->tablaProveedores->horizontalHeader()->setResizeMode(6,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->resizeSection(6,90);
+    ui->tablaProveedores->horizontalHeader()->setResizeMode(7,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->resizeSection(7,87);
+
+    //--------------------
+    // Grafica proveedores
+    //--------------------
+
+    ui->graf_prov->Clear();
+    ui->graf_prov->verValoresEjeY(false);
+    rellenar_grafica_proveedores();
+
+    // ------------------
+    // TABLA TRAZABILIDAD
+    // ------------------
+    modelTrazabilidad1 = new QSqlQueryModel(this);
+    modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_Articulo = "+QString::number(oArticulo->id),
+                                  QSqlDatabase::database("terra"));
+    ui->tablaLotes->setModel(modelTrazabilidad1);
 
 }

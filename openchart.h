@@ -1,8 +1,6 @@
 #ifndef OPENCHART_H
 #define OPENCHART_H
 
-#include <QWidget>
-#include <QPainter>
 
 #define SHAREDLIB_LIBRARY
 
@@ -11,6 +9,9 @@
 #else
 #  define SHAREDLIBSHARED_EXPORT Q_DECL_IMPORT
 #endif
+#include <QWidget>
+#include <QPainter>
+#include "qchartpiece.h"
 
 class ChartPiece
 {
@@ -47,6 +48,8 @@ class SHAREDLIBSHARED_EXPORT OpenChart : public QWidget
     Q_PROPERTY(bool Leyenda READ LeyendaEnabled WRITE EnableLeyenda)
     Q_PROPERTY(Tipo_leyenda TipoLeyenda READ TipoLeyenda WRITE setTipoleyenda)
     Q_PROPERTY(QFont LetraLeyenda READ LetraLeyenda WRITE setLetraLeyenda)
+    Q_PROPERTY(bool useAnimation READ useAnimation WRITE setAnimation)
+    Q_PROPERTY(int animationDuration READ animationDuration WRITE setAnimationDuration)
 public:
     OpenChart(QWidget *parent = 0);
     QSize minimumSizeHint() const;
@@ -99,12 +102,20 @@ public:
     void setLetra(QFont f){m_letra = f;
                            this->repaint();}
 
+    bool useAnimation(){return m_animation;}
+    void setAnimation(bool b){m_animation = b;this->repaint();}
+
+    int animationDuration(){return m_aniDuration;}
+    void setAnimationDuration(int i){m_aniDuration = i;}
+
     void addItem(QString nombre, float value);
     void addItem(QString nombre, float value, QColor color);
 
     void addItem(QString nombre, QVector<float> values);
     void addItem(QString nombre, QVector<float> values, QColor color);
     void addMulibarColor(QString nombre , QColor color);
+    void addLineaStop(QString s){lineasStops.append(s);}
+    void addLineaStops(QStringList sl){lineasStops = sl;}
 
     void Clear(){pieces.clear();multibarColors.clear();lineasStops.clear();}
 protected:
@@ -127,11 +138,13 @@ private:
     bool m_labels;
     bool m_values;
     bool m_valuesEnY;
+    bool m_animation;
+    int m_aniDuration;
 
     QFont m_letraLeyenda;
     QFont m_letra;
 
-    QVector<ChartPiece> pieces;
+    QVector<QChartPiece> pieces;
     QVector<QPair<QString , QColor> >multibarColors;
     QStringList lineasStops;
 
@@ -140,6 +153,13 @@ private:
     void drawLeyendaCircular(QPainter* painter);
     void drawYValues(QPainter* painter);
     QPointF GetPoint(double angle, double R1 = 0, double R2 = 0);
+
+    Q_PROPERTY(float percent READ percent WRITE setPercent)
+    float percent(){return m_percent;}
+    void setPercent(float f);
+    void startAnimation();
+
+    float m_percent;
 };
 
 #endif

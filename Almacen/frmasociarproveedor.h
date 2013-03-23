@@ -33,7 +33,6 @@ private slots:
     void setcodigo();
     void setpvd();
     void setDescOferta();
-    void setOferta();
     void seleccionarPro(QModelIndex indicde);
     void setpvdReal();
     void setIdDivisa();

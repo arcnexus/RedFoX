@@ -14,7 +14,7 @@
    <string>Asociar proveedor-Artículo</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../terra.qrc">
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <property name="styleSheet">
@@ -46,7 +46,7 @@
          <string>Filtrar</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../terra.qrc">
           <normaloff>:/Icons/PNG/filtrar.png</normaloff>:/Icons/PNG/filtrar.png</iconset>
         </property>
         <property name="iconSize">
@@ -82,10 +82,10 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_5">
+      <item row="5" column="0" colspan="2">
+       <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>PVD Real:</string>
+         <string>Descripción Oferta:</string>
         </property>
        </widget>
       </item>
@@ -96,28 +96,8 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0" colspan="2">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Descripción Oferta:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="6" column="1" colspan="2">
-       <widget class="QLineEdit" name="txtOferta">
+      <item row="1" column="1" colspan="2">
+       <widget class="QLineEdit" name="txtCodigo">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -136,31 +116,20 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Oferta:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Código</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="txtCodigo">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>PVD:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QComboBox" name="cboDivisa"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Divisa:</string>
         </property>
        </widget>
       </item>
@@ -177,15 +146,32 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_6">
+      <item row="0" column="1">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>Divisa:</string>
+         <string>PVD Real:</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="2">
-       <widget class="QComboBox" name="cboDivisa"/>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Código</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -199,7 +185,7 @@
       <string>Añadir</string>
      </property>
      <property name="icon">
-      <iconset>
+      <iconset resource="../terra.qrc">
        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
      </property>
      <property name="iconSize">
@@ -219,7 +205,7 @@
       <string>Cancelar</string>
      </property>
      <property name="icon">
-      <iconset>
+      <iconset resource="../terra.qrc">
        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
      </property>
      <property name="iconSize">
@@ -241,11 +227,12 @@
   <tabstop>txtPVDReal</tabstop>
   <tabstop>cboDivisa</tabstop>
   <tabstop>txtDescoferta</tabstop>
-  <tabstop>txtOferta</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>BtnCancelar</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../terra.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>BtnCancelar</sender>

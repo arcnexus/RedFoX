@@ -22,7 +22,6 @@ FrmAsociarProveedor::FrmAsociarProveedor(QWidget *parent) :
     connect(ui->btnFiltrar,SIGNAL(clicked()),this,SLOT(filtrar_proveedor()));
     connect(ui->txtCodigo,SIGNAL(editingFinished()),this,SLOT(setcodigo()));
     connect(ui->txtDescoferta,SIGNAL(editingFinished()),this,SLOT(setDescOferta()));
-    connect(ui->txtOferta,SIGNAL(editingFinished()),this,SLOT(setOferta()));
     connect(ui->txtPVD,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
     connect(ui->txtPVDReal,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
     connect(ui->txtPVD,SIGNAL(editingFinished()),this,SLOT(setpvd()));
@@ -60,8 +59,6 @@ void FrmAsociarProveedor::seteditar(QString id)
             this->pvdreal = ui->txtPVDReal->text().toDouble();
             ui->txtDescoferta->setText(queryProvAlt.record().value("descoferta").toString());
             this->DescOferta = ui->txtDescoferta->text();
-            ui->txtOferta->setText(queryProvAlt.record().value("oferta").toString());
-            this->Oferta = ui->txtOferta->text();
             int index = ui->cboDivisa->findText(queryProvAlt.record().value("moneda").toString());
             ui->cboDivisa->setCurrentIndex(index);
             modelProveedor->setQuery("select cProveedor from proveedores where id="+
@@ -97,10 +94,6 @@ void FrmAsociarProveedor::setDescOferta()
     this->DescOferta = ui->txtDescoferta->text();
 }
 
-void FrmAsociarProveedor::setOferta()
-{
-    this->Oferta = ui->txtOferta->text();
-}
 
 void FrmAsociarProveedor::seleccionarPro(QModelIndex indice)
 {
