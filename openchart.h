@@ -4,6 +4,14 @@
 #include <QWidget>
 #include <QPainter>
 
+#define SHAREDLIB_LIBRARY
+
+#if defined(SHAREDLIB_LIBRARY)
+#  define SHAREDLIBSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define SHAREDLIBSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
 class ChartPiece
 {
 public:
@@ -17,8 +25,15 @@ public:
 private:
     QVector<float> values;
 };
+struct roundLabelPoints
+{
+    QString name;
+    QPointF start;
+    QPointF intersec;
+    float value;
+};
 
-class OpenChart : public QWidget
+class SHAREDLIBSHARED_EXPORT OpenChart : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(Tipos Tipo READ Tipo WRITE setTipo)

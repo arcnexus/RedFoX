@@ -12,7 +12,9 @@ class MonetaryDelegate : public QItemDelegate
 public:
     explicit MonetaryDelegate(QObject *parent = 0);
 
-  void     setModelData ( QWidget * editor, QAbstractItemModel * model, const QModelIndex & index ) const;
+  void setModelData ( QWidget * editor, QAbstractItemModel * model, const QModelIndex & index ) const;
+  void paint(QPainter *painter, const QStyleOptionViewItem &option,
+                     const QModelIndex &index) const;
     
 signals:
     

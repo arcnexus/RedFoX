@@ -363,7 +363,11 @@ void FrmArticulos::LLenarCampos()
                       QSqlDatabase::database("terra"));
 
   ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
+  ui->tablaProveedores->setItemDelegateForColumn(4,new MonetaryDelegate);
   ui->tablaProveedores->setModel(modelProv);
+
+  modelProv->setHeaderData(1,Qt::Horizontal,tr("COD.PROV."));
+  modelProv->setHeaderData(2,Qt::Horizontal,tr("PROVEEDOR"));
   ui->tablaProveedores->setColumnHidden(0,true);
 
     //--------------------
