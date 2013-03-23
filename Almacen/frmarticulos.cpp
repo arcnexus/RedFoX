@@ -5,8 +5,11 @@
 #include "Almacen/frmasociarproveedor.h"
 #include "../Auxiliares/spinboxdelegate.h"
 #include "../db_table_view.h"
-#include "grafica.h"
+
 #include"../Auxiliares/monetarydelegate.h"
+
+#include"../Auxiliares/readonlydelegate.h"
+
 
 FrmArticulos::FrmArticulos(QWidget *parent) :
     QDialog(parent),
@@ -1162,4 +1165,103 @@ void FrmArticulos::LlenarTablas()
                                   QSqlDatabase::database("terra"));
     ui->tablaLotes->setModel(modelTrazabilidad1);
 
+}
+
+void FrmArticulos::on_checkBox_toggled(bool checked)
+{
+    if(checked)
+    {
+        ui->cajaValores->show();
+        QPropertyAnimation* animation = new QPropertyAnimation(ui->cajaValores, "pos",this);
+
+        animation->setDuration(1000);
+        animation->setEasingCurve(QEasingCurve::OutElastic);
+        QPoint pos = ui->cajaValores->pos();
+        animation->setStartValue(QPoint(pos.x()+ui->cajaValores->width(),pos.y()));
+        animation->setEndValue(pos);
+
+        QPropertyAnimation* animation0 = new QPropertyAnimation(ui->cajaValores, "size",this);
+        //connect(animation,SIGNAL(finished()),this,SLOT(ani_end()));
+        animation0->setDuration(1000);
+        animation0->setEasingCurve(QEasingCurve::OutElastic);
+        QSize siz0 = ui->cajaValores->size();
+        animation0->setStartValue(QSize(0,siz0.height()));
+        animation0->setEndValue(siz0);
+
+        QGraphicsOpacityEffect* fade_effect = new QGraphicsOpacityEffect(this);
+        //this->setGraphicsEffect(fade_effect);
+        ui->cajaValores->setGraphicsEffect(fade_effect);
+        QPropertyAnimation *animationOp = new QPropertyAnimation(fade_effect, "opacity");
+        animationOp->setEasingCurve(QEasingCurve::Linear);
+        animationOp->setDuration(1000);
+        animationOp->setStartValue(0.0);
+        animationOp->setEndValue(1.0);
+
+        QPropertyAnimation* animation1 = new QPropertyAnimation(ui->frame_9, "size",this);
+        //connect(animation1,SIGNAL(finished()),this,SLOT(ani_end()));
+        animation1->setDuration(1000);
+        animation1->setEasingCurve(QEasingCurve::OutElastic);
+        QSize siz = ui->frame_9->size();
+        animation1->setStartValue(QSize(siz.width()+siz0.width(),siz.height()));
+        animation1->setEndValue(siz);
+
+        QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
+        group->addAnimation(animation);
+        group->addAnimation(animation0);
+        group->addAnimation(animation1);
+        group->addAnimation(animationOp);
+
+        connect(group,SIGNAL(finished()),group,SLOT(deleteLater()));
+        group->start();
+    }
+    else
+    {
+        QPropertyAnimation* animation = new QPropertyAnimation(ui->cajaValores, "pos",this);
+        //connect(animation,SIGNAL(finished()),this,SLOT(ani_end()));
+        animation->setDuration(1300);
+        animation->setEasingCurve(QEasingCurve::OutElastic);
+        QPoint pos = ui->cajaValores->pos();
+        animation->setStartValue(pos);
+        animation->setEndValue(QPoint(pos.x()+ui->cajaValores->width(),pos.y()));
+
+        QPropertyAnimation* animation0 = new QPropertyAnimation(ui->cajaValores, "size",this);
+        //connect(animation,SIGNAL(finished()),this,SLOT(ani_end()));
+        animation0->setDuration(1300);
+        animation0->setEasingCurve(QEasingCurve::OutElastic);
+        QSize siz0 = ui->cajaValores->size();
+        animation0->setStartValue(siz0);
+        animation0->setEndValue(QSize(0,siz0.height()));
+
+        QGraphicsOpacityEffect* fade_effect = new QGraphicsOpacityEffect(this);
+        //this->setGraphicsEffect(fade_effect);
+        ui->cajaValores->setGraphicsEffect(fade_effect);
+        QPropertyAnimation *animationOp = new QPropertyAnimation(fade_effect, "opacity");
+        animationOp->setEasingCurve(QEasingCurve::Linear);
+        animationOp->setDuration(1000);
+        animationOp->setStartValue(1.0);
+        animationOp->setEndValue(0.0);
+
+        QPropertyAnimation* animation1 = new QPropertyAnimation(ui->frame_9, "size",this);
+        //connect(animation1,SIGNAL(finished()),this,SLOT(ani_end()));
+        animation1->setDuration(1300);
+        animation1->setEasingCurve(QEasingCurve::OutElastic);
+        QSize siz = ui->frame_9->size();
+        animation1->setStartValue(siz);
+        animation1->setEndValue(QSize(siz.width()+ui->cajaValores->width(),siz.height()));
+
+        QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
+        group->addAnimation(animation);
+        group->addAnimation(animation0);
+        group->addAnimation(animation1);
+        group->addAnimation(animationOp);
+
+        connect(group,SIGNAL(finished()),this,SLOT(ani_end()));
+        group->start();
+    }
+}
+
+void FrmArticulos::ani_end()
+{
+    ui->cajaValores->hide();
+    sender()->deleteLater();
 }

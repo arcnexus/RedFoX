@@ -208,7 +208,6 @@ FORMS    += mainwindow.ui \
     login.ui \
     Zona_Compras/frmproveedores.ui \
     Busquedas/frmbuscarcliente.ui \
-    pruebas.ui \
     Busquedas/frmbuscarpoblacion.ui \
     Busquedas/frmBuscarFactura.ui \
     Zona_Administrador/frmempresas.ui \
@@ -352,10 +351,16 @@ DEPENDPATH += $$PWD/SQLlibs
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/SQLlibs/qsqlmysql.lib
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/SQLlibs/qsqlmysqld.lib
 
-
-
-
 unix:!macx: LIBS += -L$$PWD/LibsGraficas/ -lopenchartplugin
 
 INCLUDEPATH += $$PWD/LibsGraficas
 DEPENDPATH += $$PWD/LibsGraficas
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/LibsGraficas/ -lopenchartplugin
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/LibsGraficas/ -lopenchartplugind
+
+INCLUDEPATH += $$PWD/
+DEPENDPATH += $$PWD/
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/LibsGraficas/openchartplugin.lib
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/LibsGraficas/openchartplugind.lib

@@ -67,6 +67,8 @@ private slots:
     void GraficaImportes();
     void LlenarTablas();
 
+    void on_checkBox_toggled(bool checked);
+    void ani_end();
 public slots:
     void AnadirSeccion();
 
