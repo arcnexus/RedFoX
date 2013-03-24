@@ -69,6 +69,10 @@ private slots:
 
     void on_checkBox_toggled(bool checked);
     void ani_end();
+    void toggleChecbox();
+    void on_chkmostrarvalores_comparativa_toggled(bool checked);
+    void ani_comparativas_end();
+    void togglechkmostrarvalores_comparativa();
 public slots:
     void AnadirSeccion();
 

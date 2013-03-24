@@ -26,6 +26,9 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->lblCodigo->setVisible(false);
     ui->lblDescripcion->setVisible(false);
     ui->graf_prov->Clear();
+    ui->graf_prov->verValoresEjeY(true);
+    ui->graf_prov->verValores(true);
+    qDebug() << "valores en y" << ui->graf_prov->ValoresEjeY();
 
     GraficaUnidades();
 
@@ -1154,7 +1157,7 @@ void FrmArticulos::LlenarTablas()
     //--------------------
 
     ui->graf_prov->Clear();
-    ui->graf_prov->verValoresEjeY(false);
+    ////uigraf_prov->verValoresEjeY(false);
     rellenar_grafica_proveedores();
 
     // ------------------
@@ -1169,6 +1172,7 @@ void FrmArticulos::LlenarTablas()
 
 void FrmArticulos::on_checkBox_toggled(bool checked)
 {
+    ui->checkBox->setEnabled(false);
     if(checked)
     {
         ui->cajaValores->show();
@@ -1212,6 +1216,7 @@ void FrmArticulos::on_checkBox_toggled(bool checked)
         group->addAnimation(animationOp);
 
         connect(group,SIGNAL(finished()),group,SLOT(deleteLater()));
+         connect(group,SIGNAL(finished()),this,SLOT(toggleChecbox()));
         group->start();
     }
     else
@@ -1256,6 +1261,7 @@ void FrmArticulos::on_checkBox_toggled(bool checked)
         group->addAnimation(animationOp);
 
         connect(group,SIGNAL(finished()),this,SLOT(ani_end()));
+        connect(group,SIGNAL(finished()),this,SLOT(toggleChecbox()));
         group->start();
     }
 }
@@ -1264,4 +1270,116 @@ void FrmArticulos::ani_end()
 {
     ui->cajaValores->hide();
     sender()->deleteLater();
+}
+
+void FrmArticulos::toggleChecbox()
+{
+    ui->checkBox->setEnabled(true);
+}
+
+void FrmArticulos::on_chkmostrarvalores_comparativa_toggled(bool checked)
+{
+    ui->chkmostrarvalores_comparativa->setEnabled(false);
+    if(checked)
+    {
+        ui->cajaValores__comparativa->show();
+        QPropertyAnimation* animation = new QPropertyAnimation(ui->cajaValores__comparativa, "pos",this);
+
+        animation->setDuration(1000);
+        animation->setEasingCurve(QEasingCurve::OutElastic);
+        QPoint pos = ui->cajaValores__comparativa->pos();
+        animation->setStartValue(QPoint(pos.x()+ui->cajaValores__comparativa->width(),pos.y()));
+        animation->setEndValue(pos);
+
+        QPropertyAnimation* animation0 = new QPropertyAnimation(ui->cajaValores__comparativa, "size",this);
+        //connect(animation,SIGNAL(finished()),this,SLOT(ani_end()));
+        animation0->setDuration(1000);
+        animation0->setEasingCurve(QEasingCurve::OutElastic);
+        QSize siz0 = ui->cajaValores__comparativa->size();
+        animation0->setStartValue(QSize(0,siz0.height()));
+        animation0->setEndValue(siz0);
+
+        QGraphicsOpacityEffect* fade_effect = new QGraphicsOpacityEffect(this);
+        //this->setGraphicsEffect(fade_effect);
+        ui->cajaValores__comparativa->setGraphicsEffect(fade_effect);
+        QPropertyAnimation *animationOp = new QPropertyAnimation(fade_effect, "opacity");
+        animationOp->setEasingCurve(QEasingCurve::Linear);
+        animationOp->setDuration(1000);
+        animationOp->setStartValue(0.0);
+        animationOp->setEndValue(1.0);
+
+        QPropertyAnimation* animation1 = new QPropertyAnimation(ui->frame_graficas_comparativas, "size",this);
+        //connect(animation1,SIGNAL(finished()),this,SLOT(ani_end()));
+        animation1->setDuration(1000);
+        animation1->setEasingCurve(QEasingCurve::OutElastic);
+        QSize siz = ui->frame_graficas_comparativas->size();
+        animation1->setStartValue(QSize(siz.width()+siz0.width(),siz.height()));
+        animation1->setEndValue(siz);
+
+        QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
+        group->addAnimation(animation);
+        group->addAnimation(animation0);
+        group->addAnimation(animation1);
+        group->addAnimation(animationOp);
+
+        connect(group,SIGNAL(finished()),group,SLOT(deleteLater()));
+        connect(group,SIGNAL(finished()),this,SLOT(togglechkmostrarvalores_comparativa()));
+        group->start();
+    }
+    else
+    {
+        QPropertyAnimation* animation = new QPropertyAnimation(ui->cajaValores__comparativa, "pos",this);
+        //connect(animation,SIGNAL(finished()),this,SLOT(ani_end()));
+        animation->setDuration(1300);
+        animation->setEasingCurve(QEasingCurve::OutElastic);
+        QPoint pos = ui->cajaValores__comparativa->pos();
+        animation->setStartValue(pos);
+        animation->setEndValue(QPoint(pos.x()+ui->cajaValores__comparativa->width(),pos.y()));
+
+        QPropertyAnimation* animation0 = new QPropertyAnimation(ui->cajaValores__comparativa, "size",this);
+        //connect(animation,SIGNAL(finished()),this,SLOT(ani_end()));
+        animation0->setDuration(1300);
+        animation0->setEasingCurve(QEasingCurve::OutElastic);
+        QSize siz0 = ui->cajaValores__comparativa->size();
+        animation0->setStartValue(siz0);
+        animation0->setEndValue(QSize(0,siz0.height()));
+
+        QGraphicsOpacityEffect* fade_effect = new QGraphicsOpacityEffect(this);
+        //this->setGraphicsEffect(fade_effect);
+        ui->cajaValores__comparativa->setGraphicsEffect(fade_effect);
+        QPropertyAnimation *animationOp = new QPropertyAnimation(fade_effect, "opacity");
+        animationOp->setEasingCurve(QEasingCurve::Linear);
+        animationOp->setDuration(1000);
+        animationOp->setStartValue(1.0);
+        animationOp->setEndValue(0.0);
+
+        QPropertyAnimation* animation1 = new QPropertyAnimation(ui->frame_graficas_comparativas, "size",this);
+        //connect(animation1,SIGNAL(finished()),this,SLOT(ani_end()));
+        animation1->setDuration(1300);
+        animation1->setEasingCurve(QEasingCurve::OutElastic);
+        QSize siz = ui->frame_graficas_comparativas->size();
+        animation1->setStartValue(siz);
+        animation1->setEndValue(QSize(siz.width()+ui->cajaValores__comparativa->width(),siz.height()));
+
+        QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
+        group->addAnimation(animation);
+        group->addAnimation(animation0);
+        group->addAnimation(animation1);
+        group->addAnimation(animationOp);
+
+        connect(group,SIGNAL(finished()),this,SLOT(ani_comparativas_end()));
+        connect(group,SIGNAL(finished()),this,SLOT(togglechkmostrarvalores_comparativa()));
+        group->start();
+    }
+}
+
+void FrmArticulos::ani_comparativas_end()
+{
+    ui->cajaValores__comparativa->hide();
+    sender()->deleteLater();
+}
+
+void FrmArticulos::togglechkmostrarvalores_comparativa()
+{
+        ui->chkmostrarvalores_comparativa->setEnabled(true);
 }

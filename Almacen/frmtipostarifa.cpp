@@ -14,6 +14,12 @@ FrmTiposTarifa::FrmTiposTarifa(QWidget *parent) :
     QSqlQueryModel *mTarifas = new QSqlQueryModel(this);
     mTarifas->setQuery("select descripcion from codigotarifa",QSqlDatabase::database("terra"));
     ui->listatarifas->setModel(mTarifas);
+    ui->cboPais->setModel(Configuracion_global->paises_model);
+    ui->cboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+
+    QSqlQueryModel *monedas = new QSqlQueryModel(this);
+    monedas->setQuery("Select moneda from monedas",QSqlDatabase::database("terra"));
+    ui->cboMoneda->setModel(monedas);
 }
 
 FrmTiposTarifa::~FrmTiposTarifa()

@@ -502,7 +502,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <property name="styleSheet">
@@ -1420,14 +1420,17 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="OpenChart" name="graf_prov" native="true">
+          <widget class="OpenChart" name="graf_prov">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="Title" stdset="0">
+           <property name="Tipo">
+            <enum>OpenChart::Barras</enum>
+           </property>
+           <property name="Title">
             <string>PVD Distribuidores</string>
            </property>
            <property name="Etiquetas" stdset="0">
@@ -1439,7 +1442,7 @@ color: rgb(0, 0, 0);</string>
            <property name="Leyenda" stdset="0">
             <bool>false</bool>
            </property>
-           <property name="animationDuration" stdset="0">
+           <property name="animationDuration">
             <number>700</number>
            </property>
           </widget>
@@ -1648,7 +1651,7 @@ background-color: rgb(255, 255, 127);</string>
             <x>0</x>
             <y>0</y>
             <width>343</width>
-            <height>593</height>
+            <height>588</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1748,18 +1751,18 @@ background-color: rgb(255, 255, 127);</string>
                  <string notr="true">background-color: rgb(254, 255, 205);
 color: rbg(0,0,0);</string>
                 </property>
-                <property name="displayFormat">
-                 <string>dd/MM/yyyy</string>
-                </property>
-                <property name="calendarPopup">
-                 <bool>true</bool>
-                </property>
                 <property name="date">
                  <date>
                   <year>1752</year>
                   <month>9</month>
                   <day>14</day>
                  </date>
+                </property>
+                <property name="displayFormat">
+                 <string>dd/MM/yyyy</string>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -3157,16 +3160,7 @@ Imagen.</string>
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>0</number>
           </property>
           <item>
@@ -3184,7 +3178,7 @@ Imagen.</string>
            </widget>
           </item>
           <item>
-           <widget class="OpenChart" name="grafica" native="true">
+           <widget class="OpenChart" name="grafica">
             <property name="useTitle" stdset="0">
              <bool>false</bool>
             </property>
@@ -4403,23 +4397,58 @@ background-color: rgb(239, 239, 239);</string>
       <attribute name="title">
        <string>Comparativa</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_32">
+      <layout class="QGridLayout" name="gridLayout_12">
        <item row="0" column="0">
-        <widget class="QComboBox" name="cboTipoGrafica_2">
-         <item>
-          <property name="text">
-           <string>Grafica de Barras</string>
+        <widget class="QFrame" name="frame_graficas_comparativas">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="layout_grafica_comparativas">
+          <property name="margin">
+           <number>0</number>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Grafica de Líneas</string>
-          </property>
-         </item>
+          <item>
+           <widget class="QComboBox" name="cboTipoGrafica_2">
+            <item>
+             <property name="text">
+              <string>Grafica de Barras</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Grafica de Líneas</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="OpenChart" name="openChart_2">
+            <property name="useTitle" stdset="0">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="chkmostrarvalores_comparativa">
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Mostrar valores</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item row="0" column="1" rowspan="2">
-        <widget class="QFrame" name="cajaValores_2">
+        <widget class="QFrame" name="cajaValores__comparativa">
          <property name="minimumSize">
           <size>
            <width>512</width>
@@ -4435,7 +4464,7 @@ background-color: rgb(239, 239, 239);</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_23">
+         <layout class="QGridLayout" name="layout_datos_comparativas">
           <item row="1" column="1">
            <widget class="QRadioButton" name="radGrafica_importes_2">
             <property name="text">
@@ -5612,13 +5641,6 @@ background-color: rgb(239, 239, 239);</string>
          </layout>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="OpenChart" name="openChart_2" native="true">
-         <property name="useTitle" stdset="0">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="Trazabilidad">
@@ -5929,7 +5951,6 @@ alternate-background-color: rgb(255, 255, 255);</string>
   <tabstop>txtImporte_ventas_noviembre</tabstop>
   <tabstop>txtUnid_ventas_diciembre</tabstop>
   <tabstop>txtImporte_ventas_diciembre</tabstop>
-  <tabstop>cboTipoGrafica_2</tabstop>
   <tabstop>radGrafica_importes_2</tabstop>
   <tabstop>radGrafica_unidades_2</tabstop>
   <tabstop>txtImporte_compras_enero_3</tabstop>
@@ -6014,12 +6035,12 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>147</y>
+     <x>280</x>
+     <y>184</y>
     </hint>
     <hint type="destinationlabel">
-     <x>198</x>
-     <y>100</y>
+     <x>350</x>
+     <y>364</y>
     </hint>
    </hints>
   </connection>
@@ -6030,12 +6051,12 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>170</y>
+     <x>280</x>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
-     <x>198</x>
-     <y>105</y>
+     <x>350</x>
+     <y>477</y>
     </hint>
    </hints>
   </connection>
@@ -6046,12 +6067,12 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>188</x>
-     <y>193</y>
+     <x>350</x>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
-     <x>242</x>
-     <y>97</y>
+     <x>782</x>
+     <y>213</y>
     </hint>
    </hints>
   </connection>
@@ -6062,8 +6083,8 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>198</x>
-     <y>94</y>
+     <x>350</x>
+     <y>121</y>
     </hint>
     <hint type="destinationlabel">
      <x>862</x>
@@ -6078,8 +6099,8 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>198</x>
-     <y>94</y>
+     <x>350</x>
+     <y>121</y>
     </hint>
     <hint type="destinationlabel">
      <x>171</x>
@@ -6094,12 +6115,12 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>188</x>
-     <y>215</y>
+     <x>350</x>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
-     <x>198</x>
-     <y>157</y>
+     <x>350</x>
+     <y>532</y>
     </hint>
    </hints>
   </connection>
@@ -6110,12 +6131,12 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>147</y>
+     <x>280</x>
+     <y>184</y>
     </hint>
     <hint type="destinationlabel">
-     <x>182</x>
-     <y>136</y>
+     <x>509</x>
+     <y>348</y>
     </hint>
    </hints>
   </connection>
@@ -6126,12 +6147,12 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>170</y>
+     <x>280</x>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
-     <x>188</x>
-     <y>140</y>
+     <x>576</x>
+     <y>467</y>
     </hint>
    </hints>
   </connection>
@@ -6142,12 +6163,12 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>188</x>
-     <y>193</y>
+     <x>350</x>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
-     <x>232</x>
-     <y>132</y>
+     <x>1008</x>
+     <y>279</y>
     </hint>
    </hints>
   </connection>
@@ -6158,12 +6179,12 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>188</x>
-     <y>215</y>
+     <x>350</x>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
-     <x>188</x>
-     <y>146</y>
+     <x>576</x>
+     <y>521</y>
     </hint>
    </hints>
   </connection>
@@ -6174,12 +6195,12 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>198</x>
-     <y>94</y>
+     <x>350</x>
+     <y>121</y>
     </hint>
     <hint type="destinationlabel">
-     <x>242</x>
-     <y>110</y>
+     <x>782</x>
+     <y>432</y>
     </hint>
    </hints>
   </connection>

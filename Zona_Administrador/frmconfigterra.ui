@@ -510,17 +510,17 @@ color: rgb(255,255,255);</string>
        <string>BD TiendaWEB</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Host:</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_12">
          <property name="text">
           <string>usuario:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" colspan="2">
+        <widget class="QLineEdit" name="txtPasswordDBWeb">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
@@ -531,22 +531,8 @@ color: rgb(255,255,255);</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_14">
-         <property name="text">
-          <string>Nombre BD web:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>Puerto:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtHostWeb">
+       <item row="4" column="1" colspan="2">
+        <widget class="QLineEdit" name="txtPuerto_DBWeb">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -559,17 +545,24 @@ color: rgb(255,255,255);</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtPasswordDBWeb">
+       <item row="1" column="1" colspan="2">
+        <widget class="QLineEdit" name="txtHostWeb">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtPuerto_DBWeb">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Nombre BD web:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Host:</string>
          </property>
         </widget>
        </item>
@@ -577,6 +570,30 @@ color: rgb(255,255,255);</string>
         <widget class="QLineEdit" name="txtNombreBDWeb">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Puerto:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>Dto fijo web:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QLineEdit" name="lineEdit">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
