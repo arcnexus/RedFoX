@@ -13,6 +13,7 @@
 #include <QSqlTableModel>
 #include <QObject>
 #include <QDoubleValidator>
+#include <QNetworkReply>
 class Configuracion: public QObject
 {
     Q_OBJECT
@@ -111,8 +112,15 @@ public:
     static bool comprobarNIF(QString country_code, QString nif);
     static QString Crypt(QString input);
     static QString DeCrypt(QString input);
+    void getCambio(QString from, QString to , float cuanty = 1);
 public slots:
     void format_text();
+private slots:
+    void cambioReply(QNetworkReply * reply);
+signals:
+    void cambioReady(float);
+private:
+    void readCambio(QString s);
 };
 
 #endif // CONFIGURACION_H

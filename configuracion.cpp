@@ -10,6 +10,8 @@
 #include "SOAP/checkVatBinding.nsmap"
 
 #include <QLineEdit>
+#include <QtNetwork/QSslConfiguration>
+#include <QSslError>
 Configuracion::Configuracion(QObject* parent) :
     QObject(parent)
 {
@@ -574,6 +576,18 @@ QString Configuracion::DeCrypt(QString input)
     return "";
 }
 
+void Configuracion::getCambio(QString from, QString to, float cuanty)
+{
+    QString url = QString("https://www.google.com/finance/converter?a=%1&from=%2&to=%3")
+            .arg(cuanty)
+            .arg(from)
+            .arg(to);
+    QNetworkAccessManager * manager = new QNetworkAccessManager(this);
+    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(cambioReply(QNetworkReply*)));
+
+    manager->get(QNetworkRequest(QUrl(url)));
+}
+
 void Configuracion::format_text()
 {
     QLineEdit * lineEdit = qobject_cast<QLineEdit*>(sender());
@@ -586,6 +600,51 @@ void Configuracion::format_text()
     }
 }
 
+void Configuracion::cambioReply(QNetworkReply *reply)
+{
+    reply->deleteLater();
+    if(reply->error() == QNetworkReply::NoError)
+        {
+            // Get the http status code
+            int v = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+            if (v >= 200 && v < 300) // Success
+            {
+                // Here we got the final reply
+                //QString replyText = reply->readAll();
+                readCambio(reply->readAll());
+            }
+            else if (v >= 300 && v < 400) // Redirection
+            {
+
+                // Get the redirection url
+                QUrl newUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
+                // Because the redirection url can be relative,
+                // we have to use the previous one to resolve it
+                newUrl = reply->url().resolved(newUrl);
+
+                QNetworkAccessManager *manager = reply->manager();
+                connect(manager,SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)),this,SLOT(onIgnoreSSLErrors(QNetworkReply*,QList<QSslError>)));
+                connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(cambioReply(QNetworkReply*)));
+                QNetworkRequest redirection(newUrl);
+                manager->get(redirection);
+                return; // to keep the manager for the next request
+            }
+        }
+    reply->manager()->deleteLater();
+}
+
+
+void Configuracion::readCambio(QString s)
+{
+    QString place = "<span class=bld>";
+    int index = s.indexOf(place)+place.size();
+    int end = s.indexOf(" ",index);
+    QString sFloat = s.mid(index,end-index);
+    bool ok;
+    float f = sFloat.toFloat(&ok);
+    if(ok)
+        emit cambioReady(f);
+}
 
 
 
