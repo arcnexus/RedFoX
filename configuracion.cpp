@@ -12,9 +12,11 @@
 #include <QLineEdit>
 #include <QtNetwork/QSslConfiguration>
 #include <QSslError>
+
 Configuracion::Configuracion(QObject* parent) :
     QObject(parent)
 {
+
     iva_model = 0;
     paises_model = 0;
     client_model = 0;
@@ -637,6 +639,53 @@ void Configuracion::getCambio(QString from, QString to, float cuanty)
     manager->get(QNetworkRequest(QUrl(url)));
 }
 
+void Configuracion::generarTablaDivisas()
+{
+    QFile f(":/Icons/divisas.txt");
+    if(f.open((QIODevice::ReadOnly | QIODevice::Text)))
+    {
+        QSqlQuery q(QSqlDatabase::database("terra"));
+        QTextStream in(&f);
+        in.setCodec("UTF-8");
+        QString all = in.readAll();
+        all.remove("\r");
+        all.remove("\n");
+        QStringList blocks = all.split("},",QString::SkipEmptyParts);
+        foreach(const QString &moneda , blocks)
+        {
+            QStringList subBlocks = moneda.split("\",",QString::SkipEmptyParts);
+            QString nombre_corto = subBlocks.at(0).mid(subBlocks.at(0).lastIndexOf("\"")+1);
+            QString nombre = subBlocks.at(1).mid(subBlocks.at(1).lastIndexOf("\"")+1);
+            QString simbol = subBlocks.at(4).mid(subBlocks.at(4).lastIndexOf("\"")+1);
+            simbol.remove("}");
+            simbol = simbol.trimmed();
+            q.prepare("INSERT INTO monedas ("
+                                  "moneda ,"
+                                  "nombreCorto ,"
+                                  "simbolo "
+                                  ")"
+                                  "VALUES ("
+                                  ":moneda, :nombreCorto, :simbolo );");
+            q.bindValue(":moneda",nombre);
+            q.bindValue(":nombreCorto",nombre_corto);
+            q.bindValue(":simbolo",simbol);
+            if(!q.exec())
+                    qDebug()<< q.lastError();
+        }
+    }
+}
+
+void Configuracion::updateTablaDivisas(QString current)
+{
+    connect(this,SIGNAL(cambioReady(float,QString)),SLOT(applyCambio(float,QString)));
+    QSqlQuery q(QSqlDatabase::database("terra"));
+    if(q.exec("SELECT * FROM monedas"))
+    {
+        while(q.next())
+            getCambio(current,q.record().value("nombreCorto").toString());
+    }
+}
+
 void Configuracion::format_text()
 {
     QLineEdit * lineEdit = qobject_cast<QLineEdit*>(sender());
@@ -682,17 +731,38 @@ void Configuracion::cambioReply(QNetworkReply *reply)
     reply->manager()->deleteLater();
 }
 
+void Configuracion::applyCambio(float f, QString target)
+{
+    static int i= 1;
+    qDebug() << i << target;
+    i++;
+    QSqlQuery q(QSqlDatabase::database("terra"));
+    QString sql = QString("UPDATE monedas SET cambio = '%1' WHERE nombreCorto ='%2';").arg(f).arg(target);
+    if(!q.exec(sql))
+        qDebug() << q.lastError();
+}
+
 
 void Configuracion::readCambio(QString s)
 {
+    static int c = 0;
+    qDebug()<< "readCambio"<< c;
+
     QString place = "<span class=bld>";
     int index = s.indexOf(place)+place.size();
     int end = s.indexOf(" ",index);
+    int end2 = s.indexOf("</span>",end);
     QString sFloat = s.mid(index,end-index);
+    QString to = s.mid(end+1,end2-end-1);
     bool ok;
     float f = sFloat.toFloat(&ok);
     if(ok)
-        emit cambioReady(f);
+    {
+        c++;
+        emit cambioReady(f,to);
+    }
+    else
+        qDebug()<<s;
 }
 /*
  *connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(unSLOT(float);

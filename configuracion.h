@@ -128,12 +128,15 @@ public:
     static QString Crypt(QString input);
     static QString DeCrypt(QString input);
     void getCambio(QString from, QString to , float cuanty = 1);
+    void generarTablaDivisas();
+    void updateTablaDivisas(QString current);
 public slots:
-    void format_text();
+    void format_text();    
 private slots:
     void cambioReply(QNetworkReply * reply);
+    void applyCambio(float f,QString target);
 signals:
-    void cambioReady(float);
+    void cambioReady(float,QString target = "");
 private:
     void readCambio(QString s);
 };

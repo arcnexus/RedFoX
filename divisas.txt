@@ -1,0 +1,652 @@
+﻿{
+        "shortname": "EUR",
+        "longname": "Euro",
+        "users":  "Austria, Bélgica, Chipre, Finlandia, Helsinki, Francia, París, Alemania, Berlín, Grecia, Atenas, Irlanda, Dublín, Italia, Roma, Milán, Pisa, Luxemburgo, Malta, Holanda, Portugal, Eslovenia, España, Madrid, Barcelona, Mayotte, Mónaco, San Pedro y Miquelón, San Marino, Ciudad del Vaticano, Akrotiri y Dhekelia, Andorra, Kosovo, Montenegro, Saint-Martin, Creta, Rodas, Corfú, Cefalonia, Cefalonia, Cos, Leucas, Miconos, Santorini, Scíathos, Zante, Zacinto, Aegina, Andros, Ios, Kalymnos, Lesvos, Naxos, Paros, Samos, Thassos, Alonissos, Leros, Lipsi, Patmos, Paxos, Skopelos, Symi, Angistri, Hidra, Ikaria, Ithaca, Esciro, La Palma, Tenerife, Lanzarote, Fuerteventure, Gran Canaria, Mallorca, Menorca, Minorca, Ibiza",
+		"alternatives": "euro, euro, euro",
+        "symbol": "€",
+        "highlight": "1"
+    },
+    {
+        "shortname": "GBP",
+        "longname": "Libra esterlina",
+        "users":  "Reino Unido, Reino Unido, Inglaterra, Gran Bretaña, Gran Bretaña, Irlanda del Norte, Gales, Escocia, Reino Unido, Isla de Man, Jersey, Guernsey, Tristán da Cunha, Islas Georgias del Sur y Sandwich del Sur",
+        "alternatives": "Quid, Libra esterlina, Esterlina, Londres, Cardiff, Edimburgo, Belfast",
+        "symbol": "£",
+        "highlight": "1"
+    },
+    {
+        "shortname": "USD",
+        "longname": "Dólar estadounidense",
+        "users":  "Estados Unidos de América, Timor Oriental, Islas Vírgenes Británicas (Reino Unido), Ecuador, El Salvador, Islas Marshall , Estados Federados de Micronesia,Palaos, Panamá, Islas Turcas y Caicos (Reino Unido), Bermuda, EE. UU., EE. UU., Estaos Unidos, Alabama, Montgomery, Alaska, Juneau, Arizona, Phoenix, Arkansas, Little Rock, California, Sacramento, Colorado, Denver, Connecticut, Hartford, Delaware, Dover, Florida, Tallahassee, Georgia, Atlanta, Hawaii, Honolulu, Idaho, Boise, Indiana, Indianapolis, Iowa, Des Moines, Kansas, Topeka, Kentucky, Frankfort, Louisiana, Baton Rouge, Maine, Augusta, Maryland, Annapolis, Massachusetts, Boston, Michigan, Lansing, Minnesota, Saint Paul, Mississippi, Jackson, Missouri, Jefferson City, Montana, Helena, Nebraska, Lincoln, Nevada, Carson City, New Hampshire, Concord, Nueva Jersey, Trenton, Nueva México, Santa Fe, Nueva York, Albany (Nueva York), Carolina del Norte, Raleigh, Dakota del Norte, Bismarck, Ohio, Columbus, Oklahoma, Oklahoma City, Oregon, Salem, Pensilvania, Harrisburg, Rhode Island, Providence, Carolina del Sur, Columbia, Dakota del Sur, Pierre, Tennessee, Nashville, Texas, Austin, Utah, Salt Lake City, Vermont, Montpelier, Virginia, Richmond, Washington, Olympia, West Virginia, Charleston, Wisconsin, Madison, Wyoming, Cheyenne, Los Ángeles",
+        "alternatives": "Buck,Green,Greenback",
+        "symbol": "$",
+        "highlight": "1"
+    },
+    {
+        "shortname": "AUD",
+        "longname": "Dólar australiano",
+        "users":  "Australia,Sídney,Melbourne,Perth,Kiribati,Nauru,Tuvalu,Isla Christmas,Islas Cocos (Keeling),Isla Norfolk",
+        "alternatives": "",
+        "symbol": "$",
+        "highlight": "1"
+    },
+    {
+        "shortname": "CAD",
+        "longname": "Dólar canadiense",
+        "users":  "Canadá",
+        "alternatives": "loonie,buck,huard,piastre,perras,",
+        "symbol": "C$",
+        "highlight": "1"
+    },
+    {
+        "shortname": "CHF",
+        "longname": "Franco suizo",
+        "users":  "Suiza, Liechtenstein",
+        "alternatives": "Schweizer Franken,franc suisse,franco svizzero franc svizzer,franco suizo",
+        "symbol": "CHF",        
+        "highlight": ""
+    },
+    {
+        "shortname": "CNY",
+        "longname": "Yuan chino",
+        "users":  "China, Hong Kong, Maco, Shanghái, Beijing, Tianjin, Guangzhou, Wuhan, Chongqing, Shenyang, Yuan",
+        "alternatives": "jiao",
+        "symbol": "¥",        
+        "highlight": ""
+    },
+    {
+        "shortname": "HKD",
+        "longname": "Dólar de Hong Kong",
+        "users":  "China, Hong Kong, Macao",
+        "alternatives": "",
+        "symbol": "HK$",
+	"highlight": ""        
+    },
+    {
+        "shortname": "IDR",
+        "longname": "Rupia indonesia",
+        "users":  "Indonesia, Yakarta",
+        "alternatives": "",
+        "symbol": "Rp"        
+    },
+    {
+        "shortname": "INR",
+        "longname": "Rupia india",
+        "users":  "Bután, India, Bangalore, Mumbai, Delhi, Calcuta, Chennai, Hyderabad, Ahmedabad",
+        "alternatives": "roopayi, rupaye, rubai",
+        "symbol": "Rs."        
+    },
+    {
+        "shortname": "JPY",
+        "longname": "Yen japonés",
+        "users":  "Japón, Tokio, Yokohama, Nippon,...",
+        "alternatives": "A.U.U.",
+        "symbol": "¥",
+        "highlight": "1"
+    },
+    {
+        "shortname": "THB",
+        "longname": "Baht tailandés",
+        "users":  "Tailandia, Bangkok",
+        "alternatives": "Baht",
+        "symbol": "?" ,        
+        "highlight": ""
+    },
+    {
+        "shortname": "DZD",
+        "longname": "Dinar argelino",
+        "users":  "Argelia, Argel, República Democrática y Popular de Argelia, Rpublique Algrienne Dmocratique et Populaire, ad-Dmuqr---------yah ash-..byah,Al-Jumhryah al-..iryah",
+        "alternatives": "",
+        "symbol": "??"       
+    },
+    {
+        "shortname": "ARS",
+        "longname": "Peso argentino",
+        "users":  "Argentina,Buenos Aires,República Argentina,República Argentina",
+        "alternatives": "",
+        "symbol": "$"       
+    },
+    {
+        "shortname": "BHD",
+        "longname": "Dinar de Bahréin",
+        "users":  "Bahréin,Manama,Reino de Bahréin",
+        "alternatives": "",
+        "symbol": ".?.?"       
+    },
+    {
+        "shortname": "BDT",
+        "longname": "Taka de Bangladesh",
+        "users":  "Bangladesh,Dacca,República Popular de Bangladesh,Go.noprojatontri Bangladesh",
+        "alternatives": "",
+        "symbol": "Tk"       
+    },
+    {
+        "shortname": "BOB",
+        "longname": "Boliviano",
+        "users":  "Bolivia,Sucre",
+        "alternatives": "",
+        "symbol": "Bs"       
+    },
+    {
+        "shortname": "BWP",
+        "longname": "Pula de Botsuana",
+        "users":  "Botsuana, Gaborone",
+        "alternatives": "",
+        "symbol": "P"       
+    },
+    {
+        "shortname": "BRL",
+        "longname": "Real brasileño",
+        "users":  "Brasil, Río de Janeiro, Sa.o Paulo, San Pablo, República Federativa del Brasil, Republica Federativa do Brasil",
+        "alternatives": "",
+        "symbol": "R$"       
+    },
+    {
+        "shortname": "BND",
+        "longname": "Dólar de Brunéi",
+        "users":  "Brunéi, Bandar Seri Begawan, Singapur, Morada de la Paz, El Sultanato de Brunei Darussalam",
+        "alternatives": "",
+        "symbol": "B$"       
+    },
+    {
+        "shortname": "BGN",
+        "longname": "Lev búlgaro",
+        "users":  "Bulgaria,Sofía,República de Bulgaria,Republika Balgariya",
+        "alternatives": "",
+        "symbol": "??"       
+    },
+    {
+        "shortname": "KYD",
+        "longname": "Dólar de las Islas Caimán",
+        "users":  "Islas Caimán, Grand Cayman, Cayman Brac, Little Cayman, George Town",
+        "alternatives": "",
+        "symbol": "$"       
+    },
+    {
+        "shortname": "XOF",
+        "longname": "Franco CFA (BCEAO)",
+        "users":  "Costa de Marfil, Yamusukro, Abiyán, República de Costa de Marfil, Costa de Marfil, Benin, Burkina Faso, Guinea-Bissau, Mali, Níger, Senegal, Togo",
+		"alternatives": "cefa, franco, Franco CFA de África Occidental",
+        "symbol": "XOF"       
+    },
+    {
+        "shortname": "CLP",
+        "longname": "Peso chileno",
+        "users":  "Chile,Santiago",
+        "alternatives": "",
+        "symbol": "$"       
+    },
+    {
+        "shortname": "COP",
+        "longname": "Peso colombiano",
+        "users":  "Colombia,Bogotá,República de Colombia",
+        "alternatives": "",
+        "symbol": "$"       
+    },
+    {
+        "shortname": "CRC",
+        "longname": "Colón costarricense",
+        "users":  "Costa Rica,San José,San José,República de Costa Rica,Republic of Costa Rica",
+        "alternatives": "",
+        "symbol": "¢"       
+    },
+    {
+        "shortname": "HRK",
+        "longname": "Kuna croata",
+        "users":  "Croacia, Zagreb, Republika Hrvatska, República de Croacia",
+        "alternatives": "",
+        "symbol": "kn"       
+    },
+    {
+        "shortname": "CZK",
+        "longname": "Corona checa",
+        "users":  "Checoeslovaquia, Praga",
+		"alternatives": "KCS",
+        "symbol": "Kc"       
+    },
+    {
+        "shortname": "DKK",
+        "longname": "Corona danesa",
+        "users":  "Dinamarca, Copenhague, Groenlandia, Islas Faroe",
+		"alternatives": "DKK",
+        "symbol": "kr"       
+    },
+    {
+        "shortname": "DOP",
+        "longname": "Peso dominicano",
+        "users":  "República Dominicana, República Dominicana, La Española, Antillas Mayores",
+        "alternatives": "",
+        "symbol": "RD$"       
+    },
+
+    {
+        "shortname": "EGP",
+        "longname": "Libra egipcia",
+        "users":  "Egipto, Cairo, Alejandría, República Árabe de Egipto",
+        "alternatives": "",
+        "symbol": "?.?"       
+    },
+    {
+        "shortname": "SVC",
+        "longname": "El Colon del Salvador",
+        "users":  "El Salvador, San Salvador, República de El Salvador",
+        "alternatives": "",
+        "symbol": "¢"       
+    },
+    {
+        "shortname": "EEK",
+        "longname": "Corona estonia",
+        "users":  "Estonia, República de Estonia, Tallin, Eesti, Eesti Vabariik",
+        "alternatives": "",
+        "symbol": "EEK"       
+    },
+    {
+        "shortname": "FJD",
+        "longname": "Dólar de Fiji",
+        "users":  "Fiyi, República de las Islas Fiyi, Suva",
+        "alternatives": "",
+        "symbol": "FJ$"       
+    },
+    {
+        "shortname": "HNL",
+        "longname": "Lempira hondureña",
+        "users":  "Honduras, Tegucigalpa, República de Honduras, República de Honduras",
+        "alternatives": "",
+        "symbol": "L"       
+    },
+    {
+        "shortname": "HUF",
+        "longname": "Florín húngaro",
+        "users":  "Hungría, Budapest, Magyar Ko.ztarsasag, República de Hungría",
+        "alternatives": "",
+        "symbol": "Ft"       
+    },
+    {
+        "shortname": "ILS",
+        "longname": "Shekel israelí",
+        "users":  "Israel, Territorios Palestinos, Cisjordania, Franja de Gaza, Jerusalén",
+        "alternatives": "",
+        "symbol": "?"       
+    },
+    {
+        "shortname": "JMD",
+        "longname": "Dólar jamaiquino",
+        "users":  "Jamaica, Kingston",
+        "alternatives": "",
+        "symbol": "$"       
+    },
+    {
+        "shortname": "JOD",
+        "longname": "Dinar jordano",
+        "users":  "Jordania, Cisjordania, Al-Mamlakah al-Urdunniyyah al-Ha.s.imiyyah, Reino Hachemita de Jordania, Ammán",
+        "alternatives": "",
+        "symbol": "JOD"       
+    },
+    {
+        "shortname": "KZT",
+        "longname": "Tenge kazako",
+        "users":  "Kazajstán, República de Kazajstán, Qazaqstan Respubli.ka, Astana",
+        "alternatives": "",
+        "symbol": "KZT"       
+    },
+    {
+        "shortname": "KES",
+        "longname": "Chelín keniano",
+        "users":  "Kenia, Nairobi, Jamhuri ya Kenya, República de Kenia",
+        "alternatives": "",
+        "symbol": "KSh"       
+    },
+    {
+        "shortname": "KRW",
+        "longname": "Won surcoreano",
+        "users":  "Corea del Sur, Daehanminguk, República de Corea, Seúl",
+        "alternatives": "",
+        "symbol": "?",
+        "highlight": ""
+    },
+    {
+        "shortname": "KWD",
+        "longname": "Dinar kuwaití",
+        "users":  "Kuwait, Dawlat al-Kuwayt, Estado de Kuwait",
+        "alternatives": "",
+        "symbol": "?.?"       
+    },
+    {
+        "shortname": "LVL",
+        "longname": "Lats letón",
+        "users":  "Letonia, República de Letonia,Latvijas Republika",
+        "alternatives": "",
+        "symbol": "Ls"       
+    },
+    {
+        "shortname": "LBP",
+        "longname": "Libra libanesa",
+        "users":  "Líbano, República del Líbano, Al-Jumhu.ri.yyah al-Lubna.ni.yyah, Beirut",
+        "alternatives": "",
+        "symbol": "?.?"       
+    },
+    {
+        "shortname": "LTL",
+        "longname": "Litas lituana",
+        "users":  "Lituania, Lietuvos Respublika, República de Lituania",
+        "alternatives": "",
+        "symbol": "Lt"       
+    },
+    {
+        "shortname": "MKD",
+        "longname": "Dinar macedonio",
+        "users":  "República de Macedonia, Macedonia, Republika Makedonija",
+        "alternatives": "",
+        "symbol": "MKD"       
+    },
+    {
+        "shortname": "MYR",
+        "longname": "Ringgit malayo",
+        "users":  "Malasia, Kuala Lumpur",
+        "alternatives": "",
+        "symbol": "RM"       
+    },
+    {
+        "shortname": "MVR",
+        "longname": "Rupia de Maldivas",
+        "users":  "Maldivas, Malé, Divehi Ra.jje ge Jumhuriyya., República de Maldivas",
+        "alternatives": "",
+        "symbol": "Rf"       
+    },
+    {
+        "shortname": "MUR",
+        "longname": "Rupia mauricia",
+        "users":  "Mauricio, Puerto Luis, República de Mauricio",
+        "alternatives": "",
+        "symbol": "?"       
+    },
+    {
+        "shortname": "MXN",
+        "longname": "Peso mexicano",
+        "users":  "México, Ciudad de México",
+        "alternatives": "",
+        "symbol": "$"       
+    },
+    {
+        "shortname": "MDL",
+        "longname": "Leu moldavo",
+        "users":  "Moldavia, República Moldavia, República de Moldavia, Chisinau",
+        "alternatives": "",
+        "symbol": "MDL"       
+    },
+    {
+        "shortname": "MAD",
+        "longname": "Dirham marroquí",
+        "users":  "Marruecos, Sahara Occidental, Al-Mamlaka al-Maghribiyya, Reino de Marruecos, Rabat,al-G.arbiyyah,Sahara Occidental, Sahara Occidental, El Aaiun,Laa.youne",
+        "alternatives": "",
+        "symbol": "?.?."       
+    },
+    {
+        "shortname": "NAD",
+        "longname": "Dólar de Namibia",
+        "users":  "Namibia, República de Namibia, Windhoek",
+        "alternatives": "",
+        "symbol": "N$"       
+    },
+    {
+        "shortname": "NPR",
+        "longname": "Rupia nepalí",
+        "users":  "Nepal, Katmandú, Sanghiya Lokta.ntrik Ganatantra Nepa.l, República Federal Democrática de Nepal",
+        "alternatives": "",
+        "symbol": "?"       
+    },
+    {
+        "shortname": "ANG",
+        "longname": "Guilder antillano",
+        "users":  "Antillas Neerlandesas,Willemstad,Nederlandse Antillen,Antia Ulandes,Antia Hulandes, Antillas Holandesas",
+        "alternatives": "",
+        "symbol": "NAƒ"       
+    },
+    {
+        "shortname": "TRY",
+        "longname": "Lira turca",
+        "users":  "Turquía, Estanbul, Ankara, Norte de Chipre, Kuzey Kbrs Tu.rk Cumhuriyeti, República Turca del Norte de Chipre, Nicosia, Lefkosa",
+        "alternatives": "",
+        "symbol": "YTL"       
+    },
+    {
+        "shortname": "NZD",
+        "longname": "Dólar neozelandés",
+        "users":  "Nueva Zelanda, Wellington",
+        "alternatives": "",
+        "symbol": "$" ,      
+        "highlight": ""
+    },
+    {
+        "shortname": "NIO",
+        "longname": "Córdoba nicaragüense",
+        "users":  "Nicaragua, Managua, República de Nicaragua",
+        "alternatives": "",
+        "symbol": "C$"       
+    },
+    {
+        "shortname": "NGN",
+        "longname": "Naira nigeriano",
+        "users":  "Nigeria, Lagos",
+        "alternatives": "",
+        "symbol": "?"       
+    },
+    {
+        "shortname": "NOK",
+        "longname": "Corona noruega",
+        "users":  "Noruega, Oslo",
+        "alternatives": "",
+        "symbol": "kr"       
+    },
+    {
+        "shortname": "OMR",
+        "longname": "Rial omaní",
+        "users":  "Omán, Mascate",
+        "alternatives": "",
+        "symbol": "?.?."       
+    },
+    {
+        "shortname": "PKR",
+        "longname": "Rupia pakistaní",
+        "users":  "Pakistán, Islamabad, Karachi, Lahore",
+        "alternatives": "",
+        "symbol": "Rs."       
+    },
+    {
+        "shortname": "PGK",
+        "longname": "Kina de Papúa Nueva Guinea",
+        "users":  "Papúa Nueva Guinea, Port Moresby",
+        "alternatives": "",
+        "symbol": "K"       
+    },
+    {
+        "shortname": "PYG",
+        "longname": "Guaraní paraguayo",
+        "users":  "Paraguay, Asunción",
+        "alternatives": "",
+        "symbol": "?"       
+    },
+    {
+        "shortname": "PEN",
+        "longname": "Nuevo Sol peruano",
+        "users":  "Perú, Lima",
+        "alternatives": "",
+        "symbol": "S/."       
+    },
+    {
+        "shortname": "PHP",
+        "longname": "Peso filipino",
+        "users":  "Filipinas, Manila",
+        "alternatives": "",
+        "symbol": "?"       
+    },
+    {
+        "shortname": "PLN",
+        "longname": "Zloty polaco",
+        "users":  "Polonia, Varsovia, República de Polonia",
+		"alternatives": "z.oty,zloty",
+        "symbol": "zl"       
+    },
+    {
+        "shortname": "QAR",
+        "longname": "Riyal Qatarí",
+        "users":  "Qatar, Doha, Estado de Qatar",
+		"alternatives": "Riyal Qatarí",
+        "symbol": "?.?"       
+    },
+    {
+        "shortname": "RON",
+        "longname": "Leu rumano",
+        "users":  "Rumanía, Bucarest",
+        "alternatives": "",
+        "symbol": "L"       
+    },
+    {
+        "shortname": "RUB",
+        "longname": "Rublo ruso",
+        "users":  "Rusia, Moscú, San Petersburgo",
+        "alternatives": "",
+        "symbol": "???"       
+    },
+    {
+        "shortname": "SAR",
+        "longname": "Riyal saudí",
+        "users":  "Arabia Saudita, Riad",
+        "alternatives": "",
+        "symbol": "?.?"       
+    },
+    {
+        "shortname": "SCR",
+        "longname": "Rupia de Seychelles",
+        "users":  "Islas Seychelles, Victoria, República de Seychelles",
+        "alternatives": "",
+        "symbol": "SR"       
+    },
+    {
+        "shortname": "SLL",
+        "longname": "Leone de Sierra Leona",
+        "users":  "Sierra Leona, Freetown",
+        "alternatives": "",
+        "symbol": "Le"       
+    },
+    {
+        "shortname": "SGD",
+        "longname": "Dólar de Singapur",
+        "users":  "Singapur",
+        "alternatives": "",
+        "symbol": "S$",
+	"highlight": ""       
+    },
+    {
+        "shortname": "SKK",
+        "longname": "Corona eslovaca",
+        "users":  "Eslovaquia, Bratislava",
+        "alternatives": "",
+        "symbol": "Sk"       
+    },
+    {
+        "shortname": "ZAR",
+        "longname": "Rand sudafricano",
+        "users":  "Sudáfrica, República de África del Sur, Pretoria, Bloemfontein, Ciudad del Cabo, Johannesburgo",
+        "alternatives": "",
+        "symbol": "R"       
+    },
+    {
+        "shortname": "LKR",
+        "longname": "Rupia de Sri Lanka",
+        "users":  "Sri Lanka ,Sri Jayawardenapura-Kotte",
+        "alternatives": "",
+        "symbol": "?"       
+    },
+    {
+        "shortname": "SEK",
+        "longname": "Corona sueca",
+        "users":  "Suecia, Estocolmo",
+        "alternatives": "",
+        "symbol": "kr"       
+    },
+    {
+        "shortname": "TWD",
+        "longname": "Dólar taiwanés",
+        "users":  "Taiwán, Taipei",
+        "alternatives": "",
+        "symbol": "NT$",       
+        "highlight": ""
+    },
+    {
+        "shortname": "TZS",
+        "longname": "Chelín tanzano",
+        "users":  "Tanzania",
+        "alternatives": "",
+        "symbol": "x"       
+    },
+    {
+        "shortname": "TTD",
+        "longname": "Dólar de Trinidad y Tobago",
+        "users":  "Trinidad y Tobago, Trinidad, Tobago, Puerto España",
+		"alternatives": "TT$",
+        "symbol": ""       
+    },
+    {
+        "shortname": "TND",
+        "longname": "Dinar tunecino",
+        "users":  "Túnez, Túnez",
+        "alternatives": "",
+        "symbol": "?.?"       
+    },
+    {
+        "shortname": "AED",
+        "longname": "Dirham de Emiratos Arabes Unidos",
+        "users":  "Emiratos Árabes Unidos,UAE,Dubái",
+        "alternatives": "",
+        "symbol": "?.?"       
+    },
+    {
+        "shortname": "UGX",
+        "longname": "Chelín ugandés",
+        "users":  "Uganda, Kampala",
+        "alternatives": "",
+        "symbol": "USh"       
+    },
+    {
+        "shortname": "UAH",
+        "longname": "Grivnia de Ucrania",
+        "users":  "Ucrania",
+        "alternatives": "",
+        "symbol": "?"       
+    },
+    {
+        "shortname": "UYU",
+        "longname": "Peso uruguayo",
+        "users":  "Uruguay",
+		"alternatives": "$",
+        "symbol": ""       
+    },
+    {
+        "shortname": "VEF",
+        "longname": "Bolívar venezolano",
+        "users":  "Venezuela",
+        "alternatives": "",
+        "symbol": "Bs"       
+    },
+    {
+        "shortname": "VND",
+        "longname": "Dong de Vietnam",
+        "users":  "Vietnam, Ciudad Ho Chi Minh",
+        "alternatives": "",
+        "symbol": "?"       
+    },
+    {
+        "shortname": "YER",
+        "longname": "Rial yemení",
+        "users":  "Yemen",
+		"alternatives": "Rial yemení",
+        "symbol": "YER"       
+    },
+    {
+        "shortname": "ZMK",
+        "longname": "Kwacha zambiano",
+        "users":  "Zambia",
+        "alternatives": "",
+        "symbol": "ZMK"       
+    }
