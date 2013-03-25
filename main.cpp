@@ -47,16 +47,18 @@ bool cargarEmpresa(QString empresa)
         Configuracion_global->cPasswordBDEmpresa =record.field("contrasena").value().toString();
         Configuracion_global->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
         Configuracion_global->cUsuarioBDEmpresa = record.field("user").value().toString();
+        Configuracion_global->DivisaLocal = Configuracion_global->Devolver_moneda(record.field("id_divisa").value().toInt());
 
-//        if(record.field("medica").value().toInt()==1)
-//            medic = true;
-//        else
-//            medic = false;
 
-//        if(record.field("internacional").value().toInt()==1)
-//            internacional = true;
-//        else
-//            internacional = false;
+        if(record.field("medica").value().toInt()==1)
+            Configuracion_global->medic = true;
+        else
+            Configuracion_global->medic = false;
+
+        if(record.field("internacional").value().toInt()==1)
+            Configuracion_global->internacional = true;
+        else
+            Configuracion_global->internacional = false;
 
 
         QApplication::processEvents();

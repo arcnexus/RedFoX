@@ -67,6 +67,7 @@ public:
     int tamanocodigo;
     bool medic;
     bool internacional;
+    QString DivisaLocal;
 
     QHash <QString,QSqlRecord> ivas;
     QSqlTableModel* iva_model;

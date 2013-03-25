@@ -121,7 +121,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="4">
+         <item row="0" column="6">
           <spacer name="horizontalSpacer_4">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -134,7 +134,7 @@
            </property>
           </spacer>
          </item>
-         <item row="1" column="1" colspan="4">
+         <item row="1" column="1" colspan="6">
           <widget class="QLineEdit" name="txtEmpresa">
            <property name="minimumSize">
             <size>
@@ -146,6 +146,16 @@
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
           </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLabel" name="label_42">
+           <property name="text">
+            <string>Divisa: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QComboBox" name="cboDivisas"/>
          </item>
         </layout>
        </item>

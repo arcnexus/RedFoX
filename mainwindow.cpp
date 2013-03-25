@@ -315,9 +315,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
-
-    connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(test(float)));
-    Configuracion_global->getCambio("EUR","USD");
+//    //-------------------------------
+//    // CAMBIO DIVISA
+//    //-------------------------------
+//    connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(test(float)));
+//    Configuracion_global->getCambio("EUR","USD");
 }
 void MainWindow::init()
 {

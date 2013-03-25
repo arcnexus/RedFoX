@@ -113,6 +113,7 @@ public:
     QSqlQuery qEmpresa;
     QString cCodEmpresa;
     int id  ;
+    int id_divisa;
     QString cCodigo;
     QString cNombre;
     int nDigitosFactura;
