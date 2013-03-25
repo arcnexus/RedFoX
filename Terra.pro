@@ -261,26 +261,6 @@ OTHER_FILES += \
     SOAP/checkVatBinding.checkVat.res.xml \
     SOAP/checkVatBinding.checkVat.req.xml
 
-unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lcommon
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lrenderer
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lMetaSQL
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lwrtembed
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lcommon
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/openrptLibs/win32/debug/ -lcommon
@@ -364,3 +344,53 @@ DEPENDPATH += $$PWD/
 
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/LibsGraficas/openchartplugin.lib
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/LibsGraficas/openchartplugind.lib
+
+
+#unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lcommon
+
+#INCLUDEPATH += $$PWD/openrptLibs/include
+#DEPENDPATH += $$PWD/openrptLibs/include
+
+#unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lrenderer
+
+#INCLUDEPATH += $$PWD/openrptLibs/include
+#DEPENDPATH += $$PWD/openrptLibs/include
+
+#unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lMetaSQL
+
+#INCLUDEPATH += $$PWD/openrptLibs/include
+#DEPENDPATH += $$PWD/openrptLibs/include
+
+#unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lwrtembed
+
+#INCLUDEPATH += $$PWD/openrptLibs/include
+#DEPENDPATH += $$PWD/openrptLibs/include
+
+
+unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lcommon
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+unix:!macx: PRE_TARGETDEPS += $$PWD/openrptLibs/linux/libcommon.a
+
+unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lrenderer
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+unix:!macx: PRE_TARGETDEPS += $$PWD/openrptLibs/linux/librenderer.a
+
+unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lMetaSQL
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+unix:!macx: PRE_TARGETDEPS += $$PWD/openrptLibs/linux/libMetaSQL.a
+
+unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lwrtembed
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+unix:!macx: PRE_TARGETDEPS += $$PWD/openrptLibs/linux/libwrtembed.a
