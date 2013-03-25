@@ -764,6 +764,11 @@ void Configuracion::readCambio(QString s)
     else
         qDebug()<<s;
 }
+/*
+ *connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(unSLOT(float);
+ *Configuracion_global->getCambio("EUR","USD");
+ *ó
+ *Configuracion_global->getCambio("EUR","USD",100 (cantidad) );*/
 
 
 

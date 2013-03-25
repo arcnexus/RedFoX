@@ -316,7 +316,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
 
-
+    connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(test(float)));
+    Configuracion_global->getCambio("EUR","USD");
 }
 void MainWindow::init()
 {
@@ -559,6 +560,11 @@ void MainWindow::showInfo()
     ui->lineEmpresaActiva->setText(empresa);
     ui->lineUsuarioActivo->setText(user);
     Configuracion_global->cUsuarioActivo = user;
+}
+
+void MainWindow::test(float f)
+{
+    QMessageBox::information(this,"EUR -> USD", QString::number(f));
 }
 
 void MainWindow::btnMantenimientos_clicked()
