@@ -346,51 +346,25 @@ win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/LibsGraficas/openc
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/LibsGraficas/openchartplugind.lib
 
 
-#unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lcommon
-
-#INCLUDEPATH += $$PWD/openrptLibs/include
-#DEPENDPATH += $$PWD/openrptLibs/include
-
-#unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lrenderer
-
-#INCLUDEPATH += $$PWD/openrptLibs/include
-#DEPENDPATH += $$PWD/openrptLibs/include
-
-#unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lMetaSQL
-
-#INCLUDEPATH += $$PWD/openrptLibs/include
-#DEPENDPATH += $$PWD/openrptLibs/include
-
-#unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lwrtembed
-
-#INCLUDEPATH += $$PWD/openrptLibs/include
-#DEPENDPATH += $$PWD/openrptLibs/include
-
-
 unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lcommon
 
 INCLUDEPATH += $$PWD/openrptLibs/include
 DEPENDPATH += $$PWD/openrptLibs/include
-
-unix:!macx: PRE_TARGETDEPS += $$PWD/openrptLibs/linux/libcommon.a
 
 unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lrenderer
 
 INCLUDEPATH += $$PWD/openrptLibs/include
 DEPENDPATH += $$PWD/openrptLibs/include
 
-unix:!macx: PRE_TARGETDEPS += $$PWD/openrptLibs/linux/librenderer.a
-
 unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lMetaSQL
 
 INCLUDEPATH += $$PWD/openrptLibs/include
 DEPENDPATH += $$PWD/openrptLibs/include
-
-unix:!macx: PRE_TARGETDEPS += $$PWD/openrptLibs/linux/libMetaSQL.a
 
 unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lwrtembed
 
 INCLUDEPATH += $$PWD/openrptLibs/include
 DEPENDPATH += $$PWD/openrptLibs/include
 
-unix:!macx: PRE_TARGETDEPS += $$PWD/openrptLibs/linux/libwrtembed.a
+
+
