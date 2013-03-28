@@ -792,6 +792,7 @@ void FrmArticulos::on_btnBuscarProveedor_clicked()
 void FrmArticulos::on_btnAnadirTarifa_clicked()
 {
     FrmTarifas addTarifa(this);
+    addTarifa.capturar_coste(ui->txtrCoste->text().toFloat());
     if(addTarifa.exec() ==QDialog::Accepted)
     {
         QSqlQuery qTarifa(QSqlDatabase::database("terra"));
@@ -806,11 +807,7 @@ void FrmArticulos::on_btnAnadirTarifa_clicked()
         qTarifa.bindValue(":pvp",addTarifa.pvp);
         qTarifa.bindValue(":id_codigotarifa",addTarifa.codigoTarifa);
         if(qTarifa.exec()) {
-            QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
-            modelTarifa->setQuery("select codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp "
-                                 "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
-                                 QSqlDatabase::database("terra"));
-            ui->TablaTarifas->setModel(modelTarifa);
+            LlenarTablas();
         } else {
             QMessageBox::information(this,tr("Gestión de Productos/Servicios"),
                                       tr("Ocurrió un error al insertar una tarifa en el artículo: %1").arg(qTarifa.lastError().text()),
@@ -1089,7 +1086,7 @@ void FrmArticulos::LlenarTablas()
     // Tarifas
     //---------------------
     QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
-    modelTarifa->setQuery("select codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp "
+    modelTarifa->setQuery("select codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp,simbolo "
                          "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
                          QSqlDatabase::database("terra"));
     ui->TablaTarifas->setModel(modelTarifa);
@@ -1102,12 +1099,14 @@ void FrmArticulos::LlenarTablas()
     modelTarifa->setHeaderData(4,Qt::Horizontal,tr("%MARG."));
     modelTarifa->setHeaderData(5,Qt::Horizontal,tr("%M. MÍN."));
     modelTarifa->setHeaderData(6,Qt::Horizontal,tr("PVP"));
+    modelTarifa->setHeaderData(7,Qt::Horizontal,tr("S"));
+
     ui->TablaTarifas->horizontalHeader()->setResizeMode(0,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(0,110);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(0,105);
     ui->TablaTarifas->horizontalHeader()->setResizeMode(1,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(1,170);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(1,165);
     ui->TablaTarifas->horizontalHeader()->setResizeMode(2,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(2,70);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(2,65);
     ui->TablaTarifas->horizontalHeader()->setResizeMode(3,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(3,70);
     ui->TablaTarifas->horizontalHeader()->setResizeMode(4,QHeaderView::Fixed);
@@ -1115,8 +1114,9 @@ void FrmArticulos::LlenarTablas()
     ui->TablaTarifas->horizontalHeader()->setResizeMode(5,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(5,70);
     ui->TablaTarifas->horizontalHeader()->setResizeMode(6,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(6,90);
-
+    ui->TablaTarifas->horizontalHeader()->resizeSection(6,85);
+    ui->TablaTarifas->horizontalHeader()->setResizeMode(7,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(7,20);
     //-----------------------
     // Proveedores frecuentes
     //-----------------------

@@ -318,6 +318,12 @@ color: rgb(115, 115, 115);</string>
           <height>0</height>
          </size>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -334,7 +340,7 @@ color: rgb(115, 115, 115);</string>
        </widget>
       </item>
       <item row="3" column="8">
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="txtValorDivisa">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -356,11 +362,55 @@ color: rgb(115, 115, 115);</string>
         </property>
        </widget>
       </item>
+      <item row="5" column="3">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Coste:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4">
+       <widget class="QLineEdit" name="txtCoste">
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>listaTarifa</tabstop>
+  <tabstop>txtPais</tabstop>
+  <tabstop>txtMoneda</tabstop>
+  <tabstop>txtCodTarifa</tabstop>
+  <tabstop>txtDescTarifa</tabstop>
+  <tabstop>txtValorDivisa</tabstop>
+  <tabstop>spinMargen</tabstop>
+  <tabstop>spinMargenMinimo</tabstop>
+  <tabstop>txtCoste</tabstop>
+  <tabstop>txtPVPDivisa</tabstop>
+  <tabstop>txtPVP</tabstop>
+  <tabstop>btnAceptar</tabstop>
+  <tabstop>btnCancelar</tabstop>
+ </tabstops>
  <resources>
   <include location="../terra.qrc"/>
  </resources>
@@ -372,8 +422,8 @@ color: rgb(115, 115, 115);</string>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>197</x>
-     <y>181</y>
+     <x>649</x>
+     <y>242</y>
     </hint>
     <hint type="destinationlabel">
      <x>331</x>
@@ -388,8 +438,8 @@ color: rgb(115, 115, 115);</string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>491</x>
-     <y>192</y>
+     <x>752</x>
+     <y>242</y>
     </hint>
     <hint type="destinationlabel">
      <x>530</x>

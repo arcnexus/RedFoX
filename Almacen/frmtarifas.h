@@ -21,11 +21,16 @@ public:
     int id_pais;
     int id_moneda;
     QString codigoTarifa;
-    
+    float coste;
+    void capturar_coste(float);
+
 private:
     Ui::FrmTarifas *ui;
 private slots:
     void cargarDatosTarifa(QModelIndex);
+    void asignarcambiodivisa(float);
+    void valorar_en_local();
+
 };
 
 #endif // FRMTARIFAS_H
