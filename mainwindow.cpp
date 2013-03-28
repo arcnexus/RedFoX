@@ -170,7 +170,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->menubar->hide();
+   // ui->menubar->hide();
     on_edit = false;
     Configuracion_global->CargarDatos();
     QStringList modulos;
@@ -317,6 +317,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
     ui->menubar->show();
+
+  //  ui->menubar->setNativeMenuBar(false);
+   QHBoxLayout *layout_mw = new QHBoxLayout(this);
+   layout_mw->addWidget(ui->frame_toolbar);
+   layout_mw->addWidget(ui->widget);
+   this->centralWidget()->setLayout(layout_mw);
+   this->show();
+
+
 //    //-------------------------------
 //    // CAMBIO DIVISA
 //    //-------------------------------

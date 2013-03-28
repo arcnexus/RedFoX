@@ -30,6 +30,7 @@ private slots:
     void cargarDatosTarifa(QModelIndex);
     void asignarcambiodivisa(float);
     void valorar_en_local();
+    void calcular_precio();
 
 };
 

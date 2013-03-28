@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1133</width>
-    <height>263</height>
+    <height>487</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -45,13 +45,13 @@
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::ForceTabbedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_3">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QFrame" name="frame_3">
+      <widget class="QFrame" name="frame_toolbar">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -126,7 +126,7 @@ selection-color: rgb(0, 0, 0);</string>
          <number>0</number>
         </property>
         <item>
-         <widget class="QFrame" name="frame">
+         <widget class="QFrame" name="frameusuario">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -825,7 +825,9 @@ background-color: rgb(255, 255, 255);</string>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <widget class="QWidget" name="page"/>
+          <widget class="QWidget" name="page">
+           <zorder>frameusuario</zorder>
+          </widget>
           <widget class="QWidget" name="page_2"/>
          </widget>
         </item>
@@ -834,6 +836,8 @@ background-color: rgb(255, 255, 255);</string>
      </widget>
     </item>
    </layout>
+   <zorder>splitter</zorder>
+   <zorder>stackedWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

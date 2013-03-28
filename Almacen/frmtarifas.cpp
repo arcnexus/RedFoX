@@ -74,3 +74,13 @@ void FrmTarifas::valorar_en_local()
     ui->txtPVP->setText(Configuracion_global->FormatoNumerico(QString::number(importe,'f',2)));
     this->pvp = ui->txtPVPDivisa->text().toDouble();
 }
+
+void FrmTarifas::calcular_precio()
+{
+    if(ui->txtPVP->text().trimmed()=="0,00"){
+        double margen_moneda = (ui->txtCoste->text().toDouble() * ui->spinMargen->value())/100;
+        double pvp = margen_moneda + ui->txtCoste->text().toDouble();
+        ui->txtPVP->setText(Configuracion_global->FormatoNumerico(QString::number(pvp,'f',2)));
+
+    }
+}
