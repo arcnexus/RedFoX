@@ -316,6 +316,7 @@ void FrmArticulos::LLenarCampos()
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
    ui->txtrDto->setText(QString::number(oArticulo->rDto,'f',2));
+   ui->txtrCoste->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->rCoste)));
    ui->txtdFechaUltimaCompra->setDate(oArticulo->dUltimaCompra);
    ui->txtdFechaUltimaVenta->setDate(oArticulo->dUltimaVenta);
    ui->txtnUnidadesCompradas->setText(QString::number(oArticulo->nUnidadesCompradas));

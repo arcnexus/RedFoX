@@ -23,6 +23,11 @@ void Articulo::Anadir()
      } else {
          this->id = query.lastInsertId().toInt();
          Recuperar("Select * from articulos where id = "+QString::number(this->id));
+         //--------------------------
+         // Añado tarifas a artículo
+         //--------------------------
+
+
      }
 
 
@@ -265,9 +270,9 @@ void Articulo::Guardar()
     query.bindValue(":nStockMinimo",this->nStockMinimo);
     query.bindValue(":nStockReal",this->nStockReal);
     query.bindValue(":lControlarStock",this->lControlarStock);
-    query.bindValue(":cModelo",this->cModelo);
-    query.bindValue(":cTalla",this->cTalla);
-    query.bindValue(":cColor",this->cColor);
+//    query.bindValue(":cModelo",this->cModelo);
+//    query.bindValue(":cTalla",this->cTalla);
+//    query.bindValue(":cColor",this->cColor);
     query.bindValue(":cComposicion",this->cComposicion);
     query.bindValue(":lPvpIncluyeIva",this->lPvpIncluyeIva);
     query.bindValue(":dFechaPrevistaRecepcion",dFechaPrevistaRecepcion);
@@ -282,6 +287,7 @@ void Articulo::Guardar()
     query.bindValue(":idgrupoart",this->idgrupoart);
     query.bindValue(":idweb",this->idweb);
     query.bindValue(":stockfisico",this->stockfisico);
+    query.bindValue(":rCoste",this->rCoste);
 
 
     if(!query.exec()) {

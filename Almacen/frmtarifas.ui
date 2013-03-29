@@ -20,7 +20,7 @@
    <string>valoración de Tarifas</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../terra.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -82,7 +82,7 @@
          <string>Aceptar</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset>
           <normaloff>:/Icons/PNG/OK.png</normaloff>:/Icons/PNG/OK.png</iconset>
         </property>
         <property name="iconSize">
@@ -108,7 +108,7 @@
          <string>Cancelar</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset>
           <normaloff>:/Icons/PNG/Cancel.png</normaloff>:/Icons/PNG/Cancel.png</iconset>
         </property>
         <property name="iconSize">
@@ -411,26 +411,8 @@ color: rgb(115, 115, 115);</string>
   <tabstop>btnAceptar</tabstop>
   <tabstop>btnCancelar</tabstop>
  </tabstops>
- <resources>
-  <include location="../terra.qrc"/>
- </resources>
+ <resources/>
  <connections>
-  <connection>
-   <sender>btnAceptar</sender>
-   <signal>clicked()</signal>
-   <receiver>FrmTarifas</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>649</x>
-     <y>242</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>331</x>
-     <y>210</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>btnCancelar</sender>
    <signal>clicked()</signal>

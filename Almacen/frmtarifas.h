@@ -31,6 +31,7 @@ private slots:
     void asignarcambiodivisa(float);
     void valorar_en_local();
     void calcular_precio();
+    void aceptar();
 
 };
 
