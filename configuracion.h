@@ -68,6 +68,7 @@ public:
     bool medic;
     bool internacional;
     QString DivisaLocal;
+    QString codDivisaLocal;
 
     QHash <QString,QSqlRecord> ivas;
     QSqlTableModel* iva_model;
@@ -83,6 +84,7 @@ public:
 
     QString Devolver_pais(int id);
     QString Devolver_moneda(int id);
+    QString Devolver_codDivisa(int id);
     int Devolver_id_moneda(QString cDivisa);
     QString Devolver_idioma(int id);
     int Devolver_id_idioma(QString idioma);

@@ -74,7 +74,9 @@ QString Configuracion::FormatoNumerico(QString cTexto)
 
         if(!ret.contains(","))
             ret = cTexto+",00";
-
+        if(ret.right(2)==",1" || ret.right(2)==",2" || ret.right(2)==",3" || ret.right(2)==",4" || ret.right(2)==",5"
+                || ret.right(2)==",6" || ret.right(2)==",7" || ret.right(2)==",8" || ret.right(2)==",9")
+            ret = ret+"0";
         return ret;
     }
     else
@@ -237,6 +239,19 @@ QString Configuracion::Devolver_moneda(int id)
     {
         qMoneda.next();
         return qMoneda.record().field("moneda").value().toString();
+    }
+    return "";
+}
+
+QString Configuracion::Devolver_codDivisa(int id)
+{
+    QSqlQuery qMoneda(QSqlDatabase::database("terra"));
+    qMoneda.prepare("select nombreCorto from monedas where id = :nId");
+    qMoneda.bindValue(":nId",id);
+    if(qMoneda.exec())
+    {
+        qMoneda.next();
+        return qMoneda.record().field("nombreCorto").value().toString();
     }
     return "";
 }

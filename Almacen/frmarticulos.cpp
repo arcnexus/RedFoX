@@ -71,6 +71,8 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     connect(ui->radGrafica_importes,SIGNAL(clicked()),this,SLOT(GraficaImportes()));
     connect(ui->btnEditarProveedorFrecuente,SIGNAL(clicked()), this, SLOT(editar_proveedor_clicked()));
     connect(ui->btnBorrarProveedores,SIGNAL(clicked()),this,SLOT(borrar_proveedor_clicked()));
+    connect(ui->btnEditartarifa,SIGNAL(clicked()),this,SLOT(btnEditarTarifa_clicked()));
+    connect(ui->btnBorrarTarifa,SIGNAL(clicked()),this,SLOT(btnBorrarTarifa_clicked()));
 
 
 }
@@ -817,6 +819,55 @@ void FrmArticulos::on_btnAnadirTarifa_clicked()
     }
 }
 
+void FrmArticulos::btnEditarTarifa_clicked()
+{
+    QModelIndex celda=ui->TablaTarifas->currentIndex();
+    QModelIndex index1=tarifa_model->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+
+    QVariant pKey = tarifa_model->data(index1,Qt::EditRole);
+
+    FrmTarifas editTarifa(this);
+    editTarifa.capturar_datos(pKey.toInt(),ui->txtrCoste->text());
+    if(editTarifa.exec() ==QDialog::Accepted) {
+        QSqlQuery queryTarifas(QSqlDatabase::database("terra"));
+        queryTarifas.prepare(
+        "UPDATE tarifas SET "
+        "margen = :margen,"
+        "margenminimo = :margenminimo,"
+        "pvp = :pvp "
+        " WHERE id = :id");
+        queryTarifas.bindValue(":margen",editTarifa.margen);
+        queryTarifas.bindValue(":margenMinimo",editTarifa.margen_min);
+        queryTarifas.bindValue(":pvp",editTarifa.pvp);
+        queryTarifas.bindValue(":id",pKey);
+        if(!queryTarifas.exec())
+            QMessageBox::warning(this,tr("ATENCIÓN"),
+                                 tr("Ocurrió un error al actualizar BD: %1").arg(queryTarifas.lastError().text()),
+                                 tr("Aceptar"));
+        LlenarTablas();
+    }
+}
+
+void FrmArticulos::btnBorrarTarifa_clicked()
+{
+    QModelIndex celda=ui->TablaTarifas->currentIndex();
+    QModelIndex index1=tarifa_model->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+
+    QVariant pKey = tarifa_model->data(index1,Qt::EditRole);
+    if(QMessageBox::question(this,tr("Borrar Tarifa"),
+                             tr("¿Desea realmente borrar esta tarifa para este artículo?"),
+                             tr("No"),
+                             tr("Borrar"))==QMessageBox::Accepted){
+        QSqlQuery queryTarifa(QSqlDatabase::database("terra"));
+        if(!queryTarifa.exec("delete from tarifas where id ="+QString::number(pKey.toInt())))
+            QMessageBox::warning(this,tr("Borrar"),
+                                 tr("Ocurrió un error al borrar: %1").arg(queryTarifa.lastError().text()));
+        LlenarTablas();
+
+    }
+
+}
+
 void FrmArticulos::anadir_proveedor_clicked()
 {
     FrmAsociarProveedor frmAsociar;
@@ -1087,37 +1138,41 @@ void FrmArticulos::LlenarTablas()
     // Tarifas
     //---------------------
     QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
-    modelTarifa->setQuery("select codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp,simbolo "
+    modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp,simbolo "
                          "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
                          QSqlDatabase::database("terra"));
     ui->TablaTarifas->setModel(modelTarifa);
     MonetaryDelegate *Delegado = new MonetaryDelegate(this);
-    ui->TablaTarifas->setItemDelegateForColumn(6,Delegado);
-    modelTarifa->setHeaderData(0,Qt::Horizontal,tr("CODIGO"));
-    modelTarifa->setHeaderData(1,Qt::Horizontal,tr("DESCRIPCIÓN"));
-    modelTarifa->setHeaderData(2,Qt::Horizontal,tr("PAIS"));
-    modelTarifa->setHeaderData(3,Qt::Horizontal,tr("DIVISA"));
-    modelTarifa->setHeaderData(4,Qt::Horizontal,tr("%MARG."));
-    modelTarifa->setHeaderData(5,Qt::Horizontal,tr("%M. MÍN."));
-    modelTarifa->setHeaderData(6,Qt::Horizontal,tr("PVP"));
-    modelTarifa->setHeaderData(7,Qt::Horizontal,tr("S"));
+    ui->TablaTarifas->setItemDelegateForColumn(7,Delegado);
+    modelTarifa->setHeaderData(0,Qt::Horizontal,tr("ID"));
+    modelTarifa->setHeaderData(1,Qt::Horizontal,tr("CODIGO"));
+    modelTarifa->setHeaderData(2,Qt::Horizontal,tr("DESCRIPCIÓN"));
+    modelTarifa->setHeaderData(3,Qt::Horizontal,tr("PAIS"));
+    modelTarifa->setHeaderData(4,Qt::Horizontal,tr("DIVISA"));
+    modelTarifa->setHeaderData(5,Qt::Horizontal,tr("%MARG."));
+    modelTarifa->setHeaderData(6,Qt::Horizontal,tr("%M. MÍN."));
+    modelTarifa->setHeaderData(7,Qt::Horizontal,tr("PVP"));
+    modelTarifa->setHeaderData(8,Qt::Horizontal,tr("S"));
 
     ui->TablaTarifas->horizontalHeader()->setResizeMode(0,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(0,105);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(0,0);
+
     ui->TablaTarifas->horizontalHeader()->setResizeMode(1,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(1,165);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(1,105);
     ui->TablaTarifas->horizontalHeader()->setResizeMode(2,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(2,65);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(2,165);
     ui->TablaTarifas->horizontalHeader()->setResizeMode(3,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(3,70);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(3,65);
     ui->TablaTarifas->horizontalHeader()->setResizeMode(4,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(4,70);
     ui->TablaTarifas->horizontalHeader()->setResizeMode(5,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(5,70);
     ui->TablaTarifas->horizontalHeader()->setResizeMode(6,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(6,85);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(6,70);
     ui->TablaTarifas->horizontalHeader()->setResizeMode(7,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(7,20);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(7,85);
+    ui->TablaTarifas->horizontalHeader()->setResizeMode(8,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(8,20);
     //-----------------------
     // Proveedores frecuentes
     //-----------------------

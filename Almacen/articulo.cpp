@@ -26,8 +26,30 @@ void Articulo::Anadir()
          //--------------------------
          // Añado tarifas a artículo
          //--------------------------
+         QSqlQuery queryTarifas(QSqlDatabase::database("terra"));
+         if(queryTarifas.exec("select * from codigotarifa")){
+             while (queryTarifas.next()){
+                 QSqlQuery anadirTarifa(QSqlDatabase::database("terra"));
+                 anadirTarifa.prepare("INSERT INTO tarifas ("
+                                   "id_Articulo,"
+                                   "id_pais,"
+                                   "id_monedas,"
+                                   "id_codigotarifa) VALUES ("
+                                   ":id_Articulo,"
+                                   ":id_pais,"
+                                   ":id_monedas,"
+                                   ":id_codigotarifa);");
 
-
+                 anadirTarifa.bindValue(":id_articulo",this->id);
+                 anadirTarifa.bindValue(":id_pais",queryTarifas.record().field("id_pais").value().toInt());
+                 anadirTarifa.bindValue(":id_monedas",queryTarifas.record().field("id_monedas").value().toInt());
+                 anadirTarifa.bindValue(":id_codigoTarifa",queryTarifas.record().field("id").value().toInt());
+                 if(!anadirTarifa.exec())
+                     QMessageBox::warning(qApp->activeWindow(),tr("Añadir tarifa"),
+                                          tr("Falló la inserción de la tarifa: %1").arg(anadirTarifa.lastError().text()),
+                                          tr("Aceptar"));
+             }
+         }
      }
 
 

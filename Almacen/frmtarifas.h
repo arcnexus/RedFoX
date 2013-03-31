@@ -21,8 +21,10 @@ public:
     int id_pais;
     int id_moneda;
     QString codigoTarifa;
+    QString cod_divisa;
     float coste;
     void capturar_coste(float);
+    void capturar_datos(int id,QString coste);
 
 private:
     Ui::FrmTarifas *ui;

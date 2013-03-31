@@ -48,7 +48,7 @@ bool cargarEmpresa(QString empresa)
         Configuracion_global->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
         Configuracion_global->cUsuarioBDEmpresa = record.field("user").value().toString();
         Configuracion_global->DivisaLocal = Configuracion_global->Devolver_moneda(record.field("id_divisa").value().toInt());
-
+        Configuracion_global->codDivisaLocal = Configuracion_global->Devolver_codDivisa(record.field("id_divisa").value().toInt());
 
         if(record.field("medica").value().toInt()==1)
             Configuracion_global->medic = true;
