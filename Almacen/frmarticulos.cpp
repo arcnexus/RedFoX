@@ -125,6 +125,7 @@ void FrmArticulos::on_botGuardar_clicked()
     }
 }
 
+
 void FrmArticulos::on_botSiguiente_clicked()
 {
     QString cCodigo = oArticulo->cCodigo;
@@ -203,8 +204,6 @@ void FrmArticulos::bloquearCampos() {
     ui->botSiguiente->setEnabled(true);
     // activo controles que deben estar activos.
 
-    ui->radDescripcion->setEnabled(true);
-    ui->radPrecio->setEnabled(true);
     ui->txtBuscarArticulo->setReadOnly(false);
     ui->botBuscarArtRapido->setEnabled(true);
     // Botones artículos
@@ -213,6 +212,9 @@ void FrmArticulos::bloquearCampos() {
     ui->botBuscarSubfamilia->setEnabled(false);
     ui->botBuscarSubSubFamilia->setEnabled(false);
     ui->botCambiarImagen->setEnabled(false);
+    ui->botCambiarImagen_2->setEnabled(false);
+    ui->botCambiarImagen_3->setEnabled(false);
+    ui->botCambiarImagen_4->setEnabled(false);
     ui->botBuscarGrupo->setEnabled(false);
     ui->btnBuscarProveedor->setEnabled(false);
     ui->btnAnadirProveedores->setEnabled(false);
@@ -287,6 +289,9 @@ void FrmArticulos::desbloquearCampos() {
     ui->botBuscarSubSubFamilia->setEnabled(true);
     ui->botBuscarGrupo->setEnabled(true);
     ui->botCambiarImagen->setEnabled(true);
+    ui->botCambiarImagen_2->setEnabled(true);
+    ui->botCambiarImagen_3->setEnabled(true);
+    ui->botCambiarImagen_4->setEnabled(true);
     ui->btnBuscarProveedor->setEnabled(true);
     ui->btnAnadirProveedores->setEnabled(true);
     ui->btnBorrarProveedores->setEnabled(true);
@@ -348,12 +353,43 @@ void FrmArticulos::LLenarCampos()
         ui->chklMostrarWeb->setChecked(true);
     else
        ui->chklMostrarWeb->setChecked(false);
-//    // Recuperamos imagen desde BD
-   oArticulo->CargarImagen(ui->lblImagenArticulo);
-    // llenamos combo iva
+   //-----------------------------
+   // Recuperamos imagen desde BD
+   //-----------------------------
+   oArticulo->CargarImagen(ui->lblImagenArticulo_1,ui->lblImagenArticulo_2,
+                           ui->lblImagenArticulo_3,ui->lblImagenArticulo_4);
+
+   //-----------------------
+   // llenamos combo iva
+   //-----------------------
   nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tiposiva));
   if(nIndex >-1)
       ui->cboTipoIVA->setCurrentIndex(nIndex);
+
+  ui->chkArticulo_promocionado->setChecked(oArticulo->articulopromocionado);
+  ui->framePromocion->setEnabled(false);
+  ui->txtDescripcion_promocion->setText(oArticulo->descripcion_promocion);
+  switch (oArticulo->tipo_oferta) {
+  case 1:
+      ui->radOferta1->setChecked(true);
+      break;
+  case 2:
+      ui->radOferta2->setChecked(true);
+      break;
+  case 3:
+      ui->radOferta3->setChecked(true);
+      break;
+  case 4:
+      ui->radOferta4->setChecked(true);
+      break;
+  }
+
+  ui->txtpor_cada->setText(QString::number(oArticulo->por_cada));
+  ui->txtRegalode->setText(QString::number(oArticulo->regalode));
+  ui->txt_dto_web->setText(QString::number(oArticulo->porc_dto_web,'f',2));
+  ui->txtoferta_pvp_fijo->setText(QString::number(oArticulo->oferta_pvp_fijo,'f',2));
+  ui->txtComentarios_promocion->setPlainText(oArticulo->comentario_oferta);
+
 
   // ------------------
   // LLENO TABLAS DATOS
@@ -411,6 +447,24 @@ void FrmArticulos::CargarCamposEnArticulo()
 
 //    this->idweb = registro.field("idweb").value().toInt();
     oArticulo->stockfisico = ui->txtStockFisico->text().toInt();
+    oArticulo->articulopromocionado = ui->chkArticulo_promocionado->isChecked();
+    oArticulo->descripcion_promocion = ui->txtDescripcion_promocion->text();
+
+    if(ui->radOferta1->isChecked())
+            oArticulo->tipo_oferta = 1;
+    if(ui->radOferta2->isChecked())
+            oArticulo->tipo_oferta = 2;
+    if(ui->radOferta3->isChecked())
+            oArticulo->tipo_oferta = 3;
+    if(ui->radOferta4->isChecked())
+            oArticulo->tipo_oferta = 4;
+
+
+    oArticulo->por_cada = ui->txtpor_cada->text().toInt();
+    oArticulo->regalode = ui->txtRegalode->text().toInt();
+    oArticulo->porc_dto_web = ui->txt_dto_web->text().toDouble();
+    oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().toDouble();
+    oArticulo->comentario_oferta = ui->txtComentarios_promocion->toPlainText();
 
 }
 
@@ -446,8 +500,19 @@ void FrmArticulos::VaciarCampos()
    ui->txtdFechaPrevistaRecepcion->setDate(QDate::currentDate());
    ui->txtnReservados->setText("0");
    ui->chklMostrarWeb->setChecked(false);
-   ui->lblImagenArticulo->setText("");
    ui->txtCodigoProveedor->setText("");
+   ui->chkArticulo_promocionado->setChecked(false);
+   ui->txtDescripcion_promocion->setText("");
+   ui->radOferta1->setChecked(false);
+   ui->radOferta2->setChecked(false);
+   ui->radOferta3->setChecked(false);
+   ui->radOferta4->setChecked(false);
+   ui->txtpor_cada->setText("0");
+   ui->txtRegalode->setText("0");
+   ui->txt_dto_web->setText("0");
+   ui->txtoferta_pvp_fijo->setText("0");
+   ui->txtComentarios_promocion->setPlainText("");
+
 
 }
 
@@ -492,6 +557,10 @@ void FrmArticulos::on_botEditar_clicked()
 {
     desbloquearCampos();
     ui->txtcCodigo->setFocus();
+    if (ui->chkArticulo_promocionado->isChecked())
+        ui->framePromocion->setEnabled(true);
+    else
+        ui->framePromocion->setEnabled(false);
 }
 
 void FrmArticulos::on_botBorrar_clicked()
@@ -503,79 +572,7 @@ void FrmArticulos::on_botBorrar_clicked()
 
 
 
-void FrmArticulos::on_botCambiarImagen_clicked()
-{
-    QString ficheroImagen;
-    ficheroImagen = QFileDialog::getOpenFileName(this,tr("Abrir fichero de imagen"),"","Imagenes (*.bmp *.png *.xpm *.jpg)");
-    if (!ficheroImagen.isEmpty()) {
 
-        QImage imagen(ficheroImagen);
-
-        ui->lblImagenArticulo->setPixmap(QPixmap::fromImage(imagen));
-        ui->lblImagenArticulo->setScaledContents(true);
-        QByteArray ba;
-        QFile f(ficheroImagen);
-        if(f.open(QIODevice::ReadOnly)) {
-            ba = f.readAll();
-            f.close();
-        }
-        QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("terra"));
-        Articulo->prepare("update articulos set bImagen =:imagen where Id = :nid");
-        Articulo->bindValue(":imagen",ba);
-        Articulo->bindValue(":nid",oArticulo->id);
-        if (!Articulo->exec())
-            QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
-        delete Articulo;
-    }
-}
-
-void FrmArticulos::on_botRotarImagen90_clicked()
-{
-    ui->lblImagenArticulo->setScaledContents(false);
-    // Create new rotatedPixmap that size is same as original
-    //QPixmap img(*ui->nombre_del_qlabel->pixmap());
-    QPixmap pixmap(*ui->lblImagenArticulo->pixmap());
-    QPixmap rotatedPixmap(pixmap.size());
-
-    // Create a QPainter for it
-    QPainter p(&rotatedPixmap);
-
-    // Set rotation origo into pixmap center
-    QSize size = pixmap.size();
-    p.translate(size.height()/2,size.height()/2);
-
-    // Rotate the painter 90 degrees
-    p.rotate(90);
-
-    // Set origo back to upper left corner
-    p.translate(-size.height()/2,-size.height()/2);
-
-    // Draw your original pixmap on it
-    p.drawPixmap(0, 0, pixmap);
-    p.end();
-
-    // Change original pixmap reference into new rotated pixmap
-    pixmap = rotatedPixmap;
-
-//    // Guardamos la imagen una vez rotada
-  //  QPixmap pixmap;
-    // Preparation of our QPixmap
-
-    QByteArray bArray;
-   QBuffer buffer( &bArray );
-    buffer.open( QIODevice::WriteOnly );
-    pixmap.save( &buffer, "PNG" );
-
-    QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("terra"));
-    Articulo->prepare("update articulos set bImagen =:imagen where Id = :nid");
-   Articulo->bindValue(":imagen",bArray);
-    Articulo->bindValue(":nid",oArticulo->id);
-   if (!Articulo->exec())
-        QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
-    delete Articulo;
-    ui->lblImagenArticulo->setPixmap(pixmap);
-    ui->lblImagenArticulo->setScaledContents(true);
-}
 
 void FrmArticulos::on_botDeshacer_clicked()
 {
@@ -603,12 +600,9 @@ void FrmArticulos::on_botBuscarArtRapido_clicked()
         ui->lblMensajeRecuperar->setVisible(true);
         modArt = new QSqlQueryModel();
         QString cSQL;
-        if(ui->radDescripcion->isChecked())
-            cSQL = "select id,cDescripcion,rTarifa from articulos where cDescripcion like '%" +
-                    ui->txtBuscarArticulo->text().trimmed()+"%' order by cDescripcion";
-       else
-            cSQL = "select id,cDescripcion,rTarifa1 from articulos where cDescripcion like '%" +
-                    ui->txtBuscarArticulo->text().trimmed()+"%' order by rTarifa1";
+        cSQL = "select id,cCodigo, cCodigoBarras, cDescripcion from articulos where cDescripcion like '%" +
+                ui->txtBuscarArticulo->text().trimmed()+"%' order by cDescripcion";
+
 
         modArt->setQuery(cSQL,QSqlDatabase::database("terra"));
         ui->TablaBuscarArt->setModel(modArt);
@@ -616,15 +610,18 @@ void FrmArticulos::on_botBuscarArtRapido_clicked()
         // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
         ui->TablaBuscarArt->setHorizontalHeader(Cabecera);
         /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
-    //    Cabecera->setResizeMode(0,QHeaderView::Fixed);
+        Cabecera->setResizeMode(0,QHeaderView::Fixed);
         Cabecera->resizeSection(0,0);
-    //    Cabecera->setResizeMode(1,QHeaderView::Fixed);
-        Cabecera->resizeSection(1,155);
-    //    Cabecera->setResizeMode(2,QHeaderView::Fixed);
-        Cabecera->resizeSection(2,65);
+        Cabecera->setResizeMode(1,QHeaderView::Fixed);
+        Cabecera->resizeSection(1,120);
+        Cabecera->setResizeMode(2,QHeaderView::Fixed);
+        Cabecera->resizeSection(2,120);
+        Cabecera->setResizeMode(3,QHeaderView::Fixed);
+        Cabecera->resizeSection(3,400);
         Cabecera->setVisible(true);
-        modArt->setHeaderData(1, Qt::Horizontal, QObject::tr("DESCRIPCIÓN"));
-        modArt->setHeaderData(2, Qt::Horizontal, QObject::tr("PVP"));
+        modArt->setHeaderData(1, Qt::Horizontal, tr("CÓDIGO"));
+        modArt->setHeaderData(2, Qt::Horizontal, tr("EAN"));
+        modArt->setHeaderData(3, Qt::Horizontal, tr("DESCRIPCIÓN"));
 
         //ui->TablaBuscarArt->setItemDelegateForColumn(2, Columna);
     } else {
@@ -807,7 +804,7 @@ void FrmArticulos::on_btnAnadirTarifa_clicked()
         qTarifa.bindValue(":id_monedas",addTarifa.id_moneda);
         qTarifa.bindValue(":margen",addTarifa.margen);
         qTarifa.bindValue(":margenminimo",addTarifa.margen_min);
-        qTarifa.bindValue(":pvp",addTarifa.pvp);
+        qTarifa.bindValue(":pvp",addTarifa.pvpDivisa);
         qTarifa.bindValue(":id_codigotarifa",addTarifa.codigoTarifa);
         if(qTarifa.exec()) {
             LlenarTablas();
@@ -838,12 +835,13 @@ void FrmArticulos::btnEditarTarifa_clicked()
         " WHERE id = :id");
         queryTarifas.bindValue(":margen",editTarifa.margen);
         queryTarifas.bindValue(":margenMinimo",editTarifa.margen_min);
-        queryTarifas.bindValue(":pvp",editTarifa.pvp);
+        queryTarifas.bindValue(":pvp",editTarifa.pvpDivisa);
         queryTarifas.bindValue(":id",pKey);
         if(!queryTarifas.exec())
             QMessageBox::warning(this,tr("ATENCIÓN"),
                                  tr("Ocurrió un error al actualizar BD: %1").arg(queryTarifas.lastError().text()),
                                  tr("Aceptar"));
+
         LlenarTablas();
     }
 }
@@ -1438,4 +1436,49 @@ void FrmArticulos::ani_comparativas_end()
 void FrmArticulos::togglechkmostrarvalores_comparativa()
 {
         ui->chkmostrarvalores_comparativa->setEnabled(true);
+}
+
+void FrmArticulos::on_botCambiarImagen_clicked()
+{
+    CambiarImagen_clicked(ui->lblImagenArticulo_1,"bImagen");
+}
+
+void FrmArticulos::on_botCambiarImagen_2_clicked()
+{
+    CambiarImagen_clicked(ui->lblImagenArticulo_2,"bImagen2");
+}
+
+void FrmArticulos::on_botCambiarImagen_3_clicked()
+{
+    CambiarImagen_clicked(ui->lblImagenArticulo_3,"bImagen3");
+}
+
+void FrmArticulos::on_botCambiarImagen_4_clicked()
+{
+    CambiarImagen_clicked(ui->lblImagenArticulo_4,"bImagen4");
+}
+void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
+{
+    QString ficheroImagen;
+    ficheroImagen = QFileDialog::getOpenFileName(this,tr("Abrir fichero de imagen"),"","Imagenes (*.bmp *.png *.xpm *.jpg)");
+    if (!ficheroImagen.isEmpty()) {
+
+        QImage imagen(ficheroImagen);
+
+        label->setPixmap(QPixmap::fromImage(imagen));
+        label->setScaledContents(true);
+        QByteArray ba;
+        QFile f(ficheroImagen);
+        if(f.open(QIODevice::ReadOnly)) {
+            ba = f.readAll();
+            f.close();
+        }
+        QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("terra"));
+        Articulo->prepare("update articulos set "+campo+" =:imagen where Id = :nid");
+        Articulo->bindValue(":imagen",ba);
+        Articulo->bindValue(":nid",oArticulo->id);
+        if (!Articulo->exec())
+            QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
+        delete Articulo;
+    }
 }

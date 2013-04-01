@@ -502,7 +502,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <property name="styleSheet">
@@ -2260,7 +2260,7 @@ alternate-background-color: rgb(255, 255, 202);</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_33">
        <item row="1" column="0">
-        <widget class="QFrame" name="frame_6">
+        <widget class="QFrame" name="framePromocion">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -2282,27 +2282,39 @@ alternate-background-color: rgb(255, 255, 202);</string>
          <layout class="QGridLayout" name="gridLayout_34">
           <item row="0" column="0">
            <widget class="QLabel" name="label_51">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>Descripción:</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit">
+           <widget class="QLineEdit" name="txtDescripcion_promocion">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="radOferta1">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string> Oferta 3*2</string>
             </property>
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QRadioButton" name="radioButton_2">
+           <widget class="QRadioButton" name="radOferta2">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>Oferta % dto</string>
             </property>
@@ -2312,14 +2324,20 @@ alternate-background-color: rgb(255, 255, 202);</string>
            </widget>
           </item>
           <item row="3" column="0" colspan="2">
-           <widget class="QRadioButton" name="radioButton_3">
+           <widget class="QRadioButton" name="radOferta3">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>Oferta precio final</string>
             </property>
            </widget>
           </item>
           <item row="4" column="0" colspan="2">
-           <widget class="QRadioButton" name="radioButton_4">
+           <widget class="QRadioButton" name="radOferta4">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>Descuento especial web</string>
             </property>
@@ -2370,7 +2388,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QTextEdit" name="textEdit">
+           <widget class="QTextEdit" name="txtComentarios_promocion">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -2435,7 +2453,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QLineEdit" name="lineEdit_5">
+           <widget class="QLineEdit" name="txtoferta_pvp_fijo">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -2517,7 +2535,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="2" rowspan="2">
-           <widget class="QLineEdit" name="lineEdit_2">
+           <widget class="QLineEdit" name="txtpor_cada">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -2569,7 +2587,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="3" column="2">
-           <widget class="QLineEdit" name="lineEdit_3">
+           <widget class="QLineEdit" name="txtRegalode">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -2659,7 +2677,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_6">
+           <widget class="QLineEdit" name="txt_dto_web">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -2748,7 +2766,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QLineEdit" name="lineEdit_4">
+           <widget class="QLineEdit" name="txtDtoOferta">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -2776,7 +2794,7 @@ color: rgb(255, 255, 255);</string>
         </widget>
        </item>
        <item row="0" column="0">
-        <widget class="QCheckBox" name="checkBox_2">
+        <widget class="QCheckBox" name="chkArticulo_promocionado">
          <property name="text">
           <string>Artículo promocionado</string>
          </property>
@@ -2784,6 +2802,9 @@ color: rgb(255, 255, 255);</string>
        </item>
        <item row="0" column="1">
         <widget class="QLabel" name="label_68">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(128, 0, 0);</string>
+         </property>
          <property name="text">
           <string>Para promociones en distinta moneda usar promociones por tarifa</string>
          </property>
@@ -2815,7 +2836,7 @@ color: rgb(255, 255, 255);</string>
 Imagen.</string>
        </property>
       </widget>
-      <widget class="QLabel" name="lblImagenArticulo">
+      <widget class="QLabel" name="lblImagenArticulo_1">
        <property name="geometry">
         <rect>
          <x>160</x>
@@ -3086,40 +3107,14 @@ Imagen.</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
-            <widget class="QRadioButton" name="radPrecio">
-             <property name="minimumSize">
-              <size>
-               <width>72</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Precio</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QRadioButton" name="radDescripcion">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Descripción</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0" colspan="2">
+           <item row="1" column="0" colspan="2">
             <widget class="QTableView" name="TablaBuscarArt">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="0" colspan="2">
+           <item row="2" column="0" colspan="2">
             <widget class="QLabel" name="lblMensajeRecuperar">
              <property name="minimumSize">
               <size>
@@ -5895,26 +5890,24 @@ alternate-background-color: rgb(255, 255, 255);</string>
   <tabstop>txtnReservados</tabstop>
   <tabstop>txtdFechaUltimaCompra</tabstop>
   <tabstop>txtdFechaUltimaVenta</tabstop>
-  <tabstop>checkBox_2</tabstop>
-  <tabstop>lineEdit</tabstop>
-  <tabstop>radioButton</tabstop>
-  <tabstop>radioButton_2</tabstop>
-  <tabstop>radioButton_3</tabstop>
-  <tabstop>radioButton_4</tabstop>
-  <tabstop>lineEdit_2</tabstop>
-  <tabstop>lineEdit_3</tabstop>
-  <tabstop>lineEdit_4</tabstop>
-  <tabstop>lineEdit_6</tabstop>
-  <tabstop>lineEdit_5</tabstop>
-  <tabstop>textEdit</tabstop>
+  <tabstop>chkArticulo_promocionado</tabstop>
+  <tabstop>txtDescripcion_promocion</tabstop>
+  <tabstop>radOferta1</tabstop>
+  <tabstop>radOferta2</tabstop>
+  <tabstop>radOferta3</tabstop>
+  <tabstop>radOferta4</tabstop>
+  <tabstop>txtpor_cada</tabstop>
+  <tabstop>txtRegalode</tabstop>
+  <tabstop>txtDtoOferta</tabstop>
+  <tabstop>txt_dto_web</tabstop>
+  <tabstop>txtoferta_pvp_fijo</tabstop>
+  <tabstop>txtComentarios_promocion</tabstop>
   <tabstop>botCambiarImagen</tabstop>
   <tabstop>botCambiarImagen_2</tabstop>
   <tabstop>botCambiarImagen_3</tabstop>
   <tabstop>botCambiarImagen_4</tabstop>
   <tabstop>txtBuscarArticulo</tabstop>
   <tabstop>botBuscarArtRapido</tabstop>
-  <tabstop>radPrecio</tabstop>
-  <tabstop>radDescripcion</tabstop>
   <tabstop>TablaBuscarArt</tabstop>
   <tabstop>cboTipoGrafica</tabstop>
   <tabstop>txtNumLote</tabstop>
@@ -6037,46 +6030,46 @@ alternate-background-color: rgb(255, 255, 255);</string>
  </resources>
  <connections>
   <connection>
-   <sender>radioButton</sender>
+   <sender>radOferta1</sender>
    <signal>toggled(bool)</signal>
    <receiver>frame_19</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>280</x>
-     <y>184</y>
+     <x>260</x>
+     <y>159</y>
     </hint>
     <hint type="destinationlabel">
-     <x>350</x>
-     <y>364</y>
+     <x>494</x>
+     <y>348</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_2</sender>
+   <sender>radOferta2</sender>
    <signal>toggled(bool)</signal>
    <receiver>frame_20</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>280</x>
-     <y>210</y>
+     <x>260</x>
+     <y>184</y>
     </hint>
     <hint type="destinationlabel">
-     <x>350</x>
-     <y>477</y>
+     <x>494</x>
+     <y>424</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_3</sender>
+   <sender>radOferta3</sender>
    <signal>toggled(bool)</signal>
    <receiver>frame_21</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>350</x>
-     <y>236</y>
+     <x>501</x>
+     <y>209</y>
     </hint>
     <hint type="destinationlabel">
      <x>782</x>
@@ -6085,14 +6078,14 @@ alternate-background-color: rgb(255, 255, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_2</sender>
+   <sender>chkArticulo_promocionado</sender>
    <signal>toggled(bool)</signal>
    <receiver>lblPromocion</receiver>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>350</x>
-     <y>121</y>
+     <x>494</x>
+     <y>101</y>
     </hint>
     <hint type="destinationlabel">
      <x>862</x>
@@ -6101,14 +6094,14 @@ alternate-background-color: rgb(255, 255, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_2</sender>
+   <sender>chkArticulo_promocionado</sender>
    <signal>toggled(bool)</signal>
-   <receiver>frame_6</receiver>
+   <receiver>framePromocion</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>350</x>
-     <y>121</y>
+     <x>494</x>
+     <y>101</y>
     </hint>
     <hint type="destinationlabel">
      <x>171</x>
@@ -6117,94 +6110,94 @@ alternate-background-color: rgb(255, 255, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_4</sender>
+   <sender>radOferta4</sender>
    <signal>toggled(bool)</signal>
    <receiver>frame_23</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>350</x>
-     <y>262</y>
+     <x>501</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
-     <x>350</x>
-     <y>532</y>
+     <x>494</x>
+     <y>477</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>radioButton</sender>
+   <sender>radOferta1</sender>
    <signal>clicked()</signal>
-   <receiver>lineEdit_2</receiver>
+   <receiver>txtpor_cada</receiver>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>280</x>
+     <x>260</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>515</x>
+     <y>310</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radOferta2</sender>
+   <signal>clicked()</signal>
+   <receiver>txtDtoOferta</receiver>
+   <slot>setFocus()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>260</x>
      <y>184</y>
     </hint>
     <hint type="destinationlabel">
-     <x>509</x>
-     <y>348</y>
+     <x>578</x>
+     <y>417</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_2</sender>
+   <sender>radOferta3</sender>
    <signal>clicked()</signal>
-   <receiver>lineEdit_4</receiver>
+   <receiver>txtoferta_pvp_fijo</receiver>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>280</x>
-     <y>210</y>
+     <x>501</x>
+     <y>209</y>
     </hint>
     <hint type="destinationlabel">
-     <x>576</x>
-     <y>467</y>
+     <x>1019</x>
+     <y>248</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_3</sender>
+   <sender>radOferta4</sender>
    <signal>clicked()</signal>
-   <receiver>lineEdit_5</receiver>
+   <receiver>txt_dto_web</receiver>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>350</x>
-     <y>236</y>
+     <x>501</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1008</x>
-     <y>279</y>
+     <x>578</x>
+     <y>466</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_4</sender>
-   <signal>clicked()</signal>
-   <receiver>lineEdit_6</receiver>
-   <slot>setFocus()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>350</x>
-     <y>262</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>576</x>
-     <y>521</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_2</sender>
+   <sender>chkArticulo_promocionado</sender>
    <signal>toggled(bool)</signal>
    <receiver>frame_22</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>350</x>
-     <y>121</y>
+     <x>494</x>
+     <y>101</y>
     </hint>
     <hint type="destinationlabel">
      <x>782</x>

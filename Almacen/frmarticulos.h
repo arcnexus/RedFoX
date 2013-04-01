@@ -37,9 +37,7 @@ private slots:
 
     void on_botGuardar_clicked();
 
-    void on_botCambiarImagen_clicked();
-
-    void on_botRotarImagen90_clicked();
+    void CambiarImagen_clicked(QLabel *label ,QString campo);
 
     void on_botDeshacer_clicked();
 
@@ -76,6 +74,14 @@ private slots:
     void on_chkmostrarvalores_comparativa_toggled(bool checked);
     void ani_comparativas_end();
     void togglechkmostrarvalores_comparativa();
+    void on_botCambiarImagen_clicked();
+
+    void on_botCambiarImagen_2_clicked();
+
+    void on_botCambiarImagen_3_clicked();
+
+    void on_botCambiarImagen_4_clicked();
+
 public slots:
     void AnadirSeccion();
 

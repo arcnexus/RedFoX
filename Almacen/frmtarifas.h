@@ -17,7 +17,7 @@ public:
     int id_tarifa;
     double margen;
     double margen_min;
-    double pvp;
+    double pvpDivisa;
     int id_pais;
     int id_moneda;
     QString codigoTarifa;
@@ -31,7 +31,7 @@ private:
 private slots:
     void cargarDatosTarifa(QModelIndex);
     void asignarcambiodivisa(float);
-    void valorar_en_local();
+    void cambiar_precio_editingfinished();
     void calcular_precio();
     void aceptar();
 

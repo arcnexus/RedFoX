@@ -61,6 +61,14 @@ public:
     int nUnidadesCompradas;
     int nUnidadesVendidas;
     double rCoste;
+    bool articulopromocionado;
+    QString descripcion_promocion;
+    int tipo_oferta;
+    int por_cada;
+    int regalode;
+    double porc_dto_web;
+    double oferta_pvp_fijo;
+    QString comentario_oferta;
 
     Articulo(QObject* parent = 0);
     void Anadir();
@@ -71,7 +79,7 @@ public:
     void Borrar(int nId);
     static void Vender(int id, int cantidad, double rPVP);
     void Devolucion(int id, int cantidad, double rImporte, QString cMotivo, QString dFechaDevolucion);
-    void CargarImagen(QLabel *label);
+    void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
     int getIdSeccion(QString cSeccion_);
     int getIdFamilia(QString cFamilia_);
     int getIdSubFamilia(QString cSubfamilia_);
