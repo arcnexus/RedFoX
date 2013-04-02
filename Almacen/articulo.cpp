@@ -668,6 +668,24 @@ bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, Q
 
 }
 
+bool Articulo::cambiarProveedorPrincipal(int id, int id_proveedor)
+{
+    QSqlQuery queryProveedor(QSqlDatabase::database("terra"));
+    queryProveedor.prepare("update articulos Set id_proveedor = :id_proveedor where id = :id");
+    queryProveedor.bindValue(":id_proveedor",id_proveedor);
+    queryProveedor.bindValue(":id",id);
+    if (!queryProveedor.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Cambiar proveedor"),
+                             tr("Falló el cambio de proveedor principal : %1").arg(queryProveedor.lastError().text()),
+                             tr("Aceptar"));
+        return false;
+    }
+    this->id_Proveedor = id_proveedor;
+    return true;
+
+
+}
+
 QString Articulo::autocodigo()
 {
     QString codigoIni;

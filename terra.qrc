@@ -141,6 +141,7 @@
         <file>images/right_arrow.png</file>
         <file>images/right_arrow_disabled.png</file>
         <file>divisas.txt</file>
+        <file>PNG/graficas.png</file>
     </qresource>
     <qresource prefix="/openRPTLangs">
         <file>openrptLibs/traduccion/common_es.qm</file>

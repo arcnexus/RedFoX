@@ -60,13 +60,18 @@ private slots:
     void anadir_proveedor_clicked();
     void editar_proveedor_clicked();
     void borrar_proveedor_clicked();
-    void asignar_proveedor_pricipal_clicked();
+    void asignar_proveedor_principal_clicked();
     void calcular_codigo();
     void trazabilidad2(int id);
     void TablaTrazabilidad_clicked(QModelIndex);
     void GraficaUnidades();
     void GraficaImportes();
+    void LLenarGraficas();
+    void LLenarGrafica_comparativa1();
+    void LLenarGrafica_comparativa2();
     void LlenarTablas();
+    void SeleccionarPestana(int);
+    void listados();
 
     void on_checkBox_toggled(bool checked);
     void ani_end();

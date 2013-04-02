@@ -9,6 +9,7 @@
 #include"../Auxiliares/monetarydelegate.h"
 
 #include"../Auxiliares/readonlydelegate.h"
+#include"frmlistadosarticulo.h"
 
 
 FrmArticulos::FrmArticulos(QWidget *parent) :
@@ -23,12 +24,17 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     //Configuracion_global->CargarDatos();
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
     ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
+    // Cargar empresas
+    QSqlQueryModel *modelEmpresa = new QSqlQueryModel(this);
+    modelEmpresa->setQuery("select * from vistaEmpresa",QSqlDatabase::database("terra"));
+    ui->cboEmpresa2->setModel(modelEmpresa);
     ui->lblCodigo->setVisible(false);
     ui->lblDescripcion->setVisible(false);
     ui->graf_prov->Clear();
     ui->graf_prov->verValoresEjeY(true);
     ui->graf_prov->verValores(true);
     qDebug() << "valores en y" << ui->graf_prov->ValoresEjeY();
+    ui->checkBox->setEnabled(true);
 
     GraficaUnidades();
 
@@ -70,9 +76,12 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     connect(ui->radGrafica_unidades,SIGNAL(clicked()),this,SLOT(GraficaUnidades()));
     connect(ui->radGrafica_importes,SIGNAL(clicked()),this,SLOT(GraficaImportes()));
     connect(ui->btnEditarProveedorFrecuente,SIGNAL(clicked()), this, SLOT(editar_proveedor_clicked()));
+    connect(ui->btnAsignarProveedor,SIGNAL(clicked()),this,SLOT(asignar_proveedor_principal_clicked()));
     connect(ui->btnBorrarProveedores,SIGNAL(clicked()),this,SLOT(borrar_proveedor_clicked()));
     connect(ui->btnEditartarifa,SIGNAL(clicked()),this,SLOT(btnEditarTarifa_clicked()));
     connect(ui->btnBorrarTarifa,SIGNAL(clicked()),this,SLOT(btnBorrarTarifa_clicked()));
+    connect(ui->Pestanas,SIGNAL(currentChanged(int)),this,SLOT(SeleccionarPestana(int)));
+    connect(ui->botListados,SIGNAL(clicked()),this,SLOT(listados()));
 
 
 }
@@ -197,7 +206,6 @@ void FrmArticulos::bloquearCampos() {
     ui->botAnadir->setEnabled(true);
     ui->botAnterior->setEnabled(true);
     ui->botBorrar->setEnabled(true);
-    ui->botBuscar->setEnabled(true);
     ui->botDeshacer->setEnabled(false);
     ui->botEditar->setEnabled(true);
     ui->botGuardar->setEnabled(false);
@@ -221,6 +229,8 @@ void FrmArticulos::bloquearCampos() {
     ui->btnBorrarProveedores->setEnabled(false);
     ui->btnEditarProveedorFrecuente->setEnabled(false);
     ui->btnAsignarProveedor->setEnabled(false);
+    ui->checkBox->setEnabled(true);
+    ui->cboTipoGrafica->setEnabled(true);
 
 
 }
@@ -277,7 +287,6 @@ void FrmArticulos::desbloquearCampos() {
     ui->botAnadir->setEnabled(false);
     ui->botAnterior->setEnabled(false);
     ui->botBorrar->setEnabled(false);
-    ui->botBuscar->setEnabled(false);
     ui->botDeshacer->setEnabled(true);
     ui->botEditar->setEnabled(false);
     ui->botGuardar->setEnabled(true);
@@ -395,6 +404,10 @@ void FrmArticulos::LLenarCampos()
   // LLENO TABLAS DATOS
   //-------------------
   LlenarTablas();
+  //-------------------
+  // LLENO ACUMULADOS
+  //-------------------
+  LLenarGraficas();
 
 
 
@@ -638,6 +651,7 @@ void FrmArticulos::on_TablaBuscarArt_doubleClicked(const QModelIndex &index)
     QString cSQL = "Select * from articulos where id = "+pKey.toString();
     oArticulo->Recuperar(cSQL);
     LLenarCampos();
+    ui->Pestanas->setCurrentIndex(0);
 }
 
 
@@ -942,29 +956,36 @@ void FrmArticulos::borrar_proveedor_clicked()
     }
 }
 
-void FrmArticulos::asignar_proveedor_pricipal_clicked()
+void FrmArticulos::asignar_proveedor_principal_clicked()
 {
     QModelIndex celda=ui->tablaProveedores->currentIndex();
-    QModelIndex index1=modelProv->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+    QModelIndex index1=modelProv->index(celda.row(),8);     ///< '0' es la posicion del registro que nos interesa
 
     QVariant pKey=modelProv->data(index1,Qt::EditRole);
 
 
-    QMessageBox mensaje(this);
-    mensaje.setStyleSheet("background-color: rgb(221,221,221)");
-    mensaje.setWindowTitle(tr("Assignar proveedor"));
-    mensaje.setText(tr("¿Desea hacer de este proveedor el principal?"));
-    mensaje.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
-    mensaje.setButtonText(0,tr("No"));
-    mensaje.setButtonText(1,tr("Sí"));
+//    QMessageBox mensaje(this);
+//    mensaje.setStyleSheet("background-color: rgb(221,221,221)");
+//    mensaje.setWindowTitle(tr("Assignar proveedor"));
+//    mensaje.setText(tr("¿Desea hacer de este proveedor el principal?"));
+//    mensaje.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
+//    mensaje.setButtonText(0,tr("No"));
+//    mensaje.setButtonText(1,tr("Sí"));
+    if (QMessageBox::question(this,tr("Re-asignar proveedor"),
+                          tr("¿Desea cambiar el proveedor principal?"),tr("No"),tr("Sí")) == QMessageBox::Accepted){
 
-    mensaje.setIcon(QMessageBox::Question);
+        bool resultado = oArticulo->cambiarProveedorPrincipal(oArticulo->id,pKey.toInt());
+        if(resultado)
 
-    if(mensaje.exec()==QMessageBox::Yes) {
-
+            index1=modelProv->index(celda.row(),1);     ///< '0' es la posicion del registro que nos interesa
+            pKey=modelProv->data(index1,Qt::EditRole);
+            ui->txtCodigoProveedor->setText(pKey.toString());
+            index1=modelProv->index(celda.row(),2);
+            pKey=modelProv->data(index1,Qt::EditRole);
+            ui->txtcProveedor->setText(pKey.toString());
     }
-}
 
+}
 void FrmArticulos::calcular_codigo()
 {
     if (Configuracion_global->Autocodigoart == true) {
@@ -1003,80 +1024,91 @@ void FrmArticulos::TablaTrazabilidad_clicked(QModelIndex)
 void FrmArticulos::GraficaUnidades()
 {
 
-//    if(ui->cboTipoGrafica->currentText()=tr("Grafica de Barras"))
-//        ui->grafica->setTipo(Tipos::);
+    if(ui->cboTipoGrafica->currentText()==tr("Grafica de Barras")) {
+        ui->grafica->setTipo(OpenChart::BarraMultiple);
+        ui->grafica->Clear();
+        ui->grafica->addMulibarColor("Ventas",Qt::darkGreen);
+        ui->grafica->addMulibarColor("Compras",Qt::darkBlue);
+        QVector <float> enero;
+        enero << ui->txtUnid_compras_enero->text().toInt()<<ui->txtUnid_ventas_enero->text().toInt();
 
-    ui->grafica->Clear();
-    QVector <float> enero;
-    enero << ui->txtUnid_compras_enero->text().toInt()<<ui->txtUnid_ventas_enero->text().toInt();
+        ui->grafica->addItem("Ene",enero);
 
-    ui->grafica->addItem("Ene",enero);
-    ui->grafica->addMulibarColor("Ventas",Qt::darkYellow);
-    ui->grafica->addMulibarColor("Compras",Qt::darkGreen);
+        QVector <float> febrero;
+        febrero <<ui->txtUnid_compras_febrero->text().toInt() <<ui->txtUnid_ventas_febrero->text().toInt();
 
-    QVector <float> febrero;
-    febrero <<ui->txtUnid_compras_febrero->text().toInt() <<ui->txtUnid_ventas_febrero->text().toInt();
+        ui->grafica->addItem("Feb",febrero);
 
-    ui->grafica->addItem("Feb",febrero);
+        QVector <float> marzo;
+        marzo <<ui->txtUnid_compras_marzo->text().toInt() <<ui->txtUnid_ventas_marzo->text().toInt();
 
-    QVector <float> marzo;
-    marzo <<ui->txtUnid_compras_marzo->text().toInt() <<ui->txtUnid_ventas_marzo->text().toInt();
+        ui->grafica->addItem("Mar",marzo);
 
-    ui->grafica->addItem("Mar",marzo);
+        QVector <float> abril;
+        abril <<ui->txtUnid_compras_abril->text().toInt() <<ui->txtUnid_ventas_abril->text().toInt();
 
-    QVector <float> abril;
-    abril <<ui->txtUnid_compras_abril->text().toInt() <<ui->txtUnid_ventas_abril->text().toInt();
+        ui->grafica->addItem("Abr",abril);
 
-    ui->grafica->addItem("Abr",abril);
+        QVector <float> mayo;
+        mayo <<ui->txtUnid_compras_mayo->text().toInt() <<ui->txtUnid_ventas_mayo->text().toInt();
 
-    QVector <float> mayo;
-    mayo <<ui->txtUnid_compras_mayo->text().toInt() <<ui->txtUnid_ventas_mayo->text().toInt();
+        ui->grafica->addItem("May",mayo);
 
-    ui->grafica->addItem("May",mayo);
+        QVector <float> junio;
+        junio <<ui->txtUnid_compras_junio->text().toInt() <<ui->txtUnid_ventas_junio->text().toInt();
 
-    QVector <float> junio;
-    junio <<ui->txtUnid_compras_junio->text().toInt() <<ui->txtUnid_ventas_junio->text().toInt();
+        ui->grafica->addItem("jun",junio);
 
-    ui->grafica->addItem("jun",junio);
+        QVector <float> julio;
+        julio <<ui->txtUnid_compras_julio->text().toInt() <<ui->txtUnid_ventas_julio->text().toInt();
 
-    QVector <float> julio;
-    julio <<ui->txtUnid_compras_julio->text().toInt() <<ui->txtUnid_ventas_julio->text().toInt();
+        ui->grafica->addItem("Jul",julio);
 
-    ui->grafica->addItem("Jul",julio);
+        QVector <float> agosto;
+        agosto <<ui->txtUnid_compras_agosto->text().toInt() <<ui->txtUnid_ventas_agosto->text().toInt();
+        ui->grafica->addItem("Ago",agosto);
 
-    QVector <float> agosto;
-    agosto <<ui->txtUnid_compras_agosto->text().toInt() <<ui->txtUnid_ventas_agosto->text().toInt();
-    ui->grafica->addItem("Ago",agosto);
+        QVector <float> septiembre;
+        septiembre <<ui->txtUnid_compras_septiembre->text().toInt() <<ui->txtUnid_ventas_septiembre->text().toInt();
+        ui->grafica->addItem("Sep",septiembre);
 
-    QVector <float> septiembre;
-    septiembre <<ui->txtUnid_compras_septiembre->text().toInt() <<ui->txtUnid_ventas_septiembre->text().toInt();
-    ui->grafica->addItem("Sep",septiembre);
+        QVector <float> octubre;
+        octubre <<ui->txtUnid_compras_octubre->text().toInt()<<ui->txtUnid_ventas_octubre->text().toInt();
+        ui->grafica->addItem("Oct",octubre);
 
-    QVector <float> octubre;
-    octubre <<ui->txtUnid_compras_octubre->text().toInt()<<ui->txtUnid_ventas_octubre->text().toInt();
-    ui->grafica->addItem("Oct",octubre);
+        QVector <float> noviembre;
+        noviembre <<ui->txtUnid_compras_noviembre->text().toInt() <<ui->txtUnid_ventas_noviembre->text().toInt();
+        ui->grafica->addItem("Nov",noviembre);
 
-    QVector <float> noviembre;
-    noviembre <<ui->txtUnid_compras_noviembre->text().toInt() <<ui->txtUnid_ventas_noviembre->text().toInt();
-    ui->grafica->addItem("Nov",noviembre);
+        QVector <float> diciembre;
+        diciembre <<ui->txtUnid_compras_diciembre->text().toInt() <<ui->txtUnid_ventas_diciembre->text().toInt();
+        ui->grafica->addItem("Dic",diciembre);
+        ui->grafica->repaint();
+    } else{
+        ui->grafica->Clear();
+        ui->grafica->setTipo(OpenChart::Lineas);
+        QStringList lista;
+        lista << "12" << "34" ;
+        ui->grafica->addLineaStops(lista);
+        QStringList lista1;
+        lista1 << "20" << "60";
+        ui->grafica->addLineaStops(lista1);
 
-    QVector <float> diciembre;
-    diciembre <<ui->txtUnid_compras_diciembre->text().toInt() <<ui->txtUnid_ventas_diciembre->text().toInt();
-    ui->grafica->addItem("Dic",diciembre);
-    ui->grafica->repaint();
-
+        ui->grafica->repaint();
+    }
 }
 
 void FrmArticulos::GraficaImportes()
 {
 
     ui->grafica->Clear();
+    ui->grafica->addMulibarColor("Compras",Qt::darkRed);
+    ui->grafica->addMulibarColor("Ventas",Qt::darkGreen);
     QVector <float> enero;
     enero << ui->txtImporte_compras_enero->text().toFloat() <<ui->txtImporte_ventas_enero->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
 
     ui->grafica->addItem("Ene",enero);
-    ui->grafica->addMulibarColor("Ventas",Qt::darkYellow);
-    ui->grafica->addMulibarColor("Compras",Qt::darkGreen);
+
 
     QVector <float> febrero;
     febrero <<ui->txtImporte_compras_febrero->text().toFloat() <<ui->txtImporte_ventas_febrero->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
@@ -1130,6 +1162,131 @@ void FrmArticulos::GraficaImportes()
 
 }
 
+void FrmArticulos::LLenarGraficas()
+{
+    QSqlQuery queryAcumulados(QSqlDatabase::database("empresa"));
+    if(!queryAcumulados.exec("select * from acum_articulos where id_Articulo=" +QString::number(oArticulo->id))){
+        QMessageBox::warning(this,tr("Acumulados ejercicio"),
+                             tr("Ocurrió un error al recuperar ficha de acumulados: %1").arg(queryAcumulados.lastError().text()),
+                             tr("Aceptar"));
+    } else {
+        queryAcumulados.next();
+        //--------------------
+        // Undidades compradas
+        //--------------------
+        ui->txtUnid_compras_enero->setText(queryAcumulados.record().value("unid_comp_enero").toString());
+        ui->txtUnid_compras_febrero->setText(queryAcumulados.record().value("unid_comp_febrero").toString());
+        ui->txtUnid_compras_marzo->setText(queryAcumulados.record().value("unid_comp_marzo").toString());
+        ui->txtUnid_compras_abril->setText(queryAcumulados.record().value("unid_comp_abril").toString());
+        ui->txtUnid_compras_mayo->setText(queryAcumulados.record().value("unid_comp_mayo").toString());
+        ui->txtUnid_compras_junio->setText(queryAcumulados.record().value("unid_comp_junio").toString());
+        ui->txtUnid_compras_julio->setText(queryAcumulados.record().value("unid_comp_julio").toString());
+        ui->txtUnid_compras_agosto->setText(queryAcumulados.record().value("unid_comp_agosto").toString());
+        ui->txtUnid_compras_septiembre->setText(queryAcumulados.record().value("unid_comp_septiembre").toString());
+        ui->txtUnid_compras_octubre->setText(queryAcumulados.record().value("unid_comp_octubre").toString());
+        ui->txtUnid_compras_noviembre->setText(queryAcumulados.record().value("unid_comp_noviembre").toString());
+        ui->txtUnid_compras_diciembre->setText(queryAcumulados.record().value("unid_comp_diciembre").toString());
+
+        //--------------------
+        // Undidades vendidas
+        //--------------------
+        ui->txtUnid_ventas_enero->setText(queryAcumulados.record().value("unid_vent_enero").toString());
+        ui->txtUnid_ventas_febrero->setText(queryAcumulados.record().value("unid_vent_febrero").toString());
+        ui->txtUnid_ventas_marzo->setText(queryAcumulados.record().value("unid_vent_marzo").toString());
+        ui->txtUnid_ventas_abril->setText(queryAcumulados.record().value("unid_vent_abril").toString());
+        ui->txtUnid_ventas_mayo->setText(queryAcumulados.record().value("unid_vent_mayo").toString());
+        ui->txtUnid_ventas_junio->setText(queryAcumulados.record().value("unid_vent_junio").toString());
+        ui->txtUnid_ventas_julio->setText(queryAcumulados.record().value("unid_vent_julio").toString());
+        ui->txtUnid_ventas_agosto->setText(queryAcumulados.record().value("unid_vent_agosto").toString());
+        ui->txtUnid_ventas_septiembre->setText(queryAcumulados.record().value("unid_vent_septiembre").toString());
+        ui->txtUnid_ventas_octubre->setText(queryAcumulados.record().value("unid_vent_octubre").toString());
+        ui->txtUnid_ventas_noviembre->setText(queryAcumulados.record().value("unid_vent_noviembre").toString());
+        ui->txtUnid_ventas_diciembre->setText(queryAcumulados.record().value("unid_vent_diciembre").toString());
+
+        //--------------------
+        // Importe compras
+        //--------------------
+        ui->txtImporte_compras_enero->setText(queryAcumulados.record().value("acum_comp_enero").toString());
+        ui->txtImporte_compras_febrero->setText(queryAcumulados.record().value("acum_comp_febrero").toString());
+        ui->txtImporte_compras_marzo->setText(queryAcumulados.record().value("acum_comp_marzo").toString());
+        ui->txtImporte_compras_abril->setText(queryAcumulados.record().value("acum_comp_abril").toString());
+        ui->txtImporte_compras_mayo->setText(queryAcumulados.record().value("acum_comp_mayo").toString());
+        ui->txtImporte_compras_junio->setText(queryAcumulados.record().value("acum_comp_junio").toString());
+        ui->txtImporte_compras_julio->setText(queryAcumulados.record().value("acum_comp_julio").toString());
+        ui->txtImporte_compras_agosto->setText(queryAcumulados.record().value("acum_comp_agosto").toString());
+        ui->txtImporte_compras_septiembre->setText(queryAcumulados.record().value("acum_comp_septiembre").toString());
+        ui->txtImporte_compras_octubre->setText(queryAcumulados.record().value("acum_comp_octubre").toString());
+        ui->txtImporte_compras_noviembre->setText(queryAcumulados.record().value("acum_comp_noviembre").toString());
+        ui->txtImporte_compras_diciembre->setText(queryAcumulados.record().value("acum_comp_diciembre").toString());
+
+        //--------------------
+        // Importe Ventas
+        //--------------------
+        ui->txtImporte_ventas_enero->setText(queryAcumulados.record().value("acum_vent_enero").toString());
+        ui->txtImporte_ventas_febrero->setText(queryAcumulados.record().value("acum_vent_febrero").toString());
+        ui->txtImporte_ventas_marzo->setText(queryAcumulados.record().value("acum_vent_marzo").toString());
+        ui->txtImporte_ventas_abril->setText(queryAcumulados.record().value("acum_vent_abril").toString());
+        ui->txtImporte_ventas_mayo->setText(queryAcumulados.record().value("acum_vent_mayo").toString());
+        ui->txtImporte_ventas_junio->setText(queryAcumulados.record().value("acum_vent_junio").toString());
+        ui->txtImporte_ventas_julio->setText(queryAcumulados.record().value("acum_vent_julio").toString());
+        ui->txtImporte_ventas_agosto->setText(queryAcumulados.record().value("acum_vent_agosto").toString());
+        ui->txtImporte_ventas_septiembre->setText(queryAcumulados.record().value("acum_vent_septiembre").toString());
+        ui->txtImporte_ventas_octubre->setText(queryAcumulados.record().value("acum_vent_octubre").toString());
+        ui->txtImporte_ventas_noviembre->setText(queryAcumulados.record().value("acum_vent_noviembre").toString());
+        ui->txtImporte_ventas_diciembre->setText(queryAcumulados.record().value("acum_vent_diciembre").toString());
+
+        //-----------------------------------------
+        // Undidades vendidas (Grafica comparativa)
+        //-----------------------------------------
+        ui->txtUnid_ventas_enero_EA->setText(queryAcumulados.record().value("unid_vent_enero").toString());
+        ui->txtUnid_ventas_febrero_EA->setText(queryAcumulados.record().value("unid_vent_febrero").toString());
+        ui->txtUnid_ventas_marzo_EA->setText(queryAcumulados.record().value("unid_vent_marzo").toString());
+        ui->txtUnid_ventas_abril_EA->setText(queryAcumulados.record().value("unid_vent_abril").toString());
+        ui->txtUnid_ventas_mayo_EA->setText(queryAcumulados.record().value("unid_vent_mayo").toString());
+        ui->txtUnid_ventas_junio_EA->setText(queryAcumulados.record().value("unid_vent_junio").toString());
+        ui->txtUnid_ventas_julio_EA->setText(queryAcumulados.record().value("unid_vent_julio").toString());
+        ui->txtUnid_ventas_agosto_EA->setText(queryAcumulados.record().value("unid_vent_agosto").toString());
+        ui->txtUnid_ventas_septiembre_EA->setText(queryAcumulados.record().value("unid_vent_septiembre").toString());
+        ui->txtUnid_ventas_octubre_EA->setText(queryAcumulados.record().value("unid_vent_octubre").toString());
+        ui->txtUnid_ventas_noviembre_EA->setText(queryAcumulados.record().value("unid_vent_noviembre").toString());
+        ui->txtUnid_ventas_diciembre_EA->setText(queryAcumulados.record().value("unid_vent_diciembre").toString());
+
+        //--------------------
+        // Importe Ventas
+        //--------------------
+        ui->txtImporte_ventas_enero_EA->setText(queryAcumulados.record().value("acum_vent_enero").toString());
+        ui->txtImporte_ventas_febrero_EA->setText(queryAcumulados.record().value("acum_vent_febrero").toString());
+        ui->txtImporte_ventas_marzo_EA->setText(queryAcumulados.record().value("acum_vent_marzo").toString());
+        ui->txtImporte_ventas_abril_EA->setText(queryAcumulados.record().value("acum_vent_abril").toString());
+        ui->txtImporte_ventas_mayo_EA->setText(queryAcumulados.record().value("acum_vent_mayo").toString());
+        ui->txtImporte_ventas_junio_EA->setText(queryAcumulados.record().value("acum_vent_junio").toString());
+        ui->txtImporte_ventas_julio_EA->setText(queryAcumulados.record().value("acum_vent_julio").toString());
+        ui->txtImporte_ventas_agosto_EA->setText(queryAcumulados.record().value("acum_vent_agosto").toString());
+        ui->txtImporte_ventas_septiembre_EA->setText(queryAcumulados.record().value("acum_vent_septiembre").toString());
+        ui->txtImporte_ventas_octubre_EA->setText(queryAcumulados.record().value("acum_vent_octubre").toString());
+        ui->txtImporte_ventas_noviembre_EA->setText(queryAcumulados.record().value("acum_vent_noviembre").toString());
+        ui->txtImporte_ventas_diciembre_EA->setText(queryAcumulados.record().value("acum_vent_diciembre").toString());
+
+    }
+    if(ui->Pestanas->currentIndex()==5){
+        if(ui->radGrafica_importes->isChecked())
+            GraficaImportes();
+        else
+            GraficaUnidades();
+    }
+}
+
+void FrmArticulos::LLenarGrafica_comparativa1()
+{
+
+
+}
+
+void FrmArticulos::LLenarGrafica_comparativa2()
+{
+
+}
+
 void FrmArticulos::LlenarTablas()
 {
     //---------------------
@@ -1175,7 +1332,7 @@ void FrmArticulos::LlenarTablas()
     // Proveedores frecuentes
     //-----------------------
 
-    modelProv->setQuery("Select id,codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
+    modelProv->setQuery("Select id,codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta,id_prov from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
                         QSqlDatabase::database("terra"));
 
     ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
@@ -1190,6 +1347,7 @@ void FrmArticulos::LlenarTablas()
     modelProv->setHeaderData(6,Qt::Horizontal,tr("DIVISA"));
     modelProv->setHeaderData(7,Qt::Horizontal,tr("D.OFERTA"));
     ui->tablaProveedores->setColumnHidden(0,true);
+    ui->tablaProveedores->setColumnHidden(8,true);
 
     ui->tablaProveedores->horizontalHeader()->setResizeMode(1,QHeaderView::Fixed);
     ui->tablaProveedores->horizontalHeader()->resizeSection(1,90);
@@ -1221,6 +1379,19 @@ void FrmArticulos::LlenarTablas()
     modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_Articulo = "+QString::number(oArticulo->id),
                                   QSqlDatabase::database("terra"));
     ui->tablaLotes->setModel(modelTrazabilidad1);
+
+}
+
+void FrmArticulos::SeleccionarPestana(int pestana)
+{
+    if(pestana ==5)
+        GraficaUnidades();
+}
+
+void FrmArticulos::listados()
+{
+    frmListadosArticulo *listados = new frmListadosArticulo(this);
+    listados->exec();
 
 }
 

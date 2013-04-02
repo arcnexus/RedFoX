@@ -71,6 +71,9 @@ public:
     QString comentario_oferta;
 
     Articulo(QObject* parent = 0);
+    //-----------
+    // Metodos
+    //-----------
     void Anadir();
     bool Recuperar(QString cSQL);
     void Recuperar(QString cSQL,int nProcede);
@@ -94,6 +97,7 @@ public:
                                        QString oferta, double pvdreal, int id_divisa);
     bool guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta,
                                        QString oferta, double pvdreal, int id_divisa);
+    bool cambiarProveedorPrincipal(int id,int id_proveedor);
 
     QString autocodigo();
 private:
