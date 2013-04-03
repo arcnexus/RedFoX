@@ -117,7 +117,8 @@ SOURCES += main.cpp\
     SOAP/soapC.cpp \
     Almacen/frmasociarproveedor.cpp \
     Auxiliares/monetarydelegate.cpp \
-    Almacen/frmlistadosarticulo.cpp
+    Almacen/frmlistadosarticulo.cpp \
+    Zona_Compras/frmrecepcion_pedidos.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -202,7 +203,8 @@ HEADERS  += mainwindow.h \
     SOAP/checkVatBinding.nsmap \
     Almacen/frmasociarproveedor.h \
     Auxiliares/monetarydelegate.h \
-    Almacen/frmlistadosarticulo.h
+    Almacen/frmlistadosarticulo.h \
+    Zona_Compras/frmrecepcion_pedidos.h
 
 
 FORMS    += mainwindow.ui \
@@ -252,7 +254,8 @@ FORMS    += mainwindow.ui \
     Almacen/frmtipostarifa.ui \
     Zona_Ventas/frmcajaabierta.ui \
     Almacen/frmasociarproveedor.ui \
-    Almacen/frmlistadosarticulo.ui
+    Almacen/frmlistadosarticulo.ui \
+    Zona_Compras/frmrecepcion_pedidos.ui
 
 RESOURCES += \
     terra.qrc

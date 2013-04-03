@@ -1,4 +1,4 @@
-// Terra Software médico profesional (Open Source GNU)
+// Terra Software para profesionales de la Salud (Open Source GNU)
 // Copyright (C) 2012-2013  Marc Miralles Biosca
 //
 // Terra Gestión empresarial open-source is free software: you can redistribute it and/or modify

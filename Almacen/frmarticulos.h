@@ -66,9 +66,11 @@ private slots:
     void TablaTrazabilidad_clicked(QModelIndex);
     void GraficaUnidades();
     void GraficaImportes();
+    void GraficaUnidades_comparativa();
+    void GraficaImportes_comparativa();
+    void MostrarGrafica_comparativa(bool);
     void LLenarGraficas();
-    void LLenarGrafica_comparativa1();
-    void LLenarGrafica_comparativa2();
+    void LLenarGrafica_comparativa(int);
     void LlenarTablas();
     void SeleccionarPestana(int);
     void listados();

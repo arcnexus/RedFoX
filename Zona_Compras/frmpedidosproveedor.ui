@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1023</width>
+    <width>1014</width>
     <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Pedidos a Proveedores</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../terra.qrc">
+    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:#4c6088</string>

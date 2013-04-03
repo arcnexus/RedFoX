@@ -90,6 +90,8 @@ void MainWindow::crear_barraCompras()
     btn_albaranes_pro = new ToolBarButton(tr("Albaranes \nProv."),":/Icons/PNG/albaran_pro.png",this);
     btn_facturas_pro = new ToolBarButton(tr("Facturas \nProv."),":/Icons/PNG/Factura_pro.png",this);
     btn_Orden_pedido = new ToolBarButton(tr("Orden \nde pedido"),":/Icons/PNG/opedido.png",this);
+    btn_recepcionPedidos = new ToolBarButton(tr("Recepción \npedidos"),":Icons/PNG/recepcion_ped.png",this);
+    btn_gestionPagos = new ToolBarButton(tr("Gestión \npagos"),":Icons/PNG/pagos.png",this);
 
 
     QFrame*  line = new QFrame(ui->page_compras);
@@ -98,8 +100,10 @@ void MainWindow::crear_barraCompras()
 
     ui->verticalLayout_compras->addWidget(btn_Orden_pedido);
     ui->verticalLayout_compras->addWidget(btn_pedidos_pro);
+    ui->verticalLayout_compras->addWidget(btn_recepcionPedidos);
     ui->verticalLayout_compras->addWidget(btn_albaranes_pro);
     ui->verticalLayout_compras->addWidget(btn_facturas_pro);
+    ui->verticalLayout_compras->addWidget(btn_gestionPagos);
 
 
     ui->verticalLayout_compras->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
@@ -108,6 +112,7 @@ void MainWindow::crear_barraCompras()
     connect(btn_pedidos_pro,SIGNAL(clicked()),this,SLOT(btn_pedidos_pro_clicked()));
     connect(btn_albaranes_pro,SIGNAL(clicked()),this,SLOT(btn_albaranes_pro_clicked()));
     connect(btn_facturas_pro,SIGNAL(clicked()),this,SLOT(btn_facturas_pro_clicked()));
+    connect(btn_recepcionPedidos,SIGNAL(clicked()),this,SLOT(btn_recepcionPedidos_clicked()));
 
     //barra de menu
     connect(ui->actionOrdenes_de_pedidos,SIGNAL(triggered()),this,SLOT(btnOrden_pedido_clicked()));
@@ -288,6 +293,9 @@ MainWindow::MainWindow(QWidget *parent) :
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
     agendaForm = new AgendaForm(this);
 
+    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Recepción de Pedidos"),Qt::AlignBottom);
+    frmRecep_pedidos = new Frmrecepcion_pedidos(this);
+
     splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
 
     ui->stackedWidget->addWidget(frmClientes1);
@@ -303,6 +311,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->addWidget(frmFacturas_pro);
     ui->stackedWidget->addWidget(frmFactura_multiple);
     ui->stackedWidget->addWidget(frmOrden_Ped_pro);
+    ui->stackedWidget->addWidget(frmRecep_pedidos);
     ui->stackedWidget->addWidget(reportWindow);
     ui->stackedWidget->addWidget(agendaForm);
     TerraForm = new init_form(this);
@@ -650,6 +659,11 @@ void MainWindow::btn_albaranes_pro_clicked()
 void MainWindow::btn_facturas_pro_clicked()
 {
     ui->stackedWidget->setCurrentWidget(frmFacturas_pro);
+}
+
+void MainWindow::btn_recepcionPedidos_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(frmRecep_pedidos);
 }
 
 void MainWindow::btnArticulos_2_clicked()
