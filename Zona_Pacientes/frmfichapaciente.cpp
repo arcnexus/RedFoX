@@ -44,6 +44,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
 
     ui->cboNivelEstudios->addItems(listaEstudios);
     ui->cboDoctorEpisodio->addItems(listaDoctores);
+    ui->cboRealizadaPorDr->addItems(listaDoctores);
 
     QSqlQueryModel *qTipos = new QSqlQueryModel(this);
     qTipos->setQuery("Select descripcion from tiposimagen",QSqlDatabase::database("dbmedica"));
