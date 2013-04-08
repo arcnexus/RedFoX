@@ -228,7 +228,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));
     connect(ui->actionMonedas,SIGNAL(triggered()),this,SLOT(handle_monedas()));
 
-    QPixmap pixmap(":/Icons/PNG/Logo2.png");
+    QPixmap pixmap(":/Icons/PNG/mayafondo_blanco.png");
     QSplashScreen splash(pixmap);
     splash.show();
 

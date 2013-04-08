@@ -23,7 +23,7 @@
    <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>TERRA - El software de los profesionales de la Salud - Acceso Usuarios</string>
+   <string>MAYA M-SALUD - El software de los profesionales de la Salud - Acceso Usuarios</string>
   </property>
   <property name="windowIcon">
    <iconset resource="terra.qrc">
@@ -66,28 +66,6 @@
       <number>1</number>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="1" column="0" rowspan="3" colspan="2">
-       <widget class="QLabel" name="label_5">
-        <property name="minimumSize">
-         <size>
-          <width>421</width>
-          <height>143</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">border-radius: 5px;</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="terra.qrc">:/Icons/PNG/logo.png</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="2" colspan="2">
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
@@ -869,6 +847,28 @@ border-color: rgb(192, 192, 255);</string>
           </widget>
          </item>
         </layout>
+       </widget>
+      </item>
+      <item row="0" column="0" rowspan="4" colspan="2">
+       <widget class="QLabel" name="label_5">
+        <property name="minimumSize">
+         <size>
+          <width>421</width>
+          <height>143</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius: 5px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="terra.qrc">:/Icons/PNG/mayafondo_blanco.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
      </layout>

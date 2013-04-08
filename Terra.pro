@@ -118,7 +118,8 @@ SOURCES += main.cpp\
     Almacen/frmasociarproveedor.cpp \
     Auxiliares/monetarydelegate.cpp \
     Almacen/frmlistadosarticulo.cpp \
-    Zona_Compras/frmrecepcion_pedidos.cpp
+    Zona_Compras/frmrecepcion_pedidos.cpp \
+    Zona_Pacientes/frmmtcbase.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -204,7 +205,8 @@ HEADERS  += mainwindow.h \
     Almacen/frmasociarproveedor.h \
     Auxiliares/monetarydelegate.h \
     Almacen/frmlistadosarticulo.h \
-    Zona_Compras/frmrecepcion_pedidos.h
+    Zona_Compras/frmrecepcion_pedidos.h \
+    Zona_Pacientes/frmmtcbase.h
 
 
 FORMS    += mainwindow.ui \
@@ -255,7 +257,8 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmcajaabierta.ui \
     Almacen/frmasociarproveedor.ui \
     Almacen/frmlistadosarticulo.ui \
-    Zona_Compras/frmrecepcion_pedidos.ui
+    Zona_Compras/frmrecepcion_pedidos.ui \
+    Zona_Pacientes/frmmtcbase.ui
 
 RESOURCES += \
     terra.qrc
