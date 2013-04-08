@@ -134,10 +134,10 @@ void FrmTarifas::cambiar_precio_editingfinished()
 
 void FrmTarifas::calcular_precio()
 {
-    double margen = ui->spinMargen->value();
+    double margen = (100-ui->spinMargen->value())/100;
     //NOTE 70% /0.30 - 40 /0.60
-    double margen_moneda =0;
-   // double margen_moneda = (ui->txtCosteLocal->text().toDouble()/)/100;
+
+    double margen_moneda = (ui->txtCosteLocal->text().toDouble()*margen);
     double pvp = margen_moneda + ui->txtCosteLocal->text().toDouble();
     QString cPvp = Configuracion_global->FormatoNumerico(QString::number(pvp,'f',2));
     this->pvpDivisa = cPvp.toDouble();
