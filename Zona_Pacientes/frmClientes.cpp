@@ -1056,6 +1056,7 @@ void frmClientes::on_btnFichaPaciente_clicked()
 
     frmPaciente.recibedatospaciente(oCliente->id,oCliente->cNombreFiscal);
     frmPaciente.cargarDatos(oCliente->id);
+
     frmPaciente.exec();
 }
 

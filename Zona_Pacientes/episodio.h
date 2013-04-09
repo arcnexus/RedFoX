@@ -6,7 +6,7 @@
 class Episodio : public QObject
 {
     Q_OBJECT
-private:
+public:
     int id;
     int idPaciente;
     int cerrado;
@@ -20,8 +20,6 @@ private:
     QString historial;
     QString codigocie;
     bool Altas;
-
-public:
     Episodio(QObject* parent = 0);
     void NuevoEpisodio(int idPaciente);
     void RecuperarEpisodio(int idEpisodio);

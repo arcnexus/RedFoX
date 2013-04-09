@@ -20,7 +20,6 @@ int Visitas::AnadirVisita(int nIdEpisodio,QString cMedico)
         nIdVisita = 0;
     }
     else {
-        QMessageBox::information(qApp->activeWindow(),tr("Visitas"),tr("Se ha creado una nueva visita"), tr("Aceptar"));
         nIdVisita = qVisita.lastInsertId().toInt();
     }
     return nIdVisita;
@@ -42,6 +41,7 @@ void Visitas::RecuperarVisita(int nIdVisita)
         this->tratamiento = rVisita.field("tratamiento").value().toString();
         this->lengua = rVisita.field("lengua").value().toString();
         this->pulso = rVisita.field("pulso").value().toString();
+        this->diagnostico = rVisita.field("diagnostico").value().toString();
 
 
     } else{
@@ -61,7 +61,8 @@ void Visitas::GuardarDatos()
                     "exploracion  =  :exploracion,"
                     "tratamiento  =  :tratamiento,"
                     "lengua  = :lengua,"
-                    "pulso  = :pulso"
+                    "pulso  = :pulso,"
+                    "diagnostico =:diagnostico"
                     " WHERE id = :nId");
     qVisita.bindValue(":idEpisodio",this->idepisodio);
     qVisita.bindValue(":fechahora",this->fechahora);
@@ -70,6 +71,7 @@ void Visitas::GuardarDatos()
     qVisita.bindValue(":tratamiento",this->tratamiento);
     qVisita.bindValue(":lengua",this->lengua);
     qVisita.bindValue(":pulso",this->pulso);
+    qVisita.bindValue(":diagnostico",this->diagnostico);
     qVisita.bindValue(":nId", this->id);
     if(!qVisita.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Visitas"),tr("Ocurrió un error al modificar los datos de la visita: ")+

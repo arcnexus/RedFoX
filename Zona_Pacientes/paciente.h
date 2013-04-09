@@ -83,7 +83,7 @@ public slots:
     void settalla(double talla);
     void settrabaja(int trabaja);
 
-private:
+public:
 
     int alcohol;
     int numhistoria;

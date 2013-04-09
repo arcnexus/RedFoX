@@ -61,6 +61,7 @@ private slots:
     void VerAnalitica();
     void on_BtnDeshacerPaciente_clicked();
     void AnadirVisita();
+    void CargarVisita(int nId);
     void vademecums();
 
 signals:
