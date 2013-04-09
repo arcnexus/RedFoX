@@ -37,9 +37,7 @@ private slots:
 
     void on_botGuardar_clicked();
 
-    void on_botCambiarImagen_clicked();
-
-    void on_botRotarImagen90_clicked();
+    void CambiarImagen_clicked(QLabel *label ,QString campo);
 
     void on_botDeshacer_clicked();
 
@@ -56,16 +54,26 @@ private slots:
     void on_botBuscarSubSubFamilia_clicked();
     void on_btnBuscarProveedor_clicked();
     void on_btnAnadirTarifa_clicked();
+    void btnEditarTarifa_clicked();
+    void btnBorrarTarifa_clicked();
+
     void anadir_proveedor_clicked();
     void editar_proveedor_clicked();
     void borrar_proveedor_clicked();
-    void asignar_proveedor_pricipal_clicked();
+    void asignar_proveedor_principal_clicked();
     void calcular_codigo();
     void trazabilidad2(int id);
     void TablaTrazabilidad_clicked(QModelIndex);
     void GraficaUnidades();
     void GraficaImportes();
+    void GraficaUnidades_comparativa();
+    void GraficaImportes_comparativa();
+    void MostrarGrafica_comparativa(bool);
+    void LLenarGraficas();
+    void LLenarGrafica_comparativa(int);
     void LlenarTablas();
+    void SeleccionarPestana(int);
+    void listados();
 
     void on_checkBox_toggled(bool checked);
     void ani_end();
@@ -73,6 +81,14 @@ private slots:
     void on_chkmostrarvalores_comparativa_toggled(bool checked);
     void ani_comparativas_end();
     void togglechkmostrarvalores_comparativa();
+    void on_botCambiarImagen_clicked();
+
+    void on_botCambiarImagen_2_clicked();
+
+    void on_botCambiarImagen_3_clicked();
+
+    void on_botCambiarImagen_4_clicked();
+
 public slots:
     void AnadirSeccion();
 

@@ -1,4 +1,4 @@
-// Terra Software médico profesional (Open Source GNU)
+// Terra Software para profesionales de la Salud (Open Source GNU)
 // Copyright (C) 2012-2013  Marc Miralles Biosca
 //
 // Terra Gestión empresarial open-source is free software: you can redistribute it and/or modify
@@ -47,17 +47,20 @@ bool cargarEmpresa(QString empresa)
         Configuracion_global->cPasswordBDEmpresa =record.field("contrasena").value().toString();
         Configuracion_global->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
         Configuracion_global->cUsuarioBDEmpresa = record.field("user").value().toString();
+        Configuracion_global->DivisaLocal = Configuracion_global->Devolver_moneda(record.field("id_divisa").value().toInt());
+        Configuracion_global->codDivisaLocal = Configuracion_global->Devolver_codDivisa(record.field("id_divisa").value().toInt());
 
-//        if(record.field("medica").value().toInt()==1)
-//            medic = true;
-//        else
-//            medic = false;
+        if(record.field("medica").value().toInt()==1)
+            Configuracion_global->medic = true;
+        else
+            Configuracion_global->medic = false;
 
-//        if(record.field("internacional").value().toInt()==1)
-//            internacional = true;
-//        else
-//            internacional = false;
+        if(record.field("internacional").value().toInt()==1)
+            Configuracion_global->internacional = true;
+        else
+            Configuracion_global->internacional = false;
 
+        Configuracion_global->EnlaceWeb = record.field("enlaceweb").value().toBool();
 
         QApplication::processEvents();
 

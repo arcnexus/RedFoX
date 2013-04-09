@@ -90,6 +90,8 @@ void MainWindow::crear_barraCompras()
     btn_albaranes_pro = new ToolBarButton(tr("Albaranes \nProv."),":/Icons/PNG/albaran_pro.png",this);
     btn_facturas_pro = new ToolBarButton(tr("Facturas \nProv."),":/Icons/PNG/Factura_pro.png",this);
     btn_Orden_pedido = new ToolBarButton(tr("Orden \nde pedido"),":/Icons/PNG/opedido.png",this);
+    btn_recepcionPedidos = new ToolBarButton(tr("Recepción \npedidos"),":Icons/PNG/recepcion_ped.png",this);
+    btn_gestionPagos = new ToolBarButton(tr("Gestión \npagos"),":Icons/PNG/pagos.png",this);
 
 
     QFrame*  line = new QFrame(ui->page_compras);
@@ -98,8 +100,10 @@ void MainWindow::crear_barraCompras()
 
     ui->verticalLayout_compras->addWidget(btn_Orden_pedido);
     ui->verticalLayout_compras->addWidget(btn_pedidos_pro);
+    ui->verticalLayout_compras->addWidget(btn_recepcionPedidos);
     ui->verticalLayout_compras->addWidget(btn_albaranes_pro);
     ui->verticalLayout_compras->addWidget(btn_facturas_pro);
+    ui->verticalLayout_compras->addWidget(btn_gestionPagos);
 
 
     ui->verticalLayout_compras->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
@@ -108,6 +112,7 @@ void MainWindow::crear_barraCompras()
     connect(btn_pedidos_pro,SIGNAL(clicked()),this,SLOT(btn_pedidos_pro_clicked()));
     connect(btn_albaranes_pro,SIGNAL(clicked()),this,SLOT(btn_albaranes_pro_clicked()));
     connect(btn_facturas_pro,SIGNAL(clicked()),this,SLOT(btn_facturas_pro_clicked()));
+    connect(btn_recepcionPedidos,SIGNAL(clicked()),this,SLOT(btn_recepcionPedidos_clicked()));
 
     //barra de menu
     connect(ui->actionOrdenes_de_pedidos,SIGNAL(triggered()),this,SLOT(btnOrden_pedido_clicked()));
@@ -170,6 +175,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+   // ui->menubar->hide();
     on_edit = false;
     Configuracion_global->CargarDatos();
     QStringList modulos;
@@ -222,7 +228,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));
     connect(ui->actionMonedas,SIGNAL(triggered()),this,SLOT(handle_monedas()));
 
-    QPixmap pixmap(":/Icons/PNG/Logo2.png");
+    QPixmap pixmap(":/Icons/PNG/mayafondo_blanco.png");
     QSplashScreen splash(pixmap);
     splash.show();
 
@@ -287,6 +293,9 @@ MainWindow::MainWindow(QWidget *parent) :
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
     agendaForm = new AgendaForm(this);
 
+    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Recepción de Pedidos"),Qt::AlignBottom);
+    frmRecep_pedidos = new Frmrecepcion_pedidos(this);
+
     splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
 
     ui->stackedWidget->addWidget(frmClientes1);
@@ -302,6 +311,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->addWidget(frmFacturas_pro);
     ui->stackedWidget->addWidget(frmFactura_multiple);
     ui->stackedWidget->addWidget(frmOrden_Ped_pro);
+    ui->stackedWidget->addWidget(frmRecep_pedidos);
     ui->stackedWidget->addWidget(reportWindow);
     ui->stackedWidget->addWidget(agendaForm);
     TerraForm = new init_form(this);
@@ -315,8 +325,21 @@ MainWindow::MainWindow(QWidget *parent) :
     QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
     ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
+    ui->menubar->show();
+
+  //  ui->menubar->setNativeMenuBar(false);
+   QHBoxLayout *layout_mw = new QHBoxLayout(this);
+   layout_mw->addWidget(ui->frame_toolbar);
+   layout_mw->addWidget(ui->widget);
+   this->centralWidget()->setLayout(layout_mw);
+   this->show();
 
 
+//    //-------------------------------
+//    // CAMBIO DIVISA
+//    //-------------------------------
+  //  connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(test(float)));
+   // Configuracion_global->getCambio("EUR","USD",1);
 }
 void MainWindow::init()
 {
@@ -447,92 +470,92 @@ void MainWindow::init()
 //            Configuracion_global->CargarUsuarios();
 //            //Widgets
 
-////            splash.showMessage(tr("Cargando modulos... Modulo de clientes"),Qt::AlignBottom);
-////            frmClientes1 = new frmClientes(this);
-////            connect(frmClientes1,SIGNAL(block()),this,SLOT(block_main()));
-////            connect(frmClientes1,SIGNAL(unblock()),this,SLOT(unblock_main()));
+//            splash.showMessage(tr("Cargando modulos... Modulo de clientes"),Qt::AlignBottom);
+//            frmClientes1 = new frmClientes(this);
+//            connect(frmClientes1,SIGNAL(block()),this,SLOT(block_main()));
+//            connect(frmClientes1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-////            splash.showMessage(tr("Cargando modulos... Modulo de facturas"),Qt::AlignBottom);
-////            frmFacturas1 = new frmFacturas(this);
-////            connect(frmFacturas1,SIGNAL(block()),this,SLOT(block_main()));
-////            connect(frmFacturas1,SIGNAL(unblock()),this,SLOT(unblock_main()));
+//            splash.showMessage(tr("Cargando modulos... Modulo de facturas"),Qt::AlignBottom);
+//            frmFacturas1 = new frmFacturas(this);
+//            connect(frmFacturas1,SIGNAL(block()),this,SLOT(block_main()));
+//            connect(frmFacturas1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-////            splash.showMessage(tr("Cargando modulos... Modulo de articulos"),Qt::AlignBottom);
-////            frmArticulos1 = new FrmArticulos(this);
+//            splash.showMessage(tr("Cargando modulos... Modulo de articulos"),Qt::AlignBottom);
+//            frmArticulos1 = new FrmArticulos(this);
 
-////            splash.showMessage(tr("Cargando modulos... Modulo de proveedores"),Qt::AlignBottom);
-////            frmProveedores1 = new frmProveedores(this);
+//            splash.showMessage(tr("Cargando modulos... Modulo de proveedores"),Qt::AlignBottom);
+//            frmProveedores1 = new frmProveedores(this);
 
-////            splash.showMessage(tr("Cargando modulos... Modulo de albaranes"),Qt::AlignBottom);
-////            frmAlbaran1 = new FrmAlbaran(this);
-////            connect(frmAlbaran1,SIGNAL(block()),this,SLOT(block_main()));
-////            connect(frmAlbaran1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-
-////            splash.showMessage(tr("Cargando modulos... Modulo de facturación de albaranes"),Qt::AlignBottom);
-////            frmFactura_multiple = new FrmFacturarAlabaranes(this);
-////            connect(frmFactura_multiple,SIGNAL(block()),this,SLOT(block_main()));
-////            connect(frmFactura_multiple,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-////            splash.showMessage(tr("Cargando modulos... Modulo de pedidos"),Qt::AlignBottom);
-////            frmPedidos1 = new FrmPedidos(this);
-////            connect(frmPedidos1,SIGNAL(block()),this,SLOT(block_main()));
-////            connect(frmPedidos1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-////            splash.showMessage(tr("Cargando modulos... Modulo de presupuestos"),Qt::AlignBottom);
-////            frmPresupcli = new FrmPresupuestosCli(this);
-////            connect(frmPresupcli,SIGNAL(block()),this,SLOT(block_main()));
-////            connect(frmPresupcli,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-////            splash.showMessage(tr("Cargando modulos... Modulo de TPV"),Qt::AlignBottom);
-////            frmCajaMinuta = new FrmCajaMinuta(this);
-////            connect(frmCajaMinuta,SIGNAL(block()),this,SLOT(block_main()));
-////            connect(frmCajaMinuta,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-////            splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos"),Qt::AlignBottom);
-////            FrmPedidos_pro = new FrmPedidosProveedor(this);
-
-////            splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes"),Qt::AlignBottom);
-////            FrmAlbaran_pro = new FrmAlbaranProveedor(this);
+//            splash.showMessage(tr("Cargando modulos... Modulo de albaranes"),Qt::AlignBottom);
+//            frmAlbaran1 = new FrmAlbaran(this);
+//            connect(frmAlbaran1,SIGNAL(block()),this,SLOT(block_main()));
+//            connect(frmAlbaran1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
 
-////            splash.showMessage(tr("Cargando modulos... Modulo de Compras: facturas"),Qt::AlignBottom);
-////            frmFacturas_pro = new FrmFacturasProveedor(this);
+//            splash.showMessage(tr("Cargando modulos... Modulo de facturación de albaranes"),Qt::AlignBottom);
+//            frmFactura_multiple = new FrmFacturarAlabaranes(this);
+//            connect(frmFactura_multiple,SIGNAL(block()),this,SLOT(block_main()));
+//            connect(frmFactura_multiple,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-////            splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
-////            frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
+//            splash.showMessage(tr("Cargando modulos... Modulo de pedidos"),Qt::AlignBottom);
+//            frmPedidos1 = new FrmPedidos(this);
+//            connect(frmPedidos1,SIGNAL(block()),this,SLOT(block_main()));
+//            connect(frmPedidos1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-////            splash.showMessage(tr("Cargando modulos... Editor de reportes"),Qt::AlignBottom);
-////            reportWindow = new ReportWriterWindow();
+//            splash.showMessage(tr("Cargando modulos... Modulo de presupuestos"),Qt::AlignBottom);
+//            frmPresupcli = new FrmPresupuestosCli(this);
+//            connect(frmPresupcli,SIGNAL(block()),this,SLOT(block_main()));
+//            connect(frmPresupcli,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-////            splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
-////            agendaForm = new AgendaForm(this);
+//            splash.showMessage(tr("Cargando modulos... Modulo de TPV"),Qt::AlignBottom);
+//            frmCajaMinuta = new FrmCajaMinuta(this);
+//            connect(frmCajaMinuta,SIGNAL(block()),this,SLOT(block_main()));
+//            connect(frmCajaMinuta,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-////            splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
+//            splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos"),Qt::AlignBottom);
+//            FrmPedidos_pro = new FrmPedidosProveedor(this);
 
-////            ui->stackedWidget->addWidget(frmClientes1);
-////            ui->stackedWidget->addWidget(frmFacturas1);
-////            ui->stackedWidget->addWidget(frmArticulos1);
-////            ui->stackedWidget->addWidget(frmProveedores1);
-////            ui->stackedWidget->addWidget(frmAlbaran1);
-////            ui->stackedWidget->addWidget(frmPedidos1);
-////            ui->stackedWidget->addWidget(frmPresupcli);
-////            ui->stackedWidget->addWidget(frmCajaMinuta);
-////            ui->stackedWidget->addWidget(FrmPedidos_pro);
-////            ui->stackedWidget->addWidget(FrmAlbaran_pro);
-////            ui->stackedWidget->addWidget(frmFacturas_pro);
-////            ui->stackedWidget->addWidget(frmFactura_multiple);
-////            ui->stackedWidget->addWidget(frmOrden_Ped_pro);
-////            ui->stackedWidget->addWidget(reportWindow);
-////            ui->stackedWidget->addWidget(agendaForm);
-////            TerraForm = new init_form(this);
-////            ui->stackedWidget->addWidget(TerraForm);
-////            ui->stackedWidget->setCurrentWidget(TerraForm);
+//            splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes"),Qt::AlignBottom);
+//            FrmAlbaran_pro = new FrmAlbaranProveedor(this);
 
-////            QApplication::processEvents();
-////            this->setWindowState(Qt::WindowMaximized);
-////            this->move(0,0);
-////            this->show();
+
+//            splash.showMessage(tr("Cargando modulos... Modulo de Compras: facturas"),Qt::AlignBottom);
+//            frmFacturas_pro = new FrmFacturasProveedor(this);
+
+//            splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
+//            frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
+
+//            splash.showMessage(tr("Cargando modulos... Editor de reportes"),Qt::AlignBottom);
+//            reportWindow = new ReportWriterWindow();
+
+//            splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
+//            agendaForm = new AgendaForm(this);
+
+//            splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
+
+//            ui->stackedWidget->addWidget(frmClientes1);
+//            ui->stackedWidget->addWidget(frmFacturas1);
+//            ui->stackedWidget->addWidget(frmArticulos1);
+//            ui->stackedWidget->addWidget(frmProveedores1);
+//            ui->stackedWidget->addWidget(frmAlbaran1);
+//            ui->stackedWidget->addWidget(frmPedidos1);
+//            ui->stackedWidget->addWidget(frmPresupcli);
+//            ui->stackedWidget->addWidget(frmCajaMinuta);
+//            ui->stackedWidget->addWidget(FrmPedidos_pro);
+//            ui->stackedWidget->addWidget(FrmAlbaran_pro);
+//            ui->stackedWidget->addWidget(frmFacturas_pro);
+//            ui->stackedWidget->addWidget(frmFactura_multiple);
+//            ui->stackedWidget->addWidget(frmOrden_Ped_pro);
+//            ui->stackedWidget->addWidget(reportWindow);
+//            ui->stackedWidget->addWidget(agendaForm);
+//            TerraForm = new init_form(this);
+//            ui->stackedWidget->addWidget(TerraForm);
+//            ui->stackedWidget->setCurrentWidget(TerraForm);
+
+//            QApplication::processEvents();
+//            this->setWindowState(Qt::WindowMaximized);
+//            this->move(0,0);
+//            this->show();
 //		}
 //		else
 //            QMessageBox::critical(this,"Error","Fallo la conexión al fichero Medico");
@@ -559,6 +582,11 @@ void MainWindow::showInfo()
     ui->lineEmpresaActiva->setText(empresa);
     ui->lineUsuarioActivo->setText(user);
     Configuracion_global->cUsuarioActivo = user;
+}
+
+void MainWindow::test(float f)
+{
+    QMessageBox::information(this,"EUR -> USD", QString::number(f));
 }
 
 void MainWindow::btnMantenimientos_clicked()
@@ -631,6 +659,11 @@ void MainWindow::btn_albaranes_pro_clicked()
 void MainWindow::btn_facturas_pro_clicked()
 {
     ui->stackedWidget->setCurrentWidget(frmFacturas_pro);
+}
+
+void MainWindow::btn_recepcionPedidos_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(frmRecep_pedidos);
 }
 
 void MainWindow::btnArticulos_2_clicked()

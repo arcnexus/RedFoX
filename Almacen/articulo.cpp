@@ -23,6 +23,33 @@ void Articulo::Anadir()
      } else {
          this->id = query.lastInsertId().toInt();
          Recuperar("Select * from articulos where id = "+QString::number(this->id));
+         //--------------------------
+         // Añado tarifas a artículo
+         //--------------------------
+         QSqlQuery queryTarifas(QSqlDatabase::database("terra"));
+         if(queryTarifas.exec("select * from codigotarifa")){
+             while (queryTarifas.next()){
+                 QSqlQuery anadirTarifa(QSqlDatabase::database("terra"));
+                 anadirTarifa.prepare("INSERT INTO tarifas ("
+                                   "id_Articulo,"
+                                   "id_pais,"
+                                   "id_monedas,"
+                                   "id_codigotarifa) VALUES ("
+                                   ":id_Articulo,"
+                                   ":id_pais,"
+                                   ":id_monedas,"
+                                   ":id_codigotarifa);");
+
+                 anadirTarifa.bindValue(":id_articulo",this->id);
+                 anadirTarifa.bindValue(":id_pais",queryTarifas.record().field("id_pais").value().toInt());
+                 anadirTarifa.bindValue(":id_monedas",queryTarifas.record().field("id_monedas").value().toInt());
+                 anadirTarifa.bindValue(":id_codigoTarifa",queryTarifas.record().field("id").value().toInt());
+                 if(!anadirTarifa.exec())
+                     QMessageBox::warning(qApp->activeWindow(),tr("Añadir tarifa"),
+                                          tr("Falló la inserción de la tarifa: %1").arg(anadirTarifa.lastError().text()),
+                                          tr("Aceptar"));
+             }
+         }
      }
 
 
@@ -85,6 +112,14 @@ bool Articulo::Recuperar(QString cSQL)
                this->idgrupoart = registro.field("idgrupoart").value().toInt();
                this->idweb = registro.field("idweb").value().toInt();
                this->stockfisico = registro.field("stockfisco").value().toInt();
+               this->articulopromocionado = registro.field("articulopromocionado").value().toBool();
+               this->descripcion_promocion = registro.field("descripcion_promocion").value().toString();
+               this->tipo_oferta = registro.field("tipo_oferta").value().toInt();
+               this->por_cada = registro.field("por_cada").value().toInt();
+               this->regalode= registro.field("regalode").value().toInt();
+               this->porc_dto_web = registro.field("porc_dto_web").value().toDouble();
+               this->oferta_pvp_fijo = registro.field("oferta_pvp_fijo").value().toDouble();
+               this->comentario_oferta =registro.field("comentario_oferta").value().toString();
 
                // Recupero proveedor
                QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
@@ -168,6 +203,14 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->idgrupoart = registro.field("idgrupoart").value().toInt();
                this->idweb = registro.field("idweb").value().toInt();
                this->stockfisico = registro.field("stockfisco").value().toInt();
+               this->articulopromocionado = registro.field("articulopromocionado").value().toBool();
+               this->descripcion_promocion = registro.field("descripcion_promocion").value().toString();
+               this->tipo_oferta = registro.field("tipo_oferta").value().toInt();
+               this->por_cada = registro.field("por_cada").value().toInt();
+               this->regalode= registro.field("regalode").value().toInt();
+               this->porc_dto_web = registro.field("porc_dto_web").value().toDouble();
+               this->oferta_pvp_fijo = registro.field("oferta_pvp_fijo").value().toDouble();
+               this->comentario_oferta =registro.field("comentario_oferta").value().toString();
                // Recupero proveedor
                QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
                qryProveedor->prepare("select id,cCodigo,cProveedor from proveedores where id = :id");
@@ -217,7 +260,6 @@ void Articulo::Guardar()
                    "`nUnidadesVendidas` =:nUnidadesVendidas,"
                    "`rAcumuladoCompras` =:rAcumuladoCompras,"
                    "`rAcumuladoVentas` =:rAcumuladoVentas,"
-                   "`bImagen` =:bImagen,"
                    "`tComentario` =:tComentario,"
                    "`nStockMaximo` =:nStockMaximo,"
                    "`nStockMinimo` =:nStockMinimo,"
@@ -236,7 +278,15 @@ void Articulo::Guardar()
                    "`idsubsubfamilia` =:idsubsubfamilia,"
                    "`idgrupoart` =:idgrupoart,"
                    "`idweb` =:idweb,"
-                   "`stockfisico` =:stockfisico"
+                   "`stockfisico` =:stockfisico,"
+                   "`articulopromocionado` =:articulopromocionado,"
+                   "`descripcion_promocion` =:descripcion_promocion,"
+                   "`tipo_oferta` =:tipo_oferta,"
+                   "`por_cada` =:por_cada,"
+                   "`regalode` =:regalode,"
+                   "`porc_dto_web` =:porc_dto_web,"
+                   "`oferta_pvp_fijo` =:oferta_pvp_fijo,"
+                   "`comentario_oferta` =:comentario_oferta"
                    " WHERE id =:id");
 
 
@@ -265,9 +315,6 @@ void Articulo::Guardar()
     query.bindValue(":nStockMinimo",this->nStockMinimo);
     query.bindValue(":nStockReal",this->nStockReal);
     query.bindValue(":lControlarStock",this->lControlarStock);
-    query.bindValue(":cModelo",this->cModelo);
-    query.bindValue(":cTalla",this->cTalla);
-    query.bindValue(":cColor",this->cColor);
     query.bindValue(":cComposicion",this->cComposicion);
     query.bindValue(":lPvpIncluyeIva",this->lPvpIncluyeIva);
     query.bindValue(":dFechaPrevistaRecepcion",dFechaPrevistaRecepcion);
@@ -282,7 +329,15 @@ void Articulo::Guardar()
     query.bindValue(":idgrupoart",this->idgrupoart);
     query.bindValue(":idweb",this->idweb);
     query.bindValue(":stockfisico",this->stockfisico);
-
+    query.bindValue(":rCoste",this->rCoste);
+    query.bindValue(":articulopromocionado",this->articulopromocionado);
+    query.bindValue(":descripcion_promocion",this->descripcion_promocion);
+    query.bindValue(":tipo_oferta",this->tipo_oferta);
+    query.bindValue(":por_cada",this->por_cada);
+    query.bindValue(":regalode",this->regalode);
+    query.bindValue(":porc_dto_web",this->porc_dto_web);
+    query.bindValue(":oferta_pvp_fijo",this->oferta_pvp_fijo);
+    query.bindValue(":comentario_oferta",this->comentario_oferta);
 
     if(!query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Guardar Artículo"),
@@ -337,6 +392,14 @@ void Articulo::Vaciar()
     this->lMostrarWeb = 0;
     this->nEtiquetas = 0;
     this->cLocalizacion = "";
+    this->articulopromocionado = false;
+    this->descripcion_promocion = "";
+    this->tipo_oferta = 0;
+    this->por_cada = 0;
+    this->regalode = 0;
+    this->porc_dto_web = 0;
+    this->oferta_pvp_fijo = 0;
+    this->comentario_oferta = "";
 }
 
 void Articulo::Borrar(int nId)
@@ -372,24 +435,50 @@ void Articulo::Devolucion(int id, int cantidad, double rImporte, QString cMotivo
 {
 }
 
-void Articulo::CargarImagen(QLabel *label)
+void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4)
 {
     QSqlQuery qryArticulo(QSqlDatabase::database("terra"));
-    qryArticulo.prepare("Select bImagen from articulos where Id = :id");
+    qryArticulo.prepare("Select bImagen,bImagen2,bImagen3,bImagen4 from articulos where Id = :id");
     qryArticulo.bindValue(":id",this->id);
     if (qryArticulo.exec()) {
-           if (qryArticulo.next()){
-               QSqlRecord registro =  qryArticulo.record();
-
-
-
-               QByteArray ba1 = registro.field("bImagen").value().toByteArray();
-               QPixmap pm1;
-               pm1.loadFromData(ba1);
-               label->setPixmap(pm1);
-          } else
-               QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al recuperar"),
-                                    QObject::tr("No se puede recuperar la imagen asociada al artículo"),QObject::tr("Ok"));
+        if (qryArticulo.next()){
+            //--------
+            // imagen1
+            //--------
+            QSqlRecord registro =  qryArticulo.record();
+            QByteArray ba1 = registro.field("bImagen").value().toByteArray();
+            QPixmap pm1;
+            pm1.loadFromData(ba1);
+            if(!registro.field("bImagen").value().isNull())
+                label->setPixmap(pm1);
+            //--------
+            // imagen2
+            //--------
+            ba1 = registro.field("bImagen2").value().toByteArray();
+            QPixmap pm12;
+            pm12.loadFromData(ba1);
+            if(!registro.field("bImagen2").value().isNull())
+                label2->setPixmap(pm12);
+            //--------
+            // imagen3
+            //--------
+            ba1 = registro.field("bImagen3").value().toByteArray();
+            QPixmap pm13;
+            pm13.loadFromData(ba1);
+            if(!registro.field("bImagen3").value().isNull())
+                label3->setPixmap(pm13);
+            //--------
+            // imagen4
+            //--------
+            ba1 = registro.field("bImagen4").value().toByteArray();
+            QPixmap pm14;
+            pm14.loadFromData(ba1);
+            if(!registro.field("bImagen4").value().isNull())
+                label4->setPixmap(pm14);
+        } else
+            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al recuperar"),
+                                    QObject::tr("No se pueden recuperar la imagenes asociadas al artículo"),
+                                    QObject::tr("Ok"));
     }
 }
 
@@ -575,6 +664,24 @@ bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, Q
     } else
         return true;
 
+
+
+}
+
+bool Articulo::cambiarProveedorPrincipal(int id, int id_proveedor)
+{
+    QSqlQuery queryProveedor(QSqlDatabase::database("terra"));
+    queryProveedor.prepare("update articulos Set id_proveedor = :id_proveedor where id = :id");
+    queryProveedor.bindValue(":id_proveedor",id_proveedor);
+    queryProveedor.bindValue(":id",id);
+    if (!queryProveedor.exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Cambiar proveedor"),
+                             tr("Falló el cambio de proveedor principal : %1").arg(queryProveedor.lastError().text()),
+                             tr("Aceptar"));
+        return false;
+    }
+    this->id_Proveedor = id_proveedor;
+    return true;
 
 
 }

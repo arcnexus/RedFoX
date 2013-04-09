@@ -18,6 +18,12 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     connect(ui->botCerrar_2,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(txtcPoblacion_editingFinished()));
     connect(ui->txtcCP,SIGNAL(editingFinished()),this,SLOT(txtcCp_editingFinished()));
+    //------------------
+    // LLeno divisas
+    //------------------
+    QSqlQueryModel *modelDivisas = new QSqlQueryModel(this);
+    modelDivisas->setQuery("select moneda from monedas",QSqlDatabase::database("terra"));
+    ui->cboDivisas->setModel(modelDivisas);
 
     on_botSiguiente_clicked();
     on_botSiguiente_user_clicked();
@@ -76,6 +82,9 @@ void FrmEmpresas::LLenarCampos()
     ui->txtcCuentaCliente->setText(oEmpresa.getcCuentaClientes());
     ui->txtcCuentaProveedores->setText(oEmpresa.getcCuentaProveedores());
     ui->txtcCuentaAcreedores->setText(oEmpresa.getcCuentaAcreedores());
+    QString cDivisa = Configuracion_global->Devolver_moneda(oEmpresa.id_divisa);
+    int nIndex = ui->cboDivisas->findText(cDivisa);
+    ui->cboDivisas->setCurrentIndex(nIndex);
 }
 
 void FrmEmpresas::CargarCamposEnEmpresa()
@@ -120,6 +129,8 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.setcCodigoCuentaClientes(ui->txtcCuentaCliente->text());
     oEmpresa.setcCodigoCuentaProveedor(ui->txtcCuentaProveedores->text());
     oEmpresa.setcCodigoCuentaAcreedores(ui->txtcCuentaAcreedores->text());
+    oEmpresa.id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisas->currentText());
+
 }
 
 

@@ -129,7 +129,7 @@ void Cliente::Guardar() {
     if(!query.exec()){
         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos cliente. Descripción Error: ", query.executedQuery());
     } else {
-        if (Configuracion_global->EnlaceWeb)
+        if (Configuracion_global->EnlaceWeb ==true)
             GuardarWeb();
        // QMessageBox::information(qApp->activeWindow(),"Guardar datos","Los datos se han guardado correctamente:","Ok");
     }

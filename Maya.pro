@@ -116,7 +116,10 @@ SOURCES += main.cpp\
     SOAP/soapcheckVatBindingProxy.cpp \
     SOAP/soapC.cpp \
     Almacen/frmasociarproveedor.cpp \
-    Auxiliares/monetarydelegate.cpp
+    Auxiliares/monetarydelegate.cpp \
+    Almacen/frmlistadosarticulo.cpp \
+    Zona_Compras/frmrecepcion_pedidos.cpp \
+    Zona_Pacientes/frmmtcbase.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -200,7 +203,10 @@ HEADERS  += mainwindow.h \
     SOAP/soapcheckVatBindingProxy.h \
     SOAP/checkVatBinding.nsmap \
     Almacen/frmasociarproveedor.h \
-    Auxiliares/monetarydelegate.h
+    Auxiliares/monetarydelegate.h \
+    Almacen/frmlistadosarticulo.h \
+    Zona_Compras/frmrecepcion_pedidos.h \
+    Zona_Pacientes/frmmtcbase.h
 
 
 FORMS    += mainwindow.ui \
@@ -249,7 +255,10 @@ FORMS    += mainwindow.ui \
     Busquedas/frmbuscarproveedor.ui \
     Almacen/frmtipostarifa.ui \
     Zona_Ventas/frmcajaabierta.ui \
-    Almacen/frmasociarproveedor.ui
+    Almacen/frmasociarproveedor.ui \
+    Almacen/frmlistadosarticulo.ui \
+    Zona_Compras/frmrecepcion_pedidos.ui \
+    Zona_Pacientes/frmmtcbase.ui
 
 RESOURCES += \
     terra.qrc
@@ -260,26 +269,6 @@ OTHER_FILES += \
     SOAP/checkVatBinding.checkVatApprox.req.xml \
     SOAP/checkVatBinding.checkVat.res.xml \
     SOAP/checkVatBinding.checkVat.req.xml
-
-unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lcommon
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lrenderer
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lMetaSQL
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lwrtembed
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lcommon
@@ -364,3 +353,27 @@ DEPENDPATH += $$PWD/
 
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/LibsGraficas/openchartplugin.lib
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/LibsGraficas/openchartplugind.lib
+
+
+unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lcommon
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lrenderer
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lMetaSQL
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lwrtembed
+
+INCLUDEPATH += $$PWD/openrptLibs/include
+DEPENDPATH += $$PWD/openrptLibs/include
+
+
+

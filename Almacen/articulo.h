@@ -61,8 +61,19 @@ public:
     int nUnidadesCompradas;
     int nUnidadesVendidas;
     double rCoste;
+    bool articulopromocionado;
+    QString descripcion_promocion;
+    int tipo_oferta;
+    int por_cada;
+    int regalode;
+    double porc_dto_web;
+    double oferta_pvp_fijo;
+    QString comentario_oferta;
 
     Articulo(QObject* parent = 0);
+    //-----------
+    // Metodos
+    //-----------
     void Anadir();
     bool Recuperar(QString cSQL);
     void Recuperar(QString cSQL,int nProcede);
@@ -71,7 +82,7 @@ public:
     void Borrar(int nId);
     static void Vender(int id, int cantidad, double rPVP);
     void Devolucion(int id, int cantidad, double rImporte, QString cMotivo, QString dFechaDevolucion);
-    void CargarImagen(QLabel *label);
+    void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
     int getIdSeccion(QString cSeccion_);
     int getIdFamilia(QString cFamilia_);
     int getIdSubFamilia(QString cSubfamilia_);
@@ -86,6 +97,7 @@ public:
                                        QString oferta, double pvdreal, int id_divisa);
     bool guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta,
                                        QString oferta, double pvdreal, int id_divisa);
+    bool cambiarProveedorPrincipal(int id,int id_proveedor);
 
     QString autocodigo();
 private:

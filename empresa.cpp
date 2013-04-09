@@ -30,6 +30,7 @@ void Empresa::Recuperar(QString cSQL)
 		{
             QSqlRecord registro = qEmpresa.record();
             this->id = registro.field("id").value().toInt();
+            this->id_divisa = registro.field("id_divisa").value().toInt();
             this->cCodigo = registro.field("codigo").value().toString();
             this->cNombre = registro.field("nombre").value().toString();
             this->nDigitosFactura = registro.field("digitosfactura").value().toInt();
@@ -94,6 +95,7 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
         if(qEmpresa.next()) {
             QSqlRecord registro = qEmpresa.record();
             this->id = registro.field("id").value().toInt();
+            this->id_divisa = registro.field("id_divisa").value().toInt();
             this->cCodigo = registro.field("codigo").value().toString();
             this->cNombre = registro.field("nombre").value().toString();
             this->nDigitosFactura = registro.field("digitosfactura").value().toInt();
@@ -151,6 +153,7 @@ void Empresa::Guardar()
 {
     qEmpresa = QSqlQuery(QSqlDatabase::database("terra"));
     qEmpresa.prepare("update empresas set "
+                     "id_divisa =:id_divisa,"
                      "codigo =:cCodigo,"
                      "nombre =:cNombre,"
                      "digitosfactura =:nDigitosFactura,"
@@ -194,6 +197,7 @@ void Empresa::Guardar()
                      "cCuentaPagos =:cCuentaPagos"
                      " where id=:nID");
 
+    qEmpresa.bindValue(":id_divisa",this->id_divisa);
     qEmpresa.bindValue(":cCodigo",this->cCodigo);
     qEmpresa.bindValue(":cNombre",this->cNombre);
     qEmpresa.bindValue(":nDigitosFactura", this->nDigitosFactura);
@@ -253,6 +257,7 @@ void Empresa::Guardar()
 
 void Empresa::Vaciar()
 {
+    this->id_divisa = 0;
     this->cCodigo = "";
     this->cNombre = "";
     this->nDigitosFactura = 0;

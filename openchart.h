@@ -28,7 +28,7 @@ struct roundLabelPoints
     float value;
 };
 
-class /*SHAREDLIBSHARED_EXPORT*/ OpenChart : public QWidget
+class SHAREDLIBSHARED_EXPORT OpenChart : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(Tipos Tipo READ Tipo WRITE setTipo)

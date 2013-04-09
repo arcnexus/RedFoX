@@ -16,6 +16,7 @@
 #include "Zona_Compras/frmalbaranproveedor.h"
 #include "Zona_Compras/frmfacturasproveedor.h"
 #include "Zona_Compras/frmorden_pedido_producto.h"
+#include "Zona_Compras/frmrecepcion_pedidos.h"
 
 #include "Zona_Ventas/frmfacturaralabaranes.h"
 #include "Zona_Ventas/frmalbaran.h"
@@ -46,6 +47,7 @@ public:
     //QSqlDatabase dbConfiguracion;
     QSqlQuery QryConfiguracion;
 private slots:
+    void test(float f);
 	void init();
 
     void block_main();
@@ -83,6 +85,8 @@ private slots:
 
     void btn_albaranes_pro_clicked();
     void btn_facturas_pro_clicked();
+    void btn_recepcionPedidos_clicked();
+
     // Zona Almacen
     void btnArticulos_2_clicked();
     void btnOrden_pedido_clicked();
@@ -173,6 +177,7 @@ private:
     FrmFacturasProveedor * frmFacturas_pro;
     FrmFacturarAlabaranes *frmFactura_multiple;
     FrmOrden_Pedido_Producto * frmOrden_Ped_pro;
+    Frmrecepcion_pedidos *frmRecep_pedidos;
 
     ReportWriterWindow * reportWindow;
     AgendaForm * agendaForm;

@@ -24,6 +24,7 @@
 #include "frmanalitica.h"
 #include "analitica.h"
 #include "frmveranalitica.h"
+#include "frmmtcbase.h"
 
 //TODO integrar http://doc.ginkgo-cadx.com/ginkgo-integration/ginkgo-cadx-integration-input-xml-integration/
 
@@ -43,6 +44,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
 
     ui->cboNivelEstudios->addItems(listaEstudios);
     ui->cboDoctorEpisodio->addItems(listaDoctores);
+    ui->cboRealizadaPorDr->addItems(listaDoctores);
 
     QSqlQueryModel *qTipos = new QSqlQueryModel(this);
     qTipos->setQuery("Select descripcion from tiposimagen",QSqlDatabase::database("dbmedica"));
@@ -80,7 +82,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->btnBorrarAnalitica,SIGNAL(clicked()),this,SLOT(BorrarAnalitica()));
     connect(ui->btnAnadirVisita,SIGNAL(clicked()),this,SLOT(AnadirVisita()));
     connect(ui->listaEpisodios,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),this,SLOT(listaEpisodios_currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
-
+    connect(ui->btnBdMed,SIGNAL(clicked()),this,SLOT(vademecums()));
 
     // Ocultar Iconos imagenes
     ui->itemFarma->setVisible(false);
@@ -928,4 +930,10 @@ void FrmFichaPaciente::AnadirVisita()
 {
     frmVisitas frmvisitas;
     frmvisitas.exec();
+}
+
+void FrmFichaPaciente::vademecums()
+{
+FrmMTCbase base;
+base.exec();
 }

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>764</width>
+    <width>848</width>
     <height>254</height>
    </rect>
   </property>
@@ -134,8 +134,18 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="6" column="4" colspan="3">
-       <widget class="QLineEdit" name="txtPVPDivisa">
+      <item row="4" column="7">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Valor local:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="8">
+       <widget class="QLineEdit" name="txtvalorLocal">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="maximumSize">
          <size>
           <width>106</width>
@@ -149,14 +159,124 @@
          <string>0,00</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="4">
+       <widget class="QDoubleSpinBox" name="spinMargenMinimo">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>96</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="minimum">
+         <double>-500.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1000000.989999999990687</double>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="7">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Coste en divisa local:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Margen Mínimo:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Margen:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="3">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>PVP en Divisa Tarifa:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="7">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>PVP en divisa Local:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="8">
+       <widget class="QLineEdit" name="txtValorDivisa">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>96</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
       <item row="6" column="8">
-       <widget class="QLineEdit" name="txtPVP">
+       <widget class="QLineEdit" name="txtPVPLocal">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>96</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>16777215</height>
+         </size>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);
@@ -170,14 +290,14 @@ color: rgb(115, 115, 115);</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="2">
-       <widget class="QLineEdit" name="txtCodTarifa">
+      <item row="0" column="4" colspan="3">
+       <widget class="QLineEdit" name="txtPais">
         <property name="enabled">
          <bool>false</bool>
         </property>
         <property name="minimumSize">
          <size>
-          <width>49</width>
+          <width>123</width>
           <height>0</height>
          </size>
         </property>
@@ -187,10 +307,26 @@ color: rgb(115, 115, 115);</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="7">
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>Margen Mínimo:</string>
+      <item row="0" column="8">
+       <widget class="QLineEdit" name="txtMoneda">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>96</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(115, 115, 115);</string>
         </property>
        </widget>
       </item>
@@ -198,13 +334,6 @@ color: rgb(115, 115, 115);</string>
        <widget class="QListView" name="listaTarifa">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Código tarifa:</string>
         </property>
        </widget>
       </item>
@@ -234,80 +363,26 @@ color: rgb(115, 115, 115);</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="8">
-       <widget class="QDoubleSpinBox" name="spinMargenMinimo">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="minimumSize">
+      <item row="6" column="4" colspan="3">
+       <widget class="QLineEdit" name="txtPVPDivisa">
+        <property name="maximumSize">
          <size>
-          <width>96</width>
-          <height>0</height>
+          <width>106</width>
+          <height>16777215</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-</string>
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
         </property>
        </widget>
       </item>
-      <item row="0" column="4" colspan="3">
-       <widget class="QLineEdit" name="txtPais">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>123</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(115, 115, 115);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="8">
-       <widget class="QLineEdit" name="txtMoneda">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(115, 115, 115);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="3">
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>PVP en Divisa Tarifa:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="7">
-       <widget class="QLabel" name="label_7">
-        <property name="text">
-         <string>Importe local:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3" colspan="6">
-       <widget class="QLineEdit" name="txtDescTarifa">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(115, 115, 115);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="4">
+      <item row="3" column="4">
        <widget class="QDoubleSpinBox" name="spinMargen">
         <property name="enabled">
          <bool>true</bool>
@@ -318,25 +393,46 @@ color: rgb(115, 115, 115);</string>
           <height>0</height>
          </size>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
-       </widget>
-      </item>
-      <item row="4" column="3">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Margen:</string>
+        <property name="minimum">
+         <double>-500.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1000000.989999999990687</double>
         </property>
        </widget>
       </item>
-      <item row="3" column="8">
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="enabled">
-         <bool>false</bool>
+      <item row="3" column="7">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Valor divisa:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="8">
+       <widget class="QLineEdit" name="txtCosteLocal">
+        <property name="minimumSize">
+         <size>
+          <width>96</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>16777215</height>
+         </size>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -347,12 +443,56 @@ color: rgb(115, 115, 115);</string>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
-      <item row="3" column="7">
-       <widget class="QLabel" name="label_8">
+      <item row="2" column="5" colspan="4">
+       <widget class="QLineEdit" name="txtDescTarifa">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(115, 115, 115);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QLineEdit" name="txtCodTarifa">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>49</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(115, 115, 115);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Coste divisa local:</string>
+         <string>Tarifa:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="5">
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Calcular PVP</string>
         </property>
        </widget>
       </item>
@@ -361,26 +501,25 @@ color: rgb(115, 115, 115);</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>txtPais</tabstop>
+  <tabstop>txtMoneda</tabstop>
+  <tabstop>txtCodTarifa</tabstop>
+  <tabstop>txtDescTarifa</tabstop>
+  <tabstop>spinMargen</tabstop>
+  <tabstop>txtValorDivisa</tabstop>
+  <tabstop>spinMargenMinimo</tabstop>
+  <tabstop>txtCosteLocal</tabstop>
+  <tabstop>txtPVPDivisa</tabstop>
+  <tabstop>txtPVPLocal</tabstop>
+  <tabstop>listaTarifa</tabstop>
+  <tabstop>btnAceptar</tabstop>
+  <tabstop>btnCancelar</tabstop>
+ </tabstops>
  <resources>
   <include location="../terra.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>btnAceptar</sender>
-   <signal>clicked()</signal>
-   <receiver>FrmTarifas</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>197</x>
-     <y>181</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>331</x>
-     <y>210</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>btnCancelar</sender>
    <signal>clicked()</signal>
@@ -388,8 +527,8 @@ color: rgb(115, 115, 115);</string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>491</x>
-     <y>192</y>
+     <x>752</x>
+     <y>242</y>
     </hint>
     <hint type="destinationlabel">
      <x>530</x>
