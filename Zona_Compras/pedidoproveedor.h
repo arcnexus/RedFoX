@@ -39,10 +39,17 @@ public:
     double	rBase3;
     double	rBase4;
     double	nPorcIva1;
+
+    bool get(int id);
+    bool next();
+    bool prev();
+    long save();
+    bool update();
 signals:
     
 public slots:
-    
+private:
+    void fillPedido(QSqlRecord r);
 };
 
 #endif // PEDIDOPROVEEDOR_H
