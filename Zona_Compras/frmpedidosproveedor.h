@@ -4,7 +4,7 @@
 #include <QDialog>
 #include "../Auxiliares/Globlal_Include.h"
 #include "../Auxiliares/table_helper.h"
-
+#include "pedidoproveedor.h"
 namespace Ui {
 class FrmPedidosProveedor;
 }
@@ -22,7 +22,12 @@ private slots:
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);
     void desglose4Changed(double base, double iva, double re, double total);
+    void on_btnSiguiente_clicked();
+
+    void on_btnAnterior_clicked();
+
 private:
+    PedidoProveedor pedido;
     Ui::FrmPedidosProveedor *ui;
     Table_Helper helper;
 };

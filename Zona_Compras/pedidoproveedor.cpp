@@ -25,7 +25,8 @@ bool PedidoProveedor::next()
 {
     QSqlQuery q(QSqlDatabase::database("empresa"));
     q.prepare("SELECT * FROM ped_pro WHERE id = :id");
-    q.bindValue(":id",id+1);
+    int idplus = id+1;
+    q.bindValue(":id",idplus);
     if(q.exec())
     {
         if(q.next())
@@ -41,7 +42,8 @@ bool PedidoProveedor::prev()
 {
     QSqlQuery q(QSqlDatabase::database("empresa"));
     q.prepare("SELECT * FROM ped_pro WHERE id = :id");
-    q.bindValue(":id",id-1);
+    int idminus = id-1;
+    q.bindValue(":id",idminus);
     if(q.exec())
     {
         if(q.next())
@@ -55,7 +57,30 @@ bool PedidoProveedor::prev()
 
 long PedidoProveedor::save()
 {
-    return -1;
+    QSqlQuery q(QSqlDatabase::database("empresa"));
+    q.prepare("INSERT INTO ped_pro"
+              "( nPedido ,  cSerie ,  dFecha ,  dRecepcion ,  Id_Proveedor ,  cCodigoProveedor ,"
+              " cProveedor ,  cDireccion1 ,  cDireccion2 ,  cCP ,  cPoblacion ,  cProvincia ,  idpais ,"
+              " cCifNif ,  rBase ,  rSubotal ,  rDto ,  nIVA ,  rRecTotal ,  rTotal ,  lEnviado ,  lRecibido ,"
+              " lRecibidoCompleto ,  lGeneroPendiente ,  rBase1 ,  rBase2 ,  rBase3 ,  rBase4 ,  nPorcIva1 ,"
+              " nPorcIva2 ,  nPorcIva3 ,  nPorcIva4 ,  rIVA1 ,  rIVA2 ,  rIVA3 ,  rIVA4 ,  rTotal1 ,  rTotal2 ,"
+              " rTotal3 ,  rTotal4 ,  nMargenREC1 ,  nMargenREC2 ,  nMargenREC3 ,  nMargenREC4 ,  rREC1 ,  rREC2 ,"
+              " rREC3 ,  rREC4 ,  lTraspasado ,  nPedidoCliente ,  Id_FormaPago ,  dVencimiento1 ,  dVencimiento2 ,"
+              " dVencimiento3 ,  dVencimiento4 ,  lPagado1 ,  lPagado2 ,  lPagado3 ,  lPagado4 ,  tComentario ,"
+              " dFechaEntrega ,  cDireccion1Entrega ,  cDireccion2Entrega ,  cCPEntrega ,  cPoblacionEntrega ,"
+              " cProvinciaEntrega ,  id_paisEntrega ,  cNombreCliente ,  cHorarioActivo )"
+              "VALUES
+              "( :nPedido ,  :cSerie ,  :dFecha ,  :dRecepcion ,  :Id_Proveedor ,  :cCodigoProveedor ,"
+              " :cProveedor ,  :cDireccion1 ,  :cDireccion2 ,  :cCP ,  :cPoblacion ,  :cProvincia ,  :idpais ,"
+              " :cCifNif ,  :rBase ,  :rSubotal ,  :rDto ,  :nIVA ,  :rRecTotal ,  :rTotal ,  :lEnviado ,  :lRecibido ,"
+              " :lRecibidoCompleto ,  :lGeneroPendiente ,  :rBase1 ,  :rBase2 ,  :rBase3 ,  :rBase4 ,  :nPorcIva1 ,"
+              " :nPorcIva2 ,  :nPorcIva3 ,  :nPorcIva4 ,  :rIVA1 ,  :rIVA2 ,  :rIVA3 ,  :rIVA4 ,  :rTotal1 ,  :rTotal2 ,"
+              " :rTotal3 ,  :rTotal4 ,  :nMargenREC1 ,  :nMargenREC2 ,  :nMargenREC3 ,  :nMargenREC4 ,  :rREC1 ,  :rREC2 ,"
+              " :rREC3 ,  :rREC4 ,  :lTraspasado ,  :nPedidoCliente ,  :Id_FormaPago ,  :dVencimiento1 ,  :dVencimiento2 ,"
+              " :dVencimiento3 ,  :dVencimiento4 ,  :lPagado1 ,  :lPagado2 ,  :lPagado3 ,  :lPagado4 ,  :tComentario ,"
+              " :dFechaEntrega ,  :cDireccion1Entrega ,  :cDireccion2Entrega ,  :cCPEntrega ,  :cPoblacionEntrega ,"
+              " :cProvinciaEntrega ,  :id_paisEntrega ,  :cNombreCliente ,  :cHorarioActivo ");
+            return -1;
 }
 
 bool PedidoProveedor::update()

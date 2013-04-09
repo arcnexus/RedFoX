@@ -42,6 +42,8 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     ui->txtnRec2->setText(Configuracion_global->reList.at(1));
     ui->txtnRec3->setText(Configuracion_global->reList.at(2));
     ui->txtnRec4->setText(Configuracion_global->reList.at(3));
+
+    pedido.get(0);
 }
 
 FrmPedidosProveedor::~FrmPedidosProveedor()
@@ -95,4 +97,20 @@ void FrmPedidosProveedor::desglose4Changed(double base, double iva, double re, d
     ui->txtrIVA4->setText(QString::number(iva));
     ui->txtrRecargoEq4->setText(QString::number(re));
     ui->txtrTotal4->setText(QString::number(total));
+}
+
+void FrmPedidosProveedor::on_btnSiguiente_clicked()
+{
+    if(!pedido.next())
+        QMessageBox::information(this,tr("Final de archivo")
+                                 ,tr("Final de archivo alcanzado")
+                                 ,tr("Aceptar"));
+}
+
+void FrmPedidosProveedor::on_btnAnterior_clicked()
+{
+    if(!pedido.prev())
+        QMessageBox::information(this,tr("Principio de archivo")
+                                 ,tr("Principio de archivo alcanzado")
+                                 ,tr("Aceptar"));
 }
