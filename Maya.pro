@@ -119,7 +119,8 @@ SOURCES += main.cpp\
     Auxiliares/monetarydelegate.cpp \
     Almacen/frmlistadosarticulo.cpp \
     Zona_Compras/frmrecepcion_pedidos.cpp \
-    Zona_Pacientes/frmmtcbase.cpp
+    Zona_Pacientes/frmmtcbase.cpp \
+    Zona_Pacientes/frmanadirdiagnostico.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -206,7 +207,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/monetarydelegate.h \
     Almacen/frmlistadosarticulo.h \
     Zona_Compras/frmrecepcion_pedidos.h \
-    Zona_Pacientes/frmmtcbase.h
+    Zona_Pacientes/frmmtcbase.h \
+    Zona_Pacientes/frmanadirdiagnostico.h
 
 
 FORMS    += mainwindow.ui \
@@ -258,7 +260,8 @@ FORMS    += mainwindow.ui \
     Almacen/frmasociarproveedor.ui \
     Almacen/frmlistadosarticulo.ui \
     Zona_Compras/frmrecepcion_pedidos.ui \
-    Zona_Pacientes/frmmtcbase.ui
+    Zona_Pacientes/frmmtcbase.ui \
+    Zona_Pacientes/frmanadirdiagnostico.ui
 
 RESOURCES += \
     terra.qrc
