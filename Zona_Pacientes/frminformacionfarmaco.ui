@@ -17,8 +17,8 @@
    <string>Información medicamento</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="terra.qrc">
-    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
+   <iconset resource="Maya.qrc">
+    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -410,7 +410,7 @@
       <string>Aceptar</string>
      </property>
      <property name="icon">
-      <iconset resource="terra.qrc">
+      <iconset resource="Maya.qrc">
        <normaloff>:/Icons/PNG/OK.png</normaloff>:/Icons/PNG/OK.png</iconset>
      </property>
      <property name="iconSize">
@@ -490,7 +490,7 @@ color: rgb(255, 255, 255);</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="Maya.qrc"/>
  </resources>
  <connections/>
 </ui>

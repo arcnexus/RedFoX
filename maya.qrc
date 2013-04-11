@@ -29,7 +29,6 @@
         <file>PNG/paquete.png</file>
         <file>PNG/notepad.png</file>
         <file>PNG/ventas.png</file>
-        <file>PNG/terra.png</file>
         <file>PNG/Fp.png</file>
         <file>PNG/iva3.png</file>
         <file>PNG/albaran.png</file>
@@ -104,7 +103,7 @@
         <file>images/checkbox_unchecked.png</file>
         <file>images/checkbox_unchecked_hover.png</file>
         <file>images/checkbox_unchecked_pressed.png</file>
-        <file>Terra.qss</file>
+        <file>maya.qss</file>
         <file>PNG/users.png</file>
         <file>sql/Db_empresa_sqlite.sql</file>
         <file>sql/Db_empresa_mysql.sql</file>
@@ -149,6 +148,7 @@
         <file>PNG/mayamini.png</file>
         <file>PNG/mayafondo_blanco.png</file>
         <file>PNG/mayafondo_blanco_mini.png</file>
+        <file>PNG/iconMaya.png</file>
     </qresource>
     <qresource prefix="/openRPTLangs">
         <file>openrptLibs/traduccion/common_es.qm</file>

@@ -54,6 +54,7 @@ private slots:
     void on_botBuscarSubSubFamilia_clicked();
     void on_btnBuscarProveedor_clicked();
     void on_btnAnadirTarifa_clicked();
+
     void btnEditarTarifa_clicked();
     void btnBorrarTarifa_clicked();
 
@@ -64,6 +65,7 @@ private slots:
     void calcular_codigo();
     void trazabilidad2(int id);
     void TablaTrazabilidad_clicked(QModelIndex);
+    void graficar(QString Tipo);
     void GraficaUnidades();
     void GraficaImportes();
     void GraficaUnidades_comparativa();

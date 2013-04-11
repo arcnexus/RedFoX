@@ -116,7 +116,7 @@ void Configuracion::Cargar_iva()
     ivaList.clear();
     reList.clear();
 
-    QSqlQuery query(QSqlDatabase::database("terra"));
+    QSqlQuery query(QSqlDatabase::database("Maya"));
     if(query.exec("SELECT * FROM tiposiva"))
     {
         while(query.next())
@@ -133,7 +133,7 @@ void Configuracion::Cargar_iva()
     }
 
     if(iva_model == 0)
-        iva_model = new QSqlTableModel(this,QSqlDatabase::database("terra"));
+        iva_model = new QSqlTableModel(this,QSqlDatabase::database("Maya"));
     iva_model->setTable("tiposiva");
     iva_model->select();
 
@@ -170,7 +170,7 @@ void Configuracion::Cargar_iva()
 
 int Configuracion::getIdIva(QString cIva)
 {
-    QSqlQuery qIVA(QSqlDatabase::database("terra"));
+    QSqlQuery qIVA(QSqlDatabase::database("Maya"));
     qIVA.prepare("select id from tiposiva where cTipo = :cIva");
     qIVA.bindValue(":cIva",cIva);
     if(!qIVA.exec()) {
@@ -186,7 +186,7 @@ int Configuracion::getIdIva(QString cIva)
 
 QString Configuracion::setTipoIva(int idIva)
 {
-    QSqlQuery qIVA(QSqlDatabase::database("terra"));
+    QSqlQuery qIVA(QSqlDatabase::database("Maya"));
     qIVA.prepare("select cTipo from tiposiva where id = :id");
     qIVA.bindValue(":id",idIva);
     if(!qIVA.exec()) {
@@ -202,7 +202,7 @@ QString Configuracion::setTipoIva(int idIva)
 void Configuracion::Cargar_paises()
 {
     paises.clear();
-    QSqlQuery query(QSqlDatabase::database("terra"));
+    QSqlQuery query(QSqlDatabase::database("Maya"));
     if(query.exec("SELECT * FROM paises"))
     {
         while(query.next())
@@ -212,14 +212,14 @@ void Configuracion::Cargar_paises()
         }
     }
     if(paises_model == 0)
-        paises_model = new QSqlTableModel(this,QSqlDatabase::database("terra"));
+        paises_model = new QSqlTableModel(this,QSqlDatabase::database("Maya"));
     paises_model->setTable("paises");
     paises_model->select();
 }
 
 QString Configuracion::Devolver_pais(int id)
 {
-    QSqlQuery qPais(QSqlDatabase::database("terra"));
+    QSqlQuery qPais(QSqlDatabase::database("Maya"));
     qPais.prepare("select pais from paises where id = :nId");
     qPais.bindValue(":nId",id);
     if(qPais.exec())
@@ -232,7 +232,7 @@ QString Configuracion::Devolver_pais(int id)
 
 QString Configuracion::Devolver_moneda(int id)
 {
-    QSqlQuery qMoneda(QSqlDatabase::database("terra"));
+    QSqlQuery qMoneda(QSqlDatabase::database("Maya"));
     qMoneda.prepare("select moneda from monedas where id = :nId");
     qMoneda.bindValue(":nId",id);
     if(qMoneda.exec())
@@ -245,7 +245,7 @@ QString Configuracion::Devolver_moneda(int id)
 
 QString Configuracion::Devolver_codDivisa(int id)
 {
-    QSqlQuery qMoneda(QSqlDatabase::database("terra"));
+    QSqlQuery qMoneda(QSqlDatabase::database("Maya"));
     qMoneda.prepare("select nombreCorto from monedas where id = :nId");
     qMoneda.bindValue(":nId",id);
     if(qMoneda.exec())
@@ -258,7 +258,7 @@ QString Configuracion::Devolver_codDivisa(int id)
 
 int Configuracion::Devolver_id_moneda(QString cDivisa)
 {
-    QSqlQuery queryMoneda(QSqlDatabase::database("terra"));
+    QSqlQuery queryMoneda(QSqlDatabase::database("Maya"));
     queryMoneda.prepare("select id from monedas where moneda = :cDivisa");
     queryMoneda.bindValue(":cDivisa",cDivisa);
     if(queryMoneda.exec())
@@ -270,7 +270,7 @@ int Configuracion::Devolver_id_moneda(QString cDivisa)
 
 QString Configuracion::Devolver_idioma(int id)
 {
-    QSqlQuery qIdioma(QSqlDatabase::database("terra"));
+    QSqlQuery qIdioma(QSqlDatabase::database("Maya"));
     if(qIdioma.exec("select idioma from idiomas where id = "+QString::number(id))) {
         qIdioma.next();
         return qIdioma.record().value("idioma").toString();
@@ -285,7 +285,7 @@ QString Configuracion::Devolver_idioma(int id)
 
 int Configuracion::Devolver_id_idioma(QString idioma)
 {
-    QSqlQuery qIdioma(QSqlDatabase::database("terra"));
+    QSqlQuery qIdioma(QSqlDatabase::database("Maya"));
     if(qIdioma.exec("select id from idiomas where idioma = '"+idioma+"'")){
         qIdioma.next();
         return qIdioma.record().value("id").toInt();
@@ -301,7 +301,7 @@ int Configuracion::Devolver_id_idioma(QString idioma)
 void Configuracion::CargarClientes()
 {
     if(client_model == 0)
-        client_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
+        client_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("Maya"));
     client_model->setTable("clientes");
     client_model->select();
 }
@@ -309,19 +309,19 @@ void Configuracion::CargarClientes()
 void Configuracion::CargarUsuarios()
 {
     if(usuarios_model == 0)
-        usuarios_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
+        usuarios_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("Maya"));
     usuarios_model->setTable("usuarios");
     usuarios_model->select();
 }
 
 void Configuracion::CargarDatosBD()
 {
-    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
-    this->cDriverBDTerra = settings.value("cDriverBDTerra").toString();
-    this->cRutaBdTerra = settings.value("cRutaDBTerra").toString();
-    this->cHostBDTerra = settings.value("cHostBDTerra").toString();
-    this->cUsuarioBDTerra  =   settings.value("cUserBDTerra").toString();
-    this->cPasswordBDTerra = settings.value("cPasswordBDTerra").toString();
+    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
+    this->cDriverBDMaya = settings.value("cDriverBDMaya").toString();
+    this->cRutaBdMaya = settings.value("cRutaDBMaya").toString();
+    this->cHostBDMaya = settings.value("cHostBDMaya").toString();
+    this->cUsuarioBDMaya  =   settings.value("cUserBDMaya").toString();
+    this->cPasswordBDMaya = settings.value("cPasswordBDMaya").toString();
 
     this->cNombreBDTiendaWeb = settings.value("nombreBDTiendaWeb").toString();
     this->cHostBDTiendaWeb = settings.value("hostTiendaWeb").toString();
@@ -329,6 +329,13 @@ void Configuracion::CargarDatosBD()
     this->cPasswordTiendaWeb = settings.value("Pass_web").toString();
     this->cPuertoTiendaWeb =settings.value("puertoTiendaWeb").toString();
     this->EnlaceWeb = settings.value("EnlaceWeb").toBool();
+
+
+    this->HostDB_MediTec = settings.value("HostDB_MediTec").toString();
+    this->NombreDB_MediTec = settings.value("NombreDB_MediTec").toString();
+    this->UsuarioDB_MediTec = settings.value("UsuarioDB_MediTec").toString();
+    this->PasswordDB_MediTec = settings.value("PasswordDB_MediTec").toString();
+    this->PortDB_MediTec =  settings.value("PuertoDB_MediTec").toString();
 
 
 }
@@ -354,9 +361,29 @@ void Configuracion::CerrarDbWeb()
 {
     dbWeb.close();
 }
+
+void Configuracion::AbridBDMediTec()
+{
+    // Abro bdInformación técnica de medicina
+    QSqlDatabase DB_MediTec = QSqlDatabase::addDatabase("QMYSQL","db_meditec");
+
+        DB_MediTec.setDatabaseName(Configuracion_global->NombreDB_MediTec);
+        DB_MediTec.setHostName(Configuracion_global->HostDB_MediTec);
+        DB_MediTec.open(Configuracion_global->UsuarioDB_MediTec,Configuracion_global->PasswordDB_MediTec);
+
+    if (DB_MediTec.lastError().isValid())
+    {
+        QMessageBox::critical(qApp->activeWindow(), "error:", DB_MediTec.lastError().text());
+    }
+}
+
+void Configuracion::CerrarBDMediTec()
+{
+    db_meditec.close();
+}
 void Configuracion::CargarDatos()
 {
-    QSqlQuery qEmpresa(QSqlDatabase::database("terra"));
+    QSqlQuery qEmpresa(QSqlDatabase::database("Maya"));
     qEmpresa.prepare("Select * from empresas where id =:id");
     idEmpresa = 1;
     qEmpresa.bindValue(":id",idEmpresa);
@@ -382,6 +409,7 @@ void Configuracion::CargarDatos()
         this->cCuentaPagosProveedor = qEmpresa.record().value("cCuentaPagos").toString();
         this->medic = qEmpresa.record().value("medica").toBool();
         this->internacional = qEmpresa.record().value("internacional").toBool();
+
 
     } else {
         qDebug() << qEmpresa.lastError().text();
@@ -607,7 +635,7 @@ bool Configuracion::comprobarNIF(QString country_code, QString nif)
     QByteArray  nif_bytes = nif.toAscii();
     ns2__checkVat.vatNumber = nif_bytes.data();
 
-    QSqlQuery q(QSqlDatabase::database("terra"));
+    QSqlQuery q(QSqlDatabase::database("Maya"));
     QString sql = QString("SELECT * FROM paises where pais = '%1'").arg(country_code);
     q.prepare(sql);
     if(q.exec())
@@ -659,7 +687,7 @@ void Configuracion::generarTablaDivisas()
     QFile f(":/Icons/divisas.txt");
     if(f.open((QIODevice::ReadOnly | QIODevice::Text)))
     {
-        QSqlQuery q(QSqlDatabase::database("terra"));
+        QSqlQuery q(QSqlDatabase::database("Maya"));
         QTextStream in(&f);
         in.setCodec("UTF-8");
         QString all = in.readAll();
@@ -693,7 +721,7 @@ void Configuracion::generarTablaDivisas()
 void Configuracion::updateTablaDivisas(QString current)
 {
     connect(this,SIGNAL(cambioReady(float,QString)),SLOT(applyCambio(float,QString)));
-    QSqlQuery q(QSqlDatabase::database("terra"));
+    QSqlQuery q(QSqlDatabase::database("Maya"));
     if(q.exec("SELECT * FROM monedas"))
     {
         while(q.next())
@@ -751,7 +779,7 @@ void Configuracion::applyCambio(float f, QString target)
     static int i= 1;
     qDebug() << i << target;
     i++;
-    QSqlQuery q(QSqlDatabase::database("terra"));
+    QSqlQuery q(QSqlDatabase::database("Maya"));
     QString sql = QString("UPDATE monedas SET cambio = '%1' WHERE nombreCorto ='%2';").arg(f).arg(target);
     if(!q.exec(sql))
         qDebug() << q.lastError();

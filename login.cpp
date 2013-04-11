@@ -7,7 +7,7 @@
 
 #include "Zona_Administrador/frmempresas.h"
 #include "Zona_Administrador/arearestringida_form.h"
-#include <Zona_Administrador/frmconfigterra.h>
+#include <Zona_Administrador/frmconfigmaya.h>
 #include "mainwindow.h"
 
 Login::Login(QWidget *parent) :
@@ -21,7 +21,7 @@ Login::Login(QWidget *parent) :
     //--------------------------------------------
     connect(ui->btnEmpresa,SIGNAL(clicked()),this,SLOT(btnEmpresa_clicked()));
     connect(ui->Crearconfiguracin,SIGNAL(clicked()),this,SLOT(Crearconfiguracion_clicked()));
-    if (! QFile::exists(qApp->applicationDirPath()+"/TerraConfig.ini")){
+    if (! QFile::exists(qApp->applicationDirPath()+"/MayaConfig.ini")){
         Crearconfiguracion_clicked();
     }
 
@@ -29,25 +29,25 @@ Login::Login(QWidget *parent) :
         Configuracion_global = new Configuracion;
     Configuracion_global->CargarDatosBD();
 
-    QSqlDatabase dbTerra  = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDTerra,"terra");
+    QSqlDatabase dbMaya  = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDMaya,"Maya");
 
-    if (Configuracion_global->cDriverBDTerra == "QSQLITE")
+    if (Configuracion_global->cDriverBDMaya == "QSQLITE")
     {
-        dbTerra.setDatabaseName(Configuracion_global->cRutaBdTerra);
-        dbTerra.open();
+        dbMaya.setDatabaseName(Configuracion_global->cRutaBdMaya);
+        dbMaya.open();
     }
     else
     {
-        dbTerra.setDatabaseName("TerraGeneral");
-        dbTerra.setHostName(Configuracion_global->cHostBDTerra);
-        dbTerra.open(Configuracion_global->cUsuarioBDTerra,Configuracion_global->cPasswordBDTerra);
-        dbTerra.open(Configuracion_global->cUsuarioBDTerra,Configuracion_global->cPasswordBDTerra);
+        dbMaya.setDatabaseName("MayaGeneral");
+        dbMaya.setHostName(Configuracion_global->cHostBDMaya);
+        dbMaya.open(Configuracion_global->cUsuarioBDMaya,Configuracion_global->cPasswordBDMaya);
+        dbMaya.open(Configuracion_global->cUsuarioBDMaya,Configuracion_global->cPasswordBDMaya);
     }
-    if (dbTerra.lastError().isValid())
+    if (dbMaya.lastError().isValid())
     {
-        QMessageBox::critical(0, "error:", dbTerra.lastError().text());
+        QMessageBox::critical(0, "error:", dbMaya.lastError().text());
     }
-    if(dbTerra.isOpen())
+    if(dbMaya.isOpen())
         Configuracion_global->CargarDatos();
     init();
 }
@@ -56,7 +56,7 @@ Login::~Login()
 {
     delete ui;
 
-    //dbTerra.close();
+    //dbMaya.close();
 }
 
 const QString Login::getUsuario() const
@@ -82,7 +82,7 @@ int Login::getIdUser()
 
 void Login::on_btnAcceder_clicked()
 {
-    QSqlQuery qEmpresa(QSqlDatabase::database("terra"));
+    QSqlQuery qEmpresa(QSqlDatabase::database("Maya"));
     qEmpresa.prepare("select id from empresas where nombre = :nombreemp");
     qEmpresa.bindValue(":nombreemp",ui->cboEmpresa->currentText());
     if(qEmpresa.exec())
@@ -90,7 +90,7 @@ void Login::on_btnAcceder_clicked()
     else
         QMessageBox::warning(this,tr("ABRIR EMPRESA"),tr("No se encuentra la empresa"),tr("Aceptar"));
 
-    QSqlQuery qryUsers(QSqlDatabase::database("terra"));
+    QSqlQuery qryUsers(QSqlDatabase::database("Maya"));
 
     qryUsers.prepare( "SELECT * FROM usuarios where nombre =:Nombre" );
     qryUsers.bindValue(":Nombre",ui->lineUsuario->text());
@@ -108,7 +108,7 @@ void Login::on_btnAcceder_clicked()
             if (ui->linePassword->text() == qryUsers.value(2).toString()) 
 			{
                 m_id = qryUsers.value(0).toInt();
-                QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
+                QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
                 settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
                 settings.setValue("nNivelAcceso",rUsuario.field("nivelacceso").value().toInt());
                 settings.setValue("cCategoria",rUsuario.field("categoria").value().toString());
@@ -138,7 +138,7 @@ void Login::on_btnAcceder_clicked()
 void Login::Crearconfiguracion_clicked()
 {
 
- frmConfigTerra frmConf;
+ frmConfigmaya frmConf;
  if(frmConf.exec()==QDialog::Accepted)
     //Note - notificar al usuario que el boton hace algo
     QMessageBox::information(this,
@@ -167,13 +167,13 @@ void Login::on_pushButton_clicked()
 
 void Login::init()
 {
-	// TODO - Rellenar en base a fichero de empresas BD terra.
+	// TODO - Rellenar en base a fichero de empresas BD Maya.
 	// Relleno combo empresas
 
     //NOTE - Fixed pointer
     ui->cboEmpresa->clear();
-    QScopedPointer<QSqlQuery>QryEmpresas(new QSqlQuery(QSqlDatabase::database("terra")));
-    //QSqlQuery *QryEmpresas = new QSqlQuery(QSqlDatabase::database("terra"));
+    QScopedPointer<QSqlQuery>QryEmpresas(new QSqlQuery(QSqlDatabase::database("Maya")));
+    //QSqlQuery *QryEmpresas = new QSqlQuery(QSqlDatabase::database("Maya"));
 
 	QryEmpresas->prepare("Select * from empresas");
 	if(QryEmpresas->exec()) 

@@ -333,7 +333,7 @@ void frmProveedores::on_txtcPoblacion_editingFinished()
             int nId = BuscarPoblacion.DevolverID();
 
             if(nId > 0) {
-                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
                 QString cId;
                 cId = QString::number(nId);
                 qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
@@ -365,7 +365,7 @@ void frmProveedores::on_txtcCP_editingFinished()
         if(BuscarPoblacion.exec()) {
             int nId = BuscarPoblacion.DevolverID();
             if(nId > 0) {
-                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
                 QString cId;
                 cId = QString::number(nId);
                 qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
@@ -544,7 +544,7 @@ void frmProveedores::on_txtcCPAlmacen_editingFinished()
             if(BuscarPoblacion.exec()) {
                 int nId = BuscarPoblacion.DevolverID();
                 if(nId > 0) {
-                    QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                    QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
                     QString cId;
                     cId = QString::number(nId);
                     qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");

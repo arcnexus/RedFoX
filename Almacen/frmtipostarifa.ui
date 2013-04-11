@@ -14,8 +14,8 @@
    <string>Tipos de Tarifa</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../terra.qrc">
-    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
+   <iconset resource="../Maya.qrc">
+    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background: #4c6088</string>
@@ -242,7 +242,7 @@ color: rgb(255,255,255);</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../terra.qrc">
+      <iconset resource="../Maya.qrc">
        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
      </property>
      <property name="iconSize">
@@ -259,7 +259,7 @@ color: rgb(255,255,255);</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../terra.qrc">
+      <iconset resource="../Maya.qrc">
        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
      </property>
      <property name="iconSize">
@@ -429,7 +429,7 @@ color: rgb(255,255,255);</string>
          <string>Cerrar</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset resource="../Maya.qrc">
           <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
         </property>
         <property name="iconSize">
@@ -459,7 +459,7 @@ color: rgb(255,255,255);</string>
          <string>Guardar</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset resource="../Maya.qrc">
           <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
         </property>
         <property name="iconSize">
@@ -476,7 +476,7 @@ color: rgb(255,255,255);</string>
          <string>Deshacer</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset resource="../Maya.qrc">
           <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
         </property>
         <property name="iconSize">
@@ -493,7 +493,7 @@ color: rgb(255,255,255);</string>
          <string>Editar</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset resource="../Maya.qrc">
           <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
         </property>
         <property name="iconSize">
@@ -553,7 +553,7 @@ color: rgb(255,255,255);</string>
   <tabstop>pushButton</tabstop>
  </tabstops>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -14,8 +14,8 @@
    <string>Gestión de Caja diaria</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../terra.qrc">
-    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
+   <iconset resource="../Maya.qrc">
+    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: #4C6088;
@@ -34,7 +34,7 @@
             <string>Abrir Caja</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/abrecaja.png</normaloff>:/Icons/PNG/abrecaja.png</iconset>
            </property>
           </widget>
@@ -307,7 +307,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../terra.qrc">
+                  <iconset resource="../Maya.qrc">
                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                  </property>
                 </widget>
@@ -451,7 +451,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
                 <enum>Qt::AutoText</enum>
                </property>
                <property name="pixmap">
-                <pixmap resource="../terra.qrc">:/Icons/PNG/clientes.png</pixmap>
+                <pixmap resource="../Maya.qrc">:/Icons/PNG/clientes.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>false</bool>
@@ -1843,7 +1843,7 @@ color: rgb(255, 255, 255);</string>
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../terra.qrc">
+               <iconset resource="../Maya.qrc">
                 <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
               </property>
               <property name="iconSize">
@@ -2125,7 +2125,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <string>&amp;Nueva</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset resource="../Maya.qrc">
           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
         </property>
         <property name="iconSize">
@@ -2148,7 +2148,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <string>&amp;Anterior</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset resource="../Maya.qrc">
           <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
         </property>
         <property name="iconSize">
@@ -2171,7 +2171,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <string>Siguient&amp;e</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset resource="../Maya.qrc">
           <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
         </property>
         <property name="iconSize">
@@ -2194,7 +2194,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <string>Buscar</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset resource="../Maya.qrc">
           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
         </property>
         <property name="iconSize">
@@ -2217,7 +2217,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <string>imprimir</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset resource="../Maya.qrc">
           <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
         </property>
         <property name="iconSize">
@@ -2364,7 +2364,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
   <tabstop>btnBuscarArt</tabstop>
  </tabstops>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections/>
 </ui>

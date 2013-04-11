@@ -34,7 +34,7 @@ private slots:
 private:
     Ui::Login *ui;
     QString path;
-    QSqlDatabase dbTerra;
+    QSqlDatabase dbMaya;
     int m_id;
 
 };

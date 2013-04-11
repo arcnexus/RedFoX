@@ -56,7 +56,7 @@ void FrmBuscarPoblacion::setcPoblacion(QString cPoblacion, int nPoblacion)
     }
     ui->ListaPoblaciones->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->ListaPoblaciones->setAlternatingRowColors(true);
-    ModelPoblaciones->setQuery(cSQL,QSqlDatabase::database("terra"));
+    ModelPoblaciones->setQuery(cSQL,QSqlDatabase::database("Maya"));
     ui->ListaPoblaciones->setModel(ModelPoblaciones);
     // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
     ui->ListaPoblaciones->setHorizontalHeader(Cabecera);

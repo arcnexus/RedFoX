@@ -25,6 +25,8 @@
 #include "analitica.h"
 #include "frmveranalitica.h"
 #include "frmmtcbase.h"
+#include "visitas.h"
+#include "frmanadirdiagnostico.h"
 
 //TODO integrar http://doc.ginkgo-cadx.com/ginkgo-integration/ginkgo-cadx-integration-input-xml-integration/
 
@@ -83,12 +85,16 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->btnAnadirVisita,SIGNAL(clicked()),this,SLOT(AnadirVisita()));
     connect(ui->listaEpisodios,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),this,SLOT(listaEpisodios_currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
     connect(ui->btnBdMed,SIGNAL(clicked()),this,SLOT(vademecums()));
+    connect(ui->listaEpisodios,SIGNAL(clicked(QModelIndex)),this,SLOT(ListaEpisodio_clicked(QModelIndex)));
+    connect(ui->listaVisitas,SIGNAL(clicked(QModelIndex)),this,SLOT(ListaVisita_Clicked(QModelIndex)));
+    connect(ui->btnAnadirDiagnostico,SIGNAL(clicked()),this,SLOT(anadirDiagnostico()));
 
     // Ocultar Iconos imagenes
     ui->itemFarma->setVisible(false);
     ui->itemAnalitica->setVisible(false);
     ui->itemImagenes->setVisible(false);
     ui->itemInterConsulta->setVisible(false);
+    this->setWindowState(Qt::WindowMaximized);
 }
 
 FrmFichaPaciente::~FrmFichaPaciente()
@@ -142,44 +148,10 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
 
     ui->txtNumHistoriaClinica->setText(QString::number(oPaciente->getnumHistoria()));
     // cargar datos Episodios
-    QSqlQuery Episodios(QSqlDatabase::database("dbmedica"));
-
-    Episodios.prepare("Select id, descripcion from episodios where idpaciente = :nId");
-    Episodios.bindValue(":nId",oPaciente->getid());
-    if(Episodios.exec()) {
-        ui->listaEpisodios->setColumnCount(3);
-        ui->listaEpisodios->setColumnWidth(0,50);
-        ui->listaEpisodios->setColumnWidth(1,200);
-        ui->listaEpisodios->setColumnWidth(2,0);
-        //--------------------------------
-        while (Episodios.next()) {
-            QSqlRecord registro = Episodios.record();
-            QTreeWidgetItem *item = new QTreeWidgetItem(ui->listaEpisodios);
-            item->setText(0,registro.field("id").value().toString());
-            item->setText(1,registro.field("descripcion").value().toString());
-            item->setText(2,"EPISODIO");
-            ui->listaEpisodios->addTopLevelItem(item);
-            //Leer base de datos visitas para añadir como hijo de Episodios.
-            QSqlQuery qVisitas(QSqlDatabase::database("dbmedica"));
-            qVisitas.prepare("select id,fechahora,medico from visitas where idepisodio =:nId");
-            qVisitas.bindValue(":nId",registro.field("id").value().toString());
-            if(qVisitas.exec()) {
-                while(qVisitas.next()){
-                    QSqlRecord recVis = qVisitas.record();
-                    QTreeWidgetItem *child = new QTreeWidgetItem(item);
-                    QString Valor = recVis.field("fechahora").value().toDateTime().toString("dd/MM/yyyy hh:mm") +" "+
-                            recVis.field("medico").value().toString();
-                    child->setText(0,recVis.field("id").value().toString());
-                    child->setText(1,Valor);
-                    child->setText(2,"VISITA");
-                    child->setIcon(0,QIcon(":Icons/PNG/notepad.png"));
-                    item->addChild(child);
-                }
-            }
-        }
-        BloquearCamposEpisodio(true);
-    } else
-        QMessageBox::warning(qApp->activeWindow(),tr("Error"),tr("No se pueden cargar los datos del episodio"),tr("aceptar"));
+    QSqlQueryModel *modelEpisodios = new QSqlQueryModel(this);
+    modelEpisodios->setQuery("select descripcion,fecha,id from episodios where idpaciente ="+QString::number(oPaciente->id)+
+                             " order by fecha desc",QSqlDatabase::database("dbmedica"));
+    ui->listaEpisodios->setModel(modelEpisodios);
 
 }
 
@@ -330,6 +302,14 @@ void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
      ui->txtDescripcionEpisodio->setFocus();
 }
 
+void FrmFichaPaciente::ListaEpisodio_clicked(QModelIndex index)
+{
+    int id =ui->listaEpisodios->model()->data(ui->listaEpisodios->model()->index(index.row(),2),Qt::EditRole).toInt();
+    oEpisodio->RecuperarEpisodio(id);
+    cargarEpisodio(1);
+    llenarhistorialvisitas();
+}
+
 
 void FrmFichaPaciente::on_btnGuardarEpisodio_clicked()
 {
@@ -418,20 +398,7 @@ void FrmFichaPaciente::on_btnGuardarPaciente_clicked()
 
 
 
-void FrmFichaPaciente::listaEpisodios_currentItemChanged(QTreeWidgetItem*current,QTreeWidgetItem*previous)
-{
-    if(current->text(2) == "EPISODIO"){
-        int nIdEpisodio = current->text(0).toInt();
-        oEpisodio->RecuperarEpisodio(nIdEpisodio);
-        cargarEpisodio(0);
 
-    }
-    else
-    {
-        int nIdVisita = current->text(0).toInt();
-        // TODO - Cargar Visita
-    }
-}
 
 void FrmFichaPaciente::on_btnEditarEpisodio_clicked()
 {
@@ -692,36 +659,6 @@ void FrmFichaPaciente::llenartablahistorialanalisisepisodio()
     }
 }
 
-void FrmFichaPaciente::
-llenarhistorialvisitas()
-{
-    QSqlQuery qVisitas(QSqlDatabase::database("dbmedica"));
-    QSqlQuery qDoctores(QSqlDatabase::database("dbmedica"));
-
-    qVisitas.prepare("select * from visitas where idepisodio = :idepisodio");
-    qVisitas.bindValue(":idepisodio",oEpisodio->getid());
-
-    if(qVisitas.exec()){
-        qVisitas.next();
-        QSqlRecord rVisitas = qVisitas.record();
-        qDoctores.prepare("select nombre from doctores where id =:nId");
-
-
-        ui->txtFechaHoraVisita->setDateTime(rVisitas.field("fechahora").value().toDateTime());
-
-
-
-        int nIndex = ui->cboRealizadaPorDr->findText(rVisitas.field("doctor").value().toString());
-        if(nIndex >-1)
-            ui->cboDoctorEpisodio->setCurrentIndex(nIndex);
-
-        ui->txtExploracion->setPlainText(rVisitas.field("exploracion").value().toString());
-        ui->txtTratamiento->setPlainText(rVisitas.field("tratamiento").value().toString());
-        ui->txtLengua->setPlainText(rVisitas.field("lengua").value().toString());
-        ui->txtPulso->setPlainText(rVisitas.field("pulso").value().toString());
-
-    }
-}
 
 
 
@@ -928,8 +865,62 @@ void FrmFichaPaciente::on_BtnDeshacerPaciente_clicked()
 
 void FrmFichaPaciente::AnadirVisita()
 {
-    frmVisitas frmvisitas;
-    frmvisitas.exec();
+//    frmVisitas frmvisitas;
+//    frmvisitas.exec();
+    if (!ui->cboRealizadaPorDr->currentText().isEmpty()){
+        Visitas *oVisita = new Visitas(this);
+        int nIdVisita;
+        nIdVisita = oVisita->AnadirVisita(oEpisodio->id,ui->cboRealizadaPorDr->currentText());
+        if (nIdVisita >0){
+            CargarVisita(nIdVisita);
+            ui->txtFechaHoraVisita->setEnabled(true);
+            ui->txtExploracion->setEnabled(true);
+            ui->txtLengua->setEnabled(true);
+            ui->txtPulso->setEnabled(true);
+            ui->txtTratamiento->setEnabled(true);
+            ui->txtDiagnosticoVisita->setEnabled(true);
+            ui->btnAnadirVisita->setEnabled(false);
+            ui->btnGuardarVisita->setEnabled(true);
+            ui->btnDeshacerVisita->setEnabled(true);
+            ui->txtExploracion->setFocus();
+            llenarhistorialvisitas();
+        }
+    }
+
+}
+void FrmFichaPaciente::llenarhistorialvisitas()
+{
+
+    QSqlQueryModel *modelVisitas = new QSqlQueryModel(this);
+    modelVisitas->setQuery("Select fechahora,medico,id from visitas where idepisodio ="+QString::number(oEpisodio->getid())+" order by fechahora desc",
+                           QSqlDatabase::database("dbmedica"));
+    ui->listaVisitas->setModel(modelVisitas);
+
+}
+
+
+void FrmFichaPaciente::ListaVisita_Clicked(QModelIndex index)
+{
+    int id =ui->listaVisitas->model()->data(ui->listaVisitas->model()->index(index.row(),2),Qt::EditRole).toInt();
+    CargarVisita(id);
+}
+
+void FrmFichaPaciente::CargarVisita(int nId)
+{
+    Visitas *oVisita = new Visitas(this);
+    oVisita->RecuperarVisita(nId);
+    ui->txtFechaHoraVisita->setDateTime(oVisita->fechahora);
+    ui->txtExploracion->setText(oVisita->exploracion);
+    ui->txtLengua->setText(oVisita->lengua);
+    ui->txtPulso->setText(oVisita->pulso);
+    ui->txtTratamiento->setText(oVisita->tratamiento);
+    ui->txtDiagnosticoVisita->setText(oVisita->diagnostico);
+}
+
+void FrmFichaPaciente::anadirDiagnostico()
+{
+    FrmAnadirDiagnostico frmDiag(this);
+    frmDiag.exec();
 }
 
 void FrmFichaPaciente::vademecums()

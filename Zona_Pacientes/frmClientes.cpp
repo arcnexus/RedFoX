@@ -28,10 +28,10 @@ frmClientes::frmClientes(QWidget *parent) :
     //oCliente->Actualizar_de_web();
     // Rellenar formas de pago
     modelFP = new QSqlQueryModel();
-    modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("terra"));
+    modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("Maya"));
 
     // Ocultar campos según configuración
-    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
+    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
     int nNivel = settings.value("nNivelAcceso").toInt();
     //QString cCategoria = settings.value("cCategoria").toString();
     if( Configuracion_global->medic == false) {
@@ -54,7 +54,7 @@ frmClientes::frmClientes(QWidget *parent) :
 
     // Rellenar Tarifas:
     QSqlQueryModel *qTarifa = new QSqlQueryModel(this);
-    qTarifa->setQuery("select descripcion, id from codigotarifa",QSqlDatabase::database("terra"));
+    qTarifa->setQuery("select descripcion, id from codigotarifa",QSqlDatabase::database("Maya"));
     ui->cbonTarifaCliente->setModel(qTarifa);
 
     // Rellenar Paises:
@@ -66,7 +66,7 @@ frmClientes::frmClientes(QWidget *parent) :
 
     // rellenar combo idiomas
     QSqlQueryModel *qmIdiomas = new QSqlQueryModel(this);
-    qmIdiomas->setQuery("select idioma from idiomas", QSqlDatabase::database("terra"));
+    qmIdiomas->setQuery("select idioma from idiomas", QSqlDatabase::database("Maya"));
     ui->cboIdiomaDocumentos->setModel(qmIdiomas);
     //oCliente->Recuperar("Select * from clientes");
     //LLenarCampos();
@@ -202,7 +202,7 @@ void frmClientes::LLenarCampos()
     QString cSQL;
     cSQL= "Select id,cDocumento,rPendienteCobro,dFecha,dVencimiento from clientes_deuda where Id_cliente = "
             + QString::number(oCliente->id);
-    deudas->setQuery(cSQL,QSqlDatabase::database("terra"));
+    deudas->setQuery(cSQL,QSqlDatabase::database("Maya"));
     ColumnaFecha *columnaFecha = new ColumnaFecha();
     ui->TablaDeudas->setModel(deudas);
     //  ui->TablaDeudas->setItemDelegateForColumn(2,columnaMoneda);
@@ -334,7 +334,7 @@ void frmClientes::LLenarCampos()
     QSqlQueryModel *Vales = new QSqlQueryModel(this);
 
     cSQL= "Select id,nNumero,dFecha,dVto,rImporte from vales where id_Cliente =" + QString::number(oCliente->id);
-    Vales->setQuery(cSQL,QSqlDatabase::database("terra"));
+    Vales->setQuery(cSQL,QSqlDatabase::database("Maya"));
     ui->tablaVales->setModel(Vales);
     ui->tablaVales->setItemDelegateForColumn(2,columnaFecha);
     ui->tablaVales->setItemDelegateForColumn(3,columnaFecha);
@@ -397,7 +397,7 @@ void frmClientes::LLenarCampos()
     //------------------
     QSqlQueryModel *qModelTipos = new QSqlQueryModel(this);
     qModelTipos->setQuery("select tipocliente from tipocliente where idcliente = "+QString::number(oCliente->id),
-                          QSqlDatabase::database("terra"));
+                          QSqlDatabase::database("Maya"));
     ui->lista_tipos->setModel(qModelTipos);
 
     //-----------------
@@ -405,7 +405,7 @@ void frmClientes::LLenarCampos()
     //-----------------
     QSqlQueryModel *qModelDireccion = new QSqlQueryModel(this);
     qModelDireccion->setQuery("select descripcion,id from cliente_direcciones where idcliente = "+QString::number(oCliente->id),
-                              QSqlDatabase::database("terra"));
+                              QSqlDatabase::database("Maya"));
     ui->lista_DireccionesAlternativas->setModel(qModelDireccion);
 }
 void frmClientes::VaciarCampos()
@@ -469,7 +469,7 @@ void frmClientes::VaciarCampos()
     //------------------
     QSqlQueryModel *qModelTipos = new QSqlQueryModel(this);
     qModelTipos->setQuery("select tipocliente from tipocliente where idcliente = -1",
-                          QSqlDatabase::database("terra"));
+                          QSqlDatabase::database("Maya"));
     ui->lista_tipos->setModel(qModelTipos);
 
 
@@ -534,7 +534,7 @@ void frmClientes::LLenarCliente()
     else
         oCliente->lIRPF=false;
 
-    QSqlQuery qTarifa(QSqlDatabase::database("terra"));
+    QSqlQuery qTarifa(QSqlDatabase::database("Maya"));
     qTarifa.prepare("select id from codigotarifa where descripcion = '"+ui->cbonTarifaCliente->currentText()+"'");
     if(qTarifa.exec()){
         qTarifa.next();
@@ -658,7 +658,7 @@ void frmClientes::txtcPoblacion_editingFinished()
          qDebug() << "nID: " <<nId;
          if(nId > 0)
          {
-             QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+             QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
              QString cId;
              cId = QString::number(nId);
              qPoblacion.prepare("select poblacion,cp,provincia from poblaciones where id = :cId");
@@ -900,7 +900,7 @@ void frmClientes::txtcCp_editingFinished()
             //qDebug() <<nId;
             if(nId > 0)
             {
-                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
                 QString cId;
                 cId = QString::number(nId);
                 qPoblacion.prepare("select poblacion, cp,provincia from poblaciones where id = :cId");
@@ -943,7 +943,7 @@ void frmClientes::txtcCPAlternativa_editingFinished()
             //qDebug() <<nId;
             if(nId > 0)
             {
-                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
                 QString cId;
                 cId = QString::number(nId);
                 qPoblacion.prepare("select poblacion, cp,provincia from poblaciones where id = :cId");
@@ -986,7 +986,7 @@ void frmClientes::txtcPoblacionAlternativa_editingFinished()
             //qDebug() <<nId;
             if(nId > 0)
             {
-                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
                 QString cId;
                 cId = QString::number(nId);
                 qPoblacion.prepare("select poblacion,cp,provincia from poblaciones where id = :cId");
@@ -1056,6 +1056,7 @@ void frmClientes::on_btnFichaPaciente_clicked()
 
     frmPaciente.recibedatospaciente(oCliente->id,oCliente->cNombreFiscal);
     frmPaciente.cargarDatos(oCliente->id);
+
     frmPaciente.exec();
 }
 
@@ -1065,7 +1066,7 @@ void frmClientes::AddCustomerType()
    FrmAddTipoCliente AddTipoCliente(this);
    if(AddTipoCliente.exec() == QDialog::Accepted){
        QString valor = AddTipoCliente.cFamiliaRetorno;
-       QSqlQuery qTipo(QSqlDatabase::database("terra"));
+       QSqlQuery qTipo(QSqlDatabase::database("Maya"));
        qTipo.prepare("INSERT INTO tipocliente (tipocliente,idcliente) VALUES (:tipo,:idcliente)");
        qTipo.bindValue(":tipo",valor);
        qTipo.bindValue(":idcliente",oCliente->id);
@@ -1074,7 +1075,7 @@ void frmClientes::AddCustomerType()
                                 tr("No se pudo añadir el tipo de cliente :%1").arg(qTipo.lastError().text()),tr("Aceptar"));
        QSqlQueryModel *qModelTipos = new QSqlQueryModel(this);
        qModelTipos->setQuery("select tipocliente from tipocliente where idcliente = "+QString::number(oCliente->id),
-                             QSqlDatabase::database("terra"));
+                             QSqlDatabase::database("Maya"));
 
         ui->lista_tipos->setModel(qModelTipos);
    }
@@ -1140,7 +1141,7 @@ void frmClientes::GuardarDireccionAlternativa()
         //-----------------
         QSqlQueryModel *qModelDireccion = new QSqlQueryModel(this);
         qModelDireccion->setQuery("select descripcion,id from cliente_direcciones where idcliente = "+QString::number(oCliente->id),
-                                  QSqlDatabase::database("terra"));
+                                  QSqlDatabase::database("Maya"));
         ui->lista_DireccionesAlternativas->setModel(qModelDireccion);
         ui->btnGuardar->setEnabled(true);
         ui->btnDeshacer->setEnabled(true);
@@ -1159,7 +1160,7 @@ void frmClientes::DeshacerDireccionAlternativa()
     //-----------------
     qModelDireccion = new QSqlQueryModel(this);
     qModelDireccion->setQuery("select descripcion,id from cliente_direcciones where idcliente = "+QString::number(oCliente->id),
-                              QSqlDatabase::database("terra"));
+                              QSqlDatabase::database("Maya"));
     ui->lista_DireccionesAlternativas->setModel(qModelDireccion);
     ui->btnGuardar->setEnabled(true);
     ui->btnDeshacer->setEnabled(true);
@@ -1167,7 +1168,7 @@ void frmClientes::DeshacerDireccionAlternativa()
     ui->btnDeshacerDireccionAlternativa->setEnabled(false);
     ui->btnEditarDireccionAlternativa->setEnabled(true);
 
-    QSqlQuery diralt(QSqlDatabase::database("terra"));
+    QSqlQuery diralt(QSqlDatabase::database("Maya"));
     diralt.prepare("select * from cliente_direcciones where id = :id");
     diralt.bindValue(":id",idDireccionAlternativa);
     if(diralt.exec()){
@@ -1194,14 +1195,14 @@ void frmClientes::BorrarDireccionAlternativa()
                                                                     "¿desea continuar?"),
                              tr("Cancelar"),tr("Borrar"))==QMessageBox::Accepted)
     {
-        QSqlQuery qDireccion(QSqlDatabase::database("terra"));
+        QSqlQuery qDireccion(QSqlDatabase::database("Maya"));
         if(!qDireccion.exec("delete from cliente_direcciones where id="+QString::number(idDireccionAlternativa)))
             QMessageBox::warning(this,tr("Direcciones Alternativas"),tr("No se ha podido borrar la direccion"),tr("Aceptar"));
 
     }
     QString cSQL = "select descripcion,id from cliente_direcciones where idcliente = "+QString::number(oCliente->id);
     qModelDireccion = new QSqlQueryModel();
-    qModelDireccion->setQuery(cSQL,QSqlDatabase::database("terra"));
+    qModelDireccion->setQuery(cSQL,QSqlDatabase::database("Maya"));
     ui->lista_DireccionesAlternativas->setModel(qModelDireccion);
     ui->txtcDescripcionDireccion->setText("");
     ui->txtcDireccionAlternativa1->setText("");
@@ -1233,7 +1234,7 @@ void frmClientes::CargarDireccionAlternativa(QModelIndex index)
 {
     QSqlQueryModel* modelo = (QSqlQueryModel*)ui->lista_DireccionesAlternativas->model();
     int nId = modelo->record(index.row()).value("id").toInt();
-    QSqlQuery qDirecciones(QSqlDatabase::database("terra"));
+    QSqlQuery qDirecciones(QSqlDatabase::database("Maya"));
     qDirecciones.prepare("select * from cliente_direcciones where id = :id");
     qDirecciones.bindValue(":id",nId);
     if(qDirecciones.exec()){

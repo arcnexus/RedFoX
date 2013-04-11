@@ -7,7 +7,7 @@ Articulo::Articulo(QObject *parent) : QObject(parent)
 
 void Articulo::Anadir()
 {
-    QSqlQuery query(QSqlDatabase::database("terra"));
+    QSqlQuery query(QSqlDatabase::database("Maya"));
     query.prepare("INSERT INTO articulos (cCodigo)"
                        " VALUES (:cCodigo)");
     if(Configuracion_global->Autocodigoart ==false)
@@ -26,10 +26,10 @@ void Articulo::Anadir()
          //--------------------------
          // Añado tarifas a artículo
          //--------------------------
-         QSqlQuery queryTarifas(QSqlDatabase::database("terra"));
+         QSqlQuery queryTarifas(QSqlDatabase::database("Maya"));
          if(queryTarifas.exec("select * from codigotarifa")){
              while (queryTarifas.next()){
-                 QSqlQuery anadirTarifa(QSqlDatabase::database("terra"));
+                 QSqlQuery anadirTarifa(QSqlDatabase::database("Maya"));
                  anadirTarifa.prepare("INSERT INTO tarifas ("
                                    "id_Articulo,"
                                    "id_pais,"
@@ -58,7 +58,7 @@ void Articulo::Anadir()
 
 bool Articulo::Recuperar(QString cSQL)
 {
-    QSqlQuery qryArticulo(QSqlDatabase::database("terra"));
+    QSqlQuery qryArticulo(QSqlDatabase::database("Maya"));
     qryArticulo.prepare(cSQL);
     if (qryArticulo.exec())
     {
@@ -122,7 +122,7 @@ bool Articulo::Recuperar(QString cSQL)
                this->comentario_oferta =registro.field("comentario_oferta").value().toString();
 
                // Recupero proveedor
-               QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
+               QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
                qryProveedor->prepare("select id,cCodigo,cProveedor from proveedores where id = :id");
                qryProveedor->bindValue(":id",this->id_Proveedor);
                if (!qryProveedor->exec()) {
@@ -153,7 +153,7 @@ bool Articulo::Recuperar(QString cSQL)
 
 void Articulo::Recuperar(QString cSQL, int nProcede)
 {
-    QSqlQuery qryArticulo(QSqlDatabase::database("terra"));
+    QSqlQuery qryArticulo(QSqlDatabase::database("Maya"));
     qryArticulo.prepare(cSQL);
     if (qryArticulo.exec()) {
            if (qryArticulo.next()){
@@ -212,7 +212,7 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->oferta_pvp_fijo = registro.field("oferta_pvp_fijo").value().toDouble();
                this->comentario_oferta =registro.field("comentario_oferta").value().toString();
                // Recupero proveedor
-               QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
+               QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
                qryProveedor->prepare("select id,cCodigo,cProveedor from proveedores where id = :id");
                qryProveedor->bindValue(":id",this->id_Proveedor);
                if (!qryProveedor->exec()) {
@@ -239,7 +239,7 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
 
 void Articulo::Guardar()
 {
-    QSqlQuery query(QSqlDatabase::database("terra"));
+    QSqlQuery query(QSqlDatabase::database("Maya"));
     query.prepare( "UPDATE articulos SET "
                    "`cCodigo`=:cCodigo,"
                    "`cCodigoBarras` =:cCodigoBarras,"
@@ -408,7 +408,7 @@ void Articulo::Borrar(int nId)
                              qApp->tr("¿Desea realmente Borrar este artículo?\nEsta opción no se puede deshacer"),
                              qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted)
     {
-        QSqlQuery qryArticulo(QSqlDatabase::database("terra"));
+        QSqlQuery qryArticulo(QSqlDatabase::database("Maya"));
         qryArticulo.prepare("Delete from articulos where id = :nId");
         qryArticulo.bindValue(":id",nId);
         if(!qryArticulo.exec())
@@ -437,7 +437,7 @@ void Articulo::Devolucion(int id, int cantidad, double rImporte, QString cMotivo
 
 void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4)
 {
-    QSqlQuery qryArticulo(QSqlDatabase::database("terra"));
+    QSqlQuery qryArticulo(QSqlDatabase::database("Maya"));
     qryArticulo.prepare("Select bImagen,bImagen2,bImagen3,bImagen4 from articulos where Id = :id");
     qryArticulo.bindValue(":id",this->id);
     if (qryArticulo.exec()) {
@@ -484,7 +484,7 @@ void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabe
 
 int Articulo::getIdSeccion(QString cSeccion_)
 {
-    QSqlQuery Query(QSqlDatabase::database("terra"));
+    QSqlQuery Query(QSqlDatabase::database("Maya"));
     Query.prepare("select id from secciones where cSeccion = :cValor ");
     Query.bindValue(":cValor",cSeccion_);
     if(!Query.exec()) {
@@ -497,7 +497,7 @@ int Articulo::getIdSeccion(QString cSeccion_)
 
 int Articulo::getIdFamilia(QString cFamilia_)
 {
-    QSqlQuery Query(QSqlDatabase::database("terra"));
+    QSqlQuery Query(QSqlDatabase::database("Maya"));
     Query.prepare("select id from familias where cFamilia = :cValor ");
     Query.bindValue(":cValor",cFamilia_);
     if(!Query.exec()) {
@@ -510,7 +510,7 @@ int Articulo::getIdFamilia(QString cFamilia_)
 
 int Articulo::getIdSubFamilia(QString cSubfamilia_)
 {
-    QSqlQuery Query(QSqlDatabase::database("terra"));
+    QSqlQuery Query(QSqlDatabase::database("Maya"));
     Query.prepare("select id from subfamilias where cSubfamilia = :cValor ");
     Query.bindValue(":cValor",cSubfamilia_);
     if(!Query.exec()) {
@@ -523,7 +523,7 @@ int Articulo::getIdSubFamilia(QString cSubfamilia_)
 
 int Articulo::getIdSubSufFamilia(QString cSubSubFamilia_)
 {
-    QSqlQuery Query(QSqlDatabase::database("terra"));
+    QSqlQuery Query(QSqlDatabase::database("Maya"));
     Query.prepare("select id from subsubfamilias where subsubfamilia = :cValor ");
     Query.bindValue(":cValor",cSubSubFamilia_);
     if(!Query.exec()) {
@@ -536,7 +536,7 @@ int Articulo::getIdSubSufFamilia(QString cSubSubFamilia_)
 
 int Articulo::getIdGrupo(QString cGrupo_)
 {
-    QSqlQuery Query(QSqlDatabase::database("terra"));
+    QSqlQuery Query(QSqlDatabase::database("Maya"));
     Query.prepare("select id from gruposart where grupoart = :cValor ");
     Query.bindValue(":cValor",cGrupo_);
     if(!Query.exec()) {
@@ -549,7 +549,7 @@ int Articulo::getIdGrupo(QString cGrupo_)
 
 QString Articulo::getcSeccion(int nId)
 {
-    QSqlQuery Query(QSqlDatabase::database("terra"));
+    QSqlQuery Query(QSqlDatabase::database("Maya"));
     Query.prepare("select cSeccion from secciones where id = :cValor ");
     Query.bindValue(":cValor",nId);
     if(!Query.exec()) {
@@ -561,7 +561,7 @@ QString Articulo::getcSeccion(int nId)
 }
 QString Articulo::getcFamilia(int nId)
 {
-    QSqlQuery Query(QSqlDatabase::database("terra"));
+    QSqlQuery Query(QSqlDatabase::database("Maya"));
     Query.prepare("select cFamilia from familias where id = :cValor ");
     Query.bindValue(":cValor",nId);
     if(!Query.exec()) {
@@ -576,7 +576,7 @@ QString Articulo::getcFamilia(int nId)
 
 QString Articulo::getcSubFamilia(int nId)
 {
-    QSqlQuery Query(QSqlDatabase::database("terra"));
+    QSqlQuery Query(QSqlDatabase::database("Maya"));
     Query.prepare("select cSubfamilia from subfamilias where id = :cValor ");
     Query.bindValue(":cValor",nId);
     if(!Query.exec()) {
@@ -590,7 +590,7 @@ QString Articulo::getcSubFamilia(int nId)
 
 QString Articulo::getcSubSubFamilia(int nId)
 {
-    QSqlQuery Query(QSqlDatabase::database("terra"));
+    QSqlQuery Query(QSqlDatabase::database("Maya"));
     Query.prepare("select subsubfamilia from subsubfamilias where id = :cValor ");
     Query.bindValue(":cValor",nId);
     if(!Query.exec()) {
@@ -603,7 +603,7 @@ QString Articulo::getcSubSubFamilia(int nId)
 
 QString Articulo::getcGrupo(int nId)
 {
-    QSqlQuery Query(QSqlDatabase::database("terra"));
+    QSqlQuery Query(QSqlDatabase::database("Maya"));
     Query.prepare("select grupoart from gruposart where id = :cValor ");
     Query.bindValue(":cValor",nId);
     if(!Query.exec()) {
@@ -617,7 +617,7 @@ QString Articulo::getcGrupo(int nId)
 bool Articulo::agregar_proveedor_alternativo(int id_art, int id_Proveedor, QString codigo, double pvd, QString descoferta, QString oferta,
                                              double pvdreal,int id_divisa)
 {
-    QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("terra"));
+    QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("Maya"));
 
     query_proveedor_alternativo.prepare("INSERT INTO articulos_prov_frec "
                                         "(id_Articulo,id_Proveedor,pvd,oferta,codigo,descoferta,pvdreal,id_divisa)"
@@ -643,7 +643,7 @@ bool Articulo::agregar_proveedor_alternativo(int id_art, int id_Proveedor, QStri
 
 bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta, QString oferta, double pvdreal, int id_divisa)
 {
-    QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("terra"));
+    QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("Maya"));
 
     query_proveedor_alternativo.prepare("UPDATE articulos_prov_frec  set pvd = :pvd,oferta = :oferta, codigo = :codigo, "
                                         "descoferta = :descoferta, pvdreal = :pvdreal, id_divisa =:id_divisa "
@@ -670,7 +670,7 @@ bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, Q
 
 bool Articulo::cambiarProveedorPrincipal(int id, int id_proveedor)
 {
-    QSqlQuery queryProveedor(QSqlDatabase::database("terra"));
+    QSqlQuery queryProveedor(QSqlDatabase::database("Maya"));
     queryProveedor.prepare("update articulos Set id_proveedor = :id_proveedor where id = :id");
     queryProveedor.bindValue(":id_proveedor",id_proveedor);
     queryProveedor.bindValue(":id",id);
@@ -693,7 +693,7 @@ QString Articulo::autocodigo()
     codigoIni = this->cSeccion+this->cFamilia+this->cSubfamilia+this->cSubSubFamilia+this->cGrupoArt;
     tamanocodigoIni = codigoIni.length();
     QSqlQuery queryArt("select codigo from articulos where codigo like '"+codigoIni+"%' order by codigo desc limit 1",
-                       QSqlDatabase::database("terra"));
+                       QSqlDatabase::database("Maya"));
     if(queryArt.exec()){
         queryArt.next();
         QString lastcode = queryArt.record().value("codigo").toString();

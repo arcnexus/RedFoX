@@ -21,7 +21,7 @@ void frmPersonasContactoCliente::RefrescarTabla()
     QString cSQL = "select id, nombre, cargo_empresa, desctelefono1,telefono1, desctelefono2, "
             "telefono2, desctelefono3, telefono3, descmovil1, movil, descmovil2, movil2"
             " from Personascontactocliente where  idcliente= "+ QString::number(nIdCliente);
-    lista->setQuery(cSQL,QSqlDatabase::database("terra"));
+    lista->setQuery(cSQL,QSqlDatabase::database("Maya"));
 ;
 
     ui->tabla_PersonasContacto->setModel(lista);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>frmConfigTerra</class>
- <widget class="QDialog" name="frmConfigTerra">
+ <class>frmConfigmaya</class>
+ <widget class="QDialog" name="frmConfigmaya">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,10 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Configuración de Terra</string>
+   <string>Configuración de maya</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../terra.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
   </property>
   <property name="styleSheet">
@@ -129,7 +129,7 @@ QPushButton:enabled{color: rgb(255,255,255); }
       <item row="2" column="0" colspan="2">
        <widget class="QCheckBox" name="chkconta">
         <property name="text">
-         <string>Modulo Contabilidad (TerraConta)</string>
+         <string>Modulo Contabilidad (mayaConta)</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -139,7 +139,7 @@ QPushButton:enabled{color: rgb(255,255,255); }
       <item row="1" column="0" colspan="2">
        <widget class="QCheckBox" name="chkmedicum">
         <property name="text">
-         <string>Modulo Medicina(Terra Medicum)</string>
+         <string>Modulo Medicina(maya Medicum)</string>
         </property>
        </widget>
       </item>
@@ -150,7 +150,7 @@ QPushButton:enabled{color: rgb(255,255,255); }
 color: rgb(255,255,255);</string>
         </property>
         <property name="text">
-         <string>Módulos Terra</string>
+         <string>Módulos maya</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -175,7 +175,7 @@ color: rgb(255,255,255);</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="Pagina_general">
       <property name="styleSheet">
@@ -599,6 +599,86 @@ color: rgb(255,255,255);</string>
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_2">
+      <property name="styleSheet">
+       <string notr="true">background-color: #ecefed;</string>
+      </property>
+      <attribute name="title">
+       <string>DBMedi_tec</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_36">
+         <property name="text">
+          <string>Nombre BD:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="txtNombreBD_MediTec">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_34">
+         <property name="text">
+          <string>Host:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="txtHostBD_MediTec">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_35">
+         <property name="text">
+          <string>usuario:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="txtUsuarioDB_MediTec">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_17">
+         <property name="text">
+          <string>Password:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="txtPasswordDB_MediTec">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>Puerto:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="txtPuerto_DB_MediTec">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item row="0" column="0" colspan="4">
@@ -769,14 +849,12 @@ color: rgb(255,255,255);</string>
   <tabstop>pushButton_2</tabstop>
   <tabstop>pushButton</tabstop>
  </tabstops>
- <resources>
-  <include location="../terra.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
-   <receiver>frmConfigTerra</receiver>
+   <receiver>frmConfigmaya</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -792,7 +870,7 @@ color: rgb(255,255,255);</string>
   <connection>
    <sender>pushButton</sender>
    <signal>clicked()</signal>
-   <receiver>frmConfigTerra</receiver>
+   <receiver>frmConfigmaya</receiver>
    <slot>configurar()</slot>
    <hints>
     <hint type="sourcelabel">

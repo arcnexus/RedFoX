@@ -26,7 +26,7 @@ void FrmInformacionFarmaco::capturarid(QString ccodigonacional)
     QString cUrl = "http://demo.vademecumdata.es/vweb/xml/ws_drug/SearchByCodeFull?value="+
             ccodigonacional;
     // Recupero valores conexión Vademecum
-    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
+    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
     QString cClave1 = settings.value("Clave1").toString();
     QString cClave2 = settings.value("Clave2").toString();
 

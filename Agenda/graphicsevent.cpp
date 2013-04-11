@@ -492,7 +492,7 @@ void GraphicsEvent::updateThis()
     }
     this->setToolTip(st);
 
-    QSqlQuery q(QSqlDatabase::database("terra"));
+    QSqlQuery q(QSqlDatabase::database("Maya"));
     q.prepare("UPDATE agenda SET "
               " cHora=:cHora, cInicio=:cInicio, cFin=:cFin, cAsunto=:cAsunto,"
               "cDescripcionAsunto=:cDescripcionAsunto, cEstado=:cEstado, cAvisarTiempo=:cAvisarTiempo,"
@@ -529,7 +529,7 @@ void GraphicsEvent::updateThis()
 void GraphicsEvent::shareThis()
 {
     QList<int> id_users;
-    QSqlQuery getUser(QSqlDatabase::database("terra"));
+    QSqlQuery getUser(QSqlDatabase::database("Maya"));
     QString sGetUser = QString("SELECT id_Usuario_agenda FROM  permisos_agenda WHERE id_Usuario_editor = %1").arg(Configuracion_global->id_usuario_activo);
     if(getUser.exec(sGetUser))
     {
@@ -561,7 +561,7 @@ void GraphicsEvent::shareThis()
     if(ok)
     {
         int iUser;
-        QSqlQuery user(QSqlDatabase::database("terra"));
+        QSqlQuery user(QSqlDatabase::database("Maya"));
         QString sql = QString("SELECT id FROM usuarios WHERE nombre = '%1'").arg(sUser);
         if(user.exec(sql))
         {
@@ -575,7 +575,7 @@ void GraphicsEvent::shareThis()
                 return;
             }
         }
-        QSqlQuery q(QSqlDatabase::database("terra"));
+        QSqlQuery q(QSqlDatabase::database("Maya"));
         q.prepare("INSERT INTO agenda"
                   "(dFecha, cHora, id_Usuario, cInicio, cFin, cAsunto,"
                   "cDescripcionAsunto, cEstado, cAvisarTiempo, cImportancia, color,"

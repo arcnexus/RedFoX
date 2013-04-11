@@ -1,21 +1,21 @@
-// Terra Software para profesionales de la Salud (Open Source GNU)
+// Maya Software para profesionales de la Salud (Open Source GNU)
 // Copyright (C) 2012-2013  Marc Miralles Biosca
 //
-// Terra Gestión empresarial open-source is free software: you can redistribute it and/or modify
+// Maya Gestión empresarial open-source is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Terra Gestión empresarial open-source is distributed in the hope that it will be useful,
+// Maya Gestión empresarial open-source is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Terra Gestión empresarial open-source.  If not, see <http://www.gnu.org/licenses/>.
+// along with Maya Gestión empresarial open-source.  If not, see <http://www.gnu.org/licenses/>.
 //
-// Email   : mmiralles +(simboloarroba)+ terramedicproject DOT org
-// Web-Site: http://www.terramedicproject.org
+// Email   : mmiralles +(simboloarroba)+ Mayamedicproject DOT org
+// Web-Site: http://www.Mayamedicproject.org
 
 #include "mainwindow.h"
 #include "login.h"
@@ -29,7 +29,7 @@ Q_IMPORT_PLUGIN(qsqlite)
 #endif
 bool cargarEmpresa(QString empresa)
 {
-    QSqlQuery QryEmpresa(QSqlDatabase::database("terra"));
+    QSqlQuery QryEmpresa(QSqlDatabase::database("Maya"));
     QryEmpresa.prepare("Select * from empresas where nombre = :nombre");
     QryEmpresa.bindValue(":nombre",empresa.trimmed());
     if (QryEmpresa.exec())
@@ -87,7 +87,7 @@ bool cargarEmpresa(QString empresa)
         QApplication::processEvents();
 
         // Guardo preferencias
-        QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
+        QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
         settings.setValue("cSerie",Configuracion_global->cSerie);
         settings.setValue("ndigitoscuenta",Configuracion_global->nDigitosCuentasContables);
         settings.setValue("cCuentaClientes",Configuracion_global->cCuentaClientes);
@@ -172,14 +172,14 @@ int main(int argc, char *argv[])
 
    a.setStyle("Plastique");
 
-   QFile file(":Icons/Terra.qss");
+   QFile file(":Icons/maya.qss");
 
 
    if(file.open(QFile::ReadOnly))
         a.setStyleSheet(file.readAll());
    else
        QMessageBox::warning(qApp->activeWindow(),
-                            QObject::tr("Terra"),
+                            QObject::tr("Maya"),
                             QObject::tr("No se puede cargar el archivo de tema"),
                             QObject::tr("Aceptar"));
 

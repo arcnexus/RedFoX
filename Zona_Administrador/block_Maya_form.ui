@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>block_terra_form</class>
- <widget class="QDialog" name="block_terra_form">
+ <class>block_Maya_form</class>
+ <widget class="QDialog" name="block_Maya_form">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>628</width>
-    <height>357</height>
+    <width>637</width>
+    <height>362</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Debloquear Terra</string>
+   <string>Debloquear Maya</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
@@ -75,7 +75,7 @@
       <string>Desbloquear</string>
      </property>
      <property name="icon">
-      <iconset resource="terra.qrc">
+      <iconset resource="../Maya.qrc">
        <normaloff>:/Icons/PNG/abrecaja.png</normaloff>:/Icons/PNG/abrecaja.png</iconset>
      </property>
      <property name="iconSize">
@@ -92,7 +92,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="terra.qrc">:/Icons/PNG/logo-blocked.png</pixmap>
+      <pixmap resource="../Maya.qrc">:/Icons/PNG/logo-blocked.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -102,7 +102,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections/>
 </ui>

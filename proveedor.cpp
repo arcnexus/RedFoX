@@ -10,8 +10,8 @@ Proveedor::Proveedor(QObject *parent) :
 
 void Proveedor::Anadir()
 {
-    QScopedPointer<QSqlQuery>QProveedor(new QSqlQuery(QSqlDatabase::database("terra")));
-    //QSqlQuery *QProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
+    QScopedPointer<QSqlQuery>QProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
+    //QSqlQuery *QProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
     if (!QProveedor->exec("insert into proveedores (cCodigo) values('')"))
             QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de proveedores"),
                                  QObject::tr("No se ha podido crear una nueva ficha de proveedor. Error: ")+
@@ -26,8 +26,8 @@ void Proveedor::Anadir()
 
 void Proveedor::Recuperar(QString cSQL)
 {
-    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("terra")));
-   // QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
+    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
+   // QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
     if(qProveedor->exec(cSQL)) {
         if(qProveedor->next()) {
             QSqlRecord rProveedor = qProveedor->record();
@@ -94,8 +94,8 @@ void Proveedor::Recuperar(QString cSQL)
 
 void Proveedor::Recuperar(QString cSQL, int nProcede)
 {
-    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("terra")));
-    //QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
+    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
+    //QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
     if(qProveedor->exec(cSQL)) {
         if(qProveedor->next()) {
             QSqlRecord rProveedor = qProveedor->record();
@@ -166,8 +166,8 @@ void Proveedor::Recuperar(QString cSQL, int nProcede)
 
 void Proveedor::Guardar()
 {
-    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("terra")));
-    //QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
+    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
+    //QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
     qProveedor->prepare("UPDATE proveedores SET "
                         "cCCProveedor = :cCCProveedor,"
                         "cCif = :cCif,"
@@ -331,8 +331,8 @@ void Proveedor::Vaciar()
 
 void Proveedor::Borrar(int nId)
 {
-    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("terra")));
-    //QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("terra"));
+    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
+    //QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
     qProveedor->prepare("delete from proveedores where Id = "+QString::number(nId));
     if(qProveedor->exec())
         QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión de Proveedores"),QObject::tr("Se ha borrado la ficha del proveedor"),
@@ -347,8 +347,8 @@ QString Proveedor::NuevoCodigoProveedor()
     QString cCodigo;
     QString cNum;
     int nCodigo;
-    QScopedPointer<QSqlQuery>qProveedores(new QSqlQuery(QSqlDatabase::database("terra")));
-    //QSqlQuery *qProveedores = new QSqlQuery(QSqlDatabase::database("terra"));
+    QScopedPointer<QSqlQuery>qProveedores(new QSqlQuery(QSqlDatabase::database("Maya")));
+    //QSqlQuery *qProveedores = new QSqlQuery(QSqlDatabase::database("Maya"));
     if(qProveedores->exec("select cCodigo from proveedores  order by cCodigo desc limit 1")) {
         if (qProveedores->next()) {
             QSqlRecord registro = qProveedores->record();

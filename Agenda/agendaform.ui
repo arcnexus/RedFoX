@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Agenda Maya</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../maya.qrc">
+    <normaloff>:/Icons/PNG/iconMaya.png</normaloff>:/Icons/PNG/iconMaya.png</iconset>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
@@ -60,7 +64,7 @@ QLabel{background-color: #4C6088;}</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../terra.qrc">
+           <iconset resource="../maya.qrc">
             <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
           </property>
          </widget>
@@ -117,7 +121,7 @@ QLabel{background-color: #4C6088;}</string>
          <string>Añadir cita</string>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/Calendar.png</normaloff>:/Icons/PNG/Calendar.png</iconset>
         </property>
        </widget>
@@ -143,7 +147,7 @@ QLabel{background-color: #4C6088;}</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../terra.qrc">
+           <iconset resource="../maya.qrc">
             <normaloff>:/Icons/PNG/magnifier_zoom_in.png</normaloff>:/Icons/PNG/magnifier_zoom_in.png</iconset>
           </property>
           <property name="iconSize">
@@ -160,7 +164,7 @@ QLabel{background-color: #4C6088;}</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../terra.qrc">
+           <iconset resource="../maya.qrc">
             <normaloff>:/Icons/PNG/magnifier_zoom_out.png</normaloff>:/Icons/PNG/magnifier_zoom_out.png</iconset>
           </property>
           <property name="iconSize">
@@ -215,7 +219,7 @@ QLabel{background-color: #4C6088;}</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections/>
 </ui>

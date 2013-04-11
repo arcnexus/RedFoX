@@ -14,7 +14,7 @@ FrmAddTipoCliente::FrmAddTipoCliente(QWidget *parent) :
     // CARGAR LISTA/TABLA
     //----------------------
     QSqlQueryModel *m_familia = new QSqlQueryModel(this);
-    m_familia->setQuery("select descripcion, id from maestro_familia_cliente",QSqlDatabase::database("terra"));
+    m_familia->setQuery("select descripcion, id from maestro_familia_cliente",QSqlDatabase::database("Maya"));
     ui->list_Familia->setModel(m_familia);
 
     //-----------------------
@@ -34,7 +34,7 @@ void FrmAddTipoCliente::LLenarTablaSubfamilias(QModelIndex index)
     QSqlQueryModel* modelo = (QSqlQueryModel*)ui->list_Familia->model();
     int nId = modelo->record(index.row()).value("id").toInt();
     cFamiliaRetorno = modelo->record(index.row()).value("descripcion").toString();
-    QSqlQuery qFamilia(QSqlDatabase::database("terra"));
+    QSqlQuery qFamilia(QSqlDatabase::database("Maya"));
     qFamilia.prepare(QString("select * from maestro_subfamilia_cliente where id_maestro_familia_cliente = %1 ").arg(nId));
     if (qFamilia.exec()) {
         // Cargo datos en tabla

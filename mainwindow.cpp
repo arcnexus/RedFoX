@@ -4,12 +4,12 @@
 #include "Zona_Administrador/frmempresas.h"
 #include "Zona_Compras/frmpedidosproveedor.h"
 //#include "frmconfiguracion.h"
-#include "block_terra_form.h"
+#include "Zona_Administrador/block_Maya_form.h"
 #include "db_table_view.h"
 #include "Agenda/permisosagendaform.h"
 #include <QSplashScreen>
 #include <Almacen/frmtipostarifa.h>
-#include "Zona_Administrador/frmconfigterra.h"
+#include "Zona_Administrador/frmconfigmaya.h"
 
 Configuracion * Configuracion_global = 0;
 
@@ -314,15 +314,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->addWidget(frmRecep_pedidos);
     ui->stackedWidget->addWidget(reportWindow);
     ui->stackedWidget->addWidget(agendaForm);
-    TerraForm = new init_form(this);
-    ui->stackedWidget->addWidget(TerraForm);
-    ui->stackedWidget->setCurrentWidget(TerraForm);
+    MayaForm = new init_form(this);
+    ui->stackedWidget->addWidget(MayaForm);
+    ui->stackedWidget->setCurrentWidget(MayaForm);
 
     QApplication::processEvents();
 
 
 
-    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
+    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
     ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
     ui->menubar->show();
@@ -348,14 +348,14 @@ void MainWindow::init()
 //        ui->lineUsuarioActivo->setText(user);
 //        Configuracion_global->cUsuarioActivo = user;
 
-//		QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
+//		QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
 //		ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
 //		ui->txtcCategoria->setText(settings.value("cCategoria").toString());
 
 //        ui->lineEmpresaActiva->setText(empresa);
 
 		// Configuramos valores empresa activa
-//		QSqlQuery QryEmpresa(QSqlDatabase::database("terra"));
+//		QSqlQuery QryEmpresa(QSqlDatabase::database("Maya"));
 //		QryEmpresa.prepare("Select * from empresas where nombre = :nombre");
 //        QryEmpresa.bindValue(":nombre",empresa.trimmed());
 //		if (QryEmpresa.exec())
@@ -414,7 +414,7 @@ void MainWindow::init()
 //            QApplication::processEvents();
 
 //			// Guardo preferencias
-//			QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
+//			QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
 //            settings.setValue("cSerie",Configuracion_global->cSerie);
 //            settings.setValue("ndigitoscuenta",Configuracion_global->nDigitosCuentasContables);
 //            settings.setValue("cCuentaClientes",Configuracion_global->cCuentaClientes);
@@ -548,9 +548,9 @@ void MainWindow::init()
 //            ui->stackedWidget->addWidget(frmOrden_Ped_pro);
 //            ui->stackedWidget->addWidget(reportWindow);
 //            ui->stackedWidget->addWidget(agendaForm);
-//            TerraForm = new init_form(this);
-//            ui->stackedWidget->addWidget(TerraForm);
-//            ui->stackedWidget->setCurrentWidget(TerraForm);
+//            MayaForm = new init_form(this);
+//            ui->stackedWidget->addWidget(MayaForm);
+//            ui->stackedWidget->setCurrentWidget(MayaForm);
 
 //            QApplication::processEvents();
 //            this->setWindowState(Qt::WindowMaximized);
@@ -694,7 +694,7 @@ void MainWindow::btn_reports_clicked()
 
 void MainWindow::on_btn_bloquear_clicked()
 {
-    block_terra_form form(this);
+    block_Maya_form form(this);
     form.set_user(user,pass);
     this->hide();
     form.exec();
@@ -706,7 +706,7 @@ void MainWindow::divisiones_almacen()
     if(sender()== ui->actionGestion_de_Secciones)
     {
         Db_table_View form(this);
-        form.set_db("terra");
+        form.set_db("Maya");
         form.set_table("secciones");
 
         form.setWindowTitle(tr("Secciones"));
@@ -722,7 +722,7 @@ void MainWindow::divisiones_almacen()
     else if (sender() == ui->actionGestion_de_Familias)
     {
         Db_table_View form(this);
-        form.set_db("terra");
+        form.set_db("Maya");
         form.set_table("familias");
 
         form.setWindowTitle(tr("Familias"));
@@ -739,7 +739,7 @@ void MainWindow::divisiones_almacen()
     else if (sender() == ui->actionGestion_de_subfamilias)
     {
         Db_table_View form(this);
-        form.set_db("terra");
+        form.set_db("Maya");
         form.set_table("subfamilias");
 
         form.setWindowTitle(tr("Subfamilias"));
@@ -756,7 +756,7 @@ void MainWindow::divisiones_almacen()
     else if (sender() == ui->actionSubSubFamilias)
     {
         Db_table_View form(this);
-        form.set_db("terra");
+        form.set_db("Maya");
         form.set_table("subsubfamilias");
 
         form.setWindowTitle(tr("SubSubfamilias"));
@@ -773,7 +773,7 @@ void MainWindow::divisiones_almacen()
     else if (sender() == ui->actionGrupos)
     {
         Db_table_View form(this);
-        form.set_db("terra");
+        form.set_db("Maya");
         form.set_table("grupoart");
 
         form.setWindowTitle(tr("Grupo de Articulos"));
@@ -796,7 +796,7 @@ void MainWindow::editar_empresas()
 }
 void MainWindow::configuracion()
 {
-    frmConfigTerra frmConfig(this);
+    frmConfigmaya frmConfig(this);
     frmConfig.exec();
 }
 
@@ -825,7 +825,7 @@ void MainWindow::handle_doctores()
 void MainWindow::handle_bancos()
 {
     Db_table_View form(this);
-    form.set_db("terra");
+    form.set_db("Maya");
     form.set_table("bancos");
 
     form.setWindowTitle(tr("Bancos"));
@@ -842,7 +842,7 @@ void MainWindow::handle_bancos()
 void MainWindow::handle_tiposIVA()
 {
     Db_table_View form(this);
-    form.set_db("terra");
+    form.set_db("Maya");
     form.set_table("tiposiva");
 
     form.setWindowTitle(tr("Tipos de I.V.A"));
@@ -861,7 +861,7 @@ void MainWindow::handle_tiposIVA()
 void MainWindow::handle_fomasPago()
 {
     Db_table_View form(this);
-    form.set_db("terra");
+    form.set_db("Maya");
     form.set_table("FormPago");
 
     form.setWindowTitle(tr("Formas de pago"));
@@ -878,7 +878,7 @@ void MainWindow::handle_fomasPago()
 void MainWindow::handle_paises()
 {
     Db_table_View form(this);
-    form.set_db("terra");
+    form.set_db("Maya");
     form.set_table("paises");
 
     form.setWindowTitle(tr("Paises"));
@@ -889,7 +889,7 @@ void MainWindow::handle_paises()
 
     form.set_columnHide(0);
     form.set_relation(2,QSqlRelation("monedas","id","moneda"));
-    form.set_printFile("/home/arcnexus/TerraReports/clientes.xml");//TODO hacer directorio general de reports
+    form.set_printFile("/home/arcnexus/MayaReports/clientes.xml");//TODO hacer directorio general de reports
     form.exec();
     Configuracion_global->Cargar_paises();
 }
@@ -897,7 +897,7 @@ void MainWindow::handle_paises()
 void MainWindow::hande_avisos()
 {
     Db_table_View form(this);
-    form.set_db("terra");
+    form.set_db("Maya");
     form.set_table("avisos");
 
     form.setWindowTitle(tr("Avisos"));
@@ -982,7 +982,7 @@ void MainWindow::handle_motivoInterConsulta()
 void MainWindow::tipostarifa()
 {
 //    Db_table_View form(this);
-//    form.set_db("terra");
+//    form.set_db("Maya");
 //    form.set_table("codigotarifa");
 
 //    form.setWindowTitle(tr("Tipos de tarifa"));
@@ -1001,7 +1001,7 @@ void MainWindow::tipostarifa()
 void MainWindow::handle_monedas()
 {
     Db_table_View form(this);
-    form.set_db("terra");
+    form.set_db("Maya");
     form.set_table("monedas");
 
     form.setWindowTitle(tr("Monedas"));

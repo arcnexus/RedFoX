@@ -20,7 +20,7 @@ class Configuracion: public QObject
 public:
     Configuracion(QObject * parent = 0);
 
-    QString cRutaBdTerra;
+    QString cRutaBdMaya;
     QString cSerie;
     int nDigitosFactura;
     QString cConector;
@@ -41,17 +41,23 @@ public:
     QString cPasswordBDMedica;
     QString cNombreBDMedica;
     QString cPuertoBDMedica;
-    QString cDriverBDTerra;
-    QString cHostBDTerra;
-    QString cUsuarioBDTerra;
-    QString cPasswordBDTerra;
-    QString cNombreBDTerra;
-    QString cPuertoBDTerra;
+    QString cDriverBDMaya;
+    QString cHostBDMaya;
+    QString cUsuarioBDMaya;
+    QString cPasswordBDMaya;
+    QString cNombreBDMaya;
+    QString cPuertoBDMaya;
     QString cNombreBDTiendaWeb;
     QString cHostBDTiendaWeb;
     QString cUsuarioTiendaWeb;
     QString cPasswordTiendaWeb;
     QString cPuertoTiendaWeb;
+    QString HostDB_MediTec;
+    QString NombreDB_MediTec;
+    QString UsuarioDB_MediTec;
+    QString PasswordDB_MediTec;
+    QString PortDB_MediTec;
+
     bool EnlaceWeb;
     QString cPais;
     QString cEjercicio;
@@ -61,6 +67,7 @@ public:
     QString cNivelUsuarioActivo;
     QSqlDatabase dbConfiguracion;
     QSqlDatabase dbWeb;
+    QSqlDatabase db_meditec;
     QSqlQuery *QryConfiguracion;
     QFileDialog dialogo;
     bool Autocodigoart;
@@ -117,6 +124,8 @@ public:
     void CargarDatosBD();
     void AbrirDbWeb();
     void CerrarDbWeb();
+    void AbridBDMediTec();
+    void CerrarBDMediTec();
     QString ValidarCC(QString Entidad,QString Oficina, QString DC, QString CC);
     QString ValidarCC(QString Entidad, QString Oficina, QString CC);
     QString ValidarnifE(QString Nif);

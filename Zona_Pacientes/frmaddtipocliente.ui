@@ -14,8 +14,8 @@
    <string>Añadir tipología a cliente</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../terra.qrc">
-    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
+   <iconset resource="../Maya.qrc">
+    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="2" colspan="2">
@@ -77,7 +77,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections>
   <connection>

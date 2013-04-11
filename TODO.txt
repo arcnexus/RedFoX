@@ -1,4 +1,4 @@
-TERRA - TODO
+Maya - TODO
 
 En los items que se solucionen pondremos [END] a su izquierda. Así.
 
@@ -34,10 +34,10 @@ FRMEMPRESAS.CPP
         -crear copia de seguridad.
         -enlazar con vademecum ( deberá salir una pantalla donde aparezca un código aleatorio y luego sobre eso nosotros calcularemos
                                 otro código que les facilitaremos una vez tengamos el justificante del pago de la cuota de vademecum 120€/año aprox.)
-        -enlazar con vademecums terra (Aquí van los vademecum de Medicina china, homeopatia, naturopatia, ayurveda.... - El proceso es 
+        -enlazar con vademecums Maya (Aquí van los vademecum de Medicina china, homeopatia, naturopatia, ayurveda.... - El proceso es 
                                 el mismo que con vademecum de data solutions, solo que este lo cobramos todo para nosotros :) ) 
         -Modificar formato informes (Este enlaza con OpenRPT)
-[END] -Cambiar boton salir de terra de la barra superior por el de lockwindow.
+[END] -Cambiar boton salir de Maya de la barra superior por el de lockwindow.
         
 
 CLIENTES/PACIENTES
@@ -68,7 +68,7 @@ BASE DE DATOS
 
 OTROS:
 
--Enlace con Prestashop - (Agupunt- pero nos da mucha potencia de cara a la venta por web enlazada con terra)
+-Enlace con Prestashop - (Agupunt- pero nos da mucha potencia de cara a la venta por web enlazada con Maya)
 -Enlace con Jooma        ( lo mismo que Prestashop)
 -Importación datos facturaplus. (Importar de Facturaplus -Contaplus facilita la captación de usuarios que ahora usen facturaplus como
                                  software de gestión de la clínica)

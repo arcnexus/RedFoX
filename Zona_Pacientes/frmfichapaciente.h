@@ -34,11 +34,11 @@ public slots:
 private slots:
     void finishedSlot(QNetworkReply* reply);
     void on_btnAnadirEpisodio_clicked();
+    void ListaEpisodio_clicked(QModelIndex index);
     void on_btnBuscarCIEEpisodio_clicked();
     void on_btnEditarPaciente_clicked();
     void on_btnGuardarPaciente_clicked();
     void on_btnGuardarEpisodio_clicked();
-    void listaEpisodios_currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*);
     void on_btnEditarEpisodio_clicked();
     void on_btnDeshacerEpisodio_clicked();
     void on_btnAnadirFarma_clicked();
@@ -61,6 +61,9 @@ private slots:
     void VerAnalitica();
     void on_BtnDeshacerPaciente_clicked();
     void AnadirVisita();
+    void ListaVisita_Clicked(QModelIndex index);
+    void CargarVisita(int nId);
+    void anadirDiagnostico();
     void vademecums();
 
 signals:

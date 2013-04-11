@@ -14,8 +14,8 @@
    <string>Gestión de empresas</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../terra.qrc">
-    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
+   <iconset resource="../Maya.qrc">
+    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:#4c6088</string>
@@ -24,7 +24,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; color:#ffff00;&quot;&gt;Gestión de Terra.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; color:#ffff00;&quot;&gt;Gestión de Maya.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
@@ -215,7 +215,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Añadir</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
            </property>
            <property name="iconSize">
@@ -254,7 +254,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Siguiente</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
            </property>
            <property name="iconSize">
@@ -293,7 +293,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Anterior</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
            </property>
            <property name="iconSize">
@@ -332,7 +332,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Buscar</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
            </property>
            <property name="iconSize">
@@ -371,7 +371,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Borrar</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
            </property>
            <property name="iconSize">
@@ -410,7 +410,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Guardar</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
            </property>
            <property name="iconSize">
@@ -449,7 +449,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Cerrar</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
            </property>
           </widget>
@@ -1294,7 +1294,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Añadir</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
            </property>
            <property name="iconSize">
@@ -1329,7 +1329,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Siguiente</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
            </property>
            <property name="iconSize">
@@ -1364,7 +1364,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Anterior</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
            </property>
            <property name="iconSize">
@@ -1399,7 +1399,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Buscar</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
            </property>
            <property name="iconSize">
@@ -1434,7 +1434,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Guardar</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
            </property>
            <property name="iconSize">
@@ -1517,7 +1517,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             <string>Cerrar</string>
            </property>
            <property name="icon">
-            <iconset resource="../terra.qrc">
+            <iconset resource="../Maya.qrc">
              <normaloff>:/Icons/PNG/alert.png</normaloff>:/Icons/PNG/alert.png</iconset>
            </property>
           </widget>
@@ -1656,7 +1656,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
   </layout>
  </widget>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections/>
 </ui>

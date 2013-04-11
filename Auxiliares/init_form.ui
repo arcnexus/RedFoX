@@ -46,7 +46,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../terra.qrc">:/Icons/PNG/maya.png</pixmap>
+      <pixmap resource="../Maya.qrc">:/Icons/PNG/maya.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -82,7 +82,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections/>
 </ui>
