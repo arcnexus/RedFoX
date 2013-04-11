@@ -52,6 +52,12 @@ public:
     QString cUsuarioTiendaWeb;
     QString cPasswordTiendaWeb;
     QString cPuertoTiendaWeb;
+    QString HostDB_MediTec;
+    QString NombreDB_MediTec;
+    QString UsuarioDB_MediTec;
+    QString PasswordDB_MediTec;
+    QString PortDB_MediTec;
+
     bool EnlaceWeb;
     QString cPais;
     QString cEjercicio;
@@ -61,6 +67,7 @@ public:
     QString cNivelUsuarioActivo;
     QSqlDatabase dbConfiguracion;
     QSqlDatabase dbWeb;
+    QSqlDatabase db_meditec;
     QSqlQuery *QryConfiguracion;
     QFileDialog dialogo;
     bool Autocodigoart;
@@ -117,6 +124,8 @@ public:
     void CargarDatosBD();
     void AbrirDbWeb();
     void CerrarDbWeb();
+    void AbridBDMediTec();
+    void CerrarBDMediTec();
     QString ValidarCC(QString Entidad,QString Oficina, QString DC, QString CC);
     QString ValidarCC(QString Entidad, QString Oficina, QString CC);
     QString ValidarnifE(QString Nif);

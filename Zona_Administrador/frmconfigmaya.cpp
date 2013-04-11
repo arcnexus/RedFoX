@@ -72,6 +72,11 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     ui->txtclaveV3_2->setText(settings.value("Clave6").toString());
     ui->txtclaveV4_1->setText(settings.value("Clave7").toString());
     ui->txtclaveV4_2->setText(settings.value("Clave8").toString());
+    ui->txtHostBD_MediTec->setText(settings.value("HostDB_MediTec").toString());
+    ui->txtNombreBD_MediTec->setText(settings.value("NombreDB_MediTec").toString());
+    ui->txtUsuarioDB_MediTec->setText(settings.value("UsuarioDB_MediTec").toString());
+    ui->txtPasswordDB_MediTec->setText(settings.value("PasswordDB_MediTec").toString());
+    ui->txtPuerto_DB_MediTec->setText(settings.value("PuertoDB_MediTec").toString());
     if(settings.value("cDriverBDMaya").toString() =="QMYSQL")
         ui->radMysql->setChecked(true);
     else
@@ -200,6 +205,13 @@ void frmConfigmaya::configurar()
    settings.setValue("puertoTiendaWeb",ui->txtPuerto_DBWeb->text());
    settings.setValue("nombreBDTiendaWeb",ui->txtNombreBDWeb->text());
    settings.setValue("EnlaceWeb",ui->chkPrestaShop->isEnabled());
+
+
+   settings.setValue("HostDB_MediTec",ui->txtHostBD_MediTec->text());
+   settings.setValue("NombreDB_MediTec",ui->txtNombreBD_MediTec->text());
+   settings.setValue("UsuarioDB_MediTec",ui->txtUsuarioDB_MediTec->text());
+   settings.setValue("PasswordDB_MediTec",ui->txtPasswordDB_MediTec->text());
+   settings.setValue("PuertoDB_MediTec",ui->txtPuerto_DB_MediTec->text());
 
     accept();
 }

@@ -331,6 +331,13 @@ void Configuracion::CargarDatosBD()
     this->EnlaceWeb = settings.value("EnlaceWeb").toBool();
 
 
+    this->HostDB_MediTec = settings.value("HostDB_MediTec").toString();
+    this->NombreDB_MediTec = settings.value("NombreDB_MediTec").toString();
+    this->UsuarioDB_MediTec = settings.value("UsuarioDB_MediTec").toString();
+    this->PasswordDB_MediTec = settings.value("PasswordDB_MediTec").toString();
+    this->PortDB_MediTec =  settings.value("PuertoDB_MediTec").toString();
+
+
 }
 
 void Configuracion::AbrirDbWeb()
@@ -353,6 +360,26 @@ void Configuracion::AbrirDbWeb()
 void Configuracion::CerrarDbWeb()
 {
     dbWeb.close();
+}
+
+void Configuracion::AbridBDMediTec()
+{
+    // Abro bdInformación técnica de medicina
+    QSqlDatabase DB_MediTec = QSqlDatabase::addDatabase("QMYSQL","db_meditec");
+
+        DB_MediTec.setDatabaseName(Configuracion_global->NombreDB_MediTec);
+        DB_MediTec.setHostName(Configuracion_global->HostDB_MediTec);
+        DB_MediTec.open(Configuracion_global->UsuarioDB_MediTec,Configuracion_global->PasswordDB_MediTec);
+
+    if (DB_MediTec.lastError().isValid())
+    {
+        QMessageBox::critical(qApp->activeWindow(), "error:", DB_MediTec.lastError().text());
+    }
+}
+
+void Configuracion::CerrarBDMediTec()
+{
+    db_meditec.close();
 }
 void Configuracion::CargarDatos()
 {
@@ -382,6 +409,7 @@ void Configuracion::CargarDatos()
         this->cCuentaPagosProveedor = qEmpresa.record().value("cCuentaPagos").toString();
         this->medic = qEmpresa.record().value("medica").toBool();
         this->internacional = qEmpresa.record().value("internacional").toBool();
+
 
     } else {
         qDebug() << qEmpresa.lastError().text();

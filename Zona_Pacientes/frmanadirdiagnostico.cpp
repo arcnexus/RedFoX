@@ -16,9 +16,21 @@ FrmAnadirDiagnostico::~FrmAnadirDiagnostico()
 
 void FrmAnadirDiagnostico::BtnBuscar_Clicked()
 {
+
+    Configuracion_global->AbridBDMediTec();
     QSqlQueryModel *modelDiagnostico = new QSqlQueryModel(this);
     modelDiagnostico->setQuery("Select sindrome,id from sindromes where sindrome like '%"+ui->txtBusar->text().trimmed()+
-                               "%' order by sindrome",QSqlDatabase::database("dbinfomed"));
+                               "%' order by sindrome",QSqlDatabase::database("db_meditec"));
     ui->listaDiagnositicos->setModel(modelDiagnostico);
+    Configuracion_global->CerrarBDMediTec();
+
+
+
+
+
+
+
+
+
 
 }
