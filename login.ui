@@ -26,7 +26,7 @@
    <string>MAYA M-SALUD - El software de los profesionales de la Salud - Acceso Usuarios</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="terra.qrc">
+   <iconset resource="Maya.qrc">
     <normaloff>:/Icons/PNG/clientes.png</normaloff>:/Icons/PNG/clientes.png</iconset>
   </property>
   <property name="styleSheet">
@@ -761,7 +761,7 @@ border-color: rgb(192, 192, 255);</string>
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="terra.qrc">:/Icons/PNG/usuarios.png</pixmap>
+         <pixmap resource="Maya.qrc">:/Icons/PNG/usuarios.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -814,7 +814,7 @@ border-color: rgb(192, 192, 255);</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/PNG/logoagupunt.png</pixmap>
+            <pixmap resource="Maya.qrc">:/Icons/PNG/logoagupunt.png</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -839,7 +839,7 @@ border-color: rgb(192, 192, 255);</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+            <pixmap resource="Maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -864,7 +864,7 @@ border-color: rgb(192, 192, 255);</string>
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="terra.qrc">:/Icons/PNG/mayafondo_blanco.png</pixmap>
+         <pixmap resource="Maya.qrc">:/Icons/PNG/mayafondo_blanco.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -895,7 +895,7 @@ border-color: rgb(192, 192, 255);</string>
   <tabstop>btnEmpresa</tabstop>
  </tabstops>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="Maya.qrc"/>
  </resources>
  <connections/>
 </ui>

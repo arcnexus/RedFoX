@@ -22,7 +22,7 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     // LLeno divisas
     //------------------
     QSqlQueryModel *modelDivisas = new QSqlQueryModel(this);
-    modelDivisas->setQuery("select moneda from monedas",QSqlDatabase::database("terra"));
+    modelDivisas->setQuery("select moneda from monedas",QSqlDatabase::database("Maya"));
     ui->cboDivisas->setModel(modelDivisas);
 
     on_botSiguiente_clicked();
@@ -228,7 +228,7 @@ void FrmEmpresas::txtcPoblacion_editingFinished()
          qDebug() << "nID: " <<nId;
          if(nId > 0)
          {
-             QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+             QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
              QString cId;
              cId = QString::number(nId);
              qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
@@ -266,7 +266,7 @@ void FrmEmpresas::txtcCp_editingFinished()
             //qDebug() <<nId;
             if(nId > 0)
             {
-                QSqlQuery qPoblacion(QSqlDatabase::database("terra"));
+                QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
                 QString cId;
                 cId = QString::number(nId);
                 qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
@@ -301,7 +301,7 @@ void FrmEmpresas::on_botAnadir_clicked()
         ui->botAnadir->setText("Deshacer");
         ui->botAnadir->setIcon(QIcon(":/Icons/PNG/undo.png"));
 
-        QSqlQuery get_last(QSqlDatabase::database("terra"));
+        QSqlQuery get_last(QSqlDatabase::database("Maya"));
         get_last.prepare("SELECT id FROM empresas ORDER BY id DESC LIMIT 1");
         if(get_last.exec())
         {
@@ -700,7 +700,7 @@ void FrmEmpresas::on_botAnadir_user_clicked()
         ui->botAnadir_user->setText("Deshacer");
         ui->botAnadir_user->setIcon(QIcon(":/Icons/PNG/undo.png"));
 
-        QSqlQuery get_last(QSqlDatabase::database("terra"));
+        QSqlQuery get_last(QSqlDatabase::database("Maya"));
         get_last.prepare("SELECT * FROM usuarios ORDER BY id DESC LIMIT 1");
         if(get_last.exec())
         {
@@ -725,7 +725,7 @@ void FrmEmpresas::on_botAnadir_user_clicked()
 
 void FrmEmpresas::on_botSiguiente_user_clicked()
 {
-    QSqlQuery next_user(QSqlDatabase::database("terra"));
+    QSqlQuery next_user(QSqlDatabase::database("Maya"));
     QString sql = QString("SELECT * FROM usuarios WHERE id > %1 LIMIT 1 ")
             .arg(ui->txt_id_user->text());
     next_user.prepare(sql);
@@ -742,7 +742,7 @@ void FrmEmpresas::on_botSiguiente_user_clicked()
 
 void FrmEmpresas::on_botAnterior_user_clicked()
 {
-    QSqlQuery next_user(QSqlDatabase::database("terra"));
+    QSqlQuery next_user(QSqlDatabase::database("Maya"));
     QString sql = QString("SELECT * FROM usuarios WHERE id < %1 ORDER BY id DESC LIMIT 1")
             .arg(ui->txt_id_user->text());
     next_user.prepare(sql);
@@ -771,7 +771,7 @@ void FrmEmpresas::on_botGuardar_user_clicked()
     else
     {
 
-        QSqlQuery add_user(QSqlDatabase::database("terra"));
+        QSqlQuery add_user(QSqlDatabase::database("Maya"));
         /*add_user.prepare("INSERT INTO usuarios (id,nombre,contrasena,nivelacceso,categoria) "
                          "VALUES (?1,?2,?3,?4,?5)");
          Id es un campo autoincremental y no se debe sobreescribir ya que puede dar problemas, siendo la propia bd

@@ -14,8 +14,8 @@
    <string>Facturación multile de albaranes</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../terra.qrc">
-    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
+   <iconset resource="../Maya.qrc">
+    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:#4c6088</string>
@@ -108,7 +108,7 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../terra.qrc">
+         <iconset resource="../Maya.qrc">
           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
         </property>
         <property name="iconSize">
@@ -160,7 +160,7 @@ color: rgb(255, 255, 255);</string>
   </layout>
  </widget>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections/>
 </ui>

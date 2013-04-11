@@ -258,7 +258,7 @@ bool FrmCajaMinuta::rellenarArticulo(QString cCodigo)
 void FrmCajaMinuta::on_btnBuscarArt_clicked()
 {
     Db_table_View searcher(this);
-    searcher.set_db("terra");
+    searcher.set_db("Maya");
     searcher.set_table("articulos");
     searcher.set_selection("cCodigo");
     searcher.setWindowTitle(tr("Articulos"));

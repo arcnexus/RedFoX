@@ -50,7 +50,7 @@ background-color: rgb(255, 255, 255);</string>
 border-color: rgba(255, 255, 255, 0);</string>
      </property>
      <property name="icon">
-      <iconset resource="../terra.qrc">
+      <iconset resource="../Maya.qrc">
        <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
      </property>
      <property name="flat">
@@ -61,7 +61,7 @@ border-color: rgba(255, 255, 255, 0);</string>
   </layout>
  </widget>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections/>
 </ui>

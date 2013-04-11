@@ -26,8 +26,8 @@
    <string>MAYA - ERP/GNU para los profesionales de la Salud</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="terra.qrc">
-    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
+   <iconset resource="maya.qrc">
+    <normaloff>:/Icons/PNG/iconMaya.png</normaloff>:/Icons/PNG/iconMaya.png</iconset>
   </property>
   <property name="iconSize">
    <size>
@@ -252,7 +252,7 @@ selection-color: rgb(0, 0, 0);</string>
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap resource="terra.qrc">:/Icons/PNG/mayamini.png</pixmap>
+              <pixmap resource="maya.qrc">:/Icons/PNG/mayamini.png</pixmap>
              </property>
              <property name="scaledContents">
               <bool>true</bool>
@@ -771,10 +771,10 @@ background-color: rgb(255, 255, 255);</string>
               <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>Bloquear Terra</string>
+              <string>Bloquear Maya</string>
              </property>
              <property name="icon">
-              <iconset resource="terra.qrc">
+              <iconset resource="maya.qrc">
                <normaloff>:/Icons/PNG/cierrecaja.png</normaloff>:/Icons/PNG/cierrecaja.png</iconset>
              </property>
              <property name="iconSize">
@@ -794,7 +794,7 @@ background-color: rgb(255, 255, 255);</string>
               <string>Salir</string>
              </property>
              <property name="icon">
-              <iconset resource="terra.qrc">
+              <iconset resource="maya.qrc">
                <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
              </property>
              <property name="iconSize">
@@ -996,7 +996,7 @@ background-color: rgb(255, 255, 255);</string>
   </widget>
   <action name="btnClientes">
    <property name="icon">
-    <iconset resource="terra.qrc">
+    <iconset resource="maya.qrc">
      <normaloff>:/Icons/PNG/clientes.png</normaloff>
      <normalon>:/Icons/PNG/clientes.png</normalon>:/Icons/PNG/clientes.png</iconset>
    </property>
@@ -1048,7 +1048,7 @@ background-color: rgb(255, 255, 255);</string>
   </action>
   <action name="btnTipos_de_Iva">
    <property name="icon">
-    <iconset resource="terra.qrc">
+    <iconset resource="maya.qrc">
      <normaloff>:/Icons/PNG/iva3.png</normaloff>:/Icons/PNG/iva3.png</iconset>
    </property>
    <property name="text">
@@ -1060,7 +1060,7 @@ background-color: rgb(255, 255, 255);</string>
   </action>
   <action name="btnAgenda">
    <property name="icon">
-    <iconset resource="terra.qrc">
+    <iconset resource="maya.qrc">
      <normaloff>:/Icons/PNG/Calendar2.png</normaloff>:/Icons/PNG/Calendar2.png</iconset>
    </property>
    <property name="text">
@@ -1072,7 +1072,7 @@ background-color: rgb(255, 255, 255);</string>
   </action>
   <action name="btnSalir">
    <property name="icon">
-    <iconset resource="terra.qrc">
+    <iconset resource="maya.qrc">
      <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
    </property>
    <property name="text">
@@ -1084,7 +1084,7 @@ background-color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionPresupuestos">
    <property name="icon">
-    <iconset resource="terra.qrc">
+    <iconset resource="maya.qrc">
      <normaloff>:/Icons/PNG/presupuestos.png</normaloff>:/Icons/PNG/presupuestos.png</iconset>
    </property>
    <property name="text">
@@ -1096,7 +1096,7 @@ background-color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionPedidos">
    <property name="icon">
-    <iconset resource="terra.qrc">
+    <iconset resource="maya.qrc">
      <normaloff>:/Icons/PNG/pedidos_cli.png</normaloff>:/Icons/PNG/pedidos_cli.png</iconset>
    </property>
    <property name="text">
@@ -1108,7 +1108,7 @@ background-color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionFacturas">
    <property name="icon">
-    <iconset resource="terra.qrc">
+    <iconset resource="maya.qrc">
      <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
    </property>
    <property name="text">
@@ -1120,7 +1120,7 @@ background-color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionVentas_Contado">
    <property name="icon">
-    <iconset resource="terra.qrc">
+    <iconset resource="maya.qrc">
      <normaloff>:/Icons/PNG/tpv.png</normaloff>:/Icons/PNG/tpv.png</iconset>
    </property>
    <property name="text">
@@ -1540,7 +1540,7 @@ background-color: rgb(255, 255, 255);</string>
   </action>
  </widget>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="maya.qrc"/>
  </resources>
  <connections/>
 </ui>

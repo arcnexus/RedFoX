@@ -20,7 +20,7 @@ class Configuracion: public QObject
 public:
     Configuracion(QObject * parent = 0);
 
-    QString cRutaBdTerra;
+    QString cRutaBdMaya;
     QString cSerie;
     int nDigitosFactura;
     QString cConector;
@@ -41,12 +41,12 @@ public:
     QString cPasswordBDMedica;
     QString cNombreBDMedica;
     QString cPuertoBDMedica;
-    QString cDriverBDTerra;
-    QString cHostBDTerra;
-    QString cUsuarioBDTerra;
-    QString cPasswordBDTerra;
-    QString cNombreBDTerra;
-    QString cPuertoBDTerra;
+    QString cDriverBDMaya;
+    QString cHostBDMaya;
+    QString cUsuarioBDMaya;
+    QString cPasswordBDMaya;
+    QString cNombreBDMaya;
+    QString cPuertoBDMaya;
     QString cNombreBDTiendaWeb;
     QString cHostBDTiendaWeb;
     QString cUsuarioTiendaWeb;

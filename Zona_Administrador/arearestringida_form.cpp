@@ -24,7 +24,7 @@ bool AreaRestringida_form::es_valido()
 
 void AreaRestringida_form::login()
 {
-    QSqlQuery qryUsers(QSqlDatabase::database("terra"));
+    QSqlQuery qryUsers(QSqlDatabase::database("Maya"));
 
     qryUsers.prepare( "SELECT * FROM usuarios where nombre =:Nombre AND categoria = 'ADMINISTRADOR'" );
     qryUsers.bindValue(":Nombre",ui->lineUsuario->text());
@@ -40,7 +40,7 @@ void AreaRestringida_form::login()
             QSqlRecord rUsuario = qryUsers.record();
             if (ui->linePassword->text() == qryUsers.value(2).toString())
             {
-                QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
+                QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
                 settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
                 settings.setValue("nNivelAcceso",rUsuario.field("nivelacceso").value().toInt());
                 settings.setValue("cCategoria",rUsuario.field("categoria").value().toString());

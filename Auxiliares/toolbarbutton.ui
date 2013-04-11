@@ -81,7 +81,7 @@ background-color:#AFC3E1;
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../terra.qrc">:/Icons/PNG/Factura.png</pixmap>
+        <pixmap resource="../Maya.qrc">:/Icons/PNG/Factura.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -142,7 +142,7 @@ margin: 0px;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections/>
 </ui>

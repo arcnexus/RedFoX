@@ -52,7 +52,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../terra.qrc">
+          <iconset resource="../Maya.qrc">
            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
          </property>
          <property name="iconSize">
@@ -76,7 +76,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../terra.qrc">
+          <iconset resource="../Maya.qrc">
            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
          </property>
          <property name="iconSize">
@@ -113,7 +113,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../terra.qrc">
+          <iconset resource="../Maya.qrc">
            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
          </property>
          <property name="iconSize">
@@ -169,7 +169,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../terra.qrc">
+          <iconset resource="../Maya.qrc">
            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
          </property>
          <property name="iconSize">
@@ -272,7 +272,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../terra.qrc">
+          <iconset resource="../Maya.qrc">
            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
          </property>
          <property name="iconSize">
@@ -322,7 +322,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../terra.qrc">
+          <iconset resource="../Maya.qrc">
            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
          </property>
          <property name="iconSize">
@@ -376,7 +376,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../terra.qrc">
+          <iconset resource="../Maya.qrc">
            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
          </property>
          <property name="iconSize">
@@ -574,7 +574,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections>
   <connection>

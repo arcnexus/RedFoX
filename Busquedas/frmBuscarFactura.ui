@@ -111,7 +111,7 @@
         <string>Buscar</string>
        </property>
        <property name="icon">
-        <iconset resource="../terra.qrc">
+        <iconset resource="../Maya.qrc">
          <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
        </property>
       </widget>
@@ -181,7 +181,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
   <tabstop>Grid</tabstop>
  </tabstops>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections>
   <connection>

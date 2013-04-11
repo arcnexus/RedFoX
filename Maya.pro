@@ -29,7 +29,7 @@ LIBS += -L/usr/local/Qxt/lib
 greaterThan(QT_MAJOR_VERSION, 4):LIBS += -L/home/arcnexus/Qt5.0.0/Tools/QtCreator/lib/qtcreator/ -lQt5WebKitWidgets
 
 
-TARGET = Terra
+TARGET = Maya
 TEMPLATE = app
 
 # CONFIG  += qxt
@@ -68,7 +68,7 @@ SOURCES += main.cpp\
     Zona_Pacientes/frmveranalitica.cpp \
     frmvisitas.cpp \
     Zona_Administrador/arearestringida_form.cpp \
-    block_terra_form.cpp \
+    Zona_Administrador/block_Maya_form.cpp \
     Zona_Administrador/copy_db_progressfrm.cpp \
     db_table_view.cpp \
     Auxiliares/search_lineedit.cpp \
@@ -93,7 +93,6 @@ SOURCES += main.cpp\
     Zona_Pacientes/frmaddtipocliente.cpp \
     Zona_Compras/frmorden_pedido_producto.cpp \
     openrptLibs/Auxiliares/reportwriterwindow.cpp \
-    Zona_Administrador/frmconfigterra.cpp \
     Agenda/graphicstable.cpp \
     Agenda/graphicsevent.cpp \
     Agenda/editeventform.cpp \
@@ -120,11 +119,13 @@ SOURCES += main.cpp\
     Almacen/frmlistadosarticulo.cpp \
     Zona_Compras/frmrecepcion_pedidos.cpp \
     Zona_Pacientes/frmmtcbase.cpp \
-    Zona_Pacientes/frmanadirdiagnostico.cpp
+    Zona_Pacientes/frmanadirdiagnostico.cpp \
+    Zona_Administrador/frmconfigmaya.cpp \
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
     Zona_Pacientes/frmClientes.h \
+    Zona_Administrador\block_Maya_form.h \
     login.h \
     Zona_Compras/frmproveedores.h \
     Zona_Pacientes/cliente.h \
@@ -153,7 +154,6 @@ HEADERS  += mainwindow.h \
     Zona_Pacientes/frmveranalitica.h \
     frmvisitas.h \
     Zona_Administrador/arearestringida_form.h \
-    block_terra_form.h \
     Zona_Administrador/copy_db_progressfrm.h \
     db_table_view.h \
     Auxiliares/search_lineedit.h \
@@ -179,7 +179,6 @@ HEADERS  += mainwindow.h \
     Zona_Pacientes/frmaddtipocliente.h \
     Zona_Compras/frmorden_pedido_producto.h \
     openrptLibs/Auxiliares/reportwriterwindow.h \
-    Zona_Administrador/frmconfigterra.h \   
      Agenda/graphicstable.h \
     Agenda/graphicsevent.h \
     Agenda/editeventform.h \
@@ -208,7 +207,9 @@ HEADERS  += mainwindow.h \
     Almacen/frmlistadosarticulo.h \
     Zona_Compras/frmrecepcion_pedidos.h \
     Zona_Pacientes/frmmtcbase.h \
-    Zona_Pacientes/frmanadirdiagnostico.h
+    Zona_Pacientes/frmanadirdiagnostico.h \
+    Zona_Administrador/frmconfigmaya.h \
+    Zona_Administrador/block_Maya_form.h
 
 
 FORMS    += mainwindow.ui \
@@ -230,7 +231,7 @@ FORMS    += mainwindow.ui \
     prueba.ui \
     frmvisitas.ui \
     Zona_Administrador/arearestringida_form.ui \
-    block_terra_form.ui \
+    Zona_Administrador/block_Maya_form.ui \
     Zona_Administrador/copy_db_progressfrm.ui \
     db_table_view.ui \
     Auxiliares/search_lineedit.ui \
@@ -245,7 +246,6 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmfacturaralabaranes.ui \
     Zona_Pacientes/frmaddtipocliente.ui \
     Zona_Compras/frmorden_pedido_producto.ui \
-    Zona_Administrador/frmconfigterra.ui \
     Agenda/editeventform.ui \
     Agenda/agendaform.ui \
     Zona_Pacientes/frmpersonascontactocliente.ui \
@@ -261,10 +261,11 @@ FORMS    += mainwindow.ui \
     Almacen/frmlistadosarticulo.ui \
     Zona_Compras/frmrecepcion_pedidos.ui \
     Zona_Pacientes/frmmtcbase.ui \
-    Zona_Pacientes/frmanadirdiagnostico.ui
+    Zona_Pacientes/frmanadirdiagnostico.ui \
+    Zona_Administrador/frmconfigmaya.ui \
 
 RESOURCES += \
-    terra.qrc
+    maya.qrc
 
 OTHER_FILES += \
     TODO.txt \

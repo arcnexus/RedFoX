@@ -7,7 +7,7 @@ FrmTarifas::FrmTarifas(QWidget *parent) :
 {
     ui->setupUi(this);
     QSqlQueryModel *modelo = new QSqlQueryModel(this);
-    modelo->setQuery("Select descripcion from codigotarifa",QSqlDatabase::database("terra"));
+    modelo->setQuery("Select descripcion from codigotarifa",QSqlDatabase::database("Maya"));
     ui->listaTarifa->setModel(modelo);
 
 
@@ -41,13 +41,13 @@ void FrmTarifas::capturar_coste(float Coste)
 
 void FrmTarifas::capturar_datos(int id, QString costeLocal){
     ui->listaTarifa->hide();
-    QSqlQuery queryTarifas(QSqlDatabase::database("terra"));
+    QSqlQuery queryTarifas(QSqlDatabase::database("Maya"));
     if(!queryTarifas.exec("select * from tarifas where id="+QString::number(id))){
         QMessageBox::warning(this,tr("Editar"),
                              tr("Ocurrió un error al recuperar los datos: %1").arg(queryTarifas.lastError().text()));
     }else {
         queryTarifas.next();
-        QSqlQuery queryGrupotarifa(QSqlDatabase::database("terra"));
+        QSqlQuery queryGrupotarifa(QSqlDatabase::database("Maya"));
         if(queryGrupotarifa.exec("select * from codigotarifa where id="+QString::number(
                                       queryTarifas.record().field("id_codigotarifa").value().toInt()))){
             queryGrupotarifa.next();
@@ -83,7 +83,7 @@ void FrmTarifas::cargarDatosTarifa(QModelIndex indice)
 {
     QSqlQueryModel* modelo = (QSqlQueryModel*)ui->listaTarifa->model();
     QString tarifa = modelo->record(indice.row()).value("descripcion").toString();
-    QSqlQuery qTarifa(QSqlDatabase::database("terra"));
+    QSqlQuery qTarifa(QSqlDatabase::database("Maya"));
     qTarifa.prepare("select * from codigotarifa where descripcion ='"+tarifa+"'");
 
     if(qTarifa.exec()){

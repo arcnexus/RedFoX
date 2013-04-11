@@ -14,8 +14,8 @@
    <string>Analitica episodio</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="terra.qrc">
-    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
+   <iconset resource="Maya.qrc">
+    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(219, 228, 255);</string>
@@ -126,7 +126,7 @@
          <string>Cerrar</string>
         </property>
         <property name="icon">
-         <iconset resource="terra.qrc">
+         <iconset resource="Maya.qrc">
           <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
         </property>
        </widget>
@@ -184,7 +184,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="terra.qrc">
+         <iconset resource="Maya.qrc">
           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
         </property>
        </widget>
@@ -212,7 +212,7 @@ alternate-background-color: rgb(255, 253, 104);</string>
   <tabstop>tablaAnalitica</tabstop>
  </tabstops>
  <resources>
-  <include location="terra.qrc"/>
+  <include location="Maya.qrc"/>
  </resources>
  <connections/>
 </ui>

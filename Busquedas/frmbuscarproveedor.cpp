@@ -22,7 +22,7 @@ void FrmBuscarProveedor::on_btnBuscar_clicked()
 {
     modelo = new QSqlQueryModel(this);
     modelo->setQuery("select cProveedor, cCodigo,cCif,id from proveedores where cProveedor like'"+ui->txtcBuscar->text()+"%'",
-                     QSqlDatabase::database("terra"));
+                     QSqlDatabase::database("Maya"));
     ui->tableProv->setModel(modelo);
 
 }

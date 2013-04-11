@@ -14,8 +14,8 @@
    <string>Buscar Población</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../terra.qrc">
-    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
+   <iconset resource="../Maya.qrc">
+    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <widget class="QTableView" name="ListaPoblaciones">
    <property name="geometry">
@@ -53,7 +53,7 @@ QPushButton:enabled{color: rgb(0,0,0); }</string>
        <string>Aceptar</string>
       </property>
       <property name="icon">
-       <iconset resource="../terra.qrc">
+       <iconset resource="../Maya.qrc">
         <normaloff>:/Icons/PNG/star.png</normaloff>:/Icons/PNG/star.png</iconset>
       </property>
      </widget>
@@ -74,7 +74,7 @@ QPushButton:enabled{color: rgb(0,0,0); }</string>
        <string>Cancelar</string>
       </property>
       <property name="icon">
-       <iconset resource="../terra.qrc">
+       <iconset resource="../Maya.qrc">
         <normaloff>:/Icons/PNG/error.png</normaloff>:/Icons/PNG/error.png</iconset>
       </property>
      </widget>
@@ -88,7 +88,7 @@ QPushButton:enabled{color: rgb(0,0,0); }</string>
   <tabstop>btnCancelar</tabstop>
  </tabstops>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections>
   <connection>

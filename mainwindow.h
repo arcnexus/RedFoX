@@ -182,7 +182,7 @@ private:
     ReportWriterWindow * reportWindow;
     AgendaForm * agendaForm;
 
-    init_form * TerraForm;
+    init_form * MayaForm;
 
     bool on_edit;
 };

@@ -23,8 +23,8 @@
    <string>Historia clínica</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../terra.qrc">
-    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
+   <iconset resource="../Maya.qrc">
+    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(219, 228, 255);</string>
@@ -133,7 +133,7 @@ color: rgb(0, 0, 0);</string>
       <string>Cerrar</string>
      </property>
      <property name="icon">
-      <iconset resource="../terra.qrc">
+      <iconset resource="../Maya.qrc">
        <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
      </property>
      <property name="iconSize">
@@ -237,7 +237,7 @@ background-color: rgb(255, 255, 255);</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../terra.qrc">:/Icons/PNG/mayafondo_blanco_mini.png</pixmap>
+      <pixmap resource="../Maya.qrc">:/Icons/PNG/mayafondo_blanco_mini.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -818,7 +818,7 @@ color: rgb(0, 0, 0);</string>
              <string>Editar</string>
             </property>
             <property name="icon">
-             <iconset resource="../terra.qrc">
+             <iconset resource="../Maya.qrc">
               <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
             </property>
             <property name="iconSize">
@@ -838,7 +838,7 @@ color: rgb(0, 0, 0);</string>
              <string>Guardar</string>
             </property>
             <property name="icon">
-             <iconset resource="../terra.qrc">
+             <iconset resource="../Maya.qrc">
               <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
             </property>
             <property name="iconSize">
@@ -858,7 +858,7 @@ color: rgb(0, 0, 0);</string>
              <string>Deshacer</string>
             </property>
             <property name="icon">
-             <iconset resource="../terra.qrc">
+             <iconset resource="../Maya.qrc">
               <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
             </property>
             <property name="iconSize">
@@ -939,7 +939,7 @@ color: rgb(255, 0, 0);</string>
                  <string notr="true">background-color: #ecefed;</string>
                 </property>
                 <attribute name="icon">
-                 <iconset resource="../terra.qrc">
+                 <iconset resource="../Maya.qrc">
                   <normaloff>:/Icons/PNG/PatientFile2.png</normaloff>:/Icons/PNG/PatientFile2.png</iconset>
                 </attribute>
                 <attribute name="title">
@@ -1080,7 +1080,7 @@ color: rgb(255, 0, 0);</string>
                     <string>Añadir</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1106,7 +1106,7 @@ color: rgb(255, 0, 0);</string>
                     <string>Editar</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1126,7 +1126,7 @@ color: rgb(255, 0, 0);</string>
                     <string>Guardar</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1152,7 +1152,7 @@ color: rgb(255, 0, 0);</string>
                     <string>Deshacer</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1169,7 +1169,7 @@ color: rgb(255, 0, 0);</string>
                     <string>Imprimir</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1253,7 +1253,7 @@ color: rgb(255, 255, 255);</string>
                  <string notr="true">background-color: #ecefed;</string>
                 </property>
                 <attribute name="icon">
-                 <iconset resource="../terra.qrc">
+                 <iconset resource="../Maya.qrc">
                   <normaloff>:/Icons/PNG/Pills.png</normaloff>:/Icons/PNG/Pills.png</iconset>
                 </attribute>
                 <attribute name="title">
@@ -1271,7 +1271,7 @@ color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../terra.qrc">
+                      <iconset resource="../Maya.qrc">
                        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                      </property>
                     </widget>
@@ -1285,7 +1285,7 @@ color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../terra.qrc">
+                      <iconset resource="../Maya.qrc">
                        <normaloff>:/Icons/PNG/Pills.png</normaloff>:/Icons/PNG/Pills.png</iconset>
                      </property>
                     </widget>
@@ -1305,7 +1305,7 @@ color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../terra.qrc">
+                      <iconset resource="../Maya.qrc">
                        <normaloff>:/Icons/PNG/print2.png</normaloff>:/Icons/PNG/print2.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -1352,7 +1352,7 @@ color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../terra.qrc">
+                      <iconset resource="../Maya.qrc">
                        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
                      </property>
                     </widget>
@@ -1475,7 +1475,7 @@ color: rgb(255, 255, 255);</string>
                     <string/>
                    </property>
                    <property name="pixmap">
-                    <pixmap resource="../terra.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+                    <pixmap resource="../Maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
                    </property>
                    <property name="scaledContents">
                     <bool>true</bool>
@@ -1514,7 +1514,7 @@ color: rgb(255, 255, 255);</string>
                     <string>Editar</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
                    </property>
                   </widget>
@@ -1528,7 +1528,7 @@ color: rgb(255, 255, 255);</string>
                     <string>Guardar</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
                    </property>
                   </widget>
@@ -1542,7 +1542,7 @@ color: rgb(255, 255, 255);</string>
                     <string>Deshacer</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
                    </property>
                   </widget>
@@ -1554,7 +1554,7 @@ color: rgb(255, 255, 255);</string>
                  <string notr="true">background-color: #ecefed;</string>
                 </property>
                 <attribute name="icon">
-                 <iconset resource="../terra.qrc">
+                 <iconset resource="../Maya.qrc">
                   <normaloff>:/Icons/PNG/TestTubes.png</normaloff>:/Icons/PNG/TestTubes.png</iconset>
                 </attribute>
                 <attribute name="title">
@@ -1570,7 +1570,7 @@ color: rgb(255, 255, 255);</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                    </property>
                   </widget>
@@ -1584,7 +1584,7 @@ color: rgb(255, 255, 255);</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
                    </property>
                   </widget>
@@ -1598,7 +1598,7 @@ color: rgb(255, 255, 255);</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/TestTubes.png</normaloff>:/Icons/PNG/TestTubes.png</iconset>
                    </property>
                   </widget>
@@ -1612,7 +1612,7 @@ color: rgb(255, 255, 255);</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/importar.png</normaloff>:/Icons/PNG/importar.png</iconset>
                    </property>
                   </widget>
@@ -1674,7 +1674,7 @@ color: rgb(255,255,255);
                  <string notr="true">background-color: #ecefed;</string>
                 </property>
                 <attribute name="icon">
-                 <iconset resource="../terra.qrc">
+                 <iconset resource="../Maya.qrc">
                   <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
                 </attribute>
                 <attribute name="title">
@@ -1705,7 +1705,7 @@ color: rgb(255,255,255);
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
                    </property>
                   </widget>
@@ -1719,7 +1719,7 @@ color: rgb(255,255,255);
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/importar.png</normaloff>:/Icons/PNG/importar.png</iconset>
                    </property>
                   </widget>
@@ -1781,7 +1781,7 @@ background-color: rgb(255, 255, 255);</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                    </property>
                   </widget>
@@ -1795,7 +1795,7 @@ background-color: rgb(255, 255, 255);</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
                    </property>
                   </widget>
@@ -1982,7 +1982,7 @@ background-color: rgb(255, 255, 255);</string>
                  <string notr="true">background-color: #ecefed;</string>
                 </property>
                 <attribute name="icon">
-                 <iconset resource="../terra.qrc">
+                 <iconset resource="../Maya.qrc">
                   <normaloff>:/Icons/PNG/users.png</normaloff>:/Icons/PNG/users.png</iconset>
                 </attribute>
                 <attribute name="title">
@@ -2000,7 +2000,7 @@ background-color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../terra.qrc">
+                      <iconset resource="../Maya.qrc">
                        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                      </property>
                     </widget>
@@ -2014,7 +2014,7 @@ background-color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../terra.qrc">
+                      <iconset resource="../Maya.qrc">
                        <normaloff>:/Icons/PNG/importar.png</normaloff>:/Icons/PNG/importar.png</iconset>
                      </property>
                     </widget>
@@ -2028,7 +2028,7 @@ background-color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../terra.qrc">
+                      <iconset resource="../Maya.qrc">
                        <normaloff>:/Icons/PNG/TestTubes.png</normaloff>:/Icons/PNG/TestTubes.png</iconset>
                      </property>
                     </widget>
@@ -2042,7 +2042,7 @@ background-color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../terra.qrc">
+                      <iconset resource="../Maya.qrc">
                        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
                      </property>
                     </widget>
@@ -2133,7 +2133,7 @@ color: rgb(255,255,255);</string>
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../terra.qrc">
+                       <iconset resource="../Maya.qrc">
                         <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                       </property>
                      </widget>
@@ -2161,7 +2161,7 @@ color: rgb(255,255,255);</string>
                        <string>Documentos</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="../terra.qrc">
+                       <iconset resource="../Maya.qrc">
                         <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
                       </property>
                      </widget>
@@ -2238,7 +2238,7 @@ color: rgb(255,255,255);</string>
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../terra.qrc">
+                       <iconset resource="../Maya.qrc">
                         <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                       </property>
                      </widget>
@@ -2262,7 +2262,7 @@ color: rgb(255,255,255);</string>
                        <string>Documentos</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="../terra.qrc">
+                       <iconset resource="../Maya.qrc">
                         <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
                       </property>
                      </widget>
@@ -2301,7 +2301,7 @@ color: rgb(255,255,255);</string>
                  <string notr="true">background-color: #ecefed;</string>
                 </property>
                 <attribute name="icon">
-                 <iconset resource="../terra.qrc">
+                 <iconset resource="../Maya.qrc">
                   <normaloff>:/Icons/PNG/avisos.png</normaloff>:/Icons/PNG/avisos.png</iconset>
                 </attribute>
                 <attribute name="title">
@@ -2326,7 +2326,7 @@ color: rgb(255,255,255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../terra.qrc">
+                      <iconset resource="../Maya.qrc">
                        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
                      </property>
                     </widget>
@@ -2354,7 +2354,7 @@ color: rgb(255,255,255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../terra.qrc">
+                      <iconset resource="../Maya.qrc">
                        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                      </property>
                     </widget>
@@ -2411,7 +2411,7 @@ color: rgb(255,255,255);</string>
                       <string>Editar</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../terra.qrc">
+                      <iconset resource="../Maya.qrc">
                        <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -2499,7 +2499,7 @@ color: rgb(255,255,255);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../terra.qrc">
+                <iconset resource="../Maya.qrc">
                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                </property>
                <property name="iconSize">
@@ -2528,7 +2528,7 @@ color: rgb(255,255,255);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../terra.qrc">
+                <iconset resource="../Maya.qrc">
                  <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
                </property>
                <property name="iconSize">
@@ -2551,7 +2551,7 @@ color: rgb(255,255,255);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../terra.qrc">
+                <iconset resource="../Maya.qrc">
                  <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
                </property>
                <property name="iconSize">
@@ -2580,7 +2580,7 @@ color: rgb(255,255,255);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../terra.qrc">
+                <iconset resource="../Maya.qrc">
                  <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
                </property>
                <property name="iconSize">
@@ -2600,7 +2600,7 @@ color: rgb(255,255,255);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../terra.qrc">
+                <iconset resource="../Maya.qrc">
                  <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
                </property>
                <property name="iconSize">
@@ -2711,7 +2711,7 @@ alternate-background-color: rgb(255, 255, 192);</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../terra.qrc">
+                    <iconset resource="../Maya.qrc">
                      <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                    </property>
                   </widget>
@@ -3221,7 +3221,7 @@ color: rgb(255,255,255);</string>
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../terra.qrc">
+               <iconset resource="../Maya.qrc">
                 <normaloff>:/Icons/PNG/Pills.png</normaloff>:/Icons/PNG/Pills.png</iconset>
               </property>
              </widget>
@@ -3255,7 +3255,7 @@ color: rgb(255,255,255);</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../terra.qrc">
+             <iconset resource="../Maya.qrc">
               <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
             </property>
            </widget>
@@ -3395,7 +3395,7 @@ color: rgb(255,255,255);</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../terra.qrc">:/Icons/jpg/rx.jpg</pixmap>
+             <pixmap resource="../Maya.qrc">:/Icons/jpg/rx.jpg</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -3509,7 +3509,7 @@ color: rgb(255,255,255);</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../terra.qrc">:/Icons/PNG/Pills.png</pixmap>
+            <pixmap resource="../Maya.qrc">:/Icons/PNG/Pills.png</pixmap>
            </property>
           </widget>
          </item>
@@ -3528,7 +3528,7 @@ color: rgb(255,255,255);</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../terra.qrc">:/Icons/PNG/TestTubes.png</pixmap>
+            <pixmap resource="../Maya.qrc">:/Icons/PNG/TestTubes.png</pixmap>
            </property>
           </widget>
          </item>
@@ -3547,7 +3547,7 @@ color: rgb(255,255,255);</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../terra.qrc">:/Icons/PNG/XRay.png</pixmap>
+            <pixmap resource="../Maya.qrc">:/Icons/PNG/XRay.png</pixmap>
            </property>
           </widget>
          </item>
@@ -3566,7 +3566,7 @@ color: rgb(255,255,255);</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../terra.qrc">:/Icons/PNG/usuarios.png</pixmap>
+            <pixmap resource="../Maya.qrc">:/Icons/PNG/usuarios.png</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -3590,7 +3590,7 @@ color: rgb(255,255,255);</string>
   <tabstop>txtEdadActual</tabstop>
  </tabstops>
  <resources>
-  <include location="../terra.qrc"/>
+  <include location="../Maya.qrc"/>
  </resources>
  <connections>
   <connection>

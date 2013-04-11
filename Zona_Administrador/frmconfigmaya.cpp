@@ -1,5 +1,5 @@
-#include "frmconfigterra.h"
-#include "ui_frmconfigterra.h"
+#include "frmconfigmaya.h"
+#include "ui_frmconfigmaya.h"
 #include <QtSql>
 #include <QSqlDatabase>
 #include "configuracion.h"
@@ -7,9 +7,9 @@
 
 //Configuracion * Configuracion_global = 0;
 
-frmConfigTerra::frmConfigTerra(QWidget *parent) :
+frmConfigmaya::frmConfigmaya(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::frmConfigTerra)
+    ui(new Ui::frmConfigmaya)
 {
     if(!Configuracion_global)
         Configuracion_global = new Configuracion;
@@ -18,19 +18,19 @@ frmConfigTerra::frmConfigTerra(QWidget *parent) :
     Configuracion_global->Cargar_paises();
     ui->setupUi(this);
     QSqlQueryModel *qUsers = new QSqlQueryModel(this);
-    qUsers->setQuery("select nombre from usuarios",QSqlDatabase::database("terra"));
+    qUsers->setQuery("select nombre from usuarios",QSqlDatabase::database("Maya"));
     ui->cboUsuarioActivo->setModel(qUsers);
 
 
     ui->cboPaises->setModel(Configuracion_global->paises_model);
     ui->cboPaises->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
-    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
-    ui->txtHost->setText(settings.value("cHostBDTerra").toString());
-    ui->txtUsuario->setText(settings.value("cUserBDTerra").toString());
-    ui->txtPassword->setText(settings.value("cPasswordBDTerra").toString());
-    ui->txtPuerto->setText(settings.value("cPuertoDBTerra").toString());
-    ui->txtDireccionBD->setText(settings.value("cRutaDBTerra").toString());
+    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
+    ui->txtHost->setText(settings.value("cHostBDMaya").toString());
+    ui->txtUsuario->setText(settings.value("cUserBDMaya").toString());
+    ui->txtPassword->setText(settings.value("cPasswordBDMaya").toString());
+    ui->txtPuerto->setText(settings.value("cPuertoDBMaya").toString());
+    ui->txtDireccionBD->setText(settings.value("cRutaDBMaya").toString());
 
 
     ui->txtHostWeb->setText(settings.value("hostTiendaWeb").toString());
@@ -72,7 +72,7 @@ frmConfigTerra::frmConfigTerra(QWidget *parent) :
     ui->txtclaveV3_2->setText(settings.value("Clave6").toString());
     ui->txtclaveV4_1->setText(settings.value("Clave7").toString());
     ui->txtclaveV4_2->setText(settings.value("Clave8").toString());
-    if(settings.value("cDriverBDTerra").toString() =="QMYSQL")
+    if(settings.value("cDriverBDMaya").toString() =="QMYSQL")
         ui->radMysql->setChecked(true);
     else
         ui->radMysql->setChecked(false);
@@ -109,21 +109,21 @@ frmConfigTerra::frmConfigTerra(QWidget *parent) :
 
 }
 
-frmConfigTerra::~frmConfigTerra()
+frmConfigmaya::~frmConfigmaya()
 {
     delete ui;
 }
 
-void frmConfigTerra::configurar()
+void frmConfigmaya::configurar()
 {
 
 
-    QSettings settings(qApp->applicationDirPath()+"/TerraConfig.ini", QSettings::IniFormat);
+    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
     if(ui->radMysql->isChecked())
-        settings.setValue("cDriverBDTerra","QMYSQL");
+        settings.setValue("cDriverBDMaya","QMYSQL");
     else
-        //settings.setValue("cRutaDBTerra",qApp->applicationDirPath()+"/DB/terra.sqlite");
-        settings.setValue("cRutaDBTerra",ui->txtDireccionBD->text());
+        //settings.setValue("cRutaDBMaya",qApp->applicationDirPath()+"/DB/Maya.sqlite");
+        settings.setValue("cRutaDBMaya",ui->txtDireccionBD->text());
 //    QDir directorioBd(qApp->applicationDirPath()+"/DB");
 //    if(!directorioBd.exists())
 //    {
@@ -131,17 +131,17 @@ void frmConfigTerra::configurar()
 //        path.mkdir(qApp->applicationDirPath()+"/DB");
 //    }
 
-//    QFile bd(qApp->applicationDirPath()+"/DB/terra.sqlite");
+//    QFile bd(qApp->applicationDirPath()+"/DB/Maya.sqlite");
 //    if(!bd.exists())
 //    {
-//       //TODO - Descargar terra.sqlite del servidor??
+//       //TODO - Descargar Maya.sqlite del servidor??
 //    }
 
-    settings.setValue("cHostBDTerra",ui->txtHost->text());
-    settings.setValue("cUserBDTerra",ui->txtUsuario->text());
-    settings.setValue("cPasswordBDTerra",ui->txtPassword->text());
+    settings.setValue("cHostBDMaya",ui->txtHost->text());
+    settings.setValue("cUserBDMaya",ui->txtUsuario->text());
+    settings.setValue("cPasswordBDMaya",ui->txtPassword->text());
     settings.setValue("cPais",ui->cboPaises->currentText());
-    settings.setValue(("cPuertoDBTerra"),ui->txtPuerto->text());
+    settings.setValue(("cPuertoDBMaya"),ui->txtPuerto->text());
     settings.setValue("nDigitosFactura",ui->spinDigitosFactura->value());
     if(ui->chkProfesional->isChecked())
         settings.setValue("lProfesional",1);
@@ -150,9 +150,9 @@ void frmConfigTerra::configurar()
 
     settings.setValue("nIRPF",ui->txtPorcIRPF->text());
     if (ui->chkPrestaShop->isChecked())
-        settings.setValue("EnlacePrestaShop",1);
+        settings.setValue("EnlaceTiendaWeb",1);
     else
-        settings.setValue("EnlacePrestaShop",0);
+        settings.setValue("EnlaceTiendaWeb",0);
     settings.setValue("contrasenaactiva",ui->txtContrasenaActiva->text());
     settings.setValue("nDigitosCuentas",ui->spinDigitosCuentaContable->value());
     settings.setValue("cCuentaClientes",ui->txtCuentaClientes->text());

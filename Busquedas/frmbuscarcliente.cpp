@@ -27,7 +27,7 @@ void FrmBuscarCliente::on_pushButton_clicked()
     //NOTE - asignale parent a los pointer y se borraran solos al borrar el parent
     ModelClientes = new QSqlQueryModel(this);
 
-    ModelClientes->setQuery(cSQL,QSqlDatabase::database("terra"));
+    ModelClientes->setQuery(cSQL,QSqlDatabase::database("Maya"));
     ui->Grid->setModel(ModelClientes);
 
     // 2º - Creamos Objeto de la clase Cabecera

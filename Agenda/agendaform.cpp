@@ -87,7 +87,7 @@ void AgendaForm::on_btn_buscaUser_clicked()
 {
     QString s = QInputDialog::getText(this,"Nombre","Nombre de usuario");
     Db_table_View form(this);
-    form.set_db("terra");
+    form.set_db("Maya");
     form.set_table("usuarios");
 
     form.setWindowTitle(tr("Usuarios"));

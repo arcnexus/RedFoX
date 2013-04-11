@@ -18,6 +18,6 @@ frmListadosArticulo::~frmListadosArticulo()
 
 void frmListadosArticulo::btn_Preview_clicked()
 {
-    Configuracion_global->imprimir("terra","/home/arcnexus/MayaProject/maya/Reports/articulo.xml",true,true,this);
+    Configuracion_global->imprimir("Maya","/home/arcnexus/MayaProject/maya/Reports/articulo.xml",true,true,this);
 
 }

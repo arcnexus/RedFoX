@@ -26,7 +26,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
     // Cargar empresas
     QSqlQueryModel *modelEmpresa = new QSqlQueryModel(this);
-    modelEmpresa->setQuery("select * from vistaEmpresa",QSqlDatabase::database("terra"));
+    modelEmpresa->setQuery("select * from vistaEmpresa",QSqlDatabase::database("Maya"));
     ui->cboEmpresa2->setModel(modelEmpresa);
     ui->lblCodigo->setVisible(false);
     ui->lblDescripcion->setVisible(false);
@@ -44,7 +44,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     // --------------------
     // TARIFAS
     //---------------------
-    tarifa_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("terra"));
+    tarifa_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("Maya"));
     tarifa_model->setTable("viewTarifa");
     tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
     tarifa_model->select();
@@ -98,7 +98,7 @@ FrmArticulos::~FrmArticulos()
 
 void FrmArticulos::on_botAnadir_clicked()
 {
-    QSqlQuery querySecciones(QSqlDatabase::database("terra"));
+    QSqlQuery querySecciones(QSqlDatabase::database("Maya"));
     querySecciones.prepare("select id from secciones order by id desc limit 1 ");
     if (querySecciones.exec()){
         querySecciones.next();
@@ -556,7 +556,7 @@ void FrmArticulos::rellenar_grafica_proveedores()
     // GRAFICA SEGÚN PVDREAL
     //----------------------
     QSqlQuery queryProveed("select cProveedor,pvdreal from proveedores_frecuentes where id_art = "+
-                           QString::number(oArticulo->id),QSqlDatabase::database("terra"));
+                           QString::number(oArticulo->id),QSqlDatabase::database("Maya"));
     if(queryProveed.exec()){
 
         while (queryProveed.next()) {
@@ -598,7 +598,7 @@ void FrmArticulos::on_botDeshacer_clicked()
 {
     if(this->anadir)
     {
-        QSqlQuery qArt(QSqlDatabase::database("terra"));
+        QSqlQuery qArt(QSqlDatabase::database("Maya"));
         qArt.prepare("delete from articulos where id = :nId");
         qArt.bindValue("nId",oArticulo->id);
         if(qArt.exec());
@@ -624,7 +624,7 @@ void FrmArticulos::on_botBuscarArtRapido_clicked()
                 ui->txtBuscarArticulo->text().trimmed()+"%' order by cDescripcion";
 
 
-        modArt->setQuery(cSQL,QSqlDatabase::database("terra"));
+        modArt->setQuery(cSQL,QSqlDatabase::database("Maya"));
         ui->TablaBuscarArt->setModel(modArt);
         QHeaderView *Cabecera = new QHeaderView(Qt::Horizontal,this);
         // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
@@ -666,7 +666,7 @@ void FrmArticulos::on_TablaBuscarArt_doubleClicked(const QModelIndex &index)
 void FrmArticulos::on_botBuscarSeccion_clicked()
 {
     Db_table_View form(this);
-    form.set_db("terra");
+    form.set_db("Maya");
     form.set_table("secciones");
 
     form.setWindowTitle(tr("Secciones"));
@@ -682,7 +682,7 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
     if(form.exec() == QDialog::Accepted)
     {
         ui->txtcSeccion->setText(form.selected_value);
-        QSqlQuery qSeccion(QSqlDatabase::database("terra"));
+        QSqlQuery qSeccion(QSqlDatabase::database("Maya"));
         qSeccion.prepare("select id from secciones where cSeccion = :seccion");
         qSeccion.bindValue(":seccion",form.selected_value);
         if(qSeccion.exec())
@@ -708,7 +708,7 @@ void FrmArticulos::AnadirSeccion()
 void FrmArticulos::on_botBuscarFamilia_clicked()
 {
     Db_table_View form(this);
-    form.set_db("terra");
+    form.set_db("Maya");
     form.set_table("familias");
 
     form.setWindowTitle(tr("Familias"));
@@ -722,7 +722,7 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
     form.set_columnHide(0);
 
     form.set_selection("cFamilia");
-    QSqlQuery query(QSqlDatabase::database("terra"));
+    QSqlQuery query(QSqlDatabase::database("Maya"));
     query.prepare(QString("SELECT id FROM secciones WHERE cFamilia = '%1' ").arg(ui->txtcFamilia->text()));
     if (query.exec())
         if(query.next())
@@ -737,7 +737,7 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
 void FrmArticulos::on_botBuscarSubfamilia_clicked()
 {
     Db_table_View form(this);
-    form.set_db("terra");
+    form.set_db("Maya");
     form.set_table("subfamilias");
 
     form.setWindowTitle(tr("Subfamilias"));
@@ -751,7 +751,7 @@ void FrmArticulos::on_botBuscarSubfamilia_clicked()
     form.set_columnHide(0);
 
     form.set_selection("cSubfamilia");
-    QSqlQuery query(QSqlDatabase::database("terra"));
+    QSqlQuery query(QSqlDatabase::database("Maya"));
     query.prepare(QString("SELECT id FROM familias WHERE cFamilia = '%1'").arg(ui->txtcFamilia->text()));
     if (query.exec())
         if(query.next())
@@ -766,7 +766,7 @@ void FrmArticulos::on_botBuscarSubfamilia_clicked()
 void FrmArticulos::on_botBuscarSubSubFamilia_clicked()
 {
     Db_table_View form(this);
-    form.set_db("terra");
+    form.set_db("Maya");
     form.set_table("subsubfamilias");
 
     form.setWindowTitle(tr("Subsubfamilias"));
@@ -780,7 +780,7 @@ void FrmArticulos::on_botBuscarSubSubFamilia_clicked()
     form.set_columnHide(0);
 
     form.set_selection("cSubsubfamilia");
-    QSqlQuery query(QSqlDatabase::database("terra"));
+    QSqlQuery query(QSqlDatabase::database("Maya"));
     query.prepare(QString("SELECT id FROM subfamilias WHERE cFamilia = '%1'").arg(ui->txtcFamilia->text()));
     if (query.exec())
         if(query.next())
@@ -797,7 +797,7 @@ void FrmArticulos::on_btnBuscarProveedor_clicked()
     FrmBuscarProveedor buscar(this);
     if(buscar.exec()==QDialog::Accepted)
     {
-        QSqlQuery qProv(QSqlDatabase::database("terra"));
+        QSqlQuery qProv(QSqlDatabase::database("Maya"));
         qProv.prepare("Select * from proveedores where id =:nId");
         qProv.bindValue(":nId",buscar.nIdProv);
         if(qProv.exec()){
@@ -816,8 +816,8 @@ void FrmArticulos::on_btnAnadirTarifa_clicked()
     addTarifa.capturar_coste(ui->txtrCoste->text().toFloat());
     if(addTarifa.exec() ==QDialog::Accepted)
     {
-        QSqlQuery qTarifa(QSqlDatabase::database("terra"));
-        qTarifa.prepare("INSERT INTO `TerraGeneral`.`tarifas` (`id_Articulo`, `id_pais`,"
+        QSqlQuery qTarifa(QSqlDatabase::database("Maya"));
+        qTarifa.prepare("INSERT INTO `MayaGeneral`.`tarifas` (`id_Articulo`, `id_pais`,"
                         "`id_monedas`, `margen`, `margenminimo`, `pvp`, `id_codigotarifa`) "
                         "VALUES (:id, :id_pais,:id_monedas,:margen,:margenminimo,:pvp,:id_codigotarifa);");
         qTarifa.bindValue(":id",oArticulo->id);
@@ -848,7 +848,7 @@ void FrmArticulos::btnEditarTarifa_clicked()
     FrmTarifas editTarifa(this);
     editTarifa.capturar_datos(pKey.toInt(),ui->txtrCoste->text());
     if(editTarifa.exec() ==QDialog::Accepted) {
-        QSqlQuery queryTarifas(QSqlDatabase::database("terra"));
+        QSqlQuery queryTarifas(QSqlDatabase::database("Maya"));
         queryTarifas.prepare(
         "UPDATE tarifas SET "
         "margen = :margen,"
@@ -878,7 +878,7 @@ void FrmArticulos::btnBorrarTarifa_clicked()
                              tr("¿Desea realmente borrar esta tarifa para este artículo?"),
                              tr("No"),
                              tr("Borrar"))==QMessageBox::Accepted){
-        QSqlQuery queryTarifa(QSqlDatabase::database("terra"));
+        QSqlQuery queryTarifa(QSqlDatabase::database("Maya"));
         if(!queryTarifa.exec("delete from tarifas where id ="+QString::number(pKey.toInt())))
             QMessageBox::warning(this,tr("Borrar"),
                                  tr("Ocurrió un error al borrar: %1").arg(queryTarifa.lastError().text()));
@@ -907,7 +907,7 @@ void FrmArticulos::anadir_proveedor_clicked()
     modelProv = new QSqlQueryModel(this);
     modelProv->setQuery("Select id,codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta from proveedores_frecuentes where id_art = "+
                         QString::number(oArticulo->id),
-                        QSqlDatabase::database("terra"));
+                        QSqlDatabase::database("Maya"));
 
     ui->tablaProveedores->setModel(modelProv);
     ui->tablaProveedores->setColumnHidden(0,true);
@@ -951,7 +951,7 @@ void FrmArticulos::borrar_proveedor_clicked()
     mensaje.setIcon(QMessageBox::Question);
 
     if(mensaje.exec()==QMessageBox::Yes) {
-        QSqlQuery queryProv(QSqlDatabase::database("terra"));
+        QSqlQuery queryProv(QSqlDatabase::database("Maya"));
         queryProv.prepare("delete from articulos_prov_frec where id =:id");
         queryProv.bindValue(":id",pKey.toString());
         if(!queryProv.exec())
@@ -1020,7 +1020,7 @@ void FrmArticulos::trazabilidad2(int id)
     modelTrazabilidad2 = new QSqlQueryModel(this);
     modelTrazabilidad2->setQuery("select codigocuentacliente,cliente, documento_venta,numero_ticket,unidades_vendidas,"
                                  "fecha_venta from trazabilidad2 where id_trazabilidad1 ="+QString::number(id),
-                                 QSqlDatabase::database("terra"));
+                                 QSqlDatabase::database("Maya"));
     ui->tablaVentas->setModel(modelTrazabilidad2);
     modelTrazabilidad2->setHeaderData(0,Qt::Horizontal,tr("C.CLIENTE"));
     modelTrazabilidad2->setHeaderData(1,Qt::Horizontal,tr("CLIENTE"));
@@ -1492,12 +1492,12 @@ void FrmArticulos::LLenarGraficas()
 void FrmArticulos::LLenarGrafica_comparativa(int index)
 {
     // Conecto a la BD de la otra empresa
-    QSqlQuery queryEmpresa_2(QSqlDatabase::database("terra"));
+    QSqlQuery queryEmpresa_2(QSqlDatabase::database("Maya"));
     queryEmpresa_2.prepare("Select * from vistaEmpresa where empresa =:empresa");
     queryEmpresa_2.bindValue(":empresa",ui->cboEmpresa2->currentText().trimmed());
     if (queryEmpresa_2.exec()){
         if(queryEmpresa_2.next()){
-            QSqlQuery queryEmpresa(QSqlDatabase::database("terra"));
+            QSqlQuery queryEmpresa(QSqlDatabase::database("Maya"));
             queryEmpresa.exec("select * from empresas where id="+ queryEmpresa_2.record().value("id").toString());
             queryEmpresa.next();
             QString cDriver;
@@ -1579,7 +1579,7 @@ void FrmArticulos::LlenarTablas()
     QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
     modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp,simbolo "
                          "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
-                         QSqlDatabase::database("terra"));
+                         QSqlDatabase::database("Maya"));
     ui->TablaTarifas->setModel(modelTarifa);
     MonetaryDelegate *Delegado = new MonetaryDelegate(this);
     ui->TablaTarifas->setItemDelegateForColumn(7,Delegado);
@@ -1617,7 +1617,7 @@ void FrmArticulos::LlenarTablas()
     //-----------------------
 
     modelProv->setQuery("Select id,codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta,id_prov from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
-                        QSqlDatabase::database("terra"));
+                        QSqlDatabase::database("Maya"));
 
     ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
     ui->tablaProveedores->setItemDelegateForColumn(4,new MonetaryDelegate);
@@ -1661,7 +1661,7 @@ void FrmArticulos::LlenarTablas()
     // ------------------
     modelTrazabilidad1 = new QSqlQueryModel(this);
     modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_Articulo = "+QString::number(oArticulo->id),
-                                  QSqlDatabase::database("terra"));
+                                  QSqlDatabase::database("Maya"));
     ui->tablaLotes->setModel(modelTrazabilidad1);
     ui->tablaLotes->setColumnHidden(0,true);
     ui->tablaLotes->setColumnHidden(6,true);
@@ -1942,7 +1942,7 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
             ba = f.readAll();
             f.close();
         }
-        QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("terra"));
+        QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("Maya"));
         Articulo->prepare("update articulos set "+campo+" =:imagen where Id = :nid");
         Articulo->bindValue(":imagen",ba);
         Articulo->bindValue(":nid",oArticulo->id);
