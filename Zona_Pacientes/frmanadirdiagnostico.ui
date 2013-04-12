@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Añadir Diagnostico</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../maya.qrc">
+    <normaloff>:/Icons/PNG/iconMaya.png</normaloff>:/Icons/PNG/iconMaya.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -22,7 +26,11 @@
     </widget>
    </item>
    <item row="0" column="1" colspan="4">
-    <widget class="QLineEdit" name="txtBusar"/>
+    <widget class="QLineEdit" name="txtBusar">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0" colspan="3">
     <widget class="QLabel" name="label_2">
@@ -43,6 +51,9 @@
    </item>
    <item row="2" column="3">
     <widget class="QCheckBox" name="chkMed_China">
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
      <property name="text">
       <string>Medicina China</string>
      </property>
@@ -50,9 +61,6 @@
       <bool>true</bool>
      </property>
     </widget>
-   </item>
-   <item row="3" column="0" colspan="5">
-    <widget class="QColumnView" name="listaDiagnositicos"/>
    </item>
    <item row="4" column="1">
     <spacer name="horizontalSpacer">
@@ -73,7 +81,7 @@
       <string>Agregar</string>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
      </property>
      <property name="iconSize">
@@ -90,7 +98,7 @@
       <string>Cerrar</string>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
      </property>
      <property name="iconSize">
@@ -107,7 +115,7 @@
       <string>Buscar</string>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
      </property>
      <property name="iconSize">
@@ -118,10 +126,17 @@
      </property>
     </widget>
    </item>
+   <item row="3" column="0" colspan="5">
+    <widget class="QTableView" name="listaDiagnositicos">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -920,7 +920,25 @@ void FrmFichaPaciente::CargarVisita(int nId)
 void FrmFichaPaciente::anadirDiagnostico()
 {
     FrmAnadirDiagnostico frmDiag(this);
-    frmDiag.exec();
+    if( frmDiag.exec() == QDialog::Accepted){
+        // Cargamos datos de la BD
+        int id = frmDiag.id;
+        Configuracion_global->AbridBDMediTec();
+        QSqlQuery QueryMediTec(QSqlDatabase::database("db_meditec"));
+        if(QueryMediTec.exec("select sindrome from sindromes where id ="+QString::number(id))){
+            if(QueryMediTec.next()){
+                if (!ui->txtDiagnosticoVisita->toPlainText().isEmpty())
+                    ui->txtDiagnosticoVisita->setPlainText(ui->txtDiagnosticoVisita->toPlainText()+ ", "+QueryMediTec.record().value("sindrome").toString());
+                else
+                    ui->txtDiagnosticoVisita->setPlainText(ui->txtDiagnosticoVisita->toPlainText()+ QueryMediTec.record().value("sindrome").toString());
+
+            }
+
+        }
+        Configuracion_global->CerrarBDMediTec();
+
+    }
+
 }
 
 void FrmFichaPaciente::vademecums()
