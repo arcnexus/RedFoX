@@ -349,7 +349,7 @@ void FrmArticulos::LLenarCampos()
    ui->txttComentario->setText(oArticulo->tComentario);
    ui->txtnStockMaximo->setText(QString::number(oArticulo->nStockMaximo));
    ui->txtnStockMinimo->setText(QString::number(oArticulo->nStockMinimo));
-   ui->txtnStockReal->setText(QString::number(oArticulo->nStockReal));
+ //  ui->txtnStockReal->setText(QString::number(oArticulo->nStockReal));
    ui->txtnStockReal_2->setText(QString::number(oArticulo->nStockReal));
 
    if (oArticulo->lControlarStock==1)
@@ -442,7 +442,7 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->tComentario=ui->txttComentario->toPlainText();
     oArticulo->nStockMaximo=ui->txtnStockMaximo->text().toInt();
     oArticulo->nStockMinimo=ui->txtnStockMinimo->text().toInt();
-    oArticulo->nStockReal=ui->txtnStockReal->text().toInt();
+  //  oArticulo->nStockReal=ui->txtnStockReal->text().toInt();
 
     if (ui->chklControlarStock->isChecked())
        oArticulo->lControlarStock=1;
@@ -466,7 +466,7 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->cProveedor = ui->txtcProveedor->text();
 
 //    this->idweb = registro.field("idweb").value().toInt();
-    oArticulo->stockfisico = ui->txtStockFisico->text().toInt();
+  //  oArticulo->stockfisico = ui->txtStockFisico->text().toInt();
     oArticulo->articulopromocionado = ui->chkArticulo_promocionado->isChecked();
     oArticulo->descripcion_promocion = ui->txtDescripcion_promocion->text();
 
@@ -512,9 +512,9 @@ void FrmArticulos::VaciarCampos()
    ui->txttComentario->setText("");
    ui->txtnStockMaximo->setText("0");
    ui->txtnStockMinimo->setText("0");
-   ui->txtnStockReal->setText("0");
+  // ui->txtnStockReal->setText("0");
    ui->txtnStockReal_2->setText("0");
-   ui->txtStockFisico->setText("0");
+  // ui->txtStockFisico->setText("0");
    ui->chklControlarStock->setChecked(false);
    ui->txtnCantidadPendienteRecibir->setText("0");
    ui->txtdFechaPrevistaRecepcion->setDate(QDate::currentDate());

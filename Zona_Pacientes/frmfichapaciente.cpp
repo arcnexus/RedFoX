@@ -944,5 +944,6 @@ void FrmFichaPaciente::anadirDiagnostico()
 void FrmFichaPaciente::vademecums()
 {
 FrmMTCbase base;
+base.setWindowState(Qt::WindowMaximized);
 base.exec();
 }

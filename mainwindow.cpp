@@ -176,6 +176,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
    // ui->menubar->hide();
+    //  ui->menubar->setNativeMenuBar(false);
+     QHBoxLayout *layout_mw = new QHBoxLayout(this);
+     layout_mw->addWidget(ui->frame_toolbar);
+     layout_mw->addWidget(ui->widget);
+     this->centralWidget()->setLayout(layout_mw);
+
     on_edit = false;
     Configuracion_global->CargarDatos();
     QStringList modulos;
@@ -298,7 +304,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
 
-    ui->stackedWidget->addWidget(frmClientes1);
+  ui->stackedWidget->addWidget(frmClientes1);
     ui->stackedWidget->addWidget(frmFacturas1);
     ui->stackedWidget->addWidget(frmArticulos1);
     ui->stackedWidget->addWidget(frmProveedores1);
@@ -327,11 +333,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
     ui->menubar->show();
 
-  //  ui->menubar->setNativeMenuBar(false);
-   QHBoxLayout *layout_mw = new QHBoxLayout(this);
-   layout_mw->addWidget(ui->frame_toolbar);
-   layout_mw->addWidget(ui->widget);
-   this->centralWidget()->setLayout(layout_mw);
+//  //  ui->menubar->setNativeMenuBar(false);
+//   QHBoxLayout *layout_mw = new QHBoxLayout(this);
+//   layout_mw->addWidget(ui->frame_toolbar);
+//   layout_mw->addWidget(ui->widget);
+//   this->centralWidget()->setLayout(layout_mw);
+
    this->show();
 
 
