@@ -1,4 +1,4 @@
-#include "frmfichapaciente.h"
+﻿#include "frmfichapaciente.h"
 #include "ui_frmfichapaciente.h"
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkRequest>
@@ -35,8 +35,9 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     ui(new Ui::FrmFichaPaciente)
 {
     oPaciente = new Paciente();
-    oEpisodio = new Episodio();
-    oImagenes = new ImagenesDiagnostico();
+    oEpisodio = new Episodio(this);
+    oImagenes = new ImagenesDiagnostico(this);
+    oVisita = new Visitas(this);
 
     ui->setupUi(this);
     // Rellenar combos
@@ -88,6 +89,8 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->listaEpisodios,SIGNAL(clicked(QModelIndex)),this,SLOT(ListaEpisodio_clicked(QModelIndex)));
     connect(ui->listaVisitas,SIGNAL(clicked(QModelIndex)),this,SLOT(ListaVisita_Clicked(QModelIndex)));
     connect(ui->btnAnadirDiagnostico,SIGNAL(clicked()),this,SLOT(anadirDiagnostico()));
+    connect(ui->btnEditarVisita,SIGNAL(clicked()),this,SLOT(bntEditarVisita_clicked()));
+    connect(ui->btnGuardarVisita,SIGNAL(clicked()),this,SLOT(btnGuardarVisita_clicked()));
 
     // Ocultar Iconos imagenes
     ui->itemFarma->setVisible(false);
@@ -437,7 +440,7 @@ void FrmFichaPaciente::RecuperarCIE(int id, QString codigo, QString descripcion)
 
 void FrmFichaPaciente::ActivarControlesFarmacologia()
 {
-    if(ui->listaTratamientosFarma->currentRow()>0) {
+    if(ui->listaTratamientosFarma->currentRow()>-1) {
         ui->btnEditarFarmacologia->setEnabled(false);
         ui->btnGuardarFarmacologia->setEnabled(true);
         ui->btnDeshacerFarmacologia->setEnabled(false);
@@ -447,7 +450,7 @@ void FrmFichaPaciente::ActivarControlesFarmacologia()
         ui->chkactivo->setEnabled(true);
         ui->txtInicioTratamientoFarma->setFocus();
     } else
-        QMessageBox::warning(this,tr("Editar historial Farmacología"),tr("Antes de editar debe seleccionar una ficha de imagen"),
+        QMessageBox::warning(this,tr("Editar historial Farmacología"),tr("Antes de editar debe seleccionar una ficha de Farmaco"),
                              tr("Aceptar"));
 }
 
@@ -541,7 +544,7 @@ void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
     QStringList list;
     list <<QObject::tr("DESCRIPCIÓN")<< QObject::tr("FECHA") <<QObject::tr("TIPO") <<"ID";
     QSqlQuery qImagenes(QSqlDatabase::database("dbmedica"));
-    QString cSQL = " Select descripcion, id,fechaimagen, tipoimagen,evaluada from imagenes where idepisodio = :id ";
+    QString cSQL = " Select descripcion, id,fechaimagen, evaluada from imagenes where idepisodio = :id ";
     qImagenes.prepare(cSQL);
     qImagenes.bindValue(":id",oEpisodio->getid());
     ui->listaImagenes->setRowCount(0);
@@ -704,11 +707,19 @@ void FrmFichaPaciente::AnadirImagenDiagnostico()
 {
     if (oEpisodio->getid() >0)
     {
-        FrmAnadirImagen imagen;
-        imagen.RecuperarId(oEpisodio->getid());
-        imagen.adjustSize();
-        imagen.move(QApplication::desktop()->screen()->rect().center() - imagen.rect().center());
-        imagen.exec();
+        int id;
+        QSqlQuery queryImagenes(QSqlDatabase::database("dbmedica"));
+        queryImagenes.prepare("INSERT INTO `emp0999med`.`imagenes`"
+                              "(`idepisodio`) VALUES (:idepisodio);");
+        queryImagenes.bindValue(":idepisodio",oEpisodio->id);
+        if (queryImagenes.exec()){
+            id = queryImagenes.lastInsertId().toInt();
+            FrmAnadirImagen imagen;
+            imagen.RecuperarId(id);
+            imagen.adjustSize();
+            imagen.move(QApplication::desktop()->screen()->rect().center() - imagen.rect().center());
+            imagen.exec();
+        }
     }
     else
         QMessageBox::warning(this,tr("Añadir imagenes a episodio"),
@@ -818,36 +829,59 @@ void FrmFichaPaciente::cargarDatosImagenes(int crow, int ccol)
     QString id = ui->listaImagenes->item(crow,3)->text();
 
     oImagenes->llenarObjetoconDatosDB(id.toInt());
-    ui->txtComentariosImagen->setPlainText(oImagenes->getComentarios());
-    ui->lineEdit_descripcionimagen->setText(oImagenes->getDescripcion());
-    ui->dateEdit_fechaimagen->setDate(oImagenes->getFechaImagen());
+    ui->txtComentariosImagen->setPlainText(oImagenes->Comentarios);
+    ui->lineEdit_descripcionimagen->setText(oImagenes->Descripcion);
+    ui->dateEdit_fechaimagen->setDate(oImagenes->FechaImagen);
 
-    int nindex = ui->comboBox_tipoImagen->findText(oImagenes->getTipoImagen());
+    int nindex = ui->comboBox_tipoImagen->findText(oImagenes->DevolverTexto_tipo_imagen( oImagenes->idTipoImagen));
     if (nindex >-1)
         ui->comboBox_tipoImagen->setCurrentIndex(nindex);
     else
         ui->comboBox_tipoImagen->clear();
 
-    if (!oImagenes->getLocalizacionImagen().isEmpty())
-    {
-        QImage imagen(oImagenes->getLocalizacionImagen());
-        QPixmap qpmImagen = QPixmap::fromImage(imagen);
-        ui->lblImagenDiagnostico->setPixmap(qpmImagen.scaled(ui->lblImagenDiagnostico->size(), Qt::KeepAspectRatio));
-    }    
-    ui->checkBox_evaluada->setChecked(oImagenes->getEvaluada()==1);
+    QSqlQuery qryImagenes(QSqlDatabase::database("dbmedica"));
+    qryImagenes.prepare("Select imagen from imagenes where id = :id");
+    qryImagenes.bindValue(":id",id);
+    if (qryImagenes.exec()) {
+        if (qryImagenes.next()){
+            //------------------------------
+            // Insertamos imagen en pantalla
+            //------------------------------
+            QByteArray ba1 = qryImagenes.record().field("imagen").value().toByteArray();
+            QPixmap pm1;
+            pm1.loadFromData(ba1);
+            if(!qryImagenes.record().field("imagen").value().isNull()){
+                ui->lblImagenDiagnostico->setPixmap(pm1);
+                ui->lblImagenDiagnostico->setScaledContents(true);
+            } else {
+                ui->lblImagenDiagnostico->clear();
+                ui->lblImagenDiagnostico->setText(tr("Sin imagen"));
+            }
+        } else {
+            QMessageBox::warning(this,tr("ATENCIÓN"),
+                                 tr("no se ha encontrado ningún registro de imagen"),
+                                 tr("Aceptar"));
+        }
+    } else{
+        QMessageBox::warning(this,tr("ATENCIÓN"),
+        tr("Se ha producido un error durante la recuperación de la imagen: %1").arg(qryImagenes.lastError().text()),
+                             tr("Aceptar"));
+
+    }
+    ui->checkBox_evaluada->setChecked(oImagenes->Evaluada==1);
 }
 
 void FrmFichaPaciente::guardarDatosImagenes()
 {
     QString cId = ui->listaImagenes->item(ui->listaImagenes->currentRow(),3)->text();
-    oImagenes->setId(cId.toInt());
-    oImagenes->setComentarios(ui->txtComentariosImagen->toPlainText());
-    oImagenes->setDescripcion(ui->lineEdit_descripcionimagen->text());
-    oImagenes->setFechaImagen(ui->dateEdit_fechaimagen->date());
+    oImagenes->id = cId.toInt();
+    oImagenes->Comentarios = ui->txtComentariosImagen->toPlainText();
+    oImagenes->Descripcion = ui->lineEdit_descripcionimagen->text();
+    oImagenes->FechaImagen = ui->dateEdit_fechaimagen->date();
 
-    oImagenes->setEvaluada(ui->checkBox_evaluada->isChecked());
+    oImagenes->Evaluada = ui->checkBox_evaluada->isChecked();
 
-    oImagenes->setTipoImagen(ui->comboBox_tipoImagen->currentText());
+    oImagenes->idTipoImagen = oImagenes->DevolverId_tipo_imagen(ui->comboBox_tipoImagen->currentText());
     oImagenes->guardarDatosDB();
     BloquearCamposImagen();
 }
@@ -907,7 +941,7 @@ void FrmFichaPaciente::ListaVisita_Clicked(QModelIndex index)
 
 void FrmFichaPaciente::CargarVisita(int nId)
 {
-    Visitas *oVisita = new Visitas(this);
+
     oVisita->RecuperarVisita(nId);
     ui->txtFechaHoraVisita->setDateTime(oVisita->fechahora);
     ui->txtExploracion->setText(oVisita->exploracion);
@@ -915,6 +949,76 @@ void FrmFichaPaciente::CargarVisita(int nId)
     ui->txtPulso->setText(oVisita->pulso);
     ui->txtTratamiento->setText(oVisita->tratamiento);
     ui->txtDiagnosticoVisita->setText(oVisita->diagnostico);
+    ui->cboRealizadaPorDr->setCurrentIndex(ui->cboRealizadaPorDr->findText(oVisita->medico));
+    ui->btnEditarVisita->setEnabled(true);
+
+}
+
+void FrmFichaPaciente::bntEditarVisita_clicked()
+{
+    //-------------------
+    // CONTROLES
+    //-------------------
+    ui->btnEditarVisita->setEnabled(false);
+    ui->btnAnadirVisita->setEnabled(false);
+    ui->listaVisitas->setEnabled(false);
+    ui->btnGuardarVisita->setEnabled(true);
+    ui->btnDeshacerVisita->setEnabled(true);
+    ui->txtFechaHoraVisita->setEnabled(true);
+    ui->txtExploracion->setEnabled(true);
+    ui->txtLengua->setEnabled(true);
+    ui->txtPulso->setEnabled(true);
+    ui->txtTratamiento->setEnabled(true);
+    ui->txtDiagnosticoVisita->setEnabled(true);
+    ui->txtExploracion->setFocus();
+}
+
+void FrmFichaPaciente::btnGuardarVisita_clicked()
+{
+    oVisita->idepisodio = oEpisodio->id;
+    oVisita->fechahora = ui->txtFechaHoraVisita->dateTime();
+    oVisita->medico = ui->cboRealizadaPorDr->currentText();
+    oVisita->exploracion = ui->txtExploracion->toPlainText();
+    oVisita->tratamiento = ui->txtTratamiento->toPlainText();
+    oVisita->lengua = ui->txtLengua->toPlainText();
+    oVisita->pulso = ui->txtPulso->toPlainText();
+    oVisita->diagnostico =ui->txtDiagnosticoVisita->toPlainText();
+
+    oVisita->GuardarDatos();
+    //-------------------
+    // CONTROLES
+    //-------------------
+    ui->btnEditarVisita->setEnabled(true);
+    ui->btnAnadirVisita->setEnabled(true);
+    ui->listaVisitas->setEnabled(true);
+    ui->btnGuardarVisita->setEnabled(false);
+    ui->btnDeshacerVisita->setEnabled(false);
+    ui->txtFechaHoraVisita->setEnabled(false);
+    ui->txtExploracion->setEnabled(false);
+    ui->txtLengua->setEnabled(false);
+    ui->txtPulso->setEnabled(false);
+    ui->txtTratamiento->setEnabled(false);
+    ui->txtDiagnosticoVisita->setEnabled(false);
+
+}
+
+void FrmFichaPaciente::btnDeshacerVisita_clicked()
+{
+    //-------------------
+    // CONTROLES
+    //-------------------
+    ui->btnEditarVisita->setEnabled(true);
+    ui->btnAnadirVisita->setEnabled(true);
+    ui->listaVisitas->setEnabled(true);
+    ui->btnGuardarVisita->setEnabled(false);
+    ui->btnDeshacerVisita->setEnabled(false);
+    ui->txtFechaHoraVisita->setEnabled(false);
+    ui->txtExploracion->setEnabled(false);
+    ui->txtLengua->setEnabled(false);
+    ui->txtPulso->setEnabled(false);
+    ui->txtTratamiento->setEnabled(false);
+    ui->txtDiagnosticoVisita->setEnabled(false);
+    oVisita->RecuperarVisita(oVisita->id);
 }
 
 void FrmFichaPaciente::anadirDiagnostico()

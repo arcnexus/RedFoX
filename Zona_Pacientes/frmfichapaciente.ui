@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1325</width>
-    <height>702</height>
+    <height>737</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -26,7 +26,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(219, 228, 255);</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_19">
+  <layout class="QGridLayout" name="gridLayout_24">
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
@@ -121,7 +121,7 @@ color: rgb(0, 0, 0);</string>
      </item>
     </layout>
    </item>
-   <item row="0" column="1" colspan="2">
+   <item row="0" column="1">
     <widget class="QPushButton" name="btnCerrar">
      <property name="text">
       <string>Cerrar</string>
@@ -219,7 +219,7 @@ background-color: rgb(255, 255, 255);</string>
      </item>
     </layout>
    </item>
-   <item row="1" column="1" colspan="2">
+   <item row="1" column="1">
     <widget class="QLabel" name="label_92">
      <property name="maximumSize">
       <size>
@@ -926,7 +926,7 @@ color: rgb(255, 0, 0);</string>
                 <bool>true</bool>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>3</number>
                </property>
                <widget class="QWidget" name="tabWidget_2Page1">
                 <property name="styleSheet">
@@ -1088,7 +1088,7 @@ color: rgb(255, 0, 0);</string>
                  <item row="7" column="3" colspan="2">
                   <widget class="QPushButton" name="btnEditarVisita">
                    <property name="enabled">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <property name="maximumSize">
                     <size>
@@ -1674,185 +1674,21 @@ color: rgb(255,255,255);
                 <attribute name="title">
                  <string>Imágenes</string>
                 </attribute>
-                <layout class="QGridLayout" name="gridLayout_11">
-                 <item row="2" column="7" colspan="2">
-                  <widget class="QLabel" name="label_87">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(0, 0, 192);
-color: rgb(255,255,255);
-</string>
-                   </property>
-                   <property name="text">
-                    <string>COMENTARIOS IMAGEN</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="5" rowspan="2">
-                  <widget class="QToolButton" name="btnVerImagen">
-                   <property name="toolTip">
-                    <string>Ver Imagen</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../maya.qrc">
-                     <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="6" rowspan="2">
-                  <widget class="QToolButton" name="btnImportarimagen">
-                   <property name="toolTip">
-                    <string>Importar Imagen</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../maya.qrc">
-                     <normaloff>:/Icons/PNG/importar.png</normaloff>:/Icons/PNG/importar.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1" colspan="2">
+                <layout class="QGridLayout" name="gridLayout_19">
+                 <item row="0" column="0" rowspan="2" colspan="2">
                   <widget class="QLabel" name="label_51">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>27</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>Descripción</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="5" colspan="3">
-                  <widget class="QPushButton" name="pushButton_editarimagen">
-                   <property name="text">
-                    <string>Editar</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="2">
-                  <spacer name="horizontalSpacer_7">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="6" column="3" colspan="4">
-                  <widget class="QCheckBox" name="checkBox_evaluada">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>Evaluada</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="7" rowspan="5" colspan="3">
-                  <widget class="QPlainTextEdit" name="txtComentariosImagen">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">color: rgb(0, 0, 128);
-background-color: rgb(255, 255, 255);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="3" rowspan="2">
-                  <widget class="QToolButton" name="btnAnadirImagen">
-                   <property name="toolTip">
-                    <string>Añadir prueba de imagen</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../maya.qrc">
-                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="4" rowspan="2">
-                  <widget class="QToolButton" name="btnBorrarImagen">
-                   <property name="toolTip">
-                    <string>Borrar prueba (Requiere contraseña de administrador)</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../maya.qrc">
-                     <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="10" column="0" colspan="10">
-                  <widget class="QTableWidget" name="listaImagenes">
-                   <property name="styleSheet">
-                    <string notr="true">selection-background-color: rgb(37, 129, 4);
-border-color: rgb(212, 255, 230);
-alternate-background-color: rgb(113, 255, 153);
-background-color: rgb(219, 255, 208);</string>
-                   </property>
-                   <property name="alternatingRowColors">
-                    <bool>true</bool>
-                   </property>
-                   <property name="selectionBehavior">
-                    <enum>QAbstractItemView::SelectRows</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0" rowspan="9">
-                  <widget class="QLabel" name="lblImagenDiagnostico">
-                   <property name="minimumSize">
-                    <size>
-                     <width>113</width>
-                     <height>163</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>149</width>
-                     <height>183</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Sin Imagen</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="8">
-                  <widget class="QPushButton" name="pushButton_GuardarImagen">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>Guardar</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="8">
-                  <widget class="QPushButton" name="pushButton_DeshacerImagen">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>Deshacer</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1" colspan="7">
+                 <item row="0" column="2" rowspan="2" colspan="5">
                   <widget class="QLineEdit" name="lineEdit_descripcionimagen">
                    <property name="enabled">
                     <bool>false</bool>
@@ -1863,7 +1699,208 @@ background-color: rgb(255, 255, 255);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="9" column="0" colspan="7">
+                 <item row="0" column="7">
+                  <widget class="QLabel" name="label_87">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>27</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);
+</string>
+                   </property>
+                   <property name="text">
+                    <string>COMENT. IMAGEN</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0" colspan="3">
+                  <widget class="QLabel" name="lblImagenDiagnostico">
+                   <property name="minimumSize">
+                    <size>
+                     <width>190</width>
+                     <height>190</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: qradialgradient(spread:repeat, cx:0.5, cy:0.5, radius:0.077, fx:0.5, fy:0.5, stop:0 rgba(0, 169, 255, 147), stop:0.497326 rgba(0, 0, 0, 147), stop:1 rgba(0, 169, 255, 147));
+color: rgb(222, 222, 222);</string>
+                   </property>
+                   <property name="text">
+                    <string>Sin Imagen</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="3" colspan="4">
+                  <widget class="QFrame" name="frame_26">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(197, 205, 255);</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QGridLayout" name="gridLayout_11">
+                    <item row="2" column="0">
+                     <widget class="QCheckBox" name="checkBox_evaluada">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="text">
+                       <string>Evaluada</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_53">
+                      <property name="text">
+                       <string>Tipo de imagen:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1" colspan="4">
+                     <widget class="QComboBox" name="comboBox_tipoImagen">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>116</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(0, 0, 128);</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_52">
+                      <property name="text">
+                       <string>FechaToma:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="3" colspan="2">
+                     <widget class="QDateTimeEdit" name="dateEdit_fechaimagen">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>165</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(0, 0, 128);
+background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="displayFormat">
+                       <string>dd/MM/yyyy HH:mm</string>
+                      </property>
+                      <property name="calendarPopup">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QToolButton" name="btnAnadirImagen">
+                   <property name="minimumSize">
+                    <size>
+                     <width>91</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string/>
+                   </property>
+                   <property name="text">
+                    <string>Añadir</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1" colspan="2">
+                  <widget class="QToolButton" name="btnBorrarImagen">
+                   <property name="toolTip">
+                    <string/>
+                   </property>
+                   <property name="text">
+                    <string>Eliminar</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="3">
+                  <widget class="QToolButton" name="btnVerImagen">
+                   <property name="toolTip">
+                    <string/>
+                   </property>
+                   <property name="text">
+                    <string>Ampliar</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="4">
+                  <widget class="QPushButton" name="pushButton_editarimagen">
+                   <property name="text">
+                    <string>Editar</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="5">
+                  <widget class="QPushButton" name="pushButton_GuardarImagen">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>Guardar</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="0" colspan="8">
                   <widget class="QLabel" name="label_17">
                    <property name="styleSheet">
                     <string notr="true">background-color: rgb(0, 0, 192);
@@ -1878,7 +1915,7 @@ color: rgb(255,255,255);
                    </property>
                   </widget>
                  </item>
-                 <item row="9" column="7" colspan="2">
+                 <item row="6" column="0" colspan="6">
                   <widget class="QFrame" name="frame_6">
                    <property name="minimumSize">
                     <size>
@@ -1894,9 +1931,16 @@ color: rgb(255,255,255);
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_8">
                     <item>
+                     <widget class="QLabel" name="label_63">
+                      <property name="text">
+                       <string>Mostrar registro de imagenes :</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <widget class="QRadioButton" name="radImagenEvaluada">
                       <property name="text">
-                       <string>Evaluada</string>
+                       <string>Evaluadas</string>
                       </property>
                       <property name="checked">
                        <bool>false</bool>
@@ -1916,56 +1960,44 @@ color: rgb(255,255,255);
                    </layout>
                   </widget>
                  </item>
-                 <item row="5" column="3" colspan="4">
-                  <widget class="QComboBox" name="comboBox_tipoImagen">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>116</width>
-                     <height>0</height>
-                    </size>
-                   </property>
+                 <item row="7" column="0" colspan="8">
+                  <widget class="QTableWidget" name="listaImagenes">
                    <property name="styleSheet">
-                    <string notr="true">color: rgb(0, 0, 128);</string>
+                    <string notr="true">selection-background-color: rgb(37, 129, 4);
+border-color: rgb(212, 255, 230);
+alternate-background-color: rgb(113, 255, 153);
+background-color: rgb(219, 255, 208);</string>
+                   </property>
+                   <property name="alternatingRowColors">
+                    <bool>true</bool>
+                   </property>
+                   <property name="selectionBehavior">
+                    <enum>QAbstractItemView::SelectRows</enum>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="3" colspan="4">
-                  <widget class="QDateTimeEdit" name="dateEdit_fechaimagen">
+                 <item row="3" column="6">
+                  <widget class="QPushButton" name="pushButton_DeshacerImagen">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>165</width>
-                     <height>16777215</height>
-                    </size>
+                   <property name="text">
+                    <string>Deshacer</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="7" rowspan="3">
+                  <widget class="QPlainTextEdit" name="txtComentariosImagen">
+                   <property name="enabled">
+                    <bool>false</bool>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">color: rgb(0, 0, 128);
 background-color: rgb(255, 255, 255);</string>
-                   </property>
-                   <property name="displayFormat">
-                    <string>dd/MM/yyyy HH:mm</string>
-                   </property>
-                   <property name="calendarPopup">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="2">
-                  <widget class="QLabel" name="label_52">
-                   <property name="text">
-                    <string>Fecha</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="2">
-                  <widget class="QLabel" name="label_53">
-                   <property name="text">
-                    <string>T.imagen:</string>
                    </property>
                   </widget>
                  </item>

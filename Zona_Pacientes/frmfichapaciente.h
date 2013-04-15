@@ -5,7 +5,8 @@
 
 #include "paciente.h"
 #include "episodio.h"
-#include "../imagenesdiagnostico.h"
+#include "visitas.h"
+#include "imagenesdiagnostico.h"
 
 namespace Ui {
 class FrmFichaPaciente;
@@ -23,6 +24,8 @@ public:
     void guardarDatosPaciente();
     Paciente *oPaciente;
     Episodio *oEpisodio;
+    Visitas *oVisita;
+
     ImagenesDiagnostico *oImagenes;
 public slots:
     void AnadirDatosMedicamento(int id, QString nombre,QString codigo_nacional);
@@ -63,6 +66,9 @@ private slots:
     void AnadirVisita();
     void ListaVisita_Clicked(QModelIndex index);
     void CargarVisita(int nId);
+    void bntEditarVisita_clicked();
+    void btnGuardarVisita_clicked();
+    void btnDeshacerVisita_clicked();
     void anadirDiagnostico();
     void vademecums();
 

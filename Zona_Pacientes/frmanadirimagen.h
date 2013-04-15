@@ -20,7 +20,9 @@ private:
 private slots:
 
     void AnadirImagen();
+    void GuardarInfoImagen_en_BD();
     void GuardarDatosEnObjetoImagen();
+    void CambioTipoImagen(QString);
 signals:
 
 
