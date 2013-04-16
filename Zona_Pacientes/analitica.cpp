@@ -11,10 +11,11 @@ void Analitica::AnadirAnalitica()
     if(this->analisis.isEmpty())
         this->setAnalisis(tr("pendiente determinar"));
     QSqlQuery *qAna = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qAna->prepare("Insert INTO Analitica (idepisodio, analisis, comentarios)"
-                  " VALUES (:idepisodio, :analisis, :comentarios)");
+    qAna->prepare("Insert INTO Analitica (idepisodio,idpaciente analisis, comentarios)"
+                  " VALUES (:idepisodio,:idpaciente :analisis, :comentarios)");
     qAna->bindValue(":idepisodio",this->idepisodio);
     qAna->bindValue(":analisis", this->analisis);
+    qAna->bindValue(":idpaciente",this->idpaciente);
     qAna->bindValue(":comentarios",this->comentarios);
     if(!qAna->exec()){
         QMessageBox::warning(qApp->activeWindow(),tr("Nueva Analítica"),tr("Falló al insertar una nueva analítica: ")+
@@ -54,6 +55,7 @@ void Analitica::recuperarDatos(int nId)
     if (qAnalitica->exec()) {
         qAnalitica->next();
         QSqlRecord qRec = qAnalitica->record();
+        this->idpaciente = qRec.field("idpaciente").value().toInt();
         this->analisis = qRec.field("analisis").value().toString();
         this->fecha = qRec.field("fechaanalisis").value().toDate();
         this->comentarios = qRec.field("comentarios").value().toString();
@@ -71,10 +73,12 @@ void Analitica::GuardarDatos(int nId)
     QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     qAnalitica->prepare("UPDATE Analitica SET "
                         "analisis = :analisis,"
+                        "idpaciente = :idpaciente,"
                         "comentarios = :comentarios,"
                         "fechaanalisis = :fechaanalisis"
                         " WHERE id = :id");
     qAnalitica->bindValue(":analisis",this->analisis);
+    qAnalitica->bindValue(":idpaciente",this->idpaciente);
     qAnalitica->bindValue(":comentarios",this->comentarios);
     qAnalitica->bindValue(":fechaanalisis",this->fecha);
     qAnalitica->bindValue(":id",nId);

@@ -27,6 +27,123 @@
    <string notr="true">background-color: rgb(219, 228, 255);</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_24">
+   <item row="0" column="1">
+    <widget class="QPushButton" name="btnCerrar">
+     <property name="text">
+      <string>Cerrar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLabel" name="label_92">
+     <property name="maximumSize">
+      <size>
+       <width>90</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../maya.qrc">:/Icons/PNG/mayafondo_blanco_mini.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_28">
+       <property name="text">
+        <string>NUM HISTORIA CLÍNICA:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtNumHistoriaClinica">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>999999</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>NACIMIENTO:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDateTimeEdit" name="txtNacimiento">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="displayFormat">
+        <string>dd/MM/yyyy HH:mm</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>EDAD ACTUAL:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtEdadActual">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
@@ -121,121 +238,176 @@ color: rgb(0, 0, 0);</string>
      </item>
     </layout>
    </item>
-   <item row="0" column="1">
-    <widget class="QPushButton" name="btnCerrar">
-     <property name="text">
-      <string>Cerrar</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
-     </property>
-     <property name="iconSize">
+   <item row="2" column="1">
+    <widget class="QFrame" name="frame_2">
+     <property name="minimumSize">
       <size>
-       <width>24</width>
-       <height>24</height>
+       <width>0</width>
+       <height>212</height>
       </size>
      </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="label_28">
-       <property name="text">
-        <string>NUM HISTORIA CLÍNICA:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="txtNumHistoriaClinica">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>120</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="text">
-        <string>999999</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>NACIMIENTO:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDateTimeEdit" name="txtNacimiento">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="displayFormat">
-        <string>dd/MM/yyyy HH:mm</string>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>EDAD ACTUAL:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="txtEdadActual">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLabel" name="label_92">
      <property name="maximumSize">
       <size>
        <width>90</width>
-       <height>30</height>
+       <height>16777215</height>
       </size>
      </property>
-     <property name="text">
-      <string/>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="pixmap">
-      <pixmap resource="../maya.qrc">:/Icons/PNG/mayafondo_blanco_mini.png</pixmap>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
+     <layout class="QGridLayout" name="gridLayout_44">
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_74">
+        <property name="minimumSize">
+         <size>
+          <width>78</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>15</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>EPISODIO</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QFrame" name="frame_22">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(197, 205, 255);</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_26">
+         <item row="0" column="0">
+          <widget class="QLabel" name="itemFarma">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Este episodio contiene historial de farmacología</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../maya.qrc">:/Icons/PNG/Pills.png</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="itemAnalitica">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Este episodio contiene analíticas</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../maya.qrc">:/Icons/PNG/TestTubes.png</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="itemImagenes">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Este episodio contiene imagenes</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../maya.qrc">:/Icons/PNG/XRay.png</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="itemInterConsulta">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Este episodio contiene información de interconsultas</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../maya.qrc">:/Icons/PNG/usuarios.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="itemAvisos">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Este episodio contiene información de interconsultas</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../maya.qrc">:/Icons/PNG/avisos.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item row="2" column="0">
@@ -265,7 +437,7 @@ background-color: rgb(255, 255, 255);</string>
          <enum>QTabWidget::North</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="tab_7">
          <property name="styleSheet">
@@ -926,7 +1098,7 @@ color: rgb(255, 0, 0);</string>
                 <bool>true</bool>
                </property>
                <property name="currentIndex">
-                <number>3</number>
+                <number>4</number>
                </property>
                <widget class="QWidget" name="tabWidget_2Page1">
                 <property name="styleSheet">
@@ -2133,7 +2305,7 @@ color: rgb(255,255,255);</string>
                     </widget>
                    </item>
                    <item row="2" column="0" colspan="5">
-                    <widget class="QTableWidget" name="tableWidget">
+                    <widget class="QTableWidget" name="tablaInterconsultas">
                      <property name="styleSheet">
                       <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
@@ -2294,7 +2466,7 @@ color: rgb(255,255,255);</string>
                      </widget>
                     </item>
                     <item row="0" column="1" colspan="4">
-                     <widget class="QLineEdit" name="btnReferidodeInterconsultas">
+                     <widget class="QLineEdit" name="txtReferidoDe">
                       <property name="styleSheet">
                        <string notr="true">background-color: rgb(255, 255, 255);</string>
                       </property>
@@ -2336,13 +2508,6 @@ color: rgb(255,255,255);</string>
                 <layout class="QGridLayout" name="gridLayout_18">
                  <item row="0" column="0">
                   <layout class="QGridLayout" name="gridLayout_16">
-                   <item row="1" column="0" colspan="3">
-                    <widget class="QColumnView" name="columnView_4">
-                     <property name="styleSheet">
-                      <string notr="true">background-color: rgb(255, 255, 255);</string>
-                     </property>
-                    </widget>
-                   </item>
                    <item row="2" column="1">
                     <widget class="QToolButton" name="toolButton_20">
                      <property name="toolTip">
@@ -2385,12 +2550,19 @@ color: rgb(255,255,255);</string>
                      </property>
                     </widget>
                    </item>
+                   <item row="1" column="0" colspan="3">
+                    <widget class="QListWidget" name="listaAvisos">
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(255, 255, 255);</string>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </item>
                  <item row="0" column="1">
                   <layout class="QGridLayout" name="gridLayout_17">
                    <item row="0" column="1">
-                    <widget class="QLineEdit" name="lineEdit_9">
+                    <widget class="QLineEdit" name="txtMotivoAviso">
                      <property name="styleSheet">
                       <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
@@ -2425,7 +2597,7 @@ color: rgb(255,255,255);</string>
                     </widget>
                    </item>
                    <item row="5" column="0" colspan="2">
-                    <widget class="QTextEdit" name="textEdit_4">
+                    <widget class="QTextEdit" name="txtTextoAviso">
                      <property name="styleSheet">
                       <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
@@ -2456,7 +2628,7 @@ color: rgb(255,255,255);</string>
                     </widget>
                    </item>
                    <item row="1" column="1">
-                    <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+                    <widget class="QDateTimeEdit" name="txtAvisar_desde">
                      <property name="styleSheet">
                       <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
@@ -2469,7 +2641,7 @@ color: rgb(255,255,255);</string>
                     </widget>
                    </item>
                    <item row="2" column="1">
-                    <widget class="QDateTimeEdit" name="dateTimeEdit_3">
+                    <widget class="QDateTimeEdit" name="txtAvisar_hasta">
                      <property name="styleSheet">
                       <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
@@ -2489,7 +2661,7 @@ color: rgb(255,255,255);</string>
                     </widget>
                    </item>
                    <item row="6" column="0" colspan="2">
-                    <widget class="QCheckBox" name="checkBox_4">
+                    <widget class="QCheckBox" name="chkAvisoCerrado">
                      <property name="text">
                       <string>Aviso cerrado</string>
                      </property>
@@ -3143,18 +3315,24 @@ color: rgb(0, 0, 0);</string>
          <attribute name="title">
           <string>H. Farmacologico</string>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_30">
-          <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_27">
+          <item row="1" column="2" rowspan="2">
+           <widget class="QTableView" name="listaHistorialFarmacologicoTotal">
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" rowspan="2">
            <layout class="QGridLayout" name="gridLayout_28">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_45">
-              <property name="text">
-               <string>Inicio tratamiento:</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="1">
-             <widget class="QDateEdit" name="dateEdit_5">
+             <widget class="QDateEdit" name="cboFechaInicioTratamiento_pestana_H_Farmacologico">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
@@ -3166,17 +3344,31 @@ color: rgb(0, 0, 0);</string>
               </property>
              </widget>
             </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="txtPosologiaIndicada_PestanaHFarmacologico">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0" colspan="2">
+             <widget class="QTextEdit" name="txtComentariosFarmaco_PestanaHFarmacologia">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_45">
+              <property name="text">
+               <string>Inicio tratamiento:</string>
+              </property>
+             </widget>
+            </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_46">
               <property name="text">
                <string>Posología indicada:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="lineEdit_15">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
              </widget>
             </item>
@@ -3193,76 +3385,43 @@ color: rgb(0, 0, 0);</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="0" colspan="2">
-             <widget class="QTextEdit" name="textEdit_9">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
-            </item>
            </layout>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_48">
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+            </property>
+            <property name="text">
+             <string>MEDICAMENTOS</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
           </item>
           <item row="0" column="1">
-           <layout class="QGridLayout" name="gridLayout_29">
-            <item row="2" column="2">
-             <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="0" colspan="3">
-             <widget class="QListWidget" name="listWidget_2">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0" colspan="3">
-             <widget class="QLabel" name="label_48">
-              <property name="styleSheet">
-               <string notr="true">background: #304163;
-color: rgb(255,255,255);</string>
-              </property>
-              <property name="text">
-               <string>MEDICAMENTOS</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QToolButton" name="toolButton_18">
-              <property name="toolTip">
-               <string>Documentación Fármaco</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../maya.qrc">
-                <normaloff>:/Icons/PNG/Pills.png</normaloff>:/Icons/PNG/Pills.png</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QToolButton" name="btnVerFarmaco_PestanaHFarmacologia">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Documentación Fármaco&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/Pills.png</normaloff>:/Icons/PNG/Pills.png</iconset>
+            </property>
+           </widget>
           </item>
          </layout>
-        </widget>
-        <widget class="QWidget" name="tab_4">
-         <property name="styleSheet">
-          <string notr="true">background-color: #ecefed;</string>
-         </property>
-         <attribute name="title">
-          <string>Especialidad</string>
-         </attribute>
         </widget>
         <widget class="QWidget" name="tab_6">
          <property name="styleSheet">
@@ -3450,156 +3609,6 @@ color: rgb(255,255,255);</string>
           </item>
          </layout>
         </widget>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QFrame" name="frame_2">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>212</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>90</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_44">
-      <property name="leftMargin">
-       <number>4</number>
-      </property>
-      <property name="rightMargin">
-       <number>4</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_74">
-        <property name="minimumSize">
-         <size>
-          <width>78</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>15</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background: #304163;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>EPISODIO</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QFrame" name="frame_22">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(197, 205, 255);</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_43">
-         <item row="0" column="0">
-          <widget class="QLabel" name="itemFarma">
-           <property name="maximumSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Este episodio contiene historial de farmacología</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../maya.qrc">:/Icons/PNG/Pills.png</pixmap>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="itemAnalitica">
-           <property name="maximumSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Este episodio contiene analíticas</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../maya.qrc">:/Icons/PNG/TestTubes.png</pixmap>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="itemImagenes">
-           <property name="maximumSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Este episodio contiene imagenes</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../maya.qrc">:/Icons/PNG/XRay.png</pixmap>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="itemInterConsulta">
-           <property name="maximumSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Este episodio contiene información de interconsultas</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../maya.qrc">:/Icons/PNG/usuarios.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </widget>
       </item>
      </layout>

@@ -28,6 +28,7 @@
 #include "visitas.h"
 #include "frmanadirdiagnostico.h"
 
+
 //TODO integrar http://doc.ginkgo-cadx.com/ginkgo-integration/ginkgo-cadx-integration-input-xml-integration/
 
 FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
@@ -54,13 +55,21 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     ui->comboBox_tipoImagen->setModel(qTipos);
     ui->txtHistorialEpisodio->setPlainText("");
 
+    //------------------
     // Doctores
+    //------------------
     QSqlQueryModel *qMDoctor = new QSqlQueryModel(this);
     qMDoctor->setQuery("Select nombre from doctores",QSqlDatabase::database("dbmedica"));
     ui->cboDoctorEpisodio->setModel(qMDoctor);
+    //------------------
+    // Historiales
+    //------------------
+    ui->cboFechaInicioTratamiento_pestana_H_Farmacologico->setDate(QDate::currentDate());
 
+
+    //-----------------------
     // Conexiones
-
+    //-----------------------
     connect(ui->btnCerrar, SIGNAL(clicked()), this, SLOT(close()));
     connect(ui->btnBuscarCIEEpisodio,SIGNAL(clicked()),this,SLOT(BuscarCIE()));
     connect(ui->btnEditarFarmacologia,SIGNAL(clicked()), this, SLOT(ActivarControlesFarmacologia()));
@@ -70,6 +79,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->radversoloactivosfarmacologia,SIGNAL(clicked()),this,SLOT(llenartablahistorialfarmacologiaepisodio()));
     connect(ui->btnBorrarFarma,SIGNAL(clicked()),this,SLOT(BorrarDatosMedicamento()));
     connect(ui->btnVerFarma,SIGNAL(clicked()),this,SLOT(MostrarFichaMedicamento()));
+    connect(ui->btnVerFarmaco_PestanaHFarmacologia,SIGNAL(clicked()),this,SLOT(MostrarFichaMedicamento2()));
     connect(ui->btnAnadirImagen,SIGNAL(clicked()), this, SLOT(AnadirImagenDiagnostico()));
     connect(ui->radImagenEvaluada,SIGNAL(clicked()),this,SLOT(llenartablahistorialimagenesepisodio()));
     connect(ui->radImagenPendiente, SIGNAL(clicked()),this,SLOT(llenartablahistorialimagenesepisodio()));
@@ -91,12 +101,14 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->btnAnadirDiagnostico,SIGNAL(clicked()),this,SLOT(anadirDiagnostico()));
     connect(ui->btnEditarVisita,SIGNAL(clicked()),this,SLOT(bntEditarVisita_clicked()));
     connect(ui->btnGuardarVisita,SIGNAL(clicked()),this,SLOT(btnGuardarVisita_clicked()));
+    connect(ui->listaHistorialFarmacologicoTotal,SIGNAL(clicked(QModelIndex)), this,SLOT(ListaHistorialFarmacologia_clicked(QModelIndex)));
 
     // Ocultar Iconos imagenes
     ui->itemFarma->setVisible(false);
     ui->itemAnalitica->setVisible(false);
     ui->itemImagenes->setVisible(false);
     ui->itemInterConsulta->setVisible(false);
+    ui->itemAvisos->setVisible(false);
     this->setWindowState(Qt::WindowMaximized);
 }
 
@@ -155,6 +167,16 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
     modelEpisodios->setQuery("select descripcion,fecha,id from episodios where idpaciente ="+QString::number(oPaciente->id)+
                              " order by fecha desc",QSqlDatabase::database("dbmedica"));
     ui->listaEpisodios->setModel(modelEpisodios);
+    //-----------------------
+    // Historial Farmacología
+    //-----------------------
+    QSqlQueryModel *qFarmacologia = new QSqlQueryModel(this);
+    qFarmacologia->setQuery("select id,medicamento from histofarma where "
+                            "id = "+QString::number(oPaciente->id),QSqlDatabase::database("dbmedica"));
+    qFarmacologia->setHeaderData(1,Qt::Horizontal,tr("NOMBRE DEL MEDICAMENTO"));
+    ui->listaHistorialFarmacologicoTotal->setModel(qFarmacologia);
+    ui->listaHistorialFarmacologicoTotal->setColumnWidth(0,0);
+    ui->listaHistorialFarmacologicoTotal->setColumnWidth(1,ui->listaHistorialFarmacologicoTotal->width()-10);
 
 }
 
@@ -307,10 +329,15 @@ void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
 
 void FrmFichaPaciente::ListaEpisodio_clicked(QModelIndex index)
 {
+    VaciarCamposHistorialCompleto();
     int id =ui->listaEpisodios->model()->data(ui->listaEpisodios->model()->index(index.row(),2),Qt::EditRole).toInt();
     oEpisodio->RecuperarEpisodio(id);
     cargarEpisodio(1);
     llenarhistorialvisitas();
+    llenartablahistorialanalisisepisodio();
+    llenartablahistorialfarmacologiaepisodio();
+    llenartablahistorialimagenesepisodio();
+
 }
 
 
@@ -372,6 +399,70 @@ void FrmFichaPaciente::VaciarCamposEpisodio()
     ui->txtHistorialEpisodio->setPlainText("");
     BloquearCamposEpisodio(false);
     ui->txtDescripcionEpisodio->setFocus();
+
+}
+
+void FrmFichaPaciente::VaciarCamposHistorialCompleto()
+{
+    VaciarCamposEpisodio();
+    //---------------------
+    // Campos Visita
+    //---------------------
+    ui->txtFechaHoraVisita->setDateTime(QDateTime::currentDateTime());
+    ui->cboRealizadaPorDr->setCurrentIndex(-1);
+    ui->txtExploracion->clear();
+    ui->txtLengua->clear();
+    ui->txtPulso->clear();
+    ui->txtDiagnosticoVisita->clear();
+    ui->txtTratamiento->clear();
+
+    //---------------------
+    // Datos Farmacología
+    //---------------------
+    ui->txtInicioTratamientoFarma->setDate(QDate::currentDate());
+    ui->txtPosologiaFarma->clear();
+    ui->chkactivo->setChecked(false);
+    ui->txtComentariosFarma->clear();
+    ui->itemFarma->setVisible(false);
+
+    //----------------------
+    // Analiticas
+    //----------------------
+    ui->listaAnaliticas->clear();
+    ui->itemAnalitica->setVisible(false);
+
+    //----------------------
+    // Imagenes
+    //----------------------
+    ui->lineEdit_descripcionimagen->clear();
+    ui->dateEdit_fechaimagen->setDate(QDate::currentDate());
+    ui->comboBox_tipoImagen->setCurrentIndex(-1);
+    ui->checkBox_evaluada->setChecked(false);
+    ui->lblImagenDiagnostico->clear();
+    ui->lblImagenDiagnostico->setText(tr("Sin imagen"));
+    ui->txtComentariosImagen->clear();
+    ui->itemImagenes->setVisible(false);
+    //-----------------------
+    // Referidos
+    //-----------------------
+    ui->txtReferidoDe->clear();
+    ui->cboMotivoInterconsultas->setCurrentIndex(-1);
+    ui->txtDerivaraInterconsulta->clear();
+    ui->cboMotivoDerivacionInterconsulta->setCurrentIndex(-1);
+    ui->txtPeticionInterconsulta->clear();
+    ui->txtRespuestaInterconsulta->clear();
+    ui->tablaInterconsultas->clear();
+    ui->itemInterConsulta->setVisible(false);
+    //------------------------
+    // Avisos
+    //------------------------
+    ui->txtMotivoAviso->clear();
+    ui->txtAvisar_desde->setDateTime(QDateTime::currentDateTime());
+    ui->txtAvisar_hasta->setDateTime(QDateTime::currentDateTime());
+    ui->txtTextoAviso->clear();
+    ui->chkAvisoCerrado->setChecked(false);
+    ui->listaAvisos->clear();
+    ui->itemAvisos->setVisible(false);
 }
 
 void FrmFichaPaciente::BloquearCamposImagen()
@@ -558,9 +649,11 @@ void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
     QSqlRecord reg ;
     // Relleno la tabla
      QString cFecha;
+     bool MostrarIcono = false;
     if (qImagenes.exec()) {
         while (qImagenes.next()) {
             // Nombre Medicamento
+            MostrarIcono = true;
             reg = qImagenes.record();
             if ((ui->radImagenEvaluada->isChecked() && reg.field("evaluada").value().toInt()==1)
                     || !ui->radImagenEvaluada->isChecked() ) {
@@ -600,6 +693,10 @@ void FrmFichaPaciente::llenartablahistorialimagenesepisodio()
                 pos++;
             }
         }
+        if(MostrarIcono == true)
+            ui->itemImagenes->setVisible(true);
+        else
+            ui->itemImagenes->setVisible(false);
     }
 }
 
@@ -702,7 +799,24 @@ void FrmFichaPaciente::MostrarFichaMedicamento()
         }
     }
 }
+void FrmFichaPaciente::MostrarFichaMedicamento2()
+{
 
+    QSqlQuery qFarma(QSqlDatabase::database("dbmedica"));
+    QString cSQL = "select codigonacional from histofarma where id =:id";
+    qFarma.prepare(cSQL);
+    qFarma.bindValue(":id",this->id_farmaco);
+    if(qFarma.exec()) {
+        qFarma.next();
+        QString cCodigoNacional = qFarma.value(0).toString();
+        FrmInformacionFarmaco frmFarmaco(this);
+        frmFarmaco.capturarid(cCodigoNacional);
+        frmFarmaco.setModal(true);
+        frmFarmaco.setWindowModality(Qt::WindowModal);
+        frmFarmaco.exec();
+    }
+
+}
 void FrmFichaPaciente::AnadirImagenDiagnostico()
 {
     if (oEpisodio->getid() >0)
@@ -769,6 +883,7 @@ void FrmFichaPaciente::AnadirAnalitica()
         FrmAnalitica frmAnalitica(this);
         Analitica oAnalitica(this);
         oAnalitica.setIdEpisodio(oEpisodio->getid());
+        oAnalitica.idpaciente=oEpisodio->idPaciente;
         oAnalitica.AnadirAnalitica();
         frmAnalitica.capturaID(oAnalitica.getId());
         frmAnalitica.capturaPaciente(ui->txtPaciente->text());
@@ -908,6 +1023,7 @@ void FrmFichaPaciente::AnadirVisita()
         if (nIdVisita >0){
             CargarVisita(nIdVisita);
             ui->txtFechaHoraVisita->setEnabled(true);
+            ui->txtFechaHoraVisita->setDateTime(QDateTime::currentDateTime());
             ui->txtExploracion->setEnabled(true);
             ui->txtLengua->setEnabled(true);
             ui->txtPulso->setEnabled(true);
@@ -1050,4 +1166,26 @@ void FrmFichaPaciente::vademecums()
 FrmMTCbase base;
 base.setWindowState(Qt::WindowMaximized);
 base.exec();
+}
+
+void FrmFichaPaciente::ListaHistorialFarmacologia_clicked(QModelIndex index)
+{
+    this->id_farmaco =ui->listaHistorialFarmacologicoTotal->model()->data(ui->listaHistorialFarmacologicoTotal->model()->index(index.row(),0),Qt::EditRole).toInt();
+    QSqlQuery queryFarmacologia(QSqlDatabase::database("dbmedica"));
+    queryFarmacologia.prepare("select * from histofarma where id = :id");
+    queryFarmacologia.bindValue(":id",this->id_farmaco);
+    if(queryFarmacologia.exec()){
+        queryFarmacologia.next();
+        ui->txtComentariosFarmaco_PestanaHFarmacologia->setPlainText(queryFarmacologia.record().value("comentarios").toString());
+        ui->cboFechaInicioTratamiento_pestana_H_Farmacologico->setDate(
+                    queryFarmacologia.record().value("iniciotratamiento").toDate());
+        ui->txtPosologiaIndicada_PestanaHFarmacologico->setText(
+                    queryFarmacologia.record().value("indicacionposologia").toString());
+    } else {
+        ui->txtComentariosFarmaco_PestanaHFarmacologia->clear();
+        ui->cboFechaInicioTratamiento_pestana_H_Farmacologico->clear();
+        ui->txtPosologiaIndicada_PestanaHFarmacologico->clear();
+        QMessageBox::warning(this,tr("ATENCIÓN"),tr("No se ha encontrado el registro del medicamento"),tr("Aceptar"));
+
+    }
 }

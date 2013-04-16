@@ -33,7 +33,7 @@ public slots:
     void cargarDatosImagenes(int,int);
     void guardarDatosImagenes();
     void deshacerDatosImagenes();
-     void recibedatospaciente(int,QString);
+    void recibedatospaciente(int,QString);
 private slots:
     void finishedSlot(QNetworkReply* reply);
     void on_btnAnadirEpisodio_clicked();
@@ -55,6 +55,7 @@ private slots:
     void llenarhistorialvisitas();
     void BorrarDatosMedicamento();
     void MostrarFichaMedicamento();
+    void MostrarFichaMedicamento2();
     void AnadirImagenDiagnostico();
     void BorrarImagenDiagnostico();
     void EditarImagenDiagnostico();
@@ -71,6 +72,7 @@ private slots:
     void btnDeshacerVisita_clicked();
     void anadirDiagnostico();
     void vademecums();
+    void ListaHistorialFarmacologia_clicked(QModelIndex index);
 
 signals:
     void pasaid(int);
@@ -87,7 +89,10 @@ private:
     void BloquearCamposEpisodio(bool state);
     void LLenarEpisodio();
     void VaciarCamposEpisodio();
+    void VaciarCamposHistorialCompleto();
     void BloquearCamposImagen();
+public:
+    int id_farmaco;
 };
 
 #endif // FRMFICHAPACIENTE_H

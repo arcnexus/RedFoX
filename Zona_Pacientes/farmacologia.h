@@ -28,8 +28,8 @@ public:
     void setactivo(int activo);
     void setcodigonacional(QString codigonacional);
 
-private:
     int id;
+    int idpaciente;
     int idmedicamento;
     QString medicamento;
     QDate iniciotratamiento;
