@@ -73,7 +73,7 @@ private slots:
     void anadirDiagnostico();
     void vademecums();
     void ListaHistorialFarmacologia_clicked(QModelIndex index);
-
+    void ListaHistorialImagenes_clicked(QModelIndex index);
 signals:
     void pasaid(int);
     void pasaCodigoNacional(QString);

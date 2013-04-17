@@ -437,7 +437,7 @@ color: rgb(255,255,255);</string>
          <enum>QTabWidget::North</enum>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab_7">
          <property name="styleSheet">
@@ -1098,7 +1098,7 @@ color: rgb(255, 0, 0);</string>
                 <bool>true</bool>
                </property>
                <property name="currentIndex">
-                <number>4</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="tabWidget_2Page1">
                 <property name="styleSheet">
@@ -1112,10 +1112,16 @@ color: rgb(255, 0, 0);</string>
                  <string>Detalle visita</string>
                 </attribute>
                 <layout class="QGridLayout" name="gridLayout_3">
-                 <item row="3" column="1">
-                  <widget class="QLabel" name="label_60">
+                 <item row="1" column="1">
+                  <widget class="QLabel" name="label_57">
+                   <property name="maximumSize">
+                    <size>
+                     <width>86</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
-                    <string>Pulso:</string>
+                    <string>Exploración:</string>
                    </property>
                   </widget>
                  </item>
@@ -1153,19 +1159,6 @@ color: rgb(255, 0, 0);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="1">
-                  <widget class="QLabel" name="label_57">
-                   <property name="maximumSize">
-                    <size>
-                     <width>86</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Exploración:</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="1" column="2" colspan="8">
                   <widget class="QTextEdit" name="txtExploracion">
                    <property name="styleSheet">
@@ -1188,39 +1181,18 @@ color: rgb(255, 0, 0);</string>
                  </item>
                  <item row="2" column="2" colspan="8">
                   <widget class="QTextEdit" name="txtLengua">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="2" colspan="8">
-                  <widget class="QTextEdit" name="txtPulso">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="2" rowspan="2" colspan="7">
-                  <widget class="QTextEdit" name="txtDiagnosticoVisita">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="9">
-                  <widget class="QPushButton" name="btnBdMed">
                    <property name="maximumSize">
                     <size>
-                     <width>36</width>
-                     <height>16777215</height>
+                     <width>16777215</width>
+                     <height>39</height>
                     </size>
                    </property>
-                   <property name="text">
-                    <string>?</string>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="6" column="1">
+                 <item row="7" column="1">
                   <widget class="QLabel" name="label_58">
                    <property name="maximumSize">
                     <size>
@@ -1233,14 +1205,14 @@ color: rgb(255, 0, 0);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="6" column="2" colspan="8">
+                 <item row="7" column="2" colspan="8">
                   <widget class="QTextEdit" name="txtTratamiento">
                    <property name="styleSheet">
                     <string notr="true">background-color: rgb(255, 255, 255);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="1" colspan="2">
+                 <item row="8" column="1" colspan="2">
                   <widget class="QPushButton" name="btnAnadirVisita">
                    <property name="text">
                     <string>Añadir</string>
@@ -1257,7 +1229,7 @@ color: rgb(255, 0, 0);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="3" colspan="2">
+                 <item row="8" column="3" colspan="2">
                   <widget class="QPushButton" name="btnEditarVisita">
                    <property name="enabled">
                     <bool>true</bool>
@@ -1283,7 +1255,7 @@ color: rgb(255, 0, 0);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="5">
+                 <item row="8" column="5">
                   <widget class="QPushButton" name="btnGuardarVisita">
                    <property name="enabled">
                     <bool>false</bool>
@@ -1303,7 +1275,7 @@ color: rgb(255, 0, 0);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="6">
+                 <item row="8" column="6">
                   <widget class="QPushButton" name="btnDeshacerVisita">
                    <property name="enabled">
                     <bool>false</bool>
@@ -1329,7 +1301,7 @@ color: rgb(255, 0, 0);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="7" colspan="3">
+                 <item row="8" column="7" colspan="3">
                   <widget class="QPushButton" name="btnImprimirVisita">
                    <property name="text">
                     <string>Imprimir</string>
@@ -1346,7 +1318,7 @@ color: rgb(255, 0, 0);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="1" rowspan="2">
+                 <item row="5" column="1" rowspan="2">
                   <widget class="QLabel" name="label_61">
                    <property name="maximumSize">
                     <size>
@@ -1359,7 +1331,7 @@ color: rgb(255, 0, 0);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="0" rowspan="6">
+                 <item row="1" column="0" rowspan="7">
                   <widget class="QListView" name="listaVisitas">
                    <property name="minimumSize">
                     <size>
@@ -1399,7 +1371,7 @@ color: rgb(255, 255, 255);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="9">
+                 <item row="3" column="9">
                   <widget class="QPushButton" name="btnAnadirDiagnostico">
                    <property name="maximumSize">
                     <size>
@@ -1409,6 +1381,54 @@ color: rgb(255, 255, 255);</string>
                    </property>
                    <property name="text">
                     <string>+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="9">
+                  <widget class="QPushButton" name="btnBdMed">
+                   <property name="maximumSize">
+                    <size>
+                     <width>36</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>?</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="7" rowspan="2" colspan="2">
+                  <widget class="QTableView" name="tableView">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="6" rowspan="2">
+                  <widget class="QLabel" name="label_64">
+                   <property name="text">
+                    <string>Sindromes</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="2" rowspan="2" colspan="4">
+                  <widget class="QTextEdit" name="txtPulso">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="2" rowspan="2" colspan="8">
+                  <widget class="QTextEdit" name="txtDiagnosticoVisita">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1" rowspan="2">
+                  <widget class="QLabel" name="label_60">
+                   <property name="text">
+                    <string>Pulso:</string>
                    </property>
                   </widget>
                  </item>
@@ -3318,6 +3338,12 @@ color: rgb(0, 0, 0);</string>
          <layout class="QGridLayout" name="gridLayout_27">
           <item row="1" column="2" rowspan="2">
            <widget class="QTableView" name="listaHistorialFarmacologicoTotal">
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
               <width>300</width>
@@ -3431,127 +3457,32 @@ color: rgb(255,255,255);</string>
           <string>D. Imagen</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_31">
-          <item row="3" column="0">
-           <widget class="QToolButton" name="toolButton_22">
-            <property name="toolTip">
-             <string>Ver Imagen</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QFrame" name="frame_17">
+          <item row="3" column="1">
+           <widget class="QDateEdit" name="txtFechatomaimagen_pestana_Dimagen">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(197, 205, 255);</string>
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_10">
-             <item>
-              <widget class="QRadioButton" name="radioButton_14">
-               <property name="text">
-                <string>Vistos</string>
-               </property>
-               <property name="checked">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="radioButton_15">
-               <property name="text">
-                <string>Pendientes de ver</string>
-               </property>
-               <property name="checked">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_49">
-            <property name="styleSheet">
-             <string notr="true">background: #304163;
-color: rgb(255,255,255);</string>
-            </property>
-            <property name="text">
-             <string>REGISTRO DE PRUEBAS DE IMÁGEN</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+            <property name="displayFormat">
+             <string>dd/MM/yyyy</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QColumnView" name="columnView_5">
+          <item row="4" column="0" colspan="2">
+           <widget class="QTextEdit" name="txtComentariosImagen_PestanaDImagen">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_50">
+            <property name="text">
+             <string>fecha toma imagen:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
            <layout class="QHBoxLayout" name="horizontalLayout_11">
-            <item>
-             <widget class="QToolButton" name="toolButton_19">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_21">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_23">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_24">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_25">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_26">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_27">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
             <item>
              <spacer name="horizontalSpacer_5">
               <property name="orientation">
@@ -3574,16 +3505,108 @@ color: rgb(255,255,255);</string>
             </item>
            </layout>
           </item>
-          <item row="0" column="1" rowspan="3">
-           <widget class="QLabel" name="label_50">
-            <property name="text">
-             <string/>
+          <item row="0" column="2" rowspan="5">
+           <widget class="QLabel" name="lblimagengrande">
+            <property name="styleSheet">
+             <string notr="true">background-color: qradialgradient(spread:repeat, cx:0.5, cy:0.5, radius:0.077, fx:0.5, fy:0.5, stop:0 rgba(0, 169, 255, 147), stop:0.497326 rgba(0, 0, 0, 147), stop:1 rgba(0, 169, 255, 147));
+color: rgb(222, 222, 222);</string>
             </property>
-            <property name="pixmap">
-             <pixmap resource="../maya.qrc">:/Icons/jpg/rx.jpg</pixmap>
+            <property name="text">
+             <string>Sin Imagen</string>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QTableView" name="listaImagenes_pestana_dimagen">
+            <property name="minimumSize">
+             <size>
+              <width>400</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 218);</string>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <property name="gridStyle">
+             <enum>Qt::DotLine</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QFrame" name="frame_17">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(197, 205, 255);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_10">
+             <item>
+              <widget class="QRadioButton" name="radioButton_14">
+               <property name="text">
+                <string>Comentadas</string>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="radioButton_15">
+               <property name="text">
+                <string>Pendientes de comentar</string>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="radioButton">
+               <property name="text">
+                <string>Todas</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="label_49">
+            <property name="styleSheet">
+             <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+            </property>
+            <property name="text">
+             <string>REGISTRO DE PRUEBAS DE IMÁGEN</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>

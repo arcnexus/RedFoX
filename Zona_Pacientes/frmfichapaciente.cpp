@@ -67,9 +67,9 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     ui->cboFechaInicioTratamiento_pestana_H_Farmacologico->setDate(QDate::currentDate());
 
 
-    //-----------------------
+    //------------------
     // Conexiones
-    //-----------------------
+    //------------------
     connect(ui->btnCerrar, SIGNAL(clicked()), this, SLOT(close()));
     connect(ui->btnBuscarCIEEpisodio,SIGNAL(clicked()),this,SLOT(BuscarCIE()));
     connect(ui->btnEditarFarmacologia,SIGNAL(clicked()), this, SLOT(ActivarControlesFarmacologia()));
@@ -102,6 +102,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->btnEditarVisita,SIGNAL(clicked()),this,SLOT(bntEditarVisita_clicked()));
     connect(ui->btnGuardarVisita,SIGNAL(clicked()),this,SLOT(btnGuardarVisita_clicked()));
     connect(ui->listaHistorialFarmacologicoTotal,SIGNAL(clicked(QModelIndex)), this,SLOT(ListaHistorialFarmacologia_clicked(QModelIndex)));
+    connect(ui->listaImagenes_pestana_dimagen,SIGNAL(clicked(QModelIndex)), this,SLOT(ListaHistorialImagenes_clicked(QModelIndex)));
 
     // Ocultar Iconos imagenes
     ui->itemFarma->setVisible(false);
@@ -172,11 +173,22 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
     //-----------------------
     QSqlQueryModel *qFarmacologia = new QSqlQueryModel(this);
     qFarmacologia->setQuery("select id,medicamento from histofarma where "
-                            "id = "+QString::number(oPaciente->id),QSqlDatabase::database("dbmedica"));
+                            "idpaciente = "+QString::number(oPaciente->id),QSqlDatabase::database("dbmedica"));
     qFarmacologia->setHeaderData(1,Qt::Horizontal,tr("NOMBRE DEL MEDICAMENTO"));
     ui->listaHistorialFarmacologicoTotal->setModel(qFarmacologia);
     ui->listaHistorialFarmacologicoTotal->setColumnWidth(0,0);
-    ui->listaHistorialFarmacologicoTotal->setColumnWidth(1,ui->listaHistorialFarmacologicoTotal->width()-10);
+    ui->listaHistorialFarmacologicoTotal->setColumnWidth(1,285);
+
+    //-----------------------
+    // Historial Imagenes
+    //-----------------------
+    QSqlQueryModel *queryImagenes = new QSqlQueryModel(this);
+    queryImagenes->setQuery("select id,descripcion from imagenes where idpaciente ="+QString::number(oPaciente->id),
+                            QSqlDatabase::database("dbmedica"));
+    ui->listaImagenes_pestana_dimagen->setModel(queryImagenes);
+    queryImagenes->setHeaderData(1,Qt::Horizontal,tr("DESCRIPCIÓN IMAGEN"));
+    ui->listaImagenes_pestana_dimagen->setColumnWidth(0,0);
+    ui->listaImagenes_pestana_dimagen->setColumnWidth(1,370);
 
 }
 
@@ -1189,3 +1201,42 @@ void FrmFichaPaciente::ListaHistorialFarmacologia_clicked(QModelIndex index)
 
     }
 }
+
+void FrmFichaPaciente::ListaHistorialImagenes_clicked(QModelIndex index)
+{
+    int id =ui->listaImagenes_pestana_dimagen->model()->data(ui->listaImagenes_pestana_dimagen->model()->index(index.row(),0),Qt::EditRole).toInt();
+    QSqlQuery queryImagen(QSqlDatabase::database("dbmedica"));
+    queryImagen.prepare("select * from imagenes where id = :id");
+    queryImagen.bindValue(":id",id);
+    if(queryImagen.exec()){
+        queryImagen.next();
+
+        ui->txtComentariosImagen_PestanaDImagen->setPlainText(queryImagen.record().value("comentarios").toString());
+        ui->txtFechatomaimagen_pestana_Dimagen->setDate(
+                    queryImagen.record().value("fechaimagen").toDate());
+
+         //------------------------------
+         // Insertamos imagen en pantalla
+         //------------------------------
+         QByteArray ba1 = queryImagen.record().field("imagen").value().toByteArray();
+         QPixmap pm1;
+         pm1.loadFromData(ba1);
+         if(!queryImagen.record().field("imagen").value().isNull()){
+             ui->lblimagengrande->setPixmap(pm1);
+             ui->lblimagengrande->setScaledContents(true);
+         } else {
+             ui->lblimagengrande->clear();
+             ui->lblimagengrande->setText(tr("Sin imagen"));
+         }
+    } else {
+        ui->txtComentariosImagen_PestanaDImagen->clear();
+        ui->txtFechatomaimagen_pestana_Dimagen->clear();
+        QMessageBox::warning(this,tr("ATENCIÓN"),tr("No se ha encontrado el registro de la imágen"),tr("Aceptar"));
+
+    }
+}
+
+
+
+
+
