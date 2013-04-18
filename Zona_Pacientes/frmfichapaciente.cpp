@@ -1079,6 +1079,13 @@ void FrmFichaPaciente::CargarVisita(int nId)
     ui->txtDiagnosticoVisita->setText(oVisita->diagnostico);
     ui->cboRealizadaPorDr->setCurrentIndex(ui->cboRealizadaPorDr->findText(oVisita->medico));
     ui->btnEditarVisita->setEnabled(true);
+    QSqlQueryModel *modelSindromes = new QSqlQueryModel(this);
+    modelSindromes->setQuery("select id,sindrome from sindromes where id_visita ="+QString::number(oVisita->id),
+                             QSqlDatabase::database("dbmedica"));
+    ui->tablaSindromes->setModel(modelSindromes);
+    ui->tablaSindromes->setColumnWidth(0,0);
+    ui->tablaSindromes->setColumnWidth(1,250);
+    modelSindromes->setHeaderData(1,Qt::Horizontal,tr("Sindrome"));
 
 }
 
@@ -1159,10 +1166,25 @@ void FrmFichaPaciente::anadirDiagnostico()
         QSqlQuery QueryMediTec(QSqlDatabase::database("db_meditec"));
         if(QueryMediTec.exec("select sindrome from sindromes where id ="+QString::number(id))){
             if(QueryMediTec.next()){
-                if (!ui->txtDiagnosticoVisita->toPlainText().isEmpty())
-                    ui->txtDiagnosticoVisita->setPlainText(ui->txtDiagnosticoVisita->toPlainText()+ ", "+QueryMediTec.record().value("sindrome").toString());
-                else
-                    ui->txtDiagnosticoVisita->setPlainText(ui->txtDiagnosticoVisita->toPlainText()+ QueryMediTec.record().value("sindrome").toString());
+                QSqlQuery querySindromes(QSqlDatabase::database("dbmedica"));
+                querySindromes.prepare("INSERT INTO sindromes (id_visita,idsindrome,sindrome)"
+                                       " VALUES (:id_visita,:idsindrome,:sindrome);");
+                querySindromes.bindValue(":id_visita",oVisita->id);
+                querySindromes.bindValue(":idsindrome",QueryMediTec.record().value("id").toInt());
+                querySindromes.bindValue(":sindrome",QueryMediTec.record().value("sindrome").toString());
+                if(!querySindromes.exec())
+                    QMessageBox::warning(this,tr("ATENCIÓN"),
+                    tr("Ha fallado la inserción de registros de Sindromes: %1").arg(querySindromes.lastError().text()));
+                else {
+                    QSqlQueryModel *modelSindromes = new QSqlQueryModel(this);
+                    modelSindromes->setQuery("select id,sindrome from sindromes where id_visita ="+QString::number(oVisita->id),
+                                             QSqlDatabase::database("dbmedica"));
+                    ui->tablaSindromes->setModel(modelSindromes);
+                    ui->tablaSindromes->setRowHeight(0,0);
+                    ui->tablaSindromes->setColumnWidth(0,0);
+                    ui->tablaSindromes->setColumnWidth(1,250);
+                    modelSindromes->setHeaderData(1,Qt::Horizontal,tr("Sindrome"));
+                }
 
             }
 
@@ -1176,6 +1198,7 @@ void FrmFichaPaciente::anadirDiagnostico()
 void FrmFichaPaciente::vademecums()
 {
 FrmMTCbase base;
+base.cargarSindromes(oVisita->id);
 base.setWindowState(Qt::WindowMaximized);
 base.exec();
 }
