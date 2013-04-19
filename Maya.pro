@@ -60,7 +60,7 @@ SOURCES += main.cpp\
     Zona_Pacientes/farmacologia.cpp \
     Zona_Pacientes/frminformacionfarmaco.cpp \
     Zona_Pacientes/frmanadirimagen.cpp \
-    imagenesdiagnostico.cpp \
+    Zona_Pacientes/imagenesdiagnostico.cpp \
     interconsulta.cpp \
     Zona_Pacientes/frmanalitica.cpp \
     Zona_Pacientes/frmanalitica2.cpp \
@@ -147,7 +147,7 @@ HEADERS  += mainwindow.h \
     Zona_Pacientes/farmacologia.h \
     Zona_Pacientes/frminformacionfarmaco.h \
     Zona_Pacientes/frmanadirimagen.h \
-    imagenesdiagnostico.h \
+    Zona_Pacientes/imagenesdiagnostico.h \
     interconsulta.h \
     Zona_Pacientes/frmanalitica.h \
     Zona_Pacientes/frmanalitica2.h \

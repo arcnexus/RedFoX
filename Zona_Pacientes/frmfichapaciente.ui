@@ -2,15 +2,12 @@
 <ui version="4.0">
  <class>FrmFichaPaciente</class>
  <widget class="QDialog" name="FrmFichaPaciente">
-  <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
-  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>702</height>
+    <width>1325</width>
+    <height>737</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -23,16 +20,130 @@
    <string>Historia clínica</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Maya.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(219, 228, 255);</string>
   </property>
-  <property name="modal">
-   <bool>true</bool>
-  </property>
-  <layout class="QGridLayout" name="gridLayout_19">
+  <layout class="QGridLayout" name="gridLayout_24">
+   <item row="0" column="1">
+    <widget class="QPushButton" name="btnCerrar">
+     <property name="text">
+      <string>Cerrar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLabel" name="label_92">
+     <property name="maximumSize">
+      <size>
+       <width>90</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../maya.qrc">:/Icons/PNG/mayafondo_blanco_mini.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_28">
+       <property name="text">
+        <string>NUM HISTORIA CLÍNICA:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtNumHistoriaClinica">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>999999</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>NACIMIENTO:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDateTimeEdit" name="txtNacimiento">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="displayFormat">
+        <string>dd/MM/yyyy HH:mm</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>EDAD ACTUAL:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtEdadActual">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
@@ -127,121 +238,176 @@ color: rgb(0, 0, 0);</string>
      </item>
     </layout>
    </item>
-   <item row="0" column="1" colspan="2">
-    <widget class="QPushButton" name="btnCerrar">
-     <property name="text">
-      <string>Cerrar</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../Maya.qrc">
-       <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
-     </property>
-     <property name="iconSize">
+   <item row="2" column="1">
+    <widget class="QFrame" name="frame_2">
+     <property name="minimumSize">
       <size>
-       <width>24</width>
-       <height>24</height>
+       <width>0</width>
+       <height>212</height>
       </size>
      </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="label_28">
-       <property name="text">
-        <string>NUM HISTORIA CLÍNICA:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="txtNumHistoriaClinica">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>120</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="text">
-        <string>999999</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>NACIMIENTO:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDateTimeEdit" name="txtNacimiento">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="displayFormat">
-        <string>dd/MM/yyyy HH:mm</string>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>EDAD ACTUAL:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="txtEdadActual">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="1" colspan="2">
-    <widget class="QLabel" name="label_92">
      <property name="maximumSize">
       <size>
        <width>90</width>
-       <height>30</height>
+       <height>16777215</height>
       </size>
      </property>
-     <property name="text">
-      <string/>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="pixmap">
-      <pixmap resource="../Maya.qrc">:/Icons/PNG/mayafondo_blanco_mini.png</pixmap>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
+     <layout class="QGridLayout" name="gridLayout_44">
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_74">
+        <property name="minimumSize">
+         <size>
+          <width>78</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>15</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>EPISODIO</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QFrame" name="frame_22">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(197, 205, 255);</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_26">
+         <item row="0" column="0">
+          <widget class="QLabel" name="itemFarma">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Este episodio contiene historial de farmacología</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../maya.qrc">:/Icons/PNG/Pills.png</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="itemAnalitica">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Este episodio contiene analíticas</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../maya.qrc">:/Icons/PNG/TestTubes.png</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="itemImagenes">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Este episodio contiene imagenes</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../maya.qrc">:/Icons/PNG/XRay.png</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="itemInterConsulta">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Este episodio contiene información de interconsultas</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../maya.qrc">:/Icons/PNG/usuarios.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="itemAvisos">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Este episodio contiene información de interconsultas</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../maya.qrc">:/Icons/PNG/avisos.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item row="2" column="0">
@@ -818,7 +984,7 @@ color: rgb(0, 0, 0);</string>
              <string>Editar</string>
             </property>
             <property name="icon">
-             <iconset resource="../Maya.qrc">
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
             </property>
             <property name="iconSize">
@@ -838,7 +1004,7 @@ color: rgb(0, 0, 0);</string>
              <string>Guardar</string>
             </property>
             <property name="icon">
-             <iconset resource="../Maya.qrc">
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
             </property>
             <property name="iconSize">
@@ -858,7 +1024,7 @@ color: rgb(0, 0, 0);</string>
              <string>Deshacer</string>
             </property>
             <property name="icon">
-             <iconset resource="../Maya.qrc">
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
             </property>
             <property name="iconSize">
@@ -939,28 +1105,35 @@ color: rgb(255, 0, 0);</string>
                  <string notr="true">background-color: #ecefed;</string>
                 </property>
                 <attribute name="icon">
-                 <iconset resource="../Maya.qrc">
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/PatientFile2.png</normaloff>:/Icons/PNG/PatientFile2.png</iconset>
                 </attribute>
                 <attribute name="title">
                  <string>Detalle visita</string>
                 </attribute>
                 <layout class="QGridLayout" name="gridLayout_3">
-                 <item row="3" column="1">
-                  <widget class="QLabel" name="label_60">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_62">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(0, 0, 128);
+color: rgb(255, 255, 255);</string>
+                   </property>
                    <property name="text">
-                    <string>Pulso:</string>
+                    <string>Visitas R.</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="1" colspan="3">
+                 <item row="0" column="2" colspan="3">
                   <widget class="QLabel" name="label_55">
                    <property name="text">
                     <string>Fecha hora visita:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="4" colspan="2">
+                 <item row="0" column="5" colspan="3">
                   <widget class="QDateTimeEdit" name="txtFechaHoraVisita">
                    <property name="styleSheet">
                     <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -970,14 +1143,14 @@ color: rgb(255, 0, 0);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="6" colspan="2">
+                 <item row="0" column="8" colspan="2">
                   <widget class="QLabel" name="label_56">
                    <property name="text">
                     <string>Realizada por:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="8" colspan="2">
+                 <item row="0" column="10" colspan="2">
                   <widget class="QComboBox" name="cboRealizadaPorDr">
                    <property name="minimumSize">
                     <size>
@@ -987,217 +1160,11 @@ color: rgb(255, 0, 0);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="1">
-                  <widget class="QLabel" name="label_57">
-                   <property name="maximumSize">
-                    <size>
-                     <width>86</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Exploración:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="2" colspan="8">
-                  <widget class="QTextEdit" name="txtExploracion">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QLabel" name="label_59">
-                   <property name="maximumSize">
-                    <size>
-                     <width>86</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Lengua:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="2" colspan="8">
-                  <widget class="QTextEdit" name="txtLengua">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="2" colspan="8">
-                  <widget class="QTextEdit" name="txtPulso">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="2" rowspan="2" colspan="7">
-                  <widget class="QTextEdit" name="txtDiagnosticoVisita">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="9">
-                  <widget class="QPushButton" name="btnBdMed">
-                   <property name="maximumSize">
-                    <size>
-                     <width>36</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>?</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="6" column="1">
-                  <widget class="QLabel" name="label_58">
-                   <property name="maximumSize">
-                    <size>
-                     <width>86</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Tratamiento:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="6" column="2" colspan="8">
-                  <widget class="QTextEdit" name="txtTratamiento">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="1" colspan="2">
-                  <widget class="QPushButton" name="btnAnadirVisita">
-                   <property name="text">
-                    <string>Añadir</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../Maya.qrc">
-                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>24</width>
-                     <height>24</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="3" colspan="2">
-                  <widget class="QPushButton" name="btnEditarVisita">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>150</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Editar</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../Maya.qrc">
-                     <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>24</width>
-                     <height>24</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="5">
-                  <widget class="QPushButton" name="btnGuardarVisita">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>Guardar</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../Maya.qrc">
-                     <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>24</width>
-                     <height>24</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="6">
-                  <widget class="QPushButton" name="btnDeshacerVisita">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>150</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Deshacer</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../Maya.qrc">
-                     <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>24</width>
-                     <height>24</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="7" colspan="3">
-                  <widget class="QPushButton" name="btnImprimirVisita">
-                   <property name="text">
-                    <string>Imprimir</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../Maya.qrc">
-                     <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>24</width>
-                     <height>24</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="1" rowspan="2">
-                  <widget class="QLabel" name="label_61">
-                   <property name="maximumSize">
-                    <size>
-                     <width>86</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Diagnostico</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0" rowspan="6">
+                 <item row="1" column="0" rowspan="5">
                   <widget class="QListView" name="listaVisitas">
                    <property name="minimumSize">
                     <size>
-                     <width>76</width>
+                     <width>153</width>
                      <height>0</height>
                     </size>
                    </property>
@@ -1219,21 +1186,87 @@ alternate-background-color: rgb(255, 255, 192);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_62">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(0, 0, 128);
-color: rgb(255, 255, 255);</string>
+                 <item row="1" column="1" colspan="2">
+                  <widget class="QLabel" name="label_57">
+                   <property name="maximumSize">
+                    <size>
+                     <width>86</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                    <property name="text">
-                    <string>Visitas R.</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
+                    <string>Exploración:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="9">
+                 <item row="1" column="3" colspan="9">
+                  <widget class="QTextEdit" name="txtExploracion">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLabel" name="label_59">
+                   <property name="maximumSize">
+                    <size>
+                     <width>86</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Lengua:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="3" colspan="9">
+                  <widget class="QTextEdit" name="txtLengua">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>39</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLabel" name="label_60">
+                   <property name="text">
+                    <string>Pulso:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="3" rowspan="2" colspan="3">
+                  <widget class="QTextEdit" name="txtPulso">
+                   <property name="minimumSize">
+                    <size>
+                     <width>206</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="6" colspan="2">
+                  <widget class="QLabel" name="label_64">
+                   <property name="text">
+                    <string>Sindromes</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="8" rowspan="2" colspan="3">
+                  <widget class="QTableView" name="tablaSindromes">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="11">
                   <widget class="QPushButton" name="btnAnadirDiagnostico">
                    <property name="maximumSize">
                     <size>
@@ -1246,6 +1279,177 @@ color: rgb(255, 255, 255);</string>
                    </property>
                   </widget>
                  </item>
+                 <item row="4" column="11">
+                  <widget class="QPushButton" name="btnBdMed">
+                   <property name="maximumSize">
+                    <size>
+                     <width>36</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>?</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="1" colspan="2">
+                  <widget class="QLabel" name="label_61">
+                   <property name="maximumSize">
+                    <size>
+                     <width>86</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Diagnostico:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="3" colspan="3">
+                  <widget class="QTextEdit" name="txtDiagnosticoVisita">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="6" colspan="2">
+                  <widget class="QLabel" name="label_58">
+                   <property name="minimumSize">
+                    <size>
+                     <width>97</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>86</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Tratamiento:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="8" colspan="4">
+                  <widget class="QTextEdit" name="txtTratamiento">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(255, 255, 255);</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="2" colspan="2">
+                  <widget class="QPushButton" name="btnAnadirVisita">
+                   <property name="text">
+                    <string>Añadir</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="4">
+                  <widget class="QPushButton" name="btnEditarVisita">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Editar</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="5" colspan="2">
+                  <widget class="QPushButton" name="btnGuardarVisita">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>Guardar</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="7" colspan="2">
+                  <widget class="QPushButton" name="btnDeshacerVisita">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>77</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Deshacer</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="9" colspan="2">
+                  <widget class="QPushButton" name="btnImprimirVisita">
+                   <property name="text">
+                    <string>Imprimir</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
                <widget class="QWidget" name="tabWidget_2Page2">
@@ -1253,7 +1457,7 @@ color: rgb(255, 255, 255);</string>
                  <string notr="true">background-color: #ecefed;</string>
                 </property>
                 <attribute name="icon">
-                 <iconset resource="../Maya.qrc">
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/Pills.png</normaloff>:/Icons/PNG/Pills.png</iconset>
                 </attribute>
                 <attribute name="title">
@@ -1271,7 +1475,7 @@ color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Maya.qrc">
+                      <iconset resource="../maya.qrc">
                        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                      </property>
                     </widget>
@@ -1285,7 +1489,7 @@ color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Maya.qrc">
+                      <iconset resource="../maya.qrc">
                        <normaloff>:/Icons/PNG/Pills.png</normaloff>:/Icons/PNG/Pills.png</iconset>
                      </property>
                     </widget>
@@ -1305,7 +1509,7 @@ color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Maya.qrc">
+                      <iconset resource="../maya.qrc">
                        <normaloff>:/Icons/PNG/print2.png</normaloff>:/Icons/PNG/print2.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -1352,7 +1556,7 @@ color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Maya.qrc">
+                      <iconset resource="../maya.qrc">
                        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
                      </property>
                     </widget>
@@ -1475,7 +1679,7 @@ color: rgb(255, 255, 255);</string>
                     <string/>
                    </property>
                    <property name="pixmap">
-                    <pixmap resource="../Maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+                    <pixmap resource="../maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
                    </property>
                    <property name="scaledContents">
                     <bool>true</bool>
@@ -1514,7 +1718,7 @@ color: rgb(255, 255, 255);</string>
                     <string>Editar</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Maya.qrc">
+                    <iconset resource="../maya.qrc">
                      <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
                    </property>
                   </widget>
@@ -1528,7 +1732,7 @@ color: rgb(255, 255, 255);</string>
                     <string>Guardar</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Maya.qrc">
+                    <iconset resource="../maya.qrc">
                      <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
                    </property>
                   </widget>
@@ -1542,7 +1746,7 @@ color: rgb(255, 255, 255);</string>
                     <string>Deshacer</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Maya.qrc">
+                    <iconset resource="../maya.qrc">
                      <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
                    </property>
                   </widget>
@@ -1554,7 +1758,7 @@ color: rgb(255, 255, 255);</string>
                  <string notr="true">background-color: #ecefed;</string>
                 </property>
                 <attribute name="icon">
-                 <iconset resource="../Maya.qrc">
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/TestTubes.png</normaloff>:/Icons/PNG/TestTubes.png</iconset>
                 </attribute>
                 <attribute name="title">
@@ -1570,7 +1774,7 @@ color: rgb(255, 255, 255);</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Maya.qrc">
+                    <iconset resource="../maya.qrc">
                      <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                    </property>
                   </widget>
@@ -1584,7 +1788,7 @@ color: rgb(255, 255, 255);</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Maya.qrc">
+                    <iconset resource="../maya.qrc">
                      <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
                    </property>
                   </widget>
@@ -1598,7 +1802,7 @@ color: rgb(255, 255, 255);</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Maya.qrc">
+                    <iconset resource="../maya.qrc">
                      <normaloff>:/Icons/PNG/TestTubes.png</normaloff>:/Icons/PNG/TestTubes.png</iconset>
                    </property>
                   </widget>
@@ -1612,7 +1816,7 @@ color: rgb(255, 255, 255);</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Maya.qrc">
+                    <iconset resource="../maya.qrc">
                      <normaloff>:/Icons/PNG/importar.png</normaloff>:/Icons/PNG/importar.png</iconset>
                    </property>
                   </widget>
@@ -1674,191 +1878,27 @@ color: rgb(255,255,255);
                  <string notr="true">background-color: #ecefed;</string>
                 </property>
                 <attribute name="icon">
-                 <iconset resource="../Maya.qrc">
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
                 </attribute>
                 <attribute name="title">
                  <string>Imágenes</string>
                 </attribute>
-                <layout class="QGridLayout" name="gridLayout_11">
-                 <item row="2" column="7" colspan="2">
-                  <widget class="QLabel" name="label_87">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(0, 0, 192);
-color: rgb(255,255,255);
-</string>
-                   </property>
-                   <property name="text">
-                    <string>COMENTARIOS IMAGEN</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="5" rowspan="2">
-                  <widget class="QToolButton" name="btnVerImagen">
-                   <property name="toolTip">
-                    <string>Ver Imagen</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../Maya.qrc">
-                     <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="6" rowspan="2">
-                  <widget class="QToolButton" name="btnImportarimagen">
-                   <property name="toolTip">
-                    <string>Importar Imagen</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../Maya.qrc">
-                     <normaloff>:/Icons/PNG/importar.png</normaloff>:/Icons/PNG/importar.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1" colspan="2">
+                <layout class="QGridLayout" name="gridLayout_19">
+                 <item row="0" column="0" rowspan="2" colspan="2">
                   <widget class="QLabel" name="label_51">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>27</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>Descripción</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="5" colspan="3">
-                  <widget class="QPushButton" name="pushButton_editarimagen">
-                   <property name="text">
-                    <string>Editar</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="2">
-                  <spacer name="horizontalSpacer_7">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="6" column="3" colspan="4">
-                  <widget class="QCheckBox" name="checkBox_evaluada">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>Evaluada</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="7" rowspan="5" colspan="3">
-                  <widget class="QPlainTextEdit" name="txtComentariosImagen">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">color: rgb(0, 0, 128);
-background-color: rgb(255, 255, 255);</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="3" rowspan="2">
-                  <widget class="QToolButton" name="btnAnadirImagen">
-                   <property name="toolTip">
-                    <string>Añadir prueba de imagen</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../Maya.qrc">
-                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="4" rowspan="2">
-                  <widget class="QToolButton" name="btnBorrarImagen">
-                   <property name="toolTip">
-                    <string>Borrar prueba (Requiere contraseña de administrador)</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../Maya.qrc">
-                     <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="10" column="0" colspan="10">
-                  <widget class="QTableWidget" name="listaImagenes">
-                   <property name="styleSheet">
-                    <string notr="true">selection-background-color: rgb(37, 129, 4);
-border-color: rgb(212, 255, 230);
-alternate-background-color: rgb(113, 255, 153);
-background-color: rgb(219, 255, 208);</string>
-                   </property>
-                   <property name="alternatingRowColors">
-                    <bool>true</bool>
-                   </property>
-                   <property name="selectionBehavior">
-                    <enum>QAbstractItemView::SelectRows</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0" rowspan="9">
-                  <widget class="QLabel" name="lblImagenDiagnostico">
-                   <property name="minimumSize">
-                    <size>
-                     <width>113</width>
-                     <height>163</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>149</width>
-                     <height>183</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Sin Imagen</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="8">
-                  <widget class="QPushButton" name="pushButton_GuardarImagen">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>Guardar</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="8">
-                  <widget class="QPushButton" name="pushButton_DeshacerImagen">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>Deshacer</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1" colspan="7">
+                 <item row="0" column="2" rowspan="2" colspan="5">
                   <widget class="QLineEdit" name="lineEdit_descripcionimagen">
                    <property name="enabled">
                     <bool>false</bool>
@@ -1869,7 +1909,208 @@ background-color: rgb(255, 255, 255);</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="9" column="0" colspan="7">
+                 <item row="0" column="7">
+                  <widget class="QLabel" name="label_87">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>27</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(0, 0, 192);
+color: rgb(255,255,255);
+</string>
+                   </property>
+                   <property name="text">
+                    <string>COMENT. IMAGEN</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0" colspan="3">
+                  <widget class="QLabel" name="lblImagenDiagnostico">
+                   <property name="minimumSize">
+                    <size>
+                     <width>190</width>
+                     <height>190</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: qradialgradient(spread:repeat, cx:0.5, cy:0.5, radius:0.077, fx:0.5, fy:0.5, stop:0 rgba(0, 169, 255, 147), stop:0.497326 rgba(0, 0, 0, 147), stop:1 rgba(0, 169, 255, 147));
+color: rgb(222, 222, 222);</string>
+                   </property>
+                   <property name="text">
+                    <string>Sin Imagen</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="3" colspan="4">
+                  <widget class="QFrame" name="frame_26">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(197, 205, 255);</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QGridLayout" name="gridLayout_11">
+                    <item row="2" column="0">
+                     <widget class="QCheckBox" name="checkBox_evaluada">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="text">
+                       <string>Evaluada</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_53">
+                      <property name="text">
+                       <string>Tipo de imagen:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1" colspan="4">
+                     <widget class="QComboBox" name="comboBox_tipoImagen">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>116</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(0, 0, 128);</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_52">
+                      <property name="text">
+                       <string>FechaToma:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="3" colspan="2">
+                     <widget class="QDateTimeEdit" name="dateEdit_fechaimagen">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>165</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(0, 0, 128);
+background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="displayFormat">
+                       <string>dd/MM/yyyy HH:mm</string>
+                      </property>
+                      <property name="calendarPopup">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QToolButton" name="btnAnadirImagen">
+                   <property name="minimumSize">
+                    <size>
+                     <width>91</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string/>
+                   </property>
+                   <property name="text">
+                    <string>Añadir</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1" colspan="2">
+                  <widget class="QToolButton" name="btnBorrarImagen">
+                   <property name="toolTip">
+                    <string/>
+                   </property>
+                   <property name="text">
+                    <string>Eliminar</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="3">
+                  <widget class="QToolButton" name="btnVerImagen">
+                   <property name="toolTip">
+                    <string/>
+                   </property>
+                   <property name="text">
+                    <string>Ampliar</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="4">
+                  <widget class="QPushButton" name="pushButton_editarimagen">
+                   <property name="text">
+                    <string>Editar</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="5">
+                  <widget class="QPushButton" name="pushButton_GuardarImagen">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>Guardar</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="0" colspan="8">
                   <widget class="QLabel" name="label_17">
                    <property name="styleSheet">
                     <string notr="true">background-color: rgb(0, 0, 192);
@@ -1884,7 +2125,7 @@ color: rgb(255,255,255);
                    </property>
                   </widget>
                  </item>
-                 <item row="9" column="7" colspan="2">
+                 <item row="6" column="0" colspan="6">
                   <widget class="QFrame" name="frame_6">
                    <property name="minimumSize">
                     <size>
@@ -1900,9 +2141,16 @@ color: rgb(255,255,255);
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_8">
                     <item>
+                     <widget class="QLabel" name="label_63">
+                      <property name="text">
+                       <string>Mostrar registro de imagenes :</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <widget class="QRadioButton" name="radImagenEvaluada">
                       <property name="text">
-                       <string>Evaluada</string>
+                       <string>Evaluadas</string>
                       </property>
                       <property name="checked">
                        <bool>false</bool>
@@ -1922,56 +2170,44 @@ color: rgb(255,255,255);
                    </layout>
                   </widget>
                  </item>
-                 <item row="5" column="3" colspan="4">
-                  <widget class="QComboBox" name="comboBox_tipoImagen">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>116</width>
-                     <height>0</height>
-                    </size>
-                   </property>
+                 <item row="7" column="0" colspan="8">
+                  <widget class="QTableWidget" name="listaImagenes">
                    <property name="styleSheet">
-                    <string notr="true">color: rgb(0, 0, 128);</string>
+                    <string notr="true">selection-background-color: rgb(37, 129, 4);
+border-color: rgb(212, 255, 230);
+alternate-background-color: rgb(113, 255, 153);
+background-color: rgb(219, 255, 208);</string>
+                   </property>
+                   <property name="alternatingRowColors">
+                    <bool>true</bool>
+                   </property>
+                   <property name="selectionBehavior">
+                    <enum>QAbstractItemView::SelectRows</enum>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="3" colspan="4">
-                  <widget class="QDateTimeEdit" name="dateEdit_fechaimagen">
+                 <item row="3" column="6">
+                  <widget class="QPushButton" name="pushButton_DeshacerImagen">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>165</width>
-                     <height>16777215</height>
-                    </size>
+                   <property name="text">
+                    <string>Deshacer</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../maya.qrc">
+                     <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="7" rowspan="3">
+                  <widget class="QPlainTextEdit" name="txtComentariosImagen">
+                   <property name="enabled">
+                    <bool>false</bool>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">color: rgb(0, 0, 128);
 background-color: rgb(255, 255, 255);</string>
-                   </property>
-                   <property name="displayFormat">
-                    <string>dd/MM/yyyy HH:mm</string>
-                   </property>
-                   <property name="calendarPopup">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="2">
-                  <widget class="QLabel" name="label_52">
-                   <property name="text">
-                    <string>Fecha</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="2">
-                  <widget class="QLabel" name="label_53">
-                   <property name="text">
-                    <string>T.imagen:</string>
                    </property>
                   </widget>
                  </item>
@@ -1982,7 +2218,7 @@ background-color: rgb(255, 255, 255);</string>
                  <string notr="true">background-color: #ecefed;</string>
                 </property>
                 <attribute name="icon">
-                 <iconset resource="../Maya.qrc">
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/users.png</normaloff>:/Icons/PNG/users.png</iconset>
                 </attribute>
                 <attribute name="title">
@@ -2000,7 +2236,7 @@ background-color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Maya.qrc">
+                      <iconset resource="../maya.qrc">
                        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                      </property>
                     </widget>
@@ -2014,7 +2250,7 @@ background-color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Maya.qrc">
+                      <iconset resource="../maya.qrc">
                        <normaloff>:/Icons/PNG/importar.png</normaloff>:/Icons/PNG/importar.png</iconset>
                      </property>
                     </widget>
@@ -2028,7 +2264,7 @@ background-color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Maya.qrc">
+                      <iconset resource="../maya.qrc">
                        <normaloff>:/Icons/PNG/TestTubes.png</normaloff>:/Icons/PNG/TestTubes.png</iconset>
                      </property>
                     </widget>
@@ -2042,7 +2278,7 @@ background-color: rgb(255, 255, 255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Maya.qrc">
+                      <iconset resource="../maya.qrc">
                        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
                      </property>
                     </widget>
@@ -2107,7 +2343,7 @@ color: rgb(255,255,255);</string>
                     </widget>
                    </item>
                    <item row="2" column="0" colspan="5">
-                    <widget class="QTableWidget" name="tableWidget">
+                    <widget class="QTableWidget" name="tablaInterconsultas">
                      <property name="styleSheet">
                       <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
@@ -2133,7 +2369,7 @@ color: rgb(255,255,255);</string>
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Maya.qrc">
+                       <iconset resource="../maya.qrc">
                         <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                       </property>
                      </widget>
@@ -2161,7 +2397,7 @@ color: rgb(255,255,255);</string>
                        <string>Documentos</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Maya.qrc">
+                       <iconset resource="../maya.qrc">
                         <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
                       </property>
                      </widget>
@@ -2238,7 +2474,7 @@ color: rgb(255,255,255);</string>
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Maya.qrc">
+                       <iconset resource="../maya.qrc">
                         <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                       </property>
                      </widget>
@@ -2262,13 +2498,13 @@ color: rgb(255,255,255);</string>
                        <string>Documentos</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Maya.qrc">
+                       <iconset resource="../maya.qrc">
                         <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
                       </property>
                      </widget>
                     </item>
                     <item row="0" column="1" colspan="4">
-                     <widget class="QLineEdit" name="btnReferidodeInterconsultas">
+                     <widget class="QLineEdit" name="txtReferidoDe">
                       <property name="styleSheet">
                        <string notr="true">background-color: rgb(255, 255, 255);</string>
                       </property>
@@ -2301,7 +2537,7 @@ color: rgb(255,255,255);</string>
                  <string notr="true">background-color: #ecefed;</string>
                 </property>
                 <attribute name="icon">
-                 <iconset resource="../Maya.qrc">
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/avisos.png</normaloff>:/Icons/PNG/avisos.png</iconset>
                 </attribute>
                 <attribute name="title">
@@ -2310,13 +2546,6 @@ color: rgb(255,255,255);</string>
                 <layout class="QGridLayout" name="gridLayout_18">
                  <item row="0" column="0">
                   <layout class="QGridLayout" name="gridLayout_16">
-                   <item row="1" column="0" colspan="3">
-                    <widget class="QColumnView" name="columnView_4">
-                     <property name="styleSheet">
-                      <string notr="true">background-color: rgb(255, 255, 255);</string>
-                     </property>
-                    </widget>
-                   </item>
                    <item row="2" column="1">
                     <widget class="QToolButton" name="toolButton_20">
                      <property name="toolTip">
@@ -2326,7 +2555,7 @@ color: rgb(255,255,255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Maya.qrc">
+                      <iconset resource="../maya.qrc">
                        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
                      </property>
                     </widget>
@@ -2354,8 +2583,15 @@ color: rgb(255,255,255);</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Maya.qrc">
+                      <iconset resource="../maya.qrc">
                        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0" colspan="3">
+                    <widget class="QListWidget" name="listaAvisos">
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
                     </widget>
                    </item>
@@ -2364,7 +2600,7 @@ color: rgb(255,255,255);</string>
                  <item row="0" column="1">
                   <layout class="QGridLayout" name="gridLayout_17">
                    <item row="0" column="1">
-                    <widget class="QLineEdit" name="lineEdit_9">
+                    <widget class="QLineEdit" name="txtMotivoAviso">
                      <property name="styleSheet">
                       <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
@@ -2399,7 +2635,7 @@ color: rgb(255,255,255);</string>
                     </widget>
                    </item>
                    <item row="5" column="0" colspan="2">
-                    <widget class="QTextEdit" name="textEdit_4">
+                    <widget class="QTextEdit" name="txtTextoAviso">
                      <property name="styleSheet">
                       <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
@@ -2411,7 +2647,7 @@ color: rgb(255,255,255);</string>
                       <string>Editar</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Maya.qrc">
+                      <iconset resource="../maya.qrc">
                        <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -2430,7 +2666,7 @@ color: rgb(255,255,255);</string>
                     </widget>
                    </item>
                    <item row="1" column="1">
-                    <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+                    <widget class="QDateTimeEdit" name="txtAvisar_desde">
                      <property name="styleSheet">
                       <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
@@ -2443,7 +2679,7 @@ color: rgb(255,255,255);</string>
                     </widget>
                    </item>
                    <item row="2" column="1">
-                    <widget class="QDateTimeEdit" name="dateTimeEdit_3">
+                    <widget class="QDateTimeEdit" name="txtAvisar_hasta">
                      <property name="styleSheet">
                       <string notr="true">background-color: rgb(255, 255, 255);</string>
                      </property>
@@ -2463,7 +2699,7 @@ color: rgb(255,255,255);</string>
                     </widget>
                    </item>
                    <item row="6" column="0" colspan="2">
-                    <widget class="QCheckBox" name="checkBox_4">
+                    <widget class="QCheckBox" name="chkAvisoCerrado">
                      <property name="text">
                       <string>Aviso cerrado</string>
                      </property>
@@ -2499,7 +2735,7 @@ color: rgb(255,255,255);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Maya.qrc">
+                <iconset resource="../maya.qrc">
                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                </property>
                <property name="iconSize">
@@ -2528,7 +2764,7 @@ color: rgb(255,255,255);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Maya.qrc">
+                <iconset resource="../maya.qrc">
                  <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
                </property>
                <property name="iconSize">
@@ -2551,7 +2787,7 @@ color: rgb(255,255,255);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Maya.qrc">
+                <iconset resource="../maya.qrc">
                  <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
                </property>
                <property name="iconSize">
@@ -2580,7 +2816,7 @@ color: rgb(255,255,255);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Maya.qrc">
+                <iconset resource="../maya.qrc">
                  <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
                </property>
                <property name="iconSize">
@@ -2600,7 +2836,7 @@ color: rgb(255,255,255);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Maya.qrc">
+                <iconset resource="../maya.qrc">
                  <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
                </property>
                <property name="iconSize">
@@ -2711,7 +2947,7 @@ alternate-background-color: rgb(255, 255, 192);</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Maya.qrc">
+                    <iconset resource="../maya.qrc">
                      <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                    </property>
                   </widget>
@@ -3117,18 +3353,30 @@ color: rgb(0, 0, 0);</string>
          <attribute name="title">
           <string>H. Farmacologico</string>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_30">
-          <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_27">
+          <item row="1" column="2" rowspan="2">
+           <widget class="QTableView" name="listaHistorialFarmacologicoTotal">
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" rowspan="2">
            <layout class="QGridLayout" name="gridLayout_28">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_45">
-              <property name="text">
-               <string>Inicio tratamiento:</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="1">
-             <widget class="QDateEdit" name="dateEdit_5">
+             <widget class="QDateEdit" name="cboFechaInicioTratamiento_pestana_H_Farmacologico">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
@@ -3140,17 +3388,31 @@ color: rgb(0, 0, 0);</string>
               </property>
              </widget>
             </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="txtPosologiaIndicada_PestanaHFarmacologico">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0" colspan="2">
+             <widget class="QTextEdit" name="txtComentariosFarmaco_PestanaHFarmacologia">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_45">
+              <property name="text">
+               <string>Inicio tratamiento:</string>
+              </property>
+             </widget>
+            </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_46">
               <property name="text">
                <string>Posología indicada:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="lineEdit_15">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
              </widget>
             </item>
@@ -3167,76 +3429,43 @@ color: rgb(0, 0, 0);</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="0" colspan="2">
-             <widget class="QTextEdit" name="textEdit_9">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
-            </item>
            </layout>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_48">
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+            </property>
+            <property name="text">
+             <string>MEDICAMENTOS</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
           </item>
           <item row="0" column="1">
-           <layout class="QGridLayout" name="gridLayout_29">
-            <item row="2" column="2">
-             <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="0" colspan="3">
-             <widget class="QListWidget" name="listWidget_2">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0" colspan="3">
-             <widget class="QLabel" name="label_48">
-              <property name="styleSheet">
-               <string notr="true">background: #304163;
-color: rgb(255,255,255);</string>
-              </property>
-              <property name="text">
-               <string>MEDICAMENTOS</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QToolButton" name="toolButton_18">
-              <property name="toolTip">
-               <string>Documentación Fármaco</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../Maya.qrc">
-                <normaloff>:/Icons/PNG/Pills.png</normaloff>:/Icons/PNG/Pills.png</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QToolButton" name="btnVerFarmaco_PestanaHFarmacologia">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Documentación Fármaco&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/Pills.png</normaloff>:/Icons/PNG/Pills.png</iconset>
+            </property>
+           </widget>
           </item>
          </layout>
-        </widget>
-        <widget class="QWidget" name="tab_4">
-         <property name="styleSheet">
-          <string notr="true">background-color: #ecefed;</string>
-         </property>
-         <attribute name="title">
-          <string>Especialidad</string>
-         </attribute>
         </widget>
         <widget class="QWidget" name="tab_6">
          <property name="styleSheet">
@@ -3246,127 +3475,32 @@ color: rgb(255,255,255);</string>
           <string>D. Imagen</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_31">
-          <item row="3" column="0">
-           <widget class="QToolButton" name="toolButton_22">
-            <property name="toolTip">
-             <string>Ver Imagen</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../Maya.qrc">
-              <normaloff>:/Icons/PNG/XRay.png</normaloff>:/Icons/PNG/XRay.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QFrame" name="frame_17">
+          <item row="3" column="1">
+           <widget class="QDateEdit" name="txtFechatomaimagen_pestana_Dimagen">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(197, 205, 255);</string>
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_10">
-             <item>
-              <widget class="QRadioButton" name="radioButton_14">
-               <property name="text">
-                <string>Vistos</string>
-               </property>
-               <property name="checked">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="radioButton_15">
-               <property name="text">
-                <string>Pendientes de ver</string>
-               </property>
-               <property name="checked">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_49">
-            <property name="styleSheet">
-             <string notr="true">background: #304163;
-color: rgb(255,255,255);</string>
-            </property>
-            <property name="text">
-             <string>REGISTRO DE PRUEBAS DE IMÁGEN</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+            <property name="displayFormat">
+             <string>dd/MM/yyyy</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QColumnView" name="columnView_5">
+          <item row="4" column="0" colspan="2">
+           <widget class="QTextEdit" name="txtComentariosImagen_PestanaDImagen">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_50">
+            <property name="text">
+             <string>fecha toma imagen:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
            <layout class="QHBoxLayout" name="horizontalLayout_11">
-            <item>
-             <widget class="QToolButton" name="toolButton_19">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_21">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_23">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_24">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_25">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_26">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton_27">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
             <item>
              <spacer name="horizontalSpacer_5">
               <property name="orientation">
@@ -3389,16 +3523,108 @@ color: rgb(255,255,255);</string>
             </item>
            </layout>
           </item>
-          <item row="0" column="1" rowspan="3">
-           <widget class="QLabel" name="label_50">
-            <property name="text">
-             <string/>
+          <item row="0" column="2" rowspan="5">
+           <widget class="QLabel" name="lblimagengrande">
+            <property name="styleSheet">
+             <string notr="true">background-color: qradialgradient(spread:repeat, cx:0.5, cy:0.5, radius:0.077, fx:0.5, fy:0.5, stop:0 rgba(0, 169, 255, 147), stop:0.497326 rgba(0, 0, 0, 147), stop:1 rgba(0, 169, 255, 147));
+color: rgb(222, 222, 222);</string>
             </property>
-            <property name="pixmap">
-             <pixmap resource="../Maya.qrc">:/Icons/jpg/rx.jpg</pixmap>
+            <property name="text">
+             <string>Sin Imagen</string>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QTableView" name="listaImagenes_pestana_dimagen">
+            <property name="minimumSize">
+             <size>
+              <width>400</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 218);</string>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <property name="gridStyle">
+             <enum>Qt::DotLine</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QFrame" name="frame_17">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(197, 205, 255);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_10">
+             <item>
+              <widget class="QRadioButton" name="radioButton_14">
+               <property name="text">
+                <string>Comentadas</string>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="radioButton_15">
+               <property name="text">
+                <string>Pendientes de comentar</string>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="radioButton">
+               <property name="text">
+                <string>Todas</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="label_49">
+            <property name="styleSheet">
+             <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+            </property>
+            <property name="text">
+             <string>REGISTRO DE PRUEBAS DE IMÁGEN</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -3429,156 +3655,6 @@ color: rgb(255,255,255);</string>
      </layout>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QFrame" name="frame_2">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>212</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>90</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_44">
-      <property name="leftMargin">
-       <number>4</number>
-      </property>
-      <property name="rightMargin">
-       <number>4</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_74">
-        <property name="minimumSize">
-         <size>
-          <width>78</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>15</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background: #304163;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>EPISODIO</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QFrame" name="frame_22">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(197, 205, 255);</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_43">
-         <item row="0" column="0">
-          <widget class="QLabel" name="itemFarma">
-           <property name="maximumSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Este episodio contiene historial de farmacología</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../Maya.qrc">:/Icons/PNG/Pills.png</pixmap>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="itemAnalitica">
-           <property name="maximumSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Este episodio contiene analíticas</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../Maya.qrc">:/Icons/PNG/TestTubes.png</pixmap>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="itemImagenes">
-           <property name="maximumSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Este episodio contiene imagenes</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../Maya.qrc">:/Icons/PNG/XRay.png</pixmap>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="itemInterConsulta">
-           <property name="maximumSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Este episodio contiene información de interconsultas</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../Maya.qrc">:/Icons/PNG/usuarios.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
   </layout>
  </widget>
  <tabstops>
@@ -3590,7 +3666,7 @@ color: rgb(255,255,255);</string>
   <tabstop>txtEdadActual</tabstop>
  </tabstops>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -3600,8 +3676,8 @@ color: rgb(255,255,255);</string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1327</x>
-     <y>32</y>
+     <x>1320</x>
+     <y>38</y>
     </hint>
     <hint type="destinationlabel">
      <x>1014</x>

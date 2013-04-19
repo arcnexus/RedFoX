@@ -1,4 +1,4 @@
-/*
+﻿/*
  * ColumnaFecha.cpp
  *
  *  Created on: September 2012

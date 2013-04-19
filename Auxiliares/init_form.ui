@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>643</width>
-    <height>271</height>
+    <height>387</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,6 +23,19 @@
       <size>
        <width>20</width>
        <height>102</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="3">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
       </size>
      </property>
     </spacer>
@@ -46,25 +59,12 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../Maya.qrc">:/Icons/PNG/maya.png</pixmap>
+      <pixmap resource="../maya.qrc">:/Icons/PNG/maya_logo.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
      </property>
     </widget>
-   </item>
-   <item row="1" column="3">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item row="2" column="2">
     <spacer name="verticalSpacer_2">
@@ -82,7 +82,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections/>
 </ui>

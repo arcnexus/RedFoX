@@ -15,11 +15,13 @@ class FrmAnadirDiagnostico : public QDialog
 public:
     explicit FrmAnadirDiagnostico(QWidget *parent = 0);
     ~FrmAnadirDiagnostico();
+    int id;
     
 private:
     Ui::FrmAnadirDiagnostico *ui;
 private slots:
     void BtnBuscar_Clicked();
+    void SeleccionLista(QModelIndex index);
 };
 
 #endif // FRMANADIRDIAGNOSTICO_H

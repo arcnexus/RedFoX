@@ -100,13 +100,14 @@ void Farmacologia::setcodigonacional(QString codigonacional)
 void Farmacologia::AnadirFarmaco()
 {
     QSqlQuery *qFarma = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    QString cSQL ="INSERT INTO histofarma (idmedicamento,medicamento,iniciotratamiento,"
+    QString cSQL ="INSERT INTO histofarma (idmedicamento,idpaciente,medicamento,iniciotratamiento,"
     "indicacionposologia,comentarios,idepisodio,activo,codigonacional) VALUES "
-    "(:idmedicamento,:medicamento,:iniciotratamiento,:indicacion,:posologia,"
+    "(:idmedicamento,:idpaciente,:medicamento,:iniciotratamiento,:indicacion,:posologia,"
     ":comentarios,idepisodio,:activo,:codigonacional)";
 
     qFarma->prepare(cSQL);
     qFarma->bindValue(":idmedicamento",this->idmedicamento);
+    qFarma->bindValue(":idpaciente",this->idpaciente);
     qFarma->bindValue(":medicamento",this->medicamento);
     qFarma->bindValue(":iniciotratamiento",this->iniciotratamiento);
     qFarma->bindValue(":indicacionposologia",this->indicacionposologia);
@@ -129,6 +130,7 @@ void Farmacologia::modificarFarmaco(int id)
     QString cSQL;
     cSQL = "UPDATE histofarma SET "
     "iniciotratamiento = :iniciotratamiento,"
+    "idpaciente =:idpaciente,"
     "indicacionposologia = :indicacionposologia,"
     "comentarios = :comentarios,"
     "activo = :activo"
@@ -136,6 +138,7 @@ void Farmacologia::modificarFarmaco(int id)
 
     qFarma->prepare(cSQL);
     qFarma->bindValue(":iniciotratamiento",this->iniciotratamiento);
+    qFarma->bindValue(":idpaciente",this->idpaciente);
     qFarma->bindValue(":indicacionposologia",this->indicacionposologia);
     qFarma->bindValue(":comentarios",this->comentarios);
     qFarma->bindValue(":activo",this->activo);
@@ -168,6 +171,7 @@ void Farmacologia::cargarDatos(QString cSQL)
         qFarma->next();
         QSqlRecord rFarma = qFarma->record();
         this->id = rFarma.field("id").value().toInt();
+        this->idpaciente = rFarma.field("idpaciente").value().toInt();
         this->idmedicamento = rFarma.field("idmedicamento").value().toInt();
         this->medicamento = rFarma.field("medicamento").value().toString();
         this->iniciotratamiento = rFarma.field("iniciotratamiento").value().toDate();

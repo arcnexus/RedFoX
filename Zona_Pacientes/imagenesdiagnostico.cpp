@@ -1,4 +1,4 @@
-#include "imagenesdiagnostico.h"
+﻿#include "imagenesdiagnostico.h"
 
 ImagenesDiagnostico::ImagenesDiagnostico(QObject *parent) :
     QObject(parent)
@@ -11,20 +11,19 @@ void ImagenesDiagnostico::guardarDatosDB()
         QScopedPointer<QSqlQuery>qImagen (new QSqlQuery(QSqlDatabase::database("dbmedica")));
         //QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
         qImagen->prepare("UPDATE imagenes SET "
-                         "localizacionimagen =:localizacionimagen,"
                          "comentarios = :comentarios,"
                          "evaluada =:evaluada,"
                          "descripcion = :descripcion,"
                          "fechaimagen = :fechaimagen,"
-                         "tipoimagen = :tipoimagen "
+                         "idtipoimagen = :idtipoimagen "
                          "WHERE id =:id");
 
-        qImagen->bindValue(":localizacionimagen",this->LocalizacionImagen);
+
         qImagen->bindValue(":comentarios",this->Comentarios);
         qImagen->bindValue(":evaluada",this->Evaluada);
         qImagen->bindValue(":descripcion",this->Descripcion);
         qImagen->bindValue(":fechaimagen",this->FechaImagen);
-        qImagen->bindValue(":tipoimagen",this->TipoImagen);
+        qImagen->bindValue(":idtipoimagen",this->idTipoImagen);
         qImagen->bindValue(":id",this->id);
 
         if(qImagen->exec()){
@@ -54,7 +53,7 @@ void ImagenesDiagnostico::llenarObjetoconDatosDB()
         this->Descripcion = rImagen.field("descripcion").value().toString();
         this->FechaImagen = rImagen.field("fechaimagen").value().toDate();
         this->LocalizacionImagen = rImagen.field("localizacionimagen").value().toString();
-        this->TipoImagen = rImagen.field("tipoimagen").value().toString();
+        this->idTipoImagen = rImagen.field("idtipoimagen").value().toInt();
         this->Evaluada =rImagen.field("evaluada").value().toInt();
     } else {
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Imagenes Diagnóstico"),QObject::tr("No se ha podido recuperar el registro de imagen"),
@@ -78,7 +77,7 @@ void ImagenesDiagnostico::llenarObjetoconDatosDB(int nid)
         this->Descripcion = rImagen.field("descripcion").value().toString();
         this->FechaImagen = rImagen.field("fechaimagen").value().toDate();
         this->LocalizacionImagen = rImagen.field("localizacionimagen").value().toString();
-        this->TipoImagen = rImagen.field("tipoimagen").value().toString();
+        this->idTipoImagen = rImagen.field("idtipoimagen").value().toInt();
         this->Evaluada =rImagen.field("evaluada").value().toInt();
     } else {
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Imagenes Diagnóstico"),QObject::tr("No se ha podido recuperar el registro de imagen"),
@@ -103,30 +102,29 @@ void ImagenesDiagnostico::BorrarImagen(int nid)
     }
 }
 
-void ImagenesDiagnostico::anadirDatosDB()
+int ImagenesDiagnostico::DevolverId_tipo_imagen(QString TipoImagen)
 {
-    emit ui_ponerDatosEnObjetoImagen();
-    QScopedPointer<QSqlQuery>qImagen (new QSqlQuery(QSqlDatabase::database("dbmedica")));
-    //QSqlQuery *qImagen = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qImagen->prepare("INSERT INTO imagenes "
-                    "(idepisodio,localizacionimagen,comentarios,evaluada,descripcion,fechaimagen,"
-                    "tipoimagen) VALUES (:idepisodio,:localizacionimagen,:comentarios,:evaluada,"
-                    ":descripcion,:fechaimagen,:tipoimagen)");
-    qImagen->bindValue(":idepisodio",this->idEpisodio);
-    qImagen->bindValue(":localizacionimagen",this->LocalizacionImagen);
-    qImagen->bindValue(":comentarios",this->Comentarios);
-    qImagen->bindValue(":evaluada",this->Evaluada);
-    qImagen->bindValue(":descripcion",this->Descripcion);
-    qImagen->bindValue(":fechaimagen",this->FechaImagen);
-    qImagen->bindValue(":tipoimagen",this->TipoImagen);
-    if(qImagen->exec()){
-        QMessageBox::information(qApp->activeWindow(),QObject::tr("Insertar Imagenes"),QObject::tr("La imagen ha sido insertada correctamente"),
-                                 QObject::tr("Aceptar"));
-        emit cerrarventana();
-    } else
-        QMessageBox::information(qApp->activeWindow(),QObject::tr("Insertar Imagenes"),QObject::tr("Ocurrió un error al insertar la imagen en el episodio:")+
-                                 qImagen->lastError().text(),
-                                 QObject::tr("Aceptar"));
-
-
+    QSqlQuery queryTiposImagen(QSqlDatabase::database("dbmedica"));
+    queryTiposImagen.prepare("Select id from tiposimagen where descripcion = :TipoImagen");
+    queryTiposImagen.bindValue(":TipoImagen",TipoImagen);
+    if(queryTiposImagen.exec()){
+        queryTiposImagen.next();
+        return queryTiposImagen.record().value("id").toInt();
+    }
+    return -1;
 }
+
+QString ImagenesDiagnostico::DevolverTexto_tipo_imagen(int id)
+{
+    QSqlQuery queryTiposImagen(QSqlDatabase::database("dbmedica"));
+    queryTiposImagen.prepare("Select descripcion from tiposimagen where id = :id");
+    queryTiposImagen.bindValue(":id",id);
+    if(queryTiposImagen.exec()){
+        queryTiposImagen.next();
+        return queryTiposImagen.record().value("descripcion").toString();
+    }
+    return "";
+}
+
+
+

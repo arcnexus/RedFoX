@@ -7,8 +7,9 @@ class Analitica : public QObject
 {
     Q_OBJECT
 
-private:
+public:
     int id;
+    int idpaciente;
     int idepisodio;
     QString analisis;
     QString comentarios;
@@ -16,7 +17,6 @@ private:
     QString valor;
     QDate fecha;
 
-public:
     explicit Analitica(QObject *parent = 0);
     void AnadirAnalitica();
     void AnadirLineas(int idanalitica, QString descripcion, QString valor, QString referencia, QString comentarios, QString tipo);
