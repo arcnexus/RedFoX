@@ -559,71 +559,79 @@ QString Configuracion::letraDNI(QString Nif)
 
 void Configuracion::imprimir(QString db, QString report, bool toPDF,bool preview, QWidget *parent)
 {
-    QFile f(report);
-    if(f.open(QFile::ReadOnly))
+    QSqlQuery q(QSqlDatabase::database("terra"));
+    q.prepare("SELECT * FROM report WHERE report_name = :name ORDER BY report_grade DESC");
+    q.bindValue(":name",report);
+    if(q.exec())
     {
-        QDomDocument ddoc;
-        if(ddoc.setContent(f.readAll()))
+        qDebug() << q.executedQuery();
+        if(q.next())
         {
-            ORPreRender pre;
-            pre.setDom(ddoc);
-            pre.setDatabase(QSqlDatabase::database(db));
-
-            ParameterEdit paramEdit(0);
-            QDialog *dlgEdit = ParameterEdit::ParameterEditDialog(&paramEdit, parent);
-            if (paramEdit.setDocument(ddoc))
-                if (dlgEdit->exec() != QDialog::Accepted)
-                    return;
-
-            pre.setParamList(paramEdit.getParameterList());
-            ORODocument * doc = pre.generate();
-
-            if(doc)
+            QDomDocument ddoc;
+            QString error;
+            if(ddoc.setContent(q.record().value("report_source").toString(),&error))
             {
-                QPrinter printer(QPrinter::HighResolution);
-                if(preview)
-                {
-                    PreviewDialog preview (doc, &printer, parent);
-                    if (preview.exec() == QDialog::Rejected)
-                        return;
-                }
-                ORPrintRender render;
-                render.setupPrinter(doc, &printer);
+                ORPreRender pre;
+                pre.setDom(ddoc);
+                pre.setDatabase(QSqlDatabase::database(db));
 
-                if(printer.printerName().isEmpty())
-                {
-                    QPrintDialog pd(&printer);
-                    if(pd.exec() != QDialog::Accepted)
-                    {
-                        qDebug() << "no printer, can't preview";
-                        return; // no printer, can't preview
-                    }
-                }
-
-                if(toPDF)
-                {
-                    QString output = QFileDialog::getSaveFileName(parent);
-
-                    if(output.isEmpty())
+                ParameterEdit paramEdit(0);
+                QDialog *dlgEdit = ParameterEdit::ParameterEditDialog(&paramEdit, parent);
+                if (paramEdit.setDocument(ddoc))
+                    if (dlgEdit->exec() != QDialog::Accepted)
                         return;
 
-                    if ( QFileInfo( output ).suffix().isEmpty() )
-                      output.append(".pdf");
+                pre.setParamList(paramEdit.getParameterList());
+                ORODocument * doc = pre.generate();
 
-                    ORPrintRender::exportToPDF(doc, output );
-                }
-                else
+                if(doc)
                 {
-                    QPrintDialog pd(&printer);
-                    pd.setMinMax(1, doc->pages());
-                    if(pd.exec() == QDialog::Accepted)
+                    QPrinter printer(QPrinter::HighResolution);
+                    if(preview)
                     {
-                        render.setPrinter(&printer);
-                        render.render(doc);
+                        PreviewDialog preview (doc, &printer, parent);
+                        if (preview.exec() == QDialog::Rejected)
+                            return;
                     }
+                    ORPrintRender render;
+                    render.setupPrinter(doc, &printer);
+
+                    if(printer.printerName().isEmpty())
+                    {
+                        QPrintDialog pd(&printer);
+                        if(pd.exec() != QDialog::Accepted)
+                        {
+                            qDebug() << "no printer, can't preview";
+                            return; // no printer, can't preview
+                        }
+                    }
+
+                    if(toPDF)
+                    {
+                        QString output = QFileDialog::getSaveFileName(parent);
+
+                        if(output.isEmpty())
+                            return;
+
+                        if ( QFileInfo( output ).suffix().isEmpty() )
+                            output.append(".pdf");
+
+                        ORPrintRender::exportToPDF(doc, output );
+                    }
+                    else
+                    {
+                        QPrintDialog pd(&printer);
+                        pd.setMinMax(1, doc->pages());
+                        if(pd.exec() == QDialog::Accepted)
+                        {
+                            render.setPrinter(&printer);
+                            render.render(doc);
+                        }
+                    }
+                    delete doc;
                 }
-                delete doc;
             }
+            qDebug()<<error;
         }
     }
 }

@@ -896,7 +896,7 @@ void MainWindow::handle_paises()
 
     form.set_columnHide(0);
     form.set_relation(2,QSqlRelation("monedas","id","moneda"));
-    form.set_printFile("/home/arcnexus/MayaReports/clientes.xml");//TODO hacer directorio general de reports
+    form.set_printFile("x");//TODO hacer directorio general de reports
     form.exec();
     Configuracion_global->Cargar_paises();
 }

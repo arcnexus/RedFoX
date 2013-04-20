@@ -102,12 +102,8 @@ void Db_table_View::set_noInsertDeleteRows()
 
 void Db_table_View::set_printFile(QString file)
 {
-    QFile f(file);
-    if (f.exists())
-    {
-        ui->btn_print->setEnabled(true);
-        this->file = file;
-    }
+    ui->btn_print->setEnabled(true);
+    this->file = file;
 }
 
 void Db_table_View::on_btn_add_clicked()

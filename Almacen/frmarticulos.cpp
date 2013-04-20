@@ -1139,6 +1139,7 @@ void FrmArticulos::GraficaImportes()
 
     if(ui->cboTipoGrafica->currentText()==tr("Grafica de Barras")) {
         ui->grafica->Clear();
+        ui->grafica->setTipo(OpenChart::BarraMultiple);
         ui->grafica->addMulibarColor("Compras",Qt::darkRed);
         ui->grafica->addMulibarColor("Ventas",Qt::darkGreen);
         QVector <float> enero;
