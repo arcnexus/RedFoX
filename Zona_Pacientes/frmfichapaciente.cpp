@@ -168,6 +168,7 @@ void FrmFichaPaciente::cargarDatos(int idcliente)
     modelEpisodios->setQuery("select descripcion,fecha,id from episodios where idpaciente ="+QString::number(oPaciente->id)+
                              " order by fecha desc",QSqlDatabase::database("dbmedica"));
     ui->listaEpisodios->setModel(modelEpisodios);
+    ui->listaEpisodios->setColumnHidden(2,true);
     //-----------------------
     // Historial Farmacología
     //-----------------------

@@ -11,6 +11,8 @@ QLabel, QAbstractButton , QStatusBar{
 }
 
 
+QTextEdit{border:1px solid grey}
+
 QStatusBar::item {
     border-width: 1;
     border-color: darkkhaki;
@@ -87,11 +89,7 @@ QFrame {
     border-radius: 5px;
     background-color: rgb(175,195,225);
 }
-QLabel {
-    border: none;
-    padding: 0;
-    background: none;
-}
+
 QLineEdit:focus, QFrame:focus {
     border-width: 1.5px;
     padding: 0px;
@@ -352,5 +350,6 @@ QTableView, QTableWidet {
 QPushButton:enabled{color: rgb(255,255,255); }*/
 
 QMessageBox {
-background-color:rgb(192,192,192);
+    background-color:rgb(192,192,192);
 }
+
