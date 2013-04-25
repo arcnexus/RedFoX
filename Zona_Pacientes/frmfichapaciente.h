@@ -45,6 +45,7 @@ private slots:
     void on_btnEditarEpisodio_clicked();
     void on_btnDeshacerEpisodio_clicked();
     void on_btnAnadirFarma_clicked();
+    void on_btnAnadirHerb_clicked();
     void BuscarCIE();
     void RecuperarCIE(int,QString,QString);
     void ActivarControlesFarmacologia();

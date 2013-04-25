@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>frmAnadirHierb</class>
+ <widget class="QDialog" name="frmAnadirHierb">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>922</width>
+    <height>554</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Buscar productos complementarios</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/Icons/PNG/mayafondo_blanco.png</normaloff>:/Icons/PNG/mayafondo_blanco.png</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0" colspan="4">
+    <widget class="QFrame" name="frame">
+     <property name="styleSheet">
+      <string notr="true">background: #4c6088</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QTabWidget" name="pestanas">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="pagina_nombre">
+         <property name="styleSheet">
+          <string notr="true">background-color: #ecefed;</string>
+         </property>
+         <attribute name="title">
+          <string>Buscar por nombre</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Nombre del producto:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="txtTexto_producto">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="btn_buscar_producto">
+            <property name="text">
+             <string>Buscar</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="3">
+           <widget class="QTableView" name="tabla_producto">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(219, 255, 207);</string>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="pagina_laboratorio">
+         <property name="styleSheet">
+          <string notr="true">background-color: #ecefed;</string>
+         </property>
+         <attribute name="title">
+          <string>Buscar  por laboratorio</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="0" column="0">
+             <widget class="QLineEdit" name="lineEdit">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="pushButton">
+              <property name="text">
+               <string>Buscar</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="2">
+             <widget class="QTableView" name="tableView">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" colspan="2">
+             <widget class="QPushButton" name="pushButton_2">
+              <property name="text">
+               <string>Mostrar productos</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>:/Icons/PNG/pedidos.png</normaloff>:/Icons/PNG/pedidos.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="1">
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QLineEdit" name="lineEdit_2">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableView" name="tableView_2">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="pagina_laboratorio_2">
+         <property name="styleSheet">
+          <string notr="true">background-color: #ecefed;</string>
+         </property>
+         <attribute name="title">
+          <string>Buscar por patología</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <layout class="QGridLayout" name="gridLayout_5">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Patología:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="txt_patologia">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QPushButton" name="btn_buscar">
+              <property name="text">
+               <string>Buscar</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="3">
+             <widget class="QTableView" name="tabla_patologias">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" colspan="3">
+             <widget class="QPushButton" name="btn_ver_producto_por_patologia">
+              <property name="text">
+               <string>Ver productos</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QLineEdit" name="txt_filtro_producto_por_patologias">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableView" name="tabla_producto_patologias">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="pagina_componente">
+         <property name="styleSheet">
+          <string notr="true">background-color: #ecefed;</string>
+         </property>
+         <attribute name="title">
+          <string>Buscar por componente</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Componente:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="txt_componente">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QPushButton" name="btn_buscar_componente">
+              <property name="text">
+               <string>Buscar</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="3">
+             <widget class="QTableView" name="tabla_componentes">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" colspan="3">
+             <widget class="QPushButton" name="btn_ver_producto_por_componente">
+              <property name="text">
+               <string>Ver productos</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QLineEdit" name="txt_filtrar_por_componente">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableView" name="tabla_producto_componente">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="btn_vademecum">
+     <property name="text">
+      <string>Ver en vademécum</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/Icons/PNG/magnifier_zoom_out.png</normaloff>:/Icons/PNG/magnifier_zoom_out.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="btn_anadir">
+     <property name="text">
+      <string>Añadir</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QPushButton" name="btn_cerrar">
+     <property name="text">
+      <string>Cerrar</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btn_cerrar</sender>
+   <signal>clicked()</signal>
+   <receiver>frmAnadirHierb</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>876</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>383</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_vademecum</sender>
+   <signal>clicked()</signal>
+   <receiver>frmAnadirHierb</receiver>
+   <slot>ver_vademecum()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>608</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>288</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_anadir</sender>
+   <signal>clicked()</signal>
+   <receiver>frmAnadirHierb</receiver>
+   <slot>anadir_producto()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>787</x>
+     <y>402</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>485</x>
+     <y>392</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>ver_vademecum()</slot>
+  <slot>anadir_producto()</slot>
+ </slots>
+</ui>

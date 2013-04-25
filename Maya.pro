@@ -121,6 +121,7 @@ SOURCES += main.cpp\
     Zona_Pacientes/frmmtcbase.cpp \
     Zona_Pacientes/frmanadirdiagnostico.cpp \
     Zona_Administrador/frmconfigmaya.cpp \
+    Zona_Pacientes/frmanadirhierb.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -209,7 +210,8 @@ HEADERS  += mainwindow.h \
     Zona_Pacientes/frmmtcbase.h \
     Zona_Pacientes/frmanadirdiagnostico.h \
     Zona_Administrador/frmconfigmaya.h \
-    Zona_Administrador/block_Maya_form.h
+    Zona_Administrador/block_Maya_form.h \
+    Zona_Pacientes/frmanadirhierb.h
 
 
 FORMS    += mainwindow.ui \
@@ -263,6 +265,7 @@ FORMS    += mainwindow.ui \
     Zona_Pacientes/frmmtcbase.ui \
     Zona_Pacientes/frmanadirdiagnostico.ui \
     Zona_Administrador/frmconfigmaya.ui \
+    Zona_Pacientes/frmanadirhierb.ui
 
 RESOURCES += \
     maya.qrc

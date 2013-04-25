@@ -27,6 +27,7 @@
 #include "frmmtcbase.h"
 #include "visitas.h"
 #include "frmanadirdiagnostico.h"
+#include "frmanadirhierb.h"
 
 
 //TODO integrar http://doc.ginkgo-cadx.com/ginkgo-integration/ginkgo-cadx-integration-input-xml-integration/
@@ -103,6 +104,7 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
     connect(ui->btnGuardarVisita,SIGNAL(clicked()),this,SLOT(btnGuardarVisita_clicked()));
     connect(ui->listaHistorialFarmacologicoTotal,SIGNAL(clicked(QModelIndex)), this,SLOT(ListaHistorialFarmacologia_clicked(QModelIndex)));
     connect(ui->listaImagenes_pestana_dimagen,SIGNAL(clicked(QModelIndex)), this,SLOT(ListaHistorialImagenes_clicked(QModelIndex)));
+    connect(ui->btnAnadirHierba,SIGNAL(clicked()),this,SLOT(on_btnAnadirHerb_clicked()));
 
     // Ocultar Iconos imagenes
     ui->itemFarma->setVisible(false);
@@ -525,6 +527,12 @@ void FrmFichaPaciente::on_btnAnadirFarma_clicked()
     nuevomed.setWindowState(Qt::WindowMaximized);
     connect(&nuevomed, SIGNAL(datos(int, QString,QString)), this, SLOT(AnadirDatosMedicamento(int, QString,QString)));
     nuevomed.exec();
+}
+
+void FrmFichaPaciente::on_btnAnadirHerb_clicked()
+{
+    frmAnadirHierb nuevahierba(this);
+    nuevahierba.exec();
 }
 
 void FrmFichaPaciente::BuscarCIE()
