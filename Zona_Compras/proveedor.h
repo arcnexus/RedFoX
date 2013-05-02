@@ -18,6 +18,7 @@ public:
     QString cCP;
     QString cPoblacion;
     QString cProvincia;
+    int idpais;
     QString cPais;
     QString cTelefono1;
     QString cTelefono2;
@@ -32,9 +33,11 @@ public:
     QString cCPAlmacen;
     QString cPoblacionAlmacen;
     QString cProvinciaAlmacen;
+    int idPaisAlmacen;
     QString cPaisAlmacen;
     QString cTelefonoAlmacen;
     QString cFaxAlmacen;
+    int idFormadePago;
     QString cCodigoFormaPago;
     QDate dFechaUltimaCompra;
     double rAcumuladoCompras;

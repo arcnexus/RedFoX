@@ -23,11 +23,31 @@ frmProveedores::frmProveedores(QWidget *parent) :
     BloquearCampos();
     ui->txtdFechaAlta->setDate(QDate::currentDate());
     ui->txtdFechaUltimaCompra->setDate(QDate::currentDate());
+    //---------------------------
     // cargar datos forma de pago.
+    //---------------------------
     QSqlQueryModel *qmFormaPago = new QSqlQueryModel(this);
-    qmFormaPago->setQuery("select cCodigo, cFormapago from FormPago",QSqlDatabase::database("empresa"));
+    qmFormaPago->setQuery("select cCodigo, cFormapago from FormPago",QSqlDatabase::database("Maya"));
 
     ui->txtcCodigoFormaPago->setModel(qmFormaPago);
+    oProveedor->idFormadePago = Configuracion_global->Devolver_id_forma_pago(ui->txtcCodigoFormaPago->currentText());
+
+    // ----------------
+    // Cargar Paises
+    // ----------------
+    QSqlQueryModel * modelPais = new QSqlQueryModel(this);
+    modelPais->setQuery("select pais from paises",QSqlDatabase::database("Maya"));
+    ui->txtcPais->setModel(modelPais);
+    oProveedor->idpais = Configuracion_global->Devolver_id_pais(ui->txtcPais->currentText());
+
+    // ---------------------
+    // Cargar Paises almacen
+    // ---------------------
+    QSqlQueryModel * modelPaisAlmacen = new QSqlQueryModel(this);
+    modelPaisAlmacen->setQuery("select pais from paises",QSqlDatabase::database("Maya"));
+    ui->txtcPaisAlmacen->setModel(modelPaisAlmacen);
+    oProveedor->idPaisAlmacen = Configuracion_global->Devolver_id_pais(ui->txtcPaisAlmacen->currentText());
+
 }
 
 frmProveedores::~frmProveedores()
@@ -46,7 +66,8 @@ void frmProveedores::LLenarCampos()
     ui->txtcCP->setText(oProveedor->cCP);
     ui->txtcPoblacion->setText(oProveedor->cPoblacion);
     ui->txtcProvincia->setText(oProveedor->cProvincia);
-    ui->txtcPais->setText(oProveedor->cPais);
+    int index = ui->txtcPais->findText(oProveedor->cPais);
+    ui->txtcPais->setCurrentIndex(index);
     ui->txtcTelefono1->setText(oProveedor->cTelefono1);
     ui->txtcTelefono2->setText(oProveedor->cTelefono2);
     ui->txtcTelefono3->setText(oProveedor->cTelefono3);
@@ -60,12 +81,21 @@ void frmProveedores::LLenarCampos()
     ui->txtcCPAlmacen->setText(oProveedor->cCPAlmacen);
     ui->txtcPoblacionAlmacen->setText(oProveedor->cPoblacionAlmacen);
     ui->txtcProvinciaAmacen->setText(oProveedor->cProvinciaAlmacen);
-    ui->txtcPaisAlmacen->setText(oProveedor->cPaisAlmacen);
+    index = ui->txtcPaisAlmacen->findText(oProveedor->cPaisAlmacen);
+    ui->txtcPaisAlmacen->setCurrentIndex(index);
     ui->txtcTelefonoAlmacen->setText(oProveedor->cTelefonoAlmacen);
     ui->txtcFaxAlmacen->setText(oProveedor->cFaxAlmacen);
+
     int nIndex = ui->txtcCodigoFormaPago->findText(oProveedor->cCodigoFormaPago);
     if (nIndex !=-1)
+    {
         ui->txtcCodigoFormaPago->setCurrentIndex(nIndex);
+        ui->txtcFormaPago->setText(Configuracion_global->Devolver_forma_pago(oProveedor->idFormadePago));
+
+    } else
+    {
+        ui->txtcFormaPago->setText("");
+    }
 
     ui->txtdFechaUltimaCompra->setDate(oProveedor->dFechaUltimaCompra);
     ui->txtrAcumuladoCompras->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->rAcumuladoCompras,'f',2)));
@@ -123,7 +153,7 @@ void frmProveedores::CargarCamposEnProveedor()
     oProveedor->cCP = ui->txtcCP->text();
     oProveedor->cPoblacion = ui->txtcPoblacion->text();
     oProveedor->cProvincia = ui->txtcProvincia->text();
-    oProveedor->cPais = ui->txtcPais->text();
+    oProveedor->cPais = ui->txtcPais->currentText();
     oProveedor->cTelefono1 = ui->txtcTelefono1->text();
     oProveedor->cTelefono2 = ui->txtcTelefono2->text();
     oProveedor->cTelefono3 = ui->txtcTelefono3->text();
@@ -137,7 +167,7 @@ void frmProveedores::CargarCamposEnProveedor()
     oProveedor->cCPAlmacen = ui->txtcCPAlmacen->text();
     oProveedor->cPoblacionAlmacen = ui->txtcPoblacionAlmacen->text();
     oProveedor->cProvinciaAlmacen = ui->txtcProvinciaAmacen->text();
-    oProveedor->cPaisAlmacen = ui->txtcPaisAlmacen->text();
+    oProveedor->cPaisAlmacen = ui->txtcPaisAlmacen->currentText();
     oProveedor->cTelefonoAlmacen = ui->txtcTelefonoAlmacen->text();
     oProveedor->cFaxAlmacen = ui->txtcFaxAlmacen->text();
     oProveedor->cCodigoFormaPago = ui->txtcCodigoFormaPago->currentText();
@@ -299,9 +329,29 @@ void frmProveedores::on_btnAnterior_clicked()
 
 void frmProveedores::on_btnGuardar_clicked()
 {
-    CargarCamposEnProveedor();
-    oProveedor->Guardar();
-    BloquearCampos();
+    bool lGuardar = true;
+    QString cTexto;
+    cTexto = tr("Hay campos que debe rellenar para poder guardar")+"\n";
+    if (oProveedor->idFormadePago == 0)
+    {
+        lGuardar = false;
+        cTexto = cTexto + tr("Debe elegir una forma de pago")+"\n";
+    }
+
+    if (oProveedor->idpais == 0)
+    {
+        lGuardar = false;
+        cTexto = cTexto + tr("Debe elegir el pais del Proveedor")+"\n";
+    }
+    if (lGuardar)
+    {
+        CargarCamposEnProveedor();
+        oProveedor->Guardar();
+        BloquearCampos();
+    } else
+    {
+        QMessageBox::warning(this,tr("No se puede guardar, falta especificar datos"),cTexto,tr("Aceptar"));
+    }
 }
 
 void frmProveedores::on_btnEditar_clicked()
@@ -345,7 +395,8 @@ void frmProveedores::on_txtcPoblacion_editingFinished()
                         ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
                         ui->txtcCP->setText(qPoblacion.value(1).toString());
                         ui->txtcProvincia->setText(qPoblacion.value(2).toString());
-                        ui->txtcPais->setText(Configuracion_global->cPais);
+                        int index = ui->txtcPais->findText(Configuracion_global->cPais);
+                        ui->txtcPais->setCurrentIndex(index);
                     }
                 }
 
@@ -368,22 +419,24 @@ void frmProveedores::on_txtcCP_editingFinished()
                 QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
                 QString cId;
                 cId = QString::number(nId);
-                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+                qPoblacion.prepare("select  poblacion,  cp, provincia from poblaciones where id = :cId");
                 qPoblacion.bindValue(":id",cId);
                 if(!qPoblacion.exec()) {
                     QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                 } else {
                     if (qPoblacion.next()) {
-                        ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
-                        ui->txtcProvincia->setText(qPoblacion.value(2).toString());
-                        ui->txtcPais->setText(Configuracion_global->cPais);
+                        ui->txtcPoblacion->setText(qPoblacion.record().value("poblacion").toString());
+                        ui->txtcProvincia->setText(qPoblacion.record().value("provincia").toString());
+                        int index = ui->txtcPais->findText(Configuracion_global->cPais);
+                        ui->txtcPais->setCurrentIndex(index);
+                        ui->txtcTelefono1->setFocus();
                     }
                 }
 
             }
         }
     }
-    ui->txtcTelefono1->setFocus();
+
 }
 
 
@@ -547,7 +600,7 @@ void frmProveedores::on_txtcCPAlmacen_editingFinished()
                     QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
                     QString cId;
                     cId = QString::number(nId);
-                    qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+                    qPoblacion.prepare("select poblacion, cp, provincia from poblaciones where id = :cId");
                     qPoblacion.bindValue(":id",cId);
                     if(!qPoblacion.exec()) {
                         QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
@@ -555,7 +608,8 @@ void frmProveedores::on_txtcCPAlmacen_editingFinished()
                         if (qPoblacion.next()) {
                             ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());
                             ui->txtcProvinciaAmacen->setText(qPoblacion.value(2).toString());
-                            ui->txtcPaisAlmacen->setText(Configuracion_global->cPais);
+                            int index = ui->txtcPaisAlmacen->findText(Configuracion_global->cPais);
+                            ui->txtcPaisAlmacen->setCurrentIndex(index);
                         }
                     }
 
@@ -564,4 +618,17 @@ void frmProveedores::on_txtcCPAlmacen_editingFinished()
         }
         ui->txtcTelefonoAlmacen->setFocus();
     }
+}
+
+void frmProveedores::on_txtcPais_currentIndexChanged(const QString &arg1)
+{
+    QString cPais = arg1;
+   oProveedor->idpais = Configuracion_global->Devolver_id_pais(cPais);
+}
+
+
+void frmProveedores::on_txtcCodigoFormaPago_currentIndexChanged(const QString &arg1)
+{
+    QString cCodigo = arg1;
+    oProveedor->idFormadePago = Configuracion_global->Devolver_id_codigo_forma_pago(cCodigo);
 }

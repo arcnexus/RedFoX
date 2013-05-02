@@ -42,7 +42,7 @@ SOURCES += main.cpp\
     login.cpp \
     Zona_Compras/frmproveedores.cpp \
     Zona_Pacientes/cliente.cpp \
-    proveedor.cpp \
+    Zona_Compras/proveedor.cpp \
     Busquedas/frmbuscarcliente.cpp \
     Busquedas/frmbuscarpoblacion.cpp \
     configuracion.cpp \
@@ -130,7 +130,7 @@ HEADERS  += mainwindow.h \
     login.h \
     Zona_Compras/frmproveedores.h \
     Zona_Pacientes/cliente.h \
-    proveedor.h \
+    Zona_Compras/proveedor.h \
     Busquedas/frmbuscarcliente.h \
     Busquedas/frmbuscarpoblacion.h \
     configuracion.h \
@@ -180,7 +180,7 @@ HEADERS  += mainwindow.h \
     Zona_Pacientes/frmaddtipocliente.h \
     Zona_Compras/frmorden_pedido_producto.h \
     openrptLibs/Auxiliares/reportwriterwindow.h \
-     Agenda/graphicstable.h \
+    Agenda/graphicstable.h \
     Agenda/graphicsevent.h \
     Agenda/editeventform.h \
     Agenda/agendaform.h \

@@ -40,7 +40,8 @@ void Proveedor::Recuperar(QString cSQL)
             this->cCP = rProveedor.field("cCP").value().toString();
             this->cPoblacion = rProveedor.field("cPoblacion").value().toString();
             this->cProvincia = rProveedor.field("cProvincia").value().toString();
-            this->cPais = rProveedor.field("cPais").value().toString();
+            this->idpais = rProveedor.field("id_pais").value().toInt();
+            this->cPais =  Configuracion_global->Devolver_pais(this->idpais);
             this->cTelefono1 = rProveedor.field("cTelefono1").value().toString();
             this->cTelefono2 = rProveedor.field("cTelefono2").value().toString();
             this->cTelefono3 = rProveedor.field("cTelefono3").value().toString();
@@ -54,10 +55,12 @@ void Proveedor::Recuperar(QString cSQL)
             this->cCPAlmacen = rProveedor.field("cCPAlmacen").value().toString();
             this->cPoblacionAlmacen = rProveedor.field("cPoblacionAlmacen").value().toString();
             this->cProvinciaAlmacen = rProveedor.field("cProvinciaAlmacen").value().toString();
-            this->cPaisAlmacen = rProveedor.field("cPaisAlmacen").value().toString();
+            this->idPaisAlmacen = rProveedor.field("idPaisAlmacen").value().toInt();
+            this->cPaisAlmacen = Configuracion_global->Devolver_pais(this->idPaisAlmacen);
             this->cTelefonoAlmacen = rProveedor.field("cTelefonoAlmacen").value().toString();
             this->cFaxAlmacen = rProveedor.field("cFaxAlmacen").value().toString();
-            this->cCodigoFormaPago = rProveedor.field("cCodigoFormaPago").value().toString();
+            this->idFormadePago = rProveedor.field("idFormaPago").value().toInt();
+            this->cCodigoFormaPago = Configuracion_global->Devolver_codigo_forma_pago(this->idFormadePago);
             this->dFechaUltimaCompra = rProveedor.field("dFechaUltimaCompra").value().toDate();
             this->rAcumuladoCompras = rProveedor.field("rAcumuladoCompras").value().toDouble();
             this->cEntidadBancariaProveedor = rProveedor.field("cEntidadBancariaProveedor").value().toString();
@@ -108,7 +111,8 @@ void Proveedor::Recuperar(QString cSQL, int nProcede)
             this->cCP = rProveedor.field("cCP").value().toString();
             this->cPoblacion = rProveedor.field("cPoblacion").value().toString();
             this->cProvincia = rProveedor.field("cProvincia").value().toString();
-            this->cPais = rProveedor.field("cPais").value().toString();
+            this->idpais = rProveedor.field("id_pais").value().toInt();
+            this->cPais =  Configuracion_global->Devolver_pais(this->idpais);
             this->cTelefono1 = rProveedor.field("cTelefono1").value().toString();
             this->cTelefono2 = rProveedor.field("cTelefono2").value().toString();
             this->cTelefono3 = rProveedor.field("cTelefono3").value().toString();
@@ -122,10 +126,12 @@ void Proveedor::Recuperar(QString cSQL, int nProcede)
             this->cCPAlmacen = rProveedor.field("cCPAlmacen").value().toString();
             this->cPoblacionAlmacen = rProveedor.field("cPoblacionAlmacen").value().toString();
             this->cProvinciaAlmacen = rProveedor.field("cProvinciaAlmacen").value().toString();
-            this->cPaisAlmacen = rProveedor.field("cPaisAlmacen").value().toString();
+            this->idPaisAlmacen = rProveedor.field("idPaisAlmacen").value().toInt();
+            this->cPaisAlmacen = Configuracion_global->Devolver_pais(this->idPaisAlmacen);
             this->cTelefonoAlmacen = rProveedor.field("cTelefonoAlmacen").value().toString();
             this->cFaxAlmacen = rProveedor.field("cFaxAlmacen").value().toString();
-            this->cCodigoFormaPago = rProveedor.field("cCodigoFormaPago").value().toString();
+            this->idFormadePago = rProveedor.field("idFormaPago").value().toInt();
+            this->cCodigoFormaPago = Configuracion_global->Devolver_codigo_forma_pago(this->idFormadePago);
             this->dFechaUltimaCompra = rProveedor.field("dFechaUltimaCompra").value().toDate();
             this->rAcumuladoCompras = rProveedor.field("rAcumuladoCompras").value().toDouble();
             this->cEntidadBancariaProveedor = rProveedor.field("cEntidadBancariaProveedor").value().toString();
@@ -166,114 +172,124 @@ void Proveedor::Recuperar(QString cSQL, int nProcede)
 
 void Proveedor::Guardar()
 {
-    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
-    //QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
-    qProveedor->prepare("UPDATE proveedores SET "
-                        "cCCProveedor = :cCCProveedor,"
-                        "cCif = :cCif,"
-                        "cCodigo = :cCodigo,"
-                        "cCodigoFormaPago =:cCodigoFormaPago,"
-                        "cCP =:cCP,"
-                        "cCPAlmacen=:cCPAlmacen,"
-                        "cCuentaAplicacion = :cCuentaAplicacion ,"
-                        "cCuentaIvaSoportado =:cCuentaIvaSoportado,"
-                        "cCuentaPagoProveedor =:cCuentaPagoProveedor,"
-                        "cCuentaPagos =:cCuentaPagos,"
-                        "cDCPagoProveedor =:cDCPagoProveedor,"
-                        "cDCProveedor =:cDCProveedor,"
+   // QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
+    QSqlQuery queryProveedor(QSqlDatabase::database("Maya"));
+
+    queryProveedor.prepare("UPDATE proveedores SET "
+                        " cCodigo =:cCodigo,"
+                        "cProveedor =:cProveedor,"
+                        "cCif =:cCif,"
                         "cDireccion1 =:cDireccion1,"
                         "cDireccion2 =:cDireccion2,"
-                        "cDireccionAlmacen =:cDireccionAlmacen,"
-                        "cEMail =:cEMail,"
-                        "cEntidadBancariaProveedor =:cEntidadBancariaProveedor,"
-                        "cEntidadPagoProveedor =:cEntidadPagoProveedor,"
-                        "cFax = :cFax,"
-                        "cFaxAlmacen=:cFaxAlmacen,"
-                        "cMovil = :cMovil,"
-                        "cOficinaBancariaProveedor = :cOficinaBancariaProveedor,"
-                        "cOficinaPagoProveedor =:cOficinaPagoProveedor,"
-                        "cPais = :cPais,"
-                        "cPaisAlmacen = :cPaisAlmacen,"
-                        "cPersonaContacto =:cPersonaContacto,"
+                        "cCP =:cCP,"
                         "cPoblacion =:cPoblacion,"
-                        "cPoblacionAlmacen =:cPoblacionAlmacen,"
-                        "cProveedor = :cProveedor,"
-                        "cProvincia = :cProvincia,"
-                        "cProvinciaAlmacen=:cProvinciaAlmacen,"
+                        "cProvincia =:cProvincia, "
+                        "id_pais =:id_pais, "
                         "cTelefono1 =:cTelefono1,"
                         "cTelefono2 =:cTelefono2,"
-                        "cTelefono3 = :cTelefono3,"
+                        "cTelefono3 =:cTelefono3,"
+                        "cFax =:cFax,"
+                        "cMovil =:cMovil,"
+                        "cEMail =:cEMail,"
+                        "cWeb =:cWeb,"
+                        "cPersonaContacto =:cPersonaContacto,"
+                        "nDiaCobro =:nDiaCobro,"
+                        "cDireccionAlmacen =:cDireccionAlmacen,"
+                        "cCPAlmacen =:cCPAlmacen,"
+                        "cPoblacionAlmacen =:cPoblacionAlmacen,"
+                        "cProvinciaAlmacen =:cProvinciaAlmacen,"
+                        "idPaisAlmacen =:idPaisAlmacen,"
                         "cTelefonoAlmacen =:cTelefonoAlmacen,"
-                        "cWeb = :cWeb,"
-                        "dFechaAlta =:dFechaAlta,"
+                        "cFaxAlmacen =:cFaxAlmacen,"
+                        "idFormaPago =:idFormaPago,"
                         "dFechaUltimaCompra =:dFechaUltimaCompra,"
-                        "lRecargoEquivalencia = :lRecargoEquivalencia,"
-                        "nDiaCobro = :nDiaCobro,"
-                        "nDto = :nDto,"
-                        "nTipoRetencion = :nTipoRetencion,"
-                        "rAcumuladoCompras = :rAcumuladoCompras,"
-                        "rDeudaActual = :rDeudaActual,"
-                        "rDeudaMaxima = :rDeudaMaxima,"
-                        "rEntregadoaCuenta = :rEntregadoaCuenta,"
-                        "rRetencionIRPF = :rRetencionIRPF,"
-                        "tComentarios= :tComentarios,"
-                        "tTextoparaPedidos = :tTextoparaPedidos "
-                        "WHERE  id = :nId");
+                        "rAcumuladoCompras =:rAcumuladoCompras,"
+                        "cEntidadBancariaProveedor =:cEntidadBancariaProveedor,"
+                        "cOficinaBancariaProveedor =:cOficinaBancariaProveedor,"
+                        "cDCProveedor =:cDCProveedor,"
+                        "cCCProveedor =:cCCProveedor,"
+                        "cEntidadPagoProveedor =:cEntidadPagoProveedor,"
+                        "cOficinaPagoProveedor =:cOficinaPagoProveedor,"
+                        "cDCPagoProveedor =:cDCPagoProveedor,"
+                        "cCuentaPagoProveedor =:cCuentaPagoProveedor,"
+                        "cCuentaIvaSoportado =:cCuentaIvaSoportado,"
+                        "rRetencionIRPF =:rRetencionIRPF,"
+                        "nTipoRetencion =:nTipoRetencion,"
+                        "cCuentaAplicacion =:cCuentaAplicacion,"
+                        "cCuentaPagos =:cCuentaPagos,"
+                        "tComentarios =:tComentarios,"
+                        "nDto =:nDto,"
+                        "dFechaAlta =:dFechaAlta,"
+                        "rDeudaMaxima =:rDeudaMaxima,"
+                        "rDeudaActual =:rDeudaActual,"
+                        "lRecargoEquivalencia =:lRecargoEquivalencia,"
+                        "tTextoparaPedidos =:tTextoparaPedidos,"
+                        "rEntregadoaCuenta =:rEntregadoaCuenta "
+                        " WHERE id = :id");
 
-    qProveedor->bindValue(":cCCProveedor",this->cCCProveedor);
-    qProveedor->bindValue(":cCif",this->cCif);
-    qProveedor->bindValue(":cCodigo",this->cCodigo);
-    qProveedor->bindValue(":cCodigoFormaPago",this->cCodigoFormaPago);
-    qProveedor->bindValue(":cCP",this->cCP);
-    qProveedor->bindValue(":cCPAlmacen",this->cCPAlmacen);
-    qProveedor->bindValue(":cCuentaAplicacion",this->cCuentaAplicacion);
-      qProveedor->bindValue(":cCuentaIvaSoportado",this->cCuentaIvaSoportado);
-      qProveedor->bindValue(":cCuentaPagoProveedor", this->cCuentaPagoProveedor);
-      qProveedor->bindValue(":cCuentaPagos",this->cCuentaPagos);
-      qProveedor->bindValue(":cDCPagoProveedor",this->cDCPagoProveedor);
-      qProveedor->bindValue(":cDCProveedor", this->cDCProveedor);
-      qProveedor->bindValue(":cDireccion1", this->cDireccion1);
-      qProveedor->bindValue(":cDireccion2",this->cDireccion2);
-      qProveedor->bindValue(":cDireccionAlmacen", this->cDireccionAlmacen);
-      qProveedor->bindValue(":cEMail",this->cEMail);
-      qProveedor->bindValue(":cEntidadBancariaProveedor",this->cEntidadBancariaProveedor);
-      qProveedor->bindValue(":cEntidadPagoProveedor",this->cEntidadBancariaProveedor);
-      qProveedor->bindValue(":cFax",this->cFax);
-      qProveedor->bindValue(":cFaxAlmacen", this->cFaxAlmacen);
-      qProveedor->bindValue(":cMovil", this->cFaxAlmacen);
-      qProveedor->bindValue(":cOficinaBancariaProveedor", this->cOficinaBancariaProveedor);
-      qProveedor->bindValue(":cOficinaPagoProveedor", this->cOficinaPagoProveedor);
-      qProveedor->bindValue(":cPais", this->cPais);
-      qProveedor->bindValue(":cPaisAlmacen",this->cPaisAlmacen);
-      qProveedor->bindValue(":cPersonaContacto", this->cPersonaContacto);
-      qProveedor->bindValue(":cPoblacion",this->cPoblacion);
-      qProveedor->bindValue(":cPoblacionAlmacen", this->cPoblacionAlmacen);
-      qProveedor->bindValue(":cProveedor", this->cProveedor);
-      qProveedor->bindValue(":cProvincia", this->cProvincia);
-      qProveedor->bindValue(":cProvinciaAlmacen", this->cProvinciaAlmacen);
-      qProveedor->bindValue(":cTelefono1",this->cTelefono1);
-      qProveedor->bindValue(":cTelefono2", this->cTelefono2);
-      qProveedor->bindValue(":cTelefono3", this->cTelefono3);
-      qProveedor->bindValue(":cTelefonoAlmacen", this->cTelefonoAlmacen);
-      qProveedor->bindValue(":cWeb", this->cWeb);
-      qProveedor->bindValue(":dFechaAlta", this->dFechaAlta);
-      qProveedor->bindValue(":dFechaUltimaCompra", this->dFechaUltimaCompra);
-      qProveedor->bindValue(":lRecargoEquivalencia",this->lRecargoEquivalencia);
-      qProveedor->bindValue(":nDiaCobro",this->nDiaCobro);
-      qProveedor->bindValue(":nDto",this->nDto);
-      qProveedor->bindValue(":nTipoRetencion", this->nTipoRetencion);
-      qProveedor->bindValue(":rAcumuladoCompras",this->rAcumuladoCompras);
-      qProveedor->bindValue(":rDeudaActual", this->rDeudaActual);
-      qProveedor->bindValue(":rDeudaMaxima", this->rDeudaMaxima);
-      qProveedor->bindValue(":rEntregadoaCuenta", this->rEntregadoaCuenta);
-      qProveedor->bindValue(":rRetencionIRPF", this->rRetencionIRPF);
-      qProveedor->bindValue(":tComentarios", this->tComentarios);
-      qProveedor->bindValue(":tTextoparaPedidos", this->tTextoparaPedidos);
-      qProveedor->bindValue(":nId",this->id);
-    if(!qProveedor->exec())
+
+    queryProveedor.bindValue(":cCodigo",this->cCodigo);
+    queryProveedor.bindValue(":cProveedor",this->cProveedor);
+    queryProveedor.bindValue(":cCif",this->cCif);
+    queryProveedor.bindValue(":cDireccion1",this->cDireccion1);
+    queryProveedor.bindValue(":cDireccion2",this->cDireccion2);
+    queryProveedor.bindValue(":cCP",this->cCP);
+    queryProveedor.bindValue(":cPoblacion",this->cPoblacion);
+    queryProveedor.bindValue(":cProvincia",this->cProvincia);
+    queryProveedor.bindValue(":id_pais",this->idpais);
+    queryProveedor.bindValue(":cTelefono1",this->cTelefono1);
+    queryProveedor.bindValue(":cTelefono2",this->cTelefono2);
+    queryProveedor.bindValue(":cTelefono3",this->cTelefono3);
+    queryProveedor.bindValue(":cFax",this->cFax);
+    queryProveedor.bindValue(":cMovil",this->cMovil);
+    queryProveedor.bindValue(":cEMail",this->cEMail);
+    queryProveedor.bindValue(":cWeb",this->cWeb);
+    queryProveedor.bindValue(":cPersonaContacto",this->cPersonaContacto);
+    queryProveedor.bindValue(":nDiaCobro",this->nDiaCobro);
+    queryProveedor.bindValue(":cDireccionAlmacen",this->cDireccionAlmacen);
+    queryProveedor.bindValue(":cCPAlmacen",this->cCPAlmacen);
+    queryProveedor.bindValue(":cPoblacionAlmacen",this->cPoblacionAlmacen);
+    queryProveedor.bindValue(":cProvinciaAlmacen",this->cProvinciaAlmacen);
+    queryProveedor.bindValue(":idPaisAlmacen",this->idPaisAlmacen);
+    queryProveedor.bindValue(":cTelefonoAlmacen",this->cTelefonoAlmacen);
+    queryProveedor.bindValue(":cFaxAlmacen",this->cFaxAlmacen);
+    queryProveedor.bindValue(":idFormaPago",this->idFormadePago);
+    queryProveedor.bindValue(":dFechaUltimaCompra",this->dFechaUltimaCompra);
+    queryProveedor.bindValue(":rAcumuladoCompras",this->rAcumuladoCompras);
+    queryProveedor.bindValue(":cEntidadBancariaProveedor",this->cEntidadBancariaProveedor);
+    queryProveedor.bindValue(":cOficinaBancariaProveedor",this->cOficinaBancariaProveedor);
+    queryProveedor.bindValue(":cDCProveedor",this->cDCProveedor);
+    queryProveedor.bindValue(":cCCProveedor",this->cCCProveedor);
+    queryProveedor.bindValue(":cEntidadPagoProveedor",this->cEntidadPagoProveedor);
+    queryProveedor.bindValue(":cOficinaPagoProveedor",this->cOficinaPagoProveedor);
+    queryProveedor.bindValue(":cDCPagoProveedor",this->cDCPagoProveedor);
+    queryProveedor.bindValue(":cCuentaPagoProveedor",this->cCuentaPagoProveedor);
+    queryProveedor.bindValue(":cCuentaIvaSoportado",this->cCuentaIvaSoportado);
+    queryProveedor.bindValue(":rRetencionIRPF",this->rRetencionIRPF);
+    queryProveedor.bindValue(":nTipoRetencion",this->nTipoRetencion);
+    queryProveedor.bindValue(":cCuentaAplicacion",this->cCuentaAplicacion);
+    queryProveedor.bindValue(":cCuentaPagos",this->cCuentaPagos);
+    queryProveedor.bindValue(":tComentarios",this->tComentarios);
+    queryProveedor.bindValue(":nDto",this->nDto);
+    queryProveedor.bindValue(":dFechaAlta",this->dFechaAlta);
+    queryProveedor.bindValue(":rDeudaMaxima",this->rDeudaMaxima);
+    queryProveedor.bindValue(":rDeudaActual",this->rDeudaActual);
+    queryProveedor.bindValue(":lRecargoEquivalencia",this->lRecargoEquivalencia);
+    queryProveedor.bindValue(":tTextoparaPedidos",this->tTextoparaPedidos);
+    queryProveedor.bindValue(":rEntregadoaCuenta",this->rEntregadoaCuenta);
+    queryProveedor.bindValue(":id",this->id);
+
+    if(!queryProveedor.exec()){
+        qDebug() << queryProveedor.lastQuery();
+
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión proveedores/Acreedores"),
-                             QObject::tr("No se ha podido insertar el proveedor en la BD"),QObject::tr("Ok"));
+           QObject::tr("No se ha podido insertar el proveedor en la BD: %1").arg(queryProveedor.lastError().text(),
+           QObject::tr("Ok")));
+    } else {
+        QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión proveedores/Acreeedores"),
+                                 QObject::tr("Los datos se han guardado correctamente"),tr("Aceptar"));
     }
+}
 
 void Proveedor::Vaciar()
 {
@@ -327,6 +343,8 @@ void Proveedor::Vaciar()
     this->lRecargoEquivalencia = 0;
     this->tTextoparaPedidos = "";
     this->rEntregadoaCuenta = 0;
+    this->idFormadePago =0;
+    this->idPaisAlmacen =0;
 }
 
 void Proveedor::Borrar(int nId)

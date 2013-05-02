@@ -57,6 +57,12 @@ private slots:
 
     void on_txtcCPAlmacen_editingFinished();
 
+    void on_txtcPais_currentIndexChanged(const QString &arg1);
+
+
+
+    void on_txtcCodigoFormaPago_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::frmProveedores *ui;
 };

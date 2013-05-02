@@ -217,6 +217,20 @@ void Configuracion::Cargar_paises()
     paises_model->select();
 }
 
+int Configuracion::Devolver_id_pais(QString cPais)
+{
+    QSqlQuery qPais(QSqlDatabase::database("Maya"));
+    qPais.prepare("select id from paises where pais = :cPais");
+    qPais.bindValue(":cPais",cPais);
+    if(qPais.exec())
+    {
+        qPais.next();
+        int id = qPais.record().field("id").value().toInt();
+        return id;
+    }
+    return 0;
+}
+
 QString Configuracion::Devolver_pais(int id)
 {
     QSqlQuery qPais(QSqlDatabase::database("Maya"));
@@ -295,6 +309,67 @@ int Configuracion::Devolver_id_idioma(QString idioma)
                              tr("Aceptar"));
     }
     return 0;
+
+}
+
+int Configuracion::Devolver_id_forma_pago(QString cFormaPago)
+{
+    QSqlQuery queryFP(QSqlDatabase::database("Maya"));
+    if(queryFP.exec("select id from FormPago where cFormapago = '"+cFormaPago+"'")){
+        queryFP.next();
+        int id = queryFP.record().value("id").toInt();
+        return id;
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
+                             tr("Fallo la recuperacion del identificador de la forma de pago: ")+queryFP.lastError().text(),
+                             tr("Aceptar"));
+    }
+    return 0;
+}
+
+int Configuracion::Devolver_id_codigo_forma_pago(QString cCodigo)
+{
+    QSqlQuery queryFP(QSqlDatabase::database("Maya"));
+    if(queryFP.exec("select id from FormPago where cCodigo = '"+cCodigo+"'")){
+        queryFP.next();
+        int id = queryFP.record().value("id").toInt();
+        return id;
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
+                             tr("Fallo la recuperacion del identificador de la forma de pago: ")+queryFP.lastError().text(),
+                             tr("Aceptar"));
+    }
+    return 0;
+}
+
+QString Configuracion::Devolver_forma_pago(int id)
+{
+    QSqlQuery queryFP(QSqlDatabase::database("Maya"));
+    if(queryFP.exec("select cFormapago from FormPago where id = "+QString::number(id))){
+        queryFP.next();
+        QString cFP = queryFP.record().value("cFormapago").toString();
+        return cFP;
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
+                             tr("Fallo la recuperacion de la forma de pago: ")+queryFP.lastError().text(),
+                             tr("Aceptar"));
+    }
+    return "";
+}
+
+QString Configuracion::Devolver_codigo_forma_pago(int id)
+{
+    QSqlQuery queryFP(QSqlDatabase::database("Maya"));
+    if(queryFP.exec("select cCodigo from FormPago where id = "+QString::number(id))){
+        queryFP.next();
+        QString cFP = queryFP.record().value("cCodigo").toString();
+        return cFP;
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
+                             tr("Fallo la recuperacion de la forma de pago: ")+queryFP.lastError().text(),
+                             tr("Aceptar"));
+    }
+    return "";
 
 }
 

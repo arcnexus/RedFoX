@@ -27,7 +27,7 @@
 #include "parameter.h"
 
 #ifdef Q_OS_LINUX
-#include "/home/arcnexus/MayaProject/build-openrpt-Desktop-Release_manjaro/common/tmp/ui_parameteredit.h"
+#include "/home/arcnexus/MayaProject/build-openrpt-Desktop-Release/common/tmp/ui_parameteredit.h"
 #else
 #include "C:\openrpt-build-Desktop_Qt_4_8_2_in_PATH_4_8_2-Debug\common\tmp/ui_parameteredit.h"
 #endif

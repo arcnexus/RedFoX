@@ -89,12 +89,17 @@ public:
     QSqlTableModel* paises_model;
     void Cargar_paises();
 
+    int Devolver_id_pais(QString cPais);
     QString Devolver_pais(int id);
     QString Devolver_moneda(int id);
     QString Devolver_codDivisa(int id);
     int Devolver_id_moneda(QString cDivisa);
     QString Devolver_idioma(int id);
     int Devolver_id_idioma(QString idioma);
+    int Devolver_id_forma_pago(QString cFormaPago);
+    int Devolver_id_codigo_forma_pago(QString cCodigo);
+    QString Devolver_forma_pago(int id);
+    QString Devolver_codigo_forma_pago(int id);
 
     QSqlTableModel* client_model;
     void CargarClientes();

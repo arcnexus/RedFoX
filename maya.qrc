@@ -150,6 +150,8 @@
         <file>PNG/mayafondo_blanco_mini.png</file>
         <file>PNG/iconMaya.png</file>
         <file>PNG/maya_logo.png</file>
+        <file>PNG/maya_logo2.png</file>
+        <file>PNG/maya_blanco.png</file>
     </qresource>
     <qresource prefix="/openRPTLangs">
         <file>openrptLibs/traduccion/common_es.qm</file>
