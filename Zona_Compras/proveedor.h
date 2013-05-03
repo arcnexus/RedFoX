@@ -63,6 +63,12 @@ public:
     QString tTextoparaPedidos;
     double rEntregadoaCuenta;
 
+    // Acumulados
+    double enero,febrero,marzo,abril,mayo,junio,julio,agosto,septiembre,octubre,noviembre,diciembre;
+    void cargaracumulados(int id_proveedor);
+    bool acumular(int id_proveedor, int mes, double importe);
+
+
 signals:
     
 public slots:

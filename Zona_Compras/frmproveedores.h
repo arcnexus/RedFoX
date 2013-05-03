@@ -13,6 +13,7 @@ class frmProveedores : public QDialog
     
 public:
     explicit frmProveedores(QWidget *parent = 0);
+
     ~frmProveedores();
 public slots:
     void DesbloquerCampos();
@@ -62,6 +63,19 @@ private slots:
 
 
     void on_txtcCodigoFormaPago_currentIndexChanged(const QString &arg1);
+
+
+    void on_btnNuevaFactura_clicked();
+
+    void on_btnNuevoAlbaran_clicked();
+
+    void on_btnNuevoPedido_clicked();
+
+    void historiales();
+    void acumulados();
+    void grafica();
+
+    void on_btnBuscar_clicked();
 
 private:
     Ui::frmProveedores *ui;

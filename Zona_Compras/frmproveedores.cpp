@@ -3,6 +3,11 @@
 #include "proveedor.h"
 
 #include "Busquedas/frmbuscarpoblacion.h"
+#include "frmfacturasproveedor.h"
+#include "frmpedidosproveedor.h"
+#include "frmalbaranproveedor.h"
+#include "Auxiliares/monetarydelegate.h"
+#include "Busquedas/frmbuscarproveedor.h"
 
 
 #ifdef WIN32
@@ -47,6 +52,7 @@ frmProveedores::frmProveedores(QWidget *parent) :
     modelPaisAlmacen->setQuery("select pais from paises",QSqlDatabase::database("Maya"));
     ui->txtcPaisAlmacen->setModel(modelPaisAlmacen);
     oProveedor->idPaisAlmacen = Configuracion_global->Devolver_id_pais(ui->txtcPaisAlmacen->currentText());
+
 
 }
 
@@ -140,6 +146,24 @@ void frmProveedores::LLenarCampos()
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
+    //----------------------
+    //  Rellenar Historiales
+    //----------------------
+
+    historiales();
+
+    // --------------------
+    // Rellenar Acumulados
+    //---------------------
+    acumulados();
+
+    //---------------------
+    // Grafica
+    //---------------------
+    grafica();
+
+
+
 
 }
 
@@ -631,4 +655,113 @@ void frmProveedores::on_txtcCodigoFormaPago_currentIndexChanged(const QString &a
 {
     QString cCodigo = arg1;
     oProveedor->idFormadePago = Configuracion_global->Devolver_id_codigo_forma_pago(cCodigo);
+}
+
+
+void frmProveedores::on_btnNuevaFactura_clicked()
+{
+    QMessageBox::information(this,tr("Nueva Factura"),
+                             tr("Para volver a proveedores cierre la ventana\n desde el boton X de la ventana de Facturas"),
+                             tr("Aceptar"));
+    FrmFacturasProveedor frmFactura(this);
+    frmFactura.setWindowState(Qt::WindowMaximized);
+    frmFactura.exec();
+}
+
+void frmProveedores::on_btnNuevoAlbaran_clicked()
+{
+    QMessageBox::information(this,tr("Nuevo Albarán"),
+                             tr("Para volver a proveedores cierre la ventana\n desde el boton X de la ventana de Albaranes"),
+                             tr("Aceptar"));
+    FrmAlbaranProveedor frmAlbaran(this);
+    frmAlbaran.setWindowState(Qt::WindowMaximized);
+    frmAlbaran.exec();
+}
+
+void frmProveedores::on_btnNuevoPedido_clicked()
+{
+    QMessageBox::information(this,tr("Nuevo Pedido"),
+                             tr("Para volver a proveedores cierre la ventana\n desde el boton X de la ventana de Pedidos"),
+                             tr("Aceptar"));
+    FrmPedidosProveedor frmPedidos(this);
+    frmPedidos.setWindowState(Qt::WindowMaximized);
+    frmPedidos.exec();
+}
+
+void frmProveedores::historiales()
+{
+
+    // -------------------------
+    // Cargar Historial Facturas
+    //--------------------------
+    QSqlQueryModel *modelFacturas = new QSqlQueryModel(this);
+    modelFacturas->setQuery("select id,cFactura,dFecha,cPedido,rTotalBase,rTotalIva,rTotalRetencion,rTotalRecargoEq,rTotal,rImporteDeudaPendiente"
+                            " from fac_pro",QSqlDatabase::database("empresa"));
+    ui->tablacolumnasFacturas->setModel(modelFacturas);
+    ui->tablacolumnasFacturas->setColumnHidden(0,true);
+    modelFacturas->setHeaderData(1,Qt::Horizontal,"N.Factura");
+    modelFacturas->setHeaderData(2,Qt::Horizontal,"Fecha");
+    modelFacturas->setHeaderData(3,Qt::Horizontal,"Pedido");
+    modelFacturas->setHeaderData(4,Qt::Horizontal,"Base IMP.");
+    modelFacturas->setHeaderData(5,Qt::Horizontal,"Tot.IVA");
+    modelFacturas->setHeaderData(6,Qt::Horizontal,"Ret IRPF");
+    modelFacturas->setHeaderData(7,Qt::Horizontal,"Rec. Eq.");
+    modelFacturas->setHeaderData(8,Qt::Horizontal,"TOTAL");
+    modelFacturas->setHeaderData(9,Qt::Horizontal,"Pendiente");
+ //   MonetaryDelegate *Delegado = new MonetaryDelegate(this);
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(4,new MonetaryDelegate);
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(5,new MonetaryDelegate);
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(6,new MonetaryDelegate);
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(7,new MonetaryDelegate);
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(8,new MonetaryDelegate);
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(9,new MonetaryDelegate);
+}
+
+void frmProveedores::acumulados()
+{
+    //----------------------
+    // Acumulados
+    //----------------------
+    ui->txtEnero->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->enero,'f',2)));
+    ui->txtFebrero->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->febrero,'f',2)));
+    ui->txtMarzo->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->marzo,'f',2)));
+    ui->txtAbril->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->abril,'f',2)));
+    ui->txtMayo->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->mayo,'f',2)));
+    ui->txtJunio->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->junio,'f',2)));
+    ui->txtjulio->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->julio,'f',2)));
+    ui->txtAgosto->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->agosto,'f',2)));
+    ui->txtSeptiembre->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->septiembre,'f',2)));
+    ui->txtOctubre->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->octubre,'f',2)));
+    ui->txtNoviembre->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->noviembre,'f',2)));
+    ui->txtDiciembre->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->diciembre,'f',2)));
+
+}
+
+void frmProveedores::grafica()
+{
+    ui->Grafica->Clear();
+
+    ui->Grafica->addItem(tr("Ene"),oProveedor->enero);
+    ui->Grafica->addItem(tr("Feb"),oProveedor->febrero);
+    ui->Grafica->addItem(tr("Mar"),oProveedor->marzo);
+    ui->Grafica->addItem(tr("Abr"),oProveedor->abril);
+    ui->Grafica->addItem(tr("May"),oProveedor->mayo);
+    ui->Grafica->addItem(tr("Jun"),oProveedor->junio);
+    ui->Grafica->addItem(tr("Jul"),oProveedor->julio);
+    ui->Grafica->addItem(tr("Ago"),oProveedor->agosto);
+    ui->Grafica->addItem(tr("Sep"),oProveedor->septiembre);
+    ui->Grafica->addItem(tr("Oct"),oProveedor->octubre);
+    ui->Grafica->addItem(tr("Nov"),oProveedor->noviembre);
+    ui->Grafica->addItem(tr("Dic"),oProveedor->diciembre);
+}
+
+void frmProveedores::on_btnBuscar_clicked()
+{
+    FrmBuscarProveedor frmBuscar(this);
+    if(frmBuscar.exec() == QDialog::Accepted)
+    {
+        int id_pro = frmBuscar.nIdProv;
+        oProveedor->Recuperar("select * from proveedores where id = "+QString::number(id_pro));
+        this->LLenarCampos();
+    }
 }

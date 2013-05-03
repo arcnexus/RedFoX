@@ -8,6 +8,34 @@ Proveedor::Proveedor(QObject *parent) :
     this->id = 0;
 }
 
+void Proveedor::cargaracumulados(int id_proveedor)
+{
+    QSqlQuery query_acumulados(QSqlDatabase::database("empresa"));
+    if(query_acumulados.exec("select * from acum_proveedores where id_proveedor = "+QString::number(id_proveedor)))
+    {
+        query_acumulados.next();
+        this->enero = query_acumulados.record().value("acum_enero").toDouble();
+        this->febrero = query_acumulados.record().value("acum_febrero").toDouble();
+        this->marzo = query_acumulados.record().value("acum_marzo").toDouble();
+        this->abril = query_acumulados.record().value("acum_abril").toDouble();
+        this->mayo = query_acumulados.record().value("acum_mayo").toDouble();
+        this->junio = query_acumulados.record().value("acum_junio").toDouble();
+        this->julio = query_acumulados.record().value("acum_julio").toDouble();
+        this->agosto = query_acumulados.record().value("acum_agosto").toDouble();
+        this->septiembre = query_acumulados.record().value("acum_septiembre").toDouble();
+        this->octubre = query_acumulados.record().value("acum_octubre").toDouble();
+        this->noviembre = query_acumulados.record().value("acum_noviembre").toDouble();
+        this->diciembre = query_acumulados.record().value("acum_diciembre").toDouble();
+    }
+
+
+}
+
+bool Proveedor::acumular(int id_proveedor, int mes, double importe)
+{
+
+}
+
 void Proveedor::Anadir()
 {
     QScopedPointer<QSqlQuery>QProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
@@ -84,6 +112,7 @@ void Proveedor::Recuperar(QString cSQL)
             this->lRecargoEquivalencia = rProveedor.field("lRecargoEquivalencia").value().toInt();
             this->tTextoparaPedidos = rProveedor.field("tTextoparaPedidos").value().toString();
             this->rEntregadoaCuenta = rProveedor.field("rEntregadoaCuenta").value().toDouble();
+
         } else {
             QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("No se encuentra el proveedor"),
                                          QObject::tr("Ok"));
@@ -93,6 +122,7 @@ void Proveedor::Recuperar(QString cSQL)
     } else
      QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Problema en la BD no se puede recuperar el proveedor Error: ")+
                                  qProveedor->lastError().text() ,QObject::tr("Ok"));
+    cargaracumulados(this->id);
 }
 
 void Proveedor::Recuperar(QString cSQL, int nProcede)
@@ -167,6 +197,7 @@ void Proveedor::Recuperar(QString cSQL, int nProcede)
     } else
      QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Problema en la BD no se puede recuperar el proveedor Error: ")+
                                  qProveedor->lastError().text() ,QObject::tr("Ok"));
+    cargaracumulados(this->id);
 }
 
 
