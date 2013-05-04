@@ -2,6 +2,7 @@
 #define FRMRECEPCION_PEDIDOS_H
 
 #include <QDialog>
+#include "Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class Frmrecepcion_pedidos;
@@ -15,6 +16,9 @@ public:
     explicit Frmrecepcion_pedidos(QWidget *parent = 0);
     ~Frmrecepcion_pedidos();
     
+private slots:
+    void on_btnBuscar_clicked();
+
 private:
     Ui::Frmrecepcion_pedidos *ui;
 };
