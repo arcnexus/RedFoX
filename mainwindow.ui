@@ -946,9 +946,15 @@ background-color: rgb(255, 255, 255);</string>
      <addaction name="menuAlbaranes_2"/>
      <addaction name="menuFacturas"/>
     </widget>
+    <widget class="QMenu" name="menuGesti_n_de_pedidos_a_proveedores">
+     <property name="title">
+      <string>Gestión de pedidos a proveedores</string>
+     </property>
+     <addaction name="actionGestion_Pedidos_Pro"/>
+     <addaction name="actionRecepcion_de_pedido_pro"/>
+    </widget>
     <addaction name="actionOrdenes_de_pedidos"/>
-    <addaction name="actionGesti_n_de_pedidos_a_proveedores"/>
-    <addaction name="actionAlbaranes_de_proveedores"/>
+    <addaction name="menuGesti_n_de_pedidos_a_proveedores"/>
     <addaction name="actionFacturas_de_proveedores_Acreedores"/>
     <addaction name="menu_Listados"/>
    </widget>
@@ -1277,14 +1283,6 @@ background-color: rgb(255, 255, 255);</string>
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionGesti_n_de_pedidos_a_proveedores">
-   <property name="text">
-    <string>Gestión de pedidos a proveedores</string>
-   </property>
-   <property name="iconVisibleInMenu">
-    <bool>true</bool>
-   </property>
-  </action>
   <action name="actionAlbaranes_de_proveedores">
    <property name="text">
     <string>Albaranes de proveedores</string>
@@ -1551,6 +1549,16 @@ background-color: rgb(255, 255, 255);</string>
   <action name="actionMonedas">
    <property name="text">
     <string>Monedas</string>
+   </property>
+  </action>
+  <action name="actionGestion_Pedidos_Pro">
+   <property name="text">
+    <string>Gestión de Pedidos</string>
+   </property>
+  </action>
+  <action name="actionRecepcion_de_pedido_pro">
+   <property name="text">
+    <string>Recepción de pedido</string>
    </property>
   </action>
  </widget>

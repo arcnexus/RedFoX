@@ -19,6 +19,11 @@ public:
 private slots:
     void on_btnBuscar_clicked();
 
+    void on_chkForzarCierre_clicked();
+
+    void on_tablaPedidos_doubleClicked(const QModelIndex &index);
+
+    void validarcantidad(int , int);
 private:
     Ui::Frmrecepcion_pedidos *ui;
 };

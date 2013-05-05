@@ -34,8 +34,14 @@
     <widget class="QFrame" name="frame">
      <property name="minimumSize">
       <size>
-       <width>0</width>
-       <height>176</height>
+       <width>270</width>
+       <height>201</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>270</width>
+       <height>16777215</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -82,13 +88,6 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="2">
-       <widget class="QCheckBox" name="chkPedientes">
-        <property name="text">
-         <string>Pendientes</string>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="2">
        <widget class="QDateEdit" name="txtFechaFin">
         <property name="styleSheet">
@@ -116,10 +115,27 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="0" colspan="3">
+      <item row="6" column="0" colspan="3">
        <widget class="QPushButton" name="btnBuscar">
         <property name="text">
          <string>Buscar</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Pedido:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1" colspan="2">
+       <widget class="QLineEdit" name="txtNumPedido"/>
+      </item>
+      <item row="3" column="1" colspan="2">
+       <widget class="QCheckBox" name="chkPedientes">
+        <property name="text">
+         <string>completados/cerrados</string>
         </property>
        </widget>
       </item>
@@ -141,6 +157,9 @@ color: rgb(255, 255, 255);</string>
    </item>
    <item row="3" column="2">
     <widget class="QPushButton" name="pushButton_3">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
      <property name="text">
       <string>Imprimir</string>
      </property>
@@ -148,6 +167,9 @@ color: rgb(255, 255, 255);</string>
    </item>
    <item row="3" column="3">
     <widget class="QPushButton" name="pushButton_2">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
      <property name="text">
       <string>Etiquetas</string>
      </property>
@@ -166,7 +188,7 @@ color: rgb(255, 255, 255);</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QTableView" name="tablaLineas">
+       <widget class="QTableWidget" name="tablaLineas">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);
 alternate-background-color: rgb(255, 253, 219);</string>
@@ -174,10 +196,10 @@ alternate-background-color: rgb(255, 253, 219);</string>
         <property name="alternatingRowColors">
          <bool>true</bool>
         </property>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>true</bool>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>1</number>
         </attribute>
-        <attribute name="verticalHeaderCascadingSectionResizes">
+        <attribute name="horizontalHeaderStretchLastSection">
          <bool>true</bool>
         </attribute>
        </widget>
@@ -198,7 +220,7 @@ alternate-background-color: rgb(255, 253, 219);</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
          <item row="0" column="0">
-          <widget class="QCheckBox" name="checkBox">
+          <widget class="QCheckBox" name="chkForzarCierre">
            <property name="text">
             <string>Forzar Cerrar Pedido</string>
            </property>
@@ -212,9 +234,21 @@ alternate-background-color: rgb(255, 253, 219);</string>
    </item>
    <item row="2" column="0" rowspan="2">
     <widget class="QTableView" name="tablaPedidos">
+     <property name="maximumSize">
+      <size>
+       <width>270</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);</string>
      </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
     </widget>
    </item>
   </layout>

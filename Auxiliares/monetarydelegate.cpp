@@ -14,6 +14,7 @@ void MonetaryDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
     lineedit->text();
     QString valor = Configuracion_global->FormatoNumerico(lineedit->text());
     model->setData(index,valor,Qt::EditRole);
+    lineedit->setAlignment(Qt::AlignRight);
 }
 
 void MonetaryDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const

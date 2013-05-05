@@ -117,10 +117,11 @@ void MainWindow::crear_barraCompras()
     //barra de menu
     connect(ui->actionOrdenes_de_pedidos,SIGNAL(triggered()),this,SLOT(btnOrden_pedido_clicked()));
     connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
-    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
+    connect(ui->actionGestion_Pedidos_Pro,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
     connect(ui->actionAlbaranes_2,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
     connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
     connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+    connect(ui->actionRecepcion_de_pedido_pro,SIGNAL(triggered()),this,SLOT(btn_recepcionPedidos_clicked()));
 }
 
 void MainWindow::crear_barraAlmacen()
@@ -142,7 +143,8 @@ void MainWindow::crear_barraAlmacen()
     connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
     connect(ui->actionAlbaranes_2,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
     connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
-        connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+    connect(ui->actionRecepci_n_de_Pedidos,SIGNAL(triggered()),this,SLOT(btn_recepcionPedidos_clicked()));
 }
 
 void MainWindow::crear_barraAdmin()
