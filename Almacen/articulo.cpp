@@ -120,6 +120,8 @@ bool Articulo::Recuperar(QString cSQL)
                this->porc_dto_web = registro.field("porc_dto_web").value().toDouble();
                this->oferta_pvp_fijo = registro.field("oferta_pvp_fijo").value().toDouble();
                this->comentario_oferta =registro.field("comentario_oferta").value().toString();
+               this->margen = registro.field("margen").value().toDouble();
+               this->margen_min = registro.field("margen_min").value().toDouble();
 
                // Recupero proveedor
                QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
@@ -211,6 +213,9 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->porc_dto_web = registro.field("porc_dto_web").value().toDouble();
                this->oferta_pvp_fijo = registro.field("oferta_pvp_fijo").value().toDouble();
                this->comentario_oferta =registro.field("comentario_oferta").value().toString();
+               this->margen = registro.field("margen").value().toDouble();
+               this->margen_min = registro.field("margen_min").value().toDouble();
+
                // Recupero proveedor
                QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
                qryProveedor->prepare("select id,cCodigo,cProveedor from proveedores where id = :id");
@@ -286,6 +291,8 @@ void Articulo::Guardar()
                    "`regalode` =:regalode,"
                    "`porc_dto_web` =:porc_dto_web,"
                    "`oferta_pvp_fijo` =:oferta_pvp_fijo,"
+                   "`margen` =:margen,"
+                   "`margen_min` =:margen_min,"
                    "`comentario_oferta` =:comentario_oferta"
                    " WHERE id =:id");
 
@@ -338,6 +345,8 @@ void Articulo::Guardar()
     query.bindValue(":porc_dto_web",this->porc_dto_web);
     query.bindValue(":oferta_pvp_fijo",this->oferta_pvp_fijo);
     query.bindValue(":comentario_oferta",this->comentario_oferta);
+    query.bindValue(":margen",this->margen);
+    query.bindValue(":margen_min",this->margen_min);
 
     if(!query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Guardar Artículo"),
@@ -400,6 +409,9 @@ void Articulo::Vaciar()
     this->porc_dto_web = 0;
     this->oferta_pvp_fijo = 0;
     this->comentario_oferta = "";
+    this->margen = 0;
+    this->margen_min = 0;
+
 }
 
 void Articulo::Borrar(int nId)

@@ -24,6 +24,8 @@ private slots:
     void on_tablaPedidos_doubleClicked(const QModelIndex &index);
 
     void validarcantidad(int , int);
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Frmrecepcion_pedidos *ui;
 };

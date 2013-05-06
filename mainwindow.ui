@@ -1552,11 +1552,19 @@ background-color: rgb(255, 255, 255);</string>
    </property>
   </action>
   <action name="actionGestion_Pedidos_Pro">
+   <property name="icon">
+    <iconset resource="maya.qrc">
+     <normaloff>:/Icons/PNG/pedido_pro.png</normaloff>:/Icons/PNG/pedido_pro.png</iconset>
+   </property>
    <property name="text">
     <string>Gestión de Pedidos</string>
    </property>
   </action>
   <action name="actionRecepcion_de_pedido_pro">
+   <property name="icon">
+    <iconset resource="maya.qrc">
+     <normaloff>:/Icons/PNG/recepcion_ped.png</normaloff>:/Icons/PNG/recepcion_ped.png</iconset>
+   </property>
    <property name="text">
     <string>Recepción de pedido</string>
    </property>

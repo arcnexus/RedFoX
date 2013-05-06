@@ -365,6 +365,9 @@ void FrmArticulos::LLenarCampos()
    ui->txtcSubFamilia->setText(oArticulo->getcSubFamilia(oArticulo->id_SubFamilia));
    ui->txtcSubSubFamilia->setText((oArticulo->getcSubSubFamilia(oArticulo->idsubsubfamilia)));
    ui->txtcGupoArt->setText(oArticulo->getcGrupo(oArticulo->idgrupoart));
+   ui->txtMargen->setValue(oArticulo->margen);
+   ui->txtMargen_min->setValue((oArticulo->margen_min));
+
    if (oArticulo->lMostrarWeb==1)
         ui->chklMostrarWeb->setChecked(true);
     else
@@ -485,6 +488,8 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->porc_dto_web = ui->txt_dto_web->text().toDouble();
     oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().toDouble();
     oArticulo->comentario_oferta = ui->txtComentarios_promocion->toPlainText();
+    oArticulo->margen = ui->txtMargen->value();
+    oArticulo->margen_min = ui->txtMargen_min->value();
 
 }
 
@@ -532,6 +537,8 @@ void FrmArticulos::VaciarCampos()
    ui->txt_dto_web->setText("0");
    ui->txtoferta_pvp_fijo->setText("0");
    ui->txtComentarios_promocion->setPlainText("");
+   ui->txtMargen->setValue(0);
+   ui->txtMargen_min->setValue(0);
 
 
 }

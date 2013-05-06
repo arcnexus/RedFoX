@@ -69,6 +69,8 @@ public:
     double porc_dto_web;
     double oferta_pvp_fijo;
     QString comentario_oferta;
+    double margen;
+    double margen_min;
 
     Articulo(QObject* parent = 0);
     //-----------
