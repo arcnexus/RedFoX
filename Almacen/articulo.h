@@ -38,6 +38,7 @@ public:
     int nStockMaximo;
     int nStockMinimo;
     int nStockReal;
+    int nStockFisico;
     QString cTipoUnidad;
     int lControlarStock;
     QString cModelo;
@@ -57,7 +58,6 @@ public:
     int idsubsubfamilia;
     int idgrupoart;
     int idweb;
-    int stockfisico;
     int nUnidadesCompradas;
     int nUnidadesVendidas;
     double rCoste;

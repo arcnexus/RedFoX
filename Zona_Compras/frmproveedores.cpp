@@ -218,7 +218,15 @@ void frmProveedores::CargarCamposEnProveedor()
     oProveedor->lRecargoEquivalencia = ui->chklRecargoEquivalencia->isChecked();
     oProveedor->tTextoparaPedidos = ui->txttTextoparaPedidos->toPlainText();
     oProveedor->rEntregadoaCuenta = ui->txtrEntregadoaCuenta->text().replace(".","").toDouble();
+    cargar_forma_pago(ui->txtcCodigoFormaPago->currentText());
 
+}
+
+void frmProveedores::cargar_forma_pago(QString codigo)
+{
+    int id_forma_pago = Configuracion_global->Devolver_id_codigo_forma_pago(codigo);
+    ui->txtcFormaPago->setText(Configuracion_global->Devolver_forma_pago(id_forma_pago));
+    oProveedor->idFormadePago = id_forma_pago;
 }
 void frmProveedores::DesbloquerCampos()
 {

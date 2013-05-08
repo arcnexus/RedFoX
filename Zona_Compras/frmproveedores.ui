@@ -1006,7 +1006,7 @@ color: rgb(0, 0, 0);</string>
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_4">
       <property name="styleSheet">
@@ -2013,5 +2013,25 @@ color: rgb(0, 0, 0);</string>
  <resources>
   <include location="../maya.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>txtcCodigoFormaPago</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>frmProveedores</receiver>
+   <slot>cargar_forma_pago(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>767</x>
+     <y>406</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>913</x>
+     <y>301</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>cargar_forma_pago(QString)</slot>
+ </slots>
 </ui>

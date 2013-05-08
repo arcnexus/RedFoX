@@ -15,6 +15,7 @@ class Frmrecepcion_pedidos : public QDialog
 public:
     explicit Frmrecepcion_pedidos(QWidget *parent = 0);
     ~Frmrecepcion_pedidos();
+    bool paso = false;
     
 private slots:
     void on_btnBuscar_clicked();
@@ -23,7 +24,8 @@ private slots:
 
     void on_tablaPedidos_doubleClicked(const QModelIndex &index);
 
-    void validarcantidad(int , int);
+    void validarcantidad(QTableWidgetItem*);
+    void reconectar();
     void on_pushButton_3_clicked();
 
 private:

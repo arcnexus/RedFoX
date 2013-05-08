@@ -15,7 +15,7 @@ class frmEditar_tarifas : public QDialog
 public:
     explicit frmEditar_tarifas(QWidget *parent = 0);
     ~frmEditar_tarifas();
-    QSqlQueryModel *modeltarifa;
+
     void setFiltro(int id);
 
 private:

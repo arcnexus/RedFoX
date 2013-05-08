@@ -93,6 +93,7 @@ bool Articulo::Recuperar(QString cSQL)
                this->nStockMaximo = registro.field("nStockMaximo").value().toInt();
                this->nStockMinimo = registro.field("nStockMinimo").value().toInt();
                this->nStockReal = registro.field("nStockReal").value().toInt();
+               this->nStockFisico = registro.field("stockfisico").value().toInt();
                this->cTipoUnidad = registro.field("cTipoUnidad").value().toString();
                this->lControlarStock = registro.field("lControlarStock").value().toInt();
                this->cModelo = registro.field("cModelo").value().toString();
@@ -111,7 +112,7 @@ bool Articulo::Recuperar(QString cSQL)
                this->idsubsubfamilia = registro.field("idsubsubfamilia").value().toInt();
                this->idgrupoart = registro.field("idgrupoart").value().toInt();
                this->idweb = registro.field("idweb").value().toInt();
-               this->stockfisico = registro.field("stockfisco").value().toInt();
+               this->nStockFisico = registro.field("stockfisco").value().toInt();
                this->articulopromocionado = registro.field("articulopromocionado").value().toBool();
                this->descripcion_promocion = registro.field("descripcion_promocion").value().toString();
                this->tipo_oferta = registro.field("tipo_oferta").value().toInt();
@@ -186,6 +187,7 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->nStockMaximo = registro.field("nStockMaximo").value().toInt();
                this->nStockMinimo = registro.field("nStockMinimo").value().toInt();
                this->nStockReal = registro.field("nStockReal").value().toInt();
+               this->nStockFisico = registro.field("stockfisico").value().toInt();
                this->cTipoUnidad = registro.field("cTipoUnidad").value().toString();
                this->lControlarStock = registro.field("lControlarStock").value().toInt();
                this->cModelo = registro.field("cModelo").value().toString();
@@ -204,7 +206,6 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->idsubsubfamilia = registro.field("idsubsubfamilia").value().toInt();
                this->idgrupoart = registro.field("idgrupoart").value().toInt();
                this->idweb = registro.field("idweb").value().toInt();
-               this->stockfisico = registro.field("stockfisco").value().toInt();
                this->articulopromocionado = registro.field("articulopromocionado").value().toBool();
                this->descripcion_promocion = registro.field("descripcion_promocion").value().toString();
                this->tipo_oferta = registro.field("tipo_oferta").value().toInt();
@@ -269,6 +270,7 @@ void Articulo::Guardar()
                    "`nStockMaximo` =:nStockMaximo,"
                    "`nStockMinimo` =:nStockMinimo,"
                    "`nStockReal` =:nStockReal,"
+                   "`stockfisico` = :stockfisico,"
                    "`cTipoUnidad` =:cTipoUnidad,"
                    "`lControlarStock` =:lControlarStock,"
                    "`lPvpIncluyeIva` =:lPvpIncluyeIva,"
@@ -321,6 +323,7 @@ void Articulo::Guardar()
     query.bindValue(":nStockMaximo",this->nStockMaximo);
     query.bindValue(":nStockMinimo",this->nStockMinimo);
     query.bindValue(":nStockReal",this->nStockReal);
+    query.bindValue(":stockfisico",this->nStockFisico);
     query.bindValue(":lControlarStock",this->lControlarStock);
     query.bindValue(":cComposicion",this->cComposicion);
     query.bindValue(":lPvpIncluyeIva",this->lPvpIncluyeIva);
@@ -335,7 +338,7 @@ void Articulo::Guardar()
     query.bindValue(":idsubsubfamilia",this->idsubsubfamilia);
     query.bindValue(":idgrupoart",this->idgrupoart);
     query.bindValue(":idweb",this->idweb);
-    query.bindValue(":stockfisico",this->stockfisico);
+    query.bindValue(":stockfisico",this->nStockFisico);
     query.bindValue(":rCoste",this->rCoste);
     query.bindValue(":articulopromocionado",this->articulopromocionado);
     query.bindValue(":descripcion_promocion",this->descripcion_promocion);
@@ -411,6 +414,7 @@ void Articulo::Vaciar()
     this->comentario_oferta = "";
     this->margen = 0;
     this->margen_min = 0;
+    this->nStockFisico =0;
 
 }
 

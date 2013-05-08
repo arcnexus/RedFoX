@@ -46,7 +46,7 @@
     </spacer>
    </item>
    <item row="0" column="0" colspan="3">
-    <widget class="QTableView" name="tabla_tarifa"/>
+    <widget class="QTableWidget" name="tabla_tarifa"/>
    </item>
   </layout>
  </widget>

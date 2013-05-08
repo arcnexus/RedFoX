@@ -11,6 +11,7 @@ Frmrecepcion_pedidos::Frmrecepcion_pedidos(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->txtFechaFin->setDate(QDate::currentDate());
+
 }
 
 Frmrecepcion_pedidos::~Frmrecepcion_pedidos()
@@ -77,10 +78,10 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
     query_lineas.bindValue(":nid",nid);
     int pos = 0;
     ui->tablaLineas->clear();
-    ui->tablaLineas->setColumnCount(10);
+    ui->tablaLineas->setColumnCount(11);
     QStringList cabecera;
     cabecera <<tr("id") << tr("C.prov") << tr("Cod.") <<tr("Descripción") << tr("Cant") <<tr("Pdte.")
-            <<tr("Recibidos") <<tr("Bruto") <<tr("Etiquetas");
+            <<tr("Recibidos") <<tr("A.R.") <<tr("Bruto") <<tr("Etiquetas");
     ui->tablaLineas->setHorizontalHeaderLabels(cabecera);
 
     if(query_lineas.exec())
@@ -115,50 +116,134 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
             item_columna4->setFlags(item_columna4->flags() & (~Qt::ItemIsEditable));
             item_columna4->setTextColor(Qt::blue); // color de los items
             ui->tablaLineas->setItem(pos,4,item_columna4);
+            ui->tablaLineas->setColumnWidth(4,60);
 
             QTableWidgetItem *item_columna5 = new QTableWidgetItem(query_lineas.record().value("cantidad_pendiente").toString());
             item_columna5->setFlags(item_columna5->flags() & (~Qt::ItemIsEditable));
             item_columna5->setTextColor(Qt::blue); // color de los items
             ui->tablaLineas->setItem(pos,5,item_columna5);
+            ui->tablaLineas->setColumnWidth(5,60);
 
             QTableWidgetItem *item_columna6 = new QTableWidgetItem(query_lineas.record().value("cantidad_recibida").toString());
-            item_columna6->setTextColor(Qt::black); // color de los items
+            item_columna6->setTextColor(Qt::blue); // color de los items
+            item_columna6->setFlags(item_columna6->flags() & (~Qt::ItemIsEditable));
             item_columna6->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             ui->tablaLineas->setItem(pos,6,item_columna6);
 
 
-            QTableWidgetItem *item_columna7 = new QTableWidgetItem(QString::number(query_lineas.record().value("coste_bruto").toDouble(),'f',2));
+            QTableWidgetItem *item_columna7 = new QTableWidgetItem("0");
             item_columna7->setTextColor(Qt::black); // color de los items
+            item_columna7->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             ui->tablaLineas->setItem(pos,7,item_columna7);
-            ui->tablaLineas->setItemDelegateForColumn(7,new MonetaryDelegate);
 
-            QTableWidgetItem *item_columna8 = new QTableWidgetItem(query_lineas.record().value("etiquetas").toString());
+            QTableWidgetItem *item_columna8 = new QTableWidgetItem(QString::number(query_lineas.record().value("coste_bruto").toDouble(),'f',2));
             item_columna8->setTextColor(Qt::black); // color de los items
-            item_columna8->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             ui->tablaLineas->setItem(pos,8,item_columna8);
+            ui->tablaLineas->setItemDelegateForColumn(8,new MonetaryDelegate);
 
-            QTableWidgetItem *item_columna9 = new QTableWidgetItem(query_lineas.record().value("id_articulo").toString());
+            QTableWidgetItem *item_columna9 = new QTableWidgetItem(query_lineas.record().value("etiquetas").toString());
             item_columna9->setTextColor(Qt::black); // color de los items
             item_columna9->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             ui->tablaLineas->setItem(pos,9,item_columna9);
-            ui->tablaLineas->setColumnHidden(9,true);
+
+            QTableWidgetItem *item_columna10 = new QTableWidgetItem(query_lineas.record().value("id_articulo").toString());
+            item_columna10->setTextColor(Qt::black); // color de los items
+            item_columna10->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            ui->tablaLineas->setItem(pos,10,item_columna10);
+            ui->tablaLineas->setColumnHidden(10,true);
+            pos++;
 
         }
-        connect(ui->tablaLineas,SIGNAL(cellChanged(int,int)),this,SLOT(validarcantidad(int,int)));
+
 
     }
+
+   // connect(ui->tablaLineas,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(validarcantidad(QTableWidgetItem*)));
+    connect(ui->tablaLineas,SIGNAL(itemSelectionChanged()),this,SLOT(reconectar()));
 }
 
-void Frmrecepcion_pedidos::validarcantidad(int row,int col)
+void Frmrecepcion_pedidos::validarcantidad(QTableWidgetItem *item)
 {
-    if(col ==6) // Cantidad
+   disconnect(ui->tablaLineas,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(validarcantidad(QTableWidgetItem*)));
+    int row = ui->tablaLineas->currentRow();
+    int col = ui->tablaLineas->currentColumn();
+
+    if(item != ui->tablaLineas->currentItem()) // Cantidad
+        return;
+    else
     {
-        int cant = ui->tablaLineas->item(row,4)->text().toInt();
-        int rec = ui->tablaLineas->item(row,col)->text().toInt();
-        int pend = cant-rec;
-        ui->tablaLineas->item(row,5)->setText(QString::number(pend));
+        if (item->column() ==7);
+        int pend = ui->tablaLineas->item(row,5)->text().toInt();
+        int rec = ui->tablaLineas->item(row,6)->text().toInt();
+        int rec_act = ui->tablaLineas->item(row,7)->text().toInt();
+        int nuevo_pend = pend - rec_act;
+        int nid = ui->tablaLineas->item(row,10)->text().toInt();
+        rec = rec + rec_act;
+
+        bool fallo = false;
+
+
+        QSqlDatabase::database("Maya").transaction();
+        QSqlDatabase::database("empresa").transaction();
+        QSqlQuery queryLineas(QSqlDatabase::database("empresa"));
+        queryLineas.prepare("update lin_ped_pro set cantidad_pendiente =:pend, cantidad_recibida = :rec where id =:id");
+        queryLineas.bindValue(":pend",nuevo_pend);
+        queryLineas.bindValue(":rec",rec);
+        queryLineas.bindValue(":id",nid);
+        if(!queryLineas.exec()) {
+            QMessageBox::warning(this,tr("ATENCIÓN"),
+                                 tr("Fallo la modificación de pendientes: %1").arg(queryLineas.lastError().text()),
+                                 tr("Aceptar"));
+          fallo = true;}
+        else {
+            if(nuevo_pend!=0)
+            {
+
+
+                int stockfisico, stockreal,nCPR;
+                QSqlQuery queryProducto(QSqlDatabase::database("Maya"));
+                if(queryProducto.exec("select stockfisico, nStockReal, nCantidadPendienteRecibir from articulos where id = " +QString::number(nid)))
+                {
+                    queryProducto.next();
+                    stockfisico = queryProducto.record().value("stockfisico").toInt();
+                    stockreal = queryProducto.record().value("nStockReal").toInt();
+                    nCPR = queryProducto.record().value("nCantidadPendienteRecibir").toInt();
+
+                    if(!queryProducto.exec("update articulos set stockfisico = " +QString::number(stockfisico+rec_act)+
+                                           ",nStockReal = "+QString::number(stockfisico+rec_act+nuevo_pend)+
+                                           ",nCantidadPendienteRecibir ="+QString::number(nCPR -rec_act)+
+                                           " where id = "+QString::number(nid)))
+                    {
+                        QMessageBox::warning(this,tr("ATENCIÓN"),
+                                             tr("Falló la actualización de stock %1").arg(queryProducto.lastError().text()),
+                                             tr("Aceptar"));
+                        fallo = true;
+
+                    } else {
+                        qDebug() << queryProducto.lastQuery();
+                    }
+
+                }
+            }
+
+        }
+        if (!fallo)
+        {
+            QSqlDatabase::database("empresa").commit();
+            QSqlDatabase::database("Maya").commit();
+        } else
+        {
+            QSqlDatabase::database("empresa").rollback();
+            QSqlDatabase::database("Maya").rollback();
+        }
+
+        ui->tablaLineas->item(row,5)->setText(QString::number(nuevo_pend));
+        ui->tablaLineas->item(row,6)->setText(QString::number(rec));
+        ui->tablaLineas->item(row,7)->setText("0");
+
+
     }
-    if(col ==7) // Coste
+    if(ui->tablaLineas->currentColumn() ==8) // Coste
     {
         int id = ui->tablaLineas->item(row,9)->text().toInt();
         QSqlQuery queryProducto(QSqlDatabase::database("Maya"));
@@ -200,10 +285,16 @@ void Frmrecepcion_pedidos::validarcantidad(int row,int col)
         }
 
     }
+    // connect(ui->tablaLineas,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(validarcantidad(QTableWidgetItem*)));
+}
+
+void Frmrecepcion_pedidos::reconectar()
+{
+    disconnect(ui->tablaLineas,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(validarcantidad(QTableWidgetItem*)));
+    connect(ui->tablaLineas,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(validarcantidad(QTableWidgetItem*)));
 }
 
 void Frmrecepcion_pedidos::on_pushButton_3_clicked()
 {
-    FrmBuscarCIE editar;
-    editar.exec();
+
 }

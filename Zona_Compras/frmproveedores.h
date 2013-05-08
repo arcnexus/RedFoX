@@ -20,6 +20,7 @@ public slots:
     void BloquearCampos();
     void LLenarCampos();
     void CargarCamposEnProveedor();
+    void cargar_forma_pago(QString);
     
 private slots:
     void on_btnSiguiente_clicked();

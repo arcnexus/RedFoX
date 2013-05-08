@@ -349,8 +349,9 @@ void FrmArticulos::LLenarCampos()
    ui->txttComentario->setText(oArticulo->tComentario);
    ui->txtnStockMaximo->setText(QString::number(oArticulo->nStockMaximo));
    ui->txtnStockMinimo->setText(QString::number(oArticulo->nStockMinimo));
- //  ui->txtnStockReal->setText(QString::number(oArticulo->nStockReal));
+   //ui->txtnStockReal->setText(QString::number(oArticulo->nStockReal));
    ui->txtnStockReal_2->setText(QString::number(oArticulo->nStockReal));
+   ui->txtStockfisico->setText(QString::number(oArticulo->nStockFisico));
 
    if (oArticulo->lControlarStock==1)
         ui->chklControlarStock->setChecked(true);
