@@ -36,6 +36,59 @@ bool Proveedor::acumular(int id_proveedor, int mes, double importe)
 
 }
 
+void Proveedor::anadir_persona_contacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
+                                        QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3,
+                                        QString descMovil1, QString Movil1, QString descMovil2, QString Movil2,QString cargo)
+    {
+        QSqlQuery qContactos(QSqlDatabase::database("Maya"));
+        qContactos.prepare("INSERT INTO personascontactoproveedor "
+                           "(nombre,"
+                           "telefono1,"
+                           "telefono2,"
+                           "telefono3,"
+                           "movil1,"
+                           "movil2,"
+                           "idproveedor,"
+                           "desctelefono1,"
+                           "desctelefono2,"
+                           "desctelefono3,"
+                           "descmovil1,"
+                           "descmovil2,"
+                           "cargo_empresa)"
+                           " VALUES ("
+                          ":nombre,"
+                          ":telefono1,"
+                          ":telefono2,"
+                          ":telefono3,"
+                          ":movil1,"
+                          ":movil2,"
+                          ":idproveedor,"
+                          ":desctelefono1,"
+                          ":desctelefono2,"
+                          ":desctelefono3,"
+                          ":descmovil1,"
+                          ":descmovil2,"
+                           ":cargo);");
+
+
+                           qContactos.bindValue(":nombre",Nombre);
+                           qContactos.bindValue(":telefono1",Telefono1);
+                           qContactos.bindValue( ":telefono2",Telefono2);
+                           qContactos.bindValue(":telefono3",Telefono3);
+                           qContactos.bindValue(":movil",Movil1);
+                           qContactos.bindValue(":movil2",Movil2);
+                           qContactos.bindValue(":idproveedor",Id);
+                           qContactos.bindValue(":desctelefono1",descTelefono1);
+                           qContactos.bindValue(":desctelefono2",descTelefono2);
+                           qContactos.bindValue(":desctelefono3",descTelefono3);
+                           qContactos.bindValue(":descmovil1",descMovil1);
+                           qContactos.bindValue(":descmovil2",descMovil2);
+                           qContactos.bindValue(":cargo",cargo);
+                           if(!qContactos.exec())
+                               QMessageBox::warning(qApp->activeWindow(),tr("Añadir personas de contacto"),
+                                                    tr("Falló el añadir una persona de contacto: %1").arg(qContactos.lastError().text()));
+}
+
 void Proveedor::Anadir()
 {
     QScopedPointer<QSqlQuery>QProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));

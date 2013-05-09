@@ -75,6 +75,12 @@ private slots:
     void historiales();
     void acumulados();
     void grafica();
+    void contactos();
+    void menu_contactos(QModelIndex);
+    void nuevo_contacto();
+    void editar_contacto();
+    void borrar_contacto();
+
 
     void on_btnBuscar_clicked();
 

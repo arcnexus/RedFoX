@@ -67,7 +67,9 @@ public:
     double enero,febrero,marzo,abril,mayo,junio,julio,agosto,septiembre,octubre,noviembre,diciembre;
     void cargaracumulados(int id_proveedor);
     bool acumular(int id_proveedor, int mes, double importe);
-
+    void anadir_persona_contacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
+                                 QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3,
+                                 QString descMovil1, QString Movil1, QString descMovil2, QString Movil2,QString cargo);
 
 signals:
     

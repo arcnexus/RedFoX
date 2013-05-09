@@ -97,6 +97,7 @@ public slots:
     void guardar();
     void recuperar(int id);
     void clear();
+
     
 };
 

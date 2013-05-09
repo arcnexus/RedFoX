@@ -54,6 +54,12 @@ frmProveedores::frmProveedores(QWidget *parent) :
     oProveedor->idPaisAlmacen = Configuracion_global->Devolver_id_pais(ui->txtcPaisAlmacen->currentText());
 
 
+    // -----------------------
+    // CONEXIONES
+    //------------------------
+    connect(ui->btnAnadir_persona_contacto,SIGNAL(clicked()),this,SLOT(nuevo_contacto()));
+    connect(ui->tablaContactos,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(menu_contactos(QModelIndex)));
+
 }
 
 frmProveedores::~frmProveedores()
@@ -161,6 +167,11 @@ void frmProveedores::LLenarCampos()
     // Grafica
     //---------------------
     grafica();
+
+    // -----------------------
+    // Cargar Contactos
+    // -----------------------
+    contactos();
 
 
 
@@ -761,6 +772,80 @@ void frmProveedores::grafica()
     ui->Grafica->addItem(tr("Oct"),oProveedor->octubre);
     ui->Grafica->addItem(tr("Nov"),oProveedor->noviembre);
     ui->Grafica->addItem(tr("Dic"),oProveedor->diciembre);
+}
+
+void frmProveedores::contactos()
+{
+    QSqlQueryModel *modelContactos= new QSqlQueryModel(this);
+    modelContactos->setQuery("select id,idproveedor,cargo_empresa, nombre, desctelefono1,telefono1,desctelefono2,telefono2,"
+                             "desctelefono3, telefono3, descmovil1,movil1,descmovil2,movil2 "
+                             "from personascontactoproveedor where idproveedor ="+QString::number(oProveedor->id),
+                             QSqlDatabase::database("Maya"));
+
+    ui->tablaContactos->setModel(modelContactos);
+
+    modelContactos->setHeaderData(0,Qt::Horizontal,tr("ID"));
+    modelContactos->setHeaderData(1,Qt::Horizontal,tr("IDPROVEEDOR"));
+    modelContactos->setHeaderData(2,Qt::Horizontal,tr("CARGO"));
+    modelContactos->setHeaderData(3,Qt::Horizontal,tr("NOMBRE"));
+    modelContactos->setHeaderData(4,Qt::Horizontal,tr("DESC.T1"));
+    modelContactos->setHeaderData(5,Qt::Horizontal,tr("TEL1"));
+    modelContactos->setHeaderData(6,Qt::Horizontal,tr("DESC.T2"));
+    modelContactos->setHeaderData(7,Qt::Horizontal,tr("TEL2"));
+    modelContactos->setHeaderData(8,Qt::Horizontal,tr("DESC.T3"));
+    modelContactos->setHeaderData(9,Qt::Horizontal,tr("TEL3"));
+    modelContactos->setHeaderData(10,Qt::Horizontal,tr("DESC.M1"));
+    modelContactos->setHeaderData(11,Qt::Horizontal,tr("Mov.1"));
+    modelContactos->setHeaderData(12,Qt::Horizontal,tr("DESC.M2"));
+    modelContactos->setHeaderData(13,Qt::Horizontal,tr("Mov.2"));
+
+    ui->tablaContactos->setColumnHidden(0,true);
+    ui->tablaContactos->setColumnHidden(1,true);
+
+}
+
+void frmProveedores::menu_contactos(QModelIndex index)
+{
+    QMenu* contextMenu = new QMenu ( this );
+    Q_CHECK_PTR ( contextMenu );
+    contextMenu->addAction ( "Editar Contacto",this,SLOT(editar_contacto()));
+    contextMenu->addAction ( "Borrar Contacto",this,SLOT (borrar_contacto()));
+    contextMenu->popup( QCursor::pos() );
+    contextMenu->exec ();
+    delete contextMenu;
+    contextMenu = 0;
+
+}
+
+void frmProveedores::nuevo_contacto()
+{
+    oProveedor->anadir_persona_contacto(oProveedor->id,ui->txtNombre->text(),ui->txtDescripcionT1->text(),
+                                   ui->txtTelefono1->text(),ui->txtDescripcionT2->text(),ui->txtTelefono2->text(),
+                                   ui->txtDescripcionT3->text(),ui->txtTelefono3->text(),ui->txtDescripcionM1->text(),
+                                   ui->txtMovil1->text(),ui->txtDescripcionM2->text(),ui->txtMovil2->text(),ui->txtCargo->text());
+    ui->txtDescripcionM1->setText("");
+    ui->txtDescripcionM2->setText("");
+    ui->txtDescripcionT1->setText("");
+    ui->txtDescripcionT2->setText("");
+    ui->txtDescripcionT3->setText("");
+    ui->txtMovil1->setText("");
+    ui->txtMovil2->setText("");
+    ui->txtNombre->setText("");
+    ui->txtTelefono1->setText("");
+    ui->txtTelefono2->setText("");
+    ui->txtTelefono3->setText("");
+    ui->txtCargo->setText("");
+    ui->txtNombre->setFocus();
+
+    contactos();
+}
+
+void frmProveedores::editar_contacto()
+{
+}
+
+void frmProveedores::borrar_contacto()
+{
 }
 
 void frmProveedores::on_btnBuscar_clicked()

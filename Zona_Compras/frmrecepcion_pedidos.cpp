@@ -32,12 +32,12 @@ void Frmrecepcion_pedidos::on_btnBuscar_clicked()
         else
             recibido = 0;
 
-        consulta = "select id,nPedido,cSerie,dFecha,cProveedor from ped_pro where dFecha >="+ui->txtFecha_ini->date().toString("yyMMdd")+
+        consulta = "select id,nPedido,nEjercicio,dFecha,cProveedor from ped_pro where dFecha >="+ui->txtFecha_ini->date().toString("yyMMdd")+
             " and dFecha <="+ui->txtFechaFin->date().toString("yyMMdd")+" and cProveedor like '"+ ui->txtproveedor->text()+
             "%' and lRecibidoCompleto =" + QString::number(recibido);
     } else
     {
-        consulta = " select id,nPedido,cSerie,dFecha,cProveedor from ped_pro where nPedido = "+ui->txtNumPedido->text();
+        consulta = " select id,nPedido,nEjercicio,dFecha,cProveedor from ped_pro where nPedido = "+ui->txtNumPedido->text();
     }
 
     modelPedidos->setQuery(consulta,QSqlDatabase::database("empresa"));

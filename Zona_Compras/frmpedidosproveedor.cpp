@@ -251,6 +251,7 @@ void FrmPedidosProveedor::anadir_pedido()
     int id = oPedido_proveedor->nuevo_pedido_proveedor();
     clear();
     oPedido_proveedor->recuperar(id);
+    this->id = id;
     llenar_campos();
     estadoedicion();
 }
@@ -258,11 +259,13 @@ void FrmPedidosProveedor::anadir_pedido()
 void FrmPedidosProveedor::guardar_pedido()
 {
     estadolectura();
+    guardar_campos_en_objeto();
     oPedido_proveedor->guardar();
 }
 
 void FrmPedidosProveedor::llenar_campos()
 {
+
     ui->txtnPedido->setText(QString::number(oPedido_proveedor->nPedido));
     ui->lblSerie->setText(QString::number(oPedido_proveedor->nEjercicio));
     ui->lblnumero_pedido->setText(QString::number(oPedido_proveedor->nPedido));
@@ -319,6 +322,64 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txtrTotal2->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rtotal2,'f',2)));
     ui->txtrTotal3->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rtotal3,'f',2)));
     ui->txtrTotal4->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rtotal4,'f',2)));
+}
+
+void FrmPedidosProveedor::guardar_campos_en_objeto()
+{
+    oPedido_proveedor->id = this->id;
+    oPedido_proveedor->nPedido = ui->lblnumero_pedido->text().toInt();
+    oPedido_proveedor->nEjercicio = ui->lblSerie->text().toInt();
+    oPedido_proveedor->cProveedor = ui->txtcProveedor->text();
+    oPedido_proveedor->dFecha = ui->txtdFecha->date();
+    oPedido_proveedor->dRecepcion =ui->txtdFechaRecepcion->date();
+    oPedido_proveedor->cCodigoProveedor = ui->txtcCodigoProveedor->text();
+    oPedido_proveedor->cDireccion1 = ui->txtcDireccion->text();
+    oPedido_proveedor->cDireccion2 = ui->txtcDireccion2->text();
+    oPedido_proveedor->cCP = ui->txtcCp->text();
+    oPedido_proveedor->cPoblacion = ui->txtcPoblacion->text();
+    oPedido_proveedor->cProvincia = ui->txtcProvincia->text();
+    oPedido_proveedor->cCifNif = ui->txtcCif->text();
+    oPedido_proveedor->rBaseTotal = ui->txtrBaseTotal_2->text().toDouble();
+    oPedido_proveedor->rSubotal = ui->txtrSubtotal->text().toDouble();
+    oPedido_proveedor->rDto = ui->txtrImporteDescuento->text().toDouble();
+    oPedido_proveedor->nIVA = ui->txtrImporteIva->text().toDouble();
+    oPedido_proveedor->rRecTotal= ui->txtrTotalRecargoEq->text().toDouble();
+    oPedido_proveedor->rTotal = ui->txtrTotal->text().toDouble();
+    oPedido_proveedor->lEnviado = ui->chklEnviado->isChecked();
+    oPedido_proveedor->lRecibido = ui->chkRecibido->isChecked();
+    oPedido_proveedor->lRecibidoCompleto = ui->chklCompleto->isChecked();
+    oPedido_proveedor->tComentario = ui->txttComentario->toPlainText();
+    oPedido_proveedor->dFechaEntrega = ui->txtdFechaRecepcion->date();
+    oPedido_proveedor->cDireccion1Entrega = ui->txtcDireccionEntrega->text();
+    oPedido_proveedor->cDireccion2Entrega = ui->txtcDireccionEntrega_2->text();
+    oPedido_proveedor->cCPEntrega = ui->txtcCpEntrega->text();
+    oPedido_proveedor->cPoblacionEntrega = ui->txtcPoblacionEntrega->text();
+    oPedido_proveedor->cProvinciaEntrega = ui->txtcProvinciaEntrega->text();
+    oPedido_proveedor->cHorarioActivo = ui->txtHorarioEntrega->text();
+    oPedido_proveedor->rBase1 = ui->txtrBase1->text().toDouble();
+    oPedido_proveedor->rBase2 = ui->txtrBase2->text().toDouble();
+    oPedido_proveedor->rBase3 = ui->txtrBase3->text().toDouble();
+    oPedido_proveedor->rBase4 = ui->txtrBase4->text().toDouble();
+    oPedido_proveedor->niva1 = ui->txtnIva1->text().toInt();
+    oPedido_proveedor->niva2 = ui->txtnIva2->text().toInt();
+    oPedido_proveedor->niva3 = ui->txtnIva3->text().toInt();
+    oPedido_proveedor->niva4 = ui->txtnIva4->text().toInt();
+    oPedido_proveedor->riva1 = ui->txtrIVA1->text().toDouble();
+    oPedido_proveedor->riva2 = ui->txtrIVA2->text().toDouble();
+    oPedido_proveedor->riva3 = ui->txtrIVA3->text().toDouble();
+    oPedido_proveedor->riva4 = ui->txtrIVA4->text().toDouble();
+    oPedido_proveedor->nrec1 = ui->txtnRec1->text().toInt();
+    oPedido_proveedor->nrec2 = ui->txtnRec2->text().toInt();
+    oPedido_proveedor->nrec3 = ui->txtnRec3->text().toInt();
+    oPedido_proveedor->nrec4 = ui->txtnRec4->text().toInt();
+    oPedido_proveedor->rrec1 = ui->txtrRecargoEq1->text().toDouble();
+    oPedido_proveedor->rrec2 = ui->txtrRecargoEq2->text().toDouble();
+    oPedido_proveedor->rrec3 = ui->txtrRecargoEq3->text().toDouble();
+    oPedido_proveedor->rrec4 = ui->txtrRecargoEq4->text().toDouble();
+    oPedido_proveedor->rtotal1 = ui->txtrTotal1->text().toDouble();
+    oPedido_proveedor->rtotal2 = ui->txtrTotal2->text().toDouble();
+    oPedido_proveedor->rtotal3 = ui->txtrTotal3->text().toDouble();
+    oPedido_proveedor->rtotal4 = ui->txtrTotal4->text().toDouble();
 }
 
 void FrmPedidosProveedor::clear()

@@ -20,6 +20,7 @@ public:
     ~FrmPedidosProveedor();
     Proveedor *oProveedor = new Proveedor(this);
     PedidoProveedor *oPedido_proveedor = new PedidoProveedor(this);
+    int id;
 
 private slots:
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
@@ -33,6 +34,7 @@ private slots:
     void anadir_pedido();
     void guardar_pedido();
     void llenar_campos();
+    void guardar_campos_en_objeto();
     void clear();
 private:
     Ui::FrmPedidosProveedor *ui;

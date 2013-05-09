@@ -772,6 +772,7 @@ void frmClientes::bloquearCampos() {
     ui->btnDeshacerDireccionAlternativa->setEnabled(false);
     ui->btnAdd_TipoCliente->setEnabled(false);
     ui->btndel_TipoCliente->setEnabled(false);
+    ui->btnVer_OtrosContactos->setEnabled(true);
 
 }
 void frmClientes::desbloquearCampos()

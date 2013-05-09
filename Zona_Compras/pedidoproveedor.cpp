@@ -50,7 +50,7 @@ void PedidoProveedor::guardar()
     "dRecepcion =:dRecepcion,"
     "Id_Proveedor =:Id_Proveedor,"
     "cCodigoProveedor =:cCodigoProveedor,"
-    "cProveedor =:cProveedor,"
+    "cProveedor =:cProveedor"
     "cDireccion1 =:cDireccion1,"
     "cDireccion2 =:cDireccion2,"
     "cCP =:cCP,"
@@ -105,7 +105,7 @@ void PedidoProveedor::guardar()
      "rtotal3 =:rtotal3,"
      "rtotal4 =:rtotal4 "
     " WHERE id = :id";
-
+    queryPedido.prepare(cSql);
     queryPedido.bindValue(":cSerie",this->nEjercicio);
     queryPedido.bindValue(":dFecha",this->dFecha);
     queryPedido.bindValue(":dRecepcion",this->dRecepcion);
@@ -166,8 +166,7 @@ void PedidoProveedor::guardar()
     queryPedido.bindValue(":rtotal3",this->rtotal3);
     queryPedido.bindValue(":rtotal4",this->rtotal4);
     queryPedido.bindValue(":id",this->id);
-    queryPedido.prepare(cSql);
-    qDebug() << cSql;
+
     if(!queryPedido.exec())
         QMessageBox::warning(qApp->activeWindow(),tr("ATENCIÓN:"),
                              tr("Ha ocurrido un error al guardar el pedido: %1").arg(queryPedido.lastError().text()),
