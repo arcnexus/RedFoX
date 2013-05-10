@@ -53,6 +53,10 @@ frmProveedores::frmProveedores(QWidget *parent) :
     ui->txtcPaisAlmacen->setModel(modelPaisAlmacen);
     oProveedor->idPaisAlmacen = Configuracion_global->Devolver_id_pais(ui->txtcPaisAlmacen->currentText());
 
+    // -----------------------
+    // CONTROLES
+    // -----------------------
+    ui->btnGuardarContacto->setVisible(false);
 
     // -----------------------
     // CONEXIONES
@@ -709,6 +713,13 @@ void frmProveedores::on_btnNuevoPedido_clicked()
 
 void frmProveedores::historiales()
 {
+    // -------------------------
+    // Cargar historial Pedidos
+    //--------------------------
+    QSqlQueryModel *modelPedidos = new QSqlQueryModel(this);
+    modelPedidos->setQuery("select id,nPedido,dFecha,rTotal,lRecibidoCompleto from ped_pro where id_Proveedor ="+
+                           QString::number(oProveedor->id)+" order by nPedido desc",QSqlDatabase::database("empresa"));
+    ui->tablaColumnasPedidos->setModel(modelPedidos);
 
     // -------------------------
     // Cargar Historial Facturas
@@ -806,10 +817,16 @@ void frmProveedores::contactos()
 
 void frmProveedores::menu_contactos(QModelIndex index)
 {
+    int nId = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
+    this->id_contacto = nId;
+
     QMenu* contextMenu = new QMenu ( this );
     Q_CHECK_PTR ( contextMenu );
-    contextMenu->addAction ( "Editar Contacto",this,SLOT(editar_contacto()));
-    contextMenu->addAction ( "Borrar Contacto",this,SLOT (borrar_contacto()));
+    //contextMenu->setStyleSheet("{ background-color: white; }");
+    //add action for help menu.
+    QAction *mEdit = new QAction(tr("Editar Contacto"), this);
+    contextMenu->addAction(mEdit);
+    connect(mEdit, SIGNAL(triggered()), this, SLOT(editar_contacto()));
     contextMenu->popup( QCursor::pos() );
     contextMenu->exec ();
     delete contextMenu;
@@ -840,8 +857,84 @@ void frmProveedores::nuevo_contacto()
     contactos();
 }
 
-void frmProveedores::editar_contacto()
+void frmProveedores::guardar_contacto()
 {
+    oProveedor->guardar_persona_contacto(this->id_contacto,ui->txtNombre->text(),ui->txtDescripcionT1->text(),
+                                   ui->txtTelefono1->text(),ui->txtDescripcionT2->text(),ui->txtTelefono2->text(),
+                                   ui->txtDescripcionT3->text(),ui->txtTelefono3->text(),ui->txtDescripcionM1->text(),
+                                   ui->txtMovil1->text(),ui->txtDescripcionM2->text(),ui->txtMovil2->text(),ui->txtCargo->text());
+    ui->txtDescripcionM1->setText("");
+    ui->txtDescripcionM2->setText("");
+    ui->txtDescripcionT1->setText("");
+    ui->txtDescripcionT2->setText("");
+    ui->txtDescripcionT3->setText("");
+    ui->txtMovil1->setText("");
+    ui->txtMovil2->setText("");
+    ui->txtNombre->setText("");
+    ui->txtTelefono1->setText("");
+    ui->txtTelefono2->setText("");
+    ui->txtTelefono3->setText("");
+    ui->txtCargo->setText("");
+    ui->txtNombre->setFocus();
+
+    contactos();
+    ui->btnGuardarContacto->setVisible(false);
+    ui->txtDescripcionM1->setReadOnly(true);
+    ui->txtDescripcionM2->setReadOnly(true);
+    ui->txtDescripcionT1->setReadOnly(true);
+    ui->txtDescripcionT2->setReadOnly(true);
+    ui->txtDescripcionT3->setReadOnly(true);
+    ui->txtMovil1->setReadOnly(true);
+    ui->txtMovil2->setReadOnly(true);
+    ui->txtNombre->setReadOnly(true);
+    ui->txtTelefono1->setReadOnly(true);
+    ui->txtTelefono2->setReadOnly(true);
+    ui->txtTelefono3->setReadOnly(true);
+    ui->txtCargo->setReadOnly(true);
+}
+
+void frmProveedores::editar_contacto()
+
+{
+    QSqlQuery queryContactos(QSqlDatabase::database("Maya"));
+    queryContactos.prepare("select * from personascontactoproveedor where id = :id");
+    queryContactos.bindValue(":id",this->id_contacto);
+    if (!queryContactos.exec())
+    {
+        QMessageBox::warning(this,tr("ATENCIÓN:"),
+                             tr("Ocurrió un error al recuperar los datos: %1").arg(queryContactos.lastError().text()),
+                             tr("Aceptar"));
+    } else
+    {
+        queryContactos.next();
+        ui->txtNombre->setText(queryContactos.record().value("nombre").toString());
+        ui->txtCargo->setText(queryContactos.record().value("cargo_empresa").toString());
+        ui->txtDescripcionT1->setText(queryContactos.record().value("desctelefono1").toString());
+        ui->txtDescripcionT2->setText(queryContactos.record().value("desctelefono2").toString());
+        ui->txtDescripcionT3->setText(queryContactos.record().value("desctelefono3").toString());
+        ui->txtDescripcionM1->setText(queryContactos.record().value("descmovil1").toString());
+        ui->txtDescripcionM2->setText(queryContactos.record().value("descmovil2").toString());
+        ui->txtcTelefono1->setText(queryContactos.record().value("telefono1").toString());
+        ui->txtcTelefono2->setText(queryContactos.record().value("telefono2").toString());
+        ui->txtcTelefono3->setText(queryContactos.record().value("telefono3").toString());
+        ui->txtMovil1->setText(queryContactos.record().value("movil1").toString());
+        ui->txtMovil2->setText(queryContactos.record().value("movil2").toString());
+
+        ui->btnGuardarContacto->setVisible("true");
+        ui->txtDescripcionM1->setReadOnly(false);
+        ui->txtDescripcionM2->setReadOnly(false);
+        ui->txtDescripcionT1->setReadOnly(false);
+        ui->txtDescripcionT2->setReadOnly(false);
+        ui->txtDescripcionT3->setReadOnly(false);
+        ui->txtMovil1->setReadOnly(false);
+        ui->txtMovil2->setReadOnly(false);
+        ui->txtNombre->setReadOnly(false);
+        ui->txtTelefono1->setReadOnly(false);
+        ui->txtTelefono2->setReadOnly(false);
+        ui->txtTelefono3->setReadOnly(false);
+        ui->txtCargo->setReadOnly(false);
+        ui->txtNombre->setFocus();
+    }
 }
 
 void frmProveedores::borrar_contacto()

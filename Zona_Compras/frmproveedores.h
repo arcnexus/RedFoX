@@ -13,7 +13,7 @@ class frmProveedores : public QDialog
     
 public:
     explicit frmProveedores(QWidget *parent = 0);
-
+    int id_contacto;
     ~frmProveedores();
 public slots:
     void DesbloquerCampos();
@@ -21,6 +21,8 @@ public slots:
     void LLenarCampos();
     void CargarCamposEnProveedor();
     void cargar_forma_pago(QString);
+    void editar_contacto();
+    void borrar_contacto();
     
 private slots:
     void on_btnSiguiente_clicked();
@@ -78,8 +80,8 @@ private slots:
     void contactos();
     void menu_contactos(QModelIndex);
     void nuevo_contacto();
-    void editar_contacto();
-    void borrar_contacto();
+    void guardar_contacto();
+
 
 
     void on_btnBuscar_clicked();

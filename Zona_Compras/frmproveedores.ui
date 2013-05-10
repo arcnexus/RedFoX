@@ -831,6 +831,23 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             </property>
            </widget>
           </item>
+          <item row="9" column="3">
+           <widget class="QPushButton" name="btnGuardarContacto">
+            <property name="text">
+             <string>Guardar</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>15</width>
+              <height>15</height>
+             </size>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -1426,7 +1443,7 @@ color: rgb(0, 0, 0);</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_13">
       <property name="styleSheet">
@@ -1546,7 +1563,7 @@ background-color: rgb(172, 176, 255);</string>
           <enum>QTabWidget::North</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="tab_8">
           <property name="styleSheet">
@@ -2186,21 +2203,21 @@ color: rgb(0, 0, 0);</string>
   <tabstop>txtcWeb</tabstop>
   <tabstop>btnAbrirWeb</tabstop>
   <tabstop>txtcPersonaContacto</tabstop>
-  <tabstop>txtcCodigoFormaPago</tabstop>
-  <tabstop>txtcFormaPago</tabstop>
-  <tabstop>txtcCuentaIvaSoportado</tabstop>
-  <tabstop>txtcCuentaAplicacion</tabstop>
-  <tabstop>txtcCuentaPagos</tabstop>
-  <tabstop>tablaAsientos</tabstop>
-  <tabstop>tabWidget_3</tabstop>
-  <tabstop>tabWidget_2</tabstop>
-  <tabstop>tabWidget_5</tabstop>
-  <tabstop>btnAnadir</tabstop>
-  <tabstop>btnSiguiente</tabstop>
-  <tabstop>btnAnterior</tabstop>
-  <tabstop>btnBuscar</tabstop>
-  <tabstop>btnEditar</tabstop>
-  <tabstop>btnGuardar</tabstop>
+  <tabstop>tablaContactos</tabstop>
+  <tabstop>txtNombre</tabstop>
+  <tabstop>txtCargo</tabstop>
+  <tabstop>txtDescripcionT1</tabstop>
+  <tabstop>txtTelefono1</tabstop>
+  <tabstop>txtDescripcionT2</tabstop>
+  <tabstop>txtTelefono2</tabstop>
+  <tabstop>txtDescripcionT3</tabstop>
+  <tabstop>txtTelefono3</tabstop>
+  <tabstop>txtDescripcionM1</tabstop>
+  <tabstop>txtMovil1</tabstop>
+  <tabstop>txtDescripcionM2</tabstop>
+  <tabstop>txtMovil2</tabstop>
+  <tabstop>btnGuardarContacto</tabstop>
+  <tabstop>btnAnadir_persona_contacto</tabstop>
   <tabstop>btnDeshacer</tabstop>
   <tabstop>btnBorrar</tabstop>
   <tabstop>txtnDiaCobro</tabstop>
@@ -2236,6 +2253,35 @@ color: rgb(0, 0, 0);</string>
   <tabstop>txtrAcumuladoCompras</tabstop>
   <tabstop>tableView_2</tabstop>
   <tabstop>tablaColumnasPedidos</tabstop>
+  <tabstop>txtcFormaPago</tabstop>
+  <tabstop>btnGuardar</tabstop>
+  <tabstop>txtcCuentaPagos</tabstop>
+  <tabstop>txtcCuentaAplicacion</tabstop>
+  <tabstop>tabWidget_3</tabstop>
+  <tabstop>tabWidget_5</tabstop>
+  <tabstop>btnSiguiente</tabstop>
+  <tabstop>btnBuscar</tabstop>
+  <tabstop>tablaAsientos</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>btnAnadir</tabstop>
+  <tabstop>btnAnterior</tabstop>
+  <tabstop>txtcCuentaIvaSoportado</tabstop>
+  <tabstop>txtcCodigoFormaPago</tabstop>
+  <tabstop>btnNuevoAlbaran</tabstop>
+  <tabstop>btnNuevoPedido</tabstop>
+  <tabstop>txtEnero</tabstop>
+  <tabstop>txtjulio</tabstop>
+  <tabstop>txtFebrero</tabstop>
+  <tabstop>txtAgosto</tabstop>
+  <tabstop>txtMarzo</tabstop>
+  <tabstop>txtSeptiembre</tabstop>
+  <tabstop>txtAbril</tabstop>
+  <tabstop>txtOctubre</tabstop>
+  <tabstop>txtMayo</tabstop>
+  <tabstop>txtNoviembre</tabstop>
+  <tabstop>txtJunio</tabstop>
+  <tabstop>txtDiciembre</tabstop>
+  <tabstop>btnEditar</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>
@@ -2248,8 +2294,8 @@ color: rgb(0, 0, 0);</string>
    <slot>cargar_forma_pago(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>767</x>
-     <y>406</y>
+     <x>803</x>
+     <y>464</y>
     </hint>
     <hint type="destinationlabel">
      <x>913</x>
@@ -2257,8 +2303,25 @@ color: rgb(0, 0, 0);</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnGuardarContacto</sender>
+   <signal>clicked()</signal>
+   <receiver>frmProveedores</receiver>
+   <slot>guardar_contacto()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>426</x>
+     <y>489</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>508</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>cargar_forma_pago(QString)</slot>
+  <slot>guardar_contacto()</slot>
  </slots>
 </ui>

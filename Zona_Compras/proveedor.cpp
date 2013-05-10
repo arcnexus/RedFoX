@@ -89,6 +89,44 @@ void Proveedor::anadir_persona_contacto(int Id, QString Nombre, QString descTele
                                                     tr("Falló el añadir una persona de contacto: %1").arg(qContactos.lastError().text()));
 }
 
+void Proveedor::guardar_persona_contacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1, QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3, QString descMovil1, QString Movil1, QString descMovil2, QString Movil2, QString cargo)
+{
+    QSqlQuery qContactos(QSqlDatabase::database("Maya"));
+    qContactos.prepare("UPDATE personascontactoproveedor SET "
+    "nombre =:nombre,"
+    "telefono1 =:telefono1,"
+    "telefono2 =:telefono2,"
+    "telefono3 =:telefono3,"
+    "movil1 =:movil1,"
+    "movil2 =:movil2,"
+    "desctelefono1 =:desctelefono1,"
+    "desctelefono2 =:desctelefono2,"
+    "desctelefono3 =:desctelefono3,"
+    "descmovil1 =:descmovil1,"
+    "descmovil2 =:descmovil2,"
+    "cargo_empresa =:cargo_empresa "
+    " where id = :id");
+
+
+    qContactos.bindValue(":nombre",Nombre);
+    qContactos.bindValue(":telefono1",Telefono1);
+    qContactos.bindValue( ":telefono2",Telefono2);
+    qContactos.bindValue(":telefono3",Telefono3);
+    qContactos.bindValue(":movil",Movil1);
+    qContactos.bindValue(":movil2",Movil2);
+    qContactos.bindValue(":idproveedor",Id);
+    qContactos.bindValue(":desctelefono1",descTelefono1);
+    qContactos.bindValue(":desctelefono2",descTelefono2);
+    qContactos.bindValue(":desctelefono3",descTelefono3);
+    qContactos.bindValue(":descmovil1",descMovil1);
+    qContactos.bindValue(":descmovil2",descMovil2);
+    qContactos.bindValue(":cargo",cargo);
+    qContactos.bindValue(":id",Id);
+    if(!qContactos.exec())
+        QMessageBox::warning(qApp->activeWindow(),tr("Editar personas de contacto"),
+                             tr("Falló el guardar una persona de contacto: %1").arg(qContactos.lastError().text()));
+}
+
 void Proveedor::Anadir()
 {
     QScopedPointer<QSqlQuery>QProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));

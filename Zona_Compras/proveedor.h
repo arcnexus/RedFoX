@@ -70,6 +70,9 @@ public:
     void anadir_persona_contacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
                                  QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3,
                                  QString descMovil1, QString Movil1, QString descMovil2, QString Movil2,QString cargo);
+    void guardar_persona_contacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
+                                  QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3,
+                                  QString descMovil1, QString Movil1, QString descMovil2, QString Movil2,QString cargo);
 
 signals:
     
