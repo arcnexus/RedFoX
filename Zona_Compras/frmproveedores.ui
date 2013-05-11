@@ -307,7 +307,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
    <item row="2" column="1" rowspan="2" colspan="2">
     <widget class="QTabWidget" name="tabWidget_5">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <property name="styleSheet">
@@ -869,60 +869,7 @@ alternate-background-color: rgb(255, 254, 202);</string>
        <string>Pagos</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QLabel" name="label_40">
-           <property name="text">
-            <string>Día cobro proveedor:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="txtnDiaCobro">
-           <property name="maximumSize">
-            <size>
-             <width>60</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-           <property name="text">
-            <string>0</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_41">
-           <property name="text">
-            <string>Dto.Predeterminado:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="txtnDto">
-           <property name="maximumSize">
-            <size>
-             <width>60</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-           <property name="text">
-            <string>0,00</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0">
+       <item row="1" column="0" colspan="4">
         <layout class="QGridLayout" name="gridLayout_3">
          <item row="0" column="0">
           <widget class="QLabel" name="label_36">
@@ -1068,6 +1015,105 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="4" column="0" colspan="4">
+        <widget class="QTableView" name="tablaPagos">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 250, 210);
+alternate-background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QRadioButton" name="radioButton_2">
+         <property name="text">
+          <string>Todos</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QRadioButton" name="radioButton_3">
+         <property name="text">
+          <string>Solo Pagados</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QRadioButton" name="radioButton">
+         <property name="text">
+          <string>Solo pendientes de Pago</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="4">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="label_40">
+           <property name="text">
+            <string>Día cobro proveedor:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="txtnDiaCobro">
+           <property name="maximumSize">
+            <size>
+             <width>60</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_41">
+           <property name="text">
+            <string>Dto.Predeterminado:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="txtnDto">
+           <property name="maximumSize">
+            <size>
+             <width>60</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>0,00</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="0" colspan="4">
+        <widget class="QLabel" name="label_63">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>GESTIÓN DE PAGOS</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -1443,7 +1489,7 @@ color: rgb(0, 0, 0);</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_13">
       <property name="styleSheet">
@@ -1558,12 +1604,12 @@ background-color: rgb(172, 176, 255);</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_12">
        <item row="0" column="0">
-        <widget class="QTabWidget" name="tablaColumnasAlbaranes">
+        <widget class="QTabWidget" name="pestanaHistAlbaranes">
          <property name="tabPosition">
           <enum>QTabWidget::North</enum>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_8">
           <property name="styleSheet">
@@ -1612,12 +1658,12 @@ alternate-background-color: rgb(255, 254, 211);</string>
            <item row="1" column="0">
             <widget class="QPushButton" name="btnNuevoAlbaran">
              <property name="text">
-              <string>Añadir Albrán de proveedor</string>
+              <string>Añadir Albarán de proveedor</string>
              </property>
             </widget>
            </item>
            <item row="0" column="0">
-            <widget class="QTableView" name="tableView_2">
+            <widget class="QTableView" name="tablaColumnasAlbaran">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);
 alternate-background-color: rgb(255, 254, 211)</string>
@@ -1687,6 +1733,9 @@ alternate-background-color: rgb(255, 254, 211)</string>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
         </widget>
        </item>
       </layout>
@@ -2236,7 +2285,7 @@ color: rgb(0, 0, 0);</string>
   <tabstop>txtcTelefonoAlmacen</tabstop>
   <tabstop>txtcFaxAlmacen</tabstop>
   <tabstop>txttComentarios</tabstop>
-  <tabstop>tablaColumnasAlbaranes</tabstop>
+  <tabstop>pestanaHistAlbaranes</tabstop>
   <tabstop>tablacolumnasFacturas</tabstop>
   <tabstop>btnNuevaFactura</tabstop>
   <tabstop>tablaArticulos</tabstop>
@@ -2251,7 +2300,7 @@ color: rgb(0, 0, 0);</string>
   <tabstop>txtcCuentaPagoProveedor</tabstop>
   <tabstop>txtdFechaUltimaCompra</tabstop>
   <tabstop>txtrAcumuladoCompras</tabstop>
-  <tabstop>tableView_2</tabstop>
+  <tabstop>tablaColumnasAlbaran</tabstop>
   <tabstop>tablaColumnasPedidos</tabstop>
   <tabstop>txtcFormaPago</tabstop>
   <tabstop>btnGuardar</tabstop>

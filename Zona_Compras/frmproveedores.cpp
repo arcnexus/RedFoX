@@ -7,6 +7,7 @@
 #include "frmpedidosproveedor.h"
 #include "frmalbaranproveedor.h"
 #include "Auxiliares/monetarydelegate.h"
+#include "Auxiliares/datedelegate.h"
 #include "Busquedas/frmbuscarproveedor.h"
 
 
@@ -720,13 +721,25 @@ void frmProveedores::historiales()
     modelPedidos->setQuery("select id,nPedido,dFecha,rTotal,lRecibidoCompleto from ped_pro where id_Proveedor ="+
                            QString::number(oProveedor->id)+" order by nPedido desc",QSqlDatabase::database("empresa"));
     ui->tablaColumnasPedidos->setModel(modelPedidos);
+    ui->tablaColumnasPedidos->setColumnHidden(0,true);
+    ui->tablaColumnasPedidos->setColumnWidth(1,120);
+    ui->tablaColumnasPedidos->setColumnWidth(1,120);
+    ui->tablaColumnasPedidos->setColumnWidth(3,120);
+    modelPedidos->setHeaderData(1,Qt::Horizontal,"PEDIDO");
+    ui->tablaColumnasPedidos->setItemDelegateForColumn(2, new DateDelegate);
+    modelPedidos->setHeaderData(2,Qt::Horizontal,"Fecha");
+    ui->tablaColumnasPedidos->setItemDelegateForColumn(3,new MonetaryDelegate);
+    modelPedidos->setHeaderData(3,Qt::Horizontal,"Total");
+    modelPedidos->setHeaderData(4,Qt::Horizontal,"C.");
+
 
     // -------------------------
     // Cargar Historial Facturas
     //--------------------------
     QSqlQueryModel *modelFacturas = new QSqlQueryModel(this);
     modelFacturas->setQuery("select id,cFactura,dFecha,cPedido,rTotalBase,rTotalIva,rTotalRetencion,rTotalRecargoEq,rTotal,rImporteDeudaPendiente"
-                            " from fac_pro",QSqlDatabase::database("empresa"));
+                            " from fac_pro where id_Proveedor = "+QString::number(oProveedor->id)+
+                            " order by cFactura desc",QSqlDatabase::database("empresa"));
     ui->tablacolumnasFacturas->setModel(modelFacturas);
     ui->tablacolumnasFacturas->setColumnHidden(0,true);
     modelFacturas->setHeaderData(1,Qt::Horizontal,"N.Factura");
@@ -738,13 +751,71 @@ void frmProveedores::historiales()
     modelFacturas->setHeaderData(7,Qt::Horizontal,"Rec. Eq.");
     modelFacturas->setHeaderData(8,Qt::Horizontal,"TOTAL");
     modelFacturas->setHeaderData(9,Qt::Horizontal,"Pendiente");
- //   MonetaryDelegate *Delegado = new MonetaryDelegate(this);
+
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(2,new DateDelegate);
     ui->tablacolumnasFacturas->setItemDelegateForColumn(4,new MonetaryDelegate);
     ui->tablacolumnasFacturas->setItemDelegateForColumn(5,new MonetaryDelegate);
     ui->tablacolumnasFacturas->setItemDelegateForColumn(6,new MonetaryDelegate);
     ui->tablacolumnasFacturas->setItemDelegateForColumn(7,new MonetaryDelegate);
     ui->tablacolumnasFacturas->setItemDelegateForColumn(8,new MonetaryDelegate);
     ui->tablacolumnasFacturas->setItemDelegateForColumn(9,new MonetaryDelegate);
+
+
+    // --------------------------
+    // Cargar Historial Albaranes
+    //---------------------------
+    QSqlQueryModel *modelAlbaranes = new QSqlQueryModel(this);
+    modelAlbaranes->setQuery("select id,cAlbaran,dFecha,rBaseTotal,rIvaTotal,"
+                             " rTotal from alb_pro where id_Proveedor = "+QString::number(oProveedor->id)+
+                             " order by cAlbaran desc ",QSqlDatabase::database("empresa"));
+    ui->tablaColumnasAlbaran->setModel(modelAlbaranes);
+    ui->tablaColumnasAlbaran->setColumnHidden(0,true);
+    modelAlbaranes->setHeaderData(1,Qt::Horizontal,"N.Albarán");
+    modelAlbaranes->setHeaderData(2,Qt::Horizontal,"Fecha");
+    modelAlbaranes->setHeaderData(3,Qt::Horizontal,"Pedido");
+    modelAlbaranes->setHeaderData(4,Qt::Horizontal,"Base IMP.");
+    modelAlbaranes->setHeaderData(5,Qt::Horizontal,"Tot.IVA");
+    modelAlbaranes->setHeaderData(6,Qt::Horizontal,"Ret IRPF");
+    modelAlbaranes->setHeaderData(7,Qt::Horizontal,"Rec. Eq.");
+    modelAlbaranes->setHeaderData(8,Qt::Horizontal,"TOTAL");
+    modelAlbaranes->setHeaderData(9,Qt::Horizontal,"Pendiente");
+
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(4,new MonetaryDelegate);
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(5,new MonetaryDelegate);
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(6,new MonetaryDelegate);
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(7,new MonetaryDelegate);
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(8,new MonetaryDelegate);
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(9,new MonetaryDelegate);
+
+    //---------------------
+    // Artículos proveedor
+    //---------------------
+    QSqlQueryModel *modelArticulo = new QSqlQueryModel(this);
+    modelArticulo->setQuery("select cCodigo,cCodigoBarras, cDescripcion,rCoste "
+                           "from articulos where id_Proveedor =" +QString::number(oProveedor->id),
+                           QSqlDatabase::database("Maya"));
+
+
+    ui->tablaArticulos->setModel(modelArticulo);
+    ui->tablaArticulos->setColumnWidth(2,200);
+    ui->tablaArticulos->setItemDelegateForColumn(3,new MonetaryDelegate);
+
+    //----------------------
+    // Deudas a Proveedores
+    //----------------------
+    QSqlQueryModel *modeloDeudas = new QSqlQueryModel(this);
+    modeloDeudas->setQuery("select id,documento,fecha_deuda,vencimiento,importe_deuda,pendiente,pago_por,"
+                           "numero_tarjeta_cuenta from deudas_proveedores where id_proveedor = "+
+                           QString::number(oProveedor->id)+ " order by fecha_deuda desc",QSqlDatabase::database("empresa"));
+    ui->tablaPagos->setModel(modeloDeudas);
+    ui->tablaPagos->setColumnHidden(0,true);
+    ui->tablaPagos->setColumnWidth(1,80);
+    ui->tablaPagos->setColumnWidth(2,90);
+    ui->tablaPagos->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tablaPagos->setItemDelegateForColumn(3,new DateDelegate);
+    ui->tablaPagos->setItemDelegateForColumn(4,new MonetaryDelegate);
+    ui->tablaPagos->setItemDelegateForColumn(5,new MonetaryDelegate);
 }
 
 void frmProveedores::acumulados()

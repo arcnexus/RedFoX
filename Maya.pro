@@ -122,7 +122,8 @@ SOURCES += main.cpp\
     Zona_Pacientes/frmanadirdiagnostico.cpp \
     Zona_Administrador/frmconfigmaya.cpp \
     Zona_Pacientes/frmanadirhierb.cpp \
-    Almacen/frmeditar_tarifas.cpp
+    Almacen/frmeditar_tarifas.cpp \
+    Auxiliares/datedelegate.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -213,7 +214,8 @@ HEADERS  += mainwindow.h \
     Zona_Administrador/frmconfigmaya.h \
     Zona_Administrador/block_Maya_form.h \
     Zona_Pacientes/frmanadirhierb.h \
-    Almacen/frmeditar_tarifas.h
+    Almacen/frmeditar_tarifas.h \
+    Auxiliares/datedelegate.h
 
 
 FORMS    += mainwindow.ui \
