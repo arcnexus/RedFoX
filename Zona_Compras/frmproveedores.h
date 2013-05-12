@@ -73,12 +73,15 @@ private slots:
     void on_btnNuevoAlbaran_clicked();
 
     void on_btnNuevoPedido_clicked();
+    void pagar_fraccion();
+    void ver_asiento();
 
     void historiales();
     void acumulados();
     void grafica();
     void contactos();
-    void menu_contactos(QModelIndex);
+    void menu_contactos(const QPoint&);
+    void menu_deudas(const QPoint&);
     void nuevo_contacto();
     void guardar_contacto();
 

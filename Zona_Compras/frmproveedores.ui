@@ -1020,8 +1020,18 @@ color: rgb(0, 0, 0);</string>
         <widget class="QTableView" name="tablaPagos">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 250, 210);
+font: 7pt &quot;Sans Serif&quot;;
 alternate-background-color: rgb(255, 255, 255);</string>
          </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
         </widget>
        </item>
        <item row="3" column="2">
@@ -1502,54 +1512,14 @@ color: rgb(255, 255, 255);</string>
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout_14">
          <item row="0" column="0">
-          <widget class="QLabel" name="label_32">
-           <property name="text">
-            <string>Cuenta IVA Soportado:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="txtcCuentaIvaSoportado">
-           <property name="maximumSize">
-            <size>
-             <width>150</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
           <widget class="QLabel" name="label_33">
            <property name="text">
             <string>Cuenta cont. Proveedor:</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="0" column="1">
           <widget class="QLineEdit" name="txtcCuentaAplicacion">
-           <property name="maximumSize">
-            <size>
-             <width>150</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_34">
-           <property name="text">
-            <string>Cuenta de Pagos:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="txtcCuentaPagos">
            <property name="maximumSize">
             <size>
              <width>150</width>
@@ -1583,10 +1553,27 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QTextEdit" name="tablaAsientos">
+           <widget class="QTableView" name="tablaAsientos">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">background-color: rgb(255, 255, 255);
+font: 7pt &quot;Sans Serif&quot;;
+alternate-background-color: rgb(255, 250, 178);</string>
             </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <property name="gridStyle">
+             <enum>Qt::DotLine</enum>
+            </property>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
            </widget>
           </item>
          </layout>
@@ -2304,17 +2291,14 @@ color: rgb(0, 0, 0);</string>
   <tabstop>tablaColumnasPedidos</tabstop>
   <tabstop>txtcFormaPago</tabstop>
   <tabstop>btnGuardar</tabstop>
-  <tabstop>txtcCuentaPagos</tabstop>
   <tabstop>txtcCuentaAplicacion</tabstop>
   <tabstop>tabWidget_3</tabstop>
   <tabstop>tabWidget_5</tabstop>
   <tabstop>btnSiguiente</tabstop>
   <tabstop>btnBuscar</tabstop>
-  <tabstop>tablaAsientos</tabstop>
   <tabstop>tabWidget_2</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnAnterior</tabstop>
-  <tabstop>txtcCuentaIvaSoportado</tabstop>
   <tabstop>txtcCodigoFormaPago</tabstop>
   <tabstop>btnNuevoAlbaran</tabstop>
   <tabstop>btnNuevoPedido</tabstop>

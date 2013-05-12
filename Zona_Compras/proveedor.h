@@ -48,12 +48,9 @@ public:
     QString cEntidadPagoProveedor;
     QString cOficinaPagoProveedor;
     QString cDCPagoProveedor;
-    QString cCuentaPagoProveedor;
-    QString cCuentaIvaSoportado;
     double rRetencionIRPF;
     int nTipoRetencion;
     QString cCuentaAplicacion;
-    QString cCuentaPagos;
     QString tComentarios;
     double nDto;
     QDate dFechaAlta;

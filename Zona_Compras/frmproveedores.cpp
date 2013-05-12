@@ -38,6 +38,7 @@ frmProveedores::frmProveedores(QWidget *parent) :
     ui->txtcCodigoFormaPago->setModel(qmFormaPago);
     oProveedor->idFormadePago = Configuracion_global->Devolver_id_forma_pago(ui->txtcCodigoFormaPago->currentText());
 
+
     // ----------------
     // Cargar Paises
     // ----------------
@@ -63,8 +64,11 @@ frmProveedores::frmProveedores(QWidget *parent) :
     // CONEXIONES
     //------------------------
     connect(ui->btnAnadir_persona_contacto,SIGNAL(clicked()),this,SLOT(nuevo_contacto()));
-    connect(ui->tablaContactos,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(menu_contactos(QModelIndex)));
+    ui->tablaContactos->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->tablaPagos->setContextMenuPolicy(Qt::CustomContextMenu);
 
+    connect(ui->tablaContactos, SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(menu_contactos(const QPoint&)));
+    connect(ui->tablaPagos,SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(menu_deudas(const QPoint&)));
 }
 
 frmProveedores::~frmProveedores()
@@ -123,12 +127,10 @@ void frmProveedores::LLenarCampos()
     ui->txtcEntidadPagoProveedor->setText(oProveedor->cEntidadPagoProveedor);
     ui->txtcOficinaPagoProveedor->setText(oProveedor->cOficinaPagoProveedor);
     ui->txtcDCPagoProveedor->setText(oProveedor->cDCPagoProveedor);
-    ui->txtcCuentaPagoProveedor->setText(oProveedor->cCuentaPagoProveedor);
-    ui->txtcCuentaIvaSoportado->setText(oProveedor->cCuentaIvaSoportado);
+
     ui->txtrRetencionIRPF->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->rRetencionIRPF,'f',2)));
     ui->txtnTipoRetencionIRPF->setText(QString::number(oProveedor->nTipoRetencion));
     ui->txtcCuentaAplicacion->setText(oProveedor->cCuentaAplicacion);
-    ui->txtcCuentaPagos->setText(oProveedor->cCuentaPagos);
     ui->txttComentarios->setText(oProveedor->tComentarios);
     ui->txtnDto->setText(QString::number(oProveedor->nDto));
     ui->txtdFechaAlta->setDate(oProveedor->dFechaAlta);
@@ -220,12 +222,9 @@ void frmProveedores::CargarCamposEnProveedor()
     oProveedor->cEntidadPagoProveedor = ui->txtcEntidadPagoProveedor->text();
     oProveedor->cOficinaPagoProveedor = ui->txtcOficinaPagoProveedor->text();
     oProveedor->cDCPagoProveedor = ui->txtcDCPagoProveedor->text();
-    oProveedor->cCuentaPagoProveedor = ui->txtcCuentaPagoProveedor->text();
-    oProveedor->cCuentaIvaSoportado = ui->txtcCuentaIvaSoportado->text();
     oProveedor->rRetencionIRPF = ui->txtrRetencionIRPF->text().replace(".","").toDouble();
     oProveedor->nTipoRetencion = ui->txtnTipoRetencionIRPF->text().toInt();
     oProveedor->cCuentaAplicacion = ui->txtcCuentaAplicacion->text();
-    oProveedor->cCuentaPagos = ui->txtcCuentaPagos->text();
     oProveedor->tComentarios = ui->txttComentarios->toPlainText();
     oProveedor->nDto = ui->txtnDto->text().replace(".","").toDouble();
     oProveedor->dFechaAlta = ui->txtdFechaAlta->date();
@@ -712,6 +711,16 @@ void frmProveedores::on_btnNuevoPedido_clicked()
     frmPedidos.exec();
 }
 
+void frmProveedores::pagar_fraccion()
+{
+
+}
+
+void frmProveedores::ver_asiento()
+{
+
+}
+
 void frmProveedores::historiales()
 {
     // -------------------------
@@ -805,17 +814,62 @@ void frmProveedores::historiales()
     // Deudas a Proveedores
     //----------------------
     QSqlQueryModel *modeloDeudas = new QSqlQueryModel(this);
-    modeloDeudas->setQuery("select id,documento,fecha_deuda,vencimiento,importe_deuda,pendiente,pago_por,"
-                           "numero_tarjeta_cuenta from deudas_proveedores where id_proveedor = "+
+    modeloDeudas->setQuery("select id,documento,fecha_deuda,vencimiento,importe_deuda,pagado,pendiente,pago_por,"
+                           "numero_tarjeta_cuenta,asiento_numero from deudas_proveedores where id_proveedor = "+
                            QString::number(oProveedor->id)+ " order by fecha_deuda desc",QSqlDatabase::database("empresa"));
     ui->tablaPagos->setModel(modeloDeudas);
     ui->tablaPagos->setColumnHidden(0,true);
     ui->tablaPagos->setColumnWidth(1,80);
-    ui->tablaPagos->setColumnWidth(2,90);
+    ui->tablaPagos->setColumnWidth(2,70);
+    ui->tablaPagos->setColumnWidth(3,70);
+    ui->tablaPagos->setColumnWidth(4,65);
+    ui->tablaPagos->setColumnWidth(5,65);
+    ui->tablaPagos->setColumnWidth(6,65);
+    ui->tablaPagos->setColumnWidth(8,200);
+    ui->tablaPagos->setColumnWidth(9,200);
     ui->tablaPagos->setItemDelegateForColumn(2,new DateDelegate);
     ui->tablaPagos->setItemDelegateForColumn(3,new DateDelegate);
     ui->tablaPagos->setItemDelegateForColumn(4,new MonetaryDelegate);
     ui->tablaPagos->setItemDelegateForColumn(5,new MonetaryDelegate);
+    ui->tablaPagos->setItemDelegateForColumn(6, new MonetaryDelegate);
+    modeloDeudas->setHeaderData(1,Qt::Horizontal,tr("Documento"));
+    modeloDeudas->setHeaderData(2,Qt::Horizontal,tr("F. Deuda"));
+    modeloDeudas->setHeaderData(3,Qt::Horizontal,tr("Vto"));
+    modeloDeudas->setHeaderData(4,Qt::Horizontal,tr("Importe"));
+    modeloDeudas->setHeaderData(5,Qt::Horizontal,tr("Pagado"));
+    modeloDeudas->setHeaderData(6,Qt::Horizontal,tr("Pendiente"));
+    modeloDeudas->setHeaderData(7,Qt::Horizontal,tr("Pago por...."));
+    modeloDeudas->setHeaderData(8,Qt::Horizontal,tr("N.Tarjeta/Cuenta"));
+    modeloDeudas->setHeaderData(9,Qt::Horizontal,tr("Asiento numero"));
+
+    //----------------------
+    // Asientos contables
+    //----------------------
+    QSqlQueryModel *modelAsientos = new QSqlQueryModel(this);
+
+    modelAsientos->setQuery("select id,asiento,fechaAsiento,cuentaD,descripcionD, importeD,cuentaH,descripcionH,importeH "
+                            "from diario where cuentaD = '"+oProveedor->cCuentaAplicacion +"' or cuentaH = '"+
+                            oProveedor->cCuentaAplicacion+ "' order by asiento + ' '+posenasiento",
+                            QSqlDatabase::database("dbconta"));
+
+    qDebug()  <<"Error: "<< modelAsientos->lastError();
+
+    ui->tablaAsientos->setModel(modelAsientos);
+    ui->tablaAsientos->setColumnHidden(0,true);
+
+    ui->tablaAsientos->setColumnWidth(1,55);
+    ui->tablaAsientos->setColumnWidth(2,63);
+    ui->tablaAsientos->setItemDelegateForColumn(2, new DateDelegate);
+    ui->tablaAsientos->setColumnWidth(3,55);
+    ui->tablaAsientos->setColumnWidth(4,75);
+    ui->tablaAsientos->setColumnWidth(5,60);
+    ui->tablaAsientos->setItemDelegateForColumn(5, new MonetaryDelegate);
+    ui->tablaAsientos->setColumnWidth(6,55);
+    ui->tablaAsientos->setColumnWidth(7,75);
+    ui->tablaAsientos->setColumnWidth(8,60);
+    ui->tablaAsientos->setItemDelegateForColumn(8, new MonetaryDelegate);
+
+
 }
 
 void frmProveedores::acumulados()
@@ -886,23 +940,37 @@ void frmProveedores::contactos()
 
 }
 
-void frmProveedores::menu_contactos(QModelIndex index)
+void frmProveedores::menu_contactos(const QPoint &position)
 {
-    int nId = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
-    this->id_contacto = nId;
+   QPoint globalPos = ui->tablaContactos->mapToGlobal(position);
+   QMenu myMenu;
+   QAction *actionEditar = new QAction(tr("Editar Contacto"),this);
+   myMenu.addAction(actionEditar);
 
-    QMenu* contextMenu = new QMenu ( this );
-    Q_CHECK_PTR ( contextMenu );
-    //contextMenu->setStyleSheet("{ background-color: white; }");
-    //add action for help menu.
-    QAction *mEdit = new QAction(tr("Editar Contacto"), this);
-    contextMenu->addAction(mEdit);
-    connect(mEdit, SIGNAL(triggered()), this, SLOT(editar_contacto()));
-    contextMenu->popup( QCursor::pos() );
-    contextMenu->exec ();
-    delete contextMenu;
-    contextMenu = 0;
+       connect(actionEditar, SIGNAL(triggered()), this, SLOT(editar_contacto()));
 
+    myMenu.exec(globalPos);
+
+
+}
+
+void frmProveedores::menu_deudas(const QPoint &position)
+{
+    QPoint globalPos = ui->tablaPagos->mapToGlobal(position);
+    QMenu myMenu;
+    QAction *actionPagar = new QAction(tr("Pagar vencimiento"),this);
+    myMenu.addAction(actionPagar);
+    QAction *actionFraccion = new QAction(tr("Pago parcial"),this);
+    myMenu.addAction(actionFraccion);
+    QAction *actionAsiento = new QAction(tr("Ver asiento contable"),this);
+    myMenu.addAction(actionAsiento);
+
+        connect(actionPagar, SIGNAL(triggered()), this, SLOT(pagar_deuda()));
+        connect(actionFraccion,SIGNAL(triggered()),this,SLOT(pagar_fraccion()));
+        connect(actionAsiento,SIGNAL(triggered()),this,SLOT(ver_asiento()));
+
+
+     myMenu.exec(globalPos);
 }
 
 void frmProveedores::nuevo_contacto()
@@ -967,6 +1035,9 @@ void frmProveedores::guardar_contacto()
 void frmProveedores::editar_contacto()
 
 {
+    QModelIndex index= ui->tablaContactos->currentIndex();
+    int nId = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
+    this->id_contacto = nId;
     QSqlQuery queryContactos(QSqlDatabase::database("Maya"));
     queryContactos.prepare("select * from personascontactoproveedor where id = :id");
     queryContactos.bindValue(":id",this->id_contacto);

@@ -412,7 +412,6 @@ void Configuracion::CargarDatosBD()
     this->PasswordDB_MediTec = settings.value("PasswordDB_MediTec").toString();
     this->PortDB_MediTec =  settings.value("PuertoDB_MediTec").toString();
 
-
 }
 
 void Configuracion::AbrirDbWeb()

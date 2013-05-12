@@ -57,6 +57,14 @@ public:
     QString UsuarioDB_MediTec;
     QString PasswordDB_MediTec;
     QString PortDB_MediTec;
+    QString RutaBD_Conta;
+    QString DriverBD_Conta;
+    QString HostDB_Conta;
+    QString NombreDB_Conta;
+    QString usuarioDB_Conta;
+    QString passwordDB_Conta;
+    QString portDB_Conta;
+    bool contabilidad;
 
     bool EnlaceWeb;
     QString cPais;

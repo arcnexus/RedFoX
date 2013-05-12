@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Maya Gestión empresarial open-source.  If not, see <http://www.gnu.org/licenses/>.
 //
-// Email   : mmiralles +(simboloarroba)+ Mayamedicproject DOT org
-// Web-Site: http://www.Mayamedicproject.org
+// Email   : mmiralles +(simboloarroba)+ mayasoftware DOT es
+// Web-Site: http://www.mayasoftware.es
 
 #include "mainwindow.h"
 #include "login.h"
@@ -49,6 +49,14 @@ bool cargarEmpresa(QString empresa)
         Configuracion_global->cUsuarioBDEmpresa = record.field("user").value().toString();
         Configuracion_global->DivisaLocal = Configuracion_global->Devolver_moneda(record.field("id_divisa").value().toInt());
         Configuracion_global->codDivisaLocal = Configuracion_global->Devolver_codDivisa(record.field("id_divisa").value().toInt());
+        Configuracion_global->DriverBD_Conta = record.field("driverBDConta").value().toString();
+        Configuracion_global->HostDB_Conta = record.field("hostDBConta").value().toString();
+        Configuracion_global->NombreDB_Conta = record.value("nombreDBConta").toString();
+        Configuracion_global->usuarioDB_Conta = record.field("userDBConta").value().toString();
+        Configuracion_global->passwordDB_Conta = record.field("passwordDBConta").value().toString();
+        Configuracion_global->portDB_Conta = record.field("puertoDBConta").value().toString();
+        Configuracion_global->contabilidad = record.field("contabilidad").value().toBool();
+
 
         if(record.field("medica").value().toInt()==1)
             Configuracion_global->medic = true;
@@ -114,8 +122,10 @@ bool cargarEmpresa(QString empresa)
         }
 
         QApplication::processEvents();
-
+        //----------------------
         // Abro bdmedica activa
+        //----------------------
+
         //splash.showMessage(tr("Abriendo base de datos médica"),Qt::AlignBottom);
         QSqlDatabase dbMedica = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"dbmedica");
         if (Configuracion_global->cDriverBDMedica =="QSQLITE")
@@ -136,6 +146,33 @@ bool cargarEmpresa(QString empresa)
         {
             QMessageBox::critical(qApp->activeWindow(), "error:", dbMedica.lastError().text());
         }
+        if(Configuracion_global->contabilidad)
+        {
+            //----------------------------
+            // Abro empresa Contabilidad
+            //----------------------------
+            QSqlDatabase dbConta = QSqlDatabase::addDatabase(Configuracion_global->DriverBD_Conta,"dbconta");
+            if (Configuracion_global->DriverBD_Conta =="QSQLITE")
+            {
+                dbMedica.setDatabaseName(Configuracion_global->RutaBD_Conta);
+                qDebug() << "Conta:" << Configuracion_global->RutaBD_Conta;
+                if(!dbConta.open())
+                    QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR DB"),
+                                         QObject::tr("No se ha podido abrir la BD de Contabilidad"),
+                                         QObject::tr("Aceptar"));
+            }
+            else
+            {
+                dbConta.setDatabaseName(Configuracion_global->NombreDB_Conta);
+                dbConta.setHostName(Configuracion_global->HostDB_Conta);
+                dbConta.open(Configuracion_global->usuarioDB_Conta,Configuracion_global->passwordDB_Conta);
+            }
+            if (dbConta.lastError().isValid())
+            {
+                QMessageBox::critical(qApp->activeWindow(), "error al conectar a la BD de contabilidad:", dbMedica.lastError().text());
+            }
+
+        }
 
         Configuracion_global->Cargar_iva();
         Configuracion_global->Cargar_paises();
@@ -145,7 +182,7 @@ bool cargarEmpresa(QString empresa)
     }
     else
     {
-        QMessageBox::critical(qApp->activeWindow(),"Error","Fallo la conexión al fichero Medico");
+        QMessageBox::critical(qApp->activeWindow(),"Error","Fallo la conexión al fichero de Empresa");
         return false;
     }
 }

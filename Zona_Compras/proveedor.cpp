@@ -189,12 +189,9 @@ void Proveedor::Recuperar(QString cSQL)
             this->cEntidadPagoProveedor = rProveedor.field("cEntidadPagoProveedor").value().toString();
             this->cOficinaPagoProveedor = rProveedor.field("cOficinaPagoProveedor").value().toString();
             this->cDCPagoProveedor = rProveedor.field("cDCPagoProveedor").value().toString();
-            this->cCuentaPagoProveedor = rProveedor.field("cCuentaPagoProveedor").value().toString();
-            this->cCuentaIvaSoportado = rProveedor.field("cCuentaIvaSoportado").value().toString();
             this->rRetencionIRPF = rProveedor.field("rRetencionIRPF").value().toDouble();
             this->nTipoRetencion = rProveedor.field("nTipoRetencion").value().toInt();
             this->cCuentaAplicacion = rProveedor.field("cCuentaAplicacion").value().toString();
-            this->cCuentaPagos = rProveedor.field("cCuentaPagos").value().toString();
             this->tComentarios = rProveedor.field("tComentarios").value().toString();
             this->nDto = rProveedor.field("nDto").value().toDouble();
             this->dFechaAlta = rProveedor.field("dFechaAlta").value().toDate();
@@ -262,12 +259,9 @@ void Proveedor::Recuperar(QString cSQL, int nProcede)
             this->cEntidadPagoProveedor = rProveedor.field("cEntidadPagoProveedor").value().toString();
             this->cOficinaPagoProveedor = rProveedor.field("cOficinaPagoProveedor").value().toString();
             this->cDCPagoProveedor = rProveedor.field("cDCPagoProveedor").value().toString();
-            this->cCuentaPagoProveedor = rProveedor.field("cCuentaPagoProveedor").value().toString();
-            this->cCuentaIvaSoportado = rProveedor.field("cCuentaIvaSoportado").value().toString();
             this->rRetencionIRPF = rProveedor.field("rRetencionIRPF").value().toDouble();
             this->nTipoRetencion = rProveedor.field("nTipoRetencion").value().toInt();
             this->cCuentaAplicacion = rProveedor.field("cCuentaAplicacion").value().toString();
-            this->cCuentaPagos = rProveedor.field("cCuentaPagos").value().toString();
             this->tComentarios = rProveedor.field("tComentarios").value().toString();
             this->nDto = rProveedor.field("nDto").value().toDouble();
             this->dFechaAlta = rProveedor.field("dFechaAlta").value().toDate();
@@ -333,12 +327,9 @@ void Proveedor::Guardar()
                         "cEntidadPagoProveedor =:cEntidadPagoProveedor,"
                         "cOficinaPagoProveedor =:cOficinaPagoProveedor,"
                         "cDCPagoProveedor =:cDCPagoProveedor,"
-                        "cCuentaPagoProveedor =:cCuentaPagoProveedor,"
-                        "cCuentaIvaSoportado =:cCuentaIvaSoportado,"
                         "rRetencionIRPF =:rRetencionIRPF,"
                         "nTipoRetencion =:nTipoRetencion,"
                         "cCuentaAplicacion =:cCuentaAplicacion,"
-                        "cCuentaPagos =:cCuentaPagos,"
                         "tComentarios =:tComentarios,"
                         "nDto =:nDto,"
                         "dFechaAlta =:dFechaAlta,"
@@ -385,12 +376,9 @@ void Proveedor::Guardar()
     queryProveedor.bindValue(":cEntidadPagoProveedor",this->cEntidadPagoProveedor);
     queryProveedor.bindValue(":cOficinaPagoProveedor",this->cOficinaPagoProveedor);
     queryProveedor.bindValue(":cDCPagoProveedor",this->cDCPagoProveedor);
-    queryProveedor.bindValue(":cCuentaPagoProveedor",this->cCuentaPagoProveedor);
-    queryProveedor.bindValue(":cCuentaIvaSoportado",this->cCuentaIvaSoportado);
     queryProveedor.bindValue(":rRetencionIRPF",this->rRetencionIRPF);
     queryProveedor.bindValue(":nTipoRetencion",this->nTipoRetencion);
     queryProveedor.bindValue(":cCuentaAplicacion",this->cCuentaAplicacion);
-    queryProveedor.bindValue(":cCuentaPagos",this->cCuentaPagos);
     queryProveedor.bindValue(":tComentarios",this->tComentarios);
     queryProveedor.bindValue(":nDto",this->nDto);
     queryProveedor.bindValue(":dFechaAlta",this->dFechaAlta);
@@ -451,12 +439,9 @@ void Proveedor::Vaciar()
     this->cEntidadPagoProveedor = "";
     this->cOficinaPagoProveedor = "";
     this->cDCPagoProveedor = "";
-    this->cCuentaPagoProveedor = "";
-    this->cCuentaIvaSoportado = "";
     this->rRetencionIRPF = 0;
     this->nTipoRetencion = 0;
     this->cCuentaAplicacion = "";
-    this->cCuentaPagos = "";
     this->tComentarios = "";
     this->nDto = 0;
     this->dFechaAlta = QDate::currentDate();
