@@ -168,8 +168,35 @@ void MainWindow::crear_barraAdmin()
     connect(btn_config,SIGNAL(clicked()),this,SLOT(configuracion()));
 
     //barra de menu
-//    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
+    //    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
 }
+
+void MainWindow::crear_barraContabilidad()
+{
+    btn_cuentas = new ToolBarButton(tr("Cuentas"),":/Icons/PNG/asientos.png",this);
+    btn_diario = new ToolBarButton(tr("Diario"),":/Icons/PNG/proveedores_2.png",this);
+
+    QFrame*  line = new QFrame(ui->page_contabilidad);
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
+
+    ui->verticalLayout_contabilidad->addWidget(btn_cuentas);
+    ui->verticalLayout_contabilidad->addWidget(btn_diario);
+
+    ui->verticalLayout_contabilidad->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
+
+    connect(btn_cuentas,SIGNAL(clicked()),this,SLOT(btn_cuentas_clicked()));
+    connect(btn_diario,SIGNAL(clicked()),this,SLOT(btn_diario_clicked()));
+
+
+    //Barra de menu
+    connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
+    connect(ui->btnArt_culos,SIGNAL(triggered()),this,SLOT(btnArticulos_clicked()));
+    connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
+    connect(ui->btnAgenda,SIGNAL(triggered()),this,SLOT(showAgenda()));
+    connect(ui->actionPermisos_de_Agenda,SIGNAL(triggered()),this,SLOT(handle_permisosAgenda()));
+}
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -186,7 +213,7 @@ MainWindow::MainWindow(QWidget *parent) :
     on_edit = false;
     Configuracion_global->CargarDatos();
     QStringList modulos;
-    modulos << "Mantenimiento"  << "Compras" << "Ventas" << "Almacen " << "Administrador";
+    modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas") << tr("Almacen")  << tr("Administrador") << tr("Contabilidad");
     ui->comboBox->addItems(modulos);
     crear_barraMantenimiento();
 
@@ -197,6 +224,8 @@ MainWindow::MainWindow(QWidget *parent) :
     crear_barraAlmacen();
 
     crear_barraAdmin();
+
+    crear_barraContabilidad();
 
     ui->stackedWidget_2->setCurrentIndex(0);
     if (Configuracion_global->medic)
@@ -689,6 +718,10 @@ void MainWindow::btn_reports_clicked()
     ui->stackedWidget->setCurrentWidget(reportWindow);
 }
 
+void MainWindow::btn_diario_clicked()
+{
+}
+
 //void MainWindow::on_btnAgenda_clicked()
 //{
 //    ui->btnAgenda->setEnabled(false);
@@ -1062,4 +1095,9 @@ void MainWindow::handle_permisosAgenda()
 {
     PermisosAgendaForm form(this);
     form.exec();
+}
+
+
+void MainWindow::btn_cuentas_clicked()
+{
 }

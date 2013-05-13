@@ -95,6 +95,10 @@ private slots:
 
  //4   void on_btnAgenda_clicked();
 
+    // Contabilidad
+    void btn_diario_clicked();
+    void btn_cuentas_clicked();
+
 
     void on_btn_bloquear_clicked();
 
@@ -161,6 +165,9 @@ private:
     ToolBarButton * btn_config;
     void crear_barraAdmin();
 
+    void crear_barraContabilidad();
+    ToolBarButton * btn_diario;
+    ToolBarButton * btn_cuentas;
 
 
     //WIDGETS

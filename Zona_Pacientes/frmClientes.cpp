@@ -200,9 +200,9 @@ void frmClientes::LLenarCampos()
     ValidarCC();
 
     // Tablas
-    /********************************************************************
-     * DEUDAS
-     *******************************************************************/
+    //----------------
+    // DEUDAS
+    //----------------
 
     QSqlQueryModel *deudas = new QSqlQueryModel(this);
     QString cSQL;
