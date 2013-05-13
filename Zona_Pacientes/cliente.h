@@ -84,7 +84,6 @@ public:
     QSqlDatabase db;
     QSqlQuery *qryCliente;
 
-public:
 
 signals:
     
@@ -98,6 +97,7 @@ public slots:
     void AnadirDeuda(int id_cliente, QDate dFechaDeuda,QDate dFechaVto,QString cDocumento, int id_Tiquet,
                      int id_Factura, int nTipo, double rImporteDeuda, double rPagado, double rPendienteCobro,
                      QString cEntidad, QString cOficina,QString cDC ,QString cCuenta);
+    void CobrarDeudaTotal(int id_deuda);
     void AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1, QString descTelefono2,
                                QString Telefono2, QString descTelefono3, QString Telefono3,
                                QString descMovil1, QString Movil1, QString descMovil2, QString Movil2, QString cargo);

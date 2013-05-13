@@ -765,7 +765,7 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab">
       <property name="styleSheet">
@@ -2310,6 +2310,36 @@ color: rgb(255, 255, 255);</string>
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_8">
+      <property name="styleSheet">
+       <string notr="true">background-color: #ecefed;</string>
+      </property>
+      <attribute name="title">
+       <string>Gestión deuda cliente</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_20">
+       <item row="0" column="0">
+        <widget class="QTableView" name="TablaDeudas">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 164);
+alternate-background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="tab_6">
       <property name="styleSheet">
        <string notr="true">background-color: #ecefed;</string>
@@ -3162,8 +3192,21 @@ color: rgb(0, 0, 0);</string>
               <item row="0" column="0">
                <widget class="QTableView" name="tablaPresupuestos">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 175);</string>
                 </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::SingleSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
                </widget>
               </item>
              </layout>
@@ -3225,30 +3268,6 @@ color: rgb(0, 0, 0);</string>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab_4">
-             <property name="styleSheet">
-              <string notr="true">background-color: #ecefed;</string>
-             </property>
-             <attribute name="title">
-              <string>R.Deudas</string>
-             </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_4">
-              <item>
-               <widget class="QTableView" name="TablaDeudas">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Pagar">
-                <property name="text">
-                 <string>Pagar Deuda</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
             <widget class="QWidget" name="tab_12">
              <property name="styleSheet">
               <string notr="true">background-color: #ecefed;</string>
@@ -3266,6 +3285,49 @@ color: rgb(0, 0, 0);</string>
               </item>
              </layout>
             </widget>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QFrame" name="frame_4">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(168, 168, 0);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_21">
+             <item row="1" column="0">
+              <widget class="QTableView" name="tablaAsientos">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);
+font: 7pt &quot;Sans Serif&quot;;
+alternate-background-color: rgb(255, 250, 178);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_10">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 0);</string>
+               </property>
+               <property name="text">
+                <string>Asientos Contables</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -3350,11 +3412,9 @@ color: rgb(0, 0, 0);</string>
   <tabstop>txtdFechaUltimaCompra</tabstop>
   <tabstop>tabWidget_2</tabstop>
   <tabstop>tablaPresupuestos</tabstop>
-  <tabstop>TablaDeudas</tabstop>
   <tabstop>lista_tipos</tabstop>
   <tabstop>tablaFacturas</tabstop>
   <tabstop>tablaVales</tabstop>
-  <tabstop>Pagar</tabstop>
   <tabstop>TablaAlbaranes</tabstop>
   <tabstop>tablaTickets</tabstop>
  </tabstops>

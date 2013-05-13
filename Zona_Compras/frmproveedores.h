@@ -73,6 +73,7 @@ private slots:
     void on_btnNuevoAlbaran_clicked();
 
     void on_btnNuevoPedido_clicked();
+    void pagar_deuda();
     void pagar_fraccion();
     void ver_asiento();
 

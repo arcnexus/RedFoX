@@ -428,6 +428,11 @@ void Cliente::AnadirDeuda(int id_cliente, QDate dFechaDeuda, QDate dFechaVto, QS
 
 }
 
+void Cliente::CobrarDeudaTotal(int id_deuda)
+{
+
+}
+
 void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
                                     QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3,
                                     QString descMovil1, QString Movil1, QString descMovil2, QString Movil2,QString cargo)

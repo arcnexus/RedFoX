@@ -87,6 +87,11 @@ private slots:
     void ValidarCC();
     void validarNifIntrac();
     void Contactos();
+    void menu_deudas(QPoint);
+
+    void cobrar_deuda();
+    void cobrar_fraccion();
+    void ver_asiento();
 
 
 private:

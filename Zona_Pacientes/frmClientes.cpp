@@ -9,6 +9,9 @@
 #include "paciente.h"
 #include "frmaddtipocliente.h"
 #include "frmpersonascontactocliente.h"
+#include "Auxiliares/monetarydelegate.h"
+#include "Auxiliares/datedelegate.h"
+#include "frmcobrardeuda.h"
 
 
 #ifdef WIN32
@@ -95,6 +98,9 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->txtcDc,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
     connect(ui->txtcCuentaContable,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
     connect(ui->btnValidarVIES,SIGNAL(clicked()),this,SLOT(validarNifIntrac()));
+
+    ui->TablaDeudas->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->TablaDeudas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(menu_deudas(QPoint)));
 }
 
 frmClientes::~frmClientes()
@@ -200,34 +206,22 @@ void frmClientes::LLenarCampos()
 
     QSqlQueryModel *deudas = new QSqlQueryModel(this);
     QString cSQL;
-    cSQL= "Select id,cDocumento,rPendienteCobro,dFecha,dVencimiento from clientes_deuda where Id_cliente = "
+    cSQL= "Select id,cDocumento,rImporte,rPagado,rPendienteCobro,dFecha,dVencimiento from clientes_deuda where id_cliente = "
             + QString::number(oCliente->id);
     deudas->setQuery(cSQL,QSqlDatabase::database("Maya"));
-    ColumnaFecha *columnaFecha = new ColumnaFecha();
     ui->TablaDeudas->setModel(deudas);
-    //  ui->TablaDeudas->setItemDelegateForColumn(2,columnaMoneda);
-    ui->TablaDeudas->setItemDelegateForColumn(3,columnaFecha);
-    ui->TablaDeudas->setItemDelegateForColumn(4,columnaFecha);
-    //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
-    QHeaderView *CabeceraDeu = new QHeaderView(Qt::Horizontal,this);
-    // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
-    ui->TablaDeudas->setHorizontalHeader(CabeceraDeu);
-    /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0".  */
-    //CabeceraDeu->setResizeMode(0,QHeaderView::Fixed);
-    CabeceraDeu->resizeSection(0,0);
-    //CabeceraDeu->setResizeMode(1,QHeaderView::Fixed);
-    CabeceraDeu->resizeSection(1,85);
-    //CabeceraDeu->setResizeMode(2,QHeaderView::Fixed);
-    CabeceraDeu->resizeSection(2,85);
-    //CabeceraDeu->setResizeMode(3,QHeaderView::Fixed);
-    CabeceraDeu->resizeSection(3,85);
-    //CabeceraDeu->setResizeMode(4,QHeaderView::Fixed);
-    CabeceraDeu->resizeSection(4,85);
-    deudas->setHeaderData(1, Qt::Horizontal, QObject::tr("DOCUMENTO"));
-    deudas->setHeaderData(2, Qt::Horizontal, QObject::tr("I.PENDIENTE"));
-    deudas->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA"));
-    deudas->setHeaderData(4, Qt::Horizontal, QObject::tr("VTO"));
-    CabeceraDeu->setVisible(true);
+    ui->TablaDeudas->setColumnHidden(0,true);
+    deudas->setHeaderData(1,Qt::Horizontal,tr("Documento"));
+    deudas->setHeaderData(2,Qt::Horizontal,tr("Importe"));
+    ui->TablaDeudas->setItemDelegateForColumn(2,new MonetaryDelegate);
+    deudas->setHeaderData(3,Qt::Horizontal,tr("Pagado"));
+    ui->TablaDeudas->setItemDelegateForColumn(3,new MonetaryDelegate);
+    deudas->setHeaderData(4,Qt::Horizontal,tr("Pendiente"));
+    ui->TablaDeudas->setItemDelegateForColumn(4,new MonetaryDelegate);
+    deudas->setHeaderData(5,Qt::Horizontal,tr("Fecha"));
+    ui->TablaDeudas->setItemDelegateForColumn(5,new DateDelegate);
+    deudas->setHeaderData(6,Qt::Horizontal,tr("Vencimiento"));
+    ui->TablaDeudas->setItemDelegateForColumn(6,new DateDelegate);
 
     /********************************************************************
     * ALBARANES
@@ -237,7 +231,7 @@ void frmClientes::LLenarCampos()
     cSQL= "Select id,nAlbaran,dFecha,nFactura,rTotalAlbaran from cab_alb where id_Cliente =" + QString::number(oCliente->id);
     Albaranes->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->TablaAlbaranes->setModel(Albaranes);
-    ui->TablaAlbaranes->setItemDelegateForColumn(2,columnaFecha);
+    ui->TablaAlbaranes->setItemDelegateForColumn(2,new DateDelegate);
     //  ui->TablaAlbaranes->setItemDelegateForColumn(4,columnaMoneda);
     //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
     QHeaderView *CabeceraAlb = new QHeaderView(Qt::Horizontal,this);
@@ -268,8 +262,8 @@ void frmClientes::LLenarCampos()
     cSQL= "Select id,cFactura,dFecha,dFechaCobro,rTotal from cab_fac where iId_Cliente =" + QString::number(oCliente->id);
     Facturas->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->tablaFacturas->setModel(Facturas);
-    ui->tablaFacturas->setItemDelegateForColumn(2,columnaFecha);
-    ui->tablaFacturas->setItemDelegateForColumn(3,columnaFecha);
+    ui->tablaFacturas->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tablaFacturas->setItemDelegateForColumn(3,new DateDelegate);
     //  ui->tablaFacturas->setItemDelegateForColumn(4,columnaMoneda);
     //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
     QHeaderView *CabeceraFac = new QHeaderView(Qt::Horizontal,this);
@@ -301,8 +295,8 @@ void frmClientes::LLenarCampos()
     cSQL= "Select id,nPresupuesto,dFecha,dValidoHasta,rTotal from cab_pre where id_Cliente =" + QString::number(oCliente->id);
     Presupuestos->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->tablaPresupuestos->setModel(Presupuestos);
-    ui->tablaPresupuestos->setItemDelegateForColumn(2,columnaFecha);
-    ui->tablaPresupuestos->setItemDelegateForColumn(3,columnaFecha);
+    ui->tablaPresupuestos->setItemDelegateForColumn(2,new MonetaryDelegate);
+    ui->tablaPresupuestos->setItemDelegateForColumn(3, new MonetaryDelegate);
     //ui->tablaPresupuestos->setItemDelegateForColumn(4,columnaMoneda);
     //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
     QHeaderView *CabeceraPre = new QHeaderView(Qt::Horizontal,this);
@@ -336,8 +330,8 @@ void frmClientes::LLenarCampos()
     cSQL= "Select id,nNumero,dFecha,dVto,rImporte from vales where id_Cliente =" + QString::number(oCliente->id);
     Vales->setQuery(cSQL,QSqlDatabase::database("Maya"));
     ui->tablaVales->setModel(Vales);
-    ui->tablaVales->setItemDelegateForColumn(2,columnaFecha);
-    ui->tablaVales->setItemDelegateForColumn(3,columnaFecha);
+    ui->tablaVales->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tablaVales->setItemDelegateForColumn(3,new DateDelegate);
     //ui->tablaVales->setItemDelegateForColumn(4,columnaMoneda);
     //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
     QHeaderView *CabeceraVal = new QHeaderView(Qt::Horizontal,this);
@@ -369,8 +363,8 @@ void frmClientes::LLenarCampos()
     cSQL= "Select id,nTicket,dFecha,cHora,rImporte from cab_tpv where id_Cliente =" + QString::number(oCliente->id);
     Tickets->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->tablaTickets->setModel(Tickets);
-    ui->tablaTickets->setItemDelegateForColumn(2,columnaFecha);
-    ui->tablaTickets->setItemDelegateForColumn(3,columnaFecha);
+    ui->tablaTickets->setItemDelegateForColumn(2,new ColumnaFecha);
+    ui->tablaTickets->setItemDelegateForColumn(3,new ColumnaFecha);
     //ui->tablaTickets->setItemDelegateForColumn(4,columnaMoneda);
     //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
     QHeaderView *CabeceraTic = new QHeaderView(Qt::Horizontal,this);
@@ -392,6 +386,37 @@ void frmClientes::LLenarCampos()
     Tickets->setHeaderData(3, Qt::Horizontal, QObject::tr("HORA"));
     Tickets->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
     CabeceraTic->setVisible(true);
+
+
+    //----------------------
+    // Asientos contables
+    //----------------------
+    QSqlQueryModel *modelAsientos = new QSqlQueryModel(this);
+
+    modelAsientos->setQuery("select id,asiento,fechaAsiento,cuentaD,descripcionD, importeD,cuentaH,descripcionH,importeH "
+                            "from diario where cta_principal = '"+oCliente->cCuentaContable +
+                            "' order by asiento + ' '+posenasiento",
+                            QSqlDatabase::database("dbconta"));
+
+
+    ui->tablaAsientos->setModel(modelAsientos);
+    ui->tablaAsientos->setColumnHidden(0,true);
+
+    ui->tablaAsientos->setColumnWidth(1,55);
+    ui->tablaAsientos->setColumnWidth(2,63);
+    ui->tablaAsientos->setItemDelegateForColumn(2, new DateDelegate);
+    ui->tablaAsientos->setColumnWidth(3,55);
+    ui->tablaAsientos->setColumnWidth(4,75);
+    ui->tablaAsientos->setColumnWidth(5,60);
+    ui->tablaAsientos->setItemDelegateForColumn(5, new MonetaryDelegate);
+    ui->tablaAsientos->setColumnWidth(6,55);
+    ui->tablaAsientos->setColumnWidth(7,75);
+    ui->tablaAsientos->setColumnWidth(8,60);
+    ui->tablaAsientos->setItemDelegateForColumn(8, new MonetaryDelegate);
+
+
+
+
     //------------------
     // Tipos de clientes
     //------------------
@@ -1286,5 +1311,40 @@ void frmClientes::Contactos()
     frmPersonasContactoCliente contacto;
     contacto.nIdCliente = oCliente->id;
     contacto.RefrescarTabla();
-   contacto.exec();
+    contacto.exec();
+}
+
+void frmClientes::menu_deudas(QPoint position)
+{
+    QPoint globalPos = ui->TablaDeudas->mapToGlobal(position);
+    QMenu myMenu;
+    QAction *actionCobrar = new QAction(tr("cobrar vencimiento"),this);
+    myMenu.addAction(actionCobrar);
+    QAction *actionFraccion = new QAction(tr("Cobro parcial"),this);
+    myMenu.addAction(actionFraccion);
+    QAction *actionAsiento = new QAction(tr("Ver asiento contable"),this);
+    myMenu.addAction(actionAsiento);
+
+        connect(actionCobrar, SIGNAL(triggered()), this, SLOT(cobrar_deuda()));
+        connect(actionFraccion,SIGNAL(triggered()),this,SLOT(cobrar_fraccion()));
+        connect(actionAsiento,SIGNAL(triggered()),this,SLOT(ver_asiento()));
+
+
+     myMenu.exec(globalPos);
+}
+
+void frmClientes::cobrar_deuda()
+{
+    frmCobrarDeuda cobrard(this);
+    cobrard.exec();
+}
+
+void frmClientes::cobrar_fraccion()
+{
+
+}
+
+void frmClientes::ver_asiento()
+{
+
 }

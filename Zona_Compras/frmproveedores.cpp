@@ -711,6 +711,16 @@ void frmProveedores::on_btnNuevoPedido_clicked()
     frmPedidos.exec();
 }
 
+void frmProveedores::pagar_deuda()
+{
+    if(QMessageBox::question(this,tr("Gestión de Proveedores"),
+                             tr("¿Cobrar la deuda?"),
+                             tr("Cancelar"),tr("Cobrar"))==QMessageBox::Accepted)
+    {
+
+    }
+}
+
 void frmProveedores::pagar_fraccion()
 {
 
@@ -848,11 +858,9 @@ void frmProveedores::historiales()
     QSqlQueryModel *modelAsientos = new QSqlQueryModel(this);
 
     modelAsientos->setQuery("select id,asiento,fechaAsiento,cuentaD,descripcionD, importeD,cuentaH,descripcionH,importeH "
-                            "from diario where cuentaD = '"+oProveedor->cCuentaAplicacion +"' or cuentaH = '"+
-                            oProveedor->cCuentaAplicacion+ "' order by asiento + ' '+posenasiento",
+                            "from diario where cta_principal = '"+oProveedor->cCuentaAplicacion +
+                            "' order by asiento + ' '+posenasiento",
                             QSqlDatabase::database("dbconta"));
-
-    qDebug()  <<"Error: "<< modelAsientos->lastError();
 
     ui->tablaAsientos->setModel(modelAsientos);
     ui->tablaAsientos->setColumnHidden(0,true);
