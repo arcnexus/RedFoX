@@ -78,13 +78,29 @@ void FrmEmpresas::LLenarCampos()
     ui->txtnEjercicio->setValue(oEmpresa.getnEjercicio());
     ui->txtnDigitosFactura->setText(QString::number(oEmpresa.getnDigitosFactura()));
     ui->txtcSerieFactura->setText(oEmpresa.getcSerie());
-    ui->txtnDigitosCuentas->setText(QString::number(oEmpresa.getnDigitosCuentas()));
+    ui->txtnDigitosCuentas->setValue(oEmpresa.getnDigitosCuentas());
     ui->txtcCuentaCliente->setText(oEmpresa.getcCuentaClientes());
     ui->txtcCuentaProveedores->setText(oEmpresa.getcCuentaProveedores());
     ui->txtcCuentaAcreedores->setText(oEmpresa.getcCuentaAcreedores());
     QString cDivisa = Configuracion_global->Devolver_moneda(oEmpresa.id_divisa);
     int nIndex = ui->cboDivisas->findText(cDivisa);
     ui->cboDivisas->setCurrentIndex(nIndex);
+    ui->chkContabilidad->setChecked(oEmpresa.contabilidad);
+    ui->txtConsultas->setValue( oEmpresa.consultas);
+    int index =ui->cboPrimer_dia_laborable->findText(oEmpresa.primer_dia_laborable);
+    ui->cboPrimer_dia_laborable->setCurrentIndex(index);
+    index = ui->cbo_ultimo_dia_semana->findText(oEmpresa.ultimo_dia_laborable);
+    ui->cbo_ultimo_dia_semana->setCurrentIndex(index);
+    ui->txt_horario_primer_dia->setText(oEmpresa.horario_primer_dia);
+    ui->txt_horario_dia_normal->setText(oEmpresa.horario_dia_normal);
+    ui->txt_horario_ultimo_dia->setText(oEmpresa.horario_ultimo_dia);
+
+    ui->txtHost_contabilidad->setText(oEmpresa.HostBD_contabilidad);
+    ui->txtNombre_BDConta->setText(oEmpresa.NombreBD_contabilidad);
+    ui->txtUsuario_contabilidad->setText(oEmpresa.UsuarioBD_contabilidad);
+    ui->txtPasswordBDConta->setText(oEmpresa.ContrasenaBD_contabilidad);
+    ui->txtPuertoBDConta->setText(oEmpresa.puertoDB_contabilidad);
+    ui->txtRutaBDConta->setText(oEmpresa.RutaBD_Contabilidad_sqlite);
 }
 
 void FrmEmpresas::CargarCamposEnEmpresa()
@@ -130,6 +146,23 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.setcCodigoCuentaProveedor(ui->txtcCuentaProveedores->text());
     oEmpresa.setcCodigoCuentaAcreedores(ui->txtcCuentaAcreedores->text());
     oEmpresa.id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisas->currentText());
+    oEmpresa.contabilidad = ui->chkContabilidad->isChecked();
+    oEmpresa.consultas = ui->txtConsultas->value();
+
+    oEmpresa.primer_dia_laborable = ui->cboPrimer_dia_laborable->currentText();
+    oEmpresa.ultimo_dia_laborable = ui->cbo_ultimo_dia_semana->currentText();
+    oEmpresa.horario_dia_normal = ui->txt_horario_dia_normal->text();
+    oEmpresa.horario_primer_dia = ui->txt_horario_primer_dia->text();
+    oEmpresa.horario_ultimo_dia = ui->txt_horario_ultimo_dia->text();
+
+    oEmpresa.HostBD_contabilidad = ui->txtHost_contabilidad->text();
+    oEmpresa.NombreBD_contabilidad = ui->txtNombre_BDConta->text();
+    oEmpresa.UsuarioBD_contabilidad = ui->txtUsuario_contabilidad->text();
+    oEmpresa.ContrasenaBD_contabilidad = ui->txtPasswordBDConta->text();
+    oEmpresa.puertoDB_contabilidad = ui->txtPuertoBDConta->text();
+    oEmpresa.DriverDB_contabilidad = ui->txtcDriver->currentText();
+    oEmpresa.RutaBD_Contabilidad_sqlite = ui->txtRutaBDConta->text();
+
 
 }
 

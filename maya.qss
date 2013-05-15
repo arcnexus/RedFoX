@@ -349,7 +349,5 @@ QTableView, QTableWidet {
 /*QPushButton:disabled{color: 0; }
 QPushButton:enabled{color: rgb(255,255,255); }*/
 
-QMessageBox {
-    background-color:rgb(192,192,192);
-}
+
 

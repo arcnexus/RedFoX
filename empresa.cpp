@@ -77,6 +77,20 @@ void Empresa::Recuperar(QString cSQL)
             this->Tamanocodigo = registro.field("tamanocodigo").value().toInt();
             this->cCuentaCobros = registro.field("cCuentaCobros").value().toString();
             this->cCuentaPagos = registro.field("cCuentaPagos").value().toString();
+            this->contabilidad = registro.field("contabilidad").value().toBool();
+            this->consultas = registro.field("consultas").value().toInt();
+            this->primer_dia_laborable = registro.field("primer_dia_laborable").value().toString();
+            this->ultimo_dia_laborable = registro.field("ultimo_dia_laborable").value().toString();
+            this->horario_primer_dia = registro.field("horario_primer_dia").value().toString();
+            this->horario_dia_normal = registro.field("horario_dia_normal").value().toString();
+            this->horario_ultimo_dia = registro.field("horario_ultimo_dia").value().toString();
+            this->HostBD_contabilidad = registro.field("hostBDConta").value().toString();
+            this->NombreBD_contabilidad = registro.field("nombreBDConta").value().toString();
+            this->UsuarioBD_contabilidad = registro.field("userBDConta").value().toString();
+            this->ContrasenaBD_contabilidad = registro.field("passwordBDConta").value().toString();
+            this->puertoDB_contabilidad = registro.field("puertoDBConta").value().toString();
+            this->RutaBD_Contabilidad_sqlite = registro.field("rutaBDConta").value().toString();
+            this->DriverDB_contabilidad = registro.field("driverBDConta").value().toString();
 		} 
 		else 
 		{
@@ -139,6 +153,20 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->Tamanocodigo = registro.field("tamanocodigo").value().toInt();
             this->cCuentaCobros = registro.field("cCuentaCobros").value().toString();
             this->cCuentaPagos = registro.field("cCuentaPagos").value().toString();
+            this->contabilidad = registro.field("contabilidad").value().toBool();
+            this->consultas = registro.field("consultas").value().toInt();
+            this->primer_dia_laborable = registro.field("primer_dia_laborable").value().toString();
+            this->ultimo_dia_laborable = registro.field("ultimo_dia_laborable").value().toString();
+            this->horario_primer_dia = registro.field("horario_primer_dia").value().toString();
+            this->horario_dia_normal = registro.field("horario_dia_normal").value().toString();
+            this->horario_ultimo_dia = registro.field("horario_ultimo_dia").value().toString();
+            this->HostBD_contabilidad = registro.field("hostDBConta").value().toString();
+            this->NombreBD_contabilidad = registro.field("nombreDBConta").value().toString();
+            this->UsuarioBD_contabilidad = registro.field("userDBConta").value().toString();
+            this->ContrasenaBD_contabilidad = registro.field("passwordDBConta").value().toString();
+            this->puertoDB_contabilidad = registro.field("puertoDBConta").value().toString();
+            this->RutaBD_Contabilidad_sqlite = registro.field("rutaBDConta").value().toString();
+            this->DriverDB_contabilidad = registro.field("driverBDConta").value().toString();
         } else {
             if (nProcede == 1)
                 QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Empresas"),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
@@ -194,6 +222,20 @@ void Empresa::Guardar()
                      "autocodigo=:autocodigo,"
                      "tamanocodigo =:tamanocodigo,"
                      "cCuentaCobros =:cCuentaCobros,"
+                     "contabilidad =:contabilidad,"
+                     "consultas = :consultas,"
+                     "primer_dia_laborable =:primer_dia_laborable,"
+                     "ultimo_dia_laborable =:ultimo_dia_laborable,"
+                     "horario_primer_dia =:horario_primer_dia,"
+                     "horario_dia_normal =:horario_dia_normal,"
+                     "horario_ultimo_dia =:horario_ultimo_dia,"
+                     "hostBDConta =:hostDBConta,"
+                     "nombreBDConta =:nombreBDConta,"
+                     "userBDConta =:userBDConta,"
+                     "passwordBDConta =:passwordBDConta,"
+                     "puertoDBConta = :puertoDBConta,"
+                     "rutaBDConta =:rutaBDConta,"
+                     "driverBDConta =:driverBDConta,"
                      "cCuentaPagos =:cCuentaPagos"
                      " where id=:nID");
 
@@ -239,6 +281,20 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":tamanocodigo",this->Tamanocodigo);
     qEmpresa.bindValue(":cCuentaCobros",this->cCuentaCobros);
     qEmpresa.bindValue(":cCuentaPagos",this->cCuentaPagos);
+    qEmpresa.bindValue(":contabilidad",this->contabilidad);
+    qEmpresa.bindValue(":consultas",this->consultas);
+    qEmpresa.bindValue(":primer_dia_laborable",this->primer_dia_laborable);
+    qEmpresa.bindValue(":ultimo_dia_laborable",this->ultimo_dia_laborable);
+    qEmpresa.bindValue(":horario_primer_dia",this->horario_primer_dia);
+    qEmpresa.bindValue(":horario_dia_normal",this->horario_dia_normal);
+    qEmpresa.bindValue(":horario_ultimo_dia",this->horario_ultimo_dia);
+    qEmpresa.bindValue(":hostDBConta",this->HostBD_contabilidad);
+    qEmpresa.bindValue(":nombreBDConta",this->NombreBD_contabilidad);
+    qEmpresa.bindValue(":userBDConta",this->UsuarioBD_contabilidad);
+    qEmpresa.bindValue(":passwordBDConta",this->ContrasenaBD_contabilidad);
+    qEmpresa.bindValue(":puertoDBConta",this->puertoDB_contabilidad);
+    qEmpresa.bindValue(":rutaBDConta",this->RutaBD_Contabilidad_sqlite);
+    qEmpresa.bindValue(":driverBDConta",this->DriverDB_contabilidad);
     qEmpresa.bindValue(":nID",this->id);
 
 
@@ -293,6 +349,20 @@ void Empresa::Vaciar()
     this->Tamanocodigo = 13;
     this->cCuentaCobros = "";
     this->cCuentaPagos = "";
+    this->contabilidad = false;
+    this->consultas = 1;
+    this->primer_dia_laborable = "";
+    this->ultimo_dia_laborable = "";
+    this->horario_dia_normal = "";
+    this->horario_primer_dia = "";
+    this->horario_ultimo_dia = "";
+    this->HostBD_contabilidad = "";
+    this->NombreBD_contabilidad = "";
+    this->ContrasenaBD_contabilidad = "";
+    this->puertoDB_contabilidad = "";
+    this->RutaBD_Contabilidad_sqlite = "";
+    this->DriverDB_contabilidad = "";
+
 }
 
 bool Empresa::Borrar(int nId)

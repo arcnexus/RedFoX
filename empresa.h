@@ -15,6 +15,7 @@ public:
     void Vaciar();
     bool Borrar(int nId);
 
+
     // Getters
     int getid();
     QString getcCodigo();
@@ -82,6 +83,7 @@ public:
     void setcDriverBDMed(QString cDriverBDMed);
 
 
+
     void setcDireccion(QString cDireccion);
     void setcCP(QString cCp);
     void setcPoblacion(QString cPoblacion);
@@ -137,6 +139,13 @@ public:
     bool Autocodificar;
     int Tamanocodigo;
 
+    int consultas;
+    QString primer_dia_laborable;
+    QString ultimo_dia_laborable;
+    QString horario_primer_dia;
+    QString horario_dia_normal;
+    QString horario_ultimo_dia;
+
     // ConexiónBD
     QString cRutaBDSqLite;
     QString cHost;
@@ -154,12 +163,21 @@ public:
     QString cDriverBDMed;
 
     // Contabilidad
+    bool contabilidad;
     int nDigitosCuentas;
     QString cCuentaClientes;
     QString cCuentaProveedores;
     QString cCuentaAcreeedores;
     QString cCuentaCobros;
     QString cCuentaPagos;
+    QString HostBD_contabilidad;
+    QString NombreBD_contabilidad;
+    QString UsuarioBD_contabilidad;
+    QString ContrasenaBD_contabilidad;
+    QString puertoDB_contabilidad;
+    QString DriverDB_contabilidad;
+    QString RutaBD_Contabilidad_sqlite;
+
 };
 
 #endif // EMPRESA_H

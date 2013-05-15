@@ -174,7 +174,7 @@ void MainWindow::crear_barraAdmin()
 void MainWindow::crear_barraContabilidad()
 {
     btn_cuentas = new ToolBarButton(tr("Cuentas"),":/Icons/PNG/asientos.png",this);
-    btn_diario = new ToolBarButton(tr("Diario"),":/Icons/PNG/proveedores_2.png",this);
+    btn_diario = new ToolBarButton(tr("Diario"),":/Icons/PNG/cuentas.png",this);
 
     QFrame*  line = new QFrame(ui->page_contabilidad);
     line->setFrameShape(QFrame::HLine);
@@ -213,7 +213,7 @@ MainWindow::MainWindow(QWidget *parent) :
     on_edit = false;
     Configuracion_global->CargarDatos();
     QStringList modulos;
-    modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas") << tr("Almacen")  << tr("Administrador") << tr("Contabilidad");
+    modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas")  << tr("Contabilidad") << tr("Almacen")  << tr("Administrador");
     ui->comboBox->addItems(modulos);
     crear_barraMantenimiento();
 
@@ -833,6 +833,7 @@ void MainWindow::divisiones_almacen()
 void MainWindow::editar_empresas()
 {
     FrmEmpresas frmEmpresa(this);
+    frmEmpresa.setWindowState(Qt::WindowMaximized);
     frmEmpresa.exec();
 }
 void MainWindow::configuracion()

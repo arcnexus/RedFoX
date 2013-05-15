@@ -171,5 +171,3 @@ QSqlQuery SqlCalls::RecuperarPaciente(int idCliente)
 //    }
 //    delete paciente;
 //}
-
-
