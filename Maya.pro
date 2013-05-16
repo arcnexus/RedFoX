@@ -10,6 +10,7 @@ QT       += sql
 QT       += network
 QT       += xml
 QT       += webkit
+QT += printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

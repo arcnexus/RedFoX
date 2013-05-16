@@ -62,11 +62,11 @@ void FrmBuscarPoblacion::setcPoblacion(QString cPoblacion, int nPoblacion)
     ui->ListaPoblaciones->setHorizontalHeader(Cabecera);
 
     /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
-    //  Cabecera->setResizeMode(0,QHeaderView::Fixed);
+    //  Cabecera->setSectionResizeMode(0,QHeaderView::Fixed);
     Cabecera->resizeSection(0,0);
-    //  Cabecera->setResizeMode(1,QHeaderView::Fixed);
+    //  Cabecera->setSectionResizeMode(1,QHeaderView::Fixed);
     Cabecera->resizeSection(1,600);
-    // Cabecera->setResizeMode(2,QHeaderView::Fixed);
+    // Cabecera->setSectionResizeMode(2,QHeaderView::Fixed);
      Cabecera->resizeSection(2,50);
      ui->ListaPoblaciones->setFocus();
 }

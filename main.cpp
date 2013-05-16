@@ -205,9 +205,9 @@ int main(int argc, char *argv[])
    if(d.isEmpty())
        QMessageBox::information(0,"Driver","No sql drivers");
 
-   //a.setStyle("fusion");
+   a.setStyle("fusion");
 
-   a.setStyle("Plastique");
+   //a.setStyle("Plastique");
 
    QFile file(":Icons/maya.qss");
 

@@ -12,7 +12,7 @@
 #include <QLineEdit>
 #include <QtNetwork/QSslConfiguration>
 #include <QSslError>
-
+#include <QPrintDialog>
 Configuracion::Configuracion(QObject* parent) :
     QObject(parent)
 {
@@ -714,7 +714,7 @@ bool Configuracion::comprobarNIF(QString country_code, QString nif)
 {
     _ns2__checkVat ns2__checkVat;
     QByteArray   code_bytes;
-    QByteArray  nif_bytes = nif.toAscii();
+    QByteArray  nif_bytes = nif.toLatin1();
     ns2__checkVat.vatNumber = nif_bytes.data();
 
     QSqlQuery q(QSqlDatabase::database("Maya"));
@@ -725,7 +725,7 @@ bool Configuracion::comprobarNIF(QString country_code, QString nif)
         if(q.next())
         {
             QString code = q.record().value("countryCode").toString();
-            code_bytes = code.toAscii();
+            code_bytes = code.toLatin1();
             ns2__checkVat.countryCode = code_bytes.data();
         }
         else return false;

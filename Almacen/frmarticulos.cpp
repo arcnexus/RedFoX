@@ -638,13 +638,13 @@ void FrmArticulos::on_botBuscarArtRapido_clicked()
         // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
         ui->TablaBuscarArt->setHorizontalHeader(Cabecera);
         /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
-        Cabecera->setResizeMode(0,QHeaderView::Fixed);
+        Cabecera->setSectionResizeMode(0,QHeaderView::Fixed);
         Cabecera->resizeSection(0,0);
-        Cabecera->setResizeMode(1,QHeaderView::Fixed);
+        Cabecera->setSectionResizeMode(1,QHeaderView::Fixed);
         Cabecera->resizeSection(1,120);
-        Cabecera->setResizeMode(2,QHeaderView::Fixed);
+        Cabecera->setSectionResizeMode(2,QHeaderView::Fixed);
         Cabecera->resizeSection(2,120);
-        Cabecera->setResizeMode(3,QHeaderView::Fixed);
+        Cabecera->setSectionResizeMode(3,QHeaderView::Fixed);
         Cabecera->resizeSection(3,400);
         Cabecera->setVisible(true);
         modArt->setHeaderData(1, Qt::Horizontal, tr("CÓDIGO"));
@@ -1602,24 +1602,24 @@ void FrmArticulos::LlenarTablas()
     modelTarifa->setHeaderData(7,Qt::Horizontal,tr("PVP"));
     modelTarifa->setHeaderData(8,Qt::Horizontal,tr("S"));
 
-    ui->TablaTarifas->horizontalHeader()->setResizeMode(0,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(0,0);
 
-    ui->TablaTarifas->horizontalHeader()->setResizeMode(1,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(1,105);
-    ui->TablaTarifas->horizontalHeader()->setResizeMode(2,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(2,165);
-    ui->TablaTarifas->horizontalHeader()->setResizeMode(3,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(3,65);
-    ui->TablaTarifas->horizontalHeader()->setResizeMode(4,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(4,70);
-    ui->TablaTarifas->horizontalHeader()->setResizeMode(5,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(5,70);
-    ui->TablaTarifas->horizontalHeader()->setResizeMode(6,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(6,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(6,70);
-    ui->TablaTarifas->horizontalHeader()->setResizeMode(7,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(7,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(7,85);
-    ui->TablaTarifas->horizontalHeader()->setResizeMode(8,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(8,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(8,20);
     //-----------------------
     // Proveedores frecuentes
@@ -1642,19 +1642,19 @@ void FrmArticulos::LlenarTablas()
     ui->tablaProveedores->setColumnHidden(0,true);
     ui->tablaProveedores->setColumnHidden(8,true);
 
-    ui->tablaProveedores->horizontalHeader()->setResizeMode(1,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
     ui->tablaProveedores->horizontalHeader()->resizeSection(1,90);
-    ui->tablaProveedores->horizontalHeader()->setResizeMode(2,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
     ui->tablaProveedores->horizontalHeader()->resizeSection(2,130);
-    ui->tablaProveedores->horizontalHeader()->setResizeMode(3,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
     ui->tablaProveedores->horizontalHeader()->resizeSection(3,95);
-    ui->tablaProveedores->horizontalHeader()->setResizeMode(4,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
     ui->tablaProveedores->horizontalHeader()->resizeSection(4,80);
-    ui->tablaProveedores->horizontalHeader()->setResizeMode(5,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
     ui->tablaProveedores->horizontalHeader()->resizeSection(5,80);
-    ui->tablaProveedores->horizontalHeader()->setResizeMode(6,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(6,QHeaderView::Fixed);
     ui->tablaProveedores->horizontalHeader()->resizeSection(6,90);
-    ui->tablaProveedores->horizontalHeader()->setResizeMode(7,QHeaderView::Fixed);
+    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(7,QHeaderView::Fixed);
     ui->tablaProveedores->horizontalHeader()->resizeSection(7,87);
 
     //--------------------

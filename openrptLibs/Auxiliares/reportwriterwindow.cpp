@@ -28,7 +28,8 @@
 
 // qt
 #include <QSqlDatabase>
-#include <QWorkspace>
+//#include <QWorkspace>
+#include <QtWidgets>
 #include <QMenuBar>
 #include <QAction>
 #include <QEvent>
@@ -42,7 +43,7 @@
 
 // images
 #include "images/OpenReportsIcon.xpm"
-#include "../include/builtinSqlFunctions.h"
+#include "builtinSqlFunctions.h"
 
 //
 // ReportWriterWindow
@@ -54,14 +55,13 @@ ReportWriterWindow::ReportWriterWindow()
     setWindowIcon(QPixmap(OpenReportsIcon_xpm));
 
     // add the workspace
-    ws = new QWorkspace();
-    ws->setScrollBarsEnabled(TRUE);
+    ws = new QMdiArea(this);
+    //ws->setScrollBarsEnabled(true);
 
     setCentralWidget(ws);
 
     // setup the menubar
-    /*
-    fileExitAction = new QAction(tr("E&xit"), this);
+    /*fileExitAction = new QAction(tr("E&xit"), this);
     fileExitAction->setObjectName("file exit");
     fileExitAction->setShortcut(Qt::ALT+Qt::Key_F4);
     connect(fileExitAction, SIGNAL(activated()), this, SLOT(appExit()));*/
@@ -72,7 +72,7 @@ ReportWriterWindow::ReportWriterWindow()
     handler->setNoDatabase(true);
 #endif
 
-    QAction * sepid = handler->populateMenuBar(menuBar(),/* fileExitAction*/0);
+    QAction * sepid = handler->populateMenuBar(menuBar(), 0);
 
     windowMenu = new QMenu(tr("&Windows"));
     //windowMenu->setCheckable(TRUE);
@@ -94,7 +94,7 @@ ReportWriterWindow::ReportWriterWindow()
     connect(handler, SIGNAL(messageCleared()),
             statusBar(), SLOT(clear()));
     handler->onWinChanged(NULL);
-    connect(ws, SIGNAL(windowActivated(QWidget*)), handler, SLOT(onWinChanged(QWidget*)));
+    connect(ws, SIGNAL(subWindowActivated(QMdiSubWindow*)), handler, SLOT(onWinChanged(QMdiSubWindow*)));
     
 }
 
@@ -120,7 +120,7 @@ void ReportWriterWindow::appExit() {
 
 void ReportWriterWindow::timerEvent(QTimerEvent * e) {
     if(e->timerId() == dbTimerId) {
-        QSqlDatabase db = QSqlDatabase::database(QSqlDatabase::defaultConnection,FALSE);
+        QSqlDatabase db = QSqlDatabase::database(QSqlDatabase::defaultConnection,false);
         if(db.isValid()) {
             QSqlQuery qry(getSqlFromTag("fmt07", db.driverName()));		// MANU
 
@@ -138,18 +138,19 @@ void ReportWriterWindow::timerEvent(QTimerEvent * e) {
 }
 
 void ReportWriterWindow::closeEvent(QCloseEvent * e) {
-    QWidgetList wl = ws->windowList();
+    //QWidgetList wl = ws->windowList();
+    QList<QMdiSubWindow *> wl = ws->subWindowList();
     QWidget * w = 0;
-    for(int i = 0; i < wl.size(); i++)
+ /*   for(int i = 0; i < wl.size(); i++)
     {
-      w = wl.at(i);
+      w = static_cast<QWidget *>(wl.at(i));
       if(w && !w->close())
       {
         e->ignore();
         return;
       }
     }
-    e->accept();
+    e->accept();*/
 }
 
 void ReportWriterWindow::setCaption() {
@@ -196,13 +197,14 @@ void ReportWriterWindow::sPrepareWindowMenu()
   windowMenu->addSeparator();
 
   int cnt = 0;
-  QWidgetList windows = ws->windowList();
+  //QWidgetList windows = ws->windowList();
+  QList<QMdiSubWindow *> windows = ws->subWindowList();
   for (int intCursor = 0; intCursor < windows.count(); intCursor++)
   {
     if(windows.at(intCursor)->isVisible())
     {
       QAction * intMenuid = windowMenu->addAction(windows.at(intCursor)->windowTitle(), windows.at(intCursor), SLOT(setFocus()));
-      intMenuid->setChecked((ws->activeWindow() == windows.at(intCursor)));
+      intMenuid->setChecked((ws->activeSubWindow() == windows.at(intCursor)));
       cnt++;
     }
   }

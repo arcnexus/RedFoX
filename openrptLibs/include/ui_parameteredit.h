@@ -21,8 +21,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'parameteredit.ui'
 **
-** Created: Wed 20. Feb 18:04:15 2013
-**      by: Qt User Interface Compiler version 4.8.2
+** Created by: Qt User Interface Compiler version 5.0.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -31,17 +30,17 @@
 #define UI_PARAMETEREDIT_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QFrame>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QTableWidget>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QFrame>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QTableWidget>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -63,12 +62,12 @@ public:
     void setupUi(QWidget *ParameterEdit)
     {
         if (ParameterEdit->objectName().isEmpty())
-            ParameterEdit->setObjectName(QString::fromUtf8("ParameterEdit"));
+            ParameterEdit->setObjectName(QStringLiteral("ParameterEdit"));
         ParameterEdit->resize(600, 304);
         horizontalLayout = new QHBoxLayout(ParameterEdit);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         _table = new QTableWidget(ParameterEdit);
         if (_table->columnCount() < 4)
             _table->setColumnCount(4);
@@ -80,47 +79,47 @@ public:
         _table->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
         _table->setHorizontalHeaderItem(3, __qtablewidgetitem3);
-        _table->setObjectName(QString::fromUtf8("_table"));
+        _table->setObjectName(QStringLiteral("_table"));
 
         horizontalLayout->addWidget(_table);
 
         vboxLayout = new QVBoxLayout();
         vboxLayout->setSpacing(6);
-        vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
+        vboxLayout->setObjectName(QStringLiteral("vboxLayout"));
         _ok = new QPushButton(ParameterEdit);
-        _ok->setObjectName(QString::fromUtf8("_ok"));
+        _ok->setObjectName(QStringLiteral("_ok"));
 
         vboxLayout->addWidget(_ok);
 
         _cancel = new QPushButton(ParameterEdit);
-        _cancel->setObjectName(QString::fromUtf8("_cancel"));
+        _cancel->setObjectName(QStringLiteral("_cancel"));
 
         vboxLayout->addWidget(_cancel);
 
         _buttonDiv = new QFrame(ParameterEdit);
-        _buttonDiv->setObjectName(QString::fromUtf8("_buttonDiv"));
+        _buttonDiv->setObjectName(QStringLiteral("_buttonDiv"));
         _buttonDiv->setFrameShape(QFrame::HLine);
         _buttonDiv->setFrameShadow(QFrame::Sunken);
 
         vboxLayout->addWidget(_buttonDiv);
 
         _new = new QPushButton(ParameterEdit);
-        _new->setObjectName(QString::fromUtf8("_new"));
+        _new->setObjectName(QStringLiteral("_new"));
 
         vboxLayout->addWidget(_new);
 
         _edit = new QPushButton(ParameterEdit);
-        _edit->setObjectName(QString::fromUtf8("_edit"));
+        _edit->setObjectName(QStringLiteral("_edit"));
 
         vboxLayout->addWidget(_edit);
 
         _list = new QPushButton(ParameterEdit);
-        _list->setObjectName(QString::fromUtf8("_list"));
+        _list->setObjectName(QStringLiteral("_list"));
 
         vboxLayout->addWidget(_list);
 
         _delete = new QPushButton(ParameterEdit);
-        _delete->setObjectName(QString::fromUtf8("_delete"));
+        _delete->setObjectName(QStringLiteral("_delete"));
 
         vboxLayout->addWidget(_delete);
 
@@ -145,26 +144,26 @@ public:
 
     void retranslateUi(QWidget *ParameterEdit)
     {
-        ParameterEdit->setWindowTitle(QApplication::translate("ParameterEdit", "Parameter List", 0, QApplication::UnicodeUTF8));
+        ParameterEdit->setWindowTitle(QApplication::translate("ParameterEdit", "Parameter List", 0));
         QTableWidgetItem *___qtablewidgetitem = _table->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QApplication::translate("ParameterEdit", "Active", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem->setText(QApplication::translate("ParameterEdit", "Active", 0));
         QTableWidgetItem *___qtablewidgetitem1 = _table->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QApplication::translate("ParameterEdit", "Name", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem1->setText(QApplication::translate("ParameterEdit", "Name", 0));
         QTableWidgetItem *___qtablewidgetitem2 = _table->horizontalHeaderItem(2);
-        ___qtablewidgetitem2->setText(QApplication::translate("ParameterEdit", "Type", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem2->setText(QApplication::translate("ParameterEdit", "Type", 0));
         QTableWidgetItem *___qtablewidgetitem3 = _table->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QApplication::translate("ParameterEdit", "Value", 0, QApplication::UnicodeUTF8));
-        _ok->setText(QApplication::translate("ParameterEdit", "&OK", 0, QApplication::UnicodeUTF8));
-        _ok->setShortcut(QApplication::translate("ParameterEdit", "Alt+O", 0, QApplication::UnicodeUTF8));
-        _cancel->setText(QApplication::translate("ParameterEdit", "&Cancel", 0, QApplication::UnicodeUTF8));
-        _cancel->setShortcut(QApplication::translate("ParameterEdit", "Alt+C", 0, QApplication::UnicodeUTF8));
-        _new->setText(QApplication::translate("ParameterEdit", "&New", 0, QApplication::UnicodeUTF8));
-        _new->setShortcut(QApplication::translate("ParameterEdit", "Alt+N", 0, QApplication::UnicodeUTF8));
-        _edit->setText(QApplication::translate("ParameterEdit", "&Edit", 0, QApplication::UnicodeUTF8));
-        _edit->setShortcut(QApplication::translate("ParameterEdit", "Alt+E", 0, QApplication::UnicodeUTF8));
-        _list->setText(QApplication::translate("ParameterEdit", "List", 0, QApplication::UnicodeUTF8));
-        _list->setShortcut(QApplication::translate("ParameterEdit", "Alt+E", 0, QApplication::UnicodeUTF8));
-        _delete->setText(QApplication::translate("ParameterEdit", "Delete", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem3->setText(QApplication::translate("ParameterEdit", "Value", 0));
+        _ok->setText(QApplication::translate("ParameterEdit", "&OK", 0));
+        _ok->setShortcut(QApplication::translate("ParameterEdit", "Alt+O", 0));
+        _cancel->setText(QApplication::translate("ParameterEdit", "&Cancel", 0));
+        _cancel->setShortcut(QApplication::translate("ParameterEdit", "Alt+C", 0));
+        _new->setText(QApplication::translate("ParameterEdit", "&New", 0));
+        _new->setShortcut(QApplication::translate("ParameterEdit", "Alt+N", 0));
+        _edit->setText(QApplication::translate("ParameterEdit", "&Edit", 0));
+        _edit->setShortcut(QApplication::translate("ParameterEdit", "Alt+E", 0));
+        _list->setText(QApplication::translate("ParameterEdit", "List", 0));
+        _list->setShortcut(QApplication::translate("ParameterEdit", "Alt+E", 0));
+        _delete->setText(QApplication::translate("ParameterEdit", "Delete", 0));
     } // retranslateUi
 
 };

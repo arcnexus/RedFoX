@@ -46,27 +46,27 @@ void FrmBuscarFactura::on_pushButton_clicked()
     Cabecera = new QHeaderView(Qt::Horizontal,this);
     // 3º - La vinculamos a QTableView
     ui->Grid->setHorizontalHeader(Cabecera);
-  //  Cabecera->setResizeMode(0,QHeaderView::Fixed);
+  //  Cabecera->setSectionResizeMode(0,QHeaderView::Fixed);
     Cabecera->resizeSection(0,0);
-  //  Cabecera->setResizeMode(1,QHeaderView::Fixed);
+  //  Cabecera->setSectionResizeMode(1,QHeaderView::Fixed);
     Cabecera->resizeSection(1,100);
-  //  Cabecera->setResizeMode(2,QHeaderView::Fixed);
+  //  Cabecera->setSectionResizeMode(2,QHeaderView::Fixed);
     Cabecera->resizeSection(2,200);
-  //  Cabecera->setResizeMode(3,QHeaderView::Fixed);
+  //  Cabecera->setSectionResizeMode(3,QHeaderView::Fixed);
     Cabecera->resizeSection(3,90);
-  //  Cabecera->setResizeMode(4,QHeaderView::Fixed);
+  //  Cabecera->setSectionResizeMode(4,QHeaderView::Fixed);
     Cabecera->resizeSection(4,90);
-  //  Cabecera->setResizeMode(5,QHeaderView::Fixed);
+  //  Cabecera->setSectionResizeMode(5,QHeaderView::Fixed);
     Cabecera->resizeSection(5,90);
-   // Cabecera->setResizeMode(6,QHeaderView::Fixed);
+   // Cabecera->setSectionResizeMode(6,QHeaderView::Fixed);
     Cabecera->resizeSection(6,90);
-   // Cabecera->setResizeMode(7,QHeaderView::Fixed);
+   // Cabecera->setSectionResizeMode(7,QHeaderView::Fixed);
     Cabecera->resizeSection(7,90);
-  //  Cabecera->setResizeMode(8,QHeaderView::Fixed);
+  //  Cabecera->setSectionResizeMode(8,QHeaderView::Fixed);
     Cabecera->resizeSection(8,90);
-  //  Cabecera->setResizeMode(9,QHeaderView::Fixed);
+  //  Cabecera->setSectionResizeMode(9,QHeaderView::Fixed);
     Cabecera->resizeSection(9,90);
-   // Cabecera->setResizeMode(10,QHeaderView::Fixed);
+   // Cabecera->setSectionResizeMode(10,QHeaderView::Fixed);
     Cabecera->resizeSection(10,90);
     Cabecera->setVisible(true);
     // 4º - Defino cabecera Modelo

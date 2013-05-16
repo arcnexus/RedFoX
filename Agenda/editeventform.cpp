@@ -2,6 +2,7 @@
 #include "ui_editeventform.h"
 #include "../Busquedas/frmbuscarcliente.h"
 #include "./Zona_Pacientes/cliente.h"
+#include <QColorDialog>
 EditEventForm::EditEventForm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::EditEventForm)

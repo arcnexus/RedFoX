@@ -33,11 +33,11 @@
 #include <QDomDocument>
 #include <QPoint>
 #include <QList>
-#include <QActionGroup>
+#include <QtWidgets/QActionGroup>
 #include <QMouseEvent>
-#include <QFontComboBox>
-#include <QPushButton>
-#include <QToolBar>
+#include <QtWidgets/QFontComboBox>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets>
 
 #include <parameter.h>
 
@@ -58,7 +58,7 @@ class ReportHandler : public QObject {
 
         virtual ~ReportHandler();
 
-        void docToolBars(QMainWindow * mw, int edge = 0, bool newLine = FALSE);
+        void docToolBars(QMainWindow * mw, int edge = 0, bool newLine = false);
         QAction * populateMenuBar(QMenuBar * menubar, QAction * exitAction = 0);
 
         void setParentWindow(QWidget * w);
@@ -129,7 +129,7 @@ class ReportHandler : public QObject {
         void dbSaveDoc();
 
         void sReportsChanged(int, bool);
-		void		onWinChanged(QWidget* w);
+        void		onWinChanged(QMdiSubWindow *w);
 
         QDomElement databaseElt() {return _databaseElt;}
         void loadMemDB(const QString &filename, const QDomNode &it);

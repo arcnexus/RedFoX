@@ -1,25 +1,9 @@
 #ifndef OPENCHART_H
 #define OPENCHART_H
-
-
 #include "global_header.h"
-#include <QWidget>
-#include <QPainter>
+#include <QtWidgets>
 #include "qchartpiece.h"
-/*
-class ChartPiece
-{
-public:
-    QString nombre;
-    float value() const{return (values.isEmpty()) ?  0 : values.at(0);}
-    QVector<float> getValues() const{return values;}
 
-    void addValue(float f){values.append(f);}
-    void addValue(QVector<float> f){values=f;}
-    QColor color;
-private:
-    QVector<float> values;
-};*/
 struct roundLabelPoints
 {
     QString name;

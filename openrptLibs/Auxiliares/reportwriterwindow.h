@@ -24,11 +24,11 @@
 #include <QMainWindow>
 #include <QTimerEvent>
 #include <QCloseEvent>
-
+#include <QtWidgets>
 //
 // Prototypes
 //
-class QWorkspace;
+//class QWorkspace;
 class QAction;
 class ReportHandler;
 class QMenu;
@@ -52,7 +52,7 @@ class ReportWriterWindow : public QMainWindow {
         virtual void timerEvent(QTimerEvent*);
 
     private:
-        QWorkspace * ws;
+        QMdiArea * ws;
         int dbTimerId;
 
         //QAction * fileExitAction;

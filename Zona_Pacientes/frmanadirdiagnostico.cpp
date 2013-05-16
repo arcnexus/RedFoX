@@ -36,7 +36,7 @@ void FrmAnadirDiagnostico::BtnBuscar_Clicked()
 
     ui->listaDiagnositicos->setModel(modelDiagnostico);
     ui->listaDiagnositicos->setColumnHidden(1,true);
-    ui->listaDiagnositicos->horizontalHeader()->setResizeMode(0,QHeaderView::Fixed);
+    ui->listaDiagnositicos->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
     ui->listaDiagnositicos->horizontalHeader()->resizeSection(0,350);
     Configuracion_global->CerrarBDMediTec();
 
