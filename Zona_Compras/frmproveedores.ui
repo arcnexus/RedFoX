@@ -24,8 +24,7 @@
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-</string>
+   <string notr="true">background-color: rgb(165, 179, 255);</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_20">
    <item row="0" column="1" colspan="2">
@@ -54,7 +53,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(208, 233, 255)</string>
+      <string notr="true">color: rgb(0, 0, 127);</string>
      </property>
      <property name="text">
       <string>TextLabel</string>
@@ -1481,7 +1480,7 @@ color: rgb(255, 255, 255);</string>
    <item row="1" column="2" colspan="2">
     <widget class="QLabel" name="lblproveedor">
      <property name="styleSheet">
-      <string notr="true">color: rgb(208, 233, 255)</string>
+      <string notr="true">color: rgb(0, 0, 127);</string>
      </property>
      <property name="text">
       <string>TextLabel</string>

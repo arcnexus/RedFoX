@@ -24,7 +24,7 @@ private slots:
 
     void on_tablaPedidos_doubleClicked(const QModelIndex &index);
 
-    void validarcantidad(QTableWidgetItem*);
+    void validarcantidad(int, int);
     void reconectar();
     void on_pushButton_3_clicked();
 

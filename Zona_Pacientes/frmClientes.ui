@@ -36,7 +36,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">background-color: rgb(165, 179, 255);</string>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -311,7 +311,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
    <item row="1" column="1">
     <widget class="QLabel" name="txtNombreFiscal">
      <property name="styleSheet">
-      <string notr="true">color: rgb(208, 233, 255)</string>
+      <string notr="true">color: rgb(0, 0, 127);</string>
      </property>
      <property name="text">
       <string>TextLabel</string>
@@ -358,9 +358,9 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
         <colorrole role="Button">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>76</red>
-           <green>96</green>
-           <blue>136</blue>
+           <red>165</red>
+           <green>179</green>
+           <blue>255</blue>
           </color>
          </brush>
         </colorrole>
@@ -430,18 +430,18 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
         <colorrole role="Base">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>76</red>
-           <green>96</green>
-           <blue>136</blue>
+           <red>165</red>
+           <green>179</green>
+           <blue>255</blue>
           </color>
          </brush>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>76</red>
-           <green>96</green>
-           <blue>136</blue>
+           <red>165</red>
+           <green>179</green>
+           <blue>255</blue>
           </color>
          </brush>
         </colorrole>
@@ -495,9 +495,9 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
         <colorrole role="Button">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>76</red>
-           <green>96</green>
-           <blue>136</blue>
+           <red>165</red>
+           <green>179</green>
+           <blue>255</blue>
           </color>
          </brush>
         </colorrole>
@@ -567,18 +567,18 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
         <colorrole role="Base">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>76</red>
-           <green>96</green>
-           <blue>136</blue>
+           <red>165</red>
+           <green>179</green>
+           <blue>255</blue>
           </color>
          </brush>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>76</red>
-           <green>96</green>
-           <blue>136</blue>
+           <red>165</red>
+           <green>179</green>
+           <blue>255</blue>
           </color>
          </brush>
         </colorrole>
@@ -632,9 +632,9 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
         <colorrole role="Button">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>76</red>
-           <green>96</green>
-           <blue>136</blue>
+           <red>165</red>
+           <green>179</green>
+           <blue>255</blue>
           </color>
          </brush>
         </colorrole>
@@ -704,18 +704,18 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
         <colorrole role="Base">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>76</red>
-           <green>96</green>
-           <blue>136</blue>
+           <red>165</red>
+           <green>179</green>
+           <blue>255</blue>
           </color>
          </brush>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="SolidPattern">
           <color alpha="255">
-           <red>76</red>
-           <green>96</green>
-           <blue>136</blue>
+           <red>165</red>
+           <green>179</green>
+           <blue>255</blue>
           </color>
          </brush>
         </colorrole>
@@ -765,7 +765,7 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <property name="styleSheet">

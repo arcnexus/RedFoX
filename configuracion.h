@@ -132,6 +132,7 @@ public:
 
 
     QString FormatoNumerico(QString cTexto);
+    double MonedatoDouble(QString moneda);
     bool EsNumero(QString texto);
     void CargarDatos();
     void CargarDatosBD();

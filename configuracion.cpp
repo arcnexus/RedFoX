@@ -84,6 +84,12 @@ QString Configuracion::FormatoNumerico(QString cTexto)
 
 }
 
+double Configuracion::MonedatoDouble(QString moneda)
+{
+    moneda = moneda.replace(",",".");
+    return moneda.toDouble();
+}
+
 bool Configuracion::EsNumero(QString texto)
 {
     //Para buscar un caracter en una posición determinada de una cadena:

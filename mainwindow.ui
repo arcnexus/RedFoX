@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="maya.qrc">
-    <normaloff>:/Icons/PNG/iconMaya.png</normaloff>:/Icons/PNG/iconMaya.png</iconset>
+    <normaloff>:/Icons/PNG/maya_logo2.png</normaloff>:/Icons/PNG/maya_logo2.png</iconset>
   </property>
   <property name="iconSize">
    <size>
@@ -80,7 +80,16 @@
         <enum>QFrame::Raised</enum>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
-        <property name="margin">
+        <property name="leftMargin">
+         <number>1</number>
+        </property>
+        <property name="topMargin">
+         <number>1</number>
+        </property>
+        <property name="rightMargin">
+         <number>1</number>
+        </property>
+        <property name="bottomMargin">
          <number>1</number>
         </property>
         <item>
@@ -128,7 +137,16 @@ selection-color: rgb(0, 0, 0);</string>
         <property name="spacing">
          <number>3</number>
         </property>
-        <property name="margin">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
@@ -853,7 +871,7 @@ background-color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>1133</width>
-     <height>22</height>
+     <height>27</height>
     </rect>
    </property>
    <property name="defaultUp">

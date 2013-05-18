@@ -12,6 +12,7 @@ Frmrecepcion_pedidos::Frmrecepcion_pedidos(QWidget *parent) :
     ui->setupUi(this);
     ui->txtFechaFin->setDate(QDate::currentDate());
 
+
 }
 
 Frmrecepcion_pedidos::~Frmrecepcion_pedidos()
@@ -157,22 +158,17 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
 
 
     }
+    connect(ui->tablaLineas,SIGNAL(cellChanged(int,int)),this,SLOT(validarcantidad(int, int)));
 
-   // connect(ui->tablaLineas,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(validarcantidad(QTableWidgetItem*)));
-    connect(ui->tablaLineas,SIGNAL(itemSelectionChanged()),this,SLOT(reconectar()));
 }
 
-void Frmrecepcion_pedidos::validarcantidad(QTableWidgetItem *item)
+void Frmrecepcion_pedidos::validarcantidad(int row, int col)
 {
-   disconnect(ui->tablaLineas,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(validarcantidad(QTableWidgetItem*)));
-    int row = ui->tablaLineas->currentRow();
-    int col = ui->tablaLineas->currentColumn();
 
-    if(item != ui->tablaLineas->currentItem()) // Cantidad
-        return;
-    else
-    {
-        if (item->column() ==7);
+    if (col ==7 ){
+        blockSignals(true);
+
+
         int pend = ui->tablaLineas->item(row,5)->text().toInt();
         int rec = ui->tablaLineas->item(row,6)->text().toInt();
         int rec_act = ui->tablaLineas->item(row,7)->text().toInt();
@@ -181,8 +177,6 @@ void Frmrecepcion_pedidos::validarcantidad(QTableWidgetItem *item)
         rec = rec + rec_act;
 
         bool fallo = false;
-
-
         QSqlDatabase::database("Maya").transaction();
         QSqlDatabase::database("empresa").transaction();
         QSqlQuery queryLineas(QSqlDatabase::database("empresa"));
@@ -240,12 +234,13 @@ void Frmrecepcion_pedidos::validarcantidad(QTableWidgetItem *item)
         ui->tablaLineas->item(row,5)->setText(QString::number(nuevo_pend));
         ui->tablaLineas->item(row,6)->setText(QString::number(rec));
         ui->tablaLineas->item(row,7)->setText("0");
-
-
     }
-    if(ui->tablaLineas->currentColumn() ==8) // Coste
+    blockSignals(false);
+
+
+    if(col ==8 ) // Coste
     {
-        int id = ui->tablaLineas->item(row,9)->text().toInt();
+        int id = ui->tablaLineas->item(row,10)->text().toInt();
         QSqlQuery queryProducto(QSqlDatabase::database("Maya"));
         queryProducto.prepare("select rCoste from articulos where id =:nid");
         queryProducto.bindValue(":nid",id);
@@ -253,9 +248,24 @@ void Frmrecepcion_pedidos::validarcantidad(QTableWidgetItem *item)
         {
             queryProducto.next();
             double coste = queryProducto.record().value("rCoste").toDouble();
-            double valor = ui->tablaLineas->item(row,7)->text().toDouble();
+            QString svalor = ui->tablaLineas->item(row,8)->text();
+            double valor = Configuracion_global->MonedatoDouble(svalor);
+
             if(coste != valor)
             {
+                //----------------------------
+                // Cambio pvp en linea_pedido
+                //----------------------------
+                int id_linea = ui->tablaLineas->item(row,0)->text().toInt();
+                QSqlQuery queryLineas(QSqlDatabase::database("empresa"));
+                queryLineas.prepare("update lin_ped_pro set coste_bruto =:coste where id =:id_linea");
+                queryLineas.bindValue(":coste",valor);
+                queryLineas.bindValue(":id_linea",id_linea);
+                if(!queryLineas.exec())
+                    QMessageBox::question(this,tr("ATENCIÓN:"),
+                                          tr("Ocurrió un error al guardar el coste en la línea: %1").arg(queryLineas.lastError().text()),
+                                          tr("Aceptar"));
+
                 if( QMessageBox::question(this,tr("Entrada de Pedidos"),tr("¿Desea actualizar coste en la ficha del producto?"),
                                       tr("No"),tr("Sí")) == QMessageBox::Accepted)
                 {
@@ -285,13 +295,13 @@ void Frmrecepcion_pedidos::validarcantidad(QTableWidgetItem *item)
         }
 
     }
+    blockSignals(false);
     // connect(ui->tablaLineas,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(validarcantidad(QTableWidgetItem*)));
 }
 
 void Frmrecepcion_pedidos::reconectar()
 {
-    disconnect(ui->tablaLineas,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(validarcantidad(QTableWidgetItem*)));
-    connect(ui->tablaLineas,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(validarcantidad(QTableWidgetItem*)));
+ //   connect(ui->tablaLineas,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(validarcantidad(QTableWidgetItem*)));
 }
 
 void Frmrecepcion_pedidos::on_pushButton_3_clicked()
