@@ -14,12 +14,11 @@
    <string>Gestión de Caja diaria</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Maya.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #4C6088;
-</string>
+   <string notr="true">background-color: rgb(165, 179, 255);</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
@@ -34,7 +33,7 @@
             <string>Abrir Caja</string>
            </property>
            <property name="icon">
-            <iconset resource="../Maya.qrc">
+            <iconset resource="../maya.qrc">
              <normaloff>:/Icons/PNG/abrecaja.png</normaloff>:/Icons/PNG/abrecaja.png</iconset>
            </property>
           </widget>
@@ -42,7 +41,7 @@
          <item>
           <widget class="QLabel" name="label_12">
            <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);</string>
+            <string notr="true">color: rgb(0,0,0);</string>
            </property>
            <property name="text">
             <string>Ticket:</string>
@@ -91,8 +90,11 @@ color: rgb(0, 0, 192);</string>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QPushButton" name="btnCambioUsuario">
+           <property name="toolTip">
+            <string>cambiar Usuario TPV</string>
+           </property>
            <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);</string>
+            <string notr="true">color: rgb(0,0,0);</string>
            </property>
            <property name="text">
             <string>c.Usuario</string>
@@ -102,7 +104,7 @@ color: rgb(0, 0, 192);</string>
          <item>
           <widget class="QLabel" name="label_16">
            <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);</string>
+            <string notr="true">color: rgb(0,0,0);</string>
            </property>
            <property name="text">
             <string>Fecha/Hora:</string>
@@ -145,7 +147,7 @@ color: rgb(0, 0, 192);</string>
          <item>
           <widget class="QLabel" name="label_19">
            <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 127);</string>
+            <string notr="true">color: rgb(255, 85, 0);</string>
            </property>
            <property name="text">
             <string>Resumen. Editar:[F7]   Borrar Linea: [Suprimir]</string>
@@ -307,7 +309,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Maya.qrc">
+                  <iconset resource="../maya.qrc">
                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                  </property>
                 </widget>
@@ -451,7 +453,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
                 <enum>Qt::AutoText</enum>
                </property>
                <property name="pixmap">
-                <pixmap resource="../Maya.qrc">:/Icons/PNG/clientes.png</pixmap>
+                <pixmap resource="../maya.qrc">:/Icons/PNG/clientes.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>false</bool>
@@ -1634,11 +1636,20 @@ color: rgb(0, 64, 64);</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_14">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
               <property name="verticalSpacing">
                <number>3</number>
-              </property>
-              <property name="margin">
-               <number>0</number>
               </property>
               <item row="1" column="0">
                <widget class="QLineEdit" name="lineEdit_4">
@@ -1843,7 +1854,7 @@ color: rgb(255, 255, 255);</string>
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Maya.qrc">
+               <iconset resource="../maya.qrc">
                 <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
               </property>
               <property name="iconSize">
@@ -2125,7 +2136,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <string>&amp;Nueva</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
         </property>
         <property name="iconSize">
@@ -2148,7 +2159,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <string>&amp;Anterior</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
         </property>
         <property name="iconSize">
@@ -2171,7 +2182,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <string>Siguient&amp;e</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
         </property>
         <property name="iconSize">
@@ -2194,7 +2205,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <string>Buscar</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
         </property>
         <property name="iconSize">
@@ -2217,7 +2228,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <string>imprimir</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
         </property>
         <property name="iconSize">
@@ -2364,7 +2375,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
   <tabstop>btnBuscarArt</tabstop>
  </tabstops>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections/>
 </ui>

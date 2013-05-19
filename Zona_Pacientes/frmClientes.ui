@@ -779,6 +779,9 @@ font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QLabel" name="label">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);</string>
+           </property>
            <property name="text">
             <string>Código:                        </string>
            </property>

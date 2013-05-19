@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1048</width>
+    <width>1058</width>
     <height>482</height>
    </rect>
   </property>
@@ -14,11 +14,11 @@
    <string>Gestión de Pedidos de cliente</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Maya.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:#4c6088</string>
+   <string notr="true">background-color: rgb(165, 179, 255);</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_11">
    <item row="0" column="0" colspan="3">
@@ -37,7 +37,8 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
+      <string notr="true">
+color: rgb(0, 0, 0);</string>
      </property>
      <property name="text">
       <string>PEDIDO:</string>
@@ -53,7 +54,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(208, 233, 255)</string>
+      <string notr="true">color: rgb(0, 0, 127);</string>
      </property>
      <property name="text">
       <string>TextLabel</string>
@@ -69,7 +70,8 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
+      <string notr="true">
+color: rgb(0, 0, 0);</string>
      </property>
      <property name="text">
       <string>CLIENTE:</string>
@@ -79,7 +81,7 @@
    <item row="1" column="3">
     <widget class="QLabel" name="label_23">
      <property name="styleSheet">
-      <string notr="true">color: rgb(208, 233, 255)</string>
+      <string notr="true">color: rgb(0, 0, 127);</string>
      </property>
      <property name="text">
       <string>TextLabel</string>
@@ -144,7 +146,7 @@
              <string>Buscar Cliente</string>
             </property>
             <property name="icon">
-             <iconset resource="../Maya.qrc">
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
             </property>
            </widget>
@@ -1856,7 +1858,7 @@ color: rgb(0, 64, 64);</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Maya.qrc">
+          <iconset resource="../maya.qrc">
            <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
          </property>
         </widget>
@@ -1873,7 +1875,7 @@ color: rgb(0, 64, 64);</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Maya.qrc">
+          <iconset resource="../maya.qrc">
            <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
          </property>
         </widget>
@@ -2058,7 +2060,7 @@ color: rgb(0, 64, 64);</string>
          <string>&amp;Nueva</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
         </property>
         <property name="iconSize">
@@ -2081,7 +2083,7 @@ color: rgb(0, 64, 64);</string>
          <string>&amp;Anterior</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
         </property>
         <property name="iconSize">
@@ -2104,7 +2106,7 @@ color: rgb(0, 64, 64);</string>
          <string>Siguient&amp;e</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
         </property>
         <property name="iconSize">
@@ -2127,7 +2129,7 @@ color: rgb(0, 64, 64);</string>
          <string>Buscar</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
         </property>
         <property name="iconSize">
@@ -2150,7 +2152,7 @@ color: rgb(0, 64, 64);</string>
          <string>imprimir</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
         </property>
         <property name="iconSize">
@@ -2173,7 +2175,7 @@ color: rgb(0, 64, 64);</string>
          <string>Editar</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
         </property>
         <property name="iconSize">
@@ -2199,7 +2201,7 @@ color: rgb(0, 64, 64);</string>
          <string>Guardar</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
         </property>
         <property name="iconSize">
@@ -2222,7 +2224,7 @@ color: rgb(0, 64, 64);</string>
          <string>Deshacer</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
         </property>
         <property name="iconSize">
@@ -2281,7 +2283,7 @@ color: rgb(0, 64, 64);</string>
   </layout>
  </widget>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections/>
 </ui>

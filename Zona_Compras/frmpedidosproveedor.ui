@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1025</width>
+    <width>1059</width>
     <height>487</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:#4c6088</string>
+   <string notr="true">background-color: rgb(165, 179, 255);</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_11">
    <item row="1" column="3">
@@ -30,7 +30,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(208, 233, 255)</string>
+      <string notr="true">color: rgb(0, 0, 127)</string>
      </property>
      <property name="text">
       <string>00000000</string>
@@ -299,7 +299,7 @@
    <item row="1" column="5">
     <widget class="QLabel" name="lblnombreProveedor">
      <property name="styleSheet">
-      <string notr="true">color: rgb(208, 233, 255)</string>
+      <string notr="true">color: rgb(0, 0, 127)</string>
      </property>
      <property name="text">
       <string>AAAAAAAAAAAAAl</string>
@@ -2233,7 +2233,7 @@ color: rgb(255, 255, 255);</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
+      <string notr="true">color: rgb(0, 0, 0);</string>
      </property>
      <property name="text">
       <string>PROVEEDOR:</string>
@@ -2249,7 +2249,7 @@ color: rgb(255, 255, 255);</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
+      <string notr="true">color: rgb(0, 0, 0);</string>
      </property>
      <property name="text">
       <string>PEDIDO:</string>
@@ -2265,7 +2265,7 @@ color: rgb(255, 255, 255);</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(208, 233, 255)</string>
+      <string notr="true">color: rgb(0, 0, 127)</string>
      </property>
      <property name="text">
       <string>000000000</string>

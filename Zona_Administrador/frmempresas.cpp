@@ -101,6 +101,7 @@ void FrmEmpresas::LLenarCampos()
     ui->txtPasswordBDConta->setText(oEmpresa.ContrasenaBD_contabilidad);
     ui->txtPuertoBDConta->setText(oEmpresa.puertoDB_contabilidad);
     ui->txtRutaBDConta->setText(oEmpresa.RutaBD_Contabilidad_sqlite);
+    ui->chk_ticket_factura->setChecked(oEmpresa.ticket_factura);
 }
 
 void FrmEmpresas::CargarCamposEnEmpresa()
@@ -162,6 +163,7 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.puertoDB_contabilidad = ui->txtPuertoBDConta->text();
     oEmpresa.DriverDB_contabilidad = ui->txtcDriver->currentText();
     oEmpresa.RutaBD_Contabilidad_sqlite = ui->txtRutaBDConta->text();
+    oEmpresa.ticket_factura = ui->chk_ticket_factura->isChecked();
 
 
 }

@@ -14,7 +14,7 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(153, 160, 170);</string>
+   <string notr="true">background-color: rgb(165, 179, 255);</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="0">
@@ -36,7 +36,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="Maya.qrc">
+      <iconset resource="maya.qrc">
        <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
      </property>
     </widget>
@@ -131,7 +131,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Maya.qrc">
+        <iconset resource="maya.qrc">
          <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
        </property>
       </widget>
@@ -160,7 +160,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Maya.qrc">
+        <iconset resource="maya.qrc">
          <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
        </property>
       </widget>
@@ -176,7 +176,7 @@
       <string>Imprimir</string>
      </property>
      <property name="icon">
-      <iconset resource="Maya.qrc">
+      <iconset resource="maya.qrc">
        <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
      </property>
     </widget>
@@ -184,7 +184,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="Maya.qrc"/>
+  <include location="maya.qrc"/>
  </resources>
  <connections/>
 </ui>

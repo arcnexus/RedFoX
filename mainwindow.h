@@ -122,6 +122,7 @@ private slots:
 
     void showAgenda();
     void handle_permisosAgenda();
+
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);

@@ -177,6 +177,7 @@ public:
     QString puertoDB_contabilidad;
     QString DriverDB_contabilidad;
     QString RutaBD_Contabilidad_sqlite;
+    bool ticket_factura;
 
 };
 

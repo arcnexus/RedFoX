@@ -264,6 +264,23 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));
     connect(ui->actionMonedas,SIGNAL(triggered()),this,SLOT(handle_monedas()));
 
+    //------------------
+    // Botones barra
+    //------------------
+    connect(ui->btn_barra_clientes,SIGNAL(clicked()),this,SLOT(btnClientes_clicked()));
+    connect(ui->btn_barra_proveedores,SIGNAL(clicked()),this,SLOT(btnProveedores_clicked()));
+    connect(ui->btn_barra_albaran_pro,SIGNAL(clicked()),this,SLOT(btn_albaranes_pro_clicked()));
+    connect(ui->btn_barra_alb_cliente,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
+    connect(ui->btn_barra_articulos,SIGNAL(clicked()),this,SLOT(btnArticulos_clicked()));
+    connect(ui->btn_barra_factura_pro,SIGNAL(clicked()),this,SLOT(btn_facturas_pro_clicked()));
+    connect(ui->btn_barra_fra_cliente,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
+    connect(ui->btn_barra_ped_cliente,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
+    connect(ui->btn_barra_recepcion_ped_pro,SIGNAL(clicked()),this,SLOT(btn_recepcionPedidos_clicked()));
+    connect(ui->btn_barra_ped_pro,SIGNAL(clicked()),this,SLOT(btn_pedidos_pro_clicked()));
+    connect(ui->btn_barra_pres_cliente,SIGNAL(clicked()),this,SLOT(btnPresup_clientes_clicked()));
+    connect(ui->btn_barra_tpv_cliente,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
+
+
     QPixmap pixmap(":/Icons/PNG/mayafondo_blanco.png");
     QSplashScreen splash(pixmap);
     splash.show();
@@ -359,7 +376,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
-    ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
+   // ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
     ui->menubar->show();
 
@@ -380,222 +397,7 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 void MainWindow::init()
 {
-   // ui->toolBox->setStyleSheet("QToolBox::tab {background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);	border-radius: 5px;color: darkgray;}QToolBox::tab:selected { /* italicize selected tabs */font: italic;color: black;}");
-    //ui->toolBox->setStyleSheet("QToolBox::tab {background:#304163; 	border-radius: 5px;color: darkgray;}QToolBox::tab:selected { /* italicize selected tabs */font: italic;color: #FFFFFF;}");
-//        ui->lineUsuarioActivo->setText(user);
-//        Configuracion_global->cUsuarioActivo = user;
 
-//		QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
-//		ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
-//		ui->txtcCategoria->setText(settings.value("cCategoria").toString());
-
-//        ui->lineEmpresaActiva->setText(empresa);
-
-		// Configuramos valores empresa activa
-//		QSqlQuery QryEmpresa(QSqlDatabase::database("Maya"));
-//		QryEmpresa.prepare("Select * from empresas where nombre = :nombre");
-//        QryEmpresa.bindValue(":nombre",empresa.trimmed());
-//		if (QryEmpresa.exec())
-//        {
-//			QryEmpresa.next();
-
-//            //QPixmap pixmap(":/Icons/PNG/Logo2.png");
-//            //QSplashScreen splash(pixmap);
-//            //splash.show();
-
-//            QApplication::processEvents();
-//			QSqlRecord record = QryEmpresa.record();
-
-//			// DBEMpresa
-//            //splash.showMessage(tr("Cargando configuración de base de datos"),Qt::AlignBottom);
-//            Configuracion_global->cDriverBDEmpresa = record.field("driverBD").value().toString();
-//            Configuracion_global->cHostBDEmpresa = record.field("host").value().toString();
-//            Configuracion_global->cNombreBDEmpresa =record.field("nombreBD").value().toString();
-//            Configuracion_global->cPasswordBDEmpresa =record.field("contrasena").value().toString();
-//            Configuracion_global->cRutaBdEmpresa = record.field("RutaBDSqLite").value().toString();
-//            Configuracion_global->cUsuarioBDEmpresa = record.field("user").value().toString();
-
-//            if(record.field("medica").value().toInt()==1)
-//                medic = true;
-//            else
-//                medic = false;
-
-//            if(record.field("internacional").value().toInt()==1)
-//                internacional = true;
-//            else
-//                internacional = false;
-
-
-//            QApplication::processEvents();
-
-//			//DBMedica
-//            //splash.showMessage(tr("Cargando configuración médica"),Qt::AlignBottom);
-//            Configuracion_global->cDriverBDMedica = record.field("driverBDMedica").value().toString();
-//            Configuracion_global->cHostBDMedica = record.field("hostBDMedica").value().toString();
-//            Configuracion_global->cNombreBDMedica =record.field("nombreBDMedica").value().toString();
-//            Configuracion_global->cPasswordBDMedica =record.field("contrasenaBDMedica").value().toString();
-//            Configuracion_global->cRutaBdMedica = record.field("RutaBDMedicaSqLite").value().toString();
-//            Configuracion_global->cUsuarioBDMedica = record.field("userBDMedica").value().toString();
-
-//            QApplication::processEvents();
-
-//			// Varios
-//            //splash.showMessage(tr("Cargando configuración financiera"),Qt::AlignBottom);
-//            Configuracion_global->cSerie = record.field("serie").value().toString();
-//            qDebug() << "desde db mainwindow" << record./*field("ndigitoscuenta").*/value("ndigitoscuenta").toInt();
-//            Configuracion_global->nDigitosCuentasContables = record./*field("ndigitoscuenta").*/value("ndigitoscuenta").toInt();
-//            Configuracion_global->cCuentaAcreedores = record.field("codigocuentaacreedores").value().toString();
-//            Configuracion_global->cCuentaClientes = record.field("codigocuentaclientes").value().toString();
-//            Configuracion_global->cCuentaProveedores = record.field("codigocuentaproveedores").value().toString();
-
-//            QApplication::processEvents();
-
-//			// Guardo preferencias
-//			QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
-//            settings.setValue("cSerie",Configuracion_global->cSerie);
-//            settings.setValue("ndigitoscuenta",Configuracion_global->nDigitosCuentasContables);
-//            settings.setValue("cCuentaClientes",Configuracion_global->cCuentaClientes);
-//            settings.setValue("cCuentaProveedores",Configuracion_global->cCuentaProveedores);
-//            settings.setValue("cCuentaAcreedores",Configuracion_global->cCuentaAcreedores);
-//            settings.setValue("Clave1",record.field("clave1").value().toString());
-//            settings.setValue("Clave2",record.field("clave2").value().toString());
-
-//            QApplication::processEvents();
-
-//			// Abro empresa activa
-//            //splash.showMessage(tr("Cargando datos de la empresa activa"),Qt::AlignBottom);
-//            QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"empresa");
-//            if (Configuracion_global->cDriverBDEmpresa =="QSQLITE")
-//            {
-//                dbEmpresa.setDatabaseName(Configuracion_global->cRutaBdEmpresa);
-//				dbEmpresa.open();
-//            }
-//            else
-//            {
-//                dbEmpresa.setDatabaseName(Configuracion_global->cNombreBDEmpresa);
-//                dbEmpresa.setHostName(Configuracion_global->cHostBDEmpresa);
-//                dbEmpresa.open(Configuracion_global->cUsuarioBDEmpresa,Configuracion_global->cPasswordBDEmpresa);
-//			}
-
-//            QApplication::processEvents();
-
-//			// Abro bdmedica activa
-//            //splash.showMessage(tr("Abriendo base de datos médica"),Qt::AlignBottom);
-//            QSqlDatabase dbMedica = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDEmpresa,"dbmedica");
-//            if (Configuracion_global->cDriverBDMedica =="QSQLITE")
-//            {
-//                dbMedica.setDatabaseName(Configuracion_global->cRutaBdMedica);
-//                qDebug() << "Medica:" << Configuracion_global->cRutaBdMedica;
-//				if(!dbMedica.open())
-//					QMessageBox::warning(qApp->activeWindow(),tr("ERROR DB"),tr("No se ha podido abrir la BD medica"),
-//					tr("Aceptar"));
-//            }
-//            else
-//            {
-//                dbMedica.setDatabaseName(Configuracion_global->cNombreBDMedica);
-//                dbMedica.setHostName(Configuracion_global->cHostBDMedica);
-//                dbMedica.open(Configuracion_global->cUsuarioBDMedica,Configuracion_global->cPasswordBDMedica);
-//			}
-//			if (dbMedica.lastError().isValid())
-//			{
-//                QMessageBox::critical(this, "error:", dbMedica.lastError().text());
-//			}
-
-//            Configuracion_global->Cargar_iva();
-//            Configuracion_global->Cargar_paises();
-//            Configuracion_global->CargarClientes();
-//            Configuracion_global->CargarUsuarios();
-//            //Widgets
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de clientes"),Qt::AlignBottom);
-//            frmClientes1 = new frmClientes(this);
-//            connect(frmClientes1,SIGNAL(block()),this,SLOT(block_main()));
-//            connect(frmClientes1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de facturas"),Qt::AlignBottom);
-//            frmFacturas1 = new frmFacturas(this);
-//            connect(frmFacturas1,SIGNAL(block()),this,SLOT(block_main()));
-//            connect(frmFacturas1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de articulos"),Qt::AlignBottom);
-//            frmArticulos1 = new FrmArticulos(this);
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de proveedores"),Qt::AlignBottom);
-//            frmProveedores1 = new frmProveedores(this);
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de albaranes"),Qt::AlignBottom);
-//            frmAlbaran1 = new FrmAlbaran(this);
-//            connect(frmAlbaran1,SIGNAL(block()),this,SLOT(block_main()));
-//            connect(frmAlbaran1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de facturación de albaranes"),Qt::AlignBottom);
-//            frmFactura_multiple = new FrmFacturarAlabaranes(this);
-//            connect(frmFactura_multiple,SIGNAL(block()),this,SLOT(block_main()));
-//            connect(frmFactura_multiple,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de pedidos"),Qt::AlignBottom);
-//            frmPedidos1 = new FrmPedidos(this);
-//            connect(frmPedidos1,SIGNAL(block()),this,SLOT(block_main()));
-//            connect(frmPedidos1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de presupuestos"),Qt::AlignBottom);
-//            frmPresupcli = new FrmPresupuestosCli(this);
-//            connect(frmPresupcli,SIGNAL(block()),this,SLOT(block_main()));
-//            connect(frmPresupcli,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de TPV"),Qt::AlignBottom);
-//            frmCajaMinuta = new FrmCajaMinuta(this);
-//            connect(frmCajaMinuta,SIGNAL(block()),this,SLOT(block_main()));
-//            connect(frmCajaMinuta,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos"),Qt::AlignBottom);
-//            FrmPedidos_pro = new FrmPedidosProveedor(this);
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes"),Qt::AlignBottom);
-//            FrmAlbaran_pro = new FrmAlbaranProveedor(this);
-
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de Compras: facturas"),Qt::AlignBottom);
-//            frmFacturas_pro = new FrmFacturasProveedor(this);
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
-//            frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
-
-//            splash.showMessage(tr("Cargando modulos... Editor de reportes"),Qt::AlignBottom);
-//            reportWindow = new ReportWriterWindow();
-
-//            splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"),Qt::AlignBottom);
-//            agendaForm = new AgendaForm(this);
-
-//            splash.showMessage(tr("Integrando modulos"),Qt::AlignBottom);
-
-//            ui->stackedWidget->addWidget(frmClientes1);
-//            ui->stackedWidget->addWidget(frmFacturas1);
-//            ui->stackedWidget->addWidget(frmArticulos1);
-//            ui->stackedWidget->addWidget(frmProveedores1);
-//            ui->stackedWidget->addWidget(frmAlbaran1);
-//            ui->stackedWidget->addWidget(frmPedidos1);
-//            ui->stackedWidget->addWidget(frmPresupcli);
-//            ui->stackedWidget->addWidget(frmCajaMinuta);
-//            ui->stackedWidget->addWidget(FrmPedidos_pro);
-//            ui->stackedWidget->addWidget(FrmAlbaran_pro);
-//            ui->stackedWidget->addWidget(frmFacturas_pro);
-//            ui->stackedWidget->addWidget(frmFactura_multiple);
-//            ui->stackedWidget->addWidget(frmOrden_Ped_pro);
-//            ui->stackedWidget->addWidget(reportWindow);
-//            ui->stackedWidget->addWidget(agendaForm);
-//            MayaForm = new init_form(this);
-//            ui->stackedWidget->addWidget(MayaForm);
-//            ui->stackedWidget->setCurrentWidget(MayaForm);
-
-//            QApplication::processEvents();
-//            this->setWindowState(Qt::WindowMaximized);
-//            this->move(0,0);
-//            this->show();
-//		}
-//		else
-//            QMessageBox::critical(this,"Error","Fallo la conexión al fichero Medico");
 }
 
 void MainWindow::block_main()
@@ -616,7 +418,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::showInfo()
 {
-    ui->lineEmpresaActiva->setText(empresa);
+    this->setWindowTitle("Maya"+tr("Software para los profesionales de la salud.            (Empresa activa:")+empresa+
+                         tr("  -  Ejercicio activo: ")+Configuracion_global->cEjercicio+")");
+  //  ui->lineEmpresaActiva->setText(empresa);
     ui->lineUsuarioActivo->setText(user);
     Configuracion_global->cUsuarioActivo = user;
 }

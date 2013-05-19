@@ -91,6 +91,7 @@ void Empresa::Recuperar(QString cSQL)
             this->puertoDB_contabilidad = registro.field("puertoDBConta").value().toString();
             this->RutaBD_Contabilidad_sqlite = registro.field("rutaBDConta").value().toString();
             this->DriverDB_contabilidad = registro.field("driverBDConta").value().toString();
+            this->ticket_factura = registro.field("ticket_factura").value().toBool();
 		} 
 		else 
 		{
@@ -167,6 +168,7 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->puertoDB_contabilidad = registro.field("puertoDBConta").value().toString();
             this->RutaBD_Contabilidad_sqlite = registro.field("rutaBDConta").value().toString();
             this->DriverDB_contabilidad = registro.field("driverBDConta").value().toString();
+            this->ticket_factura = registro.field("ticket_factura").value().toBool();
         } else {
             if (nProcede == 1)
                 QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Empresas"),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
@@ -229,13 +231,14 @@ void Empresa::Guardar()
                      "horario_primer_dia =:horario_primer_dia,"
                      "horario_dia_normal =:horario_dia_normal,"
                      "horario_ultimo_dia =:horario_ultimo_dia,"
-                     "hostBDConta =:hostDBConta,"
-                     "nombreBDConta =:nombreBDConta,"
-                     "userBDConta =:userBDConta,"
-                     "passwordBDConta =:passwordBDConta,"
+                     "hostDBConta =:hostDBConta,"
+                     "nombreDBConta =:nombreBDConta,"
+                     "userDBConta =:userBDConta,"
+                     "passwordDBConta =:passwordBDConta,"
                      "puertoDBConta = :puertoDBConta,"
-                     "rutaBDConta =:rutaBDConta,"
-                     "driverBDConta =:driverBDConta,"
+                     "rutaDBConta =:rutaBDConta,"
+                     "driverDBConta =:driverBDConta,"
+                     "ticket_factura =:ticket_factura,"
                      "cCuentaPagos =:cCuentaPagos"
                      " where id=:nID");
 
@@ -295,6 +298,7 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":puertoDBConta",this->puertoDB_contabilidad);
     qEmpresa.bindValue(":rutaBDConta",this->RutaBD_Contabilidad_sqlite);
     qEmpresa.bindValue(":driverBDConta",this->DriverDB_contabilidad);
+    qEmpresa.bindValue(":ticket_factura",this->ticket_factura);
     qEmpresa.bindValue(":nID",this->id);
 
 
@@ -362,6 +366,7 @@ void Empresa::Vaciar()
     this->puertoDB_contabilidad = "";
     this->RutaBD_Contabilidad_sqlite = "";
     this->DriverDB_contabilidad = "";
+    this->ticket_factura = false;
 
 }
 

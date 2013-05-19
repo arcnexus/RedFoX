@@ -65,6 +65,7 @@ public:
     QString passwordDB_Conta;
     QString portDB_Conta;
     bool contabilidad;
+    bool ticket_factura;
 
     bool EnlaceWeb;
     QString cPais;

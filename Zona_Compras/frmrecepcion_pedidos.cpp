@@ -43,6 +43,17 @@ void Frmrecepcion_pedidos::on_btnBuscar_clicked()
 
     modelPedidos->setQuery(consulta,QSqlDatabase::database("empresa"));
     ui->tablaPedidos->setModel(modelPedidos);
+    ui->tablaPedidos->setColumnHidden(0,true);
+    modelPedidos->setHeaderData(1,Qt::Horizontal,tr("Pedido"));
+    ui->tablaPedidos->setColumnWidth(1,60);
+    modelPedidos->setHeaderData(2,Qt::Horizontal,tr("Ejercicio"));
+    ui->tablaPedidos->setColumnWidth(2,60);
+    modelPedidos->setHeaderData(3,Qt::Horizontal,tr("Fecha"));
+    ui->tablaPedidos->setColumnWidth(3,60);
+    modelPedidos->setHeaderData(4,Qt::Horizontal,tr("Proveedor"));
+    ui->tablaPedidos->setColumnWidth(4,150);
+
+
 }
 
 
