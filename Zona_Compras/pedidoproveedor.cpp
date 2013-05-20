@@ -1,3 +1,4 @@
+
 #include "pedidoproveedor.h"
 
 PedidoProveedor::PedidoProveedor(QObject *parent) :
@@ -29,8 +30,8 @@ void PedidoProveedor::guardar()
     // Si se trata de un nuevo pedido se le asigna numero de pedido
     //-------------------------------------------------------------
     QString cSql;
+    int nPedido =0;
     QSqlQuery queryPedido(QSqlDatabase::database("empresa"));
-    cSql = "UPDATE ped_pro SET ";
 
     if(this->nPedido == 0)
     {
@@ -38,14 +39,15 @@ void PedidoProveedor::guardar()
         if(queryPedido.exec("select nPedido from ped_pro order by nPedido desc limit 0,1"))
         {
             queryPedido.next();
-            int nPedido = queryPedido.record().value("nPedido").toInt();
+            nPedido = queryPedido.record().value("nPedido").toInt();
             nPedido++;
-            cSql = cSql + "nPedido = "+QString::number(nPedido)+", ";
+            this->nPedido = nPedido;
         }
 
     }
 
-    cSql = cSql + " nEjercicio =:cSerie,"
+    queryPedido.prepare("UPDATE ped_pro SET nPedido =  :nPedido,"
+    "nEjercicio =:cSerie,"
     "dFecha =:dFecha,"
     "dRecepcion =:dRecepcion,"
     "Id_Proveedor =:Id_Proveedor,"
@@ -104,8 +106,8 @@ void PedidoProveedor::guardar()
      "rtotal2 =:rtotal2,"
      "rtotal3 =:rtotal3,"
      "rtotal4 =:rtotal4 "
-    " WHERE id = :id";
-    queryPedido.prepare(cSql);
+    " WHERE id = :id;");
+
     queryPedido.bindValue(":cSerie",this->nEjercicio);
     queryPedido.bindValue(":dFecha",this->dFecha);
     queryPedido.bindValue(":dRecepcion",this->dRecepcion);
@@ -172,84 +174,58 @@ void PedidoProveedor::guardar()
                              tr("Ha ocurrido un error al guardar el pedido: %1").arg(queryPedido.lastError().text()),
                              tr("Aceptar"));
 
+    qDebug() << queryPedido.lastQuery();
 
 }
 
 void PedidoProveedor::recuperar(int id)
 {
-    QSqlQuery queryPedido(QSqlDatabase::database("empresa"));
-    queryPedido.prepare("select * from ped_pro where id = :id");
-    queryPedido.bindValue(":id",id);
-    if(queryPedido.exec())
+    QSqlQuery *queryPedido = new QSqlQuery(QSqlDatabase::database("empresa"));
+    queryPedido->prepare("select * from ped_pro where id = :id");
+    queryPedido->bindValue(":id",id);
+    if(queryPedido->exec())
     {
-        this->id = queryPedido.record().value("id").toInt();
-        this->nPedido = queryPedido.record().value("nPedido").toInt();
-        this->nEjercicio = queryPedido.record().value("nEjercicio").toInt();
-        this->dFecha = queryPedido.record().value("dFecha").toDate();
-        this->dRecepcion = queryPedido.record().value("dRecepcion").toDate();
-        this->Id_Proveedor = queryPedido.record().value("Id_Proveedor").toInt();
-        this->cCodigoProveedor = queryPedido.record().value("cCodigoProveedor").toString();
-        this->cProveedor = queryPedido.record().value("cProveedor").toString();
-        this->cDireccion1 = queryPedido.record().value("cDireccion1").toString();
-        this->cDireccion2 = queryPedido.record().value("cDireccion2").toString();
-        this->cCP = queryPedido.record().value("cCP").toString();
-        this->cPoblacion = queryPedido.record().value("cPoblacion").toString();
-        this->cProvincia = queryPedido.record().value("cProvincia").toString();
-        this->idpais = queryPedido.record().value("idpais").toInt();
-        this->cCifNif = queryPedido.record().value("cCifNif").toString();
-        this->rBaseTotal = queryPedido.record().value("rBase").toDouble();
-        this->rSubotal = queryPedido.record().value("rSubtotal").toDouble();
-        this->rDto = queryPedido.record().value("rDto").toDouble();
-        this->nIVA = queryPedido.record().value("nIVA").toInt();
-        this->rRecTotal = queryPedido.record().value("rRecTotal").toDouble();
-        this->rTotal = queryPedido.record().value("rTotal").toDouble();
-        this->lEnviado = queryPedido.record().value("lEnviado").toBool();
-        this->lRecibido = queryPedido.record().value("lRecibido").toBool();
-        this->lRecibidoCompleto = queryPedido.record().value("lRecibidoCompleto").toBool();
-        this->lGeneroPendiente = queryPedido.record().value("lGeneroPendiente").toBool();
-        this->lTraspasado = queryPedido.record().value("lTraspasado").toBool();
-        this->nPedidoCliente = queryPedido.record().value("nPedidoCliente").toInt();
-        this->Id_FormaPago = queryPedido.record().value("Id_FormaPago").toInt();
-        this->tComentario = queryPedido.record().value("tComentario").toString();
-        this->dFechaEntrega = queryPedido.record().value("dFechaEntrega").toDate();
-        this->cDireccion1Entrega = queryPedido.record().value("cDireccion1Entrega").toString();
-        this->cDireccion2Entrega = queryPedido.record().value("cDireccion2Entrega").toString();
-        this->cCPEntrega = queryPedido.record().value("cCPEntrega").toString();
-        this->cPoblacionEntrega = queryPedido.record().value("cPoblacionEntrega").toString();
-        this->cProvinciaEntrega = queryPedido.record().value("cProvinciaEntrega").toString();
-        this->id_paisEntrega = queryPedido.record().value("id_paisEntrega").toInt();
-        this->cNombreCliente = queryPedido.record().value("cNombreCliente").toString();
-        this->cHorarioActivo = queryPedido.record().value("cHorarioActivo").toString();
-        this->rBase1 = queryPedido.record().value("rBase1").toDouble();
-        this->rBase2 = queryPedido.record().value("rBase2").toDouble();
-        this->rBase3 = queryPedido.record().value("rBase3").toDouble();
-        this->rBase4 = queryPedido.record().value("rBase4").toDouble();
-        this->niva1 = queryPedido.record().value("niva1").toInt();
-        this->niva2 = queryPedido.record().value("niva2").toInt();
-        this->niva3 = queryPedido.record().value("niva3").toInt();
-        this->niva4 = queryPedido.record().value("niva4").toInt();
-        this->riva1 = queryPedido.record().value("riva1").toDouble();
-        this->riva2 = queryPedido.record().value("riva2").toDouble();
-        this->riva3 = queryPedido.record().value("riva3").toDouble();
-        this->riva4 = queryPedido.record().value("riva4").toDouble();
-        this->rdto1 = queryPedido.record().value("rdto1").toDouble();
-        this->rdto2 = queryPedido.record().value("rdto2").toDouble();
-        this->rdto3 = queryPedido.record().value("rdto3").toDouble();
-        this->rdto4 = queryPedido.record().value("rdto4").toDouble();
-        this->nrec1 = queryPedido.record().value("nrec1").toInt();
-        this->nrec2 = queryPedido.record().value("nrec2").toInt();
-        this->nrec3 = queryPedido.record().value("nrec3").toInt();
-        this->nrec4 = queryPedido.record().value("nrec4").toInt();
-        this->rrec1 = queryPedido.record().value("rrec1").toDouble();
-        this->rrec2 = queryPedido.record().value("rrec2").toDouble();
-        this->rrec3 = queryPedido.record().value("rrec3").toDouble();
-        this->rrec4 = queryPedido.record().value("rrec4").toDouble();
-        this->rtotal1 = queryPedido.record().value("rtotal1").toDouble();
-        this->rtotal2 = queryPedido.record().value("rtotal2").toDouble();
-        this->rtotal3 = queryPedido.record().value("rtotal3").toDouble();
-        this->rtotal4 = queryPedido.record().value("rtotal4").toDouble();
+        cargar(queryPedido,0);
+  }else
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Atención"),
+                             tr("Se produjo un error al recuperar los datos: %1").arg(queryPedido->lastError().text()),
+                             tr("Aceptar"));
     }
+    delete queryPedido;
 
+}
+
+void PedidoProveedor::recuperar(QString cadenaSQL)
+{
+    QSqlQuery *queryPedido = new QSqlQuery(QSqlDatabase::database("empresa"));
+
+    if(queryPedido->exec(cadenaSQL))
+    {
+        cargar(queryPedido,0);
+    }else
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Atención"),
+                             tr("Se produjo un error al recuperar los datos: %1").arg(queryPedido->lastError().text()),
+                             tr("Aceptar"));
+    }
+    delete queryPedido;
+}
+
+void PedidoProveedor::recuperar(QString cadenaSQL, int accion)
+{
+    QSqlQuery *queryPedido = new QSqlQuery(QSqlDatabase::database("empresa"));
+
+    if(queryPedido->exec(cadenaSQL))
+    {
+        cargar(queryPedido,accion);
+    } else
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Atención"),
+                             tr("Se produjo un error al recuperar los datos: %1").arg(queryPedido->lastError().text()),
+                             tr("Aceptar"));
+    }
+    delete queryPedido;
 }
 
 void PedidoProveedor::clear()
@@ -322,3 +298,91 @@ void PedidoProveedor::clear()
     this->rtotal3 = 0;
     this->rtotal4 = 0;
 }
+
+void PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
+{
+    if(queryPedido->next()){
+        this->id = queryPedido->record().value("id").toInt();
+        this->nPedido = queryPedido->record().value("nPedido").toInt();
+        this->nEjercicio = queryPedido->record().value("nEjercicio").toInt();
+        this->dFecha = queryPedido->record().value("dFecha").toDate();
+        this->dRecepcion = queryPedido->record().value("dRecepcion").toDate();
+        this->Id_Proveedor = queryPedido->record().value("Id_Proveedor").toInt();
+        this->cCodigoProveedor = queryPedido->record().value("cCodigoProveedor").toString();
+        this->cProveedor = queryPedido->record().value("cProveedor").toString();
+        this->cDireccion1 = queryPedido->record().value("cDireccion1").toString();
+        this->cDireccion2 = queryPedido->record().value("cDireccion2").toString();
+        this->cCP = queryPedido->record().value("cCP").toString();
+        this->cPoblacion = queryPedido->record().value("cPoblacion").toString();
+        this->cProvincia = queryPedido->record().value("cProvincia").toString();
+        this->idpais = queryPedido->record().value("idpais").toInt();
+        this->cCifNif = queryPedido->record().value("cCifNif").toString();
+        this->rBaseTotal = queryPedido->record().value("rBase").toDouble();
+        this->rSubotal = queryPedido->record().value("rSubtotal").toDouble();
+        this->rDto = queryPedido->record().value("rDto").toDouble();
+        this->nIVA = queryPedido->record().value("nIVA").toInt();
+        this->rRecTotal = queryPedido->record().value("rRecTotal").toDouble();
+        this->rTotal = queryPedido->record().value("rTotal").toDouble();
+        this->lEnviado = queryPedido->record().value("lEnviado").toBool();
+        this->lRecibido = queryPedido->record().value("lRecibido").toBool();
+        this->lRecibidoCompleto = queryPedido->record().value("lRecibidoCompleto").toBool();
+        this->lGeneroPendiente = queryPedido->record().value("lGeneroPendiente").toBool();
+        this->lTraspasado = queryPedido->record().value("lTraspasado").toBool();
+        this->nPedidoCliente = queryPedido->record().value("nPedidoCliente").toInt();
+        this->Id_FormaPago = queryPedido->record().value("Id_FormaPago").toInt();
+        this->tComentario = queryPedido->record().value("tComentario").toString();
+        this->dFechaEntrega = queryPedido->record().value("dFechaEntrega").toDate();
+        this->cDireccion1Entrega = queryPedido->record().value("cDireccion1Entrega").toString();
+        this->cDireccion2Entrega = queryPedido->record().value("cDireccion2Entrega").toString();
+        this->cCPEntrega = queryPedido->record().value("cCPEntrega").toString();
+        this->cPoblacionEntrega = queryPedido->record().value("cPoblacionEntrega").toString();
+        this->cProvinciaEntrega = queryPedido->record().value("cProvinciaEntrega").toString();
+        this->id_paisEntrega = queryPedido->record().value("id_paisEntrega").toInt();
+        this->cNombreCliente = queryPedido->record().value("cNombreCliente").toString();
+        this->cHorarioActivo = queryPedido->record().value("cHorarioActivo").toString();
+        this->rBase1 = queryPedido->record().value("rBase1").toDouble();
+        this->rBase2 = queryPedido->record().value("rBase2").toDouble();
+        this->rBase3 = queryPedido->record().value("rBase3").toDouble();
+        this->rBase4 = queryPedido->record().value("rBase4").toDouble();
+        this->niva1 = queryPedido->record().value("niva1").toInt();
+        this->niva2 = queryPedido->record().value("niva2").toInt();
+        this->niva3 = queryPedido->record().value("niva3").toInt();
+        this->niva4 = queryPedido->record().value("niva4").toInt();
+        this->riva1 = queryPedido->record().value("riva1").toDouble();
+        this->riva2 = queryPedido->record().value("riva2").toDouble();
+        this->riva3 = queryPedido->record().value("riva3").toDouble();
+        this->riva4 = queryPedido->record().value("riva4").toDouble();
+        this->rdto1 = queryPedido->record().value("rdto1").toDouble();
+        this->rdto2 = queryPedido->record().value("rdto2").toDouble();
+        this->rdto3 = queryPedido->record().value("rdto3").toDouble();
+        this->rdto4 = queryPedido->record().value("rdto4").toDouble();
+        this->nrec1 = queryPedido->record().value("nrec1").toInt();
+        this->nrec2 = queryPedido->record().value("nrec2").toInt();
+        this->nrec3 = queryPedido->record().value("nrec3").toInt();
+        this->nrec4 = queryPedido->record().value("nrec4").toInt();
+        this->rrec1 = queryPedido->record().value("rrec1").toDouble();
+        this->rrec2 = queryPedido->record().value("rrec2").toDouble();
+        this->rrec3 = queryPedido->record().value("rrec3").toDouble();
+        this->rrec4 = queryPedido->record().value("rrec4").toDouble();
+        this->rtotal1 = queryPedido->record().value("rtotal1").toDouble();
+        this->rtotal2 = queryPedido->record().value("rtotal2").toDouble();
+        this->rtotal3 = queryPedido->record().value("rtotal3").toDouble();
+        this->rtotal4 = queryPedido->record().value("rtotal4").toDouble();
+    } else
+    {
+        switch (accion) {
+        case 0:
+            QMessageBox::warning(qApp->activeWindow(),tr("Atención"),tr("No se ha encontrado el pedido."),tr("Aceptar"));
+            break;
+        case 1:
+            QMessageBox::warning(qApp->activeWindow(),tr("Atención"),tr("Se ha llegado al final del fichero."),tr("Aceptar"));
+            break;
+        case 2:
+            QMessageBox::warning(qApp->activeWindow(),tr("Atención"),tr("Se ha llegado al inicio del fichero."),tr("Aceptar"));
+            break;
+
+        }
+
+    }
+}
+

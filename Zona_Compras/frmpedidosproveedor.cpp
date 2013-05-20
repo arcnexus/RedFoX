@@ -26,6 +26,8 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
     connect(ui->btnAnadir,SIGNAL(clicked()),this,SLOT(anadir_pedido()));
     connect(ui->btnGuardar,SIGNAL(clicked()),this,SLOT(guardar_pedido()));
+    connect(ui->btnSiguiente,SIGNAL(clicked()),this,SLOT(siguiente()));
+    connect(ui->btnAnterior,SIGNAL(clicked()),this,SLOT(anterior()));
 
     connect(&helper,SIGNAL(totalChanged(double,double,double,double,double,double,QString)),
             this,SLOT(totalChanged(double,double,double,double,double,double,QString)));
@@ -243,6 +245,7 @@ void FrmPedidosProveedor::buscar_proveeedor()
         ui->txtcCp->setText(oProveedor->cCP);
         ui->txtcPoblacion->setText(oProveedor->cPoblacion);
         ui->txtcProvincia->setText(oProveedor->cProvincia);
+
     }
 }
 
@@ -252,6 +255,7 @@ void FrmPedidosProveedor::anadir_pedido()
     clear();
     oPedido_proveedor->recuperar(id);
     this->id = id;
+
     llenar_campos();
     estadoedicion();
 }
@@ -260,12 +264,28 @@ void FrmPedidosProveedor::guardar_pedido()
 {
     estadolectura();
     guardar_campos_en_objeto();
+    oPedido_proveedor->id =this->id;
     oPedido_proveedor->guardar();
+    oPedido_proveedor->recuperar(oPedido_proveedor->id);
+    llenar_campos();
+
+}
+
+void FrmPedidosProveedor::siguiente()
+{
+    oPedido_proveedor->recuperar("select * from ped_pro where nPedido > "+QString::number(oPedido_proveedor->nPedido)+ " order by nPedido limit 0,1",1);
+    llenar_campos();
+}
+
+void FrmPedidosProveedor::anterior()
+{
+    oPedido_proveedor->recuperar("select * from ped_pro where nPedido < "+QString::number(oPedido_proveedor->nPedido)+ " order by nPedido desc  limit 0,1 ",2);
+    llenar_campos();
 }
 
 void FrmPedidosProveedor::llenar_campos()
 {
-
+    this->id =oPedido_proveedor->id;
     ui->txtnPedido->setText(QString::number(oPedido_proveedor->nPedido));
     ui->lblSerie->setText(QString::number(oPedido_proveedor->nEjercicio));
     ui->lblnumero_pedido->setText(QString::number(oPedido_proveedor->nPedido));

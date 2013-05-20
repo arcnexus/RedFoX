@@ -80,22 +80,15 @@ public:
     double rtotal4;
 
 
-
-
-
-
-
-
-
-
-
-
 signals:
     
 public slots:
     int nuevo_pedido_proveedor();
     void guardar();
     void recuperar(int id);
+    void recuperar(QString cadenaSQL);
+    void recuperar(QString cadenaSQL,int accion);
+    void cargar(QSqlQuery *queryPedido, int accion);
     void clear();
 
     
