@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
+    <width>717</width>
     <height>498</height>
    </rect>
   </property>
@@ -20,7 +20,8 @@
    <item row="2" column="0" colspan="5">
     <widget class="QTableView" name="resultado_list">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);</string>
+      <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 196);</string>
      </property>
      <property name="verticalScrollBarPolicy">
       <enum>Qt::ScrollBarAsNeeded</enum>
@@ -28,11 +29,14 @@
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAsNeeded</enum>
      </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>
      </property>
      <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectItems</enum>
+      <enum>QAbstractItemView::SelectRows</enum>
      </property>
      <property name="sortingEnabled">
       <bool>true</bool>
@@ -46,6 +50,12 @@
     <widget class="QPushButton" name="btn_print">
      <property name="enabled">
       <bool>false</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>94</width>
+       <height>0</height>
+      </size>
      </property>
      <property name="text">
       <string>Imprimir</string>
@@ -66,7 +76,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="txtBuscar">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer_2">
@@ -75,7 +89,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>505</width>
+         <width>37</width>
          <height>21</height>
         </size>
        </property>
@@ -131,8 +145,14 @@
    </item>
    <item row="3" column="2">
     <widget class="QPushButton" name="btn_save">
+     <property name="minimumSize">
+      <size>
+       <width>94</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="text">
-      <string/>
+      <string>Guardar</string>
      </property>
      <property name="icon">
       <iconset resource="maya.qrc">
@@ -163,12 +183,16 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>70</width>
+       <width>94</width>
        <height>0</height>
       </size>
      </property>
      <property name="text">
       <string>Aceptar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="maya.qrc">
+       <normaloff>:/Icons/PNG/OK.png</normaloff>:/Icons/PNG/OK.png</iconset>
      </property>
     </widget>
    </item>
@@ -182,12 +206,16 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>70</width>
+       <width>94</width>
        <height>0</height>
       </size>
      </property>
      <property name="text">
       <string>Cancelar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="maya.qrc">
+       <normaloff>:/Icons/PNG/Cancel.png</normaloff>:/Icons/PNG/Cancel.png</iconset>
      </property>
     </widget>
    </item>

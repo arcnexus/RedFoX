@@ -23,6 +23,7 @@ public:
     void set_columnHide(int column);
     void set_noInsertDeleteRows();
     void set_printFile(QString file);
+    void set_tarifa(int tarifa);
     QString selected_value;
 private slots:
     void on_btn_add_clicked();
@@ -38,6 +39,10 @@ private slots:
     void on_btn_cancel_clicked();
 
     void print_clicked();
+    void on_txtBuscar_textChanged(const QString &arg1);
+
+    void on_txtBuscar_editingFinished();
+
 protected:
     void resizeEvent(QResizeEvent *);
 private:
@@ -46,6 +51,8 @@ private:
     QSqlRelationalTableModel* model;
     QString selection_column;
     QString file;
+    QString tabla;
+    int tarifa;
 
     QMenu * print_menu;
     QAction* toPaper;

@@ -245,6 +245,7 @@ void Table_Helper::handle_cellChanged(int row, int column)
 
 void Table_Helper::calcularTotal()
 {
+    blockSignals(true);
     double base = 0;
     double dto = 0;
     double total = 0;
@@ -259,14 +260,15 @@ void Table_Helper::calcularTotal()
         total += calcularTotalLinea(i);
     }
     double subtotal = base - dto;
+    blockSignals(false);
     emit totalChanged( base , dto , subtotal ,  iva,  re,  total,  moneda);
 }
 
 double Table_Helper::calcularDtoLinea(int row)
 {
-    double base = helped_table->item(row,4)->text().toDouble();
-    double dtoNeto = helped_table->item(row,5)->text().toDouble();
-    double descPerc = helped_table->item(row,6)->text().toDouble();
+    double base = helped_table->item(row,4)->text().replace(",",".").toDouble();
+    double dtoNeto = helped_table->item(row,5)->text().replace(",",".").toDouble();
+    double descPerc = helped_table->item(row,6)->text().replace(",",".").toDouble();
 
     double total_descPerc = (base * descPerc) / 100;
 
@@ -275,14 +277,14 @@ double Table_Helper::calcularDtoLinea(int row)
 
 double Table_Helper::calcularBaseLinea(int row)
 {
-    return helped_table->item(row,4)->text().toDouble();
+    return helped_table->item(row,4)->text().replace(",",".").toDouble();
 }
 
 double Table_Helper::calcularIVALinea(int row)
 {
-    double base = helped_table->item(row,4)->text().toDouble();
-    double dtoNeto = helped_table->item(row,5)->text().toDouble();
-    double descPerc = helped_table->item(row,6)->text().toDouble();
+    double base = helped_table->item(row,4)->text().replace(",",".").toDouble();
+    double dtoNeto = helped_table->item(row,5)->text().replace(",",".").toDouble();
+    double descPerc = helped_table->item(row,6)->text().replace(",",".").toDouble();
 
     double total_descPerc = (base * descPerc) / 100;
 
@@ -300,9 +302,9 @@ double Table_Helper::calcularRELinea(int row)
 {
     if(use_re)
     {
-        double base = helped_table->item(row,4)->text().toDouble();
-        double dtoNeto = helped_table->item(row,5)->text().toDouble();
-        double descPerc = helped_table->item(row,6)->text().toDouble();
+        double base = helped_table->item(row,4)->text().replace(",",".").toDouble();
+        double dtoNeto = helped_table->item(row,5)->text().replace(",",".").toDouble();
+        double descPerc = helped_table->item(row,6)->text().replace(",",".").toDouble();
 
         double total_descPerc = (base * descPerc) / 100;
 
@@ -506,8 +508,6 @@ void Table_Helper::rellenar_con_Articulo(int row)
                  helped_table->item(row,3)->setText(r.value("rCoste").toString());
             else
                 helped_table->item(row,3)->setText(r.value("pvp").toString());
-            //TODO recopilar otros datos del articulo
-            //NOTE yo lo haría sobre la clase articulo así nos serviría en líneas de detalle y fuera de ellas. Cargaría en las líneas el valor de las propiedades del objeto en lugar de leer aquí la BD.
 
         }
         else if(helped_table->item(row,0)->text() !="")
@@ -554,8 +554,8 @@ bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_tab
         values << helped_table->item(row,8)->text().toDouble();
 
         //cantidad = cantidadaservir por defecto
-        if(helped_table->columnCount()== 10)
-            values << helped_table->item(row,9)->text().toInt();
+//        if(helped_table->columnCount()== 10)
+//            values << helped_table->item(row,9)->text().toInt();
 
         QString sql = "INSERT INTO ";
         sql.append(db_table);
@@ -657,6 +657,7 @@ void Table_Helper::searchArticulo()
     QStringList headers;
     headers << tr("Codigo")<< tr("Cod.Barras") << tr("Cod.Fabricante") << tr("Descripción");
     searcher.set_table_headers(headers);
+    searcher.set_tarifa(this->tarifa);
 
     //if(helped_table->currentColumn()==0)
         searcher.set_selection("cCodigo");

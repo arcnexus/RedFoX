@@ -1,5 +1,6 @@
 #include "db_table_view.h"
 #include "ui_db_table_view.h"
+#include "Auxiliares/monetarydelegate.h"
 
 
 
@@ -13,6 +14,8 @@ Db_table_View::Db_table_View(QWidget *parent) :
     print_menu = new QMenu(this);
     toPaper = new QAction(tr("Imprimir"),this);
     toPDF =new QAction(tr("Exportar a PDF"),this);
+    tarifa = 1;
+
 
     connect(toPaper,SIGNAL(triggered()),this,SLOT(print_clicked()));
     connect(toPDF,SIGNAL(triggered()),this,SLOT(print_clicked()));
@@ -21,6 +24,7 @@ Db_table_View::Db_table_View(QWidget *parent) :
     print_menu->addAction(toPDF);
 
     ui->btn_print->setMenu(print_menu);
+    ui->txtBuscar->setFocus();
 }
 
 Db_table_View::~Db_table_View()
@@ -35,7 +39,7 @@ void Db_table_View::set_db(QString db)
     model->setEditStrategy(QSqlRelationalTableModel::OnManualSubmit);
     ui->resultado_list->setItemDelegate(new QSqlRelationalDelegate(ui->resultado_list));
     ui->resultado_list->setModel(model);
-    ui->resultado_list->hideColumn(0);
+//    ui->resultado_list->hideColumn(0);
 }
 
 void Db_table_View::set_table(QString tabla)
@@ -43,25 +47,61 @@ void Db_table_View::set_table(QString tabla)
     model->setTable(tabla);
     if(!model->select())
         qDebug () << model->lastError();
-    ui->resultado_list->hideColumn(0);
+ //   ui->resultado_list->hideColumn(0);
 
     colums = model->columnCount();
+    //-----------------------
+    // Formateo forzado
+    //-----------------------
+    if (tabla =="vistaArt_tarifa"){
+        QString filtro ="tarifa=";
+        filtro.append(QString::number(tarifa));
+        set_filter(filtro);
+        ui->resultado_list->setColumnWidth(0,100);
+        ui->resultado_list->setColumnWidth(1,100);
+        ui->resultado_list->setColumnWidth(2,100);
+        ui->resultado_list->setColumnWidth(3,300);
+        ui->resultado_list->setColumnWidth(4,180);
+        ui->resultado_list->setColumnWidth(5,50);
+        ui->resultado_list->setColumnWidth(6,90);
+        ui->resultado_list->setColumnWidth(7,90);
+        ui->resultado_list->setColumnHidden(8,true);
+        ui->resultado_list->setColumnHidden(9,true);
+        ui->resultado_list->setColumnHidden(11,true);
+        ui->resultado_list->setColumnWidth(10,50);
+        ui->resultado_list->setColumnWidth(12,50);
+        ui->resultado_list->setColumnHidden(13,true);
+
+        model->setHeaderData(0,Qt::Horizontal,tr("Código"));
+        model->setHeaderData(1,Qt::Horizontal,tr("C.Barras"));
+        model->setHeaderData(2,Qt::Horizontal,tr("C.Proveedor"));
+        model->setHeaderData(3,Qt::Horizontal,tr("Descripción"));
+        model->setHeaderData(4,Qt::Horizontal,tr("Desc. Resumida"));
+        model->setHeaderData(5,Qt::Horizontal,tr("IVA"));
+        model->setHeaderData(6,Qt::Horizontal,tr("Coste"));
+        model->setHeaderData(7,Qt::Horizontal,tr("PVP"));
+        model->setHeaderData(10,Qt::Horizontal,tr("St.R"));
+        model->setHeaderData(12,Qt::Horizontal,tr("St.F"));
+        ui->resultado_list->setItemDelegateForColumn(6,new MonetaryDelegate);
+        ui->resultado_list->setItemDelegateForColumn(7, new MonetaryDelegate);
+
+    }
 }
 
 void Db_table_View::set_table_headers(QStringList headers)
 {
-    for (int i = 0; i< headers.size();i++)
-        model->setHeaderData(i+1, Qt::Horizontal, headers.at(i));
-    ui->resultado_list->resizeColumnsToContents();
+//    for (int i = 0; i< headers.size();i++)
+//        model->setHeaderData(i+1, Qt::Horizontal, headers.at(i));
+//    ui->resultado_list->resizeColumnsToContents();
 
-    this->headers = headers;
+//    this->headers = headers;
 }
 
 void Db_table_View::set_relation(int colum, QSqlRelation relation)
 {
     model->setRelation(colum,relation);
     model->select();
-    ui->resultado_list->hideColumn(0);
+ //   ui->resultado_list->hideColumn(0);
 }
 
 void Db_table_View::set_filter(QString filter)
@@ -104,6 +144,11 @@ void Db_table_View::set_printFile(QString file)
 {
     ui->btn_print->setEnabled(true);
     this->file = file;
+}
+
+void Db_table_View::set_tarifa(int tarifa)
+{
+    this->tarifa = tarifa;
 }
 
 void Db_table_View::on_btn_add_clicked()
@@ -149,13 +194,30 @@ void Db_table_View::print_clicked()
 
 void Db_table_View::resizeEvent(QResizeEvent *)
 {
-    int w = ui->resultado_list->width();
-    int _w = w/colums;
+//    int w = ui->resultado_list->width();
+//    int _w = w/colums;
 
-    ui->resultado_list->horizontalHeader()->setUpdatesEnabled(false);
+//    ui->resultado_list->horizontalHeader()->setUpdatesEnabled(false);
 
-    for (int i = 0; i < ui->resultado_list->model()->columnCount(); i++)
-        ui->resultado_list->horizontalHeader()->resizeSection(i, _w);
+//    for (int i = 0; i < ui->resultado_list->model()->columnCount(); i++)
+//        ui->resultado_list->horizontalHeader()->resizeSection(i, _w);
 
-    ui->resultado_list->horizontalHeader()->setUpdatesEnabled(true);
+//    ui->resultado_list->horizontalHeader()->setUpdatesEnabled(true);
+}
+
+void Db_table_View::on_txtBuscar_textChanged(const QString &arg1)
+{
+    if (this->tabla =="vistaArt_tarifa" )
+    {
+        QString filtro = "cDescripcion like '";
+        filtro.append(arg1);
+        filtro.append("%' and tarifa =");
+        filtro.append(QString::number(tarifa));
+        Db_table_View::set_filter(filtro);
+    }
+}
+
+void Db_table_View::on_txtBuscar_editingFinished()
+{
+    ui->resultado_list->setFocus();
 }
