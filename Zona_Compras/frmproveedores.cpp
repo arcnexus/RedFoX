@@ -55,6 +55,7 @@ frmProveedores::frmProveedores(QWidget *parent) :
     ui->txtcPaisAlmacen->setModel(modelPaisAlmacen);
     oProveedor->idPaisAlmacen = Configuracion_global->Devolver_id_pais(ui->txtcPaisAlmacen->currentText());
 
+
     // -----------------------
     // CONTROLES
     // -----------------------

@@ -1,4 +1,5 @@
 #include "table_helper.h"
+#include "monetarydelegate.h"
 
 Table_Helper::Table_Helper(QObject *parent) :
     QObject(parent)
@@ -17,28 +18,37 @@ Table_Helper::~Table_Helper()
 void Table_Helper::help_table(QTableWidget *table)
 {
     this->helped_table = table;    
-    helped_table->setItemDelegateForColumn(0,new SearchDelegate(helped_table));
+   /// helped_table->setItemDelegateForColumn(0,new SearchDelegate(helped_table));
     helped_table->setItemDelegateForColumn(1,new SpinBoxDelegate(helped_table));
-    helped_table->setItemDelegateForColumn(3,new SpinBoxDelegate(helped_table,true,0));
-    helped_table->setItemDelegateForColumn(4,new ReadOnlyDelegate(helped_table));
-    helped_table->setItemDelegateForColumn(5,new SpinBoxDelegate(helped_table,true,0));
+    helped_table->setItemDelegateForColumn(3,new MonetaryDelegate(helped_table,true));
+    helped_table->setItemDelegateForColumn(4,new MonetaryDelegate(helped_table,false));
+    helped_table->setItemDelegateForColumn(5,new MonetaryDelegate(helped_table,false));
     helped_table->setItemDelegateForColumn(6,new SpinBoxDelegate(helped_table,true,0,100));
+    helped_table->setItemDelegateForColumn(7,new ReadOnlyDelegate(helped_table)); // el tipo de iva pertenece al artículo y solo se puede modificar en a ficha del artículo.
+    helped_table->setItemDelegateForColumn(8,new MonetaryDelegate(helped_table,false));
+    helped_table->setColumnWidth(2,240);
+//    comboboxDelegate* comboModel = new comboboxDelegate(helped_table);
+//    comboModel->setUpModel("Maya","tiposiva","cTipo");
+//    helped_table->setItemDelegateForColumn(7,comboModel);
 
-    comboboxDelegate* comboModel = new comboboxDelegate(helped_table);
-    comboModel->setUpModel("Maya","tiposiva","cTipo");
-    helped_table->setItemDelegateForColumn(7,comboModel);
-
-    helped_table->setItemDelegateForColumn(8,new ReadOnlyDelegate(helped_table));
+//   helped_table->setItemDelegateForColumn(8,new ReadOnlyDelegate(helped_table));
 
     QStringList headers;
-    headers << "Codigo" << "Cantidad" << "Descripcion" << "P.V.P" << "SubTotal";
-    headers << "DTO" << "DTO%" << "% I.V.A." << "Total";
-
-    if(helped_table->columnCount() == 10)
+    if (!this->comprando) {
+        headers << "Codigo" << "Cantidad" << "Descripcion" << "P.V.P" << "SubTotal";
+        headers << "DTO" << "DTO%" << "% I.V.A." << "Total";
+    } else
     {
-        headers << "A servir";
-        helped_table->setItemDelegateForColumn(9,new SpinBoxDelegate(helped_table,true,0));
+        headers << "Codigo" << "Cantidad" << "Descripcion" << "COSTE" << "SubTotal";
+        headers << "DTO" << "DTO%" << "% I.V.A." << "Total";
     }
+
+
+//    if(helped_table->columnCount() == 10)
+//    {
+//        headers << "A servir";
+//        helped_table->setItemDelegateForColumn(9,new SpinBoxDelegate(helped_table,true,0));
+//    }
     helped_table->setHorizontalHeaderLabels(headers);
     resizeTable();
 
@@ -50,6 +60,11 @@ void Table_Helper::help_table(QTableWidget *table)
 void Table_Helper::set_moneda(QString moneda)
 {
     this->moneda = moneda;
+}
+
+void Table_Helper::set_tarifa(int tarifa)
+{
+    this->tarifa = tarifa;
 }
 
 void Table_Helper::set_Tipo(bool is_compra)
@@ -187,7 +202,9 @@ void Table_Helper::addRow()
         for (int i=0;i<keys.size();i++)
             if(Configuracion_global->ivas[keys.at(i)].value("nombre_interno") == "base1")
                 helped_table->item(row,7)->setText(keys.at(i));
-        helped_table->blockSignals(false);              
+        helped_table->blockSignals(false);
+        helped_table->setCurrentCell(helped_table->rowCount()-1,0);
+        helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
     }
 }
 
@@ -472,8 +489,12 @@ void Table_Helper::calcular_por_Base(QString sbase)
 void Table_Helper::rellenar_con_Articulo(int row)
 {
     QString codigo = helped_table->item(row,0)->text();
-    QSqlQuery query(QSqlDatabase::database("empresa"));
-    QString sql = QString("SELECT * FROM articulos WHERE cCodigo = '%1'").arg(codigo);
+    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QString sql;
+    if (this->comprando)
+        sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1'").arg(codigo);
+    else
+        sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1' and tarifa = %2").arg(codigo,tarifa);
     query.prepare(sql);
     if(query.exec())
     {
@@ -481,10 +502,20 @@ void Table_Helper::rellenar_con_Articulo(int row)
         {
             QSqlRecord r = query.record();
             helped_table->item(row,2)->setText(r.value("cDescripcionReducida").toString());
+            if (this->comprando)
+                 helped_table->item(row,3)->setText(r.value("rCoste").toString());
+            else
+                helped_table->item(row,3)->setText(r.value("pvp").toString());
             //TODO recopilar otros datos del articulo
             //NOTE yo lo haría sobre la clase articulo así nos serviría en líneas de detalle y fuera de ellas. Cargaría en las líneas el valor de las propiedades del objeto en lugar de leer aquí la BD.
 
         }
+        else if(helped_table->item(row,0)->text() !="")
+            QMessageBox::warning(helped_table,
+                                 tr("Codigo desconocido"),
+                                 tr("Codigo de articulo desconocido "
+                                    "Si lo desea puede introducir un artículo directamente que no esté en la Base de datos, "
+                                    "pero no registrará acumulados"),tr("Aceptar"));
     }
 }
 
@@ -580,7 +611,7 @@ void Table_Helper::addRow(QSqlRecord r)
 
 bool Table_Helper::eventFilter(QObject *target, QEvent *event)
 {
-    Q_UNUSED(target);
+    Q_UNUSED(target)
     if (event->type() == QEvent::KeyPress)
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
@@ -589,8 +620,62 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
             if(helped_table->currentRow() == (helped_table->rowCount()-1))
                 addRow();
         }
+        if (keyEvent->key() == Qt::Key_Return)
+        {
+            if(helped_table->currentColumn() != helped_table->columnCount()-1)
+            {
+                if(helped_table->currentColumn()== 3 )
+                    helped_table->setCurrentCell(helped_table->currentRow(),helped_table->currentColumn()+2);
+                else if(helped_table->currentColumn()== 6 )
+                {
+                    addRow();
+                    return false;
+                }
+                else
+                    helped_table->setCurrentCell(helped_table->currentRow(),helped_table->currentColumn()+1);
+                helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
+            }
+            else
+                addRow();
+        }
+        if(keyEvent->key() == Qt::Key_F1)
+        {
+            searchArticulo();
+        }
     }
     return false;
+}
+
+void Table_Helper::searchArticulo()
+{
+    Db_table_View searcher(qApp->activeWindow());
+    searcher.set_db("Maya");
+    searcher.set_table("vistaArt_tarifa");
+
+    searcher.setWindowTitle(tr("Articulos"));
+
+    QStringList headers;
+    headers << tr("Codigo")<< tr("Cod.Barras") << tr("Cod.Fabricante") << tr("Descripción");
+    searcher.set_table_headers(headers);
+
+    //if(helped_table->currentColumn()==0)
+        searcher.set_selection("cCodigo");
+    //else if(helped_table->currentColumn()==1)
+      //  searcher.set_selection("cDescripcion");
+
+    if(searcher.exec() == QDialog::Accepted)
+    {
+        helped_table->item(helped_table->currentRow(),0)->setText(searcher.selected_value);
+        helped_table->setCurrentCell(helped_table->currentRow(),1);
+        helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
+    }
+    /*
+    if(table_view)
+        table_view->setModal(true);
+        if(table_view->exec() == QDialog::Accepted)
+            if (ui)
+                if(ui->lineEdit)
+                    ui->lineEdit->setText(table_view->selected_value);*/
 }
 
 

@@ -2069,6 +2069,37 @@ color: rgb(0, 64, 64);</string>
          </property>
         </spacer>
        </item>
+       <item row="2" column="0" colspan="4">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_17">
+           <property name="text">
+            <string>Total:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbl_total">
+           <property name="text">
+            <string>0€</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
        <item row="1" column="0" colspan="4">
         <widget class="QTableWidget" name="Lineas">
          <property name="horizontalScrollBarPolicy">
@@ -2078,7 +2109,7 @@ color: rgb(0, 64, 64);</string>
           <bool>true</bool>
          </property>
          <property name="selectionMode">
-          <enum>QAbstractItemView::MultiSelection</enum>
+          <enum>QAbstractItemView::SingleSelection</enum>
          </property>
          <property name="selectionBehavior">
           <enum>QAbstractItemView::SelectRows</enum>
@@ -2127,7 +2158,7 @@ color: rgb(0, 64, 64);</string>
          </column>
          <column>
           <property name="text">
-           <string>P.V.P</string>
+           <string>COSTE</string>
           </property>
          </column>
          <column>
@@ -2155,43 +2186,7 @@ color: rgb(0, 64, 64);</string>
            <string>Total</string>
           </property>
          </column>
-         <column>
-          <property name="text">
-           <string>A servir</string>
-          </property>
-         </column>
         </widget>
-       </item>
-       <item row="2" column="0" colspan="4">
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_17">
-           <property name="text">
-            <string>Total:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lbl_total">
-           <property name="text">
-            <string>0€</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </item>
       </layout>
      </widget>

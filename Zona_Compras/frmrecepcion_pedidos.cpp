@@ -89,6 +89,7 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
     query_lineas.prepare("select * from lin_ped_pro where id_cab = :nid");
     query_lineas.bindValue(":nid",nid);
     int pos = 0;
+    ui->tablaLineas->setRowCount(0);
     ui->tablaLineas->clear();
     ui->tablaLineas->setColumnCount(11);
     QStringList cabecera;
@@ -98,6 +99,7 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
 
     if(query_lineas.exec())
     {
+        ui->tablaLineas->blockSignals(true);
         while (query_lineas.next())
         {
             ui->tablaLineas->setRowCount(pos+1);
@@ -166,7 +168,7 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
             pos++;
 
         }
-
+        ui->tablaLineas->blockSignals(false);
 
     }
     connect(ui->tablaLineas,SIGNAL(cellChanged(int,int)),this,SLOT(validarcantidad(int, int)));

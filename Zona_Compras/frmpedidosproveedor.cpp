@@ -21,6 +21,7 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     helper.set_Tipo(true);
     helper.help_table(ui->Lineas);
 
+
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
     connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
     connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
@@ -245,6 +246,7 @@ void FrmPedidosProveedor::buscar_proveeedor()
         ui->txtcCp->setText(oProveedor->cCP);
         ui->txtcPoblacion->setText(oProveedor->cPoblacion);
         ui->txtcProvincia->setText(oProveedor->cProvincia);
+        ui->lblnombreProveedor->setText(oProveedor->cProveedor);
 
     }
 }
@@ -267,7 +269,9 @@ void FrmPedidosProveedor::guardar_pedido()
     oPedido_proveedor->id =this->id;
     oPedido_proveedor->guardar();
     oPedido_proveedor->recuperar(oPedido_proveedor->id);
+
     llenar_campos();
+    helper.saveTable(1,"empresa","lin_ped_pro");
 
 }
 

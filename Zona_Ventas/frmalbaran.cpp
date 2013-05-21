@@ -172,6 +172,7 @@ void FrmAlbaran::LLenarCamposCliente()
     int index = ui->comboPais->findText(oAlbaran->cPais);
     ui->comboPais->setCurrentIndex(index);
     ui->txtcCif->setText(oCliente2->cCifNif);
+    helper.set_tarifa(oCliente2->nTarifaCliente);
     if (oCliente2->lIRPF==1) {
         ui->chklRecargoEq->setChecked(true);
         oAlbaran->lRecargoEquivalencia = (1);

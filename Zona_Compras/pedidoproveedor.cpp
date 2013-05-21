@@ -45,14 +45,14 @@ void PedidoProveedor::guardar()
         }
 
     }
-
-    queryPedido.prepare("UPDATE ped_pro SET nPedido =  :nPedido,"
+    QSqlQuery queryGuardarPedido(QSqlDatabase::database("empresa"));
+    queryGuardarPedido.prepare("UPDATE ped_pro SET nPedido =  :nPedido,"
     "nEjercicio =:cSerie,"
     "dFecha =:dFecha,"
     "dRecepcion =:dRecepcion,"
     "Id_Proveedor =:Id_Proveedor,"
     "cCodigoProveedor =:cCodigoProveedor,"
-    "cProveedor =:cProveedor"
+    "cProveedor =:cProveedor,"
     "cDireccion1 =:cDireccion1,"
     "cDireccion2 =:cDireccion2,"
     "cCP =:cCP,"
@@ -108,73 +108,76 @@ void PedidoProveedor::guardar()
      "rtotal4 =:rtotal4 "
     " WHERE id = :id;");
 
-    queryPedido.bindValue(":cSerie",this->nEjercicio);
-    queryPedido.bindValue(":dFecha",this->dFecha);
-    queryPedido.bindValue(":dRecepcion",this->dRecepcion);
-    queryPedido.bindValue(":Id_Proveedor",this->Id_Proveedor);
-    queryPedido.bindValue(":cCodigoProveedor",this->cCodigoProveedor);
-    queryPedido.bindValue(":cProveedor",this->cProveedor);
-    queryPedido.bindValue(":cDireccion1",this->cDireccion1);
-    queryPedido.bindValue(":cDireccion2",this->cDireccion2);
-    queryPedido.bindValue(":cCP",this->cCP);
-    queryPedido.bindValue(":cPoblacion",this->cPoblacion);
-    queryPedido.bindValue(":cProvincia",this->cProvincia);
-    queryPedido.bindValue(":idpais",this->idpais);
-    queryPedido.bindValue(":cCifNif",this->cCifNif);
-    queryPedido.bindValue(":rBaseTotal",this->rBaseTotal);
-    queryPedido.bindValue(":rSubotal",this->rSubotal);
-    queryPedido.bindValue(":rDto",this->rDto);
-    queryPedido.bindValue(":rRecTotal",this->rRecTotal);
-    queryPedido.bindValue(":rTotal",this->rTotal);
-    queryPedido.bindValue(":lEnviado",this->lEnviado);
-    queryPedido.bindValue(":lRecibido",this->lRecibido);
-    queryPedido.bindValue(":lRecibidoCompleto",this->lRecibidoCompleto);
-    queryPedido.bindValue(":lGeneroPendiente",this->lGeneroPendiente);
-    queryPedido.bindValue(":lTraspasado",this->lTraspasado);
-    queryPedido.bindValue(":nPedidoCliente",this->nPedidoCliente);
-    queryPedido.bindValue(":Id_FormaPago",this->Id_FormaPago);
-    queryPedido.bindValue(":tComentario",this->tComentario);
-    queryPedido.bindValue(":dFechaEntrega",this->dFechaEntrega);
-    queryPedido.bindValue(":cDireccion1Entrega",this->cDireccion1Entrega);
-    queryPedido.bindValue(":cDireccion2Entrega",this->cDireccion2Entrega);
-    queryPedido.bindValue(":cCPEntrega",this->cCPEntrega);
-    queryPedido.bindValue(":cPoblacionEntrega",this->cPoblacionEntrega);
-    queryPedido.bindValue(":cProvinciaEntrega",this->cProvinciaEntrega);
-    queryPedido.bindValue(":id_paisEntrega",this->id_paisEntrega);
-    queryPedido.bindValue(":cNombreCliente",this->cNombreCliente);
-    queryPedido.bindValue(":cHorarioActivo",this->cHorarioActivo);
-    queryPedido.bindValue(":rBase1",this->rBase1);
-    queryPedido.bindValue(":rBase2",this->rBase2);
-    queryPedido.bindValue(":rBase3",this->rBase3);
-    queryPedido.bindValue(":rBase4",this->rBase4);
-    queryPedido.bindValue(":niva1",this->niva1);
-    queryPedido.bindValue(":niva2",this->niva2);
-    queryPedido.bindValue(":niva3",this->niva3);
-    queryPedido.bindValue(":niva4",this->niva4);
-    queryPedido.bindValue(":riva1",this->riva1);
-    queryPedido.bindValue(":riva2",this->riva2);
-    queryPedido.bindValue(":riva3",this->riva3);
-    queryPedido.bindValue(":riva4",this->riva4);
-    queryPedido.bindValue(":nrec1",this->nrec1);
-    queryPedido.bindValue(":nrec2",this->nrec2);
-    queryPedido.bindValue(":nrec3",this->nrec3);
-    queryPedido.bindValue(":nrec4",this->nrec4);
-    queryPedido.bindValue(":rrec1",this->rrec1);
-    queryPedido.bindValue(":rrec2",this->rrec2);
-    queryPedido.bindValue(":rrec3",this->rrec3);
-    queryPedido.bindValue(":rrec4",this->rrec4);
-    queryPedido.bindValue(":rtotal1",this->rtotal1);
-    queryPedido.bindValue(":rtotal2",this->rtotal2);
-    queryPedido.bindValue(":rtotal3",this->rtotal3);
-    queryPedido.bindValue(":rtotal4",this->rtotal4);
-    queryPedido.bindValue(":id",this->id);
+    queryGuardarPedido.bindValue(":cSerie",this->nEjercicio);
+    queryGuardarPedido.bindValue(":nPedido",this->nPedido);
+    queryGuardarPedido.bindValue(":dFecha",this->dFecha);
+    queryGuardarPedido.bindValue(":dRecepcion",this->dRecepcion);
+    queryGuardarPedido.bindValue(":Id_Proveedor",this->Id_Proveedor);
+    queryGuardarPedido.bindValue(":cCodigoProveedor",this->cCodigoProveedor);
+    queryGuardarPedido.bindValue(":cProveedor",this->cProveedor);
+    queryGuardarPedido.bindValue(":cDireccion1",this->cDireccion1);
+    queryGuardarPedido.bindValue(":cDireccion2",this->cDireccion2);
+    queryGuardarPedido.bindValue(":cCP",this->cCP);
+    queryGuardarPedido.bindValue(":cPoblacion",this->cPoblacion);
+    queryGuardarPedido.bindValue(":cProvincia",this->cProvincia);
+    queryGuardarPedido.bindValue(":idpais",this->idpais);
+    queryGuardarPedido.bindValue(":cCifNif",this->cCifNif);
+    queryGuardarPedido.bindValue(":rBaseTotal",this->rBaseTotal);
+    queryGuardarPedido.bindValue(":rSubotal",this->rSubotal);
+    queryGuardarPedido.bindValue(":rDto",this->rDto);
+    queryGuardarPedido.bindValue(":rRecTotal",this->rRecTotal);
+    queryGuardarPedido.bindValue(":rTotal",this->rTotal);
+    queryGuardarPedido.bindValue(":lEnviado",this->lEnviado);
+    queryGuardarPedido.bindValue(":lRecibido",this->lRecibido);
+    queryGuardarPedido.bindValue(":lRecibidoCompleto",this->lRecibidoCompleto);
+    queryGuardarPedido.bindValue(":lGeneroPendiente",this->lGeneroPendiente);
+    queryGuardarPedido.bindValue(":lTraspasado",this->lTraspasado);
+    queryGuardarPedido.bindValue(":nPedidoCliente",this->nPedidoCliente);
+    queryGuardarPedido.bindValue(":Id_FormaPago",this->Id_FormaPago);
+    queryGuardarPedido.bindValue(":tComentario",this->tComentario);
+    queryGuardarPedido.bindValue(":dFechaEntrega",this->dFechaEntrega);
+    queryGuardarPedido.bindValue(":cDireccion1Entrega",this->cDireccion1Entrega);
+    queryGuardarPedido.bindValue(":cDireccion2Entrega",this->cDireccion2Entrega);
+    queryGuardarPedido.bindValue(":cCPEntrega",this->cCPEntrega);
+    queryGuardarPedido.bindValue(":cPoblacionEntrega",this->cPoblacionEntrega);
+    queryGuardarPedido.bindValue(":cProvinciaEntrega",this->cProvinciaEntrega);
+    queryGuardarPedido.bindValue(":id_paisEntrega",this->id_paisEntrega);
+    queryGuardarPedido.bindValue(":cNombreCliente",this->cNombreCliente);
+    queryGuardarPedido.bindValue(":cHorarioActivo",this->cHorarioActivo);
+    queryGuardarPedido.bindValue(":rBase1",this->rBase1);
+    queryGuardarPedido.bindValue(":rBase2",this->rBase2);
+    queryGuardarPedido.bindValue(":rBase3",this->rBase3);
+    queryGuardarPedido.bindValue(":rBase4",this->rBase4);
+    queryGuardarPedido.bindValue(":niva1",this->niva1);
+    queryGuardarPedido.bindValue(":niva2",this->niva2);
+    queryGuardarPedido.bindValue(":niva3",this->niva3);
+    queryGuardarPedido.bindValue(":niva4",this->niva4);
+    queryGuardarPedido.bindValue(":riva1",this->riva1);
+    queryGuardarPedido.bindValue(":riva2",this->riva2);
+    queryGuardarPedido.bindValue(":riva3",this->riva3);
+    queryGuardarPedido.bindValue(":riva4",this->riva4);
+    queryGuardarPedido.bindValue(":nrec1",this->nrec1);
+    queryGuardarPedido.bindValue(":nrec2",this->nrec2);
+    queryGuardarPedido.bindValue(":nrec3",this->nrec3);
+    queryGuardarPedido.bindValue(":nrec4",this->nrec4);
+    queryGuardarPedido.bindValue(":rrec1",this->rrec1);
+    queryGuardarPedido.bindValue(":rrec2",this->rrec2);
+    queryGuardarPedido.bindValue(":rrec3",this->rrec3);
+    queryGuardarPedido.bindValue(":rrec4",this->rrec4);
+    queryGuardarPedido.bindValue(":rtotal1",this->rtotal1);
+    queryGuardarPedido.bindValue(":rtotal2",this->rtotal2);
+    queryGuardarPedido.bindValue(":rtotal3",this->rtotal3);
+    queryGuardarPedido.bindValue(":rtotal4",this->rtotal4);
+    queryGuardarPedido.bindValue(":id",this->id);
 
-    if(!queryPedido.exec())
+    if(!queryGuardarPedido.exec())
         QMessageBox::warning(qApp->activeWindow(),tr("ATENCIÓN:"),
-                             tr("Ha ocurrido un error al guardar el pedido: %1").arg(queryPedido.lastError().text()),
+                             tr("Ha ocurrido un error al guardar el pedido: %1").arg(queryGuardarPedido.lastError().text()),
                              tr("Aceptar"));
 
-    qDebug() << queryPedido.lastQuery();
+//    qDebug() << queryGuardarPedido.lastQuery();
+//    qDebug() << "ID: " << this->id;
+//    qDebug() << "P: " << this->cProveedor;
 
 }
 

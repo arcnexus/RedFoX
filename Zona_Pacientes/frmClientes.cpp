@@ -213,11 +213,11 @@ void frmClientes::LLenarCampos()
     ui->TablaDeudas->setColumnHidden(0,true);
     deudas->setHeaderData(1,Qt::Horizontal,tr("Documento"));
     deudas->setHeaderData(2,Qt::Horizontal,tr("Importe"));
-    ui->TablaDeudas->setItemDelegateForColumn(2,new MonetaryDelegate);
+    ui->TablaDeudas->setItemDelegateForColumn(2,new MonetaryDelegate(this,false));
     deudas->setHeaderData(3,Qt::Horizontal,tr("Pagado"));
-    ui->TablaDeudas->setItemDelegateForColumn(3,new MonetaryDelegate);
+    ui->TablaDeudas->setItemDelegateForColumn(3,new MonetaryDelegate(this,false));
     deudas->setHeaderData(4,Qt::Horizontal,tr("Pendiente"));
-    ui->TablaDeudas->setItemDelegateForColumn(4,new MonetaryDelegate);
+    ui->TablaDeudas->setItemDelegateForColumn(4,new MonetaryDelegate(this,false));
     deudas->setHeaderData(5,Qt::Horizontal,tr("Fecha"));
     ui->TablaDeudas->setItemDelegateForColumn(5,new DateDelegate);
     deudas->setHeaderData(6,Qt::Horizontal,tr("Vencimiento"));
@@ -295,8 +295,8 @@ void frmClientes::LLenarCampos()
     cSQL= "Select id,nPresupuesto,dFecha,dValidoHasta,rTotal from cab_pre where id_Cliente =" + QString::number(oCliente->id);
     Presupuestos->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->tablaPresupuestos->setModel(Presupuestos);
-    ui->tablaPresupuestos->setItemDelegateForColumn(2,new MonetaryDelegate);
-    ui->tablaPresupuestos->setItemDelegateForColumn(3, new MonetaryDelegate);
+    ui->tablaPresupuestos->setItemDelegateForColumn(2,new MonetaryDelegate(this,false));
+    ui->tablaPresupuestos->setItemDelegateForColumn(3, new MonetaryDelegate(this,false));
     //ui->tablaPresupuestos->setItemDelegateForColumn(4,columnaMoneda);
     //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
     QHeaderView *CabeceraPre = new QHeaderView(Qt::Horizontal,this);
@@ -408,11 +408,11 @@ void frmClientes::LLenarCampos()
     ui->tablaAsientos->setColumnWidth(3,55);
     ui->tablaAsientos->setColumnWidth(4,75);
     ui->tablaAsientos->setColumnWidth(5,60);
-    ui->tablaAsientos->setItemDelegateForColumn(5, new MonetaryDelegate);
+    ui->tablaAsientos->setItemDelegateForColumn(5, new MonetaryDelegate(this,false));
     ui->tablaAsientos->setColumnWidth(6,55);
     ui->tablaAsientos->setColumnWidth(7,75);
     ui->tablaAsientos->setColumnWidth(8,60);
-    ui->tablaAsientos->setItemDelegateForColumn(8, new MonetaryDelegate);
+    ui->tablaAsientos->setItemDelegateForColumn(8, new MonetaryDelegate(this,false));
 
 
 

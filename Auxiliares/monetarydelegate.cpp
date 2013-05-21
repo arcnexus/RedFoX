@@ -2,16 +2,17 @@
 //#include "configuracion.h"
 #include "Globlal_Include.h"
 
-MonetaryDelegate::MonetaryDelegate(QObject *parent) :
+MonetaryDelegate::MonetaryDelegate(QObject *parent, bool readonly) :
     QItemDelegate(parent)
 {
-
+    this->readonly = readonly;
 }
 
 void MonetaryDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
     QLineEdit *lineedit = static_cast<QLineEdit*>(editor);
     lineedit->text();
+    lineedit->setReadOnly(this->readonly);
     QString valor = Configuracion_global->FormatoNumerico(lineedit->text());
     model->setData(index,valor,Qt::EditRole);
     lineedit->setAlignment(Qt::AlignRight);

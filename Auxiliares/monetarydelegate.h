@@ -10,7 +10,7 @@ class MonetaryDelegate : public QItemDelegate
 {
     Q_OBJECT
 public:
-    explicit MonetaryDelegate(QObject *parent = 0);
+    explicit MonetaryDelegate(QObject *parent = 0, bool readonly = false);
 
   void setModelData ( QWidget * editor, QAbstractItemModel * model, const QModelIndex & index ) const;
   void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
@@ -21,6 +21,7 @@ public slots:
 
 private:
     QStandardItemModel *model;
+    bool readonly;
     
 };
 
