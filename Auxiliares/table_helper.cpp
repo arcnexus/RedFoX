@@ -123,8 +123,13 @@ void Table_Helper::fillTable(QString db, QString table, QString filter)
     if(filter.isEmpty())
         sql = QString("SELECT * FROM %1").arg(table);
     else
-        sql = QString("SELECT * FROM %1 WHERE %2").arg(table).arg(filter);
-
+        if(table =="lin_ped_pro"){
+            sql = QString("select id,id_cab,id_articulo,codigo_articulo_proveedor,cantidad,descripcion,coste_bruto,subtotal_coste,dto,porc_dto,porc_iva,total"
+                          " from %1 where %2").arg(table).arg(filter);
+        } else
+        {
+            sql = QString("SELECT * FROM %1 WHERE %2").arg(table).arg(filter);
+        }
     if(query.exec(sql))
     {
         while(query.next())
@@ -206,6 +211,32 @@ void Table_Helper::addRow()
         helped_table->setCurrentCell(helped_table->rowCount()-1,0);
         helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
     }
+}
+void Table_Helper::addRow(QSqlRecord r)
+{
+    addRow();
+    helped_table->blockSignals(true);
+    int row = helped_table->rowCount()-1;
+    helped_table->item(row,0)->setText(r.value(3).toString());
+    qDebug() << "codigo:" << r.value(3).toString();
+    helped_table->item(row,1)->setText(r.value(4).toString());
+    helped_table->item(row,2)->setText(r.value(5).toString());
+    helped_table->item(row,3)->setText(r.value(6).toString());
+    helped_table->item(row,4)->setText(r.value(7).toString());
+    helped_table->item(row,5)->setText(r.value(8).toString());
+    helped_table->item(row,6)->setText(r.value(9).toString());
+    //helped_table->item(row,7)->setText(r.value(10).toString());
+    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+    for(int i = 0;i<keys.size();i++)
+    {
+        if(Configuracion_global->ivas[keys.at(i)].value("nIVA").toDouble() == r.value(10).toDouble())
+        {
+            helped_table->item(row,7)->setText(keys.at(i));
+            break;
+        }
+    }
+    helped_table->item(row,8)->setText(r.value(11).toString());
+    helped_table->blockSignals(false);
 }
 
 void Table_Helper::removeRow()
@@ -583,31 +614,7 @@ bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_tab
     return succes;
 }
 
-void Table_Helper::addRow(QSqlRecord r)
-{
-    addRow();
-    helped_table->blockSignals(true);
-    int row = helped_table->rowCount()-1;
-    helped_table->item(row,0)->setText(r.value(3).toString());
-    helped_table->item(row,1)->setText(r.value(4).toString());
-    helped_table->item(row,2)->setText(r.value(5).toString());
-    helped_table->item(row,3)->setText(r.value(6).toString());
-    helped_table->item(row,4)->setText(r.value(7).toString());
-    helped_table->item(row,5)->setText(r.value(8).toString());
-    helped_table->item(row,6)->setText(r.value(9).toString());
-    //helped_table->item(row,7)->setText(r.value(10).toString());
-    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
-    for(int i = 0;i<keys.size();i++)
-    {
-        if(Configuracion_global->ivas[keys.at(i)].value("nIVA").toDouble() == r.value(10).toDouble())
-        {
-            helped_table->item(row,7)->setText(keys.at(i));
-            break;
-        }
-    }
-    helped_table->item(row,8)->setText(r.value(11).toString());
-    helped_table->blockSignals(false);
-}
+
 
 bool Table_Helper::eventFilter(QObject *target, QEvent *event)
 {

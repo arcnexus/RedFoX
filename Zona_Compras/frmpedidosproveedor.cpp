@@ -1,6 +1,7 @@
 #include "frmpedidosproveedor.h"
 #include "ui_frmpedidosproveedor.h"
 #include "Busquedas/frmbuscarproveedor.h"
+#include "frmtraspasoalbaran.h"
 
 
 
@@ -10,6 +11,7 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     helper(this)
 {
     ui->setupUi(this);
+    estadolectura();
     ui->lblImpreso->setVisible(false);
     ui->lblnombreProveedor->clear();
     ui->lblnumero_pedido->clear();
@@ -54,6 +56,17 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     ui->txtnRec2->setText(Configuracion_global->reList.at(1));
     ui->txtnRec3->setText(Configuracion_global->reList.at(2));
     ui->txtnRec4->setText(Configuracion_global->reList.at(3));
+    aAlbaran_action = new QAction(tr("En albaran"),this);
+    aFactura_action = new QAction(tr("En factura"),this);
+
+    connect(aAlbaran_action,SIGNAL(triggered()),this,SLOT(convertir_enAlbaran()));
+    connect(aFactura_action,SIGNAL(triggered()),this,SLOT(convertir_enFactura()));
+
+    convertir_menu = new QMenu(this);
+    convertir_menu->addAction(aAlbaran_action);
+    convertir_menu->addAction(aFactura_action);
+
+    ui->btn_convertir->setMenu(convertir_menu);
 }
 
 FrmPedidosProveedor::~FrmPedidosProveedor()
@@ -346,6 +359,9 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txtrTotal2->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rtotal2,'f',2)));
     ui->txtrTotal3->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rtotal3,'f',2)));
     ui->txtrTotal4->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rtotal4,'f',2)));
+    QString filter = QString("id_cab = '%1'").arg(oPedido_proveedor->id);
+    helper.fillTable("empresa","lin_ped_pro",filter);
+    helper.resizeTable();
 }
 
 void FrmPedidosProveedor::guardar_campos_en_objeto()
@@ -462,4 +478,14 @@ void FrmPedidosProveedor::clear()
     ui->txtrTotal2->clear();
     ui->txtrTotal3->clear();
     ui->txtrTotal4->clear();
+}
+
+void FrmPedidosProveedor::convertir_enAlbaran()
+{
+    frmTraspasoAlbaran talbaran(this);
+    talbaran.exec();
+}
+
+void FrmPedidosProveedor::convertir_enFactura()
+{
 }

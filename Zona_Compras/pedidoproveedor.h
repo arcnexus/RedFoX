@@ -90,6 +90,8 @@ public slots:
     void recuperar(QString cadenaSQL,int accion);
     void cargar(QSqlQuery *queryPedido, int accion);
     void clear();
+    void convertir_en_albaran();
+    void convertir_en_factura();
 
     
 };

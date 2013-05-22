@@ -388,4 +388,18 @@ void PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
 
     }
 }
+void PedidoProveedor::convertir_en_albaran()
+{
+    if(QMessageBox::question(qApp->activeWindow(),tr("Gestión de proveedores"),
+                             tr("¿Desea traspasar la información a un nuevo albarán?"),
+                             tr("No"),tr("Sí"))==QMessageBox::Accepted)
+    {
+
+    }
+}
+
+void PedidoProveedor::convertir_en_factura()
+{
+
+}
 

@@ -38,9 +38,15 @@ private slots:
     void llenar_campos();
     void guardar_campos_en_objeto();
     void clear();
+    void convertir_enAlbaran();
+    void convertir_enFactura();
 private:
+
     Ui::FrmPedidosProveedor *ui;
     Table_Helper helper;
+    QAction * aAlbaran_action;
+    QAction * aFactura_action;
+    QMenu * convertir_menu;
 };
 
 #endif // FRMPEDIDOSPROVEEDOR_H
