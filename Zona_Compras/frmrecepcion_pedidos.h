@@ -15,7 +15,7 @@ class Frmrecepcion_pedidos : public QDialog
 public:
     explicit Frmrecepcion_pedidos(QWidget *parent = 0);
     ~Frmrecepcion_pedidos();
-    bool paso = false;
+    bool paso;
     
 private slots:
     void on_btnBuscar_clicked();
@@ -30,6 +30,10 @@ private slots:
 
 private:
     Ui::Frmrecepcion_pedidos *ui;
+    bool albaran;
+    int id_albaran;
+    bool factura;
+    int id_factura;
 };
 
 #endif // FRMRECEPCION_PEDIDOS_H

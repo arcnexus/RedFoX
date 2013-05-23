@@ -19,6 +19,11 @@ Frmrecepcion_pedidos::Frmrecepcion_pedidos(QWidget *parent) :
     ui->lblFecha_factura->setVisible(false);
     ui->txtFactura->setVisible(false);
     ui->txtFecha_factura->setVisible(false);
+    paso = false;
+    albaran = false;
+    factura = false;
+    
+
 
     connect(ui->btnAlbaran, SIGNAL(clicked()),this,SLOT(abrir_albaran()));
 
@@ -133,7 +138,7 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
             item_columna3->setFlags(item_columna3->flags() & (~Qt::ItemIsEditable));
             item_columna3->setTextColor(Qt::blue); // color de los items
             ui->tablaLineas->setItem(pos,3,item_columna3);
-            ui->tablaLineas->setColumnWidth(3,150);
+            ui->tablaLineas->setColumnWidth(3,140);
 
             QTableWidgetItem *item_columna4 = new QTableWidgetItem(query_lineas.record().value("cantidad").toString());
             item_columna4->setFlags(item_columna4->flags() & (~Qt::ItemIsEditable));
@@ -148,6 +153,13 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
             ui->tablaLineas->setColumnWidth(5,60);
 
             QTableWidgetItem *item_columna6 = new QTableWidgetItem(query_lineas.record().value("cantidad_recibida").toString());
+            if(query_lineas.record().value("cantidad_recibida").toInt()>0)
+                item_columna6->setBackgroundColor(Qt::yellow);
+            if(query_lineas.record().value("cantidad_pendiente").toInt() <=0)
+                item_columna6->setBackgroundColor(Qt::green);
+            if(query_lineas.record().value("cantidad_recibida").toInt()==0 )
+                item_columna6->setBackgroundColor(Qt::white);
+
             item_columna6->setTextColor(Qt::blue); // color de los items
             item_columna6->setFlags(item_columna6->flags() & (~Qt::ItemIsEditable));
             item_columna6->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -180,6 +192,11 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
         ui->tablaLineas->blockSignals(false);
 
     }
+    ui->btnAlbaran->setEnabled(true);
+    ui->btnFactura->setEnabled(true);
+    ui->btnImprimir->setEnabled(true);
+    ui->btnEtiquetas->setEnabled(true);
+
     connect(ui->tablaLineas,SIGNAL(cellChanged(int,int)),this,SLOT(validarcantidad(int, int)));
 
 }
@@ -205,7 +222,8 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
         queryLineas.prepare("update lin_ped_pro set cantidad_pendiente =:pend, cantidad_recibida = :rec where id =:id");
         queryLineas.bindValue(":pend",nuevo_pend);
         queryLineas.bindValue(":rec",rec);
-        queryLineas.bindValue(":id",nid);
+        int linid = ui->tablaLineas->item(row,0)->text().toInt();
+        queryLineas.bindValue(":id",linid);
         if(!queryLineas.exec()) {
             QMessageBox::warning(this,tr("ATENCIÓN"),
                                  tr("Fallo la modificación de pendientes: %1").arg(queryLineas.lastError().text()),
@@ -214,7 +232,15 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
         else {
             if(nuevo_pend!=0)
             {
-
+                // ----------------
+                // Linea albarán
+                // ----------------
+                if(albaran){
+                    
+                }
+                // -------------------
+                // Actualizo artículo
+                // -------------------
 
                 int stockfisico, stockreal,nCPR;
                 QSqlQuery queryProducto(QSqlDatabase::database("Maya"));
@@ -254,8 +280,15 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
         }
 
         ui->tablaLineas->item(row,5)->setText(QString::number(nuevo_pend));
+
         ui->tablaLineas->item(row,6)->setText(QString::number(rec));
         ui->tablaLineas->item(row,7)->setText("0");
+        if(rec>0)
+            ui->tablaLineas->item(row,6)->setBackgroundColor(Qt::yellow);
+        if(nuevo_pend <=0)
+            ui->tablaLineas->item(row,6)->setBackgroundColor(Qt::green);
+        if(rec ==0 )
+            ui->tablaLineas->item(row,6)->setBackgroundColor(Qt::white);
     }
     blockSignals(false);
 
@@ -328,10 +361,49 @@ void Frmrecepcion_pedidos::reconectar()
 
 void Frmrecepcion_pedidos::abrir_albaran()
 {
-    ui->lblAlbaran->setVisible(true);
-    ui->lblfecha_albaran->setVisible(true);
-    ui->txtAlbaran->setVisible(true);
-    ui->txtFecha_albaran->setVisible(true);
-    ui->btnAlbaran->setText(tr("Crear y cerrar Albarán"));
+    if(albaran == false) {
+        ui->lblAlbaran->setVisible(true);
+        ui->lblfecha_albaran->setVisible(true);
+        ui->txtAlbaran->setVisible(true);
+        ui->txtFecha_albaran->setVisible(true);
 
+        ui->btnAlbaran->setText(tr("Crear y cerrar Albarán"));
+        ui->txtAlbaran->setFocus();
+        albaran =  true;
+        QSqlQuery query_albaran(QSqlDatabase::database("empresa"));
+        if(query_albaran.exec("insert into alb_pro  (cAlbaran) values ('temp')"))
+            id_albaran = query_albaran.lastInsertId().toInt();
+        else
+            QMessageBox::warning(this,tr("Recepción Pedidos"),
+                                 tr("No se pudo crear el albarán, Error:")+query_albaran.lastError().text(),
+                                 tr("Aceptar"));
+    } else
+    {
+        QDate fecha;
+        fecha = ui->txtFecha_albaran->date();
+        QSqlQuery query_albaran(QSqlDatabase::database("empresa"));
+        query_albaran.prepare("update alb_pro  set cAlbaran =:albaran, dFecha = :fecha where id =:id");
+        query_albaran.bindValue(":albaran",ui->txtAlbaran->text());
+        query_albaran.bindValue(":fecha",fecha);
+        query_albaran.bindValue(":id",id_albaran);
+
+        if(!query_albaran.exec())
+            QMessageBox::warning(this,tr("Recepción Pedidos"),
+                                 tr("No se pudo crear el albarán, Error:")+query_albaran.lastError().text(),
+                                 tr("Aceptar"));
+        else {
+            QMessageBox::warning(this,tr("Recepción pedidos"),
+                                 tr("se ha creado el albarán: ").append(ui->txtAlbaran->text()),
+                                 tr("Aceptar"));
+            id_albaran = 0;
+        }
+        ui->lblAlbaran->setVisible(false);
+        ui->txtAlbaran->setText("");
+        ui->txtAlbaran->setVisible(false);
+        ui->txtFecha_albaran->setDate(QDate::currentDate());
+        ui->lblfecha_albaran->setVisible(false);
+        ui->txtFecha_albaran->setVisible(false);
+        ui->btnAlbaran->setText("Abrir albarán");
+        albaran = false;
+    }
 }
