@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>751</width>
-    <height>475</height>
+    <width>1075</width>
+    <height>534</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,7 +43,7 @@
      </property>
     </spacer>
    </item>
-   <item row="4" column="3">
+   <item row="4" column="5">
     <widget class="QPushButton" name="pushButton_3">
      <property name="styleSheet">
       <string notr="true"/>
@@ -53,7 +53,7 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="4">
+   <item row="4" column="6">
     <widget class="QPushButton" name="pushButton_2">
      <property name="styleSheet">
       <string notr="true"/>
@@ -96,7 +96,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
      </property>
     </spacer>
    </item>
-   <item row="1" column="1" rowspan="3" colspan="4">
+   <item row="1" column="1" rowspan="3" colspan="6">
     <widget class="QFrame" name="frame_2">
      <property name="styleSheet">
       <string notr="true">background-color: #ecefed;</string>
@@ -140,7 +140,54 @@ alternate-background-color: rgb(255, 253, 219);</string>
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="2">
+          <widget class="QLabel" name="lblfecha_albaran">
+           <property name="text">
+            <string>Fecha:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="9">
+          <widget class="QDateEdit" name="txtFecha_factura"/>
+         </item>
          <item row="0" column="0">
+          <widget class="QLabel" name="lblAlbaran">
+           <property name="text">
+            <string>Albarán Num:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLabel" name="lblfactura">
+           <property name="text">
+            <string>Factura Num:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="8">
+          <widget class="QLabel" name="lblFecha_factura">
+           <property name="text">
+            <string>Fecha:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QDateEdit" name="txtFecha_albaran"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="txtAlbaran">
+           <property name="maximumSize">
+            <size>
+             <width>120</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="7">
+          <widget class="QLineEdit" name="txtFactura"/>
+         </item>
+         <item row="0" column="10">
           <widget class="QCheckBox" name="chkForzarCierre">
            <property name="text">
             <string>Forzar Cerrar Pedido</string>
@@ -153,7 +200,7 @@ alternate-background-color: rgb(255, 253, 219);</string>
      </layout>
     </widget>
    </item>
-   <item row="0" column="4">
+   <item row="0" column="6">
     <widget class="QLabel" name="label_22">
      <property name="minimumSize">
       <size>
@@ -283,6 +330,20 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="4" column="3">
+    <widget class="QPushButton" name="btnAlbaran">
+     <property name="text">
+      <string>Abrir albarán</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="4">
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Abrir Factura</string>
+     </property>
     </widget>
    </item>
   </layout>

@@ -1,7 +1,7 @@
 #include "frmpedidosproveedor.h"
 #include "ui_frmpedidosproveedor.h"
 #include "Busquedas/frmbuscarproveedor.h"
-#include "frmtraspasoalbaran.h"
+
 
 
 
@@ -56,17 +56,7 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     ui->txtnRec2->setText(Configuracion_global->reList.at(1));
     ui->txtnRec3->setText(Configuracion_global->reList.at(2));
     ui->txtnRec4->setText(Configuracion_global->reList.at(3));
-    aAlbaran_action = new QAction(tr("En albaran"),this);
-    aFactura_action = new QAction(tr("En factura"),this);
 
-    connect(aAlbaran_action,SIGNAL(triggered()),this,SLOT(convertir_enAlbaran()));
-    connect(aFactura_action,SIGNAL(triggered()),this,SLOT(convertir_enFactura()));
-
-    convertir_menu = new QMenu(this);
-    convertir_menu->addAction(aAlbaran_action);
-    convertir_menu->addAction(aFactura_action);
-
-    ui->btn_convertir->setMenu(convertir_menu);
 }
 
 FrmPedidosProveedor::~FrmPedidosProveedor()
@@ -422,6 +412,8 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
     oPedido_proveedor->rtotal4 = ui->txtrTotal4->text().toDouble();
 }
 
+
+
 void FrmPedidosProveedor::clear()
 {
     ui->txtnPedido->clear();
@@ -480,12 +472,3 @@ void FrmPedidosProveedor::clear()
     ui->txtrTotal4->clear();
 }
 
-void FrmPedidosProveedor::convertir_enAlbaran()
-{
-    frmTraspasoAlbaran talbaran(this);
-    talbaran.exec();
-}
-
-void FrmPedidosProveedor::convertir_enFactura()
-{
-}

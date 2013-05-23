@@ -26,7 +26,7 @@ private slots:
 
     void validarcantidad(int, int);
     void reconectar();
-    void on_pushButton_3_clicked();
+    void abrir_albaran();
 
 private:
     Ui::Frmrecepcion_pedidos *ui;

@@ -38,8 +38,7 @@ private slots:
     void llenar_campos();
     void guardar_campos_en_objeto();
     void clear();
-    void convertir_enAlbaran();
-    void convertir_enFactura();
+
 private:
 
     Ui::FrmPedidosProveedor *ui;

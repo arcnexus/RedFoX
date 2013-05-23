@@ -125,8 +125,7 @@ SOURCES += main.cpp\
     Zona_Pacientes/frmanadirhierb.cpp \
     Almacen/frmeditar_tarifas.cpp \
     Auxiliares/datedelegate.cpp \
-    Zona_Pacientes/frmcobrardeuda.cpp \
-    Zona_Compras/frmtraspasoalbaran.cpp
+    Zona_Pacientes/frmcobrardeuda.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -219,8 +218,7 @@ HEADERS  += mainwindow.h \
     Zona_Pacientes/frmanadirhierb.h \
     Almacen/frmeditar_tarifas.h \
     Auxiliares/datedelegate.h \
-    Zona_Pacientes/frmcobrardeuda.h \
-    Zona_Compras/frmtraspasoalbaran.h
+    Zona_Pacientes/frmcobrardeuda.h
 
 
 FORMS    += mainwindow.ui \
@@ -276,8 +274,7 @@ FORMS    += mainwindow.ui \
     Zona_Administrador/frmconfigmaya.ui \
     Zona_Pacientes/frmanadirhierb.ui \
     Almacen/frmeditar_tarifas.ui \
-    Zona_Pacientes/frmcobrardeuda.ui \
-    Zona_Compras/frmtraspasoalbaran.ui
+    Zona_Pacientes/frmcobrardeuda.ui
 
 RESOURCES += \
     maya.qrc

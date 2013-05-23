@@ -11,7 +11,16 @@ Frmrecepcion_pedidos::Frmrecepcion_pedidos(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->txtFechaFin->setDate(QDate::currentDate());
+    ui->lblAlbaran->setVisible(false);
+    ui->lblfecha_albaran->setVisible(false);
+    ui->txtAlbaran->setVisible(false);
+    ui->txtFecha_albaran->setVisible(false);
+    ui->lblfactura->setVisible(false);
+    ui->lblFecha_factura->setVisible(false);
+    ui->txtFactura->setVisible(false);
+    ui->txtFecha_factura->setVisible(false);
 
+    connect(ui->btnAlbaran, SIGNAL(clicked()),this,SLOT(abrir_albaran()));
 
 }
 
@@ -317,7 +326,12 @@ void Frmrecepcion_pedidos::reconectar()
  //   connect(ui->tablaLineas,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(validarcantidad(QTableWidgetItem*)));
 }
 
-void Frmrecepcion_pedidos::on_pushButton_3_clicked()
+void Frmrecepcion_pedidos::abrir_albaran()
 {
+    ui->lblAlbaran->setVisible(true);
+    ui->lblfecha_albaran->setVisible(true);
+    ui->txtAlbaran->setVisible(true);
+    ui->txtFecha_albaran->setVisible(true);
+    ui->btnAlbaran->setText(tr("Crear y cerrar Albarán"));
 
 }

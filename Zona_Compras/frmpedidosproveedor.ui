@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1059</width>
-    <height>487</height>
+    <width>1074</width>
+    <height>569</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -274,25 +274,6 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="btn_convertir">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Convertir</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -312,7 +293,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_5">
       <property name="styleSheet">
@@ -681,7 +662,7 @@
                 <enum>QTabWidget::North</enum>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="tab">
                 <property name="styleSheet">
