@@ -34,6 +34,7 @@ private:
     int id_albaran;
     bool factura;
     int id_factura;
+    int id_pedido;
 };
 
 #endif // FRMRECEPCION_PEDIDOS_H

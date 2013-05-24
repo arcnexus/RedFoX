@@ -34,6 +34,7 @@ public slots:
     void addRow();
     void removeRow();
     void handle_cellChanged(int row, int column);
+    void cellDataChanged(QTableWidgetItem* item);
 private:
     QTableWidget* helped_table;
     QString moneda;

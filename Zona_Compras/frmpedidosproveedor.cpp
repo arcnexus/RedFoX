@@ -22,6 +22,7 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
 
     helper.set_Tipo(true);
     helper.help_table(ui->Lineas);
+    helper.set_tarifa(1);
 
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
@@ -31,6 +32,8 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     connect(ui->btnGuardar,SIGNAL(clicked()),this,SLOT(guardar_pedido()));
     connect(ui->btnSiguiente,SIGNAL(clicked()),this,SLOT(siguiente()));
     connect(ui->btnAnterior,SIGNAL(clicked()),this,SLOT(anterior()));
+
+    connect(ui->tabWidget_2,SIGNAL(currentChanged(int)),this,SLOT(resizeTable(int)));
 
     connect(&helper,SIGNAL(totalChanged(double,double,double,double,double,double,QString)),
             this,SLOT(totalChanged(double,double,double,double,double,double,QString)));
@@ -472,3 +475,8 @@ void FrmPedidosProveedor::clear()
     ui->txtrTotal4->clear();
 }
 
+void FrmPedidosProveedor::resizeTable(int x)
+{
+    Q_UNUSED(x);
+    helper.resizeTable();
+}

@@ -99,6 +99,7 @@ void Frmrecepcion_pedidos::on_chkForzarCierre_clicked()
 void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &index)
 {
     int nid =ui->tablaPedidos->model()->data(ui->tablaPedidos->model()->index(index.row(),0),Qt::EditRole).toInt();
+    id_pedido = nid;
     QSqlQuery query_lineas(QSqlDatabase::database("empresa"));
     query_lineas.prepare("select * from lin_ped_pro where id_cab = :nid");
     query_lineas.bindValue(":nid",nid);
@@ -236,6 +237,14 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                 // Linea albarán
                 // ----------------
                 if(albaran){
+                    QSqlQuery query_lin_alb_pro(QSqlDatabase::database("empresa"));
+                    query_lin_alb_pro.prepare("INSERT INTO lin_alb_pro "
+                                              "( id_cab,cCodigo,cDescripcion,rCoste,nDto,"
+                                              "rPvp,nIva,nCantidad,rTotal,"
+                                              "rDto,rSUBTOTAL,id_Articulo) VALUES "
+                                              "(:id_cab,:cCodigo,:cDescripcion,:rCoste,"
+                                              ":nDto,:rPvp,:nIva,:nCantidad,:rTotal"
+                                              ":rDto,:rSUBTOTAL,:id_Articulo);");
                     
                 }
                 // -------------------
@@ -379,21 +388,43 @@ void Frmrecepcion_pedidos::abrir_albaran()
                                  tr("Aceptar"));
     } else
     {
+        QSqlQuery query_pedido(QSqlDatabase::database("empresa"));
+        query_pedido.exec("Select * from ped_pro where id = "+QString::number(id_pedido));
+        query_pedido.next();
         QDate fecha;
         fecha = ui->txtFecha_albaran->date();
+
+        //------------------
+        // Calcular Albarán
+        //------------------
+
+
         QSqlQuery query_albaran(QSqlDatabase::database("empresa"));
-        query_albaran.prepare("update alb_pro  set cAlbaran =:albaran, dFecha = :fecha where id =:id");
+        query_albaran.prepare("update alb_pro  set cAlbaran =:albaran, dFecha = :fecha,id_Proveedor=:id_proveedor,"
+                              "cProveedor =:proveedor, cCifProveedor =:cif,nPedido =:pedido where id =:id");
         query_albaran.bindValue(":albaran",ui->txtAlbaran->text());
         query_albaran.bindValue(":fecha",fecha);
+        query_albaran.bindValue(":id_proveedor",query_pedido.record().value("id_Proveedor").toInt());
+        query_albaran.bindValue(":proveedor",query_pedido.record().value("cProveedor").toString());
+        query_albaran.bindValue(":cif",query_pedido.record().value("cCifNif").toString());
+        query_albaran.bindValue(":pedido",ui->txtNumPedido->text().toInt());
+
         query_albaran.bindValue(":id",id_albaran);
+
+
 
         if(!query_albaran.exec())
             QMessageBox::warning(this,tr("Recepción Pedidos"),
                                  tr("No se pudo crear el albarán, Error:")+query_albaran.lastError().text(),
                                  tr("Aceptar"));
         else {
-            QMessageBox::warning(this,tr("Recepción pedidos"),
-                                 tr("se ha creado el albarán: ").append(ui->txtAlbaran->text()),
+            QString cadena = tr("Se ha creado el albarán: ");
+            cadena.append(ui->txtAlbaran->text());
+            cadena.append("\nde : ");
+            cadena.append(query_pedido.record().value("cProveedor").toString());
+            cadena.append("\ny de fecha:");
+            cadena.append(fecha.toString("dd/MM/yyyy"));
+            QMessageBox::warning(this,tr("Recepción pedidos"),cadena,
                                  tr("Aceptar"));
             id_albaran = 0;
         }

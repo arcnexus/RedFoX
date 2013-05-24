@@ -52,7 +52,8 @@ void Table_Helper::help_table(QTableWidget *table)
     helped_table->setHorizontalHeaderLabels(headers);
     resizeTable();
 
-    connect(helped_table,SIGNAL(cellChanged(int,int)),this,SLOT(handle_cellChanged(int,int)));
+    //connect(helped_table,SIGNAL(cellChanged(int,int)),this,SLOT(handle_cellChanged(int,int)));
+    connect(helped_table,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(cellDataChanged(QTableWidgetItem*)));
 
     helped_table->installEventFilter(this);
 }
@@ -261,17 +262,27 @@ void Table_Helper::removeRow()
 
 void Table_Helper::handle_cellChanged(int row, int column)
 {
-    if (column == 0)
-        rellenar_con_Articulo(row);
-    else if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
-        comprobarCantidad(row);
-    else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
-        comprobarDescuento(row);
-    else if(column == 9)
-        comprobarStock(row);
+        if (column == 1)
+            rellenar_con_Articulo(row);
+        else if(column == 2 && !helped_table->item(row,0)->text().isEmpty())
+            comprobarCantidad(row);
+        else if(column == 6 && !helped_table->item(row,4)->text().isEmpty())
+            comprobarDescuento(row);
+        else if(column == 10)
+            comprobarStock(row);
 
-    calcularTotal();
-    calcularDesglose();
+        if(column == 2 || column == 5)
+        {
+            calcularTotal();
+            calcularDesglose();
+        }
+}
+
+void Table_Helper::cellDataChanged(QTableWidgetItem *item)
+{
+    helped_table->blockSignals(true);
+    handle_cellChanged(item->row(),item->column());
+    helped_table->blockSignals(false);
 }
 
 void Table_Helper::calcularTotal()
@@ -445,8 +456,8 @@ void Table_Helper::comprobarDescuento(int row)
 
 double Table_Helper::calcularTotalLinea(int row)
 {
-    int cantidad = helped_table->item(row,1)->text().toInt();
-    double pvp = helped_table->item(row,3)->text().toDouble();
+     int cantidad = helped_table->item(row,1)->text().toInt();
+    double pvp = helped_table->item(row,3)->text().replace(",",".").toDouble();
     double subtotal = cantidad * pvp;
     helped_table->item(row,4)->setText(QString::number(subtotal,'f',2));
 
@@ -542,11 +553,21 @@ void Table_Helper::rellenar_con_Articulo(int row)
 
         }
         else if(helped_table->item(row,0)->text() !="")
-            QMessageBox::warning(helped_table,
+        {
+            QMessageBox box(helped_table->parentWidget()->parentWidget());
+            box.setText(tr("Codigo de articulo desconocido "
+                           "Si lo desea puede introducir un artículo directamente que no esté en la Base de datos, "
+                           "pero no registrará acumulados"));
+            box.setModal(true);
+            box.setIcon(QMessageBox::Warning);
+            box.setFocus();
+            box.exec();
+            /*QMessageBox::information(helped_table->parentWidget(),
                                  tr("Codigo desconocido"),
                                  tr("Codigo de articulo desconocido "
                                     "Si lo desea puede introducir un artículo directamente que no esté en la Base de datos, "
-                                    "pero no registrará acumulados"),tr("Aceptar"));
+                                    "pero no registrará acumulados"),tr("Aceptar"));*/
+        }
     }
 }
 
@@ -621,13 +642,14 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
     Q_UNUSED(target)
     if (event->type() == QEvent::KeyPress)
     {
+        helped_table->blockSignals(true);
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if (keyEvent->key() == Qt::Key_Down)
         {
             if(helped_table->currentRow() == (helped_table->rowCount()-1))
                 addRow();
         }
-        if (keyEvent->key() == Qt::Key_Return)
+        if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Tab )
         {
             if(helped_table->currentColumn() != helped_table->columnCount()-1)
             {
@@ -636,19 +658,24 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
                 else if(helped_table->currentColumn()== 6 )
                 {
                     addRow();
+                    helped_table->blockSignals(false);
                     return false;
                 }
                 else
                     helped_table->setCurrentCell(helped_table->currentRow(),helped_table->currentColumn()+1);
                 helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
+                handle_cellChanged(helped_table->currentRow(),helped_table->currentColumn());
             }
             else
                 addRow();
+
         }
         if(keyEvent->key() == Qt::Key_F1)
         {
             searchArticulo();
+            handle_cellChanged(helped_table->currentRow(),helped_table->currentColumn());
         }
+        helped_table->blockSignals(false);
     }
     return false;
 }
@@ -658,8 +685,9 @@ void Table_Helper::searchArticulo()
     Db_table_View searcher(qApp->activeWindow());
     searcher.set_db("Maya");
     searcher.set_table("vistaArt_tarifa");
+    searcher.set_readOnly(true);
 
-    searcher.setWindowTitle(tr("Articulos"));
+    searcher.setWindowTitle(tr(" Buscar Articulos"));
 
     QStringList headers;
     headers << tr("Codigo")<< tr("Cod.Barras") << tr("Cod.Fabricante") << tr("Descripción");
