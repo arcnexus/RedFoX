@@ -6,126 +6,118 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>769</width>
-    <height>416</height>
+    <width>894</width>
+    <height>472</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Buscar Clientes</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../maya.qrc">
+    <normaloff>:/Icons/PNG/maya_logo2.png</normaloff>:/Icons/PNG/maya_logo2.png</iconset>
+  </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
   </property>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>670</x>
-     <y>40</y>
-     <width>91</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Buscar</string>
-   </property>
-   <property name="icon">
-    <iconset resource="../Maya.qrc">
-     <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="txtBuscar">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>38</y>
-     <width>631</width>
-     <height>25</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="radioEmpiezaPor">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>10</y>
-     <width>111</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Empieza por....</string>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="radioContiene">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>10</y>
-     <width>95</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Contiene</string>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QTableView" name="Grid">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>70</y>
-     <width>731</width>
-     <height>301</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnAceptar">
-   <property name="geometry">
-    <rect>
-     <x>560</x>
-     <y>380</y>
-     <width>91</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-   </property>
-   <property name="text">
-    <string>&amp;Aceptar</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnCancelar">
-   <property name="geometry">
-    <rect>
-     <x>660</x>
-     <y>380</y>
-     <width>91</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-   </property>
-   <property name="text">
-    <string>&amp;Cancelar</string>
-   </property>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QRadioButton" name="radioEmpiezaPor">
+     <property name="text">
+      <string>Empieza por....</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QRadioButton" name="radioContiene">
+     <property name="text">
+      <string>Contiene</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <widget class="QPushButton" name="btnAceptar">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>&amp;Aceptar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/OK.png</normaloff>:/Icons/PNG/OK.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>14</width>
+       <height>14</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="4">
+    <widget class="QPushButton" name="btnCancelar">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>&amp;Cancelar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/Cancel.png</normaloff>:/Icons/PNG/Cancel.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>14</width>
+       <height>14</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="5">
+    <widget class="QTableView" name="Grid"/>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>686</width>
+       <height>23</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="4">
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Buscar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="4">
+    <widget class="QLineEdit" name="txtBuscar"/>
+   </item>
+  </layout>
  </widget>
  <tabstops>
   <tabstop>radioEmpiezaPor</tabstop>
   <tabstop>radioContiene</tabstop>
   <tabstop>txtBuscar</tabstop>
-  <tabstop>pushButton</tabstop>
   <tabstop>Grid</tabstop>
  </tabstops>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections>
   <connection>

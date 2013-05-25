@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>717</width>
+    <width>1035</width>
     <height>498</height>
    </rect>
   </property>
@@ -89,7 +89,7 @@ alternate-background-color: rgb(255, 255, 196);</string>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>37</width>
+         <width>28</width>
          <height>21</height>
         </size>
        </property>

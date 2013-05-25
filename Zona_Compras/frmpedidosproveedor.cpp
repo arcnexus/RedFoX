@@ -283,13 +283,15 @@ void FrmPedidosProveedor::guardar_pedido()
 
 void FrmPedidosProveedor::siguiente()
 {
-    oPedido_proveedor->recuperar("select * from ped_pro where nPedido > "+QString::number(oPedido_proveedor->nPedido)+ " order by nPedido limit 0,1",1);
+    oPedido_proveedor->recuperar("select * from ped_pro where nPedido > "+
+                                 QString::number(oPedido_proveedor->nPedido)+ " order by nPedido limit 0,1",1);
     llenar_campos();
 }
 
 void FrmPedidosProveedor::anterior()
 {
-    oPedido_proveedor->recuperar("select * from ped_pro where nPedido < "+QString::number(oPedido_proveedor->nPedido)+ " order by nPedido desc  limit 0,1 ",2);
+    oPedido_proveedor->recuperar("select * from ped_pro where nPedido < "
+                                 +QString::number(oPedido_proveedor->nPedido)+ " order by nPedido desc  limit 0,1 ",2);
     llenar_campos();
 }
 

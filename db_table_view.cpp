@@ -118,6 +118,8 @@ void Db_table_View::set_readOnly(bool state)
         ui->resultado_list->setEditTriggers(QAbstractItemView::NoEditTriggers);
         ui->btn_add->hide();
         ui->btn_remove->hide();
+        ui->btn_save->hide();
+        ui->btn_print->hide();
     }
 }
 

@@ -4,12 +4,11 @@
 PedidoProveedor::PedidoProveedor(QObject *parent) :
     QObject(parent)
 {
-
+    this->nPedido = 0;
 }
 
 int PedidoProveedor::nuevo_pedido_proveedor()
 {
-
     QSqlQuery queryPedido(QSqlDatabase::database("empresa"));
     queryPedido.prepare("INSERT INTO ped_pro (`dFecha`,`nEjercicio`) VALUES(:dfecha,:ejercicio);");
     queryPedido.bindValue(":dfecha",QDate::currentDate());

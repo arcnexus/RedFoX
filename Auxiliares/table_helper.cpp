@@ -8,6 +8,7 @@ Table_Helper::Table_Helper(QObject *parent) :
     moneda = "€";
     comprando = true;
     use_re = false;
+    tarifa = 0;
 }
 
 Table_Helper::~Table_Helper()
@@ -532,41 +533,50 @@ void Table_Helper::calcular_por_Base(QString sbase)
 
 void Table_Helper::rellenar_con_Articulo(int row)
 {
-    QString codigo = helped_table->item(row,0)->text();
-    QSqlQuery query(QSqlDatabase::database("Maya"));
-    QString sql;
-    if (this->comprando)
-        sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1'").arg(codigo);
-    else
-        sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1' and tarifa = %2").arg(codigo,tarifa);
-    query.prepare(sql);
-    if(query.exec())
-    {
-        if(query.next())
-        {
-            QSqlRecord r = query.record();
-            helped_table->item(row,2)->setText(r.value("cDescripcionReducida").toString());
-            if (this->comprando)
-                 helped_table->item(row,3)->setText(r.value("rCoste").toString());
-            else
-                helped_table->item(row,3)->setText(r.value("pvp").toString());
 
-        }
-        else if(helped_table->item(row,0)->text() !="")
+    if (this->comprando  == false && this->tarifa <=0){
+        QMessageBox::warning(qApp->activeWindow(),tr("Busqueda de producto/servicio"),
+                             tr("Debe seleccionar un cliente con tarifa asignada para poder")+
+                             tr("Seleccionar artículos/servicios"),tr("Aceptar"));
+
+    } else
+    {
+        QString codigo = helped_table->item(row,0)->text();
+        QSqlQuery query(QSqlDatabase::database("Maya"));
+        QString sql;
+        if (this->comprando)
+            sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1'").arg(codigo);
+        else
+            sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1' and tarifa = %2").arg(codigo,tarifa);
+        query.prepare(sql);
+        if(query.exec())
         {
-            QMessageBox box(helped_table->parentWidget()->parentWidget());
-            box.setText(tr("Codigo de articulo desconocido "
-                           "Si lo desea puede introducir un artículo directamente que no esté en la Base de datos, "
-                           "pero no registrará acumulados"));
-            box.setModal(true);
-            box.setIcon(QMessageBox::Warning);
-            box.setFocus();
-            box.exec();
-            /*QMessageBox::information(helped_table->parentWidget(),
-                                 tr("Codigo desconocido"),
-                                 tr("Codigo de articulo desconocido "
-                                    "Si lo desea puede introducir un artículo directamente que no esté en la Base de datos, "
-                                    "pero no registrará acumulados"),tr("Aceptar"));*/
+            if(query.next())
+            {
+                QSqlRecord r = query.record();
+                helped_table->item(row,2)->setText(r.value("cDescripcionReducida").toString());
+                if (this->comprando)
+                     helped_table->item(row,3)->setText(r.value("rCoste").toString());
+                else
+                    helped_table->item(row,3)->setText(r.value("pvp").toString());
+
+            }
+            else if(helped_table->item(row,0)->text() !="")
+            {
+                QMessageBox box(helped_table->parentWidget()->parentWidget());
+                box.setText(tr("Codigo de articulo desconocido "
+                               "Si lo desea puede introducir un artículo directamente que no esté en la Base de datos, "
+                               "pero no registrará acumulados"));
+                box.setModal(true);
+                box.setIcon(QMessageBox::Warning);
+                box.setFocus();
+                box.exec();
+                /*QMessageBox::information(helped_table->parentWidget(),
+                                     tr("Codigo desconocido"),
+                                     tr("Codigo de articulo desconocido "
+                                        "Si lo desea puede introducir un artículo directamente que no esté en la Base de datos, "
+                                        "pero no registrará acumulados"),tr("Aceptar"));*/
+            }
         }
     }
 }
@@ -672,8 +682,14 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
         }
         if(keyEvent->key() == Qt::Key_F1)
         {
-            searchArticulo();
-            handle_cellChanged(helped_table->currentRow(),helped_table->currentColumn());
+            if (this->comprando  == false && this->tarifa <=0) {
+                QMessageBox::warning(qApp->activeWindow(),tr("Busqueda de producto/servicio"),
+                                     tr("Debe seleccionar un cliente con tarifa asignada para poder")+
+                                     tr("buscar y seleccionar artículos/servicios"),tr("Aceptar"));
+            } else{
+                searchArticulo();
+                handle_cellChanged(helped_table->currentRow(),helped_table->currentColumn());
+            }
         }
         helped_table->blockSignals(false);
     }

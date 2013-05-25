@@ -26,6 +26,7 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
 
     helper.set_Tipo(false);
     helper.help_table(ui->Lineas);
+    helper.set_tarifa(0);
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
     connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
@@ -110,6 +111,7 @@ void FrmPedidos::LLenarCampos()
 
     ui->txtcCif->setText(oPedido->cCif);
     ui->chklRecargoEq->setChecked(oPedido->lRecargoEquivalencia==1);
+        helper.set_tarifa(oCliente3->nTarifaCliente);
     ui->txtrSubtotal->setText(QString::number(oPedido->rSubtotal));
     ui->txtrImporteDescuento->setText(QString::number(oPedido->rDto));
     //oPedido->nDto;
@@ -178,6 +180,7 @@ void FrmPedidos::LLenarCamposCliente()
     ui->txtcProvincia->setText(oCliente3->cProvincia);
     //ui->txtcPais->setText(oCliente3->cPais);
     ui->txtcCif->setText(oCliente3->cCifNif);
+    helper.set_tarifa(oCliente3->nTarifaCliente);
     if (oCliente3->lIRPF==1) {
         ui->chklRecargoEq->setChecked(true);
         oPedido->lRecargoEquivalencia = (1);
