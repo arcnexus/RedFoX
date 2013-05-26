@@ -33,6 +33,7 @@ private slots:
     void buscar_proveeedor();
     void anadir_pedido();
     void guardar_pedido();
+    void editar_pedido();
     void siguiente();
     void anterior();
     void llenar_campos();

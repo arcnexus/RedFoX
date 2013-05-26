@@ -303,7 +303,7 @@ background-color: rgb(46, 85, 127);</string>
                <string>T.P.V</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(133, 170, 142);</string>
@@ -525,7 +525,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
                <string>Gestión de Clientes/pacientes</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(133, 170, 142);</string>
@@ -551,10 +551,10 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
                <string>Salir de Maya</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
+               <string notr="true">
 background-color: rgb(133, 170, 142);</string>
               </property>
               <property name="text">
@@ -581,7 +581,7 @@ background-color: rgb(133, 170, 142);</string>
                <string>Recepción de pedidos</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(133, 170, 142);</string>
@@ -607,7 +607,7 @@ background-color: rgb(133, 170, 142);</string>
                <string>Gestión de Producto</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(133, 170, 142);</string>
@@ -644,7 +644,7 @@ color: rgb(255, 255, 127);</string>
                <string>Pedidos a proveedores</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(133, 170, 142);</string>
@@ -705,7 +705,7 @@ color: rgb(255, 255, 127);</string>
                <string>Gestión de Proveedores</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(133, 170, 142);</string>
@@ -742,7 +742,7 @@ color: rgb(255, 255, 127);</string>
                <string>albaranes a clientes</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(133, 170, 142);</string>
@@ -774,10 +774,10 @@ color: rgb(255, 255, 127);</string>
                <string>Bloquear Maya</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
+               <string notr="true">
 background-color: rgb(133, 170, 142);</string>
               </property>
               <property name="text">
@@ -801,7 +801,7 @@ background-color: rgb(133, 170, 142);</string>
                <string>Facturas de proveedores</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(133, 170, 142);</string>
@@ -827,7 +827,7 @@ background-color: rgb(133, 170, 142);</string>
                <string>Albaranes de proveedores</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(133, 170, 142);</string>
@@ -880,7 +880,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
                <string>Pedidos de clientes</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(133, 170, 142);</string>
@@ -932,7 +932,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
                <string>Gestión de presupuestos a clientes</string>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(133, 170, 142);</string>
@@ -981,7 +981,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
      <x>0</x>
      <y>0</y>
      <width>1245</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="defaultUp">

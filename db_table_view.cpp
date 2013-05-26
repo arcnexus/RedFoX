@@ -25,6 +25,8 @@ Db_table_View::Db_table_View(QWidget *parent) :
 
     ui->btn_print->setMenu(print_menu);
     ui->txtBuscar->setFocus();
+            ui->resultado_list->viewport()->installEventFilter(this);
+
 }
 
 Db_table_View::~Db_table_View()
@@ -223,4 +225,20 @@ void Db_table_View::on_txtBuscar_textChanged(const QString &arg1)
 void Db_table_View::on_txtBuscar_editingFinished()
 {
     ui->resultado_list->setFocus();
+    ui->resultado_list->selectRow(ui->resultado_list->currentIndex().row());
+}
+
+bool Db_table_View::eventFilter(QObject *target, QEvent *event)
+{
+    Q_UNUSED(target)
+    if (event->type() == QEvent::KeyPress)
+    {
+        ui->resultado_list->blockSignals(true);
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_Tab)
+        {
+            ui->btn_aceptar->setFocus();
+        }
+        ui->resultado_list->blockSignals(false);
+    }
 }

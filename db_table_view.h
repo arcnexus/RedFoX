@@ -42,6 +42,7 @@ private slots:
     void on_txtBuscar_textChanged(const QString &arg1);
 
     void on_txtBuscar_editingFinished();
+    bool eventFilter(QObject *target, QEvent *event);
 
 protected:
     void resizeEvent(QResizeEvent *);

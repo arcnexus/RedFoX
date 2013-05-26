@@ -23,12 +23,18 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     helper.set_Tipo(true);
     helper.help_table(ui->Lineas);
     helper.set_tarifa(1);
+    helper.set_Guardar_linea_directamente(true);
+    helper.set_db("empresa");
+    helper.set_tabla_activa("lin_ped_pro");
+    helper.set_id_cabecera(0);
+
 
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
     connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
     connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
     connect(ui->btnAnadir,SIGNAL(clicked()),this,SLOT(anadir_pedido()));
+    connect(ui->btnEditar,SIGNAL(clicked()),this,SLOT(editar_pedido()));
     connect(ui->btnGuardar,SIGNAL(clicked()),this,SLOT(guardar_pedido()));
     connect(ui->btnSiguiente,SIGNAL(clicked()),this,SLOT(siguiente()));
     connect(ui->btnAnterior,SIGNAL(clicked()),this,SLOT(anterior()));
@@ -274,11 +280,17 @@ void FrmPedidosProveedor::guardar_pedido()
     guardar_campos_en_objeto();
     oPedido_proveedor->id =this->id;
     oPedido_proveedor->guardar();
+
+    int regs = ui->Lineas->rowCount();
+    helper.saveTable(oPedido_proveedor->id,"empresa","lin_ped_pro");
     oPedido_proveedor->recuperar(oPedido_proveedor->id);
-
     llenar_campos();
-    helper.saveTable(1,"empresa","lin_ped_pro");
+}
 
+void FrmPedidosProveedor::editar_pedido()
+{
+    estadoedicion();
+    ui->txtcCodigoProveedor->setFocus();
 }
 
 void FrmPedidosProveedor::siguiente()
@@ -298,6 +310,7 @@ void FrmPedidosProveedor::anterior()
 void FrmPedidosProveedor::llenar_campos()
 {
     this->id =oPedido_proveedor->id;
+    helper.set_id_cabecera(oPedido_proveedor->id);
     ui->txtnPedido->setText(QString::number(oPedido_proveedor->nPedido));
     ui->lblSerie->setText(QString::number(oPedido_proveedor->nEjercicio));
     ui->lblnumero_pedido->setText(QString::number(oPedido_proveedor->nPedido));
