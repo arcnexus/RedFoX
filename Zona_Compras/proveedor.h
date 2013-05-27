@@ -1,7 +1,7 @@
 #ifndef PROVEEDOR_H
 #define PROVEEDOR_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class Proveedor : public QObject
 {

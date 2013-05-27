@@ -9,8 +9,8 @@
 #include "paciente.h"
 #include "frmaddtipocliente.h"
 #include "frmpersonascontactocliente.h"
-#include "Auxiliares/monetarydelegate.h"
-#include "Auxiliares/datedelegate.h"
+#include "../Auxiliares/monetarydelegate.h"
+#include "../Auxiliares/datedelegate.h"
 #include "frmcobrardeuda.h"
 
 

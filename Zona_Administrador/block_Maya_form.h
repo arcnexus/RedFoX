@@ -1,7 +1,7 @@
 #ifndef BLOCK_MAYA_FORM_H
 #define BLOCK_MAYA_FORM_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class block_Maya_form;

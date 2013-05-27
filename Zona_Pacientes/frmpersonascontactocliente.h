@@ -2,7 +2,7 @@
 #define FRMPERSONASCONTACTOCLIENTE_H
 
 #include <QDialog>
-#include <Zona_Pacientes/cliente.h>
+#include "../Zona_Pacientes/cliente.h"
 
 namespace Ui {
 class frmPersonasContactoCliente;

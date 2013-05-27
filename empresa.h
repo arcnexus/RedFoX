@@ -1,7 +1,7 @@
 #ifndef EMPRESA_H
 #define EMPRESA_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class Empresa : public QObject
 {

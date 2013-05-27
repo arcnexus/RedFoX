@@ -8,6 +8,7 @@ Table_Helper::Table_Helper(QObject *parent) :
     moneda = "€";
     comprando = true;
     use_re = false;
+    m_cantidadArticulo=0;
 }
 
 Table_Helper::~Table_Helper()
@@ -52,9 +53,27 @@ void Table_Helper::help_table(QTableWidget *table)
     helped_table->setHorizontalHeaderLabels(headers);
     resizeTable();
 
-    connect(helped_table,SIGNAL(cellChanged(int,int)),this,SLOT(handle_cellChanged(int,int)));
-
+   // connect(helped_table,SIGNAL(cellChanged(int,int)),this,SLOT(handle_cellChanged(int,int)));
+    //connect(helped_table,SIGNAL(cellActivated(int,int)),this,SLOT(handle_cellActivated(int,int)));
+    connect(helped_table,SIGNAL(currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)),this,SLOT(handle_currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)));
     helped_table->installEventFilter(this);
+}
+
+void Table_Helper::setDatabase(QString db, QString table)
+{
+    m_db = db;
+    m_db_table = table;
+    m_headers.clear();
+
+    QSqlQuery query(QSqlDatabase::database(db));
+    if(query.exec("SHOW COLUMNS FROM "+m_db_table))
+    {
+        while(query.next())
+        {
+            QSqlRecord r = query.record();
+            m_headers << r.value(0).toString();
+        }
+    }
 }
 
 void Table_Helper::set_moneda(QString moneda)
@@ -175,6 +194,9 @@ void Table_Helper::addRow()
 {
     if(helped_table)
     {
+        if(helped_table->rowCount()>0)
+            saveLine(row_id.at(helped_table->rowCount()-1),helped_table->rowCount()-1,m_idCab,m_db,m_db_table,m_headers);
+        row_id.append(0);
         resizeTable();
         helped_table->blockSignals(true);
         helped_table->setRowCount(helped_table->rowCount()+1);
@@ -208,6 +230,7 @@ void Table_Helper::addRow()
             if(Configuracion_global->ivas[keys.at(i)].value("nombre_interno") == "base1")
                 helped_table->item(row,7)->setText(keys.at(i));
         helped_table->blockSignals(false);
+        helped_table->setFocus();
         helped_table->setCurrentCell(helped_table->rowCount()-1,0);
         helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
     }
@@ -217,6 +240,7 @@ void Table_Helper::addRow(QSqlRecord r)
     addRow();
     helped_table->blockSignals(true);
     int row = helped_table->rowCount()-1;
+    row_id[helped_table->rowCount()-1] = r.value(0).toInt();
     helped_table->item(row,0)->setText(r.value(3).toString());
     qDebug() << "codigo:" << r.value(3).toString();
     helped_table->item(row,1)->setText(r.value(4).toString());
@@ -259,19 +283,35 @@ void Table_Helper::removeRow()
     calcularDesglose();
 }
 
-void Table_Helper::handle_cellChanged(int row, int column)
+void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
 {
-    if (column == 0)
-        rellenar_con_Articulo(row);
-    else if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
-        comprobarCantidad(row);
-    else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
-        comprobarDescuento(row);
-    else if(column == 9)
-        comprobarStock(row);
+    if(current)
+        if(current->column() == 1)
+            m_cantidadArticulo = current->text().toDouble();
 
-    calcularTotal();
-    calcularDesglose();
+    if(previous)
+    {
+        int column = previous->column();
+        int row = previous->row();
+        helped_table->blockSignals(true);
+        if (column == 0)
+            rellenar_con_Articulo(row);
+        else if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
+        {
+            comprobarCantidad(row);
+        }
+        else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
+            comprobarDescuento(row);
+        else if(column == 9)
+            comprobarStock(row);
+
+        if(column == 1 || column==3)
+        {
+            calcularTotal();
+            calcularDesglose();
+        }
+        helped_table->blockSignals(false);
+    }
 }
 
 void Table_Helper::calcularTotal()
@@ -446,7 +486,7 @@ void Table_Helper::comprobarDescuento(int row)
 double Table_Helper::calcularTotalLinea(int row)
 {
     int cantidad = helped_table->item(row,1)->text().toInt();
-    double pvp = helped_table->item(row,3)->text().toDouble();
+    double pvp = helped_table->item(row,3)->text().replace(",",".").toDouble();
     double subtotal = cantidad * pvp;
     helped_table->item(row,4)->setText(QString::number(subtotal,'f',2));
 
@@ -552,17 +592,23 @@ void Table_Helper::rellenar_con_Articulo(int row)
 
 bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_table, QStringList headers)
 {
+    return saveLine(0, row, id_cabecera,  db,  db_table,  headers);
+}
+
+bool Table_Helper::saveLine(int id, int row, int id_cabecera, QString db, QString db_table, QStringList headers)
+{
     bool succes = true;
 
     QSqlQuery query(QSqlDatabase::database(db));
+    QSqlQuery i_query(QSqlDatabase::database("Maya"));
     QString item_id = QString("SELECT Id FROM articulos WHERE cCodigo = '%1' LIMIT 1")
             .arg(helped_table->item(row,0)->text());
     int articulo_id = -1;
 
-    if(query.exec(item_id))
+    if(i_query.exec(item_id))
     {
-        if(query.next())
-            articulo_id = query.record().value(0).toInt();
+        if(i_query.next())
+            articulo_id = i_query.record().value(0).toInt();
     }
     else
         succes = false;
@@ -571,7 +617,7 @@ bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_tab
     {
         QVariantList values;
         values.clear();
-        values << "NULL" << id_cabecera << articulo_id;
+        values << id << id_cabecera << articulo_id;
         values << helped_table->item(row,0)->text();
         values << helped_table->item(row,1)->text().toInt();
         values << helped_table->item(row,2)->text();
@@ -587,24 +633,38 @@ bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_tab
         //cantidad = cantidadaservir por defecto
 //        if(helped_table->columnCount()== 10)
 //            values << helped_table->item(row,9)->text().toInt();
+        QString sql;
+        if(id == 0)
+        {
+            sql = "INSERT INTO ";
+            sql.append(db_table);
+            sql.append("(");
+            sql.append(headers.join(","));
+            sql.append(") VALUES (");
+            for (int i=0;i<headers.size();i++)
+            {
+                if(i!= headers.size()-1)
+                    sql.append(QString(":%1,").arg(headers.at(i)));
+                else
+                    sql.append(QString(":%1)").arg(headers.at(i)));
+            }
 
-        QString sql = "INSERT INTO ";
-        sql.append(db_table);
-        sql.append("(");
-        sql.append(headers.join(","));
-        sql.append(") VALUES (");
-        for (int i=0;i<headers.size();i++)
-        {
-            if(i!= headers.size()-1)
-                sql.append(QString(":%1,").arg(headers.at(i)));
-            else
-                sql.append(QString(":%1)").arg(headers.at(i)));
+            query.prepare(sql);
+            for(int i = 0; i<headers.size();i++)
+            {
+                QString id = QString(":%1").arg(headers.at(i));
+                query.bindValue(id,values.at(i).toString());
+            }
         }
-        query.prepare(sql);
-        for(int i = 0; i<headers.size();i++)
+        else //editando
         {
-            QString id = QString(":%1").arg(headers.at(i));
-            query.bindValue(id,values.at(i).toString());
+            sql = "UPDATE %1 SET ";
+            for (int i=1;i<headers.size();i++)
+            {
+                sql.append(QString("%1=%2").arg(headers.at(i)).arg(values.at(i).toString()));
+            }
+            sql.append(QString("WHERE id=%1;").arg(id));
+            query.prepare(sql);
         }
         if(!query.exec())
         {
@@ -627,16 +687,16 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
             if(helped_table->currentRow() == (helped_table->rowCount()-1))
                 addRow();
         }
-        if (keyEvent->key() == Qt::Key_Return)
+        if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Tab)
         {
             if(helped_table->currentColumn() != helped_table->columnCount()-1)
             {
                 if(helped_table->currentColumn()== 3 )
                     helped_table->setCurrentCell(helped_table->currentRow(),helped_table->currentColumn()+2);
-                else if(helped_table->currentColumn()== 6 )
+                else if(helped_table->currentColumn()>= 6 )
                 {
                     addRow();
-                    return false;
+                    return true;
                 }
                 else
                     helped_table->setCurrentCell(helped_table->currentRow(),helped_table->currentColumn()+1);

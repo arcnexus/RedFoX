@@ -18,8 +18,8 @@ class FrmPedidosProveedor : public QDialog
 public:
     explicit FrmPedidosProveedor(QWidget *parent = 0);
     ~FrmPedidosProveedor();
-    Proveedor *oProveedor = new Proveedor(this);
-    PedidoProveedor *oPedido_proveedor = new PedidoProveedor(this);
+    Proveedor *oProveedor;// = new Proveedor(this);
+    PedidoProveedor *oPedido_proveedor;// = new PedidoProveedor(this);
     int id;
 
 private slots:

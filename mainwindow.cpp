@@ -1,15 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "login.h"
-#include "Zona_Administrador/frmempresas.h"
-#include "Zona_Compras/frmpedidosproveedor.h"
+#include "../Zona_Administrador/frmempresas.h"
+#include "../Zona_Compras/frmpedidosproveedor.h"
 //#include "frmconfiguracion.h"
-#include "Zona_Administrador/block_Maya_form.h"
+#include "../Zona_Administrador/block_Maya_form.h"
 #include "db_table_view.h"
 #include "Agenda/permisosagendaform.h"
 #include <QSplashScreen>
-#include <Almacen/frmtipostarifa.h>
-#include "Zona_Administrador/frmconfigmaya.h"
+#include <../Almacen/frmtipostarifa.h>
+#include "../Zona_Administrador/frmconfigmaya.h"
 
 Configuracion * Configuracion_global = 0;
 
@@ -17,7 +17,7 @@ void MainWindow::crear_barraMantenimiento()
 {
     btn_clientes = new ToolBarButton(tr("Clientes"),":/Icons/PNG/clientes_2.png",this);
     btn_proovedores = new ToolBarButton(tr("Proveedores"),":/Icons/PNG/proveedores_2.png",this);
-    btn_almacen = new ToolBarButton(tr("Almacen"),":/Icons/PNG/Box.png",this);
+    btn_almacen = new ToolBarButton(tr("../Almacen"),":/Icons/PNG/Box.png",this);
     btn_agenda = new ToolBarButton(tr("Agenda"),":/Icons/PNG/Calender.png",this);
 
     QFrame*  line = new QFrame(ui->page_manten);
@@ -213,7 +213,7 @@ MainWindow::MainWindow(QWidget *parent) :
     on_edit = false;
     Configuracion_global->CargarDatos();
     QStringList modulos;
-    modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas")  << tr("Contabilidad") << tr("Almacen")  << tr("Administrador");
+    modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas")  << tr("Contabilidad") << tr("../Almacen")  << tr("Administrador");
     ui->comboBox->addItems(modulos);
     crear_barraMantenimiento();
 

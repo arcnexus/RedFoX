@@ -2,9 +2,9 @@
 #include "ui_frmpedidos.h"
 
 
-#include "Almacen/articulo.h"
+#include "../Almacen/articulo.h"
 
-#include "Busquedas/frmbuscarcliente.h"
+#include "../Busquedas/frmbuscarcliente.h"
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
     QDialog(parent),

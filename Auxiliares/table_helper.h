@@ -15,6 +15,8 @@ public:
     explicit Table_Helper(QObject *parent = 0);
     ~Table_Helper();
     void help_table(QTableWidget* table);
+    void setDatabase(QString db, QString table);
+    void setIdHeader(int id){m_idCab = id;}
     void set_Searcher(Db_table_View* table_view);
     void set_moneda(QString moneda);
     void set_tarifa(int tarifa);
@@ -33,7 +35,7 @@ public slots:
     void set_UsarRE(bool state);
     void addRow();
     void removeRow();
-    void handle_cellChanged(int row, int column);
+    void handle_currentItemChanged(QTableWidgetItem * current, QTableWidgetItem * previous);
 private:
     QTableWidget* helped_table;
     QString moneda;
@@ -56,10 +58,17 @@ private:
     bool comprando;
     bool use_re;  
     bool saveLine(int row,int id_cabecera,QString db, QString db_table, QStringList headers);
+    bool saveLine(int id, int row, int id_cabecera, QString db, QString db_table, QStringList headers);
     void addRow(QSqlRecord r);
 
     bool eventFilter(QObject *target, QEvent *event);
     void searchArticulo();
+    int m_cantidadArticulo;
+    QVector<int> row_id;
+    int m_idCab;
+    QString m_db;
+    QString m_db_table;
+    QStringList m_headers;
 };
 
 #endif // TABLE_HELPER_H

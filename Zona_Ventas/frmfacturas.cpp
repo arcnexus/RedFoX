@@ -1,9 +1,9 @@
 #include "frmfacturas.h"
 #include "ui_frmfacturas.h"
-#include "Busquedas/frmbuscarcliente.h"
-#include "Busquedas/frmBuscarFactura.h"
+#include "../Busquedas/frmbuscarcliente.h"
+#include "../Busquedas/frmBuscarFactura.h"
 
-#include "Almacen/articulo.h"
+#include "../Almacen/articulo.h"
 
 frmFacturas::frmFacturas( QWidget *parent) :
     QDialog(parent),

@@ -1,6 +1,6 @@
 #include "db_table_view.h"
 #include "ui_db_table_view.h"
-#include "Auxiliares/monetarydelegate.h"
+#include "../Auxiliares/monetarydelegate.h"
 
 
 
@@ -175,9 +175,14 @@ void Db_table_View::on_btn_aceptar_clicked()
     model->submitAll();
     if(model->rowCount()>0)
     {
-        QSqlRecord r = model->record(ui->resultado_list->currentIndex().row());
-        selected_value = r.value(selection_column).toString();
-        ui->resultado_list->currentIndex();
+        QModelIndexList indexes = ui->resultado_list->selectionModel()->selection().indexes();
+        if (!indexes.isEmpty())
+        {
+            QModelIndex index = indexes.at(0);
+            int row = index.row();
+            QSqlRecord r = model->record(row);
+            selected_value = r.value(selection_column).toString();
+        }
     }
     Db_table_View::done(QDialog::Accepted);
 }

@@ -2,8 +2,8 @@
 #include "ui_frmpresupuestoscli.h"
 #include <QSqlQueryModel>
 
-#include "Busquedas/frmbuscarcliente.h"
-#include "Almacen/articulo.h"
+#include "../Busquedas/frmbuscarcliente.h"
+#include "../Almacen/articulo.h"
 #include <QMessageBox>
 
 

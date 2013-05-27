@@ -1,7 +1,7 @@
 #ifndef PRESUPUESTO_H
 #define PRESUPUESTO_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class Presupuesto
 {

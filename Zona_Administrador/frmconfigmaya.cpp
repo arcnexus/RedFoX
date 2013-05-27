@@ -2,7 +2,7 @@
 #include "ui_frmconfigmaya.h"
 #include <QtSql>
 #include <QSqlDatabase>
-#include "configuracion.h"
+#include "../configuracion.h"
 
 
 //Configuracion * Configuracion_global = 0;

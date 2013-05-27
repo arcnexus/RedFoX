@@ -2,7 +2,7 @@
 #define FRMCOBRARDEUDA_H
 
 #include <QDialog>
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 #include "cliente.h"
 namespace Ui {
 class frmCobrarDeuda;

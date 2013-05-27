@@ -2,13 +2,13 @@
 #include "ui_frmproveedores.h"
 #include "proveedor.h"
 
-#include "Busquedas/frmbuscarpoblacion.h"
+#include "../Busquedas/frmbuscarpoblacion.h"
 #include "frmfacturasproveedor.h"
 #include "frmpedidosproveedor.h"
 #include "frmalbaranproveedor.h"
-#include "Auxiliares/monetarydelegate.h"
-#include "Auxiliares/datedelegate.h"
-#include "Busquedas/frmbuscarproveedor.h"
+#include "../Auxiliares/monetarydelegate.h"
+#include "../Auxiliares/datedelegate.h"
+#include "../Busquedas/frmbuscarproveedor.h"
 
 
 #ifdef WIN32

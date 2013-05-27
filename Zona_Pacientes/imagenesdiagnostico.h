@@ -1,7 +1,7 @@
 #ifndef IMAGENESDIAGNOSTICO_H
 #define IMAGENESDIAGNOSTICO_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class ImagenesDiagnostico : public QObject
 {

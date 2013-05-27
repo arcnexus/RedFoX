@@ -1,7 +1,7 @@
 #ifndef VADEMECUM_H
 #define VADEMECUM_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class vademecum : public QObject
 {

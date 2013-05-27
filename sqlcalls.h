@@ -1,7 +1,7 @@
 #ifndef SQLCALLS_H
 #define SQLCALLS_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class SqlCalls : public QObject
 {

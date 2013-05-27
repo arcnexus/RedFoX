@@ -112,9 +112,6 @@ SOURCES += main.cpp\
     Zona_Compras/pedidoproveedor.cpp \ 
     Almacen/frmtipostarifa.cpp \
     Zona_Ventas/frmcajaabierta.cpp \
-    SOAP/stdsoap2.cpp \
-    SOAP/soapcheckVatBindingProxy.cpp \
-    SOAP/soapC.cpp \
     Almacen/frmasociarproveedor.cpp \
     Auxiliares/monetarydelegate.cpp \
     Almacen/frmlistadosarticulo.cpp \
@@ -125,7 +122,9 @@ SOURCES += main.cpp\
     Zona_Pacientes/frmanadirhierb.cpp \
     Almacen/frmeditar_tarifas.cpp \
     Auxiliares/datedelegate.cpp \
-    Zona_Pacientes/frmcobrardeuda.cpp
+    Zona_Pacientes/frmcobrardeuda.cpp \
+    qchartpiece.cpp \
+    openchart.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -202,11 +201,6 @@ HEADERS  += mainwindow.h \
     Zona_Compras/pedidoproveedor.h \
     Almacen/frmtipostarifa.h \
     Zona_Ventas/frmcajaabierta.h \
-    SOAP/stdsoap2.h \
-    SOAP/soapStub.h \
-    SOAP/soapH.h \
-    SOAP/soapcheckVatBindingProxy.h \
-    SOAP/checkVatBinding.nsmap \
     Almacen/frmasociarproveedor.h \
     Auxiliares/monetarydelegate.h \
     Almacen/frmlistadosarticulo.h \
@@ -218,7 +212,9 @@ HEADERS  += mainwindow.h \
     Zona_Pacientes/frmanadirhierb.h \
     Almacen/frmeditar_tarifas.h \
     Auxiliares/datedelegate.h \
-    Zona_Pacientes/frmcobrardeuda.h
+    Zona_Pacientes/frmcobrardeuda.h \
+    openchart.h \
+    qchartpiece.h
 
 
 FORMS    += mainwindow.ui \
@@ -281,10 +277,6 @@ RESOURCES += \
 
 OTHER_FILES += \
     TODO.txt \
-    SOAP/checkVatBinding.checkVatApprox.res.xml \
-    SOAP/checkVatBinding.checkVatApprox.req.xml \
-    SOAP/checkVatBinding.checkVat.res.xml \
-    SOAP/checkVatBinding.checkVat.req.xml
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lcommon
@@ -360,16 +352,6 @@ unix:!macx: LIBS += -L$$PWD/LibsGraficas/ -lopenchartplugin
 
 INCLUDEPATH += $$PWD/LibsGraficas
 DEPENDPATH += $$PWD/LibsGraficas
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/LibsGraficas/ -lopenchartplugin
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/LibsGraficas/ -lopenchartplugind
-
-INCLUDEPATH += $$PWD/
-DEPENDPATH += $$PWD/
-
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/LibsGraficas/openchartplugin.lib
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/LibsGraficas/openchartplugind.lib
-
 
 unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lcommon
 

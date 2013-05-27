@@ -1,6 +1,6 @@
 #include "frmpedidosproveedor.h"
 #include "ui_frmpedidosproveedor.h"
-#include "Busquedas/frmbuscarproveedor.h"
+#include "../Busquedas/frmbuscarproveedor.h"
 
 
 
@@ -11,6 +11,8 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     helper(this)
 {
     ui->setupUi(this);
+    oProveedor = new Proveedor(this);
+    oPedido_proveedor = new PedidoProveedor(this);
     estadolectura();
     ui->lblImpreso->setVisible(false);
     ui->lblnombreProveedor->clear();
@@ -23,6 +25,8 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     helper.set_Tipo(true);
     helper.help_table(ui->Lineas);
     helper.set_tarifa(1);
+    helper.setDatabase("empresa","lin_ped_pro");
+    helper.setIdHeader(1);
 //    helper.set_Guardar_linea_directamente(true);
 //    helper.set_db("empresa");
 //    helper.set_tabla_activa("lin_ped_pro");

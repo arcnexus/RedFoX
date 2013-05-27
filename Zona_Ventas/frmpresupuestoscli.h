@@ -1,11 +1,11 @@
 #ifndef FRMPRESUPUESTOSCLI_H
 #define FRMPRESUPUESTOSCLI_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 #include "presupuesto.h"
-#include "Zona_Pacientes/cliente.h"
+#include "../Zona_Pacientes/cliente.h"
 
-#include "Auxiliares/table_helper.h"
+#include "../Auxiliares/table_helper.h"
 #include <QTimer>
 namespace Ui {
 class FrmPresupuestosCli;

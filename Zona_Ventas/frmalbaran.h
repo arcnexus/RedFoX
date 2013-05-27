@@ -1,10 +1,10 @@
 #ifndef FRMALBARAN_H
 #define FRMALBARAN_H
 
-#include "Auxiliares/Globlal_Include.h"
-#include "Busquedas/frmbuscarcliente.h"
+#include "../Auxiliares/Globlal_Include.h"
+#include "../Busquedas/frmbuscarcliente.h"
 //
-#include "Auxiliares/table_helper.h"
+#include "../Auxiliares/table_helper.h"
 namespace Ui {
 class FrmAlbaran;
 }

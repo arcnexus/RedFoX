@@ -1,11 +1,11 @@
 #ifndef FRMFACTURAS_H
 #define FRMFACTURAS_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 #include "factura.h"
-#include "Zona_Pacientes/cliente.h"
-#include "Auxiliares/table_helper.h"
+#include "../Zona_Pacientes/cliente.h"
+#include "../Auxiliares/table_helper.h"
 namespace Ui {
 class frmFacturas;
 }

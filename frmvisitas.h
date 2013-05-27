@@ -1,7 +1,7 @@
 #ifndef FRMVISITAS_H
 #define FRMVISITAS_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class frmVisitas;

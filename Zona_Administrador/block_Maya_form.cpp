@@ -1,4 +1,4 @@
-#include "Zona_Administrador/block_Maya_form.h"
+#include "../Zona_Administrador/block_Maya_form.h"
 #include "ui_block_Maya_form.h"
 
 block_Maya_form::block_Maya_form(QWidget *parent) :

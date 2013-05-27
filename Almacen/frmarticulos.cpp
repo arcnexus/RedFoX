@@ -1,8 +1,8 @@
 #include "frmarticulos.h"
 #include "ui_frmarticulos.h"
 #include "../Almacen/frmtarifas.h"
-#include "Busquedas/frmbuscarproveedor.h"
-#include "Almacen/frmasociarproveedor.h"
+#include "../Busquedas/frmbuscarproveedor.h"
+#include "../Almacen/frmasociarproveedor.h"
 #include "../Auxiliares/spinboxdelegate.h"
 #include "../db_table_view.h"
 

@@ -1,7 +1,7 @@
 #ifndef COLUMNAFECHA_H
 #define COLUMNAFECHA_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 /*
  * columnafecha.h
  *

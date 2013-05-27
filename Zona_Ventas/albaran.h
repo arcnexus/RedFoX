@@ -1,7 +1,7 @@
 #ifndef ALBARAN_H
 #define ALBARAN_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class Albaran : public QObject
 {

@@ -1,22 +1,22 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "Auxiliares/Globlal_Include.h"
-#include "Auxiliares/init_form.h"
-#include "Auxiliares/toolbarbutton.h"
+#include "../Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/init_form.h"
+#include "../Auxiliares/toolbarbutton.h"
 //
 #include "Zona_Pacientes/frmClientes.h"
 
-#include "Almacen/frmarticulos.h"
-#include "Zona_Compras/frmproveedores.h"
+#include "../Almacen/frmarticulos.h"
+#include "../Zona_Compras/frmproveedores.h"
 
 #include "TPV/frmcajaminuta.h"
 
-#include "Zona_Compras/frmpedidosproveedor.h"
-#include "Zona_Compras/frmalbaranproveedor.h"
-#include "Zona_Compras/frmfacturasproveedor.h"
-#include "Zona_Compras/frmorden_pedido_producto.h"
-#include "Zona_Compras/frmrecepcion_pedidos.h"
+#include "../Zona_Compras/frmpedidosproveedor.h"
+#include "../Zona_Compras/frmalbaranproveedor.h"
+#include "../Zona_Compras/frmfacturasproveedor.h"
+#include "../Zona_Compras/frmorden_pedido_producto.h"
+#include "../Zona_Compras/frmrecepcion_pedidos.h"
 
 #include "Zona_Ventas/frmfacturaralabaranes.h"
 #include "Zona_Ventas/frmalbaran.h"

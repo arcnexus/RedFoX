@@ -1,7 +1,7 @@
 #ifndef FACTURA_H
 #define FACTURA_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class Factura : public QObject
 {

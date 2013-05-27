@@ -1,6 +1,6 @@
 #ifndef PEDIDOS_H
 #define PEDIDOS_H
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 class Pedidos
 {

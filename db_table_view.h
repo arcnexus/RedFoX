@@ -1,7 +1,7 @@
 #ifndef DB_TABLE_VIEW_H
 #define DB_TABLE_VIEW_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 namespace Ui {
 class Db_table_View;
 }

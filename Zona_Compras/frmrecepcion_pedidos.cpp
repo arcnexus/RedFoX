@@ -1,8 +1,8 @@
 #include "frmrecepcion_pedidos.h"
 #include "ui_frmrecepcion_pedidos.h"
-#include "Auxiliares/monetarydelegate.h"
-#include "Almacen/frmeditar_tarifas.h"
-#include "Busquedas/frmbuscarcie.h"
+#include "../Auxiliares/monetarydelegate.h"
+#include "../Almacen/frmeditar_tarifas.h"
+#include "../Busquedas/frmbuscarcie.h"
 
 
 Frmrecepcion_pedidos::Frmrecepcion_pedidos(QWidget *parent) :

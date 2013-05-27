@@ -208,8 +208,6 @@ int main(int argc, char *argv[])
 
    a.setStyle("fusion");
 
-   //a.setStyle("Plastique");
-
    QFile file(":Icons/maya.qss");
 
 
@@ -244,11 +242,7 @@ int main(int argc, char *argv[])
            w.showInfo();
            Configuracion_global->id_usuario_activo = l.getIdUser();
            w.setWindowState(Qt::WindowMaximized);
-
-
            w.showMaximized();
-
-  //          w.move(0,0);
            return a.exec();
        }
    }

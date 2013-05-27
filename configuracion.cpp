@@ -1,4 +1,4 @@
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 #include "openrptLibs/include/orprerender.h"
 #include "openrptLibs/include/parameteredit.h"
@@ -6,8 +6,8 @@
 #include "openrptLibs/include/previewdialog.h"
 #include "openrptLibs/include/renderobjects.h"
 
-#include "SOAP/soapcheckVatBindingProxy.h"
-#include "SOAP/checkVatBinding.nsmap"
+//#include "SOAP/soapcheckVatBindingProxy.h"
+//#include "SOAP/checkVatBinding.nsmap"
 
 #include <QLineEdit>
 #include <QtNetwork/QSslConfiguration>
@@ -718,6 +718,7 @@ void Configuracion::imprimir(QString db, QString report, bool toPDF,bool preview
 
 bool Configuracion::comprobarNIF(QString country_code, QString nif)
 {
+    return true;/*
     _ns2__checkVat ns2__checkVat;
     QByteArray   code_bytes;
     QByteArray  nif_bytes = nif.toLatin1();
@@ -745,7 +746,7 @@ bool Configuracion::comprobarNIF(QString country_code, QString nif)
     {
         return ns2__checkVatResponse.valid;
     }
-    return false;
+    return false;*/
 }
 
 QString Configuracion::Crypt(QString input)

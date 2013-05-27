@@ -1,9 +1,9 @@
 #include "frmalbaran.h"
 #include "ui_frmalbaran.h"
 #include "albaran.h"
-#include "Zona_Pacientes/cliente.h"
+#include "../Zona_Pacientes/cliente.h"
 //
-#include "Almacen/articulo.h"
+#include "../Almacen/articulo.h"
 
 Albaran *oAlbaran = new Albaran();
 Cliente *oCliente2 = new Cliente();

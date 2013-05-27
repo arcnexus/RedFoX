@@ -33,7 +33,7 @@ void Proveedor::cargaracumulados(int id_proveedor)
 
 bool Proveedor::acumular(int id_proveedor, int mes, double importe)
 {
-
+return true;
 }
 
 void Proveedor::anadir_persona_contacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,

@@ -1,7 +1,7 @@
 #ifndef FRMPROVEEDORES_H
 #define FRMPROVEEDORES_H
 
-#include "Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class frmProveedores;
