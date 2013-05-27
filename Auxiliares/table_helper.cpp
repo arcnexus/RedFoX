@@ -8,7 +8,6 @@ Table_Helper::Table_Helper(QObject *parent) :
     moneda = "€";
     comprando = true;
     use_re = false;
-    tarifa = 0;
 }
 
 Table_Helper::~Table_Helper()
@@ -53,8 +52,7 @@ void Table_Helper::help_table(QTableWidget *table)
     helped_table->setHorizontalHeaderLabels(headers);
     resizeTable();
 
-    //connect(helped_table,SIGNAL(cellChanged(int,int)),this,SLOT(handle_cellChanged(int,int)));
-    connect(helped_table,SIGNAL(itemChanged(QTableWidgetItem*)),this,SLOT(cellDataChanged(QTableWidgetItem*)));
+    connect(helped_table,SIGNAL(cellChanged(int,int)),this,SLOT(handle_cellChanged(int,int)));
 
     helped_table->installEventFilter(this);
 }
@@ -72,26 +70,6 @@ void Table_Helper::set_tarifa(int tarifa)
 void Table_Helper::set_Tipo(bool is_compra)
 {
     comprando = is_compra;
-}
-
-void Table_Helper::set_tabla_activa(QString tabla)
-{
-    tabla_activa = tabla;
-}
-
-void Table_Helper::set_db(QString db_)
-{
-    db = db_;
-}
-
-void Table_Helper::set_id_cabecera(int id_cabece)
-{
-    id_cabecera = id_cabece;
-}
-
-void Table_Helper::set_Guardar_linea_directamente(bool guardar)
-{
-    save_line_directly = guardar;
 }
 
 void Table_Helper::blockTable(bool state)
@@ -183,9 +161,7 @@ bool Table_Helper::saveTable(int id_cabecera, QString db, QString db_table)
     }
     if(!headers.isEmpty())
     {
-        int rowtable = helped_table->rowCount();
-
-        for(int row= 0; row < rowtable; row++)
+        for(int row= 0; row < helped_table->rowCount() ; row++)
         {
             succes &= saveLine(row , id_cabecera , db , db_table , headers);
             if(!succes)
@@ -234,19 +210,6 @@ void Table_Helper::addRow()
         helped_table->blockSignals(false);
         helped_table->setCurrentCell(helped_table->rowCount()-1,0);
         helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
-        if (save_line_directly){
-            QString cSql = "insert into ";
-            cSql.append(tabla_activa);
-            cSql.append("(id_cab) values(");
-            cSql.append(QString::number(id_cabecera));
-            cSql.append(")");
-            QSqlQuery query(QSqlDatabase::database(db));
-            if(!query.exec(cSql)){
-                QMessageBox::warning(qApp->activeWindow(),tr("Insertar línea"),
-                                     tr("Falló la inserción de línea en la BD: %1").arg(query.lastError().text()),
-                                     tr("Aceptar"));
-            }
-        }
     }
 }
 void Table_Helper::addRow(QSqlRecord r)
@@ -258,10 +221,10 @@ void Table_Helper::addRow(QSqlRecord r)
     qDebug() << "codigo:" << r.value(3).toString();
     helped_table->item(row,1)->setText(r.value(4).toString());
     helped_table->item(row,2)->setText(r.value(5).toString());
-    helped_table->item(row,3)->setText(r.value(6).toString().replace(",","."));
-    helped_table->item(row,4)->setText(r.value(7).toString().replace(",","."));
-    helped_table->item(row,5)->setText(r.value(8).toString().replace(",","."));
-    helped_table->item(row,6)->setText(r.value(9).toString().replace(",","."));
+    helped_table->item(row,3)->setText(r.value(6).toString());
+    helped_table->item(row,4)->setText(r.value(7).toString());
+    helped_table->item(row,5)->setText(r.value(8).toString());
+    helped_table->item(row,6)->setText(r.value(9).toString());
     //helped_table->item(row,7)->setText(r.value(10).toString());
     QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
     for(int i = 0;i<keys.size();i++)
@@ -272,7 +235,7 @@ void Table_Helper::addRow(QSqlRecord r)
             break;
         }
     }
-    helped_table->item(row,8)->setText(r.value(11).toString().replace(",","."));
+    helped_table->item(row,8)->setText(r.value(11).toString());
     helped_table->blockSignals(false);
 }
 
@@ -298,27 +261,17 @@ void Table_Helper::removeRow()
 
 void Table_Helper::handle_cellChanged(int row, int column)
 {
-        if (column == 1)
-            rellenar_con_Articulo(row);
-        else if(column == 2 && !helped_table->item(row,0)->text().isEmpty())
-            comprobarCantidad(row);
-        else if(column == 6 && !helped_table->item(row,4)->text().isEmpty())
-            comprobarDescuento(row);
-        else if(column == 10)
-            comprobarStock(row);
+    if (column == 0)
+        rellenar_con_Articulo(row);
+    else if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
+        comprobarCantidad(row);
+    else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
+        comprobarDescuento(row);
+    else if(column == 9)
+        comprobarStock(row);
 
-        if(column == 2 || column == 5)
-        {
-            calcularTotal();
-            calcularDesglose();
-        }
-}
-
-void Table_Helper::cellDataChanged(QTableWidgetItem *item)
-{
-    helped_table->blockSignals(true);
-    handle_cellChanged(item->row(),item->column());
-    helped_table->blockSignals(false);
+    calcularTotal();
+    calcularDesglose();
 }
 
 void Table_Helper::calcularTotal()
@@ -422,7 +375,6 @@ void Table_Helper::comprobarCantidad(int row)
         else
         {
             QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),tr("Articulo no encontrado"),tr("Aceptar"));
-            helped_table->setFocus();
         }
     }
     if(comprando)
@@ -430,7 +382,6 @@ void Table_Helper::comprobarCantidad(int row)
         if((stock + cantidad) > stockMax)
             QMessageBox::warning(qApp->activeWindow(),tr("Stock superado"),
                                  tr("Con esta cantidad se superará el stock máximo establecido"),tr("Aceptar"));
-        helped_table->setFocus();
     }
     else
     {
@@ -438,7 +389,6 @@ void Table_Helper::comprobarCantidad(int row)
         {
             QMessageBox::warning(qApp->activeWindow(),tr("Stock insuficiente"),
                                  tr("No existe suficiente stock para satisfacer esta cantidad"),tr("Aceptar"));
-            helped_table->setFocus();
             if (helped_table->columnCount() == 10)
                 helped_table->item(row,9)->setText(QString::number(stock));
         }
@@ -446,7 +396,6 @@ void Table_Helper::comprobarCantidad(int row)
         {
             QMessageBox::warning(qApp->activeWindow(),tr("Stock bajo minimos"),
                                  tr("Con esta cantidad el stock estará por debajo del minimo establecido"),tr("Aceptar"));
-            helped_table->setFocus();
             if (helped_table->columnCount() == 10)
                 helped_table->item(row,9)->setText(QString::number(cantidad));
         }
@@ -473,7 +422,6 @@ void Table_Helper::comprobarStock(int row)
         else
         {
             QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),tr("Articulo no encontrado"),tr("Aceptar"));
-            helped_table->setFocus();
         }
     }
     if(aServir > cantidad)
@@ -482,7 +430,6 @@ void Table_Helper::comprobarStock(int row)
     {
         QMessageBox::warning(qApp->activeWindow(),tr("Stock insuficiente"),
                              tr("No existe suficiente stock para satisfacer esta cantidad"),tr("Aceptar"));
-        helped_table->setFocus();
         helped_table->item(row,9)->setText(QString::number(cantidad));
     }
 }
@@ -491,17 +438,15 @@ void Table_Helper::comprobarDescuento(int row)
 {
     double subTotal = helped_table->item(row,4)->text().toDouble();
     double dto = helped_table->item(row,5)->text().toDouble();
-    if((subTotal - dto) < 0){
+    if((subTotal - dto) < 0)
         QMessageBox::warning(qApp->activeWindow(),tr("Descuento excesivo"),
                              tr("Descuento mayor del valor del producto"),tr("Aceptar"));
-        helped_table->setFocus();
-    }
 }
 
 double Table_Helper::calcularTotalLinea(int row)
 {
-     int cantidad = helped_table->item(row,1)->text().toInt();
-    double pvp = helped_table->item(row,3)->text().replace(",",".").toDouble();
+    int cantidad = helped_table->item(row,1)->text().toInt();
+    double pvp = helped_table->item(row,3)->text().toDouble();
     double subtotal = cantidad * pvp;
     helped_table->item(row,4)->setText(QString::number(subtotal,'f',2));
 
@@ -576,53 +521,32 @@ void Table_Helper::calcular_por_Base(QString sbase)
 
 void Table_Helper::rellenar_con_Articulo(int row)
 {
-
-    if (this->comprando  == false && this->tarifa <=0){
-        QMessageBox::warning(qApp->activeWindow(),tr("Busqueda de producto/servicio"),
-                             tr("Debe seleccionar un cliente con tarifa asignada para poder")+
-                             tr("Seleccionar artículos/servicios"),tr("Aceptar"));
-        helped_table->setFocus();
-
-    } else
+    QString codigo = helped_table->item(row,0)->text();
+    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QString sql;
+    if (this->comprando)
+        sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1'").arg(codigo);
+    else
+        sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1' and tarifa = %2").arg(codigo,tarifa);
+    query.prepare(sql);
+    if(query.exec())
     {
-        QString codigo = helped_table->item(row,0)->text();
-        QSqlQuery query(QSqlDatabase::database("Maya"));
-        QString sql;
-        if (this->comprando)
-            sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1'").arg(codigo);
-        else
-            sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1' and tarifa = %2").arg(codigo).arg(tarifa);
-        query.prepare(sql);
-        if(query.exec())
+        if(query.next())
         {
-            if(query.next())
-            {
-                QSqlRecord r = query.record();
-                helped_table->item(row,2)->setText(r.value("cDescripcionReducida").toString());
-                if (this->comprando)
-                     helped_table->item(row,3)->setText(r.value("rCoste").toString());
-                else
-                    helped_table->item(row,3)->setText(r.value("pvp").toString());
+            QSqlRecord r = query.record();
+            helped_table->item(row,2)->setText(r.value("cDescripcionReducida").toString());
+            if (this->comprando)
+                 helped_table->item(row,3)->setText(r.value("rCoste").toString());
+            else
+                helped_table->item(row,3)->setText(r.value("pvp").toString());
 
-            }
-            else if(helped_table->item(row,0)->text() !="")
-            {
-                QMessageBox box(helped_table->parentWidget()->parentWidget());
-                box.setText(tr("Codigo de articulo desconocido "
-                               "Si lo desea puede introducir un artículo directamente que no esté en la Base de datos, "
-                               "pero no registrará acumulados"));
-                box.setModal(true);
-                box.setIcon(QMessageBox::Warning);
-                box.setFocus();
-                box.exec();
-                helped_table->setFocus();
-                /*QMessageBox::information(helped_table->parentWidget(),
-                                     tr("Codigo desconocido"),
-                                     tr("Codigo de articulo desconocido "
-                                        "Si lo desea puede introducir un artículo directamente que no esté en la Base de datos, "
-                                        "pero no registrará acumulados"),tr("Aceptar"));*/
-            }
         }
+        else if(helped_table->item(row,0)->text() !="")
+            QMessageBox::warning(helped_table,
+                                 tr("Codigo desconocido"),
+                                 tr("Codigo de articulo desconocido "
+                                    "Si lo desea puede introducir un artículo directamente que no esté en la Base de datos, "
+                                    "pero no registrará acumulados"),tr("Aceptar"));
     }
 }
 
@@ -630,22 +554,21 @@ bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_tab
 {
     bool succes = true;
 
-    QSqlQuery queryArt(QSqlDatabase::database("Maya"));
+    QSqlQuery query(QSqlDatabase::database(db));
     QString item_id = QString("SELECT Id FROM articulos WHERE cCodigo = '%1' LIMIT 1")
             .arg(helped_table->item(row,0)->text());
     int articulo_id = -1;
 
-    if(queryArt.exec(item_id))
+    if(query.exec(item_id))
     {
-        if(queryArt.next())
-            articulo_id = queryArt.record().value(0).toInt();
+        if(query.next())
+            articulo_id = query.record().value(0).toInt();
     }
     else
         succes = false;
 
     if(succes)
     {
-        QSqlQuery query(QSqlDatabase::database(db));
         QVariantList values;
         values.clear();
         values << "NULL" << id_cabecera << articulo_id;
@@ -678,25 +601,13 @@ bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_tab
                 sql.append(QString(":%1)").arg(headers.at(i)));
         }
         query.prepare(sql);
-
-        if(!comprando)
+        for(int i = 0; i<headers.size();i++)
         {
-            for(int i = 0; i<headers.size();i++)
-            {
-                QString id = QString(":%1").arg(headers.at(i));
-                query.bindValue(id,values.at(i).toString());
-            }
-        } else {
-            for(int i = 0; i<values.size();i++)
-            {
-                QString id = QString(":%1").arg(headers.at(i));
-                query.bindValue(id,values.at(i).toString());
-            }
+            QString id = QString(":%1").arg(headers.at(i));
+            query.bindValue(id,values.at(i).toString());
         }
         if(!query.exec())
         {
-            qDebug() << "Error:"  << query.lastError().text() <<"\n" << query.lastQuery();
-
             succes = false;            
         }
     }
@@ -705,21 +616,18 @@ bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_tab
 
 
 
-
-
 bool Table_Helper::eventFilter(QObject *target, QEvent *event)
 {
     Q_UNUSED(target)
     if (event->type() == QEvent::KeyPress)
     {
-        helped_table->blockSignals(true);
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if (keyEvent->key() == Qt::Key_Down)
         {
             if(helped_table->currentRow() == (helped_table->rowCount()-1))
                 addRow();
         }
-        if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Tab )
+        if (keyEvent->key() == Qt::Key_Return)
         {
             if(helped_table->currentColumn() != helped_table->columnCount()-1)
             {
@@ -728,31 +636,19 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
                 else if(helped_table->currentColumn()== 6 )
                 {
                     addRow();
-                    helped_table->blockSignals(false);
                     return false;
                 }
                 else
                     helped_table->setCurrentCell(helped_table->currentRow(),helped_table->currentColumn()+1);
                 helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
-                handle_cellChanged(helped_table->currentRow(),helped_table->currentColumn());
             }
             else
                 addRow();
-
         }
         if(keyEvent->key() == Qt::Key_F1)
         {
-            if (this->comprando  == false && this->tarifa <=0) {
-                QMessageBox::warning(qApp->activeWindow(),tr("Busqueda de producto/servicio"),
-                                     tr("Debe seleccionar un cliente con tarifa asignada para poder")+
-                                     tr("buscar y seleccionar artículos/servicios"),tr("Aceptar"));
-                helped_table->setFocus();
-            } else{
-                searchArticulo();
-                handle_cellChanged(helped_table->currentRow(),helped_table->currentColumn());
-            }
+            searchArticulo();
         }
-        helped_table->blockSignals(false);
     }
     return false;
 }
@@ -762,19 +658,16 @@ void Table_Helper::searchArticulo()
     Db_table_View searcher(qApp->activeWindow());
     searcher.set_db("Maya");
     searcher.set_table("vistaArt_tarifa");
-    searcher.set_readOnly(true);
 
-    searcher.setWindowTitle(tr(" Buscar Articulos"));
+    searcher.setWindowTitle(tr("Articulos"));
 
     QStringList headers;
     headers << tr("Codigo")<< tr("Cod.Barras") << tr("Cod.Fabricante") << tr("Descripción");
     searcher.set_table_headers(headers);
     searcher.set_tarifa(this->tarifa);
 
-    //if(helped_table->currentColumn()==0)
-        searcher.set_selection("cCodigo");
-    //else if(helped_table->currentColumn()==1)
-      //  searcher.set_selection("cDescripcion");
+    searcher.set_readOnly(true);
+    searcher.set_selection("cCodigo");
 
     if(searcher.exec() == QDialog::Accepted)
     {

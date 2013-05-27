@@ -63,6 +63,7 @@ private:
     QVector<int> hide_headers;
 
     int colums;
+
 };
 
 #endif // DB_TABLE_VIEW_H

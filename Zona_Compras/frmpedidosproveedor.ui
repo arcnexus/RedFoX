@@ -2000,94 +2000,6 @@ color: rgb(0, 64, 64);</string>
        <string>Líneas pedido</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_9">
-       <item row="1" column="0" colspan="5">
-        <widget class="QTableWidget" name="Lineas">
-         <property name="horizontalScrollBarPolicy">
-          <enum>Qt::ScrollBarAsNeeded</enum>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="selectionMode">
-          <enum>QAbstractItemView::SingleSelection</enum>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-         <property name="gridStyle">
-          <enum>Qt::DotLine</enum>
-         </property>
-         <property name="cornerButtonEnabled">
-          <bool>true</bool>
-         </property>
-         <attribute name="horizontalHeaderCascadingSectionResizes">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>80</number>
-         </attribute>
-         <attribute name="horizontalHeaderMinimumSectionSize">
-          <number>80</number>
-         </attribute>
-         <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="horizontalHeaderStretchLastSection">
-          <bool>true</bool>
-         </attribute>
-         <attribute name="verticalHeaderCascadingSectionResizes">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="verticalHeaderStretchLastSection">
-          <bool>false</bool>
-         </attribute>
-         <column>
-          <property name="text">
-           <string>Codigo</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Cantidad</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Descripcion</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>COSTE</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>SubTotal</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>DTO</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>DTO%</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>% I.V.A.</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Total</string>
-          </property>
-         </column>
-        </widget>
-       </item>
        <item row="2" column="0" colspan="5">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
@@ -2177,6 +2089,94 @@ color: rgb(0, 64, 64);</string>
          <property name="text">
           <string>[F1] - Buscar Artículo/Servicio</string>
          </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="5">
+        <widget class="QTableWidget" name="Lineas">
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAsNeeded</enum>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="gridStyle">
+          <enum>Qt::DotLine</enum>
+         </property>
+         <property name="cornerButtonEnabled">
+          <bool>true</bool>
+         </property>
+         <attribute name="horizontalHeaderCascadingSectionResizes">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>80</number>
+         </attribute>
+         <attribute name="horizontalHeaderMinimumSectionSize">
+          <number>80</number>
+         </attribute>
+         <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderCascadingSectionResizes">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderStretchLastSection">
+          <bool>false</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Codigo</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Cantidad</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Descripcion</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>COSTE</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>SubTotal</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>DTO</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>DTO%</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>% I.V.A.</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Total</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>

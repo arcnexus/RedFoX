@@ -19,10 +19,6 @@ public:
     void set_moneda(QString moneda);
     void set_tarifa(int tarifa);
     void set_Tipo(bool is_compra);
-    void set_tabla_activa(QString tabla);
-    void set_db(QString db_);
-    void set_id_cabecera(int id_cabece);
-    void set_Guardar_linea_directamente(bool guardar);
     void blockTable(bool state);
     void resizeTable();
     void fillTable(QString db , QString table , QString filter);
@@ -36,10 +32,8 @@ signals:
 public slots:
     void set_UsarRE(bool state);
     void addRow();
-    void addRow(QSqlRecord r);
     void removeRow();
     void handle_cellChanged(int row, int column);
-    void cellDataChanged(QTableWidgetItem* item);
 private:
     QTableWidget* helped_table;
     QString moneda;
@@ -61,12 +55,8 @@ private:
     void rellenar_con_Articulo(int row);
     bool comprando;
     bool use_re;  
-    bool save_line_directly;
-    int  id_cabecera;
-    QString db;
-    QString tabla_activa;
     bool saveLine(int row,int id_cabecera,QString db, QString db_table, QStringList headers);
-
+    void addRow(QSqlRecord r);
 
     bool eventFilter(QObject *target, QEvent *event);
     void searchArticulo();

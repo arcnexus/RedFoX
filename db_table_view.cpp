@@ -25,8 +25,7 @@ Db_table_View::Db_table_View(QWidget *parent) :
 
     ui->btn_print->setMenu(print_menu);
     ui->txtBuscar->setFocus();
-            ui->resultado_list->viewport()->installEventFilter(this);
-
+    ui->resultado_list->installEventFilter(this);
 }
 
 Db_table_View::~Db_table_View()
@@ -174,6 +173,12 @@ void Db_table_View::on_btn_save_clicked()
 void Db_table_View::on_btn_aceptar_clicked()
 {
     model->submitAll();
+    if(model->rowCount()>0)
+    {
+        QSqlRecord r = model->record(ui->resultado_list->currentIndex().row());
+        selected_value = r.value(selection_column).toString();
+        ui->resultado_list->currentIndex();
+    }
     Db_table_View::done(QDialog::Accepted);
 }
 
@@ -241,4 +246,6 @@ bool Db_table_View::eventFilter(QObject *target, QEvent *event)
         }
         ui->resultado_list->blockSignals(false);
     }
+    return false;
 }
+

@@ -198,6 +198,9 @@ alternate-background-color: rgb(255, 255, 196);</string>
       <iconset resource="maya.qrc">
        <normaloff>:/Icons/PNG/OK.png</normaloff>:/Icons/PNG/OK.png</iconset>
      </property>
+     <property name="shortcut">
+      <string>Alt+Return</string>
+     </property>
     </widget>
    </item>
    <item row="3" column="4">
@@ -225,6 +228,16 @@ alternate-background-color: rgb(255, 255, 196);</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>txtBuscar</tabstop>
+  <tabstop>resultado_list</tabstop>
+  <tabstop>btn_save</tabstop>
+  <tabstop>btn_aceptar</tabstop>
+  <tabstop>btn_cancel</tabstop>
+  <tabstop>btn_add</tabstop>
+  <tabstop>btn_remove</tabstop>
+  <tabstop>btn_print</tabstop>
+ </tabstops>
  <resources>
   <include location="maya.qrc"/>
  </resources>
