@@ -571,7 +571,7 @@ void Table_Helper::rellenar_con_Articulo(int row)
     if (this->comprando)
         sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1'").arg(codigo);
     else
-        sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1' and tarifa = %2").arg(codigo,tarifa);
+        sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1' and tarifa = %2").arg(codigo).arg(tarifa);
     query.prepare(sql);
     if(query.exec())
     {
