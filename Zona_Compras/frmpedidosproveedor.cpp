@@ -564,6 +564,7 @@ void FrmPedidosProveedor::clear()
     ui->lblnombreProveedor->clear();
     ui->lblnumalb->clear();
     ui->lblSerie->clear();
+    ui->lblnumero_pedido->clear();
 }
 
 void FrmPedidosProveedor::resizeTable(int x)
