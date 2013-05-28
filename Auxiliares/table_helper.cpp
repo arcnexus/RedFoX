@@ -28,11 +28,6 @@ void Table_Helper::help_table(QTableWidget *table)
     helped_table->setItemDelegateForColumn(7,new ReadOnlyDelegate(helped_table)); // el tipo de iva pertenece al artículo y solo se puede modificar en a ficha del artículo.
     helped_table->setItemDelegateForColumn(8,new MonetaryDelegate(helped_table,false));
     helped_table->setColumnWidth(2,240);
-//    comboboxDelegate* comboModel = new comboboxDelegate(helped_table);
-//    comboModel->setUpModel("Maya","tiposiva","cTipo");
-//    helped_table->setItemDelegateForColumn(7,comboModel);
-
-//   helped_table->setItemDelegateForColumn(8,new ReadOnlyDelegate(helped_table));
 
     QStringList headers;
     if (!this->comprando) {
@@ -44,17 +39,9 @@ void Table_Helper::help_table(QTableWidget *table)
         headers << "DTO" << "DTO%" << "% I.V.A." << "Total";
     }
 
-
-//    if(helped_table->columnCount() == 10)
-//    {
-//        headers << "A servir";
-//        helped_table->setItemDelegateForColumn(9,new SpinBoxDelegate(helped_table,true,0));
-//    }
     helped_table->setHorizontalHeaderLabels(headers);
     resizeTable();
 
-   // connect(helped_table,SIGNAL(cellChanged(int,int)),this,SLOT(handle_cellChanged(int,int)));
-    //connect(helped_table,SIGNAL(cellActivated(int,int)),this,SLOT(handle_cellActivated(int,int)));
     connect(helped_table,SIGNAL(currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)),this,SLOT(handle_currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)));
     helped_table->installEventFilter(this);
 }
@@ -63,17 +50,6 @@ void Table_Helper::setDatabase(QString db, QString table)
 {
     m_db = db;
     m_db_table = table;
-    m_headers.clear();
-
-    QSqlQuery query(QSqlDatabase::database(db));
-    if(query.exec("SHOW COLUMNS FROM "+m_db_table))
-    {
-        while(query.next())
-        {
-            QSqlRecord r = query.record();
-            m_headers << r.value(0).toString();
-        }
-    }
 }
 
 void Table_Helper::set_moneda(QString moneda)
@@ -136,6 +112,7 @@ void Table_Helper::fillTable(QString db, QString table, QString filter)
     helped_table->blockSignals(true);
     helped_table->clearContents();
     helped_table->setRowCount(0);
+    m_rows.clear();
 
     QSqlQuery query(QSqlDatabase::database(db));
     QString sql;
@@ -159,44 +136,13 @@ void Table_Helper::fillTable(QString db, QString table, QString filter)
     calcularDesglose();
 }
 
-bool Table_Helper::saveTable(int id_cabecera, QString db, QString db_table)
-{
-    bool succes = true;
-    QSqlQuery query(QSqlDatabase::database(db));
-    QStringList headers;
-    headers.clear();
-
-    if(query.exec("SHOW COLUMNS FROM "+db_table))
-    {
-        while(query.next())
-        {
-            QSqlRecord r = query.record();
-            headers << r.value(0).toString();
-        }
-    }
-    else
-    {
-        succes = false;
-    }
-    if(!headers.isEmpty())
-    {
-        for(int row= 0; row < helped_table->rowCount() ; row++)
-        {
-            succes &= saveLine(row , id_cabecera , db , db_table , headers);
-            if(!succes)
-                break;
-        }
-    }
-    return succes;
-}
-
 void Table_Helper::addRow()
 {
     if(helped_table)
     {
         if(helped_table->rowCount()>0)
-            saveLine(row_id.at(helped_table->rowCount()-1),helped_table->rowCount()-1,m_idCab,m_db,m_db_table,m_headers);
-        row_id.append(0);
+            updateLinea(helped_table->rowCount()-1);
+
         resizeTable();
         helped_table->blockSignals(true);
         helped_table->setRowCount(helped_table->rowCount()+1);
@@ -233,34 +179,85 @@ void Table_Helper::addRow()
         helped_table->setFocus();
         helped_table->setCurrentCell(helped_table->rowCount()-1,0);
         helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
+        lineaDetalle * lrow = new lineaDetalle;
+        lrow->idLinea = -1;
+        m_rows.append(lrow);
     }
 }
 void Table_Helper::addRow(QSqlRecord r)
 {
-    addRow();
+    resizeTable();
     helped_table->blockSignals(true);
+    helped_table->setRowCount(helped_table->rowCount()+1);
     int row = helped_table->rowCount()-1;
-    row_id[helped_table->rowCount()-1] = r.value(0).toInt();
+
+    QTableWidgetItem * item0 = new QTableWidgetItem;
+    helped_table->setItem(row,0,item0);
+
+    QTableWidgetItem * item = new QTableWidgetItem;
+    helped_table->setItem(row,1,item);
+    item->setText("1");
+
+    for(int i = 2;i < helped_table->columnCount();i++)
+    {
+        QTableWidgetItem * itemX = new QTableWidgetItem;
+        helped_table->setItem(row,i,itemX);
+    }
+
+    QTableWidgetItem * subtotal = helped_table->item(row,4);
+    subtotal->setFlags(subtotal->flags()^Qt::ItemIsEnabled);
+    subtotal->setText("0");
+
+    QTableWidgetItem * total = helped_table->item(row,8);
+    total->setFlags(total->flags()^Qt::ItemIsEnabled);
+    total->setText("0");
+    helped_table->item(row,3)->setText("0");
+    helped_table->item(row,5)->setText("0");
+    helped_table->item(row,6)->setText("0");
+
+
+
+    helped_table->blockSignals(false);
+    helped_table->setFocus();
+    helped_table->setCurrentCell(helped_table->rowCount()-1,0);
+    helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
+    lineaDetalle * lrow = new lineaDetalle;
+    lrow->idLinea = -1;
+    m_rows.append(lrow);
+    helped_table->blockSignals(true);
+    int index = 0;
+    m_rows[row]->idLinea = r.value(0).toInt();
     helped_table->item(row,0)->setText(r.value(3).toString());
-    qDebug() << "codigo:" << r.value(3).toString();
+    m_rows[row]->codigo = r.value(3).toString();
     helped_table->item(row,1)->setText(r.value(4).toString());
+    m_rows[row]->cantidad = r.value(4).toDouble();
+    m_rows[row]->catidad_old = r.value(4).toDouble();
     helped_table->item(row,2)->setText(r.value(5).toString());
+    m_rows[row]->descripcion = r.value(5).toString();
     helped_table->item(row,3)->setText(r.value(6).toString());
+    m_rows[row]->importe = r.value(6).toDouble();
     helped_table->item(row,4)->setText(r.value(7).toString());
+    m_rows[row]->subTotal = r.value(7).toDouble();
     helped_table->item(row,5)->setText(r.value(8).toString());
+    m_rows[row]->dto = r.value(8).toDouble();
     helped_table->item(row,6)->setText(r.value(9).toString());
-    //helped_table->item(row,7)->setText(r.value(10).toString());
+    m_rows[row]->dto_perc = r.value(9).toDouble();
+    m_rows[row]->iva_perc = r.value(10).toDouble();
+
+
     QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
     for(int i = 0;i<keys.size();i++)
     {
+        qDebug() << "IVA: "  <<r.value(10).toDouble();
         if(Configuracion_global->ivas[keys.at(i)].value("nIVA").toDouble() == r.value(10).toDouble())
         {
             helped_table->item(row,7)->setText(keys.at(i));
             break;
         }
     }
-    helped_table->item(row,8)->setText(r.value(11).toString());
+    //helped_table->item(row,index)->setText(r.value(11).toString());
     helped_table->blockSignals(false);
+    //updateLinea(row);
 }
 
 void Table_Helper::removeRow()
@@ -277,7 +274,12 @@ void Table_Helper::removeRow()
         qSort(rowsList);
 
         for(int i = rowsList.count() - 1; i >= 0; i--)
+        {
+            int id = m_rows.at(i)->idLinea;
             helped_table->removeRow(rowsList.at(i));
+            m_rows.remove(rowsList.at(i));
+            emit lineaDeleted(id);
+        }
     }
     calcularTotal();
     calcularDesglose();
@@ -287,7 +289,7 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
 {
     if(current)
         if(current->column() == 1)
-            m_cantidadArticulo = current->text().toDouble();
+            m_rows[current->row()]->catidad_old = current->text().toDouble();
 
     if(previous)
     {
@@ -299,6 +301,8 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
         else if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
         {
             comprobarCantidad(row);
+            m_rows[row]->cantidad = previous->text().toDouble();
+            updateLinea(row);
         }
         else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
             comprobarDescuento(row);
@@ -579,9 +583,10 @@ void Table_Helper::rellenar_con_Articulo(int row)
                  helped_table->item(row,3)->setText(r.value("rCoste").toString());
             else
                 helped_table->item(row,3)->setText(r.value("pvp").toString());
+            helped_table->item(row,8)->setText(r.value("nTipoIva").toString());
 
         }
-        else if(helped_table->item(row,0)->text() !="")
+        else if(helped_table->item(row,0)->text() !="" && helped_table->item(row,2)->text().isEmpty())
             QMessageBox::warning(helped_table,
                                  tr("Codigo desconocido"),
                                  tr("Codigo de articulo desconocido "
@@ -589,92 +594,6 @@ void Table_Helper::rellenar_con_Articulo(int row)
                                     "pero no registrará acumulados"),tr("Aceptar"));
     }
 }
-
-bool Table_Helper::saveLine(int row, int id_cabecera, QString db, QString db_table, QStringList headers)
-{
-    return saveLine(0, row, id_cabecera,  db,  db_table,  headers);
-}
-
-bool Table_Helper::saveLine(int id, int row, int id_cabecera, QString db, QString db_table, QStringList headers)
-{
-    bool succes = true;
-
-    QSqlQuery query(QSqlDatabase::database(db));
-    QSqlQuery i_query(QSqlDatabase::database("Maya"));
-    QString item_id = QString("SELECT Id FROM articulos WHERE cCodigo = '%1' LIMIT 1")
-            .arg(helped_table->item(row,0)->text());
-    int articulo_id = -1;
-
-    if(i_query.exec(item_id))
-    {
-        if(i_query.next())
-            articulo_id = i_query.record().value(0).toInt();
-    }
-    else
-        succes = false;
-
-    if(succes)
-    {
-        QVariantList values;
-        values.clear();
-        values << id << id_cabecera << articulo_id;
-        values << helped_table->item(row,0)->text();
-        values << helped_table->item(row,1)->text().toInt();
-        values << helped_table->item(row,2)->text();
-
-        values << helped_table->item(row,3)->text().toDouble();
-        values << helped_table->item(row,4)->text().toDouble();
-        values << helped_table->item(row,5)->text().toDouble();
-        values << helped_table->item(row,6)->text().toDouble();
-
-        values << Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nIva");
-        values << helped_table->item(row,8)->text().toDouble();
-
-        //cantidad = cantidadaservir por defecto
-//        if(helped_table->columnCount()== 10)
-//            values << helped_table->item(row,9)->text().toInt();
-        QString sql;
-        if(id == 0)
-        {
-            sql = "INSERT INTO ";
-            sql.append(db_table);
-            sql.append("(");
-            sql.append(headers.join(","));
-            sql.append(") VALUES (");
-            for (int i=0;i<headers.size();i++)
-            {
-                if(i!= headers.size()-1)
-                    sql.append(QString(":%1,").arg(headers.at(i)));
-                else
-                    sql.append(QString(":%1)").arg(headers.at(i)));
-            }
-
-            query.prepare(sql);
-            for(int i = 0; i<headers.size();i++)
-            {
-                QString id = QString(":%1").arg(headers.at(i));
-                query.bindValue(id,values.at(i).toString());
-            }
-        }
-        else //editando
-        {
-            sql = "UPDATE %1 SET ";
-            for (int i=1;i<headers.size();i++)
-            {
-                sql.append(QString("%1=%2").arg(headers.at(i)).arg(values.at(i).toString()));
-            }
-            sql.append(QString("WHERE id=%1;").arg(id));
-            query.prepare(sql);
-        }
-        if(!query.exec())
-        {
-            succes = false;            
-        }
-    }
-    return succes;
-}
-
-
 
 bool Table_Helper::eventFilter(QObject *target, QEvent *event)
 {
@@ -735,13 +654,38 @@ void Table_Helper::searchArticulo()
         helped_table->setCurrentCell(helped_table->currentRow(),1);
         helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
     }
+}
+
+void Table_Helper::updateLinea(int row)
+{
+    m_rows[row]->codigo = helped_table->item(row,0)->text();
+    m_rows[row]->cantidad= helped_table->item(row,1)->text().toInt();
+    m_rows[row]->descripcion= helped_table->item(row,2)->text();
+    m_rows[row]->importe= helped_table->item(row,3)->text().replace(",",".").toDouble();
+    m_rows[row]->subTotal= helped_table->item(row,4)->text().replace(",",".").toDouble();
+    m_rows[row]->dto= helped_table->item(row,5)->text().replace(",",".").toDouble();
+    m_rows[row]->dto_perc= helped_table->item(row,6)->text().toDouble();
+    double iva = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nIva").toDouble();
+    m_rows[row]->iva_perc= iva;
+    m_rows[row]->total= helped_table->item(row,8)->text().replace(",",".").toDouble();
+
+
+    //etc
     /*
-    if(table_view)
-        table_view->setModal(true);
-        if(table_view->exec() == QDialog::Accepted)
-            if (ui)
-                if(ui->lineEdit)
-                    ui->lineEdit->setText(table_view->selected_value);*/
+    helped_table->item(row,index)->setText(r.value(4).toString()); index++;
+    m_rows[row]->cantidad = r.value(4).toDouble();
+    helped_table->item(row,index)->setText(r.value(5).toString()); index++;
+    m_rows[row]->descripcion = r.value(5).toString();
+    helped_table->item(row,index)->setText(r.value(6).toString()); index++;
+    m_rows[row]->importe = r.value(6).toDouble();
+    helped_table->item(row,index)->setText(r.value(7).toString());index++;
+    m_rows[row]->subTotal = r.value(7).toDouble();
+    helped_table->item(row,index)->setText(r.value(8).toString());index++;
+    m_rows[row]->dto = r.value(8).toDouble();
+    helped_table->item(row,index)->setText(r.value(9).toString());index++;
+    m_rows[row]->dto_perc = r.value(9).toDouble();
+    m_rows[row]->iva_perc = r.value(10).toDouble();*/
+    emit lineaReady(m_rows[row]);
 }
 
 

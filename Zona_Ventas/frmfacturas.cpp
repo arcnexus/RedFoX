@@ -474,12 +474,12 @@ void frmFacturas::Guardar_factura()
     {
         succes &= oFactura->GuardarFactura(oFactura->Id,false);
         succes &= oFactura->BorrarLineasFactura(oFactura->Id);
-        succes &= helper.saveTable(oFactura->Id,"empresa","lin_fac");
+        //succes &= helper.saveTable(oFactura->Id,"empresa","lin_fac");
     }
     else
     {
         succes &= oFactura->AnadirFactura();
-        succes &= helper.saveTable(oFactura->Id,"empresa","lin_fac");
+        //succes &= helper.saveTable(oFactura->Id,"empresa","lin_fac");
     }
     if(succes)
     {

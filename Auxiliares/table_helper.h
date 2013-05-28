@@ -8,6 +8,22 @@
 #include "readonlydelegate.h"
 #include "comboboxdelegate.h"
 
+struct lineaDetalle
+{
+    int idLinea;
+    QString codigo;
+    int cantidad;
+    int catidad_old;
+    QString descripcion;
+    double importe;
+    double subTotal;
+    double dto;
+    double dto_perc;
+    double iva_perc;
+    double total;
+    double importe_moneda_extrangera;
+};
+
 class Table_Helper : public QObject
 {
     Q_OBJECT
@@ -19,13 +35,15 @@ public:
     void setIdHeader(int id){m_idCab = id;}
     void set_Searcher(Db_table_View* table_view);
     void set_moneda(QString moneda);
+    void set2Divisas(bool b){use2divisas = b;}
     void set_tarifa(int tarifa);
     void set_Tipo(bool is_compra);
     void blockTable(bool state);
     void resizeTable();
     void fillTable(QString db , QString table , QString filter);
-    bool saveTable(int id_cabecera , QString db , QString db_table);
 signals:
+    void lineaReady(lineaDetalle*);
+    void lineaDeleted(int id);
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);
@@ -57,18 +75,17 @@ private:
     void rellenar_con_Articulo(int row);
     bool comprando;
     bool use_re;  
-    bool saveLine(int row,int id_cabecera,QString db, QString db_table, QStringList headers);
-    bool saveLine(int id, int row, int id_cabecera, QString db, QString db_table, QStringList headers);
     void addRow(QSqlRecord r);
 
     bool eventFilter(QObject *target, QEvent *event);
     void searchArticulo();
     int m_cantidadArticulo;
-    QVector<int> row_id;
+    QVector<lineaDetalle*> m_rows;
     int m_idCab;
     QString m_db;
     QString m_db_table;
-    QStringList m_headers;
+    bool use2divisas;
+    void updateLinea(int row);
 };
 
 #endif // TABLE_HELPER_H

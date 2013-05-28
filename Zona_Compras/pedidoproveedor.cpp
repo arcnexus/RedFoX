@@ -10,9 +10,14 @@ PedidoProveedor::PedidoProveedor(QObject *parent) :
 int PedidoProveedor::nuevo_pedido_proveedor()
 {
     QSqlQuery queryPedido(QSqlDatabase::database("empresa"));
-    queryPedido.prepare("INSERT INTO ped_pro (`dFecha`,`nEjercicio`) VALUES(:dfecha,:ejercicio);");
+    queryPedido.prepare("INSERT INTO ped_pro (`dFecha`,`nEjercicio`,`niva1`,`niva2`,`niva3`,`niva4`) "
+                        "VALUES(:dfecha,:ejercicio,:iva1,:iva2,:iva3,:iva4);");
     queryPedido.bindValue(":dfecha",QDate::currentDate());
     queryPedido.bindValue(":ejercicio",Configuracion_global->cEjercicio.toInt());
+    queryPedido.bindValue(":iva1",Configuracion_global->ivaList.at(0));
+    queryPedido.bindValue(":iva2",Configuracion_global->ivaList.at(1));
+    queryPedido.bindValue(":iva3",Configuracion_global->ivaList.at(2));
+    queryPedido.bindValue(":iva4",Configuracion_global->ivaList.at(3));
     if(!queryPedido.exec())
     {
         QMessageBox::warning(qApp->activeWindow(),tr("ATENCIÓN:"),
@@ -400,5 +405,30 @@ void PedidoProveedor::convertir_en_albaran()
 void PedidoProveedor::convertir_en_factura()
 {
 
+}
+
+bool PedidoProveedor::borrar(int id)
+{
+    QSqlQuery queryPedido(QSqlDatabase::database("empresa"));
+    QSqlDatabase::database("empresa").transaction();
+    bool error = false;
+    queryPedido.prepare("delete from lin_ped_pro where id_cab = :id");
+    queryPedido.bindValue(":id",id);
+    if(!queryPedido.exec())
+        error = true;
+    queryPedido.prepare("delete from ped_pro where id = :id");
+    queryPedido.bindValue(":id",id);
+    if(!queryPedido.exec())
+        error = true;
+    if(error == true) {
+        QSqlDatabase::database("empresa").rollback();
+        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de pedidos a proveedores"),
+                             tr("Ocurrió un error al borrar: %1").arg(queryPedido.lastError().text()),
+                             tr("Aceptar"));
+        return false;
+    } else{
+        QSqlDatabase::database("empresa").commit();
+        return true;
+    }
 }
 

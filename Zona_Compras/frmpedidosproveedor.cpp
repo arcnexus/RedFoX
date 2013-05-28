@@ -1,6 +1,9 @@
 #include "frmpedidosproveedor.h"
 #include "ui_frmpedidosproveedor.h"
 #include "../Busquedas/frmbuscarproveedor.h"
+#include "Auxiliares/frmdialogoimprimir.h"
+#include <QPrintDialog>
+
 
 
 
@@ -13,7 +16,7 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     ui->setupUi(this);
     oProveedor = new Proveedor(this);
     oPedido_proveedor = new PedidoProveedor(this);
-    estadolectura();
+    bloquearcampos(true);
     ui->lblImpreso->setVisible(false);
     ui->lblnombreProveedor->clear();
     ui->lblnumero_pedido->clear();
@@ -27,12 +30,10 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     helper.set_tarifa(1);
     helper.setDatabase("empresa","lin_ped_pro");
     helper.setIdHeader(1);
-//    helper.set_Guardar_linea_directamente(true);
-//    helper.set_db("empresa");
-//    helper.set_tabla_activa("lin_ped_pro");
-//    helper.set_id_cabecera(0);
-//    helper.set_manual(true);
+    helper.blockTable(true);
 
+    connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
+    connect(&helper,SIGNAL(lineaDeleted(int)),this,SLOT(lieaDeleted(int)));
 
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
@@ -41,8 +42,11 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     connect(ui->btnAnadir,SIGNAL(clicked()),this,SLOT(anadir_pedido()));
     connect(ui->btnEditar,SIGNAL(clicked()),this,SLOT(editar_pedido()));
     connect(ui->btnGuardar,SIGNAL(clicked()),this,SLOT(guardar_pedido()));
+    connect(ui->btnDeshacer,SIGNAL(clicked()),this,SLOT(deshacer()));
     connect(ui->btnSiguiente,SIGNAL(clicked()),this,SLOT(siguiente()));
     connect(ui->btnAnterior,SIGNAL(clicked()),this,SLOT(anterior()));
+    connect(ui->btnImprimir,SIGNAL(clicked()),this,SLOT(imprimir()));
+    connect(ui->btn_borrar,SIGNAL(clicked()),this,SLOT(borrar_pedido()));
 
     connect(ui->tabWidget_2,SIGNAL(currentChanged(int)),this,SLOT(resizeTable(int)));
 
@@ -78,172 +82,204 @@ FrmPedidosProveedor::~FrmPedidosProveedor()
     delete ui;
 }
 
+void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
+{
+    //TODO tuyo aquí el insert
+
+    if (ld->idLinea == -1)
+    {
+        qDebug()<< ld->idLinea;
+        QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
+        query_lin_ped_pro.prepare("INSERT INTO lin_ped_pro (id_cab,id_articulo,codigo_articulo_proveedor,"
+                                  "descripcion, cantidad, coste_bruto,subtotal_coste,porc_dto,dto,porc_iva,"
+                                  "iva,total) VALUES (:id_cab,:id_articulo,:codigo_articulo_proveedor,"
+                                  ":descripcion,:cantidad,:coste_bruto,:subtotal_coste,:porc_dto,:dto,"
+                                  ":porc_iva,:iva,:total);");
+        query_lin_ped_pro.bindValue(":id_cab", oPedido_proveedor->id);
+        query_lin_ped_pro.bindValue(":id_articulo", 1); /*TODO: arreglar luego*/
+        query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
+        query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
+        query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
+        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
+        query_lin_ped_pro.bindValue(":subtotal_coste",ld->subTotal);
+        query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
+        query_lin_ped_pro.bindValue(":dto",ld->dto);
+        query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
+        query_lin_ped_pro.bindValue(":iva",0); // importe iva hay que calcularlo
+        query_lin_ped_pro.bindValue(":total",ld->total);
+        if (!query_lin_ped_pro.exec()){
+            QMessageBox::warning(this,tr("Gestión de pedidos"),
+                                 tr("Ocurrió un error al insertar la nueva línea: %1").arg(query_lin_ped_pro.lastError().text()),
+                                 tr("Aceptar"));
+        }else
+        {
+            ld->idLinea = query_lin_ped_pro.lastInsertId().toInt();
+        }
+    } else
+    {
+        QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
+        query_lin_ped_pro.prepare("UPDATE lin_ped_pro SET "
+                                  "id_articulo =:id_articulo,"
+                                  "codigo_articulo_proveedor =:codigo_articulo_proveedor,"
+                                  "descripcion =:descripcion,"
+                                  "cantidad =:cantidad,"
+                                  "coste_bruto =:coste_bruto,"
+                                  "subtotal_coste =:subtotal_coste,"
+                                  "porc_dto =:porc_dto,"
+                                  "dto =:dto,"
+                                  "porc_iva =:porc_iva,"
+                                  "iva =:iva,"
+                                  "total =:total "
+                                  "WHERE id = :id;");
+
+        query_lin_ped_pro.bindValue(":id_cab", oPedido_proveedor->id);
+        query_lin_ped_pro.bindValue(":id_articulo", 1); /*TODO: arreglar luego*/
+        query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
+        query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
+        query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
+        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
+        query_lin_ped_pro.bindValue(":subtotal_coste",ld->subTotal);
+        query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
+        query_lin_ped_pro.bindValue(":dto",ld->dto);
+        query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
+        query_lin_ped_pro.bindValue(":iva",0); // importe iva hay que calcularlo
+        query_lin_ped_pro.bindValue(":total",ld->total);
+        query_lin_ped_pro.bindValue(":id",ld->idLinea);
+
+        if (!query_lin_ped_pro.exec())
+            QMessageBox::warning(this,tr("Gestión de pedidos"),
+                                 tr("Ocurrió un error al guardar la línea: %1").arg(query_lin_ped_pro.lastError().text()),
+                                 tr("Aceptar"));
+
+
+
+
+
+
+    //if -1 = nueva else editando
+    //cambiar el id aki
+    //qDebug()<< "antes" << ld->catidad_old;
+    //qDebug()<< "ahorita" << ld->cantidad;
+    }
+}
+
+void FrmPedidosProveedor::lieaDeleted(int id)
+{
+    //todo borrar de la bd y stock y demas
+    //if id = -1 pasando olimpicamente
+    qDebug() << "borra" << id;
+}
+
 void FrmPedidosProveedor::totalChanged(double base, double dto, double subTotal, double iva, double re, double total, QString moneda)
 {
-    ui->txtrBase->setText(QString::number(base)+moneda);
-    ui->txtrImporteDescuento->setText(QString::number(dto)+moneda);
-    ui->txtrSubtotal->setText(QString::number(subTotal)+moneda);
-    ui->txtrImporteIva->setText(QString::number(iva)+moneda);
-    ui->txtrTotalRecargoEq->setText(QString::number(re)+moneda);
-    ui->txtrTotal->setText(QString::number(total)+moneda);
-    ui->lbl_total->setText(QString::number(total)+moneda);
+    ui->txtrBase->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)+moneda));
+    ui->txtrImporteDescuento->setText(Configuracion_global->FormatoNumerico(QString::number(dto,'f',2)+moneda));
+    ui->txtrSubtotal->setText(Configuracion_global->FormatoNumerico(QString::number(subTotal,'f',2)+moneda));
+    ui->txtrImporteIva->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)+moneda));
+    ui->txtrTotalRecargoEq->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)+moneda));
+    ui->txtrTotal->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)+moneda));
+    ui->lbl_total->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)+moneda));
 
-    ui->txtrBaseTotal_2->setText(QString::number(base)+moneda);
-    ui->txtrTotalIVA_2->setText(QString::number(iva)+moneda);
-    ui->txtrTotalRecargoEq_2->setText(QString::number(re)+moneda);
-    ui->txtrTotal_2->setText(QString::number(total)+moneda);
+    ui->txtrBaseTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)+moneda));
+    ui->txtrTotalIVA_2->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)+moneda));
+    ui->txtrTotalRecargoEq_2->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)+moneda));
+    ui->txtrTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)+moneda));
 }
 
 void FrmPedidosProveedor::desglose1Changed(double base, double iva, double re, double total)
 {
-    ui->txtrBase1->setText(QString::number(base));
-    ui->txtrIVA1->setText(QString::number(iva));
-    ui->txtrRecargoEq1->setText(QString::number(re));
-    ui->txtrTotal1->setText(QString::number(total));
+    ui->txtrBase1->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)));
+    ui->txtrIVA1->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)));
+    ui->txtrRecargoEq1->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)));
+    ui->txtrTotal1->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)));
 }
 
 void FrmPedidosProveedor::desglose2Changed(double base, double iva, double re, double total)
 {
-    ui->txtrBase2->setText(QString::number(base));
-    ui->txtrIVA2->setText(QString::number(iva));
-    ui->txtrRecargoEq2->setText(QString::number(re));
-    ui->txtrTotal2->setText(QString::number(total));
+    ui->txtrBase2->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)));
+    ui->txtrIVA2->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)));
+    ui->txtrRecargoEq2->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)));
+    ui->txtrTotal2->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)));
 }
 
 void FrmPedidosProveedor::desglose3Changed(double base, double iva, double re, double total)
 {
-    ui->txtrBase3->setText(QString::number(base));
-    ui->txtrIVA3->setText(QString::number(iva));
-    ui->txtrRecargoEq3->setText(QString::number(re));
-    ui->txtrTotal3->setText(QString::number(total));
+    ui->txtrBase3->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)));
+    ui->txtrIVA3->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)));
+    ui->txtrRecargoEq3->setText(Configuracion_global->FormatoNumerico( QString::number(re,'f',2)));
+    ui->txtrTotal3->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)));
 }
 
 void FrmPedidosProveedor::desglose4Changed(double base, double iva, double re, double total)
 {
-    ui->txtrBase4->setText(QString::number(base));
-    ui->txtrIVA4->setText(QString::number(iva));
-    ui->txtrRecargoEq4->setText(QString::number(re));
-    ui->txtrTotal4->setText(QString::number(total));
+    ui->txtrBase4->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)));
+    ui->txtrIVA4->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)));
+    ui->txtrRecargoEq4->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)));
+    ui->txtrTotal4->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)));
 }
 
-void FrmPedidosProveedor::estadoedicion()
-{
-    // LineEdit
-    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
-    QLineEdit *lineEdit;
-    foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // ComboBox
-    QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
-    QComboBox *ComboBox;
-    foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-//    // SpinBox
-//    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-//    QSpinBox *SpinBox;
-//    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(false);
-//        //qDebug() << lineEdit->objectName();
-//    }
-    // DoubleSpinBox
-    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-    QDoubleSpinBox *DSpinBox;
-    foreach (DSpinBox, DSpinBoxList) {
-        DSpinBox->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // CheckBox
-    QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
-    QCheckBox *CheckBox;
-    foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    // QTextEdit
-    QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
-    QTextEdit *TextEdit;
-    foreach (TextEdit,TextEditList) {
-        TextEdit->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // QDateEdit
-    QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
-    QDateEdit *DateEdit;
-    foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    ui->btnAnadir->setEnabled(false);
-    ui->btnAnterior->setEnabled(false);
-    ui->btn_borrar->setEnabled(false);
-    ui->btnDeshacer->setEnabled(true);
-    ui->btnEditar->setEnabled(false);
-    ui->btnGuardar->setEnabled(true);
-    ui->btnSiguiente->setEnabled(false);
-}
 
-void FrmPedidosProveedor::estadolectura()
+void FrmPedidosProveedor::bloquearcampos(bool estado)
 {
 
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(true);
+        lineEdit->setReadOnly(estado);
     }
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
     QComboBox *ComboBox;
     foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(false);
+        ComboBox->setEnabled(!estado);
         //qDebug() << lineEdit->objectName();
     }
     // SpinBox
 //    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
 //    QSpinBox *SpinBox;
 //    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(true);
+//        SpinBox->setReadOnly(!estado);
 //        //qDebug() << lineEdit->objectName();
 //   }
 //DoubleSpinBox
     QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
     QDoubleSpinBox *DSpinBox;
     foreach (DSpinBox, DSpinBoxList) {
-        DSpinBox->setReadOnly(true);
+        DSpinBox->setReadOnly(estado);
         //qDebug() << lineEdit->objectName();
     }
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
     foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(false);
+        CheckBox->setEnabled(!estado);
         //qDebug() << lineEdit->objectName();
     }
     // QTextEdit
     QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
     QTextEdit *TextEdit;
     foreach (TextEdit,TextEditList) {
-        TextEdit->setReadOnly(true);
+        TextEdit->setReadOnly(estado);
         //qDebug() << lineEdit->objectName();
     }
     // QDateEdit
     QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(false);
+        DateEdit->setEnabled(!estado);
         //qDebug() << lineEdit->objectName();
     }
 
-    ui->btnAnadir->setEnabled(true);
-    ui->btnAnterior->setEnabled(true);
-    ui->btn_borrar->setEnabled(true);
-    ui->btnDeshacer->setEnabled(false);
-    ui->btnEditar->setEnabled(true);
-    ui->btnGuardar->setEnabled(false);
-    ui->btnSiguiente->setEnabled(true);
+    ui->btnAnadir->setEnabled(estado);
+    ui->btnAnterior->setEnabled(estado);
+    ui->btn_borrar->setEnabled(estado);
+    ui->btnDeshacer->setEnabled(!estado);
+    ui->btnEditar->setEnabled(estado);
+    ui->btnGuardar->setEnabled(!estado);
+    ui->btnSiguiente->setEnabled(estado);
+    ui->btnAnadirLinea->setEnabled(!estado);
+    ui->btn_borrarLinea->setEnabled(!estado);
+    helper.blockTable(!estado);
     // activo controles que deben estar activos.
 
 
@@ -274,28 +310,36 @@ void FrmPedidosProveedor::anadir_pedido()
     clear();
     oPedido_proveedor->recuperar(id);
     this->id = id;
-
+    emit block();
     llenar_campos();
-    estadoedicion();
-}
+    bloquearcampos(false);
+    }
 
 void FrmPedidosProveedor::guardar_pedido()
 {
-    estadolectura();
     guardar_campos_en_objeto();
     oPedido_proveedor->id =this->id;
     oPedido_proveedor->guardar();
 
     int regs = ui->Lineas->rowCount();
-    helper.saveTable(oPedido_proveedor->id,"empresa","lin_ped_pro");
+   // helper.saveTable(oPedido_proveedor->id,"empresa","lin_ped_pro");
     oPedido_proveedor->recuperar(oPedido_proveedor->id);
     llenar_campos();
+    bloquearcampos(true);
+    emit unblock();
 }
 
 void FrmPedidosProveedor::editar_pedido()
 {
-    estadoedicion();
+    bloquearcampos(false);
+    emit block();
     ui->txtcCodigoProveedor->setFocus();
+}
+void FrmPedidosProveedor::deshacer()
+{
+    llenar_campos();
+    bloquearcampos(true);
+    emit unblock();
 }
 
 void FrmPedidosProveedor::siguiente()
@@ -310,6 +354,30 @@ void FrmPedidosProveedor::anterior()
     oPedido_proveedor->recuperar("select * from ped_pro where nPedido < "
                                  +QString::number(oPedido_proveedor->nPedido)+ " order by nPedido desc  limit 0,1 ",2);
     llenar_campos();
+}
+
+void FrmPedidosProveedor::imprimir()
+{
+    FrmDialogoImprimir imprimir(this);
+    if(imprimir.exec() == QDialog::Accepted)
+    {
+        QPrintDialog print;
+        print.exec();
+    }
+}
+
+void FrmPedidosProveedor::borrar_pedido()
+{
+    if(QMessageBox::question(this,tr("Gestión de Pedidos a proveedores"),
+                             tr("¿Desea eliminar este pedido?\nEsta opción no se podrá deshacer"),
+                             tr("Cancelar"),tr("Aceptar")) == QMessageBox::Accepted)
+    {
+        bool exito = oPedido_proveedor->borrar(oPedido_proveedor->id);
+        if (exito == true)
+            clear();
+
+
+    }
 }
 
 void FrmPedidosProveedor::llenar_campos()
@@ -493,6 +561,9 @@ void FrmPedidosProveedor::clear()
     ui->txtrTotal2->clear();
     ui->txtrTotal3->clear();
     ui->txtrTotal4->clear();
+    ui->lblnombreProveedor->clear();
+    ui->lblnumalb->clear();
+    ui->lblSerie->clear();
 }
 
 void FrmPedidosProveedor::resizeTable(int x)

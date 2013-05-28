@@ -2033,6 +2033,9 @@ color: rgb(0, 64, 64);</string>
        </item>
        <item row="0" column="0">
         <widget class="QPushButton" name="btnAnadirLinea">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -2053,6 +2056,9 @@ color: rgb(0, 64, 64);</string>
        </item>
        <item row="0" column="1">
         <widget class="QPushButton" name="btn_borrarLinea">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="maximumSize">
           <size>
            <width>30</width>

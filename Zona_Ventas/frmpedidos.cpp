@@ -443,7 +443,7 @@ void FrmPedidos::on_btnGuardar_clicked()
     {
         succes &= oPedido->GuardarPedido(iPed);
         succes &= oPedido->BorrarLineas(iPed);
-        succes &= helper.saveTable(iPed,"empresa","lin_ped");
+        //succes &= helper.saveTable(iPed,"empresa","lin_ped");
     }
     else
     {
@@ -451,7 +451,7 @@ void FrmPedidos::on_btnGuardar_clicked()
         LLenarPedido();
         succes &= oPedido->AnadirPedido();
         succes &= oPedido->GuardarPedido(iPed);
-        succes &= helper.saveTable(iPed,"empresa","lin_ped");
+        //succes &= helper.saveTable(iPed,"empresa","lin_ped");
     }
 
     if(succes)

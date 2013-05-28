@@ -92,6 +92,7 @@ public slots:
     void clear();
     void convertir_en_albaran();
     void convertir_en_factura();
+    bool borrar(int id);
 
     
 };

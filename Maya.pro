@@ -124,7 +124,9 @@ SOURCES += main.cpp\
     Auxiliares/datedelegate.cpp \
     Zona_Pacientes/frmcobrardeuda.cpp \
     qchartpiece.cpp \
-    openchart.cpp
+    openchart.cpp \
+    Zona_Contabilidad/frmentrada_apuntes.cpp \
+    Auxiliares/frmdialogoimprimir.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -214,7 +216,9 @@ HEADERS  += mainwindow.h \
     Auxiliares/datedelegate.h \
     Zona_Pacientes/frmcobrardeuda.h \
     openchart.h \
-    qchartpiece.h
+    qchartpiece.h \
+    Zona_Contabilidad/frmentrada_apuntes.h \
+    Auxiliares/frmdialogoimprimir.h
 
 
 FORMS    += mainwindow.ui \
@@ -270,7 +274,9 @@ FORMS    += mainwindow.ui \
     Zona_Administrador/frmconfigmaya.ui \
     Zona_Pacientes/frmanadirhierb.ui \
     Almacen/frmeditar_tarifas.ui \
-    Zona_Pacientes/frmcobrardeuda.ui
+    Zona_Pacientes/frmcobrardeuda.ui \
+    Zona_Contabilidad/frmentrada_apuntes.ui \
+    Auxiliares/frmdialogoimprimir.ui
 
 RESOURCES += \
     maya.qrc

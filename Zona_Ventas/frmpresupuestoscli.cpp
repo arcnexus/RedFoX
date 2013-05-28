@@ -476,7 +476,7 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
         //Borrar lineas
         succes &= oPres->BorrarLineas(iPre);
         //guardar lineas
-        succes &= helper.saveTable(iPre,"empresa","lin_pre");
+    //    succes &= helper.saveTable(iPre,"empresa","lin_pre");
         if(succes)
         {
             LLenarCampos();
@@ -489,7 +489,7 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
         ui->txtnPresupuesto->setText(QString::number(next));
         LLenarPresupuesto();
         succes &= oPres->AnadirPresupuesto();
-        succes &= helper.saveTable(oPres->nPresupuesto,"empresa","lin_pre");
+    //    succes &= helper.saveTable(oPres->nPresupuesto,"empresa","lin_pre");
         if(succes)
         {
             LLenarCampos();

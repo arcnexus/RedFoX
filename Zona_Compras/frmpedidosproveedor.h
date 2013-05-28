@@ -21,21 +21,28 @@ public:
     Proveedor *oProveedor;// = new Proveedor(this);
     PedidoProveedor *oPedido_proveedor;// = new PedidoProveedor(this);
     int id;
+signals:
+    void block();
+    void unblock();
 
 private slots:
+    void lineaReady(lineaDetalle*);
+    void lieaDeleted(int id);
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);
     void desglose4Changed(double base, double iva, double re, double total);
-    void estadoedicion();
-    void estadolectura();
+    void bloquearcampos(bool estado);
     void buscar_proveeedor();
     void anadir_pedido();
     void guardar_pedido();
     void editar_pedido();
+    void deshacer();
     void siguiente();
     void anterior();
+    void imprimir();
+    void borrar_pedido();
     void llenar_campos();
     void guardar_campos_en_objeto();
     void clear();

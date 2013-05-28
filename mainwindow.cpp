@@ -329,6 +329,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos"));
     FrmPedidos_pro = new FrmPedidosProveedor(this);
+    connect(FrmPedidos_pro,SIGNAL(block()),this,SLOT(block_main()));
+    connect(FrmPedidos_pro,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes"));
     FrmAlbaran_pro = new FrmAlbaranProveedor(this);
