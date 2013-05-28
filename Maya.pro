@@ -123,8 +123,8 @@ SOURCES += main.cpp\
     Almacen/frmeditar_tarifas.cpp \
     Auxiliares/datedelegate.cpp \
     Zona_Pacientes/frmcobrardeuda.cpp \
-    qchartpiece.cpp \
-    openchart.cpp \
+    LibsGraficas/qchartpiece.cpp \
+    LibsGraficas/openchart.cpp \
     Zona_Contabilidad/frmentrada_apuntes.cpp \
     Auxiliares/frmdialogoimprimir.cpp
 
@@ -215,8 +215,8 @@ HEADERS  += mainwindow.h \
     Almacen/frmeditar_tarifas.h \
     Auxiliares/datedelegate.h \
     Zona_Pacientes/frmcobrardeuda.h \
-    openchart.h \
-    qchartpiece.h \
+    LibsGraficas/openchart.h \
+    LibsGraficas/qchartpiece.h \
     Zona_Contabilidad/frmentrada_apuntes.h \
     Auxiliares/frmdialogoimprimir.h
 

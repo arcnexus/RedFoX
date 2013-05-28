@@ -5,6 +5,7 @@
 #include "openrptLibs/include/orprintrender.h"
 #include "openrptLibs/include/previewdialog.h"
 #include "openrptLibs/include/renderobjects.h"
+#include "openrptLibs/include/dbfiledialog.h"
 
 //#include "SOAP/soapcheckVatBindingProxy.h"
 //#include "SOAP/checkVatBinding.nsmap"
@@ -637,27 +638,27 @@ QString Configuracion::letraDNI(QString Nif)
     }
 }
 
-void Configuracion::imprimir(QString db, QString report, bool toPDF,bool preview, QWidget *parent)
+void Configuracion::imprimir(bool toPDF,bool preview, QWidget *parent)
 {
-    QSqlQuery q(QSqlDatabase::database("terra"));
-    q.prepare("SELECT * FROM report WHERE report_name = :name ORDER BY report_grade DESC");
-    q.bindValue(":name",report);
-    if(q.exec())
-    {
-        qDebug() << q.executedQuery();
-        if(q.next())
-        {
-            QDomDocument ddoc;
-            QString error;
-            if(ddoc.setContent(q.record().value("report_source").toString(),&error))
-            {
+    QSqlDatabase db = QSqlDatabase::database("Maya", false);
+    if(db.isValid()) {
+        DBFileDialog rptDiag;
+        rptDiag.setWindowTitle(tr("Load Report from Database"));
+        rptDiag._name->setReadOnly(true);
+        rptDiag._grade->setEnabled(false);
+        if(rptDiag.exec() == QDialog::Accepted) {
+            QDomDocument doc;
+            QString errMsg;
+            int errLine, errCol;
+            QString source = rptDiag.getSource();
+            if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
                 ORPreRender pre;
-                pre.setDom(ddoc);
-                pre.setDatabase(QSqlDatabase::database(db));
+                pre.setDom(doc);
+                pre.setDatabase(QSqlDatabase::database("Maya"));
 
                 ParameterEdit paramEdit(0);
                 QDialog *dlgEdit = ParameterEdit::ParameterEditDialog(&paramEdit, parent);
-                if (paramEdit.setDocument(ddoc))
+                if (paramEdit.setDocument(doc))
                     if (dlgEdit->exec() != QDialog::Accepted)
                         return;
 
@@ -711,7 +712,7 @@ void Configuracion::imprimir(QString db, QString report, bool toPDF,bool preview
                     delete doc;
                 }
             }
-            qDebug()<<error;
+            qDebug()<<errMsg;
         }
     }
 }
