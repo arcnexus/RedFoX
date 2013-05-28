@@ -361,7 +361,7 @@ void FrmPedidosProveedor::imprimir()
     FrmDialogoImprimir imprimir(this);
     if(imprimir.exec() == QDialog::Accepted)
     {
-        QPrintDialog print;
+        QPrintDialog print;        
         print.exec();
     }
 }
