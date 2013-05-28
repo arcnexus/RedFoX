@@ -202,9 +202,9 @@ void Db_table_View::on_btn_cancel_clicked()
 void Db_table_View::print_clicked()
 {
     if(sender() == toPDF)
-        Configuracion::imprimir(db,file,true,true,this);
+        Configuracion::imprimir(true,true,this);
     else
-        Configuracion::imprimir(db,file,false,true,this);
+        Configuracion::imprimir(false,true,this);
 }
 
 void Db_table_View::resizeEvent(QResizeEvent *)
@@ -245,8 +245,10 @@ bool Db_table_View::eventFilter(QObject *target, QEvent *event)
     {
         ui->resultado_list->blockSignals(true);
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        if (keyEvent->key() == Qt::Key_Tab)
+        if (keyEvent->key() == Qt::Key_Tab || keyEvent->key() == Qt::Key_Return)
         {
+            int row = ui->resultado_list->currentIndex().row();
+            selected_value = ui->resultado_list->model()->data(ui->resultado_list->model()->index(row,0)).toString();
             ui->btn_aceptar->setFocus();
         }
         ui->resultado_list->blockSignals(false);

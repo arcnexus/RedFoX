@@ -1,7 +1,7 @@
 #include "frmpedidosproveedor.h"
 #include "ui_frmpedidosproveedor.h"
 #include "../Busquedas/frmbuscarproveedor.h"
-#include "Auxiliares/frmdialogoimprimir.h"
+#include "../Auxiliares/frmdialogoimprimir.h"
 #include <QPrintDialog>
 
 

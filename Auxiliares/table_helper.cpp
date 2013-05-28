@@ -18,7 +18,7 @@ Table_Helper::~Table_Helper()
 
 void Table_Helper::help_table(QTableWidget *table)
 {
-    this->helped_table = table;    
+    this->helped_table = table;
    /// helped_table->setItemDelegateForColumn(0,new SearchDelegate(helped_table));
     helped_table->setItemDelegateForColumn(1,new SpinBoxDelegate(helped_table));
     helped_table->setItemDelegateForColumn(3,new MonetaryDelegate(helped_table,true));
@@ -653,6 +653,7 @@ void Table_Helper::searchArticulo()
         helped_table->item(helped_table->currentRow(),0)->setText(searcher.selected_value);
         helped_table->setCurrentCell(helped_table->currentRow(),1);
         helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
+        rellenar_con_Articulo(helped_table->currentRow());
     }
 }
 
@@ -687,5 +688,3 @@ void Table_Helper::updateLinea(int row)
     m_rows[row]->iva_perc = r.value(10).toDouble();*/
     emit lineaReady(m_rows[row]);
 }
-
-
