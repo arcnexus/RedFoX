@@ -155,6 +155,7 @@
         <file>PNG/asientos.png</file>
         <file>PNG/cuentas.png</file>
         <file>PNG/impresora2.png</file>
+        <file>PNG/find2.png</file>
     </qresource>
     <qresource prefix="/openRPTLangs">
         <file>openrptLibs/traduccion/common_es.qm</file>

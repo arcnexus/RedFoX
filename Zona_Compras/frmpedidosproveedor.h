@@ -27,7 +27,7 @@ signals:
 
 private slots:
     void lineaReady(lineaDetalle*);
-    void lieaDeleted(int id);
+    void lineaDeleted(int id);
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);

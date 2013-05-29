@@ -1,6 +1,6 @@
 #include "frmpedidosproveedor.h"
 #include "ui_frmpedidosproveedor.h"
-#include "../Busquedas/frmbuscarproveedor.h"
+#include "../Busquedas/db_consulta_view.h"
 #include "../Auxiliares/frmdialogoimprimir.h"
 #include <QPrintDialog>
 
@@ -88,7 +88,7 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
 
     if (ld->idLinea == -1)
     {
-        qDebug()<< ld->idLinea;
+        //qDebug()<< ld->idLinea;
         QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
         query_lin_ped_pro.prepare("INSERT INTO lin_ped_pro (id_cab,id_articulo,codigo_articulo_proveedor,"
                                   "descripcion, cantidad, coste_bruto,subtotal_coste,porc_dto,dto,porc_iva,"
@@ -163,7 +163,7 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
     }
 }
 
-void FrmPedidosProveedor::lieaDeleted(int id)
+void FrmPedidosProveedor::lineaDeleted(int id)
 {
     //todo borrar de la bd y stock y demas
     //if id = -1 pasando olimpicamente
@@ -278,7 +278,9 @@ void FrmPedidosProveedor::bloquearcampos(bool estado)
     ui->btnGuardar->setEnabled(!estado);
     ui->btnSiguiente->setEnabled(estado);
     ui->btnAnadirLinea->setEnabled(!estado);
+
     ui->btn_borrarLinea->setEnabled(!estado);
+    ui->botBuscarCliente->setEnabled(!estado);
     helper.blockTable(!estado);
     // activo controles que deben estar activos.
 
@@ -287,10 +289,23 @@ void FrmPedidosProveedor::bloquearcampos(bool estado)
 
 void FrmPedidosProveedor::buscar_proveeedor()
 {
-    FrmBuscarProveedor buscar(this);
-    if(buscar.exec() == QDialog::Accepted)
+//    FrmBuscarProveedor buscar(this);
+//    if(buscar.exec() == QDialog::Accepted)
+    db_consulta_view consulta;
+    consulta.set_campoBusqueda("cProveedor");
+    consulta.set_texto_tabla("Proveedores");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id, cCodigo,cProveedor,cCif,cPoblacion from proveedores");
+    QStringList cabecera;
+    QVariantList tamanos;
+    cabecera  << tr("Código") << tr("Proveedor") << tr("DNI/CIF/NIE") << tr("Población");
+    tamanos <<"0" << "100" << "300" << "180" << "300";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de proveedores");
+    if(consulta.exec())
     {
-        int id_proveedor = buscar.nIdProv;
+        int id_proveedor = consulta.get_id();
         oProveedor->Recuperar("select * from proveedores where id = "+QString::number(id_proveedor));
         ui->txtcCodigoProveedor->setText(oProveedor->cCodigo);
         ui->txtcProveedor->setText(oProveedor->cProveedor);
@@ -358,12 +373,7 @@ void FrmPedidosProveedor::anterior()
 
 void FrmPedidosProveedor::imprimir()
 {
-    FrmDialogoImprimir imprimir(this);
-    if(imprimir.exec() == QDialog::Accepted)
-    {
-        QPrintDialog print;        
-        print.exec();
-    }
+    oPedido_proveedor->imprimir(oPedido_proveedor->id);
 }
 
 void FrmPedidosProveedor::borrar_pedido()

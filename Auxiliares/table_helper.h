@@ -85,6 +85,7 @@ private:
     QString m_db;
     QString m_db_table;
     bool use2divisas;
+    bool isActive;
     void updateLinea(int row);
 };
 

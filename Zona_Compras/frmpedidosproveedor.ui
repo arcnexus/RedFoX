@@ -73,7 +73,7 @@
          </size>
         </property>
         <property name="text">
-         <string>&amp;Nueva</string>
+         <string>Nueva</string>
         </property>
         <property name="icon">
          <iconset resource="../maya.qrc">
@@ -84,6 +84,9 @@
           <width>24</width>
           <height>24</height>
          </size>
+        </property>
+        <property name="shortcut">
+         <string>Shift+F6</string>
         </property>
        </widget>
       </item>
@@ -263,8 +266,8 @@
          <string>Borrar</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -662,7 +665,7 @@
                 <enum>QTabWidget::North</enum>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="tab">
                 <property name="styleSheet">

@@ -126,7 +126,8 @@ SOURCES += main.cpp\
     LibsGraficas/qchartpiece.cpp \
     LibsGraficas/openchart.cpp \
     Zona_Contabilidad/frmentrada_apuntes.cpp \
-    Auxiliares/frmdialogoimprimir.cpp
+    Auxiliares/frmdialogoimprimir.cpp \
+    Busquedas/db_consulta_view.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -218,7 +219,8 @@ HEADERS  += mainwindow.h \
     LibsGraficas/openchart.h \
     LibsGraficas/qchartpiece.h \
     Zona_Contabilidad/frmentrada_apuntes.h \
-    Auxiliares/frmdialogoimprimir.h
+    Auxiliares/frmdialogoimprimir.h \
+    Busquedas/db_consulta_view.h
 
 
 FORMS    += mainwindow.ui \
@@ -276,7 +278,8 @@ FORMS    += mainwindow.ui \
     Almacen/frmeditar_tarifas.ui \
     Zona_Pacientes/frmcobrardeuda.ui \
     Zona_Contabilidad/frmentrada_apuntes.ui \
-    Auxiliares/frmdialogoimprimir.ui
+    Auxiliares/frmdialogoimprimir.ui \
+    Busquedas/db_consulta_view.ui
 
 RESOURCES += \
     maya.qrc

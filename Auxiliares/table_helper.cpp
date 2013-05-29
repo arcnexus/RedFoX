@@ -9,6 +9,7 @@ Table_Helper::Table_Helper(QObject *parent) :
     comprando = true;
     use_re = false;
     m_cantidadArticulo=0;
+    isActive = false;
 }
 
 Table_Helper::~Table_Helper()
@@ -69,6 +70,7 @@ void Table_Helper::set_Tipo(bool is_compra)
 
 void Table_Helper::blockTable(bool state)
 {
+    isActive = !state;
     if(helped_table)
     {
         if(state)
@@ -598,7 +600,7 @@ void Table_Helper::rellenar_con_Articulo(int row)
 bool Table_Helper::eventFilter(QObject *target, QEvent *event)
 {
     Q_UNUSED(target)
-    if (event->type() == QEvent::KeyPress)
+    if (event->type() == QEvent::KeyPress && isActive)
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if (keyEvent->key() == Qt::Key_Down)

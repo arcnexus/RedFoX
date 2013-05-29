@@ -1,5 +1,7 @@
 
 #include "pedidoproveedor.h"
+#include <QPrintDialog>
+#include "../Auxiliares/frmdialogoimprimir.h"
 
 PedidoProveedor::PedidoProveedor(QObject *parent) :
     QObject(parent)
@@ -430,5 +432,18 @@ bool PedidoProveedor::borrar(int id)
         QSqlDatabase::database("empresa").commit();
         return true;
     }
+}
+
+void PedidoProveedor::imprimir(int id)
+{
+    FrmDialogoImprimir imprimir(qApp->activeWindow());
+    if(imprimir.exec() == QDialog::Accepted)
+    {
+        QPrintDialog print;
+        print.exec();
+//        QSqlQuery query_ped_pro(QSqlDatabase::database("empresa"));
+//        query_ped_pro.prepare("update ped_pro set ");
+    }
+
 }
 
