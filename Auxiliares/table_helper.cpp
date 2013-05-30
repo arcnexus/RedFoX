@@ -277,10 +277,12 @@ void Table_Helper::removeRow()
 
         for(int i = rowsList.count() - 1; i >= 0; i--)
         {
-            int id = m_rows.at(i)->idLinea;
+            lineaDetalle * aux = new lineaDetalle;
+            aux->idLinea = m_rows.at(i)->idLinea;
+            //copiar todos los valores a 'aux'
             helped_table->removeRow(rowsList.at(i));
-            m_rows.remove(rowsList.at(i));
-            emit lineaDeleted(m_rows[rowsList.at(i)]);
+            m_rows.remove(rowsList.at(i));//esto borra rowList(i) de la memoria....
+            emit lineaDeleted(aux);
         }
     }
     calcularTotal();
@@ -289,6 +291,7 @@ void Table_Helper::removeRow()
 
 void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
 {
+    //guardar cantidad al entrar a editar
     if(current)
         if(current->column() == 1)
             m_rows[current->row()]->cantidad_old = current->text().toDouble();
@@ -303,6 +306,7 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
         else if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
         {
             comprobarCantidad(row);
+            //guardar cantidad al terminar de editar
             m_rows[row]->cantidad = previous->text().toDouble();
             updateLinea(row);
         }
@@ -406,8 +410,9 @@ void Table_Helper::comprobarCantidad(int row)
     int stock = 0;
     int stockMax = 0;
     int stockMin = 0;
+    bool controlarStock = true;
     QString codigo = helped_table->item(row,0)->text();
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(QSqlDatabase::database("Maya"));
     QString sql = QString("SELECT * FROM articulos WHERE cCodigo = '%1'").arg(codigo);
     query.prepare(sql);
     if(query.exec())
@@ -417,28 +422,33 @@ void Table_Helper::comprobarCantidad(int row)
             stock = query.record().value("nStockReal").toInt();
             stockMax  = query.record().value("nStockMaximo").toInt();
             stockMin  = query.record().value("nStockMinimo").toInt();
+            controlarStock = query.record().value("lControlarStock").toBool();
+
         }
         else
         {
             QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),tr("Articulo no encontrado"),tr("Aceptar"));
         }
+    } else{
+        QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),
+                              tr("Error al buscar stock: %1").arg(query.lastError().text()),tr("Aceptar"));
     }
     if(comprando)
     {
-        if((stock + cantidad) > stockMax)
+        if((stock + cantidad) > stockMax && stockMax >0 && controlarStock)
             QMessageBox::warning(qApp->activeWindow(),tr("Stock superado"),
                                  tr("Con esta cantidad se superará el stock máximo establecido"),tr("Aceptar"));
     }
     else
     {
-        if((stock - cantidad) < 0)
+        if((stock - cantidad) < 0 && controlarStock)
         {
             QMessageBox::warning(qApp->activeWindow(),tr("Stock insuficiente"),
                                  tr("No existe suficiente stock para satisfacer esta cantidad"),tr("Aceptar"));
             if (helped_table->columnCount() == 10)
                 helped_table->item(row,9)->setText(QString::number(stock));
         }
-        else if ((stock - cantidad) < stockMin)
+        else if ((stock - cantidad) < stockMin && controlarStock)
         {
             QMessageBox::warning(qApp->activeWindow(),tr("Stock bajo minimos"),
                                  tr("Con esta cantidad el stock estará por debajo del minimo establecido"),tr("Aceptar"));
@@ -455,8 +465,9 @@ void Table_Helper::comprobarStock(int row)
     int stock = 0;
     int stockMax = 0;
     int stockMin = 0;
+    bool controlarstock = true;
     QString codigo = helped_table->item(row,0)->text();
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(QSqlDatabase::database("Maya"));
     QString sql = QString("SELECT * FROM articulos WHERE cCodigo = '%1'").arg(codigo);
     query.prepare(sql);
     if(query.exec())
@@ -464,15 +475,17 @@ void Table_Helper::comprobarStock(int row)
         if(query.next())
         {
             stock = query.record().value("nStockReal").toInt();
+            controlarstock = query.record().value("lControlarStock").toBool();
+
         }
         else
         {
             QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),tr("Articulo no encontrado"),tr("Aceptar"));
         }
     }
-    if(aServir > cantidad)
+    if(aServir > cantidad && controlarstock)
         helped_table->item(row,9)->setText(QString::number(cantidad));
-    if(aServir > stock)
+    if(aServir > stock && controlarstock)
     {
         QMessageBox::warning(qApp->activeWindow(),tr("Stock insuficiente"),
                              tr("No existe suficiente stock para satisfacer esta cantidad"),tr("Aceptar"));

@@ -145,7 +145,6 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
         }
 
         ld->idLinea = query_lin_ped_pro.lastInsertId().toInt();
-        ld->cantidad_old = ld->cantidad;
 
     } else
     {
@@ -226,6 +225,7 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
             QSqlDatabase::database("Maya").rollback();
         }
     }
+    ld->cantidad_old = ld->cantidad;
 }
 
 void FrmPedidosProveedor::lineaDeleted(lineaDetalle * ld)
@@ -272,6 +272,7 @@ void FrmPedidosProveedor::lineaDeleted(lineaDetalle * ld)
         }
     }
     //qDebug() << "borra" << id;
+    delete ld;
 }
 
 void FrmPedidosProveedor::totalChanged(double base, double dto, double subTotal, double iva, double re, double total, QString moneda)

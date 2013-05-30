@@ -1056,14 +1056,7 @@ background-color: rgb(255, 255, 127);</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_35">
-              <item row="5" column="0">
-               <widget class="QLabel" name="label_31">
-                <property name="text">
-                 <string>Stock Máximo:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="2">
+              <item row="5" column="3">
                <widget class="QLineEdit" name="txtnStockMaximo">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -1088,7 +1081,14 @@ background-color: rgb(255, 255, 127);</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="2">
+              <item row="5" column="1">
+               <widget class="QLabel" name="label_31">
+                <property name="text">
+                 <string>Stock Máximo:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="3">
                <widget class="QLineEdit" name="txtnStockMinimo">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -1113,28 +1113,28 @@ background-color: rgb(255, 255, 127);</string>
                 </property>
                </widget>
               </item>
-              <item row="10" column="0">
+              <item row="10" column="1">
                <widget class="QLabel" name="label_45">
                 <property name="text">
                  <string>Cantidad reservada:</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
+              <item row="2" column="1">
                <widget class="QLabel" name="label_29">
                 <property name="text">
                  <string>Unidades Vendidas:</string>
                 </property>
                </widget>
               </item>
-              <item row="8" column="0">
+              <item row="8" column="1">
                <widget class="QLabel" name="label_44">
                 <property name="text">
                  <string>Pendientes recibir:</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="2">
+              <item row="1" column="3">
                <widget class="QLineEdit" name="txtrAcumuladoCompras">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1163,14 +1163,14 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
+              <item row="1" column="1">
                <widget class="QLabel" name="label_42">
                 <property name="text">
                  <string>Acumulado Compras</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="2">
+              <item row="0" column="3">
                <widget class="QLineEdit" name="txtnUnidadesCompradas">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1199,7 +1199,7 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="7" column="2">
+              <item row="7" column="3">
                <widget class="QLineEdit" name="txtnStockReal_2">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1234,14 +1234,14 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="0">
+              <item row="0" column="1">
                <widget class="QLabel" name="label_28">
                 <property name="text">
                  <string>Unidades Compradas:</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="2">
+              <item row="3" column="3">
                <widget class="QLineEdit" name="txtrAcumuladoVentas">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1270,14 +1270,14 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="0">
+              <item row="3" column="1">
                <widget class="QLabel" name="label_43">
                 <property name="text">
                  <string>Acumulado Ventas:</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="2">
+              <item row="2" column="3">
                <widget class="QLineEdit" name="txtnUnidadesVendidas">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1306,7 +1306,7 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="7" column="0">
+              <item row="7" column="1">
                <widget class="QLabel" name="label_32">
                 <property name="text">
                  <string>Stock Real:
@@ -1314,14 +1314,14 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="9" column="0">
+              <item row="9" column="1">
                <widget class="QLabel" name="lblFechaPrevistaRecepcion">
                 <property name="text">
                  <string>Fecha Prev. Recepc.:</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="2">
+              <item row="6" column="3">
                <widget class="QLineEdit" name="txtStockfisico">
                 <property name="maximumSize">
                  <size>
@@ -1341,7 +1341,7 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="0">
+              <item row="4" column="1">
                <widget class="QLabel" name="label_30">
                 <property name="autoFillBackground">
                  <bool>false</bool>
@@ -1351,7 +1351,7 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="10" column="2">
+              <item row="10" column="3">
                <widget class="QLineEdit" name="txtnReservados">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1380,7 +1380,7 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="9" column="2">
+              <item row="9" column="3">
                <widget class="QDateEdit" name="txtdFechaPrevistaRecepcion">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1418,14 +1418,14 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="0">
+              <item row="6" column="1">
                <widget class="QLabel" name="label_22">
                 <property name="text">
                  <string>Stock Fisico:</string>
                 </property>
                </widget>
               </item>
-              <item row="8" column="2">
+              <item row="8" column="3">
                <widget class="QLineEdit" name="txtnCantidadPendienteRecibir">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1454,7 +1454,7 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="11" column="2">
+              <item row="11" column="3">
                <widget class="QDateEdit" name="txtdFechaUltimaCompra">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1490,21 +1490,21 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="12" column="0">
+              <item row="12" column="1">
                <widget class="QLabel" name="label_34">
                 <property name="text">
                  <string>Fecha últ. Venta:</string>
                 </property>
                </widget>
               </item>
-              <item row="11" column="0">
+              <item row="11" column="1">
                <widget class="QLabel" name="label_33">
                 <property name="text">
                  <string>Fecha últ. Compra:</string>
                 </property>
                </widget>
               </item>
-              <item row="12" column="2">
+              <item row="12" column="3">
                <widget class="QDateEdit" name="txtdFechaUltimaVenta">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1527,7 +1527,7 @@ color: rbg(0,0,0);</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
+              <item row="0" column="0">
                <widget class="QPushButton" name="btnActualizar">
                 <property name="maximumSize">
                  <size>
@@ -1539,7 +1539,17 @@ color: rbg(0,0,0);</string>
                  <string>Actualizar valores</string>
                 </property>
                 <property name="text">
-                 <string>A</string>
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/refrescar.png</normaloff>:/Icons/PNG/refrescar.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
                 </property>
                </widget>
               </item>

@@ -87,7 +87,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     connect(ui->cboTipoGrafica,SIGNAL(currentIndexChanged(QString)),this,SLOT(graficar(QString)));
     connect(ui->btnActualizar,SIGNAL(clicked()),this,SLOT(actualizar()));
 
-
+    this->installEventFilter(this);
 }
 
 FrmArticulos::~FrmArticulos()
@@ -718,6 +718,14 @@ void FrmArticulos::AnadirSeccion()
     QLineEdit *txtcSeccionNueva = new QLineEdit(ventana);
     layout->addWidget(txtcSeccionNueva,2,1,2,1);
 }
+
+bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
+{
+    if(event->type() == QEvent::Show)
+        actualizar();
+    return false;
+}
+
 
 void FrmArticulos::on_botBuscarFamilia_clicked()
 {
@@ -1949,7 +1957,11 @@ void FrmArticulos::actualizar()
     LLenarCampos();
     tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
     tarifa_model->select();
+    qDebug() << "FrmArticulos::actualizar()";
 }
+
+
+
 void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
 {
     QString ficheroImagen;

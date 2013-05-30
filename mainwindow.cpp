@@ -17,7 +17,7 @@ void MainWindow::crear_barraMantenimiento()
 {
     btn_clientes = new ToolBarButton(tr("Clientes"),":/Icons/PNG/clientes_2.png",this);
     btn_proovedores = new ToolBarButton(tr("Proveedores"),":/Icons/PNG/proveedores_2.png",this);
-    btn_almacen = new ToolBarButton(tr("../Almacen"),":/Icons/PNG/Box.png",this);
+    btn_almacen = new ToolBarButton(tr("Almacen"),":/Icons/PNG/Box.png",this);
     btn_agenda = new ToolBarButton(tr("Agenda"),":/Icons/PNG/Calender.png",this);
 
     QFrame*  line = new QFrame(ui->page_manten);
@@ -885,6 +885,13 @@ void MainWindow::blockMe(bool state)
     ui->stackedWidget_2->setEnabled(!state);
     ui->comboBox->setEnabled(!state);
     ui->menubar->setEnabled(!state);
+    QList<QPushButton*> buttons = ui->frameusuario->findChildren<QPushButton*>();
+    QPushButton* b;
+    foreach (b, buttons) {
+        if(b!= ui->btn_bloquear)
+            if(b!=ui->btn_salir)
+                b->setEnabled(!state);
+    }
     on_edit = state;
 }
 

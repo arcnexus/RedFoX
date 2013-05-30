@@ -98,6 +98,7 @@ public slots:
 
 private:
     Ui::FrmArticulos *ui;
+    bool eventFilter(QObject *target, QEvent *event);
     bool Altas;
     void desbloquearCampos();
     void bloquearCampos();
