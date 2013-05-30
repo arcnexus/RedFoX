@@ -85,6 +85,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     connect(ui->cboEmpresa2,SIGNAL(currentIndexChanged(int)),this,SLOT(LLenarGrafica_comparativa(int)));
     connect(ui->radGrafica_importes_2,SIGNAL(toggled(bool)),this,SLOT(MostrarGrafica_comparativa(bool)));
     connect(ui->cboTipoGrafica,SIGNAL(currentIndexChanged(QString)),this,SLOT(graficar(QString)));
+    connect(ui->btnActualizar,SIGNAL(clicked()),this,SLOT(actualizar()));
 
 
 }
@@ -129,6 +130,7 @@ void FrmArticulos::on_botGuardar_clicked()
         bloquearCampos();
         CargarCamposEnArticulo();
         oArticulo->Guardar();
+        actualizar();
     } else
     {
         QMessageBox::warning(this,tr("Gestion de Productos/servicios"),
@@ -436,13 +438,13 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->cSubfamilia=ui->txtcSubFamilia->text();
     oArticulo->nTipoIva=Configuracion_global->ivas[ui->cboTipoIVA->currentText()].value("nIva").toDouble();
     oArticulo->id_tiposiva = Configuracion_global->getIdIva(ui->cboTipoIVA->currentText());
-    oArticulo->rCoste=ui->txtrCoste->text().toDouble();
+    oArticulo->rCoste=ui->txtrCoste->text().replace(",",".").toDouble();
     oArticulo->dUltimaCompra= ui->txtdFechaUltimaCompra->date();
     oArticulo->dUltimaVenta= ui->txtdFechaUltimaVenta->date();
     oArticulo->nUnidadesCompradas= ui->txtnUnidadesCompradas->text().toDouble();
     oArticulo->nUnidadesVendidas=ui->txtnUnidadesVendidas->text().toDouble();
-    oArticulo->rAcumuladoCompras= ui->txtrAcumuladoCompras->text().toDouble();
-    oArticulo->rAcumuladoVentas= ui->txtrAcumuladoVentas->text().toDouble();
+    oArticulo->rAcumuladoCompras= ui->txtrAcumuladoCompras->text().replace(",",".").toDouble();
+    oArticulo->rAcumuladoVentas= ui->txtrAcumuladoVentas->text().replace(",",".").toDouble();
     oArticulo->tComentario=ui->txttComentario->toPlainText();
     oArticulo->nStockMaximo=ui->txtnStockMaximo->text().toInt();
     oArticulo->nStockMinimo=ui->txtnStockMinimo->text().toInt();
@@ -486,8 +488,8 @@ void FrmArticulos::CargarCamposEnArticulo()
 
     oArticulo->por_cada = ui->txtpor_cada->text().toInt();
     oArticulo->regalode = ui->txtRegalode->text().toInt();
-    oArticulo->porc_dto_web = ui->txt_dto_web->text().toDouble();
-    oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().toDouble();
+    oArticulo->porc_dto_web = ui->txt_dto_web->text().replace(",",".").toDouble();
+    oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().replace(",",".").toDouble();
     oArticulo->comentario_oferta = ui->txtComentarios_promocion->toPlainText();
     oArticulo->margen = ui->txtMargen->value();
     oArticulo->margen_min = ui->txtMargen_min->value();
@@ -614,8 +616,11 @@ void FrmArticulos::on_botDeshacer_clicked()
         this->anadir = false;
     } else
         {
+        int nId = oArticulo->id;
         QString cSql = "Select * from articulos where Id =" +QString::number(oArticulo->id);
         oArticulo->Recuperar(cSql);
+        oArticulo->id = nId;
+
         LLenarCampos();
     }
     bloquearCampos();
@@ -667,6 +672,7 @@ void FrmArticulos::on_TablaBuscarArt_doubleClicked(const QModelIndex &index)
     oArticulo->Recuperar(cSQL);
     LLenarCampos();
     ui->Pestanas->setCurrentIndex(0);
+
 }
 
 
@@ -1934,6 +1940,15 @@ void FrmArticulos::on_botCambiarImagen_3_clicked()
 void FrmArticulos::on_botCambiarImagen_4_clicked()
 {
     CambiarImagen_clicked(ui->lblImagenArticulo_4,"bImagen4");
+}
+
+void FrmArticulos::actualizar()
+{
+    QString cCodigo = oArticulo->cCodigo;
+    oArticulo->Recuperar("Select * from articulos where cCodigo ='"+cCodigo+"' order by cCodigo limit 1 ",1);
+    LLenarCampos();
+    tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
+    tarifa_model->select();
 }
 void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
 {

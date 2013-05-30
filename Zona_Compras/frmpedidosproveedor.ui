@@ -2102,6 +2102,10 @@ color: rgb(0, 64, 64);</string>
        </item>
        <item row="1" column="0" colspan="5">
         <widget class="QTableWidget" name="Lineas">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 219);</string>
+         </property>
          <property name="horizontalScrollBarPolicy">
           <enum>Qt::ScrollBarAsNeeded</enum>
          </property>

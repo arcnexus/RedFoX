@@ -5,9 +5,6 @@
 #include <QPrintDialog>
 
 
-
-
-
 FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmPedidosProveedor),
@@ -84,22 +81,38 @@ FrmPedidosProveedor::~FrmPedidosProveedor()
 
 void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
 {
-    //TODO tuyo aquí el insert
+    //-----------------------------------------------------
+    // Insertamos línea de pedido y controlamos acumulados
+    //-----------------------------------------------------
 
+    bool ok_empresa,ok_Maya;
+    ok_empresa = true;
+    ok_Maya = true;
+    QSqlDatabase::database("empresa").transaction();
+    QSqlDatabase::database("Maya").transaction();
     if (ld->idLinea == -1)
     {
         //qDebug()<< ld->idLinea;
+        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        queryArticulos.prepare("select id from articulos where cCodigo =:codigo");
+        queryArticulos.bindValue(":codigo",ld->codigo);
+        if(queryArticulos.exec())
+            queryArticulos.next();
+        else
+            ok_Maya = false;
+
         QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
         query_lin_ped_pro.prepare("INSERT INTO lin_ped_pro (id_cab,id_articulo,codigo_articulo_proveedor,"
                                   "descripcion, cantidad, coste_bruto,subtotal_coste,porc_dto,dto,porc_iva,"
-                                  "iva,total) VALUES (:id_cab,:id_articulo,:codigo_articulo_proveedor,"
+                                  "iva,total,cantidad_pendiente) VALUES (:id_cab,:id_articulo,:codigo_articulo_proveedor,"
                                   ":descripcion,:cantidad,:coste_bruto,:subtotal_coste,:porc_dto,:dto,"
-                                  ":porc_iva,:iva,:total);");
+                                  ":porc_iva,:iva,:total,:cantidad_pendiente);");
         query_lin_ped_pro.bindValue(":id_cab", oPedido_proveedor->id);
-        query_lin_ped_pro.bindValue(":id_articulo", 1); /*TODO: arreglar luego*/
+        query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
         query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
         query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
+        query_lin_ped_pro.bindValue(":cantidad_pendiente",ld->cantidad);
         query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
         query_lin_ped_pro.bindValue(":subtotal_coste",ld->subTotal);
         query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
@@ -108,21 +121,64 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
         query_lin_ped_pro.bindValue(":iva",0); // importe iva hay que calcularlo
         query_lin_ped_pro.bindValue(":total",ld->total);
         if (!query_lin_ped_pro.exec()){
+            ok_empresa = false;
             QMessageBox::warning(this,tr("Gestión de pedidos"),
                                  tr("Ocurrió un error al insertar la nueva línea: %1").arg(query_lin_ped_pro.lastError().text()),
                                  tr("Aceptar"));
-        }else
-        {
-            ld->idLinea = query_lin_ped_pro.lastInsertId().toInt();
         }
+        // ---------------------------------
+        // Actualización stock y acumulados
+        //----------------------------------
+
+        queryArticulos.prepare("update articulos set nCantidadPendienteRecibir = nCantidadPendienteRecibir+:nRecibir, "
+                               " nStockReal = nStockReal + :nRecibir2 where cCodigo=:codigo");
+        queryArticulos.bindValue(":nRecibir",ld->cantidad);
+        queryArticulos.bindValue(":nRecibir2",ld->cantidad);
+        queryArticulos.bindValue(":codigo",ld->codigo);
+        if(queryArticulos.exec() && ok_empresa){
+            QSqlDatabase::database("empresa").commit();
+            QSqlDatabase::database("Maya").commit();
+        } else
+        {
+            QSqlDatabase::database("empresa").rollback();
+            QSqlDatabase::database("Maya").rollback();
+        }
+
+        ld->idLinea = query_lin_ped_pro.lastInsertId().toInt();
+        ld->cantidad_old = ld->cantidad;
+
     } else
     {
+        // --------------------------
+        // Descuento unidades pedidas
+        //---------------------------
+        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        queryArticulos.prepare("update articulos set nCantidadPendienteRecibir = nCantidadPendienteRecibir-:nRecibir,"
+                               "nStockReal = nStockReal - :nRecibir2 where cCodigo=:codigo");
+        queryArticulos.bindValue(":nRecibir",ld->cantidad_old);
+        queryArticulos.bindValue(":nRecibir2",ld->cantidad_old);
+        queryArticulos.bindValue(":codigo",ld->codigo);
+        if (!queryArticulos.exec())
+        {
+            ok_Maya = false;
+            QMessageBox::warning(this,tr("Gestión de pedidos"),
+                                 tr("Se produjo un error al actualizar stock : %1").arg(queryArticulos.lastError().text()));
+
+        }
+
+        queryArticulos.prepare("select id from articulos where cCodigo =:codigo");
+        queryArticulos.bindValue(":codigo",ld->codigo);
+        if(queryArticulos.exec())
+            queryArticulos.next();
+        else
+            ok_Maya = false;
         QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
         query_lin_ped_pro.prepare("UPDATE lin_ped_pro SET "
                                   "id_articulo =:id_articulo,"
                                   "codigo_articulo_proveedor =:codigo_articulo_proveedor,"
                                   "descripcion =:descripcion,"
                                   "cantidad =:cantidad,"
+                                  "cantidad_pendiente =:cantidad_pendiente,"
                                   "coste_bruto =:coste_bruto,"
                                   "subtotal_coste =:subtotal_coste,"
                                   "porc_dto =:porc_dto,"
@@ -133,10 +189,11 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
                                   "WHERE id = :id;");
 
         query_lin_ped_pro.bindValue(":id_cab", oPedido_proveedor->id);
-        query_lin_ped_pro.bindValue(":id_articulo", 1); /*TODO: arreglar luego*/
+        query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
         query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
         query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
+        query_lin_ped_pro.bindValue(":cantidad_pendiente",ld->cantidad);
         query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
         query_lin_ped_pro.bindValue(":subtotal_coste",ld->subTotal);
         query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
@@ -146,28 +203,75 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
         query_lin_ped_pro.bindValue(":total",ld->total);
         query_lin_ped_pro.bindValue(":id",ld->idLinea);
 
-        if (!query_lin_ped_pro.exec())
+        if (!query_lin_ped_pro.exec()) {
             QMessageBox::warning(this,tr("Gestión de pedidos"),
                                  tr("Ocurrió un error al guardar la línea: %1").arg(query_lin_ped_pro.lastError().text()),
                                  tr("Aceptar"));
-
-
-
-
-
-
-    //if -1 = nueva else editando
-    //cambiar el id aki
-    //qDebug()<< "antes" << ld->catidad_old;
-    //qDebug()<< "ahorita" << ld->cantidad;
+            ok_empresa = false;
+        }
+        // ---------------------------------
+        // Actualización stock y acumulados
+        //----------------------------------
+        queryArticulos.prepare("update articulos set nCantidadPendienteRecibir = nCantidadPendienteRecibir + :nRecibir, "
+                               "nStockReal = nStockReal + :nRecibir2 where cCodigo=:codigo");
+        queryArticulos.bindValue(":nRecibir",ld->cantidad);
+        queryArticulos.bindValue(":nRecibir2",ld->cantidad);
+        queryArticulos.bindValue(":codigo",ld->codigo);
+        if(queryArticulos.exec() && ok_empresa && ok_Maya){
+            QSqlDatabase::database("empresa").commit();
+            QSqlDatabase::database("Maya").commit();
+        } else
+        {
+            QSqlDatabase::database("empresa").rollback();
+            QSqlDatabase::database("Maya").rollback();
+        }
     }
 }
 
-void FrmPedidosProveedor::lineaDeleted(int id)
+void FrmPedidosProveedor::lineaDeleted(lineaDetalle * ld)
 {
     //todo borrar de la bd y stock y demas
     //if id = -1 pasando olimpicamente
-    qDebug() << "borra" << id;
+    bool ok_empresa,ok_Maya;
+    ok_empresa = true;
+    ok_Maya = true;
+    QSqlDatabase::database("empresa").transaction();
+    QSqlDatabase::database("Maya").transaction();
+    if(ld->idLinea >-1)
+    {
+        // --------------------------
+        // Descuento unidades pedidas
+        //---------------------------
+        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        queryArticulos.prepare("update articulos set nCantidadPendienteRecibir = nCantidadPendienteRecibir-:nRecibir,"
+                               "nStockReal = nStockReal + :nRecibir2 where cCodigo=:codigo");
+        queryArticulos.bindValue(":nRecibir",ld->cantidad_old);
+        queryArticulos.bindValue(":nRecibir2",ld->cantidad_old);
+        queryArticulos.bindValue(":codigo",ld->codigo);
+        if (!queryArticulos.exec())
+        {
+            ok_Maya = false;
+            QMessageBox::warning(this,tr("Gestión de pedidos"),
+                                 tr("Se produjo un error al actualizar stock : %1").arg(queryArticulos.lastError().text()));
+
+        }
+        //----------------------
+        // Borrar línea pedido
+        //----------------------
+        QSqlQuery querylin_ped_pro(QSqlDatabase::database("empresa"));
+        querylin_ped_pro.prepare("delete from lin_ped_pro where id =:id");
+        querylin_ped_pro.bindValue(":id",id);
+        if(querylin_ped_pro.exec() && ok_Maya)
+        {
+            QSqlDatabase::database("empresa").commit();
+            QSqlDatabase::database("Maya").commit();
+        } else
+        {
+            QSqlDatabase::database("empresa").rollback();
+            QSqlDatabase::database("Maya").rollback();
+        }
+    }
+    //qDebug() << "borra" << id;
 }
 
 void FrmPedidosProveedor::totalChanged(double base, double dto, double subTotal, double iva, double re, double total, QString moneda)
@@ -281,7 +385,7 @@ void FrmPedidosProveedor::bloquearcampos(bool estado)
 
     ui->btn_borrarLinea->setEnabled(!estado);
     ui->botBuscarCliente->setEnabled(!estado);
-    helper.blockTable(!estado);
+    helper.blockTable(estado);
     // activo controles que deben estar activos.
 
 

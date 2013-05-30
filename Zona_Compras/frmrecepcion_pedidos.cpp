@@ -199,6 +199,9 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
     ui->btnEtiquetas->setEnabled(true);
 
     connect(ui->tablaLineas,SIGNAL(cellChanged(int,int)),this,SLOT(validarcantidad(int, int)));
+    ui->tablaLineas->setFocus();
+    if(ui->tablaLineas->rowCount()>0)
+        ui->tablaLineas->setCurrentCell(0,7);
 
 }
 
@@ -219,6 +222,15 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
         bool fallo = false;
         QSqlDatabase::database("Maya").transaction();
         QSqlDatabase::database("empresa").transaction();
+        //----------------------------------------------------
+        // Marco el pedido como recibido al cambiar una linea
+        //----------------------------------------------------
+        QSqlQuery queryCabecera(QSqlDatabase::database("empresa"));
+        if(!queryCabecera.exec("update ped_pro set lRecibido = 1 where id ="+QString::number(this->id_pedido)))
+            fallo = true;
+        //---------------------------
+        // Actualizo linea de pedido
+        //---------------------------
         QSqlQuery queryLineas(QSqlDatabase::database("empresa"));
         queryLineas.prepare("update lin_ped_pro set cantidad_pendiente =:pend, cantidad_recibida = :rec where id =:id");
         queryLineas.bindValue(":pend",nuevo_pend);
@@ -233,9 +245,9 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
         else {
             if(nuevo_pend!=0)
             {
-                // ----------------
-                // Linea albarán
-                // ----------------
+                // ----------------------------------------
+                //  Si albaran = true  añado Linea albarán
+                // ----------------------------------------
                 if(albaran){
                     QSqlQuery query_lin_alb_pro(QSqlDatabase::database("empresa"));
                     query_lin_alb_pro.prepare("INSERT INTO lin_alb_pro "
@@ -253,25 +265,30 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
 
                 int stockfisico, stockreal,nCPR;
                 QSqlQuery queryProducto(QSqlDatabase::database("Maya"));
-                if(queryProducto.exec("select stockfisico, nStockReal, nCantidadPendienteRecibir from articulos where id = " +QString::number(nid)))
+                if(queryProducto.exec("select stockfisico, nStockReal, nCantidadPendienteRecibir from articulos where id = " +
+                                      QString::number(nid)))
                 {
-                    queryProducto.next();
-                    stockfisico = queryProducto.record().value("stockfisico").toInt();
-                    stockreal = queryProducto.record().value("nStockReal").toInt();
-                    nCPR = queryProducto.record().value("nCantidadPendienteRecibir").toInt();
-
-                    if(!queryProducto.exec("update articulos set stockfisico = " +QString::number(stockfisico+rec_act)+
-                                           ",nStockReal = "+QString::number(stockfisico+rec_act+nuevo_pend)+
-                                           ",nCantidadPendienteRecibir ="+QString::number(nCPR -rec_act)+
-                                           " where id = "+QString::number(nid)))
+                    if(queryProducto.next())
                     {
-                        QMessageBox::warning(this,tr("ATENCIÓN"),
-                                             tr("Falló la actualización de stock %1").arg(queryProducto.lastError().text()),
-                                             tr("Aceptar"));
-                        fallo = true;
+                        stockfisico = queryProducto.record().value("stockfisico").toInt();
+                        stockreal = queryProducto.record().value("nStockReal").toInt();
+                        nCPR = queryProducto.record().value("nCantidadPendienteRecibir").toInt();
 
-                    } else {
-                        qDebug() << queryProducto.lastQuery();
+//                        if(!queryProducto.exec("update articulos set stockfisico = " +QString::number(stockfisico+rec_act)+
+//                                               ",nStockReal = "+QString::number(stockfisico+rec_act+nuevo_pend)+
+//                                               ",nCantidadPendienteRecibir ="+QString::number(nCPR -rec_act)+
+//                                               " where id = "+QString::number(nid)))
+                        if(!queryProducto.exec("update articulos set stockfisico = stockfisico +" +QString::number(rec_act)+
+                                               ",nStockReal = nStockReal+"+QString::number(rec_act)+
+                                               ",nCantidadPendienteRecibir = nCantidadPendienteRecibir-"+QString::number(rec_act)+
+                                               " where id = "+QString::number(nid)))
+                        {
+                            QMessageBox::warning(this,tr("ATENCIÓN"),
+                                                 tr("Falló la actualización de stock %1").arg(queryProducto.lastError().text()),
+                                                 tr("Aceptar"));
+                            fallo = true;
+
+                        }
                     }
 
                 }

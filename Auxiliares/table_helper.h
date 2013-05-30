@@ -13,7 +13,7 @@ struct lineaDetalle
     int idLinea;
     QString codigo;
     int cantidad;
-    int catidad_old;
+    int cantidad_old;
     QString descripcion;
     double importe;
     double subTotal;
@@ -43,7 +43,7 @@ public:
     void fillTable(QString db , QString table , QString filter);
 signals:
     void lineaReady(lineaDetalle*);
-    void lineaDeleted(int id);
+    void lineaDeleted(lineaDetalle*);
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);

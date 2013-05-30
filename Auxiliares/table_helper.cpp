@@ -28,7 +28,7 @@ void Table_Helper::help_table(QTableWidget *table)
     helped_table->setItemDelegateForColumn(6,new SpinBoxDelegate(helped_table,true,0,100));
     helped_table->setItemDelegateForColumn(7,new ReadOnlyDelegate(helped_table)); // el tipo de iva pertenece al artículo y solo se puede modificar en a ficha del artículo.
     helped_table->setItemDelegateForColumn(8,new MonetaryDelegate(helped_table,false));
-    helped_table->setColumnWidth(2,240);
+    helped_table->setColumnWidth(2,220);
 
     QStringList headers;
     if (!this->comprando) {
@@ -96,7 +96,7 @@ void Table_Helper::resizeTable()
         helped_table->horizontalHeader()->setUpdatesEnabled(false);
 
         for (int i = 0; i < helped_table->columnCount(); i++)
-            helped_table->horizontalHeader()->resizeSection(i, 80);
+            helped_table->horizontalHeader()->resizeSection(i, 90);
 
 
         int columnCount = helped_table->columnCount()-1;
@@ -233,7 +233,7 @@ void Table_Helper::addRow(QSqlRecord r)
     m_rows[row]->codigo = r.value(3).toString();
     helped_table->item(row,1)->setText(r.value(4).toString());
     m_rows[row]->cantidad = r.value(4).toDouble();
-    m_rows[row]->catidad_old = r.value(4).toDouble();
+    m_rows[row]->cantidad_old = r.value(4).toDouble();
     helped_table->item(row,2)->setText(r.value(5).toString());
     m_rows[row]->descripcion = r.value(5).toString();
     helped_table->item(row,3)->setText(r.value(6).toString());
@@ -280,7 +280,7 @@ void Table_Helper::removeRow()
             int id = m_rows.at(i)->idLinea;
             helped_table->removeRow(rowsList.at(i));
             m_rows.remove(rowsList.at(i));
-            emit lineaDeleted(id);
+            emit lineaDeleted(m_rows[rowsList.at(i)]);
         }
     }
     calcularTotal();
@@ -291,7 +291,7 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
 {
     if(current)
         if(current->column() == 1)
-            m_rows[current->row()]->catidad_old = current->text().toDouble();
+            m_rows[current->row()]->cantidad_old = current->text().toDouble();
 
     if(previous)
     {
@@ -580,7 +580,10 @@ void Table_Helper::rellenar_con_Articulo(int row)
         if(query.next())
         {
             QSqlRecord r = query.record();
-            helped_table->item(row,2)->setText(r.value("cDescripcionReducida").toString());
+            if(r.value("cDescripcionReducida").toString().isEmpty())
+                helped_table->item(row,2)->setText(r.value("cDescripcion").toString());
+            else
+                helped_table->item(row,2)->setText(r.value("cDescripcionReducida").toString());
             if (this->comprando)
                  helped_table->item(row,3)->setText(r.value("rCoste").toString());
             else

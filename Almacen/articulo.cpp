@@ -13,6 +13,7 @@ void Articulo::Anadir()
     if(Configuracion_global->Autocodigoart ==false)
          query.bindValue(":cCodigo","");
     else
+
         query.bindValue(":cCodigo","autocodigo");
 
 
@@ -40,10 +41,10 @@ void Articulo::Anadir()
                                    ":id_monedas,"
                                    ":id_codigotarifa);");
 
-                 anadirTarifa.bindValue(":id_articulo",this->id);
+                 anadirTarifa.bindValue(":id_Articulo",this->id);
                  anadirTarifa.bindValue(":id_pais",queryTarifas.record().field("id_pais").value().toInt());
                  anadirTarifa.bindValue(":id_monedas",queryTarifas.record().field("id_monedas").value().toInt());
-                 anadirTarifa.bindValue(":id_codigoTarifa",queryTarifas.record().field("id").value().toInt());
+                 anadirTarifa.bindValue(":id_codigotarifa",queryTarifas.record().value("id").toInt());
                  if(!anadirTarifa.exec())
                      QMessageBox::warning(qApp->activeWindow(),tr("Añadir tarifa"),
                                           tr("Falló la inserción de la tarifa: %1").arg(anadirTarifa.lastError().text()),
@@ -112,7 +113,6 @@ bool Articulo::Recuperar(QString cSQL)
                this->idsubsubfamilia = registro.field("idsubsubfamilia").value().toInt();
                this->idgrupoart = registro.field("idgrupoart").value().toInt();
                this->idweb = registro.field("idweb").value().toInt();
-               this->nStockFisico = registro.field("stockfisco").value().toInt();
                this->articulopromocionado = registro.field("articulopromocionado").value().toBool();
                this->descripcion_promocion = registro.field("descripcion_promocion").value().toString();
                this->tipo_oferta = registro.field("tipo_oferta").value().toInt();
@@ -245,6 +245,66 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
 
 void Articulo::Guardar()
 {
+    // --------------------------------------------
+    // Si está activada la autogeneración de código
+    //---------------------------------------------
+
+    if (this->cCodigo == "autocodigo"){
+        QString nuevo_codigo;
+        QSqlQuery querycodigo(QSqlDatabase::database("Maya"));
+
+        // seccion
+        querycodigo.prepare("select cCodigo from secciones where id = :id");
+        querycodigo.bindValue(":id",this->id_Seccion);
+        querycodigo.exec();
+        querycodigo.next();
+        nuevo_codigo.append(querycodigo.record().value("cCodigo").toString().trimmed());
+
+        // familia
+        querycodigo.prepare("select cCodigo from familias where id = :id");
+        querycodigo.bindValue(":id",this->id_Familia);
+        querycodigo.exec();
+        if(querycodigo.next())
+            nuevo_codigo.append(querycodigo.record().value("cCodigo").toString().trimmed());
+        else
+            nuevo_codigo.append("000");
+        //subfamilia
+        querycodigo.prepare("select cCodigo from subfamilias where id = :id");
+        querycodigo.bindValue(":id",this->id_SubFamilia);
+        querycodigo.exec();
+        if(querycodigo.next())
+            nuevo_codigo.append(querycodigo.record().value("cCodigo").toString().trimmed());
+        else
+            nuevo_codigo.append("000");
+
+        //buscamos ultimo número de la serie
+        QString cSQL = "select cCodigo from articulos where cCodigo like '";
+                cSQL.append(nuevo_codigo);
+                cSQL.append("%' order by  cCodigo desc limit 0,1");
+        if(querycodigo.exec(cSQL)){
+            if (querycodigo.next())
+            {
+                QString ultcod;
+                int tamano =  Configuracion_global->tamanocodigo;
+                ultcod = querycodigo.record().value("cCodigo").toString();
+                int aum = ultcod.right(4).toInt();
+                aum++;
+
+                QString nuev,cnum;
+                cnum = QString::number(aum);
+                nuev = cnum.fill('0',(4-cnum.trimmed().size())).append(QString::number(aum));
+                this->cCodigo = ultcod.left(9).append(nuev);
+
+            } else{
+                this->cCodigo = nuevo_codigo+"0001";
+            }
+
+        } else
+        {
+            this->cCodigo = nuevo_codigo +"0001";
+        }
+
+    }
     QSqlQuery query(QSqlDatabase::database("Maya"));
     query.prepare( "UPDATE articulos SET "
                    "`cCodigo`=:cCodigo,"

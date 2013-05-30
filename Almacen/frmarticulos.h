@@ -90,6 +90,7 @@ private slots:
     void on_botCambiarImagen_3_clicked();
 
     void on_botCambiarImagen_4_clicked();
+    void actualizar();
 
 public slots:
     void AnadirSeccion();
