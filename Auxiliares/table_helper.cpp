@@ -1,6 +1,6 @@
 #include "table_helper.h"
 #include "monetarydelegate.h"
-
+#include "../Almacen/frmarticulos.h"
 Table_Helper::Table_Helper(QObject *parent) :
     QObject(parent)
 {
@@ -307,8 +307,7 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
         {
             comprobarCantidad(row);
             //guardar cantidad al terminar de editar
-            m_rows[row]->cantidad = previous->text().toDouble();
-            updateLinea(row);
+            m_rows[row]->cantidad = previous->text().toDouble();            
         }
         else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
             comprobarDescuento(row);
@@ -320,6 +319,7 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
             calcularTotal();
             calcularDesglose();
         }
+        updateLinea(row);
         helped_table->blockSignals(false);
     }
 }
@@ -425,10 +425,10 @@ void Table_Helper::comprobarCantidad(int row)
             controlarStock = query.record().value("lControlarStock").toBool();
 
         }
-        else
-        {
-            QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),tr("Articulo no encontrado"),tr("Aceptar"));
-        }
+     //   else
+     //   {
+     //       QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),tr("Articulo no encontrado"),tr("Aceptar"));
+     //   }
     } else{
         QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),
                               tr("Error al buscar stock: %1").arg(query.lastError().text()),tr("Aceptar"));
@@ -478,10 +478,10 @@ void Table_Helper::comprobarStock(int row)
             controlarstock = query.record().value("lControlarStock").toBool();
 
         }
-        else
-        {
-            QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),tr("Articulo no encontrado"),tr("Aceptar"));
-        }
+       // else
+       // {
+       //     QMessageBox::critical(qApp->activeWindow(),tr("No encontado"),tr("Articulo no encontrado"),tr("Aceptar"));
+       // }
     }
     if(aServir > cantidad && controlarstock)
         helped_table->item(row,9)->setText(QString::number(cantidad));
@@ -605,11 +605,17 @@ void Table_Helper::rellenar_con_Articulo(int row)
 
         }
         else if(helped_table->item(row,0)->text() !="" && helped_table->item(row,2)->text().isEmpty())
-            QMessageBox::warning(helped_table,
+        {
+            if(QMessageBox::question(helped_table,
                                  tr("Codigo desconocido"),
                                  tr("Codigo de articulo desconocido "
-                                    "Si lo desea puede introducir un artículo directamente que no esté en la Base de datos, "
-                                    "pero no registrará acumulados"),tr("Aceptar"));
+                                    "¿Desea introducir el árticulo? (si no lo hace no se registraran acumulados)")
+                                    ,tr("Usar de todos modos"),tr("Sí"))== QMessageBox::Accepted)
+            {
+                FrmArticulos f((QWidget*)helped_table->parent(),true);
+                f.exec();
+            }
+        }
     }
 }
 

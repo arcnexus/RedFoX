@@ -12,7 +12,7 @@
 #include"frmlistadosarticulo.h"
 
 
-FrmArticulos::FrmArticulos(QWidget *parent) :
+FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     QDialog(parent),
     ui(new Ui::FrmArticulos)
 {
@@ -88,6 +88,7 @@ FrmArticulos::FrmArticulos(QWidget *parent) :
     connect(ui->btnActualizar,SIGNAL(clicked()),this,SLOT(actualizar()));
 
     this->installEventFilter(this);
+    ui->btn_cerrar->setVisible(closeBtn);
 }
 
 FrmArticulos::~FrmArticulos()

@@ -1034,7 +1034,7 @@ background-color: rgb(255, 255, 127);</string>
             <x>0</x>
             <y>0</y>
             <width>343</width>
-            <height>601</height>
+            <height>606</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -5578,6 +5578,29 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="btn_cerrar">
+        <property name="minimumSize">
+         <size>
+          <width>115</width>
+          <height>45</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Cerrar</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -5831,12 +5854,12 @@ color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>260</x>
-     <y>159</y>
+     <x>258</x>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
-     <x>494</x>
-     <y>348</y>
+     <x>631</x>
+     <y>346</y>
     </hint>
    </hints>
   </connection>
@@ -5847,8 +5870,8 @@ color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>260</x>
-     <y>184</y>
+     <x>258</x>
+     <y>171</y>
     </hint>
     <hint type="destinationlabel">
      <x>494</x>
@@ -5863,8 +5886,8 @@ color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>501</x>
-     <y>209</y>
+     <x>621</x>
+     <y>194</y>
     </hint>
     <hint type="destinationlabel">
      <x>782</x>
@@ -5879,8 +5902,8 @@ color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>632</x>
-     <y>99</y>
+     <x>631</x>
+     <y>89</y>
     </hint>
     <hint type="destinationlabel">
      <x>171</x>
@@ -5895,8 +5918,8 @@ color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>501</x>
-     <y>234</y>
+     <x>621</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
      <x>494</x>
@@ -5911,12 +5934,12 @@ color: rgb(255, 255, 255);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>260</x>
-     <y>159</y>
+     <x>258</x>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
-     <x>515</x>
-     <y>310</y>
+     <x>571</x>
+     <y>303</y>
     </hint>
    </hints>
   </connection>
@@ -5927,12 +5950,12 @@ color: rgb(255, 255, 255);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>260</x>
-     <y>184</y>
+     <x>258</x>
+     <y>171</y>
     </hint>
     <hint type="destinationlabel">
-     <x>622</x>
-     <y>449</y>
+     <x>621</x>
+     <y>422</y>
     </hint>
    </hints>
   </connection>
@@ -5943,12 +5966,12 @@ color: rgb(255, 255, 255);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>501</x>
-     <y>209</y>
+     <x>621</x>
+     <y>194</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1100</x>
-     <y>221</y>
+     <x>1098</x>
+     <y>199</y>
     </hint>
    </hints>
   </connection>
@@ -5959,12 +5982,12 @@ color: rgb(255, 255, 255);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>501</x>
-     <y>234</y>
+     <x>621</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
-     <x>622</x>
-     <y>503</y>
+     <x>621</x>
+     <y>476</y>
     </hint>
    </hints>
   </connection>
@@ -5975,12 +5998,28 @@ color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>632</x>
-     <y>99</y>
+     <x>631</x>
+     <y>89</y>
     </hint>
     <hint type="destinationlabel">
      <x>782</x>
      <y>432</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_cerrar</sender>
+   <signal>clicked()</signal>
+   <receiver>FrmArticulos</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>113</x>
+     <y>646</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>141</x>
+     <y>698</y>
     </hint>
    </hints>
   </connection>
