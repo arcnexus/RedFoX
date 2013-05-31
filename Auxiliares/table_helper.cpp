@@ -308,7 +308,6 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
             comprobarCantidad(row);
             //guardar cantidad al terminar de editar
             m_rows[row]->cantidad = previous->text().toDouble();
-            updateLinea(row);
         }
         else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
             comprobarDescuento(row);
@@ -321,6 +320,7 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
             calcularDesglose();
         }
         helped_table->blockSignals(false);
+        updateLinea(row);
     }
 }
 

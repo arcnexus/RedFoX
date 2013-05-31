@@ -15,17 +15,22 @@ FrmTarifas::FrmTarifas(QWidget *parent) :
     // CONEXIONES
     //-----------
     connect(ui->listaTarifa,SIGNAL(clicked(QModelIndex)),this,SLOT(cargarDatosTarifa(QModelIndex)));
-    connect(ui->pushButton,SIGNAL(clicked()),this,SLOT(calcular_precio()));
     connect(ui->txtPVPDivisa,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
     connect(ui->txtPVPDivisa,SIGNAL(editingFinished()),this,SLOT(cambiar_precio_editingfinished()));
     connect(ui->btnAceptar,SIGNAL(clicked()),this,SLOT(aceptar()));
+    connect(ui->spinMargen,SIGNAL(valueChanged(double)),this,SLOT(calcular_precio(double margen)));
 
 
     //-------------------------------
     // CAMBIO DIVISA
     //-------------------------------
     connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(asignarcambiodivisa(float)));
- //   Configuracion_global->getCambio("EUR","USD",1);
+    //   Configuracion_global->getCambio("EUR","USD",1);
+
+    ui->spinMargen->setValue(Configuracion_global->margen);
+    ui->spinMargenMinimo->setValue(Configuracion_global->margen_minimo);
+
+
 }
 
 FrmTarifas::~FrmTarifas()
@@ -58,8 +63,14 @@ void FrmTarifas::capturar_datos(int id, QString costeLocal){
         ui->txtMoneda->setText(Configuracion_global->Devolver_moneda(queryTarifas.record().field("id_monedas").value().toInt()));
         ui->txtPVPDivisa->setText(Configuracion_global->FormatoNumerico(queryTarifas.record().field("pvp").value().toString()));
         ui->txtCosteLocal->setText(costeLocal);
-        ui->spinMargen->setValue(queryTarifas.record().field("margen").value().toDouble());
-        ui->spinMargenMinimo->setValue(queryTarifas.record().field("margenminimo").value().toDouble());
+        if(queryTarifas.record().value("margen").toDouble() == 0)
+            ui->spinMargen->setValue(Configuracion_global->margen);
+        else
+            ui->spinMargen->setValue(queryTarifas.record().field("margen").value().toDouble());
+        if (queryTarifas.record().value("margenminimo") == 0)
+            ui->spinMargenMinimo->setValue(Configuracion_global->margen_minimo);
+        else
+            ui->spinMargenMinimo->setValue(queryTarifas.record().field("margenminimo").value().toDouble());
 
         this->id_tarifa = queryTarifas.record().field("id").value().toInt();
         this->id_pais = queryTarifas.record().field("id_pais").value().toInt();
@@ -76,6 +87,7 @@ void FrmTarifas::capturar_datos(int id, QString costeLocal){
         else
             asignarcambiodivisa(1);
 
+        calcular_precio(this->margen);
    }
 }
 
@@ -132,11 +144,11 @@ void FrmTarifas::cambiar_precio_editingfinished()
     ui->spinMargen->setValue(Margen);
 }
 
-void FrmTarifas::calcular_precio()
+void FrmTarifas::calcular_precio(double margen)
 {
-    double margen = (100-ui->spinMargen->value())/100;
+    margen = (100-margen)/100;
     //NOTE 70% /0.30 - 40 /0.60
-
+    ui->txtMargenReal->setText(QString::number(margen,'f',2));
     double margen_moneda = (ui->txtCosteLocal->text().replace(",",".").toDouble()*margen);
     double pvp = margen_moneda + ui->txtCosteLocal->text().replace(",",".").toDouble();
     QString cPvp = Configuracion_global->FormatoNumerico(QString::number(pvp,'f',2));
@@ -155,3 +167,4 @@ void FrmTarifas::aceptar()
     this->margen_min = ui->spinMargenMinimo->value();
     this->accept();
 }
+
