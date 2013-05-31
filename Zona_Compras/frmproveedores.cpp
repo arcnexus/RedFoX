@@ -681,11 +681,11 @@ void frmProveedores::on_txtcCodigoFormaPago_currentIndexChanged(const QString &a
     oProveedor->idFormadePago = Configuracion_global->Devolver_id_codigo_forma_pago(cCodigo);
 }
 
-
 void frmProveedores::on_btnNuevaFactura_clicked()
 {
     FrmFacturasProveedor frmFactura(this,true);
     frmFactura.setWindowState(Qt::WindowMaximized);
+    frmFactura.llenarProveedor(oProveedor->id);
     frmFactura.exec();
 }
 
@@ -693,6 +693,7 @@ void frmProveedores::on_btnNuevoAlbaran_clicked()
 {
     FrmAlbaranProveedor frmAlbaran(this,true);
     frmAlbaran.setWindowState(Qt::WindowMaximized);
+    frmAlbaran.llenarProveedor(oProveedor->id);
     frmAlbaran.exec();
 }
 
@@ -700,6 +701,7 @@ void frmProveedores::on_btnNuevoPedido_clicked()
 {
     FrmPedidosProveedor frmPedidos(this,true);
     frmPedidos.setWindowState(Qt::WindowMaximized);
+    frmPedidos.llenarProveedor(oProveedor->id,true);
     frmPedidos.exec();
 }
 

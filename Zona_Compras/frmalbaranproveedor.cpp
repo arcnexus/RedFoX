@@ -1,10 +1,10 @@
 #include "frmalbaranproveedor.h"
 #include "ui_frmalbaranproveedor.h"
-
 FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     QDialog(parent),
     ui(new Ui::FrmAlbaranProveedor),
-    helper(this)
+    helper(this),
+    prov(this)
 {
     ui->setupUi(this);
 
@@ -49,6 +49,20 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
 FrmAlbaranProveedor::~FrmAlbaranProveedor()
 {
     delete ui;
+}
+
+void FrmAlbaranProveedor::llenarProveedor(int id)
+{
+    prov.Recuperar("Select * from proveedores where id="+QString::number(id),1);
+    ui->txtcCodigoCliente->setText(prov.cCodigo);
+    ui->txtcCliente->setText(prov.cProveedor);
+    ui->txtcDireccion->setText(prov.cDireccion1);
+    ui->txtcDireccion2->setText(prov.cDireccion2);
+    ui->txtcPoblacion->setText(prov.cPoblacion);
+    ui->txtcProvincia->setText(prov.cProvincia);
+    ui->txtcCp->setText(prov.cCP);
+    ui->txtcCif->setText(prov.cCif);
+    ui->combo_pais->setCurrentText(Configuracion::Devolver_pais(prov.idpais));
 }
 
 void FrmAlbaranProveedor::totalChanged(double base, double dto, double subTotal, double iva, double re, double total, QString moneda)

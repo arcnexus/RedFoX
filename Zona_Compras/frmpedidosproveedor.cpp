@@ -8,10 +8,11 @@
 FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     QDialog(parent),
     ui(new Ui::FrmPedidosProveedor),
-    helper(this)
+    helper(this),
+    prov(this)
 {
     ui->setupUi(this);
-    oProveedor = new Proveedor(this);
+
     oPedido_proveedor = new PedidoProveedor(this);
     bloquearcampos(true);
     ui->lblImpreso->setVisible(false);
@@ -78,6 +79,27 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
 FrmPedidosProveedor::~FrmPedidosProveedor()
 {
     delete ui;
+}
+
+void FrmPedidosProveedor::llenarProveedor(int id, bool isNew)
+{
+    if(isNew)
+    {
+        ui->btnAnadir->clicked();
+        ui->tabWidget_2->setCurrentIndex(1);
+        ui->btnAnadirLinea->clicked();
+    }
+    prov.Recuperar("Select * from proveedores where id="+QString::number(id),1);
+    ui->txtcCodigoProveedor->setText(prov.cCodigo);
+    ui->txtcProveedor->setText(prov.cProveedor);
+    ui->txtcDireccion->setText(prov.cDireccion1);
+    ui->txtcDireccion2->setText(prov.cDireccion2);
+    ui->txtcPoblacion->setText(prov.cPoblacion);
+    ui->txtcProvincia->setText(prov.cProvincia);
+    ui->txtcCp->setText(prov.cCP);
+    ui->txtcCif->setText(prov.cCif);
+    ui->combo_pais->setCurrentText(Configuracion::Devolver_pais(prov.idpais));
+    ui->lblnombreProveedor->setText(prov.cProveedor);
 }
 
 void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
@@ -412,16 +434,7 @@ void FrmPedidosProveedor::buscar_proveeedor()
     if(consulta.exec())
     {
         int id_proveedor = consulta.get_id();
-        oProveedor->Recuperar("select * from proveedores where id = "+QString::number(id_proveedor));
-        ui->txtcCodigoProveedor->setText(oProveedor->cCodigo);
-        ui->txtcProveedor->setText(oProveedor->cProveedor);
-        ui->txtcDireccion->setText(oProveedor->cDireccion1);
-        ui->txtcDireccion2->setText(oProveedor->cDireccion2);
-        ui->txtcCp->setText(oProveedor->cCP);
-        ui->txtcPoblacion->setText(oProveedor->cPoblacion);
-        ui->txtcProvincia->setText(oProveedor->cProvincia);
-        ui->lblnombreProveedor->setText(oProveedor->cProveedor);
-
+        llenarProveedor(id_proveedor);
     }
 }
 

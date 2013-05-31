@@ -101,7 +101,7 @@ public:
     void Cargar_paises();
 
     int Devolver_id_pais(QString cPais);
-    QString Devolver_pais(int id);
+    static QString Devolver_pais(int id);
     QString Devolver_moneda(int id);
     QString Devolver_codDivisa(int id);
     int Devolver_id_moneda(QString cDivisa);
