@@ -35,16 +35,22 @@ void Articulo::Anadir()
                                    "id_Articulo,"
                                    "id_pais,"
                                    "id_monedas,"
+                                   "margen,"
+                                   "margenminimo,"
                                    "id_codigotarifa) VALUES ("
                                    ":id_Articulo,"
                                    ":id_pais,"
                                    ":id_monedas,"
+                                   ":margen,"
+                                   ":margenminimo,"
                                    ":id_codigotarifa);");
 
                  anadirTarifa.bindValue(":id_Articulo",this->id);
                  anadirTarifa.bindValue(":id_pais",queryTarifas.record().field("id_pais").value().toInt());
                  anadirTarifa.bindValue(":id_monedas",queryTarifas.record().field("id_monedas").value().toInt());
                  anadirTarifa.bindValue(":id_codigotarifa",queryTarifas.record().value("id").toInt());
+                 anadirTarifa.bindValue(":margen",Configuracion_global->margen);
+                 anadirTarifa.bindValue(":margenminimo",Configuracion_global->margen_minimo);
                  if(!anadirTarifa.exec())
                      QMessageBox::warning(qApp->activeWindow(),tr("Añadir tarifa"),
                                           tr("Falló la inserción de la tarifa: %1").arg(anadirTarifa.lastError().text()),

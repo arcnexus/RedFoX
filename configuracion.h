@@ -85,6 +85,8 @@ public:
     bool internacional;
     QString DivisaLocal;
     QString codDivisaLocal;
+    double margen;
+    double margen_minimo;
 
     QHash <QString,QSqlRecord> ivas;
     QSqlTableModel* iva_model;

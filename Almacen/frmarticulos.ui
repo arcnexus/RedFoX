@@ -57,7 +57,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <property name="styleSheet">
@@ -2572,7 +2572,7 @@ Imagen.</string>
        <string notr="true">background-color: #ecefed;</string>
       </property>
       <attribute name="title">
-       <string>Gráfica</string>
+       <string>Estadística/Gráfica</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">

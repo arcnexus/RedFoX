@@ -341,13 +341,13 @@ void FrmArticulos::LLenarCampos()
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
    ui->txtrDto->setText(QString::number(oArticulo->rDto,'f',2));
-   ui->txtrCoste->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->rCoste)));
+   ui->txtrCoste->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->rCoste,'f',2)));
    ui->txtdFechaUltimaCompra->setDate(oArticulo->dUltimaCompra);
    ui->txtdFechaUltimaVenta->setDate(oArticulo->dUltimaVenta);
    ui->txtnUnidadesCompradas->setText(QString::number(oArticulo->nUnidadesCompradas));
    ui->txtnUnidadesVendidas->setText(QString::number(oArticulo->nUnidadesVendidas));
-   ui->txtrAcumuladoCompras->setText(QString::number(oArticulo->rAcumuladoCompras,'f',2));
-   ui->txtrAcumuladoVentas->setText(QString::number(oArticulo->rAcumuladoVentas,'f',2));
+   ui->txtrAcumuladoCompras->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->rAcumuladoCompras,'f',2)));
+   ui->txtrAcumuladoVentas->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->rAcumuladoVentas,'f',2)));
    ui->txttComentario->setText(oArticulo->tComentario);
    ui->txtnStockMaximo->setText(QString::number(oArticulo->nStockMaximo));
    ui->txtnStockMinimo->setText(QString::number(oArticulo->nStockMinimo));
@@ -1615,6 +1615,9 @@ void FrmArticulos::LlenarTablas()
     modelTarifa->setHeaderData(6,Qt::Horizontal,tr("%M. MÍN."));
     modelTarifa->setHeaderData(7,Qt::Horizontal,tr("PVP"));
     modelTarifa->setHeaderData(8,Qt::Horizontal,tr("S"));
+    ui->TablaTarifas->setItemDelegateForColumn(5, new MonetaryDelegate);
+    ui->TablaTarifas->setItemDelegateForColumn(6, new MonetaryDelegate);
+    ui->TablaTarifas->setItemDelegateForColumn(7, new MonetaryDelegate);
 
     ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(0,0);
@@ -1952,12 +1955,15 @@ void FrmArticulos::on_botCambiarImagen_4_clicked()
 
 void FrmArticulos::actualizar()
 {
-    QString cCodigo = oArticulo->cCodigo;
-    oArticulo->Recuperar("Select * from articulos where cCodigo ='"+cCodigo+"' order by cCodigo limit 1 ",1);
-    LLenarCampos();
-    tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
-    tarifa_model->select();
-    qDebug() << "FrmArticulos::actualizar()";
+    if(!oArticulo->cCodigo.isEmpty())
+    {
+        QString cCodigo = oArticulo->cCodigo;
+        oArticulo->Recuperar("Select * from articulos where cCodigo ='"+cCodigo+"' order by cCodigo limit 1 ",1);
+        LLenarCampos();
+        tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
+        tarifa_model->select();
+        //qDebug() << "FrmArticulos::actualizar()";
+    }
 }
 
 

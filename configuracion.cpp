@@ -490,6 +490,8 @@ void Configuracion::CargarDatos()
         this->cCuentaPagosProveedor = qEmpresa.record().value("cCuentaPagos").toString();
         this->medic = qEmpresa.record().value("medica").toBool();
         this->internacional = qEmpresa.record().value("internacional").toBool();
+        this->margen = qEmpresa.record().value("margen").toDouble();
+        this->margen_minimo = qEmpresa.record().value("margen_minimo").toDouble();
 
 
     } else {
