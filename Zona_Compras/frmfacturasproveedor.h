@@ -13,7 +13,7 @@ class FrmFacturasProveedor : public QDialog
     Q_OBJECT
     
 public:
-    explicit FrmFacturasProveedor(QWidget *parent = 0);
+    explicit FrmFacturasProveedor(QWidget *parent = 0, bool showCerrar = false);
     ~FrmFacturasProveedor();
 private slots:
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);

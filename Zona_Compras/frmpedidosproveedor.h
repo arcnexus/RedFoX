@@ -16,7 +16,7 @@ class FrmPedidosProveedor : public QDialog
     Q_OBJECT
     
 public:
-    explicit FrmPedidosProveedor(QWidget *parent = 0);
+    explicit FrmPedidosProveedor(QWidget *parent = 0, bool showCerrar = false);
     ~FrmPedidosProveedor();
     Proveedor *oProveedor;// = new Proveedor(this);
     PedidoProveedor *oPedido_proveedor;// = new PedidoProveedor(this);

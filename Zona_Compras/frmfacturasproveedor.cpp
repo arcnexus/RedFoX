@@ -1,7 +1,7 @@
 #include "frmfacturasproveedor.h"
 #include "ui_frmfacturasproveedor.h"
 
-FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent) :
+FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     QDialog(parent),
     ui(new Ui::FrmFacturasProveedor),
     helper(this)
@@ -42,6 +42,8 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent) :
     ui->txtnRec2->setText(Configuracion_global->reList.at(1));
     ui->txtnRec3->setText(Configuracion_global->reList.at(2));
     ui->txtnRec4->setText(Configuracion_global->reList.at(3));
+
+    ui->btn_cerrar->setVisible(showCerrar);
 }
 
 FrmFacturasProveedor::~FrmFacturasProveedor()

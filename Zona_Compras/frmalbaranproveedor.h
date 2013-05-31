@@ -14,7 +14,7 @@ class FrmAlbaranProveedor : public QDialog
     Q_OBJECT
     
 public:
-    explicit FrmAlbaranProveedor(QWidget *parent = 0);
+    explicit FrmAlbaranProveedor(QWidget *parent = 0, bool showCerrar = false);
     ~FrmAlbaranProveedor();
 private slots:
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);

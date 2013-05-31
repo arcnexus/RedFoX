@@ -5,7 +5,7 @@
 #include <QPrintDialog>
 
 
-FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
+FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     QDialog(parent),
     ui(new Ui::FrmPedidosProveedor),
     helper(this)
@@ -72,6 +72,7 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent) :
     ui->txtnRec3->setText(Configuracion_global->reList.at(2));
     ui->txtnRec4->setText(Configuracion_global->reList.at(3));
 
+    ui->btn_cerrar->setVisible(showCerrar);
 }
 
 FrmPedidosProveedor::~FrmPedidosProveedor()
