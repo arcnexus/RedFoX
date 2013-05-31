@@ -14,7 +14,7 @@ class FrmArticulos : public QDialog
     Q_OBJECT
     
 public:
-    explicit FrmArticulos(QWidget *parent = 0);
+    explicit FrmArticulos(QWidget *parent = 0, bool closeBtn = false);
     ~FrmArticulos();
     Articulo *oArticulo;
     QSqlQueryModel *modArt;
