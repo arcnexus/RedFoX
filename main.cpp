@@ -190,21 +190,21 @@ bool cargarEmpresa(QString empresa)
 
 int main(int argc, char *argv[])
 {
+    QApplication a(argc, argv);
     qDebug() << "drivers: "<< QSqlDatabase::drivers();
     QStringList d = QSqlDatabase::drivers();
 
-    qDebug() << QStyleFactory::keys();
-    QApplication a(argc, argv);
+    if(d.isEmpty())
+        QMessageBox::information(0,"Driver","No sql drivers");
+
+    qDebug() << QStyleFactory::keys();    
 
     QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
     #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
         QTextCodec::setCodecForTr(linuxCodec);
         QTextCodec::setCodecForCStrings(linuxCodec);
    #endif
-   QTextCodec::setCodecForLocale(linuxCodec);;
-
-   if(d.isEmpty())
-       QMessageBox::information(0,"Driver","No sql drivers");
+   QTextCodec::setCodecForLocale(linuxCodec);
 
    a.setStyle("fusion");
 
