@@ -29,6 +29,10 @@
    <iconset resource="maya.qrc">
     <normaloff>:/Icons/PNG/maya_logo2.png</normaloff>:/Icons/PNG/maya_logo2.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">
+background-color: rgb(218, 218, 218);</string>
+  </property>
   <property name="iconSize">
    <size>
     <width>36</width>
@@ -960,6 +964,9 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
            </property>
            <property name="currentIndex">
             <number>1</number>

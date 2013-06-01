@@ -100,8 +100,7 @@ private:
     Ui::FrmArticulos *ui;
     bool eventFilter(QObject *target, QEvent *event);
     bool Altas;
-    void desbloquearCampos();
-    void bloquearCampos();
+    void bloquearCampos(bool state);
     void LLenarCampos();
     void CargarCamposEnArticulo();
     void VaciarCampos();

@@ -57,7 +57,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
         tarifa_model->setHeaderData(i+1, Qt::Horizontal, headers.at(i));
 
     ui->tablaProveedores->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    bloquearCampos();
+    bloquearCampos(true);
 
     reformateado = false;
 
@@ -85,7 +85,6 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     connect(ui->cboEmpresa2,SIGNAL(currentIndexChanged(int)),this,SLOT(LLenarGrafica_comparativa(int)));
     connect(ui->radGrafica_importes_2,SIGNAL(toggled(bool)),this,SLOT(MostrarGrafica_comparativa(bool)));
     connect(ui->cboTipoGrafica,SIGNAL(currentIndexChanged(QString)),this,SLOT(graficar(QString)));
-    connect(ui->btnActualizar,SIGNAL(clicked()),this,SLOT(actualizar()));
 
     this->installEventFilter(this);
     ui->btn_cerrar->setVisible(closeBtn);
@@ -113,7 +112,7 @@ void FrmArticulos::on_botAnadir_clicked()
                 message.setButtonText(1,tr("Aceptar"));
                 message.exec();
         } else {
-            desbloquearCampos();
+            bloquearCampos(false);
             VaciarCampos();
             oArticulo->Anadir();
             this->anadir = true;
@@ -128,7 +127,7 @@ void FrmArticulos::on_botGuardar_clicked()
 {
     if(!ui->txtcSeccion->text().isEmpty())
     {
-        bloquearCampos();
+        bloquearCampos(true);
         CargarCamposEnArticulo();
         oArticulo->Guardar();
         actualizar();
@@ -159,166 +158,93 @@ void FrmArticulos::on_botAnterior_clicked()
 
 }
 
-void FrmArticulos::bloquearCampos() {
+void FrmArticulos::bloquearCampos(bool state) {
 
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(true);
+        lineEdit->setReadOnly(state);
     }
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
     QComboBox *ComboBox;
     foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(false);
+        ComboBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
     // SpinBox
 //    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
 //    QSpinBox *SpinBox;
 //    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(true);
+//        SpinBox->setReadOnly(state);
 //        //qDebug() << lineEdit->objectName();
 //   }
 //DoubleSpinBox
     QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
     QDoubleSpinBox *DSpinBox;
     foreach (DSpinBox, DSpinBoxList) {
-        DSpinBox->setReadOnly(true);
+        DSpinBox->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
     foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(false);
+        CheckBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
     // QTextEdit
     QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
     QTextEdit *TextEdit;
     foreach (TextEdit,TextEditList) {
-        TextEdit->setReadOnly(true);
+        TextEdit->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // QDateEdit
     QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(false);
+        DateEdit->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
 
-    ui->botAnadir->setEnabled(true);
-    ui->botAnterior->setEnabled(true);
-    ui->botBorrar->setEnabled(true);
-    ui->botDeshacer->setEnabled(false);
-    ui->botEditar->setEnabled(true);
-    ui->botGuardar->setEnabled(false);
-    ui->botSiguiente->setEnabled(true);
+    ui->botAnadir->setEnabled(state);
+    ui->botAnterior->setEnabled(state);
+    ui->botBorrar->setEnabled(state);
+    ui->botDeshacer->setEnabled(!state);
+    ui->botEditar->setEnabled(state);
+    ui->botGuardar->setEnabled(!state);
+    ui->botSiguiente->setEnabled(state);
     // activo controles que deben estar activos.
 
-    ui->txtBuscarArticulo->setReadOnly(false);
-    ui->botBuscarArtRapido->setEnabled(true);
+    ui->txtBuscarArticulo->setReadOnly(!state);
+    ui->botBuscarArtRapido->setEnabled(state);
     // Botones artículos
-    ui->botBuscarSeccion->setEnabled(false);
-    ui->botBuscarFamilia->setEnabled(false);
-    ui->botBuscarSubfamilia->setEnabled(false);
-    ui->botBuscarSubSubFamilia->setEnabled(false);
-    ui->botCambiarImagen->setEnabled(false);
-    ui->botCambiarImagen_2->setEnabled(false);
-    ui->botCambiarImagen_3->setEnabled(false);
-    ui->botCambiarImagen_4->setEnabled(false);
-    ui->botBuscarGrupo->setEnabled(false);
-    ui->btnBuscarProveedor->setEnabled(false);
-    ui->btnAnadirProveedores->setEnabled(false);
-    ui->btnBorrarProveedores->setEnabled(false);
-    ui->btnEditarProveedorFrecuente->setEnabled(false);
-    ui->btnAsignarProveedor->setEnabled(false);
-    ui->checkBox->setEnabled(true);
-    ui->cboTipoGrafica->setEnabled(true);
-    ui->cboTipoGrafica_2->setEnabled(true);
-    ui->radGrafica_importes_2->setEnabled(true);
-    ui->radGrafica_unidades_2->setEnabled(true);
-    ui->chkmostrarvalores_comparativa->setEnabled(true);
+    ui->botBuscarSeccion->setEnabled(!state);
+    ui->botBuscarFamilia->setEnabled(!state);
+    ui->botBuscarSubfamilia->setEnabled(!state);
+    ui->botBuscarSubSubFamilia->setEnabled(!state);
+    ui->botCambiarImagen->setEnabled(!state);
+    ui->botCambiarImagen_2->setEnabled(!state);
+    ui->botCambiarImagen_3->setEnabled(!state);
+    ui->botCambiarImagen_4->setEnabled(!state);
+    ui->botBuscarGrupo->setEnabled(!state);
+    ui->btnBuscarProveedor->setEnabled(!state);
+    ui->btnAnadirProveedores->setEnabled(!state);
+    ui->btnBorrarProveedores->setEnabled(!state);
+    ui->btnEditarProveedorFrecuente->setEnabled(!state);
+    ui->btnAsignarProveedor->setEnabled(!state);
+    ui->checkBox->setEnabled(state);
+    ui->cboTipoGrafica->setEnabled(state);
+    ui->cboTipoGrafica_2->setEnabled(state);
+    ui->radGrafica_importes_2->setEnabled(state);
+    ui->radGrafica_unidades_2->setEnabled(state);
+    ui->chkmostrarvalores_comparativa->setEnabled(state);
+    ui->btnAnadirTarifa->setEnabled(!state);
+    ui->btnEditartarifa->setEnabled(!state);
+    ui->btnBorrarTarifa->setEnabled(!state);
 
 
-}
-void FrmArticulos::desbloquearCampos() {
-    // LineEdit
-    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
-    QLineEdit *lineEdit;
-    foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // ComboBox
-    QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
-    QComboBox *ComboBox;
-    foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-//    // SpinBox
-//    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-//    QSpinBox *SpinBox;
-//    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(false);
-//        //qDebug() << lineEdit->objectName();
-//    }
-    // DoubleSpinBox
-    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-    QDoubleSpinBox *DSpinBox;
-    foreach (DSpinBox, DSpinBoxList) {
-        DSpinBox->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // CheckBox
-    QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
-    QCheckBox *CheckBox;
-    foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    // QTextEdit
-    QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
-    QTextEdit *TextEdit;
-    foreach (TextEdit,TextEditList) {
-        TextEdit->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // QDateEdit
-    QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
-    QDateEdit *DateEdit;
-    foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    ui->botAnadir->setEnabled(false);
-    ui->botAnterior->setEnabled(false);
-    ui->botBorrar->setEnabled(false);
-    ui->botDeshacer->setEnabled(true);
-    ui->botEditar->setEnabled(false);
-    ui->botGuardar->setEnabled(true);
-    ui->botSiguiente->setEnabled(false);
-    // Botones artículos
-    ui->botBuscarSeccion->setEnabled(true);
-    ui->botBuscarFamilia->setEnabled(true);
-    ui->botBuscarSubfamilia->setEnabled(true);
-    ui->botBuscarSubSubFamilia->setEnabled(true);
-    ui->botBuscarGrupo->setEnabled(true);
-    ui->botCambiarImagen->setEnabled(true);
-    ui->botCambiarImagen_2->setEnabled(true);
-    ui->botCambiarImagen_3->setEnabled(true);
-    ui->botCambiarImagen_4->setEnabled(true);
-    ui->btnBuscarProveedor->setEnabled(true);
-    ui->btnAnadirProveedores->setEnabled(true);
-    ui->btnBorrarProveedores->setEnabled(true);
-    ui->btnEditarProveedorFrecuente->setEnabled(true);
-
-    ui->txtcProveedor->setEnabled(false);
-    ui->txtCodigoProveedor->setEnabled(false);
-    ui->btnAsignarProveedor->setEnabled(true);
 }
 
 void FrmArticulos::LLenarCampos()
@@ -586,7 +512,7 @@ void FrmArticulos::rellenar_grafica_proveedores()
 
 void FrmArticulos::on_botEditar_clicked()
 {
-    desbloquearCampos();
+    bloquearCampos(false);
     ui->txtcCodigo->setFocus();
     if (ui->chkArticulo_promocionado->isChecked())
         ui->framePromocion->setEnabled(true);
@@ -624,7 +550,7 @@ void FrmArticulos::on_botDeshacer_clicked()
 
         LLenarCampos();
     }
-    bloquearCampos();
+    bloquearCampos(true);
 }
 
 

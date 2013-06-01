@@ -31,11 +31,11 @@ private:
 private slots:
     void cargarDatosTarifa(QModelIndex);
     void asignarcambiodivisa(float);
-    void cambiar_precio_editingfinished();
     void calcular_precio(double margen);
     void aceptar();
 
 
+    void on_txtPVPLocal_editingFinished();
 };
 
 #endif // FRMTARIFAS_H
