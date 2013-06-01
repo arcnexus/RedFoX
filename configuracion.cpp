@@ -492,6 +492,7 @@ void Configuracion::CargarDatos()
         this->internacional = qEmpresa.record().value("internacional").toBool();
         this->margen = qEmpresa.record().value("margen").toDouble();
         this->margen_minimo = qEmpresa.record().value("margen_minimo").toDouble();
+        this->activar_seguimiento = qEmpresa.record().value("seguimiento").toBool();
 
 
     } else {

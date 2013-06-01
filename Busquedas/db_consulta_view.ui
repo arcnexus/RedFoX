@@ -31,6 +31,22 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="maximumSize">
+      <size>
+       <width>128</width>
+       <height>128</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../maya.qrc">:/Icons/PNG/find2.png</pixmap>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="1">
     <widget class="QLineEdit" name="lineaTextoBuscar">
      <property name="styleSheet">
@@ -39,7 +55,17 @@ alternate-background-color: rgb(255, 252, 205);</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="0" column="2">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Buscar por:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QComboBox" name="cboCampoBusqueda"/>
+   </item>
+   <item row="1" column="1" colspan="3">
     <widget class="QLabel" name="lbltabla">
      <property name="maximumSize">
       <size>
@@ -59,23 +85,7 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="maximumSize">
-      <size>
-       <width>128</width>
-       <height>128</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../maya.qrc">:/Icons/PNG/find2.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
+   <item row="2" column="1" colspan="3">
     <widget class="QTableView" name="resultado_list">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);
@@ -95,7 +105,7 @@ alternate-background-color: rgb(255, 252, 205);</string>
      </attribute>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
+   <item row="3" column="0" colspan="4">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">

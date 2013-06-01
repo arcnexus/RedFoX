@@ -36,6 +36,8 @@ private slots:
 
 
     void on_txtPVPLocal_editingFinished();
+    void on_btnDesbloquearDivisa_clicked(bool checked);
+    void on_spinMargen_editingFinished();
 };
 
 #endif // FRMTARIFAS_H

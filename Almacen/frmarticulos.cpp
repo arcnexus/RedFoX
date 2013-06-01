@@ -10,6 +10,7 @@
 
 #include"../Auxiliares/readonlydelegate.h"
 #include"frmlistadosarticulo.h"
+#include"../Busquedas/db_consulta_view.h"
 
 
 FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
@@ -40,7 +41,6 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
 
 
     // Control objetos
-    ui->lblMensajeRecuperar->setVisible(false);
     // --------------------
     // TARIFAS
     //---------------------
@@ -58,6 +58,9 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
 
     ui->tablaProveedores->setEditTriggers(QAbstractItemView::NoEditTriggers);
     bloquearCampos(true);
+    ui->botEditar->setEnabled(false);
+    ui->botAnterior->setEnabled(false);
+    ui->botBorrar->setEnabled(false);
 
     reformateado = false;
 
@@ -145,6 +148,9 @@ void FrmArticulos::on_botSiguiente_clicked()
     QString cCodigo = oArticulo->cCodigo;
     oArticulo->Recuperar("Select * from articulos where cCodigo >'"+cCodigo+"' order by cCodigo limit 1 ",1);
     LLenarCampos();
+    ui->botBorrar->setEnabled(true);
+    ui->botAnterior->setEnabled(true);
+    ui->botEditar->setEnabled(true);
     tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
     tarifa_model->select();
 }
@@ -217,10 +223,9 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->botSiguiente->setEnabled(state);
     // activo controles que deben estar activos.
 
-    ui->txtBuscarArticulo->setReadOnly(!state);
-    ui->botBuscarArtRapido->setEnabled(state);
     // Botones artículos
     ui->botBuscarSeccion->setEnabled(!state);
+    ui->botBuscar->setEnabled(state);
     ui->botBuscarFamilia->setEnabled(!state);
     ui->botBuscarSubfamilia->setEnabled(!state);
     ui->botBuscarSubSubFamilia->setEnabled(!state);
@@ -295,8 +300,8 @@ void FrmArticulos::LLenarCampos()
    ui->txtcSubFamilia->setText(oArticulo->getcSubFamilia(oArticulo->id_SubFamilia));
    ui->txtcSubSubFamilia->setText((oArticulo->getcSubSubFamilia(oArticulo->idsubsubfamilia)));
    ui->txtcGupoArt->setText(oArticulo->getcGrupo(oArticulo->idgrupoart));
-   ui->txtMargen->setValue(oArticulo->margen);
-   ui->txtMargen_min->setValue((oArticulo->margen_min));
+  // ui->txtMargen->setValue(oArticulo->margen);
+  // ui->txtMargen_min->setValue((oArticulo->margen_min));
 
    if (oArticulo->lMostrarWeb==1)
         ui->chklMostrarWeb->setChecked(true);
@@ -418,8 +423,8 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->porc_dto_web = ui->txt_dto_web->text().replace(",",".").toDouble();
     oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().replace(",",".").toDouble();
     oArticulo->comentario_oferta = ui->txtComentarios_promocion->toPlainText();
-    oArticulo->margen = ui->txtMargen->value();
-    oArticulo->margen_min = ui->txtMargen_min->value();
+   // oArticulo->margen = ui->txtMargen->value();
+   // oArticulo->margen_min = ui->txtMargen_min->value();
 
 }
 
@@ -467,8 +472,8 @@ void FrmArticulos::VaciarCampos()
    ui->txt_dto_web->setText("0");
    ui->txtoferta_pvp_fijo->setText("0");
    ui->txtComentarios_promocion->setPlainText("");
-   ui->txtMargen->setValue(0);
-   ui->txtMargen_min->setValue(0);
+   //ui->txtMargen->setValue(0);
+   //ui->txtMargen_min->setValue(0);
 
 
 }
@@ -554,53 +559,6 @@ void FrmArticulos::on_botDeshacer_clicked()
 }
 
 
-void FrmArticulos::on_botBuscarArtRapido_clicked()
-{
-    if(!ui->txtBuscarArticulo->text().isEmpty()) {
-        ui->lblMensajeRecuperar->setVisible(true);
-        modArt = new QSqlQueryModel();
-        QString cSQL;
-        cSQL = "select id,cCodigo, cCodigoBarras, cDescripcion from articulos where cDescripcion like '%" +
-                ui->txtBuscarArticulo->text().trimmed()+"%' order by cDescripcion";
-
-
-        modArt->setQuery(cSQL,QSqlDatabase::database("Maya"));
-        ui->TablaBuscarArt->setModel(modArt);
-        QHeaderView *Cabecera = new QHeaderView(Qt::Horizontal,this);
-        // Le decimos a nuestro objeto QTableView  que use la instancia de QHeaderView que acabamos de crear.
-        ui->TablaBuscarArt->setHorizontalHeader(Cabecera);
-        /*Ponemos el tamaño deseado para cada columna, teniendo en cuenta que la primera columna es la "0". (en nuestro caso está oculta ya que muestra el id de la tabla y esto no nos interesa que lo vea el usuario */
-        Cabecera->setSectionResizeMode(0,QHeaderView::Fixed);
-        Cabecera->resizeSection(0,0);
-        Cabecera->setSectionResizeMode(1,QHeaderView::Fixed);
-        Cabecera->resizeSection(1,120);
-        Cabecera->setSectionResizeMode(2,QHeaderView::Fixed);
-        Cabecera->resizeSection(2,120);
-        Cabecera->setSectionResizeMode(3,QHeaderView::Fixed);
-        Cabecera->resizeSection(3,400);
-        Cabecera->setVisible(true);
-        modArt->setHeaderData(1, Qt::Horizontal, tr("CÓDIGO"));
-        modArt->setHeaderData(2, Qt::Horizontal, tr("EAN"));
-        modArt->setHeaderData(3, Qt::Horizontal, tr("DESCRIPCIÓN"));
-
-        //ui->TablaBuscarArt->setItemDelegateForColumn(2, Columna);
-    } else {
-        QMessageBox::critical(this,tr("Buscar Artículos"),tr("Debe especificar algún criterio de búsqueda"),tr("OK"));
-    }
-}
-
-void FrmArticulos::on_TablaBuscarArt_doubleClicked(const QModelIndex &index)
-{
-    QModelIndex celda=ui->TablaBuscarArt->currentIndex();
-    QModelIndex index1=modArt->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
-
-    QVariant pKey=modArt->data(index1,Qt::EditRole);
-    QString cSQL = "Select * from articulos where id = "+pKey.toString();
-    oArticulo->Recuperar(cSQL);
-    LLenarCampos();
-    ui->Pestanas->setCurrentIndex(0);
-
-}
 
 
 
@@ -1919,4 +1877,38 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
             QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
         delete Articulo;
     }
+}
+
+void FrmArticulos::on_botBuscar_clicked()
+{
+    db_consulta_view busqueda(this);
+    busqueda.set_db("Maya");
+    busqueda.set_texto_tabla("Artículos");
+    QStringList listacampos;
+    listacampos <<"cDescripcion" << "cCodigo" << "cCodigoBarras";
+    busqueda.set_campoBusqueda(listacampos);
+    busqueda.set_SQL("select id,cCodigo,cCodigoBarras,cCodigoFabricante,cDescripcion,cDescripcionReducida from articulos");
+   // busqueda.set_filtro("id >0 limit 0,100");
+    QStringList cabecera;
+    cabecera << tr("Código") <<tr("Cod. Barras") << tr("Cod. prov.") << tr("Descripción") << tr("Desc. Reducida");
+    busqueda.set_headers(cabecera);
+    QVariantList tamanos;
+    tamanos <<"0" << "120" << "120" <<"120" <<"300" <<"200";
+    busqueda.set_tamano_columnas(tamanos);
+    busqueda.set_titulo(tr("Búsqueda de artículos"));
+    if(busqueda.exec() == QDialog::Accepted) {
+        int id_art = busqueda.get_id();
+        oArticulo->Recuperar("Select * from articulos where id = "+QString::number(id_art));
+        LLenarCampos();
+        ui->botAnterior->setEnabled(true);
+        ui->botEditar->setEnabled(true);
+        ui->botBorrar->setEnabled(true);
+    }
+
+}
+
+
+void FrmArticulos::on_txtrCoste_textEdited(const QString &arg1)
+{
+
 }

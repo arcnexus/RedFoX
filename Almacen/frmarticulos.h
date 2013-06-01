@@ -41,10 +41,6 @@ private slots:
 
     void on_botDeshacer_clicked();
 
-    void on_botBuscarArtRapido_clicked();
-
-    void on_TablaBuscarArt_doubleClicked(const QModelIndex &index);
-
     void on_botBuscarSeccion_clicked();
 
     void on_botBuscarFamilia_clicked();
@@ -91,6 +87,11 @@ private slots:
 
     void on_botCambiarImagen_4_clicked();
     void actualizar();
+
+    void on_botBuscar_clicked();
+
+
+    void on_txtrCoste_textEdited(const QString &arg1);
 
 public slots:
     void AnadirSeccion();

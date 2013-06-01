@@ -21,14 +21,14 @@ public:
     void set_titulo(QString titulo);
     void set_headers(QStringList cabecera);
     void set_tamano_columnas(QVariantList tamanos);
-    void set_campoBusqueda(QString campo);
+    void set_campoBusqueda(QStringList campos);
     void set_db(QString nombre_db);
     int get_id() {return this->id;}
     
 private:
     Ui::db_consulta_view *ui;
     QString cSQL;
-    QString campoBusqueda;
+    QStringList campoBusqueda;
     QString filtro;
     QString cSQLFiltered;
     QStringList headers;

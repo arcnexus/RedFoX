@@ -87,6 +87,7 @@ public:
     QString codDivisaLocal;
     double margen;
     double margen_minimo;
+    bool activar_seguimiento;
 
     QHash <QString,QSqlRecord> ivas;
     QSqlTableModel* iva_model;

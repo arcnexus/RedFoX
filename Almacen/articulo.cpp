@@ -492,6 +492,8 @@ void Articulo::Borrar(int nId)
     {
         QSqlQuery qryArticulo(QSqlDatabase::database("Maya"));
         qryArticulo.prepare("Delete from articulos where id = :nId");
+        // TODO - Borrar estadisticas y tarifas
+
         qryArticulo.bindValue(":id",nId);
         if(!qryArticulo.exec())
         {
