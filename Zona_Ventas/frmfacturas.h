@@ -52,7 +52,7 @@ private slots:
     void desglose3Changed(double base, double iva, double re, double total);
     void desglose4Changed(double base, double iva, double re, double total);
     void on_btnEditar_clicked();
-
+    void lineaReady(lineaDetalle* ld);
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;

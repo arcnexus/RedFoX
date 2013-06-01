@@ -189,7 +189,6 @@ void Table_Helper::addRow()
 void Table_Helper::addRow(QSqlRecord r)
 {
     resizeTable();
-    helped_table->blockSignals(true);
     helped_table->setRowCount(helped_table->rowCount()+1);
     int row = helped_table->rowCount()-1;
 
@@ -226,8 +225,6 @@ void Table_Helper::addRow(QSqlRecord r)
     lineaDetalle * lrow = new lineaDetalle;
     lrow->idLinea = -1;
     m_rows.append(lrow);
-    helped_table->blockSignals(true);
-    int index = 0;
     m_rows[row]->idLinea = r.value(0).toInt();
     helped_table->item(row,0)->setText(r.value(3).toString());
     m_rows[row]->codigo = r.value(3).toString();
@@ -257,9 +254,6 @@ void Table_Helper::addRow(QSqlRecord r)
             break;
         }
     }
-    //helped_table->item(row,index)->setText(r.value(11).toString());
-    helped_table->blockSignals(false);
-    //updateLinea(row);
 }
 
 void Table_Helper::removeRow()
@@ -307,9 +301,7 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
         {
             comprobarCantidad(row);
             //guardar cantidad al terminar de editar
-
             m_rows[row]->cantidad = previous->text().toDouble();
-
         }
         else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
             comprobarDescuento(row);
@@ -323,7 +315,6 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
         }
         updateLinea(row);
         helped_table->blockSignals(false);
-        updateLinea(row);
     }
 }
 

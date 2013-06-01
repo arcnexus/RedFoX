@@ -54,48 +54,48 @@ bool Albaran::AnadirAlbaran()
     q.bindValue(":cCif",cCif);
 
     q.bindValue(":lRecargoEquivalencia",lRecargoEquivalencia);
-    q.bindValue(":rSubtotal",rSubtotal);
-    q.bindValue(":rDto",rDto);
-    q.bindValue(":nDto",nDto);
-    q.bindValue(":rBase1",rBase1);
-    q.bindValue(":rBase2",rBase2);
-    q.bindValue(":rBase3",rBase3);
-    q.bindValue(":rBase4",rBase4);
-    q.bindValue(":nPorcentajeIva1",nPorcentajeIVA1);
-    q.bindValue(":nPorcentajeIva2",nPorcentajeIVA2);
-    q.bindValue(":nPorcentajeIva3",nPorcentajeIVA3);
-    q.bindValue(":nPorcentajeIva4",nPorcentajeIVA4);
+    q.bindValue(":rSubtotal",0);
+    q.bindValue(":rDto",0);
+    q.bindValue(":nDto",0);
+    q.bindValue(":rBase1",0);
+    q.bindValue(":rBase2",0);
+    q.bindValue(":rBase3",0);
+    q.bindValue(":rBase4",0);
+    q.bindValue(":nPorcentajeIva1",0);
+    q.bindValue(":nPorcentajeIva2",0);
+    q.bindValue(":nPorcentajeIva3",0);
+    q.bindValue(":nPorcentajeIva4",0);
 
-    q.bindValue(":rImporteIva1",rImporteIva1);
-    q.bindValue(":rImporteIva2",rImporteIva2);
-    q.bindValue(":rImporteIva3",rImporteIva3);
-    q.bindValue(":rImporteIva4",rImporteIva4);
-    q.bindValue(":nPorcentajeRecargoEq1",nPorcentajeRecargoEq1);
-    q.bindValue(":nPorcentajeRecargoEq2",nPorcentajeRecargoEq2);
-    q.bindValue(":nPorcentajeRecargoEq3",nPorcentajeRecargoEq3);
-    q.bindValue(":nPorcentajeRecargoEq4",nPorcentajeRecargoEq4);
+    q.bindValue(":rImporteIva1",0);
+    q.bindValue(":rImporteIva2",0);
+    q.bindValue(":rImporteIva3",0);
+    q.bindValue(":rImporteIva4",0);
+    q.bindValue(":nPorcentajeRecargoEq1",0);
+    q.bindValue(":nPorcentajeRecargoEq2",0);
+    q.bindValue(":nPorcentajeRecargoEq3",0);
+    q.bindValue(":nPorcentajeRecargoEq4",0);
 
-    q.bindValue(":rImporteRecargoEq1",rImporteRecargoEq1);
-    q.bindValue(":rImporteRecargoEq2",rImporteRecargoEq2);
-    q.bindValue(":rImporteRecargoEq3",rImporteRecargoEq3);
-    q.bindValue(":rImporteRecargoEq4",rImporteRecargoEq4);
+    q.bindValue(":rImporteRecargoEq1",0);
+    q.bindValue(":rImporteRecargoEq2",0);
+    q.bindValue(":rImporteRecargoEq3",0);
+    q.bindValue(":rImporteRecargoEq4",0);
 
-    q.bindValue(":rTotal1",rTotal1);
-    q.bindValue(":rTotal2",rTotal2);
-    q.bindValue(":rTotal3",rTotal3);
-    q.bindValue(":rTotal4",rTotal4);
-    q.bindValue(":rBaseTotal",rBaseTotal);
-    q.bindValue(":rIvaTotal",rIvaTotal);
-    q.bindValue(":rRecargoEqTotal",rRecargoEqTotal);
+    q.bindValue(":rTotal1",0);
+    q.bindValue(":rTotal2",0);
+    q.bindValue(":rTotal3",0);
+    q.bindValue(":rTotal4",0);
+    q.bindValue(":rBaseTotal",0);
+    q.bindValue(":rIvaTotal",0);
+    q.bindValue(":rRecargoEqTotal",0);
 
-    q.bindValue(":rTotalAlbaran",rTotalAlbaran);
-    q.bindValue(":lImpreso",lImpreso);
+    q.bindValue(":rTotalAlbaran",0);
+    q.bindValue(":lImpreso",0);
     q.bindValue(":lFacturado",0);
     q.bindValue(":cFactura",cFactura);
     q.bindValue(":dFechaFactura",dFechaFactura);
     q.bindValue(":tComentario",tComentario);
 
-    q.bindValue(":rACuenta",rACuenta);
+    q.bindValue(":rACuenta",0);
 
     if(!q.exec())
     {
@@ -104,6 +104,7 @@ bool Albaran::AnadirAlbaran()
     }
     else
     {
+        this->id = q.lastInsertId().toInt();
         return true;
     }
 }
