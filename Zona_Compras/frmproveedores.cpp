@@ -681,34 +681,27 @@ void frmProveedores::on_txtcCodigoFormaPago_currentIndexChanged(const QString &a
     oProveedor->idFormadePago = Configuracion_global->Devolver_id_codigo_forma_pago(cCodigo);
 }
 
-
 void frmProveedores::on_btnNuevaFactura_clicked()
 {
-    QMessageBox::information(this,tr("Nueva Factura"),
-                             tr("Para volver a proveedores cierre la ventana\n desde el boton X de la ventana de Facturas"),
-                             tr("Aceptar"));
-    FrmFacturasProveedor frmFactura(this);
+    FrmFacturasProveedor frmFactura(this,true);
     frmFactura.setWindowState(Qt::WindowMaximized);
+    frmFactura.llenarProveedor(oProveedor->id);
     frmFactura.exec();
 }
 
 void frmProveedores::on_btnNuevoAlbaran_clicked()
 {
-    QMessageBox::information(this,tr("Nuevo Albarán"),
-                             tr("Para volver a proveedores cierre la ventana\n desde el boton X de la ventana de Albaranes"),
-                             tr("Aceptar"));
-    FrmAlbaranProveedor frmAlbaran(this);
+    FrmAlbaranProveedor frmAlbaran(this,true);
     frmAlbaran.setWindowState(Qt::WindowMaximized);
+    frmAlbaran.llenarProveedor(oProveedor->id);
     frmAlbaran.exec();
 }
 
 void frmProveedores::on_btnNuevoPedido_clicked()
 {
-    QMessageBox::information(this,tr("Nuevo Pedido"),
-                             tr("Para volver a proveedores cierre la ventana\n desde el boton X de la ventana de Pedidos"),
-                             tr("Aceptar"));
-    FrmPedidosProveedor frmPedidos(this);
+    FrmPedidosProveedor frmPedidos(this,true);
     frmPedidos.setWindowState(Qt::WindowMaximized);
+    frmPedidos.llenarProveedor(oProveedor->id,true);
     frmPedidos.exec();
 }
 

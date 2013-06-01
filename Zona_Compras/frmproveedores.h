@@ -23,7 +23,6 @@ public slots:
     void cargar_forma_pago(QString);
     void editar_contacto();
     void borrar_contacto();
-    
 private slots:
     void on_btnSiguiente_clicked();
 

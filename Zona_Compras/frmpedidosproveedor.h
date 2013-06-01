@@ -16,9 +16,10 @@ class FrmPedidosProveedor : public QDialog
     Q_OBJECT
     
 public:
-    explicit FrmPedidosProveedor(QWidget *parent = 0);
+    explicit FrmPedidosProveedor(QWidget *parent = 0, bool showCerrar = false);
     ~FrmPedidosProveedor();
-    Proveedor *oProveedor;// = new Proveedor(this);
+    // = new Proveedor(this);
+    void llenarProveedor(int id,bool isNew = false);
     PedidoProveedor *oPedido_proveedor;// = new PedidoProveedor(this);
     int id;
 signals:
@@ -54,6 +55,7 @@ private:
     QAction * aAlbaran_action;
     QAction * aFactura_action;
     QMenu * convertir_menu;
+    Proveedor prov;
 };
 
 #endif // FRMPEDIDOSPROVEEDOR_H
