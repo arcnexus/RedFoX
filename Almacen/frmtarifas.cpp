@@ -138,23 +138,20 @@ void FrmTarifas::asignarcambiodivisa(float valor)
 
 void FrmTarifas::calcular_precio(double margen)
 {
-    if(QMessageBox::question(this,tr("Gestión de artículos"),tr("Se ha cambiado el coste del producto,\n¿desea actualizar las tarifas?"),
-                             tr("No"),tr("Sí"))== QMessageBox::Accepted){
-            // TODO repasar tarifas para actualizar precios
 
-//        blockSignals(true);
-//        //NOTE 70% /0.30 - 40 /0.60
-//        double pvp = (ui->txtCosteLocal->text().replace(",",".").toDouble()*100)/(100-margen);
-//        QString cPvp = Configuracion_global->FormatoNumerico(QString::number(pvp,'f',2));
-//        this->pvpDivisa = cPvp.toDouble();
-//        ui->txtPVPLocal->setText(cPvp);
-//        double valordivisa = ui->txtPVPLocal->text().replace(",",".").toDouble() * ui->txtValorDivisa->text().replace(",",".").toDouble();
-//        ui->txtPVPDivisa->setText(Configuracion_global->FormatoNumerico(QString::number(valordivisa,'f',2)));
-//        this->pvpDivisa = valordivisa;
-//        blockSignals(false);
+        blockSignals(true);
+        //NOTE 70% /0.30 - 40 /0.60
+        double pvp = (ui->txtCosteLocal->text().replace(",",".").toDouble()*100)/(100-margen);
+        QString cPvp = Configuracion_global->FormatoNumerico(QString::number(pvp,'f',2));
+        this->pvpDivisa = cPvp.toDouble();
+        ui->txtPVPLocal->setText(cPvp);
+        double valordivisa = ui->txtPVPLocal->text().replace(",",".").toDouble() * ui->txtValorDivisa->text().replace(",",".").toDouble();
+        ui->txtPVPDivisa->setText(Configuracion_global->FormatoNumerico(QString::number(valordivisa,'f',2)));
+        this->pvpDivisa = valordivisa;
+        blockSignals(false);
 }
 
-}
+
 
 void FrmTarifas::aceptar()
 {
