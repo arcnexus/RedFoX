@@ -58,6 +58,7 @@ private slots:
     void on_btnBorrar_clicked();
 
     void lineaReady(lineaDetalle*);
+    void lineaDeleted(lineaDetalle*);
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;

@@ -49,6 +49,7 @@ private slots:
     void desglose4Changed(double base, double iva, double re, double total);
 
     void lineaReady(lineaDetalle*);
+    void lineaDeleted(lineaDetalle*);
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;

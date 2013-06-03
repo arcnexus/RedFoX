@@ -51,6 +51,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
             this,SLOT(desglose4Changed(double,double,double,double)));
 
     connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
+    connect(&helper,SIGNAL(lineaDeleted(lineaDetalle*)),this,SLOT(lineaDeleted(lineaDetalle*)));
 
     connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
 
@@ -735,4 +736,32 @@ void FrmPresupuestosCli::lineaReady(lineaDetalle * ld)
         }
     }
     ld->cantidad_old = ld->cantidad;
+}
+
+void FrmPresupuestosCli::lineaDeleted(lineaDetalle * ld)
+{
+    //todo borrar de la bd y stock y demas
+    //if id = -1 pasando olimpicamente
+    bool ok_empresa,ok_Maya;
+    ok_empresa = true;
+    ok_Maya = true;
+    QSqlDatabase::database("empresa").transaction();
+    QSqlDatabase::database("Maya").transaction();
+    if(ld->idLinea >-1)
+    {
+        //TODO control de stock
+        QSqlQuery q(QSqlDatabase::database("empresa"));
+        q.prepare("delete from lin_pre where id =:id");
+        q.bindValue(":id",ld->idLinea);
+        if(q.exec() && ok_Maya)
+        {
+            QSqlDatabase::database("empresa").commit();
+            QSqlDatabase::database("Maya").commit();
+        } else
+        {
+            QSqlDatabase::database("empresa").rollback();
+            QSqlDatabase::database("Maya").rollback();
+        }
+    }
+    delete ld;
 }

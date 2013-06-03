@@ -45,6 +45,7 @@ private slots:
     void desglose3Changed(double base, double iva, double re, double total);
     void desglose4Changed(double base, double iva, double re, double total);
     void lineaReady(lineaDetalle*);
+    void lineaDeleted(lineaDetalle*);
 
     void convertir_enAlbaran();
     void convertir_enFactura();
