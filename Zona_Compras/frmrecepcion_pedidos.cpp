@@ -257,6 +257,8 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                                               "(:id_cab,:cCodigo,:cDescripcion,:rCoste,"
                                               ":nDto,:rPvp,:nIva,:nCantidad,:rTotal"
                                               ":rDto,:rSUBTOTAL,:id_Articulo);");
+
+                    // TODO - Terminar entrada lineas alabarán
                     
                 }
                 // -------------------
@@ -274,10 +276,7 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                         stockreal = queryProducto.record().value("nStockReal").toInt();
                         nCPR = queryProducto.record().value("nCantidadPendienteRecibir").toInt();
 
-//                        if(!queryProducto.exec("update articulos set stockfisico = " +QString::number(stockfisico+rec_act)+
-//                                               ",nStockReal = "+QString::number(stockfisico+rec_act+nuevo_pend)+
-//                                               ",nCantidadPendienteRecibir ="+QString::number(nCPR -rec_act)+
-//                                               " where id = "+QString::number(nid)))
+
                         if(!queryProducto.exec("update articulos set stockfisico = stockfisico +" +QString::number(rec_act)+
                                                ",nStockReal = nStockReal+"+QString::number(rec_act)+
                                                ",nCantidadPendienteRecibir = nCantidadPendienteRecibir-"+QString::number(rec_act)+
@@ -388,6 +387,9 @@ void Frmrecepcion_pedidos::reconectar()
 void Frmrecepcion_pedidos::abrir_albaran()
 {
     if(albaran == false) {
+        //--------------------------------------
+        // Creo cabecera en blanco del albarán
+        //--------------------------------------
         ui->lblAlbaran->setVisible(true);
         ui->lblfecha_albaran->setVisible(true);
         ui->txtAlbaran->setVisible(true);
@@ -411,25 +413,97 @@ void Frmrecepcion_pedidos::abrir_albaran()
         QDate fecha;
         fecha = ui->txtFecha_albaran->date();
 
-        //------------------
-        // Calcular Albarán
-        //------------------
+        //----------------------------
+        // Rellenar cabecera Albarán
+        //----------------------------
 
 
         QSqlQuery query_albaran(QSqlDatabase::database("empresa"));
         query_albaran.prepare("update alb_pro  set cAlbaran =:albaran, dFecha = :fecha,id_Proveedor=:id_proveedor,"
-                              "cProveedor =:proveedor, cCifProveedor =:cif,nPedido =:pedido where id =:id");
+                              "cProveedor =:proveedor, cCifProveedor =:cif,nPedido =:pedido,"
+                              "nIva1 =:iva1, nIva2 =:iva2, nIva3 =:iva3, nIva4 =:iva4, "
+                              "rBase1 =:base1,rBase2 =:base2,rBase3 =:base3, rBase4 =:base4, "
+                              "rIva1 =:riva1,rIva2 =:riva2, rIva3 =:riva3, rIva4 =:riva4, "
+                              "rDto1 =:dto1,rDto2 =:dto2, rDto3 =:dto3, rDto4 =:dto4, "
+                              "rTotal1 =:total1,rTotal2 =:total2,rTotal3 =:total3,rTotal4 =:total4 where id =:id");
         query_albaran.bindValue(":albaran",ui->txtAlbaran->text());
         query_albaran.bindValue(":fecha",fecha);
         query_albaran.bindValue(":id_proveedor",query_pedido.record().value("id_Proveedor").toInt());
         query_albaran.bindValue(":proveedor",query_pedido.record().value("cProveedor").toString());
         query_albaran.bindValue(":cif",query_pedido.record().value("cCifNif").toString());
         query_albaran.bindValue(":pedido",ui->txtNumPedido->text().toInt());
-
+        query_albaran.bindValue(":iva1",Configuracion_global->ivaList.at(0));
+        query_albaran.bindValue(":iva2",Configuracion_global->ivaList.at(1));
+        query_albaran.bindValue(":iva3",Configuracion_global->ivaList.at(2));
+        query_albaran.bindValue(":iva4",Configuracion_global->ivaList.at(3));
+        
         query_albaran.bindValue(":id",id_albaran);
+        
+        // ----------------------
+        // Sumar líneas albarán
+        // ----------------------
+        QSqlQuery query_lin_alb_pro(QSqlDatabase::database("empresa"));
+        query_lin_alb_pro.prepare("select * from lin_alb_pro where id_cab = :id");
+        query_lin_alb_pro.bindValue(":id",id_albaran);
+        double base1,base2,base3,base4,iva1,iva2,iva3,iva4,dto1,dto2,dto3,dto4,total1,total2,total3,total4;
+        base1 = 0; base2 = 0; base3 = 0; base4 = 0;
+        iva1 = 0;  iva2 = 0;  iva3 = 0;  iva4 = 0;
+        dto1 = 0; dto2 = 0; dto3 = 0; dto4 = 0;
+        total1 = 0; total2 = 0; total3 = 0; total4 = 0;
+        
+        if(query_lin_alb_pro.exec())
+        {
+            while (query_lin_alb_pro.next())
+            {
 
-
-
+                if(query_lin_alb_pro.record().value("nIva").toDouble() == query_lin_alb_pro.record().value("nIva1").toDouble())
+                {
+                    base1 &+query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
+                    iva1 &+query_lin_alb_pro.record().value("rIva").toDouble();
+                    dto1 &+query_lin_alb_pro.record().value("rDto").toDouble();
+                    total1 &+query_lin_alb_pro.record().value("rTotal").toDouble();
+                }
+                if(query_lin_alb_pro.record().value("nIva").toDouble() == query_lin_alb_pro.record().value("nIva2").toDouble())
+                {
+                    base2 &+query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
+                    iva2 &+query_lin_alb_pro.record().value("rIva").toDouble();
+                    dto2 &+query_lin_alb_pro.record().value("rDto").toDouble();
+                    total2 &+query_lin_alb_pro.record().value("rTotal").toDouble();
+                }
+                if(query_lin_alb_pro.record().value("nIva").toDouble() == query_lin_alb_pro.record().value("nIva3").toDouble())
+                {
+                    base3 &+query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
+                    iva3 &+query_lin_alb_pro.record().value("rIva").toDouble();
+                    dto3 &+query_lin_alb_pro.record().value("rDto").toDouble();
+                    total3 &+query_lin_alb_pro.record().value("rTotal").toDouble();
+                }
+                if(query_lin_alb_pro.record().value("nIva").toDouble() == query_lin_alb_pro.record().value("nIva4").toDouble())
+                {
+                    base4 &+query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
+                    iva4 &+query_lin_alb_pro.record().value("rIva").toDouble();
+                    dto4 &+query_lin_alb_pro.record().value("rDto").toDouble();
+                    total4 &+query_lin_alb_pro.record().value("rTotal").toDouble();
+                }
+                
+            }
+        }
+        query_albaran.bindValue(":base1",base1);
+        query_albaran.bindValue(":base2",base2);
+        query_albaran.bindValue(":base3",base3);
+        query_albaran.bindValue(":base4",base4);
+        query_albaran.bindValue(":riva1",iva1);
+        query_albaran.bindValue(":riva2",iva2);
+        query_albaran.bindValue(":riva3",iva3);
+        query_albaran.bindValue(":riva4",iva4);
+        query_albaran.bindValue(":rdto1",dto1);
+        query_albaran.bindValue(":rdto2",dto2);
+        query_albaran.bindValue(":rdto3",dto3);
+        query_albaran.bindValue(":rdto4",dto4);
+        query_albaran.bindValue(":rtotal1",total1);
+        query_albaran.bindValue(":rtotal2",total2);
+        query_albaran.bindValue(":rtotal3",total3);
+        query_albaran.bindValue(":rtotal4",total4);
+        
         if(!query_albaran.exec())
             QMessageBox::warning(this,tr("Recepción Pedidos"),
                                  tr("No se pudo crear el albarán, Error:")+query_albaran.lastError().text(),

@@ -100,6 +100,7 @@ public:
     bool guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta,
                                        QString oferta, double pvdreal, int id_divisa);
     bool cambiarProveedorPrincipal(int id,int id_proveedor);
+    bool cambiar_pvp();
 
     QString autocodigo();
 private:

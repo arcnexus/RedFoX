@@ -90,8 +90,7 @@ private slots:
 
     void on_botBuscar_clicked();
 
-
-    void on_txtrCoste_textEdited(const QString &arg1);
+    void on_txtrCoste_editingFinished();
 
 public slots:
     void AnadirSeccion();

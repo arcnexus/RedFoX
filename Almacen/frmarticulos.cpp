@@ -1907,8 +1907,15 @@ void FrmArticulos::on_botBuscar_clicked()
 
 }
 
-
-void FrmArticulos::on_txtrCoste_textEdited(const QString &arg1)
+void FrmArticulos::on_txtrCoste_editingFinished()
 {
-
+    double inicio, fin;
+    inicio = oArticulo->rCoste;
+    fin = ui->txtrCoste->text().replace(",",".").toDouble();
+    if (inicio != fin)
+    {
+        blockSignals(true);
+        // TODO recalcular tarifas
+         blockSignals(false);
+    }
 }

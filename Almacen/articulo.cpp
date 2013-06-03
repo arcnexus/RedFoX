@@ -1,4 +1,5 @@
 #include "articulo.h"
+#include "../Almacen/frmtarifas.h"
 
 Articulo::Articulo(QObject *parent) : QObject(parent)
 {
@@ -767,6 +768,54 @@ bool Articulo::cambiarProveedorPrincipal(int id, int id_proveedor)
     this->id_Proveedor = id_proveedor;
     return true;
 
+
+}
+
+bool Articulo::cambiar_pvp()
+{
+    QSqlQuery tarifas(QSqlDatabase::database("Maya"));
+    tarifas.prepare("select * from tarifas where id_Articulo = :id");
+    tarifas.bindValue(":id",this->id);
+
+    if (tarifas.exec()){
+        FrmTarifas editTarifa(qApp->activeWindow());
+        while (tarifas.next())
+        {
+//            QSqlQuery qTarifa(QSqlDatabase::database("Maya"));
+//            qTarifa.prepare("select * from codigotarifa where descripcion ='"+ this->ct+"'");
+
+//            if(qTarifa.exec()){
+//                qTarifa.next();
+
+//                QString cMoneda = Configuracion_global->Devolver_moneda(qTarifa.record().field("id_monedas").value().toInt());
+            editTarifa.capturar_datos(tarifas.record().value("id").toInt(),QString::number(this->rCoste,'f',2));
+//            if (Configuracion_global->DivisaLocal != cMoneda)
+//                Configuracion_global->getCambio(Configuracion_global->codDivisaLocal,editTarifa->cod_divisa);
+//            else
+//                editTarifa. asignarcambiodivisa(1);
+
+            editTarifa.calcular_precio(tarifas.record().value("margen").toDouble());
+            QSqlQuery queryTarifas(QSqlDatabase::database("Maya"));
+            queryTarifas.prepare(
+            "UPDATE tarifas SET "
+            "margen = :margen,"
+            "margenminimo = :margenminimo,"
+            "pvp = :pvp "
+            " WHERE id = :id");
+            queryTarifas.bindValue(":margen",editTarifa.margen);
+            queryTarifas.bindValue(":margenMinimo",editTarifa.margen_min);
+            queryTarifas.bindValue(":pvp",editTarifa.pvpDivisa);
+            queryTarifas.bindValue(":id",tarifas.record().value("id").toInt());
+            if(!queryTarifas.exec()) {
+                QMessageBox::warning(qApp->activeWindow(),tr("ATENCIÓN"),
+                                     tr("Ocurrió un error al actualizar BD: %1").arg(queryTarifas.lastError().text()),
+                                     tr("Aceptar"));
+                return false;
+            } else
+                return true;
+
+        }
+    }
 
 }
 
