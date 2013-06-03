@@ -458,31 +458,31 @@ void Frmrecepcion_pedidos::abrir_albaran()
 
                 if(query_lin_alb_pro.record().value("nIva").toDouble() == query_lin_alb_pro.record().value("nIva1").toDouble())
                 {
-                    base1 &+query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
-                    iva1 &+query_lin_alb_pro.record().value("rIva").toDouble();
-                    dto1 &+query_lin_alb_pro.record().value("rDto").toDouble();
-                    total1 &+query_lin_alb_pro.record().value("rTotal").toDouble();
+                    base1 +=query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
+                    iva1 +=query_lin_alb_pro.record().value("rIva").toDouble();
+                    dto1 +=query_lin_alb_pro.record().value("rDto").toDouble();
+                    total1 +=query_lin_alb_pro.record().value("rTotal").toDouble();
                 }
                 if(query_lin_alb_pro.record().value("nIva").toDouble() == query_lin_alb_pro.record().value("nIva2").toDouble())
                 {
-                    base2 &+query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
-                    iva2 &+query_lin_alb_pro.record().value("rIva").toDouble();
-                    dto2 &+query_lin_alb_pro.record().value("rDto").toDouble();
-                    total2 &+query_lin_alb_pro.record().value("rTotal").toDouble();
+                    base2 +=query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
+                    iva2 +=query_lin_alb_pro.record().value("rIva").toDouble();
+                    dto2 +=query_lin_alb_pro.record().value("rDto").toDouble();
+                    total2 +=query_lin_alb_pro.record().value("rTotal").toDouble();
                 }
                 if(query_lin_alb_pro.record().value("nIva").toDouble() == query_lin_alb_pro.record().value("nIva3").toDouble())
                 {
-                    base3 &+query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
-                    iva3 &+query_lin_alb_pro.record().value("rIva").toDouble();
-                    dto3 &+query_lin_alb_pro.record().value("rDto").toDouble();
-                    total3 &+query_lin_alb_pro.record().value("rTotal").toDouble();
+                    base3 +=query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
+                    iva3 +=query_lin_alb_pro.record().value("rIva").toDouble();
+                    dto3 +=query_lin_alb_pro.record().value("rDto").toDouble();
+                    total3 +=query_lin_alb_pro.record().value("rTotal").toDouble();
                 }
                 if(query_lin_alb_pro.record().value("nIva").toDouble() == query_lin_alb_pro.record().value("nIva4").toDouble())
                 {
-                    base4 &+query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
-                    iva4 &+query_lin_alb_pro.record().value("rIva").toDouble();
-                    dto4 &+query_lin_alb_pro.record().value("rDto").toDouble();
-                    total4 &+query_lin_alb_pro.record().value("rTotal").toDouble();
+                    base4 +=query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
+                    iva4 +=query_lin_alb_pro.record().value("rIva").toDouble();
+                    dto4 +=query_lin_alb_pro.record().value("rDto").toDouble();
+                    total4 +=query_lin_alb_pro.record().value("rTotal").toDouble();
                 }
                 
             }
