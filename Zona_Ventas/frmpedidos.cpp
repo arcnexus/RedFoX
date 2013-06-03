@@ -47,6 +47,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     connect(&helper,SIGNAL(desglose4Changed(double,double,double,double)),
             this,SLOT(desglose4Changed(double,double,double,double)));
 
+    connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
+
     aAlbaran_action = new QAction(tr("En albaran"),this);
     aFactura_action = new QAction(tr("En factura"),this);
 
@@ -410,6 +412,8 @@ void FrmPedidos::on_btnAnadir_clicked()
     VaciarCampos();
     BloquearCampos(false);
     ui->txtnPedido->setText(QString::number(oPedido->NuevoNumeroPedido()));
+    LLenarPedido();
+    oPedido->AnadirPedido();
     ui->txtcCodigoCliente->setFocus();
     editando = false;
     emit block();
@@ -447,11 +451,7 @@ void FrmPedidos::on_btnGuardar_clicked()
     }
     else
     {
-        ui->txtnPedido->setText(QString::number(oPedido->NuevoNumeroPedido()));
-        LLenarPedido();
-        succes &= oPedido->AnadirPedido();
-        succes &= oPedido->GuardarPedido(iPed);
-        //succes &= helper.saveTable(iPed,"empresa","lin_ped");
+
     }
 
     if(succes)
@@ -566,6 +566,115 @@ void FrmPedidos::desglose4Changed(double base, double iva, double re, double tot
     ui->txtrIVA4->setText(QString::number(iva));
     ui->txtrRecargoEq4->setText(QString::number(re));
     ui->txtrTotal4->setText(QString::number(total));
+}
+
+void FrmPedidos::lineaReady(lineaDetalle * ld)
+{
+    //-----------------------------------------------------
+    // Insertamos línea de pedido y controlamos acumulados
+    //-----------------------------------------------------
+
+    bool ok_empresa,ok_Maya;
+    ok_empresa = true;
+    ok_Maya = true;
+    QSqlDatabase::database("empresa").transaction();
+    QSqlDatabase::database("Maya").transaction();
+    if (ld->idLinea == -1)
+    {
+        //qDebug()<< ld->idLinea;
+        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        queryArticulos.prepare("select id from articulos where cCodigo =:codigo");
+        queryArticulos.bindValue(":codigo",ld->codigo);
+        if(queryArticulos.exec())
+            queryArticulos.next();
+        else
+            ok_Maya = false;
+//INSERT INTO `emp0999`.`lin_ped` (rSubTotal`, `rDto`, `nDto`, `nPorcIva`, `rTotal`, `cantidadaservir`)
+        QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
+        query_lin_ped_pro.prepare("INSERT INTO lin_ped (Id_Cab,id_Articulo,cCodigo,"
+                                  "cDescripcion, nCantidad, rPvp,rSubTotal,rDto,nDto,nPorcIva,"
+                                  "rTotal,cantidadaservir) VALUES (:id_cab,:id_articulo,:codigo_articulo_proveedor,"
+                                  ":descripcion,:cantidad,:coste_bruto,:subtotal_coste,:porc_dto,:dto,"
+                                  ":porc_iva,:total,:cantidad_pendiente);");
+        query_lin_ped_pro.bindValue(":id_cab", oPedido->id);
+        query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
+        query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
+        query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
+        query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
+        query_lin_ped_pro.bindValue(":cantidad_pendiente",ld->cantidad);
+        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
+        query_lin_ped_pro.bindValue(":subtotal_coste",ld->subTotal);
+        query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
+        query_lin_ped_pro.bindValue(":dto",ld->dto);
+        query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
+        query_lin_ped_pro.bindValue(":total",ld->total);
+        if (!query_lin_ped_pro.exec()){
+            ok_empresa = false;
+            QMessageBox::warning(this,tr("Gestión de pedidos"),
+                                 tr("Ocurrió un error al insertar la nueva línea: %1").arg(query_lin_ped_pro.lastError().text()),
+                                 tr("Aceptar"));
+        }
+        //TODO control stock en pedidos cli
+
+        ld->idLinea = query_lin_ped_pro.lastInsertId().toInt();
+
+    } else
+    {
+        //TODO control stock en pedidos cli
+        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        queryArticulos.prepare("select id from articulos where cCodigo =:codigo");
+        queryArticulos.bindValue(":codigo",ld->codigo);
+        if(queryArticulos.exec())
+            queryArticulos.next();
+        else
+            ok_Maya = false;
+        QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
+//INSERT INTO `emp0999`.`lin_ped` (`, ``) VALUES ('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+        query_lin_ped_pro.prepare("UPDATE lin_ped SET "
+                                  "id_Articulo =:id_articulo,"
+                                  "cCodigo =:codigo_articulo_proveedor,"
+                                  "cDescripcion =:descripcion,"
+                                  "nCantidad =:cantidad,"
+                                  "cantidadaservir =:cantidad_pendiente,"
+                                  "rPvp =:coste_bruto,"
+                                  "rSubTotal =:subtotal_coste,"
+                                  "rDto =:porc_dto,"
+                                  "nDto =:dto,"
+                                  "nPorcIva =:porc_iva,"
+                                  "rTotal =:total "
+                                  "WHERE id = :id;");
+
+        query_lin_ped_pro.bindValue(":id_cab", oPedido->id);
+        query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
+        query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
+        query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
+        query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
+        query_lin_ped_pro.bindValue(":cantidadaservir",ld->cantidad);
+        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
+        query_lin_ped_pro.bindValue(":subtotal_coste",ld->subTotal);
+        query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
+        query_lin_ped_pro.bindValue(":dto",ld->dto);
+        query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
+        query_lin_ped_pro.bindValue(":total",ld->total);
+        query_lin_ped_pro.bindValue(":id",ld->idLinea);
+
+        if (!query_lin_ped_pro.exec()) {
+            QMessageBox::warning(this,tr("Gestión de pedidos"),
+                                 tr("Ocurrió un error al guardar la línea: %1").arg(query_lin_ped_pro.lastError().text()),
+                                 tr("Aceptar"));
+            ok_empresa = false;
+        }
+        //TODO control stock en pedidos cli
+        if(queryArticulos.exec() && ok_empresa && ok_Maya){
+            QSqlDatabase::database("empresa").commit();
+            QSqlDatabase::database("Maya").commit();
+        } else
+        {
+            QSqlDatabase::database("empresa").rollback();
+            QSqlDatabase::database("Maya").rollback();
+        }
+    }
+    ld->cantidad_old = ld->cantidad;
 }
 
 void FrmPedidos::convertir_enAlbaran()

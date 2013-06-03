@@ -22,6 +22,7 @@ struct lineaDetalle
     double iva_perc;
     double total;
     double importe_moneda_extrangera;
+    int cantidad_pendiente;
 };
 
 class Table_Helper : public QObject
