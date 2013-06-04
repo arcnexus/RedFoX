@@ -461,7 +461,7 @@ void FrmPedidos::on_btnGuardar_clicked()
     }
     if(succes)
     {
-        QMessageBox::information(this,tr("Guardado"),tr("Guardado con éxito"),tr("&Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Pedido guardado con éxito"));
         BloquearCampos(true);
         emit unblock();
     }
@@ -515,7 +515,7 @@ void FrmPedidos::on_btn_borrar_clicked()
             succes &= QSqlDatabase::database("empresa").commit();
 
         if(succes)
-            QMessageBox::information(this,tr("Borrado"),tr("Borrado con exito"));
+            TimedMessageBox * t = new TimedMessageBox(this,tr("Pedido borrado con éxito"));
         else
             QSqlDatabase::database("empresa").rollback();
     }

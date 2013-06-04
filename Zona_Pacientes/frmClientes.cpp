@@ -1140,8 +1140,7 @@ void frmClientes::AnadirDireccionAlternativa()
 void frmClientes::GuardarDireccionAlternativa()
 {
     if(ui->cbopaisAlternativa->currentText().isEmpty()){
-        QMessageBox::information(this,tr("Direcciones Alternativas"),
-                                 tr("Debe rellenar el campo pais para poder guardar"),tr("Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Debe rellenar el campo pais para poder guardar"));
     } else {
         ui->txtcDescripcionDireccion->setEnabled(false);
         ui->txtcDireccionAlternativa1->setEnabled(false);

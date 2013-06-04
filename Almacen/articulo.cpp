@@ -241,9 +241,9 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
 
            } else {
                if (nProcede ==1)
-                   QMessageBox::critical(qApp->activeWindow(),"Búsqueda de artículos", "Se ha llegado al final del fichero");
+                   TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Se ha llegado al final del fichero");
                if (nProcede == 2)
-                   QMessageBox::critical(qApp->activeWindow(),"Búsqueda de artículos", "Se ha llegado al inicio del fichero");
+                   TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Se ha llegado al inicio del fichero");
            }
     } else {
         QMessageBox::critical(qApp->activeWindow(),"error al leer datos artículo:", qryArticulo.lastError().text());
@@ -424,8 +424,9 @@ void Articulo::Guardar()
                              QObject::tr("Ok"));
 
     } else {
-        QMessageBox::information(qApp->activeWindow(),QObject::tr("Guardar Artículo"),QObject::tr("Se ha guardado el artículo en la base de datos"),
-                                 QObject::tr("Ok"));
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),
+                                                  QObject::tr("Se ha guardado el artículo en la base de datos"));
+
     }
 
 }

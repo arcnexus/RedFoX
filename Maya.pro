@@ -127,7 +127,8 @@ SOURCES += main.cpp\
     LibsGraficas/openchart.cpp \
     Zona_Contabilidad/frmentrada_apuntes.cpp \
     Auxiliares/frmdialogoimprimir.cpp \
-    Busquedas/db_consulta_view.cpp
+    Busquedas/db_consulta_view.cpp \
+    Auxiliares/timedmessagebox.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -220,7 +221,8 @@ HEADERS  += mainwindow.h \
     LibsGraficas/qchartpiece.h \
     Zona_Contabilidad/frmentrada_apuntes.h \
     Auxiliares/frmdialogoimprimir.h \
-    Busquedas/db_consulta_view.h
+    Busquedas/db_consulta_view.h \
+    Auxiliares/timedmessagebox.h
 
 
 FORMS    += mainwindow.ui \

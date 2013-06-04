@@ -481,7 +481,8 @@ void FrmArticulos::VaciarCampos()
 void FrmArticulos::ChangeValues_TablaProveedores(int row, int column)
 {
     if (column == 4)
-        QMessageBox::information(this,tr("Se ha cambiado el valor"),tr("Valor cambiado"),tr("Aceptar"));
+       TimedMessageBox * t = new TimedMessageBox(this,
+                                                 tr("Se ha cambiado el valor"));
 //    else if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
 //        comprobarCantidad(row);
 //    else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())

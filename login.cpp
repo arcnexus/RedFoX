@@ -137,14 +137,9 @@ void Login::on_btnAcceder_clicked()
 
 void Login::Crearconfiguracion_clicked()
 {
-
  frmConfigmaya frmConf;
  if(frmConf.exec()==QDialog::Accepted)
-    //Note - notificar al usuario que el boton hace algo
-    QMessageBox::information(this,
-                             tr("Configurado"),
-                             tr("Configuración inicial realizada con éxito"),
-                             tr("Aceptar"));
+    TimedMessageBox * t = new TimedMessageBox(this,tr("Configuración inicial realizada con éxito"));
 }
 
 void Login::btnEmpresa_clicked()

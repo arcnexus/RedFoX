@@ -16,11 +16,9 @@ void Interconsulta::AnadirInterconsulta(int idEpisodio,int idPaciente)
     qInterconsulta->bindValue(":idepisodio",idEpisodio);
     qInterconsulta->bindValue(":fechapeticion",QDate::currentDate());
     if(qInterconsulta->exec())
-        QMessageBox::information(qApp->activeWindow(),tr("Interconsultas"),tr("Se ha añadido el registro correctamente"),
-                                 tr("Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha añadido el registro correctamente"));
     else
-        QMessageBox::information(qApp->activeWindow(),tr("Interconsultas"),tr("No se ha podido añadir el registro correctamente"),
-                                 tr("Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("No se ha podido añadir el registro correctamente"));
 
 
 }

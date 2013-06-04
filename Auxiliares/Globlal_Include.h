@@ -78,6 +78,7 @@
 # include <QDomDocument>
 
 #include "../configuracion.h"
+#include "timedmessagebox.h"
 extern Configuracion * Configuracion_global;
 extern bool medic;
 extern bool internacional;

@@ -27,13 +27,11 @@ void ImagenesDiagnostico::guardarDatosDB()
         qImagen->bindValue(":id",this->id);
 
         if(qImagen->exec()){
-            QMessageBox::information(qApp->activeWindow(),QObject::tr("Modificar Imagenes"),QObject::tr("La imagen ha sido modificada correctamente"),
-                                     QObject::tr("Aceptar"));
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("La imagen ha sido modificada correctamente"));
             emit refrescarlista();
         } else
-            QMessageBox::information(qApp->activeWindow(),QObject::tr("Modificar Imagenes"),QObject::tr("Ocurrió un error al modificar la imagen en el episodio:")+
-                                     qImagen->lastError().text(),
-                                     QObject::tr("Aceptar"));
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Ocurrió un error al modificar la imagen en el episodio:\n")+
+                                     qImagen->lastError().text());
 }
 
 

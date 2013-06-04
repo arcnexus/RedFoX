@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
     QStringList d = QSqlDatabase::drivers();
 
     if(d.isEmpty())
-        QMessageBox::information(0,"Driver","No sql drivers");
+        QMessageBox::critical(0,QObject::tr("Driver"),QObject::tr("No sql drivers"));
 
     qDebug() << QStyleFactory::keys();    
 

@@ -411,9 +411,8 @@ void FrmPresupuestosCli::on_btnSiguiente_clicked()
         helper.fillTable("empresa","lin_pre",filter);
     }
     else
-        QMessageBox::information(this,tr("Final del archivo"),
-                                 tr("Se ha llegado al final del archivo.\nNo hay mas presupuestos disponibles"),
-                                 tr("&Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha llegado al final del archivo.\n"
+                                                          "No hay mas presupuestos disponibles"));
 }
 
 void FrmPresupuestosCli::on_btnAnterior_clicked()
@@ -425,9 +424,8 @@ void FrmPresupuestosCli::on_btnAnterior_clicked()
         helper.fillTable("empresa","lin_pre",filter);
     }
     else
-        QMessageBox::information(this,tr("Inicio de archivo"),
-                                 tr("Se ha llegado al principio del archivo.\nNo hay mas presupuestos disponibles"),
-                                 tr("&Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha llegado al principio del archivo.\n"
+                                                          "No hay mas presupuestos disponibles"));
 }
 
 void FrmPresupuestosCli::on_btnAnadir_clicked()
@@ -465,9 +463,8 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
 {
     if(ui->tableWidget->rowCount() == 0)
     {
-        QMessageBox::information(this,tr("Presupuesto vacio"),
-                                 tr("Está intentando guardar un presupuesto vacio.\nPor favor, añada alguna linea al presupuesto."),
-                                 tr("&Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Está intentando guardar un presupuesto vacio.\n"
+                                         "Por favor, añada alguna linea al presupuesto."));
         return;
     }
     LLenarPresupuesto();
@@ -494,7 +491,7 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
     }
     if(succes)
     {
-        QMessageBox::information(this,tr("Guardado"),tr("Guardado con éxito"),tr("&Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Guardado con éxito"));
         BloquearCampos(true);
         emit unblock();
     }
@@ -615,7 +612,7 @@ void FrmPresupuestosCli::on_btnBorrar_clicked()
             succes &= QSqlDatabase::database("empresa").commit();
 
         if(succes)
-            QMessageBox::information(this,tr("Borrado"),tr("Borrado con exito"));
+            TimedMessageBox * t = new TimedMessageBox(this,tr("Borrado con exito"));
         else
             QSqlDatabase::database("empresa").rollback();
     }

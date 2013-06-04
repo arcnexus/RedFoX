@@ -711,15 +711,11 @@ void FrmPedidosProveedor::resizeTable(int x)
 void FrmPedidosProveedor::on_btnSiguiente_clicked()
 {
     if(!pedido.next())
-        QMessageBox::information(this,tr("Final de archivo")
-                                 ,tr("Final de archivo alcanzado")
-                                 ,tr("Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Final de archivo alcanzado"));
 }
 
 void FrmPedidosProveedor::on_btnAnterior_clicked()
 {
     if(!pedido.prev())
-        QMessageBox::information(this,tr("Principio de archivo")
-                                 ,tr("Principio de archivo alcanzado")
-                                 ,tr("Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Principio de archivo alcanzado"));
 }

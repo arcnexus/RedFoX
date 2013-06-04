@@ -95,7 +95,8 @@ void Empresa::Recuperar(QString cSQL)
 		} 
 		else 
 		{
-            QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Empresas"),QObject::tr("No se ha podido encontrar la ficha de empresa"));
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),
+                                                      QObject::tr("No se ha podido encontrar la ficha de empresa"));
         }
     }
 }
@@ -104,8 +105,9 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
 {
     qEmpresa = QSqlQuery(QSqlDatabase::database("Maya"));
     if (!qEmpresa.exec(cSQL))
-        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Empresas"),QObject::tr("No se puede recuperar la ficha de empresa"),
-                             qEmpresa.lastError().text());
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),
+                                                  QObject::tr("No se puede recuperar la ficha de empresa\n")+
+                                                              qEmpresa.lastError().text());
     else {
         if(qEmpresa.next()) {
             QSqlRecord registro = qEmpresa.record();
@@ -171,9 +173,9 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->ticket_factura = registro.field("ticket_factura").value().toBool();
         } else {
             if (nProcede == 1)
-                QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Empresas"),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
+                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
             else
-                QMessageBox::information(qApp->activeWindow(), QObject::tr("Gestión Empresas"),QObject::tr("No hay más empresas: se ha llegado al inicio del fichero"));
+                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No hay más empresas: se ha llegado al inicio del fichero"));
 
         }
     }
@@ -306,9 +308,10 @@ void Empresa::Guardar()
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Empresas"),QObject::tr("No se ha podido modificar la ficha de la empresa")+
                              qEmpresa.lastError().text(), QObject::tr("Ok"));
     else {
-        QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión de Empresas"),QObject::tr("La ficha de la empresa ha sido modificada\n"
-                                                                                     "ADMINISTRADOR: Verifique funcionamiento correcto\n"
-                                                                                     "antes de dar acceso a usuarios"),
+        QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión de Empresas")
+                                 ,QObject::tr("La ficha de la empresa ha sido modificada\n"
+                                              "ADMINISTRADOR: Verifique funcionamiento correcto\n"
+                                              "antes de dar acceso a usuarios"),
                                  QObject::tr("OK"));
     }
 

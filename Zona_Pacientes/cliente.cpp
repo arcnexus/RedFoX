@@ -282,7 +282,7 @@ void Cliente::Anadir() {
          if(!query.exec()){
              QMessageBox::critical(qApp->activeWindow(),"error al insertar:", query.executedQuery());
          } else{
-             QMessageBox::information(qApp->activeWindow(),"NuevoCliente","Cliente insertado Correctamente");
+             TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Cliente insertado Correctamente");
              int nId = query.lastInsertId().toInt();
              this->id = nId;
              if (Configuracion_global->EnlaceWeb)
@@ -305,21 +305,18 @@ void Cliente::anadirWeb()
                              tr("Aceptar"));
     else
         this->id_web = queryClienteWeb.lastInsertId().toInt();
-        QMessageBox::information(qApp->activeWindow(),tr("Añadir en web"),
-                                 tr("Se ha creado el cliente en la web"), tr("Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha creado el cliente en la web"));
 
     Configuracion_global->CerrarDbWeb();
-
-
-
 }
+
 void Cliente::Recuperar(QString cSQL) {
     qryCliente = new QSqlQuery(QSqlDatabase::database("Maya"));
     qryCliente->prepare(cSQL);
     if( !qryCliente->exec() ) {
         QMessageBox::critical(qApp->activeWindow(), "error:", qryCliente->lastError().text());
     } else {
-        if (qryCliente->next()) {
+        if (qryCliente->next()) {            
             QSqlRecord registro = qryCliente->record();
             this->id = registro.field("id").value().toInt();
             this->cCodigoCliente= registro.field("cCodigoCliente").value().toString();
@@ -383,7 +380,8 @@ void Cliente::Recuperar(QString cSQL) {
                 this->lIRPF = false;
 
             }
-
+            else
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Final de archivo"));
     delete qryCliente;
 
     }
@@ -577,8 +575,7 @@ void Cliente::Borrar(int id_cliente)
         }
         if (borrado_ok ==true) {
             QSqlDatabase::database("Maya").commit();
-            QMessageBox::information(qApp->activeWindow(),tr("Borrar cliente"),
-                                 tr("Borrado correctamente"),tr("&Aceptar"));
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Borrado correctamente"));
         } else {
             QSqlDatabase::database("Maya").rollback();
             QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),
@@ -615,8 +612,7 @@ void Cliente::Actualizar_de_web()
     queryClienteWeb.prepare("select * from clientes where id_local = 0");
     if (!queryClienteWeb.exec()) {
         if (queryClienteWeb.next()) {
-            QMessageBox::information(qApp->activeWindow(),tr("Clientes web"),
-                                     tr("Hay clientes nuevos en la web"),tr("Aceptar"));
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Hay clientes nuevos en la web"));
             int id = queryClienteWeb.record().value("id").toInt();
             Recuperar("select * from clientes where id = "+QString::number(id));
             Guardar();

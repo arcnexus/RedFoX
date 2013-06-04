@@ -202,8 +202,7 @@ void Proveedor::Recuperar(QString cSQL)
             this->rEntregadoaCuenta = rProveedor.field("rEntregadoaCuenta").value().toDouble();
 
         } else {
-            QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("No se encuentra el proveedor"),
-                                         QObject::tr("Ok"));
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No se encuentra el proveedor"));
 
             }
 
@@ -272,11 +271,9 @@ void Proveedor::Recuperar(QString cSQL, int nProcede)
             this->rEntregadoaCuenta = rProveedor.field("rEntregadoaCuenta").value().toDouble();
         } else {
             if (nProcede ==1) {
-                QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Se ha llegado al último proveedor"),
-                                         QObject::tr("Ok"));
+                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Se ha llegado al último proveedor"));
             } else {
-                QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Se ha llegado al primer proveedor"),
-                                         QObject::tr("Ok"));
+                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Se ha llegado al primer proveedor"));
             }
         }
     } else
@@ -396,8 +393,7 @@ void Proveedor::Guardar()
            QObject::tr("No se ha podido insertar el proveedor en la BD: %1").arg(queryProveedor.lastError().text(),
            QObject::tr("Ok")));
     } else {
-        QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión proveedores/Acreeedores"),
-                                 QObject::tr("Los datos se han guardado correctamente"),tr("Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Los datos se han guardado correctamente"));
     }
 }
 
@@ -460,8 +456,7 @@ void Proveedor::Borrar(int nId)
     //QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
     qProveedor->prepare("delete from proveedores where Id = "+QString::number(nId));
     if(qProveedor->exec())
-        QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión de Proveedores"),QObject::tr("Se ha borrado la ficha del proveedor"),
-                                 QObject::tr("Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Se ha borrado la ficha del proveedor"));
    else
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Proveedores"),QObject::tr("No Se ha borrado la ficha del proveedor ERROR: ")+
                              qProveedor->lastError().text(),QObject::tr("Aceptar"));

@@ -553,7 +553,9 @@ void GraphicsEvent::shareThis()
         users << Configuracion_global->cUsuarioActivo;
     if(users.isEmpty())
     {
-        QMessageBox::information(qApp->activeWindow(),"Compartir evento","No puede compartir eventos con ningun usuario.\nConsulte al administrador de sistema");
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),
+                                                  tr("No puede compartir eventos con ningun usuario.\n"
+                                                     "Consulte al administrador de sistema"));
         return;
     }
     bool ok;

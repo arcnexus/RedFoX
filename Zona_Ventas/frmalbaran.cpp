@@ -425,7 +425,7 @@ void FrmAlbaran::on_btnGuardar_clicked()
     }
     if(succes)
     {
-        QMessageBox::information(this,tr("Guardado"),tr("Guardado con éxito"),tr("&Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Albarán guardado con éxito"));
         BloquearCampos(true);
         emit unblock();
     }
@@ -461,7 +461,7 @@ void FrmAlbaran::on_pushButton_clicked()
             succes &= QSqlDatabase::database("empresa").commit();
 
         if(succes)
-            QMessageBox::information(this,tr("Borrado"),tr("Borrado con exito"));
+            TimedMessageBox * t = new TimedMessageBox(this,tr("Albarán borrado con exito"));
         else
             QSqlDatabase::database("empresa").rollback();
     }

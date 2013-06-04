@@ -490,7 +490,7 @@ void frmFacturas::Guardar_factura()
     }
     if(succes)
     {
-        QMessageBox::information(this,tr("Guardado"),tr("Guardado con éxito"),tr("&Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Factura guardada con éxito"));
         BloquearCampos(true);
         emit unblock();
     }

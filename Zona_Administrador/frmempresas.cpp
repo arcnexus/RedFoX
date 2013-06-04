@@ -769,8 +769,8 @@ void FrmEmpresas::on_botSiguiente_user_clicked()
         if(next_user.next())
             llenar_user(next_user.record());
         else
-            QMessageBox::information(this,tr("Final de archivo"),
-                                     tr("No exsten mas usuarios"),tr("Aceptar"));
+            TimedMessageBox * t = new TimedMessageBox(this,
+                                     tr("No exsten mas usuarios"));
 
     }
 }
@@ -786,8 +786,8 @@ void FrmEmpresas::on_botAnterior_user_clicked()
         if(next_user.next())
             llenar_user(next_user.record());
         else
-            QMessageBox::information(this,tr("Inicio de archivo"),
-                                     tr("Este es el primer usuario"),tr("Aceptar"));
+            TimedMessageBox * t = new TimedMessageBox(this,
+                                     tr("Este es el primer usuario"));
 
     }
 }
@@ -831,7 +831,7 @@ void FrmEmpresas::on_botGuardar_user_clicked()
 
 
         if(add_user.exec())
-            QMessageBox::information(this,tr("Guardado"),tr("Se ha guardado con exito"),tr("Aceptar"));
+            TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha guardado con exito"));
         else
             QMessageBox::critical(this,tr("Error"),tr("No se ha podido guardar el nuevo usuario.\n%1").arg(add_user.lastError().text()),tr("Aceptar"));
 

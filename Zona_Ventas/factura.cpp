@@ -248,7 +248,7 @@ bool Factura::GuardarFactura(int nId_Factura, bool FacturaLegal)
     }
     else
     {
-        QMessageBox::information(qApp->activeWindow(),tr("Guardar datos"),tr("La Factura se ha guardado correctamente:"),tr("Ok"));
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("La Factura se ha guardado correctamente:"));
         QString cSQL = "Select * from cab_fac where id ="+QString::number(nId_Factura);
         RecuperarFactura(cSQL);
         if (FacturaLegal)

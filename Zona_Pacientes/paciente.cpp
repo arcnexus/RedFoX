@@ -143,8 +143,7 @@ void Paciente::GuardarPaciente()
                              QObject::tr("Aceptar"));
     }
     else {
-        QMessageBox::information(qApp->activeWindow(),QObject::tr("PACIENTE"),QObject::tr("Los datos del paciente han sido guardados"),
-                             QObject::tr("Aceptar"));
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Los datos del paciente han sido guardados"));
     }
 }
 
