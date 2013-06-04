@@ -431,6 +431,23 @@ color: rgb(115, 115, 115);</string>
            </property>
           </spacer>
          </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="btnDesbloquearDivisa">
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Desbloquear las divisas para entrada manual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../maya.qrc">
+             <normaloff>:/Icons/PNG/abrecaja.png</normaloff>:/Icons/PNG/abrecaja.png</iconset>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>

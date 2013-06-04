@@ -424,7 +424,9 @@ void FrmPedidosProveedor::buscar_proveeedor()
 //    FrmBuscarProveedor buscar(this);
 //    if(buscar.exec() == QDialog::Accepted)
     db_consulta_view consulta;
-    consulta.set_campoBusqueda("cProveedor");
+    QStringList campos;
+    campos << "cProveedor";
+    consulta.set_campoBusqueda(campos);
     consulta.set_texto_tabla("Proveedores");
     consulta.set_db("Maya");
     consulta.set_SQL("select id, cCodigo,cProveedor,cCif,cPoblacion from proveedores");

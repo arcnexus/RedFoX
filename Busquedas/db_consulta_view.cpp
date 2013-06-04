@@ -30,6 +30,7 @@ void db_consulta_view::set_SQL(QString cSQL)
     modelo = new QSqlQueryModel(this);
     modelo->setQuery(cSQL,QSqlDatabase::database(db));
     ui->resultado_list->setModel(modelo);
+   // qDebug() <<cSQL;
 }
 
 void db_consulta_view::set_filtro(QString filtro)
@@ -37,12 +38,13 @@ void db_consulta_view::set_filtro(QString filtro)
     cSQLFiltered = "";
     cSQLFiltered.append(cSQL);
     cSQLFiltered.append(" where ");
-    cSQLFiltered.append(campoBusqueda);
+    cSQLFiltered.append(ui->cboCampoBusqueda->currentText().trimmed());
     cSQLFiltered.append(" like '%");
     cSQLFiltered.append(filtro);
     cSQLFiltered.append("%'");
 
     modelo->setQuery(cSQLFiltered,QSqlDatabase::database(db));
+   // qDebug() << cSQLFiltered;
 }
 
 void db_consulta_view::set_titulo(QString titulo)
@@ -65,9 +67,10 @@ void db_consulta_view::set_tamano_columnas(QVariantList tamanos)
         ui->resultado_list->setColumnWidth(i,tamanos.at(i).toInt());
 }
 
-void db_consulta_view::set_campoBusqueda(QString campo)
+void db_consulta_view::set_campoBusqueda(QStringList campos)
 {
-    campoBusqueda = campo;
+    campoBusqueda = campos;
+    ui->cboCampoBusqueda->addItems(campoBusqueda);
 }
 
 void db_consulta_view::set_db(QString nombre_db)

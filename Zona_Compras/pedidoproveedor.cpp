@@ -513,7 +513,7 @@ long PedidoProveedor::save()
               " dVencimiento3 ,  dVencimiento4 ,  lPagado1 ,  lPagado2 ,  lPagado3 ,  lPagado4 ,  tComentario ,"
               " dFechaEntrega ,  cDireccion1Entrega ,  cDireccion2Entrega ,  cCPEntrega ,  cPoblacionEntrega ,"
               " cProvinciaEntrega ,  id_paisEntrega ,  cNombreCliente ,  cHorarioActivo )"
-              "VALUES
+              " VALUES "
               "( :nPedido ,  :cSerie ,  :dFecha ,  :dRecepcion ,  :Id_Proveedor ,  :cCodigoProveedor ,"
               " :cProveedor ,  :cDireccion1 ,  :cDireccion2 ,  :cCP ,  :cPoblacion ,  :cProvincia ,  :idpais ,"
               " :cCifNif ,  :rBase ,  :rSubotal ,  :rDto ,  :nIVA ,  :rRecTotal ,  :rTotal ,  :lEnviado ,  :lRecibido ,"
@@ -536,7 +536,7 @@ void PedidoProveedor::fillPedido(QSqlRecord r)
 {
     id = r.value("id").toInt();
     nPedido = r.value("nPedido").toULongLong();
-    cSerie = r.value("cSerie").toString();
+    //cSerie = r.value("cSerie").toString();
     dFecha = r.value("dFecha").toDate();
     dRecepcion = r.value("dRecepcion").toDate();
     Id_Proveedor = r.value("Id_Proveedor").toULongLong();
@@ -549,7 +549,7 @@ void PedidoProveedor::fillPedido(QSqlRecord r)
     cProvincia= r.value("cProvincia").toString();
     idpais= r.value("idpais").toInt();
     cCifNif= r.value("cCifNif").toString();
-    rBase= r.value("rBase").toDouble();
+    //rBase= r.value("rBase").toDouble();
     rSubotal= r.value("rSubotal").toDouble();
     rDto= r.value("rDto").toDouble();
     nIVA= r.value("nIVA").toDouble();
