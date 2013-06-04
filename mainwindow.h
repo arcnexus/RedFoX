@@ -48,7 +48,6 @@ public:
     QSqlQuery QryConfiguracion;
 private slots:
     void test(float f);
-	void init();
 
     void block_main();
 

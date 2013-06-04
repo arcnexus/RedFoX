@@ -12,8 +12,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>1000</width>
-    <height>480</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -117,10 +117,48 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_3">
+          <item row="0" column="2">
+           <widget class="QPushButton" name="botBuscarCliente">
             <property name="text">
-             <string>Código cliente:</string>
+             <string>Buscar Cliente</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Dirección 2:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="2">
+           <widget class="QLineEdit" name="txtcCliente">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Cliente:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Dirección:</string>
             </property>
            </widget>
           </item>
@@ -143,44 +181,6 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="botBuscarCliente">
-            <property name="text">
-             <string>Buscar Cliente</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Cliente:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" colspan="2">
-           <widget class="QLineEdit" name="txtcCliente">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Dirección:</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="1" colspan="2">
            <widget class="QLineEdit" name="txtcDireccion">
             <property name="minimumSize">
@@ -194,38 +194,18 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_6">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>Dirección 2:</string>
+             <string>Código cliente:</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1" colspan="2">
-           <widget class="QLineEdit" name="txtcDireccion2">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Población:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
+          <item row="5" column="1">
            <widget class="QLineEdit" name="txtcCp">
             <property name="minimumSize">
              <size>
-              <width>100</width>
+              <width>0</width>
               <height>27</height>
              </size>
             </property>
@@ -240,7 +220,14 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="2">
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Pais:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
            <widget class="QLineEdit" name="txtcPoblacion">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -259,54 +246,7 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>Provincia:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLineEdit" name="txtcProvincia">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QLabel" name="label_14">
-              <property name="text">
-               <string>Pais:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboPais"/>
-            </item>
-           </layout>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>Cif/Nif/Nie:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
+          <item row="8" column="1">
            <widget class="QLineEdit" name="txtcCif">
             <property name="minimumSize">
              <size>
@@ -325,20 +265,26 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
-           <widget class="QCheckBox" name="chklRecargoEquivalencia">
-            <property name="text">
-             <string>Recargo Equivalencia</string>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="txtcProvincia">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
             </property>
-            <property name="checkable">
-             <bool>true</bool>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
             </property>
-            <property name="checked">
-             <bool>false</bool>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="1">
+          <item row="10" column="1">
            <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -351,6 +297,63 @@
             </property>
            </spacer>
           </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>C.P:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Cif/Nif/Nie:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Provincia:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Población:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QCheckBox" name="chklRecargoEquivalencia">
+            <property name="text">
+             <string>Recargo Equivalencia</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="2">
+           <widget class="QLineEdit" name="txtcDireccion2">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QComboBox" name="comboPais"/>
+          </item>
          </layout>
         </widget>
        </item>
@@ -358,7 +361,7 @@
         <widget class="QFrame" name="frame">
          <property name="minimumSize">
           <size>
-           <width>500</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
@@ -490,7 +493,7 @@
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>50</width>
+                     <width>0</width>
                      <height>0</height>
                     </size>
                    </property>

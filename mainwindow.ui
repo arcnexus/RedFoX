@@ -49,7 +49,809 @@ background-color: rgb(218, 218, 218);</string>
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::ForceTabbedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QFrame" name="frameusuario">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>38</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>38</height>
+       </size>
+      </property>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>85</green>
+            <blue>127</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>85</green>
+            <blue>127</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>85</green>
+            <blue>127</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>85</green>
+            <blue>127</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>85</green>
+            <blue>127</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>85</green>
+            <blue>127</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>85</green>
+            <blue>127</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>85</green>
+            <blue>127</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>85</green>
+            <blue>127</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+background-color: rgb(46, 85, 127);</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item row="0" column="13" rowspan="4">
+        <widget class="QPushButton" name="btn_barra_alb_cliente">
+         <property name="toolTip">
+          <string>albaranes a clientes</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/albaran.png</normaloff>:/Icons/PNG/albaran.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="11" rowspan="4">
+        <widget class="QPushButton" name="btn_barra_pres_cliente">
+         <property name="toolTip">
+          <string>Gestión de presupuestos a clientes</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/presupuestos.png</normaloff>:/Icons/PNG/presupuestos.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="10" rowspan="2">
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>7</width>
+           <height>13</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="4" rowspan="4">
+        <widget class="QPushButton" name="btn_barra_articulos">
+         <property name="toolTip">
+          <string>Gestión de Producto</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/articulos.png</normaloff>:/Icons/PNG/articulos.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2" rowspan="4">
+        <widget class="QPushButton" name="btn_barra_clientes">
+         <property name="toolTip">
+          <string>Gestión de Clientes/pacientes</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/clientes.png</normaloff>:/Icons/PNG/clientes.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="8" rowspan="4">
+        <widget class="QPushButton" name="btn_barra_albaran_pro">
+         <property name="toolTip">
+          <string>Albaranes de proveedores</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/albaran_pro.png</normaloff>:/Icons/PNG/albaran_pro.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="17" rowspan="2" colspan="2">
+        <widget class="QLabel" name="label_3">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);
+font: 75 8pt &quot;Cantarell&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Categoría:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="9" rowspan="4">
+        <widget class="QPushButton" name="btn_barra_factura_pro">
+         <property name="toolTip">
+          <string>Facturas de proveedores</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/Factura_pro.png</normaloff>:/Icons/PNG/Factura_pro.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="20" rowspan="4">
+        <widget class="QPushButton" name="btn_bloquear">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Bloquear Maya</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string>Bloq.</string>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/cierrecaja.png</normaloff>:/Icons/PNG/cierrecaja.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="14" rowspan="4">
+        <widget class="QPushButton" name="btn_barra_fra_cliente">
+         <property name="toolTip">
+          <string>Gestión de Facturas</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="19" rowspan="2">
+        <widget class="QLabel" name="txtcCategoria">
+         <property name="styleSheet">
+          <string notr="true">font: 75 8pt &quot;Cantarell&quot;;
+color: rgb(255, 255, 127);</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5" rowspan="2">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>7</width>
+           <height>13</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="3" rowspan="4">
+        <widget class="QPushButton" name="btn_barra_proveedores">
+         <property name="toolTip">
+          <string>Gestión de Proveedores</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/proveedores.png</normaloff>:/Icons/PNG/proveedores.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6" rowspan="4">
+        <widget class="QPushButton" name="btn_barra_ped_pro">
+         <property name="toolTip">
+          <string>Pedidos a proveedores</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/pedido_pro.png</normaloff>:/Icons/PNG/pedido_pro.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" rowspan="4">
+        <widget class="QLabel" name="label_5">
+         <property name="maximumSize">
+          <size>
+           <width>72</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="maya.qrc">:/Icons/PNG/maya_blanco.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="16" rowspan="2">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="15" rowspan="4">
+        <widget class="QPushButton" name="btn_barra_tpv_cliente">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>T.P.V</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/tpv.png</normaloff>:/Icons/PNG/tpv.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="12" rowspan="4">
+        <widget class="QPushButton" name="btn_barra_ped_cliente">
+         <property name="toolTip">
+          <string>Pedidos de clientes</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/pedidos_cli.png</normaloff>:/Icons/PNG/pedidos_cli.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="21" rowspan="4">
+        <widget class="QPushButton" name="btn_salir">
+         <property name="toolTip">
+          <string>Salir de Maya</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string>Salir</string>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="18" rowspan="2" colspan="2">
+        <widget class="QLabel" name="lineUsuarioActivo">
+         <property name="styleSheet">
+          <string notr="true">font: 75 8pt &quot;Cantarell&quot;;
+color: rgb(255, 255, 127);</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="7" rowspan="4">
+        <widget class="QPushButton" name="btn_barra_recepcion_ped_pro">
+         <property name="toolTip">
+          <string>Recepción de pedidos</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(133, 170, 142);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="maya.qrc">
+           <normaloff>:/Icons/PNG/recepcion_ped.png</normaloff>:/Icons/PNG/recepcion_ped.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="17" rowspan="2">
+        <widget class="QLabel" name="label">
+         <property name="palette">
+          <palette>
+           <active>
+            <colorrole role="WindowText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Button">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>46</red>
+               <green>85</green>
+               <blue>127</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Text">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="ButtonText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>46</red>
+               <green>85</green>
+               <blue>127</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Window">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>46</red>
+               <green>85</green>
+               <blue>127</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </active>
+           <inactive>
+            <colorrole role="WindowText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Button">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>46</red>
+               <green>85</green>
+               <blue>127</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Text">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="ButtonText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>46</red>
+               <green>85</green>
+               <blue>127</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Window">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>46</red>
+               <green>85</green>
+               <blue>127</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </inactive>
+           <disabled>
+            <colorrole role="WindowText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Button">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>46</red>
+               <green>85</green>
+               <blue>127</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Text">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="ButtonText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>46</red>
+               <green>85</green>
+               <blue>127</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Window">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>46</red>
+               <green>85</green>
+               <blue>127</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </disabled>
+          </palette>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);
+font: 75 8pt &quot;Cantarell&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Usuario:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Minimum</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item>
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
@@ -136,847 +938,21 @@ selection-color: rgb(0, 0, 0);</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="widget" native="true">
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="spacing">
-         <number>3</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QSplitter" name="splitter_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <widget class="QFrame" name="frameusuario">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>38</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>38</height>
-            </size>
-           </property>
-           <property name="palette">
-            <palette>
-             <active>
-              <colorrole role="Button">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>46</red>
-                 <green>85</green>
-                 <blue>127</blue>
-                </color>
-               </brush>
-              </colorrole>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>46</red>
-                 <green>85</green>
-                 <blue>127</blue>
-                </color>
-               </brush>
-              </colorrole>
-              <colorrole role="Window">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>46</red>
-                 <green>85</green>
-                 <blue>127</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </active>
-             <inactive>
-              <colorrole role="Button">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>46</red>
-                 <green>85</green>
-                 <blue>127</blue>
-                </color>
-               </brush>
-              </colorrole>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>46</red>
-                 <green>85</green>
-                 <blue>127</blue>
-                </color>
-               </brush>
-              </colorrole>
-              <colorrole role="Window">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>46</red>
-                 <green>85</green>
-                 <blue>127</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </inactive>
-             <disabled>
-              <colorrole role="Button">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>46</red>
-                 <green>85</green>
-                 <blue>127</blue>
-                </color>
-               </brush>
-              </colorrole>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>46</red>
-                 <green>85</green>
-                 <blue>127</blue>
-                </color>
-               </brush>
-              </colorrole>
-              <colorrole role="Window">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>46</red>
-                 <green>85</green>
-                 <blue>127</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </disabled>
-            </palette>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">
-background-color: rgb(46, 85, 127);</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <layout class="QGridLayout" name="gridLayout">
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item row="1" column="1" rowspan="2">
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>39</width>
-                <height>11</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="15" rowspan="4">
-             <widget class="QPushButton" name="btn_barra_tpv_cliente">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>T.P.V</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/tpv.png</normaloff>:/Icons/PNG/tpv.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="16" rowspan="2">
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="17" rowspan="2">
-             <widget class="QLabel" name="label">
-              <property name="palette">
-               <palette>
-                <active>
-                 <colorrole role="WindowText">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>255</red>
-                    <green>255</green>
-                    <blue>255</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="Button">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>46</red>
-                    <green>85</green>
-                    <blue>127</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="Text">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>255</red>
-                    <green>255</green>
-                    <blue>255</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="ButtonText">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>255</red>
-                    <green>255</green>
-                    <blue>255</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="Base">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>46</red>
-                    <green>85</green>
-                    <blue>127</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="Window">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>46</red>
-                    <green>85</green>
-                    <blue>127</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                </active>
-                <inactive>
-                 <colorrole role="WindowText">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>255</red>
-                    <green>255</green>
-                    <blue>255</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="Button">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>46</red>
-                    <green>85</green>
-                    <blue>127</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="Text">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>255</red>
-                    <green>255</green>
-                    <blue>255</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="ButtonText">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>255</red>
-                    <green>255</green>
-                    <blue>255</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="Base">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>46</red>
-                    <green>85</green>
-                    <blue>127</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="Window">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>46</red>
-                    <green>85</green>
-                    <blue>127</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                </inactive>
-                <disabled>
-                 <colorrole role="WindowText">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>255</red>
-                    <green>255</green>
-                    <blue>255</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="Button">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>46</red>
-                    <green>85</green>
-                    <blue>127</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="Text">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>255</red>
-                    <green>255</green>
-                    <blue>255</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="ButtonText">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>255</red>
-                    <green>255</green>
-                    <blue>255</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="Base">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>46</red>
-                    <green>85</green>
-                    <blue>127</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                 <colorrole role="Window">
-                  <brush brushstyle="SolidPattern">
-                   <color alpha="255">
-                    <red>46</red>
-                    <green>85</green>
-                    <blue>127</blue>
-                   </color>
-                  </brush>
-                 </colorrole>
-                </disabled>
-               </palette>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
-font: 75 8pt &quot;Cantarell&quot;;</string>
-              </property>
-              <property name="text">
-               <string>Usuario:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2" rowspan="4">
-             <widget class="QPushButton" name="btn_barra_clientes">
-              <property name="toolTip">
-               <string>Gestión de Clientes/pacientes</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/clientes.png</normaloff>:/Icons/PNG/clientes.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="21" rowspan="4">
-             <widget class="QPushButton" name="btn_salir">
-              <property name="toolTip">
-               <string>Salir de Maya</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">
-background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string>Salir</string>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="7" rowspan="4">
-             <widget class="QPushButton" name="btn_barra_recepcion_ped_pro">
-              <property name="toolTip">
-               <string>Recepción de pedidos</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/recepcion_ped.png</normaloff>:/Icons/PNG/recepcion_ped.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="4" rowspan="4">
-             <widget class="QPushButton" name="btn_barra_articulos">
-              <property name="toolTip">
-               <string>Gestión de Producto</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/articulos.png</normaloff>:/Icons/PNG/articulos.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="19" rowspan="2">
-             <widget class="QLabel" name="txtcCategoria">
-              <property name="styleSheet">
-               <string notr="true">font: 75 8pt &quot;Cantarell&quot;;
-color: rgb(255, 255, 127);</string>
-              </property>
-              <property name="text">
-               <string>TextLabel</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="6" rowspan="4">
-             <widget class="QPushButton" name="btn_barra_ped_pro">
-              <property name="toolTip">
-               <string>Pedidos a proveedores</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/pedido_pro.png</normaloff>:/Icons/PNG/pedido_pro.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="5" rowspan="2">
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>7</width>
-                <height>13</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="0" rowspan="4">
-             <widget class="QLabel" name="label_5">
-              <property name="maximumSize">
-               <size>
-                <width>72</width>
-                <height>31</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap resource="maya.qrc">:/Icons/PNG/maya_blanco.png</pixmap>
-              </property>
-              <property name="scaledContents">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3" rowspan="4">
-             <widget class="QPushButton" name="btn_barra_proveedores">
-              <property name="toolTip">
-               <string>Gestión de Proveedores</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/proveedores.png</normaloff>:/Icons/PNG/proveedores.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="18" rowspan="2" colspan="2">
-             <widget class="QLabel" name="lineUsuarioActivo">
-              <property name="styleSheet">
-               <string notr="true">font: 75 8pt &quot;Cantarell&quot;;
-color: rgb(255, 255, 127);</string>
-              </property>
-              <property name="text">
-               <string>TextLabel</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="13" rowspan="4">
-             <widget class="QPushButton" name="btn_barra_alb_cliente">
-              <property name="toolTip">
-               <string>albaranes a clientes</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/albaran.png</normaloff>:/Icons/PNG/albaran.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="20" rowspan="4">
-             <widget class="QPushButton" name="btn_bloquear">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>27</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Bloquear Maya</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">
-background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string>Bloq.</string>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/cierrecaja.png</normaloff>:/Icons/PNG/cierrecaja.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="9" rowspan="4">
-             <widget class="QPushButton" name="btn_barra_factura_pro">
-              <property name="toolTip">
-               <string>Facturas de proveedores</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/Factura_pro.png</normaloff>:/Icons/PNG/Factura_pro.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="8" rowspan="4">
-             <widget class="QPushButton" name="btn_barra_albaran_pro">
-              <property name="toolTip">
-               <string>Albaranes de proveedores</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/albaran_pro.png</normaloff>:/Icons/PNG/albaran_pro.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="17" rowspan="2" colspan="2">
-             <widget class="QLabel" name="label_3">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
-font: 75 8pt &quot;Cantarell&quot;;</string>
-              </property>
-              <property name="text">
-               <string>Categoría:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="10" rowspan="2">
-             <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>7</width>
-                <height>13</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="12" rowspan="4">
-             <widget class="QPushButton" name="btn_barra_ped_cliente">
-              <property name="toolTip">
-               <string>Pedidos de clientes</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/pedidos_cli.png</normaloff>:/Icons/PNG/pedidos_cli.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="14" rowspan="4">
-             <widget class="QPushButton" name="btn_barra_fra_cliente">
-              <property name="toolTip">
-               <string>Gestión de Facturas</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="11" rowspan="4">
-             <widget class="QPushButton" name="btn_barra_pres_cliente">
-              <property name="toolTip">
-               <string>Gestión de presupuestos a clientes</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(133, 170, 142);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="maya.qrc">
-                <normaloff>:/Icons/PNG/presupuestos.png</normaloff>:/Icons/PNG/presupuestos.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>26</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QStackedWidget" name="stackedWidget">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="currentIndex">
-            <number>1</number>
-           </property>
-           <widget class="QWidget" name="page"/>
-           <widget class="QWidget" name="page_2"/>
-          </widget>
-         </widget>
-        </item>
-       </layout>
+      <widget class="QStackedWidget" name="stackedWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="page"/>
+       <widget class="QWidget" name="page_2"/>
       </widget>
      </widget>
     </item>

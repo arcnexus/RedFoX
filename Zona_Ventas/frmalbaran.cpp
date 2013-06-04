@@ -22,8 +22,16 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
 
     ui->comboPais->setModel(Configuracion_global->paises_model);
     ui->comboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
-    // valores edicion
-    //ui->txtcCodigoArticulo->setFocus();
+
+    ui->txtnPorcentajeIva1->setText(Configuracion_global->ivaList.at(0));
+    ui->txtnPorcentajeIva2->setText(Configuracion_global->ivaList.at(1));
+    ui->txtnPorcentajeIva3->setText(Configuracion_global->ivaList.at(2));
+    ui->txtnPorcentajeIva4->setText(Configuracion_global->ivaList.at(3));
+
+    ui->txtnRec1->setText(Configuracion_global->reList.at(0));
+    ui->txtnRec2->setText(Configuracion_global->reList.at(1));
+    ui->txtnRec3->setText(Configuracion_global->reList.at(2));
+    ui->txtnRec4->setText(Configuracion_global->reList.at(3));
 
     BloquearCampos(true);
 
@@ -31,6 +39,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     helper.help_table(ui->Lineas);
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
+
     connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
 
     connect(&helper,SIGNAL(totalChanged(double,double,double,double,double,double,QString)),
@@ -49,6 +58,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
             this,SLOT(desglose4Changed(double,double,double,double)));
 
     connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
+
     connect(&helper,SIGNAL(lineaDeleted(lineaDetalle*)),this,SLOT(lineaDeleted(lineaDetalle*)));
 
     connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
@@ -59,16 +69,6 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
         QString filter = QString("Id_Cab = '%1'").arg(ui->txtcAlbaran->text());
         helper.fillTable("empresa","lin_alb",filter);
     }
-
-    ui->txtnPorcentajeIva1->setText(Configuracion_global->ivaList.at(0));
-    ui->txtnPorcentajeIva2->setText(Configuracion_global->ivaList.at(1));
-    ui->txtnPorcentajeIva3->setText(Configuracion_global->ivaList.at(2));
-    ui->txtnPorcentajeIva4->setText(Configuracion_global->ivaList.at(3));
-
-    ui->txtnRec1->setText(Configuracion_global->reList.at(0));
-    ui->txtnRec2->setText(Configuracion_global->reList.at(1));
-    ui->txtnRec3->setText(Configuracion_global->reList.at(2));
-    ui->txtnRec4->setText(Configuracion_global->reList.at(3));
 }
 
 FrmAlbaran::~FrmAlbaran()
@@ -254,7 +254,6 @@ void FrmAlbaran::BloquearCampos(bool state)
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
         lineEdit->setReadOnly(state);
-        //qDebug() << lineEdit->objectName();
     }
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
@@ -284,7 +283,6 @@ void FrmAlbaran::BloquearCampos(bool state)
     ui->btnAnadir->setEnabled(state);
     ui->btnAnterior->setEnabled(state);
     ui->btnBuscar->setEnabled(state);
-    ui->btnDeshacer->setEnabled(!state);
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
@@ -376,12 +374,12 @@ void FrmAlbaran::on_btnAnterior_clicked()
 void FrmAlbaran::on_btnAnadir_clicked()
 {
     in_edit = false;
-    VaciarCampos();
-    BloquearCampos(false);
-    ui->txtcAlbaran->setText(QString::number(oAlbaran->NuevoNumeroAlbaran()));
+    VaciarCampos();    
     LLenarAlbaran();
     oAlbaran->AnadirAlbaran();
-    ui->txtcCodigoCliente->setFocus();
+    ui->txtcAlbaran->setText(QString::number(oAlbaran->nAlbaran));
+    BloquearCampos(false);
+    ui->txtcCodigoCliente->setFocus();    
     emit block();
 }
 
@@ -419,16 +417,7 @@ void FrmAlbaran::on_btnGuardar_clicked()
 {        
     QSqlDatabase::database("empresa").transaction();
     LLenarAlbaran();
-    bool succes = true;
-    if(in_edit)
-    {
-        succes &= oAlbaran->GuardarAlbaran(ui->txtcAlbaran->text().toInt());
-        succes &= oAlbaran->borrarLineas(ui->txtcAlbaran->text().toInt()) ;
-    }
-    else
-    {
-
-    }
+    bool succes = oAlbaran->GuardarAlbaran(oAlbaran->id);
     if(succes)
     {
         LLenarCampos();
@@ -447,16 +436,6 @@ void FrmAlbaran::on_btnGuardar_clicked()
                               tr("&Aceptar"));
         QSqlDatabase::database("empresa").rollback();
     }
-
-}
-
-void FrmAlbaran::on_btnDeshacer_clicked()
-{
-    BloquearCampos(true);
-    QString cId = QString::number(oAlbaran->id);
-    oAlbaran->RecuperarAlbaran("Select * from cab_alb where id ="+cId+" order by id limit 1 ");
-    LLenarCampos();
-    emit unblock();
 }
 
 void FrmAlbaran::on_pushButton_clicked()
@@ -464,15 +443,19 @@ void FrmAlbaran::on_pushButton_clicked()
     if (QMessageBox::question(this,tr("Borrar"),
                               tr("Esta acción no se puede deshacer.\n¿Desea continuar?"),
                               tr("Cancelar"),
-                               tr("&Continuar"))== QMessageBox::Accepted)
+                              tr("&Continuar"))== QMessageBox::Accepted)
     {
-        bool succes = true;
+        bool succes = true;        
         QSqlDatabase::database("empresa").transaction();
-
         QSqlQuery q(QSqlDatabase::database("empresa"));
-        q.prepare("DELETE FROM cab_alb WHERE nAlbaran = "+ui->txtcAlbaran->text());
+
+        q.prepare("SELECT * FROM lin_alb WHERE Id_Cab = "+oAlbaran->id);
+        q.exec();
+
+        while(q.next())
+
+        q.prepare("DELETE FROM cab_alb WHERE Id = "+oAlbaran->id);
         succes &= q.exec();
-        succes &= oAlbaran->borrarLineas(ui->txtcAlbaran->text().toInt());
 
         if(succes)
             succes &= QSqlDatabase::database("empresa").commit();

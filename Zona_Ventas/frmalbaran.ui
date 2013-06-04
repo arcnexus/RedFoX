@@ -12,8 +12,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>1000</width>
-    <height>480</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -29,6 +29,12 @@
   <layout class="QGridLayout" name="gridLayout_10">
    <item row="0" column="0" colspan="3">
     <widget class="QLabel" name="label_36">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ALBARANES&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
@@ -36,6 +42,12 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label_18">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>69</width>
@@ -58,6 +70,12 @@
    </item>
    <item row="1" column="1">
     <widget class="QLabel" name="lblAlbaran">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="maximumSize">
       <size>
        <width>120</width>
@@ -74,6 +92,12 @@
    </item>
    <item row="1" column="2">
     <widget class="QLabel" name="label_21">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="maximumSize">
       <size>
        <width>100</width>
@@ -90,6 +114,12 @@
    </item>
    <item row="1" column="3">
     <widget class="QLabel" name="lblCliente">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="styleSheet">
       <string notr="true">color: rgb(0, 0, 127);</string>
      </property>
@@ -100,6 +130,12 @@
    </item>
    <item row="2" column="0" colspan="4">
     <widget class="QTabWidget" name="tabWidget_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -113,6 +149,12 @@
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
         <widget class="QFrame" name="frame_5">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -120,107 +162,53 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_13">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
-             <string>Provincia:</string>
+             <string>Cliente:</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="txtcCif">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Código cliente:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Población:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
+          <item row="2" column="0">
            <widget class="QLabel" name="label_15">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Cif/Nif/Nie:</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_6">
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
-             <string>Dirección 2:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QLabel" name="label_14">
-            <property name="text">
-             <string>Pais:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="txtcCp">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>70</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLineEdit" name="txtcProvincia">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string>Provincia:</string>
             </property>
            </widget>
           </item>
           <item row="0" column="2">
            <widget class="QPushButton" name="botBuscarCliente">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Buscar Cliente</string>
             </property>
@@ -230,12 +218,34 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1" colspan="3">
-           <widget class="QLineEdit" name="txtcDireccion">
+          <item row="8" column="1">
+           <widget class="QComboBox" name="comboPais">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="txtcCif">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
               <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -243,10 +253,10 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="2" colspan="2">
-           <widget class="QLineEdit" name="txtcPoblacion">
+          <item row="4" column="1" colspan="3">
+           <widget class="QLineEdit" name="txtcDireccion2">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -262,21 +272,53 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="1" colspan="3">
-           <widget class="QLineEdit" name="txtcCliente">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <property name="text">
+             <string>Dirección:</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="txtcCodigoCliente">
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Dirección 2:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Pais:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLineEdit" name="txtcProvincia">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -294,22 +336,91 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_5">
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
-             <string>Dirección:</string>
+             <string>Población:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_4">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
-             <string>Cliente:</string>
+             <string>Código cliente:</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1" colspan="3">
-           <widget class="QLineEdit" name="txtcDireccion2">
+          <item row="9" column="1">
+           <widget class="QCheckBox" name="chklRecargoEq">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Recargo de equivalencia</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_19">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>C.P:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="txtcCp">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="3">
+           <widget class="QLineEdit" name="txtcCliente">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -321,8 +432,77 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="0">
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="txtcPoblacion">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="txtcCodigoCliente">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="3">
+           <widget class="QLineEdit" name="txtcDireccion">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
            <spacer name="verticalSpacer_6">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -334,25 +514,21 @@
             </property>
            </spacer>
           </item>
-          <item row="5" column="3">
-           <widget class="QComboBox" name="comboPais"/>
-          </item>
-          <item row="6" column="3">
-           <widget class="QCheckBox" name="chklRecargoEq">
-            <property name="text">
-             <string>Recargo de equivalencia</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </item>
        <item row="0" column="1">
         <widget class="QFrame" name="frame">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
-           <width>500</width>
-           <height>243</height>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
@@ -372,6 +548,12 @@
            <layout class="QHBoxLayout" name="horizontalLayout_6">
             <item>
              <widget class="QLabel" name="lblnumalb">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Albarán:</string>
               </property>
@@ -379,6 +561,12 @@
             </item>
             <item>
              <widget class="QLineEdit" name="txtcAlbaran">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
@@ -386,6 +574,12 @@
             </item>
             <item>
              <spacer name="horizontalSpacer_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -399,6 +593,12 @@
             </item>
             <item>
              <widget class="QLabel" name="label">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>FechaAlbarán:</string>
               </property>
@@ -406,6 +606,12 @@
             </item>
             <item>
              <widget class="QDateEdit" name="txtdFecha">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -427,6 +633,12 @@
           </item>
           <item row="1" column="0">
            <widget class="QFrame" name="frame_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color:#4c6088</string>
             </property>
@@ -439,6 +651,12 @@
             <layout class="QGridLayout" name="gridLayout_3">
              <item row="0" column="0">
               <widget class="QTabWidget" name="tabWidget">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -446,7 +664,7 @@
                 <enum>QTabWidget::North</enum>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>2</number>
                </property>
                <widget class="QWidget" name="tab">
                 <property name="styleSheet">
@@ -458,9 +676,15 @@
                 <layout class="QGridLayout" name="gridLayout_13">
                  <item row="0" column="1" rowspan="2">
                   <widget class="QFrame" name="frame_3">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
-                     <width>221</width>
+                     <width>0</width>
                      <height>0</height>
                     </size>
                    </property>
@@ -481,6 +705,12 @@
                      <layout class="QGridLayout" name="gridLayout_6">
                       <item row="2" column="1" rowspan="2" colspan="2">
                        <widget class="QLineEdit" name="txtcNumFra">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
@@ -494,6 +724,12 @@
                       </item>
                       <item row="1" column="0" colspan="2">
                        <widget class="QLabel" name="lblFacturado">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="styleSheet">
                          <string notr="true">color: rgb(0, 128, 0);</string>
                         </property>
@@ -504,6 +740,12 @@
                       </item>
                       <item row="2" column="0" rowspan="2">
                        <widget class="QLabel" name="lblNumFactura">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="styleSheet">
                          <string notr="true">color: rgb(255, 128, 0);</string>
                         </property>
@@ -514,6 +756,12 @@
                       </item>
                       <item row="0" column="0" colspan="3">
                        <widget class="QLabel" name="lblImpreso">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="styleSheet">
                          <string notr="true">color: rgb(255, 0, 0);</string>
                         </property>
@@ -524,6 +772,12 @@
                       </item>
                       <item row="1" column="2">
                        <widget class="QDateEdit" name="txtdFechaFactura">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
@@ -545,6 +799,12 @@
                     </item>
                     <item row="1" column="0">
                      <spacer name="verticalSpacer_3">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Vertical</enum>
                       </property>
@@ -569,6 +829,12 @@
                    </property>
                    <item row="5" column="0">
                     <widget class="QLabel" name="label_10">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="text">
                       <string>R.E.:</string>
                      </property>
@@ -576,6 +842,12 @@
                    </item>
                    <item row="3" column="0" rowspan="2">
                     <widget class="QLabel" name="label_11">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="text">
                       <string>Iva:</string>
                      </property>
@@ -583,6 +855,12 @@
                    </item>
                    <item row="0" column="0">
                     <widget class="QLabel" name="label_16">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="text">
                       <string>Base Imp:</string>
                      </property>
@@ -590,6 +868,12 @@
                    </item>
                    <item row="3" column="1" rowspan="2">
                     <widget class="QLineEdit" name="txtrImporteIva">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
@@ -616,7 +900,7 @@
                    <item row="0" column="1">
                     <widget class="QLineEdit" name="txtrBase">
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -646,6 +930,12 @@
                    </item>
                    <item row="6" column="1">
                     <widget class="QLineEdit" name="txtrTotal">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
@@ -671,6 +961,12 @@
                    </item>
                    <item row="5" column="1">
                     <widget class="QLineEdit" name="txtrTotalRecargoEq">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
@@ -690,6 +986,12 @@
                    </item>
                    <item row="6" column="0">
                     <widget class="QLabel" name="label_12">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="text">
                       <string>Total</string>
                      </property>
@@ -697,6 +999,12 @@
                    </item>
                    <item row="1" column="1">
                     <widget class="QLineEdit" name="txtrImporteDescuento">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
@@ -722,6 +1030,12 @@
                    </item>
                    <item row="1" column="0">
                     <widget class="QLabel" name="label_9">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="text">
                       <string>Dto:</string>
                      </property>
@@ -729,6 +1043,12 @@
                    </item>
                    <item row="2" column="0">
                     <widget class="QLabel" name="label_8">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="text">
                       <string>SubTotal:</string>
                      </property>
@@ -736,9 +1056,15 @@
                    </item>
                    <item row="2" column="1">
                     <widget class="QLineEdit" name="txtrSubtotal">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="minimumSize">
                       <size>
-                       <width>85</width>
+                       <width>0</width>
                        <height>27</height>
                       </size>
                      </property>
@@ -766,6 +1092,12 @@
                  </item>
                  <item row="2" column="0">
                   <spacer name="verticalSpacer">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
                    </property>
@@ -789,6 +1121,12 @@
                 <layout class="QGridLayout" name="gridLayout_7">
                  <item row="1" column="1">
                   <widget class="QLineEdit" name="txtrACuenta">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -808,6 +1146,12 @@
                  </item>
                  <item row="2" column="0">
                   <spacer name="verticalSpacer_2">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
                    </property>
@@ -821,6 +1165,12 @@
                  </item>
                  <item row="1" column="0">
                   <widget class="QLabel" name="label_20">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="text">
                     <string>Entregado a Cuenta:</string>
                    </property>
@@ -828,6 +1178,12 @@
                  </item>
                  <item row="1" column="2">
                   <widget class="QLabel" name="label_24">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="text">
                     <string>Pedido Cliente:</string>
                    </property>
@@ -835,6 +1191,12 @@
                  </item>
                  <item row="1" column="3">
                   <widget class="QLineEdit" name="txtcPedidoCliente">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -858,6 +1220,12 @@
                 <layout class="QGridLayout" name="gridLayout_12">
                  <item row="5" column="5">
                   <spacer name="verticalSpacer_5">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
                    </property>
@@ -871,6 +1239,12 @@
                  </item>
                  <item row="5" column="2">
                   <spacer name="verticalSpacer_4">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
                    </property>
@@ -886,6 +1260,12 @@
                   <widget class="QLineEdit" name="txtrBase1">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -913,6 +1293,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -938,6 +1324,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtnRec1">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -968,6 +1360,12 @@ color: rgb(0, 64, 64);</string>
                  </item>
                  <item row="4" column="0">
                   <widget class="QLabel" name="label_27">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>17</width>
@@ -986,6 +1384,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtrTotal1">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1010,6 +1414,12 @@ color: rgb(0, 64, 64);</string>
                  </item>
                  <item row="2" column="0">
                   <widget class="QLabel" name="label_25">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>17</width>
@@ -1026,6 +1436,12 @@ color: rgb(0, 64, 64);</string>
                  </item>
                  <item row="0" column="1">
                   <widget class="QLabel" name="label_28">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">color: rgb(0, 0, 192);</string>
                    </property>
@@ -1038,6 +1454,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtrTotal4">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1064,6 +1486,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtnPorcentajeIva2">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1097,6 +1525,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1129,6 +1563,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1152,6 +1592,12 @@ color: rgb(0, 64, 64);</string>
                  </item>
                  <item row="1" column="0">
                   <widget class="QLabel" name="label_2">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>17</width>
@@ -1170,6 +1616,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtrIVA1">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1194,6 +1646,12 @@ color: rgb(0, 64, 64);</string>
                  </item>
                  <item row="0" column="2" colspan="2">
                   <widget class="QLabel" name="label_55">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">color: rgb(0, 0, 192);</string>
                    </property>
@@ -1206,6 +1664,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtnRec3">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1239,6 +1703,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1264,6 +1734,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtrTotal2">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1291,6 +1767,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1316,6 +1798,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtnRec2">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1349,6 +1837,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1375,6 +1869,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1398,6 +1898,12 @@ color: rgb(0, 64, 64);</string>
                  </item>
                  <item row="5" column="0">
                   <widget class="QLabel" name="label_29">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>17</width>
@@ -1414,6 +1920,12 @@ color: rgb(0, 64, 64);</string>
                  </item>
                  <item row="3" column="0">
                   <widget class="QLabel" name="label_26">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>17</width>
@@ -1430,6 +1942,12 @@ color: rgb(0, 64, 64);</string>
                  </item>
                  <item row="0" column="7">
                   <widget class="QLabel" name="label_59">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">color: rgb(0, 0, 192);</string>
                    </property>
@@ -1442,6 +1960,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtrBase3">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1469,6 +1993,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1494,6 +2024,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtrTotal3">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1521,6 +2057,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1547,6 +2089,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1572,6 +2120,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtnRec4">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1605,6 +2159,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1637,6 +2197,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1660,6 +2226,12 @@ color: rgb(0, 64, 64);</string>
                  </item>
                  <item row="0" column="5">
                   <widget class="QLabel" name="label_57">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">color: rgb(0, 0, 192);</string>
                    </property>
@@ -1672,6 +2244,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtrRecargoEq2">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1696,6 +2274,12 @@ color: rgb(0, 64, 64);</string>
                  </item>
                  <item row="0" column="6">
                   <widget class="QLabel" name="label_58">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">color: rgb(0, 0, 192);</string>
                    </property>
@@ -1708,6 +2292,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtrBaseTotal_2">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1735,6 +2325,12 @@ color: rgb(0, 64, 64);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1760,6 +2356,12 @@ color: rgb(0, 64, 64);</string>
                   <widget class="QLineEdit" name="txtnPorcentajeIva4">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -1790,6 +2392,12 @@ color: rgb(0, 64, 64);</string>
                  </item>
                  <item row="0" column="4">
                   <widget class="QLabel" name="label_56">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">color: rgb(0, 0, 192);</string>
                    </property>
@@ -1810,6 +2418,12 @@ color: rgb(0, 64, 64);</string>
                 <layout class="QGridLayout" name="gridLayout_11">
                  <item row="0" column="0">
                   <widget class="QTextEdit" name="txttComentario">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">background-color: rgb(255, 255, 255);</string>
                    </property>
@@ -1837,6 +2451,12 @@ color: rgb(0, 64, 64);</string>
       <layout class="QGridLayout" name="gridLayout_9">
        <item row="0" column="0">
         <widget class="QPushButton" name="btnAnadirLinea">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -1857,6 +2477,12 @@ color: rgb(0, 64, 64);</string>
        </item>
        <item row="0" column="1">
         <widget class="QPushButton" name="btn_borrarLinea">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -1868,6 +2494,12 @@ color: rgb(0, 64, 64);</string>
        </item>
        <item row="0" column="2">
         <spacer name="horizontalSpacer_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -1881,6 +2513,12 @@ color: rgb(0, 64, 64);</string>
        </item>
        <item row="1" column="0" colspan="3">
         <widget class="QTableWidget" name="Lineas">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="horizontalScrollBarPolicy">
           <enum>Qt::ScrollBarAsNeeded</enum>
          </property>
@@ -1968,6 +2606,12 @@ color: rgb(0, 64, 64);</string>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <spacer name="horizontalSpacer_4">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1981,6 +2625,12 @@ color: rgb(0, 64, 64);</string>
          </item>
          <item>
           <widget class="QLabel" name="label_17">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Total:</string>
            </property>
@@ -1988,6 +2638,12 @@ color: rgb(0, 64, 64);</string>
          </item>
          <item>
           <widget class="QLabel" name="lbl_total">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>0€</string>
            </property>
@@ -2001,6 +2657,12 @@ color: rgb(0, 64, 64);</string>
    </item>
    <item row="3" column="0" colspan="4">
     <widget class="QFrame" name="frame_4">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -2028,6 +2690,12 @@ color: rgb(0, 64, 64);</string>
       </property>
       <item>
        <widget class="QPushButton" name="btnAnadir">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2051,6 +2719,12 @@ color: rgb(0, 64, 64);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnAnterior">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2074,6 +2748,12 @@ color: rgb(0, 64, 64);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnSiguiente">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2097,6 +2777,12 @@ color: rgb(0, 64, 64);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnBuscar">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2120,6 +2806,12 @@ color: rgb(0, 64, 64);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnImprimir">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2143,6 +2835,12 @@ color: rgb(0, 64, 64);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnEditar">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2169,6 +2867,12 @@ color: rgb(0, 64, 64);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnGuardar">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2191,30 +2895,13 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnDeshacer">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Deshacer</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../maya.qrc">
-          <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="pushButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2225,8 +2912,8 @@ color: rgb(0, 64, 64);</string>
          <string>Borrar</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2238,6 +2925,12 @@ color: rgb(0, 64, 64);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnFacturar">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2270,14 +2963,10 @@ color: rgb(0, 64, 64);</string>
   <tabstop>txtcCliente</tabstop>
   <tabstop>txtcDireccion</tabstop>
   <tabstop>txtcDireccion2</tabstop>
-  <tabstop>txtcCp</tabstop>
-  <tabstop>txtcPoblacion</tabstop>
   <tabstop>txtcProvincia</tabstop>
-  <tabstop>txtcCif</tabstop>
   <tabstop>btnSiguiente</tabstop>
   <tabstop>btnFacturar</tabstop>
   <tabstop>btnAnterior</tabstop>
-  <tabstop>btnDeshacer</tabstop>
   <tabstop>btnImprimir</tabstop>
   <tabstop>btnGuardar</tabstop>
   <tabstop>btnAnadir</tabstop>

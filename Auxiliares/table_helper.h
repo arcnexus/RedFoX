@@ -42,6 +42,7 @@ public:
     void blockTable(bool state);
     void resizeTable();
     void fillTable(QString db , QString table , QString filter);
+    lineaDetalle * getLineaDetalleFromRecord(QSqlRecord r);
 signals:
     void lineaReady(lineaDetalle*);
     void lineaDeleted(lineaDetalle*);

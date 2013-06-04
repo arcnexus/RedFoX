@@ -453,7 +453,7 @@ color: rgb(0, 0, 127);</string>
         <widget class="QFrame" name="frame">
          <property name="minimumSize">
           <size>
-           <width>459</width>
+           <width>0</width>
            <height>199</height>
           </size>
          </property>
@@ -556,7 +556,7 @@ color: rgb(255, 255, 255);</string>
                 <enum>QTabWidget::North</enum>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="tab_5">
                 <property name="styleSheet">

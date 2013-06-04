@@ -239,7 +239,6 @@ FORMS    += mainwindow.ui \
     Zona_Pacientes/frmanalitica.ui \
     Zona_Pacientes/frmanalitica2.ui \
     Zona_Pacientes/frmveranalitica.ui \
-    prueba.ui \
     frmvisitas.ui \
     Zona_Administrador/arearestringida_form.ui \
     Zona_Administrador/block_Maya_form.ui \

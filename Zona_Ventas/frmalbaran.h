@@ -38,8 +38,6 @@ private slots:
 
     void on_btnGuardar_clicked();
 
-    void on_btnDeshacer_clicked();
-
     void on_pushButton_clicked();
 
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);

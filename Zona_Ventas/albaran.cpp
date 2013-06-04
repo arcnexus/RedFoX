@@ -2,9 +2,10 @@
 //
 
 Albaran::Albaran(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    id(0)
 {
-    this->id =0;
+    //this->id =0;
 }
 
 Albaran::~Albaran()
@@ -132,7 +133,7 @@ bool Albaran::GuardarAlbaran(int nId_Albaran)
               "rTotalAlbaran=:rTotalAlbaran, lImpreso=:lImpreso, lFacturado=:lFacturado,"
               "cFactura=:cFactura, dFechaFactura=:dFechaFactura, tComentario=:tComentario,"
               "rACuenta=:rACuenta"
-              " WHERE nAlbaran = :nAlbaran");
+              " WHERE Id = :nAlbaran");
 
     q.bindValue(":nAlbaran",nId_Albaran);
     q.bindValue(":dFecha",dFecha);
@@ -275,22 +276,8 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 rACuenta= r.value("rACuenta").toDouble();
                 return true;
                }
-            else
+            else //if not next
                 return false;
-        }
-}
-
-bool Albaran::borrarLineas(int nId_Albaran)
-{
-    QSqlQuery query(QSqlDatabase::database("empresa"));
-        QString sql = QString("DELETE FROM lin_alb WHERE Id_Cab = %1").arg(nId_Albaran);
-        query.prepare(sql);
-        if(query.exec())
-            return true;
-        else
-        {
-            QMessageBox::critical(qApp->activeWindow(), "Error:",query.lastError().text());
-            return false;
         }
 }
 

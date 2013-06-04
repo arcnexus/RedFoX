@@ -205,15 +205,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
    // ui->menubar->hide();
     //  ui->menubar->setNativeMenuBar(false);
-     QHBoxLayout *layout_mw = new QHBoxLayout(this);
-     layout_mw->addWidget(ui->frame_toolbar);
-     layout_mw->addWidget(ui->widget);
-     this->centralWidget()->setLayout(layout_mw);
+   //  QHBoxLayout *layout_mw = new QHBoxLayout(this);
+   //  layout_mw->addWidget(ui->frame_toolbar);
+   //  layout_mw->addWidget(ui->widget);
+   //  this->centralWidget()->setLayout(layout_mw);
 
     on_edit = false;
     Configuracion_global->CargarDatos();
     QStringList modulos;
-    modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas")  << tr("Contabilidad") << tr("../Almacen")  << tr("Administrador");
+    modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas")  << tr("Contabilidad") << tr("Almacen")  << tr("Administrador");
     ui->comboBox->addItems(modulos);
     crear_barraMantenimiento();
 
@@ -353,7 +353,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     splash.showMessage(tr("Integrando modulos"));
 
-  ui->stackedWidget->addWidget(frmClientes1);
+    ui->stackedWidget->addWidget(frmClientes1);
     ui->stackedWidget->addWidget(frmFacturas1);
     ui->stackedWidget->addWidget(frmArticulos1);
     ui->stackedWidget->addWidget(frmProveedores1);
@@ -380,7 +380,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
    // ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
-    ui->menubar->show();
+    //ui->menubar->show();
 
 //  //  ui->menubar->setNativeMenuBar(false);
 //   QHBoxLayout *layout_mw = new QHBoxLayout(this);
@@ -397,10 +397,7 @@ MainWindow::MainWindow(QWidget *parent) :
   //  connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(test(float)));
    // Configuracion_global->getCambio("EUR","USD",1);
 }
-void MainWindow::init()
-{
 
-}
 
 void MainWindow::block_main()
 {
