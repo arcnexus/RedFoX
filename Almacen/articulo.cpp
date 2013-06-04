@@ -819,6 +819,11 @@ bool Articulo::cambiar_pvp()
 
 }
 
+bool Articulo::agregarStock(int id, int value)
+{
+    // TODO controlar stock
+}
+
 QString Articulo::autocodigo()
 {
     QString codigoIni;

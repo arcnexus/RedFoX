@@ -24,6 +24,8 @@ private slots:
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);
     void desglose4Changed(double base, double iva, double re, double total);
+    void on_btnSiguiente_clicked();
+
 private:
     Ui::FrmAlbaranProveedor *ui;
     Table_Helper helper;

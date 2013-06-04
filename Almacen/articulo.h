@@ -101,6 +101,7 @@ public:
                                        QString oferta, double pvdreal, int id_divisa);
     bool cambiarProveedorPrincipal(int id,int id_proveedor);
     bool cambiar_pvp();
+    static bool agregarStock(int id, int value);
 
     QString autocodigo();
 private:

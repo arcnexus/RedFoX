@@ -112,3 +112,8 @@ void FrmAlbaranProveedor::desglose4Changed(double base, double iva, double re, d
     ui->txtrRecargoEq4->setText(QString::number(re));
     ui->txtrTotal4->setText(QString::number(total));
 }
+
+void FrmAlbaranProveedor::on_btnSiguiente_clicked()
+{
+
+}
