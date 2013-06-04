@@ -73,7 +73,11 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     ui->txtnRec3->setText(Configuracion_global->reList.at(2));
     ui->txtnRec4->setText(Configuracion_global->reList.at(3));
 
+
     ui->btn_cerrar->setVisible(showCerrar);
+
+    pedido.get(0);
+
 }
 
 FrmPedidosProveedor::~FrmPedidosProveedor()
@@ -700,4 +704,20 @@ void FrmPedidosProveedor::resizeTable(int x)
 {
     Q_UNUSED(x);
     helper.resizeTable();
+}
+
+void FrmPedidosProveedor::on_btnSiguiente_clicked()
+{
+    if(!pedido.next())
+        QMessageBox::information(this,tr("Final de archivo")
+                                 ,tr("Final de archivo alcanzado")
+                                 ,tr("Aceptar"));
+}
+
+void FrmPedidosProveedor::on_btnAnterior_clicked()
+{
+    if(!pedido.prev())
+        QMessageBox::information(this,tr("Principio de archivo")
+                                 ,tr("Principio de archivo alcanzado")
+                                 ,tr("Aceptar"));
 }
