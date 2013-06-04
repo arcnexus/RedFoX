@@ -22,6 +22,7 @@ struct lineaDetalle
     double iva_perc;
     double total;
     double importe_moneda_extrangera;
+    int cantidad_pendiente;
 };
 
 class Table_Helper : public QObject
@@ -41,6 +42,7 @@ public:
     void blockTable(bool state);
     void resizeTable();
     void fillTable(QString db , QString table , QString filter);
+    lineaDetalle * getLineaDetalleFromRecord(QSqlRecord r);
 signals:
     void lineaReady(lineaDetalle*);
     void lineaDeleted(lineaDetalle*);

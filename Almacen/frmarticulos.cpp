@@ -225,7 +225,7 @@ void FrmArticulos::bloquearCampos(bool state) {
 
     // Botones artículos
     ui->botBuscarSeccion->setEnabled(!state);
-    ui->botBuscar->setEnabled(state);
+   // ui->botBuscar->setEnabled(state);
     ui->botBuscarFamilia->setEnabled(!state);
     ui->botBuscarSubfamilia->setEnabled(!state);
     ui->botBuscarSubSubFamilia->setEnabled(!state);

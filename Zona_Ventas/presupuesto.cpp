@@ -65,53 +65,53 @@ bool Presupuesto::AnadirPresupuesto()
     cab_pre.bindValue(":cFax",cFax);
     cab_pre.bindValue(":nDto",nDto);
     cab_pre.bindValue(":tComentarios",tComentarios);
-    cab_pre.bindValue(":rImporte",rImporte);
-    cab_pre.bindValue(":rSubtotal",rSubTotal);
-    cab_pre.bindValue(":rDescuento",rDescuento);
-    cab_pre.bindValue(":rTotal",rTotal);
+    cab_pre.bindValue(":rImporte",0);
+    cab_pre.bindValue(":rSubtotal",0);
+    cab_pre.bindValue(":rDescuento",0);
+    cab_pre.bindValue(":rTotal",0);
     cab_pre.bindValue(":lImpreso",lImpreso);
     cab_pre.bindValue(":lAprobado",lAprobado);
     cab_pre.bindValue(":dFechaAprobacion",dFechaAprobacion);
-    cab_pre.bindValue(":rImporteFactura",rImporteFactura);
-    cab_pre.bindValue(":rImportePendiente",rImportePendiente);
+    cab_pre.bindValue(":rImporteFactura",0);
+    cab_pre.bindValue(":rImportePendiente",0);
     cab_pre.bindValue(":cFactura",cFactura);
     cab_pre.bindValue(":nAlbaran",nAlbaran);
     cab_pre.bindValue(":nPedido",nPedido);
     cab_pre.bindValue(":id_FormaPago",id_FormaPago);
     cab_pre.bindValue(":tLugarEntrega",tLugarEntrega);
     cab_pre.bindValue(":cAtencionde",cAtencionde);
-    cab_pre.bindValue(":rBase1",rBase1);
-    cab_pre.bindValue(":rBase2",rBase2);
-    cab_pre.bindValue(":rBase3",rBase3);
-    cab_pre.bindValue(":rBase4",rBase4);
+    cab_pre.bindValue(":rBase1",0);
+    cab_pre.bindValue(":rBase2",0);
+    cab_pre.bindValue(":rBase3",0);
+    cab_pre.bindValue(":rBase4",0);
     cab_pre.bindValue(":nIva1",nIva1);
     cab_pre.bindValue(":nIva2",nIva2);
     cab_pre.bindValue(":nIva3",nIva3);
     cab_pre.bindValue(":nIva4",nIva4);
-    cab_pre.bindValue(":rIva1",rIva1);
-    cab_pre.bindValue(":rIva2",rIva2);
-    cab_pre.bindValue(":rIva3",rIva3);
-    cab_pre.bindValue(":rIva4",rIva4);
+    cab_pre.bindValue(":rIva1",0);
+    cab_pre.bindValue(":rIva2",0);
+    cab_pre.bindValue(":rIva3",0);
+    cab_pre.bindValue(":rIva4",0);
     cab_pre.bindValue(":nRecargoEquivalencia1",nRecargoEquivalencia1);
     cab_pre.bindValue(":nRecargoEquivalencia2",nRecargoEquivalencia2);
     cab_pre.bindValue(":nRecargoEquivalencia3",nRecargoEquivalencia3);
     cab_pre.bindValue(":nRecargoEquivalencia4",nRecargoEquivalencia4);
-    cab_pre.bindValue(":rRec1",rRec1);
-    cab_pre.bindValue(":rRec2",rRec2);
-    cab_pre.bindValue(":rRec3",rRec3);
-    cab_pre.bindValue(":rRec4",rRec4);
-    cab_pre.bindValue(":rTotal1",rTotal1);
-    cab_pre.bindValue(":rTotal2",rTotal2);
-    cab_pre.bindValue(":rTotal3",rTotal3);
-    cab_pre.bindValue(":rTotal4",rTotal4);
+    cab_pre.bindValue(":rRec1",0);
+    cab_pre.bindValue(":rRec2",0);
+    cab_pre.bindValue(":rRec3",0);
+    cab_pre.bindValue(":rRec4",0);
+    cab_pre.bindValue(":rTotal1",0);
+    cab_pre.bindValue(":rTotal2",0);
+    cab_pre.bindValue(":rTotal3",0);
+    cab_pre.bindValue(":rTotal4",0);
     cab_pre.bindValue(":lRecargoEquivalencia",lRecargoEquivalencia);
     cab_pre.bindValue(":cEmail",cEmail);
-    cab_pre.bindValue(":rTotalIva",rTotalIva);
-    cab_pre.bindValue(":rTotalRec",rTotalRec);
-    cab_pre.bindValue(":rImporte1",rImporte1);
-    cab_pre.bindValue(":rImporte2",rImporte2);
-    cab_pre.bindValue(":rImporte3",rImporte3);
-    cab_pre.bindValue(":rImporte4",rImporte4);
+    cab_pre.bindValue(":rTotalIva",0);
+    cab_pre.bindValue(":rTotalRec",0);
+    cab_pre.bindValue(":rImporte1",0);
+    cab_pre.bindValue(":rImporte2",0);
+    cab_pre.bindValue(":rImporte3",0);
+    cab_pre.bindValue(":rImporte4",0);
 
      if(!cab_pre.exec())
      {
@@ -121,8 +121,9 @@ bool Presupuesto::AnadirPresupuesto()
      else
      {         
          this->id = cab_pre.lastInsertId().toInt();
-         QString cSQL = "Select * from cab_pre where id ="+QString::number(this->id);
-         RecuperarPresupuesto(cSQL);
+         //acaba de guardar, para que recuperarlo de la bd O.o?
+        // QString cSQL = "Select * from cab_pre where id ="+QString::number(this->id);
+        // RecuperarPresupuesto(cSQL);
          return true;
      }
 }

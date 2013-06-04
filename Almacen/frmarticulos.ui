@@ -26,80 +26,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(165, 179, 255);</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_6">
-   <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="label_70">
-     <property name="maximumSize">
-      <size>
-       <width>239</width>
-       <height>27</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ARTÍCULOS&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QLabel" name="lblCodigo">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>130</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 0, 127);
-font: 12pt &quot;Sans Serif&quot;;</string>
-     </property>
-     <property name="text">
-      <string>código</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QLabel" name="lblDescripcion">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 0, 127);
-font: 12pt &quot;Sans Serif&quot;;</string>
-     </property>
-     <property name="text">
-      <string>Descripcion</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="4">
-    <widget class="QLabel" name="label_5">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>19</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 85, 0);
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>En Promoción</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
+  <layout class="QGridLayout" name="gridLayout_32">
    <item row="1" column="0">
     <widget class="QFrame" name="frame_16">
      <property name="minimumSize">
@@ -225,27 +152,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="botBuscar">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>45</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Buscar</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../maya.qrc">
-          <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="botEditar">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
         <property name="minimumSize">
          <size>
           <width>115</width>
@@ -351,9 +258,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
       </item>
       <item>
        <widget class="QPushButton" name="botBorrar">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
         <property name="minimumSize">
          <size>
           <width>115</width>
@@ -444,6 +348,79 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
      </layout>
     </widget>
    </item>
+   <item row="0" column="3">
+    <widget class="QLabel" name="lblDescripcion">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 0, 127);
+font: 12pt &quot;Sans Serif&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Descripcion</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLabel" name="lblCodigo">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>130</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 0, 127);
+font: 12pt &quot;Sans Serif&quot;;</string>
+     </property>
+     <property name="text">
+      <string>código</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLabel" name="label_5">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>19</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 85, 0);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>En Promoción</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="label_70">
+     <property name="maximumSize">
+      <size>
+       <width>239</width>
+       <height>27</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ARTÍCULOS&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="1" colspan="4">
     <widget class="QTabWidget" name="Pestanas">
      <property name="sizePolicy">
@@ -477,12 +454,24 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
        <string>Artículo</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_8">
-       <item row="0" column="0" colspan="2">
-        <widget class="QFrame" name="frame_13">
+       <item row="5" column="0" colspan="7">
+        <widget class="QFrame" name="frame_5">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>45</height>
+           <height>40</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -494,72 +483,108 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_16">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_2">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="label_12">
             <property name="text">
-             <string>Código: </string>
+             <string>Margen:</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="txtcCodigo">
+          <item>
+           <widget class="QDoubleSpinBox" name="txtMargen">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="minimum">
+             <double>-1000.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9999.989999999999782</double>
+            </property>
+            <property name="value">
+             <double>0.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Margen min:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="txtMargen_min">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="minimum">
+             <double>-1000.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9999.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>0.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>315</width>
+              <height>17</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>%Descuento Promocional:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="txtrDto">
+            <property name="minimumSize">
+             <size>
+              <width>62</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
-              <width>120</width>
+              <width>80</width>
               <height>16777215</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="0" column="2" colspan="2">
-        <widget class="QFrame" name="frame_12">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>45</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(175,195,225);
-</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_15">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>Código EAN:</string>
+             <string>0</string>
             </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="txtcCodigoBarras">
-            <property name="maximumSize">
-             <size>
-              <width>120</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>
          </layout>
-         <zorder>txtcCodigoBarras</zorder>
-         <zorder>label_3</zorder>
         </widget>
        </item>
        <item row="0" column="4" colspan="3">
@@ -610,12 +635,95 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          </layout>
         </widget>
        </item>
-       <item row="0" column="7" rowspan="7">
-        <widget class="QFrame" name="frame_3">
-         <property name="minimumSize">
+       <item row="0" column="7" rowspan="6">
+        <widget class="QFrame" name="frame">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(175,195,225);
+</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="1" column="0">
+           <widget class="QTextEdit" name="txttComentario">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>Comentarios:</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QFrame" name="frame_13">
+         <property name="maximumSize">
           <size>
-           <width>286</width>
-           <height>0</height>
+           <width>16777215</width>
+           <height>45</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(175,195,225);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_16">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Código: </string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="txtcCodigo">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>120</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="2" colspan="2">
+        <widget class="QFrame" name="frame_12">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>45</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -628,337 +736,346 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_10">
+         <layout class="QGridLayout" name="gridLayout_15">
           <item row="0" column="0">
-           <widget class="QLabel" name="label_9">
+           <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>Sección:</string>
+             <string>Código EAN:</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="botBuscarSeccion">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="txtcCodigoBarras">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
             <property name="maximumSize">
              <size>
-              <width>25</width>
+              <width>120</width>
               <height>16777215</height>
              </size>
             </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Asociar Sección.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+         <zorder>txtcCodigoBarras</zorder>
+         <zorder>label_3</zorder>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="7">
+        <widget class="QFrame" name="frame_8">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(175,195,225);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="1" column="0">
+           <widget class="QPushButton" name="btnAnadirTarifa">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
             <property name="text">
-             <string/>
+             <string>Añadir Tarifa</string>
             </property>
             <property name="icon">
              <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>16</width>
-              <height>16</height>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="btnBorrarTarifa">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Borrar Tarifa</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="txtcFamilia">
+           <widget class="QPushButton" name="btnEditartarifa">
             <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>130</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(254, 255, 205);
-color: rgb(0, 0, 0);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="botBuscarFamilia">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>16777215</height>
-             </size>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
             <property name="text">
-             <string/>
+             <string>Editar Tarifa</string>
             </property>
             <property name="icon">
              <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>16</width>
-              <height>16</height>
-             </size>
+              <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_11">
-            <property name="text">
-             <string>Subfamilia:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="txtcSubFamilia">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>130</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
+          <item row="0" column="0" colspan="3">
+           <widget class="QTableView" name="TablaTarifas">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(254, 255, 205);
-color: rgb(0, 0, 0);</string>
+             <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 202);</string>
             </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QPushButton" name="botBuscarSubfamilia">
-            <property name="enabled">
-             <bool>false</bool>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>16777215</height>
-             </size>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
             </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>16</width>
-              <height>16</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>sub-sub Familia:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="txtcSubSubFamilia">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>130</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(254, 255, 205);
-color: rgb(0, 0, 0);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QPushButton" name="botBuscarSubSubFamilia">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>16</width>
-              <height>16</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>Grupo:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="txtcGupoArt">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>130</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(254, 255, 205);
-color: rgb(0, 0, 0);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_10">
-            <property name="text">
-             <string>Familia:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QPushButton" name="botBuscarGrupo">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>16</width>
-              <height>16</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="txtcSeccion">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>130</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(254, 255, 205);
-color: rgb(0, 0, 0);</string>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Descripción:</string>
+       <item row="4" column="3" colspan="2">
+        <widget class="QFrame" name="frame_10">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(175,195,225);
+</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_13">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="chklMostrarWeb">
+            <property name="toolTip">
+             <string>Seleccionar si se desea que el artículo aparezca en la tienda virtual en su web</string>
+            </property>
+            <property name="text">
+             <string>Mostrar en web</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QFrame" name="frame_4">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(175,195,225);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>Tipo IVA:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="cboTipoIVA">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="5" colspan="2">
+        <widget class="QFrame" name="frame_2">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(170, 255, 0);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="chklControlarStock">
+            <property name="text">
+             <string>Controlar stock</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="1" colspan="2">
+        <widget class="QFrame" name="frame_7">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+background-color: rgb(255, 255, 127);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="label_14">
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>Coste:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="txtrCoste">
+            <property name="maximumSize">
+             <size>
+              <width>120</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="6">
+        <widget class="QLineEdit" name="txtcDescripcionResumida">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Descripción Resumida:</string>
+       <item row="1" column="1" colspan="6">
+        <widget class="QLineEdit" name="txtcDescripcion">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>27</height>
+          </size>
          </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Proveedor Habitual:</string>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
        <item row="3" column="1">
         <widget class="QLineEdit" name="txtCodigoProveedor">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>100</width>
@@ -1015,128 +1132,35 @@ color: rgb(0, 0, 0);</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QFrame" name="frame_4">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Proveedor Habitual:</string>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(175,195,225);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QLabel" name="label_19">
-            <property name="text">
-             <string>Tipo IVA:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="cboTipoIVA">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </widget>
        </item>
-       <item row="4" column="1" colspan="2">
-        <widget class="QFrame" name="frame_7">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Descripción:</string>
          </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Descripción Resumida:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="7">
+        <widget class="QFrame" name="frame_3">
          <property name="minimumSize">
           <size>
-           <width>180</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">
-background-color: rgb(255, 255, 127);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <widget class="QLabel" name="label_14">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>10</y>
-            <width>42</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="autoFillBackground">
-           <bool>false</bool>
-          </property>
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <property name="text">
-           <string>Coste:</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="txtrCoste">
-          <property name="geometry">
-           <rect>
-            <x>60</x>
-            <y>10</y>
-            <width>120</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>120</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="text">
-           <string>0,00</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </widget>
-       </item>
-       <item row="4" column="3" colspan="2">
-        <widget class="QFrame" name="frame_10">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(175,195,225);
 </string>
@@ -1147,278 +1171,319 @@ background-color: rgb(255, 255, 127);</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_13">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="chklMostrarWeb">
-            <property name="toolTip">
-             <string>Seleccionar si se desea que el artículo aparezca en la tienda virtual en su web</string>
-            </property>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_10">
             <property name="text">
-             <string>Mostrar en web</string>
+             <string>Familia:</string>
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="4" column="5" colspan="2">
-        <widget class="QFrame" name="frame_2">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(170, 255, 0);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_5">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="chklControlarStock">
-            <property name="text">
-             <string>Controlar stock</string>
+          <item row="1" column="0" colspan="6">
+           <widget class="QLineEdit" name="txtcSeccion">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="7">
-        <widget class="QFrame" name="frame_5">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>361</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(175,195,225);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <spacer name="horizontalSpacer">
+          <item row="3" column="0" colspan="6">
+           <widget class="QLineEdit" name="txtcFamilia">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Grupo:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0" colspan="6">
+           <widget class="QLineEdit" name="txtcGupoArt">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="6">
+           <widget class="QLineEdit" name="txtcSubSubFamilia">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="5">
+           <widget class="QPushButton" name="botBuscarSubSubFamilia">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>25</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="3">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Subfamilia:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="4">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Sub-sub Familia:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="6">
+           <widget class="QLineEdit" name="txtcSubFamilia">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(254, 255, 205);
+color: rgb(0, 0, 0);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Sección:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="4">
+           <spacer name="horizontalSpacer_9">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>315</width>
-              <height>17</height>
+              <width>40</width>
+              <height>20</height>
              </size>
             </property>
            </spacer>
           </item>
-          <item>
-           <widget class="QLabel" name="label_20">
-            <property name="text">
-             <string>%Descuento Promocional:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="txtrDto">
-            <property name="minimumSize">
-             <size>
-              <width>62</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>80</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="text">
-             <string>0</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="7" column="7">
-        <widget class="QFrame" name="frame">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(175,195,225);
-</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_7">
-          <item row="1" column="0">
-           <widget class="QTextEdit" name="txttComentario">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_18">
-            <property name="text">
-             <string>Comentarios:</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="6" column="0" rowspan="2" colspan="7">
-        <widget class="QFrame" name="frame_8">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(175,195,225);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_4">
-          <item row="1" column="0">
-           <widget class="QPushButton" name="btnAnadirTarifa">
+          <item row="4" column="5">
+           <widget class="QPushButton" name="botBuscarSubfamilia">
             <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="text">
-             <string>Añadir Tarifa</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="btnBorrarTarifa">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Borrar Tarifa</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="btnEditartarifa">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Editar Tarifa</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="3">
-           <widget class="QTableView" name="TablaTarifas">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(255, 255, 202);</string>
+            <property name="maximumSize">
+             <size>
+              <width>25</width>
+              <height>16777215</height>
+             </size>
             </property>
-            <property name="alternatingRowColors">
-             <bool>true</bool>
+            <property name="text">
+             <string/>
             </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::SingleSelection</enum>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
             </property>
-            <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectRows</enum>
+            <property name="iconSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="5">
+           <widget class="QPushButton" name="botBuscarFamilia">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>25</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QPushButton" name="botBuscarSeccion">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>25</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Asociar Sección.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="5">
+           <widget class="QPushButton" name="botBuscarGrupo">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>25</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
             </property>
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="6">
-        <widget class="QLineEdit" name="txtcDescripcion">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1" colspan="6">
-        <widget class="QLineEdit" name="txtcDescripcionResumida">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
         </widget>
        </item>
       </layout>
@@ -2066,7 +2131,7 @@ color: rbg(0,0,0);</string>
              <bool>false</bool>
             </property>
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -2920,6 +2985,62 @@ Imagen.</string>
           <bool>true</bool>
          </property>
         </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab">
+      <property name="styleSheet">
+       <string notr="true">background-color: #ecefed;</string>
+      </property>
+      <attribute name="title">
+       <string>Búsqueda</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Buscar:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="txtBuscarArticulo">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="botBuscarArtRapido">
+           <property name="icon">
+            <iconset resource="../maya.qrc">
+             <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="QLabel" name="lblMensajeRecuperar">
+           <property name="minimumSize">
+            <size>
+             <width>250</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realice&lt;span style=&quot; font-weight:600; color:#0000c0;&quot;&gt; dobleclick&lt;/span&gt; sobre el artículo&lt;/p&gt;&lt;p&gt;a recuperar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="3">
+          <widget class="QTableView" name="TablaBuscarArt">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -5662,22 +5783,19 @@ alternate-background-color: rgb(255, 255, 255);</string>
   <tabstop>txtrCoste</tabstop>
   <tabstop>chklMostrarWeb</tabstop>
   <tabstop>chklControlarStock</tabstop>
+  <tabstop>txtMargen</tabstop>
+  <tabstop>txtMargen_min</tabstop>
   <tabstop>txtrDto</tabstop>
   <tabstop>TablaTarifas</tabstop>
   <tabstop>btnAnadirTarifa</tabstop>
   <tabstop>btnEditartarifa</tabstop>
   <tabstop>btnBorrarTarifa</tabstop>
   <tabstop>txttComentario</tabstop>
-  <tabstop>txtcSeccion</tabstop>
-  <tabstop>botBuscarSeccion</tabstop>
   <tabstop>txtcFamilia</tabstop>
-  <tabstop>botBuscarFamilia</tabstop>
   <tabstop>txtcSubFamilia</tabstop>
-  <tabstop>botBuscarSubfamilia</tabstop>
   <tabstop>txtcSubSubFamilia</tabstop>
   <tabstop>botBuscarSubSubFamilia</tabstop>
   <tabstop>txtcGupoArt</tabstop>
-  <tabstop>botBuscarGrupo</tabstop>
   <tabstop>tablaProveedores</tabstop>
   <tabstop>btnAnadirProveedores</tabstop>
   <tabstop>btnEditarProveedorFrecuente</tabstop>
@@ -5712,6 +5830,8 @@ alternate-background-color: rgb(255, 255, 255);</string>
   <tabstop>botCambiarImagen_2</tabstop>
   <tabstop>botCambiarImagen_3</tabstop>
   <tabstop>botCambiarImagen_4</tabstop>
+  <tabstop>txtBuscarArticulo</tabstop>
+  <tabstop>TablaBuscarArt</tabstop>
   <tabstop>cboTipoGrafica</tabstop>
   <tabstop>radGrafica_unidades</tabstop>
   <tabstop>radGrafica_importes</tabstop>
@@ -5825,6 +5945,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
   <tabstop>txtImporte_ventas_febrero</tabstop>
   <tabstop>txtImporte_ventas_marzo</tabstop>
   <tabstop>txtImporte_ventas_abril</tabstop>
+  <tabstop>botBuscarArtRapido</tabstop>
   <tabstop>txtUnid_ventas_mayo</tabstop>
   <tabstop>txtUnid_ventas_junio</tabstop>
   <tabstop>txtImporte_ventas_junio</tabstop>

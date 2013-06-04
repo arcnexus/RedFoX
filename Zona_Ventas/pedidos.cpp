@@ -60,7 +60,8 @@ bool Pedidos::AnadirPedido()
      }
      else
      {
-        return true;
+         this->id = cab_ped.lastInsertId().toInt();
+         return true;
      }
 }
 // Guardar el Pedido

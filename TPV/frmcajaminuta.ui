@@ -257,7 +257,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
           </size>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="sizePolicy">
@@ -380,7 +380,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
               <widget class="QLineEdit" name="txtcTelefono">
                <property name="minimumSize">
                 <size>
-                 <width>87</width>
+                 <width>0</width>
                  <height>24</height>
                 </size>
                </property>
@@ -554,7 +554,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>73</width>
+                 <width>0</width>
                  <height>24</height>
                 </size>
                </property>
@@ -625,7 +625,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
               <widget class="QLineEdit" name="txtcPais">
                <property name="minimumSize">
                 <size>
-                 <width>83</width>
+                 <width>0</width>
                  <height>24</height>
                 </size>
                </property>

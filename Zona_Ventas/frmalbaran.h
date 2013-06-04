@@ -38,8 +38,6 @@ private slots:
 
     void on_btnGuardar_clicked();
 
-    void on_btnDeshacer_clicked();
-
     void on_pushButton_clicked();
 
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
@@ -47,6 +45,9 @@ private slots:
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);
     void desglose4Changed(double base, double iva, double re, double total);
+
+    void lineaReady(lineaDetalle*);
+    void lineaDeleted(lineaDetalle*);
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;

@@ -40,6 +40,7 @@ public:
     double	rBase4;
     double	nPorcIva1;
 
+
     bool lTraspasado;
     int nPedidoCliente;
     int Id_FormaPago;
@@ -96,6 +97,18 @@ public slots:
     void imprimir(int id);
 
     
+
+    bool get(int id);
+    bool next();
+    bool prev();
+    long save();
+    bool update();
+signals:
+    
+public slots:
+private:
+    void fillPedido(QSqlRecord r);
+
 };
 
 #endif // PEDIDOPROVEEDOR_H

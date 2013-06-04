@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "../Auxiliares/Globlal_Include.h"
 #include "../Auxiliares/table_helper.h"
+
 #include "proveedor.h"
 #include "pedidoproveedor.h"
 
@@ -34,6 +35,7 @@ private slots:
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);
     void desglose4Changed(double base, double iva, double re, double total);
+
     void bloquearcampos(bool estado);
     void buscar_proveeedor();
     void anadir_pedido();
@@ -49,6 +51,14 @@ private slots:
     void clear();
     void resizeTable(int x);
 private:
+
+
+    void on_btnSiguiente_clicked();
+
+    void on_btnAnterior_clicked();
+
+private:
+    PedidoProveedor pedido;
 
     Ui::FrmPedidosProveedor *ui;
     Table_Helper helper;

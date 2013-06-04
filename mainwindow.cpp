@@ -205,15 +205,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
    // ui->menubar->hide();
     //  ui->menubar->setNativeMenuBar(false);
-     QHBoxLayout *layout_mw = new QHBoxLayout(this);
-     layout_mw->addWidget(ui->frame_toolbar);
-     layout_mw->addWidget(ui->widget);
-     this->centralWidget()->setLayout(layout_mw);
+   //  QHBoxLayout *layout_mw = new QHBoxLayout(this);
+   //  layout_mw->addWidget(ui->frame_toolbar);
+   //  layout_mw->addWidget(ui->widget);
+   //  this->centralWidget()->setLayout(layout_mw);
 
     on_edit = false;
     Configuracion_global->CargarDatos();
     QStringList modulos;
-    modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas")  << tr("Contabilidad") << tr("../Almacen")  << tr("Administrador");
+    modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas")  << tr("Contabilidad") << tr("Almacen")  << tr("Administrador");
     ui->comboBox->addItems(modulos);
     crear_barraMantenimiento();
 
@@ -285,75 +285,82 @@ MainWindow::MainWindow(QWidget *parent) :
     QSplashScreen splash(pixmap);
     splash.show();
 
-    splash.showMessage(tr("Cargando modulos... Modulo de clientes"));
+    splash.showMessage(tr("Cargando modulos... Modulo de clientes") );
+
     frmClientes1 = new frmClientes(this);
     connect(frmClientes1,SIGNAL(block()),this,SLOT(block_main()));
     connect(frmClientes1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-    splash.showMessage(tr("Cargando modulos... Modulo de facturas"));
+    splash.showMessage(tr("Cargando modulos... Modulo de facturas") );
+
     frmFacturas1 = new frmFacturas(this);
     connect(frmFacturas1,SIGNAL(block()),this,SLOT(block_main()));
     connect(frmFacturas1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-    splash.showMessage(tr("Cargando modulos... Modulo de articulos"));
+    splash.showMessage(tr("Cargando modulos... Modulo de articulos") );
     frmArticulos1 = new FrmArticulos(this);
 
-    splash.showMessage(tr("Cargando modulos... Modulo de proveedores"));
+    splash.showMessage(tr("Cargando modulos... Modulo de proveedores") );
     frmProveedores1 = new frmProveedores(this);
 
-    splash.showMessage(tr("Cargando modulos... Modulo de albaranes"));
+    splash.showMessage(tr("Cargando modulos... Modulo de albaranes") );
+
     frmAlbaran1 = new FrmAlbaran(this);
     connect(frmAlbaran1,SIGNAL(block()),this,SLOT(block_main()));
     connect(frmAlbaran1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
+    splash.showMessage(tr("Cargando modulos... Modulo de facturación de albaranes") );
 
-    splash.showMessage(tr("Cargando modulos... Modulo de facturación de albaranes"));
     frmFactura_multiple = new FrmFacturarAlabaranes(this);
     connect(frmFactura_multiple,SIGNAL(block()),this,SLOT(block_main()));
     connect(frmFactura_multiple,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-    splash.showMessage(tr("Cargando modulos... Modulo de pedidos"));
+    splash.showMessage(tr("Cargando modulos... Modulo de pedidos") );
+
     frmPedidos1 = new FrmPedidos(this);
     connect(frmPedidos1,SIGNAL(block()),this,SLOT(block_main()));
     connect(frmPedidos1,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-    splash.showMessage(tr("Cargando modulos... Modulo de presupuestos"));
+    splash.showMessage(tr("Cargando modulos... Modulo de presupuestos") );
+
     frmPresupcli = new FrmPresupuestosCli(this);
     connect(frmPresupcli,SIGNAL(block()),this,SLOT(block_main()));
     connect(frmPresupcli,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-    splash.showMessage(tr("Cargando modulos... Modulo de TPV"));
+    splash.showMessage(tr("Cargando modulos... Modulo de TPV") );
+
     frmCajaMinuta = new FrmCajaMinuta(this);
     connect(frmCajaMinuta,SIGNAL(block()),this,SLOT(block_main()));
     connect(frmCajaMinuta,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos"));
+    splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos") );
+
     FrmPedidos_pro = new FrmPedidosProveedor(this);
     connect(FrmPedidos_pro,SIGNAL(block()),this,SLOT(block_main()));
     connect(FrmPedidos_pro,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes"));
+    splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes") );
     FrmAlbaran_pro = new FrmAlbaranProveedor(this);
 
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: facturas"));
+    splash.showMessage(tr("Cargando modulos... Modulo de Compras: facturas") );
     frmFacturas_pro = new FrmFacturasProveedor(this);
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"));
+    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") );
     frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
 
-    splash.showMessage(tr("Cargando modulos... Editor de reportes"));
+    splash.showMessage(tr("Cargando modulos... Editor de reportes") );
     reportWindow = new ReportWriterWindow();
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido"));
+    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") );
     agendaForm = new AgendaForm(this);
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Recepción de Pedidos"));
+    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Recepción de Pedidos") );
     frmRecep_pedidos = new Frmrecepcion_pedidos(this);
 
-    splash.showMessage(tr("Integrando modulos"));
+    splash.showMessage(tr("Integrando modulos") );
 
-  ui->stackedWidget->addWidget(frmClientes1);
+    ui->stackedWidget->addWidget(frmClientes1);
     ui->stackedWidget->addWidget(frmFacturas1);
     ui->stackedWidget->addWidget(frmArticulos1);
     ui->stackedWidget->addWidget(frmProveedores1);
@@ -380,7 +387,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
    // ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
-    ui->menubar->show();
+    //ui->menubar->show();
 
 //  //  ui->menubar->setNativeMenuBar(false);
 //   QHBoxLayout *layout_mw = new QHBoxLayout(this);
@@ -396,10 +403,6 @@ MainWindow::MainWindow(QWidget *parent) :
 //    //-------------------------------
   //  connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(test(float)));
    // Configuracion_global->getCambio("EUR","USD",1);
-}
-void MainWindow::init()
-{
-
 }
 
 void MainWindow::block_main()

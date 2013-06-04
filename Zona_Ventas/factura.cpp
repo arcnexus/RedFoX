@@ -1,16 +1,9 @@
 #include "factura.h"
 
-//
-
-#ifdef WIN32
-    //#define and &&
-#endif
-
-
 Factura::Factura(QObject *parent) :
     QObject(parent)
 {
-    this->Id =0;
+    this->id =0;
 }
 
 // Metodos utilidad Clase
@@ -51,48 +44,48 @@ bool Factura::AnadirFactura()
      cab_fac.bindValue(":cPais",this->idPais);
      cab_fac.bindValue(":cCif",this->cCif);
      cab_fac.bindValue(":lRecargoEquivalencia",this->lRecargoEquivalencia);
-     cab_fac.bindValue(":rSubtotal",this->rSubtotal);
-     cab_fac.bindValue(":nDto",this->nDto);
-     cab_fac.bindValue(":nDtoPP",this->nDtoPP);
-     cab_fac.bindValue(":rImporteDescuento",this->rImporteDescuento);
-     cab_fac.bindValue(":rImporteDescuentoPP",this->rImporteDescuentoPP);
-     cab_fac.bindValue(":rBase",this->rBase);
-     cab_fac.bindValue(":nIva",this->nIva);
-     cab_fac.bindValue(":rImporteIva",this->rImporteIva);
-     cab_fac.bindValue(":rTotal",this->rTotal);
-     cab_fac.bindValue(":lImpresa",this->lImpresa);
-     cab_fac.bindValue(":lCobrada",this->lCobrada);
-     cab_fac.bindValue(":lContabilizada",this->lContablilizada);
+     cab_fac.bindValue(":rSubtotal",0);
+     cab_fac.bindValue(":nDto",0);
+     cab_fac.bindValue(":nDtoPP",0);
+     cab_fac.bindValue(":rImporteDescuento",0);
+     cab_fac.bindValue(":rImporteDescuentoPP",0);
+     cab_fac.bindValue(":rBase",0);
+     cab_fac.bindValue(":nIva",0);
+     cab_fac.bindValue(":rImporteIva",0);
+     cab_fac.bindValue(":rTotal",0);
+     cab_fac.bindValue(":lImpresa",0);
+     cab_fac.bindValue(":lCobrada",0);
+     cab_fac.bindValue(":lContabilizada",0);
      cab_fac.bindValue(":id_FormaPago",this->id_FormaPago);
      cab_fac.bindValue(":cFormaPago",this->cFormaPago);
      cab_fac.bindValue(":tComentario",this->tComentario);
-     cab_fac.bindValue(":rBase1",this->rBase1);
-     cab_fac.bindValue(":rBase2",this->rBase2);
-     cab_fac.bindValue(":rBase3",this->rBase3);
-     cab_fac.bindValue(":rBase4",this->rBase4);
+     cab_fac.bindValue(":rBase1",0);
+     cab_fac.bindValue(":rBase2",0);
+     cab_fac.bindValue(":rBase3",0);
+     cab_fac.bindValue(":rBase4",0);
      cab_fac.bindValue(":nPorcentajeIVA1",this->nPorcentajeIVA1);
      cab_fac.bindValue(":nPorcentajeIVA2",this->nPorcentajeIVA2);
      cab_fac.bindValue(":nPorcentajeIVA3",this->nPorcentajeIVA3);
      cab_fac.bindValue(":nPorcentajeIVA4",this->nPorcentajeIVA4);
-     cab_fac.bindValue(":rIVA1",this->rIVA1);
-     cab_fac.bindValue(":rIVA2",this->rIVA2);
-     cab_fac.bindValue(":rIVA3",this->rIVA3);
-     cab_fac.bindValue(":rIVA4",this->rIVA4);
-     cab_fac.bindValue(":rTotal1",this->rTotal1);
-     cab_fac.bindValue(":rTotal2",this->rTotal2);
-     cab_fac.bindValue(":rTotal3",this->rTotal3);
-     cab_fac.bindValue(":rTotal4",this->rTotal4);
-     cab_fac.bindValue(":nRec1",this->nRec1);
-     cab_fac.bindValue(":nRec2",this->nRec2);
-     cab_fac.bindValue(":nRec3",this->nRec3);
-     cab_fac.bindValue(":nRec4",this->nRec4);
-     cab_fac.bindValue(":rRecargoEq1",this->rRecargoEq1);
-     cab_fac.bindValue(":rRecargoEq2",this->rRecargoEq2);
-     cab_fac.bindValue(":rRecargoEq3",this->rRecargoEq3);
-     cab_fac.bindValue(":rRecargoEq4",this->rRecargoEq4);
-     cab_fac.bindValue(":rTotalRecargoEq",this->rTotalRecargoEq);
-     cab_fac.bindValue(":rEntregadoaCuenta",this->rEntregadoaCuenta);
-     cab_fac.bindValue(":rImportePendiente",this->rImportePendiente);
+     cab_fac.bindValue(":rIVA1",0);
+     cab_fac.bindValue(":rIVA2",0);
+     cab_fac.bindValue(":rIVA3",0);
+     cab_fac.bindValue(":rIVA4",0);
+     cab_fac.bindValue(":rTotal1",0);
+     cab_fac.bindValue(":rTotal2",0);
+     cab_fac.bindValue(":rTotal3",0);
+     cab_fac.bindValue(":rTotal4",0);
+     cab_fac.bindValue(":nRec1",0);
+     cab_fac.bindValue(":nRec2",0);
+     cab_fac.bindValue(":nRec3",0);
+     cab_fac.bindValue(":nRec4",0);
+     cab_fac.bindValue(":rRecargoEq1",0);
+     cab_fac.bindValue(":rRecargoEq2",0);
+     cab_fac.bindValue(":rRecargoEq3",0);
+     cab_fac.bindValue(":rRecargoEq4",0);
+     cab_fac.bindValue(":rTotalRecargoEq",0);
+     cab_fac.bindValue(":rEntregadoaCuenta",0);
+     cab_fac.bindValue(":rImportePendiente",0);
      cab_fac.bindValue(":cCodigoEntidad",this->cCodigoEntidad);
      cab_fac.bindValue(":cOficinaEntidad",this->cOficinaEntidad);
      cab_fac.bindValue(":cDCCuenta",this->cDCCuenta);
@@ -105,8 +98,8 @@ bool Factura::AnadirFactura()
      }
      else
      {
-         this->Id = cab_fac.lastInsertId().toInt();
-         QString cSQL = "Select * from cab_fac where id ="+QString::number(this->Id);
+         this->id = cab_fac.lastInsertId().toInt();
+         QString cSQL = "Select * from cab_fac where id ="+QString::number(this->id);
          RecuperarFactura(cSQL);
          return true;
      }
@@ -348,7 +341,7 @@ bool Factura::RecuperarFactura(QString cSQL){
             if (cab_fac.next())
             {
                 QSqlRecord registro = cab_fac.record();
-                this->Id = registro.field("id").value().toInt();
+                this->id = registro.field("id").value().toInt();
                 this->cCodigoCliente= registro.field("cCodigoCliente").value().toString();
                 this->cFactura = registro.field("cFactura").value().toString();
                 this->dFecha = registro.field("dFecha").value().toDate();
@@ -484,7 +477,7 @@ bool Factura::CobrarFactura()
     }
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
     cab_fac.prepare("update cab_fac set lCobrada = 1 where Id =:id_cab");
-    cab_fac.bindValue(":id_cab",this->Id);
+    cab_fac.bindValue(":id_cab",this->id);
     if(!cab_fac.exec())
     {
         QMessageBox::warning(qApp->activeWindow(),tr("Guardar Factura"),tr("No se ha podido marcar la factura como cobrada"),tr("OK"));

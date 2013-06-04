@@ -22,8 +22,16 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
 
     ui->comboPais->setModel(Configuracion_global->paises_model);
     ui->comboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
-    // valores edicion
-    //ui->txtcCodigoArticulo->setFocus();
+
+    ui->txtnPorcentajeIva1->setText(Configuracion_global->ivaList.at(0));
+    ui->txtnPorcentajeIva2->setText(Configuracion_global->ivaList.at(1));
+    ui->txtnPorcentajeIva3->setText(Configuracion_global->ivaList.at(2));
+    ui->txtnPorcentajeIva4->setText(Configuracion_global->ivaList.at(3));
+
+    ui->txtnRec1->setText(Configuracion_global->reList.at(0));
+    ui->txtnRec2->setText(Configuracion_global->reList.at(1));
+    ui->txtnRec3->setText(Configuracion_global->reList.at(2));
+    ui->txtnRec4->setText(Configuracion_global->reList.at(3));
 
     BloquearCampos(true);
 
@@ -31,6 +39,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     helper.help_table(ui->Lineas);
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
+
     connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
 
     connect(&helper,SIGNAL(totalChanged(double,double,double,double,double,double,QString)),
@@ -48,6 +57,10 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     connect(&helper,SIGNAL(desglose4Changed(double,double,double,double)),
             this,SLOT(desglose4Changed(double,double,double,double)));
 
+    connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
+
+    connect(&helper,SIGNAL(lineaDeleted(lineaDetalle*)),this,SLOT(lineaDeleted(lineaDetalle*)));
+
     connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
 
     if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran > -1 order by nAlbaran  limit 1 "))
@@ -56,16 +69,6 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
         QString filter = QString("Id_Cab = '%1'").arg(ui->txtcAlbaran->text());
         helper.fillTable("empresa","lin_alb",filter);
     }
-
-    ui->txtnPorcentajeIva1->setText(Configuracion_global->ivaList.at(0));
-    ui->txtnPorcentajeIva2->setText(Configuracion_global->ivaList.at(1));
-    ui->txtnPorcentajeIva3->setText(Configuracion_global->ivaList.at(2));
-    ui->txtnPorcentajeIva4->setText(Configuracion_global->ivaList.at(3));
-
-    ui->txtnRec1->setText(Configuracion_global->reList.at(0));
-    ui->txtnRec2->setText(Configuracion_global->reList.at(1));
-    ui->txtnRec3->setText(Configuracion_global->reList.at(2));
-    ui->txtnRec4->setText(Configuracion_global->reList.at(3));
 }
 
 FrmAlbaran::~FrmAlbaran()
@@ -251,7 +254,6 @@ void FrmAlbaran::BloquearCampos(bool state)
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
         lineEdit->setReadOnly(state);
-        //qDebug() << lineEdit->objectName();
     }
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
@@ -281,7 +283,6 @@ void FrmAlbaran::BloquearCampos(bool state)
     ui->btnAnadir->setEnabled(state);
     ui->btnAnterior->setEnabled(state);
     ui->btnBuscar->setEnabled(state);
-    ui->btnDeshacer->setEnabled(!state);
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
@@ -373,11 +374,12 @@ void FrmAlbaran::on_btnAnterior_clicked()
 void FrmAlbaran::on_btnAnadir_clicked()
 {
     in_edit = false;
-    VaciarCampos();
+    VaciarCampos();    
     LLenarAlbaran();
+    oAlbaran->AnadirAlbaran();
+    ui->txtcAlbaran->setText(QString::number(oAlbaran->nAlbaran));
     BloquearCampos(false);
-    ui->txtcAlbaran->setText(QString::number(oAlbaran->NuevoNumeroAlbaran()));
-    ui->txtcCodigoCliente->setFocus();
+    ui->txtcCodigoCliente->setFocus();    
     emit block();
 }
 
@@ -415,20 +417,7 @@ void FrmAlbaran::on_btnGuardar_clicked()
 {        
     QSqlDatabase::database("empresa").transaction();
     LLenarAlbaran();
-    bool succes = true;
-    if(in_edit)
-    {
-        succes &= oAlbaran->GuardarAlbaran(ui->txtcAlbaran->text().toInt());
-        succes &= oAlbaran->borrarLineas(ui->txtcAlbaran->text().toInt()) ;
-        //succes &= helper.saveTable(ui->txtcAlbaran->text().toInt(),"empresa","lin_alb");
-    }
-    else
-    {
-        ui->txtcAlbaran->setText(QString::number(oAlbaran->NuevoNumeroAlbaran()));
-        LLenarAlbaran();
-        succes &= oAlbaran->AnadirAlbaran();
-        //succes &= helper.saveTable(ui->txtcAlbaran->text().toInt(),"empresa","lin_alb");
-    }
+    bool succes = oAlbaran->GuardarAlbaran(oAlbaran->id);
     if(succes)
     {
         LLenarCampos();
@@ -447,16 +436,6 @@ void FrmAlbaran::on_btnGuardar_clicked()
                               tr("&Aceptar"));
         QSqlDatabase::database("empresa").rollback();
     }
-
-}
-
-void FrmAlbaran::on_btnDeshacer_clicked()
-{
-    BloquearCampos(true);
-    QString cId = QString::number(oAlbaran->id);
-    oAlbaran->RecuperarAlbaran("Select * from cab_alb where id ="+cId+" order by id limit 1 ");
-    LLenarCampos();
-    emit unblock();
 }
 
 void FrmAlbaran::on_pushButton_clicked()
@@ -464,15 +443,19 @@ void FrmAlbaran::on_pushButton_clicked()
     if (QMessageBox::question(this,tr("Borrar"),
                               tr("Esta acción no se puede deshacer.\n¿Desea continuar?"),
                               tr("Cancelar"),
-                               tr("&Continuar"))== QMessageBox::Accepted)
+                              tr("&Continuar"))== QMessageBox::Accepted)
     {
-        bool succes = true;
+        bool succes = true;        
         QSqlDatabase::database("empresa").transaction();
-
         QSqlQuery q(QSqlDatabase::database("empresa"));
-        q.prepare("DELETE FROM cab_alb WHERE nAlbaran = "+ui->txtcAlbaran->text());
+
+        q.prepare("SELECT * FROM lin_alb WHERE Id_Cab = "+oAlbaran->id);
+        q.exec();
+
+        while(q.next())
+
+        q.prepare("DELETE FROM cab_alb WHERE Id = "+oAlbaran->id);
         succes &= q.exec();
-        succes &= oAlbaran->borrarLineas(ui->txtcAlbaran->text().toInt());
 
         if(succes)
             succes &= QSqlDatabase::database("empresa").commit();
@@ -531,5 +514,151 @@ void FrmAlbaran::desglose4Changed(double base, double iva, double re, double tot
     ui->txtrRecargoEq4->setText(QString::number(re));
     ui->txtrTotal4->setText(QString::number(total));
 }
+
+void FrmAlbaran::lineaReady(lineaDetalle * ld)
+{
+    //-----------------------------------------------------
+    // Insertamos línea de pedido y controlamos acumulados
+    //-----------------------------------------------------
+
+    bool ok_empresa,ok_Maya;
+    ok_empresa = true;
+    ok_Maya = true;
+    QSqlDatabase::database("empresa").transaction();
+    QSqlDatabase::database("Maya").transaction();
+
+    //Nueva linea
+    if (ld->idLinea == -1)
+    {
+        //qDebug()<< ld->idLinea;
+        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        queryArticulos.prepare("select id from articulos where cCodigo =:codigo");
+        queryArticulos.bindValue(":codigo",ld->codigo);
+        if(queryArticulos.exec())
+            queryArticulos.next();
+        else
+            ok_Maya = false;
+        QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
+        query_lin_ped_pro.prepare("INSERT INTO lin_alb (Id_Cab, id_Articulo, cCodigo, nCantidad,"
+                                  "cDescripcion, rPvp, rSubTotal, rDto,"
+                                  " nDto, nPorcIva, rTotal)"
+                                  "VALUES (:id_cab,:id_articulo,:cCodigo,:cantidad,"
+                                  ":descripcion,:coste_bruto,:subtotal_coste,:porc_dto,"
+                                  ":dto,:porc_iva,:total);");
+        query_lin_ped_pro.bindValue(":id_cab", oAlbaran->id);
+        query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
+        query_lin_ped_pro.bindValue(":cCodigo",ld->codigo);
+        query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
+        query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
+        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
+        query_lin_ped_pro.bindValue(":subtotal_coste",ld->subTotal);
+        query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
+        query_lin_ped_pro.bindValue(":dto",ld->dto);
+        query_lin_ped_pro.bindValue(":iva",0); // importe iva hay que calcularlo
+        query_lin_ped_pro.bindValue(":total",ld->total);
+        if (!query_lin_ped_pro.exec()){
+            ok_empresa = false;
+            QMessageBox::warning(this,tr("Gestión de albaranes"),
+                                 tr("Ocurrió un error al insertar la nueva línea: %1").arg(query_lin_ped_pro.lastError().text()),
+                                 tr("Aceptar"));
+        }
+        //TODO control de stock fact clientes
+
+        if(queryArticulos.exec() && ok_empresa){
+            QSqlDatabase::database("empresa").commit();
+            QSqlDatabase::database("Maya").commit();
+        } else
+        {
+            QSqlDatabase::database("empresa").rollback();
+            QSqlDatabase::database("Maya").rollback();
+        }
+
+        ld->idLinea = query_lin_ped_pro.lastInsertId().toInt();
+
+    } else // Editando linea
+    {
+        //TODO control de stock editando en fact clientes
+        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        queryArticulos.prepare("select id from articulos where cCodigo =:codigo");
+        queryArticulos.bindValue(":codigo",ld->codigo);
+        if(queryArticulos.exec())
+            queryArticulos.next();
+        else
+            ok_Maya = false;
+
+        QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
+        query_lin_ped_pro.prepare("UPDATE lin_alb SET "
+                                  "id_Articulo =:id_articulo,"
+                                  "cCodigo =:codigo_articulo_proveedor,"
+                                  "cDescripcion =:descripcion,"
+                                  "nCantidad =:cantidad,"
+                                  "rPvp =:coste_bruto,"
+                                  "rSubTotal =:subtotal_coste,"
+                                  "rDto =:porc_dto,"
+                                  "nDto =:dto,"
+                                  "nPorcIva =:porc_iva,"
+                                  "rTotal =:total "
+                                  "WHERE id = :id;");
+
+        query_lin_ped_pro.bindValue(":id_cab", oAlbaran->id);
+        query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
+        query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
+        query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
+        query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
+        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
+        query_lin_ped_pro.bindValue(":subtotal_coste",ld->subTotal);
+        query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
+        query_lin_ped_pro.bindValue(":dto",ld->dto);
+        query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
+        query_lin_ped_pro.bindValue(":total",ld->total);
+        query_lin_ped_pro.bindValue(":id",ld->idLinea);
+
+        if (!query_lin_ped_pro.exec()) {
+            QMessageBox::warning(this,tr("Gestión de pedidos"),
+                                 tr("Ocurrió un error al guardar la línea: %1").arg(query_lin_ped_pro.lastError().text()),
+                                 tr("Aceptar"));
+            ok_empresa = false;
+        }
+        //TODO control stock editando linea alb
+        if(queryArticulos.exec() && ok_empresa && ok_Maya){
+            QSqlDatabase::database("empresa").commit();
+            QSqlDatabase::database("Maya").commit();
+        } else
+        {
+            QSqlDatabase::database("empresa").rollback();
+            QSqlDatabase::database("Maya").rollback();
+        }
+    }
+    ld->cantidad_old = ld->cantidad;
+}
+
+void FrmAlbaran::lineaDeleted(lineaDetalle * ld)
+{
+    //todo borrar de la bd y stock y demas
+    //if id = -1 pasando olimpicamente
+    bool ok_empresa,ok_Maya;
+    ok_empresa = true;
+    ok_Maya = true;
+    QSqlDatabase::database("empresa").transaction();
+    QSqlDatabase::database("Maya").transaction();
+    if(ld->idLinea >-1)
+    {
+        //TODO control de stock
+        QSqlQuery q(QSqlDatabase::database("empresa"));
+        q.prepare("delete from lin_alb where id =:id");
+        q.bindValue(":id",ld->idLinea);
+        if(q.exec() && ok_Maya)
+        {
+            QSqlDatabase::database("empresa").commit();
+            QSqlDatabase::database("Maya").commit();
+        } else
+        {
+            QSqlDatabase::database("empresa").rollback();
+            QSqlDatabase::database("Maya").rollback();
+        }
+    }
+    delete ld;
+}
+
 
 

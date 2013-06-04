@@ -8,7 +8,7 @@ class Factura : public QObject
     Q_OBJECT
 public:
     explicit Factura(QObject *parent = 0);
-    int Id;
+    int id;
     QString cCodigoCliente;
     QString cFactura;
     QDate dFecha;

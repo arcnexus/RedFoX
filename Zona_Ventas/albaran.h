@@ -69,7 +69,6 @@ public slots:
     // Metodos de trabajo Clase Albaran
     bool AnadirAlbaran();
     bool RecuperarAlbaran(QString cSQL);
-    bool borrarLineas(int nId_Albaran);
     bool GuardarAlbaran(int nId_Albaran);
     int NuevoNumeroAlbaran();
 
