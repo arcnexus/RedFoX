@@ -395,7 +395,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //   layout_mw->addWidget(ui->widget);
 //   this->centralWidget()->setLayout(layout_mw);
 
-   this->show();
+ //  this->show();
 
 
 //    //-------------------------------

@@ -128,7 +128,9 @@ SOURCES += main.cpp\
     Zona_Contabilidad/frmentrada_apuntes.cpp \
     Auxiliares/frmdialogoimprimir.cpp \
     Busquedas/db_consulta_view.cpp \
-    Auxiliares/timedmessagebox.cpp
+    Auxiliares/timedmessagebox.cpp\
+    Zona_Compras/albaranproveedor.cpp
+
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -222,7 +224,9 @@ HEADERS  += mainwindow.h \
     Zona_Contabilidad/frmentrada_apuntes.h \
     Auxiliares/frmdialogoimprimir.h \
     Busquedas/db_consulta_view.h \
-    Auxiliares/timedmessagebox.h
+    Auxiliares/timedmessagebox.h\
+    Zona_Compras/albaranproveedor.h
+
 
 
 FORMS    += mainwindow.ui \
