@@ -2131,8 +2131,8 @@ color: rgb(0, 64, 64);</string>
          <string>Borrar</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
         </property>
         <property name="iconSize">
          <size>

@@ -44,6 +44,8 @@ private slots:
     void on_txtBuscar_editingFinished();
     bool eventFilter(QObject *target, QEvent *event);
 
+    void on_resultado_list_doubleClicked(const QModelIndex &index);
+
 protected:
     void resizeEvent(QResizeEvent *);
 private:

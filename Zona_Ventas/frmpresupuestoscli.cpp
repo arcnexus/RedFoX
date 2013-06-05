@@ -500,14 +500,38 @@ void FrmPresupuestosCli::on_btnBuscar_clicked()
 }
 
 void FrmPresupuestosCli::on_botBuscarCliente_clicked()
-{
-    FrmBuscarCliente BuscarClientes(this);
-    BuscarClientes.exec();
-    int nId = BuscarClientes.DevolverID();
-    QString cId = QString::number(nId);
-    oPres->id_cliente = cId.toInt();
-    oClientePres->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
-    LLenarCamposCliente();
+{    
+    Db_table_View searcher(qApp->activeWindow());
+    searcher.set_db("Maya");
+    searcher.set_table("clientes");
+
+    searcher.setWindowTitle(tr("Clientes"));
+
+    QStringList headers;
+    headers << tr("Codigo")<< tr("Nombre Fiscal") << tr("DNI/NIF") << tr("Poblacion");
+    searcher.set_table_headers(headers);
+
+    searcher.set_readOnly(true);
+    searcher.set_selection("Id");
+
+    searcher.set_columnHide(0);
+    searcher.set_columnHide(2);
+    searcher.set_columnHide(3);
+    searcher.set_columnHide(4);
+    searcher.set_columnHide(6);
+    searcher.set_columnHide(7);
+    searcher.set_columnHide(9);
+    searcher.set_columnHide(10);
+    searcher.set_columnHide(11);
+    for(int i =13;i<55;i++)
+        searcher.set_columnHide(i);
+    if(searcher.exec() == QDialog::Accepted)
+    {
+        QString cId =searcher.selected_value;
+        oPres->id_cliente = cId.toInt();
+        oClientePres->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
+        LLenarCamposCliente();
+    }
 }
 
 void FrmPresupuestosCli::totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda)
