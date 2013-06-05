@@ -30,6 +30,19 @@ void AlbaranProveedor::Recuperar(QString cSQL)
 
 }
 
+void AlbaranProveedor::Recuperar(QString cSQL, int val_accion)
+{
+    this->accion = val_accion;
+    QSqlQuery queryAlbaran(QSqlDatabase::database("empresa"));
+    if (queryAlbaran.exec(cSQL))
+        Cargar(queryAlbaran);
+    else
+        QMessageBox::warning(qApp->activeWindow(),tr("Albaranes de proveedor"),
+                             tr("Ocurrió un error al recuperar:")+queryAlbaran.lastError().text(),
+                             tr("Aceptar"));
+
+}
+
 void AlbaranProveedor::Cargar(QSqlQuery query)
 {
     if(query.next()){
@@ -61,6 +74,27 @@ void AlbaranProveedor::Cargar(QSqlQuery query)
         this->rTotal = query.record().value("rTotal").toDouble();
         this->tComentario = query.record().value("tComentario").toString();
     int nPedido;
+    } else
+    {
+        TimedMessageBox * t;
+        switch (this->accion) {
+        case 1: // siguiente
+            t = new TimedMessageBox(qApp->activeWindow(),
+                                                      QObject::tr("Se ha llegado al último albarán"));
+
+            break;
+        case 2: // anterior
+            t = new TimedMessageBox(qApp->activeWindow(),
+                                                      QObject::tr("Se ha llegado al primer albarán"));
+
+            break;
+        default:
+            break;
+        }
     }
 
+}
+
+void AlbaranProveedor::guardar()
+{
 }

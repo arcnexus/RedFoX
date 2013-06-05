@@ -12,7 +12,11 @@ public:
     
     void Recuperar(int id);
     void Recuperar(QString cSQL);
+    void Recuperar(QString cSQL, int val_accion);
     void Cargar(QSqlQuery query);
+    void guardar();
+    void Recuperar();
+    void llenarCampos();
 
     // -------
     // CAMPOS
@@ -33,6 +37,8 @@ public:
 signals:
     
 public slots:
+private:
+    int accion;
     
 };
 

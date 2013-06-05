@@ -341,14 +341,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes") );
     FrmAlbaran_pro = new FrmAlbaranProveedor(this);
-
+    connect(FrmAlbaran_pro,SIGNAL(block()),this,SLOT(block_main()));
+    connect(FrmAlbaran_pro,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: facturas") );
     frmFacturas_pro = new FrmFacturasProveedor(this);
+    connect(frmFacturas_pro,SIGNAL(block()),this,SLOT(block_main()));
+    connect(frmFacturas_pro,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") );
     frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
-
+    connect(frmOrden_Ped_pro,SIGNAL(block()),this,SLOT(block_main()));
+    connect(frmOrden_Ped_pro,SIGNAL(unblock()),this,SLOT(unblock_main()));
     splash.showMessage(tr("Cargando modulos... Editor de reportes") );
     reportWindow = new ReportWriterWindow();
 

@@ -389,7 +389,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
     </widget>
    </item>
    <item row="0" column="4">
-    <widget class="QLabel" name="label_5">
+    <widget class="QLabel" name="lbl_en_promocion">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -1661,7 +1661,7 @@ alternate-background-color: rgb(255, 255,210);</string>
         </layout>
        </item>
        <item>
-        <widget class="OpenChart" name="graf_prov">
+        <widget class="OpenChart" name="graf_prov" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -1674,7 +1674,7 @@ alternate-background-color: rgb(255, 255,210);</string>
            <height>232</height>
           </size>
          </property>
-         <property name="Title">
+         <property name="Title" stdset="0">
           <string>PVD Distribuidores</string>
          </property>
          <property name="Etiquetas" stdset="0">
@@ -1686,7 +1686,7 @@ alternate-background-color: rgb(255, 255,210);</string>
          <property name="Leyenda" stdset="0">
           <bool>false</bool>
          </property>
-         <property name="animationDuration">
+         <property name="animationDuration" stdset="0">
           <number>700</number>
          </property>
         </widget>
@@ -3088,14 +3088,11 @@ Imagen.</string>
            </widget>
           </item>
           <item>
-           <widget class="OpenChart" name="grafica">
-            <property name="Tipo">
-             <enum>OpenChart::BarraMultiple</enum>
-            </property>
+           <widget class="OpenChart" name="grafica" native="true">
             <property name="useTitle" stdset="0">
              <bool>true</bool>
             </property>
-            <property name="Title">
+            <property name="Title" stdset="0">
              <string>Compras/Ventas Ejercicio /unidades</string>
             </property>
             <property name="Etiquetas" stdset="0">
@@ -3106,9 +3103,6 @@ Imagen.</string>
             </property>
             <property name="Leyenda" stdset="0">
              <bool>true</bool>
-            </property>
-            <property name="TipoLeyenda" stdset="0">
-             <enum>OpenChart::Vertical</enum>
             </property>
            </widget>
           </item>
@@ -4372,11 +4366,11 @@ background-color: rgb(239, 239, 239);</string>
            </widget>
           </item>
           <item>
-           <widget class="OpenChart" name="Grafica_comparativa">
+           <widget class="OpenChart" name="Grafica_comparativa" native="true">
             <property name="useTitle" stdset="0">
              <bool>true</bool>
             </property>
-            <property name="Title">
+            <property name="Title" stdset="0">
              <string>Comparativa venta articulo entre empresas/ejercicios</string>
             </property>
             <property name="Etiquetas" stdset="0">
@@ -5999,8 +5993,8 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>258</x>
-     <y>171</y>
+     <x>281</x>
+     <y>195</y>
     </hint>
     <hint type="destinationlabel">
      <x>494</x>
@@ -6015,8 +6009,8 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>621</x>
-     <y>194</y>
+     <x>622</x>
+     <y>222</y>
     </hint>
     <hint type="destinationlabel">
      <x>782</x>
@@ -6047,8 +6041,8 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>621</x>
-     <y>217</y>
+     <x>622</x>
+     <y>249</y>
     </hint>
     <hint type="destinationlabel">
      <x>494</x>
@@ -6067,8 +6061,8 @@ alternate-background-color: rgb(255, 255, 255);</string>
      <y>148</y>
     </hint>
     <hint type="destinationlabel">
-     <x>571</x>
-     <y>303</y>
+     <x>556</x>
+     <y>335</y>
     </hint>
    </hints>
   </connection>
@@ -6079,12 +6073,12 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>258</x>
-     <y>171</y>
+     <x>281</x>
+     <y>195</y>
     </hint>
     <hint type="destinationlabel">
-     <x>621</x>
-     <y>422</y>
+     <x>622</x>
+     <y>454</y>
     </hint>
    </hints>
   </connection>
@@ -6095,8 +6089,8 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>621</x>
-     <y>194</y>
+     <x>622</x>
+     <y>222</y>
     </hint>
     <hint type="destinationlabel">
      <x>1098</x>
@@ -6111,12 +6105,12 @@ alternate-background-color: rgb(255, 255, 255);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>621</x>
-     <y>217</y>
+     <x>622</x>
+     <y>249</y>
     </hint>
     <hint type="destinationlabel">
-     <x>621</x>
-     <y>476</y>
+     <x>622</x>
+     <y>508</y>
     </hint>
    </hints>
   </connection>
@@ -6133,6 +6127,22 @@ alternate-background-color: rgb(255, 255, 255);</string>
     <hint type="destinationlabel">
      <x>782</x>
      <y>432</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chkArticulo_promocionado</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lbl_en_promocion</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>294</x>
+     <y>88</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>878</x>
+     <y>20</y>
     </hint>
    </hints>
   </connection>

@@ -22,6 +22,9 @@ Frmrecepcion_pedidos::Frmrecepcion_pedidos(QWidget *parent) :
     paso = false;
     albaran = false;
     factura = false;
+
+    ui->lblRegistrarAlbaran->setVisible(false);
+    ui->lblRegistrarFactura->setVisible(false);
     
 
 
@@ -394,6 +397,7 @@ void Frmrecepcion_pedidos::abrir_albaran()
         ui->lblfecha_albaran->setVisible(true);
         ui->txtAlbaran->setVisible(true);
         ui->txtFecha_albaran->setVisible(true);
+        ui->lblRegistrarAlbaran->setVisible(true);
 
         ui->btnAlbaran->setText(tr("Crear y cerrar Albarán"));
         ui->txtAlbaran->setFocus();
@@ -526,6 +530,7 @@ void Frmrecepcion_pedidos::abrir_albaran()
         ui->lblfecha_albaran->setVisible(false);
         ui->txtFecha_albaran->setVisible(false);
         ui->btnAlbaran->setText("Abrir albarán");
+        ui->lblfecha_albaran->setVisible(false);
         albaran = false;
     }
 }

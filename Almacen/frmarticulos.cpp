@@ -39,8 +39,10 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
 
     GraficaUnidades();
 
-
+    //---------------------
     // Control objetos
+    //---------------------
+    ui->lbl_en_promocion->setVisible(false);
     // --------------------
     // TARIFAS
     //---------------------
@@ -248,6 +250,7 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->btnAnadirTarifa->setEnabled(!state);
     ui->btnEditartarifa->setEnabled(!state);
     ui->btnBorrarTarifa->setEnabled(!state);
+    ui->checkBox->setEnabled(true);
 
 
 }
@@ -343,7 +346,10 @@ void FrmArticulos::LLenarCampos()
   ui->txt_dto_web->setText(QString::number(oArticulo->porc_dto_web,'f',2));
   ui->txtoferta_pvp_fijo->setText(QString::number(oArticulo->oferta_pvp_fijo,'f',2));
   ui->txtComentarios_promocion->setPlainText(oArticulo->comentario_oferta);
-
+  if (oArticulo->articulopromocionado)
+      ui->lbl_en_promocion->setVisible(true);
+  else
+      ui->lbl_en_promocion->setVisible(false);
 
   // ------------------
   // LLENO TABLAS DATOS

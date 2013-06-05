@@ -274,7 +274,34 @@ color: rgb(255, 255, 255);</string>
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_8">
-                    <item row="0" column="0">
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_23">
+                      <property name="text">
+                       <string>Pedido:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <spacer name="verticalSpacer_3">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QLineEdit" name="txtnPedido">
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0" colspan="2">
                      <layout class="QGridLayout" name="gridLayout_6">
                       <item row="1" column="1" rowspan="2" colspan="2">
                        <widget class="QLineEdit" name="txtcNumFra">
@@ -329,19 +356,6 @@ color: rgb(255, 255, 255);</string>
                        </widget>
                       </item>
                      </layout>
-                    </item>
-                    <item row="1" column="0">
-                     <spacer name="verticalSpacer_3">
-                      <property name="orientation">
-                       <enum>Qt::Vertical</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>20</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                     </spacer>
                     </item>
                    </layout>
                   </widget>
@@ -1636,7 +1650,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="1" column="1" colspan="3">
-           <widget class="QLineEdit" name="txtcCliente">
+           <widget class="QLineEdit" name="txtcProveedor">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -1649,7 +1663,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="txtcCodigoCliente">
+           <widget class="QLineEdit" name="txtcCodigoProveedor">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -1836,7 +1850,7 @@ color: rgb(0, 64, 64);</string>
            </widget>
           </item>
           <item row="7" column="1">
-           <widget class="QComboBox" name="combo_pais"/>
+           <widget class="QComboBox" name="cbo_pais"/>
           </item>
           <item row="7" column="0">
            <widget class="QLabel" name="label_14">
@@ -2244,7 +2258,7 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="btnBorrar">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2255,8 +2269,8 @@ color: rgb(0, 64, 64);</string>
          <string>Borrar</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2278,13 +2292,13 @@ color: rgb(0, 64, 64);</string>
          <string>Facturar</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>:/Icons/PNG/factura.png</normaloff>:/Icons/PNG/factura.png</iconset>
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>24</width>
-          <height>24</height>
+          <width>20</width>
+          <height>20</height>
          </size>
         </property>
        </widget>

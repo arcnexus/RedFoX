@@ -17,165 +17,17 @@
    <string notr="true">background-color: rgb(165, 179, 255);</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_36">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>27</height>
-      </size>
+   <item row="3" column="4">
+    <widget class="QPushButton" name="btnFactura">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;RECEPCIÓN DE PEDIDOS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>Abrir Factura</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="3" colspan="3">
-    <widget class="QLabel" name="label_22">
-     <property name="minimumSize">
-      <size>
-       <width>250</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(170, 0, 127);
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>AREA DE COMPRAS</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QFrame" name="frame">
-     <property name="minimumSize">
-      <size>
-       <width>320</width>
-       <height>201</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>283</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #ecefed;</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Proveedor:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1" colspan="2">
-       <widget class="QLineEdit" name="txtproveedor">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" colspan="3">
-       <widget class="QLabel" name="label">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 0, 128);
-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>FILTRAR PEDIDOS</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QDateEdit" name="txtFechaFin">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="displayFormat">
-         <string>dd/MM/yyyy</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Realizados entre:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QDateEdit" name="txtFecha_ini">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="displayFormat">
-         <string>dd/MM/yyyy</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0" colspan="3">
-       <widget class="QPushButton" name="btnBuscar">
-        <property name="text">
-         <string>Buscar</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Pedido:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1" colspan="2">
-       <widget class="QLineEdit" name="txtNumPedido"/>
-      </item>
-      <item row="3" column="1" colspan="2">
-       <widget class="QCheckBox" name="chkPedientes">
-        <property name="text">
-         <string>completados/cerrados</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="1" column="1" rowspan="2" colspan="5">
+   <item row="1" column="1" rowspan="2" colspan="6">
     <widget class="QFrame" name="frame_2">
      <property name="styleSheet">
       <string notr="true">background-color: #ecefed;</string>
@@ -306,6 +158,82 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
      </attribute>
     </widget>
    </item>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="btnAlbaran">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Abrir albarán</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_36">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>27</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;RECEPCIÓN DE PEDIDOS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="4" colspan="3">
+    <widget class="QLabel" name="label_22">
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(170, 0, 127);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>AREA DE COMPRAS</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLabel" name="lblRegistrarAlbaran">
+     <property name="minimumSize">
+      <size>
+       <width>144</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 170, 0);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Registrando Albarán</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
    <item row="3" column="1">
     <spacer name="horizontalSpacer">
      <property name="orientation">
@@ -319,27 +247,119 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
      </property>
     </spacer>
    </item>
-   <item row="3" column="2">
-    <widget class="QPushButton" name="btnAlbaran">
-     <property name="enabled">
-      <bool>false</bool>
+   <item row="1" column="0">
+    <widget class="QFrame" name="frame">
+     <property name="minimumSize">
+      <size>
+       <width>320</width>
+       <height>201</height>
+      </size>
      </property>
-     <property name="text">
-      <string>Abrir albarán</string>
+     <property name="maximumSize">
+      <size>
+       <width>283</width>
+       <height>16777215</height>
+      </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #ecefed;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Proveedor:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1" colspan="2">
+       <widget class="QLineEdit" name="txtproveedor">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="3">
+       <widget class="QLabel" name="label">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 0, 128);
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>FILTRAR PEDIDOS</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QDateEdit" name="txtFechaFin">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="displayFormat">
+         <string>dd/MM/yyyy</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Realizados entre:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QDateEdit" name="txtFecha_ini">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="displayFormat">
+         <string>dd/MM/yyyy</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0" colspan="3">
+       <widget class="QPushButton" name="btnBuscar">
+        <property name="text">
+         <string>Buscar</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Pedido:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1" colspan="2">
+       <widget class="QLineEdit" name="txtNumPedido"/>
+      </item>
+      <item row="3" column="1" colspan="2">
+       <widget class="QCheckBox" name="chkPedientes">
+        <property name="text">
+         <string>completados/cerrados</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
-   <item row="3" column="3">
-    <widget class="QPushButton" name="btnFactura">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Abrir Factura</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="4">
+   <item row="3" column="5">
     <widget class="QPushButton" name="btnImprimir">
      <property name="enabled">
       <bool>false</bool>
@@ -352,7 +372,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="5">
+   <item row="3" column="6">
     <widget class="QPushButton" name="btnEtiquetas">
      <property name="enabled">
       <bool>false</bool>
@@ -362,6 +382,26 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
      </property>
      <property name="text">
       <string>Etiquetas</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLabel" name="lblRegistrarFactura">
+     <property name="minimumSize">
+      <size>
+       <width>144</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 170, 0);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Registrando Factura</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>

@@ -246,10 +246,11 @@ int main(int argc, char *argv[])
            w.setWindowState(Qt::WindowMinimized);
            w.showMaximized();
 #else
-           w.setWindowState(Qt::WindowMaximized);
            QRect dr= QApplication::desktop()->rect();
            int ancho = dr.width();
            w.setMaximumWidth(ancho);
+           w.setWindowState(Qt::WindowMaximized);
+           w.setFixedWidth(ancho);
            w.showMaximized();
 #endif
            return a.exec();
