@@ -2120,29 +2120,6 @@ color: rgb(0, 64, 64);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnDeshacer">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Deshacer</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../maya.qrc">
-          <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="btnBorrar">
         <property name="minimumSize">
          <size>
@@ -2209,7 +2186,6 @@ color: rgb(0, 64, 64);</string>
   <tabstop>btnImprimir</tabstop>
   <tabstop>btnEditar</tabstop>
   <tabstop>btnGuardar</tabstop>
-  <tabstop>btnDeshacer</tabstop>
   <tabstop>btnBorrar</tabstop>
   <tabstop>txtnPresupuesto</tabstop>
  </tabstops>

@@ -51,11 +51,14 @@ signals:
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);
     void desglose4Changed(double base, double iva, double re, double total);
+    void i_recalc();
 public slots:
     void set_UsarRE(bool state);
     void addRow();
     void removeRow();
     void handle_currentItemChanged(QTableWidgetItem * current, QTableWidgetItem * previous);
+private slots:
+    void recalc();
 private:
     QTableWidget* helped_table;
     QString moneda;

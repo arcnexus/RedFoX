@@ -67,6 +67,7 @@ private:
     QMenu * convertir_menu;
     Table_Helper helper;
     bool editando;
+    QString moneda;
 };
 
 #endif // FRMPRESUPUESTOSCLI_H

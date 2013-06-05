@@ -58,7 +58,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     if(oPres->siguiente())
     {
         LLenarCampos();
-        QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPresupuesto->text());
+        QString filter = QString("Id_Cab = '%1'").arg(oPres->id);
         helper.fillTable("empresa","lin_pre",filter);
     }
 
@@ -230,15 +230,16 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     oPres->cMovil = (ui->txtcMovil->text());
     oPres->cFax = (ui->txtcFax->text());
     oPres->tComentarios = (ui->txttComentario->toPlainText());
-    oPres->rImporte = (ui->txtrBase->text().replace(".","").toDouble());
-    oPres->rSubTotal = (ui->txtrSubtotal->text().replace(".","").toDouble());
-    oPres->rDescuento = (ui->txtrDescuento->text().replace(".","").toDouble());
-    oPres->rTotal = (ui->txtrTotal->text().replace(".","").toDouble());
+    qDebug()<<ui->txtrBase->text();
+    oPres->rImporte = ui->txtrBase->text().replace(moneda,"") .toDouble();
+    oPres->rSubTotal = (ui->txtrSubtotal->text().replace(moneda,"") .toDouble());
+    oPres->rDescuento = (ui->txtrDescuento->text().replace(moneda,"") .toDouble());
+    oPres->rTotal = (ui->txtrTotal->text().replace(moneda,"") .toDouble());
 
     oPres->lAprobado = ui->chklAprovado->isChecked();
 
     oPres->dFechaAprobacion = (ui->txtdFechaAprovacion->date());
-    oPres->rImporteFactura = (ui->txtrImporteFactura->text().replace(".","").toDouble());
+    oPres->rImporteFactura = (ui->txtrImporteFactura->text().replace(moneda,"") .toDouble());
 
     if(ui->txtcFactura->text()=="")
         oPres->cFactura = "0";
@@ -255,31 +256,31 @@ void FrmPresupuestosCli::LLenarPresupuesto()
 
     oPres->tLugarEntrega = (ui->txttLugarEntrega->toPlainText());
     oPres->cAtencionde = (ui->txtcAtencionde->text());
-    oPres->rBase1 = (ui->txtrBase1->text().replace(".","").toDouble());
-    oPres->rBase2 = (ui->txtrBase2->text().replace(".","").toDouble());
-    oPres->rBase3 = (ui->txtrBase3->text().replace(".","").toDouble());
-    oPres->rBase4 = (ui->txtrBase4->text().replace(".","").toDouble());
+    oPres->rBase1 = (ui->txtrBase1->text().replace(moneda,"") .toDouble());
+    oPres->rBase2 = (ui->txtrBase2->text().replace(moneda,"") .toDouble());
+    oPres->rBase3 = (ui->txtrBase3->text().replace(moneda,"") .toDouble());
+    oPres->rBase4 = (ui->txtrBase4->text().replace(moneda,"") .toDouble());
     oPres->nIva1 = (ui->txtnPorcentajeIva1->text().toDouble());
     oPres->nIva2 = (ui->txtnPorcentajeIva2->text().toDouble());
     oPres->nIva3 = (ui->txtnPorcentajeIva3->text().toDouble());
     oPres->nIva4 = (ui->txtnPorcentajeIva4->text().toDouble());
-    oPres->rIva1 = (ui->txtrIVA1->text().replace(".","").toDouble());
-    oPres->rIva2 = (ui->txtrIVA2->text().replace(".","").toDouble());
-    oPres->rIva3 = (ui->txtrIVA3->text().replace(".","").toDouble());
-    oPres->rIva4 = (ui->txtrIVA4->text().replace(".","").toDouble());
+    oPres->rIva1 = (ui->txtrIVA1->text().replace(moneda,"") .toDouble());
+    oPres->rIva2 = (ui->txtrIVA2->text().replace(moneda,"") .toDouble());
+    oPres->rIva3 = (ui->txtrIVA3->text().replace(moneda,"") .toDouble());
+    oPres->rIva4 = (ui->txtrIVA4->text().replace(moneda,"") .toDouble());
     oPres->nRecargoEquivalencia1 = (ui->txtnRec1->text().toDouble());
     oPres->nRecargoEquivalencia2 = (ui->txtnRec2->text().toDouble());
     oPres->nRecargoEquivalencia3 = (ui->txtnRec3->text().toDouble());
     oPres->nRecargoEquivalencia4 = (ui->txtnRec4->text().toDouble());
     oPres->lRecargoEquivalencia = ui->chklRecargoEq->isChecked();
-    oPres->rRec1 = (ui->txtrRecargoEq1->text().replace(".","").toDouble());
-    oPres->rRec2 = (ui->txtrRecargoEq2->text().replace(".","").toDouble());
-    oPres->rRec3 = (ui->txtrRecargoEq3->text().replace(".","").toDouble());
-    oPres->rRec4 = (ui->txtrRecargoEq4->text().replace(".","").toDouble());
-    oPres->rTotal1 = (ui->txtrTotal1->text().replace(".","").toDouble());
-    oPres->rTotal2 = (ui->txtrTotal2->text().replace(".","").toDouble());
-    oPres->rTotal3 = (ui->txtrTotal3->text().replace(".","").toDouble());
-    oPres->rTotal4 = (ui->txtrTotal4->text().replace(".","").toDouble());
+    oPres->rRec1 = (ui->txtrRecargoEq1->text().replace(moneda,"") .toDouble());
+    oPres->rRec2 = (ui->txtrRecargoEq2->text().replace(moneda,"") .toDouble());
+    oPres->rRec3 = (ui->txtrRecargoEq3->text().replace(moneda,"") .toDouble());
+    oPres->rRec4 = (ui->txtrRecargoEq4->text().replace(moneda,"") .toDouble());
+    oPres->rTotal1 = (ui->txtrTotal1->text().replace(moneda,"") .toDouble());
+    oPres->rTotal2 = (ui->txtrTotal2->text().replace(moneda,"") .toDouble());
+    oPres->rTotal3 = (ui->txtrTotal3->text().replace(moneda,"") .toDouble());
+    oPres->rTotal4 = (ui->txtrTotal4->text().replace(moneda,"") .toDouble());
     oPres->cEmail = (ui->txtcEmail->text());
 }
 void FrmPresupuestosCli::VaciarCampos()
@@ -381,7 +382,6 @@ void FrmPresupuestosCli::BloquearCampos(bool state)
     ui->btnAnterior->setEnabled(state);
     ui->btnBorrar->setEnabled(state);
     ui->btnBuscar->setEnabled(state);
-    ui->btnDeshacer->setEnabled(!state);
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
@@ -407,7 +407,7 @@ void FrmPresupuestosCli::on_btnSiguiente_clicked()
     if(oPres->siguiente())
     {
         LLenarCampos();
-        QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPresupuesto->text());
+        QString filter = QString("Id_Cab = '%1'").arg(oPres->id);
         helper.fillTable("empresa","lin_pre",filter);
     }
     else
@@ -420,7 +420,7 @@ void FrmPresupuestosCli::on_btnAnterior_clicked()
     if(oPres->anterior())
     {
         LLenarCampos();
-        QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPresupuesto->text());
+        QString filter = QString("Id_Cab = '%1'").arg(oPres->id);
         helper.fillTable("empresa","lin_pre",filter);
     }
     else
@@ -470,25 +470,15 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
     LLenarPresupuesto();
     QSqlDatabase::database("empresa").transaction();
     bool succes = true;
-    if(editando)
-    {
-        int iPre = ui->txtnPresupuesto->text().toInt();
-        //actualizar cabezera
-        succes &= oPres->GuardarPres(iPre);
-        //Borrar lineas
-        succes &= oPres->BorrarLineas(iPre);
-        //guardar lineas
-    //    succes &= helper.saveTable(iPre,"empresa","lin_pre");
-        if(succes)
-        {
-            LLenarCampos();
-            succes = QSqlDatabase::database("empresa").commit();
-        }
-    }
-    else
-    {
 
+    succes &= oPres->GuardarPres(oPres->id);
+
+    if(succes)
+    {
+        LLenarCampos();
+        succes = QSqlDatabase::database("empresa").commit();
     }
+
     if(succes)
     {
         TimedMessageBox * t = new TimedMessageBox(this,tr("Guardado con éxito"));
@@ -522,6 +512,7 @@ void FrmPresupuestosCli::on_botBuscarCliente_clicked()
 
 void FrmPresupuestosCli::totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda)
 {
+    this->moneda = moneda;
     ui->txtrBase->setText(QString::number(base)+moneda);
     ui->txtrDescuento->setText(QString::number(dto)+moneda);
     ui->txtrSubtotal->setText(QString::number(subTotal)+moneda);
@@ -538,6 +529,7 @@ void FrmPresupuestosCli::totalChanged(double base , double dto ,double subTotal 
 
 void FrmPresupuestosCli::desglose1Changed(double base, double iva, double re, double total)
 {
+    this->moneda = moneda;
     ui->txtrBase1->setText(QString::number(base));
     ui->txtrIVA1->setText(QString::number(iva));
     ui->txtrRecargoEq1->setText(QString::number(re));

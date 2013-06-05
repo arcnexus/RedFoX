@@ -10,6 +10,7 @@ Table_Helper::Table_Helper(QObject *parent) :
     use_re = false;
     m_cantidadArticulo=0;
     isActive = false;
+    connect(this,SIGNAL(i_recalc()),this,SLOT(recalc()));
 }
 
 Table_Helper::~Table_Helper()
@@ -85,8 +86,7 @@ void Table_Helper::blockTable(bool state)
 void Table_Helper::set_UsarRE(bool state)
 {
     use_re = state;
-    calcularTotal();
-    calcularDesglose();
+    emit i_recalc();
 }
 
 void Table_Helper::resizeTable()
@@ -134,8 +134,7 @@ void Table_Helper::fillTable(QString db, QString table, QString filter)
             addRow(query.record());
     }
     helped_table->blockSignals(false);
-    calcularTotal();
-    calcularDesglose();
+    emit i_recalc();
 }
 
 void Table_Helper::addRow()
@@ -290,8 +289,7 @@ void Table_Helper::removeRow()
             emit lineaDeleted(aux);
         }
     }
-    calcularTotal();
-    calcularDesglose();
+    emit i_recalc();
 }
 
 void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
@@ -319,19 +317,23 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
         else if(column == 9)
             comprobarStock(row);
 
-        if(column == 1 || column==3)
-        {
-            calcularTotal();
-            calcularDesglose();
-        }
         updateLinea(row);
         helped_table->blockSignals(false);
+
+        calcularTotal();
+        calcularDesglose();
     }
+}
+
+void Table_Helper::recalc()
+{
+    calcularTotal();
+    calcularDesglose();
 }
 
 void Table_Helper::calcularTotal()
 {
-    blockSignals(true);
+    helped_table->blockSignals(true);
     double base = 0;
     double dto = 0;
     double total = 0;
@@ -346,7 +348,7 @@ void Table_Helper::calcularTotal()
         total += calcularTotalLinea(i);
     }
     double subtotal = base - dto;
-    blockSignals(false);
+    helped_table->blockSignals(false);
     emit totalChanged( base , dto , subtotal ,  iva,  re,  total,  moneda);
 }
 
@@ -658,6 +660,7 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
             searchArticulo();
         }
     }
+    emit i_recalc();
     return false;
 }
 
