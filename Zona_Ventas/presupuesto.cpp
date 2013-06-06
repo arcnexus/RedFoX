@@ -14,21 +14,21 @@ bool Presupuesto::AnadirPresupuesto()
 {
     QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
 
-    this->nIva1 = Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble();
-    this->nIva2 = Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble();
-    this->nIva3 = Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble();
-    this->nIva4 = Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble();
+    this->nIva1 = Configuracion_global->ivaList.at(0).toDouble();
+    this->nIva2 = Configuracion_global->ivaList.at(1).toDouble();
+    this->nIva3 = Configuracion_global->ivaList.at(2).toDouble();
+    this->nIva4 = Configuracion_global->ivaList.at(3).toDouble();
 
-    this->nRecargoEquivalencia1 = Configuracion_global->ivas[keys.at(0)].value("nRegargoEquivalencia").toDouble();
-    this->nRecargoEquivalencia2 = Configuracion_global->ivas[keys.at(1)].value("nRegargoEquivalencia").toDouble();
-    this->nRecargoEquivalencia3 = Configuracion_global->ivas[keys.at(2)].value("nRegargoEquivalencia").toDouble();
-    this->nRecargoEquivalencia4 = Configuracion_global->ivas[keys.at(3)].value("nRegargoEquivalencia").toDouble();
+    this->nRecargoEquivalencia1 = Configuracion_global->reList.at(0).toDouble();
+    this->nRecargoEquivalencia2 = Configuracion_global->reList.at(1).toDouble();
+    this->nRecargoEquivalencia3 = Configuracion_global->reList.at(2).toDouble();
+    this->nRecargoEquivalencia4 = Configuracion_global->reList.at(3).toDouble();
 
     QSqlQuery cab_pre(QSqlDatabase::database("empresa"));
     cab_pre.prepare("INSERT INTO cab_pre (nPresupuesto, dFecha, dValidoHasta,"
                     "id_Cliente, cCodigoCliente, cCliente, cCif, cDireccion, cDireccion2, cCP,"
                     "cPoblacion, cProvincia, idpais, cTelefono, cMovil, cFax, nDto, tComentarios,"
-                    "rImporte, rSubtotal, rDescuento, rTotal, lImpreso, lAprobado, dFechaAprobacion,"
+                    "rImporte, rBase, rDescuento, rTotal, lImpreso, lAprobado, dFechaAprobacion,"
                     "rImporteFactura, rImportePendiente, cFactura, nAlbaran, nPedido, id_FormaPago,"
                     "tLugarEntrega, cAtencionde, rBase1, rBase2, rBase3, rBase4, nIva1, nIva2, nIva3,"
                     "nIva4, rIva1, rIva2, rIva3, rIva4, nRecargoEquivalencia1, nRecargoEquivalencia2,"
@@ -155,7 +155,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->nDto = registro.field("nDto").value().toDouble();
             this->tComentarios = registro.field("tComentarios").value().toString();
             this->rImporte = registro.field("rImporte").value().toDouble();
-            this->rSubTotal = registro.field("rSubtotal").value().toDouble();
+            this->rBase = registro.field("rBase").value().toDouble();
             this->rDescuento = registro.field("rDescuento").value().toDouble();
             this->rTotal = registro.field("rTotal").value().toDouble();
             this->lImpreso = registro.field("lImpreso").value().toBool();
@@ -235,7 +235,7 @@ bool Presupuesto::GuardarPres(int nId_Presupuesto)
                     "cDireccion = :cDireccion, cDireccion2 = :cDireccion2, cCP = :cCP,"
                     "cPoblacion = :cPoblacion, cProvincia = :cProvincia, idpais = :idpais,"
                     "cTelefono = :cTelefono, cMovil = :cMovil, cFax = :cFax,"
-                    "tComentarios = :tComentarios, rImporte = :rImporte, rSubtotal =:rSubtotal,"
+                    "tComentarios = :tComentarios, rImporte = :rImporte, rBase =:rSubtotal,"
                     "rDescuento = :rDescuento, rTotal = :rTotal, lImpreso = :lImpreso,"
                     "lAprobado = :lAprobado, dFechaAprobacion = :dFechaAprobacion,"
                     "rImporteFactura =:rImporteFactura, rImportePendiente = :rImportePendiente,"
@@ -273,7 +273,7 @@ bool Presupuesto::GuardarPres(int nId_Presupuesto)
     cab_pre.bindValue(":cFax",cFax);
     cab_pre.bindValue(":tComentarios",tComentarios);
     cab_pre.bindValue(":rImporte",rImporte);
-    cab_pre.bindValue(":rSubtotal",rSubTotal);
+    cab_pre.bindValue(":rSubtotal",rBase);
     cab_pre.bindValue(":rDescuento",rDescuento);
     cab_pre.bindValue(":rTotal",rTotal);
     cab_pre.bindValue(":lImpreso",lImpreso);
@@ -315,7 +315,7 @@ bool Presupuesto::GuardarPres(int nId_Presupuesto)
     cab_pre.bindValue(":cEmail",cEmail);
     cab_pre.bindValue(":rTotalIva",rTotalIva);
     cab_pre.bindValue(":rTotalRec",rTotalRec);
-    cab_pre.bindValue(":rImporte1",0);//TODO preguntar a Marc
+    cab_pre.bindValue(":rImporte1",0);
     cab_pre.bindValue(":rImporte2",0);
     cab_pre.bindValue(":rImporte3",0);
     cab_pre.bindValue(":rImporte4",0);

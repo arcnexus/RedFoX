@@ -124,7 +124,7 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtcFax->setText(oPres->cFax);
     ui->txttComentario->setPlainText(oPres->tComentarios);
     ui->txtrBase->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rImporte,'f',2)));
-    ui->txtrSubtotal->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rSubTotal,'f',2)));
+    ui->txtrSubtotal->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rBase,'f',2)));
     ui->txtrDescuento->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rDescuento,'f',2)));
     ui->txtrTotal->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotal,'f',2)));
     ui->lblImpreso->setVisible(oPres->lImpreso);
@@ -147,20 +147,20 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtrBase4->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rBase4,'f',2)));
     ui->txtrBaseTotal->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rImporte,'f',2)));
 
-    ui->txtnPorcentajeIva1->setText(QString::number(oPres->nIva1));
-    ui->txtnPorcentajeIva2->setText(QString::number(oPres->nIva2));
-    ui->txtnPorcentajeIva3->setText(QString::number(oPres->nIva3));
-    ui->txtnPorcentajeIva4->setText(QString::number(oPres->nIva4));
+    //ui->txtnPorcentajeIva1->setText(QString::number(oPres->nIva1));
+    //ui->txtnPorcentajeIva2->setText(QString::number(oPres->nIva2));
+    //ui->txtnPorcentajeIva3->setText(QString::number(oPres->nIva3));
+    //ui->txtnPorcentajeIva4->setText(QString::number(oPres->nIva4));
     ui->txtrIVA1->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rIva1,'f',2)));
     ui->txtrIVA2->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rIva2,'f',2)));
     ui->txtrIVA3->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rIva3,'f',2)));
     ui->txtrIVA4->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rIva4,'f',2)));
     ui->txtrTotalIVA->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotalIva,'f',2)));
     ui->txtrImporteIva->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotalIva,'f',2)));
-    ui->txtnRec1->setText(QString::number(oPres->nRecargoEquivalencia1));
-    ui->txtnRec2->setText(QString::number(oPres->nRecargoEquivalencia2));
-    ui->txtnRec3->setText(QString::number(oPres->nRecargoEquivalencia3));
-    ui->txtnRec4->setText(QString::number(oPres->nRecargoEquivalencia4));
+    //ui->txtnRec1->setText(QString::number(oPres->nRecargoEquivalencia1));
+    //ui->txtnRec2->setText(QString::number(oPres->nRecargoEquivalencia2));
+    //ui->txtnRec3->setText(QString::number(oPres->nRecargoEquivalencia3));
+    //ui->txtnRec4->setText(QString::number(oPres->nRecargoEquivalencia4));
     ui->txtrTotalRecargoEq->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotalRec,'f',2)));
     ui->txtrTotalRecargoEq_2->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rTotalRec,'f',2)));
     ui->txtrRecargoEq1->setText(Configuracion_global->FormatoNumerico(QString::number(oPres->rRec1,'f',2)));
@@ -230,9 +230,9 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     oPres->cMovil = (ui->txtcMovil->text());
     oPres->cFax = (ui->txtcFax->text());
     oPres->tComentarios = (ui->txttComentario->toPlainText());
-    qDebug()<<ui->txtrBase->text();
+
     oPres->rImporte = ui->txtrBase->text().replace(moneda,"") .toDouble();
-    oPres->rSubTotal = (ui->txtrSubtotal->text().replace(moneda,"") .toDouble());
+    oPres->rBase = (ui->txtrSubtotal->text().replace(moneda,"") .toDouble());
     oPres->rDescuento = (ui->txtrDescuento->text().replace(moneda,"") .toDouble());
     oPres->rTotal = (ui->txtrTotal->text().replace(moneda,"") .toDouble());
 
@@ -260,18 +260,18 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     oPres->rBase2 = (ui->txtrBase2->text().replace(moneda,"") .toDouble());
     oPres->rBase3 = (ui->txtrBase3->text().replace(moneda,"") .toDouble());
     oPres->rBase4 = (ui->txtrBase4->text().replace(moneda,"") .toDouble());
-    oPres->nIva1 = (ui->txtnPorcentajeIva1->text().toDouble());
-    oPres->nIva2 = (ui->txtnPorcentajeIva2->text().toDouble());
-    oPres->nIva3 = (ui->txtnPorcentajeIva3->text().toDouble());
-    oPres->nIva4 = (ui->txtnPorcentajeIva4->text().toDouble());
+    //oPres->nIva1 = (ui->txtnPorcentajeIva1->text().toDouble());
+    //oPres->nIva2 = (ui->txtnPorcentajeIva2->text().toDouble());
+    //oPres->nIva3 = (ui->txtnPorcentajeIva3->text().toDouble());
+    //oPres->nIva4 = (ui->txtnPorcentajeIva4->text().toDouble());
     oPres->rIva1 = (ui->txtrIVA1->text().replace(moneda,"") .toDouble());
     oPres->rIva2 = (ui->txtrIVA2->text().replace(moneda,"") .toDouble());
     oPres->rIva3 = (ui->txtrIVA3->text().replace(moneda,"") .toDouble());
     oPres->rIva4 = (ui->txtrIVA4->text().replace(moneda,"") .toDouble());
-    oPres->nRecargoEquivalencia1 = (ui->txtnRec1->text().toDouble());
-    oPres->nRecargoEquivalencia2 = (ui->txtnRec2->text().toDouble());
-    oPres->nRecargoEquivalencia3 = (ui->txtnRec3->text().toDouble());
-    oPres->nRecargoEquivalencia4 = (ui->txtnRec4->text().toDouble());
+    //oPres->nRecargoEquivalencia1 = (ui->txtnRec1->text().toDouble());
+    //oPres->nRecargoEquivalencia2 = (ui->txtnRec2->text().toDouble());
+    //oPres->nRecargoEquivalencia3 = (ui->txtnRec3->text().toDouble());
+    //oPres->nRecargoEquivalencia4 = (ui->txtnRec4->text().toDouble());
     oPres->lRecargoEquivalencia = ui->chklRecargoEq->isChecked();
     oPres->rRec1 = (ui->txtrRecargoEq1->text().replace(moneda,"") .toDouble());
     oPres->rRec2 = (ui->txtrRecargoEq2->text().replace(moneda,"") .toDouble());
@@ -281,6 +281,8 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     oPres->rTotal2 = (ui->txtrTotal2->text().replace(moneda,"") .toDouble());
     oPres->rTotal3 = (ui->txtrTotal3->text().replace(moneda,"") .toDouble());
     oPres->rTotal4 = (ui->txtrTotal4->text().replace(moneda,"") .toDouble());
+    oPres->rTotalIva = ui->txtrTotalIVA->text().replace(moneda,"") .toDouble();
+    oPres->rTotalRec = ui->txtrTotalRecargoEq->text().replace(moneda,"") .toDouble();
     oPres->cEmail = (ui->txtcEmail->text());
 }
 void FrmPresupuestosCli::VaciarCampos()
@@ -318,18 +320,18 @@ void FrmPresupuestosCli::VaciarCampos()
     ui->txtrBase2->setText("0,00");
     ui->txtrBase3->setText("0,00");
     ui->txtrBase4->setText("0,00");
-    ui->txtnPorcentajeIva1->setText("0");
-    ui->txtnPorcentajeIva2->setText("0");
-    ui->txtnPorcentajeIva3->setText("0");
-    ui->txtnPorcentajeIva4->setText("0");
+   // ui->txtnPorcentajeIva1->setText("0");
+   // ui->txtnPorcentajeIva2->setText("0");
+   // ui->txtnPorcentajeIva3->setText("0");
+   // ui->txtnPorcentajeIva4->setText("0");
     ui->txtrIVA1->setText("0,00");
     ui->txtrIVA2->setText("0,00");
     ui->txtrIVA3->setText("0,00");
     ui->txtrIVA4->setText("0,00");
-    ui->txtnRec1->setText("0");
-    ui->txtnRec2->setText("0");
-    ui->txtnRec3->setText("0");
-    ui->txtnRec4->setText("0");
+    //ui->txtnRec1->setText("0");
+    //ui->txtnRec2->setText("0");
+    //ui->txtnRec3->setText("0");
+    //ui->txtnRec4->setText("0");
     ui->txtrRecargoEq1->setText("0,00");
     ui->txtrRecargoEq2->setText("0,00");
     ui->txtrRecargoEq3->setText("0,00");
@@ -620,9 +622,9 @@ void FrmPresupuestosCli::on_btnBorrar_clicked()
         QSqlDatabase::database("empresa").transaction();
 
         QSqlQuery q(QSqlDatabase::database("empresa"));
+        succes &= oPres->BorrarLineas(oPres->id);
         q.prepare("DELETE FROM cab_pre WHERE nPresupuesto = "+ui->txtnPresupuesto->text());
-        succes &= q.exec();
-        succes &= oPres->BorrarLineas(ui->txtnPresupuesto->text().toInt());
+        succes &= q.exec();        
 
         if(succes)
             succes &= QSqlDatabase::database("empresa").commit();

@@ -320,8 +320,7 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
         updateLinea(row);
         helped_table->blockSignals(false);
 
-        calcularTotal();
-        calcularDesglose();
+        emit i_recalc();
     }
 }
 
@@ -516,8 +515,8 @@ double Table_Helper::calcularTotalLinea(int row)
     double subtotal = cantidad * pvp;
     helped_table->item(row,4)->setText(QString::number(subtotal,'f',2));
 
-    double dto = helped_table->item(row,5)->text().toDouble();
-    double dto_percent = helped_table->item(row,6)->text().toDouble();
+    double dto = helped_table->item(row,5)->text().replace(",",".").toDouble();
+    double dto_percent = helped_table->item(row,6)->text().replace(",",".").toDouble();
 
     double iva = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nIVA").toDouble();
 
@@ -643,8 +642,14 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
             {
                 if(helped_table->currentColumn()== 3 )
                     helped_table->setCurrentCell(helped_table->currentRow(),helped_table->currentColumn()+2);
-                else if(helped_table->currentColumn()>= 6 )
+                else if(helped_table->currentColumn()>= 6)
                 {
+                    if(helped_table->currentRow() == helped_table->rowCount()-1)
+                    {
+                        helped_table->setCurrentCell(helped_table->currentRow()+1,0);
+                        helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
+                    }
+                    else
                     addRow();
                     return true;
                 }
@@ -659,8 +664,8 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
         {
             searchArticulo();
         }
-    }
-    emit i_recalc();
+        emit i_recalc();
+    }    
     return false;
 }
 
