@@ -46,7 +46,7 @@ void AlbaranProveedor::Recuperar(QString cSQL, int val_accion)
 void AlbaranProveedor::Cargar(QSqlQuery query)
 {
     if(query.next()){
-        this->id = query.record().value("id").toInt();
+        this->id = query.record().value("Id").toInt();
         this->cAlbaran = query.record().value("cAlbaran").toString();
         this->dFecha = query.record().value("dFecha").toDate();
         this->id_Proveedor = query.record().value("id_Proveedor").toInt();

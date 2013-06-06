@@ -85,6 +85,7 @@ void FrmAlbaranProveedor::llenarProveedor(int id)
     int ind = ui->cbo_pais->findText(Configuracion_global->Devolver_pais(prov.idpais));
     ui->cbo_pais->setCurrentIndex(ind);
     ui->chklRecargoEq->setChecked(prov.lRecargoEquivalencia);
+    oAlbPro->id_Proveedor = prov.id;
 }
 
 void FrmAlbaranProveedor::bloquearcampos(bool estado)
@@ -178,6 +179,8 @@ void FrmAlbaranProveedor::buscar_proveeedor()
     {
         int id_proveedor = consulta.get_id();
         llenarProveedor(id_proveedor);
+
+        oAlbPro->id_Proveedor = id_proveedor;
     }
 }
 
@@ -247,7 +250,7 @@ void FrmAlbaranProveedor::on_btnAnterior_clicked()
 
 void FrmAlbaranProveedor::llenar_campos()
 {
-    this->id = oAlbPro->id;
+
     ui->txtcAlbaran->setText(oAlbPro->cAlbaran);
     ui->txtdFecha->setDate(oAlbPro->dFecha);
     ui->txtcProveedor->setText(oAlbPro->cProveedor);
@@ -279,7 +282,7 @@ void FrmAlbaranProveedor::llenar_campos()
         ui->btnFacturar->setEnabled(true);
     else
         ui->btnFacturar->setEnabled(false);
-
+    this->id = oAlbPro->id;
     QString filter = QString("id_cab = '%1'").arg(oAlbPro->id);
     helper.fillTable("empresa","lin_alb_pro",filter);
     helper.resizeTable();
