@@ -9,7 +9,7 @@ class AlbaranProveedor : public QObject
     Q_OBJECT
 public:
     explicit AlbaranProveedor(QObject *parent = 0);
-    
+    int anadir();
     void Recuperar(int id);
     void Recuperar(QString cSQL);
     void Recuperar(QString cSQL, int val_accion);

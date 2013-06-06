@@ -5,6 +5,28 @@ AlbaranProveedor::AlbaranProveedor(QObject *parent) :
 {
 }
 
+int AlbaranProveedor::anadir()
+{
+     QSqlQuery queryAlbaran(QSqlDatabase::database("empresa"));
+     queryAlbaran.prepare("insert into alb_pro (nIva1,nIva2,nIva3,nIva4) values (:nIva1,:nIva2,:nIva3,:nIva4);");
+     queryAlbaran.bindValue(":nIva1",Configuracion_global->ivaList.at(0));
+     queryAlbaran.bindValue(":nIva2",Configuracion_global->ivaList.at(1));
+     queryAlbaran.bindValue(":nIva3",Configuracion_global->ivaList.at(2));
+     queryAlbaran.bindValue(":nIva4",Configuracion_global->ivaList.at(3));
+     if(queryAlbaran.exec())
+     {
+             this->id = queryAlbaran.lastInsertId().toInt();
+        return this->id;
+     } else
+     {
+         this->id =0;
+         QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Albaranes de proveedores"),
+                              tr("Ocurrió un error al crear un nuevo albarán : %1").arg(queryAlbaran.lastError().text()));
+        return this->id;
+     }
+
+}
+
 void AlbaranProveedor::Recuperar(int id)
 {
     QSqlQuery queryAlbaran(QSqlDatabase::database("empresa"));

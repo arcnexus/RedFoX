@@ -45,11 +45,14 @@ private slots:
 
     void on_botBuscarCliente_clicked();
 
+    void on_btnAnadir_clicked();
+
 private:
     Ui::FrmAlbaranProveedor *ui;
     Table_Helper helper;
     Proveedor prov;
     AlbaranProveedor *oAlbPro;
+    QString moneda;
     void llenar_campos();
     void bloquearcampos(bool estado);
 signals:

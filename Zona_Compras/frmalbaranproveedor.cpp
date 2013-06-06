@@ -446,16 +446,24 @@ void FrmAlbaranProveedor::on_btnEditar_clicked()
 
 void FrmAlbaranProveedor::on_btnGuardar_clicked()
 {
-    guardar_campos_en_objeto();
-    oAlbPro->id =this->id;
-    oAlbPro->guardar();
+    if(!ui->txtcAlbaran->text().isEmpty())
+    {
+        guardar_campos_en_objeto();
+        oAlbPro->id =this->id;
+        oAlbPro->guardar();
 
-    //int regs = ui->Lineas->rowCount();
-   // helper.saveTable(oPedido_proveedor->id,"empresa","lin_ped_pro");
-    oAlbPro->Recuperar(oAlbPro->id);
-    llenar_campos();
-    bloquearcampos(true);
-    emit unblock();
+        //int regs = ui->Lineas->rowCount();
+       // helper.saveTable(oPedido_proveedor->id,"empresa","lin_ped_pro");
+        oAlbPro->Recuperar(oAlbPro->id);
+        llenar_campos();
+        bloquearcampos(true);
+        emit unblock();
+    } else
+    {
+        QMessageBox::information(this,tr("Gestión de Albaranes de proveedor"),
+                                 tr("Debe especificar el numero de albarán antes de guardar"),tr("Aceptar"));
+        ui->txtcAlbaran->setFocus();
+    }
 }
 
 void FrmAlbaranProveedor::guardar_campos_en_objeto()
@@ -481,9 +489,9 @@ void FrmAlbaranProveedor::guardar_campos_en_objeto()
     oAlbPro->rBase3 = ui->txtrBase3->text().replace(",",".").toDouble();
     oAlbPro->rBase4 = ui->txtrBase4->text().replace(",",".").toDouble();
     oAlbPro->cFactura = ui->txtcNumFra->text().replace(",",".").toDouble();
-    oAlbPro->rBaseTotal = ui->txtrBase->text().replace(",",".").toDouble();
-    oAlbPro->rIvaTotal = ui->txtrImporteIva->text().replace(",",".").toDouble();
-    oAlbPro->rTotal = ui->txtrTotal->text().replace(",",".").toDouble();
+    oAlbPro->rBaseTotal = ui->txtrBase->text().replace(",",".").replace(moneda,"").toDouble();
+    oAlbPro->rIvaTotal = ui->txtrImporteIva->text().replace(",",".").replace(moneda,"").toDouble();
+    oAlbPro->rTotal = ui->txtrTotal->text().replace(",",".").replace(moneda,"").toDouble();
     oAlbPro->tComentario = ui->txttComentario->toPlainText();
 }
 
@@ -542,4 +550,15 @@ void FrmAlbaranProveedor::on_botBuscarCliente_clicked()
         int id_prov = busca_prov.get_id();
         llenarProveedor(id_prov);
     }
+}
+
+void FrmAlbaranProveedor::on_btnAnadir_clicked()
+{
+    int id = oAlbPro->anadir();
+    oAlbPro->Recuperar(id);
+    this->id = id;
+    emit block();
+    llenar_campos();
+    bloquearcampos(false);
+    ui->txtcCodigoProveedor->setFocus();
 }
