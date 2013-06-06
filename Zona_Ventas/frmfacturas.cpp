@@ -135,7 +135,7 @@ void frmFacturas::LLenarCampos() {
 
     ui->txtcCif->setText(oFactura->cCif);
      lEstado = oFactura->lRecargoEquivalencia;
-    if ((lEstado= 1)) {
+    if ((lEstado== 1)) {
         ui->chklRecargoEquivalencia->setChecked(true);
     } else {
         ui->chklRecargoEquivalencia->setChecked(false);
@@ -205,7 +205,7 @@ void frmFacturas::LLenarCampos() {
     ui->txtcOficinaEntidad->setText(oFactura->cOficinaEntidad);
     ui->txtcDCCuenta->setText(oFactura->cDCCuenta);
     ui->txtcNumeroCuenta->setText(oFactura->cNumeroCuenta);
-    ui->txtcPedidoCliente->setText(oFactura->cPedidoCliente);
+    ui->txtcPedidoCliente->setText(QString::number(oFactura->cPedidoCliente));
     if(oFactura->nIRPF!=0)
         ui->lblIRPF_3->setVisible(true);
     else
@@ -435,7 +435,10 @@ void frmFacturas::LLenarFactura() {
     oFactura->cOficinaEntidad = (ui->txtcOficinaEntidad->text());
     oFactura->cDCCuenta = (ui->txtcDCCuenta->text());
     oFactura->cNumeroCuenta = (ui->txtcNumeroCuenta->text());
-    oFactura->cPedidoCliente = (ui->txtcPedidoCliente->text());
+    bool ok;
+    int nPed = ui->txtcPedidoCliente->text().toInt(&ok);
+
+    oFactura->cPedidoCliente = ok ? nPed : 0;
     oFactura->nIRPF = (ui->txtnIRPF->text().replace(".","").toDouble());
     oFactura->rImporteIRPF = (ui->txtrImporteIRPF->text().replace(".","").toDouble());
 }
@@ -449,6 +452,8 @@ void frmFacturas::on_btnSiguiente_clicked()
         QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
         helper.fillTable("empresa","lin_fac",filter);
     }
+    else
+        TimedMessageBox * t = new TimedMessageBox(this,tr("final de archivo"));
 }
 void frmFacturas::on_btnAnterior_clicked()
 {
@@ -459,6 +464,8 @@ void frmFacturas::on_btnAnterior_clicked()
         QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
         helper.fillTable("empresa","lin_fac",filter);
     }
+    else
+        TimedMessageBox * t = new TimedMessageBox(this,tr("final de archivo"));
 }
 
 
@@ -473,16 +480,7 @@ void frmFacturas::Guardar_factura()
     else
         oFactura->cFactura = oFactura->NuevoNumeroFactura();
 
-    if(in_edit)
-    {
-        succes &= oFactura->GuardarFactura(oFactura->id,false);
-        succes &= oFactura->BorrarLineasFactura(oFactura->id);
-        //succes &= helper.saveTable(oFactura->Id,"empresa","lin_fac");
-    }
-    else
-    {
-
-    }
+    succes = oFactura->GuardarFactura(oFactura->id,false);
     if(succes)
     {
         LLenarCampos();

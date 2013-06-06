@@ -24,7 +24,6 @@ TimedMessageBox::TimedMessageBox(QWidget *parent, QString message, Icons icon) :
     _layout.addWidget(&_message);
 
     this->setLayout(&_layout);
-
     this->show();
     QTimer::singleShot(0,this,SLOT(startAnimation()));
 }

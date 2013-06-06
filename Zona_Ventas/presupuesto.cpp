@@ -14,21 +14,21 @@ bool Presupuesto::AnadirPresupuesto()
 {
     QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
 
-    this->nIva1 = Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble();
-    this->nIva2 = Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble();
-    this->nIva3 = Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble();
-    this->nIva4 = Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble();
+    this->nIva1 = Configuracion_global->ivaList.at(0).toDouble();
+    this->nIva2 = Configuracion_global->ivaList.at(1).toDouble();
+    this->nIva3 = Configuracion_global->ivaList.at(2).toDouble();
+    this->nIva4 = Configuracion_global->ivaList.at(3).toDouble();
 
-    this->nRecargoEquivalencia1 = Configuracion_global->ivas[keys.at(0)].value("nRegargoEquivalencia").toDouble();
-    this->nRecargoEquivalencia2 = Configuracion_global->ivas[keys.at(1)].value("nRegargoEquivalencia").toDouble();
-    this->nRecargoEquivalencia3 = Configuracion_global->ivas[keys.at(2)].value("nRegargoEquivalencia").toDouble();
-    this->nRecargoEquivalencia4 = Configuracion_global->ivas[keys.at(3)].value("nRegargoEquivalencia").toDouble();
+    this->nRecargoEquivalencia1 = Configuracion_global->reList.at(0).toDouble();
+    this->nRecargoEquivalencia2 = Configuracion_global->reList.at(1).toDouble();
+    this->nRecargoEquivalencia3 = Configuracion_global->reList.at(2).toDouble();
+    this->nRecargoEquivalencia4 = Configuracion_global->reList.at(3).toDouble();
 
     QSqlQuery cab_pre(QSqlDatabase::database("empresa"));
     cab_pre.prepare("INSERT INTO cab_pre (nPresupuesto, dFecha, dValidoHasta,"
                     "id_Cliente, cCodigoCliente, cCliente, cCif, cDireccion, cDireccion2, cCP,"
                     "cPoblacion, cProvincia, idpais, cTelefono, cMovil, cFax, nDto, tComentarios,"
-                    "rImporte, rSubtotal, rDescuento, rTotal, lImpreso, lAprobado, dFechaAprobacion,"
+                    "rImporte, rBase, rDescuento, rTotal, lImpreso, lAprobado, dFechaAprobacion,"
                     "rImporteFactura, rImportePendiente, cFactura, nAlbaran, nPedido, id_FormaPago,"
                     "tLugarEntrega, cAtencionde, rBase1, rBase2, rBase3, rBase4, nIva1, nIva2, nIva3,"
                     "nIva4, rIva1, rIva2, rIva3, rIva4, nRecargoEquivalencia1, nRecargoEquivalencia2,"
@@ -63,7 +63,7 @@ bool Presupuesto::AnadirPresupuesto()
     cab_pre.bindValue(":cTelefono",cTelefono);
     cab_pre.bindValue(":cMovil",cMovil);
     cab_pre.bindValue(":cFax",cFax);
-    cab_pre.bindValue(":nDto",nDto);
+    cab_pre.bindValue(":nDto",0);
     cab_pre.bindValue(":tComentarios",tComentarios);
     cab_pre.bindValue(":rImporte",0);
     cab_pre.bindValue(":rSubtotal",0);
@@ -121,9 +121,6 @@ bool Presupuesto::AnadirPresupuesto()
      else
      {         
          this->id = cab_pre.lastInsertId().toInt();
-         //acaba de guardar, para que recuperarlo de la bd O.o?
-        // QString cSQL = "Select * from cab_pre where id ="+QString::number(this->id);
-        // RecuperarPresupuesto(cSQL);
          return true;
      }
 }
@@ -132,16 +129,12 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
 {
     QSqlQuery qCab_pre(QSqlDatabase::database("empresa"));
     qCab_pre.prepare(cSQL);
-    if( !qCab_pre.exec() )
-    {
-        return false;
-    }
-    else
+    if( qCab_pre.exec() )
     {
         if (qCab_pre.next())
         {
             QSqlRecord registro = qCab_pre.record();
-            this->id = registro.field("Id").value().toInt();
+            this->id = registro.field("id").value().toInt();
             this->nPresupuesto = registro.field("nPresupuesto").value().toInt();
             this->dFecha = registro.field("dFecha").value().toDate();
             this->dValidoHasta = registro.field("dValidoHasta").value().toDate();
@@ -162,7 +155,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->nDto = registro.field("nDto").value().toDouble();
             this->tComentarios = registro.field("tComentarios").value().toString();
             this->rImporte = registro.field("rImporte").value().toDouble();
-            this->rSubTotal = registro.field("rSubtotal").value().toDouble();
+            this->rBase = registro.field("rBase").value().toDouble();
             this->rDescuento = registro.field("rDescuento").value().toDouble();
             this->rTotal = registro.field("rTotal").value().toDouble();
             this->lImpreso = registro.field("lImpreso").value().toBool();
@@ -213,22 +206,19 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->lRecargoEquivalencia = registro.field("lRecargoEquivalencia").value().toBool();
             return true;
         }
-        else
-        {
-         return false;
-        }
-    }
+     }
+    return false;
 }
 
 bool Presupuesto::siguiente()
 {
-    return RecuperarPresupuesto("Select * from cab_pre where nPresupuesto >'"+
-                                    QString::number(nPresupuesto)+"' order by nPresupuesto  limit 1 ");
+    return RecuperarPresupuesto("Select * from cab_pre where id >'"+
+                                    QString::number(id)+"' order by nPresupuesto  limit 1 ");
 }
 
 bool Presupuesto::anterior()
 {
-   return RecuperarPresupuesto("Select * from cab_pre where nPresupuesto <'"+QString::number(nPresupuesto)+
+   return RecuperarPresupuesto("Select * from cab_pre where id <'"+QString::number(id)+
                                "' order by nPresupuesto desc limit 1 ");
 }
 
@@ -244,8 +234,8 @@ bool Presupuesto::GuardarPres(int nId_Presupuesto)
                     "cCodigoCliente =  :cCodigoCliente, cCliente = :cCliente, cCif = :cCif,"
                     "cDireccion = :cDireccion, cDireccion2 = :cDireccion2, cCP = :cCP,"
                     "cPoblacion = :cPoblacion, cProvincia = :cProvincia, idpais = :idpais,"
-                    "cTelefono = :cTelefono, cMovil = :cMovil, cFax = :cFax, nDto = :nDto,"
-                    "tComentarios = :tComentarios, rImporte = :rImporte, rSubtotal =:rSubtotal,"
+                    "cTelefono = :cTelefono, cMovil = :cMovil, cFax = :cFax,"
+                    "tComentarios = :tComentarios, rImporte = :rImporte, rBase =:rSubtotal,"
                     "rDescuento = :rDescuento, rTotal = :rTotal, lImpreso = :lImpreso,"
                     "lAprobado = :lAprobado, dFechaAprobacion = :dFechaAprobacion,"
                     "rImporteFactura =:rImporteFactura, rImportePendiente = :rImportePendiente,"
@@ -264,7 +254,7 @@ bool Presupuesto::GuardarPres(int nId_Presupuesto)
                     "rTotalIva=:rTotalIva, rTotalRec=:rTotalRec,"
                     "rImporte1=:rImporte1, rImporte2=:rImporte2,"
                     "rImporte3=:rImporte3, rImporte4=:rImporte4 "
-                    "WHERE nPresupuesto = :nnPresupuesto");
+                    "WHERE Id = :nnPresupuesto");
 
     cab_pre.bindValue(":dFecha",dFecha);
     cab_pre.bindValue(":dValidoHasta",dValidoHasta);
@@ -281,17 +271,16 @@ bool Presupuesto::GuardarPres(int nId_Presupuesto)
     cab_pre.bindValue(":cTelefono",cTelefono);
     cab_pre.bindValue(":cMovil",cMovil);
     cab_pre.bindValue(":cFax",cFax);
-    cab_pre.bindValue(":nDto",nDto);
     cab_pre.bindValue(":tComentarios",tComentarios);
     cab_pre.bindValue(":rImporte",rImporte);
-    cab_pre.bindValue(":rSubtotal",rSubTotal);
+    cab_pre.bindValue(":rSubtotal",rBase);
     cab_pre.bindValue(":rDescuento",rDescuento);
     cab_pre.bindValue(":rTotal",rTotal);
     cab_pre.bindValue(":lImpreso",lImpreso);
     cab_pre.bindValue(":lAprobado",lAprobado);
     cab_pre.bindValue(":dFechaAprobacion",dFechaAprobacion);
     cab_pre.bindValue(":rImporteFactura",rImporteFactura);
-    cab_pre.bindValue(":rImportePendiente",rImportePendiente);
+    cab_pre.bindValue(":rImportePendiente",0);//TODO preguntar a Marc
     cab_pre.bindValue(":cFactura",cFactura);
     cab_pre.bindValue(":nAlbaran",nAlbaran);
     cab_pre.bindValue(":nPedido",nPedido);
@@ -326,10 +315,10 @@ bool Presupuesto::GuardarPres(int nId_Presupuesto)
     cab_pre.bindValue(":cEmail",cEmail);
     cab_pre.bindValue(":rTotalIva",rTotalIva);
     cab_pre.bindValue(":rTotalRec",rTotalRec);
-    cab_pre.bindValue(":rImporte1",rImporte1);
-    cab_pre.bindValue(":rImporte2",rImporte2);
-    cab_pre.bindValue(":rImporte3",rImporte3);
-    cab_pre.bindValue(":rImporte4",rImporte4);
+    cab_pre.bindValue(":rImporte1",0);
+    cab_pre.bindValue(":rImporte2",0);
+    cab_pre.bindValue(":rImporte3",0);
+    cab_pre.bindValue(":rImporte4",0);
     cab_pre.bindValue(":nnPresupuesto",nId_Presupuesto);
 
     if(!cab_pre.exec())
@@ -337,13 +326,7 @@ bool Presupuesto::GuardarPres(int nId_Presupuesto)
         QMessageBox::critical(qApp->activeWindow(),"Error al guardar datos Presupuesto:", cab_pre.lastError().text());
         return false;
     }
-    else
-    {
-        this->id = cab_pre.lastInsertId().toInt();
-        QString cSQL = "Select * from cab_pre where id ="+QString::number(this->id);
-        RecuperarPresupuesto(cSQL);
-        return true;
-    }
+    return true;
 }
 
 bool Presupuesto::BorrarLineas(int nId_Presupuesto)

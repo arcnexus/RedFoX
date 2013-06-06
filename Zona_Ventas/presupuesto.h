@@ -32,7 +32,7 @@ public:
     double rImporte2;
     double rImporte3;
     double rImporte4;
-    double rSubTotal;
+    double rBase;
     double rDescuento;
     double rTotal;
     bool lImpreso;

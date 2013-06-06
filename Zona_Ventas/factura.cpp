@@ -22,7 +22,7 @@ bool Factura::AnadirFactura()
                    "rBase,nIva,rImporteIva,rTotal,lImpresa,lCobrada,lContabilizada,id_FormaPago,cFormaPago,tComentario,"
                    "rBase1,rBase2,rBase3,rBase4,nPorcentajeIVA1,nPorcentajeIVA2,nPorcentajeIVA3,nPorcentajeIVA4,rIVA1,rIVA2,rIVA3,rIVA4,"
                    "rTotal1,rTotal2,rTotal3,rTotal4,nRec1,nRec2,nRec3,nRec4,rRecargoEq1,rRecargoEq2,rRecargoEq3,rRecargoEq4,"
-                   "rTotalRecargoEq,rEntregadoaCuenta,rImportePendiente,cCodigoEntidad,cOficinaEntidad,cDCCuenta,cNumeroCuenta,cPedidoCliente)"
+                   "rTotalRecargoEq,rEntregadoaCuenta,rImportePendiente,cCodigoEntidad,cOficinaEntidad,cDCCuenta,cNumeroCuenta,nPedidoCliente)"
                    " VALUES (:cCodigoCliente,:cFactura,:dFecha,:dFechaCobro,:iId_Cliente,:cCliente,:cDireccion,:cDireccion2,"
                    ":cCp,:cPoblacion,:cProvincia,:cPais,:cCif,:lRecargoEquivalencia,:rSubtotal,:nDto,:nDtoPP,:rImporteDescuento,:rImporteDescuentoPP,"
                    ":rBase,:nIva,:rImporteIva,:rTotal,:lImpresa,:lCobrada,:lContabilizada,:id_FormaPago,:cFormaPago,:tComentario,"
@@ -90,7 +90,7 @@ bool Factura::AnadirFactura()
      cab_fac.bindValue(":cOficinaEntidad",this->cOficinaEntidad);
      cab_fac.bindValue(":cDCCuenta",this->cDCCuenta);
      cab_fac.bindValue(":cNumeroCuenta",this->cNumeroCuenta);
-     cab_fac.bindValue(":cPedidoCliente",this->cPedidoCliente);
+     cab_fac.bindValue(":cPedidoCliente",0);
      if(!cab_fac.exec())
      {
          QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Factura:", cab_fac.lastError().text());
@@ -171,7 +171,7 @@ bool Factura::GuardarFactura(int nId_Factura, bool FacturaLegal)
                      "cOficinaEntidad =:cOficinaEntidad,"
                      "cDCCuenta =:cDCCuenta,"
                      "cNumeroCuenta =:cNumeroCuenta,"
-                     "cPedidoCliente =:cPedidoCliente,"
+                     "nPedidoCliente =:cPedidoCliente,"
                      "nIRPF =:nIRPF,"
                      "rImporteIRPF =:rImporteIRPF"
                      " where Id=:Id");
@@ -248,7 +248,7 @@ bool Factura::GuardarFactura(int nId_Factura, bool FacturaLegal)
     }
     else
     {
-        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("La Factura se ha guardado correctamente:"));
+       // TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("La Factura se ha guardado correctamente:"));
         QString cSQL = "Select * from cab_fac where id ="+QString::number(nId_Factura);
         RecuperarFactura(cSQL);
         if (FacturaLegal)
@@ -300,6 +300,7 @@ bool Factura::GuardarFactura(int nId_Factura, bool FacturaLegal)
                     }
                     else
                     {
+                        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Deuda añadida correctamente:"));
                         // Añadimos acumulados ficha cliente.
                         Cliente.prepare("Update clientes set dFechaUltimaCompra = :dFechaUltimaCompra, "
                                         "rAcumuladoVentas = rAcumuladoVentas + :rAcumuladoVentas,"
@@ -402,7 +403,7 @@ bool Factura::RecuperarFactura(QString cSQL){
                 this->cOficinaEntidad = registro.field("cOficinaEntidad").value().toString();
                 this->cDCCuenta = registro.field("cDCCuenta").value().toString();
                 this->cNumeroCuenta = registro.field("cNumeroCuenta").value().toString();
-                this->cPedidoCliente = registro.field("cPedidoCliente").value().toString();
+                this->cPedidoCliente = registro.field("nPedidoCliente").value().toInt();
                 this->nIRPF = registro.field("nIRPF").value().toInt();
                 this->rImporteIRPF = registro.field("rImporteIRPF").value().toDouble();
                 return true;

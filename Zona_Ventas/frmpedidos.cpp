@@ -443,17 +443,8 @@ void FrmPedidos::on_btnGuardar_clicked()
     LLenarPedido();
     QSqlDatabase::database("empresa").transaction();
     bool succes = true;
-    int iPed = ui->txtnPedido->text().toInt();
-    if(editando)
-    {
-        succes &= oPedido->GuardarPedido(iPed);
-        succes &= oPedido->BorrarLineas(iPed);
-        //succes &= helper.saveTable(iPed,"empresa","lin_ped");
-    }
-    else
-    {
 
-    }
+    succes &= oPedido->GuardarPedido(oPedido->id);
 
     if(succes)
     {

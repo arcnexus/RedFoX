@@ -10,6 +10,7 @@ Table_Helper::Table_Helper(QObject *parent) :
     use_re = false;
     m_cantidadArticulo=0;
     isActive = false;
+    connect(this,SIGNAL(i_recalc()),this,SLOT(recalc()));
 }
 
 Table_Helper::~Table_Helper()
@@ -85,8 +86,7 @@ void Table_Helper::blockTable(bool state)
 void Table_Helper::set_UsarRE(bool state)
 {
     use_re = state;
-    calcularTotal();
-    calcularDesglose();
+    emit i_recalc();
 }
 
 void Table_Helper::resizeTable()
@@ -150,8 +150,7 @@ void Table_Helper::fillTable(QString db, QString table, QString filter)
             addRow(query.record());
     }
     helped_table->blockSignals(false);
-    calcularTotal();
-    calcularDesglose();
+    emit i_recalc();
 }
 
 void Table_Helper::addRow()
@@ -306,8 +305,7 @@ void Table_Helper::removeRow()
             emit lineaDeleted(aux);
         }
     }
-    calcularTotal();
-    calcularDesglose();
+    emit i_recalc();
 }
 
 void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
@@ -335,19 +333,22 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
         else if(column == 9)
             comprobarStock(row);
 
-        if(column == 1 || column==3)
-        {
-            calcularTotal();
-            calcularDesglose();
-        }
         updateLinea(row);
         helped_table->blockSignals(false);
+
+        emit i_recalc();
     }
+}
+
+void Table_Helper::recalc()
+{
+    calcularTotal();
+    calcularDesglose();
 }
 
 void Table_Helper::calcularTotal()
 {
-    blockSignals(true);
+    helped_table->blockSignals(true);
     double base = 0;
     double dto = 0;
     double total = 0;
@@ -362,7 +363,7 @@ void Table_Helper::calcularTotal()
         total += calcularTotalLinea(i);
     }
     double subtotal = base - dto;
-    blockSignals(false);
+    helped_table->blockSignals(false);
     emit totalChanged( base , dto , subtotal ,  iva,  re,  total,  moneda);
 }
 
@@ -530,8 +531,8 @@ double Table_Helper::calcularTotalLinea(int row)
     double subtotal = cantidad * pvp;
     helped_table->item(row,4)->setText(QString::number(subtotal,'f',2));
 
-    double dto = helped_table->item(row,5)->text().toDouble();
-    double dto_percent = helped_table->item(row,6)->text().toDouble();
+    double dto = helped_table->item(row,5)->text().replace(",",".").toDouble();
+    double dto_percent = helped_table->item(row,6)->text().replace(",",".").toDouble();
 
     double iva = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nIVA").toDouble();
 
@@ -657,8 +658,14 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
             {
                 if(helped_table->currentColumn()== 3 )
                     helped_table->setCurrentCell(helped_table->currentRow(),helped_table->currentColumn()+2);
-                else if(helped_table->currentColumn()>= 6 )
+                else if(helped_table->currentColumn()>= 6)
                 {
+                    if(helped_table->currentRow() == helped_table->rowCount()-1)
+                    {
+                        helped_table->setCurrentCell(helped_table->currentRow()+1,0);
+                        helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
+                    }
+                    else
                     addRow();
                     return true;
                 }
@@ -673,7 +680,8 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
         {
             searchArticulo();
         }
-    }
+        emit i_recalc();
+    }    
     return false;
 }
 

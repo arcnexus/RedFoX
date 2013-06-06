@@ -256,3 +256,11 @@ bool Db_table_View::eventFilter(QObject *target, QEvent *event)
     return false;
 }
 
+
+void Db_table_View::on_resultado_list_doubleClicked(const QModelIndex &index)
+{
+    int row = index.row();
+    QSqlRecord r = model->record(row);
+    selected_value = r.value(selection_column).toString();
+    this->accept();
+}

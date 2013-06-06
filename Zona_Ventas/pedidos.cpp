@@ -70,12 +70,12 @@ bool Pedidos::GuardarPedido(int nId_Pedido)
     QSqlQuery cab_ped(QSqlDatabase::database("empresa"));
 
     cab_ped.prepare( "UPDATE ped_cli SET "
-                     "nAlbaran =:nAlbaran, dFecha =:dFecha  , cPedido =:cPedido  , id_Cliente =:id_Cliente  ,"
+                     "nAlbaran =:nAlbaran,nPedido =:nPedido, dFecha =:dFecha  , cPedido =:cPedido  , id_Cliente =:id_Cliente  ,"
                      "cCodigoCliente  =:cCodigoCliente  ,  cCliente =:cCliente  , cDireccion =:cDireccion,"
                      "cDireccion2 =:cDireccion2  , cPoblacion =:cPoblacion  ,cProvincia  =:cProvincia  ,"
                      "cCP  =:cCP  ,  idpais  =:idpais  ,  cCif  =:cCif  ,"
                      "lRecargoEquivalencia  =:lRecargoEquivalencia  ,  rSubtotal  =:rSubtotal ,"
-                     "rDto  =:rDto  ,  nDto  =:nDto  ,  rBase1  =:rBase1  ,  rBase2  =:rBase2  ,"
+                     "rDto  =:rDto  ,  rBase1  =:rBase1  ,  rBase2  =:rBase2  ,"
                      "rBase3  =:rBase3  ,  rBase4  =:rBase4  ,  nPorcentajeIva1  =:nPorcentajeIva1  ,"
                      "nPorcentajeIva2  =:nPorcentajeIva2  ,  nPorcentajeIva3  =:nPorcentajeIva3  ,"
                      "nPorcentajeIva4  =:nPorcentajeIva4  ,  rImporteIva1  =:rImporteIva1  ,"
@@ -99,9 +99,10 @@ bool Pedidos::GuardarPedido(int nId_Pedido)
                      "cPaisEntrega  =:cPaisEntrega  ,lEnviado  =:lEnviado  ,  lCompleto  =:lCompleto  ,"
                      "lEntregado  =:lEntregado  ,  dFechaLimiteEntrega  =:dFechaLimiteEntrega  ,"
                      "rTotalPedido  =:rTotalPedido"
-                     " WHERE nPedido = :nPedido");
+                     " WHERE Id = :nPedido");
 
     cab_ped.bindValue(":nAlbaran",nAlbaran);
+    cab_ped.bindValue(":nPedido",nPedido);
     cab_ped.bindValue(":dFecha",dFecha);
     cab_ped.bindValue(":cPedido",cPedido);
     cab_ped.bindValue(":id_Cliente",iId_Cliente);
@@ -117,7 +118,7 @@ bool Pedidos::GuardarPedido(int nId_Pedido)
     cab_ped.bindValue(":lRecargoEquivalencia",lRecargoEquivalencia);
     cab_ped.bindValue(":rSubtotal",rSubtotal);
     cab_ped.bindValue(":rDto",rDto);
-    cab_ped.bindValue(":nDto",nDto);
+  //  cab_ped.bindValue(":nDto",nDto);
     cab_ped.bindValue(":rBase1",rBase1);
     cab_ped.bindValue(":rBase2",rBase2);
     cab_ped.bindValue(":rBase3",rBase3);

@@ -71,7 +71,7 @@ public:
     QString cOficinaEntidad;
     QString cDCCuenta;
     QString cNumeroCuenta;
-    QString cPedidoCliente;
+    int cPedidoCliente;
 
 signals:
 
