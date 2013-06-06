@@ -24,6 +24,7 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
 
     connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
     connect(&helper,SIGNAL(lineaDeleted(int)),this,SLOT(lieaDeleted(int)));
+    connect(ui->tabWidget_2,SIGNAL(currentChanged(int)),this,SLOT(resizeTable(int)));
 
 
     connect(&helper,SIGNAL(totalChanged(double,double,double,double,double,double,QString)),
@@ -246,7 +247,7 @@ void FrmAlbaranProveedor::on_btnAnterior_clicked()
 
 void FrmAlbaranProveedor::llenar_campos()
 {
-
+    this->id = oAlbPro->id;
     ui->txtcAlbaran->setText(oAlbPro->cAlbaran);
     ui->txtdFecha->setDate(oAlbPro->dFecha);
     ui->txtcProveedor->setText(oAlbPro->cProveedor);
@@ -281,6 +282,11 @@ void FrmAlbaranProveedor::llenar_campos()
 
     QString filter = QString("id_cab = '%1'").arg(oAlbPro->id);
     helper.fillTable("empresa","lin_alb_pro",filter);
+    helper.resizeTable();
+}
+void FrmAlbaranProveedor::resizeTable(int x)
+{
+    Q_UNUSED(x);
     helper.resizeTable();
 }
 void FrmAlbaranProveedor::lineaReady(lineaDetalle * ld)
@@ -509,5 +515,28 @@ void FrmAlbaranProveedor::on_btnBuscar_clicked()
     {
         QMessageBox::warning(this,tr("Búsqueda de albaranes"),
                              tr("No se localizó o no se especifico ningún albarán "), tr("Aceptar"));
+    }
+}
+
+void FrmAlbaranProveedor::on_botBuscarCliente_clicked()
+{
+    db_consulta_view busca_prov;
+    busca_prov.set_db("Maya");
+    QStringList cCampo,cCabecera;
+    QVariantList vTamanos;
+    cCampo << "cProveedor" << "cCodigo" <<"cCif";
+    cCabecera <<"Código" << "Proveedor" << "CIF/NIF/NIE";
+    vTamanos << 0 << 120 << 250 <<120;
+    busca_prov.set_SQL("Select Id, cCodigo,cProveedor,cCif from proveedores");
+    busca_prov.set_campoBusqueda(cCampo);
+    busca_prov.set_headers(cCabecera);
+
+    busca_prov.set_tamano_columnas(vTamanos);
+    busca_prov.set_texto_tabla(tr("Busqueda  de proveedor"));
+    busca_prov.set_titulo("Busquedas...");
+    if(busca_prov.exec() == QMessageBox::Accepted)
+    {
+        int id_prov = busca_prov.get_id();
+        llenarProveedor(id_prov);
     }
 }

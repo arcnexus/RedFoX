@@ -25,6 +25,7 @@ public:
 
 
 
+    void resizeTable(int x);
 private slots:
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
@@ -41,6 +42,8 @@ private slots:
     void guardar_campos_en_objeto();
 
     void on_btnBuscar_clicked();
+
+    void on_botBuscarCliente_clicked();
 
 private:
     Ui::FrmAlbaranProveedor *ui;
