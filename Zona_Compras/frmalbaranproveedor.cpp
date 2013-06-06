@@ -52,7 +52,14 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     ui->txtnRec4->setText(Configuracion_global->reList.at(3));
 
     ui->btn_cerrar->setVisible(showCerrar);
+    // ------------------------------
+    // control estado widgets
+    //-------------------------------
     bloquearcampos(true);
+    ui->btnAnterior->setEnabled(false);
+    ui->btnBorrar->setEnabled(false);
+    ui->btnImprimir->setEnabled(false);
+    ui->btnFacturar->setEnabled(false);
     oAlbPro->id = 0;
 }
 
@@ -63,7 +70,9 @@ FrmAlbaranProveedor::~FrmAlbaranProveedor()
 
 void FrmAlbaranProveedor::llenarProveedor(int id)
 {
-    prov.Recuperar("Select * from proveedores where id="+QString::number(id),1);
+    prov.clear();
+
+    prov.Recuperar("Select * from proveedores where id="+QString::number(id),0);
     ui->txtcCodigoProveedor->setText(prov.cCodigo);
     ui->txtcProveedor->setText(prov.cProveedor);
     ui->txtcDireccion->setText(prov.cDireccion1);
@@ -74,6 +83,7 @@ void FrmAlbaranProveedor::llenarProveedor(int id)
     ui->txtcCif->setText(prov.cCif);
     int ind = ui->cbo_pais->findText(Configuracion_global->Devolver_pais(prov.idpais));
     ui->cbo_pais->setCurrentIndex(ind);
+    ui->chklRecargoEq->setChecked(prov.lRecargoEquivalencia);
 }
 
 void FrmAlbaranProveedor::bloquearcampos(bool estado)
@@ -138,6 +148,7 @@ void FrmAlbaranProveedor::bloquearcampos(bool estado)
 
     ui->btn_borrarLinea->setEnabled(!estado);
     ui->botBuscarCliente->setEnabled(!estado);
+    ui->btnFacturar->setEnabled(!estado);
     helper.blockTable(estado);
     // activo controles que deben estar activos.
 
@@ -222,6 +233,9 @@ void FrmAlbaranProveedor::on_btnSiguiente_clicked()
 {
     oAlbPro->Recuperar("Select * from alb_pro where id >"+QString::number(oAlbPro->id),1);
     llenar_campos();
+    ui->btnAnterior->setEnabled(true);
+    ui->btnBorrar->setEnabled(true);
+    ui->btnImprimir->setEnabled(true);
 }
 
 void FrmAlbaranProveedor::on_btnAnterior_clicked()
@@ -237,21 +251,7 @@ void FrmAlbaranProveedor::llenar_campos()
     ui->txtdFecha->setDate(oAlbPro->dFecha);
     ui->txtcProveedor->setText(oAlbPro->cProveedor);
     ui->txtcCif->setText(oAlbPro->cCifproveedor);
-    QSqlQuery queryProveedor(QSqlDatabase::database("Maya"));
-    queryProveedor.prepare("select * from proveedores where id =:id");
-    queryProveedor.bindValue(":id",oAlbPro->id_Proveedor);
-    if(queryProveedor.exec())
-    {
-        queryProveedor.next();
-        ui->txtcCodigoProveedor->setText(queryProveedor.record().value("cCodigo").toString());
-        ui->txtcDireccion->setText(queryProveedor.record().value("cDireccion1").toString());
-        ui->txtcDireccion2->setText(queryProveedor.record().value("cDireccion2").toString());
-        ui->txtcCp->setText(queryProveedor.record().value("cCP").toString());
-        ui->txtcPoblacion->setText(queryProveedor.record().value("cPoblacion").toString());
-        ui->txtcProvincia->setText(queryProveedor.record().value("cProvincia").toString());
-        int ind =ui->cbo_pais->findText(Configuracion_global->Devolver_pais(queryProveedor.record().value("id_pais").toInt()));
-        ui->cbo_pais->setCurrentIndex(ind);
-    }
+    llenarProveedor(oAlbPro->id_Proveedor);
     ui->txtrTotal1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rTotal1,'f',2)));
     ui->txtrTotal2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rTotal2,'f',2)));
     ui->txtrTotal3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rTotal3,'f',2)));
@@ -274,7 +274,14 @@ void FrmAlbaranProveedor::llenar_campos()
     ui->txtrTotal->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rTotal,'f',2)));
     ui->txttComentario->setText(oAlbPro->tComentario);
     ui->txtnPedido->setText(QString::number(oAlbPro->nPedido));
+    if(oAlbPro->cFactura.isEmpty())
+        ui->btnFacturar->setEnabled(true);
+    else
+        ui->btnFacturar->setEnabled(false);
 
+    QString filter = QString("id_cab = '%1'").arg(oAlbPro->id);
+    helper.fillTable("empresa","lin_alb_pro",filter);
+    helper.resizeTable();
 }
 void FrmAlbaranProveedor::lineaReady(lineaDetalle * ld)
 {
@@ -300,26 +307,25 @@ void FrmAlbaranProveedor::lineaReady(lineaDetalle * ld)
 
         QSqlQuery query_lin_alb_pro(QSqlDatabase::database("empresa"));
         query_lin_alb_pro.prepare("INSERT INTO lin_alb_pro (id_cab,id_articulo,codigo_articulo_proveedor,"
-                                  "descripcion, cantidad, coste_bruto,subtotal_coste,porc_dto,dto,porc_iva,"
-                                  "iva,total,cantidad_pendiente) VALUES (:id_cab,:id_articulo,:codigo_articulo_proveedor,"
+                                  "cDescripcion, nCantidad, rCoste,rSubTotal,nDto,rDto,nIva,"
+                                  "rIva,rTotal) VALUES (:id_cab,:id_articulo,:codigo_articulo_proveedor,"
                                   ":descripcion,:cantidad,:coste_bruto,:subtotal_coste,:porc_dto,:dto,"
-                                  ":porc_iva,:iva,:total,:cantidad_pendiente);");
+                                  ":porc_iva,:iva,:total);");
         query_lin_alb_pro.bindValue(":id_cab", oAlbPro->id);
         query_lin_alb_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
         query_lin_alb_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
         query_lin_alb_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_alb_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_alb_pro.bindValue(":cantidad_pendiente",ld->cantidad);
         query_lin_alb_pro.bindValue(":coste_bruto",ld->importe);
         query_lin_alb_pro.bindValue(":subtotal_coste",ld->subTotal);
         query_lin_alb_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_alb_pro.bindValue(":dto",ld->dto);
         query_lin_alb_pro.bindValue(":porc_iva",ld->iva_perc);
-        query_lin_alb_pro.bindValue(":iva",0); // importe iva hay que calcularlo
+        query_lin_alb_pro.bindValue(":iva",(ld->subTotal * ld->iva_perc)/100);
         query_lin_alb_pro.bindValue(":total",ld->total);
         if (!query_lin_alb_pro.exec()){
             ok_empresa = false;
-            QMessageBox::warning(this,tr("Gestión de pedidos"),
+            QMessageBox::warning(this,tr("Gestión de albaranes"),
                                  tr("Ocurrió un error al insertar la nueva línea: %1").arg(query_lin_alb_pro.lastError().text()),
                                  tr("Aceptar"));
         }
@@ -349,10 +355,9 @@ void FrmAlbaranProveedor::lineaReady(lineaDetalle * ld)
         // Descuento unidades pedidas
         //---------------------------
         QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
-        queryArticulos.prepare("update articulos set nCantidadPendienteRecibir = nCantidadPendienteRecibir-:nRecibir,"
-                               "nStockReal = nStockReal - :nRecibir2 where cCodigo=:codigo");
+        queryArticulos.prepare("update articulos set "
+                               "nStockReal = nStockReal - :nRecibir where cCodigo=:codigo");
         queryArticulos.bindValue(":nRecibir",ld->cantidad_old);
-        queryArticulos.bindValue(":nRecibir2",ld->cantidad_old);
         queryArticulos.bindValue(":codigo",ld->codigo);
         if (!queryArticulos.exec())
         {
@@ -372,16 +377,15 @@ void FrmAlbaranProveedor::lineaReady(lineaDetalle * ld)
         query_lin_alb_pro.prepare("UPDATE lin_alb_pro SET "
                                   "id_articulo =:id_articulo,"
                                   "codigo_articulo_proveedor =:codigo_articulo_proveedor,"
-                                  "descripcion =:descripcion,"
-                                  "cantidad =:cantidad,"
-                                  "cantidad_pendiente =:cantidad_pendiente,"
-                                  "coste_bruto =:coste_bruto,"
-                                  "subtotal_coste =:subtotal_coste,"
-                                  "porc_dto =:porc_dto,"
-                                  "dto =:dto,"
-                                  "porc_iva =:porc_iva,"
-                                  "iva =:iva,"
-                                  "total =:total "
+                                  "cDescripcion =:descripcion,"
+                                  "nCantidad =:cantidad,"
+                                  "rCoste =:coste_bruto,"
+                                  "rSubtotal =:subtotal_coste,"
+                                  "nDto =:porc_dto,"
+                                  "rDto =:dto,"
+                                  "nIva =:porc_iva,"
+                                  "rIva =:iva,"
+                                  "rTotal =:total "
                                   "WHERE id = :id;");
 
         query_lin_alb_pro.bindValue(":id_cab", oAlbPro->id);
@@ -389,7 +393,6 @@ void FrmAlbaranProveedor::lineaReady(lineaDetalle * ld)
         query_lin_alb_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
         query_lin_alb_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_alb_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_alb_pro.bindValue(":cantidad_pendiente",ld->cantidad);
         query_lin_alb_pro.bindValue(":coste_bruto",ld->importe);
         query_lin_alb_pro.bindValue(":subtotal_coste",ld->subTotal);
         query_lin_alb_pro.bindValue(":porc_dto",ld->dto_perc);
@@ -408,10 +411,9 @@ void FrmAlbaranProveedor::lineaReady(lineaDetalle * ld)
         // ---------------------------------
         // Actualización stock y acumulados
         //----------------------------------
-        queryArticulos.prepare("update articulos set nCantidadPendienteRecibir = nCantidadPendienteRecibir + :nRecibir, "
-                               "nStockReal = nStockReal + :nRecibir2 where cCodigo=:codigo");
+        queryArticulos.prepare("update articulos set "
+                               "nStockReal = nStockReal + :nRecibir where cCodigo=:codigo");
         queryArticulos.bindValue(":nRecibir",ld->cantidad);
-        queryArticulos.bindValue(":nRecibir2",ld->cantidad);
         queryArticulos.bindValue(":codigo",ld->codigo);
         if(queryArticulos.exec() && ok_empresa && ok_Maya){
             QSqlDatabase::database("empresa").commit();
@@ -477,3 +479,35 @@ void FrmAlbaranProveedor::guardar_campos_en_objeto()
 }
 
 
+
+void FrmAlbaranProveedor::on_btnBuscar_clicked()
+{
+    db_consulta_view busca_albaran;
+    busca_albaran.set_db("empresa");
+    QStringList cCampo,cCabecera;
+    QVariantList vTamanos;
+    cCampo << "cAlbaran" << "cProveedor";
+    cCabecera <<"Albarán" << "Fecha" << "Proveedor" << "Total";
+    vTamanos << 0 << 120 << 130 << 250 <<120;
+    busca_albaran.set_SQL("Select id, cAlbaran,dFecha, cProveedor,rTotal from alb_pro");
+    busca_albaran.set_campoBusqueda(cCampo);
+    busca_albaran.set_headers(cCabecera);
+
+    busca_albaran.set_tamano_columnas(vTamanos);
+    busca_albaran.set_texto_tabla(tr("Busqueda de Albaranes de proveedor"));
+    busca_albaran.set_titulo("Busquedas....");
+    if(busca_albaran.exec() == QMessageBox::Accepted)
+    {
+        int id_alb = busca_albaran.get_id();
+        oAlbPro->Recuperar(id_alb);
+        llenar_campos();
+
+        ui->btnAnterior->setEnabled(true);
+        ui->btnBorrar->setEnabled(true);
+        ui->btnImprimir->setEnabled(true);
+    } else
+    {
+        QMessageBox::warning(this,tr("Búsqueda de albaranes"),
+                             tr("No se localizó o no se especifico ningún albarán "), tr("Aceptar"));
+    }
+}

@@ -270,10 +270,22 @@ void Proveedor::Recuperar(QString cSQL, int nProcede)
             this->tTextoparaPedidos = rProveedor.field("tTextoparaPedidos").value().toString();
             this->rEntregadoaCuenta = rProveedor.field("rEntregadoaCuenta").value().toDouble();
         } else {
+            TimedMessageBox * t;
+            switch (nProcede) {
+            case 1:
+                t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Se ha llegado al último proveedor"));
+                break;
+            case 2:
+                  t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Se ha llegado al primer proveedor"));
+                 break;
+            default:
+                  t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No se encuentra el proveedor"));
+                break;
+            }
             if (nProcede ==1) {
-                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Se ha llegado al último proveedor"));
+
             } else {
-                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Se ha llegado al primer proveedor"));
+
             }
         }
     } else
@@ -460,6 +472,60 @@ void Proveedor::Borrar(int nId)
    else
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Proveedores"),QObject::tr("No Se ha borrado la ficha del proveedor ERROR: ")+
                              qProveedor->lastError().text(),QObject::tr("Aceptar"));
+}
+
+void Proveedor::clear()
+{
+    this->id = 0;
+    this->cCodigo = "";
+    this->cProveedor = "";
+    this->cCif = "";
+    this->cDireccion1 = "";
+    this->cDireccion2 = "";
+    this->cCP = "";
+    this->cPoblacion = "";
+    this->cProvincia = "";
+    this->idpais = 0;
+    this->cPais =  "";
+    this->cTelefono1 = "";
+    this->cTelefono2 = "";
+    this->cTelefono3 = "";
+    this->cFax = "";
+    this->cMovil = "";
+    this->cEMail = "";
+    this->cWeb = "";
+    this->cPersonaContacto = "";
+    this->nDiaCobro = 0;
+    this->cDireccionAlmacen = "";
+    this->cCPAlmacen = "";
+    this->cPoblacionAlmacen = "";
+    this->cProvinciaAlmacen = "";
+    this->idPaisAlmacen = 0;
+    this->cPaisAlmacen = "";
+    this->cTelefonoAlmacen = "";
+    this->cFaxAlmacen = "";
+    this->idFormadePago = 0;
+    this->cCodigoFormaPago = "";
+    this->dFechaUltimaCompra = QDate::currentDate();
+    this->rAcumuladoCompras = 0;
+    this->cEntidadBancariaProveedor = "";
+    this->cOficinaBancariaProveedor = "";
+    this->cDCProveedor = "";
+    this->cCCProveedor = "";
+    this->cEntidadPagoProveedor ="";
+    this->cOficinaPagoProveedor = "";
+    this->cDCPagoProveedor = "";
+    this->rRetencionIRPF = 0;
+    this->nTipoRetencion = 0;
+    this->cCuentaAplicacion = "";
+    this->tComentarios = "";
+    this->nDto = 0;
+    this->dFechaAlta = QDate::currentDate();
+    this->rDeudaMaxima = 0;
+    this->rDeudaActual = 0;
+    this->lRecargoEquivalencia = false;
+    this->tTextoparaPedidos = "";
+    this->rEntregadoaCuenta =0;
 }
 
 QString Proveedor::NuevoCodigoProveedor()

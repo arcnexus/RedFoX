@@ -121,13 +121,29 @@ void Table_Helper::fillTable(QString db, QString table, QString filter)
     if(filter.isEmpty())
         sql = QString("SELECT * FROM %1").arg(table);
     else
-        if(table =="lin_ped_pro"){
+    {
+        int ntabla;
+        ntabla = 0;
+
+        if(table =="lin_ped_pro")
+            ntabla = 1;
+        if(table =="lin_alb_pro")
+            ntabla = 2;
+
+        switch (ntabla) {
+        case 1:
             sql = QString("select id,id_cab,id_articulo,codigo_articulo_proveedor,cantidad,descripcion,coste_bruto,subtotal_coste,dto,porc_dto,porc_iva,total"
                           " from %1 where %2").arg(table).arg(filter);
-        } else
-        {
+            break;
+        case 2:
+            sql = QString("select id,id_cab,id_articulo,codigo_articulo_proveedor,nCantidad,cDescripcion,rCoste,rSubtotal,rDto,nDto,nIva,rTotal"
+                          " from %1 where %2").arg(table).arg(filter);
+            break;
+        default:
             sql = QString("SELECT * FROM %1 WHERE %2").arg(table).arg(filter);
+            break;
         }
+    }
     if(query.exec(sql))
     {
         while(query.next())

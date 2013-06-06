@@ -81,6 +81,7 @@ public slots:
     void Guardar();
     void Vaciar();
     void Borrar(int nId);
+    void clear();
     QString NuevoCodigoProveedor();
 
 

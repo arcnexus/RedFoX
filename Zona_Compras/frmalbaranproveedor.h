@@ -40,6 +40,8 @@ private slots:
     void on_btnGuardar_clicked();
     void guardar_campos_en_objeto();
 
+    void on_btnBuscar_clicked();
+
 private:
     Ui::FrmAlbaranProveedor *ui;
     Table_Helper helper;

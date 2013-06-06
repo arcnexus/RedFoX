@@ -371,7 +371,7 @@ void frmProveedores::on_btnSiguiente_clicked()
 
 void frmProveedores::on_btnAnterior_clicked()
 {
-    oProveedor->Recuperar("Select * from proveedores where id<"+QString::number(oProveedor->id)+" order by id desc",1);
+    oProveedor->Recuperar("Select * from proveedores where id<"+QString::number(oProveedor->id)+" order by id desc",2);
     LLenarCampos();
 }
 
