@@ -55,6 +55,8 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
 
     connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
 
+    helper.set_tarifa(0);//TODO tarifa general;
+
     if(oPres->siguiente())
     {
         LLenarCampos();
@@ -532,6 +534,7 @@ void FrmPresupuestosCli::on_botBuscarCliente_clicked()
         QString cId =searcher.selected_value;
         oPres->id_cliente = cId.toInt();
         oClientePres->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
+        helper.set_tarifa(oClientePres->idTarifa);
         LLenarCamposCliente();
     }
 }
@@ -779,4 +782,10 @@ void FrmPresupuestosCli::lineaDeleted(lineaDetalle * ld)
         }
     }
     delete ld;
+}
+
+void FrmPresupuestosCli::on_tabWidget_currentChanged(int index)
+{
+    Q_UNUSED(index);
+    helper.resizeTable();
 }

@@ -50,6 +50,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
     connect(&helper,SIGNAL(lineaDeleted(lineaDetalle*)),this,SLOT(lineaDeleted(lineaDetalle*)));
 
+    helper.set_tarifa(0);//TODO tarifa general;
+
     aAlbaran_action = new QAction(tr("En albaran"),this);
     aFactura_action = new QAction(tr("En factura"),this);
 
@@ -122,10 +124,10 @@ void FrmPedidos::LLenarCampos()
     ui->txtrBase2->setText(QString::number(oPedido->rBase2));
     ui->txtrBase3->setText(QString::number(oPedido->rBase3));
     ui->txtrBase4->setText(QString::number(oPedido->rBase4));
-    ui->txtnPorcentajeIva1->setText(QString::number(oPedido->nPorcentajeIVA1));
-    ui->txtnPorcentajeIva2->setText(QString::number(oPedido->nPorcentajeIVA2));
-    ui->txtnPorcentajeIva3->setText(QString::number(oPedido->nPorcentajeIVA3));
-    ui->txtnPorcentajeIva4->setText(QString::number(oPedido->nPorcentajeIVA4));
+    //ui->txtnPorcentajeIva1->setText(QString::number(oPedido->nPorcentajeIVA1));
+    //ui->txtnPorcentajeIva2->setText(QString::number(oPedido->nPorcentajeIVA2));
+    //ui->txtnPorcentajeIva3->setText(QString::number(oPedido->nPorcentajeIVA3));
+    //ui->txtnPorcentajeIva4->setText(QString::number(oPedido->nPorcentajeIVA4));
     ui->txtrIVA1->setText(QString::number(oPedido->rImporteIva1));
     ui->txtrIVA2->setText(QString::number(oPedido->rImporteIva2));
     ui->txtrIVA3->setText(QString::number(oPedido->rImporteIva3));
@@ -223,11 +225,11 @@ void FrmPedidos::VaciarCampos()
     ui->txtrBase3->setText(0);
     ui->txtrBase4->setText(0);
     //Configuracion_global->CargarDatos();
-    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
-    ui->txtnPorcentajeIva1->setText(QString::number(Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble()));
-    ui->txtnPorcentajeIva2->setText(QString::number(Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble()));
-    ui->txtnPorcentajeIva3->setText(QString::number(Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble()));
-    ui->txtnPorcentajeIva4->setText(QString::number(Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble()));
+    //QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+    //ui->txtnPorcentajeIva1->setText(QString::number(Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble()));
+    //ui->txtnPorcentajeIva2->setText(QString::number(Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble()));
+    //ui->txtnPorcentajeIva3->setText(QString::number(Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble()));
+    //ui->txtnPorcentajeIva4->setText(QString::number(Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble()));
     ui->txtnRec1->clear();
     ui->txtnRec2->clear();
     ui->txtnRec3->clear();
@@ -297,12 +299,13 @@ void FrmPedidos::BloquearCampos(bool state)
     ui->btnAnadir->setEnabled(state);
     ui->btnAnterior->setEnabled(state);
     ui->btnBuscar->setEnabled(state);
-    ui->btnDeshacer->setEnabled(!state);
-    ui->btnEditar->setEnabled(state);
+    //ui->btnDeshacer->setEnabled(!state);
+    ui->btnEditar->setEnabled(state);    
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
     ui->botBuscarCliente->setEnabled(!state);
     ui->txtnPedido->setReadOnly(true);
+    ui->btn_borrar->setEnabled(state);
 }
 
 void FrmPedidos::LLenarPedido()
@@ -328,38 +331,38 @@ void FrmPedidos::LLenarPedido()
 
     oPedido->cCif=ui->txtcCif->text();
     oPedido->lRecargoEquivalencia=ui->chklRecargoEq->isChecked();
-    oPedido->rSubtotal=ui->txtrSubtotal->text().toDouble();
-    oPedido->rDto=ui->txtrImporteDescuento->text().toDouble();
+    oPedido->rSubtotal=ui->txtrSubtotal->text().replace(_moneda,"").toDouble();
+    oPedido->rDto=ui->txtrImporteDescuento->text().replace(_moneda,"").toDouble();
     //oPedido->nDto;
-    oPedido->rBase1=ui->txtrBase1->text().toDouble();
-    oPedido->rBase2=ui->txtrBase2->text().toDouble();
-    oPedido->rBase3=ui->txtrBase3->text().toDouble();
-    oPedido->rBase4=ui->txtrBase4->text().toDouble();
-    oPedido->nPorcentajeIVA1=ui->txtnPorcentajeIva1->text().toDouble();
+    oPedido->rBase1=ui->txtrBase1->text().replace(_moneda,"").toDouble();
+    oPedido->rBase2=ui->txtrBase2->text().replace(_moneda,"").toDouble();
+    oPedido->rBase3=ui->txtrBase3->text().replace(_moneda,"").toDouble();
+    oPedido->rBase4=ui->txtrBase4->text().replace(_moneda,"").toDouble();
+    oPedido->nPorcentajeIVA1=ui->txtnPorcentajeIva1->text().replace(_moneda,"").toDouble();
 
-    oPedido->nPorcentajeIVA2=ui->txtnPorcentajeIva2->text().toDouble();
-    oPedido->nPorcentajeIVA3=ui->txtnPorcentajeIva3->text().toDouble();
-    oPedido->nPorcentajeIVA4=ui->txtnPorcentajeIva4->text().toDouble();
-    oPedido->rImporteIva1=ui->txtrIVA1->text().toDouble();
-    oPedido->rImporteIva2=ui->txtrIVA2->text().toDouble();
-    oPedido->rImporteIva3=ui->txtrIVA3->text().toDouble();
-    oPedido->rImporteIva4=ui->txtrIVA4->text().toDouble();
-    oPedido->nPorcentajeRecargoEq1=ui->txtnRec1->text().toDouble();
-    oPedido->nPorcentajeRecargoEq2=ui->txtnRec2->text().toDouble();
-    oPedido->nPorcentajeRecargoEq3=ui->txtnRec3->text().toDouble();
-    oPedido->nPorcentajeRecargoEq4=ui->txtnRec4->text().toDouble();
-    oPedido->rImporteRecargoEq1=ui->txtrRecargoEq1->text().toDouble();
-    oPedido->rImporteRecargoEq2=ui->txtrRecargoEq2->text().toDouble();
-    oPedido->rImporteRecargoEq3=ui->txtrRecargoEq3->text().toDouble();
-    oPedido->rImporteRecargoEq4=ui->txtrRecargoEq4->text().toDouble();
-    oPedido->rTotal1=ui->txtrTotal1->text().toDouble();
-    oPedido->rTotal2=ui->txtrTotal2->text().toDouble();
-    oPedido->rTotal3=ui->txtrTotal3->text().toDouble();
-    oPedido->rTotal4=ui->txtrTotal4->text().toDouble();
-    oPedido->rBaseTotal=ui->txtrBaseTotal_2->text().toDouble();
-    oPedido->rIvaTotal=ui->txtrTotalIVA_2->text().toDouble();
-    oPedido->rRecargoEqTotal=ui->txtrTotalRecargoEq_2->text().toDouble();
-    oPedido->rTotalAlbaran=ui->txtrTotal_2->text().toDouble();
+    oPedido->nPorcentajeIVA2=ui->txtnPorcentajeIva2->text().replace(_moneda,"").toDouble();
+    oPedido->nPorcentajeIVA3=ui->txtnPorcentajeIva3->text().replace(_moneda,"").toDouble();
+    oPedido->nPorcentajeIVA4=ui->txtnPorcentajeIva4->text().replace(_moneda,"").toDouble();
+    oPedido->rImporteIva1=ui->txtrIVA1->text().replace(_moneda,"").toDouble();
+    oPedido->rImporteIva2=ui->txtrIVA2->text().replace(_moneda,"").toDouble();
+    oPedido->rImporteIva3=ui->txtrIVA3->text().replace(_moneda,"").toDouble();
+    oPedido->rImporteIva4=ui->txtrIVA4->text().replace(_moneda,"").toDouble();
+    oPedido->nPorcentajeRecargoEq1=ui->txtnRec1->text().replace(_moneda,"").toDouble();
+    oPedido->nPorcentajeRecargoEq2=ui->txtnRec2->text().replace(_moneda,"").toDouble();
+    oPedido->nPorcentajeRecargoEq3=ui->txtnRec3->text().replace(_moneda,"").toDouble();
+    oPedido->nPorcentajeRecargoEq4=ui->txtnRec4->text().replace(_moneda,"").toDouble();
+    oPedido->rImporteRecargoEq1=ui->txtrRecargoEq1->text().replace(_moneda,"").toDouble();
+    oPedido->rImporteRecargoEq2=ui->txtrRecargoEq2->text().replace(_moneda,"").toDouble();
+    oPedido->rImporteRecargoEq3=ui->txtrRecargoEq3->text().replace(_moneda,"").toDouble();
+    oPedido->rImporteRecargoEq4=ui->txtrRecargoEq4->text().replace(_moneda,"").toDouble();
+    oPedido->rTotal1=ui->txtrTotal1->text().replace(_moneda,"").toDouble();
+    oPedido->rTotal2=ui->txtrTotal2->text().replace(_moneda,"").toDouble();
+    oPedido->rTotal3=ui->txtrTotal3->text().replace(_moneda,"").toDouble();
+    oPedido->rTotal4=ui->txtrTotal4->text().replace(_moneda,"").toDouble();
+    oPedido->rBaseTotal=ui->txtrBaseTotal_2->text().replace(_moneda,"").toDouble();
+    oPedido->rIvaTotal=ui->txtrTotalIVA_2->text().replace(_moneda,"").toDouble();
+    oPedido->rRecargoEqTotal=ui->txtrTotalRecargoEq_2->text().replace(_moneda,"").toDouble();
+    oPedido->rTotalAlbaran=ui->txtrTotal_2->text().replace(_moneda,"").toDouble();
 
     oPedido->lImpreso = ui->lblImpreso->isVisible();
 
@@ -370,7 +373,7 @@ void FrmPedidos::LLenarPedido()
     oPedido->dFechaFactura=ui->txtdFechaFactura->date();
 
     oPedido->tComentario=ui->txttComentario->toPlainText();
-    oPedido->rACuenta=ui->txtrACuenta->text().toDouble();
+    oPedido->rACuenta=ui->txtrACuenta->text().replace(_moneda,"").toDouble();
     //oPedido->lTraspasadoAlb;
     //oPedido->lTraspasadoFac;
     oPedido->cDireccionEntrega=ui->txtcDireccionEntrega->text();
@@ -383,27 +386,27 @@ void FrmPedidos::LLenarPedido()
     oPedido->lCompleto=ui->chklCompleto->isChecked();
     oPedido->lEntregado=ui->chklEntregado->isChecked();
     oPedido->dFechaLimiteEntrega=ui->txtdFechaLimiteEntrega->date();
-    oPedido->rTotalPedido=ui->txtrTotal->text().toDouble();;
+    oPedido->rTotalPedido=ui->txtrTotal->text().replace(_moneda,"").toDouble();;
 }
 
 void FrmPedidos::on_btnSiguiente_clicked()
 {
-    int nPedido = oPedido->nPedido;
-    if(oPedido->RecuperarPedido("Select * from ped_cli where nPedido >'"+QString::number(nPedido)+"' order by nPedido  limit 1 "))
+    int nPedido = oPedido->id;
+    if(oPedido->RecuperarPedido("Select * from ped_cli where Id >'"+QString::number(nPedido)+"' order by nPedido  limit 1 "))
     {
         LLenarCampos();
-        QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPedido->text());
+        QString filter = QString("Id_Cab = '%1'").arg(oPedido->id);
         helper.fillTable("empresa","lin_ped",filter);
     }
 }
 
 void FrmPedidos::on_btnAnterior_clicked()
 {
-    int nPedido = oPedido->nPedido;
-    if(oPedido->RecuperarPedido("Select * from ped_cli where nPedido <'"+QString::number(nPedido)+"' order by nPedido desc limit 1 "))
+    int nPedido = oPedido->id;
+    if(oPedido->RecuperarPedido("Select * from ped_cli where Id <'"+QString::number(nPedido)+"' order by nPedido desc limit 1 "))
     {
         LLenarCampos();
-        QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPedido->text());
+        QString filter = QString("Id_Cab = '%1'").arg(oPedido->id);
         helper.fillTable("empresa","lin_ped",filter);
     }
 }
@@ -467,13 +470,38 @@ void FrmPedidos::on_btnGuardar_clicked()
 
 void FrmPedidos::on_botBuscarCliente_clicked()
 {
-    FrmBuscarCliente BuscarClientes;
-    BuscarClientes.exec();
-    int nId = BuscarClientes.DevolverID();
-    QString cId = QString::number(nId);
-    oPedido->iId_Cliente = (cId.toInt());
-    oCliente3->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
-    LLenarCamposCliente();
+    Db_table_View searcher(qApp->activeWindow());
+    searcher.set_db("Maya");
+    searcher.set_table("clientes");
+
+    searcher.setWindowTitle(tr("Clientes"));
+
+    QStringList headers;
+    headers << tr("Codigo")<< tr("Nombre Fiscal") << tr("DNI/NIF") << tr("Poblacion");
+    searcher.set_table_headers(headers);
+
+    searcher.set_readOnly(true);
+    searcher.set_selection("Id");
+
+    searcher.set_columnHide(0);
+    searcher.set_columnHide(2);
+    searcher.set_columnHide(3);
+    searcher.set_columnHide(4);
+    searcher.set_columnHide(6);
+    searcher.set_columnHide(7);
+    searcher.set_columnHide(9);
+    searcher.set_columnHide(10);
+    searcher.set_columnHide(11);
+    for(int i =13;i<55;i++)
+        searcher.set_columnHide(i);
+    if(searcher.exec() == QDialog::Accepted)
+    {
+        QString cId =searcher.selected_value;
+        oPedido->iId_Cliente = cId.toInt();
+        oCliente3->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
+        helper.set_tarifa(oCliente3->idTarifa);
+        LLenarCamposCliente();
+    }
 }
 
 void FrmPedidos::on_btnDeshacer_clicked()
@@ -498,9 +526,9 @@ void FrmPedidos::on_btn_borrar_clicked()
         QSqlDatabase::database("empresa").transaction();
 
         QSqlQuery q(QSqlDatabase::database("empresa"));
+        succes &= oPedido->BorrarLineas(ui->txtnPedido->text().toInt());
         q.prepare("DELETE FROM ped_cli WHERE nPedido = "+ui->txtnPedido->text());
         succes &= q.exec();
-        succes &= oPedido->BorrarLineas(ui->txtnPedido->text().toInt());
 
         if(succes)
             succes &= QSqlDatabase::database("empresa").commit();
@@ -514,6 +542,7 @@ void FrmPedidos::on_btn_borrar_clicked()
 
 void FrmPedidos::totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda)
 {
+    _moneda = moneda;
     ui->txtrBase->setText(QString::number(base)+moneda);
     ui->txtrImporteDescuento->setText(QString::number(dto)+moneda);
     ui->txtrSubtotal->setText(QString::number(subTotal)+moneda);
@@ -705,4 +734,10 @@ void FrmPedidos::convertir_enAlbaran()
 void FrmPedidos::convertir_enFactura()
 {
     //TODO FrmPedidos::convertir_enFactura()
+}
+
+void FrmPedidos::on_tabWidget_2_currentChanged(int index)
+{
+    Q_UNUSED(index);
+    helper.resizeTable();
 }
