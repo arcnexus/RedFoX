@@ -44,16 +44,16 @@ bool AlbaranProveedor::borrar(int id_alb)
     bool transaccion = true;
     QSqlDatabase::database("empresa").transaction();
     QSqlQuery queryAlbpro(QSqlDatabase::database("empresa"));
-    if(!queryAlbpro.exec("delete from lin_alb_pro where id_cab = "+QString::number(id_alb)))
-        transaccion = false;
-    if(!queryAlbpro.exec("delete from alb_pro where id ="+QString::number(id_alb)))
-        transaccion = false;
+
+    transaccion &= queryAlbpro.exec("delete from lin_alb_pro where id_cab = "+QString::number(id_alb));
+    transaccion &= queryAlbpro.exec("delete from alb_pro where id ="+QString::number(id_alb));
+
     // TODO --- Actualizar stock
     if(transaccion)
-        QSqlDatabase::database("empresa").commit();
-    else
+        transaccion = QSqlDatabase::database("empresa").commit();
+    if(!transaccion)
         QSqlDatabase::database("empresa").rollback();
-
+    return transaccion;
 }
 
 
