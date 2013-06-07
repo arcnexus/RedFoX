@@ -373,6 +373,7 @@ void Cliente::Recuperar(QString cSQL) {
             this->idioma = Configuracion_global->Devolver_idioma(this->idIdioma);
             this->cCifVies = registro.field("cif_vies").value().toString();
             this->id_web = registro.value("id_web").toInt();
+            this->idTarifa = registro.value("nTarifaCliente").toInt();
             int nIRPF =registro.field("nIRPF").value().toInt();
             if (nIRPF==1)
                 this->lIRPF = true;

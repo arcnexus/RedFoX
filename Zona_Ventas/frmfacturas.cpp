@@ -559,7 +559,6 @@ void frmFacturas::totalChanged(double base, double dto, double subTotal, double 
     ui->txtrImporteIva->setText(QString::number(iva)+moneda);
     ui->txtrTotalRecargoEq->setText(QString::number(re)+moneda);
     ui->txtrTotal->setText(QString::number(total)+moneda);
-    ui->lbl_total->setText(QString::number(total)+moneda);
 
     ui->txtrBaseTotal_2->setText(QString::number(base)+moneda);
     ui->txtnIva_2->setText(QString::number(iva)+moneda);
