@@ -66,6 +66,7 @@ private:
     QAction * aFactura_action;
     QMenu * convertir_menu;
     Proveedor prov;
+    QString moneda;
 };
 
 #endif // FRMPEDIDOSPROVEEDOR_H

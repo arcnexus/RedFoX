@@ -298,7 +298,7 @@ QString Configuracion::Devolver_idioma(int id)
     }
     else {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Idioma"),
-                             tr("Fallo la recuperacion del idioma: ")+qIdioma.lastError().text(),
+                             tr("Fallo la recuperación del idioma: ")+qIdioma.lastError().text(),
                              tr("Aceptar"));
     }
     return "";
@@ -312,7 +312,7 @@ int Configuracion::Devolver_id_idioma(QString idioma)
         return qIdioma.record().value("id").toInt();
     } else {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Idioma"),
-                             tr("Fallo la recuperacion del idioma: ")+qIdioma.lastError().text(),
+                             tr("Fallo la recuperación del idioma: ")+qIdioma.lastError().text(),
                              tr("Aceptar"));
     }
     return 0;
@@ -328,7 +328,7 @@ int Configuracion::Devolver_id_forma_pago(QString cFormaPago)
         return id;
     } else {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
-                             tr("Fallo la recuperacion del identificador de la forma de pago: ")+queryFP.lastError().text(),
+                             tr("Fallo la recuperación del identificador de la forma de pago: ")+queryFP.lastError().text(),
                              tr("Aceptar"));
     }
     return 0;
@@ -343,7 +343,7 @@ int Configuracion::Devolver_id_codigo_forma_pago(QString cCodigo)
         return id;
     } else {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
-                             tr("Fallo la recuperacion del identificador de la forma de pago: ")+queryFP.lastError().text(),
+                             tr("Fallo la recuperación del identificador de la forma de pago: ")+queryFP.lastError().text(),
                              tr("Aceptar"));
     }
     return 0;
@@ -358,7 +358,7 @@ QString Configuracion::Devolver_forma_pago(int id)
         return cFP;
     } else {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
-                             tr("Fallo la recuperacion de la forma de pago: ")+queryFP.lastError().text(),
+                             tr("Fallo la recuperación de la forma de pago: ")+queryFP.lastError().text(),
                              tr("Aceptar"));
     }
     return "";
@@ -373,11 +373,42 @@ QString Configuracion::Devolver_codigo_forma_pago(int id)
         return cFP;
     } else {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
-                             tr("Fallo la recuperacion de la forma de pago: ")+queryFP.lastError().text(),
+                             tr("Fallo la recuperación de la forma de pago: ")+queryFP.lastError().text(),
                              tr("Aceptar"));
     }
     return "";
 
+}
+
+int Configuracion::Devolver_id_tarifa(QString cTarifa)
+{
+    QSqlQuery queryTarifa(QSqlDatabase::database("Maya"));
+    if(queryTarifa.exec("select id from codigotarifa where descripcion = '"+cTarifa+"'")){
+        queryTarifa.next();
+        int id = queryTarifa.record().value("id").toInt();
+        return id;
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Tarifas"),
+                             tr("Fallo la recuperación del identificador de la tarifa: ")+queryTarifa.lastError().text(),
+                             tr("Aceptar"));
+    }
+    return 0;
+
+}
+
+QString Configuracion::Devolver_tarifa(int id_tarifa)
+{
+    QSqlQuery queryTarifa(QSqlDatabase::database("Maya"));
+    if(queryTarifa.exec("select descripcion from codigotarifa where id = "+QString::number(id_tarifa))){
+        queryTarifa.next();
+        QString cTarifa = queryTarifa.record().value("descripcion").toString();
+        return cTarifa;
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Tarifas"),
+                             tr("Fallo la recuperación de la tarifa: ")+queryTarifa.lastError().text(),
+                             tr("Aceptar"));
+    }
+    return "";
 }
 
 void Configuracion::CargarClientes()

@@ -92,6 +92,7 @@ void Empresa::Recuperar(QString cSQL)
             this->RutaBD_Contabilidad_sqlite = registro.field("rutaBDConta").value().toString();
             this->DriverDB_contabilidad = registro.field("driverBDConta").value().toString();
             this->ticket_factura = registro.field("ticket_factura").value().toBool();
+            this->id_tarifa_predeterminada = registro.field("id_tarifa_predeterminada").value().toInt();
 		} 
 		else 
 		{
@@ -171,6 +172,7 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->RutaBD_Contabilidad_sqlite = registro.field("rutaBDConta").value().toString();
             this->DriverDB_contabilidad = registro.field("driverBDConta").value().toString();
             this->ticket_factura = registro.field("ticket_factura").value().toBool();
+            this->id_tarifa_predeterminada = registro.field("id_tarifa_predeterminada").value().toInt();
         } else {
             if (nProcede == 1)
                 TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
@@ -241,6 +243,7 @@ void Empresa::Guardar()
                      "rutaDBConta =:rutaBDConta,"
                      "driverDBConta =:driverBDConta,"
                      "ticket_factura =:ticket_factura,"
+                     "id_tarifa_predeterminada =:id_tarifa_predeterminada,"
                      "cCuentaPagos =:cCuentaPagos"
                      " where id=:nID");
 
@@ -301,6 +304,7 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":rutaBDConta",this->RutaBD_Contabilidad_sqlite);
     qEmpresa.bindValue(":driverBDConta",this->DriverDB_contabilidad);
     qEmpresa.bindValue(":ticket_factura",this->ticket_factura);
+    qEmpresa.bindValue(":id_tarifa_predeterminada",this->id_tarifa_predeterminada);
     qEmpresa.bindValue(":nID",this->id);
 
 
@@ -370,6 +374,7 @@ void Empresa::Vaciar()
     this->RutaBD_Contabilidad_sqlite = "";
     this->DriverDB_contabilidad = "";
     this->ticket_factura = false;
+    this->id_tarifa_predeterminada = 0;
 
 }
 

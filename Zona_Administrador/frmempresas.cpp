@@ -27,6 +27,12 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
 
     on_botSiguiente_clicked();
     on_botSiguiente_user_clicked();
+    //----------------
+    // LLeno Tarifas
+    //----------------
+    QSqlQueryModel *modelTarifas = new QSqlQueryModel(this);
+    modelTarifas->setQuery("select descripcion from codigotarifa",QSqlDatabase::database("Maya"));
+    ui->cboTarifa->setModel(modelTarifas);
 }
 
 FrmEmpresas::~FrmEmpresas()
@@ -102,6 +108,8 @@ void FrmEmpresas::LLenarCampos()
     ui->txtPuertoBDConta->setText(oEmpresa.puertoDB_contabilidad);
     ui->txtRutaBDConta->setText(oEmpresa.RutaBD_Contabilidad_sqlite);
     ui->chk_ticket_factura->setChecked(oEmpresa.ticket_factura);
+    index = ui->cboTarifa->findText(Configuracion_global->Devolver_tarifa(oEmpresa.id_tarifa_predeterminada));
+    ui->cboTarifa->setCurrentIndex(index);
 }
 
 void FrmEmpresas::CargarCamposEnEmpresa()
@@ -164,6 +172,7 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.DriverDB_contabilidad = ui->txtcDriver->currentText();
     oEmpresa.RutaBD_Contabilidad_sqlite = ui->txtRutaBDConta->text();
     oEmpresa.ticket_factura = ui->chk_ticket_factura->isChecked();
+    oEmpresa.id_tarifa_predeterminada = Configuracion_global->Devolver_id_tarifa(ui->cboTarifa->currentText());
 
 
 }

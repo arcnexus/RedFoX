@@ -62,6 +62,8 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     ui->btnImprimir->setEnabled(false);
     ui->btnFacturar->setEnabled(false);
     oAlbPro->id = 0;
+    ui->lblAlbaran->setText("");
+    ui->lblproveedor->setText("");
 }
 
 FrmAlbaranProveedor::~FrmAlbaranProveedor()
@@ -85,6 +87,7 @@ void FrmAlbaranProveedor::llenarProveedor(int id)
     int ind = ui->cbo_pais->findText(Configuracion_global->Devolver_pais(prov.idpais));
     ui->cbo_pais->setCurrentIndex(ind);
     ui->chklRecargoEq->setChecked(prov.lRecargoEquivalencia);
+    ui->lblproveedor->setText(prov.cProveedor);
     oAlbPro->id_Proveedor = prov.id;
 }
 
@@ -199,6 +202,7 @@ void FrmAlbaranProveedor::totalChanged(double base, double dto, double subTotal,
     ui->txtrTotalIVA_2->setText(QString::number(iva)+moneda);
     ui->txtrTotalRecargoEq_2->setText(QString::number(re)+moneda);
     ui->txtrTotal_2->setText(QString::number(total)+moneda);
+    this->moneda = moneda;
 }
 
 void FrmAlbaranProveedor::desglose1Changed(double base, double iva, double re, double total)
@@ -252,6 +256,7 @@ void FrmAlbaranProveedor::llenar_campos()
 {
 
     ui->txtcAlbaran->setText(oAlbPro->cAlbaran);
+    ui->lblAlbaran->setText(oAlbPro->cAlbaran);
     ui->txtdFecha->setDate(oAlbPro->dFecha);
     ui->txtcProveedor->setText(oAlbPro->cProveedor);
     ui->txtcCif->setText(oAlbPro->cCifproveedor);

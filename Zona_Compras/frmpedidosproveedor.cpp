@@ -316,6 +316,7 @@ void FrmPedidosProveedor::totalChanged(double base, double dto, double subTotal,
     ui->txtrTotalIVA_2->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)+moneda));
     ui->txtrTotalRecargoEq_2->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)+moneda));
     ui->txtrTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)+moneda));
+    this->moneda = moneda;
 }
 
 void FrmPedidosProveedor::desglose1Changed(double base, double iva, double re, double total)
@@ -612,30 +613,30 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
     oPedido_proveedor->cPoblacionEntrega = ui->txtcPoblacionEntrega->text();
     oPedido_proveedor->cProvinciaEntrega = ui->txtcProvinciaEntrega->text();
     oPedido_proveedor->cHorarioActivo = ui->txtHorarioEntrega->text();
-    oPedido_proveedor->rBase1 = ui->txtrBase1->text().toDouble();
-    oPedido_proveedor->rBase2 = ui->txtrBase2->text().toDouble();
-    oPedido_proveedor->rBase3 = ui->txtrBase3->text().toDouble();
-    oPedido_proveedor->rBase4 = ui->txtrBase4->text().toDouble();
+    oPedido_proveedor->rBase1 = ui->txtrBase1->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rBase2 = ui->txtrBase2->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rBase3 = ui->txtrBase3->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rBase4 = ui->txtrBase4->text().replace(",",".").replace(moneda,"").toDouble();
     oPedido_proveedor->niva1 = ui->txtnIva1->text().toInt();
     oPedido_proveedor->niva2 = ui->txtnIva2->text().toInt();
     oPedido_proveedor->niva3 = ui->txtnIva3->text().toInt();
     oPedido_proveedor->niva4 = ui->txtnIva4->text().toInt();
-    oPedido_proveedor->riva1 = ui->txtrIVA1->text().toDouble();
-    oPedido_proveedor->riva2 = ui->txtrIVA2->text().toDouble();
-    oPedido_proveedor->riva3 = ui->txtrIVA3->text().toDouble();
-    oPedido_proveedor->riva4 = ui->txtrIVA4->text().toDouble();
+    oPedido_proveedor->riva1 = ui->txtrIVA1->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->riva2 = ui->txtrIVA2->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->riva3 = ui->txtrIVA3->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->riva4 = ui->txtrIVA4->text().replace(",",".").replace(moneda,"").toDouble();
     oPedido_proveedor->nrec1 = ui->txtnRec1->text().toInt();
     oPedido_proveedor->nrec2 = ui->txtnRec2->text().toInt();
     oPedido_proveedor->nrec3 = ui->txtnRec3->text().toInt();
     oPedido_proveedor->nrec4 = ui->txtnRec4->text().toInt();
-    oPedido_proveedor->rrec1 = ui->txtrRecargoEq1->text().toDouble();
-    oPedido_proveedor->rrec2 = ui->txtrRecargoEq2->text().toDouble();
-    oPedido_proveedor->rrec3 = ui->txtrRecargoEq3->text().toDouble();
-    oPedido_proveedor->rrec4 = ui->txtrRecargoEq4->text().toDouble();
-    oPedido_proveedor->rtotal1 = ui->txtrTotal1->text().toDouble();
-    oPedido_proveedor->rtotal2 = ui->txtrTotal2->text().toDouble();
-    oPedido_proveedor->rtotal3 = ui->txtrTotal3->text().toDouble();
-    oPedido_proveedor->rtotal4 = ui->txtrTotal4->text().toDouble();
+    oPedido_proveedor->rrec1 = ui->txtrRecargoEq1->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rrec2 = ui->txtrRecargoEq2->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rrec3 = ui->txtrRecargoEq3->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rrec4 = ui->txtrRecargoEq4->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rtotal1 = ui->txtrTotal1->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rtotal2 = ui->txtrTotal2->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rtotal3 = ui->txtrTotal3->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rtotal4 = ui->txtrTotal4->text().replace(",",".").replace(moneda,"").toDouble();
 }
 
 

@@ -57,7 +57,7 @@ bool cargarEmpresa(QString empresa)
         Configuracion_global->portDB_Conta = record.field("puertoDBConta").value().toString();
         Configuracion_global->contabilidad = record.field("contabilidad").value().toBool();
         Configuracion_global->ticket_factura = record.field("ticket_factura").value().toBool(); // el tiquet y la factura son correlativos
-
+        Configuracion_global->id_tarifa_predeterminada = record.field("id_tarifa_predeterminada").value().toInt();
 
         if(record.field("medica").value().toInt()==1)
             Configuracion_global->medic = true;

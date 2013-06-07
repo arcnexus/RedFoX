@@ -138,6 +138,7 @@ public:
     QString cComentarioTicket;
     bool Autocodificar;
     int Tamanocodigo;
+    int id_tarifa_predeterminada;
 
     int consultas;
     QString primer_dia_laborable;
