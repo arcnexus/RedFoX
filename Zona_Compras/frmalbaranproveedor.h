@@ -47,6 +47,8 @@ private slots:
 
     void on_btnAnadir_clicked();
 
+    void on_btnBorrar_clicked();
+
 private:
     Ui::FrmAlbaranProveedor *ui;
     Table_Helper helper;

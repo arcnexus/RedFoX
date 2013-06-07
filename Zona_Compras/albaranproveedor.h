@@ -16,6 +16,7 @@ public:
     void Cargar(QSqlQuery query);
     void guardar();
     void Recuperar();
+    bool borrar(int id_alb);
     void llenarCampos();
 
     // -------

@@ -129,7 +129,8 @@ SOURCES += main.cpp\
     Auxiliares/frmdialogoimprimir.cpp \
     Busquedas/db_consulta_view.cpp \
     Auxiliares/timedmessagebox.cpp\
-    Zona_Compras/albaranproveedor.cpp
+    Zona_Compras/albaranproveedor.cpp \
+    Zona_Compras/facturasproveedor.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -225,7 +226,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/frmdialogoimprimir.h \
     Busquedas/db_consulta_view.h \
     Auxiliares/timedmessagebox.h\
-    Zona_Compras/albaranproveedor.h
+    Zona_Compras/albaranproveedor.h \
+    Zona_Compras/facturasproveedor.h
 
 
 

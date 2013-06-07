@@ -5,6 +5,8 @@
 #include "../Auxiliares/Globlal_Include.h"
 #include "../Auxiliares/table_helper.h"
 #include "proveedor.h"
+#include "facturasproveedor.h"
+
 namespace Ui {
 class FrmFacturasProveedor;
 }
@@ -17,16 +19,19 @@ public:
     explicit FrmFacturasProveedor(QWidget *parent = 0, bool showCerrar = false);
     ~FrmFacturasProveedor();
     void llenarProveedor(int id);
+
 private slots:
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);
     void desglose4Changed(double base, double iva, double re, double total);
+    void lineaReady(lineaDetalle *ld);
 private:
     Ui::FrmFacturasProveedor *ui;
     Table_Helper helper;
     Proveedor prov;
+    FacturasProveedor *oFacPro;
 };
 
 #endif // FRMFACTURASPROVEEDOR_H
