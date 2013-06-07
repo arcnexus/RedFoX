@@ -548,7 +548,6 @@ void FrmPresupuestosCli::totalChanged(double base , double dto ,double subTotal 
     ui->txtrImporteIva->setText(QString::number(iva)+moneda);
     ui->txtrTotalRecargoEq->setText(QString::number(re)+moneda);
     ui->txtrTotal->setText(QString::number(total)+moneda);
-    ui->lbl_total->setText(QString::number(total)+moneda);
 
     ui->txtrBaseTotal->setText(QString::number(base)+moneda);
     ui->txtrTotalIVA->setText(QString::number(iva)+moneda);
