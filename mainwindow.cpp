@@ -405,20 +405,22 @@ MainWindow::MainWindow(QWidget *parent) :
 //    //-------------------------------
 //    // CAMBIO DIVISA
 //    //-------------------------------
-    connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(actualizar_divisas(float)));
-    QSqlQuery divisas(QSqlDatabase::database("Maya"));
-    if(divisas.exec("select * from monedas"))
+    if(Configuracion_global->actualizardivisas)
     {
-        while (divisas.next()) {
-           if(divisas.record().value("fecha_cambio").toDate()!=QDate::currentDate())
-            {
-                this->id_divisa = divisas.record().value("id").toInt();
-                Configuracion_global->getCambio("EUR",divisas.record().value("nombreCorto").toString(),1);
+        connect(Configuracion_global,SIGNAL(cambioReady(float,QString)),this,SLOT(actualizar_divisas(float,QString)));
+        QSqlQuery divisas(QSqlDatabase::database("Maya"));
+        if(divisas.exec("select * from monedas"))
+        {
+            while (divisas.next()) {
+               if(divisas.record().value("fecha_cambio").toDate()!=QDate::currentDate())
+                {
+                    this->id_divisa = divisas.record().value("id").toInt();
+                    Configuracion_global->getCambio("EUR",divisas.record().value("nombreCorto").toString(),1);
 
+                }
             }
         }
     }
-
 
 }
 
@@ -447,14 +449,14 @@ void MainWindow::showInfo()
     Configuracion_global->cUsuarioActivo = user;
 }
 
-void MainWindow::Actualizar_divisas(float valor_divisa)
+void MainWindow::actualizar_divisas(float valor_divisa, QString divisaDest)
 {
     QSqlQuery valor(QSqlDatabase::database("Maya"));
-    QString fecha_hoy = QDate::currentDate().toString("YYYY.MM.DD");
-    valor.prepare("update monedas set cambio =:divisa,fecha_cambio =:fecha where id =:id");
+    QString fecha_hoy = QDate::currentDate().toString("yyyy.MM.dd");
+    valor.prepare("update monedas set cambio =:divisa,fecha_cambio =:fecha where nombreCorto =:id");
     valor.bindValue(":divisa",valor_divisa);
     valor.bindValue(":fecha",fecha_hoy);
-    valor.bindValue(":id",this->id_divisa);
+    valor.bindValue(":id",divisaDest);
     valor.exec();
 }
 

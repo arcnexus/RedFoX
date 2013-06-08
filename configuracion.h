@@ -135,6 +135,7 @@ public:
     QString cCuentaDeudasProveedor;
     QString cCuentaPagosProveedor;
     int id_tarifa_predeterminada;
+    bool actualizardivisas;
 
 
 

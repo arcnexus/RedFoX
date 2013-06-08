@@ -926,7 +926,7 @@ void Configuracion::readCambio(QString s)
     if(ok)
     {
         c++;
-        emit cambioReady(f,to);
+        emit cambioReady(f,to);//double, qString....
     }
     else
         qDebug()<<s;

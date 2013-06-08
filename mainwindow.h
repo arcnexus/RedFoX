@@ -47,7 +47,7 @@ public:
     //QSqlDatabase dbConfiguracion;
     QSqlQuery QryConfiguracion;
 private slots:
-    void Actualizar_divisas(float valor_divisa);
+    void actualizar_divisas(float valor_divisa, QString divisaDest);
 
     void block_main();
 

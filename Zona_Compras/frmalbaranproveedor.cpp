@@ -64,12 +64,11 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     oAlbPro->id = 0;
     ui->lblAlbaran->setText("");
     ui->lblproveedor->setText("");
-    // TODO: agregar objetos a formulario
 
-//    ui->lblFacturado->setVisible(false);
-//    ui->lblNumFactura->setVisible(false);
-//    ui->txtdFechaFactura->setVisible(false);
-//    ui->txtcNumFra->setVisible(false);
+    ui->lblFacturado->setVisible(false);
+    ui->lblNumFactura->setVisible(false);
+    ui->txtdFechaFactura->setVisible(false);
+    ui->txtcNumFra->setVisible(false);
 }
 
 FrmAlbaranProveedor::~FrmAlbaranProveedor()
@@ -283,27 +282,27 @@ void FrmAlbaranProveedor::llenar_campos()
     ui->txtrBase2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rBase2,'f',2)));
     ui->txtrBase3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rBase3,'f',2)));
     ui->txtrBase4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rBase4,'f',2)));
-  //  ui->txtcNumFra->setText(oAlbPro->cFactura);
+   ui->txtcNumFra->setText(oAlbPro->cFactura);
     ui->txtrBase->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rBaseTotal,'f',2)));
     ui->txtrImporteIva->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rIvaTotal,'f',2)));
     ui->txtrTotal->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rTotal,'f',2)));
     ui->txttComentario->setText(oAlbPro->tComentario);
-   // ui->txtnPedido->setText(QString::number(oAlbPro->nPedido));
-//    if(ui->txtcNumFra->text().isEmpty())
-//    {
-//        ui->btnFacturar->setEnabled(true);
-//        ui->lblFacturado->setVisible(false);
-//        ui->lblNumFactura->setVisible(false);
-//        ui->txtdFechaFactura->setVisible(false);
-//        ui->txtcNumFra->setVisible(false);
-//    } else
-//    {
-//        ui->btnFacturar->setEnabled(false);
-//        ui->lblFacturado->setVisible(true);
-//        ui->lblNumFactura->setVisible(true);
-//        ui->txtdFechaFactura->setVisible(true);
-//        ui->txtcNumFra->setVisible(true);
-//    }
+    ui->txtcPedidoCliente->setText(QString::number(oAlbPro->nPedido));
+    if(ui->txtcNumFra->text().isEmpty())
+    {
+        ui->btnFacturar->setEnabled(true);
+        ui->lblFacturado->setVisible(false);
+        ui->lblNumFactura->setVisible(false);
+        ui->txtdFechaFactura->setVisible(false);
+        ui->txtcNumFra->setVisible(false);
+    } else
+    {
+        ui->btnFacturar->setEnabled(false);
+        ui->lblFacturado->setVisible(true);
+        ui->lblNumFactura->setVisible(true);
+        ui->txtdFechaFactura->setVisible(true);
+        ui->txtcNumFra->setVisible(true);
+    }
 
     this->id = oAlbPro->id;
     QString filter = QString("id_cab = '%1'").arg(oAlbPro->id);
@@ -511,7 +510,7 @@ void FrmAlbaranProveedor::guardar_campos_en_objeto()
     oAlbPro->rBase2 = ui->txtrBase2->text().replace(",",".").toDouble();
     oAlbPro->rBase3 = ui->txtrBase3->text().replace(",",".").toDouble();
     oAlbPro->rBase4 = ui->txtrBase4->text().replace(",",".").toDouble();
- //   oAlbPro->cFactura = ui->txtcNumFra->text().replace(",",".").toDouble();
+    oAlbPro->cFactura = ui->txtcNumFra->text().replace(",",".").toDouble();
     oAlbPro->rBaseTotal = ui->txtrBase->text().replace(",",".").replace(moneda,"").toDouble();
     oAlbPro->rIvaTotal = ui->txtrImporteIva->text().replace(",",".").replace(moneda,"").toDouble();
     oAlbPro->rTotal = ui->txtrTotal->text().replace(",",".").replace(moneda,"").toDouble();

@@ -731,12 +731,12 @@ void FrmArticulos::on_btnBuscarProveedor_clicked()
 void FrmArticulos::on_btnAnadirTarifa_clicked()
 {
     FrmTarifas addTarifa(this);
-    addTarifa.capturar_coste(ui->txtCoste_real->text().toFloat());
+    addTarifa.capturar_coste(ui->txtCoste_real->text().replace(",",".").toFloat());
     if(addTarifa.exec() ==QDialog::Accepted)
     {
         QSqlQuery qTarifa(QSqlDatabase::database("Maya"));
-        qTarifa.prepare("INSERT INTO `MayaGeneral`.`tarifas` (`id_Articulo`, `id_pais`,"
-                        "`id_monedas`, `margen`, `margenminimo`, `pvp`, `id_codigotarifa`) "
+        qTarifa.prepare("INSERT INTO tarifas (id_Articulo, id_pais,"
+                        "id_monedas, margen, margenminimo, pvp, id_codigotarifa) "
                         "VALUES (:id, :id_pais,:id_monedas,:margen,:margenminimo,:pvp,:id_codigotarifa);");
         qTarifa.bindValue(":id",oArticulo->id);
         qTarifa.bindValue(":id_pais",addTarifa.id_pais);
