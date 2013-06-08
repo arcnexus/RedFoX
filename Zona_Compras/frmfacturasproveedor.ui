@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1035</width>
+    <width>1063</width>
     <height>552</height>
    </rect>
   </property>
@@ -127,7 +127,7 @@ color: rgb(0, 0, 127);</string>
    <item row="2" column="0" colspan="5">
     <widget class="QTabWidget" name="tabWidget_2">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <property name="styleSheet">
@@ -473,7 +473,7 @@ color: rgb(0, 0, 127);</string>
                 <enum>QTabWidget::North</enum>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>4</number>
                </property>
                <widget class="QWidget" name="tab">
                 <property name="styleSheet">
@@ -1542,15 +1542,7 @@ color: rgb(23, 76, 7);</string>
                 <attribute name="title">
                  <string>Comentarios</string>
                 </attribute>
-                <layout class="QGridLayout" name="gridLayout_4">
-                 <item row="0" column="0">
-                  <widget class="QTextEdit" name="txttComentario">
-                   <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 255);</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <layout class="QGridLayout" name="gridLayout_4"/>
                </widget>
               </widget>
              </item>
@@ -1742,6 +1734,34 @@ color: rgb(23, 76, 7);</string>
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QWidget" name="tab_7">
+      <attribute name="title">
+       <string>Procesos</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_8">
+      <attribute name="title">
+       <string>Desglose</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_10">
+      <attribute name="title">
+       <string>Comentarios</string>
+      </attribute>
+      <widget class="QTextEdit" name="txttComentario">
+       <property name="geometry">
+        <rect>
+         <x>470</x>
+         <y>120</y>
+         <width>438</width>
+         <height>273</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </item>

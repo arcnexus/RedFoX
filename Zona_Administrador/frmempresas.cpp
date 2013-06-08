@@ -110,6 +110,9 @@ void FrmEmpresas::LLenarCampos()
     ui->chk_ticket_factura->setChecked(oEmpresa.ticket_factura);
     index = ui->cboTarifa->findText(Configuracion_global->Devolver_tarifa(oEmpresa.id_tarifa_predeterminada));
     ui->cboTarifa->setCurrentIndex(index);
+    ui->chk_upate_divisas->setChecked(oEmpresa.actualizardivisas);
+    ui->dboEmpresaMedica->setChecked(oEmpresa.empresa_medica);
+    ui->cboGestionInternacional->setChecked(oEmpresa.empresa_internacional);
 }
 
 void FrmEmpresas::CargarCamposEnEmpresa()
@@ -173,6 +176,9 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.RutaBD_Contabilidad_sqlite = ui->txtRutaBDConta->text();
     oEmpresa.ticket_factura = ui->chk_ticket_factura->isChecked();
     oEmpresa.id_tarifa_predeterminada = Configuracion_global->Devolver_id_tarifa(ui->cboTarifa->currentText());
+    oEmpresa.actualizardivisas = ui->chk_upate_divisas->isChecked();
+    oEmpresa.empresa_internacional = ui->cboGestionInternacional->isChecked();
+    oEmpresa.empresa_medica = ui->dboEmpresaMedica->isChecked();
 
 
 }
@@ -275,7 +281,7 @@ void FrmEmpresas::txtcPoblacion_editingFinished()
              QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
              QString cId;
              cId = QString::number(nId);
-             qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+             qPoblacion.prepare("select poblacion, CP, provincia from poblaciones where id = :cId");
              qPoblacion.bindValue(":cId",cId);
              if(!qPoblacion.exec())
              {
@@ -313,7 +319,7 @@ void FrmEmpresas::txtcCp_editingFinished()
                 QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
                 QString cId;
                 cId = QString::number(nId);
-                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
+                qPoblacion.prepare("select poblacion, CP,provincia from poblaciones where id = :cId");
                 qPoblacion.bindValue(":cId",cId);
                 if(!qPoblacion.exec())
                 {

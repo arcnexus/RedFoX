@@ -93,6 +93,9 @@ void Empresa::Recuperar(QString cSQL)
             this->DriverDB_contabilidad = registro.field("driverBDConta").value().toString();
             this->ticket_factura = registro.field("ticket_factura").value().toBool();
             this->id_tarifa_predeterminada = registro.field("id_tarifa_predeterminada").value().toInt();
+            this->actualizardivisas = registro.field("actualizardivisas").value().toInt();
+            this->empresa_internacional = registro.field("medica").value().toBool();
+            this->empresa_medica = registro.field("internacional").value().toBool();
 		} 
 		else 
 		{
@@ -173,6 +176,9 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->DriverDB_contabilidad = registro.field("driverBDConta").value().toString();
             this->ticket_factura = registro.field("ticket_factura").value().toBool();
             this->id_tarifa_predeterminada = registro.field("id_tarifa_predeterminada").value().toInt();
+            this->actualizardivisas = registro.field("actualizardivisas").value().toInt();
+            this->empresa_internacional = registro.field("medica").value().toBool();
+            this->empresa_medica = registro.field("internacional").value().toBool();
         } else {
             if (nProcede == 1)
                 TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
@@ -197,8 +203,8 @@ void Empresa::Guardar()
                      "user =:cUser,"
                      "contrasena =:cContrasena,"
                      "puerto=:cPuerto,"
-                     "nombreBD=:cNombreBD,"
-                     "driverBD=:cDriverBD, "
+                     "nombreBD =:cNombreBD,"
+                     "driverBD =:cDriverBD,"
                      "hostBDMedica =:cHostDBMedica,"
                      "userBDMedica =:cUserDBMedica,"
                      "contrasenaBDMedica =:cContrasenaDBMedica,"
@@ -244,6 +250,9 @@ void Empresa::Guardar()
                      "driverDBConta =:driverBDConta,"
                      "ticket_factura =:ticket_factura,"
                      "id_tarifa_predeterminada =:id_tarifa_predeterminada,"
+                     "actualizardivisas =:actualizardivisas,"
+                     "medica =:medica,"
+                     "internacional =:internacional,"
                      "cCuentaPagos =:cCuentaPagos"
                      " where id=:nID");
 
@@ -258,7 +267,7 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":cContrasena",this->cContrasena);
     qEmpresa.bindValue(":cPuerto",this->cPuerto);
     qEmpresa.bindValue(":cNombreBD",this->cNombreBD);
-    qEmpresa.bindValue(":cDriverBD ", this->cDriverBD);
+    qEmpresa.bindValue(":cDriverBD", this->cDriverBD);
     qEmpresa.bindValue(":cHostDBMedica",this->cHostMed);
     qEmpresa.bindValue(":cUserDBMedica",this->cUserMed);
     qEmpresa.bindValue(":cContrasenaDBMedica",this->cContrasenaMed);
@@ -305,6 +314,9 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":driverBDConta",this->DriverDB_contabilidad);
     qEmpresa.bindValue(":ticket_factura",this->ticket_factura);
     qEmpresa.bindValue(":id_tarifa_predeterminada",this->id_tarifa_predeterminada);
+    qEmpresa.bindValue(":actualizardivisas",this->actualizardivisas);
+    qEmpresa.bindValue(":medica",this->empresa_medica);
+    qEmpresa.bindValue(":internacional",this->empresa_internacional);
     qEmpresa.bindValue(":nID",this->id);
 
 
@@ -317,6 +329,7 @@ void Empresa::Guardar()
                                               "ADMINISTRADOR: Verifique funcionamiento correcto\n"
                                               "antes de dar acceso a usuarios"),
                                  QObject::tr("OK"));
+       // qDebug()<< qEmpresa.executedQuery();
     }
 
 
@@ -375,6 +388,7 @@ void Empresa::Vaciar()
     this->DriverDB_contabilidad = "";
     this->ticket_factura = false;
     this->id_tarifa_predeterminada = 0;
+    this->actualizardivisas = false;
 
 }
 

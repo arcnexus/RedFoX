@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>1156</width>
-    <height>801</height>
+    <height>688</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>688</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Gestión de empresas</string>
@@ -330,25 +336,183 @@
            <string>Datos Fiscales y de Gestión</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_12">
+           <item row="0" column="0" colspan="8">
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="1" column="2" colspan="3">
+              <widget class="QLineEdit" name="txtcPoblacion">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLabel" name="label_16">
+               <property name="text">
+                <string>Pais:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" colspan="4">
+              <widget class="QLineEdit" name="txtcDireccion">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="txtcCP">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_13">
+               <property name="text">
+                <string>Dirección:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QLineEdit" name="txtcPais">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_15">
+               <property name="text">
+                <string>Provincia:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_14">
+               <property name="text">
+                <string>Población:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="2">
+              <widget class="QLineEdit" name="txtcProvincia">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="0">
+            <widget class="QCheckBox" name="chkAutocodificiar">
+             <property name="text">
+              <string>Auto codificar los nuevos artículos</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="8">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLabel" name="label_22">
+               <property name="minimumSize">
+                <size>
+                 <width>66</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Cif:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcCif">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>Inscripción:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcInscripcion">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_25">
+               <property name="text">
+                <string>Digitos Factura:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtnDigitosFactura">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>Serie Factura:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcSerieFactura">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="5">
+            <widget class="QComboBox" name="cboTarifa"/>
+           </item>
+           <item row="2" column="4">
+            <widget class="QLabel" name="label_58">
+             <property name="text">
+              <string>Tarifa predeterminada:</string>
+             </property>
+            </widget>
+           </item>
            <item row="2" column="3">
             <widget class="QSpinBox" name="txtTamanocodigoart">
              <property name="value">
               <number>15</number>
              </property>
             </widget>
-           </item>
-           <item row="2" column="6">
-            <spacer name="horizontalSpacer_7">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>346</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
            </item>
            <item row="2" column="1" colspan="2">
             <widget class="QLabel" name="label_41">
@@ -491,7 +655,7 @@
              </item>
             </layout>
            </item>
-           <item row="3" column="2" colspan="5">
+           <item row="3" column="2" colspan="6">
             <widget class="QTabWidget" name="tabWidget">
              <property name="currentIndex">
               <number>0</number>
@@ -856,174 +1020,10 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </widget>
            </item>
-           <item row="0" column="0" colspan="7">
-            <layout class="QGridLayout" name="gridLayout_8">
-             <item row="1" column="2" colspan="3">
-              <widget class="QLineEdit" name="txtcPoblacion">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="3">
-              <widget class="QLabel" name="label_16">
-               <property name="text">
-                <string>Pais:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtcDireccion">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="txtcCP">
-               <property name="maximumSize">
-                <size>
-                 <width>100</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_13">
-               <property name="text">
-                <string>Dirección:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="4">
-              <widget class="QLineEdit" name="txtcPais">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_15">
-               <property name="text">
-                <string>Provincia:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_14">
-               <property name="text">
-                <string>Población:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="2">
-              <widget class="QLineEdit" name="txtcProvincia">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="0">
-            <widget class="QCheckBox" name="chkAutocodificiar">
+           <item row="2" column="6">
+            <widget class="QCheckBox" name="chk_upate_divisas">
              <property name="text">
-              <string>Auto codificar los nuevos artículos</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="7">
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QLabel" name="label_22">
-               <property name="minimumSize">
-                <size>
-                 <width>66</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Cif:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtcCif">
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_23">
-               <property name="text">
-                <string>Inscripción:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtcInscripcion">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_25">
-               <property name="text">
-                <string>Digitos Factura:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtnDigitosFactura">
-               <property name="maximumSize">
-                <size>
-                 <width>30</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_26">
-               <property name="text">
-                <string>Serie Factura:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtcSerieFactura">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="5">
-            <widget class="QComboBox" name="cboTarifa"/>
-           </item>
-           <item row="2" column="4">
-            <widget class="QLabel" name="label_58">
-             <property name="text">
-              <string>Tarifa predeterminada:</string>
+              <string>Actualizar divisas al entrar</string>
              </property>
             </widget>
            </item>
