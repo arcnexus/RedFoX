@@ -130,6 +130,7 @@ bool Articulo::Recuperar(QString cSQL)
                this->comentario_oferta =registro.field("comentario_oferta").value().toString();
                this->margen = registro.field("margen").value().toDouble();
                this->margen_min = registro.field("margen_min").value().toDouble();
+               this->coste_real = registro.field("coste_real").value().toDouble();
 
                // Recupero proveedor
                QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
@@ -223,6 +224,7 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->comentario_oferta =registro.field("comentario_oferta").value().toString();
                this->margen = registro.field("margen").value().toDouble();
                this->margen_min = registro.field("margen_min").value().toDouble();
+               this->coste_real = registro.field("coste_real").value().toDouble();
 
                // Recupero proveedor
                QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
@@ -362,6 +364,7 @@ void Articulo::Guardar()
                    "`oferta_pvp_fijo` =:oferta_pvp_fijo,"
                    "`margen` =:margen,"
                    "`margen_min` =:margen_min,"
+                   "`coste_real` =:coste_real,"
                    "`comentario_oferta` =:comentario_oferta"
                    " WHERE id =:id");
 
@@ -417,6 +420,7 @@ void Articulo::Guardar()
     query.bindValue(":comentario_oferta",this->comentario_oferta);
     query.bindValue(":margen",this->margen);
     query.bindValue(":margen_min",this->margen_min);
+    query.bindValue(":coste_real",this->coste_real);
 
     if(!query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Guardar Artículo"),
@@ -483,6 +487,7 @@ void Articulo::Vaciar()
     this->margen = 0;
     this->margen_min = 0;
     this->nStockFisico =0;
+    this->coste_real = 0;
 
 }
 

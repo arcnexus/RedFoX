@@ -49,6 +49,7 @@ bool cargarEmpresa(QString empresa)
         Configuracion_global->cUsuarioBDEmpresa = record.field("user").value().toString();
         Configuracion_global->DivisaLocal = Configuracion_global->Devolver_moneda(record.field("id_divisa").value().toInt());
         Configuracion_global->codDivisaLocal = Configuracion_global->Devolver_codDivisa(record.field("id_divisa").value().toInt());
+        Configuracion_global->DivisaLocalReducida =
         Configuracion_global->DriverBD_Conta = record.field("driverDBConta").value().toString();
         Configuracion_global->HostDB_Conta = record.field("hostDBConta").value().toString();
         Configuracion_global->NombreDB_Conta = record.value("nombreDBConta").toString();

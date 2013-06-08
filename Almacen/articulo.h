@@ -71,6 +71,7 @@ public:
     QString comentario_oferta;
     double margen;
     double margen_min;
+    double coste_real;
 
     Articulo(QObject* parent = 0);
     //-----------

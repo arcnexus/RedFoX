@@ -405,8 +405,21 @@ MainWindow::MainWindow(QWidget *parent) :
 //    //-------------------------------
 //    // CAMBIO DIVISA
 //    //-------------------------------
-  //  connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(test(float)));
-   // Configuracion_global->getCambio("EUR","USD",1);
+    connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(actualizar_divisas(float)));
+    QSqlQuery divisas(QSqlDatabase::database("Maya"));
+    if(divisas.exec("select * from monedas"))
+    {
+        while (divisas.next()) {
+           if(divisas.record().value("fecha_cambio").toDate()!=QDate::currentDate())
+            {
+                this->id_divisa = divisas.record().value("id").toInt();
+                Configuracion_global->getCambio("EUR",divisas.record().value("nombreCorto").toString(),1);
+
+            }
+        }
+    }
+
+
 }
 
 void MainWindow::block_main()
@@ -434,9 +447,15 @@ void MainWindow::showInfo()
     Configuracion_global->cUsuarioActivo = user;
 }
 
-void MainWindow::test(float f)
+void MainWindow::Actualizar_divisas(float valor_divisa)
 {
-    QMessageBox::information(this,"EUR -> USD", QString::number(f));
+    QSqlQuery valor(QSqlDatabase::database("Maya"));
+    QString fecha_hoy = QDate::currentDate().toString("YYYY.MM.DD");
+    valor.prepare("update monedas set cambio =:divisa,fecha_cambio =:fecha where id =:id");
+    valor.bindValue(":divisa",valor_divisa);
+    valor.bindValue(":fecha",fecha_hoy);
+    valor.bindValue(":id",this->id_divisa);
+    valor.exec();
 }
 
 void MainWindow::btnMantenimientos_clicked()

@@ -350,6 +350,8 @@ void FrmArticulos::LLenarCampos()
       ui->lbl_en_promocion->setVisible(true);
   else
       ui->lbl_en_promocion->setVisible(false);
+  ui->txtCoste_real->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->coste_real,'f',2)));
+
 
   // ------------------
   // LLENO TABLAS DATOS
@@ -429,6 +431,7 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->porc_dto_web = ui->txt_dto_web->text().replace(",",".").toDouble();
     oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().replace(",",".").toDouble();
     oArticulo->comentario_oferta = ui->txtComentarios_promocion->toPlainText();
+    oArticulo->coste_real = ui->txtCoste_real->text().replace(",",".").toDouble();
    // oArticulo->margen = ui->txtMargen->value();
    // oArticulo->margen_min = ui->txtMargen_min->value();
 
@@ -478,6 +481,7 @@ void FrmArticulos::VaciarCampos()
    ui->txt_dto_web->setText("0");
    ui->txtoferta_pvp_fijo->setText("0");
    ui->txtComentarios_promocion->setPlainText("");
+   ui->txtCoste_real->setText("0,00");
    //ui->txtMargen->setValue(0);
    //ui->txtMargen_min->setValue(0);
 
@@ -727,7 +731,7 @@ void FrmArticulos::on_btnBuscarProveedor_clicked()
 void FrmArticulos::on_btnAnadirTarifa_clicked()
 {
     FrmTarifas addTarifa(this);
-    addTarifa.capturar_coste(ui->txtrCoste->text().toFloat());
+    addTarifa.capturar_coste(ui->txtCoste_real->text().toFloat());
     if(addTarifa.exec() ==QDialog::Accepted)
     {
         QSqlQuery qTarifa(QSqlDatabase::database("Maya"));
@@ -760,7 +764,7 @@ void FrmArticulos::btnEditarTarifa_clicked()
     QVariant pKey = tarifa_model->data(index1,Qt::EditRole);
 
     FrmTarifas editTarifa(this);
-    editTarifa.capturar_datos(pKey.toInt(),ui->txtrCoste->text());
+    editTarifa.capturar_datos(pKey.toInt(),ui->txtCoste_real->text());
     if(editTarifa.exec() ==QDialog::Accepted) {
         QSqlQuery queryTarifas(QSqlDatabase::database("Maya"));
         queryTarifas.prepare(
@@ -1918,6 +1922,10 @@ void FrmArticulos::on_txtrCoste_editingFinished()
 {
     double inicio, fin;
     inicio = oArticulo->rCoste;
+
+    // Doy valor a coste_real
+    ui->txtCoste_real->setText(ui->txtrCoste->text());
+
     fin = ui->txtrCoste->text().replace(",",".").toDouble();
     if (inicio != fin)
     {

@@ -85,6 +85,7 @@ public:
     bool internacional;
     QString DivisaLocal;
     QString codDivisaLocal;
+    QString DivisaLocalReducida;
     double margen;
     double margen_minimo;
     bool activar_seguimiento;

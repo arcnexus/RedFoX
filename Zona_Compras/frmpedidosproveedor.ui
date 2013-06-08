@@ -706,10 +706,13 @@ alternate-background-color: rgb(255, 255, 219);</string>
           <item>
            <widget class="QLabel" name="lblFacturado">
             <property name="styleSheet">
-             <string notr="true">color: rgb(0, 128, 0);</string>
+             <string notr="true"/>
             </property>
             <property name="text">
-             <string>FECHA. FACTURA:</string>
+             <string>fecha Factura:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>

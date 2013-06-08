@@ -47,7 +47,7 @@ public:
     //QSqlDatabase dbConfiguracion;
     QSqlQuery QryConfiguracion;
 private slots:
-    void test(float f);
+    void Actualizar_divisas(float valor_divisa);
 
     void block_main();
 
@@ -190,7 +190,7 @@ private:
     AgendaForm * agendaForm;
 
     init_form * MayaForm;
-
+    int id_divisa;
     bool on_edit;
 };
 
