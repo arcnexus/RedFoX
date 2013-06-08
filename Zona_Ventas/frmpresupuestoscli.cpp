@@ -55,14 +55,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
 
     connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
 
-    helper.set_tarifa(0);//TODO tarifa general;
-
-    if(oPres->siguiente())
-    {
-        LLenarCampos();
-        QString filter = QString("Id_Cab = '%1'").arg(oPres->id);
-        helper.fillTable("empresa","lin_pre",filter);
-    }
+    helper.set_tarifa(Configuracion_global->id_tarifa_predeterminada);
 
     aPedido_action = new QAction(tr("En pedido"),this);
     aAlbaran_action = new QAction(tr("En albaran"),this);
@@ -89,6 +82,18 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->txtnRec3->setText(Configuracion_global->reList.at(2));
     ui->txtnRec4->setText(Configuracion_global->reList.at(3));
     BloquearCampos(true);
+    if(oPres->siguiente())
+    {
+        LLenarCampos();
+        QString filter = QString("Id_Cab = '%1'").arg(oPres->id);
+        helper.fillTable("empresa","lin_pre",filter);
+    }
+    else
+    {
+        ui->btnBorrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+        ui->btn_convertir->setEnabled(false);
+    }
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
@@ -413,10 +418,20 @@ void FrmPresupuestosCli::on_btnSiguiente_clicked()
         LLenarCampos();
         QString filter = QString("Id_Cab = '%1'").arg(oPres->id);
         helper.fillTable("empresa","lin_pre",filter);
+        ui->btnBorrar->setEnabled(true);
+        ui->btnEditar->setEnabled(true);
+        ui->btn_convertir->setEnabled(true);
     }
     else
-        TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha llegado al final del archivo.\n"
+    {
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha llegado al final del archivo.\n"        
                                                           "No hay mas presupuestos disponibles"));
+        VaciarCampos();
+        ui->btnBorrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+        ui->btn_convertir->setEnabled(false);
+        oPres->id++;
+    }
 }
 
 void FrmPresupuestosCli::on_btnAnterior_clicked()
@@ -426,10 +441,20 @@ void FrmPresupuestosCli::on_btnAnterior_clicked()
         LLenarCampos();
         QString filter = QString("Id_Cab = '%1'").arg(oPres->id);
         helper.fillTable("empresa","lin_pre",filter);
+        ui->btnBorrar->setEnabled(true);
+        ui->btnEditar->setEnabled(true);
+        ui->btn_convertir->setEnabled(true);
     }
     else
+    {
         TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha llegado al principio del archivo.\n"
                                                           "No hay mas presupuestos disponibles"));
+        VaciarCampos();
+        ui->btnBorrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+        ui->btn_convertir->setEnabled(false);
+        oPres->id = -1;
+    }
 }
 
 void FrmPresupuestosCli::on_btnAnadir_clicked()
@@ -437,6 +462,7 @@ void FrmPresupuestosCli::on_btnAnadir_clicked()
     VaciarCampos();
     QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPresupuesto->text());
     helper.fillTable("empresa","lin_pre",filter);
+    helper.set_tarifa(Configuracion_global->id_tarifa_predeterminada);
     BloquearCampos(false);
     int next = oPres->NuevoNumeroPresupuesto();
     ui->txtnPresupuesto->setText(QString::number(next));
@@ -549,7 +575,7 @@ void FrmPresupuestosCli::totalChanged(double base , double dto ,double subTotal 
     ui->txtrTotalRecargoEq->setText(QString::number(re)+moneda);
     ui->txtrTotal->setText(QString::number(total)+moneda);
 
-    ui->txtrBaseTotal->setText(QString::number(base)+moneda);
+    ui->txtrBaseTotal->setText(QString::number(subTotal)+moneda);
     ui->txtrTotalIVA->setText(QString::number(iva)+moneda);
     ui->txtrTotalRecargoEq_2->setText(QString::number(re)+moneda);
     ui->txtrTotal_2->setText(QString::number(total)+moneda);
@@ -557,7 +583,6 @@ void FrmPresupuestosCli::totalChanged(double base , double dto ,double subTotal 
 
 void FrmPresupuestosCli::desglose1Changed(double base, double iva, double re, double total)
 {
-    this->moneda = moneda;
     ui->txtrBase1->setText(QString::number(base));
     ui->txtrIVA1->setText(QString::number(iva));
     ui->txtrRecargoEq1->setText(QString::number(re));

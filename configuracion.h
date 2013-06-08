@@ -133,7 +133,7 @@ public:
     QString cCuentaCobrosClientes;
     QString cCuentaDeudasProveedor;
     QString cCuentaPagosProveedor;
-    QString id_tarifa_predeterminada;
+    int id_tarifa_predeterminada;
 
 
 
