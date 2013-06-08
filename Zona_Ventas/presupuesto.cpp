@@ -134,7 +134,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
         if (qCab_pre.next())
         {
             QSqlRecord registro = qCab_pre.record();
-            this->id = registro.field("id").value().toInt();
+            this->id = registro.field("Id").value().toInt();
             this->nPresupuesto = registro.field("nPresupuesto").value().toInt();
             this->dFecha = registro.field("dFecha").value().toDate();
             this->dValidoHasta = registro.field("dValidoHasta").value().toDate();
@@ -212,14 +212,14 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
 
 bool Presupuesto::siguiente()
 {
-    return RecuperarPresupuesto("Select * from cab_pre where id >'"+
-                                    QString::number(id)+"' order by nPresupuesto  limit 1 ");
+    return RecuperarPresupuesto("Select * from cab_pre where Id >'"+
+                                    QString::number(id)+"' order by Id  limit 1 ");
 }
 
 bool Presupuesto::anterior()
 {
-   return RecuperarPresupuesto("Select * from cab_pre where id <'"+QString::number(id)+
-                               "' order by nPresupuesto desc limit 1 ");
+   return RecuperarPresupuesto("Select * from cab_pre where Id <'"+QString::number(id)+
+                               "' order by Id desc limit 1 ");
 }
 
 bool Presupuesto::GuardarPres(int nId_Presupuesto)

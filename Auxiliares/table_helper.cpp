@@ -224,6 +224,7 @@ void Table_Helper::addRow(QSqlRecord r)
 {
     resizeTable();
     helped_table->setRowCount(helped_table->rowCount()+1);
+    disconnect(helped_table,SIGNAL(currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)),this,SLOT(handle_currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)));
     int row = helped_table->rowCount()-1;
 
     QTableWidgetItem * item0 = new QTableWidgetItem;
@@ -272,13 +273,13 @@ void Table_Helper::addRow(QSqlRecord r)
     QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
     for(int i = 0;i<keys.size();i++)
     {
-        qDebug() << "IVA: "  <<r.value(10).toDouble();
         if(Configuracion_global->ivas[keys.at(i)].value("nIVA").toDouble() == r.value(10).toDouble())
         {
             helped_table->item(row,7)->setText(keys.at(i));
             break;
         }
     }
+    connect(helped_table,SIGNAL(currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)),this,SLOT(handle_currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)));
 }
 
 
@@ -369,7 +370,7 @@ void Table_Helper::calcularTotal()
 
 double Table_Helper::calcularDtoLinea(int row)
 {
-    double base = helped_table->item(row,4)->text().replace(",",".").toDouble();
+    double base = calcularBaseLinea(row);
     double dtoNeto = helped_table->item(row,5)->text().replace(",",".").toDouble();
     double descPerc = helped_table->item(row,6)->text().replace(",",".").toDouble();
 
@@ -380,19 +381,17 @@ double Table_Helper::calcularDtoLinea(int row)
 
 double Table_Helper::calcularBaseLinea(int row)
 {
-    return helped_table->item(row,4)->text().replace(",",".").toDouble();
+    int cantidad = helped_table->item(row,1)->text().toInt();
+    double pvp = helped_table->item(row,3)->text().replace(",",".").toDouble();
+    double subtotal = cantidad * pvp;
+
+    return subtotal;
 }
 
 double Table_Helper::calcularIVALinea(int row)
 {
-    double base = helped_table->item(row,4)->text().replace(",",".").toDouble();
-    double dtoNeto = helped_table->item(row,5)->text().replace(",",".").toDouble();
-    double descPerc = helped_table->item(row,6)->text().replace(",",".").toDouble();
-
-    double total_descPerc = (base * descPerc) / 100;
-
-    base -= total_descPerc;
-    base -= dtoNeto;
+    double base = calcularBaseLinea(row);
+    base -= calcularDtoLinea(row);
 
     double iva = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nIva").toDouble();
 
@@ -573,11 +572,17 @@ void Table_Helper::calcular_por_Base(QString sbase)
         QString name = helped_table->item(i,7)->text();
         if(Configuracion_global->ivas[name].value("nombre_interno").toString() == sbase)
         {
-            double row_base = helped_table->item(i,4)->text().toDouble();
+            double row_base = calcularBaseLinea(i);
+            row_base-= calcularDtoLinea(i);
+
             double iva_value = Configuracion_global->ivas[name].value("nIVA").toDouble();
             double aux_iva = (row_base * iva_value) /100;
+
+            //Acumulo por linea
             base += row_base;
             iva += aux_iva;
+            /*********************/
+
             if(use_re)
             {
                 double re_value = Configuracion_global->ivas[name].value("nRegargoEquivalencia").toDouble();
@@ -619,12 +624,22 @@ void Table_Helper::rellenar_con_Articulo(int row)
                 helped_table->item(row,2)->setText(r.value("cDescripcion").toString());
             else
                 helped_table->item(row,2)->setText(r.value("cDescripcionReducida").toString());
+
             if (this->comprando)
                  helped_table->item(row,3)->setText(r.value("rCoste").toString());
             else
                 helped_table->item(row,3)->setText(r.value("pvp").toString());
-            helped_table->item(row,8)->setText(r.value("nTipoIva").toString());
 
+            QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+
+            double iva = r.value("nTipoIva").toDouble();
+            QString sIva = QString::number(iva);
+            for (int i = 0;i<keys.size();i++)
+            {
+                if(Configuracion_global->ivas[keys.at(i)].value("nIva").toDouble() == iva)
+                    sIva = Configuracion_global->ivas[keys.at(i)].value("cTipo").toString();
+            }
+            helped_table->item(row,7)->setText(sIva);
         }
         else if(helped_table->item(row,0)->text() !="" && helped_table->item(row,2)->text().isEmpty())
         {
@@ -660,7 +675,7 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
                     helped_table->setCurrentCell(helped_table->currentRow(),helped_table->currentColumn()+2);
                 else if(helped_table->currentColumn()>= 6)
                 {
-                    if(helped_table->currentRow() == helped_table->rowCount()-1)
+                    if(helped_table->currentRow() != helped_table->rowCount()-1)
                     {
                         helped_table->setCurrentCell(helped_table->currentRow()+1,0);
                         helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
