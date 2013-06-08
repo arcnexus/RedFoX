@@ -42,7 +42,8 @@ bool Pedidos::AnadirPedido()
                    " VALUES (:nPedido,:nPorcentajeIva1,:nPorcentajeIva2,:nPorcentajeIva3,:nPorcentajeIva4,"
                      ":nPorcentajeRecargoEq1,:nPorcentajeRecargoEq2,:nPorcentajeRecargoEq3,:nPorcentajeRecargoEq4,:id_Cliente)");
 
-     cab_ped.bindValue(":nPedido",0);
+     this->nPedido = NuevoNumeroPedido();
+     cab_ped.bindValue(":nPedido",nPedido);
      cab_ped.bindValue(":nPorcentajeIva1",this->nPorcentajeIVA1);
      cab_ped.bindValue(":nPorcentajeIva2",this->nPorcentajeIVA2);
      cab_ped.bindValue(":nPorcentajeIva3",this->nPorcentajeIVA3);
@@ -98,7 +99,7 @@ bool Pedidos::GuardarPedido(int nId_Pedido)
                      "cPaisEntrega  =:cPaisEntrega  ,lEnviado  =:lEnviado  ,  lCompleto  =:lCompleto  ,"
                      "lEntregado  =:lEntregado  ,  dFechaLimiteEntrega  =:dFechaLimiteEntrega  ,"
                      "rTotalPedido  =:rTotalPedido"
-                     " WHERE Id = :nPedido");
+                     " WHERE Id = :id");
 
     cab_ped.bindValue(":nAlbaran",nAlbaran);
     cab_ped.bindValue(":nPedido",nPedido);
@@ -165,7 +166,7 @@ bool Pedidos::GuardarPedido(int nId_Pedido)
     cab_ped.bindValue(":lEntregado",lEntregado);
     cab_ped.bindValue(":dFechaLimiteEntrega",dFechaLimiteEntrega);
     cab_ped.bindValue(":rTotalPedido",rTotalPedido);
-    cab_ped.bindValue(":nPedido",nId_Pedido);
+    cab_ped.bindValue(":id",nId_Pedido);
     if(!cab_ped.exec())
     {
         QMessageBox::critical(qApp->activeWindow(),QObject::tr("error al guardar datos Pedido:"), cab_ped.lastError().text());
@@ -283,7 +284,7 @@ int Pedidos::NuevoNumeroPedido()
             nPedido ++;
         }
     }
-    return nPedido;
+    return qMax(1,nPedido);
 }
 
 void Pedidos::FacturarPedido()

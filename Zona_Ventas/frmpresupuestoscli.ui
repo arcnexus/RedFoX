@@ -57,7 +57,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QLabel" name="label_17">
+    <widget class="QLabel" name="lblTopNpres">
      <property name="maximumSize">
       <size>
        <width>120</width>
@@ -90,7 +90,7 @@ color: rgb(0, 0, 127);</string>
     </widget>
    </item>
    <item row="1" column="3">
-    <widget class="QLabel" name="label_19">
+    <widget class="QLabel" name="lblTopCCliente">
      <property name="styleSheet">
       <string notr="true">
 color: rgb(0, 0, 127);</string>

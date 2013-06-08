@@ -50,7 +50,7 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
     connect(&helper,SIGNAL(lineaDeleted(lineaDetalle*)),this,SLOT(lineaDeleted(lineaDetalle*)));
 
-    helper.set_tarifa(0);//TODO tarifa general;
+    helper.set_tarifa(Configuracion_global->id_tarifa_predeterminada);
 
     aAlbaran_action = new QAction(tr("En albaran"),this);
     aFactura_action = new QAction(tr("En factura"),this);
@@ -64,12 +64,6 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
 
     ui->btn_convertir->setMenu(convertir_menu);
     BloquearCampos(true);
-    if(oPedido->RecuperarPedido("Select * from ped_cli where nPedido > -1 order by nPedido  limit 1 "))
-    {
-        LLenarCampos();
-        QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPedido->text());
-        helper.fillTable("empresa","lin_ped",filter);
-    }
 
     ui->txtnPorcentajeIva1->setText(Configuracion_global->ivaList.at(0));
     ui->txtnPorcentajeIva2->setText(Configuracion_global->ivaList.at(1));
@@ -80,6 +74,21 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     ui->txtnRec2->setText(Configuracion_global->reList.at(1));
     ui->txtnRec3->setText(Configuracion_global->reList.at(2));
     ui->txtnRec4->setText(Configuracion_global->reList.at(3));
+
+    if(oPedido->RecuperarPedido("Select * from ped_cli where nPedido > -1 order by nPedido  limit 1 "))
+    {
+        LLenarCampos();
+        QString filter = QString("Id_Cab = '%1'").arg(ui->txtnPedido->text());
+        helper.fillTable("empresa","lin_ped",filter);
+    }
+    else
+    {
+        VaciarCampos();
+        ui->btn_borrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+        ui->btn_convertir->setEnabled(false);
+        oPedido->id = -1;
+    }
 }
 
 FrmPedidos::~FrmPedidos()
@@ -91,6 +100,8 @@ FrmPedidos::~FrmPedidos()
 
 void FrmPedidos::LLenarCampos()
 {
+    ui->lblTopcCliente->setText(oPedido->cCliente);
+    ui->lblTopnPedido->setText(QString::number(oPedido->nPedido));
     ui->txtcAlbaran->setText(QString::number(oPedido->nAlbaran));
     ui->txtnPedido->setText(QString::number(oPedido->nPedido));
     ui->txtdFecha->setDate(oPedido->dFecha);
@@ -132,10 +143,10 @@ void FrmPedidos::LLenarCampos()
     ui->txtrIVA2->setText(QString::number(oPedido->rImporteIva2));
     ui->txtrIVA3->setText(QString::number(oPedido->rImporteIva3));
     ui->txtrIVA4->setText(QString::number(oPedido->rImporteIva4));
-    ui->txtnRec1->setText(QString::number(oPedido->nPorcentajeRecargoEq1));
-    ui->txtnRec2->setText(QString::number(oPedido->nPorcentajeRecargoEq2));
-    ui->txtnRec3->setText(QString::number(oPedido->nPorcentajeRecargoEq3));
-    ui->txtnRec4->setText(QString::number(oPedido->nPorcentajeRecargoEq4));
+    //ui->txtnRec1->setText(QString::number(oPedido->nPorcentajeRecargoEq1));
+    //ui->txtnRec2->setText(QString::number(oPedido->nPorcentajeRecargoEq2));
+    //ui->txtnRec3->setText(QString::number(oPedido->nPorcentajeRecargoEq3));
+    //ui->txtnRec4->setText(QString::number(oPedido->nPorcentajeRecargoEq4));
     ui->txtrRecargoEq1->setText(QString::number(oPedido->rImporteRecargoEq1));
     ui->txtrRecargoEq2->setText(QString::number(oPedido->rImporteRecargoEq2));
     ui->txtrRecargoEq3->setText(QString::number(oPedido->rImporteRecargoEq3));
@@ -176,6 +187,7 @@ void FrmPedidos::LLenarCampos()
 
 void FrmPedidos::LLenarCamposCliente()
 {
+    ui->lblTopcCliente->setText(oCliente3->cNombreFiscal);
     ui->txtcCodigoCliente->setText(oCliente3->cCodigoCliente);
     ui->txtcCliente->setText(oCliente3->cNombreFiscal);
     ui->txtcDireccion->setText(oCliente3->cDireccion1);
@@ -197,6 +209,8 @@ void FrmPedidos::LLenarCamposCliente()
 
 void FrmPedidos::VaciarCampos()
 {
+    ui->lblTopcCliente->setText("");
+    ui->lblTopnPedido->setText("");
     QDate dFecha;
     ui->txtcCodigoCliente->setText("");
     ui->txtcPedido->setText("");
@@ -230,10 +244,10 @@ void FrmPedidos::VaciarCampos()
     //ui->txtnPorcentajeIva2->setText(QString::number(Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble()));
     //ui->txtnPorcentajeIva3->setText(QString::number(Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble()));
     //ui->txtnPorcentajeIva4->setText(QString::number(Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble()));
-    ui->txtnRec1->clear();
-    ui->txtnRec2->clear();
-    ui->txtnRec3->clear();
-    ui->txtnRec4->clear();
+    //ui->txtnRec1->clear();
+    //ui->txtnRec2->clear();
+    //ui->txtnRec3->clear();
+    //ui->txtnRec4->clear();
     ui->txtrIVA1->setText(0);
     ui->txtrIVA2->setText(0);
     ui->txtrIVA3->setText(0);
@@ -397,6 +411,19 @@ void FrmPedidos::on_btnSiguiente_clicked()
         LLenarCampos();
         QString filter = QString("Id_Cab = '%1'").arg(oPedido->id);
         helper.fillTable("empresa","lin_ped",filter);
+        ui->btn_borrar->setEnabled(true);
+        ui->btnEditar->setEnabled(true);
+        ui->btn_convertir->setEnabled(true);
+    }
+    else
+    {
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha llegado al final del archivo.\n"
+                                                          "No hay mas presupuestos disponibles"));
+        VaciarCampos();
+        ui->btn_borrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+        ui->btn_convertir->setEnabled(false);
+        oPedido->id++;
     }
 }
 
@@ -408,6 +435,19 @@ void FrmPedidos::on_btnAnterior_clicked()
         LLenarCampos();
         QString filter = QString("Id_Cab = '%1'").arg(oPedido->id);
         helper.fillTable("empresa","lin_ped",filter);
+        ui->btn_borrar->setEnabled(true);
+        ui->btnEditar->setEnabled(true);
+        ui->btn_convertir->setEnabled(true);
+    }
+    else
+    {
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha llegado al final del archivo.\n"
+                                                          "No hay mas presupuestos disponibles"));
+        VaciarCampos();
+        ui->btn_borrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+        ui->btn_convertir->setEnabled(false);
+        oPedido->id = -1;
     }
 }
 
@@ -416,6 +456,7 @@ void FrmPedidos::on_btnAnadir_clicked()
     VaciarCampos();
     BloquearCampos(false);
     ui->txtnPedido->setText(QString::number(oPedido->NuevoNumeroPedido()));
+    ui->lblTopnPedido->setText(QString::number(oPedido->NuevoNumeroPedido()));
     LLenarPedido();
     oPedido->AnadirPedido();
     ui->txtcCodigoCliente->setFocus();
@@ -526,15 +567,21 @@ void FrmPedidos::on_btn_borrar_clicked()
         QSqlDatabase::database("empresa").transaction();
 
         QSqlQuery q(QSqlDatabase::database("empresa"));
-        succes &= oPedido->BorrarLineas(ui->txtnPedido->text().toInt());
-        q.prepare("DELETE FROM ped_cli WHERE nPedido = "+ui->txtnPedido->text());
+        succes &= oPedido->BorrarLineas(oPedido->id);
+        q.prepare("DELETE FROM ped_cli WHERE Id = "+QString::number(oPedido->id));
         succes &= q.exec();
 
+        //TODO control de stock
         if(succes)
             succes &= QSqlDatabase::database("empresa").commit();
 
         if(succes)
+        {
             TimedMessageBox * t = new TimedMessageBox(this,tr("Pedido borrado con éxito"));
+            VaciarCampos();
+            oPedido->id=-1;
+            on_btnSiguiente_clicked();
+        }
         else
             QSqlDatabase::database("empresa").rollback();
     }

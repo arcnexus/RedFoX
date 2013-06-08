@@ -4,17 +4,18 @@
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QStyle>
+#include <QMutexLocker>
 
 #include <QDebug>
 int TimedMessageBox::count = 0;
+QMutex TimedMessageBox::mutex;
 
 TimedMessageBox::TimedMessageBox(QWidget *parent, QString message, Icons icon) :
     QDialog(parent),
     _icon("",this),
     _message(message,this),
     _layout(this)
-{
-    count++;
+{    
     parent->setFocus();
     this->setWindowFlags(this->windowFlags()^Qt::FramelessWindowHint);
 
@@ -35,6 +36,8 @@ TimedMessageBox::~TimedMessageBox()
 
 void TimedMessageBox::startAnimation()
 {
+    QMutexLocker locker(&mutex);
+    count++;
     QRect dr= QApplication::desktop()->rect();
     this->move(dr.right()-this->size().width(),dr.bottom());
     QPropertyAnimation *ani = new QPropertyAnimation(this,"pos",this);

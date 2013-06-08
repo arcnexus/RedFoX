@@ -106,10 +106,12 @@ FrmPresupuestosCli::~FrmPresupuestosCli()
 void FrmPresupuestosCli::LLenarCampos()
 {
     ui->txtnPresupuesto->setText(QString::number(oPres->nPresupuesto));
+    ui->lblTopNpres->setText(QString::number(oPres->nPresupuesto));
+    ui->lblTopCCliente->setText(oPres->cCliente);
     ui->txtdFecha->setDate(oPres->dFecha);
     ui->txtdValidoHasta->setDate(oPres->dValidoHasta);
     ui->txtcCodigoCliente->setText(oPres->cCodigoCliente);
-    ui->txtcCliente->setText(oPres->cCliente);
+    ui->txtcCliente->setText(oPres->cCliente);    
     ui->txtcCif->setText(oPres->cCif);
     ui->txtcDireccion->setText(oPres->cDireccion);
     ui->txtcDireccion2->setText(oPres->cDireccion2);
@@ -187,6 +189,7 @@ void FrmPresupuestosCli::LLenarCamposCliente()
 {
     ui->txtcCodigoCliente->setText(oClientePres->cCodigoCliente);
     ui->txtcCliente->setText(oClientePres->cNombreFiscal);
+    ui->lblTopCCliente->setText(oClientePres->cNombreFiscal);
     ui->txtcDireccion->setText(oClientePres->cDireccion1);
     ui->txtcDireccion2->setText(oClientePres->cDireccion2);
     ui->txtcCp->setText(oClientePres->cCp);
@@ -294,6 +297,8 @@ void FrmPresupuestosCli::LLenarPresupuesto()
 }
 void FrmPresupuestosCli::VaciarCampos()
 {
+    ui->lblTopNpres->setText("");
+    ui->lblTopCCliente->setText("");
     ui->txtnPresupuesto->setText("0");
     ui->txtdFecha->setDate(QDate::currentDate());
     ui->txtdValidoHasta->setDate(QDate::currentDate());
@@ -466,6 +471,7 @@ void FrmPresupuestosCli::on_btnAnadir_clicked()
     BloquearCampos(false);
     int next = oPres->NuevoNumeroPresupuesto();
     ui->txtnPresupuesto->setText(QString::number(next));
+    ui->lblTopNpres->setText(QString::number(next));
     LLenarPresupuesto();
     oPres->AnadirPresupuesto();
     ui->txtcCodigoCliente->setFocus();
@@ -657,7 +663,12 @@ void FrmPresupuestosCli::on_btnBorrar_clicked()
             succes &= QSqlDatabase::database("empresa").commit();
 
         if(succes)
+        {
             TimedMessageBox * t = new TimedMessageBox(this,tr("Borrado con exito"));
+            VaciarCampos();
+            oPres->id = -1;
+            on_btnSiguiente_clicked();
+        }
         else
             QSqlDatabase::database("empresa").rollback();
     }
