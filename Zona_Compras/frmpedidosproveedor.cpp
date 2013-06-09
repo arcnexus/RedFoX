@@ -2,6 +2,8 @@
 #include "ui_frmpedidosproveedor.h"
 #include "../Busquedas/db_consulta_view.h"
 #include "../Auxiliares/frmdialogoimprimir.h"
+#include "../Auxiliares/frmaddentregascuenta.h"
+#include "../Auxiliares/entregascuenta.h"
 #include <QPrintDialog>
 
 
@@ -579,6 +581,8 @@ void FrmPedidosProveedor::llenar_campos()
     QString filter = QString("id_cab = '%1'").arg(oPedido_proveedor->id);
     helper.fillTable("empresa","lin_ped_pro",filter);
     helper.resizeTable();
+    cargar_tabla_entregas();
+
 }
 
 void FrmPedidosProveedor::guardar_campos_en_objeto()
@@ -720,3 +724,31 @@ void FrmPedidosProveedor::on_btnAnterior_clicked()
     if(!pedido.prev())
         TimedMessageBox * t = new TimedMessageBox(this,tr("Principio de archivo alcanzado"));
 }
+
+void FrmPedidosProveedor::on_btnAnadirEntregas_clicked()
+{
+    frmAddEntregasCuenta frmEntregas(this);
+    if(frmEntregas.exec() == QDialog::Accepted){
+        EntregasCuenta oEntrega(this);
+        if(!oEntrega.Anadir(2,oPedido_proveedor->Id_Proveedor,frmEntregas.importe,frmEntregas.fecha,frmEntregas.concepto))
+            QMessageBox::warning(this,tr("Gestión de pedidos a proveedor"),
+                                 tr("Falló el insertar una nueva entrega a cuenta"),
+                                 tr("Aceptar"));
+        else
+        {
+            cargar_tabla_entregas();
+
+        }
+
+    }
+
+}
+
+void FrmPedidosProveedor::cargar_tabla_entregas()
+{
+    QSqlQueryModel *modelEntregas = new  QSqlQueryModel(this);
+    modelEntregas->setQuery("select * from proveedor_a_cuenta where id_proveedor = "+
+                            QString::number(oPedido_proveedor->Id_Proveedor)+" and disponible >0",QSqlDatabase::database("Maya"));
+    ui->tabla_entregas->setModel(modelEntregas);
+}
+

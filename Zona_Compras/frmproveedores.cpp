@@ -9,6 +9,8 @@
 #include "../Auxiliares/monetarydelegate.h"
 #include "../Auxiliares/datedelegate.h"
 #include "../Busquedas/frmbuscarproveedor.h"
+#include "../Auxiliares/frmaddentregascuenta.h"
+#include "../Auxiliares/entregascuenta.h"
 
 
 #ifdef WIN32
@@ -128,7 +130,7 @@ void frmProveedores::LLenarCampos()
     ui->txtcEntidadPagoProveedor->setText(oProveedor->cEntidadPagoProveedor);
     ui->txtcOficinaPagoProveedor->setText(oProveedor->cOficinaPagoProveedor);
     ui->txtcDCPagoProveedor->setText(oProveedor->cDCPagoProveedor);
-
+    ui->txtrEntregadoaCuenta->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->rEntregadoaCuenta,'f',2)));
     ui->txtrRetencionIRPF->setText(Configuracion_global->FormatoNumerico(QString::number(oProveedor->rRetencionIRPF,'f',2)));
     ui->txtnTipoRetencionIRPF->setText(QString::number(oProveedor->nTipoRetencion));
     ui->txtcCuentaAplicacion->setText(oProveedor->cCuentaAplicacion);
@@ -871,6 +873,29 @@ void frmProveedores::historiales()
     ui->tablaAsientos->setColumnWidth(8,60);
     ui->tablaAsientos->setItemDelegateForColumn(8, new MonetaryDelegate);
 
+    //------------------------------
+    // Historial entregas a cuenta
+    //------------------------------
+    QSqlQueryModel * modelEntregas = new QSqlQueryModel(this);
+    modelEntregas->setQuery("select id,fecha_entrega,concepto,importe,disponible from proveedor_a_cuenta where id_proveedor = "+QString::number(oProveedor->id),
+                            QSqlDatabase::database("Maya"));
+    ui->tabla_entregas->setModel(modelEntregas);
+    ui->tabla_entregas->setColumnHidden(0,true);
+    ui->tabla_entregas->setColumnWidth(1,100);
+    ui->tabla_entregas->setItemDelegateForColumn(1,new DateDelegate);
+    ui->tabla_entregas->setColumnWidth(2,250);
+    ui->tabla_entregas->setColumnWidth(3,80);
+    ui->tabla_entregas->setItemDelegateForColumn(3,new MonetaryDelegate);
+    ui->tabla_entregas->setColumnWidth(4,80);
+    ui->tabla_entregas->setItemDelegateForColumn(4,new MonetaryDelegate);
+    QStringList cHeader;
+    cHeader << tr("Fecha") <<tr("concepto") << tr("importe") <<tr("disponible");
+    for(int pos = 0; pos < cHeader.size();pos++)
+    {
+        modelEntregas->setHeaderData(pos,Qt::Horizontal,cHeader.at(pos));
+    }
+
+
 
 }
 
@@ -947,9 +972,12 @@ void frmProveedores::menu_contactos(const QPoint &position)
    QPoint globalPos = ui->tablaContactos->mapToGlobal(position);
    QMenu myMenu;
    QAction *actionEditar = new QAction(tr("Editar Contacto"),this);
+   QAction *actionBorrar = new QAction(tr("Borrar contacto"),this);
    myMenu.addAction(actionEditar);
+   myMenu.addAction(actionBorrar);
 
        connect(actionEditar, SIGNAL(triggered()), this, SLOT(editar_contacto()));
+       connect(actionBorrar,SIGNAL(triggered()),this,SLOT(borrar_contacto()));
 
     myMenu.exec(globalPos);
 
@@ -1083,6 +1111,21 @@ void frmProveedores::editar_contacto()
 
 void frmProveedores::borrar_contacto()
 {
+    QModelIndex index= ui->tablaContactos->currentIndex();
+    int nId = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
+    this->id_contacto = nId;
+    QSqlQuery queryContactos(QSqlDatabase::database("Maya"));
+    queryContactos.prepare("delete from personascontactoproveedor where id = :id");
+    queryContactos.bindValue(":id",this->id_contacto);
+    if (!queryContactos.exec())
+    {
+        QMessageBox::warning(this,tr("ATENCIÓN:"),
+                             tr("Ocurrió un error al borrar el contacto: %1").arg(queryContactos.lastError().text()),
+                             tr("Aceptar"));
+    } else
+    {
+        contactos();
+    }
 }
 
 void frmProveedores::on_btnBuscar_clicked()
@@ -1094,4 +1137,19 @@ void frmProveedores::on_btnBuscar_clicked()
         oProveedor->Recuperar("select * from proveedores where id = "+QString::number(id_pro));
         this->LLenarCampos();
     }
+}
+
+void frmProveedores::on_btnAnadirEntrega_clicked()
+{
+    frmAddEntregasCuenta frmEntregas(this);
+    if(frmEntregas.exec() == QDialog::Accepted){
+        EntregasCuenta oEntrega(this);
+        if(!oEntrega.Anadir(2,oProveedor->id,frmEntregas.importe,frmEntregas.fecha,frmEntregas.concepto))
+            QMessageBox::warning(this,tr("Gestión de proveedores"),
+                                 tr("Falló el insertar una nueva entrega a cuenta"),
+                                 tr("Aceptar"));
+        else
+            historiales();
+    }
+
 }

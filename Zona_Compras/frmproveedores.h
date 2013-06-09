@@ -89,6 +89,8 @@ private slots:
 
     void on_btnBuscar_clicked();
 
+    void on_btnAnadirEntrega_clicked();
+
 private:
     Ui::frmProveedores *ui;
 };
