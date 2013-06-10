@@ -342,7 +342,7 @@ void FrmFacturasProveedor::on_btnAnadir_clicked()
     emit block();
     llenar_campos();
     bloquearcampos(false);
-    //ui->txtcCodigoProveedor->setFocus();
+    ui->txtcCodigoProveedor->setFocus();
 
 }
 
@@ -474,4 +474,10 @@ void FrmFacturasProveedor::on_btnSiguiente_clicked()
     llenar_campos();
     ui->btnAnterior->setEnabled(true);
     ui->btnImprimir->setEnabled(true);
+}
+
+void FrmFacturasProveedor::on_btnAnterior_clicked()
+{
+    oFacPro->recuperar_factura("Select * from fac_pro where id <"+QString::number(oFacPro->id)+" order by id desc limit 0,1",2);
+    llenar_campos();
 }
