@@ -115,6 +115,8 @@ public:
     QString Devolver_codigo_forma_pago(int id);
     int Devolver_id_tarifa(QString cTarifa);
     QString Devolver_tarifa(int id_tarifa);
+    QString Devolver_tipo_gasto(int id_gasto);
+    int Devolver_id_tipo_gasto(QString desc);
 
     QSqlTableModel* client_model;
     void CargarClientes();

@@ -21,6 +21,7 @@ public:
     explicit FrmAlbaranProveedor(QWidget *parent = 0, bool showCerrar = false);
     ~FrmAlbaranProveedor();
     void llenarProveedor(int id);
+    void llenar_tabla_entregas();
     int id;
 
 
@@ -48,6 +49,8 @@ private slots:
     void on_btnAnadir_clicked();
 
     void on_btnBorrar_clicked();
+
+    void on_btnAnadirEntrega_clicked();
 
 private:
     Ui::FrmAlbaranProveedor *ui;

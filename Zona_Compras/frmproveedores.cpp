@@ -217,7 +217,7 @@ void frmProveedores::CargarCamposEnProveedor()
     oProveedor->cFaxAlmacen = ui->txtcFaxAlmacen->text();
     oProveedor->cCodigoFormaPago = ui->txtcCodigoFormaPago->currentText();
     oProveedor->dFechaUltimaCompra = ui->txtdFechaUltimaCompra->date();
-    oProveedor->rAcumuladoCompras = ui->txtrAcumuladoCompras->text().replace(".","").toDouble();
+    oProveedor->rAcumuladoCompras = ui->txtrAcumuladoCompras->text().replace(",",".").toDouble();
     oProveedor->cEntidadBancariaProveedor = ui->txtcEntidadBancariaProveedor->text();
     oProveedor->cOficinaBancariaProveedor = ui->txtcOficinaBancariaProveedor->text();
     oProveedor->cDCProveedor = ui->txtcDCProveedor->text();
@@ -225,17 +225,16 @@ void frmProveedores::CargarCamposEnProveedor()
     oProveedor->cEntidadPagoProveedor = ui->txtcEntidadPagoProveedor->text();
     oProveedor->cOficinaPagoProveedor = ui->txtcOficinaPagoProveedor->text();
     oProveedor->cDCPagoProveedor = ui->txtcDCPagoProveedor->text();
-    oProveedor->rRetencionIRPF = ui->txtrRetencionIRPF->text().replace(".","").toDouble();
+    oProveedor->rRetencionIRPF = ui->txtrRetencionIRPF->text().replace(",",".").toDouble();
     oProveedor->nTipoRetencion = ui->txtnTipoRetencionIRPF->text().toInt();
     oProveedor->cCuentaAplicacion = ui->txtcCuentaAplicacion->text();
     oProveedor->tComentarios = ui->txttComentarios->toPlainText();
-    oProveedor->nDto = ui->txtnDto->text().replace(".","").toDouble();
+    oProveedor->nDto = ui->txtnDto->text().replace(",",".").toDouble();
     oProveedor->dFechaAlta = ui->txtdFechaAlta->date();
-    oProveedor->rDeudaMaxima = ui->txtrDeudaMaxima->text().replace(".","").toDouble();
-    oProveedor->rDeudaActual = ui->txtrDeudaActual->text().replace(".","").toDouble();
+    oProveedor->rDeudaMaxima = ui->txtrDeudaMaxima->text().replace(",",".").toDouble();
+    oProveedor->rDeudaActual = ui->txtrDeudaActual->text().replace(",",".").toDouble();
     oProveedor->lRecargoEquivalencia = ui->chklRecargoEquivalencia->isChecked();
     oProveedor->tTextoparaPedidos = ui->txttTextoparaPedidos->toPlainText();
-    oProveedor->rEntregadoaCuenta = ui->txtrEntregadoaCuenta->text().replace(".","").toDouble();
     cargar_forma_pago(ui->txtcCodigoFormaPago->currentText());
 
 }
@@ -377,7 +376,7 @@ void frmProveedores::on_btnAnterior_clicked()
     LLenarCampos();
 }
 
-void frmProveedores::on_btnGuardar_clicked()
+void frmProveedores::                          on_btnGuardar_clicked()
 {
     bool lGuardar = true;
     QString cTexto;

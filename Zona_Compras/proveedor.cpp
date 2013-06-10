@@ -345,8 +345,7 @@ void Proveedor::Guardar()
                         "rDeudaMaxima =:rDeudaMaxima,"
                         "rDeudaActual =:rDeudaActual,"
                         "lRecargoEquivalencia =:lRecargoEquivalencia,"
-                        "tTextoparaPedidos =:tTextoparaPedidos,"
-                        "rEntregadoaCuenta =:rEntregadoaCuenta "
+                        "tTextoparaPedidos =:tTextoparaPedidos "
                         " WHERE id = :id");
 
 
@@ -395,7 +394,6 @@ void Proveedor::Guardar()
     queryProveedor.bindValue(":rDeudaActual",this->rDeudaActual);
     queryProveedor.bindValue(":lRecargoEquivalencia",this->lRecargoEquivalencia);
     queryProveedor.bindValue(":tTextoparaPedidos",this->tTextoparaPedidos);
-    queryProveedor.bindValue(":rEntregadoaCuenta",this->rEntregadoaCuenta);
     queryProveedor.bindValue(":id",this->id);
 
     if(!queryProveedor.exec()){

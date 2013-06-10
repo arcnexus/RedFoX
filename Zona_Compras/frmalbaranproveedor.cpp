@@ -1,6 +1,10 @@
 #include "frmalbaranproveedor.h"
 #include "ui_frmalbaranproveedor.h"
 #include "../Busquedas/db_consulta_view.h"
+#include "../Auxiliares/datedelegate.h"
+#include "../Auxiliares/monetarydelegate.h"
+#include "../Auxiliares/frmaddentregascuenta.h"
+#include "../Auxiliares/entregascuenta.h"
 
 
 FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
@@ -16,6 +20,11 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
 
     helper.set_Tipo(true);
     helper.help_table(ui->Lineas);
+    helper.set_tarifa(1);
+    helper.setDatabase("empresa","lin_alb_pro");
+    helper.setIdHeader(1);
+    helper.blockTable(true);
+
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
     connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
@@ -91,9 +100,30 @@ void FrmAlbaranProveedor::llenarProveedor(int id)
     ui->txtcCif->setText(prov.cCif);
     int ind = ui->cbo_pais->findText(Configuracion_global->Devolver_pais(prov.idpais));
     ui->cbo_pais->setCurrentIndex(ind);
+    ui->txtrACuenta->setText(Configuracion_global->FormatoNumerico(QString::number(prov.rEntregadoaCuenta,'f',2)));
     ui->chklRecargoEq->setChecked(prov.lRecargoEquivalencia);
     ui->lblproveedor->setText(prov.cProveedor);
     oAlbPro->id_Proveedor = prov.id;
+}
+
+void FrmAlbaranProveedor::llenar_tabla_entregas()
+{
+    QSqlQueryModel *modelEntregas = new QSqlQueryModel(this);
+    modelEntregas->setQuery("select id, fecha_entrega, concepto, importe from proveedor_a_cuenta where id_proveedor = "+
+                            QString::number(prov.id),QSqlDatabase::database("Maya"));
+    ui->tabla_entregas->setModel(modelEntregas);
+    ui->tabla_entregas->setColumnHidden(0,true);
+    ui->tabla_entregas->setColumnWidth(1,120);
+    ui->tabla_entregas->setItemDelegateForColumn(1,new DateDelegate );
+    ui->tabla_entregas->setColumnWidth(2,400);
+    ui->tabla_entregas->setColumnWidth(3,120);
+    ui->tabla_entregas->setItemDelegateForColumn(3, new MonetaryDelegate);
+    QStringList cabecera;
+    cabecera << tr("id") << tr("Fecha entrega") << tr("Concepto") << tr("Importe");
+    for(int pos = 0; pos < cabecera.size();pos++)
+    {
+        modelEntregas->setHeaderData(pos,Qt::Horizontal,cabecera.at(pos));
+    }
 }
 
 void FrmAlbaranProveedor::bloquearcampos(bool estado)
@@ -205,8 +235,9 @@ void FrmAlbaranProveedor::totalChanged(double base, double dto, double subTotal,
 
     ui->txtrBaseTotal->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2))+moneda);
     ui->txtrTotalIVA->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2))+moneda);
-    ui->txtrTotalRecargoEq->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2))+moneda);
-    ui->txtrTotal->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2))+moneda);
+    ui->txtrTotalRecargoEq_3->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2))+moneda);
+    ui->txtrTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2))+moneda);
+
     this->moneda = moneda;
 }
 
@@ -244,7 +275,7 @@ void FrmAlbaranProveedor::desglose4Changed(double base, double iva, double re, d
 
 void FrmAlbaranProveedor::on_btnSiguiente_clicked()
 {
-    oAlbPro->Recuperar("Select * from alb_pro where id >"+QString::number(oAlbPro->id),1);
+    oAlbPro->Recuperar("Select * from alb_pro where id >"+QString::number(oAlbPro->id)+" limit 0,1",1);
     llenar_campos();
     ui->btnAnterior->setEnabled(true);
     ui->btnBorrar->setEnabled(true);
@@ -253,7 +284,7 @@ void FrmAlbaranProveedor::on_btnSiguiente_clicked()
 
 void FrmAlbaranProveedor::on_btnAnterior_clicked()
 {
-    oAlbPro->Recuperar("Select * from alb_pro where id <"+QString::number(oAlbPro->id)+" order by id desc",2);
+    oAlbPro->Recuperar("Select * from alb_pro where id <"+QString::number(oAlbPro->id)+" order by id desc limit 0,1",2);
     llenar_campos();
 }
 
@@ -303,6 +334,8 @@ void FrmAlbaranProveedor::llenar_campos()
         ui->txtdFechaFactura->setVisible(true);
         ui->txtcNumFra->setVisible(true);
     }
+
+    llenar_tabla_entregas();
 
     this->id = oAlbPro->id;
     QString filter = QString("id_cab = '%1'").arg(oAlbPro->id);
@@ -593,4 +626,19 @@ void FrmAlbaranProveedor::on_btnBorrar_clicked()
         oAlbPro->borrar(oAlbPro->id);
         on_btnAnterior_clicked();
     }
+}
+
+void FrmAlbaranProveedor::on_btnAnadirEntrega_clicked()
+{
+    frmAddEntregasCuenta frmEntregas(this);
+    if(frmEntregas.exec() == QDialog::Accepted){
+        EntregasCuenta oEntrega(this);
+        if(!oEntrega.Anadir(2,prov.id,frmEntregas.importe,frmEntregas.fecha,frmEntregas.concepto))
+            QMessageBox::warning(this,tr("Gestión de proveedores"),
+                                 tr("Falló el insertar una nueva entrega a cuenta"),
+                                 tr("Aceptar"));
+        else
+            llenar_tabla_entregas();
+    }
+
 }
