@@ -17,6 +17,10 @@ public:
     
 private:
     Ui::FrmEntrada_apuntes *ui;
+
+signals:
+    void block();
+    void unblock();
 };
 
 #endif // FRMENTRADA_APUNTES_H

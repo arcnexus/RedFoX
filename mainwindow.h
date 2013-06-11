@@ -27,6 +27,7 @@
 
 #include "openrptLibs/Auxiliares/reportwriterwindow.h"
 #include "Agenda/agendaform.h"
+#include "../Zona_Contabilidad/frmentrada_apuntes.h"
 namespace Ui {
 class MainWindow;
 }
@@ -185,6 +186,7 @@ private:
     FrmFacturarAlabaranes *frmFactura_multiple;
     FrmOrden_Pedido_Producto * frmOrden_Ped_pro;
     Frmrecepcion_pedidos *frmRecep_pedidos;
+    FrmEntrada_apuntes *frmentrada_apuntes;
 
     ReportWriterWindow * reportWindow;
     AgendaForm * agendaForm;

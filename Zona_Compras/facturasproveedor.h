@@ -12,8 +12,8 @@ public:
 
     int anadir_factura();
     void guardar_factura();
-    QSqlQuery recuperar_factura(QString cSQL,int accion);
-    QSqlQuery recuperar_factura(int id_factura);
+    void recuperar_factura(QString cSQL,int accion);
+    void recuperar_factura(int id_factura);
 
 
     // ---------------------
@@ -65,6 +65,13 @@ public:
     bool lPagado;
     double rImporteDeudaPendiente;
     QString cCAlbaran;
+    QString desc_gasto1;
+    QString desc_gasto2;
+    QString desc_gasto3;
+    double imp_gasto1;
+    double imp_gasto2;
+    double imp_gasto3;
+    bool gasto_to_coste;
  private:
     void cargar_factura(QSqlQuery queryFact, int accion);
     

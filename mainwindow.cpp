@@ -11,6 +11,7 @@
 #include <../Almacen/frmtipostarifa.h>
 #include "../Zona_Administrador/frmconfigmaya.h"
 
+
 Configuracion * Configuracion_global = 0;
 
 void MainWindow::crear_barraMantenimiento()
@@ -362,6 +363,12 @@ MainWindow::MainWindow(QWidget *parent) :
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: Recepción de Pedidos") );
     frmRecep_pedidos = new Frmrecepcion_pedidos(this);
 
+
+    splash.showMessage(tr("Cargando modulos... Modulo de Contabilidad: Diario de apuntes") );
+    frmentrada_apuntes = new FrmEntrada_apuntes(this);
+    connect(frmentrada_apuntes,SIGNAL(block()),this,SLOT(block_main()));
+    connect(frmentrada_apuntes,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
     splash.showMessage(tr("Integrando modulos") );
 
     ui->stackedWidget->addWidget(frmClientes1);
@@ -380,6 +387,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->addWidget(frmRecep_pedidos);
     ui->stackedWidget->addWidget(reportWindow);
     ui->stackedWidget->addWidget(agendaForm);
+    ui->stackedWidget->addWidget(frmentrada_apuntes);
     MayaForm = new init_form(this);
     ui->stackedWidget->addWidget(MayaForm);
     ui->stackedWidget->setCurrentWidget(MayaForm);
@@ -554,6 +562,7 @@ void MainWindow::btn_reports_clicked()
 
 void MainWindow::btn_diario_clicked()
 {
+    ui->stackedWidget->setCurrentWidget(frmentrada_apuntes);
 }
 
 //void MainWindow::on_btnAgenda_clicked()

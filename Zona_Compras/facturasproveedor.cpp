@@ -7,7 +7,18 @@ FacturasProveedor::FacturasProveedor(QObject *parent) :
 int FacturasProveedor::anadir_factura()
 {
     QSqlQuery queryFactura(QSqlDatabase::database("empresa"));
-    if(queryFactura.exec("insert into fac_pro (Id_Proveedor) values (0)"))
+    queryFactura.prepare("insert into fac_pro (Id_Proveedor,nPorcIva1,nPorcIva2,nPorcIva3,nPorcIva4,nREC1,nREC2,nREC3,nREC4) "
+                         " values (0,:nIva1,:nIva2,:nIva3,:nIva4,:nREC1,:nREC2,:nREC3,:nREC4)");
+    queryFactura.bindValue(":nIva1",Configuracion_global->ivaList.at(0));
+    queryFactura.bindValue(":nIva2",Configuracion_global->ivaList.at(1));
+    queryFactura.bindValue(":nIva3",Configuracion_global->ivaList.at(2));
+    queryFactura.bindValue(":nIva4",Configuracion_global->ivaList.at(3));
+    queryFactura.bindValue(":nREC1",Configuracion_global->reList.at(0));
+    queryFactura.bindValue(":nREC2",Configuracion_global->reList.at(1));
+    queryFactura.bindValue(":nREC3",Configuracion_global->reList.at(2));
+    queryFactura.bindValue(":nREC4",Configuracion_global->reList.at(3));
+
+    if(queryFactura.exec())
     {
         this->id = queryFactura.lastInsertId().toInt();
         return this->id;
@@ -68,6 +79,13 @@ void FacturasProveedor::guardar_factura()
                          "tComentario =:tComentario,"
                          "lPagado =:lPagado,"
                          "rImporteDeudaPendiente =:rImporteDeudaPendiente,"
+                         "desc_gasto1 = :desc_gasto1,"
+                         "desc_gasto2 = :desc_gasto2,"
+                         "desc_gasto3 = :desc_gasto3,"
+                         "imp_gasto1 = :imp_gasto1,"
+                         "imp_gasto2 = :imp_gasto2,"
+                         "imp_gasto3 = :imp_gasto3,"
+                         "gasto_to_coste =:gasto_to_coste,"
                          "cCAlbaran =:cCAlbaran "
                          "WHERE id =:id");
 
@@ -115,6 +133,13 @@ void FacturasProveedor::guardar_factura()
     queryFactura.bindValue(":tComentario",this->tComentario);
     queryFactura.bindValue(":lPagado",this->lPagado);
     queryFactura.bindValue(":rImporteDeudaPendiente",this->rImporteDeudaPendiente);
+    queryFactura.bindValue(":desc_gasto1",this->desc_gasto1);
+    queryFactura.bindValue(":desc_gasto2",this->desc_gasto2);
+    queryFactura.bindValue(":desc_gasto3",this->desc_gasto3);
+    queryFactura.bindValue(":imp_gasto1",this->imp_gasto1);
+    queryFactura.bindValue(":imp_gasto2",this->imp_gasto2);
+    queryFactura.bindValue(":imp_gasto3",this->imp_gasto3);
+    queryFactura.bindValue(":gasto_to_coste",this->gasto_to_coste);
     queryFactura.bindValue(":cCAlbaran",this->cCAlbaran);
     queryFactura.bindValue(":id",this->id);
 
@@ -129,7 +154,7 @@ void FacturasProveedor::guardar_factura()
 
 }
 
-QSqlQuery FacturasProveedor::recuperar_factura(QString cSQL, int accion)
+void FacturasProveedor::recuperar_factura(QString cSQL, int accion)
 {
     QSqlQuery queryFactura(QSqlDatabase::database("empresa"));
     if(queryFactura.exec(cSQL))
@@ -139,7 +164,7 @@ QSqlQuery FacturasProveedor::recuperar_factura(QString cSQL, int accion)
                              tr("Falló al recuperar la factura: %1").arg(queryFactura.lastError().text()));
 }
 
-QSqlQuery FacturasProveedor::recuperar_factura(int id_factura)
+void FacturasProveedor::recuperar_factura(int id_factura)
 {
     QSqlQuery queryFactura(QSqlDatabase::database("empresa"));
     queryFactura.prepare("select * from fac_pro where id = :id");
@@ -153,6 +178,7 @@ QSqlQuery FacturasProveedor::recuperar_factura(int id_factura)
 
 void FacturasProveedor::cargar_factura(QSqlQuery queryFact,int accion)
 {
+
   // accion == 0 - nada : 1 - Anterior : 2 - Siguiente
     if(queryFact.next())
     {
@@ -160,7 +186,7 @@ void FacturasProveedor::cargar_factura(QSqlQuery queryFact,int accion)
         this->dFecha = queryFact.record().value("dFecha").toDate();
         this->dRecepcion = queryFact.record().value("dRecepcion").toDate();
         this->cPedido = queryFact.record().value("cPedido").toString();
-        this->Id_Proveedor = queryFact.record().value("Id_Provedor").toInt();
+        this->Id_Proveedor = queryFact.record().value("Id_Proveedor").toInt();
         this->cProveedor = queryFact.record().value("cProveedor").toString();
         this->cCifProveedor = queryFact.record().value("cCifProveedor").toString();
         this->lRetencionIRPF = queryFact.record().value("lRetencionIRPF").toBool();
@@ -202,6 +228,13 @@ void FacturasProveedor::cargar_factura(QSqlQuery queryFact,int accion)
         this->rImporteDeudaPendiente = queryFact.record().value("rImporteDeudaPendiente").toDouble();
         this->cCAlbaran = queryFact.record().value("cCAlbaran").toString();
         this->id = queryFact.record().value("id").toInt();
+        this->desc_gasto1 = queryFact.record().value("desc_gasto1").toString();
+        this->desc_gasto2 = queryFact.record().value("desc_gasto2").toString();
+        this->desc_gasto3 = queryFact.record().value("desc_gasto3").toString();
+        this->imp_gasto1 = queryFact.record().value("imp_gasto1").toDouble();
+        this->imp_gasto2 = queryFact.record().value("imp_gasto2").toDouble();
+        this->imp_gasto3 = queryFact.record().value("imp_gasto3").toDouble();
+        this->gasto_to_coste = queryFact.record().value("gasto_to_coste").toBool();
 
     } else
     {

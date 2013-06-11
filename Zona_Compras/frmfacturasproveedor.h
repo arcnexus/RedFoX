@@ -32,12 +32,24 @@ private slots:
     void on_btnAnadir_clicked();
     void llenar_campos();
     void llenar_fac_pro();
+    void llenar_campos_iva();
 
     void on_btnGuardar_clicked();
 
     void on_btnSiguiente_clicked();
 
     void on_btnAnterior_clicked();
+
+    void on_botBuscarCliente_clicked();
+
+    void on_btnEditar_clicked();
+
+    void on_btnDeshacer_clicked();
+
+    void on_btnListados_clicked();
+
+    void on_btnBuscar_clicked();
+    void resizeTable(int x);
 
 private:
     Ui::FrmFacturasProveedor *ui;
