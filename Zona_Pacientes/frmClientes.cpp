@@ -432,6 +432,10 @@ void frmClientes::LLenarCampos()
     qModelDireccion->setQuery("select descripcion,id from cliente_direcciones where idcliente = "+QString::number(oCliente->id),
                               QSqlDatabase::database("Maya"));
     ui->lista_DireccionesAlternativas->setModel(qModelDireccion);
+    // -------------------
+    // Grafica estadística
+    //--------------------
+    refrescar_grafica();
 }
 void frmClientes::VaciarCampos()
 {
@@ -1346,4 +1350,69 @@ void frmClientes::cobrar_fraccion()
 void frmClientes::ver_asiento()
 {
 
+}
+
+void frmClientes::refrescar_grafica()
+{
+    ui->graficaEstadistica->Clear();
+    ui->graficaEstadistica->setTipo(OpenChart::BarraMultiple);
+    ui->graficaEstadistica->addMulibarColor("Compras",Qt::darkRed);
+    ui->graficaEstadistica->addMulibarColor("Ventas",Qt::darkGreen);
+    QVector <float> enero;
+    enero << ui->txtEnero->text().toFloat(); //Añadir tantos colores como elementos tenga el vector!
+
+    ui->graficaEstadistica->addItem("Ene",enero);
+
+
+    QVector <float> febrero;
+    febrero <<ui->txtFebrero->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+
+    ui->graficaEstadistica->addItem("Feb",febrero);
+
+    QVector <float> marzo;
+    marzo <<ui->txtMarzo->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+
+    ui->graficaEstadistica->addItem("Mar",marzo);
+
+    QVector <float> abril;
+    abril <<ui->txtAbril->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+
+    ui->graficaEstadistica->addItem("Abr",abril);
+
+    QVector <float> mayo;
+    mayo <<ui->txtMayo->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+
+    ui->graficaEstadistica->addItem("May",mayo);
+
+    QVector <float> junio;
+    junio <<ui->txtJunio->text().toFloat();
+
+    ui->graficaEstadistica->addItem("jun",junio);
+
+    QVector <float> julio;
+    julio <<ui->txtjulio->text().toFloat();
+
+    ui->graficaEstadistica->addItem("Jul",julio);
+
+    QVector <float> agosto;
+    agosto <<ui->txtAgosto->text().toFloat();
+    ui->graficaEstadistica->addItem("Ago",agosto);
+
+    QVector <float> septiembre;
+    septiembre <<ui->txtSeptiembre->text().toFloat();
+    ui->graficaEstadistica->addItem("Sep",septiembre);
+
+    QVector <float> octubre;
+    octubre <<ui->txtOctubre->text().toFloat();
+    ui->graficaEstadistica->addItem("Oct",octubre);
+
+    QVector <float> noviembre;
+    noviembre <<ui->txtNoviembre->text().toFloat();
+    ui->graficaEstadistica->addItem("Nov",noviembre);
+
+    QVector <float> diciembre;
+    diciembre <<ui->txtDiciembre->text().toFloat();
+    ui->graficaEstadistica->addItem("Dic",diciembre);
+
+    ui->graficaEstadistica->repaint();
 }

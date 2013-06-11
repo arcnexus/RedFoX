@@ -130,7 +130,9 @@ SOURCES += main.cpp\
     Busquedas/db_consulta_view.cpp \
     Auxiliares/timedmessagebox.cpp\
     Zona_Compras/albaranproveedor.cpp \
-    Zona_Compras/facturasproveedor.cpp
+    Zona_Compras/facturasproveedor.cpp \
+    Auxiliares/frmaddentregascuenta.cpp \
+    Auxiliares/entregascuenta.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -227,7 +229,9 @@ HEADERS  += mainwindow.h \
     Busquedas/db_consulta_view.h \
     Auxiliares/timedmessagebox.h\
     Zona_Compras/albaranproveedor.h \
-    Zona_Compras/facturasproveedor.h
+    Zona_Compras/facturasproveedor.h \
+    Auxiliares/frmaddentregascuenta.h \
+    Auxiliares/entregascuenta.h
 
 
 
@@ -286,7 +290,8 @@ FORMS    += mainwindow.ui \
     Zona_Pacientes/frmcobrardeuda.ui \
     Zona_Contabilidad/frmentrada_apuntes.ui \
     Auxiliares/frmdialogoimprimir.ui \
-    Busquedas/db_consulta_view.ui
+    Busquedas/db_consulta_view.ui \
+    Auxiliares/frmaddentregascuenta.ui
 
 RESOURCES += \
     maya.qrc

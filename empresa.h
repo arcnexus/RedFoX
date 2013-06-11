@@ -139,6 +139,8 @@ public:
     bool Autocodificar;
     int Tamanocodigo;
     int id_tarifa_predeterminada;
+    bool empresa_medica;
+    bool empresa_internacional;
 
     int consultas;
     QString primer_dia_laborable;
@@ -146,6 +148,7 @@ public:
     QString horario_primer_dia;
     QString horario_dia_normal;
     QString horario_ultimo_dia;
+    bool actualizardivisas;
 
     // ConexiónBD
     QString cRutaBDSqLite;

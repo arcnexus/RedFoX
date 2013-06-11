@@ -27,6 +27,7 @@
 
 #include "openrptLibs/Auxiliares/reportwriterwindow.h"
 #include "Agenda/agendaform.h"
+#include "../Zona_Contabilidad/frmentrada_apuntes.h"
 namespace Ui {
 class MainWindow;
 }
@@ -47,7 +48,7 @@ public:
     //QSqlDatabase dbConfiguracion;
     QSqlQuery QryConfiguracion;
 private slots:
-    void Actualizar_divisas(float valor_divisa);
+    void actualizar_divisas(float valor_divisa, QString divisaDest);
 
     void block_main();
 
@@ -185,6 +186,7 @@ private:
     FrmFacturarAlabaranes *frmFactura_multiple;
     FrmOrden_Pedido_Producto * frmOrden_Ped_pro;
     Frmrecepcion_pedidos *frmRecep_pedidos;
+    FrmEntrada_apuntes *frmentrada_apuntes;
 
     ReportWriterWindow * reportWindow;
     AgendaForm * agendaForm;

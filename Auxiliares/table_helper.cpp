@@ -129,6 +129,8 @@ void Table_Helper::fillTable(QString db, QString table, QString filter)
             ntabla = 1;
         if(table =="lin_alb_pro")
             ntabla = 2;
+        if(table =="lin_fac_pro")
+            ntabla = 3;
 
         switch (ntabla) {
         case 1:
@@ -139,6 +141,10 @@ void Table_Helper::fillTable(QString db, QString table, QString filter)
             sql = QString("select id,id_cab,id_articulo,codigo_articulo_proveedor,nCantidad,cDescripcion,rCoste,rSubtotal,rDto,nDto,nIva,rTotal"
                           " from %1 where %2").arg(table).arg(filter);
             break;
+        case 3:
+            sql = QString("select id,id_cab,id_articulo,codigo_articulo_proveedor,nCantidad,cDescripcion,rCoste,rSubtotal,rDto,nDto,nIva,rTotal"
+                          " from %1 where %2").arg(table).arg(filter);
+
         default:
             sql = QString("SELECT * FROM %1 WHERE %2").arg(table).arg(filter);
             break;

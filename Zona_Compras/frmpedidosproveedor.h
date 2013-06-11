@@ -50,6 +50,8 @@ private slots:
     void guardar_campos_en_objeto();
     void clear();
     void resizeTable(int x);
+    void on_btnAnadirEntregas_clicked();
+    void cargar_tabla_entregas();
 private:
 
 

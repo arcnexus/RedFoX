@@ -1010,37 +1010,12 @@ color: rgb(0, 64, 64);</string>
             <item>
              <widget class="QLabel" name="label_20">
               <property name="text">
-               <string>Entregado a Cuenta:</string>
+               <string/>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="txtrACuenta">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>120</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-              <property name="text">
-               <string>0,00</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="btnAnadirEntregas">
               <property name="icon">
                <iconset resource="../maya.qrc">
                 <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
@@ -1056,7 +1031,7 @@ color: rgb(0, 64, 64);</string>
            </layout>
           </item>
           <item row="1" column="0" colspan="2">
-           <widget class="QTableView" name="tableView">
+           <widget class="QTableView" name="tabla_entregas">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);
 alternate-background-color: rgb(255, 255, 222);</string>

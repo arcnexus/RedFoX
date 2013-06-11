@@ -448,6 +448,37 @@ QString Configuracion::Devolver_tarifa(int id_tarifa)
     return "";
 }
 
+QString Configuracion::Devolver_tipo_gasto(int id_gasto)
+{
+    QSqlQuery queryGasto(QSqlDatabase::database("Maya"));
+    if(queryGasto.exec("select descripcion from grupos_gasto where id = "+QString::number(id_gasto))){
+        queryGasto.next();
+        QString cGasto = queryGasto.record().value("descripcion").toString();
+        return cGasto;
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Tarifas"),
+                             tr("Fallo la recuperación del tipo de gasto: ")+queryGasto.lastError().text(),
+                             tr("Aceptar"));
+    }
+    return "";
+}
+
+int Configuracion::Devolver_id_tipo_gasto(QString desc)
+{
+
+    QSqlQuery queryGasto(QSqlDatabase::database("Maya"));
+    if(queryGasto.exec("select id from grupos_gasto where descripcion = '"+desc+"'")){
+        queryGasto.next();
+        int id = queryGasto.record().value("id").toInt();
+        return id;
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Tipos de Gasto"),
+                             tr("Fallo la recuperación del identificador del gasto: ")+queryGasto.lastError().text(),
+                             tr("Aceptar"));
+    }
+    return 0;
+}
+
 void Configuracion::CargarClientes()
 {
     if(client_model == 0)
@@ -995,7 +1026,7 @@ void Configuracion::readCambio(QString s)
     if(ok)
     {
         c++;
-        emit cambioReady(f,to);
+        emit cambioReady(f,to);//double, qString....
     }
     else
         qDebug()<<s;
