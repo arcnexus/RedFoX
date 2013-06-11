@@ -1926,7 +1926,7 @@ color: rgb(23, 76, 7);</string>
      <item>
       <widget class="QLabel" name="label_16">
        <property name="text">
-        <string>Base Imp:</string>
+        <string>SubTotal:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1998,7 +1998,7 @@ color: rgb(0, 64, 64);</string>
      <item>
       <widget class="QLabel" name="label_8">
        <property name="text">
-        <string>SubTotal:</string>
+        <string>Base Imp.:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

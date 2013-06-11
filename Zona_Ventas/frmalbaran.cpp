@@ -66,8 +66,20 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran > -1 order by nAlbaran  limit 1 "))
     {
         LLenarCampos();
-        QString filter = QString("Id_Cab = '%1'").arg(ui->txtcAlbaran->text());
-        helper.fillTable("empresa","lin_alb",filter);
+        QString filter = QString("Id_Cab = '%1'").arg(oAlbaran->id);
+        helper.fillTable("empresa","lin_alb",filter);        
+    }
+    else
+    {
+        VaciarCampos();
+        ui->btn_borrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+        ui->btnFacturar->setEnabled(false);
+        ui->btnSiguiente->setEnabled(false);
+        ui->btnAnterior->setEnabled(false);
+        ui->btnImprimir->setEnabled(false);
+        ui->btnBuscar->setEnabled(false);
+        oAlbaran->id = -1;
     }
 }
 
@@ -132,10 +144,10 @@ void FrmAlbaran::LLenarCampos() {
     ui->txtrBase2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rBase2,'f',2)));
     ui->txtrBase3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rBase3,'f',2)));
     ui->txtrBase4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rBase4,'f',2)));
-    ui->txtnPorcentajeIva1->setText(QString::number(oAlbaran->nPorcentajeIVA1));
-    ui->txtnPorcentajeIva2->setText(QString::number(oAlbaran->nPorcentajeIVA2));
-    ui->txtnPorcentajeIva3->setText(QString::number(oAlbaran->nPorcentajeIVA3));
-    ui->txtnPorcentajeIva4->setText(QString::number(oAlbaran->nPorcentajeIVA4));
+    //ui->txtnPorcentajeIva1->setText(QString::number(oAlbaran->nPorcentajeIVA1));
+    //ui->txtnPorcentajeIva2->setText(QString::number(oAlbaran->nPorcentajeIVA2));
+    //ui->txtnPorcentajeIva3->setText(QString::number(oAlbaran->nPorcentajeIVA3));
+    //ui->txtnPorcentajeIva4->setText(QString::number(oAlbaran->nPorcentajeIVA4));
     ui->txtrIVA1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteIva1,'f',2)));
     ui->txtrIVA2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteIva2,'f',2)));
     ui->txtrIVA3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteIva3,'f',2)));
@@ -144,10 +156,10 @@ void FrmAlbaran::LLenarCampos() {
     ui->txtrTotal2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rTotal2,'f',2)));
     ui->txtrTotal3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rTotal3,'f',2)));
     ui->txtrTotal4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rTotal4,'f',2)));
-    ui->txtnRec1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->nPorcentajeRecargoEq1,'f',2)));
-    ui->txtnRec2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->nPorcentajeRecargoEq2,'f',2)));
-    ui->txtnRec3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->nPorcentajeRecargoEq3,'f',2)));
-    ui->txtnRec4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->nPorcentajeRecargoEq4,'f',2)));
+    //ui->txtnRec1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->nPorcentajeRecargoEq1,'f',2)));
+    //ui->txtnRec2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->nPorcentajeRecargoEq2,'f',2)));
+    //ui->txtnRec3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->nPorcentajeRecargoEq3,'f',2)));
+    //ui->txtnRec4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->nPorcentajeRecargoEq4,'f',2)));
     ui->txtrRecargoEq1->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteRecargoEq1,'f',2)));
     ui->txtrRecargoEq2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteRecargoEq2,'f',2)));
     ui->txtrRecargoEq3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbaran->rImporteRecargoEq3,'f',2)));
@@ -160,7 +172,7 @@ void FrmAlbaran::LLenarCampos() {
     else
         ui->chklRecargoEq->setChecked(false);
 
-    QString filter = QString("Id_Cab = '%1'").arg(ui->txtcAlbaran->text());
+    QString filter = QString("Id_Cab = '%1'").arg(oAlbaran->id);
     helper.fillTable("empresa","lin_alb",filter);
 }
 void FrmAlbaran::LLenarCamposCliente()
@@ -215,15 +227,15 @@ void FrmAlbaran::VaciarCampos() {
     ui->txtrBase4->setText(0);
     //Configuracion_global->CargarDatos();
 
-    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
-    ui->txtnPorcentajeIva1->setText(QString::number(Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble()));
-    ui->txtnPorcentajeIva2->setText(QString::number(Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble()));
-    ui->txtnPorcentajeIva3->setText(QString::number(Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble()));
-    ui->txtnPorcentajeIva4->setText(QString::number(Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble()));
-    ui->txtnRec1->clear();
-    ui->txtnRec2->clear();
-    ui->txtnRec3->clear();
-    ui->txtnRec4->clear();
+    //QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
+    //ui->txtnPorcentajeIva1->setText(QString::number(Configuracion_global->ivas[keys.at(0)].value("nIVA").toDouble()));
+    //ui->txtnPorcentajeIva2->setText(QString::number(Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble()));
+    //ui->txtnPorcentajeIva3->setText(QString::number(Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble()));
+    //ui->txtnPorcentajeIva4->setText(QString::number(Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble()));
+    //ui->txtnRec1->clear();
+    //ui->txtnRec2->clear();
+    //ui->txtnRec3->clear();
+    //ui->txtnRec4->clear();
     ui->txtrIVA1->setText(0);
     ui->txtrIVA2->setText(0);
     ui->txtrIVA3->setText(0);
@@ -341,6 +353,7 @@ void FrmAlbaran::LLenarAlbaran()
     oAlbaran->rImporteRecargoEq3= (ui->txtrRecargoEq3->text().replace(".","").toDouble());
     oAlbaran->rImporteRecargoEq4= (ui->txtrRecargoEq4->text().replace(".","").toDouble());
     oAlbaran->rRecargoEqTotal= (ui->txtrTotalRecargoEq->text().replace(".","").toDouble());
+    oAlbaran->nDto = ui->txtrImporteDescuento->text().replace(".","").toDouble();
     if (ui->chklRecargoEq->isChecked())
         oAlbaran->lRecargoEquivalencia = (1);
     else
@@ -351,23 +364,53 @@ void FrmAlbaran::LLenarAlbaran()
 
 void FrmAlbaran::on_btnSiguiente_clicked()
 {
-    int nAlbaran = oAlbaran->nAlbaran;
-    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran >'"+QString::number(nAlbaran)+"' order by nAlbaran  limit 1 "))
+    int nAlbaran = oAlbaran->id;
+    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where Id >'"+QString::number(nAlbaran)+"' order by nAlbaran  limit 1 "))
     {
         LLenarCampos();
-        QString filter = QString("Id_Cab = '%1'").arg(ui->txtcAlbaran->text());
+        QString filter = QString("Id_Cab = '%1'").arg(oAlbaran->id);
         helper.fillTable("empresa","lin_alb",filter);
+        ui->btn_borrar->setEnabled(true);
+        ui->btnEditar->setEnabled(true);
+        ui->btnFacturar->setEnabled(true);
+        ui->btnAnterior->setEnabled(true);
+    }
+    else
+    {
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha llegado al final del archivo.\n"
+                                                          "No hay mas albaranes disponibles"));
+        VaciarCampos();
+        ui->btn_borrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+        ui->btnFacturar->setEnabled(false);
+        ui->btnSiguiente->setEnabled(false);
+        oAlbaran->id++;
     }
 }
 
 void FrmAlbaran::on_btnAnterior_clicked()
 {
-    int nAlbaran = oAlbaran->nAlbaran;
-    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran <'"+QString::number(nAlbaran)+"' order by nAlbaran desc limit 1 "))
+    int nAlbaran = oAlbaran->id;
+    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where Id <'"+QString::number(nAlbaran)+"' order by nAlbaran desc limit 1 "))
     {
         LLenarCampos();
-        QString filter = QString("Id_Cab = '%1'").arg(ui->txtcAlbaran->text());
+        QString filter = QString("Id_Cab = '%1'").arg(oAlbaran->id);
         helper.fillTable("empresa","lin_alb",filter);
+        ui->btn_borrar->setEnabled(true);
+        ui->btnEditar->setEnabled(true);
+        ui->btnFacturar->setEnabled(true);
+        ui->btnSiguiente->setEnabled(true);
+    }
+    else
+    {
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha llegado al final del archivo.\n"
+                                                          "No hay mas presupuestos disponibles"));
+        VaciarCampos();
+        ui->btn_borrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+        ui->btnFacturar->setEnabled(false);
+        ui->btnAnterior->setEnabled(false);
+        oAlbaran->id = -1;
     }
 }
 
@@ -385,13 +428,38 @@ void FrmAlbaran::on_btnAnadir_clicked()
 
 void FrmAlbaran::on_botBuscarCliente_clicked()
 {
-    FrmBuscarCliente BuscarClientes;
-    BuscarClientes.exec();
-    int nId = BuscarClientes.DevolverID();
-    QString cId = QString::number(nId);
-    oAlbaran->iId_Cliente=(cId.toInt());
-    oCliente2->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
-    LLenarCamposCliente();
+    Db_table_View searcher(qApp->activeWindow());
+    searcher.set_db("Maya");
+    searcher.set_table("clientes");
+
+    searcher.setWindowTitle(tr("Clientes"));
+
+    QStringList headers;
+    headers << tr("Codigo")<< tr("Nombre Fiscal") << tr("DNI/NIF") << tr("Poblacion");
+    searcher.set_table_headers(headers);
+
+    searcher.set_readOnly(true);
+    searcher.set_selection("Id");
+
+    searcher.set_columnHide(0);
+    searcher.set_columnHide(2);
+    searcher.set_columnHide(3);
+    searcher.set_columnHide(4);
+    searcher.set_columnHide(6);
+    searcher.set_columnHide(7);
+    searcher.set_columnHide(9);
+    searcher.set_columnHide(10);
+    searcher.set_columnHide(11);
+    for(int i =13;i<55;i++)
+        searcher.set_columnHide(i);
+    if(searcher.exec() == QDialog::Accepted)
+    {
+        QString cId = searcher.selected_value;
+        oAlbaran->iId_Cliente=(cId.toInt());
+        oCliente2->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
+        LLenarCamposCliente();
+        helper.set_tarifa(oCliente2->idTarifa);
+    }
 }
 
 

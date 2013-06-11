@@ -14,6 +14,10 @@
 #include <QtNetwork/QSslConfiguration>
 #include <QSslError>
 #include <QPrintDialog>
+
+byte Configuracion::key[ CryptoPP::AES::DEFAULT_KEYLENGTH ];
+byte Configuracion::iv[ CryptoPP::AES::BLOCKSIZE ];
+
 Configuracion::Configuracion(QObject* parent) :
     QObject(parent)
 {
@@ -24,6 +28,39 @@ Configuracion::Configuracion(QObject* parent) :
     usuarios_model = 0;
     validator_cantidad = new QDoubleValidator(-99999999999999999.00,99999999999999999.00,2,this);
     validator_porciento = new QDoubleValidator(0,100,2,this);
+    key[0] = 0x10;
+    key[1] = 0x10;
+    key[2] = 0x10;
+    key[3] = 0x10;
+    key[4] = 0x10;
+    key[5] = 0x10;
+    key[6] = 0x10;
+    key[7] = 0x10;
+    key[8] = 0x10;
+    key[9] = 0x10;
+    key[10] = 0x10;
+    key[11] = 0x10;
+    key[12] = 0x10;
+    key[13] = 0x10;
+    key[14] = 0x10;
+    key[15] = 0x10;
+
+    iv[0] = 0x10;
+    iv[1] = 0x10;
+    iv[2] = 0x10;
+    iv[3] = 0x10;
+    iv[4] = 0x10;
+    iv[5] = 0x10;
+    iv[6] = 0x10;
+    iv[7] = 0x10;
+    iv[8] = 0x10;
+    iv[9] = 0x10;
+    iv[10] = 0x10;
+    iv[11] = 0x10;
+    iv[12] = 0x10;
+    iv[13] = 0x10;
+    iv[14] = 0x10;
+    iv[15] = 0x10;
 }
 
 
@@ -786,12 +823,44 @@ bool Configuracion::comprobarNIF(QString country_code, QString nif)
 
 QString Configuracion::Crypt(QString input)
 {
-    return "";
+    std::string ciphertext;
+    std::string plaintext = input.toStdString();
+
+    CryptoPP::AES::Encryption aesEncryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
+    CryptoPP::CBC_Mode_ExternalCipher::Encryption cbcEncryption( aesEncryption, iv );
+
+    CryptoPP::StreamTransformationFilter stfEncryptor(cbcEncryption, new CryptoPP::StringSink( ciphertext ) );
+    stfEncryptor.Put( reinterpret_cast<const unsigned char*>( plaintext.c_str() ), plaintext.length() + 1 );
+    stfEncryptor.MessageEnd();
+
+    return QString::fromStdString(ciphertext);
 }
 
 QString Configuracion::DeCrypt(QString input)
 {
-    return "";
+    std::string ciphertext = input.toStdString();
+    std::string decryptedtext;
+    CryptoPP::AES::Decryption aesDecryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
+    CryptoPP::CBC_Mode_ExternalCipher::Decryption cbcDecryption( aesDecryption, iv );
+
+    CryptoPP::StreamTransformationFilter stfDecryptor(cbcDecryption, new CryptoPP::StringSink( decryptedtext ) );
+    stfDecryptor.Put( reinterpret_cast<const unsigned char*>( ciphertext.c_str() ), ciphertext.size() );
+    stfDecryptor.MessageEnd();
+    return QString::fromStdString(decryptedtext);
+}
+
+QString Configuracion::SHA256HashString(QString input)
+{
+    std::string digest;
+    std::string aString = input.toStdString();
+    CryptoPP::SHA256 hash;
+
+    CryptoPP::StringSource foo(aString, true,
+    new CryptoPP::HashFilter(hash,
+      new CryptoPP::Base64Encoder (
+         new CryptoPP::StringSink(digest))));
+
+    return QString::fromStdString(digest).trimmed();
 }
 
 void Configuracion::getCambio(QString from, QString to, float cuanty)

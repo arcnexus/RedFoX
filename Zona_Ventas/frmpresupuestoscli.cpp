@@ -87,12 +87,17 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
         LLenarCampos();
         QString filter = QString("Id_Cab = '%1'").arg(oPres->id);
         helper.fillTable("empresa","lin_pre",filter);
+        ui->btnAnterior->setEnabled(false);
     }
     else
     {
         ui->btnBorrar->setEnabled(false);
         ui->btnEditar->setEnabled(false);
         ui->btn_convertir->setEnabled(false);
+        ui->btnAnterior->setEnabled(false);
+        ui->btnSiguiente->setEnabled(false);
+        ui->btnBuscar->setEnabled(false);
+        ui->btnImprimir->setEnabled(false);
     }
 }
 
@@ -426,6 +431,7 @@ void FrmPresupuestosCli::on_btnSiguiente_clicked()
         ui->btnBorrar->setEnabled(true);
         ui->btnEditar->setEnabled(true);
         ui->btn_convertir->setEnabled(true);
+        ui->btnAnterior->setEnabled(true);
     }
     else
     {
@@ -436,6 +442,7 @@ void FrmPresupuestosCli::on_btnSiguiente_clicked()
         ui->btnEditar->setEnabled(false);
         ui->btn_convertir->setEnabled(false);
         oPres->id++;
+        ui->btnSiguiente->setEnabled(false);
     }
 }
 
@@ -449,6 +456,7 @@ void FrmPresupuestosCli::on_btnAnterior_clicked()
         ui->btnBorrar->setEnabled(true);
         ui->btnEditar->setEnabled(true);
         ui->btn_convertir->setEnabled(true);
+        ui->btnSiguiente->setEnabled(true);
     }
     else
     {
@@ -459,6 +467,7 @@ void FrmPresupuestosCli::on_btnAnterior_clicked()
         ui->btnEditar->setEnabled(false);
         ui->btn_convertir->setEnabled(false);
         oPres->id = -1;
+        ui->btnAnterior->setEnabled(false);
     }
 }
 

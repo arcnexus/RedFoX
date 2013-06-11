@@ -92,6 +92,8 @@ private:
     bool use2divisas;
     bool isActive;
     void updateLinea(int row);
+    void calcPercDescuento(int row);
+    void calcNetoDescuento(int row);
 };
 
 #endif // TABLE_HELPER_H

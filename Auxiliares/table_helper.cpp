@@ -330,7 +330,15 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
             m_rows[row]->cantidad = previous->text().toDouble();
         }
         else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
+        {
+            calcPercDescuento(row);
             comprobarDescuento(row);
+        }
+        else if(column == 6 && !helped_table->item(row,4)->text().isEmpty())
+        {
+            calcNetoDescuento(row);
+            comprobarDescuento(row);
+        }
         else if(column == 9)
             comprobarStock(row);
 
@@ -370,13 +378,7 @@ void Table_Helper::calcularTotal()
 
 double Table_Helper::calcularDtoLinea(int row)
 {
-    double base = calcularBaseLinea(row);
-    double dtoNeto = helped_table->item(row,5)->text().replace(",",".").toDouble();
-    double descPerc = helped_table->item(row,6)->text().replace(",",".").toDouble();
-
-    double total_descPerc = (base * descPerc) / 100;
-
-    return total_descPerc + dtoNeto;
+    return helped_table->item(row,5)->text().replace(",",".").toDouble();
 }
 
 double Table_Helper::calcularBaseLinea(int row)
@@ -405,13 +407,7 @@ double Table_Helper::calcularRELinea(int row)
     if(use_re)
     {
         double base = helped_table->item(row,4)->text().replace(",",".").toDouble();
-        double dtoNeto = helped_table->item(row,5)->text().replace(",",".").toDouble();
-        double descPerc = helped_table->item(row,6)->text().replace(",",".").toDouble();
-
-        double total_descPerc = (base * descPerc) / 100;
-
-        base -= total_descPerc;
-        base -= dtoNeto;
+        base -= calcularDtoLinea(row);
 
         double re = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nRegargoEquivalencia").toDouble();
 
@@ -530,17 +526,13 @@ double Table_Helper::calcularTotalLinea(int row)
     double subtotal = cantidad * pvp;
     helped_table->item(row,4)->setText(QString::number(subtotal,'f',2));
 
-    double dto = helped_table->item(row,5)->text().replace(",",".").toDouble();
-    double dto_percent = helped_table->item(row,6)->text().replace(",",".").toDouble();
+    double dto = calcularDtoLinea(row);
 
     double iva = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nIVA").toDouble();
 
     double re = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("nRegargoEquivalencia").toDouble();
 
     double total = subtotal - dto;
-
-    double x = 1 - (dto_percent / 100);
-    total = total * x;
 
     double add_re = (re / 100) * total;
 
@@ -755,4 +747,20 @@ void Table_Helper::updateLinea(int row)
     m_rows[row]->dto_perc = r.value(9).toDouble();
     m_rows[row]->iva_perc = r.value(10).toDouble();*/
     emit lineaReady(m_rows[row]);
+}
+
+void Table_Helper::calcPercDescuento(int row)
+{
+    double base = calcularBaseLinea(row);
+    double dto = helped_table->item(row,5)->text().replace(",",".").toDouble();
+    double perc = (dto * 100)/base;
+    helped_table->item(row,6)->setText(QString::number(perc));
+}
+
+void Table_Helper::calcNetoDescuento(int row)
+{
+    double base = calcularBaseLinea(row);
+    double perc_dto = helped_table->item(row,6)->text().replace(",",".").toDouble();
+    double dto = perc_dto * base / 100;
+    helped_table->item(row,5)->setText(QString::number(dto));
 }

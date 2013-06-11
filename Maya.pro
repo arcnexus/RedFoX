@@ -391,3 +391,12 @@ DEPENDPATH += $$PWD/openrptLibs/include
 
 
 
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/CryptoLIBS/release/ -lcryptlib
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/CryptoLIBS/debug/ -lcryptlib
+
+INCLUDEPATH += $$PWD/CryptoLIBS
+DEPENDPATH += $$PWD/CryptoLIBS
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/release/cryptlib.lib
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/debug/cryptlib.lib

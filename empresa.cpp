@@ -258,7 +258,7 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":cContrasena",this->cContrasena);
     qEmpresa.bindValue(":cPuerto",this->cPuerto);
     qEmpresa.bindValue(":cNombreBD",this->cNombreBD);
-    qEmpresa.bindValue(":cDriverBD ", this->cDriverBD);
+    qEmpresa.bindValue(":cDriverBD", this->cDriverBD);
     qEmpresa.bindValue(":cHostDBMedica",this->cHostMed);
     qEmpresa.bindValue(":cUserDBMedica",this->cUserMed);
     qEmpresa.bindValue(":cContrasenaDBMedica",this->cContrasenaMed);

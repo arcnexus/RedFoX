@@ -14,6 +14,18 @@
 #include <QObject>
 #include <QDoubleValidator>
 #include <QNetworkReply>
+
+//CryptoPP headers
+#ifdef Q_OS_WIN32
+#include <C:/CriptoCpp/modes.h>
+#include <C:/CriptoCpp/filters.h>
+#include <C:/CriptoCpp/aes.h>
+#include <C:/CriptoCpp/sha.h>
+#include <C:/CriptoCpp/base64.h>
+#else
+    tus includes aqui
+#endif
+
 class Configuracion: public QObject
 {
     Q_OBJECT
@@ -159,6 +171,7 @@ public:
     static bool comprobarNIF(QString country_code, QString nif);
     static QString Crypt(QString input);
     static QString DeCrypt(QString input);
+    static QString SHA256HashString(QString input);
     void getCambio(QString from, QString to , float cuanty = 1);
     void generarTablaDivisas();
     void updateTablaDivisas(QString current);
@@ -171,6 +184,8 @@ signals:
     void cambioReady(float,QString target = "");
 private:
     void readCambio(QString s);
+    static byte key[ CryptoPP::AES::DEFAULT_KEYLENGTH ];
+    static byte iv[ CryptoPP::AES::BLOCKSIZE ];
 };
 
 #endif // CONFIGURACION_H

@@ -105,7 +105,9 @@ void Login::on_btnAcceder_clicked()
        if (qryUsers.next()) 
 	   {
             QSqlRecord rUsuario = qryUsers.record();
-            if (ui->linePassword->text() == qryUsers.value(2).toString()) 
+            qDebug() << Configuracion::SHA256HashString(ui->linePassword->text());
+            qDebug() << qryUsers.value(2).toString();
+            if (Configuracion::SHA256HashString(ui->linePassword->text()) == qryUsers.value(2).toString().trimmed())
 			{
                 m_id = qryUsers.value(0).toInt();
                 QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);

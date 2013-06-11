@@ -87,6 +87,10 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
         ui->btn_borrar->setEnabled(false);
         ui->btnEditar->setEnabled(false);
         ui->btn_convertir->setEnabled(false);
+        ui->btnSiguiente->setEnabled(false);
+        ui->btnAnterior->setEnabled(false);
+        ui->btnImprimir->setEnabled(false);
+        ui->btnBuscar->setEnabled(false);
         oPedido->id = -1;
     }
 }
@@ -414,6 +418,7 @@ void FrmPedidos::on_btnSiguiente_clicked()
         ui->btn_borrar->setEnabled(true);
         ui->btnEditar->setEnabled(true);
         ui->btn_convertir->setEnabled(true);
+        ui->btnAnterior->setEnabled(true);
     }
     else
     {
@@ -423,6 +428,7 @@ void FrmPedidos::on_btnSiguiente_clicked()
         ui->btn_borrar->setEnabled(false);
         ui->btnEditar->setEnabled(false);
         ui->btn_convertir->setEnabled(false);
+        ui->btnSiguiente->setEnabled(false);
         oPedido->id++;
     }
 }
@@ -438,6 +444,7 @@ void FrmPedidos::on_btnAnterior_clicked()
         ui->btn_borrar->setEnabled(true);
         ui->btnEditar->setEnabled(true);
         ui->btn_convertir->setEnabled(true);
+        ui->btnSiguiente->setEnabled(true);
     }
     else
     {
@@ -447,6 +454,7 @@ void FrmPedidos::on_btnAnterior_clicked()
         ui->btn_borrar->setEnabled(false);
         ui->btnEditar->setEnabled(false);
         ui->btn_convertir->setEnabled(false);
+        ui->btnAnterior->setEnabled(false);
         oPedido->id = -1;
     }
 }
