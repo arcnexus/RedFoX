@@ -241,6 +241,23 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="pushButton_6">
+        <property name="text">
+         <string>Buscar Asiento</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>17</width>
+          <height>17</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
