@@ -104,7 +104,7 @@
 </string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <property name="styleSheet">
@@ -1991,29 +1991,6 @@ color: rgb(23, 76, 7);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnDeshacer">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Deshacer</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../maya.qrc">
-          <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="btnCobrar">
         <property name="minimumSize">
          <size>
@@ -2200,7 +2177,6 @@ color: rgb(23, 76, 7);</string>
   <tabstop>btnImprimir</tabstop>
   <tabstop>btnEditar</tabstop>
   <tabstop>btnGuardar</tabstop>
-  <tabstop>btnDeshacer</tabstop>
   <tabstop>btnCobrar</tabstop>
  </tabstops>
  <resources>

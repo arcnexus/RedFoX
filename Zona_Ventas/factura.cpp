@@ -22,7 +22,7 @@ bool Factura::AnadirFactura()
                    "rBase,nIva,rImporteIva,rTotal,lImpresa,lCobrada,lContabilizada,id_FormaPago,cFormaPago,tComentario,"
                    "rBase1,rBase2,rBase3,rBase4,nPorcentajeIVA1,nPorcentajeIVA2,nPorcentajeIVA3,nPorcentajeIVA4,rIVA1,rIVA2,rIVA3,rIVA4,"
                    "rTotal1,rTotal2,rTotal3,rTotal4,nRec1,nRec2,nRec3,nRec4,rRecargoEq1,rRecargoEq2,rRecargoEq3,rRecargoEq4,"
-                   "rTotalRecargoEq,rEntregadoaCuenta,rImportePendiente,cCodigoEntidad,cOficinaEntidad,cDCCuenta,cNumeroCuenta,nPedidoCliente)"
+                   "rTotalRecargoEq,rEntregadoaCuenta,rImportePendiente,cCodigoEntidad,cOficinaEntidad,cDCCuenta,cNumeroCuenta,cPedidoCliente)"
                    " VALUES (:cCodigoCliente,:cFactura,:dFecha,:dFechaCobro,:iId_Cliente,:cCliente,:cDireccion,:cDireccion2,"
                    ":cCp,:cPoblacion,:cProvincia,:cPais,:cCif,:lRecargoEquivalencia,:rSubtotal,:nDto,:nDtoPP,:rImporteDescuento,:rImporteDescuentoPP,"
                    ":rBase,:nIva,:rImporteIva,:rTotal,:lImpresa,:lCobrada,:lContabilizada,:id_FormaPago,:cFormaPago,:tComentario,"
@@ -31,7 +31,7 @@ bool Factura::AnadirFactura()
                    ":rTotalRecargoEq,:rEntregadoaCuenta,:rImportePendiente,:cCodigoEntidad,:cOficinaEntidad,:cDCCuenta,:cNumeroCuenta,:cPedidoCliente)");
 
      cab_fac.bindValue(":cCodigoCliente",this->cCodigoCliente);
-     cab_fac.bindValue(":cFactura",this->cFactura);
+     cab_fac.bindValue(":cFactura","BORRADOR");
      cab_fac.bindValue(":dFecha",this->dFecha);
      cab_fac.bindValue(":dFechaCobro",this->dFechaCobro);
      cab_fac.bindValue(":iId_Cliente", this->iId_Cliente);
@@ -171,7 +171,7 @@ bool Factura::GuardarFactura(int nId_Factura, bool FacturaLegal)
                      "cOficinaEntidad =:cOficinaEntidad,"
                      "cDCCuenta =:cDCCuenta,"
                      "cNumeroCuenta =:cNumeroCuenta,"
-                     "nPedidoCliente =:cPedidoCliente,"
+                     "cPedidoCliente =:cPedidoCliente,"
                      "nIRPF =:nIRPF,"
                      "rImporteIRPF =:rImporteIRPF"
                      " where Id=:Id");
@@ -403,7 +403,7 @@ bool Factura::RecuperarFactura(QString cSQL){
                 this->cOficinaEntidad = registro.field("cOficinaEntidad").value().toString();
                 this->cDCCuenta = registro.field("cDCCuenta").value().toString();
                 this->cNumeroCuenta = registro.field("cNumeroCuenta").value().toString();
-                this->cPedidoCliente = registro.field("nPedidoCliente").value().toInt();
+                this->cPedidoCliente = registro.field("cPedidoCliente").value().toInt();
                 this->nIRPF = registro.field("nIRPF").value().toInt();
                 this->rImporteIRPF = registro.field("rImporteIRPF").value().toDouble();
                 return true;

@@ -132,7 +132,19 @@ SOURCES += main.cpp\
     Zona_Compras/albaranproveedor.cpp \
     Zona_Compras/facturasproveedor.cpp \
     Auxiliares/frmaddentregascuenta.cpp \
-    Auxiliares/entregascuenta.cpp
+    Auxiliares/entregascuenta.cpp \
+    Auxiliares/SMPT/smtpclient.cpp \
+    Auxiliares/SMPT/quotedprintable.cpp \
+    Auxiliares/SMPT/mimetext.cpp \
+    Auxiliares/SMPT/mimepart.cpp \
+    Auxiliares/SMPT/mimemultipart.cpp \
+    Auxiliares/SMPT/mimemessage.cpp \
+    Auxiliares/SMPT/mimeinlinefile.cpp \
+    Auxiliares/SMPT/mimehtml.cpp \
+    Auxiliares/SMPT/mimefile.cpp \
+    Auxiliares/SMPT/mimecontentformatter.cpp \
+    Auxiliares/SMPT/mimeattachment.cpp \
+    Auxiliares/SMPT/emailaddress.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -231,7 +243,20 @@ HEADERS  += mainwindow.h \
     Zona_Compras/albaranproveedor.h \
     Zona_Compras/facturasproveedor.h \
     Auxiliares/frmaddentregascuenta.h \
-    Auxiliares/entregascuenta.h
+    Auxiliares/entregascuenta.h \
+    Auxiliares/SMPT/SmtpMime \
+    Auxiliares/SMPT/smtpclient.h \
+    Auxiliares/SMPT/quotedprintable.h \
+    Auxiliares/SMPT/mimetext.h \
+    Auxiliares/SMPT/mimepart.h \
+    Auxiliares/SMPT/mimemultipart.h \
+    Auxiliares/SMPT/mimemessage.h \
+    Auxiliares/SMPT/mimeinlinefile.h \
+    Auxiliares/SMPT/mimehtml.h \
+    Auxiliares/SMPT/mimefile.h \
+    Auxiliares/SMPT/mimecontentformatter.h \
+    Auxiliares/SMPT/mimeattachment.h \
+    Auxiliares/SMPT/emailaddress.h
 
 
 
