@@ -860,12 +860,12 @@ QString Configuracion::Crypt(QString input)
     std::string ciphertext;
     std::string plaintext = input.toStdString();
 
-    CryptoPP::AES::Encryption aesEncryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
+  /*  CryptoPP::AES::Encryption aesEncryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
     CryptoPP::CBC_Mode_ExternalCipher::Encryption cbcEncryption( aesEncryption, iv );
 
     CryptoPP::StreamTransformationFilter stfEncryptor(cbcEncryption, new CryptoPP::StringSink( ciphertext ) );
     stfEncryptor.Put( reinterpret_cast<const unsigned char*>( plaintext.c_str() ), plaintext.length() + 1 );
-    stfEncryptor.MessageEnd();
+    stfEncryptor.MessageEnd();*/
 
     return QString::fromStdString(ciphertext);
 }
@@ -874,12 +874,12 @@ QString Configuracion::DeCrypt(QString input)
 {
     std::string ciphertext = input.toStdString();
     std::string decryptedtext;
-    CryptoPP::AES::Decryption aesDecryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
+ /*   CryptoPP::AES::Decryption aesDecryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
     CryptoPP::CBC_Mode_ExternalCipher::Decryption cbcDecryption( aesDecryption, iv );
 
     CryptoPP::StreamTransformationFilter stfDecryptor(cbcDecryption, new CryptoPP::StringSink( decryptedtext ) );
     stfDecryptor.Put( reinterpret_cast<const unsigned char*>( ciphertext.c_str() ), ciphertext.size() );
-    stfDecryptor.MessageEnd();
+    stfDecryptor.MessageEnd();*/
     return QString::fromStdString(decryptedtext);
 }
 
