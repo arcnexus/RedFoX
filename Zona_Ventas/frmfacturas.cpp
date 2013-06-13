@@ -70,6 +70,8 @@ frmFacturas::frmFacturas( QWidget *parent) :
     connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
     connect(&helper,SIGNAL(lineaDeleted(lineaDetalle*)),this,SLOT(lineaDeleted(lineaDetalle*)));
 
+    helper.set_tarifa(Configuracion_global->id_tarifa_predeterminada);
+
     connect(ui->chklRecargoEquivalencia,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
 
     ui->txtnPorcentajeIva1->setText(Configuracion_global->ivaList.at(0));
@@ -95,11 +97,22 @@ frmFacturas::frmFacturas( QWidget *parent) :
 
     ui->btnGuardar->setMenu(menu_guardar);
 
-    if(oFactura->RecuperarFactura("Select * from cab_fac where cFactura > -1 order by cFactura  limit 1 "))
+    if(oFactura->RecuperarFactura("Select * from cab_fac where Id > -1 order by cFactura  limit 1 "))
     {
         LLenarCampos();
         QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
         helper.fillTable("empresa","lin_fac",filter);
+    }
+    else
+    {
+        VaciarCampos();
+      //  ui->btn_borrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+        ui->btnSiguiente->setEnabled(false);
+        ui->btnAnterior->setEnabled(false);
+        ui->btnImprimir->setEnabled(false);
+        ui->btnBuscar->setEnabled(false);
+        oFactura->id = -1;
     }
 }
 
@@ -112,6 +125,8 @@ frmFacturas::~frmFacturas()
 
 void frmFacturas::LLenarCampos() {
     int lEstado;
+    ui->lblFactura->setText(oFactura->cFactura);
+    ui->lblCliente->setText(oFactura->cCliente);
     ui->txtcCodigoCliente->setText(oFactura->cCodigoCliente);
     ui->txtcFactura->setText(oFactura->cFactura);
     ui->txtdFecha->setDate(oFactura->dFecha);
@@ -227,6 +242,7 @@ void frmFacturas::LLenarCampos() {
 
 void frmFacturas::LLenarCamposCliente()
 {
+    ui->lblCliente->setText(oCliente1->cNombreFiscal);
     ui->txtcCodigoCliente->setText(oCliente1->cCodigoCliente);
     ui->txtcCliente->setText(oCliente1->cNombreFiscal);
     ui->txtcDireccion->setText(oCliente1->cDireccion1);
@@ -252,11 +268,13 @@ void frmFacturas::LLenarCamposCliente()
         ui->txtnIRPF->setText("0,00");
         oFactura->nIRPF = (Configuracion_global->nIRPF);
     }
-
+    helper.set_tarifa(oCliente1->idTarifa);
 }
 
 void frmFacturas::VaciarCampos() {
     QDate dFecha;
+    ui->lblCliente->setText("");
+    ui->lblFactura->setText("");
     ui->txtcCodigoCliente->setText("");
     ui->txtcFactura->setText("");
     ui->txtdFecha->setDate(dFecha.currentDate());
@@ -361,7 +379,6 @@ void frmFacturas::BloquearCampos(bool state)
     ui->btnAnadir->setEnabled(state);
     ui->btnAnterior->setEnabled(state);
     ui->btnBuscar->setEnabled(state);
-    ui->btnDeshacer->setEnabled(!state);
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
@@ -451,9 +468,20 @@ void frmFacturas::on_btnSiguiente_clicked()
         LLenarCampos();
         QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
         helper.fillTable("empresa","lin_fac",filter);
+       // ui->btn_borrar->setEnabled(true);
+        ui->btnEditar->setEnabled(true);
+        ui->btnAnterior->setEnabled(true);
     }
     else
-        TimedMessageBox * t = new TimedMessageBox(this,tr("final de archivo"));
+    {
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha llegado al final del archivo.\n"
+                                                          "No hay mas facturas disponibles"));
+        VaciarCampos();
+      //  ui->btn_borrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+        ui->btnSiguiente->setEnabled(false);
+        oFactura->id++;
+    }
 }
 void frmFacturas::on_btnAnterior_clicked()
 {
@@ -463,9 +491,20 @@ void frmFacturas::on_btnAnterior_clicked()
         LLenarCampos();
         QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
         helper.fillTable("empresa","lin_fac",filter);
+        //ui->btn_borrar->setEnabled(true);
+        ui->btnEditar->setEnabled(true);
+        ui->btnSiguiente->setEnabled(true);
     }
     else
-        TimedMessageBox * t = new TimedMessageBox(this,tr("final de archivo"));
+    {
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha llegado al final del archivo.\n"
+                                                          "No hay mas presupuestos disponibles"));
+        VaciarCampos();
+     //   ui->btn_borrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+        ui->btnAnterior->setEnabled(false);
+        oFactura->id = -1;
+    }
 }
 
 
@@ -510,6 +549,7 @@ void frmFacturas::on_btnAnadir_clicked()
     ui->chklRecargoEquivalencia->setCheckState(Qt::Unchecked);
     ui->txtcCodigoCliente->setFocus();
     oFactura->AnadirFactura();
+    helper.set_tarifa(Configuracion_global->id_tarifa_predeterminada);
     emit block();
 }
 
@@ -524,14 +564,38 @@ void frmFacturas::on_btnDeshacer_clicked()
 
 void frmFacturas::on_botBuscarCliente_clicked()
 {
-    FrmBuscarCliente BuscarClientes;
-    BuscarClientes.exec();
-    int nId = BuscarClientes.DevolverID();
-    //qDebug() << nId;
-    QString cId = QString::number(nId);
-    oFactura->iId_Cliente = (nId);
-    oCliente1->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
-    LLenarCamposCliente();
+    Db_table_View searcher(qApp->activeWindow());
+    searcher.set_db("Maya");
+    searcher.set_table("clientes");
+
+    searcher.setWindowTitle(tr("Clientes"));
+
+    QStringList headers;
+    headers << tr("Codigo")<< tr("Nombre Fiscal") << tr("DNI/NIF") << tr("Poblacion");
+    searcher.set_table_headers(headers);
+
+    searcher.set_readOnly(true);
+    searcher.set_selection("Id");
+
+    searcher.set_columnHide(0);
+    searcher.set_columnHide(2);
+    searcher.set_columnHide(3);
+    searcher.set_columnHide(4);
+    searcher.set_columnHide(6);
+    searcher.set_columnHide(7);
+    searcher.set_columnHide(9);
+    searcher.set_columnHide(10);
+    searcher.set_columnHide(11);
+    for(int i =13;i<55;i++)
+        searcher.set_columnHide(i);
+    if(searcher.exec() == QDialog::Accepted)
+    {
+        QString cId = searcher.selected_value;
+        oFactura->iId_Cliente = cId.toInt();
+        oCliente1->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
+        LLenarCamposCliente();
+        helper.set_tarifa(oCliente1->idTarifa);
+    }
 }
 
 void frmFacturas::on_btnBuscar_clicked()

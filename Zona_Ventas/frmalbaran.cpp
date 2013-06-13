@@ -90,6 +90,8 @@ FrmAlbaran::~FrmAlbaran()
 
 
 void FrmAlbaran::LLenarCampos() {
+    ui->lblCliente->setText(oAlbaran->cCliente);
+    ui->lblAlbaran->setText(QString::number(oAlbaran->nAlbaran));
     int lEstado;
     ui->txtcCodigoCliente->setText(oAlbaran->cCodigoCliente);
     ui->txtcAlbaran->setText(QString::number(oAlbaran->nAlbaran));
@@ -172,11 +174,14 @@ void FrmAlbaran::LLenarCampos() {
     else
         ui->chklRecargoEq->setChecked(false);
 
+    ui->txtrACuenta->setText(QString::number(oAlbaran->rACuenta));
+
     QString filter = QString("Id_Cab = '%1'").arg(oAlbaran->id);
     helper.fillTable("empresa","lin_alb",filter);
 }
 void FrmAlbaran::LLenarCamposCliente()
 {
+    ui->lblCliente->setText(oCliente2->cNombreFiscal);
     ui->txtcCodigoCliente->setText(oCliente2->cCodigoCliente);
     ui->txtcCliente->setText(oCliente2->cNombreFiscal);
     ui->txtcDireccion->setText(oCliente2->cDireccion1);
@@ -198,6 +203,8 @@ void FrmAlbaran::LLenarCamposCliente()
 }
 
 void FrmAlbaran::VaciarCampos() {
+    ui->lblCliente->setText("");
+    ui->lblAlbaran->setText("");
     QDate dFecha;
     ui->txtcCodigoCliente->setText("");
     ui->txtcAlbaran->setText("");
@@ -360,6 +367,7 @@ void FrmAlbaran::LLenarAlbaran()
         oAlbaran->lRecargoEquivalencia = (0);
 
     oAlbaran->cPedidoCli= (ui->txtcPedidoCliente->text());
+    oAlbaran->rACuenta = ui->txtrACuenta->text().replace(".","").toDouble();
 }
 
 void FrmAlbaran::on_btnSiguiente_clicked()
@@ -506,7 +514,7 @@ void FrmAlbaran::on_btnGuardar_clicked()
     }
 }
 
-void FrmAlbaran::on_pushButton_clicked()
+void FrmAlbaran::on_btn_borrar_clicked()
 {
     if (QMessageBox::question(this,tr("Borrar"),
                               tr("Esta acción no se puede deshacer.\n¿Desea continuar?"),
@@ -517,21 +525,28 @@ void FrmAlbaran::on_pushButton_clicked()
         QSqlDatabase::database("empresa").transaction();
         QSqlQuery q(QSqlDatabase::database("empresa"));
 
-        q.prepare("SELECT * FROM lin_alb WHERE Id_Cab = "+oAlbaran->id);
-        q.exec();
+        //TODO control de stock
+        q.prepare("DELETE FROM lin_alb WHERE Id_Cab = "+QString::number(oAlbaran->id));
+        succes &= q.exec();
 
-        while(q.next())
-
-        q.prepare("DELETE FROM cab_alb WHERE Id = "+oAlbaran->id);
+        q.prepare("DELETE FROM cab_alb WHERE Id = "+QString::number(oAlbaran->id));
         succes &= q.exec();
 
         if(succes)
-            succes &= QSqlDatabase::database("empresa").commit();
+            succes = QSqlDatabase::database("empresa").commit();
 
         if(succes)
+        {
             TimedMessageBox * t = new TimedMessageBox(this,tr("Albarán borrado con exito"));
+            VaciarCampos();
+            oAlbaran->id = -1;
+            on_btnSiguiente_clicked();
+        }
         else
+        {
+            TimedMessageBox * t = new TimedMessageBox(this,tr("Error al borrar albarán"),TimedMessageBox::Critical);
             QSqlDatabase::database("empresa").rollback();
+        }
     }
 }
 

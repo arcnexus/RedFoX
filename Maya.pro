@@ -133,7 +133,21 @@ SOURCES += main.cpp\
     Zona_Compras/facturasproveedor.cpp \
     Auxiliares/frmaddentregascuenta.cpp \
     Auxiliares/entregascuenta.cpp \
-    Zona_Ventas/frmgestioncobros.cpp
+    Zona_Ventas/frmgestioncobros.cpp \
+    Auxiliares/SMPT/smtpclient.cpp \
+    Auxiliares/SMPT/quotedprintable.cpp \
+    Auxiliares/SMPT/mimetext.cpp \
+    Auxiliares/SMPT/mimepart.cpp \
+    Auxiliares/SMPT/mimemultipart.cpp \
+    Auxiliares/SMPT/mimemessage.cpp \
+    Auxiliares/SMPT/mimeinlinefile.cpp \
+    Auxiliares/SMPT/mimehtml.cpp \
+    Auxiliares/SMPT/mimefile.cpp \
+    Auxiliares/SMPT/mimecontentformatter.cpp \
+    Auxiliares/SMPT/mimeattachment.cpp \
+    Auxiliares/SMPT/emailaddress.cpp \
+    TPV/efectivocaja.cpp \
+    TPV/configmonedatpv.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -233,7 +247,22 @@ HEADERS  += mainwindow.h \
     Zona_Compras/facturasproveedor.h \
     Auxiliares/frmaddentregascuenta.h \
     Auxiliares/entregascuenta.h \
-    Zona_Ventas/frmgestioncobros.h
+    Zona_Ventas/frmgestioncobros.h \
+    Auxiliares/SMPT/SmtpMime \
+    Auxiliares/SMPT/smtpclient.h \
+    Auxiliares/SMPT/quotedprintable.h \
+    Auxiliares/SMPT/mimetext.h \
+    Auxiliares/SMPT/mimepart.h \
+    Auxiliares/SMPT/mimemultipart.h \
+    Auxiliares/SMPT/mimemessage.h \
+    Auxiliares/SMPT/mimeinlinefile.h \
+    Auxiliares/SMPT/mimehtml.h \
+    Auxiliares/SMPT/mimefile.h \
+    Auxiliares/SMPT/mimecontentformatter.h \
+    Auxiliares/SMPT/mimeattachment.h \
+    Auxiliares/SMPT/emailaddress.h \
+    TPV/efectivocaja.h \
+    TPV/configmonedatpv.h
 
 
 
@@ -294,7 +323,9 @@ FORMS    += mainwindow.ui \
     Auxiliares/frmdialogoimprimir.ui \
     Busquedas/db_consulta_view.ui \
     Auxiliares/frmaddentregascuenta.ui \
-    Zona_Ventas/frmgestioncobros.ui
+    Zona_Ventas/frmgestioncobros.ui \
+    TPV/efectivocaja.ui \
+    TPV/configmonedatpv.ui
 
 RESOURCES += \
     maya.qrc
