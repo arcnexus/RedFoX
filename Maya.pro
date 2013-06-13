@@ -132,7 +132,8 @@ SOURCES += main.cpp\
     Zona_Compras/albaranproveedor.cpp \
     Zona_Compras/facturasproveedor.cpp \
     Auxiliares/frmaddentregascuenta.cpp \
-    Auxiliares/entregascuenta.cpp
+    Auxiliares/entregascuenta.cpp \
+    Zona_Ventas/frmgestioncobros.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -231,7 +232,8 @@ HEADERS  += mainwindow.h \
     Zona_Compras/albaranproveedor.h \
     Zona_Compras/facturasproveedor.h \
     Auxiliares/frmaddentregascuenta.h \
-    Auxiliares/entregascuenta.h
+    Auxiliares/entregascuenta.h \
+    Zona_Ventas/frmgestioncobros.h
 
 
 
@@ -291,7 +293,8 @@ FORMS    += mainwindow.ui \
     Zona_Contabilidad/frmentrada_apuntes.ui \
     Auxiliares/frmdialogoimprimir.ui \
     Busquedas/db_consulta_view.ui \
-    Auxiliares/frmaddentregascuenta.ui
+    Auxiliares/frmaddentregascuenta.ui \
+    Zona_Ventas/frmgestioncobros.ui
 
 RESOURCES += \
     maya.qrc
@@ -405,3 +408,11 @@ DEPENDPATH += $$PWD/CryptoLIBS
 
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/release/cryptlib.lib
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/debug/cryptlib.lib
+
+
+unix:!macx: LIBS += -L$$PWD/../../../../usr/lib/ -lcryptopp
+
+INCLUDEPATH += $$PWD/../../../../usr/include
+DEPENDPATH += $$PWD/../../../../usr/include
+
+unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../usr/lib/libcryptopp.a

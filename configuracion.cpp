@@ -28,6 +28,9 @@ Configuracion::Configuracion(QObject* parent) :
     usuarios_model = 0;
     validator_cantidad = new QDoubleValidator(-99999999999999999.00,99999999999999999.00,2,this);
     validator_porciento = new QDoubleValidator(0,100,2,this);
+
+    //AES keys
+    //TODO generar una ¿mejor?
     key[0] = 0x10;
     key[1] = 0x10;
     key[2] = 0x10;

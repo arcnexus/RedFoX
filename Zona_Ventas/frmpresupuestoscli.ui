@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1063</width>
-    <height>560</height>
+    <height>619</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1311,6 +1311,19 @@ color: rgb(255, 255, 255);</string>
        </item>
        <item row="1" column="0" colspan="3">
         <widget class="QTableWidget" name="tableWidget">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(252, 255, 187);</string>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
          <property name="gridStyle">
           <enum>Qt::DotLine</enum>
          </property>

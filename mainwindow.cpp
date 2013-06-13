@@ -12,6 +12,7 @@
 #include "../Zona_Administrador/frmconfigmaya.h"
 
 
+
 Configuracion * Configuracion_global = 0;
 
 void MainWindow::crear_barraMantenimiento()
@@ -76,6 +77,7 @@ void MainWindow::crear_barraVentas()
     connect(btn_facturas,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
     connect(btn_factura_mult,SIGNAL(clicked()),this,SLOT(btnFactura_multiple_clicked()));
     connect(btn_tpv,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
+    connect(btn_gestionCobros,SIGNAL(clicked()),this,SLOT(btnGestionCobros_clicked()));
 
     //barra de menu
     connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
@@ -316,6 +318,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(frmFactura_multiple,SIGNAL(block()),this,SLOT(block_main()));
     connect(frmFactura_multiple,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
+
+    splash.showMessage(tr("Cargando modulos... Modulo de Ventas: gestión de cobros") );
+
+    frmgestcobros = new frmGestionCobros(this);
+    connect(frmgestcobros,SIGNAL(block()),this,SLOT(block_main()));
+    connect(frmgestcobros,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
+
     splash.showMessage(tr("Cargando modulos... Modulo de pedidos") );
 
     frmPedidos1 = new FrmPedidos(this);
@@ -388,6 +398,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->addWidget(reportWindow);
     ui->stackedWidget->addWidget(agendaForm);
     ui->stackedWidget->addWidget(frmentrada_apuntes);
+    ui->stackedWidget->addWidget(frmgestcobros);
     MayaForm = new init_form(this);
     ui->stackedWidget->addWidget(MayaForm);
     ui->stackedWidget->setCurrentWidget(MayaForm);
@@ -430,6 +441,11 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
+  /*  QString inicial = "Marc";
+    QString cripted = Configuracion::Crypt(inicial);
+   // QString deCrypted = Configuracion::DeCrypt(cripted);
+    qDebug()<< "cripted" << cripted;
+    //qDebug()<< "decripted" << deCrypted;*/
 }
 
 void MainWindow::block_main()
@@ -523,6 +539,12 @@ void MainWindow::btnCajaMinuta_clicked()
 {
     ui->stackedWidget->setCurrentWidget(frmCajaMinuta);
     frmCajaMinuta->setFocus();
+}
+
+void MainWindow::btnGestionCobros_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(frmgestcobros);
+
 }
 
 void MainWindow::btn_pedidos_pro_clicked()

@@ -23,7 +23,11 @@
 #include <C:/CriptoCpp/sha.h>
 #include <C:/CriptoCpp/base64.h>
 #else
-    tus includes aqui
+#include </usr/include/cryptopp/modes.h>
+#include </usr/include/cryptopp/filters.h>
+#include </usr/include/cryptopp/aes.h>
+#include </usr/include/cryptopp/sha.h>
+#include </usr/include/cryptopp/base64.h>
 #endif
 
 class Configuracion: public QObject

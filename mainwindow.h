@@ -28,6 +28,7 @@
 #include "openrptLibs/Auxiliares/reportwriterwindow.h"
 #include "Agenda/agendaform.h"
 #include "../Zona_Contabilidad/frmentrada_apuntes.h"
+#include "../Zona_Ventas/frmgestioncobros.h"
 namespace Ui {
 class MainWindow;
 }
@@ -70,6 +71,7 @@ private slots:
 
   //  void on_botConfiguracion_clicked();
 
+    // Zona Ventas
     void btnAlbaran_clientes_clicked();
 
     void btnFactura_multiple_clicked();
@@ -79,6 +81,8 @@ private slots:
     void btnPresup_clientes_clicked();
 
     void btnCajaMinuta_clicked();
+
+    void btnGestionCobros_clicked();
 
     // Zona Compras
     void btn_pedidos_pro_clicked();
@@ -187,6 +191,7 @@ private:
     FrmOrden_Pedido_Producto * frmOrden_Ped_pro;
     Frmrecepcion_pedidos *frmRecep_pedidos;
     FrmEntrada_apuntes *frmentrada_apuntes;
+    frmGestionCobros *frmgestcobros;
 
     ReportWriterWindow * reportWindow;
     AgendaForm * agendaForm;
