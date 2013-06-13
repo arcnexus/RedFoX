@@ -144,7 +144,9 @@ SOURCES += main.cpp\
     Auxiliares/SMPT/mimefile.cpp \
     Auxiliares/SMPT/mimecontentformatter.cpp \
     Auxiliares/SMPT/mimeattachment.cpp \
-    Auxiliares/SMPT/emailaddress.cpp
+    Auxiliares/SMPT/emailaddress.cpp \
+    TPV/efectivocaja.cpp \
+    TPV/configmonedatpv.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -256,7 +258,9 @@ HEADERS  += mainwindow.h \
     Auxiliares/SMPT/mimefile.h \
     Auxiliares/SMPT/mimecontentformatter.h \
     Auxiliares/SMPT/mimeattachment.h \
-    Auxiliares/SMPT/emailaddress.h
+    Auxiliares/SMPT/emailaddress.h \
+    TPV/efectivocaja.h \
+    TPV/configmonedatpv.h
 
 
 
@@ -316,7 +320,9 @@ FORMS    += mainwindow.ui \
     Zona_Contabilidad/frmentrada_apuntes.ui \
     Auxiliares/frmdialogoimprimir.ui \
     Busquedas/db_consulta_view.ui \
-    Auxiliares/frmaddentregascuenta.ui
+    Auxiliares/frmaddentregascuenta.ui \
+    TPV/efectivocaja.ui \
+    TPV/configmonedatpv.ui
 
 RESOURCES += \
     maya.qrc
