@@ -6,9 +6,11 @@
 #include "../Almacen/articulo.h"
 
 frmFacturas::frmFacturas( QWidget *parent) :
-    QDialog(parent),
+    MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::frmFacturas),
-    helper(this)
+    helper(this),
+    toolButton(tr("Facturas"),":/Icons/PNG/Factura.png",this),
+    menuButton(QIcon(":/Icons/PNG/Factura.png"),tr("Facturas"),this)
 {
     oFactura = new Factura();
     oCliente1 = new Cliente();

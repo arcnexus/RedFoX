@@ -114,10 +114,6 @@ void Login::on_btnAcceder_clicked()
                 settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
                 settings.setValue("nNivelAcceso",rUsuario.field("nivelacceso").value().toInt());
                 settings.setValue("cCategoria",rUsuario.field("categoria").value().toString());
-//                MainWindow *  w = new  MainWindow(this);
-//                w->empresa = this->getEmpresa();
-//                w->user = this->getUsuario();
-//                w->pass = this->getPass();
                 Configuracion_global->id_usuario_activo = this->getIdUser();
                 Login::done(QDialog::Accepted);
             }

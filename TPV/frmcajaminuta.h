@@ -4,20 +4,25 @@
 #include "../Auxiliares/Globlal_Include.h"
 #include "../db_table_view.h"
 #include "ticket.h"
+#include "../mayamodule.h"
 namespace Ui {
 class FrmCajaMinuta;
 }
 
-class FrmCajaMinuta : public QDialog
+class FrmCajaMinuta : public MayaModule
 {
     Q_OBJECT
 signals:
-    void block();
-    void unblock();
+
 public:
     explicit FrmCajaMinuta(QWidget *parent = 0);
     ~FrmCajaMinuta();
     
+    moduleZone ModuleZone(){return Ventas;}
+    QString ModuleName(){return "FormTPV";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
 private slots:
     void on_btnBuscarArt_clicked();
     void linea_itemSelectionChanged();
@@ -37,6 +42,10 @@ private:
     int linea_row;
     int linea_column;
     bool caja_abierta;
+
+    int _currentTarifa;
+    ToolBarButton toolButton;
+    QAction menuButton;
 };
 
 #endif // FRMCAJAMINUTA_H

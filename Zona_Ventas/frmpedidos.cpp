@@ -7,9 +7,11 @@
 #include "../Busquedas/frmbuscarcliente.h"
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
-    QDialog(parent),
+    MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::frmPedidos),
-    helper(this)
+    helper(this),
+    toolButton(tr("Pedidos"),":/Icons/PNG/pedidos_cli.png",this),
+    menuButton(QIcon(":/Icons/PNG/pedidos_cli.png"),tr("Pedidos"),this)
 {
     ui->setupUi(this);
     ui->combo_pais->setModel(Configuracion_global->paises_model);

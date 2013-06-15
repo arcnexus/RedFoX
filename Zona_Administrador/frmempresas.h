@@ -55,9 +55,16 @@ private slots:
 
     void on_botBorrar_user_clicked();
 
+    void on_btn_addAcceso_clicked();
+
+    void on_btn_quitarAcceso_clicked();
+
+    void on_btn_modPass_clicked();
+
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
+    QSqlRelationalTableModel * modelAccesos;
     void limpiar_campos();
     bool crear_empresa_sqlite(copy_db_progressFrm * form);
     bool crear_medica_sqlite(copy_db_progressFrm * form);

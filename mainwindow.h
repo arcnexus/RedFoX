@@ -65,14 +65,9 @@ private slots:
 
     void btnArticulos_clicked();
 
-   // void on_botEmpresas_clicked();
-
     void btnProveedores_clicked();
 
-  //  void on_botConfiguracion_clicked();
-
     // Zona Ventas
-    void btnAlbaran_clientes_clicked();
 
     void btnFactura_multiple_clicked();
 
@@ -110,6 +105,7 @@ private slots:
     void editar_empresas();
     void configuracion();
 
+    void handle_toolBar();
     void handle_doctores();
     void handle_bancos();
     void handle_tiposIVA();
@@ -147,7 +143,7 @@ private:
     ToolBarButton * btn_tpv;
     ToolBarButton * btn_gestionCobros;
 
-    void crear_barraVentas();
+    void crear_barraVentas(MayaModule* mm);
     // Barra de Compras
     ToolBarButton * btn_Orden_pedido;
     ToolBarButton * btn_pedidos_pro;
@@ -180,7 +176,7 @@ private:
     frmFacturas *frmFacturas1;
     FrmArticulos *frmArticulos1;
     frmProveedores *frmProveedores1;
-    FrmAlbaran *frmAlbaran1;
+    FrmAlbaran *frmAlbaran;
     FrmPedidos *frmPedidos1;
     FrmPresupuestosCli *frmPresupcli;
     FrmCajaMinuta *frmCajaMinuta;
@@ -199,6 +195,7 @@ private:
     init_form * MayaForm;
     int id_divisa;
     bool on_edit;
+    QVector<MayaModule*> _ventasModules;
 };
 
 #endif // MAINWINDOW_H

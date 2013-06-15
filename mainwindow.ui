@@ -886,16 +886,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
         <enum>QFrame::Raised</enum>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
-        <property name="leftMargin">
-         <number>1</number>
-        </property>
-        <property name="topMargin">
-         <number>1</number>
-        </property>
-        <property name="rightMargin">
-         <number>1</number>
-        </property>
-        <property name="bottomMargin">
+        <property name="margin">
          <number>1</number>
         </property>
         <item>
@@ -998,19 +989,6 @@ selection-color: rgb(0, 0, 0);</string>
     <property name="title">
      <string>Ventas</string>
     </property>
-    <widget class="QMenu" name="menuAlbaranes">
-     <property name="title">
-      <string>Albaranes</string>
-     </property>
-     <addaction name="actionAlbaranes_2"/>
-     <addaction name="actionFacturaci_n_multiple_de_albaranes"/>
-    </widget>
-    <addaction name="actionPresupuestos"/>
-    <addaction name="actionPedidos"/>
-    <addaction name="menuAlbaranes"/>
-    <addaction name="actionFacturas"/>
-    <addaction name="separator"/>
-    <addaction name="actionVentas_Contado"/>
    </widget>
    <widget class="QMenu" name="menuCompras">
     <property name="title">

@@ -2,8 +2,10 @@
 #include "ui_frmgestioncobros.h"
 
 frmGestionCobros::frmGestionCobros(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::frmGestionCobros)
+    MayaModule(ModuleZone(),ModuleName(),parent),
+    ui(new Ui::frmGestionCobros),
+    toolButton(tr("Gest. Cobros"),":/Icons/PNG/Cobros.png",this),
+    menuButton(QIcon(":/Icons/PNG/Cobros.png"),tr("Gest. Cobros"),this)
 {
     ui->setupUi(this);
     ui->txtfecha_ini->setDate(QDate::currentDate());

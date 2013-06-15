@@ -147,7 +147,9 @@ SOURCES += main.cpp\
     Auxiliares/SMPT/mimeattachment.cpp \
     Auxiliares/SMPT/emailaddress.cpp \
     TPV/efectivocaja.cpp \
-    TPV/configmonedatpv.cpp
+    TPV/configmonedatpv.cpp \
+    TPV/monedaview.cpp \
+    mayamodule.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -262,7 +264,9 @@ HEADERS  += mainwindow.h \
     Auxiliares/SMPT/mimeattachment.h \
     Auxiliares/SMPT/emailaddress.h \
     TPV/efectivocaja.h \
-    TPV/configmonedatpv.h
+    TPV/configmonedatpv.h \
+    TPV/monedaview.h \
+    mayamodule.h
 
 
 

@@ -65,6 +65,7 @@ private:
     QVector<int> hide_headers;
 
     int colums;
+    bool _readOnly;
 
 };
 

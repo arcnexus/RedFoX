@@ -7,17 +7,17 @@
 
 #include "../Auxiliares/table_helper.h"
 #include <QTimer>
+#include "../mayamodule.h"
 namespace Ui {
 class FrmPresupuestosCli;
 }
 
-class FrmPresupuestosCli : public QDialog
+class FrmPresupuestosCli : public MayaModule
 {
     Q_OBJECT
 
 signals:
-    void block();
-    void unblock();
+
 public:
     explicit FrmPresupuestosCli(QWidget *parent = 0);
     ~FrmPresupuestosCli();
@@ -28,6 +28,12 @@ public:
     void BloquearCampos(bool state);
     Presupuesto *oPres;
     Cliente *oClientePres;
+
+    moduleZone ModuleZone(){return Ventas;}
+    QString ModuleName(){return "FormPresupestosVentas";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
 private slots:
     void on_chklAprovado_stateChanged(int arg1);
 
@@ -70,6 +76,9 @@ private:
     Table_Helper helper;
     bool editando;
     QString moneda;
+
+    ToolBarButton toolButton;
+    QAction menuButton;
 };
 
 #endif // FRMPRESUPUESTOSCLI_H

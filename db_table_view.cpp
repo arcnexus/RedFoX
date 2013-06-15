@@ -8,6 +8,7 @@ Db_table_View::Db_table_View(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Db_table_View)
 {
+    _readOnly = false;
     ui->setupUi(this);
     this->setWindowState(Qt::WindowMaximized);
     selected_value = "";
@@ -92,9 +93,9 @@ void Db_table_View::set_table(QString tabla)
 
 void Db_table_View::set_table_headers(QStringList headers)
 {
-//    for (int i = 0; i< headers.size();i++)
-//        model->setHeaderData(i+1, Qt::Horizontal, headers.at(i));
-//    ui->resultado_list->resizeColumnsToContents();
+    for (int i = 0; i< headers.size();i++)
+        model->setHeaderData(i+1, Qt::Horizontal, headers.at(i));
+    ui->resultado_list->resizeColumnsToContents();
 
 //    this->headers = headers;
 }
@@ -114,6 +115,7 @@ void Db_table_View::set_filter(QString filter)
 
 void Db_table_View::set_readOnly(bool state)
 {
+    _readOnly = state;
     if(state)
     {
         ui->resultado_list->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -245,7 +247,7 @@ bool Db_table_View::eventFilter(QObject *target, QEvent *event)
     {
         ui->resultado_list->blockSignals(true);
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        if (keyEvent->key() == Qt::Key_Tab || keyEvent->key() == Qt::Key_Return)
+        if ((keyEvent->key() == Qt::Key_Tab || keyEvent->key() == Qt::Key_Return) && _readOnly)
         {
             int row = ui->resultado_list->currentIndex().row();
             selected_value = ui->resultado_list->model()->data(ui->resultado_list->model()->index(row,0)).toString();
@@ -262,5 +264,6 @@ void Db_table_View::on_resultado_list_doubleClicked(const QModelIndex &index)
     int row = index.row();
     QSqlRecord r = model->record(row);
     selected_value = r.value(selection_column).toString();
-    this->accept();
+    if(_readOnly)
+        this->accept();
 }

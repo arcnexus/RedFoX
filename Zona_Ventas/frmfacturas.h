@@ -6,11 +6,12 @@
 #include "factura.h"
 #include "../Zona_Pacientes/cliente.h"
 #include "../Auxiliares/table_helper.h"
+#include "../mayamodule.h"
 namespace Ui {
 class frmFacturas;
 }
 
-class frmFacturas : public QDialog
+class frmFacturas : public MayaModule
 {
     Q_OBJECT
     
@@ -20,15 +21,20 @@ public slots:
     void LLenarFactura();
     void VaciarCampos();
     void BloquearCampos(bool state);
+
+
 signals:
-    void block();
-    void unblock();
+
 public:
     explicit frmFacturas(QWidget *parent = 0);
     ~frmFacturas();
     Factura *oFactura;
     Cliente *oCliente1;
-    
+    moduleZone ModuleZone(){return Ventas;}
+    QString ModuleName(){return "FormFacturasVentas";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
 private slots:
     void on_btnSiguiente_clicked();
 
@@ -62,6 +68,9 @@ private:
     bool Altas;
     Table_Helper helper;
     bool in_edit;
+
+    ToolBarButton toolButton;
+    QAction menuButton;
 };
 
 #endif // FRMFACTURAS_H

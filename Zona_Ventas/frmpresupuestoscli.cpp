@@ -8,9 +8,11 @@
 
 
 FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
-    QDialog(parent),
+    MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::FrmPresupuestosCli),
-    helper(this)
+    helper(this),
+    toolButton(tr("Presupuestos"),":/Icons/PNG/presupuestos.png",this),
+    menuButton(QIcon(":/Icons/PNG/presupuestos.png"),tr("Presupuestos"),this)
 {
     ui->setupUi(this);
 

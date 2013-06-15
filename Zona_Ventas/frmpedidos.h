@@ -6,11 +6,12 @@
 #include "pedidos.h"
 #include "../Zona_Pacientes/cliente.h"
 #include "../Auxiliares/table_helper.h"
+#include "../mayamodule.h"
 namespace Ui {
 class frmPedidos;
 }
 
-class FrmPedidos : public QDialog
+class FrmPedidos : public MayaModule
 {
     Q_OBJECT
     
@@ -19,9 +20,14 @@ public:
     ~FrmPedidos();
     Pedidos *oPedido;
     Cliente *oCliente3;
+
+    moduleZone ModuleZone(){return Ventas;}
+    QString ModuleName(){return "FormPedidosVentas";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
 signals:
-    void block();
-    void unblock();
+
 private slots:
     void on_btnSiguiente_clicked();
 
@@ -67,6 +73,8 @@ private:
 
     bool editando;
     QString _moneda;
+    ToolBarButton toolButton;
+    QAction menuButton;
 };
 
 #endif // FRMPEDIDOS_H

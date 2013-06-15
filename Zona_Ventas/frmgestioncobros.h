@@ -3,21 +3,27 @@
 
 #include <QDialog>
 #include "../Auxiliares/Globlal_Include.h"
-
+#include "../mayamodule.h"
 namespace Ui {
 class frmGestionCobros;
 }
 
-class frmGestionCobros : public QDialog
+class frmGestionCobros : public MayaModule
 {
     Q_OBJECT
     
 public:
     explicit frmGestionCobros(QWidget *parent = 0);
     ~frmGestionCobros();
-    
+    moduleZone ModuleZone(){return Ventas;}
+    QString ModuleName(){return "FormCobrosVentas";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
 private:
     Ui::frmGestionCobros *ui;
+    ToolBarButton toolButton;
+    QAction menuButton;
 private slots:
     void on_txtbuscar_cliente_textChanged(const QString &arg1);
 };

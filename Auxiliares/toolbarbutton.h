@@ -17,12 +17,14 @@ public:
     explicit ToolBarButton(QString label = "" , QString icon = "" , QWidget *parent = 0);
     void setText(QString text);
     void setIcon(QString icon);
+    QWidget* linkedWidget(){return _linkedWidget;}
     ~ToolBarButton();
     
 private:
     Ui::ToolBarButton *ui;
     void mousePressEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
+    QWidget * _linkedWidget;
 };
 
 #endif // TOOLBARBUTTON_H

@@ -8,6 +8,8 @@ ToolBarButton::ToolBarButton(QString label, QString icon, QWidget *parent) :
     ui->setupUi(this);
     setText(label);
     setIcon(icon);
+    if(parent)
+        _linkedWidget = parent;
 }
 
 void ToolBarButton::setText(QString text)

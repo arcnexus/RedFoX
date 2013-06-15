@@ -25,14 +25,34 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     modelDivisas->setQuery("select moneda from monedas",QSqlDatabase::database("Maya"));
     ui->cboDivisas->setModel(modelDivisas);
 
-    on_botSiguiente_clicked();
-    on_botSiguiente_user_clicked();
     //----------------
     // LLeno Tarifas
     //----------------
     QSqlQueryModel *modelTarifas = new QSqlQueryModel(this);
     modelTarifas->setQuery("select descripcion from codigotarifa",QSqlDatabase::database("Maya"));
     ui->cboTarifa->setModel(modelTarifas);
+
+    modelAccesos = new QSqlRelationalTableModel(this,QSqlDatabase::database("Maya"));
+    modelAccesos->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    modelAccesos->setTable("accesousuarios");
+
+    modelAccesos->setRelation(2,QSqlRelation("modulos","id","ModuleName"));
+    modelAccesos->setRelation(3,QSqlRelation("nivelacceso","id","nombre"));
+
+    ui->tabla_accesos->setItemDelegate(new QSqlRelationalDelegate());
+    ui->tabla_accesos->setModel(modelAccesos);
+    modelAccesos->select();
+
+    ui->tabla_accesos->hideColumn(0);
+    ui->tabla_accesos->hideColumn(1);
+
+    ui->txt_pass_user->setReadOnly(true);
+
+    modelAccesos->setHeaderData(2, Qt::Horizontal, tr("Modulos"));
+    modelAccesos->setHeaderData(3, Qt::Horizontal, tr("Nivel de acceso"));
+
+    on_botSiguiente_clicked();
+    on_botSiguiente_user_clicked();
 }
 
 FrmEmpresas::~FrmEmpresas()
@@ -701,8 +721,10 @@ void FrmEmpresas::llenar_user(QSqlRecord record)
     ui->txt_id_user->setText(record.value(0).toString());
     ui->txt_nombre_user->setText(record.value(1).toString());
     ui->txt_pass_user->setText(record.value(2).toString());
-    ui->spin_nacceso_user->setValue(record.value(3).toInt());
     ui->txt_categoria_user->setText(record.value(4).toString());
+
+    modelAccesos->setFilter("idUser = "+ui->txt_id_user->text());
+    modelAccesos->select();
 }
 
 void FrmEmpresas::on_btn_ruta_db_clicked()
@@ -817,31 +839,23 @@ void FrmEmpresas::on_botGuardar_user_clicked()
     if(ui->botAnadir_user->text() == "Añadir")
     {
         //TODO modificar user actual
+        for(int i=0;i<modelAccesos->rowCount();i++)
+        {
+            modelAccesos->setData(modelAccesos->index(i,1),ui->txt_id_user->text().toInt());
+        }
+        modelAccesos->submitAll();
     }
     else
     {
 
         QSqlQuery add_user(QSqlDatabase::database("Maya"));
-        /*add_user.prepare("INSERT INTO usuarios (id,nombre,contrasena,nivelacceso,categoria) "
-                         "VALUES (?1,?2,?3,?4,?5)");
-         Id es un campo autoincremental y no se debe sobreescribir ya que puede dar problemas, siendo la propia bd
-           la  que debe ser la encargada de la gestión de ese campo
-
-        add_user.bindValue("?1",ui->txt_id_user->text());
-        add_user.bindValue("?2",ui->txt_nombre_user->text());
-        add_user.bindValue("?3",ui->txt_pass_user->text());
-        add_user.bindValue("?4",ui->spin_nacceso_user->value());
-        add_user.bindValue("?5",ui->txt_categoria_user->text());*/
-
-        // NOTE - Así no falla la entrada de datos a la bd en linux, prueba a ver si funciona bien en windows.
 
         add_user.prepare("INSERT INTO usuarios (id,nombre,contrasena,nivelacceso,categoria) "
-                                 "VALUES (:id,:nombre,:contrasena,:nivelacceso,:categoria)");
+                                 "VALUES (:id,:nombre,:contrasena,:categoria)");
 
                 add_user.bindValue(":id",ui->txt_id_user->text());
                 add_user.bindValue(":nombre",ui->txt_nombre_user->text());
                 add_user.bindValue(":contrasena",ui->txt_pass_user->text());
-                add_user.bindValue(":nivelacceso",ui->spin_nacceso_user->value());
                 add_user.bindValue(":categoria",ui->txt_categoria_user->text());
 
 
@@ -852,10 +866,43 @@ void FrmEmpresas::on_botGuardar_user_clicked()
 
         ui->botAnadir_user->setText("Añadir");
         ui->botAnadir_user->setIcon(QIcon(":/Icons/PNG/add.png"));
+
+        modelAccesos->submitAll();
     }
 }
 
 void FrmEmpresas::on_botBorrar_user_clicked()
 {
     //TODO borrar user
+}
+
+
+void FrmEmpresas::on_btn_addAcceso_clicked()
+{
+    modelAccesos->insertRow(modelAccesos->rowCount());
+}
+
+void FrmEmpresas::on_btn_quitarAcceso_clicked()
+{
+
+}
+
+void FrmEmpresas::on_btn_modPass_clicked()
+{
+    if(ui->btn_modPass->text() == tr("Modificar"))
+    {
+        ui->btn_modPass->setText(tr("Guardar"));
+        ui->txt_pass_user->setReadOnly(false);
+    }
+    else
+    {
+        ui->btn_modPass->setText(tr("Modificar"));
+        ui->txt_pass_user->setReadOnly(true);
+        QSqlQuery q(QSqlDatabase::database("Maya"));
+        q.prepare("UPDATE usuarios SET contrasena=:pass WHERE id=:id;");
+        q.bindValue(":pass",Configuracion::SHA256HashString(ui->txt_pass_user->text()));
+        q.bindValue("id",ui->txt_id_user->text().toInt());
+        if(q.exec())
+            TimedMessageBox* t = new TimedMessageBox(this,"Contraseña actualizada");
+    }
 }

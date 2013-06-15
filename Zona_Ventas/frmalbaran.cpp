@@ -9,9 +9,11 @@ Albaran *oAlbaran = new Albaran();
 Cliente *oCliente2 = new Cliente();
 
 FrmAlbaran::FrmAlbaran(QWidget *parent) :
-    QDialog(parent),
+    MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::FrmAlbaran),
-    helper(this)
+    helper(this),
+    toolButton(tr("Albaranes"),":/Icons/PNG/albaran.png",this),
+    menuButton(QIcon(":/Icons/PNG/albaran.png"),tr("Albaranes"),this)
 {
     ui->setupUi(this);
     // Pongo valores por defecto

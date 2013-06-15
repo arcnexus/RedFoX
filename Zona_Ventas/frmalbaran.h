@@ -5,11 +5,12 @@
 #include "../Busquedas/frmbuscarcliente.h"
 //
 #include "../Auxiliares/table_helper.h"
+#include "../mayamodule.h"
 namespace Ui {
 class FrmAlbaran;
 }
 
-class FrmAlbaran : public QDialog
+class FrmAlbaran : public MayaModule
 {
     Q_OBJECT
     
@@ -22,9 +23,14 @@ public:
     void BloquearCampos(bool state);
     void DesbloquearCampos();
     void LLenarAlbaran();
+
+    moduleZone ModuleZone(){return Ventas;}
+    QString ModuleName(){return "FormAlbaranVentas";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
 signals:
-    void block();
-    void unblock();
+
 private slots:
     void on_btnSiguiente_clicked();
 
@@ -54,6 +60,9 @@ private:
     QSqlQueryModel *ModelLin_alb;
     Table_Helper helper;
     bool in_edit;
+
+    ToolBarButton toolButton;
+    QAction menuButton;
 };
 
 #endif // FRMALBARAN_H

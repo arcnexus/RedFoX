@@ -17,6 +17,7 @@
 // Email   : mmiralles +(simboloarroba)+ mayasoftware DOT es
 // Web-Site: http://www.mayasoftware.es
 
+
 #include "mainwindow.h"
 #include "login.h"
 #include <QStyleFactory>

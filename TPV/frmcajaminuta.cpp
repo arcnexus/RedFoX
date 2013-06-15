@@ -1,5 +1,7 @@
 #include "frmcajaminuta.h"
 #include "ui_frmcajaminuta.h"
+#include "efectivocaja.h"
+
 #include "../Almacen/articulo.h"
 #include "../Auxiliares/spinboxdelegate.h"
 
@@ -13,9 +15,11 @@ background-color: rgb(0, 192, 0);
 color: rgb(255, 255, 255);
 */
 FrmCajaMinuta::FrmCajaMinuta(QWidget *parent) :
-    QDialog(parent),
+    MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::FrmCajaMinuta),
-    ticket(this)
+    ticket(this),
+    toolButton(tr("TPV"),":/Icons/PNG/tpv.png",this),
+    menuButton(QIcon(":/Icons/PNG/tpv.png"),tr("TPV"),this)
 {
     linea_row = 0;
     linea_column  =0;
@@ -48,10 +52,11 @@ FrmCajaMinuta::~FrmCajaMinuta()
 
 bool FrmCajaMinuta::eventFilter(QObject *target, QEvent *event)
 {
-    QList<QWidget*> childs = ui->lineas->findChildren<QWidget*>();
+    /*QList<QWidget*> childs = ui->lineas->findChildren<QWidget*>();
     QWidget* wid;
     foreach (wid, childs) {
-        wid->installEventFilter(this);
+        if(wid->objectName()!= "ToolBarButton")
+            wid->installEventFilter(this);
     }
     if (event->type() == QEvent::KeyPress)
     {
@@ -135,7 +140,7 @@ bool FrmCajaMinuta::eventFilter(QObject *target, QEvent *event)
         }
         if((key==Qt::Key_Return)||(key==Qt::Key_Enter))
             ui->txtcCodigoArticulo->setFocus();
-    }
+    }*/
     return false;
 }
 
@@ -211,48 +216,8 @@ bool FrmCajaMinuta::keys_lineas(int key)
 
 bool FrmCajaMinuta::rellenarArticulo(QString cCodigo)
 {
-    Articulo art(this);
-    if(art.Recuperar(QString("SELECT * FROM articulos WHERE cCodigo = '%1'").arg(cCodigo)))
-    {
-        ui->txtDescripcionArticulo->setText(art.cDescripcion);
-        ui->txtPVPArticulo->setText(QString::number(art.pvp));
-        if(ui->txtcCantidadArticulo->value()==0)
-            ui->txtcCantidadArticulo->setValue(1);
-
-        double iva = 0;
-        double re = 0;
-        QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
-        for (int i=0;i<keys.size();i++)
-        {
-            if(Configuracion_global->ivas[keys.at(i)].value("id").toInt() == art.nTipoIva)
-            {
-                iva = Configuracion_global->ivas[keys.at(i)].value("nIVA").toDouble();
-                re = Configuracion_global->ivas[keys.at(i)].value("nRegargoEquivalencia").toDouble();
-                int index = ui->txtPorcIVAArticulo->findText(keys.at(i));
-                ui->txtPorcIVAArticulo->setCurrentIndex(index);
-                break;
-            }
-        }
-        ui->txtPorcDtoArticulo->setValue(art.rDto);//FIXME dto ??
-        double subtotal = ui->txtPVPArticulo->text().toDouble() *  ui->txtcCantidadArticulo->value();
-
-        subtotal -= ui->txtDtoArticulo->value();
-        double dtoperc = ui->txtPorcDtoArticulo->value();
-        dtoperc =  1 - (dtoperc / 100);
-        iva = 1 + (iva /100);
-        double total = subtotal * dtoperc * iva;
-
-        if(ui->chklRecargoEq->isChecked())
-        {
-            re = 1 + (re/100);
-            total = total * re;
-        }
-
-        ui->txttotalArticulo->setText(QString::number(total));
-        ui->txtSubtotalArticulo->setText(QString::number(subtotal));
-        return true;
-    }
-    return false;
+    QString sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1' and tarifa = %2").arg(cCodigo).arg(_currentTarifa);
+    return true;
 }
 
 void FrmCajaMinuta::on_btnBuscarArt_clicked()
@@ -294,10 +259,15 @@ void FrmCajaMinuta::on_btn_abrirCerrarCaja_clicked()
 {
     if(ui->btn_abrirCerrarCaja->text() == tr("Abrir Caja"))
     {
-        ui->btn_abrirCerrarCaja->setText(tr("Cerrar caja"));
-        ui->btn_abrirCerrarCaja->setIcon(QIcon(":/Icons/PNG/cierrecaja.png"));
-        bloquearCaja(false);
-        emit block();
+        EfectivoCaja caja(this);
+        if(caja.exec() == QDialog::Accepted)
+        {
+            ui->btn_abrirCerrarCaja->setText(tr("Cerrar caja"));
+            ui->btn_abrirCerrarCaja->setIcon(QIcon(":/Icons/PNG/cierrecaja.png"));
+            _currentTarifa = Configuracion_global->id_tarifa_predeterminada;
+            bloquearCaja(false);
+            emit block();
+        }
     }
     else
     {

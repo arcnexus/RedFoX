@@ -46,45 +46,19 @@ void MainWindow::crear_barraMantenimiento()
     connect(ui->actionPermisos_de_Agenda,SIGNAL(triggered()),this,SLOT(handle_permisosAgenda()));
 }
 
-void MainWindow::crear_barraVentas()
+void MainWindow::crear_barraVentas(MayaModule *mm)
 {
-    btn_presupuestos = new ToolBarButton(tr("Presupuestos"),":/Icons/PNG/presupuestos.png",this);
-    btn_pedidos = new ToolBarButton(tr("Pedidos"),":/Icons/PNG/pedidos_cli.png",this);
-    btn_albaranes = new ToolBarButton(tr("Albaranes"),":/Icons/PNG/albaran.png",this);
-    btn_factura_mult = new ToolBarButton(tr("Fact. \nalbaranes"),":Icons/PNG/factmult.png",this);
-    btn_facturas = new ToolBarButton(tr("Facturas"),":/Icons/PNG/Factura.png",this);
-    btn_tpv = new ToolBarButton(tr("TPV"),":/Icons/PNG/tpv.png",this);
-    btn_gestionCobros = new ToolBarButton(tr("Gest. Cobros"),":/Icons/PNG/Cobros.png",this);
-
-    QFrame*  line = new QFrame(ui->page_ventas);
-    line->setFrameShape(QFrame::HLine);
-    line->setFrameShadow(QFrame::Sunken);
-
-    ui->verticalLayout_ventas->addWidget(btn_presupuestos);
-    ui->verticalLayout_ventas->addWidget(btn_pedidos);
-    ui->verticalLayout_ventas->addWidget(btn_albaranes);
-    ui->verticalLayout_ventas->addWidget(btn_factura_mult);
-    ui->verticalLayout_ventas->addWidget(btn_facturas);
-    ui->verticalLayout_ventas->addWidget(line);
-    ui->verticalLayout_ventas->addWidget(btn_tpv);
-    ui->verticalLayout_ventas->addWidget(line);
-    ui->verticalLayout_ventas->addWidget(btn_gestionCobros);
-    ui->verticalLayout_ventas->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
-
-    connect(btn_presupuestos,SIGNAL(clicked()),this,SLOT(btnPresup_clientes_clicked()));
-    connect(btn_pedidos,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
-    connect(btn_albaranes,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
-    connect(btn_facturas,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
-    connect(btn_factura_mult,SIGNAL(clicked()),this,SLOT(btnFactura_multiple_clicked()));
-    connect(btn_tpv,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
-    connect(btn_gestionCobros,SIGNAL(clicked()),this,SLOT(btnGestionCobros_clicked()));
-
-    //barra de menu
-    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
-    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
-    connect(ui->actionAlbaranes_2,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
-    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
-    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
+    ui->verticalLayout_ventas->addWidget(mm->ModuleToolBarButton());
+    connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
+    connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
+    if(mm->ModuleMenuPath().isEmpty())
+        ui->menuVentas->addAction(mm->ModuleMenuBarButton());
+    else
+    {
+        //TODO subPaths
+    }
+    connect(mm,SIGNAL(block()),this,SLOT(block_main()));
+    connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
 }
 
 void MainWindow::crear_barraCompras()
@@ -206,41 +180,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-   // ui->menubar->hide();
-    //  ui->menubar->setNativeMenuBar(false);
-   //  QHBoxLayout *layout_mw = new QHBoxLayout(this);
-   //  layout_mw->addWidget(ui->frame_toolbar);
-   //  layout_mw->addWidget(ui->widget);
-   //  this->centralWidget()->setLayout(layout_mw);
-
     on_edit = false;
     Configuracion_global->CargarDatos();
-    QStringList modulos;
-    modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas")  << tr("Contabilidad") << tr("Almacen")  << tr("Administrador");
-    ui->comboBox->addItems(modulos);
-    crear_barraMantenimiento();
-
-    crear_barraVentas();
-
-    crear_barraCompras();
-
-    crear_barraAlmacen();
-
-    crear_barraAdmin();
-
-    crear_barraContabilidad();
-
-    ui->stackedWidget_2->setCurrentIndex(0);
-    if (Configuracion_global->medic)
-    {
-        ui->btnClientes->setText(tr("Pacientes"));
-        btn_clientes->setText(tr("Pacientes"));
-    }
-    else
-    {
-        ui->btnClientes->setText(tr("Clientes"));
-        ui->menuClinica->deleteLater();
-    }
 
     // ----------------------------------------------------------------------------
     // Conexiones
@@ -292,13 +233,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     frmClientes1 = new frmClientes(this);
     connect(frmClientes1,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmClientes1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-    splash.showMessage(tr("Cargando modulos... Modulo de facturas") );
-
-    frmFacturas1 = new frmFacturas(this);
-    connect(frmFacturas1,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmFacturas1,SIGNAL(unblock()),this,SLOT(unblock_main()));
+    connect(frmClientes1,SIGNAL(unblock()),this,SLOT(unblock_main()));    
 
     splash.showMessage(tr("Cargando modulos... Modulo de articulos") );
     frmArticulos1 = new FrmArticulos(this);
@@ -306,44 +241,85 @@ MainWindow::MainWindow(QWidget *parent) :
     splash.showMessage(tr("Cargando modulos... Modulo de proveedores") );
     frmProveedores1 = new frmProveedores(this);
 
-    splash.showMessage(tr("Cargando modulos... Modulo de albaranes") );
-
-    frmAlbaran1 = new FrmAlbaran(this);
-    connect(frmAlbaran1,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmAlbaran1,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-    splash.showMessage(tr("Cargando modulos... Modulo de facturación de albaranes") );
-
-    frmFactura_multiple = new FrmFacturarAlabaranes(this);
-    connect(frmFactura_multiple,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmFactura_multiple,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-
-    splash.showMessage(tr("Cargando modulos... Modulo de Ventas: gestión de cobros") );
-
-    frmgestcobros = new frmGestionCobros(this);
-    connect(frmgestcobros,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmgestcobros,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-
-    splash.showMessage(tr("Cargando modulos... Modulo de pedidos") );
-
-    frmPedidos1 = new FrmPedidos(this);
-    connect(frmPedidos1,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmPedidos1,SIGNAL(unblock()),this,SLOT(unblock_main()));
+    ///
+    ///// VENTAS
+    ///
 
     splash.showMessage(tr("Cargando modulos... Modulo de presupuestos") );
 
     frmPresupcli = new FrmPresupuestosCli(this);
-    connect(frmPresupcli,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmPresupcli,SIGNAL(unblock()),this,SLOT(unblock_main()));
+    if(frmPresupcli->userHasAcces(Configuracion_global->id_usuario_activo))
+        _ventasModules.append(frmPresupcli);
+    else
+        frmPresupcli->deleteLater();
+
+    splash.showMessage(tr("Cargando modulos... Modulo de pedidos") );
+
+    frmPedidos1 = new FrmPedidos(this);
+    if(frmPedidos1->userHasAcces(Configuracion_global->id_usuario_activo))
+    {
+        _ventasModules.append(frmPedidos1);
+    }
+    else
+        frmPedidos1->deleteLater();
+
+    splash.showMessage(tr("Cargando modulos... Modulo de albaranes") );
+
+    frmAlbaran = new FrmAlbaran(this);
+    if(frmAlbaran->userHasAcces(Configuracion_global->id_usuario_activo))
+    {
+        _ventasModules.append(frmAlbaran);
+    }
+    else
+        frmAlbaran->deleteLater();
+
+    splash.showMessage(tr("Cargando modulos... Modulo de facturación de albaranes") );
+
+    frmFactura_multiple = new FrmFacturarAlabaranes(this);
+    if(frmFactura_multiple->userHasAcces(Configuracion_global->id_usuario_activo))
+    {
+        _ventasModules.append(frmFactura_multiple);
+    }
+    else
+        frmFactura_multiple->deleteLater();
+
+    splash.showMessage(tr("Cargando modulos... Modulo de facturas") );
+
+    frmFacturas1 = new frmFacturas(this);
+    if(frmFacturas1->userHasAcces(Configuracion_global->id_usuario_activo))
+    {
+        _ventasModules.append(frmFacturas1);
+    }
+    else
+        frmFacturas1->deleteLater();
+
+    splash.showMessage(tr("Cargando modulos... Modulo de Ventas: gestión de cobros") );
+
+    frmgestcobros = new frmGestionCobros(this);
+    if(frmgestcobros->userHasAcces(Configuracion_global->id_usuario_activo))
+    {
+        _ventasModules.append(frmgestcobros);
+    }
+    else
+        frmgestcobros->deleteLater();
 
     splash.showMessage(tr("Cargando modulos... Modulo de TPV") );
 
     frmCajaMinuta = new FrmCajaMinuta(this);
-    connect(frmCajaMinuta,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmCajaMinuta,SIGNAL(unblock()),this,SLOT(unblock_main()));
+    if(frmCajaMinuta->userHasAcces(Configuracion_global->id_usuario_activo))
+    {
+        _ventasModules.append(frmCajaMinuta);
+    }
+    else
+        frmCajaMinuta->deleteLater();
 
+    QVector<MayaModule*>::Iterator ventasIter;
+    for(ventasIter = _ventasModules.begin(); ventasIter!=_ventasModules.end();++ventasIter)
+        crear_barraVentas(*ventasIter);
+
+    ///
+    /// COMPRAS
+    ///
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos") );
 
     FrmPedidos_pro = new FrmPedidosProveedor(this);
@@ -385,7 +361,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->addWidget(frmFacturas1);
     ui->stackedWidget->addWidget(frmArticulos1);
     ui->stackedWidget->addWidget(frmProveedores1);
-    ui->stackedWidget->addWidget(frmAlbaran1);
+    ui->stackedWidget->addWidget(frmAlbaran);
     ui->stackedWidget->addWidget(frmPedidos1);
     ui->stackedWidget->addWidget(frmPresupcli);
     ui->stackedWidget->addWidget(frmCajaMinuta);
@@ -408,17 +384,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
-   // ui->txtnNivel->setText(QString::number( settings.value("nNivelAcceso").toInt()));
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
-    //ui->menubar->show();
-
-//  //  ui->menubar->setNativeMenuBar(false);
-//   QHBoxLayout *layout_mw = new QHBoxLayout(this);
-//   layout_mw->addWidget(ui->frame_toolbar);
-//   layout_mw->addWidget(ui->widget);
-//   this->centralWidget()->setLayout(layout_mw);
-
- //  this->show();
 
 
 //    //-------------------------------
@@ -441,11 +407,30 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
-  /*  QString inicial = "Marc";
-    QString cripted = Configuracion::Crypt(inicial);
-   // QString deCrypted = Configuracion::DeCrypt(cripted);
-    qDebug()<< "cripted" << cripted;
-    //qDebug()<< "decripted" << deCrypted;*/
+    QStringList modulos;
+    modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas")  << tr("Contabilidad") << tr("Almacen")  << tr("Administrador");
+    ui->comboBox->addItems(modulos);
+    crear_barraMantenimiento();
+
+    crear_barraCompras();
+
+    crear_barraAlmacen();
+
+    crear_barraAdmin();
+
+    crear_barraContabilidad();
+
+    ui->stackedWidget_2->setCurrentIndex(0);
+    if (Configuracion_global->medic)
+    {
+        ui->btnClientes->setText(tr("Pacientes"));
+        btn_clientes->setText(tr("Pacientes"));
+    }
+    else
+    {
+        ui->btnClientes->setText(tr("Clientes"));
+        ui->menuClinica->deleteLater();
+    }
 }
 
 void MainWindow::block_main()
@@ -513,11 +498,6 @@ void MainWindow::btnArticulos_clicked()
 void MainWindow::btnProveedores_clicked()
 {
     ui->stackedWidget->setCurrentWidget(frmProveedores1);
-}
-
-void MainWindow::btnAlbaran_clientes_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmAlbaran1);
 }
 
 void MainWindow::btnFactura_multiple_clicked()
@@ -705,6 +685,16 @@ void MainWindow::configuracion()
 {
     frmConfigmaya frmConfig(this);
     frmConfig.exec();
+}
+
+void MainWindow::handle_toolBar()
+{
+    ToolBarButton * t = qobject_cast<ToolBarButton *>(sender());
+    if(t)
+        ui->stackedWidget->setCurrentWidget(t->linkedWidget());
+    QAction * a = qobject_cast<QAction *>(sender());
+    if(a)
+       ui->stackedWidget->setCurrentWidget((QWidget*)a->parent());
 }
 
 

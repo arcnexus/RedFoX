@@ -38,7 +38,7 @@ void AreaRestringida_form::login()
        if (qryUsers.next())
        {
             QSqlRecord rUsuario = qryUsers.record();
-            if (ui->linePassword->text() == qryUsers.value(2).toString())
+            if (Configuracion::SHA256HashString(ui->linePassword->text()) == qryUsers.value(2).toString().trimmed())
             {
                 QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
                 settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
