@@ -215,16 +215,9 @@ int main(int argc, char *argv[])
 
    if(file.open(QFile::ReadOnly))
         a.setStyleSheet(file.readAll());
-   else
-       QMessageBox::warning(qApp->activeWindow(),
-                            QObject::tr("Maya"),
-                            QObject::tr("No se puede cargar el archivo de tema"),
-                            QObject::tr("Aceptar"));
 
-
-
-   QTranslator qtTranslator;
-   qtTranslator.load("qt_" + QLocale::system().name());
+                QTranslator qtTranslator;
+                qtTranslator.load("qt_" + QLocale::system().name());
    a.installTranslator(&qtTranslator);
    OpenRPT::languages.addTranslationToDefault(":/openRPTLangs/openrptLibs/traduccion/common_es.qm");
    OpenRPT::languages.addTranslationToDefault(":/openRPTLangs/openrptLibs/traduccion/wrtembed_es.qm");

@@ -269,85 +269,83 @@ QTableView, QTableWidet {
      alternate-background-color: rgb(255, 255, 127);
  }
 
- QMenu::item:selected {
-     background-color: rgb(175,195,225);
-     /* color: rgb(0, 0, 0);*/
-      selection-color: rgb(255,255,255);
-      border-radius:5px;
+
+QMenuBar {
+     background-color: red;
+     color: rgb(0,0,0);
+ }
+
+ QMenuBar::item {
+     spacing: 3px; /* spacing between menu bar items */
+     padding: 1px 4px;
+     background: transparent;
+     border-radius: 4px;
+ }
+
+ QMenuBar::item:selected { /* when selected using mouse or keyboard */
+     background: #a8a8a8;
+     color:rgb(200,0,0);
+ }
+
+ QMenuBar::item:pressed {
+     background: #888888;
  }
  QMenu {
-      background-color: #babfc8;
-      margin: 2px; /* some spacing around the menu */
+      background-color: #ABABAB; /* sets background of the menu */
+      border: 1px solid black;
   }
 
   QMenu::item {
-      padding: 2px 25px 2px 20px;
-      border: 1px solid transparent; /* reserve space for selection border */
+      /* sets background of menu item. set this to something non-transparent
+          if you want menu color and menu item color to be different */
+      background-color: transparent;
   }
 
-  QMenu::item:selected {
-      border-color: darkblue;
-      background: rgba(100, 100, 100, 150);
+  QMenu::item:selected { /* when user selects item using mouse or keyboard */
+      background-color: #001563;
   }
 
-  QMenu::icon:checked { /* appearance of a 'checked' icon */
-      background: gray;
-      border: 1px inset gray;
-      position: absolute;
-      top: 1px;
-      right: 1px;
-      bottom: 1px;
-      left: 1px;
-  }
+ QComboBox:editable {
+     background: #001563;
+ }
 
-  QMenu::separator {
-      height: 2px;
-      background: lightblue;
-      margin-left: 10px;
-      margin-right: 5px;
-  }
+ QComboBox:!editable, QComboBox::drop-down:editable {
+      background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                  stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
+                                  stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
+ }
 
-  QMenu::indicator {
-      width: 13px;
-      height: 13px;
-  }
+ /* QComboBox gets the "on" state when the popup is open */
+ QComboBox:!editable:on, QComboBox::drop-down:editable:on {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #D3D3D3, stop: 0.4 #D8D8D8,
+                                 stop: 0.5 #DDDDDD, stop: 1.0 #E1E1E1);
+ }
 
-  /* non-exclusive indicator = check box style indicator (see QActionGroup::setExclusive) */
-  QMenu::indicator:non-exclusive:unchecked {
-      image: url(:/images/checkbox_unchecked.png);
-  }
+ QComboBox:on { /* shift the text when the popup opens */
+     padding-top: 3px;
+     padding-left: 4px;
+ }
 
-  QMenu::indicator:non-exclusive:unchecked:selected {
-      image: url(:/images/checkbox_unchecked_hover.png);
-  }
+ QComboBox::drop-down {
+     subcontrol-origin: padding;
+     subcontrol-position: top right;
+     width: 15px;
 
-  QMenu::indicator:non-exclusive:checked {
-      image: url(:/images/checkbox_checked.png);
-  }
+     border-left-width: 1px;
+     border-left-color: darkgray;
+     border-left-style: solid; /* just a single line */
+     border-top-right-radius: 3px; /* same radius as the QComboBox */
+     border-bottom-right-radius: 3px;
+     color:#0;
+ }
 
-  QMenu::indicator:non-exclusive:checked:selected {
-      image: url(:/images/checkbox_checked_hover.png);
-  }
-
-  /* exclusive indicator = radio button style indicator (see QActionGroup::setExclusive) */
-  QMenu::indicator:exclusive:unchecked {
-      image: url(:/images/radiobutton_unchecked.png);
-  }
-
-  QMenu::indicator:exclusive:unchecked:selected {
-      image: url(:/images/radiobutton_unchecked_hover.png);
-  }
-
-  QMenu::indicator:exclusive:checked {
-      image: url(:/images/radiobutton_checked.png);
-  }
-
-  QMenu::indicator:exclusive:checked:selected {
-      image: url(:/images/radiobutton_checked_hover.png);
-  }
-
-/*QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }*/
-
-
-
+ QComboBox::item:selected { /* when user selects item using mouse or keyboard */
+     background-color: #001563;
+ }
+ QComboBox::down-arrow{
+     image: url(:/Icons/images/down_arrow.png) 2;
+}
+QComboBox::down-arrow::disabled{
+    image: url(:/Icons/images/down_arrow_disabled.png) 2;
+}
