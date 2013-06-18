@@ -2,9 +2,13 @@
 #define FRMEMPRESAS_H
 
 #include "../Auxiliares/Globlal_Include.h"
-
+#include "auxmodule.h"
 #include "../empresa.h"
+
 #include "copy_db_progressfrm.h"
+
+
+
 namespace Ui {
 class FrmEmpresas;
 }
@@ -55,16 +59,12 @@ private slots:
 
     void on_botBorrar_user_clicked();
 
-    void on_btn_addAcceso_clicked();
-
-    void on_btn_quitarAcceso_clicked();
-
     void on_btn_modPass_clicked();
 
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
-    QSqlRelationalTableModel * modelAccesos;
+
     void limpiar_campos();
     bool crear_empresa_sqlite(copy_db_progressFrm * form);
     bool crear_medica_sqlite(copy_db_progressFrm * form);
@@ -74,7 +74,18 @@ private:
     void borrar_mysql();
     void borrar_sqlite();
 
-    void llenar_user(QSqlRecord record);
+    void addAdminModule(AuxModule*m);
+    void addComprasModule(AuxModule*m);
+    void addVentasModule(AuxModule*m);
+    void addArchivosModule(AuxModule*);
+    void addAlmacenModule(AuxModule*);
+    void addUtilidadesModule(AuxModule*);
+    void addNoZoneModule(AuxModule*);
+
+    void crear_User(int id);
+    void llenar_user(QSqlRecord record);    
+    QVector<AuxModule*> _modulos;
+    void llenarModulos(int idUser);
 };
 
 #endif // FRMEMPRESAS_H

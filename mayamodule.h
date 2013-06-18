@@ -9,7 +9,8 @@ class MayaModule : public QDialog
     Q_OBJECT
 public:
     enum moduleZone{
-        Admin = 0 , Compras , Ventas , Archivos , Almacen , Utilidades , NoZone
+        Admin = 0 , Compras , Ventas , Archivos , Almacen , Utilidades ,Contabilidad
+        , SecretariaMedica,  InformacionMedica, NoZone
     };
     enum accessLevel{
         SinAcceso = 1,

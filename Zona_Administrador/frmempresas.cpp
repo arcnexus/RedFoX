@@ -3,10 +3,6 @@
 
 #include "../Busquedas/frmbuscarpoblacion.h"
 
-#ifdef WIN32
-    //#define and &&
-#endif
-
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmEmpresas)
@@ -32,24 +28,54 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     modelTarifas->setQuery("select descripcion from codigotarifa",QSqlDatabase::database("Maya"));
     ui->cboTarifa->setModel(modelTarifas);
 
-    modelAccesos = new QSqlRelationalTableModel(this,QSqlDatabase::database("Maya"));
-    modelAccesos->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    modelAccesos->setTable("accesousuarios");
-
-    modelAccesos->setRelation(2,QSqlRelation("modulos","id","ModuleName"));
-    modelAccesos->setRelation(3,QSqlRelation("nivelacceso","id","nombre"));
-
-    ui->tabla_accesos->setItemDelegate(new QSqlRelationalDelegate());
-    ui->tabla_accesos->setModel(modelAccesos);
-    modelAccesos->select();
-
-    ui->tabla_accesos->hideColumn(0);
-    ui->tabla_accesos->hideColumn(1);
-
     ui->txt_pass_user->setReadOnly(true);
 
-    modelAccesos->setHeaderData(2, Qt::Horizontal, tr("Modulos"));
-    modelAccesos->setHeaderData(3, Qt::Horizontal, tr("Nivel de acceso"));
+    QSqlQuery q(QSqlDatabase::database("Maya"));
+    q.prepare("SELECT * FROM modulos;");
+    q.exec();
+    while(q.next())
+    {
+        AuxModule* m = new AuxModule(this,q.record().value(2).toString());
+        m->id = q.record().value(0).toInt();
+        MayaModule::moduleZone z = static_cast<MayaModule::moduleZone>(q.record().value(1).toInt());
+        m->zone = z;
+        switch (z) {
+        case MayaModule::Compras:
+            addComprasModule(m);
+            break;
+        case MayaModule::Ventas:
+            addVentasModule(m);
+            break;
+        case MayaModule::Archivos:
+            addArchivosModule(m);
+            break;
+        case MayaModule::Almacen:
+            addAlmacenModule(m);
+            break;
+        case MayaModule::Utilidades:
+            addUtilidadesModule(m);
+            break;
+        case MayaModule::NoZone:
+            addNoZoneModule(m);
+            break;
+        case MayaModule::Admin :
+            addAdminModule(m);
+
+            break;
+
+        default:
+            break;
+        }
+        _modulos.append(m);
+    }
+
+    addComprasModule(0);
+    addVentasModule(0);
+    addArchivosModule(0);
+    addAlmacenModule(0);
+    addUtilidadesModule(0);
+    addNoZoneModule(0);
+    addAdminModule(0);
 
     on_botSiguiente_clicked();
     on_botSiguiente_user_clicked();
@@ -716,6 +742,214 @@ void FrmEmpresas::borrar_sqlite()
     oEmpresa.Borrar(oEmpresa.getid());
 }
 
+void FrmEmpresas::addAdminModule(AuxModule * m)
+{
+    static int row = 0;
+    static int column = 0;
+
+    if(!ui->tab_admin->layout())
+        QGridLayout *l= new QGridLayout(ui->tab_admin);
+
+    if(m)
+    {
+        ((QGridLayout *)ui->tab_admin->layout())->addWidget(m,row,column);
+
+        if(column==0)
+        {
+            column++;
+        }
+        else
+        {
+            row++;
+            column=0;
+        }
+    }
+    else
+    {
+        ((QGridLayout *)ui->tab_admin->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
+        column = 0;
+    }
+}
+
+void FrmEmpresas::addComprasModule(AuxModule * m)
+{
+    static int row = 0;
+    static int column = 0;
+
+    if(!ui->tab_compras->layout())
+        QGridLayout *l= new QGridLayout(ui->tab_compras);
+
+    if(m)
+    {
+        ((QGridLayout *)ui->tab_compras->layout())->addWidget(m,row,column);
+
+        if(column==0)
+        {
+            column++;
+        }
+        else
+        {
+            row++;
+            column=0;
+        }
+    }
+    else
+    {
+        ((QGridLayout *)ui->tab_compras->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
+        column = 0;
+    }
+}
+
+void FrmEmpresas::addVentasModule(AuxModule *m)
+{
+    static int row = 0;
+    static int column = 0;
+
+    if(!ui->tab_ventas->layout())
+        QGridLayout *l= new QGridLayout(ui->tab_ventas);
+
+    if(m)
+    {
+        ((QGridLayout *)ui->tab_ventas->layout())->addWidget(m,row,column);
+
+        if(column==0)
+        {
+            column++;
+        }
+        else
+        {
+            row++;
+            column=0;
+        }
+    }
+    else
+    {
+        ((QGridLayout *)ui->tab_ventas->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
+        column = 0;
+    }
+}
+
+void FrmEmpresas::addArchivosModule(AuxModule *m)
+{
+    static int row = 0;
+    static int column = 0;
+
+    if(!ui->tab_archivos->layout())
+        QGridLayout *l= new QGridLayout(ui->tab_archivos);
+
+    if(m)
+    {
+        ((QGridLayout *)ui->tab_archivos->layout())->addWidget(m,row,column);
+
+        if(column==0)
+        {
+            column++;
+        }
+        else
+        {
+            row++;
+            column=0;
+        }
+    }
+    else
+    {
+        ((QGridLayout *)ui->tab_archivos->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
+        column = 0;
+    }
+}
+
+void FrmEmpresas::addAlmacenModule(AuxModule *m)
+{
+    static int row = 0;
+    static int column = 0;
+
+    if(!ui->tab_almacen->layout())
+        QGridLayout *l= new QGridLayout(ui->tab_almacen);
+
+    if(m)
+    {
+        ((QGridLayout *)ui->tab_almacen->layout())->addWidget(m,row,column);
+
+        if(column==0)
+        {
+            column++;
+        }
+        else
+        {
+            row++;
+            column=0;
+        }
+    }
+    else
+    {
+        ((QGridLayout *)ui->tab_almacen->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
+        column = 0;
+    }
+}
+
+void FrmEmpresas::addUtilidadesModule(AuxModule *m)
+{
+    static int row = 0;
+    static int column = 0;
+
+    if(!ui->tab_utils->layout())
+        QGridLayout *l= new QGridLayout(ui->tab_utils);
+
+    if(m)
+    {
+        ((QGridLayout *)ui->tab_utils->layout())->addWidget(m,row,column);
+
+        if(column==0)
+        {
+            column++;
+        }
+        else
+        {
+            row++;
+            column=0;
+        }
+    }
+    else
+    {
+        ((QGridLayout *)ui->tab_utils->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
+        column = 0;
+    }
+}
+
+void FrmEmpresas::addNoZoneModule(AuxModule *m)
+{
+    static int row = 0;
+    static int column = 0;
+
+    if(!ui->tab_noZone->layout())
+        QGridLayout *l= new QGridLayout(ui->tab_noZone);
+
+    if(m)
+    {
+        ((QGridLayout *)ui->tab_noZone->layout())->addWidget(m,row,column);
+
+        if(column==0)
+        {
+            column++;
+        }
+        else
+        {
+            row++;
+            column=0;
+        }
+    }
+    else
+    {
+        ((QGridLayout *)ui->tab_noZone->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
+        column = 0;
+    }
+}
+
+void FrmEmpresas::crear_User(int id)
+{
+
+}
+
 void FrmEmpresas::llenar_user(QSqlRecord record)
 {
     ui->txt_id_user->setText(record.value(0).toString());
@@ -723,8 +957,29 @@ void FrmEmpresas::llenar_user(QSqlRecord record)
     ui->txt_pass_user->setText(record.value(2).toString());
     ui->txt_categoria_user->setText(record.value(4).toString());
 
-    modelAccesos->setFilter("idUser = "+ui->txt_id_user->text());
-    modelAccesos->select();
+    llenarModulos(record.value(0).toInt());
+}
+
+void FrmEmpresas::llenarModulos(int idUser)
+{
+    QSqlQuery q(QSqlDatabase::database("Maya"));
+    q.prepare("SELECT * FROM accesousuarios WHERE idUser=:id;");
+    q.bindValue(":id",idUser);
+    q.exec();
+    while(q.next())
+    {
+        int idModulo = q.record().value(2).toInt();
+        int idAcceso = q.record().value(3).toInt();
+        QVector<AuxModule*>::Iterator i;
+        for(i=_modulos.begin();i!=_modulos.end();++i)
+        {
+            if((*i)->id == idModulo)
+            {
+                (*i)->setNivel(idAcceso);
+                break;
+            }
+        }
+    }
 }
 
 void FrmEmpresas::on_btn_ruta_db_clicked()
@@ -777,15 +1032,13 @@ void FrmEmpresas::on_botAnadir_user_clicked()
         if(get_last.exec())
         {
             limpiar_campos();
+            int last_id = 1;
             if(get_last.next())
             {
-                int last_id = get_last.record().value("id").toInt()  + 1;
-                ui->txt_id_user->setText(QString::number(last_id));
+                last_id = get_last.record().value("id").toInt()  + 1;
             }
-            else
-            {
-                ui->txt_id_user->setText("1");
-            }
+            ui->txt_id_user->setText(QString::number(last_id));
+            crear_User(last_id);
         }
     }
     else
@@ -839,11 +1092,6 @@ void FrmEmpresas::on_botGuardar_user_clicked()
     if(ui->botAnadir_user->text() == "Añadir")
     {
         //TODO modificar user actual
-        for(int i=0;i<modelAccesos->rowCount();i++)
-        {
-            modelAccesos->setData(modelAccesos->index(i,1),ui->txt_id_user->text().toInt());
-        }
-        modelAccesos->submitAll();
     }
     else
     {
@@ -866,25 +1114,12 @@ void FrmEmpresas::on_botGuardar_user_clicked()
 
         ui->botAnadir_user->setText("Añadir");
         ui->botAnadir_user->setIcon(QIcon(":/Icons/PNG/add.png"));
-
-        modelAccesos->submitAll();
     }
 }
 
 void FrmEmpresas::on_botBorrar_user_clicked()
 {
     //TODO borrar user
-}
-
-
-void FrmEmpresas::on_btn_addAcceso_clicked()
-{
-    modelAccesos->insertRow(modelAccesos->rowCount());
-}
-
-void FrmEmpresas::on_btn_quitarAcceso_clicked()
-{
-
 }
 
 void FrmEmpresas::on_btn_modPass_clicked()

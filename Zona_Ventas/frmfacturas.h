@@ -31,7 +31,7 @@ public:
     Factura *oFactura;
     Cliente *oCliente1;
     moduleZone ModuleZone(){return Ventas;}
-    QString ModuleName(){return "FormFacturasVentas";}
+    QString ModuleName(){return "Facturas Ventas";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}

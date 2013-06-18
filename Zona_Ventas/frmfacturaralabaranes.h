@@ -16,7 +16,7 @@ public:
     ~FrmFacturarAlabaranes();
     
     moduleZone ModuleZone(){return Ventas;}
-    QString ModuleName(){return "FormFacturarAlbaranesVentas";}
+    QString ModuleName(){return "Facturar Albaranes Ventas";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}

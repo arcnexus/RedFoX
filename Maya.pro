@@ -71,6 +71,7 @@ SOURCES += main.cpp\
     Zona_Administrador/arearestringida_form.cpp \
     Zona_Administrador/block_Maya_form.cpp \
     Zona_Administrador/copy_db_progressfrm.cpp \
+    Zona_Administrador/auxmodule.cpp \
     db_table_view.cpp \
     Auxiliares/search_lineedit.cpp \
     Auxiliares/table_helper.cpp \
@@ -150,6 +151,7 @@ SOURCES += main.cpp\
     TPV/configmonedatpv.cpp \
     TPV/monedaview.cpp \
     mayamodule.cpp
+
 
 
 HEADERS  += mainwindow.h \
@@ -235,6 +237,7 @@ HEADERS  += mainwindow.h \
     Zona_Pacientes/frmanadirdiagnostico.h \
     Zona_Administrador/frmconfigmaya.h \
     Zona_Administrador/block_Maya_form.h \
+    Zona_Administrador/auxmodule.h \
     Zona_Pacientes/frmanadirhierb.h \
     Almacen/frmeditar_tarifas.h \
     Auxiliares/datedelegate.h \
@@ -267,6 +270,7 @@ HEADERS  += mainwindow.h \
     TPV/configmonedatpv.h \
     TPV/monedaview.h \
     mayamodule.h
+
 
 
 

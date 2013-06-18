@@ -22,7 +22,7 @@ public:
     Cliente *oCliente3;
 
     moduleZone ModuleZone(){return Ventas;}
-    QString ModuleName(){return "FormPedidosVentas";}
+    QString ModuleName(){return "Pedidos Ventas";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}

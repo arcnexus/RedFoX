@@ -25,7 +25,7 @@ public:
     void LLenarAlbaran();
 
     moduleZone ModuleZone(){return Ventas;}
-    QString ModuleName(){return "FormAlbaranVentas";}
+    QString ModuleName(){return "Albaranes Ventas";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}

@@ -16,7 +16,7 @@ public:
     explicit frmGestionCobros(QWidget *parent = 0);
     ~frmGestionCobros();
     moduleZone ModuleZone(){return Ventas;}
-    QString ModuleName(){return "FormCobrosVentas";}
+    QString ModuleName(){return "Gestion Cobros";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
