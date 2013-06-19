@@ -13,9 +13,13 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
+  <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0" colspan="2">
     <widget class="QFrame" name="frame">
+     <property name="styleSheet">
+      <string notr="true">background-color: #ecefed;
+</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -23,7 +27,7 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
+      <item row="1" column="0" colspan="6">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QLabel" name="label">
@@ -33,9 +37,16 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QSpinBox" name="txtnum_asiento">
+          <property name="minimumSize">
+           <size>
+            <width>95</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
+           <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(255, 0, 0);</string>
           </property>
          </widget>
         </item>
@@ -47,12 +58,71 @@
          </widget>
         </item>
         <item>
-         <widget class="QDateEdit" name="dateEdit">
+         <widget class="QDateEdit" name="txtfecha_asiento">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);</string>
           </property>
+          <property name="displayFormat">
+           <string>dd/MM/yyyy</string>
+          </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Asientos predefinidos</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="3">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Importe:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QComboBox" name="cbo_moneda">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <item>
+         <property name="text">
+          <string>€</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>$</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>&amp;</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="6">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
          <widget class="QLabel" name="label_3">
           <property name="text">
@@ -61,14 +131,26 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_2">
+         <widget class="QLineEdit" name="txtcuenta_debe">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>170</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="btnbuscar_cuenta_debe">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -85,28 +167,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_3">
+         <widget class="QLineEdit" name="txtdesc_cuenta_debe">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);</string>
           </property>
          </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
         </item>
         <item>
          <widget class="QLabel" name="label_4">
@@ -116,61 +184,272 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_4">
+         <widget class="QLineEdit" name="txtdocumento_debe">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0" colspan="6">
+       <widget class="QLabel" name="label_18">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>18</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>DEBE</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="5">
+       <widget class="QLineEdit" name="txtimporte_debe">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>120</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>747</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_14">
+        <property name="text">
+         <string>Saldo Cta:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="minimumSize">
+         <size>
+          <width>155</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>155</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 127);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QFrame" name="frame_4">
+     <property name="styleSheet">
+      <string notr="true">background-color: #ecefed;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label_17">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>18</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>HABER</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QLabel" name="label_15">
+          <property name="text">
+           <string>Cuenta:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="txtcuenta_haber">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>170</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_5">
+         <widget class="QPushButton" name="btnbuscar_cuenta_haber">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
-           <string>D/H:</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../maya.qrc">
+            <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>19</width>
+            <height>19</height>
+           </size>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBox">
-          <item>
-           <property name="text">
-            <string>D</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>H</string>
-           </property>
-          </item>
+         <widget class="QLineEdit" name="txtdesc_cuenta_haber">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_6">
+         <widget class="QLabel" name="label_13">
+          <property name="text">
+           <string>Documento:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="txtdoc_haber">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QLabel" name="label_19">
+          <property name="text">
+           <string>Saldo Cta:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_2">
+          <property name="maximumSize">
+           <size>
+            <width>155</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 127);</string>
+          </property>
+          <property name="text">
+           <string>0,00</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>335</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_12">
           <property name="text">
            <string>Importe:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBox_2">
-          <item>
-           <property name="text">
-            <string>€</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>$</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>&amp;</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_5">
+         <widget class="QLineEdit" name="txtimporte_haber">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>120</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);</string>
           </property>
@@ -184,17 +463,73 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="text">
-         <string>Añadir</string>
-        </property>
-       </widget>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_16">
+          <property name="text">
+           <string>Descuadre:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="txtdescuadre_linea">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>120</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>0,00</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnanadir_linea">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Insertar línea</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../maya.qrc">
+            <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
+   <item row="2" column="0" colspan="2">
     <widget class="QFrame" name="frame_3">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(241, 217, 255);</string>
@@ -207,7 +542,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="btnnuevo_asiento">
         <property name="text">
          <string>Nuevo Asiento</string>
         </property>
@@ -224,7 +559,10 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_4">
+       <widget class="QPushButton" name="btneditar_asiento">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Editar Asiento</string>
         </property>
@@ -241,7 +579,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_6">
+       <widget class="QPushButton" name="btnbuscar_asiento">
         <property name="text">
          <string>Buscar Asiento</string>
         </property>
@@ -271,7 +609,10 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_5">
+       <widget class="QPushButton" name="btncerrar_asiento">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Cerrar Asiento</string>
         </property>
@@ -290,18 +631,7 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QTableWidget" name="tableWidget">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(255, 220, 255);</string>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <widget class="QLabel" name="label_7">
      <property name="maximumSize">
       <size>
@@ -320,7 +650,7 @@ alternate-background-color: rgb(255, 220, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="4" column="1">
     <widget class="QFrame" name="frame_2">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -337,11 +667,36 @@ alternate-background-color: rgb(255, 220, 255);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_6">
+       <widget class="QLineEdit" name="txtlineas_asiento">
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
        </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item>
        <widget class="QLabel" name="label_9">
@@ -351,9 +706,15 @@ alternate-background-color: rgb(255, 220, 255);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_7">
+       <widget class="QLineEdit" name="txttotal_debe">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -365,9 +726,15 @@ alternate-background-color: rgb(255, 220, 255);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_8">
+       <widget class="QLineEdit" name="txttotal_haber">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -379,22 +746,71 @@ alternate-background-color: rgb(255, 220, 255);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_9">
+       <widget class="QLineEdit" name="txtdescuadre_asiento">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QTableView" name="tabla_asientos">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 220, 255);</string>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+    </widget>
+   </item>
   </layout>
-  <zorder>tableWidget</zorder>
+  <zorder>tabla_asientos</zorder>
   <zorder>frame</zorder>
   <zorder>label_7</zorder>
   <zorder>frame_2</zorder>
   <zorder>frame_3</zorder>
+  <zorder>frame_4</zorder>
  </widget>
+ <tabstops>
+  <tabstop>txtfecha_asiento</tabstop>
+  <tabstop>txtcuenta_debe</tabstop>
+  <tabstop>btnbuscar_cuenta_debe</tabstop>
+  <tabstop>txtdesc_cuenta_debe</tabstop>
+  <tabstop>txtdocumento_debe</tabstop>
+  <tabstop>cbo_moneda</tabstop>
+  <tabstop>txtimporte_debe</tabstop>
+  <tabstop>txtcuenta_haber</tabstop>
+  <tabstop>btnbuscar_cuenta_haber</tabstop>
+  <tabstop>txtdesc_cuenta_haber</tabstop>
+  <tabstop>txtdoc_haber</tabstop>
+  <tabstop>txtimporte_haber</tabstop>
+  <tabstop>txtdescuadre_linea</tabstop>
+  <tabstop>btnanadir_linea</tabstop>
+  <tabstop>btnnuevo_asiento</tabstop>
+  <tabstop>btneditar_asiento</tabstop>
+  <tabstop>btnbuscar_asiento</tabstop>
+  <tabstop>btncerrar_asiento</tabstop>
+  <tabstop>tabla_asientos</tabstop>
+  <tabstop>txtlineas_asiento</tabstop>
+  <tabstop>txttotal_debe</tabstop>
+  <tabstop>txttotal_haber</tabstop>
+  <tabstop>txtdescuadre_asiento</tabstop>
+ </tabstops>
  <resources>
   <include location="../maya.qrc"/>
  </resources>

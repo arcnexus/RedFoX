@@ -1016,7 +1016,7 @@ void Configuracion::applyCambio(float f, QString target)
 void Configuracion::readCambio(QString s)
 {
     static int c = 0;
-    qDebug()<< "readCambio"<< c;
+    //qDebug()<< "readCambio"<< c;
 
     QString place = "<span class=bld>";
     int index = s.indexOf(place)+place.size();

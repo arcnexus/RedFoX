@@ -320,6 +320,12 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
    </item>
    <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="textoTitulo">
+     <property name="maximumSize">
+      <size>
+       <width>384</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">color: rgb(255, 85, 0);
 font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
@@ -3744,9 +3750,46 @@ alternate-background-color: rgb(255, 250, 178);</string>
      </widget>
     </widget>
    </item>
+   <item row="0" column="2">
+    <widget class="Blinkink" name="blinkink">
+     <property name="maximumSize">
+      <size>
+       <width>600</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="color" stdset="0">
+      <color>
+       <red>255</red>
+       <green>96</green>
+       <blue>43</blue>
+      </color>
+     </property>
+     <property name="blink" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="blinkDuration" stdset="0">
+      <number>1500</number>
+     </property>
+     <property name="icon" stdset="0">
+      <pixmap resource="../maya.qrc">:/Icons/PNG/avisos.png</pixmap>
+     </property>
+     <property name="topTex" stdset="0">
+      <string>Tiene campos pendientes de rellenar</string>
+     </property>
+     <property name="bottomTex" stdset="0">
+      <string>nombre, cif, ....</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>Blinkink</class>
+   <extends>QFrame</extends>
+   <header>blinkink.h</header>
+  </customwidget>
   <customwidget>
    <class>OpenChart</class>
    <extends>QWidget</extends>

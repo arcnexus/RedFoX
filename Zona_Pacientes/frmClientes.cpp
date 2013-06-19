@@ -69,13 +69,14 @@ frmClientes::frmClientes(QWidget *parent) :
 
     // rellenar combo idiomas
     QSqlQueryModel *qmIdiomas = new QSqlQueryModel(this);
-    qmIdiomas->setQuery("select idioma from idiomas", QSqlDatabase::database("Maya"));
+    qmIdiomas->setQuery("select idioma from idiomas order by idioma", QSqlDatabase::database("Maya"));
     ui->cboIdiomaDocumentos->setModel(qmIdiomas);
     //oCliente->Recuperar("Select * from clientes");
     //LLenarCampos();
 
     bloquearCampos();
     this->Altas = false;
+    ui->blinkink->setVisible(false);
     //Connect signals /slots.
 
     connect(ui->txtPrimerApellido,SIGNAL(editingFinished()),this,SLOT(txtPrimerApellido_editingFinished()));
@@ -98,9 +99,16 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->txtcDc,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
     connect(ui->txtcCuentaContable,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
     connect(ui->btnValidarVIES,SIGNAL(clicked()),this,SLOT(validarNifIntrac()));
-
+    connect(ui->txtcNombreFiscal,SIGNAL(editingFinished()),this,SLOT(set_blink()));
+    connect(ui->txtcCifNif,SIGNAL(editingFinished()),this,SLOT(set_blink()));
+    connect(ui->txtcDireccion1,SIGNAL(editingFinished()),this,SLOT(set_blink()));
+    connect(ui->txtcCp,SIGNAL(editingFinished()),this,SLOT(set_blink()));
+    connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(set_blink()));
+    connect(ui->txtcProvincia,SIGNAL(editingFinished()),this,SLOT(set_blink()));
     ui->TablaDeudas->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->TablaDeudas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(menu_deudas(QPoint)));
+
+
 }
 
 frmClientes::~frmClientes()
@@ -115,12 +123,10 @@ frmClientes::~frmClientes()
 }
 void frmClientes::LLenarCampos()
 {
-    if (oCliente->cCodigoCliente.isEmpty()){
+
+
+    if (oCliente->cCodigoCliente.isEmpty())
         oCliente->cCodigoCliente = oCliente->NuevoCodigoCliente();
-        QMessageBox::warning(this,tr("ATENCIÓN"),tr("Faltan datos en la ficha del cliente, deberá rellenarlos ahora"),
-                             tr("Aceptar"));
-        ui->btnEditar->click();
-    }
     ui->txtcCodigoCliente->setText(oCliente->cCodigoCliente);
     ui->txtPrimerApellido->setText(oCliente->cApellido1);
     ui->txtSegundoApellido->setText(oCliente->cApellido2);
@@ -436,6 +442,7 @@ void frmClientes::LLenarCampos()
     // Grafica estadística
     //--------------------
     refrescar_grafica();
+    set_blink();
 }
 void frmClientes::VaciarCampos()
 {
@@ -616,6 +623,7 @@ void frmClientes::on_btnGuardar_clicked()
                              tr("Aceptar"));
         ui->txtcCifNif->setFocus();
     }
+    set_blink();
 }
 
 void frmClientes::on_btnAnadir_clicked()
@@ -623,11 +631,13 @@ void frmClientes::on_btnAnadir_clicked()
     emit block();
     desbloquearCampos();
     VaciarCampos();
+    set_blink();
     this->Altas = true;
     ui->txtcCodigoCliente->setText(oCliente->NuevoCodigoCliente());
     ui->txtcCuentaContable->setText(ui->txtcCodigoCliente->text());
     ui->txtcCodigoCliente->setFocus();
     LLenarCliente();
+    ui->cboIdiomaDocumentos->setCurrentIndex(1);
     oCliente->Anadir();
 
 }
@@ -733,6 +743,7 @@ void frmClientes::on_btnEditar_clicked()
     emit block();
         desbloquearCampos();
         ui->txtcCodigoCliente->setEnabled(false);
+        set_blink();
         ui->txtcCifNif->setFocus();
 }
 void frmClientes::bloquearCampos() {
@@ -891,6 +902,7 @@ void frmClientes::on_btnDeshacer_clicked()
     oCliente->Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
     LLenarCampos();
     bloquearCampos();
+    set_blink();
     emit unblock();
 }
 
@@ -1415,4 +1427,64 @@ void frmClientes::refrescar_grafica()
     ui->graficaEstadistica->addItem("Dic",diciembre);
 
     ui->graficaEstadistica->repaint();
+}
+
+void frmClientes::set_blink()
+{
+    bool campos_pendientes = false;
+    QString text_bottom;
+    if (oCliente->cCodigoCliente.isEmpty())
+    {
+        text_bottom =tr("codigo de cliente, ");
+        campos_pendientes = true;
+    }
+    if(ui->txtcNombreFiscal->text().isEmpty())
+    {
+       text_bottom.append(tr("Nombre fiscal, "));
+       campos_pendientes = true;
+    }
+    if(ui->txtcCifNif->text().isEmpty())
+    {
+        text_bottom.append(tr("Cif/nif, "));
+        campos_pendientes = true;
+    }
+    if(ui->txtcDireccion1->text().isEmpty())
+    {
+        text_bottom.append(tr("Direccion, "));
+        campos_pendientes = true;
+    }
+    if(ui->txtcCp->text().isEmpty())
+    {
+        text_bottom.append(tr("CP, "));
+        campos_pendientes = true;
+    }
+    if(ui->txtcPoblacion->text().isEmpty())
+    {
+        text_bottom.append(tr("Población, "));
+        campos_pendientes = true;
+    }
+    if(ui->txtcProvincia->text().isEmpty())
+    {
+        text_bottom.append(tr("Provincia"));
+        campos_pendientes = true;
+    }
+    if (campos_pendientes) {
+        ui->blinkink->setVisible(true);
+        ui->blinkink->settopTex(tr("ATENCIÓN TIENE CAMPOS OBLIGATORIOS PENDIENTES DE RELLENAR"));
+        ui->blinkink->setbottomTex(text_bottom);
+        ui->blinkink->setblink(true);
+        ui->blinkink->setcolor(QColor (255,96,43));
+    } else {
+        if(ui->btnGuardar->isEnabled())
+        {
+            ui->blinkink->setVisible(true);
+            ui->blinkink->settopTex("Ficha completa");
+            ui->blinkink->setbottomTex(tr("los campos obligatorios estan completos"));
+            ui->blinkink->setcolor(QColor (0,190,0));
+            ui->blinkink->setblink(false);
+        } else
+        {
+            ui->blinkink->setVisible(false);
+        }
+    }
 }

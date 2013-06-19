@@ -149,7 +149,9 @@ SOURCES += main.cpp\
     Auxiliares/SMPT/mimeattachment.cpp \
     Auxiliares/SMPT/emailaddress.cpp \
     TPV/efectivocaja.cpp \
-    TPV/configmonedatpv.cpp
+    TPV/configmonedatpv.cpp \
+    Zona_Contabilidad/apuntes.cpp \
+    Auxiliares/monetarydelegate_contabilidad.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -264,7 +266,9 @@ HEADERS  += mainwindow.h \
     Auxiliares/SMPT/mimeattachment.h \
     Auxiliares/SMPT/emailaddress.h \
     TPV/efectivocaja.h \
-    TPV/configmonedatpv.h
+    TPV/configmonedatpv.h \
+    Zona_Contabilidad/apuntes.h \
+    Auxiliares/monetarydelegate_contabilidad.h
 
 
 
@@ -450,3 +454,8 @@ INCLUDEPATH += $$PWD/../../../../usr/include
 DEPENDPATH += $$PWD/../../../../usr/include
 
 unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../usr/lib/libcryptopp.a
+
+unix:!macx: LIBS += -L$$PWD/BlinkLabel/Linux/ -lblinkinkplugin
+
+INCLUDEPATH += $$PWD/BlinkLabel
+DEPENDPATH += $$PWD/BlinkLabel

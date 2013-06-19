@@ -282,6 +282,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btn_barra_ped_pro,SIGNAL(clicked()),this,SLOT(btn_pedidos_pro_clicked()));
     connect(ui->btn_barra_pres_cliente,SIGNAL(clicked()),this,SLOT(btnPresup_clientes_clicked()));
     connect(ui->btn_barra_tpv_cliente,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
+    connect(ui->btn_barra_asientos,SIGNAL(clicked()),this,SLOT(btn_diario_clicked()));
 
 
     QPixmap pixmap(":/Icons/PNG/mayafondo_blanco.png");

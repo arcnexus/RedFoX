@@ -93,6 +93,7 @@ private slots:
     void cobrar_fraccion();
     void ver_asiento();
     void refrescar_grafica();
+    void set_blink();
 
 
 private:
