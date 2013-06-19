@@ -19,6 +19,10 @@ public:
 private:
     Ui::FrmEntrada_apuntes *ui;
     apuntes *oApunte;
+    void llenar_objeto();
+    void clear();
+    void llenar_tabla_apunte(int asiento);
+    void totales_asiento(int asiento);
 signals:
     void block();
     void unblock();
@@ -28,6 +32,7 @@ private slots:
     void controles(bool stat);
     void on_btncerrar_asiento_clicked();
     void on_btnanadir_linea_clicked();
+    void on_txtnum_asiento_valueChanged(int arg1);
 };
 
 #endif // FRMENTRADA_APUNTES_H
