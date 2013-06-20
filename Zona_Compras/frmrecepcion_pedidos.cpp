@@ -251,21 +251,23 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                 {
                     queryLineas.exec("select * from lin_ped_pro where id = "+QString::number(linid));
                     queryLineas.next();
-                    double subtotal,dto,total;
+                    double subtotal,dto,base,total,iva;
                     subtotal = queryLineas.record().value("coste_bruto").toDouble() * rec_act;
                     dto = subtotal * (queryLineas.record().value("porc_dto").toDouble()/100);
-                    total = subtotal -dto;
+                    base = subtotal -dto;
+                    iva = base * (queryLineas.record().value("porc_iva").toDouble()/100);
+                    total = base +iva;
                     // ----------------------------------------
                     //  Si albaran = true  añado Linea albarán
                     // ----------------------------------------
                     if(albaran){
                         QSqlQuery query_lin_alb_pro(QSqlDatabase::database("empresa"));
                         query_lin_alb_pro.prepare("INSERT INTO lin_alb_pro "
-                                                  "( id_cab,cCodigo,cDescripcion,rCoste,nDto,"
-                                                  "nIva,nCantidad,rTotal,"
+                                                  "(id_cab,cCodigo,cDescripcion,rCoste,nDto,"
+                                                  "nIva,rIva,nCantidad,rTotal,"
                                                   "rDto,rSUBTOTAL,id_Articulo) VALUES "
                                                   "(:id_cab,:cCodigo,:cDescripcion,:rCoste,:nDto,"
-                                                  ":nIva,:nCantidad,:rTotal,"
+                                                  ":nIva,:rIva,:nCantidad,:rTotal,"
                                                   ":rDto,:rSUBTOTAL,:id_Articulo);");
 
                         query_lin_alb_pro.bindValue(":id_cab",this->id_albaran);
@@ -277,6 +279,7 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                         query_lin_alb_pro.bindValue(":nCantidad",rec_act);
                         query_lin_alb_pro.bindValue(":rTotal",total);
                         query_lin_alb_pro.bindValue(":rDto",dto);
+                        query_lin_alb_pro.bindValue(":rIva",iva);
                         query_lin_alb_pro.bindValue(":rSUBTOTAL",subtotal);
                         query_lin_alb_pro.bindValue(":id_Articulo",queryLineas.record().value("id_articulo").toDouble());
 
@@ -295,11 +298,11 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                     if(factura){
                         QSqlQuery query_lin_fac_pro(QSqlDatabase::database("empresa"));
                         query_lin_fac_pro.prepare("INSERT INTO lin_fac_pro "
-                                                  "( id_cab,cCodigo,cDescripcion,rCoste,nDto,"
-                                                  "nIva,nCantidad,rTotal,"
+                                                  "( id_cab,cCodigo,cDescripcion,rCoste,nPorcDto,"
+                                                  "nPorcIva,rIva,nCantidad,rTotal,"
                                                   "rDto,rSUBTOTAL,id_Articulo) VALUES "
                                                   "(:id_cab,:cCodigo,:cDescripcion,:rCoste,:nDto,"
-                                                  ":nIva,:nCantidad,:rTotal,"
+                                                  ":nIva,:rIva,:nCantidad,:rTotal,"
                                                   ":rDto,:rSUBTOTAL,:id_Articulo);");
 
                         query_lin_fac_pro.bindValue(":id_cab",this->id_factura);
@@ -308,6 +311,7 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                         query_lin_fac_pro.bindValue(":rCoste",queryLineas.record().value("coste_bruto").toDouble());
                         query_lin_fac_pro.bindValue(":nDto",queryLineas.record().value("porc_dto").toDouble());
                         query_lin_fac_pro.bindValue(":nIva",queryLineas.record().value("porc_iva").toDouble());
+                        query_lin_fac_pro.bindValue(":rIva",iva);
                         query_lin_fac_pro.bindValue(":nCantidad",rec_act);
                         query_lin_fac_pro.bindValue(":rTotal",total);
                         query_lin_fac_pro.bindValue(":rDto",dto);
@@ -603,7 +607,14 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
         ui->txtFactura->setFocus();
         factura =  true;
         QSqlQuery query_factura(QSqlDatabase::database("empresa"));
-        if(query_factura.exec("insert into fac_pro  (cfactura) values ('temp')"))
+        query_factura.prepare("insert into fac_pro  (cfactura,nPorcIva1,nPorcIva2,nPorcIva3,nPorcIva4) values ('temp',"
+                              ":iva1,:iva2,:iva3,:iva4)");
+        query_factura.bindValue(":iva1",Configuracion_global->ivaList.at(0));
+        query_factura.bindValue(":iva2",Configuracion_global->ivaList.at(1));
+        query_factura.bindValue(":iva3",Configuracion_global->ivaList.at(2));
+        query_factura.bindValue(":iva4",Configuracion_global->ivaList.at(3));
+        if(query_factura.exec())
+
             id_factura = query_factura.lastInsertId().toInt();
         else
             QMessageBox::warning(this,tr("Recepción Pedidos"),
@@ -625,21 +636,17 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
         QSqlQuery query_factura(QSqlDatabase::database("empresa"));
         query_factura.prepare("update fac_pro  set cFactura =:factura, dFecha = :fecha,id_Proveedor=:id_proveedor,"
                               "cProveedor =:proveedor, cCifProveedor =:cif,cPedido =:pedido,"
-                              "nPorcIva1 =:iva1, nPorcIva2 =:iva2, nPorcIva3 =:iva3, nPorcIva4 =:iva4, "
                               "rBase1 =:base1,rBase2 =:base2,rBase3 =:base3, rBase4 =:base4, "
                               "rIVA1 =:riva1,rIVA2 =:riva2, rIVA3 =:riva3, rIVA4 =:riva4, "
-                              "rTotal1 =:total1,rTotal2 =:total2,rTotal3 =:total3,rTotal4 =:total4 where id =:id");
+                              "rTotal1 =:total1,rTotal2 =:total2,rTotal3 =:total3,rTotal4 =:total4,"
+                              "rTotalBase =:totalBase, rTotalIva =:totaliva, rTotal =:total,"
+                              "total_dto =:total_dto where id =:id");
         query_factura.bindValue(":factura",ui->txtFactura->text());
         query_factura.bindValue(":fecha",fecha);
         query_factura.bindValue(":id_proveedor",query_pedido.record().value("id_Proveedor").toInt());
         query_factura.bindValue(":proveedor",query_pedido.record().value("cProveedor").toString());
         query_factura.bindValue(":cif",query_pedido.record().value("cCifNif").toString());
         query_factura.bindValue(":pedido",ui->txtNumPedido->text().toInt());
-        query_factura.bindValue(":iva1",Configuracion_global->ivaList.at(0));
-        query_factura.bindValue(":iva2",Configuracion_global->ivaList.at(1));
-        query_factura.bindValue(":iva3",Configuracion_global->ivaList.at(2));
-        query_factura.bindValue(":iva4",Configuracion_global->ivaList.at(3));
-
         query_factura.bindValue(":id",id_factura);
 
         // ----------------------
@@ -648,11 +655,12 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
         QSqlQuery query_lin_fac_pro(QSqlDatabase::database("empresa"));
         query_lin_fac_pro.prepare("select * from lin_fac_pro where id_cab = :id");
         query_lin_fac_pro.bindValue(":id",id_factura);
-        double base1,base2,base3,base4,iva1,iva2,iva3,iva4,dto1,dto2,dto3,dto4,total1,total2,total3,total4;
-        base1 = 0; base2 = 0; base3 = 0; base4 = 0;
+        double base1,base2,base3,base4,iva1,iva2,iva3,iva4,dto1,dto2,dto3,dto4,total1,total2,total3,total4,base,iva,dto,total;
+        base1 = 0; base2 = 0; base3 = 0; base4 = 0;base=0;
         iva1 = 0;  iva2 = 0;  iva3 = 0;  iva4 = 0;
-        dto1 = 0; dto2 = 0; dto3 = 0; dto4 = 0;
+        dto1 = 0; dto2 = 0; dto3 = 0; dto4 = 0; dto=0;
         total1 = 0; total2 = 0; total3 = 0; total4 = 0;
+
 
         if(query_lin_fac_pro.exec())
         {
@@ -663,12 +671,14 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
                 {
                     base1 +=query_lin_fac_pro.record().value("rSUBTOTAL").toDouble();
                     iva1 +=query_lin_fac_pro.record().value("rIva").toDouble();
+                    dto1 +=query_lin_fac_pro.record().value("rDto").toDouble();
                     total1 +=query_lin_fac_pro.record().value("rTotal").toDouble();
                 }
                 if(query_lin_fac_pro.record().value("nIva").toDouble() == query_factura.record().value("nPorcIva2").toDouble())
                 {
                     base2 +=query_lin_fac_pro.record().value("rSUBTOTAL").toDouble();
                     iva2 +=query_lin_fac_pro.record().value("rIva").toDouble();
+                    dto2 +=query_lin_fac_pro.record().value("rDto").toDouble();
                     total2 +=query_lin_fac_pro.record().value("rTotal").toDouble();
                 }
                 if(query_lin_fac_pro.record().value("nIva").toDouble() == query_factura.record().value("nPorcIva3").toDouble())
@@ -676,13 +686,20 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
                     base3 +=query_lin_fac_pro.record().value("rSUBTOTAL").toDouble();
                     iva3 +=query_lin_fac_pro.record().value("rIva").toDouble();
                     total3 +=query_lin_fac_pro.record().value("rTotal").toDouble();
+                    dto3 +=query_lin_fac_pro.record().value("rDto").toDouble();
                 }
                 if(query_lin_fac_pro.record().value("nIva").toDouble() == query_factura.record().value("nPorcIva4").toDouble())
                 {
                     base4 +=query_lin_fac_pro.record().value("rSUBTOTAL").toDouble();
                     iva4 +=query_lin_fac_pro.record().value("rIva").toDouble();
                     total4 +=query_lin_fac_pro.record().value("rTotal").toDouble();
+                    dto4 +=query_lin_fac_pro.record().value("rDto").toDouble();
                 }
+                base = base1 + base2 +base3 + base4;
+                iva = iva1+iva2+iva3+iva4;
+                total = total1+total2+total3+total4;
+                dto = dto1+dto2+dto3+dto4;
+
 
             }
         }
@@ -698,6 +715,10 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
         query_factura.bindValue(":rtotal2",total2);
         query_factura.bindValue(":rtotal3",total3);
         query_factura.bindValue(":rtotal4",total4);
+        query_factura.bindValue(":totalBase",base);
+        query_factura.bindValue(":totaliva",iva);
+        query_factura.bindValue(":total",total);
+        query_factura.bindValue("total_dto",dto);
 
         if(!query_factura.exec())
             QMessageBox::warning(this,tr("Recepción Pedidos"),
