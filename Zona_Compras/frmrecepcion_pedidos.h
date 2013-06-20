@@ -28,6 +28,8 @@ private slots:
     void reconectar();
     void abrir_albaran();
 
+    void on_btnFactura_clicked();
+
 private:
     Ui::Frmrecepcion_pedidos *ui;
     bool albaran;
