@@ -582,6 +582,7 @@ void FrmAlbaranProveedor::on_btnBuscar_clicked()
         QMessageBox::warning(this,tr("Búsqueda de albaranes"),
                              tr("No se localizó o no se especifico ningún albarán "), tr("Aceptar"));
     }
+    helper.resizeTable();
 }
 
 void FrmAlbaranProveedor::on_botBuscarCliente_clicked()
