@@ -18,6 +18,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #QTPLUGIN+=qsqlite
 #QTPLUGIN+=qsqlmysql
 
+win32:RC_FILE = windowsRc.rc
+
 INCLUDEPATH += /Qwt/5.2.1/include
 INCLUDEPATH += /usr/local/Qxt/include/QxtCore
 DEPENDPATH += /Qwt/5.2.1/lib
@@ -336,6 +338,7 @@ RESOURCES += \
 
 OTHER_FILES += \
     TODO.txt \
+    windowsRc.rc
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lcommon
