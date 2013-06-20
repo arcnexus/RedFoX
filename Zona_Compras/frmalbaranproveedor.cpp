@@ -8,10 +8,12 @@
 
 
 FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
-    QDialog(parent),
+    MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::FrmAlbaranProveedor),
     helper(this),
-    prov(this)
+    prov(this),
+    toolButton(tr("Albaranes \nProv."),":/Icons/PNG/albaran_pro.png",this),
+    menuButton(QIcon(":/Icons/PNG/albaran_pro.png"),tr("Albaranes Prov."),this)
 {
     ui->setupUi(this);
     oAlbPro = new AlbaranProveedor(this);

@@ -8,10 +8,12 @@
 
 
 FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
-    QDialog(parent),
+    MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::FrmPedidosProveedor),
     helper(this),
-    prov(this)
+    prov(this),
+    toolButton(tr("Pedidos \nProv."),":/Icons/PNG/pedido_pro.png",this),
+    menuButton(QIcon(":/Icons/PNG/pedido_pro.png"),tr("Pedidos Prov."),this)
 {
     ui->setupUi(this);
 

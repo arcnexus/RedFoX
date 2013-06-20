@@ -1968,7 +1968,7 @@ color: rgb(255, 255, 255);</string>
           <item row="4" column="0" colspan="2">
            <widget class="QTabWidget" name="tabWidget_2">
             <property name="currentIndex">
-             <number>0</number>
+             <number>8</number>
             </property>
             <widget class="QWidget" name="tab_admin">
              <attribute name="title">
@@ -1998,6 +1998,21 @@ color: rgb(255, 255, 255);</string>
             <widget class="QWidget" name="tab_utils">
              <attribute name="title">
               <string>Utilidades</string>
+             </attribute>
+            </widget>
+            <widget class="QWidget" name="tab_conta">
+             <attribute name="title">
+              <string>Contabilidad</string>
+             </attribute>
+            </widget>
+            <widget class="QWidget" name="tab_secMed">
+             <attribute name="title">
+              <string>Secretaria Medica</string>
+             </attribute>
+            </widget>
+            <widget class="QWidget" name="tab_med">
+             <attribute name="title">
+              <string>Informacion Medica</string>
              </attribute>
             </widget>
             <widget class="QWidget" name="tab_noZone">

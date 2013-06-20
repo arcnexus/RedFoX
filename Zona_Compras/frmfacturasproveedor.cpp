@@ -3,10 +3,12 @@
 #include "../Busquedas/db_consulta_view.h"
 
 FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
-    QDialog(parent),
+    MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::FrmFacturasProveedor),
     helper(this),
-    prov(this)
+    prov(this),
+    toolButton(tr("Facturas \nProv."),":/Icons/PNG/Factura_pro.png",this),
+    menuButton(QIcon(":/Icons/PNG/Factura_pro.png"),tr("Facturas Prov."),this)
 {
     ui->setupUi(this);
     oFacPro = new FacturasProveedor(this);

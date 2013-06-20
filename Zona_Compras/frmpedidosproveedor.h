@@ -7,12 +7,12 @@
 
 #include "proveedor.h"
 #include "pedidoproveedor.h"
-
+#include "../mayamodule.h"
 namespace Ui {
 class FrmPedidosProveedor;
 }
 
-class FrmPedidosProveedor : public QDialog
+class FrmPedidosProveedor : public MayaModule
 {
     Q_OBJECT
     
@@ -23,9 +23,13 @@ public:
     void llenarProveedor(int id,bool isNew = false);
     PedidoProveedor *oPedido_proveedor;// = new PedidoProveedor(this);
     int id;
+    moduleZone ModuleZone(){return Compras;}
+    QString ModuleName(){return "Pedidos provedor";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
 signals:
-    void block();
-    void unblock();
+
 
 private slots:
     void lineaReady(lineaDetalle*);
@@ -69,6 +73,8 @@ private:
     QMenu * convertir_menu;
     Proveedor prov;
     QString moneda;
+    ToolBarButton toolButton;
+    QAction menuButton;
 };
 
 #endif // FRMPEDIDOSPROVEEDOR_H

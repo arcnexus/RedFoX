@@ -80,9 +80,12 @@ private:
     void addArchivosModule(AuxModule*);
     void addAlmacenModule(AuxModule*);
     void addUtilidadesModule(AuxModule*);
-    void addNoZoneModule(AuxModule*);
+    void addNoZoneModule(AuxModule*m);
+    void addContaModule(AuxModule*m);
+    void addSecMedicModule(AuxModule*m);
+    void addInfoMedicModule(AuxModule*m);
 
-    void crear_User(int id);
+    void crear_User();
     void llenar_user(QSqlRecord record);    
     QVector<AuxModule*> _modulos;
     void llenarModulos(int idUser);

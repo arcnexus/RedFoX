@@ -994,61 +994,6 @@ selection-color: rgb(0, 0, 0);</string>
     <property name="title">
      <string>Compras</string>
     </property>
-    <widget class="QMenu" name="menu_Listados">
-     <property name="title">
-      <string>Listados</string>
-     </property>
-     <widget class="QMenu" name="menuOrdenes_de_Compra">
-      <property name="title">
-       <string>Ordenes de Compra</string>
-      </property>
-      <addaction name="actionPor_proveedor"/>
-      <addaction name="actionPor_fecha"/>
-      <addaction name="actionPor_producto"/>
-     </widget>
-     <widget class="QMenu" name="menuPedidos">
-      <property name="title">
-       <string>Pedidos</string>
-      </property>
-      <addaction name="actionPor_proveedor_2"/>
-      <addaction name="actionPor_fecha_2"/>
-      <addaction name="actionPendientes"/>
-      <addaction name="actionCompletos"/>
-     </widget>
-     <widget class="QMenu" name="menuAlbaranes_2">
-      <property name="title">
-       <string>Albaranes</string>
-      </property>
-      <addaction name="actionPor_Proveedor"/>
-      <addaction name="actionPor_fecha_3"/>
-     </widget>
-     <widget class="QMenu" name="menuFacturas">
-      <property name="title">
-       <string>Facturas</string>
-      </property>
-      <addaction name="actionPor_Proveedor_2"/>
-      <addaction name="actionPor_Fecha"/>
-      <addaction name="actionPendientes_de_pago"/>
-      <addaction name="actionPor_grupos_de_gasto"/>
-     </widget>
-     <addaction name="actionCompras_por_producto"/>
-     <addaction name="actionCompras_por_proveedor"/>
-     <addaction name="menuOrdenes_de_Compra"/>
-     <addaction name="menuPedidos"/>
-     <addaction name="menuAlbaranes_2"/>
-     <addaction name="menuFacturas"/>
-    </widget>
-    <widget class="QMenu" name="menuGesti_n_de_pedidos_a_proveedores">
-     <property name="title">
-      <string>Gestión de pedidos a proveedores</string>
-     </property>
-     <addaction name="actionGestion_Pedidos_Pro"/>
-     <addaction name="actionRecepcion_de_pedido_pro"/>
-    </widget>
-    <addaction name="actionOrdenes_de_pedidos"/>
-    <addaction name="menuGesti_n_de_pedidos_a_proveedores"/>
-    <addaction name="actionFacturas_de_proveedores_Acreedores"/>
-    <addaction name="menu_Listados"/>
    </widget>
    <widget class="QMenu" name="menuAdministrador">
     <property name="title">

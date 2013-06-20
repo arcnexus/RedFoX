@@ -6,12 +6,12 @@
 #include "../Auxiliares/table_helper.h"
 #include "proveedor.h"
 #include "facturasproveedor.h"
-
+#include "../mayamodule.h"
 namespace Ui {
 class FrmFacturasProveedor;
 }
 
-class FrmFacturasProveedor : public QDialog
+class FrmFacturasProveedor : public MayaModule
 {
     Q_OBJECT
     
@@ -21,6 +21,11 @@ public:
     void llenarProveedor(int id);
     int id;
 
+    moduleZone ModuleZone(){return Compras;}
+    QString ModuleName(){return "Facturas Proveedor";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
 private slots:
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
@@ -56,9 +61,10 @@ private:
     Table_Helper helper;
     Proveedor prov;
     FacturasProveedor *oFacPro;
+    ToolBarButton toolButton;
+    QAction menuButton;
 signals:
-    void block();
-    void unblock();
+
 };
 
 #endif // FRMFACTURASPROVEEDOR_H

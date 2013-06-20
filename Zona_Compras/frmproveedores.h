@@ -2,12 +2,12 @@
 #define FRMPROVEEDORES_H
 
 #include "../Auxiliares/Globlal_Include.h"
-
+#include "../mayamodule.h"
 namespace Ui {
 class frmProveedores;
 }
 
-class frmProveedores : public QDialog
+class frmProveedores : public MayaModule
 {
     Q_OBJECT
     
@@ -15,6 +15,11 @@ public:
     explicit frmProveedores(QWidget *parent = 0);
     int id_contacto;
     ~frmProveedores();
+    moduleZone ModuleZone(){return Compras;}
+    QString ModuleName(){return "Proveedores";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
 public slots:
     void DesbloquerCampos();
     void BloquearCampos();
@@ -93,6 +98,8 @@ private slots:
 
 private:
     Ui::frmProveedores *ui;
+    ToolBarButton toolButton;
+    QAction menuButton;
 };
 
 #endif // FRMPROVEEDORES_H

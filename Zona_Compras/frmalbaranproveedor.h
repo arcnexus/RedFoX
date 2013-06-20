@@ -6,12 +6,12 @@
 #include "../Auxiliares/table_helper.h"
 #include "proveedor.h"
 #include "albaranproveedor.h"
-
+#include "../mayamodule.h"
 namespace Ui {
 class FrmAlbaranProveedor;
 }
 
-class FrmAlbaranProveedor : public QDialog
+class FrmAlbaranProveedor : public MayaModule
 {
     Q_OBJECT
     
@@ -25,7 +25,11 @@ public:
     int id;
 
 
-
+    moduleZone ModuleZone(){return Compras;}
+    QString ModuleName(){return "Albaranes Proveedor";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
     void resizeTable(int x);
 private slots:
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
@@ -60,9 +64,10 @@ private:
     QString moneda;
     void llenar_campos();
     void bloquearcampos(bool estado);
+    ToolBarButton toolButton;
+    QAction menuButton;
 signals:
-    void block();
-    void unblock();
+
 };
 
 #endif // FRMALBARANPROVEEDOR_H

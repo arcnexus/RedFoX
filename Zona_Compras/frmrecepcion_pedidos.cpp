@@ -6,8 +6,10 @@
 
 
 Frmrecepcion_pedidos::Frmrecepcion_pedidos(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::Frmrecepcion_pedidos)
+    MayaModule(ModuleZone(),ModuleName(),parent),
+    ui(new Ui::Frmrecepcion_pedidos),
+    toolButton(tr("Recepción \npedidos"),":Icons/PNG/recepcion_ped.png",this),
+    menuButton(QIcon(":Icons/PNG/recepcion_ped.png"),tr("Recepción de pedidos"),this)
 {
     ui->setupUi(this);
     ui->txtFechaFin->setDate(QDate::currentDate());

@@ -20,11 +20,10 @@
 Proveedor *oProveedor = new Proveedor();
 
 frmProveedores::frmProveedores(QWidget *parent) :
-    QDialog(parent),
-  ui(new Ui::frmProveedores)
-
-
-
+  MayaModule(ModuleZone(),ModuleName(),parent),
+  ui(new Ui::frmProveedores),
+  toolButton(tr("Proveedores"),":/Icons/PNG/proveedores_2.png",this),
+  menuButton(QIcon(":/Icons/PNG/proveedores_2.png"),tr("Proveedores"),this)
 {
     ui->setupUi(this);
     oProveedor->id = 0;

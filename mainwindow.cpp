@@ -18,7 +18,7 @@ Configuracion * Configuracion_global = 0;
 void MainWindow::crear_barraMantenimiento()
 {
     btn_clientes = new ToolBarButton(tr("Clientes"),":/Icons/PNG/clientes_2.png",this);
-    btn_proovedores = new ToolBarButton(tr("Proveedores"),":/Icons/PNG/proveedores_2.png",this);
+    //btn_proovedores = new ToolBarButton(tr("Proveedores"),":/Icons/PNG/proveedores_2.png",this);
     btn_almacen = new ToolBarButton(tr("Almacen"),":/Icons/PNG/Box.png",this);
     btn_agenda = new ToolBarButton(tr("Agenda"),":/Icons/PNG/Calender.png",this);
 
@@ -27,7 +27,6 @@ void MainWindow::crear_barraMantenimiento()
     line->setFrameShadow(QFrame::Sunken);
 
     ui->verticalLayout_manten->addWidget(btn_clientes);
-    ui->verticalLayout_manten->addWidget(btn_proovedores);
     ui->verticalLayout_manten->addWidget(btn_almacen);
     ui->verticalLayout_manten->addWidget(line);
     ui->verticalLayout_manten->addWidget(btn_agenda);
@@ -35,13 +34,13 @@ void MainWindow::crear_barraMantenimiento()
 
     connect(btn_clientes,SIGNAL(clicked()),this,SLOT(btnClientes_clicked()));
     connect(btn_almacen,SIGNAL(clicked()),this,SLOT(btnArticulos_clicked()));
-    connect(btn_proovedores,SIGNAL(clicked()),this,SLOT(btnProveedores_clicked()));
+    //connect(btn_proovedores,SIGNAL(clicked()),this,SLOT(btnProveedores_clicked()));
     connect(btn_agenda,SIGNAL(clicked()),this,SLOT(showAgenda()));
 
     //Barra de menu
     connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
     connect(ui->btnArt_culos,SIGNAL(triggered()),this,SLOT(btnArticulos_clicked()));
-    connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
+    //connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
     connect(ui->btnAgenda,SIGNAL(triggered()),this,SLOT(showAgenda()));
     connect(ui->actionPermisos_de_Agenda,SIGNAL(triggered()),this,SLOT(handle_permisosAgenda()));
 }
@@ -61,43 +60,19 @@ void MainWindow::crear_barraVentas(MayaModule *mm)
     connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
 }
 
-void MainWindow::crear_barraCompras()
+void MainWindow::crear_barraCompras(MayaModule* mm)
 {
-    btn_pedidos_pro= new ToolBarButton(tr("Pedidos \nProv."),":/Icons/PNG/pedido_pro.png",this);
-    btn_albaranes_pro = new ToolBarButton(tr("Albaranes \nProv."),":/Icons/PNG/albaran_pro.png",this);
-    btn_facturas_pro = new ToolBarButton(tr("Facturas \nProv."),":/Icons/PNG/Factura_pro.png",this);
-    btn_Orden_pedido = new ToolBarButton(tr("Orden \nde pedido"),":/Icons/PNG/opedido.png",this);
-    btn_recepcionPedidos = new ToolBarButton(tr("Recepción \npedidos"),":Icons/PNG/recepcion_ped.png",this);
-    btn_gestionPagos = new ToolBarButton(tr("Gestión \npagos"),":Icons/PNG/pagos.png",this);
-
-
-    QFrame*  line = new QFrame(ui->page_compras);
-    line->setFrameShape(QFrame::HLine);
-    line->setFrameShadow(QFrame::Sunken);
-
-    ui->verticalLayout_compras->addWidget(btn_Orden_pedido);
-    ui->verticalLayout_compras->addWidget(btn_pedidos_pro);
-    ui->verticalLayout_compras->addWidget(btn_recepcionPedidos);
-    ui->verticalLayout_compras->addWidget(btn_albaranes_pro);
-    ui->verticalLayout_compras->addWidget(btn_facturas_pro);
-    ui->verticalLayout_compras->addWidget(btn_gestionPagos);
-
-
-    ui->verticalLayout_compras->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
-
-    connect(btn_Orden_pedido,SIGNAL(clicked()),this,SLOT(btnOrden_pedido_clicked()));
-    connect(btn_pedidos_pro,SIGNAL(clicked()),this,SLOT(btn_pedidos_pro_clicked()));
-    connect(btn_albaranes_pro,SIGNAL(clicked()),this,SLOT(btn_albaranes_pro_clicked()));
-    connect(btn_facturas_pro,SIGNAL(clicked()),this,SLOT(btn_facturas_pro_clicked()));
-    connect(btn_recepcionPedidos,SIGNAL(clicked()),this,SLOT(btn_recepcionPedidos_clicked()));
-
-    //barra de menu
-    connect(ui->actionOrdenes_de_pedidos,SIGNAL(triggered()),this,SLOT(btnOrden_pedido_clicked()));
-    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
-    connect(ui->actionGestion_Pedidos_Pro,SIGNAL(triggered()),this,SLOT(btn_pedidos_pro_clicked()));
-    connect(ui->actionAlbaranes_2,SIGNAL(triggered()),this,SLOT(btn_albaranes_pro_clicked()));
-    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btn_facturas_pro_clicked()));
-    connect(ui->actionRecepcion_de_pedido_pro,SIGNAL(triggered()),this,SLOT(btn_recepcionPedidos_clicked()));
+    ui->verticalLayout_compras->addWidget(mm->ModuleToolBarButton());
+    connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
+    connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
+    if(mm->ModuleMenuPath().isEmpty())
+        ui->menuCompras->addAction(mm->ModuleMenuBarButton());
+    else
+    {
+        //TODO subPaths
+    }
+    connect(mm,SIGNAL(block()),this,SLOT(block_main()));
+    connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
 }
 
 void MainWindow::crear_barraAlmacen()
@@ -238,9 +213,6 @@ MainWindow::MainWindow(QWidget *parent) :
     splash.showMessage(tr("Cargando modulos... Modulo de articulos") );
     frmArticulos1 = new FrmArticulos(this);
 
-    splash.showMessage(tr("Cargando modulos... Modulo de proveedores") );
-    frmProveedores1 = new frmProveedores(this);
-
     ///
     ///// VENTAS
     ///
@@ -320,40 +292,79 @@ MainWindow::MainWindow(QWidget *parent) :
     ///
     /// COMPRAS
     ///
+    splash.showMessage(tr("Cargando modulos... Modulo de proveedores") );
+    frmProveedores1 = new frmProveedores(this);
+    if(frmProveedores1->userHasAcces(Configuracion_global->id_usuario_activo))
+    {
+        _comprasModules.append(frmProveedores1);
+    }
+    else
+        frmProveedores1->deleteLater();
+
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos") );
 
     FrmPedidos_pro = new FrmPedidosProveedor(this);
-    connect(FrmPedidos_pro,SIGNAL(block()),this,SLOT(block_main()));
-    connect(FrmPedidos_pro,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes") );
-    FrmAlbaran_pro = new FrmAlbaranProveedor(this);
-    connect(FrmAlbaran_pro,SIGNAL(block()),this,SLOT(block_main()));
-    connect(FrmAlbaran_pro,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: facturas") );
-    frmFacturas_pro = new FrmFacturasProveedor(this);
-    connect(frmFacturas_pro,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmFacturas_pro,SIGNAL(unblock()),this,SLOT(unblock_main()));
+    if(FrmPedidos_pro->userHasAcces(Configuracion_global->id_usuario_activo))
+    {
+        _comprasModules.append(FrmPedidos_pro);
+    }
+    else
+        FrmPedidos_pro->deleteLater();
 
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") );
     frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
-    connect(frmOrden_Ped_pro,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmOrden_Ped_pro,SIGNAL(unblock()),this,SLOT(unblock_main()));
-    splash.showMessage(tr("Cargando modulos... Editor de reportes") );
-    reportWindow = new ReportWriterWindow();
-
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") );
-    agendaForm = new AgendaForm(this);
+    if(frmOrden_Ped_pro->userHasAcces(Configuracion_global->id_usuario_activo))
+    {
+        _comprasModules.append(frmOrden_Ped_pro);
+    }
+    else
+        frmOrden_Ped_pro->deleteLater();
 
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: Recepción de Pedidos") );
     frmRecep_pedidos = new Frmrecepcion_pedidos(this);
+    if(frmRecep_pedidos->userHasAcces(Configuracion_global->id_usuario_activo))
+    {
+        _comprasModules.append(frmRecep_pedidos);
+    }
+    else
+        frmRecep_pedidos->deleteLater();
+
+    splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes") );
+    FrmAlbaran_pro = new FrmAlbaranProveedor(this);
+    if(FrmAlbaran_pro->userHasAcces(Configuracion_global->id_usuario_activo))
+    {
+        _comprasModules.append(FrmAlbaran_pro);
+    }
+    else
+        FrmAlbaran_pro->deleteLater();
+
+    splash.showMessage(tr("Cargando modulos... Modulo de Compras: facturas") );
+    frmFacturas_pro = new FrmFacturasProveedor(this);
+    if(frmFacturas_pro->userHasAcces(Configuracion_global->id_usuario_activo))
+    {
+        _comprasModules.append(frmFacturas_pro);
+    }
+    else
+        frmFacturas_pro->deleteLater();
+    QVector<MayaModule*>::Iterator comprasIter;
+    for(comprasIter = _comprasModules.begin(); comprasIter!=_comprasModules.end();++comprasIter)
+        crear_barraCompras(*comprasIter);
+
+    ///
+    ///
+    ///
+
+    splash.showMessage(tr("Cargando modulos... Editor de reportes") );
+    reportWindow = new ReportWriterWindow();
 
 
     splash.showMessage(tr("Cargando modulos... Modulo de Contabilidad: Diario de apuntes") );
     frmentrada_apuntes = new FrmEntrada_apuntes(this);
     connect(frmentrada_apuntes,SIGNAL(block()),this,SLOT(block_main()));
     connect(frmentrada_apuntes,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
+    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") );
+    agendaForm = new AgendaForm(this);
 
     splash.showMessage(tr("Integrando modulos") );
 
@@ -411,8 +422,6 @@ MainWindow::MainWindow(QWidget *parent) :
     modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas")  << tr("Contabilidad") << tr("Almacen")  << tr("Administrador");
     ui->comboBox->addItems(modulos);
     crear_barraMantenimiento();
-
-    crear_barraCompras();
 
     crear_barraAlmacen();
 

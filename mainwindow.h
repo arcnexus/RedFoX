@@ -131,25 +131,11 @@ private:
     //Barra de mantenimiento
     ToolBarButton * btn_clientes;
     ToolBarButton * btn_almacen;
-    ToolBarButton * btn_proovedores;
     ToolBarButton * btn_agenda;
     void crear_barraMantenimiento();
-    //Barra de ventas
-    ToolBarButton * btn_presupuestos;
-    ToolBarButton * btn_pedidos;
-    ToolBarButton * btn_albaranes;
-    ToolBarButton * btn_factura_mult;
-    ToolBarButton * btn_facturas;
-    ToolBarButton * btn_tpv;
-    ToolBarButton * btn_gestionCobros;
 
     void crear_barraVentas(MayaModule* mm);
-    // Barra de Compras
-    ToolBarButton * btn_Orden_pedido;
-    ToolBarButton * btn_pedidos_pro;
-    ToolBarButton * btn_albaranes_pro;
-    ToolBarButton * btn_facturas_pro;
-    void crear_barraCompras();
+    void crear_barraCompras(MayaModule* mm);
 
     // Barra de Almacen
     ToolBarButton * btn_recepcionPedidos;
@@ -196,6 +182,7 @@ private:
     int id_divisa;
     bool on_edit;
     QVector<MayaModule*> _ventasModules;
+    QVector<MayaModule*> _comprasModules;
 };
 
 #endif // MAINWINDOW_H
