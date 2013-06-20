@@ -1,7 +1,7 @@
 #include "frmentrada_apuntes.h"
 #include "ui_frmentrada_apuntes.h"
-#include "Auxiliares/datedelegate.h"
-#include"Auxiliares/monetarydelegate_contabilidad.h"
+#include "../Auxiliares/datedelegate.h"
+#include "../Auxiliares/monetarydelegate_contabilidad.h"
 
 FrmEntrada_apuntes::FrmEntrada_apuntes(QWidget *parent) :
     QDialog(parent),

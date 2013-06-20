@@ -2,7 +2,7 @@
 #define APUNTES_H
 
 #include <QObject>
-#include <Auxiliares/Globlal_Include.h>
+#include "../Auxiliares/Globlal_Include.h"
 
 class apuntes : public QObject
 {

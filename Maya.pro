@@ -459,3 +459,9 @@ unix:!macx: LIBS += -L$$PWD/BlinkLabel/Linux/ -lblinkinkplugin
 
 INCLUDEPATH += $$PWD/BlinkLabel
 DEPENDPATH += $$PWD/BlinkLabel
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/BlinkLabel/win32/release/ -lblinkinkplugin
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/BlinkLabel/win32/debug/ -lblinkinkplugind
+
+INCLUDEPATH += $$PWD/BlinkLabel
+DEPENDPATH += $$PWD/BlinkLabel
