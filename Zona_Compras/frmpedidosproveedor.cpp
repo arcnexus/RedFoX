@@ -106,6 +106,7 @@ void FrmPedidosProveedor::llenarProveedor(int id, bool isNew)
     ui->txtcCif->setText(prov.cCif);
     ui->combo_pais->setCurrentText(Configuracion::Devolver_pais(prov.idpais));
     ui->lblnombreProveedor->setText(prov.cProveedor);
+    ui->chklRecargoEq->setChecked(prov.lRecargoEquivalencia);
 }
 
 void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
@@ -443,6 +444,7 @@ void FrmPedidosProveedor::buscar_proveeedor()
     if(consulta.exec())
     {
         int id_proveedor = consulta.get_id();
+        oPedido_proveedor->Id_Proveedor = id_proveedor;
         llenarProveedor(id_proveedor);
     }
 }
@@ -541,6 +543,7 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txtrImporteDescuento->setText(QString::number(oPedido_proveedor->rDto));
     ui->txtrImporteIva->setText(QString::number(oPedido_proveedor->nIVA));
     ui->txtrRecargoEq1->setText(QString::number(oPedido_proveedor->rRecTotal));
+    ui->chklRecargoEq->setChecked(oPedido_proveedor->lRecargoEquivalencia);
     ui->txtrTotal->setText(QString::number(oPedido_proveedor->rTotal));
     ui->chklEnviado->setChecked(oPedido_proveedor->lEnviado);
     ui->chkRecibido->setChecked(oPedido_proveedor->lRecibido);
@@ -609,6 +612,7 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
     oPedido_proveedor->lEnviado = ui->chklEnviado->isChecked();
     oPedido_proveedor->lRecibido = ui->chkRecibido->isChecked();
     oPedido_proveedor->lRecibidoCompleto = ui->chklCompleto->isChecked();
+    oPedido_proveedor->lRecargoEquivalencia = ui->chklRecargoEq->isChecked();
     oPedido_proveedor->tComentario = ui->txttComentario->toPlainText();
     oPedido_proveedor->dFechaEntrega = ui->txtdFechaRecepcion->date();
     oPedido_proveedor->cDireccion1Entrega = ui->txtcDireccionEntrega->text();

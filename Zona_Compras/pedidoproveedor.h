@@ -34,6 +34,7 @@ public:
     bool	lRecibido;
     bool	lRecibidoCompleto;
     bool    lGeneroPendiente;
+    bool    lRecargoEquivalencia;
     double	rBase1;
     double	rBase2;
     double	rBase3;
