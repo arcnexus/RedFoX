@@ -220,6 +220,7 @@ void FrmAlbaranProveedor::buscar_proveeedor()
 
         oAlbPro->id_Proveedor = id_proveedor;
     }
+    helper.resizeTable();
 }
 
 
