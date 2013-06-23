@@ -108,14 +108,14 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0" colspan="2">
+      <item row="3" column="0" colspan="2">
        <widget class="QLabel" name="label_3">
         <property name="text">
          <string>Código para el Balance:</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="2" colspan="2">
+      <item row="3" column="2" colspan="2">
        <widget class="QLineEdit" name="txtcodigo_balance">
         <property name="maximumSize">
          <size>
@@ -152,14 +152,27 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="5">
+      <item row="3" column="4">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="5">
        <widget class="QLabel" name="label_4">
         <property name="text">
          <string>Saldo Cta:</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="6">
+      <item row="3" column="6">
        <widget class="QLineEdit" name="txtsaldo_cta">
         <property name="maximumSize">
          <size>
@@ -178,32 +191,6 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>299</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="4">
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item row="0" column="3" colspan="2">
        <spacer name="horizontalSpacer">
         <property name="orientation">
@@ -216,6 +203,14 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item row="4" column="0" colspan="7">
+       <widget class="QTableView" name="tableView">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(251, 255, 205);
+alternate-background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
