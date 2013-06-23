@@ -349,3 +349,11 @@ QMenuBar {
 QComboBox::down-arrow::disabled{
     image: url(:/Icons/images/down_arrow_disabled.png) 2;
 }
+QToolTip {
+    border: 2px solid darkkhaki;
+    padding: 5px;
+    background-color:yellow;
+    color:white;
+    border-radius: 3px;
+    opacity: 200;
+}

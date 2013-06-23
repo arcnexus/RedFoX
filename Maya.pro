@@ -152,7 +152,8 @@ SOURCES += main.cpp\
     TPV/configmonedatpv.cpp \
     Zona_Contabilidad/apuntes.cpp \
     Auxiliares/monetarydelegate_contabilidad.cpp \
-    Zona_Contabilidad/frmcuadro_cuentas.cpp
+    Zona_Contabilidad/frmcuadro_cuentas.cpp \
+    Zona_Contabilidad/cuentas_contables.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -270,7 +271,8 @@ HEADERS  += mainwindow.h \
     TPV/configmonedatpv.h \
     Zona_Contabilidad/apuntes.h \
     Auxiliares/monetarydelegate_contabilidad.h \
-    Zona_Contabilidad/frmcuadro_cuentas.h
+    Zona_Contabilidad/frmcuadro_cuentas.h \
+    Zona_Contabilidad/cuentas_contables.h
 
 
 
