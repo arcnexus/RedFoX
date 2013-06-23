@@ -28,6 +28,7 @@
 #include "openrptLibs/Auxiliares/reportwriterwindow.h"
 #include "Agenda/agendaform.h"
 #include "../Zona_Contabilidad/frmentrada_apuntes.h"
+#include "../Zona_Contabilidad/frmcuadro_cuentas.h"
 #include "../Zona_Ventas/frmgestioncobros.h"
 namespace Ui {
 class MainWindow;
@@ -191,6 +192,7 @@ private:
     FrmOrden_Pedido_Producto * frmOrden_Ped_pro;
     Frmrecepcion_pedidos *frmRecep_pedidos;
     FrmEntrada_apuntes *frmentrada_apuntes;
+    frmCuadro_cuentas *frmcuentas;
     frmGestionCobros *frmgestcobros;
 
     ReportWriterWindow * reportWindow;

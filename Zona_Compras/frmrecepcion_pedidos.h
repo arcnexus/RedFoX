@@ -30,6 +30,10 @@ private slots:
 
     void on_btnFactura_clicked();
 
+    void on_BtnCancelar_clicked();
+
+    void on_btncancelar_alb_clicked();
+
 private:
     Ui::Frmrecepcion_pedidos *ui;
     bool albaran;
@@ -37,6 +41,9 @@ private:
     bool factura;
     int id_factura;
     int id_pedido;
+signals:
+    void block();
+    void unblock();
 };
 
 #endif // FRMRECEPCION_PEDIDOS_H

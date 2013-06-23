@@ -373,12 +373,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     splash.showMessage(tr("Cargando modulos... Modulo de Compras: Recepción de Pedidos") );
     frmRecep_pedidos = new Frmrecepcion_pedidos(this);
+    connect(frmRecep_pedidos,SIGNAL(block()),this,SLOT(block_main()));
+    connect(frmRecep_pedidos,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
 
     splash.showMessage(tr("Cargando modulos... Modulo de Contabilidad: Diario de apuntes") );
     frmentrada_apuntes = new FrmEntrada_apuntes(this);
     connect(frmentrada_apuntes,SIGNAL(block()),this,SLOT(block_main()));
     connect(frmentrada_apuntes,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
+    splash.showMessage(tr("Cargando modulos...Modulo de Contabilidad: Cuadro de cuentas"));
+    frmcuentas = new frmCuadro_cuentas(this);
+    connect(frmcuentas,SIGNAL(block()),this,SLOT(block_main()));
+    connect(frmcuentas,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
     splash.showMessage(tr("Integrando modulos") );
 
@@ -399,6 +406,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->addWidget(reportWindow);
     ui->stackedWidget->addWidget(agendaForm);
     ui->stackedWidget->addWidget(frmentrada_apuntes);
+    ui->stackedWidget->addWidget(frmcuentas);
     ui->stackedWidget->addWidget(frmgestcobros);
     MayaForm = new init_form(this);
     ui->stackedWidget->addWidget(MayaForm);
@@ -974,4 +982,5 @@ void MainWindow::handle_permisosAgenda()
 
 void MainWindow::btn_cuentas_clicked()
 {
+    ui->stackedWidget->setCurrentWidget(frmcuentas);
 }

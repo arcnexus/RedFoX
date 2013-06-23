@@ -314,7 +314,7 @@ void FrmAlbaranProveedor::llenar_campos()
     ui->txtrBase2->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rBase2,'f',2)));
     ui->txtrBase3->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rBase3,'f',2)));
     ui->txtrBase4->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rBase4,'f',2)));
-   ui->txtcNumFra->setText(oAlbPro->cFactura);
+    ui->txtcNumFra->setText(oAlbPro->cFactura);
     ui->txtrBase->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rBaseTotal,'f',2)));
     ui->txtrImporteIva->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rIvaTotal,'f',2)));
     ui->txtrTotal->setText(Configuracion_global->FormatoNumerico(QString::number(oAlbPro->rTotal,'f',2)));
@@ -643,4 +643,9 @@ void FrmAlbaranProveedor::on_btnAnadirEntrega_clicked()
             llenar_tabla_entregas();
     }
 
+}
+
+void FrmAlbaranProveedor::on_tabWidget_2_currentChanged(int)
+{
+    helper.resizeTable();
 }

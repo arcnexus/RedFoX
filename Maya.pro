@@ -151,7 +151,8 @@ SOURCES += main.cpp\
     TPV/efectivocaja.cpp \
     TPV/configmonedatpv.cpp \
     Zona_Contabilidad/apuntes.cpp \
-    Auxiliares/monetarydelegate_contabilidad.cpp
+    Auxiliares/monetarydelegate_contabilidad.cpp \
+    Zona_Contabilidad/frmcuadro_cuentas.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -268,7 +269,8 @@ HEADERS  += mainwindow.h \
     TPV/efectivocaja.h \
     TPV/configmonedatpv.h \
     Zona_Contabilidad/apuntes.h \
-    Auxiliares/monetarydelegate_contabilidad.h
+    Auxiliares/monetarydelegate_contabilidad.h \
+    Zona_Contabilidad/frmcuadro_cuentas.h
 
 
 
@@ -331,7 +333,8 @@ FORMS    += mainwindow.ui \
     Auxiliares/frmaddentregascuenta.ui \
     Zona_Ventas/frmgestioncobros.ui \
     TPV/efectivocaja.ui \
-    TPV/configmonedatpv.ui
+    TPV/configmonedatpv.ui \
+    Zona_Contabilidad/frmcuadro_cuentas.ui
 
 RESOURCES += \
     maya.qrc
