@@ -543,6 +543,14 @@ void MainWindow::loadContaModules(QSplashScreen *splash)
     }
     else
         frmentrada_apuntes->deleteLater();
+    splash->showMessage(tr("Cargando modulos... Modulo de Contabilidad: Cuadro de cuentas") );
+    frmCuadro_cuentas* f = new frmCuadro_cuentas(this);
+    if(f->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _contaModules.append(f);
+    }
+    else
+        f->deleteLater();
 }
 
 void MainWindow::loadSecMedModules(QSplashScreen *splash)

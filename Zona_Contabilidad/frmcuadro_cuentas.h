@@ -3,12 +3,12 @@
 
 #include <QDialog>
 #include"../Zona_Contabilidad/cuentas_contables.h"
-
+#include "../mayamodule.h"
 namespace Ui {
 class frmCuadro_cuentas;
 }
 
-class frmCuadro_cuentas : public QDialog
+class frmCuadro_cuentas : public MayaModule
 {
     Q_OBJECT
     
@@ -17,6 +17,12 @@ public:
     ~frmCuadro_cuentas();
     Cuentas_contables *cuentas;
     
+    moduleZone ModuleZone(){return Contabilidad;}
+    QString ModuleName(){return "Cuadro de cuentas";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
+    void hideButton(){toolButton.hide();}
 private slots:
     void on_btnAnadir_clicked();
     void llenar_campos();
@@ -29,6 +35,8 @@ private slots:
 private:
     Ui::frmCuadro_cuentas *ui;
     bool anadir;
+    ToolBarButton toolButton;
+    QAction menuButton;
 };
 
 #endif // FRMCUADRO_CUENTAS_H

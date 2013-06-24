@@ -7,8 +7,8 @@
 FrmEntrada_apuntes::FrmEntrada_apuntes(QWidget *parent) :
     MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::FrmEntrada_apuntes),
-    toolButton(tr("Diario"),":/Icons/PNG/cuentas.png",this),
-    menuButton(QIcon(":/Icons/PNG/cuentas.png"),tr("Diario"),this)
+    toolButton(tr("Diario"),":/Icons/PNG/asientos.png",this),
+    menuButton(QIcon(":/Icons/PNG/asientos.png"),tr("Diario"),this)
 {
     ui->setupUi(this);
     oApunte = new apuntes(this);
