@@ -46,15 +46,21 @@ void Frmrecepcion_pedidos::on_btnBuscar_clicked()
     QString consulta;
     if(ui->txtNumPedido->text().isEmpty())
     {
-        int recibido;
-        if(ui->chkPedientes->isChecked())
-            recibido = 1;
-        else
-            recibido = 0;
+        // ver solo pendientes
+        if(ui->chkpendientes->isChecked())
+            consulta = "select id,nPedido,nEjercicio,dFecha,cProveedor from ped_pro where dFecha >="+ui->txtFecha_ini->date().toString("yyMMdd")+
+                " and dFecha <="+ui->txtFechaFin->date().toString("yyMMdd")+" and cProveedor like '"+ ui->txtproveedor->text()+
+                "%' and lRecibidoCompleto = 0";
+        if(ui->chkcompletados->isChecked())
+            consulta = "select id,nPedido,nEjercicio,dFecha,cProveedor from ped_pro where dFecha >="+ui->txtFecha_ini->date().toString("yyMMdd")+
+                " and dFecha <="+ui->txtFechaFin->date().toString("yyMMdd")+" and cProveedor like '"+ ui->txtproveedor->text()+
+                "%' and lRecibidoCompleto = 1";
+        if(ui->chktodos->isChecked())
+            consulta = "select id,nPedido,nEjercicio,dFecha,cProveedor from ped_pro where dFecha >="+ui->txtFecha_ini->date().toString("yyMMdd")+
+                " and dFecha <="+ui->txtFechaFin->date().toString("yyMMdd")+" and cProveedor like '"+ ui->txtproveedor->text()+
+                "%'";
 
-        consulta = "select id,nPedido,nEjercicio,dFecha,cProveedor from ped_pro where dFecha >="+ui->txtFecha_ini->date().toString("yyMMdd")+
-            " and dFecha <="+ui->txtFechaFin->date().toString("yyMMdd")+" and cProveedor like '"+ ui->txtproveedor->text()+
-            "%' and lRecibidoCompleto =" + QString::number(recibido);
+
     } else
     {
         consulta = " select id,nPedido,nEjercicio,dFecha,cProveedor from ped_pro where nPedido = "+ui->txtNumPedido->text();
@@ -212,9 +218,9 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
 
 void Frmrecepcion_pedidos::validarcantidad(int row, int col)
 {
-
+    blockSignals(true);
     if (col ==7 ){
-        blockSignals(true);
+
 
 
         int pend = ui->tablaLineas->item(row,5)->text().toInt();
@@ -223,48 +229,109 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
         int nuevo_pend = pend - rec_act;
         int nid = ui->tablaLineas->item(row,10)->text().toInt();
         rec = rec + rec_act;
-
-        bool fallo = false;
-        QSqlDatabase::database("Maya").transaction();
-        QSqlDatabase::database("empresa").transaction();
-        //----------------------------------------------------
-        // Marco el pedido como recibido al cambiar una linea
-        //----------------------------------------------------
-        QSqlQuery queryCabecera(QSqlDatabase::database("empresa"));
-        if(!queryCabecera.exec("update ped_pro set lRecibido = 1 where id ="+QString::number(this->id_pedido)))
-            fallo = true;
-        //---------------------------
-        // Actualizo linea de pedido
-        //---------------------------
-        QSqlQuery queryLineas(QSqlDatabase::database("empresa"));
-        queryLineas.prepare("update lin_ped_pro set cantidad_pendiente =:pend, cantidad_recibida = :rec where id =:id");
-        queryLineas.bindValue(":pend",nuevo_pend);
-        queryLineas.bindValue(":rec",rec);
-        int linid = ui->tablaLineas->item(row,0)->text().toInt();
-        queryLineas.bindValue(":id",linid);
-        if(!queryLineas.exec()) {
-            QMessageBox::warning(this,tr("ATENCIÓN"),
-                                 tr("Fallo la modificación de pendientes: %1").arg(queryLineas.lastError().text()),
-                                 tr("Aceptar"));
-          fallo = true;}
-        else {
-            if(nuevo_pend!=0)
-            {
+        if (rec_act!=0)
+        {
+            bool fallo = false;
+            QSqlDatabase::database("Maya").transaction();
+            QSqlDatabase::database("empresa").transaction();
+            //----------------------------------------------------
+            // Marco el pedido como recibido al cambiar una linea
+            //----------------------------------------------------
+            QSqlQuery queryCabecera(QSqlDatabase::database("empresa"));
+            if(!queryCabecera.exec("update ped_pro set lRecibido = 1 where id ="+QString::number(this->id_pedido)))
+                fallo = true;
+            //---------------------------
+            // Actualizo linea de pedido
+            //---------------------------
+            QSqlQuery queryLineas(QSqlDatabase::database("empresa"));
+            queryLineas.prepare("update lin_ped_pro set cantidad_pendiente =:pend, cantidad_recibida = :rec where id =:id");
+            queryLineas.bindValue(":pend",nuevo_pend);
+            queryLineas.bindValue(":rec",rec);
+            int linid = ui->tablaLineas->item(row,0)->text().toInt();
+            queryLineas.bindValue(":id",linid);
+            if(!queryLineas.exec()) {
+                QMessageBox::warning(this,tr("ATENCIÓN"),
+                                     tr("Fallo la modificación de pendientes: %1").arg(queryLineas.lastError().text()),
+                                     tr("Aceptar"));
+              fallo = true;}
+            else {
+                queryLineas.exec("select * from lin_ped_pro where id = "+QString::number(linid));
+                queryLineas.next();
+                double subtotal,dto,base,total,iva;
+                subtotal = queryLineas.record().value("coste_bruto").toDouble() * rec_act;
+                dto = subtotal * (queryLineas.record().value("porc_dto").toDouble()/100);
+                base = subtotal -dto;
+                iva = base * (queryLineas.record().value("porc_iva").toDouble()/100);
+                total = base +iva;
                 // ----------------------------------------
                 //  Si albaran = true  añado Linea albarán
                 // ----------------------------------------
                 if(albaran){
                     QSqlQuery query_lin_alb_pro(QSqlDatabase::database("empresa"));
                     query_lin_alb_pro.prepare("INSERT INTO lin_alb_pro "
-                                              "( id_cab,cCodigo,cDescripcion,rCoste,nDto,"
-                                              "rPvp,nIva,nCantidad,rTotal,"
+                                              "(id_cab,cCodigo,cDescripcion,rCoste,nDto,"
+                                              "nIva,rIva,nCantidad,rTotal,"
                                               "rDto,rSUBTOTAL,id_Articulo) VALUES "
-                                              "(:id_cab,:cCodigo,:cDescripcion,:rCoste,"
-                                              ":nDto,:rPvp,:nIva,:nCantidad,:rTotal"
+                                              "(:id_cab,:cCodigo,:cDescripcion,:rCoste,:nDto,"
+                                              ":nIva,:rIva,:nCantidad,:rTotal,"
                                               ":rDto,:rSUBTOTAL,:id_Articulo);");
 
+                    query_lin_alb_pro.bindValue(":id_cab",this->id_albaran);
+                    query_lin_alb_pro.bindValue(":cCodigo",queryLineas.record().value("codigo_articulo_proveedor").toString());
+                    query_lin_alb_pro.bindValue(":cDescripcion",queryLineas.record().value("descripcion").toString());
+                    query_lin_alb_pro.bindValue(":rCoste",queryLineas.record().value("coste_bruto").toDouble());
+                    query_lin_alb_pro.bindValue(":nDto",queryLineas.record().value("porc_dto").toDouble());
+                    query_lin_alb_pro.bindValue(":nIva",queryLineas.record().value("porc_iva").toDouble());
+                    query_lin_alb_pro.bindValue(":nCantidad",rec_act);
+                    query_lin_alb_pro.bindValue(":rTotal",total);
+                    query_lin_alb_pro.bindValue(":rDto",dto);
+                    query_lin_alb_pro.bindValue(":rIva",iva);
+                    query_lin_alb_pro.bindValue(":rSUBTOTAL",subtotal);
+                    query_lin_alb_pro.bindValue(":id_Articulo",queryLineas.record().value("id_articulo").toDouble());
+
+                    if(!query_lin_alb_pro.exec())
+                    {
+                        QMessageBox::warning(this,tr("Recepción de Pedidos"),tr("Falló la inserción de líneas de albarán :%1").arg(
+                                                 query_lin_alb_pro.lastError().text()));
+                    }
+
                     // TODO - Terminar entrada lineas alabarán
-                    
+
+                }
+                // ----------------------------------------
+                //  Si factura = true  añado Linea factura
+                // ----------------------------------------
+                if(factura){
+                    QSqlQuery query_lin_fac_pro(QSqlDatabase::database("empresa"));
+                    query_lin_fac_pro.prepare("INSERT INTO lin_fac_pro "
+                                              "( id_cab,cCodigo,cDescripcion,rCoste,nPorcDto,"
+                                              "nPorcIva,rIva,nCantidad,rTotal,"
+                                              "rDto,rSUBTOTAL,id_Articulo) VALUES "
+                                              "(:id_cab,:cCodigo,:cDescripcion,:rCoste,:nDto,"
+                                              ":nIva,:rIva,:nCantidad,:rTotal,"
+                                              ":rDto,:rSUBTOTAL,:id_Articulo);");
+
+                    query_lin_fac_pro.bindValue(":id_cab",this->id_factura);
+                    query_lin_fac_pro.bindValue(":cCodigo",queryLineas.record().value("codigo_articulo_proveedor").toString());
+                    query_lin_fac_pro.bindValue(":cDescripcion",queryLineas.record().value("descripcion").toString());
+                    query_lin_fac_pro.bindValue(":rCoste",queryLineas.record().value("coste_bruto").toDouble());
+                    query_lin_fac_pro.bindValue(":nDto",queryLineas.record().value("porc_dto").toDouble());
+                    query_lin_fac_pro.bindValue(":nIva",queryLineas.record().value("porc_iva").toDouble());
+                    query_lin_fac_pro.bindValue(":rIva",iva);
+                    query_lin_fac_pro.bindValue(":nCantidad",rec_act);
+                    query_lin_fac_pro.bindValue(":rTotal",total);
+                    query_lin_fac_pro.bindValue(":rDto",dto);
+                    query_lin_fac_pro.bindValue(":rSUBTOTAL",subtotal);
+                    query_lin_fac_pro.bindValue(":id_Articulo",queryLineas.record().value("id_articulo").toDouble());
+
+                    if(!query_lin_fac_pro.exec())
+                    {
+                        QMessageBox::warning(this,tr("Recepción de Pedidos"),tr("Falló la inserción de líneas de Factura :%1").arg(
+                                                 query_lin_fac_pro.lastError().text()));
+                    }
+
+                    // TODO - Terminar entrada lineas alabarán
+
                 }
                 // -------------------
                 // Actualizo artículo
@@ -296,32 +363,30 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                     }
 
                 }
+
+            }
+            if (!fallo)
+            {
+                QSqlDatabase::database("empresa").commit();
+                QSqlDatabase::database("Maya").commit();
+            } else
+            {
+                QSqlDatabase::database("empresa").rollback();
+                QSqlDatabase::database("Maya").rollback();
             }
 
-        }
-        if (!fallo)
-        {
-            QSqlDatabase::database("empresa").commit();
-            QSqlDatabase::database("Maya").commit();
-        } else
-        {
-            QSqlDatabase::database("empresa").rollback();
-            QSqlDatabase::database("Maya").rollback();
-        }
+            ui->tablaLineas->item(row,5)->setText(QString::number(nuevo_pend));
 
-        ui->tablaLineas->item(row,5)->setText(QString::number(nuevo_pend));
-
-        ui->tablaLineas->item(row,6)->setText(QString::number(rec));
-        ui->tablaLineas->item(row,7)->setText("0");
-        if(rec>0)
-            ui->tablaLineas->item(row,6)->setBackgroundColor(Qt::yellow);
-        if(nuevo_pend <=0)
-            ui->tablaLineas->item(row,6)->setBackgroundColor(Qt::green);
-        if(rec ==0 )
-            ui->tablaLineas->item(row,6)->setBackgroundColor(Qt::white);
+            ui->tablaLineas->item(row,6)->setText(QString::number(rec));
+            ui->tablaLineas->item(row,7)->setText("0");
+            if(rec>0)
+                ui->tablaLineas->item(row,6)->setBackgroundColor(Qt::yellow);
+            if(nuevo_pend <=0)
+                ui->tablaLineas->item(row,6)->setBackgroundColor(Qt::green);
+            if(rec ==0 )
+                ui->tablaLineas->item(row,6)->setBackgroundColor(Qt::white);
+        }
     }
-    blockSignals(false);
-
 
     if(col ==8 ) // Coste
     {
@@ -391,6 +456,11 @@ void Frmrecepcion_pedidos::reconectar()
 
 void Frmrecepcion_pedidos::abrir_albaran()
 {
+    ui->tablaPedidos->setEnabled(false);
+    ui->btncancelar_alb->setEnabled(true);
+    ui->txtFecha_albaran->setDate(QDate::currentDate());
+    emit block();
+
     if(albaran == false) {
         //--------------------------------------
         // Creo cabecera en blanco del albarán
@@ -413,126 +483,394 @@ void Frmrecepcion_pedidos::abrir_albaran()
                                  tr("Aceptar"));
     } else
     {
+        if(ui->txtAlbaran->text().isEmpty()){
+            QMessageBox::warning(this,tr("Recepción de pedidos"),tr("Debe rellenar el número de albarán"),tr("Aceptar"));
+
+        } else
+        {
+            QSqlQuery query_pedido(QSqlDatabase::database("empresa"));
+            query_pedido.exec("Select * from ped_pro where id = "+QString::number(id_pedido));
+            query_pedido.next();
+            QDate fecha;
+            fecha = ui->txtFecha_albaran->date();
+
+            //----------------------------
+            // Rellenar cabecera Albarán
+            //----------------------------
+
+
+            QSqlQuery query_albaran(QSqlDatabase::database("empresa"));
+            query_albaran.prepare("update alb_pro  set cAlbaran =:albaran, dFecha = :fecha,id_Proveedor=:id_proveedor,"
+                                  "cProveedor =:proveedor, cCifProveedor =:cif,nPedido =:pedido,"
+                                  "nIva1 =:iva1, nIva2 =:iva2, nIva3 =:iva3, nIva4 =:iva4, "
+                                  "rBase1 =:base1,rBase2 =:base2,rBase3 =:base3, rBase4 =:base4, "
+                                  "rIva1 =:riva1,rIva2 =:riva2, rIva3 =:riva3, rIva4 =:riva4, "
+                                  "rTotal1 =:total1,rTotal2 =:total2,rTotal3 =:total3,rTotal4 =:total4,"
+                                  "porcentaje_rec1=:porcentaje_rec1,porcentaje_rec2=:porcentaje_rec2,"
+                                  "porcentaje_rec3=:porcentaje_rec3,porcentaje_rec4=:porcentaje_rec4,"
+                                  "importe_rec1=:importe_rec1,importe_rec2= :importe_rec2,importe_rec3=:importe_rec3,"
+                                  "importe_rec4=:importe_rec4,importe_rec_total =:importe_rec_total,"
+                                  "rBaseTotal =:rBase,rIvaTotal =:rIva,rTotal= :rTotal "
+                                  "where id =:id");
+            query_albaran.bindValue(":albaran",ui->txtAlbaran->text());
+            query_albaran.bindValue(":fecha",fecha);
+            query_albaran.bindValue(":id_proveedor",query_pedido.record().value("id_Proveedor").toInt());
+            query_albaran.bindValue(":proveedor",query_pedido.record().value("cProveedor").toString());
+            query_albaran.bindValue(":cif",query_pedido.record().value("cCifNif").toString());
+            query_albaran.bindValue(":pedido",ui->txtNumPedido->text().toInt());
+            query_albaran.bindValue(":iva1",Configuracion_global->ivaList.at(0));
+            query_albaran.bindValue(":iva2",Configuracion_global->ivaList.at(1));
+            query_albaran.bindValue(":iva3",Configuracion_global->ivaList.at(2));
+            query_albaran.bindValue(":iva4",Configuracion_global->ivaList.at(3));
+
+            query_albaran.bindValue(":id",id_albaran);
+
+            // ----------------------
+            // Sumar líneas albarán
+            // ----------------------
+            QSqlQuery query_lin_alb_pro(QSqlDatabase::database("empresa"));
+            query_lin_alb_pro.prepare("select * from lin_alb_pro where id_cab = :id");
+            query_lin_alb_pro.bindValue(":id",id_albaran);
+            double base1,base2,base3,base4,iva1,iva2,iva3,iva4,dto1,dto2,dto3,dto4,total1,total2,total3,total4;
+            double rec1,rec2,rec3,rec4,rec_total;
+            double base,iva,total;
+            bool recargo = query_pedido.record().value("lRecargoEquivalencia").toBool();
+            base1 = 0; base2 = 0; base3 = 0; base4 = 0;
+            iva1 = 0;  iva2 = 0;  iva3 = 0;  iva4 = 0;
+            dto1 = 0; dto2 = 0; dto3 = 0; dto4 = 0;
+            total1 = 0; total2 = 0; total3 = 0; total4 = 0;
+            rec1 = 0, rec2 = 0; rec3 =0; rec4 =0; rec_total = 0;
+            base = 0; iva = 0; total=0;
+            if(query_lin_alb_pro.exec())
+            {
+                while (query_lin_alb_pro.next())
+                {
+
+                    if(query_lin_alb_pro.record().value("nIva").toDouble() == Configuracion_global->ivaList.at(0).toDouble())
+                    {
+                        base1 +=query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
+                        iva1 +=query_lin_alb_pro.record().value("rIva").toDouble();
+                        total1 +=query_lin_alb_pro.record().value("rTotal").toDouble();
+                        if(recargo)
+                            rec1 +=query_lin_alb_pro.record().value("rec_equivalencia").toDouble();
+                    }
+                    if(query_lin_alb_pro.record().value("nIva").toDouble() == Configuracion_global->ivaList.at(1).toDouble())
+                    {
+                        base2 +=query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
+                        iva2 +=query_lin_alb_pro.record().value("rIva").toDouble();
+                        total2 +=query_lin_alb_pro.record().value("rTotal").toDouble();
+                        if(recargo)
+                            rec2 +=query_lin_alb_pro.record().value("rec_equivalencia").toDouble();
+                    }
+                    if(query_lin_alb_pro.record().value("nIva").toDouble() == Configuracion_global->ivaList.at(2).toDouble())
+                    {
+                        base3 +=query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
+                        iva3 +=query_lin_alb_pro.record().value("rIva").toDouble();
+                        total3 +=query_lin_alb_pro.record().value("rTotal").toDouble();
+                        if(recargo)
+                            rec3 +=query_lin_alb_pro.record().value("rec_equivalencia").toDouble();
+                    }
+                    if(query_lin_alb_pro.record().value("nIva").toDouble() == Configuracion_global->ivaList.at(3).toDouble())
+                    {
+                        base4 +=query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
+                        iva4 +=query_lin_alb_pro.record().value("rIva").toDouble();
+                        total4 +=query_lin_alb_pro.record().value("rTotal").toDouble();
+                        if(recargo)
+                            rec4 +=query_lin_alb_pro.record().value("rec_equivalencia").toDouble();
+                    }
+
+                }
+            }
+            base = base1+base2+base3+base4;
+            iva = iva1+iva2+iva3+iva4;
+            total = total1+total2+total3+total4;
+            rec_total = rec1+rec2+rec3+rec4;
+            query_albaran.bindValue(":base1",base1);
+            query_albaran.bindValue(":base2",base2);
+            query_albaran.bindValue(":base3",base3);
+            query_albaran.bindValue(":base4",base4);
+            query_albaran.bindValue(":riva1",iva1);
+            query_albaran.bindValue(":riva2",iva2);
+            query_albaran.bindValue(":riva3",iva3);
+            query_albaran.bindValue(":riva4",iva4);
+            query_albaran.bindValue(":rtotal1",total1);
+            query_albaran.bindValue(":rtotal2",total2);
+            query_albaran.bindValue(":rtotal3",total3);
+            query_albaran.bindValue(":rtotal4",total4);
+            query_albaran.bindValue(":porcentaje_rec1",Configuracion_global->reList.at(0));
+            query_albaran.bindValue(":porcentaje_rec2",Configuracion_global->reList.at(1));
+            query_albaran.bindValue(":porcentaje_rec3",Configuracion_global->reList.at(2));
+            query_albaran.bindValue(":porcentaje_rec4",Configuracion_global->reList.at(3));
+            query_albaran.bindValue(":importe_rec1",rec1);
+            query_albaran.bindValue(":importe_rec2",rec2);
+            query_albaran.bindValue(":importe_rec3",rec3);
+            query_albaran.bindValue(":importe_rec4",rec4);
+            query_albaran.bindValue(":importe_rec_total",rec_total);
+            query_albaran.bindValue(":rTotal",total);
+            query_albaran.bindValue(":rIva",iva);
+            query_albaran.bindValue(":rBase",base);
+
+
+            if(!query_albaran.exec())
+                QMessageBox::warning(this,tr("Recepción Pedidos"),
+                                     tr("No se pudo crear el albarán, Error:")+query_albaran.lastError().text(),
+                                     tr("Aceptar"));
+            else {
+                QString cadena = tr("Se ha creado el albarán: ");
+                cadena.append(ui->txtAlbaran->text());
+                cadena.append("\nde : ");
+                cadena.append(query_pedido.record().value("cProveedor").toString());
+                cadena.append("\ny de fecha:");
+                cadena.append(fecha.toString("dd/MM/yyyy"));
+                QMessageBox::information(this,tr("Recepción pedidos"),cadena,
+                                     tr("Aceptar"));
+                id_albaran = 0;
+                ui->lblRegistrarAlbaran->setVisible(false);
+            }
+            ui->lblAlbaran->setVisible(false);
+            ui->txtAlbaran->setText("");
+            ui->txtAlbaran->setVisible(false);
+            ui->txtFecha_albaran->setDate(QDate::currentDate());
+            ui->lblfecha_albaran->setVisible(false);
+            ui->txtFecha_albaran->setVisible(false);
+            ui->btnAlbaran->setText("Abrir albarán");
+            ui->lblfecha_albaran->setVisible(false);
+            albaran = false;
+            ui->tablaPedidos->setEnabled(true);
+            ui->btncancelar_alb->setEnabled(false);
+            emit unblock();
+
+        }
+    }
+}
+
+void Frmrecepcion_pedidos::on_btnFactura_clicked()
+{
+    ui->BtnCancelar->setEnabled(true);
+    ui->txtFecha_factura->setDate(QDate::currentDate());
+    emit block();
+    if(factura == false) {
+        //---------------------------------------
+        // Creo cabecera en blanco de la factura
+        //---------------------------------------
+        ui->lblfactura->setVisible(true);
+        ui->lblFecha_factura->setVisible(true);
+        ui->txtFactura->setVisible(true);
+        ui->txtFecha_factura->setVisible(true);
+        ui->lblRegistrarFactura->setVisible(true);
+
+        ui->btnFactura->setText(tr("Crear y cerrar Factura"));
+        ui->txtFactura->setFocus();
+        factura =  true;
+        QSqlQuery query_factura(QSqlDatabase::database("empresa"));
+        query_factura.prepare("insert into fac_pro  (cfactura,nPorcIva1,nPorcIva2,nPorcIva3,nPorcIva4,"
+                              "nREC1,nREC2,nREC3,nREC4) values "
+                              "('temp',:iva1,:iva2,:iva3,:iva4,:nREC1,:nREC2,:nREC3,:nREC4)");
+        query_factura.bindValue(":iva1",Configuracion_global->ivaList.at(0));
+        query_factura.bindValue(":iva2",Configuracion_global->ivaList.at(1));
+        query_factura.bindValue(":iva3",Configuracion_global->ivaList.at(2));
+        query_factura.bindValue(":iva4",Configuracion_global->ivaList.at(3));
+        query_factura.bindValue(":nREC1",Configuracion_global->reList.at(0));
+        query_factura.bindValue(":nREC2",Configuracion_global->reList.at(1));
+        query_factura.bindValue(":nREC3",Configuracion_global->reList.at(2));
+        query_factura.bindValue(":nREC4",Configuracion_global->reList.at(3));
+
+        if(query_factura.exec())
+
+            id_factura = query_factura.lastInsertId().toInt();
+        else
+            QMessageBox::warning(this,tr("Recepción Pedidos"),
+                                 tr("No se pudo crear la factura, Error:")+query_factura.lastError().text(),
+                                 tr("Aceptar"));
+    } else
+    {
         QSqlQuery query_pedido(QSqlDatabase::database("empresa"));
         query_pedido.exec("Select * from ped_pro where id = "+QString::number(id_pedido));
         query_pedido.next();
         QDate fecha;
-        fecha = ui->txtFecha_albaran->date();
+        fecha = ui->txtFecha_factura->date();
 
         //----------------------------
-        // Rellenar cabecera Albarán
+        // Rellenar cabecera Factura
         //----------------------------
 
 
-        QSqlQuery query_albaran(QSqlDatabase::database("empresa"));
-        query_albaran.prepare("update alb_pro  set cAlbaran =:albaran, dFecha = :fecha,id_Proveedor=:id_proveedor,"
-                              "cProveedor =:proveedor, cCifProveedor =:cif,nPedido =:pedido,"
-                              "nIva1 =:iva1, nIva2 =:iva2, nIva3 =:iva3, nIva4 =:iva4, "
+        QSqlQuery query_factura(QSqlDatabase::database("empresa"));
+        query_factura.prepare("update fac_pro  set cFactura =:factura, dFecha = :fecha,id_Proveedor=:id_proveedor,"
+                              "cProveedor =:proveedor, cCifProveedor =:cif,cPedido =:pedido,"
                               "rBase1 =:base1,rBase2 =:base2,rBase3 =:base3, rBase4 =:base4, "
-                              "rIva1 =:riva1,rIva2 =:riva2, rIva3 =:riva3, rIva4 =:riva4, "
-                              "rDto1 =:dto1,rDto2 =:dto2, rDto3 =:dto3, rDto4 =:dto4, "
-                              "rTotal1 =:total1,rTotal2 =:total2,rTotal3 =:total3,rTotal4 =:total4 where id =:id");
-        query_albaran.bindValue(":albaran",ui->txtAlbaran->text());
-        query_albaran.bindValue(":fecha",fecha);
-        query_albaran.bindValue(":id_proveedor",query_pedido.record().value("id_Proveedor").toInt());
-        query_albaran.bindValue(":proveedor",query_pedido.record().value("cProveedor").toString());
-        query_albaran.bindValue(":cif",query_pedido.record().value("cCifNif").toString());
-        query_albaran.bindValue(":pedido",ui->txtNumPedido->text().toInt());
-        query_albaran.bindValue(":iva1",Configuracion_global->ivaList.at(0));
-        query_albaran.bindValue(":iva2",Configuracion_global->ivaList.at(1));
-        query_albaran.bindValue(":iva3",Configuracion_global->ivaList.at(2));
-        query_albaran.bindValue(":iva4",Configuracion_global->ivaList.at(3));
-        
-        query_albaran.bindValue(":id",id_albaran);
-        
+                              "rIVA1 =:riva1,rIVA2 =:riva2, rIVA3 =:riva3, rIVA4 =:riva4, "
+                              "rTotal1 =:total1,rTotal2 =:total2,rTotal3 =:total3,rTotal4 =:total4,"
+                              "rTotalBase =:totalBase, rTotalIva =:totaliva, rTotal =:total,"
+                              "total_dto =:total_dto,lRecargoEquivalencia =:lRecargoEquivalencia,"
+                              "rREC1=:rREC1,rREC2 =:rREC2,rREC3=:rREC3,rREC4=:rREC4,rTotalRetencion=:rTotalRetencion where id =:id");
+        query_factura.bindValue(":factura",ui->txtFactura->text());
+        query_factura.bindValue(":fecha",fecha);
+        query_factura.bindValue(":id_proveedor",query_pedido.record().value("id_Proveedor").toInt());
+        query_factura.bindValue(":proveedor",query_pedido.record().value("cProveedor").toString());
+        query_factura.bindValue(":cif",query_pedido.record().value("cCifNif").toString());
+        query_factura.bindValue(":pedido",ui->txtNumPedido->text().toInt());
+        query_factura.bindValue(":id",id_factura);
+        query_factura.bindValue(":lRecargoEquivalencia",query_pedido.record().value("lRecargoEquivalencia").toBool());
+
+
         // ----------------------
-        // Sumar líneas albarán
+        // Sumar líneas factura
         // ----------------------
-        QSqlQuery query_lin_alb_pro(QSqlDatabase::database("empresa"));
-        query_lin_alb_pro.prepare("select * from lin_alb_pro where id_cab = :id");
-        query_lin_alb_pro.bindValue(":id",id_albaran);
-        double base1,base2,base3,base4,iva1,iva2,iva3,iva4,dto1,dto2,dto3,dto4,total1,total2,total3,total4;
-        base1 = 0; base2 = 0; base3 = 0; base4 = 0;
+        QSqlQuery query_lin_fac_pro(QSqlDatabase::database("empresa"));
+        query_lin_fac_pro.prepare("select * from lin_fac_pro where id_cab = :id");
+        query_lin_fac_pro.bindValue(":id",id_factura);
+        double base1,base2,base3,base4,iva1,iva2,iva3,iva4,dto1,dto2,dto3,dto4,total1,total2,total3,total4,base,iva,dto,total;
+        double  rec1,rec2,rec3,rec4,rec;
+        bool recargo = query_pedido.record().value("lRecargoEquivalencia").toBool();
+        base1 = 0; base2 = 0; base3 = 0; base4 = 0;base=0;
         iva1 = 0;  iva2 = 0;  iva3 = 0;  iva4 = 0;
-        dto1 = 0; dto2 = 0; dto3 = 0; dto4 = 0;
+        dto1 = 0; dto2 = 0; dto3 = 0; dto4 = 0; dto=0;
+        rec1 = 0; rec2 = 0; rec3 =0; rec4=0; rec =0;
         total1 = 0; total2 = 0; total3 = 0; total4 = 0;
-        
-        if(query_lin_alb_pro.exec())
+
+
+
+        if(query_lin_fac_pro.exec())
         {
-            while (query_lin_alb_pro.next())
+            while (query_lin_fac_pro.next())
             {
 
-                if(query_lin_alb_pro.record().value("nIva").toDouble() == query_lin_alb_pro.record().value("nIva1").toDouble())
+                if(query_lin_fac_pro.record().value("nIva").toDouble() == Configuracion_global->ivaList.at(0).toDouble())
                 {
-                    base1 +=query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
-                    iva1 +=query_lin_alb_pro.record().value("rIva").toDouble();
-                    dto1 +=query_lin_alb_pro.record().value("rDto").toDouble();
-                    total1 +=query_lin_alb_pro.record().value("rTotal").toDouble();
+                    base1 +=query_lin_fac_pro.record().value("rSUBTOTAL").toDouble();
+                    iva1 +=query_lin_fac_pro.record().value("rIva").toDouble();
+                    dto1 +=query_lin_fac_pro.record().value("rDto").toDouble();
+                    total1 +=query_lin_fac_pro.record().value("rTotal").toDouble();
+                    if(recargo)
+                        rec1 +=query_lin_fac_pro.record().value("importe_rec").toDouble();
+
                 }
-                if(query_lin_alb_pro.record().value("nIva").toDouble() == query_lin_alb_pro.record().value("nIva2").toDouble())
+                if(query_lin_fac_pro.record().value("nIva").toDouble() == Configuracion_global->ivaList.at(1).toDouble())
                 {
-                    base2 +=query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
-                    iva2 +=query_lin_alb_pro.record().value("rIva").toDouble();
-                    dto2 +=query_lin_alb_pro.record().value("rDto").toDouble();
-                    total2 +=query_lin_alb_pro.record().value("rTotal").toDouble();
+                    base2 +=query_lin_fac_pro.record().value("rSUBTOTAL").toDouble();
+                    iva2 +=query_lin_fac_pro.record().value("rIva").toDouble();
+                    dto2 +=query_lin_fac_pro.record().value("rDto").toDouble();
+                    total2 +=query_lin_fac_pro.record().value("rTotal").toDouble();
+                    if(recargo)
+                        rec2 +=query_lin_fac_pro.record().value("importe_rec").toDouble();
                 }
-                if(query_lin_alb_pro.record().value("nIva").toDouble() == query_lin_alb_pro.record().value("nIva3").toDouble())
+                if(query_lin_fac_pro.record().value("nIva").toDouble() == Configuracion_global->ivaList.at(2).toDouble())
                 {
-                    base3 +=query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
-                    iva3 +=query_lin_alb_pro.record().value("rIva").toDouble();
-                    dto3 +=query_lin_alb_pro.record().value("rDto").toDouble();
-                    total3 +=query_lin_alb_pro.record().value("rTotal").toDouble();
+                    base3 +=query_lin_fac_pro.record().value("rSUBTOTAL").toDouble();
+                    iva3 +=query_lin_fac_pro.record().value("rIva").toDouble();
+                    total3 +=query_lin_fac_pro.record().value("rTotal").toDouble();
+                    dto3 +=query_lin_fac_pro.record().value("rDto").toDouble();
+                    if(recargo)
+                        rec2 +=query_lin_fac_pro.record().value("importe_rec").toDouble();
                 }
-                if(query_lin_alb_pro.record().value("nIva").toDouble() == query_lin_alb_pro.record().value("nIva4").toDouble())
+                if(query_lin_fac_pro.record().value("nIva").toDouble() == Configuracion_global->ivaList.at(3).toDouble())
                 {
-                    base4 +=query_lin_alb_pro.record().value("rSUBTOTAL").toDouble();
-                    iva4 +=query_lin_alb_pro.record().value("rIva").toDouble();
-                    dto4 +=query_lin_alb_pro.record().value("rDto").toDouble();
-                    total4 +=query_lin_alb_pro.record().value("rTotal").toDouble();
+                    base4 +=query_lin_fac_pro.record().value("rSUBTOTAL").toDouble();
+                    iva4 +=query_lin_fac_pro.record().value("rIva").toDouble();
+                    total4 +=query_lin_fac_pro.record().value("rTotal").toDouble();
+                    dto4 +=query_lin_fac_pro.record().value("rDto").toDouble();
+                    if(recargo)
+                        rec2 +=query_lin_fac_pro.record().value("importe_rec").toDouble();
                 }
-                
+                base = base1 + base2 +base3 + base4;
+                iva = iva1+iva2+iva3+iva4;
+                total = total1+total2+total3+total4;
+                dto = dto1+dto2+dto3+dto4;
+                rec = rec1+rec2+rec3+rec4;
+
+
             }
         }
-        query_albaran.bindValue(":base1",base1);
-        query_albaran.bindValue(":base2",base2);
-        query_albaran.bindValue(":base3",base3);
-        query_albaran.bindValue(":base4",base4);
-        query_albaran.bindValue(":riva1",iva1);
-        query_albaran.bindValue(":riva2",iva2);
-        query_albaran.bindValue(":riva3",iva3);
-        query_albaran.bindValue(":riva4",iva4);
-        query_albaran.bindValue(":rdto1",dto1);
-        query_albaran.bindValue(":rdto2",dto2);
-        query_albaran.bindValue(":rdto3",dto3);
-        query_albaran.bindValue(":rdto4",dto4);
-        query_albaran.bindValue(":rtotal1",total1);
-        query_albaran.bindValue(":rtotal2",total2);
-        query_albaran.bindValue(":rtotal3",total3);
-        query_albaran.bindValue(":rtotal4",total4);
-        
-        if(!query_albaran.exec())
+        query_factura.bindValue(":base1",base1);
+        query_factura.bindValue(":base2",base2);
+        query_factura.bindValue(":base3",base3);
+        query_factura.bindValue(":base4",base4);
+        query_factura.bindValue(":riva1",iva1);
+        query_factura.bindValue(":riva2",iva2);
+        query_factura.bindValue(":riva3",iva3);
+        query_factura.bindValue(":riva4",iva4);
+        query_factura.bindValue(":rtotal1",total1);
+        query_factura.bindValue(":rtotal2",total2);
+        query_factura.bindValue(":rtotal3",total3);
+        query_factura.bindValue(":rtotal4",total4);
+        query_factura.bindValue(":totalBase",base);
+        query_factura.bindValue(":totaliva",iva);
+        query_factura.bindValue(":total",total);
+        query_factura.bindValue("total_dto",dto);
+        query_factura.bindValue(":rREC1",rec1);
+        query_factura.bindValue(":rREC2",rec2);
+        query_factura.bindValue(":rREC3",rec3);
+        query_factura.bindValue(":rREC4",rec4);
+        query_factura.bindValue(":rTotalRetencion",rec);
+
+
+        if(!query_factura.exec())
             QMessageBox::warning(this,tr("Recepción Pedidos"),
-                                 tr("No se pudo crear el albarán, Error:")+query_albaran.lastError().text(),
+                                 tr("No se pudo crear la Factura, Error:")+query_factura.lastError().text(),
                                  tr("Aceptar"));
         else {
-            QString cadena = tr("Se ha creado el albarán: ");
-            cadena.append(ui->txtAlbaran->text());
+            QString cadena = tr("Se ha creado la factura: ");
+            cadena.append(ui->txtFactura->text());
             cadena.append("\nde : ");
             cadena.append(query_pedido.record().value("cProveedor").toString());
             cadena.append("\ny de fecha:");
             cadena.append(fecha.toString("dd/MM/yyyy"));
-            QMessageBox::warning(this,tr("Recepción pedidos"),cadena,
+            QMessageBox::information(this,tr("Recepción pedidos"),cadena,
                                  tr("Aceptar"));
-            id_albaran = 0;
+            id_factura = 0;
+            ui->lblRegistrarFactura->setVisible(false);
         }
-        ui->lblAlbaran->setVisible(false);
-        ui->txtAlbaran->setText("");
-        ui->txtAlbaran->setVisible(false);
-        ui->txtFecha_albaran->setDate(QDate::currentDate());
-        ui->lblfecha_albaran->setVisible(false);
-        ui->txtFecha_albaran->setVisible(false);
-        ui->btnAlbaran->setText("Abrir albarán");
-        ui->lblfecha_albaran->setVisible(false);
-        albaran = false;
+        ui->lblfactura->setVisible(false);
+        ui->txtFactura->setText("");
+        ui->txtFactura->setVisible(false);
+        ui->txtFecha_factura->setDate(QDate::currentDate());
+        ui->lblFecha_factura->setVisible(false);
+        ui->txtFecha_factura->setVisible(false);
+        ui->btnFactura->setText("Abrir Factura");
+        ui->lblFecha_factura->setVisible(false);
+        // TODO - CONTABILIZAR FACTURA COMPRAS
+        factura = false;
+        ui->BtnCancelar->setEnabled(false);
+        emit unblock();
     }
+}
+
+
+
+void Frmrecepcion_pedidos::on_BtnCancelar_clicked()
+{
+    QSqlQuery queryFactura(QSqlDatabase::database("Maya"));
+    queryFactura.exec("delete from fac_pro where id ="+QString::number(this->id_factura));
+    ui->lblfactura->setVisible(false);
+    ui->txtFactura->setText("");
+    ui->txtFactura->setVisible(false);
+    ui->txtFecha_factura->setDate(QDate::currentDate());
+    ui->lblFecha_factura->setVisible(false);
+    ui->txtFecha_factura->setVisible(false);
+    ui->btnFactura->setText("Abrir Factura");
+    ui->lblFecha_factura->setVisible(false);
+    ui->BtnCancelar->setEnabled(false);
+    emit unblock();
+
+
+}
+
+void Frmrecepcion_pedidos::on_btncancelar_alb_clicked()
+{
+
+    QSqlQuery queryAlbaran(QSqlDatabase::database("Maya"));
+    queryAlbaran.exec("delete from alb_pro where id ="+QString::number(this->id_albaran));
+    ui->lblAlbaran->setVisible(false);
+    ui->txtAlbaran->setText("");
+    ui->txtAlbaran->setVisible(false);
+    ui->txtFecha_albaran->setDate(QDate::currentDate());
+    ui->lblfecha_albaran->setVisible(false);
+    ui->txtFecha_albaran->setVisible(false);
+    ui->btnAlbaran->setText("Abrir albarán");
+    ui->lblfecha_albaran->setVisible(false);
+    albaran = false;
+    ui->tablaPedidos->setEnabled(true);
+    ui->btncancelar_alb->setEnabled(false);
+    emit unblock();
 }

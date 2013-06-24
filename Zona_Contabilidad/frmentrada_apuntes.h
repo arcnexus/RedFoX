@@ -2,7 +2,11 @@
 #define FRMENTRADA_APUNTES_H
 
 #include <QDialog>
+
 #include "../mayamodule.h"
+
+#include "apuntes.h"
+
 namespace Ui {
 class FrmEntrada_apuntes;
 }
@@ -25,6 +29,20 @@ private:
     ToolBarButton toolButton;
     QAction menuButton;
 signals:
+
+    apuntes *oApunte;
+    void llenar_objeto();
+    void clear();
+    void llenar_tabla_apunte(int asiento);
+    void totales_asiento(int asiento);
+
+private slots:
+    void on_btnnuevo_asiento_clicked();
+    void controles(bool stat);
+    void on_btncerrar_asiento_clicked();
+    void on_btnanadir_linea_clicked();
+    void on_txtnum_asiento_valueChanged(int arg1);
+    void on_txtcuenta_debe_editingFinished();
 
 };
 

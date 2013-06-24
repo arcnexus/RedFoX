@@ -18,6 +18,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #QTPLUGIN+=qsqlite
 #QTPLUGIN+=qsqlmysql
 
+win32:RC_FILE = windowsRc.rc
+
 INCLUDEPATH += /Qwt/5.2.1/include
 INCLUDEPATH += /usr/local/Qxt/include/QxtCore
 DEPENDPATH += /Qwt/5.2.1/lib
@@ -156,9 +158,11 @@ SOURCES += main.cpp\
     moduleextension.cpp \
     Almacen/divisionalmacenext.cpp \
     archivosgeneralesext.cpp \
-    Zona_Pacientes/clinicaext.cpp
-
-
+    Zona_Pacientes/clinicaext.cpp \
+    Zona_Contabilidad/apuntes.cpp \
+    Auxiliares/monetarydelegate_contabilidad.cpp \
+    Zona_Contabilidad/frmcuadro_cuentas.cpp \
+    Zona_Contabilidad/cuentas_contables.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -281,8 +285,11 @@ HEADERS  += mainwindow.h \
     moduleextension.h \
     Almacen/divisionalmacenext.h \
     archivosgeneralesext.h \
-    Zona_Pacientes/clinicaext.h
-
+    Zona_Pacientes/clinicaext.h \
+    Zona_Contabilidad/apuntes.h \
+    Auxiliares/monetarydelegate_contabilidad.h \
+    Zona_Contabilidad/frmcuadro_cuentas.h \
+    Zona_Contabilidad/cuentas_contables.h
 
 
 
@@ -346,13 +353,15 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmgestioncobros.ui \
     TPV/efectivocaja.ui \
     TPV/configmonedatpv.ui \
-    Zona_Administrador/frmusuarios.ui
+    Zona_Administrador/frmusuarios.ui \
+    Zona_Contabilidad/frmcuadro_cuentas.ui
 
 RESOURCES += \
     maya.qrc
 
 OTHER_FILES += \
     TODO.txt \
+    windowsRc.rc
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lcommon
@@ -468,3 +477,14 @@ INCLUDEPATH += $$PWD/../../../../usr/include
 DEPENDPATH += $$PWD/../../../../usr/include
 
 unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../usr/lib/libcryptopp.a
+
+unix:!macx: LIBS += -L$$PWD/BlinkLabel/Linux/ -lblinkinkplugin
+
+INCLUDEPATH += $$PWD/BlinkLabel
+DEPENDPATH += $$PWD/BlinkLabel
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/BlinkLabel/win32/release/ -lblinkinkplugin
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/BlinkLabel/win32/debug/ -lblinkinkplugind
+
+INCLUDEPATH += $$PWD/BlinkLabel
+DEPENDPATH += $$PWD/BlinkLabel

@@ -33,6 +33,12 @@ private slots:
     void reconectar();
     void abrir_albaran();
 
+    void on_btnFactura_clicked();
+
+    void on_BtnCancelar_clicked();
+
+    void on_btncancelar_alb_clicked();
+
 private:
     Ui::Frmrecepcion_pedidos *ui;
     bool albaran;
@@ -42,6 +48,9 @@ private:
     int id_pedido;
     ToolBarButton toolButton;
     QAction menuButton;
+
+signals:
+
 };
 
 #endif // FRMRECEPCION_PEDIDOS_H

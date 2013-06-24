@@ -57,6 +57,8 @@ private slots:
 
     void on_btnAnadirEntrega_clicked();
 
+    void on_tabWidget_2_currentChanged(int index);
+
 private:
     Ui::FrmAlbaranProveedor *ui;
     Table_Helper helper;

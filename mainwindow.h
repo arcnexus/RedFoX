@@ -40,11 +40,7 @@
 #include "Agenda/permisosagendaform.h"
 
 #include "../Zona_Contabilidad/frmentrada_apuntes.h"
-
-#include "../Zona_Administrador/frmempresas.h"
-#include "../Zona_Administrador/frmconfigmaya.h"
-#include "../Zona_Administrador/frmusuarios.h"
-#include "../Zona_Administrador/block_Maya_form.h"
+#include "../Zona_Contabilidad/frmcuadro_cuentas.h"
 
 namespace Ui {
 class MainWindow;

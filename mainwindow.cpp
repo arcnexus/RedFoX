@@ -609,6 +609,12 @@ MainWindow::MainWindow(QWidget *parent) :
     loadAminModules(&splash);
     crear_barraAdmin();
 
+
+    splash.showMessage(tr("Cargando modulos...Modulo de Contabilidad: Cuadro de cuentas"));
+    frmcuentas = new frmCuadro_cuentas(this);
+    connect(frmcuentas,SIGNAL(block()),this,SLOT(block_main()));
+    connect(frmcuentas,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
     MayaForm = new init_form(this);
     ui->stackedWidget->addWidget(MayaForm);
     ui->stackedWidget->setCurrentWidget(MayaForm);
@@ -718,3 +724,9 @@ void MainWindow::handle_permisosAgenda()
     PermisosAgendaForm form(this);
     form.exec();
 }
+
+void MainWindow::btn_cuentas_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(frmcuentas);
+}
+

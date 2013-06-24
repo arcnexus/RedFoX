@@ -75,6 +75,7 @@ void PedidoProveedor::guardar()
      "lRecibido =:lRecibido,"
      "lRecibidoCompleto =:lRecibidoCompleto,"
      "lGeneroPendiente =:lGeneroPendiente,"
+     "lRecargoEquivalencia =:lRecargoEquivalencia,"
      "lTraspasado =:lTraspasado,"
      "nPedidoCliente =:nPedidoCliente,"
      "Id_FormaPago =:Id_FormaPago,"
@@ -137,6 +138,7 @@ void PedidoProveedor::guardar()
     queryGuardarPedido.bindValue(":lRecibido",this->lRecibido);
     queryGuardarPedido.bindValue(":lRecibidoCompleto",this->lRecibidoCompleto);
     queryGuardarPedido.bindValue(":lGeneroPendiente",this->lGeneroPendiente);
+    queryGuardarPedido.bindValue(":lRecargoEquivalencia",this->lRecargoEquivalencia);
     queryGuardarPedido.bindValue(":lTraspasado",this->lTraspasado);
     queryGuardarPedido.bindValue(":nPedidoCliente",this->nPedidoCliente);
     queryGuardarPedido.bindValue(":Id_FormaPago",this->Id_FormaPago);
@@ -266,6 +268,7 @@ void PedidoProveedor::clear()
     this->lRecibidoCompleto = false;
     this->lGeneroPendiente = false;
     this->lTraspasado = false;
+    this->lRecargoEquivalencia = false;
     this->nPedidoCliente = 0;
     this->Id_FormaPago = 0;
     this->tComentario = "";
@@ -336,6 +339,7 @@ void PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
         this->lEnviado = queryPedido->record().value("lEnviado").toBool();
         this->lRecibido = queryPedido->record().value("lRecibido").toBool();
         this->lRecibidoCompleto = queryPedido->record().value("lRecibidoCompleto").toBool();
+        this->lRecargoEquivalencia = queryPedido->record().value("lRecargoEquivalencia").toBool();
         this->lGeneroPendiente = queryPedido->record().value("lGeneroPendiente").toBool();
         this->lTraspasado = queryPedido->record().value("lTraspasado").toBool();
         this->nPedidoCliente = queryPedido->record().value("nPedidoCliente").toInt();
@@ -559,6 +563,7 @@ void PedidoProveedor::fillPedido(QSqlRecord r)
     lRecibido= r.value("lRecibido").toULongLong();
     lRecibidoCompleto= r.value("lRecibidoCompleto").toULongLong();
     lGeneroPendiente= r.value("lGeneroPendiente").toULongLong();
+    lRecargoEquivalencia = r.value("lRecargoEquivalencia").toBool();
     rBase1= r.value("rBase1").toDouble();
     rBase2= r.value("rBase2").toDouble();
     rBase3= r.value("rBase3").toDouble();
