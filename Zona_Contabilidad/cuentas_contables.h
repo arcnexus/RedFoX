@@ -27,6 +27,8 @@ public slots:
     void guardar_cuenta();
     void recuperar_cuenta(QString cuenta);
     void recuperar_cuenta(int id);
+    QString completar_cuenta(QString cuenta_);
+    QString nueva_cuenta();
     void clear();
 
     

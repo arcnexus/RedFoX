@@ -90,6 +90,31 @@ void Cuentas_contables::recuperar_cuenta(int id)
                              tr("Ocurrió un error al recuperar la cuenta: %1").arg(query_cuenta.lastError().text()));
 }
 
+QString Cuentas_contables::completar_cuenta(QString cuenta_)
+{
+    int pos = cuenta_.indexOf(".");
+    if(pos >0)
+    {
+        QString base = cuenta_.left(pos-1);
+        QString resto = cuenta_.right(pos+1);
+
+        int tamano_cuenta = Configuracion_global->nDigitosCuentasContables;
+        int tamano = cuenta_.size()-1;
+        for(int zero = 0;zero <tamano_cuenta - tamano;zero++)
+        {
+            resto.prepend("0");
+        }
+        return base.append(resto);
+
+    }
+}
+
+QString Cuentas_contables::nueva_cuenta()
+{
+    // TODO - Crear nueva cuenta contable
+    return "XXXX";
+}
+
 void Cuentas_contables::clear()
 {
     this->id = 0;

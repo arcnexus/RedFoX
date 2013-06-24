@@ -2,6 +2,7 @@
 #include "ui_frmentrada_apuntes.h"
 #include "../Auxiliares/datedelegate.h"
 #include "../Auxiliares/monetarydelegate_contabilidad.h"
+#include "../Zona_Contabilidad/cuentas_contables.h"
 
 FrmEntrada_apuntes::FrmEntrada_apuntes(QWidget *parent) :
     QDialog(parent),
@@ -165,5 +166,13 @@ void FrmEntrada_apuntes::on_txtnum_asiento_valueChanged(int arg1)
 {
     blockSignals(true);
     llenar_tabla_apunte(arg1);
+    blockSignals(false);
+}
+
+void FrmEntrada_apuntes::on_txtcuenta_debe_editingFinished()
+{
+    Cuentas_contables cuenta(this);
+    blockSignals(true);
+    ui->txtcuenta_debe->setText(cuenta.completar_cuenta(ui->txtcuenta_debe->text()));
     blockSignals(false);
 }
