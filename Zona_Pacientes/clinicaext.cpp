@@ -72,7 +72,7 @@ QList<QAction *> ClinicaExt::Extensions()
 }
 void ClinicaExt::handle_doctores()
 {
-    Db_table_View form(this);
+    Db_table_View form(qApp->activeWindow());
     form.set_db("dbmedica");
     form.set_table("doctores");
 
@@ -92,7 +92,7 @@ void ClinicaExt::handle_doctores()
 }
 void ClinicaExt::handle_tiposImagen()
 {
-    Db_table_View form(this);
+    Db_table_View form(qApp->activeWindow());
     form.set_db("dbmedica");
     form.set_table("tiposimagen");
 
@@ -108,7 +108,7 @@ void ClinicaExt::handle_tiposImagen()
 
 void ClinicaExt::handle_tipoAnalitica()
 {
-    Db_table_View form(this);
+    Db_table_View form(qApp->activeWindow());
     form.set_db("dbmedica");
     form.set_table("tiposanalitica");
 
@@ -123,7 +123,7 @@ void ClinicaExt::handle_tipoAnalitica()
 }
 void ClinicaExt::handle_campoAnalitica()
 {
-    Db_table_View form(this);
+    Db_table_View form(qApp->activeWindow());
     form.set_db("dbmedica");
     form.set_table("tiposanalitica2");
 
@@ -139,7 +139,7 @@ void ClinicaExt::handle_campoAnalitica()
 }
 void ClinicaExt::handle_motivoInterConsulta()
 {
-    Db_table_View form(this);
+    Db_table_View form(qApp->activeWindow());
     form.set_db("dbmedica");
     form.set_table("motivosinterconsulta");
 

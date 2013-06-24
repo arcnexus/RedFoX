@@ -548,7 +548,7 @@ void MainWindow::loadContaModules(QSplashScreen *splash)
 void MainWindow::loadSecMedModules(QSplashScreen *splash)
 {
     splash->showMessage(tr("Cargando modulos... Extension de Clinica") );
-    ArchivosGeneralesExt* e = new ArchivosGeneralesExt(this);
+    ClinicaExt* e = new ClinicaExt(this);
     if(!e->Extensions().isEmpty())
         _clinicaExtensions.append(e);
     else
@@ -610,10 +610,10 @@ MainWindow::MainWindow(QWidget *parent) :
     crear_barraAdmin();
 
 
-    splash.showMessage(tr("Cargando modulos...Modulo de Contabilidad: Cuadro de cuentas"));
-    frmcuentas = new frmCuadro_cuentas(this);
-    connect(frmcuentas,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmcuentas,SIGNAL(unblock()),this,SLOT(unblock_main()));
+    //splash.showMessage(tr("Cargando modulos...Modulo de Contabilidad: Cuadro de cuentas"));
+    //frmcuentas = new frmCuadro_cuentas(this);
+    //connect(frmcuentas,SIGNAL(block()),this,SLOT(block_main()));
+    //connect(frmcuentas,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
     MayaForm = new init_form(this);
     ui->stackedWidget->addWidget(MayaForm);
@@ -725,8 +725,8 @@ void MainWindow::handle_permisosAgenda()
     form.exec();
 }
 
-void MainWindow::btn_cuentas_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmcuentas);
-}
+//void MainWindow::btn_cuentas_clicked()
+//{
+//    ui->stackedWidget->setCurrentWidget(frmcuentas);
+//}
 

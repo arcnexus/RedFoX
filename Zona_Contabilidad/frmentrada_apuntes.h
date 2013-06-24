@@ -28,8 +28,6 @@ private:
     Ui::FrmEntrada_apuntes *ui;
     ToolBarButton toolButton;
     QAction menuButton;
-signals:
-
     apuntes *oApunte;
     void llenar_objeto();
     void clear();
