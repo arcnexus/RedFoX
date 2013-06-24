@@ -31,6 +31,7 @@ public:
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}    
     void hideButton(){toolButton.hide();}
+    QPushButton* wantShortCut(bool& ok){ok = true; return shortCut;}
 private slots:
     void on_botSiguiente_clicked();
 
@@ -123,6 +124,7 @@ private:
     MonetaryDelegate *Delegado;
     ToolBarButton toolButton;
     QAction menuButton;
+    QPushButton* shortCut;
 };
 
 #endif // FRMARTICULOS_H

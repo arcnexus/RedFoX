@@ -2,6 +2,7 @@
 #define MAYAMODULE_H
 
 #include <QDialog>
+#include <QPushButton>
 #include "Auxiliares/Globlal_Include.h"
 #include "Auxiliares/toolbarbutton.h"
 class MayaModule : public QDialog
@@ -29,6 +30,7 @@ public:
     virtual ToolBarButton * ModuleToolBarButton() = 0;
     virtual QAction * ModuleMenuBarButton() = 0;
     virtual QString ModuleMenuPath() = 0; // Use '|' to subPaths
+    virtual QPushButton* wantShortCut(bool& ok) = 0;
 
     bool userHaveAcces(int idUser);
     accessLevel userLevelInModule(){return _user_level;}

@@ -92,7 +92,6 @@ private:
     void loadContaModules(QSplashScreen *splash);
     void loadSecMedModules(QSplashScreen *splash);
 
-    //Barra de mantenimiento
     void crear_barraMantenimiento();
     void crear_barraVentas();
     void crear_barraAlmacen();
@@ -101,6 +100,8 @@ private:
     void crear_barraAdmin();
     void crear_barraContabilidad();
     void crear_barraClinica();
+
+    void addShortCut(QPushButton* button);
 
     init_form * MayaForm;
     bool on_edit;
@@ -116,6 +117,8 @@ private:
     QVector<ModuleExtension* > _almacenExtensions;
     QVector<ModuleExtension* > _mantenExtensions;
     QVector<ModuleExtension* > _clinicaExtensions;
+
+    QHash<QPushButton*,QWidget*> _shortCuts;
 };
 
 #endif // MAINWINDOW_H
