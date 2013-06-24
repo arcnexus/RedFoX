@@ -172,7 +172,7 @@ background-color: rgb(46, 85, 127);</string>
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item row="2" column="3" rowspan="2" colspan="2">
+       <item row="2" column="4" rowspan="2" colspan="2">
         <widget class="QLabel" name="label_3">
          <property name="styleSheet">
           <string notr="true">color: rgb(255, 255, 255);
@@ -183,7 +183,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="6" rowspan="4">
+       <item row="0" column="7" rowspan="4">
         <widget class="QPushButton" name="btn_bloquear">
          <property name="minimumSize">
           <size>
@@ -216,7 +216,7 @@ background-color: rgb(133, 170, 142);</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="5" rowspan="2">
+       <item row="2" column="6" rowspan="2">
         <widget class="QLabel" name="txtcCategoria">
          <property name="styleSheet">
           <string notr="true">font: 75 8pt &quot;Cantarell&quot;;
@@ -246,20 +246,7 @@ color: rgb(255, 255, 127);</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="2" rowspan="2">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="7" rowspan="4">
+       <item row="0" column="8" rowspan="4">
         <widget class="QPushButton" name="btn_salir">
          <property name="toolTip">
           <string>Salir de Maya</string>
@@ -289,7 +276,7 @@ background-color: rgb(133, 170, 142);</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="3" rowspan="2">
+       <item row="0" column="4" rowspan="2">
         <widget class="QLabel" name="label">
          <property name="palette">
           <palette>
@@ -472,6 +459,33 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
          </property>
         </widget>
        </item>
+       <item row="0" column="5" rowspan="2" colspan="2">
+        <widget class="QLabel" name="lineUsuarioActivo">
+         <property name="styleSheet">
+          <string notr="true">font: 75 8pt &quot;Cantarell&quot;;
+color: rgb(255, 255, 127);</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2" rowspan="4">
+        <layout class="QHBoxLayout" name="shortCutContainer"/>
+       </item>
+       <item row="0" column="3">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="0" column="1">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
@@ -487,17 +501,6 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
           </size>
          </property>
         </spacer>
-       </item>
-       <item row="0" column="4" rowspan="2" colspan="2">
-        <widget class="QLabel" name="lineUsuarioActivo">
-         <property name="styleSheet">
-          <string notr="true">font: 75 8pt &quot;Cantarell&quot;;
-color: rgb(255, 255, 127);</string>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>

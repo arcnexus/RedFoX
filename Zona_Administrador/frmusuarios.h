@@ -22,7 +22,7 @@ public:
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}
+    void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
 private slots:
     void crear_User();
     void on_btn_modPass_clicked();

@@ -17,7 +17,8 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::FrmArticulos),
     toolButton(tr("Almacen"),":/Icons/PNG/Box.png",this),
-    menuButton(QIcon(":/Icons/PNG/Box.png"),tr("Almacen"),this)
+    menuButton(QIcon(":/Icons/PNG/Box.png"),tr("Almacen"),this),
+    shortCut(new QPushButton(QIcon(":/Icons/PNG/Box.png"),"",this))
 {
     modelProv = new QSqlQueryModel(this);
     oArticulo = new Articulo();

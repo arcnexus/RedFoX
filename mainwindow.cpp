@@ -25,6 +25,11 @@ void MainWindow::crear_barraMantenimiento()
             }
             connect(mm,SIGNAL(block()),this,SLOT(block_main()));
             connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
+            bool b;
+            QPushButton * pb = mm->wantShortCut(b) ;
+            if(b)
+                addShortCut(pb);
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -75,6 +80,11 @@ void MainWindow::crear_barraVentas()
             }
             connect(mm,SIGNAL(block()),this,SLOT(block_main()));
             connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
+            bool b;
+            QPushButton * pb = mm->wantShortCut(b) ;
+            if(b)
+                addShortCut(pb);
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -108,6 +118,11 @@ void MainWindow::crear_barraAlmacen()
             }
             connect(mm,SIGNAL(block()),this,SLOT(block_main()));
             connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
+            bool b;
+            QPushButton * pb = mm->wantShortCut(b) ;
+            if(b)
+                addShortCut(pb);
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -158,6 +173,11 @@ void MainWindow::crear_barraCompras()
             }
             connect(mm,SIGNAL(block()),this,SLOT(block_main()));
             connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
+            bool b;
+            QPushButton * pb = mm->wantShortCut(b) ;
+            if(b)
+                addShortCut(pb);
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -190,6 +210,11 @@ void MainWindow::crear_barraUtils()
             }
             connect(mm,SIGNAL(block()),this,SLOT(block_main()));
             connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
+            bool b;
+            QPushButton * pb = mm->wantShortCut(b) ;
+            if(b)
+                addShortCut(pb);
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -222,6 +247,11 @@ void MainWindow::crear_barraAdmin()
             }
             connect(mm,SIGNAL(block()),this,SLOT(block_main()));
             connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
+            bool b;
+            QPushButton * pb = mm->wantShortCut(b) ;
+            if(b)
+                addShortCut(pb);
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -255,6 +285,11 @@ void MainWindow::crear_barraContabilidad()
             }
             connect(mm,SIGNAL(block()),this,SLOT(block_main()));
             connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
+            bool b;
+            QPushButton * pb = mm->wantShortCut(b) ;
+            if(b)
+                addShortCut(pb);
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -288,6 +323,11 @@ void MainWindow::crear_barraClinica()
             }
             connect(mm,SIGNAL(block()),this,SLOT(block_main()));
             connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
+            bool b;
+            QPushButton * pb = mm->wantShortCut(b) ;
+            if(b)
+                addShortCut(pb);
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -313,6 +353,17 @@ void MainWindow::crear_barraClinica()
     }
     if(menu)
         ui->menubar->addMenu(menu);
+}
+
+void MainWindow::addShortCut(QPushButton *button)
+{
+    _shortCuts.insert(button,(QWidget*)button->parent());
+    ui->shortCutContainer->addWidget(button);
+    button->setMinimumWidth(34);
+    button->setMinimumHeight(34);
+    button->setIconSize(QSize(30,30));
+    connect(button,SIGNAL(clicked()),this,SLOT(handle_toolBar()));
+
 }
 
 void MainWindow::loadVentasModules(QSplashScreen *splash)
@@ -609,12 +660,6 @@ MainWindow::MainWindow(QWidget *parent) :
     loadAminModules(&splash);
     crear_barraAdmin();
 
-
-    //splash.showMessage(tr("Cargando modulos...Modulo de Contabilidad: Cuadro de cuentas"));
-    //frmcuentas = new frmCuadro_cuentas(this);
-    //connect(frmcuentas,SIGNAL(block()),this,SLOT(block_main()));
-    //connect(frmcuentas,SIGNAL(unblock()),this,SLOT(unblock_main()));
-
     MayaForm = new init_form(this);
     ui->stackedWidget->addWidget(MayaForm);
     ui->stackedWidget->setCurrentWidget(MayaForm);
@@ -676,9 +721,14 @@ void MainWindow::handle_toolBar()
     ToolBarButton * t = qobject_cast<ToolBarButton *>(sender());
     if(t)
         ui->stackedWidget->setCurrentWidget(t->linkedWidget());
+
     QAction * a = qobject_cast<QAction *>(sender());
     if(a)
        ui->stackedWidget->setCurrentWidget((QWidget*)a->parent());
+
+    QPushButton * p = qobject_cast<QPushButton *>(sender());
+    if(p)
+        ui->stackedWidget->setCurrentWidget(_shortCuts.value(p));
 }
 
 void MainWindow::closeEvent(QCloseEvent * e)
