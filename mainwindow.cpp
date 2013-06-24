@@ -1,406 +1,562 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "login.h"
-#include "../Zona_Administrador/frmempresas.h"
-#include "../Zona_Compras/frmpedidosproveedor.h"
-//#include "frmconfiguracion.h"
-#include "../Zona_Administrador/block_Maya_form.h"
-#include "db_table_view.h"
-#include "Agenda/permisosagendaform.h"
-#include <QSplashScreen>
-#include <../Almacen/frmtipostarifa.h>
-#include "../Zona_Administrador/frmconfigmaya.h"
-
-
 
 Configuracion * Configuracion_global = 0;
 
 void MainWindow::crear_barraMantenimiento()
 {
-    btn_clientes = new ToolBarButton(tr("Clientes"),":/Icons/PNG/clientes_2.png",this);
-    //btn_proovedores = new ToolBarButton(tr("Proveedores"),":/Icons/PNG/proveedores_2.png",this);
-    btn_almacen = new ToolBarButton(tr("Almacen"),":/Icons/PNG/Box.png",this);
-    btn_agenda = new ToolBarButton(tr("Agenda"),":/Icons/PNG/Calender.png",this);
-
-    QFrame*  line = new QFrame(ui->page_manten);
-    line->setFrameShape(QFrame::HLine);
-    line->setFrameShadow(QFrame::Sunken);
-
-    ui->verticalLayout_manten->addWidget(btn_clientes);
-    ui->verticalLayout_manten->addWidget(btn_almacen);
-    ui->verticalLayout_manten->addWidget(line);
-    ui->verticalLayout_manten->addWidget(btn_agenda);
-    ui->verticalLayout_manten->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
-
-    connect(btn_clientes,SIGNAL(clicked()),this,SLOT(btnClientes_clicked()));
-    connect(btn_almacen,SIGNAL(clicked()),this,SLOT(btnArticulos_clicked()));
-    //connect(btn_proovedores,SIGNAL(clicked()),this,SLOT(btnProveedores_clicked()));
-    connect(btn_agenda,SIGNAL(clicked()),this,SLOT(showAgenda()));
-
-    //Barra de menu
-    connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
-    connect(ui->btnArt_culos,SIGNAL(triggered()),this,SLOT(btnArticulos_clicked()));
-    //connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
-    connect(ui->btnAgenda,SIGNAL(triggered()),this,SLOT(showAgenda()));
-    connect(ui->actionPermisos_de_Agenda,SIGNAL(triggered()),this,SLOT(handle_permisosAgenda()));
+    if(!_mantenModules.isEmpty())
+    {
+        QWidget* container = new QWidget(this);
+        QVBoxLayout * box = new QVBoxLayout(container);
+        QVector<MayaModule*>::Iterator mantenIter;
+        for(mantenIter = _mantenModules.begin(); mantenIter!=_mantenModules.end();++mantenIter)
+        {
+            MayaModule * mm = *mantenIter;
+            ui->stackedWidget->addWidget(mm);
+            box->addWidget(mm->ModuleToolBarButton());
+            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
+            connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
+            if(mm->ModuleMenuPath().isEmpty())
+                ui->menuArchivos->addAction(mm->ModuleMenuBarButton());
+            else
+            {
+                //TODO subPaths
+            }
+            connect(mm,SIGNAL(block()),this,SLOT(block_main()));
+            connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+        }
+        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
+        container->setLayout(box);
+        ui->modulesStack->addWidget(container);
+        ui->comboBox->addItem(tr("Mantenimiento"));
+    }
+    if(!_mantenExtensions.isEmpty())
+    {
+        QVector<ModuleExtension*>::Iterator iter;
+        for(iter=_mantenExtensions.begin();iter!=_mantenExtensions.end();++iter)
+        {
+            if((*iter)->ExtensionPath().isEmpty())
+               ui->menuArchivos->addActions((*iter)->Extensions());
+            else
+            {
+                QMenu* in_menu = new QMenu((*iter)->ExtensionPath(),this);
+                in_menu->addActions((*iter)->Extensions());
+                ui->menuArchivos->addMenu(in_menu);
+            }
+        }
+    }
+    QAction* exit = new QAction("Salir",this);
+    connect(exit,SIGNAL(triggered()),this,SLOT(close()));
+    ui->menuArchivos->addSeparator();
+    ui->menuArchivos->addAction(exit);
 }
 
-void MainWindow::crear_barraVentas(MayaModule *mm)
+void MainWindow::crear_barraVentas()
 {
-    ui->verticalLayout_ventas->addWidget(mm->ModuleToolBarButton());
-    connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
-    connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
-    if(mm->ModuleMenuPath().isEmpty())
-        ui->menuVentas->addAction(mm->ModuleMenuBarButton());
-    else
+    if(!_ventasModules.isEmpty())
     {
-        //TODO subPaths
+        QMenu* menu = new QMenu(tr("Ventas"),this);
+        QWidget* container = new QWidget(this);
+        QVBoxLayout * box = new QVBoxLayout(container);
+        QVector<MayaModule*>::Iterator ventasIter;
+        for(ventasIter = _ventasModules.begin(); ventasIter!=_ventasModules.end();++ventasIter)
+        {
+            MayaModule * mm = *ventasIter;
+            ui->stackedWidget->addWidget(mm);
+            box->addWidget(mm->ModuleToolBarButton());
+            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
+            connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
+            if(mm->ModuleMenuPath().isEmpty())
+                menu->addAction(mm->ModuleMenuBarButton());
+            else
+            {
+                //TODO subPaths
+            }
+            connect(mm,SIGNAL(block()),this,SLOT(block_main()));
+            connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+        }
+        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
+        container->setLayout(box);
+        ui->modulesStack->addWidget(container);
+        ui->comboBox->addItem(tr("Ventas"));
+        ui->menubar->addMenu(menu);
     }
-    connect(mm,SIGNAL(block()),this,SLOT(block_main()));
-    connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
-}
-
-void MainWindow::crear_barraCompras(MayaModule* mm)
-{
-    ui->verticalLayout_compras->addWidget(mm->ModuleToolBarButton());
-    connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
-    connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
-    if(mm->ModuleMenuPath().isEmpty())
-        ui->menuCompras->addAction(mm->ModuleMenuBarButton());
-    else
-    {
-        //TODO subPaths
-    }
-    connect(mm,SIGNAL(block()),this,SLOT(block_main()));
-    connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
 }
 
 void MainWindow::crear_barraAlmacen()
 {
-    btn_articulos_2 = new ToolBarButton(tr("Artículos "),":/Icons/PNG/Box.png",this);
+    QMenu* menu  =0;
+    if(!_almacenModules.isEmpty())
+    {
+        menu = new QMenu(tr("Almacen"),this);
+        QWidget* container = new QWidget(this);
+        QVBoxLayout * box = new QVBoxLayout(container);
+        QVector<MayaModule*>::Iterator almacenIter;
+        for(almacenIter = _almacenModules.begin(); almacenIter!=_almacenModules.end();++almacenIter)
+        {
+            MayaModule * mm = *almacenIter;
+            ui->stackedWidget->addWidget(mm);
+            box->addWidget(mm->ModuleToolBarButton());
+            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
+            connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
+            if(mm->ModuleMenuPath().isEmpty())
+                menu->addAction(mm->ModuleMenuBarButton());
+            else
+            {
+                //TODO subPaths
+            }
+            connect(mm,SIGNAL(block()),this,SLOT(block_main()));
+            connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+        }
+        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
+        container->setLayout(box);
+        ui->modulesStack->addWidget(container);
+        ui->comboBox->addItem(tr("Almacen"));        
+    }
+    if(!_almacenExtensions.isEmpty())
+    {
+        if(menu == 0)
+            menu = new QMenu(tr("Almacen"),this);
+        QVector<ModuleExtension*>::Iterator iter;
+        for(iter=_almacenExtensions.begin();iter!=_almacenExtensions.end();++iter)
+        {
+            if((*iter)->ExtensionPath().isEmpty())
+               menu->addActions((*iter)->Extensions());
+            else
+            {
+                QMenu* in_menu = new QMenu((*iter)->ExtensionPath(),this);
+                in_menu->addActions((*iter)->Extensions());
+                menu->addMenu(in_menu);
+            }
+        }
+    }
+    if(menu)
+        ui->menubar->addMenu(menu);
+}
 
-    QFrame*  line = new QFrame(ui->page_almacen);
-    line->setFrameShape(QFrame::HLine);
-    line->setFrameShadow(QFrame::Sunken);
+void MainWindow::crear_barraCompras()
+{
+    if(!_comprasModules.isEmpty())
+    {
+        QMenu* menu = new QMenu(tr("Compras"),this);
+        QWidget* container = new QWidget(this);
+        QVBoxLayout * box = new QVBoxLayout(container);
+        QVector<MayaModule*>::Iterator comprasIter;
+        for(comprasIter = _comprasModules.begin(); comprasIter!=_comprasModules.end();++comprasIter)
+        {
+            MayaModule * mm = *comprasIter;
+            ui->stackedWidget->addWidget(mm);
+            box->addWidget(mm->ModuleToolBarButton());
+            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
+            connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
+            if(mm->ModuleMenuPath().isEmpty())
+                menu->addAction(mm->ModuleMenuBarButton());
+            else
+            {
+                //TODO subPaths
+            }
+            connect(mm,SIGNAL(block()),this,SLOT(block_main()));
+            connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+        }
+        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
+        container->setLayout(box);
+        ui->modulesStack->addWidget(container);
+        ui->comboBox->addItem(tr("Compras"));
+        ui->menubar->addMenu(menu);
+    }
+}
 
-    ui->verticalLayout_almacen->addWidget(btn_articulos_2);
-
-    ui->verticalLayout_almacen->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
-
-    connect(btn_articulos_2,SIGNAL(clicked()),this,SLOT(btnArticulos_2_clicked()));
-
-    //barra de menu
-    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
-    connect(ui->actionPedidos,SIGNAL(triggered()),this,SLOT(btn_Pedido_cliente_clicked()));
-    connect(ui->actionAlbaranes_2,SIGNAL(triggered()),this,SLOT(btnAlbaran_clientes_clicked()));
-    connect(ui->actionFacturas,SIGNAL(triggered()),this,SLOT(btnFacturaCliente_clicked()));
-    connect(ui->actionVentas_Contado,SIGNAL(triggered()),this,SLOT(btnCajaMinuta_clicked()));
-    connect(ui->actionRecepci_n_de_Pedidos,SIGNAL(triggered()),this,SLOT(btn_recepcionPedidos_clicked()));
+void MainWindow::crear_barraUtils()
+{
+    if(!_utilsModules.isEmpty())
+    {
+        QMenu* menu = new QMenu(tr("Utilidades"),this);
+        QWidget* container = new QWidget(this);
+        QVBoxLayout * box = new QVBoxLayout(container);
+        QVector<MayaModule*>::Iterator utilIter;
+        for(utilIter =  _utilsModules.begin(); utilIter!= _utilsModules.end();++utilIter)
+        {
+            MayaModule * mm = *utilIter;
+            ui->stackedWidget->addWidget(mm);
+            box->addWidget(mm->ModuleToolBarButton());
+            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
+            connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
+            if(mm->ModuleMenuPath().isEmpty())
+                menu->addAction(mm->ModuleMenuBarButton());
+            else
+            {
+                //TODO subPaths
+            }
+            connect(mm,SIGNAL(block()),this,SLOT(block_main()));
+            connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+        }
+        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
+        container->setLayout(box);
+        ui->modulesStack->addWidget(container);
+        ui->comboBox->addItem(tr("Utilidades"));
+        ui->menubar->addMenu(menu);
+    }
 }
 
 void MainWindow::crear_barraAdmin()
 {
-    btn_reports = new ToolBarButton(tr("Editar \nreportes "),":/Icons/PNG/reports.png",this);
-    btn_empresa = new ToolBarButton(tr("Empresas"),":/Icons/PNG/empresa.png",this);
-    btn_config = new ToolBarButton(tr("configuración"),":/Icons/PNG/Config.png",this);
-
-
-    QFrame*  line = new QFrame(ui->page_admin);
-    line->setFrameShape(QFrame::HLine);
-    line->setFrameShadow(QFrame::Sunken);
-
-    ui->verticalLayout_admin->addWidget(btn_reports);
-    ui->verticalLayout_admin->addWidget(btn_empresa);
-    ui->verticalLayout_admin->addWidget(btn_config);
-
-    ui->verticalLayout_admin->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
-
-    connect(btn_reports,SIGNAL(clicked()),this,SLOT(btn_reports_clicked()));
-    connect(btn_empresa,SIGNAL(clicked()),this,SLOT(editar_empresas()));
-    connect(btn_config,SIGNAL(clicked()),this,SLOT(configuracion()));
-
-    //barra de menu
-    //    connect(ui->actionPresupuestos,SIGNAL(triggered()),this,SLOT(btnPresup_clientes_clicked()));
+    if(!_adminModules.isEmpty())
+    {
+        QMenu* menu = new QMenu(tr("Administrador"),this);
+        QWidget* container = new QWidget(this);
+        QVBoxLayout * box = new QVBoxLayout(container);
+        QVector<MayaModule*>::Iterator Iter;
+        for(Iter =  _adminModules.begin(); Iter!=_adminModules.end();++Iter)
+        {
+            MayaModule * mm = *Iter;
+            ui->stackedWidget->addWidget(mm);
+            box->addWidget(mm->ModuleToolBarButton());
+            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
+            connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
+            if(mm->ModuleMenuPath().isEmpty())
+                menu->addAction(mm->ModuleMenuBarButton());
+            else
+            {
+                //TODO subPaths
+            }
+            connect(mm,SIGNAL(block()),this,SLOT(block_main()));
+            connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+        }
+        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
+        container->setLayout(box);
+        ui->modulesStack->addWidget(container);
+        ui->comboBox->addItem(tr("Administrador"));
+        ui->menubar->addMenu(menu);
+    }
 }
 
 void MainWindow::crear_barraContabilidad()
 {
-    btn_cuentas = new ToolBarButton(tr("Cuentas"),":/Icons/PNG/asientos.png",this);
-    btn_diario = new ToolBarButton(tr("Diario"),":/Icons/PNG/cuentas.png",this);
-
-    QFrame*  line = new QFrame(ui->page_contabilidad);
-    line->setFrameShape(QFrame::HLine);
-    line->setFrameShadow(QFrame::Sunken);
-
-    ui->verticalLayout_contabilidad->addWidget(btn_cuentas);
-    ui->verticalLayout_contabilidad->addWidget(btn_diario);
-
-    ui->verticalLayout_contabilidad->addSpacerItem(new QSpacerItem(20, 87, QSizePolicy::Minimum, QSizePolicy::Expanding));
-
-    connect(btn_cuentas,SIGNAL(clicked()),this,SLOT(btn_cuentas_clicked()));
-    connect(btn_diario,SIGNAL(clicked()),this,SLOT(btn_diario_clicked()));
-
-
-    //Barra de menu
-    connect(ui->btnClientes,SIGNAL(triggered()),this,SLOT(btnClientes_clicked()));
-    connect(ui->btnArt_culos,SIGNAL(triggered()),this,SLOT(btnArticulos_clicked()));
-    connect(ui->btnProveedores,SIGNAL(triggered()),this,SLOT(btnProveedores_clicked()));
-    connect(ui->btnAgenda,SIGNAL(triggered()),this,SLOT(showAgenda()));
-    connect(ui->actionPermisos_de_Agenda,SIGNAL(triggered()),this,SLOT(handle_permisosAgenda()));
+    //btn_cuentas = new ToolBarButton(tr("Cuentas"),":/Icons/PNG/asientos.png",this);
+    if(!_contaModules.isEmpty())
+    {
+        QMenu* menu = new QMenu(tr("Contabilidad"),this);
+        QWidget* container = new QWidget(this);
+        QVBoxLayout * box = new QVBoxLayout(container);
+        QVector<MayaModule*>::Iterator Iter;
+        for(Iter =  _contaModules.begin(); Iter!=_contaModules.end();++Iter)
+        {
+            MayaModule * mm = *Iter;
+            ui->stackedWidget->addWidget(mm);
+            box->addWidget(mm->ModuleToolBarButton());
+            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
+            connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
+            if(mm->ModuleMenuPath().isEmpty())
+                menu->addAction(mm->ModuleMenuBarButton());
+            else
+            {
+                //TODO subPaths
+            }
+            connect(mm,SIGNAL(block()),this,SLOT(block_main()));
+            connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+        }
+        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
+        container->setLayout(box);
+        ui->modulesStack->addWidget(container);
+        ui->comboBox->addItem(tr("Contabilidad"));
+        ui->menubar->addMenu(menu);
+    }
 }
 
-
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+void MainWindow::crear_barraClinica()
 {
-    ui->setupUi(this);
-    on_edit = false;
-    Configuracion_global->CargarDatos();
-
-    // ----------------------------------------------------------------------------
-    // Conexiones
-    // ----------------------------------------------------------------------------
-    connect(ui->btnSalir,SIGNAL(triggered()),this,SLOT(close()));
-    connect(ui->btn_salir,SIGNAL(clicked()),this,SLOT(close()));
-
-    connect(ui->actionGestion_de_Secciones,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
-    connect(ui->actionGestion_de_Familias,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
-    connect(ui->actionGestion_de_subfamilias,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
-    connect(ui->actionSubSubFamilias,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
-    connect(ui->actionGrupos,SIGNAL(triggered()),this,SLOT(divisiones_almacen()));
-
-    connect(ui->actionDoctores,SIGNAL(triggered()),this,SLOT(handle_doctores()));
-    connect(ui->actionBancos,SIGNAL(triggered()),this,SLOT(handle_bancos()));
-    connect(ui->btnTipos_de_Iva,SIGNAL(triggered()),this,SLOT(handle_tiposIVA()));
-    connect(ui->btnFormas_de_Pago,SIGNAL(triggered()),this,SLOT(handle_fomasPago()));
-    connect(ui->actionPaises,SIGNAL(triggered()),this,SLOT(handle_paises()));
-    connect(ui->actionAvisos,SIGNAL(triggered()),this,SLOT(hande_avisos()));
-    connect(ui->actionTipos_de_imagen,SIGNAL(triggered()),this,SLOT(handle_tiposImagen()));
-    connect(ui->actionTipos_de_anal_tica,SIGNAL(triggered()),this,SLOT(handle_tipoAnalitica()));
-    connect(ui->actionTarifas,SIGNAL(triggered()), this,SLOT(tipostarifa()));
-    connect(ui->actionCampos_de_analitica,SIGNAL(triggered()),this,SLOT(handle_campoAnalitica()));
-    connect(ui->actionMotivos_de_interconsulta,SIGNAL(triggered()),this,SLOT(handle_motivoInterConsulta()));
-    connect(ui->actionMonedas,SIGNAL(triggered()),this,SLOT(handle_monedas()));
-
-    //------------------
-    // Botones barra
-    //------------------
-    connect(ui->btn_barra_clientes,SIGNAL(clicked()),this,SLOT(btnClientes_clicked()));
-    connect(ui->btn_barra_proveedores,SIGNAL(clicked()),this,SLOT(btnProveedores_clicked()));
-    connect(ui->btn_barra_albaran_pro,SIGNAL(clicked()),this,SLOT(btn_albaranes_pro_clicked()));
-    connect(ui->btn_barra_alb_cliente,SIGNAL(clicked()),this,SLOT(btnAlbaran_clientes_clicked()));
-    connect(ui->btn_barra_articulos,SIGNAL(clicked()),this,SLOT(btnArticulos_clicked()));
-    connect(ui->btn_barra_factura_pro,SIGNAL(clicked()),this,SLOT(btn_facturas_pro_clicked()));
-    connect(ui->btn_barra_fra_cliente,SIGNAL(clicked()),this,SLOT(btnFacturaCliente_clicked()));
-    connect(ui->btn_barra_ped_cliente,SIGNAL(clicked()),this,SLOT(btn_Pedido_cliente_clicked()));
-    connect(ui->btn_barra_recepcion_ped_pro,SIGNAL(clicked()),this,SLOT(btn_recepcionPedidos_clicked()));
-    connect(ui->btn_barra_ped_pro,SIGNAL(clicked()),this,SLOT(btn_pedidos_pro_clicked()));
-    connect(ui->btn_barra_pres_cliente,SIGNAL(clicked()),this,SLOT(btnPresup_clientes_clicked()));
-    connect(ui->btn_barra_tpv_cliente,SIGNAL(clicked()),this,SLOT(btnCajaMinuta_clicked()));
-
-
-    QPixmap pixmap(":/Icons/PNG/mayafondo_blanco.png");
-    QSplashScreen splash(pixmap);
-    splash.show();
-
-    splash.showMessage(tr("Cargando modulos... Modulo de clientes") );
-
-    frmClientes1 = new frmClientes(this);
-    connect(frmClientes1,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmClientes1,SIGNAL(unblock()),this,SLOT(unblock_main()));    
-
-    splash.showMessage(tr("Cargando modulos... Modulo de articulos") );
-    frmArticulos1 = new FrmArticulos(this);
-
-    ///
-    ///// VENTAS
-    ///
-
-    splash.showMessage(tr("Cargando modulos... Modulo de presupuestos") );
-
-    frmPresupcli = new FrmPresupuestosCli(this);
-    if(frmPresupcli->userHasAcces(Configuracion_global->id_usuario_activo))
-        _ventasModules.append(frmPresupcli);
-    else
-        frmPresupcli->deleteLater();
-
-    splash.showMessage(tr("Cargando modulos... Modulo de pedidos") );
-
-    frmPedidos1 = new FrmPedidos(this);
-    if(frmPedidos1->userHasAcces(Configuracion_global->id_usuario_activo))
+    QMenu* menu = 0;
+    if(!_clinicaModules.isEmpty())
     {
-        _ventasModules.append(frmPedidos1);
+        menu = new QMenu(tr("Clinica"),this);
+        QWidget* container = new QWidget(this);
+        QVBoxLayout * box = new QVBoxLayout(container);
+        QVector<MayaModule*>::Iterator almacenIter;
+        for(almacenIter = _clinicaModules.begin(); almacenIter!=_clinicaModules.end();++almacenIter)
+        {
+            MayaModule * mm = *almacenIter;
+            ui->stackedWidget->addWidget(mm);
+            box->addWidget(mm->ModuleToolBarButton());
+            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
+            connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
+            if(mm->ModuleMenuPath().isEmpty())
+                menu->addAction(mm->ModuleMenuBarButton());
+            else
+            {
+                //TODO subPaths
+            }
+            connect(mm,SIGNAL(block()),this,SLOT(block_main()));
+            connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+        }
+        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
+        container->setLayout(box);
+        ui->modulesStack->addWidget(container);
+        ui->comboBox->addItem(tr("Almacen"));
+    }
+    if(!_clinicaExtensions.isEmpty())
+    {
+        if(menu == 0)
+            menu = new QMenu(tr("Clinica"),this);
+        QVector<ModuleExtension*>::Iterator iter;
+        for(iter=_clinicaExtensions.begin();iter!=_clinicaExtensions.end();++iter)
+        {
+            if((*iter)->ExtensionPath().isEmpty())
+               menu->addActions((*iter)->Extensions());
+            else
+            {
+                QMenu* in_menu = new QMenu((*iter)->ExtensionPath(),this);
+                in_menu->addActions((*iter)->Extensions());
+                menu->addMenu(in_menu);
+            }
+        }
+    }
+    if(menu)
+        ui->menubar->addMenu(menu);
+}
+
+void MainWindow::loadVentasModules(QSplashScreen *splash)
+{
+    splash->showMessage(tr("Cargando modulos... Modulo de presupuestos") );
+
+    FrmPresupuestosCli* Presupcli = new FrmPresupuestosCli(this);
+    if(Presupcli->userHaveAcces(Configuracion_global->id_usuario_activo))
+        _ventasModules.append(Presupcli);
+    else
+        Presupcli->deleteLater();
+
+    splash->showMessage(tr("Cargando modulos... Modulo de pedidos") );
+
+    FrmPedidos* Pedidos = new FrmPedidos(this);
+    if(Pedidos->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _ventasModules.append(Pedidos);
     }
     else
-        frmPedidos1->deleteLater();
+        Pedidos->deleteLater();
 
-    splash.showMessage(tr("Cargando modulos... Modulo de albaranes") );
+    splash->showMessage(tr("Cargando modulos... Modulo de albaranes") );
 
-    frmAlbaran = new FrmAlbaran(this);
-    if(frmAlbaran->userHasAcces(Configuracion_global->id_usuario_activo))
+    FrmAlbaran* Albaran = new FrmAlbaran(this);
+    if(Albaran->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
-        _ventasModules.append(frmAlbaran);
+        _ventasModules.append(Albaran);
     }
     else
-        frmAlbaran->deleteLater();
+        Albaran->deleteLater();
 
-    splash.showMessage(tr("Cargando modulos... Modulo de facturación de albaranes") );
+    splash->showMessage(tr("Cargando modulos... Modulo de facturación de albaranes") );
 
-    frmFactura_multiple = new FrmFacturarAlabaranes(this);
-    if(frmFactura_multiple->userHasAcces(Configuracion_global->id_usuario_activo))
+    FrmFacturarAlabaranes* frmFactura_multiple = new FrmFacturarAlabaranes(this);
+    if(frmFactura_multiple->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _ventasModules.append(frmFactura_multiple);
     }
     else
         frmFactura_multiple->deleteLater();
 
-    splash.showMessage(tr("Cargando modulos... Modulo de facturas") );
+    splash->showMessage(tr("Cargando modulos... Modulo de facturas") );
 
-    frmFacturas1 = new frmFacturas(this);
-    if(frmFacturas1->userHasAcces(Configuracion_global->id_usuario_activo))
+    frmFacturas* Facturas = new frmFacturas(this);
+    if(Facturas->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
-        _ventasModules.append(frmFacturas1);
+        _ventasModules.append(Facturas);
     }
     else
-        frmFacturas1->deleteLater();
+        Facturas->deleteLater();
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Ventas: gestión de cobros") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Ventas: gestión de cobros") );
 
-    frmgestcobros = new frmGestionCobros(this);
-    if(frmgestcobros->userHasAcces(Configuracion_global->id_usuario_activo))
+    frmGestionCobros* frmgestcobros = new frmGestionCobros(this);
+    if(frmgestcobros->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _ventasModules.append(frmgestcobros);
     }
     else
         frmgestcobros->deleteLater();
 
-    splash.showMessage(tr("Cargando modulos... Modulo de TPV") );
+    splash->showMessage(tr("Cargando modulos... Modulo de TPV") );
 
-    frmCajaMinuta = new FrmCajaMinuta(this);
-    if(frmCajaMinuta->userHasAcces(Configuracion_global->id_usuario_activo))
+    FrmCajaMinuta * frmCajaMinuta = new FrmCajaMinuta(this);
+    if(frmCajaMinuta->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _ventasModules.append(frmCajaMinuta);
     }
     else
         frmCajaMinuta->deleteLater();
+}
 
-    QVector<MayaModule*>::Iterator ventasIter;
-    for(ventasIter = _ventasModules.begin(); ventasIter!=_ventasModules.end();++ventasIter)
-        crear_barraVentas(*ventasIter);
+void MainWindow::loadComprasModules(QSplashScreen *splash)
+{
+    splash->showMessage(tr("Cargando modulos... Modulo de Compras: pedidos") );
 
-    ///
-    /// COMPRAS
-    ///
-    splash.showMessage(tr("Cargando modulos... Modulo de proveedores") );
-    frmProveedores1 = new frmProveedores(this);
-    if(frmProveedores1->userHasAcces(Configuracion_global->id_usuario_activo))
-    {
-        _comprasModules.append(frmProveedores1);
-    }
-    else
-        frmProveedores1->deleteLater();
-
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: pedidos") );
-
-    FrmPedidos_pro = new FrmPedidosProveedor(this);
-    if(FrmPedidos_pro->userHasAcces(Configuracion_global->id_usuario_activo))
+    FrmPedidosProveedor* FrmPedidos_pro = new FrmPedidosProveedor(this);
+    if(FrmPedidos_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _comprasModules.append(FrmPedidos_pro);
     }
     else
         FrmPedidos_pro->deleteLater();
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") );
-    frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
-    if(frmOrden_Ped_pro->userHasAcces(Configuracion_global->id_usuario_activo))
+    splash->showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") );
+
+    FrmOrden_Pedido_Producto * frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
+    if(frmOrden_Ped_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _comprasModules.append(frmOrden_Ped_pro);
     }
     else
         frmOrden_Ped_pro->deleteLater();
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Recepción de Pedidos") );
-    frmRecep_pedidos = new Frmrecepcion_pedidos(this);
-    if(frmRecep_pedidos->userHasAcces(Configuracion_global->id_usuario_activo))
+    splash->showMessage(tr("Cargando modulos... Modulo de Compras: Recepción de Pedidos") );
+    Frmrecepcion_pedidos* frmRecep_pedidos = new Frmrecepcion_pedidos(this);
+    if(frmRecep_pedidos->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _comprasModules.append(frmRecep_pedidos);
     }
     else
         frmRecep_pedidos->deleteLater();
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: albaranes") );
-    FrmAlbaran_pro = new FrmAlbaranProveedor(this);
-    if(FrmAlbaran_pro->userHasAcces(Configuracion_global->id_usuario_activo))
+    splash->showMessage(tr("Cargando modulos... Modulo de Compras: albaranes") );
+    FrmAlbaranProveedor* FrmAlbaran_pro = new FrmAlbaranProveedor(this);
+    if(FrmAlbaran_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _comprasModules.append(FrmAlbaran_pro);
     }
     else
         FrmAlbaran_pro->deleteLater();
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: facturas") );
-    frmFacturas_pro = new FrmFacturasProveedor(this);
-    if(frmFacturas_pro->userHasAcces(Configuracion_global->id_usuario_activo))
+    splash->showMessage(tr("Cargando modulos... Modulo de Compras: facturas") );
+    FrmFacturasProveedor* frmFacturas_pro = new FrmFacturasProveedor(this);
+    if(frmFacturas_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _comprasModules.append(frmFacturas_pro);
     }
     else
         frmFacturas_pro->deleteLater();
-    QVector<MayaModule*>::Iterator comprasIter;
-    for(comprasIter = _comprasModules.begin(); comprasIter!=_comprasModules.end();++comprasIter)
-        crear_barraCompras(*comprasIter);
+}
 
-    ///
-    ///
-    ///
+void MainWindow::loadAlmacenModules(QSplashScreen* splash)
+{
+    splash->showMessage(tr("Cargando modulos... Modulo de articulos") );
+    FrmArticulos* Articulos = new FrmArticulos(this);
+    if(Articulos->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _almacenModules.append(Articulos);
+    }
+    else
+        Articulos->deleteLater();
 
-    splash.showMessage(tr("Cargando modulos... Editor de reportes") );
-    reportWindow = new ReportWriterWindow();
+    DivisionAlmacenExt* x = new DivisionAlmacenExt(this);
+    if(!x->Extensions().isEmpty())
+        _almacenExtensions.append(x);
+    else
+        x->deleteLater();
+}
 
+void MainWindow::loadMantenModules(QSplashScreen* splash)
+{
+    splash->showMessage(tr("Cargando modulos... Modulo de clientes") );
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Contabilidad: Diario de apuntes") );
-    frmentrada_apuntes = new FrmEntrada_apuntes(this);
-    connect(frmentrada_apuntes,SIGNAL(block()),this,SLOT(block_main()));
-    connect(frmentrada_apuntes,SIGNAL(unblock()),this,SLOT(unblock_main()));
+    frmClientes* Clientes = new frmClientes(this);
+    if(Clientes->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _mantenModules.append(Clientes);
+    }
+    else
+        Clientes->deleteLater();
 
-    splash.showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") );
-    agendaForm = new AgendaForm(this);
+    splash->showMessage(tr("Cargando modulos... Modulo de proveedores") );
+    frmProveedores * Proveedores = new frmProveedores(this);
+    if(Proveedores->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _mantenModules.append(Proveedores);
+    }
+    else
+        Proveedores->deleteLater();
 
-    splash.showMessage(tr("Integrando modulos") );
+    ArchivosGeneralesExt* e = new ArchivosGeneralesExt(this);
+    if(!e->Extensions().isEmpty())
+        _mantenExtensions.append(e);
+    else
+        e->deleteLater();
+}
 
-    ui->stackedWidget->addWidget(frmClientes1);
-    ui->stackedWidget->addWidget(frmFacturas1);
-    ui->stackedWidget->addWidget(frmArticulos1);
-    ui->stackedWidget->addWidget(frmProveedores1);
-    ui->stackedWidget->addWidget(frmAlbaran);
-    ui->stackedWidget->addWidget(frmPedidos1);
-    ui->stackedWidget->addWidget(frmPresupcli);
-    ui->stackedWidget->addWidget(frmCajaMinuta);
-    ui->stackedWidget->addWidget(FrmPedidos_pro);
-    ui->stackedWidget->addWidget(FrmAlbaran_pro);
-    ui->stackedWidget->addWidget(frmFacturas_pro);
-    ui->stackedWidget->addWidget(frmFactura_multiple);
-    ui->stackedWidget->addWidget(frmOrden_Ped_pro);
-    ui->stackedWidget->addWidget(frmRecep_pedidos);
-    ui->stackedWidget->addWidget(reportWindow);
-    ui->stackedWidget->addWidget(agendaForm);
-    ui->stackedWidget->addWidget(frmentrada_apuntes);
-    ui->stackedWidget->addWidget(frmgestcobros);
-    MayaForm = new init_form(this);
-    ui->stackedWidget->addWidget(MayaForm);
-    ui->stackedWidget->setCurrentWidget(MayaForm);
+void MainWindow::loadUtilsModules(QSplashScreen *splash)
+{
+    splash->showMessage(tr("Cargando modulos... Modulo de Utilidades: Agenda") );
+    AgendaForm* agendaForm = new AgendaForm(this);
+    if(agendaForm->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _utilsModules.append(agendaForm);
+    }
+    else
+        agendaForm->deleteLater();
 
-    QApplication::processEvents();
+    splash->showMessage(tr("Cargando modulos... Editor de reportes") );
+    ReportModule* reportWindow = new ReportModule(this);
+    if(reportWindow->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _utilsModules.append(reportWindow);
+    }
+    else
+        reportWindow->deleteLater();
+}
 
+void MainWindow::loadAminModules(QSplashScreen *splash)
+{
+    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configuración general") );
+    frmConfigmaya* c = new frmConfigmaya(this);
+    if(c->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _adminModules.append(c);
+    }
+    else
+        c->deleteLater();
 
+    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configurar empresa") );
+    FrmEmpresas* e = new FrmEmpresas(this);
+    if(e->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _adminModules.append(e);
+    }
+    else
+        e->deleteLater();
 
-    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
-    ui->txtcCategoria->setText(settings.value("cCategoria").toString());
+    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Usuarios") );
+    FrmUsuarios* u = new FrmUsuarios(this);
+    if(u->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _adminModules.append(u);
+    }
+    else
+        u->deleteLater();
+}
 
+void MainWindow::loadContaModules(QSplashScreen *splash)
+{
+    splash->showMessage(tr("Cargando modulos... Modulo de Contabilidad: Diario de apuntes") );
+    FrmEntrada_apuntes * frmentrada_apuntes = new FrmEntrada_apuntes(this);
+    if(frmentrada_apuntes->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _contaModules.append(frmentrada_apuntes);
+    }
+    else
+        frmentrada_apuntes->deleteLater();
+}
 
-//    //-------------------------------
-//    // CAMBIO DIVISA
-//    //-------------------------------
+void MainWindow::loadSecMedModules(QSplashScreen *splash)
+{
+    splash->showMessage(tr("Cargando modulos... Extension de Clinica") );
+    ArchivosGeneralesExt* e = new ArchivosGeneralesExt(this);
+    if(!e->Extensions().isEmpty())
+        _clinicaExtensions.append(e);
+    else
+        e->deleteLater();
+}
+
+void MainWindow::updateDivisas()
+{
     if(Configuracion_global->actualizardivisas)
     {
         connect(Configuracion_global,SIGNAL(cambioReady(float,QString)),this,SLOT(actualizar_divisas(float,QString)));
@@ -410,36 +566,59 @@ MainWindow::MainWindow(QWidget *parent) :
             while (divisas.next()) {
                if(divisas.record().value("fecha_cambio").toDate()!=QDate::currentDate())
                 {
-                    this->id_divisa = divisas.record().value("id").toInt();
                     Configuracion_global->getCambio("EUR",divisas.record().value("nombreCorto").toString(),1);
-
                 }
             }
         }
     }
+}
 
-    QStringList modulos;
-    modulos << tr("Mantenimiento")  << tr("Compras") << tr("Ventas")  << tr("Contabilidad") << tr("Almacen")  << tr("Administrador");
-    ui->comboBox->addItems(modulos);
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+    on_edit = false;
+    Configuracion_global->CargarDatos();
+
+    QPixmap pixmap(":/Icons/PNG/mayafondo_blanco.png");
+    QSplashScreen splash(pixmap);
+    splash.show();
+
+    loadMantenModules(&splash);
     crear_barraMantenimiento();
 
+    loadComprasModules(&splash);
+    crear_barraCompras();
+
+    loadVentasModules(&splash);
+    crear_barraVentas();
+
+    loadAlmacenModules(&splash);
     crear_barraAlmacen();
 
-    crear_barraAdmin();
+    loadUtilsModules(&splash);
+    crear_barraUtils();
 
+    loadContaModules(&splash);
     crear_barraContabilidad();
 
-    ui->stackedWidget_2->setCurrentIndex(0);
-    if (Configuracion_global->medic)
-    {
-        ui->btnClientes->setText(tr("Pacientes"));
-        btn_clientes->setText(tr("Pacientes"));
-    }
-    else
-    {
-        ui->btnClientes->setText(tr("Clientes"));
-        ui->menuClinica->deleteLater();
-    }
+    loadSecMedModules(&splash);
+    crear_barraClinica();
+
+    loadAminModules(&splash);
+    crear_barraAdmin();
+
+    MayaForm = new init_form(this);
+    ui->stackedWidget->addWidget(MayaForm);
+    ui->stackedWidget->setCurrentWidget(MayaForm);
+
+    QApplication::processEvents();
+
+    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
+    ui->txtcCategoria->setText(settings.value("cCategoria").toString());
+
+    updateDivisas();
 }
 
 void MainWindow::block_main()
@@ -455,7 +634,6 @@ void MainWindow::unblock_main()
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete reportWindow;
 }
 
 void MainWindow::showInfo()
@@ -478,115 +656,6 @@ void MainWindow::actualizar_divisas(float valor_divisa, QString divisaDest)
     valor.exec();
 }
 
-void MainWindow::btnMantenimientos_clicked()
-{
-    //ui->manten_ToolBar->show();
-    //ui->ventas_toolBar->hide();
-}
-
-void MainWindow::btnVentas_clicked()
-{
-   // ui->manten_ToolBar->hide();
-   // ui->ventas_toolBar->show();
-}
-
-void MainWindow::btnClientes_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmClientes1);
-}
-void MainWindow::btnFacturaCliente_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmFacturas1);
-}
-
-void MainWindow::btnArticulos_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmArticulos1);
-}
-
-void MainWindow::btnProveedores_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmProveedores1);
-}
-
-void MainWindow::btnFactura_multiple_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmFactura_multiple);
-}
-
-void MainWindow::btn_Pedido_cliente_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmPedidos1);
-}
-
-void MainWindow::btnPresup_clientes_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmPresupcli);
-}
-
-void MainWindow::btnCajaMinuta_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmCajaMinuta);
-    frmCajaMinuta->setFocus();
-}
-
-void MainWindow::btnGestionCobros_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmgestcobros);
-
-}
-
-void MainWindow::btn_pedidos_pro_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(FrmPedidos_pro);
-}
-
-void MainWindow::btn_albaranes_pro_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(FrmAlbaran_pro);
-}
-
-void MainWindow::btn_facturas_pro_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmFacturas_pro);
-}
-
-void MainWindow::btn_recepcionPedidos_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmRecep_pedidos);
-}
-
-void MainWindow::btnArticulos_2_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmArticulos1);
-}
-
-void MainWindow::btnOrden_pedido_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmOrden_Ped_pro);
-}
-
-void MainWindow::btn_reports_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(reportWindow);
-}
-
-void MainWindow::btn_diario_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(frmentrada_apuntes);
-}
-
-//void MainWindow::on_btnAgenda_clicked()
-//{
-//    ui->btnAgenda->setEnabled(false);
-//    frmAgendaVisitas *frmAgenda1 = new frmAgendaVisitas();
-//    frmAgenda1->setWindowState(Qt::WindowMaximized);
-//    frmAgenda1->exec();
-//    cerrarSubWindows();
-//    ui->btnAgenda->setEnabled(true);
-//}
-
-
 void MainWindow::on_btn_bloquear_clicked()
 {
     block_Maya_form form(this);
@@ -594,106 +663,6 @@ void MainWindow::on_btn_bloquear_clicked()
     this->hide();
     form.exec();
     this->show();
-}
-
-void MainWindow::divisiones_almacen()
-{
-    if(sender()== ui->actionGestion_de_Secciones)
-    {
-        Db_table_View form(this);
-        form.set_db("Maya");
-        form.set_table("secciones");
-
-        form.setWindowTitle(tr("Secciones"));
-
-        QStringList headers;
-        headers << tr("Seccion");
-        form.set_table_headers(headers);
-
-        form.set_columnHide(0);
-        form.set_columnHide(2);
-        form.exec();
-    }
-    else if (sender() == ui->actionGestion_de_Familias)
-    {
-        Db_table_View form(this);
-        form.set_db("Maya");
-        form.set_table("familias");
-
-        form.setWindowTitle(tr("Familias"));
-
-        QStringList headers;
-        headers << tr("Codigo") << tr("Familia") << tr("Pertenece a");
-        form.set_table_headers(headers);
-
-        form.set_relation(3,QSqlRelation("secciones","id","cSeccion"));
-
-        form.set_columnHide(0);
-        form.exec();
-    }
-    else if (sender() == ui->actionGestion_de_subfamilias)
-    {
-        Db_table_View form(this);
-        form.set_db("Maya");
-        form.set_table("subfamilias");
-
-        form.setWindowTitle(tr("Subfamilias"));
-
-        QStringList headers;
-        headers << tr("SubFamilia") << tr("Pertenece a");
-        form.set_table_headers(headers);
-                                 //tabla a buscar, columna relacionada y lo que quiero mostar
-        form.set_relation(2,QSqlRelation("familias","id","cFamilia"));
-
-        form.set_columnHide(0);
-        form.exec();
-    }
-    else if (sender() == ui->actionSubSubFamilias)
-    {
-        Db_table_View form(this);
-        form.set_db("Maya");
-        form.set_table("subsubfamilias");
-
-        form.setWindowTitle(tr("SubSubfamilias"));
-
-        QStringList headers;
-        headers << tr("SubSubFamilia") << tr("Pertenece a");
-        form.set_table_headers(headers);
-
-        form.set_relation(2,QSqlRelation("subfamilias","id","cSubfamilia"));
-
-        form.set_columnHide(0);
-        form.exec();
-    }
-    else if (sender() == ui->actionGrupos)
-    {
-        Db_table_View form(this);
-        form.set_db("Maya");
-        form.set_table("grupoart");
-
-        form.setWindowTitle(tr("Grupo de Articulos"));
-
-        QStringList headers;
-        headers << tr("Grupo") << tr("Pertenece a");
-        form.set_table_headers(headers);
-
-        form.set_relation(2,QSqlRelation("subsubfamilias","id","subsubfamilia"));
-
-        form.set_columnHide(0);
-        form.exec();
-    }
-}
-
-void MainWindow::editar_empresas()
-{
-    FrmEmpresas frmEmpresa(this);
-    frmEmpresa.setWindowState(Qt::WindowMaximized);
-    frmEmpresa.exec();
-}
-void MainWindow::configuracion()
-{
-    frmConfigmaya frmConfig(this);
-    frmConfig.exec();
 }
 
 void MainWindow::handle_toolBar()
@@ -704,220 +673,6 @@ void MainWindow::handle_toolBar()
     QAction * a = qobject_cast<QAction *>(sender());
     if(a)
        ui->stackedWidget->setCurrentWidget((QWidget*)a->parent());
-}
-
-
-void MainWindow::handle_doctores()
-{
-    Db_table_View form(this);
-    form.set_db("dbmedica");
-    form.set_table("doctores");
-
-    form.setWindowTitle(tr("Doctores"));
-
-    QStringList headers;
-    headers << tr("Nombre") << tr("Nº Colegiado") << tr("Teléfono") << tr("Especialidad 1");
-    headers << tr("Especialidad 2") << tr("Dirección") << tr("C.P.") << tr("Población");
-    headers << tr("Provincia") << tr("Pais") << tr("Movil");
-    form.set_table_headers(headers);
-
-    form.set_columnHide(0);
-    form.set_columnHide(12);
-    form.set_columnHide(13);
-    form.set_columnHide(14);
-    form.exec();
-}
-
-void MainWindow::handle_bancos()
-{
-    Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("bancos");
-
-    form.setWindowTitle(tr("Bancos"));
-
-    QStringList headers;
-    headers << tr("Descripción") << tr("Entidad") << tr("Oficina") << tr("Dc");
-    headers << tr("Cuenta") << tr("Saldo");
-    form.set_table_headers(headers);
-
-    form.set_columnHide(0);
-    form.exec();
-}
-
-void MainWindow::handle_tiposIVA()
-{
-    Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("tiposiva");
-
-    form.setWindowTitle(tr("Tipos de I.V.A"));
-
-    QStringList headers;
-    headers << "" << tr("Tipo") << tr("Decripción") << tr("I.V.A") << tr("Recargo equivalencia");
-    form.set_table_headers(headers);
-
-    form.set_columnHide(0);
-    form.set_columnHide(1);
-    form.set_noInsertDeleteRows();
-    form.exec();
-    Configuracion_global->Cargar_iva();
-}
-
-void MainWindow::handle_fomasPago()
-{
-    Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("FormPago");
-
-    form.setWindowTitle(tr("Formas de pago"));
-
-    QStringList headers;
-    headers << tr("Codigo") << tr("Forma de pago") << tr("Dia de pago 1") << tr("Dia de pago 2");
-    headers << tr("Dia de pago 3") << tr("Dia de pago 4") << tr("Dia 1") << tr("Dia 2") << tr("Dia 3")<< tr("Dia 4");
-    form.set_table_headers(headers);
-
-    form.set_columnHide(0);
-    form.exec();
-}
-
-void MainWindow::handle_paises()
-{
-    Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("paises");
-
-    form.setWindowTitle(tr("Paises"));
-
-    QStringList headers;
-    headers << tr("Pais") << tr("Moneda");
-    form.set_table_headers(headers);
-
-    form.set_columnHide(0);
-    form.set_relation(2,QSqlRelation("monedas","id","moneda"));
-    form.set_printFile("x");//TODO hacer directorio general de reports
-    form.exec();
-    Configuracion_global->Cargar_paises();
-}
-
-void MainWindow::hande_avisos()
-{
-    Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("avisos");
-
-    form.setWindowTitle(tr("Avisos"));
-
-    QStringList headers;
-    headers << tr("Motivo") << tr("Inicio") << tr("Final") << tr("Descripcion") << tr("Estado");
-    headers << tr("Tipo de aviso") << tr("Avisar a");
-    form.set_table_headers(headers);
-
-    form.set_relation(6,QSqlRelation("tiposaviso","id","tipoaviso"));
-    form.set_relation(7,QSqlRelation("usuarios","id","nombre"));
-    form.set_columnHide(0);
-    form.exec();
-}
-
-void MainWindow::handle_tiposImagen()
-{
-    Db_table_View form(this);
-    form.set_db("dbmedica");
-    form.set_table("tiposimagen");
-
-    form.setWindowTitle(tr("Tipo de imagenes"));
-
-    QStringList headers;
-    headers << tr("Descripcion") << tr("Comentarios");
-    form.set_table_headers(headers);
-
-    form.set_columnHide(0);
-    form.exec();
-}
-
-void MainWindow::handle_tipoAnalitica()
-{
-    Db_table_View form(this);
-    form.set_db("dbmedica");
-    form.set_table("tiposanalitica");
-
-    form.setWindowTitle(tr("Tipo de Analitica"));
-
-    QStringList headers;
-    headers << tr("Tipos de Analisis");
-    form.set_table_headers(headers);
-
-    form.set_columnHide(0);
-    form.exec();
-}
-
-void MainWindow::handle_campoAnalitica()
-{
-    Db_table_View form(this);
-    form.set_db("dbmedica");
-    form.set_table("tiposanalitica2");
-
-    form.setWindowTitle(tr("Campos para analitica"));
-
-    QStringList headers;
-    headers << tr("Tipo") << tr("Descripcion") << tr("Valores de referencia") << tr("Pertenece a:");
-    form.set_table_headers(headers);
-
-    form.set_relation(4,QSqlRelation("tiposanalitica","id","tipoanalisis"));
-    form.set_columnHide(0);
-    form.exec();
-}
-
-void MainWindow::handle_motivoInterConsulta()
-{
-    Db_table_View form(this);
-    form.set_db("dbmedica");
-    form.set_table("motivosinterconsulta");
-
-    form.setWindowTitle(tr("Motivo de inter consulta"));
-
-    QStringList headers;
-    headers << tr("Tipo") << tr("Descripcion") << tr("Comentarios");
-    form.set_table_headers(headers);
-
-    form.set_columnHide(0);
-    form.exec();
-}
-
-
-void MainWindow::tipostarifa()
-{
-//    Db_table_View form(this);
-//    form.set_db("Maya");
-//    form.set_table("codigotarifa");
-
-//    form.setWindowTitle(tr("Tipos de tarifa"));
-
-//    QStringList headers;
-//    headers << tr("Descripción Tarifa");
-//    form.set_table_headers(headers);
-
-//    form.set_columnHide(400);
-//    form.exec();
-    FrmTiposTarifa tipotar(this);
-    tipotar.exec();
-
-}
-
-void MainWindow::handle_monedas()
-{
-    Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("monedas");
-
-    form.setWindowTitle(tr("Monedas"));
-
-    QStringList headers;
-    headers << tr("Moneda");
-    form.set_table_headers(headers);
-
-    form.set_columnHide(400);
-    form.exec();
 }
 
 void MainWindow::closeEvent(QCloseEvent * e)
@@ -940,7 +695,7 @@ void MainWindow::closeEvent(QCloseEvent * e)
 
 void MainWindow::blockMe(bool state)
 {
-    ui->stackedWidget_2->setEnabled(!state);
+    ui->modulesStack->setEnabled(!state);
     ui->comboBox->setEnabled(!state);
     ui->menubar->setEnabled(!state);
     QList<QPushButton*> buttons = ui->frameusuario->findChildren<QPushButton*>();
@@ -955,21 +710,11 @@ void MainWindow::blockMe(bool state)
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
-    ui->stackedWidget_2->setCurrentIndex(index);
-}
-
-void MainWindow::showAgenda()
-{
-    ui->stackedWidget->setCurrentWidget(agendaForm);
+    ui->modulesStack->setCurrentIndex(index);
 }
 
 void MainWindow::handle_permisosAgenda()
 {
     PermisosAgendaForm form(this);
     form.exec();
-}
-
-
-void MainWindow::btn_cuentas_clicked()
-{
 }

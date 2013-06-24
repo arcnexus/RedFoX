@@ -605,7 +605,6 @@ void frmFacturas::on_btnBuscar_clicked()
     FrmBuscarFactura BuscarFactura;
     BuscarFactura.exec();
     int nId = BuscarFactura.DevolverID();
-    //qDebug() << nId;
     QString cId = QString::number(nId);
     oFactura->RecuperarFactura("Select * from cab_fac where Id ="+cId+" limit 1 ");
     LLenarCampos();
@@ -686,7 +685,6 @@ void frmFacturas::lineaReady(lineaDetalle * ld)
     //Nueva linea
     if (ld->idLinea == -1)
     {
-        //qDebug()<< ld->idLinea;
         QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
         queryArticulos.prepare("select id from articulos where cCodigo =:codigo");
         queryArticulos.bindValue(":codigo",ld->codigo);

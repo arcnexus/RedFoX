@@ -5,12 +5,12 @@
 #include <QtGui>
 #include <QGraphicsScene>
 #include "graphicstable.h"
-
+#include "../mayamodule.h"
 namespace Ui {
 class AgendaForm;
 }
 
-class AgendaForm : public QDialog
+class AgendaForm : public MayaModule
 {
     Q_OBJECT
     
@@ -18,6 +18,12 @@ public:
     explicit AgendaForm(QWidget *parent = 0);
     ~AgendaForm();
 
+    moduleZone ModuleZone(){return Utilidades;}
+    QString ModuleName(){return "Agenda";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
+    void hideButton(){toolButton.hide();}
 private slots:
     void on_pushButton_clicked();
 
@@ -38,6 +44,8 @@ private:
     void resizeEvent(QResizeEvent * e );
     GraphicsTable * table;
     QColor event_color;
+    ToolBarButton toolButton;
+    QAction menuButton;
 };
 
 #endif // AGENDAFORM_H

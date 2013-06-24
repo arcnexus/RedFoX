@@ -5,11 +5,12 @@
 #include "../Auxiliares/monetarydelegate.h"
 //
 #include "articulo.h"
+#include "../mayamodule.h"
 namespace Ui {
 class FrmArticulos;
 }
 
-class FrmArticulos : public QDialog
+class FrmArticulos : public MayaModule
 {
     Q_OBJECT
     
@@ -24,6 +25,12 @@ public:
     QSqlQueryModel *modelTrazabilidad1;
     QSqlQueryModel *modelTrazabilidad2;
 
+    moduleZone ModuleZone(){return Almacen;}
+    QString ModuleName(){return "Articulos";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}    
+    void hideButton(){toolButton.hide();}
 private slots:
     void on_botSiguiente_clicked();
 
@@ -114,6 +121,8 @@ private:
     bool reformateado;
     void rellenar_grafica_proveedores();
     MonetaryDelegate *Delegado;
+    ToolBarButton toolButton;
+    QAction menuButton;
 };
 
 #endif // FRMARTICULOS_H

@@ -329,7 +329,6 @@ void Empresa::Guardar()
                                               "ADMINISTRADOR: Verifique funcionamiento correcto\n"
                                               "antes de dar acceso a usuarios"),
                                  QObject::tr("OK"));
-       // qDebug()<< qEmpresa.executedQuery();
     }
 
 

@@ -9,12 +9,12 @@
 #include "frmfichapaciente.h"
 #include "cliente.h"
 #include "../sqlcalls.h"
-
+#include "../mayamodule.h"
 namespace Ui {
 class frmClientes;
 }
 
-class frmClientes : public QDialog
+class frmClientes : public MayaModule
 {
     Q_OBJECT
 
@@ -22,9 +22,14 @@ public:
     explicit frmClientes(QWidget *parent = 0);
     ~frmClientes();
     bool Altas;
+    moduleZone ModuleZone(){return Mantenimiento;}
+    QString ModuleName(){return "Clientes";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
+    void hideButton(){toolButton.hide();}
 signals:
-    void block();
-    void unblock();
+
 public slots:
     void LLenarCampos();
     void LLenarCliente();
@@ -109,6 +114,7 @@ private:
     bool AnadirDireccion /*= false*/;
     int idDireccionAlternativa;
 
-
+    ToolBarButton toolButton;
+    QAction menuButton;
 };
 #endif

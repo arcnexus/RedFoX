@@ -172,153 +172,7 @@ background-color: rgb(46, 85, 127);</string>
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item row="0" column="13" rowspan="4">
-        <widget class="QPushButton" name="btn_barra_alb_cliente">
-         <property name="toolTip">
-          <string>albaranes a clientes</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(133, 170, 142);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="maya.qrc">
-           <normaloff>:/Icons/PNG/albaran.png</normaloff>:/Icons/PNG/albaran.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>26</width>
-           <height>26</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="11" rowspan="4">
-        <widget class="QPushButton" name="btn_barra_pres_cliente">
-         <property name="toolTip">
-          <string>Gestión de presupuestos a clientes</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(133, 170, 142);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="maya.qrc">
-           <normaloff>:/Icons/PNG/presupuestos.png</normaloff>:/Icons/PNG/presupuestos.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>26</width>
-           <height>26</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="10" rowspan="2">
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>7</width>
-           <height>13</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="4" rowspan="4">
-        <widget class="QPushButton" name="btn_barra_articulos">
-         <property name="toolTip">
-          <string>Gestión de Producto</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(133, 170, 142);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="maya.qrc">
-           <normaloff>:/Icons/PNG/articulos.png</normaloff>:/Icons/PNG/articulos.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>26</width>
-           <height>26</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2" rowspan="4">
-        <widget class="QPushButton" name="btn_barra_clientes">
-         <property name="toolTip">
-          <string>Gestión de Clientes/pacientes</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(133, 170, 142);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="maya.qrc">
-           <normaloff>:/Icons/PNG/clientes.png</normaloff>:/Icons/PNG/clientes.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>26</width>
-           <height>26</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="8" rowspan="4">
-        <widget class="QPushButton" name="btn_barra_albaran_pro">
-         <property name="toolTip">
-          <string>Albaranes de proveedores</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(133, 170, 142);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="maya.qrc">
-           <normaloff>:/Icons/PNG/albaran_pro.png</normaloff>:/Icons/PNG/albaran_pro.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>26</width>
-           <height>26</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="17" rowspan="2" colspan="2">
+       <item row="2" column="3" rowspan="2" colspan="2">
         <widget class="QLabel" name="label_3">
          <property name="styleSheet">
           <string notr="true">color: rgb(255, 255, 255);
@@ -329,33 +183,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="9" rowspan="4">
-        <widget class="QPushButton" name="btn_barra_factura_pro">
-         <property name="toolTip">
-          <string>Facturas de proveedores</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(133, 170, 142);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="maya.qrc">
-           <normaloff>:/Icons/PNG/Factura_pro.png</normaloff>:/Icons/PNG/Factura_pro.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>26</width>
-           <height>26</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="20" rowspan="4">
+       <item row="0" column="6" rowspan="4">
         <widget class="QPushButton" name="btn_bloquear">
          <property name="minimumSize">
           <size>
@@ -388,33 +216,7 @@ background-color: rgb(133, 170, 142);</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="14" rowspan="4">
-        <widget class="QPushButton" name="btn_barra_fra_cliente">
-         <property name="toolTip">
-          <string>Gestión de Facturas</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(133, 170, 142);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="maya.qrc">
-           <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>26</width>
-           <height>26</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="19" rowspan="2">
+       <item row="2" column="5" rowspan="2">
         <widget class="QLabel" name="txtcCategoria">
          <property name="styleSheet">
           <string notr="true">font: 75 8pt &quot;Cantarell&quot;;
@@ -422,74 +224,6 @@ color: rgb(255, 255, 127);</string>
          </property>
          <property name="text">
           <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5" rowspan="2">
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>7</width>
-           <height>13</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="3" rowspan="4">
-        <widget class="QPushButton" name="btn_barra_proveedores">
-         <property name="toolTip">
-          <string>Gestión de Proveedores</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(133, 170, 142);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="maya.qrc">
-           <normaloff>:/Icons/PNG/proveedores.png</normaloff>:/Icons/PNG/proveedores.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>26</width>
-           <height>26</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="6" rowspan="4">
-        <widget class="QPushButton" name="btn_barra_ped_pro">
-         <property name="toolTip">
-          <string>Pedidos a proveedores</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(133, 170, 142);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="maya.qrc">
-           <normaloff>:/Icons/PNG/pedido_pro.png</normaloff>:/Icons/PNG/pedido_pro.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>26</width>
-           <height>26</height>
-          </size>
          </property>
         </widget>
        </item>
@@ -512,7 +246,7 @@ color: rgb(255, 255, 127);</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="16" rowspan="2">
+       <item row="1" column="2" rowspan="2">
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -525,65 +259,7 @@ color: rgb(255, 255, 127);</string>
          </property>
         </spacer>
        </item>
-       <item row="0" column="15" rowspan="4">
-        <widget class="QPushButton" name="btn_barra_tpv_cliente">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>T.P.V</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(133, 170, 142);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="maya.qrc">
-           <normaloff>:/Icons/PNG/tpv.png</normaloff>:/Icons/PNG/tpv.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>26</width>
-           <height>26</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="12" rowspan="4">
-        <widget class="QPushButton" name="btn_barra_ped_cliente">
-         <property name="toolTip">
-          <string>Pedidos de clientes</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(133, 170, 142);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="maya.qrc">
-           <normaloff>:/Icons/PNG/pedidos_cli.png</normaloff>:/Icons/PNG/pedidos_cli.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>26</width>
-           <height>26</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="21" rowspan="4">
+       <item row="0" column="7" rowspan="4">
         <widget class="QPushButton" name="btn_salir">
          <property name="toolTip">
           <string>Salir de Maya</string>
@@ -613,44 +289,7 @@ background-color: rgb(133, 170, 142);</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="18" rowspan="2" colspan="2">
-        <widget class="QLabel" name="lineUsuarioActivo">
-         <property name="styleSheet">
-          <string notr="true">font: 75 8pt &quot;Cantarell&quot;;
-color: rgb(255, 255, 127);</string>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="7" rowspan="4">
-        <widget class="QPushButton" name="btn_barra_recepcion_ped_pro">
-         <property name="toolTip">
-          <string>Recepción de pedidos</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(133, 170, 142);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="maya.qrc">
-           <normaloff>:/Icons/PNG/recepcion_ped.png</normaloff>:/Icons/PNG/recepcion_ped.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>26</width>
-           <height>26</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="17" rowspan="2">
+       <item row="0" column="3" rowspan="2">
         <widget class="QLabel" name="label">
          <property name="palette">
           <palette>
@@ -849,6 +488,17 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
          </property>
         </spacer>
        </item>
+       <item row="0" column="4" rowspan="2" colspan="2">
+        <widget class="QLabel" name="lineUsuarioActivo">
+         <property name="styleSheet">
+          <string notr="true">font: 75 8pt &quot;Cantarell&quot;;
+color: rgb(255, 255, 127);</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
@@ -899,32 +549,10 @@ selection-color: rgb(0, 0, 0);</string>
          </widget>
         </item>
         <item>
-         <widget class="QStackedWidget" name="stackedWidget_2">
+         <widget class="QStackedWidget" name="modulesStack">
           <property name="currentIndex">
-           <number>3</number>
+           <number>-1</number>
           </property>
-          <widget class="QWidget" name="page_manten">
-           <layout class="QVBoxLayout" name="verticalLayout_manten"/>
-          </widget>
-          <widget class="QWidget" name="page_compras">
-           <layout class="QVBoxLayout" name="verticalLayout_compras"/>
-          </widget>
-          <widget class="QWidget" name="page_ventas">
-           <layout class="QVBoxLayout" name="verticalLayout_ventas">
-            <property name="spacing">
-             <number>5</number>
-            </property>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="page_contabilidad">
-           <layout class="QVBoxLayout" name="verticalLayout_contabilidad"/>
-          </widget>
-          <widget class="QWidget" name="page_almacen">
-           <layout class="QVBoxLayout" name="verticalLayout_almacen"/>
-          </widget>
-          <widget class="QWidget" name="page_admin">
-           <layout class="QVBoxLayout" name="verticalLayout_admin"/>
-          </widget>
          </widget>
         </item>
        </layout>
@@ -940,10 +568,8 @@ selection-color: rgb(0, 0, 0);</string>
         <string notr="true"/>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>-1</number>
        </property>
-       <widget class="QWidget" name="page"/>
-       <widget class="QWidget" name="page_2"/>
       </widget>
      </widget>
     </item>
@@ -968,89 +594,8 @@ selection-color: rgb(0, 0, 0);</string>
     <property name="title">
      <string>Archivos</string>
     </property>
-    <addaction name="btnClientes"/>
-    <addaction name="separator"/>
-    <addaction name="btnProveedores"/>
-    <addaction name="separator"/>
-    <addaction name="btnFormas_de_Pago"/>
-    <addaction name="btnTipos_de_Iva"/>
-    <addaction name="btnAgenda"/>
-    <addaction name="separator"/>
-    <addaction name="actionBancos"/>
-    <addaction name="actionPaises"/>
-    <addaction name="actionAvisos"/>
-    <addaction name="separator"/>
-    <addaction name="actionTarifas"/>
-    <addaction name="actionMonedas"/>
-    <addaction name="separator"/>
-    <addaction name="btnSalir"/>
-   </widget>
-   <widget class="QMenu" name="menuVentas">
-    <property name="title">
-     <string>Ventas</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuCompras">
-    <property name="title">
-     <string>Compras</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuAdministrador">
-    <property name="title">
-     <string>Administrador</string>
-    </property>
-    <addaction name="actionGesti_n_de_Usuarios"/>
-    <addaction name="actionPermisos"/>
-    <addaction name="actionEdici_n_de_Reports"/>
-    <addaction name="actionPermisos_de_Agenda"/>
-   </widget>
-   <widget class="QMenu" name="menuAlmacen">
-    <property name="title">
-     <string>Almacen</string>
-    </property>
-    <widget class="QMenu" name="menuDivisiones">
-     <property name="title">
-      <string>Divisiones</string>
-     </property>
-     <addaction name="actionGestion_de_Secciones"/>
-     <addaction name="actionGestion_de_Familias"/>
-     <addaction name="actionGestion_de_subfamilias"/>
-     <addaction name="actionSubSubFamilias"/>
-     <addaction name="actionGrupos"/>
-    </widget>
-    <addaction name="btnArt_culos"/>
-    <addaction name="menuDivisiones"/>
-    <addaction name="separator"/>
-    <addaction name="actionRecepci_n_de_pedidos"/>
-    <addaction name="actionGesti_n_de_devoluciones"/>
-    <addaction name="actionRegularizaci_n_de_inventario"/>
-    <addaction name="separator"/>
-    <addaction name="actionTraspasos_entre_almacenes"/>
-    <addaction name="separator"/>
-    <addaction name="actionGesti_n_de_Pagos"/>
-   </widget>
-   <widget class="QMenu" name="menuClinica">
-    <property name="title">
-     <string>Clinica</string>
-    </property>
-    <addaction name="actionDoctores"/>
-    <addaction name="actionTipos_de_anal_tica"/>
-    <addaction name="actionCampos_de_analitica"/>
-    <addaction name="actionMotivos_de_interconsulta"/>
-    <addaction name="actionTipos_de_imagen"/>
-    <addaction name="separator"/>
-    <addaction name="actionEmisi_n_de_recetas_a_pacientes"/>
-    <addaction name="actionCertificados"/>
-    <addaction name="actionGesti_n_de_comisiones"/>
-    <addaction name="separator"/>
-    <addaction name="actionTipos_de_paciente"/>
    </widget>
    <addaction name="menuArchivos"/>
-   <addaction name="menuVentas"/>
-   <addaction name="menuCompras"/>
-   <addaction name="menuAlmacen"/>
-   <addaction name="menuAdministrador"/>
-   <addaction name="menuClinica"/>
   </widget>
   <action name="btnClientes">
    <property name="icon">
@@ -1609,21 +1154,28 @@ selection-color: rgb(0, 0, 0);</string>
  </widget>
  <tabstops>
   <tabstop>comboBox</tabstop>
-  <tabstop>btn_barra_clientes</tabstop>
-  <tabstop>btn_barra_proveedores</tabstop>
-  <tabstop>btn_barra_articulos</tabstop>
-  <tabstop>btn_barra_ped_pro</tabstop>
-  <tabstop>btn_barra_recepcion_ped_pro</tabstop>
-  <tabstop>btn_barra_albaran_pro</tabstop>
-  <tabstop>btn_barra_factura_pro</tabstop>
-  <tabstop>btn_barra_ped_cliente</tabstop>
-  <tabstop>btn_barra_alb_cliente</tabstop>
-  <tabstop>btn_barra_tpv_cliente</tabstop>
   <tabstop>btn_bloquear</tabstop>
   <tabstop>btn_salir</tabstop>
  </tabstops>
  <resources>
   <include location="maya.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btn_salir</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1208</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1219</x>
+     <y>28</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -13,16 +13,18 @@
 #include "../Auxiliares/datedelegate.h"
 #include "frmcobrardeuda.h"
 
-
-#ifdef WIN32
-    //#define and &&
-#endif
-
 frmClientes::frmClientes(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::frmClientes)
+    MayaModule(ModuleZone(),ModuleName(),parent),
+    ui(new Ui::frmClientes),
+    toolButton(tr("Clientes"),":/Icons/PNG/clientes_2.png",this),
+    menuButton(QIcon(":/Icons/PNG/clientes_2.png"),tr("Clientes"),this)
 {
     ui->setupUi(this);
+
+    if (Configuracion_global->medic)
+    {
+        toolButton.setText(tr("Pacientes"));
+    }
 
     oCliente = new Cliente(this);
     oCliente->id = 0;

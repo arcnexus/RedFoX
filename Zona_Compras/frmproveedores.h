@@ -15,11 +15,12 @@ public:
     explicit frmProveedores(QWidget *parent = 0);
     int id_contacto;
     ~frmProveedores();
-    moduleZone ModuleZone(){return Compras;}
+    moduleZone ModuleZone(){return Mantenimiento;}
     QString ModuleName(){return "Proveedores";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
+    void hideButton(){toolButton.hide();}
 public slots:
     void DesbloquerCampos();
     void BloquearCampos();

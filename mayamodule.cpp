@@ -13,7 +13,7 @@ MayaModule::~MayaModule()
 {
 }
 
-bool MayaModule::userHasAcces(int idUser)
+bool MayaModule::userHaveAcces(int idUser)
 {
     QSqlQuery q(QSqlDatabase::database("Maya"));
     q.prepare("SELECT * FROM accesousuarios where idModulo = :id and idUser=:idUser");
@@ -32,7 +32,6 @@ bool MayaModule::userHasAcces(int idUser)
 void MayaModule::tryRegisterModule(moduleZone zone, QString name)
 {
     QSqlQuery q(QSqlDatabase::database("Maya"));
-    qDebug() << name;
     q.prepare("SELECT * FROM modulos where ModuleName = :name");
     q.bindValue(":name",name);
     if(q.exec())
@@ -42,7 +41,6 @@ void MayaModule::tryRegisterModule(moduleZone zone, QString name)
         else
             _id_modulo = q.record().value(0).toInt();
     }
-
 }
 
 void MayaModule::RegisterModule(moduleZone zone , QString name)
@@ -66,5 +64,4 @@ void MayaModule::RegisterModule(moduleZone zone , QString name)
         q2.bindValue(":idModulo",_id_modulo);
         q2.exec();
     }
-
 }

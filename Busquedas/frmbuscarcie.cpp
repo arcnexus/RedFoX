@@ -52,7 +52,6 @@ void FrmBuscarCIE::sltDevolverValores()
 }
 void FrmBuscarCIE::finishedSlotCIE(QNetworkReply* reply)
 {
-    //qDebug()<<reply->readAll();
      QString data=(QString)reply->readAll();
      QString cXML = data;
 

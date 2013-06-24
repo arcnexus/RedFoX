@@ -4,7 +4,7 @@
 #include "../Auxiliares/Globlal_Include.h"
 #include "auxmodule.h"
 #include "../empresa.h"
-
+#include "../mayamodule.h"
 #include "copy_db_progressfrm.h"
 
 
@@ -13,7 +13,7 @@ namespace Ui {
 class FrmEmpresas;
 }
 
-class FrmEmpresas : public QDialog
+class FrmEmpresas : public MayaModule
 {
     Q_OBJECT
     
@@ -23,6 +23,12 @@ public:
     void LLenarCampos();
     void CargarCamposEnEmpresa();
 
+    moduleZone ModuleZone(){return AdminZone;}
+    QString ModuleName(){return "Control de empresas";}
+    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
+    QAction * ModuleMenuBarButton(){return &menuButton;}
+    QString ModuleMenuPath(){return tr("");}
+    void hideButton(){toolButton.hide();}
 private slots:
     //TODO - boton buscar
     //TODO - boton borrar
@@ -47,20 +53,6 @@ private slots:
 
     void on_botBorrar_clicked();
 
-    void on_botAnadir_user_clicked();
-
-    void on_botSiguiente_user_clicked();
-
-    void on_botAnterior_user_clicked();
-
-    void on_botBuscar_user_clicked();
-
-    void on_botGuardar_user_clicked();
-
-    void on_botBorrar_user_clicked();
-
-    void on_btn_modPass_clicked();
-
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
@@ -74,21 +66,8 @@ private:
     void borrar_mysql();
     void borrar_sqlite();
 
-    void addAdminModule(AuxModule*m);
-    void addComprasModule(AuxModule*m);
-    void addVentasModule(AuxModule*m);
-    void addArchivosModule(AuxModule*);
-    void addAlmacenModule(AuxModule*);
-    void addUtilidadesModule(AuxModule*);
-    void addNoZoneModule(AuxModule*m);
-    void addContaModule(AuxModule*m);
-    void addSecMedicModule(AuxModule*m);
-    void addInfoMedicModule(AuxModule*m);
-
-    void crear_User();
-    void llenar_user(QSqlRecord record);    
-    QVector<AuxModule*> _modulos;
-    void llenarModulos(int idUser);
+    ToolBarButton toolButton;
+    QAction menuButton;
 };
 
 #endif // FRMEMPRESAS_H

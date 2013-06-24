@@ -150,7 +150,13 @@ SOURCES += main.cpp\
     TPV/efectivocaja.cpp \
     TPV/configmonedatpv.cpp \
     TPV/monedaview.cpp \
-    mayamodule.cpp
+    mayamodule.cpp \
+    openrptLibs/reportmodule.cpp \
+    Zona_Administrador/frmusuarios.cpp \
+    moduleextension.cpp \
+    Almacen/divisionalmacenext.cpp \
+    archivosgeneralesext.cpp \
+    Zona_Pacientes/clinicaext.cpp
 
 
 
@@ -269,7 +275,13 @@ HEADERS  += mainwindow.h \
     TPV/efectivocaja.h \
     TPV/configmonedatpv.h \
     TPV/monedaview.h \
-    mayamodule.h
+    mayamodule.h \
+    openrptLibs/reportmodule.h \
+    Zona_Administrador/frmusuarios.h \
+    moduleextension.h \
+    Almacen/divisionalmacenext.h \
+    archivosgeneralesext.h \
+    Zona_Pacientes/clinicaext.h
 
 
 
@@ -333,7 +345,8 @@ FORMS    += mainwindow.ui \
     Auxiliares/frmaddentregascuenta.ui \
     Zona_Ventas/frmgestioncobros.ui \
     TPV/efectivocaja.ui \
-    TPV/configmonedatpv.ui
+    TPV/configmonedatpv.ui \
+    Zona_Administrador/frmusuarios.ui
 
 RESOURCES += \
     maya.qrc

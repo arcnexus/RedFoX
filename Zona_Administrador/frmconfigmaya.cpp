@@ -8,8 +8,10 @@
 //Configuracion * Configuracion_global = 0;
 
 frmConfigmaya::frmConfigmaya(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::frmConfigmaya)
+    MayaModule(ModuleZone(),ModuleName(),parent),
+    ui(new Ui::frmConfigmaya),
+    toolButton(tr("Configuracion\nGeneral"),":/Icons/PNG/Config.png",this),
+    menuButton(QIcon(":/Icons/PNG/Config.png"),tr("Configuracion General"),this)
 {
     if(!Configuracion_global)
         Configuracion_global = new Configuracion;

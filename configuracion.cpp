@@ -1015,9 +1015,6 @@ void Configuracion::applyCambio(float f, QString target)
 
 void Configuracion::readCambio(QString s)
 {
-    static int c = 0;
-    qDebug()<< "readCambio"<< c;
-
     QString place = "<span class=bld>";
     int index = s.indexOf(place)+place.size();
     int end = s.indexOf(" ",index);
@@ -1028,7 +1025,6 @@ void Configuracion::readCambio(QString s)
     float f = sFloat.toFloat(&ok);
     if(ok)
     {
-        c++;
         emit cambioReady(f,to);//double, qString....
     }
     else

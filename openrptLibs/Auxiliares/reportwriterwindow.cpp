@@ -1,25 +1,25 @@
 /*
- * OpenRPT report writer and rendering engine
- * Copyright (C) 2001-2011 by OpenMFG, LLC
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- * Please contact info@openmfg.com with any questions on this license.
- */
+* OpenRPT report writer and rendering engine
+* Copyright (C) 2001-2011 by OpenMFG, LLC
+*
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU Lesser General Public
+* License as published by the Free Software Foundation; either
+* version 2.1 of the License, or (at your option) any later version.
+*
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+* Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with this library; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+* Please contact info@openmfg.com with any questions on this license.
+*/
 
 #include "reportwriterwindow.h" // The Primary MDI window
-#include "../include/reporthandler.h"       // The Report Window Child
+#include "../include/reporthandler.h" // The Report Window Child
 
 // common
 #include <dbtools.h>
@@ -50,7 +50,7 @@
 //
 ReportWriterWindow::ReportWriterWindow()
   : QMainWindow() {
-    
+
     setWindowTitle("OpenMFG: Report Writer");
     setWindowIcon(QPixmap(OpenReportsIcon_xpm));
 
@@ -62,9 +62,9 @@ ReportWriterWindow::ReportWriterWindow()
 
     // setup the menubar
     /*fileExitAction = new QAction(tr("E&xit"), this);
-    fileExitAction->setObjectName("file exit");
-    fileExitAction->setShortcut(Qt::ALT+Qt::Key_F4);
-    connect(fileExitAction, SIGNAL(activated()), this, SLOT(appExit()));*/
+fileExitAction->setObjectName("file exit");
+fileExitAction->setShortcut(Qt::ALT+Qt::Key_F4);
+connect(fileExitAction, SIGNAL(activated()), this, SLOT(appExit()));*/
 
     handler = new ReportHandler(this, "report handler");
 
@@ -94,7 +94,7 @@ ReportWriterWindow::ReportWriterWindow()
     connect(handler, SIGNAL(messageCleared()),
             statusBar(), SLOT(clearMessage()));
     handler->onWinChanged(NULL);
-    connect(ws, SIGNAL(subWindowActivated(QMdiSubWindow*)), handler, SLOT(onWinChanged(QMdiSubWindow*)));    
+    connect(ws, SIGNAL(subWindowActivated(QMdiSubWindow*)), handler, SLOT(onWinChanged(QMdiSubWindow*)));
 }
 
 //
@@ -121,16 +121,16 @@ void ReportWriterWindow::timerEvent(QTimerEvent * e) {
     if(e->timerId() == dbTimerId) {
         QSqlDatabase db = QSqlDatabase::database(QSqlDatabase::defaultConnection,false);
         if(db.isValid()) {
-            QSqlQuery qry(getSqlFromTag("fmt07", db.driverName()));		// MANU
+            QSqlQuery qry(getSqlFromTag("fmt07", db.driverName()));	// MANU
 
 #if 0
-            if(qry.first() == TRUE) {
-                // Nothing to do.  We were just creating a little traffic
-                qDebug("Keep alive succeeded");
-            } else {
-                // I really don't care
-                qDebug("Keep alive failed");
-            }
+if(qry.first() == TRUE) {
+// Nothing to do. We were just creating a little traffic
+qDebug("Keep alive succeeded");
+} else {
+// I really don't care
+qDebug("Keep alive failed");
+}
 #endif
         }
     }
@@ -140,16 +140,16 @@ void ReportWriterWindow::closeEvent(QCloseEvent * e) {
     //QWidgetList wl = ws->windowList();
     QList<QMdiSubWindow *> wl = ws->subWindowList();
     QWidget * w = 0;
- /*   for(int i = 0; i < wl.size(); i++)
-    {
-      w = static_cast<QWidget *>(wl.at(i));
-      if(w && !w->close())
-      {
-        e->ignore();
-        return;
-      }
-    }
-    e->accept();*/
+ /* for(int i = 0; i < wl.size(); i++)
+{
+w = static_cast<QWidget *>(wl.at(i));
+if(w && !w->close())
+{
+e->ignore();
+return;
+}
+}
+e->accept();*/
 }
 
 void ReportWriterWindow::setCaption() {
@@ -160,8 +160,8 @@ void ReportWriterWindow::setCaption() {
 
     QSqlDatabase db = QSqlDatabase::database(QSqlDatabase::defaultConnection, false);
     if(db.isValid()) {
-		XSqlQuery dbname;
-        dbname.prepare( getSqlFromTag("fmt08", db.driverName()));		// MANU
+XSqlQuery dbname;
+        dbname.prepare( getSqlFromTag("fmt08", db.driverName()));	// MANU
 
         if ((dbname.isActive()) && (dbname.size())) {
             QString protocol;

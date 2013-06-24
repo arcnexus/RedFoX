@@ -14,8 +14,10 @@
 
 
 FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
-    QDialog(parent),
-    ui(new Ui::FrmArticulos)
+    MayaModule(ModuleZone(),ModuleName(),parent),
+    ui(new Ui::FrmArticulos),
+    toolButton(tr("Almacen"),":/Icons/PNG/Box.png",this),
+    menuButton(QIcon(":/Icons/PNG/Box.png"),tr("Almacen"),this)
 {
     modelProv = new QSqlQueryModel(this);
     oArticulo = new Articulo();
@@ -34,7 +36,6 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     ui->graf_prov->Clear();
     ui->graf_prov->verValoresEjeY(true);
     ui->graf_prov->verValores(true);
-    qDebug() << "valores en y" << ui->graf_prov->ValoresEjeY();
     ui->checkBox->setEnabled(true);
 
     GraficaUnidades();
@@ -50,8 +51,6 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     tarifa_model->setTable("viewTarifa");
     tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
     tarifa_model->select();
-    //ui->TablaTarifas->setModel(tarifa_model);
-    //ui->TablaTarifas->setColumnHidden(0,true);
     QStringList headers;
     headers << "Pais" << "Moneda" << "Codigo de tarifa" << "Descripción";
     headers<< "Margen" << "Margen minimo" << "P.V.P";
@@ -178,42 +177,30 @@ void FrmArticulos::bloquearCampos(bool state) {
     QComboBox *ComboBox;
     foreach (ComboBox, ComboBoxList) {
         ComboBox->setEnabled(!state);
-        //qDebug() << lineEdit->objectName();
     }
-    // SpinBox
-//    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-//    QSpinBox *SpinBox;
-//    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(state);
-//        //qDebug() << lineEdit->objectName();
-//   }
-//DoubleSpinBox
+
     QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
     QDoubleSpinBox *DSpinBox;
     foreach (DSpinBox, DSpinBoxList) {
         DSpinBox->setReadOnly(state);
-        //qDebug() << lineEdit->objectName();
     }
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
     foreach (CheckBox, CheckBoxList) {
         CheckBox->setEnabled(!state);
-        //qDebug() << lineEdit->objectName();
     }
     // QTextEdit
     QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
     QTextEdit *TextEdit;
     foreach (TextEdit,TextEditList) {
         TextEdit->setReadOnly(state);
-        //qDebug() << lineEdit->objectName();
     }
     // QDateEdit
     QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
         DateEdit->setEnabled(!state);
-        //qDebug() << lineEdit->objectName();
     }
 
     ui->botAnadir->setEnabled(state);
@@ -227,7 +214,6 @@ void FrmArticulos::bloquearCampos(bool state) {
 
     // Botones artículos
     ui->botBuscarSeccion->setEnabled(!state);
-   // ui->botBuscar->setEnabled(state);
     ui->botBuscarFamilia->setEnabled(!state);
     ui->botBuscarSubfamilia->setEnabled(!state);
     ui->botBuscarSubSubFamilia->setEnabled(!state);
@@ -251,8 +237,6 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->btnEditartarifa->setEnabled(!state);
     ui->btnBorrarTarifa->setEnabled(!state);
     ui->checkBox->setEnabled(true);
-
-
 }
 
 void FrmArticulos::LLenarCampos()
@@ -1858,7 +1842,6 @@ void FrmArticulos::actualizar()
         LLenarCampos();
         tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
         tarifa_model->select();
-        //qDebug() << "FrmArticulos::actualizar()";
     }
 }
 

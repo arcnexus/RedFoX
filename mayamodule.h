@@ -9,7 +9,7 @@ class MayaModule : public QDialog
     Q_OBJECT
 public:
     enum moduleZone{
-        Admin = 0 , Compras , Ventas , Archivos , Almacen , Utilidades ,Contabilidad
+        AdminZone = 0 , Mantenimiento , Compras , Ventas , Archivos , Almacen , Utilidades ,Contabilidad
         , SecretariaMedica,  InformacionMedica, NoZone
     };
     enum accessLevel{
@@ -28,10 +28,12 @@ public:
     virtual QString ModuleName(){return "";}
     virtual ToolBarButton * ModuleToolBarButton() = 0;
     virtual QAction * ModuleMenuBarButton() = 0;
-    virtual QString ModuleMenuPath() = 0;
+    virtual QString ModuleMenuPath() = 0; // Use '|' to subPaths
 
-    bool userHasAcces(int idUser);
+    bool userHaveAcces(int idUser);
     accessLevel userLevelInModule(){return _user_level;}
+
+    virtual void hideButton() =0; //Used for showing the Dialog as stand alone window
 signals:
     void block();
     void unblock();

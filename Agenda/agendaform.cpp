@@ -3,8 +3,10 @@
 #include "editeventform.h"
 #include "../db_table_view.h"
 AgendaForm::AgendaForm(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::AgendaForm)
+    MayaModule(ModuleZone(),ModuleName(),parent),
+    ui(new Ui::AgendaForm),
+    toolButton(tr("Agenda"),":/Icons/PNG/Calender.png",this),
+    menuButton(QIcon(":/Icons/PNG/Calender.png"),tr("Agenda"),this)
 {
     table = new GraphicsTable;
     table->setObjectName("MainTable");

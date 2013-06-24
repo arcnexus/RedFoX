@@ -35,6 +35,7 @@ public:
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
+    void hideButton(){toolButton.hide();}
 private slots:
     void on_btnSiguiente_clicked();
 

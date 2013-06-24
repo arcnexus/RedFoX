@@ -700,7 +700,6 @@ void FrmPresupuestosCli::lineaReady(lineaDetalle * ld)
     //Nueva linea
     if (ld->idLinea == -1)
     {
-        //qDebug()<< ld->idLinea;
         QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
         queryArticulos.prepare("select id from articulos where cCodigo =:codigo");
         queryArticulos.bindValue(":codigo",ld->codigo);

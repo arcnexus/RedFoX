@@ -1,34 +1,51 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QSplashScreen>
+
+#include "archivosgeneralesext.h"
+
 #include "../Auxiliares/Globlal_Include.h"
 #include "../Auxiliares/init_form.h"
 #include "../Auxiliares/toolbarbutton.h"
-//
+#include "db_table_view.h"
+
 #include "Zona_Pacientes/frmClientes.h"
+#include "Zona_Pacientes/clinicaext.h"
 
 #include "../Almacen/frmarticulos.h"
+#include "../Almacen/frmtipostarifa.h"
+#include "../Almacen/divisionalmacenext.h"
+
 #include "../Zona_Compras/frmproveedores.h"
-
-#include "TPV/frmcajaminuta.h"
-
 #include "../Zona_Compras/frmpedidosproveedor.h"
 #include "../Zona_Compras/frmalbaranproveedor.h"
 #include "../Zona_Compras/frmfacturasproveedor.h"
 #include "../Zona_Compras/frmorden_pedido_producto.h"
 #include "../Zona_Compras/frmrecepcion_pedidos.h"
+#include "../Zona_Compras/frmpedidosproveedor.h"
 
+
+#include "../Zona_Ventas/frmgestioncobros.h"
 #include "Zona_Ventas/frmfacturaralabaranes.h"
 #include "Zona_Ventas/frmalbaran.h"
 #include "Zona_Ventas/frmpedidos.h"
 #include "Zona_Ventas/frmpresupuestoscli.h"
 #include "Zona_Ventas/frmfacturas.h"
+#include "TPV/frmcajaminuta.h"
 
 
-#include "openrptLibs/Auxiliares/reportwriterwindow.h"
+#include "openrptLibs/reportmodule.h"
 #include "Agenda/agendaform.h"
+#include "Agenda/permisosagendaform.h"
+
 #include "../Zona_Contabilidad/frmentrada_apuntes.h"
-#include "../Zona_Ventas/frmgestioncobros.h"
+
+#include "../Zona_Administrador/frmempresas.h"
+#include "../Zona_Administrador/frmconfigmaya.h"
+#include "../Zona_Administrador/frmusuarios.h"
+#include "../Zona_Administrador/block_Maya_form.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -46,143 +63,57 @@ public:
     QString user;
     QString pass;
     void showInfo();
-    //QSqlDatabase dbConfiguracion;
-    QSqlQuery QryConfiguracion;
+
+    void updateDivisas();
 private slots:
     void actualizar_divisas(float valor_divisa, QString divisaDest);
 
     void block_main();
-
     void unblock_main();
-
-    void btnMantenimientos_clicked();
-
-    void btnVentas_clicked();
-
-    void btnClientes_clicked();
-
-    void btnFacturaCliente_clicked();
-
-    void btnArticulos_clicked();
-
-    void btnProveedores_clicked();
-
-    // Zona Ventas
-
-    void btnFactura_multiple_clicked();
-
-    void btn_Pedido_cliente_clicked();
-
-    void btnPresup_clientes_clicked();
-
-    void btnCajaMinuta_clicked();
-
-    void btnGestionCobros_clicked();
-
-    // Zona Compras
-    void btn_pedidos_pro_clicked();
-
-    void btn_albaranes_pro_clicked();
-    void btn_facturas_pro_clicked();
-    void btn_recepcionPedidos_clicked();
-
-    // Zona Almacen
-    void btnArticulos_2_clicked();
-    void btnOrden_pedido_clicked();
-    // zona Administrador
-    void btn_reports_clicked();
-
- //4   void on_btnAgenda_clicked();
-
-    // Contabilidad
-    void btn_diario_clicked();
-    void btn_cuentas_clicked();
-
-
     void on_btn_bloquear_clicked();
 
-    void divisiones_almacen();
-    void editar_empresas();
-    void configuracion();
-
     void handle_toolBar();
-    void handle_doctores();
-    void handle_bancos();
-    void handle_tiposIVA();
-    void handle_fomasPago();
-    void handle_paises();
-    void hande_avisos();
-    void handle_tiposImagen();
-    void handle_tipoAnalitica();
-    void handle_campoAnalitica();
-    void handle_motivoInterConsulta();
-    void tipostarifa();
-    void handle_monedas();
+
     void on_comboBox_currentIndexChanged(int index);
-
-    void showAgenda();
     void handle_permisosAgenda();
-
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);
     void blockMe(bool state);
 
+    void loadVentasModules(QSplashScreen *splash);
+    void loadComprasModules(QSplashScreen *splash);
+    void loadAlmacenModules(QSplashScreen *splash);
+    void loadMantenModules(QSplashScreen *splash);
+    void loadUtilsModules(QSplashScreen *splash);
+    void loadAminModules(QSplashScreen *splash);
+    void loadContaModules(QSplashScreen *splash);
+    void loadSecMedModules(QSplashScreen *splash);
+
     //Barra de mantenimiento
-    ToolBarButton * btn_clientes;
-    ToolBarButton * btn_almacen;
-    ToolBarButton * btn_agenda;
     void crear_barraMantenimiento();
-
-    void crear_barraVentas(MayaModule* mm);
-    void crear_barraCompras(MayaModule* mm);
-
-    // Barra de Almacen
-    ToolBarButton * btn_recepcionPedidos;
-    ToolBarButton * btn_gestionDevoluciones;
-    ToolBarButton * btn_inventario;
-    ToolBarButton * btn_traspasoAlmacen;
-    ToolBarButton * btn_gestionPagos;
-    ToolBarButton * btn_articulos_2;
+    void crear_barraVentas();
     void crear_barraAlmacen();
-
-    //Barra de Administrador
-    ToolBarButton * btn_reports;
-    ToolBarButton * btn_empresa;
-    ToolBarButton * btn_config;
+    void crear_barraCompras();
+    void crear_barraUtils();
     void crear_barraAdmin();
-
     void crear_barraContabilidad();
-    ToolBarButton * btn_diario;
-    ToolBarButton * btn_cuentas;
-
-
-    //WIDGETS
-    frmClientes *frmClientes1;
-    frmFacturas *frmFacturas1;
-    FrmArticulos *frmArticulos1;
-    frmProveedores *frmProveedores1;
-    FrmAlbaran *frmAlbaran;
-    FrmPedidos *frmPedidos1;
-    FrmPresupuestosCli *frmPresupcli;
-    FrmCajaMinuta *frmCajaMinuta;
-    FrmPedidosProveedor *FrmPedidos_pro;
-    FrmAlbaranProveedor *FrmAlbaran_pro;
-    FrmFacturasProveedor * frmFacturas_pro;
-    FrmFacturarAlabaranes *frmFactura_multiple;
-    FrmOrden_Pedido_Producto * frmOrden_Ped_pro;
-    Frmrecepcion_pedidos *frmRecep_pedidos;
-    FrmEntrada_apuntes *frmentrada_apuntes;
-    frmGestionCobros *frmgestcobros;
-
-    ReportWriterWindow * reportWindow;
-    AgendaForm * agendaForm;
+    void crear_barraClinica();
 
     init_form * MayaForm;
-    int id_divisa;
     bool on_edit;
+    QVector<MayaModule*> _mantenModules;
     QVector<MayaModule*> _ventasModules;
     QVector<MayaModule*> _comprasModules;
+    QVector<MayaModule*> _almacenModules;
+    QVector<MayaModule*> _utilsModules;
+    QVector<MayaModule*> _adminModules;
+    QVector<MayaModule*> _contaModules;
+    QVector<MayaModule*> _clinicaModules;
+
+    QVector<ModuleExtension* > _almacenExtensions;
+    QVector<ModuleExtension* > _mantenExtensions;
+    QVector<ModuleExtension* > _clinicaExtensions;
 };
 
 #endif // MAINWINDOW_H

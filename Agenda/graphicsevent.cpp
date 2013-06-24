@@ -661,7 +661,6 @@ void GraphicsEvent::checkCollisions()
         GraphicsEvent * _collideItem;
         foreach(_collideItem,collide_items)
         {
-            //qDebug() << _collideItem->Heigth();
             if(heigth_o_Events.isEmpty())
                 heigth_o_Events.append(_collideItem);
             else if(heigth_o_Events.last()->Heigth() >= _collideItem->Heigth())
@@ -672,7 +671,6 @@ void GraphicsEvent::checkCollisions()
             {
                 for (int a = 0; a<heigth_o_Events.size(); a++)
                 {
-                    //qDebug() << "inside loop" << heigth_o_Events.at(a)->Heigth() << _collideItem->Heigth();
                     if(heigth_o_Events.at(a)->Heigth() <= _collideItem->Heigth())
                     {
                         heigth_o_Events.insert(a,_collideItem);
@@ -778,7 +776,6 @@ void GraphicsEvent::checkCollisions()
             usedEvents.append(_collideItem);
         }
     }
-    //qDebug()<<"end call";
 }
 
 

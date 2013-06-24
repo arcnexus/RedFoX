@@ -2,8 +2,10 @@
 #include "ui_frmentrada_apuntes.h"
 
 FrmEntrada_apuntes::FrmEntrada_apuntes(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::FrmEntrada_apuntes)
+    MayaModule(ModuleZone(),ModuleName(),parent),
+    ui(new Ui::FrmEntrada_apuntes),
+    toolButton(tr("Diario"),":/Icons/PNG/cuentas.png",this),
+    menuButton(QIcon(":/Icons/PNG/cuentas.png"),tr("Diario"),this)
 {
     ui->setupUi(this);
 }

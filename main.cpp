@@ -90,7 +90,6 @@ bool cargarEmpresa(QString empresa)
         // Varios
         //splash.showMessage(tr("Cargando configuración financiera"),Qt::AlignBottom);
         Configuracion_global->cSerie = record.field("serie").value().toString();
-        qDebug() << "desde db mainwindow" << record./*field("ndigitoscuenta").*/value("ndigitoscuenta").toInt();
         Configuracion_global->nDigitosCuentasContables = record./*field("ndigitoscuenta").*/value("ndigitoscuenta").toInt();
         Configuracion_global->cCuentaAcreedores = record.field("codigocuentaacreedores").value().toString();
         Configuracion_global->cCuentaClientes = record.field("codigocuentaclientes").value().toString();
@@ -159,7 +158,6 @@ bool cargarEmpresa(QString empresa)
             if (Configuracion_global->DriverBD_Conta =="QSQLITE")
             {
                 dbMedica.setDatabaseName(Configuracion_global->RutaBD_Conta);
-                qDebug() << "Conta:" << Configuracion_global->RutaBD_Conta;
                 if(!dbConta.open())
                     QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR DB"),
                                          QObject::tr("No se ha podido abrir la BD de Contabilidad"),
@@ -198,9 +196,12 @@ int main(int argc, char *argv[])
     QStringList d = QSqlDatabase::drivers();
 
     if(d.isEmpty())
-        QMessageBox::critical(0,QObject::tr("Driver"),QObject::tr("No sql drivers"));
-
-    qDebug() << QStyleFactory::keys();    
+    {
+        QMessageBox::critical(0,QObject::tr("Driver"),QObject::tr("No sql drivers.\n"
+                                                                  "La aplicación va a cerrarse.\n"
+                                                                  "Por favor instala un driver Sql para usar Maya"));
+        return 0;
+    }
 
     QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
     #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
@@ -216,13 +217,6 @@ int main(int argc, char *argv[])
 
    if(file.open(QFile::ReadOnly))
         a.setStyleSheet(file.readAll());
-   else
-       QMessageBox::warning(qApp->activeWindow(),
-                            QObject::tr("Maya"),
-                            QObject::tr("No se puede cargar el archivo de tema"),
-                            QObject::tr("Aceptar"));
-
-
 
    QTranslator qtTranslator;
    qtTranslator.load("qt_" + QLocale::system().name());

@@ -4,14 +4,15 @@
 #include "../Busquedas/frmbuscarpoblacion.h"
 
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::FrmEmpresas)
+    MayaModule(ModuleZone(),ModuleName(),parent),
+    ui(new Ui::FrmEmpresas),
+    toolButton(tr("Empresas"),":/Icons/PNG/empresa.png",this),
+    menuButton(QIcon(":/Icons/PNG/empresa.png"),tr("Empresa"),this)
 {
     ui->setupUi(this);
     ui->txtMensaje->setText("ATENCION: Modifique con cuidado. Cambiar estos\n valores puede hacer que el programa deje\n de funcionar");
 
     connect(ui->botCerrar,SIGNAL(clicked()),this,SLOT(close()));
-    connect(ui->botCerrar_2,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(txtcPoblacion_editingFinished()));
     connect(ui->txtcCP,SIGNAL(editingFinished()),this,SLOT(txtcCp_editingFinished()));
     //------------------
@@ -28,63 +29,7 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     modelTarifas->setQuery("select descripcion from codigotarifa",QSqlDatabase::database("Maya"));
     ui->cboTarifa->setModel(modelTarifas);
 
-    ui->txt_pass_user->setReadOnly(true);
-
-    QSqlQuery q(QSqlDatabase::database("Maya"));
-    q.prepare("SELECT * FROM modulos;");
-    q.exec();
-    while(q.next())
-    {
-        AuxModule* m = new AuxModule(this,q.record().value(2).toString());
-        m->id = q.record().value(0).toInt();
-        MayaModule::moduleZone z = static_cast<MayaModule::moduleZone>(q.record().value(1).toInt());
-        m->zone = z;
-        switch (z) {
-        case MayaModule::Contabilidad:
-            addContaModule(m);
-            break;
-        case MayaModule::SecretariaMedica:
-            addSecMedicModule(m);
-            break;
-        case MayaModule::InformacionMedica:
-            addInfoMedicModule(m);
-            break;
-        case MayaModule::Compras:
-            addComprasModule(m);
-            break;
-        case MayaModule::Ventas:
-            addVentasModule(m);
-            break;
-        case MayaModule::Archivos:
-            addArchivosModule(m);
-            break;
-        case MayaModule::Almacen:
-            addAlmacenModule(m);
-            break;
-        case MayaModule::Utilidades:
-            addUtilidadesModule(m);
-            break;
-        case MayaModule::Admin :
-            addAdminModule(m);
-            break;
-
-        default:
-            addNoZoneModule(m);
-            break;
-        }
-        _modulos.append(m);
-    }
-
-    addComprasModule(0);
-    addVentasModule(0);
-    addArchivosModule(0);
-    addAlmacenModule(0);
-    addUtilidadesModule(0);
-    addNoZoneModule(0);
-    addAdminModule(0);
-
     on_botSiguiente_clicked();
-    on_botSiguiente_user_clicked();
 }
 
 FrmEmpresas::~FrmEmpresas()
@@ -327,7 +272,6 @@ void FrmEmpresas::txtcPoblacion_editingFinished()
        {
         //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
          int nId = BuscarPoblacion.DevolverID();
-         qDebug() << "nID: " <<nId;
          if(nId > 0)
          {
              QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
@@ -337,8 +281,6 @@ void FrmEmpresas::txtcPoblacion_editingFinished()
              qPoblacion.bindValue(":cId",cId);
              if(!qPoblacion.exec())
              {
-                 /* qDebug() << qPoblacion.lastQuery();
-                 qDebug() << qPoblacion.value(0).toString(); */
                  QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
              }
              else
@@ -365,7 +307,6 @@ void FrmEmpresas::txtcCp_editingFinished()
         {
 
             int nId = BuscarPoblacion.DevolverID();
-            //qDebug() <<nId;
             if(nId > 0)
             {
                 QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
@@ -375,13 +316,10 @@ void FrmEmpresas::txtcCp_editingFinished()
                 qPoblacion.bindValue(":cId",cId);
                 if(!qPoblacion.exec())
                 {
-                    /* qDebug() << qPoblacion.lastQuery();*/
                     QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                 }
                 else
                 {
-                    qDebug() << "Poblacion" <<qPoblacion.value(0).toString();
-                    qDebug() << qPoblacion.lastQuery() <<" ID:= " << cId;
                     if (qPoblacion.next())
                     {
                         ui->txtcCP->setText(qPoblacion.value(1).toString());
@@ -748,356 +686,9 @@ void FrmEmpresas::borrar_sqlite()
     oEmpresa.Borrar(oEmpresa.getid());
 }
 
-void FrmEmpresas::addAdminModule(AuxModule * m)
-{
-    static int row = 0;
-    static int column = 0;
 
-    if(!ui->tab_admin->layout())
-        QGridLayout *l= new QGridLayout(ui->tab_admin);
 
-    if(m)
-    {
-        ((QGridLayout *)ui->tab_admin->layout())->addWidget(m,row,column);
 
-        if(column==0)
-        {
-            column++;
-        }
-        else
-        {
-            row++;
-            column=0;
-        }
-    }
-    else
-    {
-        ((QGridLayout *)ui->tab_admin->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
-        column = 0;
-    }
-}
-
-void FrmEmpresas::addComprasModule(AuxModule * m)
-{
-    static int row = 0;
-    static int column = 0;
-
-    if(!ui->tab_compras->layout())
-        QGridLayout *l= new QGridLayout(ui->tab_compras);
-
-    if(m)
-    {
-        ((QGridLayout *)ui->tab_compras->layout())->addWidget(m,row,column);
-
-        if(column==0)
-        {
-            column++;
-        }
-        else
-        {
-            row++;
-            column=0;
-        }
-    }
-    else
-    {
-        ((QGridLayout *)ui->tab_compras->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
-        column = 0;
-    }
-}
-
-void FrmEmpresas::addVentasModule(AuxModule *m)
-{
-    static int row = 0;
-    static int column = 0;
-
-    if(!ui->tab_ventas->layout())
-        QGridLayout *l= new QGridLayout(ui->tab_ventas);
-
-    if(m)
-    {
-        ((QGridLayout *)ui->tab_ventas->layout())->addWidget(m,row,column);
-
-        if(column==0)
-        {
-            column++;
-        }
-        else
-        {
-            row++;
-            column=0;
-        }
-    }
-    else
-    {
-        ((QGridLayout *)ui->tab_ventas->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
-        column = 0;
-    }
-}
-
-void FrmEmpresas::addArchivosModule(AuxModule *m)
-{
-    static int row = 0;
-    static int column = 0;
-
-    if(!ui->tab_archivos->layout())
-        QGridLayout *l= new QGridLayout(ui->tab_archivos);
-
-    if(m)
-    {
-        ((QGridLayout *)ui->tab_archivos->layout())->addWidget(m,row,column);
-
-        if(column==0)
-        {
-            column++;
-        }
-        else
-        {
-            row++;
-            column=0;
-        }
-    }
-    else
-    {
-        ((QGridLayout *)ui->tab_archivos->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
-        column = 0;
-    }
-}
-
-void FrmEmpresas::addAlmacenModule(AuxModule *m)
-{
-    static int row = 0;
-    static int column = 0;
-
-    if(!ui->tab_almacen->layout())
-        QGridLayout *l= new QGridLayout(ui->tab_almacen);
-
-    if(m)
-    {
-        ((QGridLayout *)ui->tab_almacen->layout())->addWidget(m,row,column);
-
-        if(column==0)
-        {
-            column++;
-        }
-        else
-        {
-            row++;
-            column=0;
-        }
-    }
-    else
-    {
-        ((QGridLayout *)ui->tab_almacen->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
-        column = 0;
-    }
-}
-
-void FrmEmpresas::addUtilidadesModule(AuxModule *m)
-{
-    static int row = 0;
-    static int column = 0;
-
-    if(!ui->tab_utils->layout())
-        QGridLayout *l= new QGridLayout(ui->tab_utils);
-
-    if(m)
-    {
-        ((QGridLayout *)ui->tab_utils->layout())->addWidget(m,row,column);
-
-        if(column==0)
-        {
-            column++;
-        }
-        else
-        {
-            row++;
-            column=0;
-        }
-    }
-    else
-    {
-        ((QGridLayout *)ui->tab_utils->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
-        column = 0;
-    }
-}
-
-void FrmEmpresas::addNoZoneModule(AuxModule *m)
-{
-    static int row = 0;
-    static int column = 0;
-
-    if(!ui->tab_noZone->layout())
-        QGridLayout *l= new QGridLayout(ui->tab_noZone);
-
-    if(m)
-    {
-        ((QGridLayout *)ui->tab_noZone->layout())->addWidget(m,row,column);
-
-        if(column==0)
-        {
-            column++;
-        }
-        else
-        {
-            row++;
-            column=0;
-        }
-    }
-    else
-    {
-        ((QGridLayout *)ui->tab_noZone->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
-        column = 0;
-    }
-}
-
-void FrmEmpresas::addContaModule(AuxModule *m)
-{
-    static int row = 0;
-    static int column = 0;
-
-    if(!ui->tab_conta->layout())
-        QGridLayout *l= new QGridLayout(ui->tab_conta);
-
-    if(m)
-    {
-        ((QGridLayout *)ui->tab_conta->layout())->addWidget(m,row,column);
-
-        if(column==0)
-        {
-            column++;
-        }
-        else
-        {
-            row++;
-            column=0;
-        }
-    }
-    else
-    {
-        ((QGridLayout *)ui->tab_conta->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
-        column = 0;
-    }
-}
-
-void FrmEmpresas::addSecMedicModule(AuxModule *m)
-{
-    static int row = 0;
-    static int column = 0;
-
-    if(!ui->tab_secMed->layout())
-        QGridLayout *l= new QGridLayout(ui->tab_secMed);
-
-    if(m)
-    {
-        ((QGridLayout *)ui->tab_secMed->layout())->addWidget(m,row,column);
-
-        if(column==0)
-        {
-            column++;
-        }
-        else
-        {
-            row++;
-            column=0;
-        }
-    }
-    else
-    {
-        ((QGridLayout *)ui->tab_secMed->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
-        column = 0;
-    }
-}
-
-void FrmEmpresas::addInfoMedicModule(AuxModule *m)
-{
-    static int row = 0;
-    static int column = 0;
-
-    if(!ui->tab_med->layout())
-        QGridLayout *l= new QGridLayout(ui->tab_med);
-
-    if(m)
-    {
-        ((QGridLayout *)ui->tab_med->layout())->addWidget(m,row,column);
-
-        if(column==0)
-        {
-            column++;
-        }
-        else
-        {
-            row++;
-            column=0;
-        }
-    }
-    else
-    {
-        ((QGridLayout *)ui->tab_med->layout())->addItem(new QSpacerItem(100, 100, QSizePolicy::Expanding, QSizePolicy::Expanding),row+1,2);
-        column = 0;
-    }
-}
-
-void FrmEmpresas::crear_User()
-{
-    QSqlQuery add_user(QSqlDatabase::database("Maya"));
-
-    add_user.prepare("INSERT INTO usuarios (nombre,contrasena,categoria) "
-                     "VALUES (:nombre,:contrasena,:categoria)");
-
-    add_user.bindValue(":nombre","");
-    add_user.bindValue(":contrasena","");
-    add_user.bindValue(":categoria","");
-
-    int last_id=-1;
-    if(add_user.exec())
-        last_id=add_user.lastInsertId().toInt();
-
-    ui->txt_id_user->setText(QString::number(last_id));
-
-    QVector<AuxModule*>::Iterator i;
-    QSqlQuery q(QSqlDatabase::database("Maya"));
-    for(i=_modulos.begin(); i!=_modulos.end(); ++i)
-    {
-        q.prepare("INSERT INTO accesousuarios (idUser, idModulo, idNivelAcceso) VALUES (:id, :mod, 1);");
-        q.bindValue(":id",last_id);
-        q.bindValue(":mod",(*i)->id);
-        q.exec();
-    }
-    llenarModulos(last_id);
-}
-
-void FrmEmpresas::llenar_user(QSqlRecord record)
-{
-    ui->txt_id_user->setText(record.value(0).toString());
-    ui->txt_nombre_user->setText(record.value(1).toString());
-    ui->txt_pass_user->setText(record.value(2).toString());
-    ui->txt_categoria_user->setText(record.value(4).toString());
-
-    llenarModulos(record.value(0).toInt());
-}
-
-void FrmEmpresas::llenarModulos(int idUser)
-{
-    QSqlQuery q(QSqlDatabase::database("Maya"));
-    q.prepare("SELECT * FROM accesousuarios WHERE idUser=:id;");
-    q.bindValue(":id",idUser);
-    q.exec();
-    while(q.next())
-    {
-        int idModulo = q.record().value(2).toInt();
-        int idAcceso = q.record().value(3).toInt();
-        QVector<AuxModule*>::Iterator i;
-        for(i=_modulos.begin();i!=_modulos.end();++i)
-        {
-            if((*i)->id == idModulo)
-            {
-                (*i)->setNivel(idAcceso);
-                break;
-            }
-        }
-    }
-}
 
 void FrmEmpresas::on_btn_ruta_db_clicked()
 {
@@ -1129,110 +720,9 @@ void FrmEmpresas::on_botBorrar_clicked()
                           tr("Esta acción no tiene vuelta atras, ¿Desea continuar?"),
                           tr("No"),tr("Si")) == QMessageBox::Accepted)
     {
-        qDebug() << "si";
         if(oEmpresa.getcDriverBD() == "QSQLITE")
             borrar_sqlite();
         else
             borrar_mysql();
-    }
-}
-
-void FrmEmpresas::on_botAnadir_user_clicked()
-{
-        crear_User();
-}
-
-void FrmEmpresas::on_botSiguiente_user_clicked()
-{
-    QSqlQuery next_user(QSqlDatabase::database("Maya"));
-    QString sql = QString("SELECT * FROM usuarios WHERE id > %1 LIMIT 1 ")
-            .arg(ui->txt_id_user->text());
-    next_user.prepare(sql);
-    if(next_user.exec())
-    {
-        if(next_user.next())
-            llenar_user(next_user.record());
-        else
-            TimedMessageBox * t = new TimedMessageBox(this,
-                                     tr("No exsten mas usuarios"));
-
-    }
-}
-
-void FrmEmpresas::on_botAnterior_user_clicked()
-{
-    QSqlQuery next_user(QSqlDatabase::database("Maya"));
-    QString sql = QString("SELECT * FROM usuarios WHERE id < %1 ORDER BY id DESC LIMIT 1")
-            .arg(ui->txt_id_user->text());
-    next_user.prepare(sql);
-    if(next_user.exec())
-    {
-        if(next_user.next())
-            llenar_user(next_user.record());
-        else
-            TimedMessageBox * t = new TimedMessageBox(this,
-                                     tr("Este es el primer usuario"));
-
-    }
-}
-
-void FrmEmpresas::on_botBuscar_user_clicked()
-{
-    //TODO buscar user
-}
-
-void FrmEmpresas::on_botGuardar_user_clicked()
-{
-    int id=ui->txt_id_user->text().toInt();
-    QSqlQuery q(QSqlDatabase::database("Maya"));
-    q.prepare("UPDATE usuarios SET nombre=:name, categoria=:cat WHERE id=:id;");
-    q.bindValue(":name",ui->txt_nombre_user->text());
-    //q.bindValue(":lvl",ui->spin_nacceso_user->value());
-    q.bindValue(":cat",ui->txt_categoria_user->text());
-    q.bindValue(":id",id);
-
-
-    if(q.exec())
-    {
-        QVector<AuxModule*>::Iterator i;
-        QSqlQuery q2(QSqlDatabase::database("Maya"));
-        for(i=_modulos.begin(); i!=_modulos.end(); ++i)
-        {
-            q2.prepare("UPDATE accesousuarios SET idNivelAcceso=:lvl WHERE idModulo=:mod AND idUser=:id;");
-            q2.bindValue(":id",id);
-            q2.bindValue(":mod",(*i)->id);
-            q2.bindValue(":lvl",(*i)->nivel());
-            qDebug()<< q2.boundValues();
-            q2.exec();
-        }
-        TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha guardado con exito"));
-    }
-    else
-        QMessageBox::critical(this,tr("Error"),tr("No se ha podido guardar el usuario.\n%1").arg(q.lastError().text()),tr("Aceptar"));
-}
-
-void FrmEmpresas::on_botBorrar_user_clicked()
-{
-    //TODO borrar user
-}
-
-void FrmEmpresas::on_btn_modPass_clicked()
-{
-    if(ui->btn_modPass->text() == tr("Modificar"))
-    {
-        ui->btn_modPass->setText(tr("Guardar"));
-        ui->txt_pass_user->setReadOnly(false);
-    }
-    else
-    {
-        ui->btn_modPass->setText(tr("Modificar"));
-        ui->txt_pass_user->setReadOnly(true);
-        QSqlQuery q(QSqlDatabase::database("Maya"));
-        q.prepare("UPDATE usuarios SET contrasena=:pass WHERE id=:id;");
-        q.bindValue(":id",ui->txt_id_user->text());
-        q.bindValue(":pass",Configuracion::SHA256HashString(ui->txt_pass_user->text()));        
-        qDebug()<< q.boundValues() << ui->txt_id_user->text();
-        if(q.exec())
-            TimedMessageBox* t = new TimedMessageBox(this,"Contraseña actualizada");
     }
 }

@@ -8,6 +8,7 @@
 #include "../Zona_Administrador/frmempresas.h"
 #include "../Zona_Administrador/arearestringida_form.h"
 #include "../Zona_Administrador/frmconfigmaya.h"
+#include "../Zona_Administrador/frmusuarios.h"
 #include "mainwindow.h"
 
 Login::Login(QWidget *parent) :
@@ -105,8 +106,6 @@ void Login::on_btnAcceder_clicked()
        if (qryUsers.next()) 
 	   {
             QSqlRecord rUsuario = qryUsers.record();
-            qDebug() << Configuracion::SHA256HashString(ui->linePassword->text());
-            qDebug() << qryUsers.value(2).toString();
             if (Configuracion::SHA256HashString(ui->linePassword->text()) == qryUsers.value(2).toString().trimmed())
 			{
                 m_id = qryUsers.value(0).toInt();
@@ -136,6 +135,7 @@ void Login::on_btnAcceder_clicked()
 void Login::Crearconfiguracion_clicked()
 {
  frmConfigmaya frmConf;
+ frmConf.hideButton();
  if(frmConf.exec()==QDialog::Accepted)
     TimedMessageBox * t = new TimedMessageBox(this,tr("Configuración inicial realizada con éxito"));
 }
@@ -147,6 +147,7 @@ void Login::btnEmpresa_clicked()
     if(check.es_valido())
     {
         FrmEmpresas formEmpresa(this);
+        formEmpresa.hideButton();
         formEmpresa.setWindowState(Qt::WindowMaximized);
         formEmpresa.exec();
         init();
@@ -184,4 +185,17 @@ void Login::init()
 	this->ui->linePassword->setText("patata");
    //this->ui->btnAcceder->click();
 
+}
+
+void Login::on_pushButton_2_clicked()
+{
+    AreaRestringida_form check(this);
+    check.exec();
+    if(check.es_valido())
+    {
+        FrmUsuarios formUsers(this);
+        formUsers.hideButton();
+        formUsers.setWindowState(Qt::WindowMaximized);
+        formUsers.exec();
+    }
 }

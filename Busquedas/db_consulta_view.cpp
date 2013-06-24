@@ -30,7 +30,6 @@ void db_consulta_view::set_SQL(QString cSQL)
     modelo = new QSqlQueryModel(this);
     modelo->setQuery(cSQL,QSqlDatabase::database(db));
     ui->resultado_list->setModel(modelo);
-   // qDebug() <<cSQL;
 }
 
 void db_consulta_view::set_filtro(QString filtro)
@@ -44,7 +43,6 @@ void db_consulta_view::set_filtro(QString filtro)
     cSQLFiltered.append("%'");
 
     modelo->setQuery(cSQLFiltered,QSqlDatabase::database(db));
-   // qDebug() << cSQLFiltered;
 }
 
 void db_consulta_view::set_titulo(QString titulo)

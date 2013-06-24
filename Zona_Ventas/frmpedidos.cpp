@@ -294,7 +294,6 @@ void FrmPedidos::BloquearCampos(bool state)
     QComboBox *ComboBox;
     foreach (ComboBox, ComboBoxList) {
         ComboBox->setEnabled(!state);
-        //qDebug() << lineEdit->objectName();
     }
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
@@ -307,7 +306,6 @@ void FrmPedidos::BloquearCampos(bool state)
     QTextEdit *textEdit;
     foreach (textEdit,textEditList) {
         textEdit->setReadOnly(state);
-        //qDebug() << lineEdit->objectName();
     }
     // QDateEdit
     QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
@@ -658,7 +656,6 @@ void FrmPedidos::lineaReady(lineaDetalle * ld)
     QSqlDatabase::database("Maya").transaction();
     if (ld->idLinea == -1)
     {
-        //qDebug()<< ld->idLinea;
         QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
         queryArticulos.prepare("select id from articulos where cCodigo =:codigo");
         queryArticulos.bindValue(":codigo",ld->codigo);
@@ -666,7 +663,7 @@ void FrmPedidos::lineaReady(lineaDetalle * ld)
             queryArticulos.next();
         else
             ok_Maya = false;
-//INSERT INTO `emp0999`.`lin_ped` (rSubTotal`, `rDto`, `nDto`, `nPorcIva`, `rTotal`, `cantidadaservir`)
+
         QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
         query_lin_ped_pro.prepare("INSERT INTO lin_ped (Id_Cab,id_Articulo,cCodigo,"
                                   "cDescripcion, nCantidad, rPvp,rSubTotal,rDto,nDto,nPorcIva,"
@@ -706,7 +703,7 @@ void FrmPedidos::lineaReady(lineaDetalle * ld)
         else
             ok_Maya = false;
         QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
-//INSERT INTO `emp0999`.`lin_ped` (`, ``) VALUES ('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+
         query_lin_ped_pro.prepare("UPDATE lin_ped SET "
                                   "id_Articulo =:id_articulo,"
                                   "cCodigo =:codigo_articulo_proveedor,"
