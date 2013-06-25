@@ -732,6 +732,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
 
     updateDivisas();
+
+    QMap<QString,QVariant> _map;
+   _map["id_cab"] = 2;
+   _map["id_cliente"] = 4;
+   Configuracion::imprimir(true,true,_map,this);
 }
 
 void MainWindow::block_main()

@@ -760,6 +760,7 @@ void Configuracion::imprimir(bool toPDF,bool preview, QWidget *parent)
             QString errMsg;
             int errLine, errCol;
             QString source = rptDiag.getSource();
+            source.replace("@empresa",Configuracion_global->cNombreBDEmpresa);
             if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
                 ORPreRender pre(db);
                 pre.setDom(doc);
@@ -769,9 +770,9 @@ void Configuracion::imprimir(bool toPDF,bool preview, QWidget *parent)
                 ParameterList pl;
                 QDialog *dlgEdit = ParameterEdit::ParameterEditDialog(&paramEdit, parent);
                 if (paramEdit.setDocument(doc))
-//                    if (dlgEdit->exec() != QDialog::Accepted)
-//                        return;
-                    pl = paramEdit.getParameterList();
+                    if (dlgEdit->exec() != QDialog::Accepted)
+                        return;
+                   // pl = paramEdit.getParameterList();
 
 
                 pre.setParamList(paramEdit.getParameterList());
@@ -828,7 +829,104 @@ void Configuracion::imprimir(bool toPDF,bool preview, QWidget *parent)
         }
     }
 }
+void Configuracion::imprimir(bool toPDF,bool preview,QMap<QString,QVariant> params, QWidget *parent)
+{
+    QSqlDatabase db = QSqlDatabase::database("Maya");
+    db.setHostName("localhost");
+    db.setUserName("root");
+    db.setPassword("marco");
+    db.open();
+    if(db.isValid()) {
+        DBFileDialog rptDiag;
+        rptDiag.setWindowTitle(tr("Load Report from Database"));
+        rptDiag._name->setReadOnly(true);
+        rptDiag._grade->setEnabled(false);
+        if(rptDiag.exec() == QDialog::Accepted) {
+            QDomDocument doc;
+            QString errMsg;
+            int errLine, errCol;
+            QString source = rptDiag.getSource();
+            source.replace("@empresa",Configuracion_global->cNombreBDEmpresa);
+            if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
+                ORPreRender pre(db);
+                pre.setDom(doc);
+                pre.setDatabase(QSqlDatabase::database("Maya"));
 
+                ParameterEdit paramEdit(0);
+                ParameterList pl;
+                QDialog *dlgEdit = ParameterEdit::ParameterEditDialog(&paramEdit, parent);
+                if (paramEdit.setDocument(doc))
+                  //  if (dlgEdit->exec() != QDialog::Accepted)
+                  //      return;
+                    pl = paramEdit.getParameterList();
+
+                ParameterList plist;
+
+                QString name;
+                QVariant value;
+
+                QMapIterator<QString, QVariant> i(params);
+                while (i.hasNext()) {
+                    i.next();
+                    name = i.key();
+                    value = i.value();
+                    plist.append(name, value);
+                }
+
+                pre.setParamList(/*paramEdit.getParameterList()*/plist);
+                ORODocument * doc = pre.generate();
+
+                if(doc)
+                {
+                    QPrinter printer(QPrinter::HighResolution);
+                    if(preview)
+                    {
+                        PreviewDialog preview (doc, &printer, parent);
+                        if (preview.exec() == QDialog::Rejected)
+                            return;
+                    }
+                    ORPrintRender render;
+                    render.setupPrinter(doc, &printer);
+
+                    if(printer.printerName().isEmpty())
+                    {
+                        QPrintDialog pd(&printer);
+                        if(pd.exec() != QDialog::Accepted)
+                        {
+                            qDebug() << "no printer, can't preview";
+                            return; // no printer, can't preview
+                        }
+                    }
+
+                    if(toPDF)
+                    {
+                        QString output = QFileDialog::getSaveFileName(parent);
+
+                        if(output.isEmpty())
+                            return;
+
+                        if ( QFileInfo( output ).suffix().isEmpty() )
+                            output.append(".pdf");
+
+                        ORPrintRender::exportToPDF(doc, output );
+                    }
+                    else
+                    {
+                        QPrintDialog pd(&printer);
+                        pd.setMinMax(1, doc->pages());
+                        if(pd.exec() == QDialog::Accepted)
+                        {
+                            render.setPrinter(&printer);
+                            render.render(doc);
+                        }
+                    }
+                    delete doc;
+                }
+            }
+            qDebug()<<errMsg;
+        }
+    }
+}
 bool Configuracion::comprobarNIF(QString country_code, QString nif)
 {
     return true;/*

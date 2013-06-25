@@ -84,10 +84,13 @@ int Login::getIdUser()
 void Login::on_btnAcceder_clicked()
 {
     QSqlQuery qEmpresa(QSqlDatabase::database("Maya"));
-    qEmpresa.prepare("select id from empresas where nombre = :nombreemp");
+    qEmpresa.prepare("select id, nombreBD from empresas where nombre = :nombreemp");
     qEmpresa.bindValue(":nombreemp",ui->cboEmpresa->currentText());
     if(qEmpresa.exec())
+    {
         Configuracion_global->idEmpresa = qEmpresa.record().field("id").value().toInt();
+        Configuracion_global->cNombreBDEmpresa = qEmpresa.record().field("nombreBD").value().toString();
+    }
     else
         QMessageBox::warning(this,tr("ABRIR EMPRESA"),tr("No se encuentra la empresa"),tr("Aceptar"));
 

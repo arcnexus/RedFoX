@@ -175,6 +175,7 @@ public:
 
     static QString letraDNI(QString Nif);
     static void imprimir(bool toPDF , bool preview = true, QWidget* parent = 0);
+    static void imprimir(bool toPDF, bool preview, QMap<QString, QVariant> params, QWidget *parent);
     static bool comprobarNIF(QString country_code, QString nif);
     static QString Crypt(QString input);
     static QString DeCrypt(QString input);
@@ -182,6 +183,7 @@ public:
     void getCambio(QString from, QString to , float cuanty = 1);
     void generarTablaDivisas();
     void updateTablaDivisas(QString current);
+
 public slots:
     void format_text();    
 private slots:
