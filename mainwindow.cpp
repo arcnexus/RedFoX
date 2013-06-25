@@ -586,14 +586,6 @@ void MainWindow::loadAminModules(QSplashScreen *splash)
 
 void MainWindow::loadContaModules(QSplashScreen *splash)
 {
-    splash->showMessage(tr("Cargando modulos... Modulo de Contabilidad: Diario de apuntes") );
-    FrmEntrada_apuntes * frmentrada_apuntes = new FrmEntrada_apuntes(this);
-    if(frmentrada_apuntes->userHaveAcces(Configuracion_global->id_usuario_activo))
-    {
-        _contaModules.append(frmentrada_apuntes);
-    }
-    else
-        frmentrada_apuntes->deleteLater();
     splash->showMessage(tr("Cargando modulos... Modulo de Contabilidad: Cuadro de cuentas") );
     frmCuadro_cuentas* f = new frmCuadro_cuentas(this);
     if(f->userHaveAcces(Configuracion_global->id_usuario_activo))
@@ -602,6 +594,17 @@ void MainWindow::loadContaModules(QSplashScreen *splash)
     }
     else
         f->deleteLater();
+
+
+    splash->showMessage(tr("Cargando modulos... Modulo de Contabilidad: Diario de apuntes") );
+    FrmEntrada_apuntes * frmentrada_apuntes = new FrmEntrada_apuntes(this);
+    if(frmentrada_apuntes->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _contaModules.append(frmentrada_apuntes);
+    }
+    else
+        frmentrada_apuntes->deleteLater();
+
 }
 
 void MainWindow::loadSecMedModules(QSplashScreen *splash)

@@ -758,3 +758,8 @@ void FrmPedidosProveedor::cargar_tabla_entregas()
     ui->tabla_entregas->setModel(modelEntregas);
 }
 
+
+void FrmPedidosProveedor::on_btnImprimir_clicked()
+{
+    Configuracion_global->imprimir(false,true,this);
+}

@@ -17,7 +17,8 @@ frmClientes::frmClientes(QWidget *parent) :
     MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::frmClientes),
     toolButton(tr("Clientes"),":/Icons/PNG/clientes_2.png",this),
-    menuButton(QIcon(":/Icons/PNG/clientes_2.png"),tr("Clientes"),this)
+    menuButton(QIcon(":/Icons/PNG/clientes_2.png"),tr("Clientes"),this),
+      push(new QPushButton(QIcon(":/Icons/PNG/clientes_2.png"),"",this))
 {
     ui->setupUi(this);
 

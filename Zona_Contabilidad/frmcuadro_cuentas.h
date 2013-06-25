@@ -23,6 +23,7 @@ public:
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
     void hideButton(){toolButton.hide();}
+    QPushButton* wantShortCut(bool& ok) {ok = true; return push;}
 private slots:
     void on_btnAnadir_clicked();
     void llenar_campos();
@@ -37,6 +38,7 @@ private:
     bool anadir;
     ToolBarButton toolButton;
     QAction menuButton;
+    QPushButton * push;
 };
 
 #endif // FRMCUADRO_CUENTAS_H

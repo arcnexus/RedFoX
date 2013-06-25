@@ -23,8 +23,11 @@ public:
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+   // void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+    void hideButton(){toolButton.hide();}
+    QPushButton* wantShortCut(bool& ok) {ok = true; return push;}
 private:
+    QPushButton * push;
     Ui::FrmEntrada_apuntes *ui;
     ToolBarButton toolButton;
     QAction menuButton;

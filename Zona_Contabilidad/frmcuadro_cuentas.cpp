@@ -7,7 +7,8 @@ frmCuadro_cuentas::frmCuadro_cuentas(QWidget *parent) :
     MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::frmCuadro_cuentas),
     toolButton(tr("Cuentas\nP.G.C."),":/Icons/PNG/cuentas.png",this),
-    menuButton(QIcon(":/Icons/PNG/cuentas.png"),tr("Cuentas P.G.C."),this)
+    menuButton(QIcon(":/Icons/PNG/cuentas.png"),tr("Cuentas P.G.C."),this),
+    push(new QPushButton(QIcon(":/Icons/PNG/cuentas.png"),"",this))
 {
     ui->setupUi(this);
     cuentas = new Cuentas_contables(this);

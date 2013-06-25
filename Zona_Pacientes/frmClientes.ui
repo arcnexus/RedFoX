@@ -328,7 +328,8 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
      </property>
      <property name="styleSheet">
       <string notr="true">color: rgb(255, 85, 0);
-font: 75 16pt &quot;Nimbus Sans L&quot;;</string>
+font: 75 16pt &quot;Nimbus Sans L&quot;;
+background-color: rgb(0, 0, 57);</string>
      </property>
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE PACIENTES - Datos Administrativos&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

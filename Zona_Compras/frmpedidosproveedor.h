@@ -57,6 +57,8 @@ private slots:
     void resizeTable(int x);
     void on_btnAnadirEntregas_clicked();
     void cargar_tabla_entregas();
+    void on_btnImprimir_clicked();
+
 private:
 
 
