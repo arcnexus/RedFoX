@@ -19,6 +19,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     toolButton(tr("Almacen"),":/Icons/PNG/Box.png",this),
     menuButton(QIcon(":/Icons/PNG/Box.png"),tr("Almacen"),this),
     shortCut(new QPushButton(QIcon(":/Icons/PNG/Box.png"),"",this))
+
 {
     modelProv = new QSqlQueryModel(this);
     oArticulo = new Articulo();
@@ -38,7 +39,8 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     ui->graf_prov->verValoresEjeY(true);
     ui->graf_prov->verValores(true);
     ui->checkBox->setEnabled(true);
-
+    shortCut->setToolTip(tr("Gestión del fichero de artículos"));
+    shortCut->setStyleSheet("background-color: rgb(133, 170, 142)");
     GraficaUnidades();
 
     //---------------------

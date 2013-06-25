@@ -11,7 +11,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     ui(new Ui::frmPedidos),
     helper(this),
     toolButton(tr("Pedidos"),":/Icons/PNG/pedidos_cli.png",this),
-    menuButton(QIcon(":/Icons/PNG/pedidos_cli.png"),tr("Pedidos"),this)
+    menuButton(QIcon(":/Icons/PNG/pedidos_cli.png"),tr("Pedidos"),this),
+    push(new QPushButton(QIcon(":/Icons/PNG/pedidos_cli.png"),"",this))
 {
     ui->setupUi(this);
     ui->combo_pais->setModel(Configuracion_global->paises_model);
@@ -21,6 +22,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     ui->lblImpreso->setVisible(false);
     ui->lblNumFactura->setVisible(false);
     ui->txtcNumFra->setVisible(false);
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión de pedidos de clientes"));
 
 
     oPedido = new Pedidos();

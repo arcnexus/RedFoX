@@ -8,7 +8,8 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     helper(this),
     prov(this),
     toolButton(tr("Facturas \nProv."),":/Icons/PNG/Factura_pro.png",this),
-    menuButton(QIcon(":/Icons/PNG/Factura_pro.png"),tr("Facturas Prov."),this)
+    menuButton(QIcon(":/Icons/PNG/Factura_pro.png"),tr("Facturas Prov."),this),
+    push(new QPushButton(QIcon(":/Icons/PNG/Factura_pro.png"),"",this))
 {
     ui->setupUi(this);
     oFacPro = new FacturasProveedor(this);
@@ -17,6 +18,8 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
 
     ui->combo_pais->setModel(Configuracion_global->paises_model);
     ui->combo_pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión de facturas de proveedores/acreeedores"));
 
     helper.set_Tipo(true);
     helper.help_table(ui->Lineas);

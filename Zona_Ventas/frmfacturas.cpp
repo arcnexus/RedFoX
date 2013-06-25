@@ -10,7 +10,9 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui(new Ui::frmFacturas),
     helper(this),
     toolButton(tr("Facturas"),":/Icons/PNG/Factura.png",this),
-    menuButton(QIcon(":/Icons/PNG/Factura.png"),tr("Facturas"),this)
+    menuButton(QIcon(":/Icons/PNG/Factura.png"),tr("Facturas"),this),
+    push(new QPushButton(QIcon(":/Icons/PNG/Factura.png"),"",this))
+
 {
     oFactura = new Factura();
     oCliente1 = new Cliente();
@@ -32,6 +34,8 @@ frmFacturas::frmFacturas( QWidget *parent) :
 
     ui->comboPais->setModel(Configuracion_global->paises_model);
     ui->comboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión de facturas a clientes"));
     // Pongo valores por defecto
     ui->lblContabilizada->setVisible(false);
     ui->lblFacturaCobrada->setVisible(false);

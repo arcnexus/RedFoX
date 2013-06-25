@@ -14,6 +14,8 @@ frmCuadro_cuentas::frmCuadro_cuentas(QWidget *parent) :
     cuentas = new Cuentas_contables(this);
     llenar_tabla();
     ui->blinkink->setVisible(false);
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión del P.G.C"));
 
 
 }

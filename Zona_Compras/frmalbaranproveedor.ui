@@ -200,8 +200,22 @@
    </item>
    <item row="0" column="0" colspan="3">
     <widget class="QLabel" name="label_36">
+     <property name="minimumSize">
+      <size>
+       <width>433</width>
+       <height>33</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 57);
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255, 85, 0);</string>
+     </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ALBARANES DE PROVEEDORES&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>GESTIÓN DE ALBARANES DE PROVEEDOR</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -220,19 +234,6 @@
       <string>PROVEEDOR:</string>
      </property>
     </widget>
-   </item>
-   <item row="0" column="4">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>213</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item row="1" column="1">
     <widget class="QLabel" name="lblAlbaran">
@@ -2211,6 +2212,19 @@ color: rgb(0, 64, 64);</string>
       </layout>
      </widget>
     </widget>
+   </item>
+   <item row="0" column="3" colspan="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>213</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

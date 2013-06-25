@@ -13,6 +13,8 @@ FrmEntrada_apuntes::FrmEntrada_apuntes(QWidget *parent) :
 {
     ui->setupUi(this);
     oApunte = new apuntes(this);
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión de apuntes del Diario general contable"));
 }
 
 FrmEntrada_apuntes::~FrmEntrada_apuntes()

@@ -30,6 +30,15 @@ frmClientes::frmClientes(QWidget *parent) :
     oCliente = new Cliente(this);
     oCliente->id = 0;
     ui->txtNombreFiscal->setText("");
+    if (Configuracion_global->medic){
+        push->setToolTip(tr("Gestión del fichero de pacientes/clientes"));
+        ui->textoTitulo->setText(tr("Gestión de Pacientes - datos administrativos"));
+    }
+    else{
+        push->setToolTip(tr("Gestión del fichero de clientes"));
+        ui->textoTitulo->setText(tr("Gestión de Clientes"));
+    }
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
     ValidarCC();
     //oCliente->Actualizar_de_web();
     // Rellenar formas de pago
@@ -40,10 +49,7 @@ frmClientes::frmClientes(QWidget *parent) :
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
     int nNivel = settings.value("nNivelAcceso").toInt();
     //QString cCategoria = settings.value("cCategoria").toString();
-    if( Configuracion_global->medic == false) {
-        this->setWindowTitle(tr("Gestion de clientes"));
-        ui->textoTitulo->setText(("GESTIÓN de CLIENTES - Datos Administrativos"));
-    }
+
     if (nNivel >7 && Configuracion_global->medic == true)
         ui->btnFichaPaciente->setVisible(true);
     else

@@ -30,7 +30,8 @@ public:
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+    void hideButton(){toolButton.hide();}
+    QPushButton* wantShortCut(bool& ok){ok = true; return push;}
     void resizeTable(int x);
 private slots:
     void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
@@ -69,6 +70,7 @@ private:
     void bloquearcampos(bool estado);
     ToolBarButton toolButton;
     QAction menuButton;
+    QPushButton* push;
 signals:
 
 };

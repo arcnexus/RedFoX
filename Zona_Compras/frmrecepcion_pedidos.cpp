@@ -9,7 +9,8 @@ Frmrecepcion_pedidos::Frmrecepcion_pedidos(QWidget *parent) :
     MayaModule(ModuleZone(),ModuleName(),parent),
     ui(new Ui::Frmrecepcion_pedidos),
     toolButton(tr("Recepción \npedidos"),":Icons/PNG/recepcion_ped.png",this),
-    menuButton(QIcon(":Icons/PNG/recepcion_ped.png"),tr("Recepción de pedidos"),this)
+    menuButton(QIcon(":Icons/PNG/recepcion_ped.png"),tr("Recepción de pedidos"),this),
+    push(new QPushButton(QIcon(":/Icons/PNG/recepcion_ped.png"),"",this))
 {
     ui->setupUi(this);
     ui->txtFechaFin->setDate(QDate::currentDate());
@@ -27,6 +28,8 @@ Frmrecepcion_pedidos::Frmrecepcion_pedidos(QWidget *parent) :
 
     ui->lblRegistrarAlbaran->setVisible(false);
     ui->lblRegistrarFactura->setVisible(false);
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Recepción de pedidos a proveedores"));
     
 
 

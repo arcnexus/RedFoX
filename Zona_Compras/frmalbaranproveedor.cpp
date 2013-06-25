@@ -13,10 +13,13 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     helper(this),
     prov(this),
     toolButton(tr("Albaranes \nProv."),":/Icons/PNG/albaran_pro.png",this),
-    menuButton(QIcon(":/Icons/PNG/albaran_pro.png"),tr("Albaranes Prov."),this)
+    menuButton(QIcon(":/Icons/PNG/albaran_pro.png"),tr("Albaranes Prov."),this),
+    push(new QPushButton(QIcon(":/Icons/PNG/albaran_pro.png"),"",this))
 {
     ui->setupUi(this);
     oAlbPro = new AlbaranProveedor(this);
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión de albaranes de proveedor"));
     ui->cbo_pais->setModel(Configuracion_global->paises_model);
     ui->cbo_pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 

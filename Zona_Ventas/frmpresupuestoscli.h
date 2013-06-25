@@ -34,7 +34,8 @@ public:
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+    void hideButton(){toolButton.hide();}
+    QPushButton* wantShortCut(bool& ok){ok = true; return push;}
 private slots:
     void on_chklAprovado_stateChanged(int arg1);
 
@@ -80,6 +81,7 @@ private:
 
     ToolBarButton toolButton;
     QAction menuButton;
+    QPushButton* push;
 };
 
 #endif // FRMPRESUPUESTOSCLI_H

@@ -23,6 +23,8 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     ui->lblImpreso->setVisible(false);
     ui->lblnombreProveedor->clear();
     ui->lblnumero_pedido->clear();
+    shortCut->setToolTip(tr("Gestión de pedidos a proveedor"));
+    shortCut->setStyleSheet("background-color: rgb(133, 170, 142)");
 
     //oProveedor = new Proveedor(this);
     ui->combo_pais->setModel(Configuracion_global->paises_model);

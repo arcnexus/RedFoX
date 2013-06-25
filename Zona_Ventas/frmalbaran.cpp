@@ -13,7 +13,8 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui(new Ui::FrmAlbaran),
     helper(this),
     toolButton(tr("Albaranes"),":/Icons/PNG/albaran.png",this),
-    menuButton(QIcon(":/Icons/PNG/albaran.png"),tr("Albaranes"),this)
+    menuButton(QIcon(":/Icons/PNG/albaran.png"),tr("Albaranes"),this),
+    push(new QPushButton(QIcon(":/Icons/PNG/albaran.png"),"",this))
 {
     ui->setupUi(this);
     // Pongo valores por defecto
@@ -21,6 +22,8 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->lblImpreso->setVisible(false);
     ui->lblNumFactura->setVisible(false);
     ui->txtcNumFra->setVisible(false);
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión de albaranes a clientes"));
 
     ui->comboPais->setModel(Configuracion_global->paises_model);
     ui->comboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
