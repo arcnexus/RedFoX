@@ -1,10 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include "openrptLibs/include/data.h"
 Configuracion * Configuracion_global = 0;
 
 void MainWindow::crear_barraMantenimiento()
 {
+    bool addSpacer = false;
     if(!_mantenModules.isEmpty())
     {
         QWidget* container = new QWidget(this);
@@ -29,7 +30,10 @@ void MainWindow::crear_barraMantenimiento()
             bool b;
             QPushButton * pb = mm->wantShortCut(b) ;
             if(b)
+            {
                 addShortCut(pb);
+                addSpacer = true;
+            }
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -55,10 +59,13 @@ void MainWindow::crear_barraMantenimiento()
     connect(exit,SIGNAL(triggered()),this,SLOT(close()));
     ui->menuArchivos->addSeparator();
     ui->menuArchivos->addAction(exit);
+    if(addSpacer)
+        ui->shortCutContainer->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Preferred));
 }
 
 void MainWindow::crear_barraAlmacen()
 {
+    bool addSpacer = false;
     QMenu* menu  =0;
     if(!_almacenModules.isEmpty())
     {
@@ -85,7 +92,10 @@ void MainWindow::crear_barraAlmacen()
             bool b;
             QPushButton * pb = mm->wantShortCut(b) ;
             if(b)
+            {
                 addShortCut(pb);
+            addSpacer = true;
+        }
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -111,10 +121,13 @@ void MainWindow::crear_barraAlmacen()
     }
     if(menu)
         ui->menubar->addMenu(menu);
+    if(addSpacer)
+        ui->shortCutContainer->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Preferred));
 }
 
 void MainWindow::crear_barraVentas()
 {
+    bool addSpacer = false;
     if(!_ventasModules.isEmpty())
     {
         QMenu* menu = new QMenu(tr("Ventas"),this);
@@ -140,7 +153,10 @@ void MainWindow::crear_barraVentas()
             bool b;
             QPushButton * pb = mm->wantShortCut(b) ;
             if(b)
+            {
                 addShortCut(pb);
+                addSpacer = true;
+            }
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -148,12 +164,15 @@ void MainWindow::crear_barraVentas()
         ui->comboBox->addItem(tr("Ventas"));
         ui->menubar->addMenu(menu);
     }
+    if(addSpacer)
+        ui->shortCutContainer->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Preferred));
 }
 
 
 
 void MainWindow::crear_barraCompras()
 {
+    bool addSpacer = false;
     if(!_comprasModules.isEmpty())
     {
         QMenu* menu = new QMenu(tr("Compras"),this);
@@ -179,7 +198,10 @@ void MainWindow::crear_barraCompras()
             bool b;
             QPushButton * pb = mm->wantShortCut(b) ;
             if(b)
+            {
                 addShortCut(pb);
+                addSpacer = true;
+            }
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -187,10 +209,13 @@ void MainWindow::crear_barraCompras()
         ui->comboBox->addItem(tr("Compras"));
         ui->menubar->addMenu(menu);
     }
+    if(addSpacer)
+        ui->shortCutContainer->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Preferred));
 }
 
 void MainWindow::crear_barraUtils()
 {
+    bool addSpacer = false;
     if(!_utilsModules.isEmpty())
     {
         QMenu* menu = new QMenu(tr("Utilidades"),this);
@@ -216,7 +241,10 @@ void MainWindow::crear_barraUtils()
             bool b;
             QPushButton * pb = mm->wantShortCut(b) ;
             if(b)
+            {
                 addShortCut(pb);
+                addSpacer = true;
+            }
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -224,10 +252,13 @@ void MainWindow::crear_barraUtils()
         ui->comboBox->addItem(tr("Utilidades"));
         ui->menubar->addMenu(menu);
     }
+    if(addSpacer)
+        ui->shortCutContainer->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Preferred));
 }
 
 void MainWindow::crear_barraAdmin()
 {
+    bool addSpacer = false;
     if(!_adminModules.isEmpty())
     {
         QMenu* menu = new QMenu(tr("Administrador"),this);
@@ -253,7 +284,10 @@ void MainWindow::crear_barraAdmin()
             bool b;
             QPushButton * pb = mm->wantShortCut(b) ;
             if(b)
+            {
                 addShortCut(pb);
+                addSpacer = true;
+            }
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -261,10 +295,13 @@ void MainWindow::crear_barraAdmin()
         ui->comboBox->addItem(tr("Administrador"));
         ui->menubar->addMenu(menu);
     }
+    if(addSpacer)
+        ui->shortCutContainer->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Preferred));
 }
 
 void MainWindow::crear_barraContabilidad()
 {
+    bool addSpacer = false;
     //btn_cuentas = new ToolBarButton(tr("Cuentas"),":/Icons/PNG/asientos.png",this);
     if(!_contaModules.isEmpty())
     {
@@ -291,7 +328,10 @@ void MainWindow::crear_barraContabilidad()
             bool b;
             QPushButton * pb = mm->wantShortCut(b) ;
             if(b)
+            {
                 addShortCut(pb);
+                addSpacer = true;
+            }
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -299,10 +339,13 @@ void MainWindow::crear_barraContabilidad()
         ui->comboBox->addItem(tr("Contabilidad"));
         ui->menubar->addMenu(menu);
     }
+    if(addSpacer)
+        ui->shortCutContainer->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Preferred));
 }
 
 void MainWindow::crear_barraClinica()
 {
+    bool addSpacer = false;
     QMenu* menu = 0;
     if(!_clinicaModules.isEmpty())
     {
@@ -329,7 +372,10 @@ void MainWindow::crear_barraClinica()
             bool b;
             QPushButton * pb = mm->wantShortCut(b) ;
             if(b)
+            {
                 addShortCut(pb);
+                addSpacer = true;
+            }
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
@@ -365,7 +411,6 @@ void MainWindow::addShortCut(QPushButton *button)
     button->setMinimumHeight(34);
     button->setIconSize(QSize(30,30));
     connect(button,SIGNAL(clicked()),this,SLOT(handle_toolBar()));
-
 }
 
 
@@ -644,6 +689,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    //OpenRPT::databaseURL = "QMYSQL://localhost:3306/";
     ui->setupUi(this);
     on_edit = false;
     Configuracion_global->CargarDatos();

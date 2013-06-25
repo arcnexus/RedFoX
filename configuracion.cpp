@@ -745,7 +745,11 @@ QString Configuracion::letraDNI(QString Nif)
 
 void Configuracion::imprimir(bool toPDF,bool preview, QWidget *parent)
 {
-    QSqlDatabase db = QSqlDatabase::database("Maya", false);
+    QSqlDatabase db = QSqlDatabase::database("Maya");
+    db.setHostName("localhost");
+    db.setUserName("root");
+    db.setPassword("marco");
+    db.open();
     if(db.isValid()) {
         DBFileDialog rptDiag;
         rptDiag.setWindowTitle(tr("Load Report from Database"));
@@ -757,15 +761,18 @@ void Configuracion::imprimir(bool toPDF,bool preview, QWidget *parent)
             int errLine, errCol;
             QString source = rptDiag.getSource();
             if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
-                ORPreRender pre;
+                ORPreRender pre(db);
                 pre.setDom(doc);
                 pre.setDatabase(QSqlDatabase::database("Maya"));
 
                 ParameterEdit paramEdit(0);
+                ParameterList pl;
                 QDialog *dlgEdit = ParameterEdit::ParameterEditDialog(&paramEdit, parent);
                 if (paramEdit.setDocument(doc))
-                    if (dlgEdit->exec() != QDialog::Accepted)
-                        return;
+//                    if (dlgEdit->exec() != QDialog::Accepted)
+//                        return;
+                    pl = paramEdit.getParameterList();
+
 
                 pre.setParamList(paramEdit.getParameterList());
                 ORODocument * doc = pre.generate();
