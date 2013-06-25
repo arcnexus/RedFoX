@@ -57,6 +57,62 @@ void MainWindow::crear_barraMantenimiento()
     ui->menuArchivos->addAction(exit);
 }
 
+void MainWindow::crear_barraAlmacen()
+{
+    QMenu* menu  =0;
+    if(!_almacenModules.isEmpty())
+    {
+        menu = new QMenu(tr("Almacen"),this);
+        QWidget* container = new QWidget(this);
+        QVBoxLayout * box = new QVBoxLayout(container);
+        QVector<MayaModule*>::Iterator almacenIter;
+        for(almacenIter = _almacenModules.begin(); almacenIter!=_almacenModules.end();++almacenIter)
+        {
+            MayaModule * mm = *almacenIter;
+            ui->stackedWidget->addWidget(mm);
+            box->addWidget(mm->ModuleToolBarButton());
+            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
+            connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
+            if(mm->ModuleMenuPath().isEmpty())
+                menu->addAction(mm->ModuleMenuBarButton());
+            else
+            {
+                //TODO subPaths
+            }
+            connect(mm,SIGNAL(block()),this,SLOT(block_main()));
+            connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
+
+            bool b;
+            QPushButton * pb = mm->wantShortCut(b) ;
+            if(b)
+                addShortCut(pb);
+        }
+        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
+        container->setLayout(box);
+        ui->modulesStack->addWidget(container);
+        ui->comboBox->addItem(tr("Almacen"));
+    }
+    if(!_almacenExtensions.isEmpty())
+    {
+        if(menu == 0)
+            menu = new QMenu(tr("Almacen"),this);
+        QVector<ModuleExtension*>::Iterator iter;
+        for(iter=_almacenExtensions.begin();iter!=_almacenExtensions.end();++iter)
+        {
+            if((*iter)->ExtensionPath().isEmpty())
+               menu->addActions((*iter)->Extensions());
+            else
+            {
+                QMenu* in_menu = new QMenu((*iter)->ExtensionPath(),this);
+                in_menu->addActions((*iter)->Extensions());
+                menu->addMenu(in_menu);
+            }
+        }
+    }
+    if(menu)
+        ui->menubar->addMenu(menu);
+}
+
 void MainWindow::crear_barraVentas()
 {
     if(!_ventasModules.isEmpty())
@@ -94,61 +150,7 @@ void MainWindow::crear_barraVentas()
     }
 }
 
-void MainWindow::crear_barraAlmacen()
-{
-    QMenu* menu  =0;
-    if(!_almacenModules.isEmpty())
-    {
-        menu = new QMenu(tr("Almacen"),this);
-        QWidget* container = new QWidget(this);
-        QVBoxLayout * box = new QVBoxLayout(container);
-        QVector<MayaModule*>::Iterator almacenIter;
-        for(almacenIter = _almacenModules.begin(); almacenIter!=_almacenModules.end();++almacenIter)
-        {
-            MayaModule * mm = *almacenIter;
-            ui->stackedWidget->addWidget(mm);
-            box->addWidget(mm->ModuleToolBarButton());
-            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
-            connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
-            if(mm->ModuleMenuPath().isEmpty())
-                menu->addAction(mm->ModuleMenuBarButton());
-            else
-            {
-                //TODO subPaths
-            }
-            connect(mm,SIGNAL(block()),this,SLOT(block_main()));
-            connect(mm,SIGNAL(unblock()),this,SLOT(unblock_main()));
 
-            bool b;
-            QPushButton * pb = mm->wantShortCut(b) ;
-            if(b)
-                addShortCut(pb);
-        }
-        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
-        container->setLayout(box);
-        ui->modulesStack->addWidget(container);
-        ui->comboBox->addItem(tr("Almacen"));        
-    }
-    if(!_almacenExtensions.isEmpty())
-    {
-        if(menu == 0)
-            menu = new QMenu(tr("Almacen"),this);
-        QVector<ModuleExtension*>::Iterator iter;
-        for(iter=_almacenExtensions.begin();iter!=_almacenExtensions.end();++iter)
-        {
-            if((*iter)->ExtensionPath().isEmpty())
-               menu->addActions((*iter)->Extensions());
-            else
-            {
-                QMenu* in_menu = new QMenu((*iter)->ExtensionPath(),this);
-                in_menu->addActions((*iter)->Extensions());
-                menu->addMenu(in_menu);
-            }
-        }
-    }
-    if(menu)
-        ui->menubar->addMenu(menu);
-}
 
 void MainWindow::crear_barraCompras()
 {
@@ -366,6 +368,54 @@ void MainWindow::addShortCut(QPushButton *button)
 
 }
 
+
+void MainWindow::loadMantenModules(QSplashScreen* splash)
+{
+    splash->showMessage(tr("Cargando modulos... Modulo de clientes") );
+
+    frmClientes* Clientes = new frmClientes(this);
+    if(Clientes->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _mantenModules.append(Clientes);
+    }
+    else
+        Clientes->deleteLater();
+
+    splash->showMessage(tr("Cargando modulos... Modulo de proveedores") );
+    frmProveedores * Proveedores = new frmProveedores(this);
+    if(Proveedores->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _mantenModules.append(Proveedores);
+    }
+    else
+        Proveedores->deleteLater();
+
+    ArchivosGeneralesExt* e = new ArchivosGeneralesExt(this);
+    if(!e->Extensions().isEmpty())
+        _mantenExtensions.append(e);
+    else
+        e->deleteLater();
+}
+
+void MainWindow::loadAlmacenModules(QSplashScreen* splash)
+{
+    splash->showMessage(tr("Cargando modulos... Modulo de articulos") );
+    FrmArticulos* Articulos = new FrmArticulos(this);
+    if(Articulos->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _almacenModules.append(Articulos);
+    }
+    else
+        Articulos->deleteLater();
+
+    DivisionAlmacenExt* x = new DivisionAlmacenExt(this);
+    if(!x->Extensions().isEmpty())
+        _almacenExtensions.append(x);
+    else
+        x->deleteLater();
+}
+
+
 void MainWindow::loadVentasModules(QSplashScreen *splash)
 {
     splash->showMessage(tr("Cargando modulos... Modulo de presupuestos") );
@@ -439,6 +489,16 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
 
 void MainWindow::loadComprasModules(QSplashScreen *splash)
 {
+    splash->showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") );
+
+    FrmOrden_Pedido_Producto * frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
+    if(frmOrden_Ped_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _comprasModules.append(frmOrden_Ped_pro);
+    }
+    else
+        frmOrden_Ped_pro->deleteLater();
+
     splash->showMessage(tr("Cargando modulos... Modulo de Compras: pedidos") );
 
     FrmPedidosProveedor* FrmPedidos_pro = new FrmPedidosProveedor(this);
@@ -449,15 +509,6 @@ void MainWindow::loadComprasModules(QSplashScreen *splash)
     else
         FrmPedidos_pro->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") );
-
-    FrmOrden_Pedido_Producto * frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
-    if(frmOrden_Ped_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
-    {
-        _comprasModules.append(frmOrden_Ped_pro);
-    }
-    else
-        frmOrden_Ped_pro->deleteLater();
 
     splash->showMessage(tr("Cargando modulos... Modulo de Compras: Recepción de Pedidos") );
     Frmrecepcion_pedidos* frmRecep_pedidos = new Frmrecepcion_pedidos(this);
@@ -485,52 +536,6 @@ void MainWindow::loadComprasModules(QSplashScreen *splash)
     }
     else
         frmFacturas_pro->deleteLater();
-}
-
-void MainWindow::loadAlmacenModules(QSplashScreen* splash)
-{
-    splash->showMessage(tr("Cargando modulos... Modulo de articulos") );
-    FrmArticulos* Articulos = new FrmArticulos(this);
-    if(Articulos->userHaveAcces(Configuracion_global->id_usuario_activo))
-    {
-        _almacenModules.append(Articulos);
-    }
-    else
-        Articulos->deleteLater();
-
-    DivisionAlmacenExt* x = new DivisionAlmacenExt(this);
-    if(!x->Extensions().isEmpty())
-        _almacenExtensions.append(x);
-    else
-        x->deleteLater();
-}
-
-void MainWindow::loadMantenModules(QSplashScreen* splash)
-{
-    splash->showMessage(tr("Cargando modulos... Modulo de clientes") );
-
-    frmClientes* Clientes = new frmClientes(this);
-    if(Clientes->userHaveAcces(Configuracion_global->id_usuario_activo))
-    {
-        _mantenModules.append(Clientes);
-    }
-    else
-        Clientes->deleteLater();
-
-    splash->showMessage(tr("Cargando modulos... Modulo de proveedores") );
-    frmProveedores * Proveedores = new frmProveedores(this);
-    if(Proveedores->userHaveAcces(Configuracion_global->id_usuario_activo))
-    {
-        _mantenModules.append(Proveedores);
-    }
-    else
-        Proveedores->deleteLater();
-
-    ArchivosGeneralesExt* e = new ArchivosGeneralesExt(this);
-    if(!e->Extensions().isEmpty())
-        _mantenExtensions.append(e);
-    else
-        e->deleteLater();
 }
 
 void MainWindow::loadUtilsModules(QSplashScreen *splash)
@@ -650,14 +655,14 @@ MainWindow::MainWindow(QWidget *parent) :
     loadMantenModules(&splash);
     crear_barraMantenimiento();
 
+    loadAlmacenModules(&splash);
+    crear_barraAlmacen();
+
     loadComprasModules(&splash);
     crear_barraCompras();
 
     loadVentasModules(&splash);
     crear_barraVentas();
-
-    loadAlmacenModules(&splash);
-    crear_barraAlmacen();
 
     loadUtilsModules(&splash);
     crear_barraUtils();

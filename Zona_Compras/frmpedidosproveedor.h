@@ -28,7 +28,8 @@ public:
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+    void hideButton(){toolButton.hide();}
+    QPushButton* wantShortCut(bool& ok){ok = true; return shortCut;}
 signals:
 
 
@@ -78,6 +79,7 @@ private:
     QString moneda;
     ToolBarButton toolButton;
     QAction menuButton;
+    QPushButton* shortCut;
 };
 
 #endif // FRMPEDIDOSPROVEEDOR_H

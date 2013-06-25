@@ -13,7 +13,8 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     helper(this),
     prov(this),
     toolButton(tr("Pedidos \nProv."),":/Icons/PNG/pedido_pro.png",this),
-    menuButton(QIcon(":/Icons/PNG/pedido_pro.png"),tr("Pedidos Prov."),this)
+    menuButton(QIcon(":/Icons/PNG/pedido_pro.png"),tr("Pedidos Prov."),this),
+    shortCut(new QPushButton(QIcon(":/Icons/PNG/pedido_pro.png"),"",this))
 {
     ui->setupUi(this);
 
