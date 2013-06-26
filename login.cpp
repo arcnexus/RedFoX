@@ -31,9 +31,12 @@ Login::Login(QWidget *parent) :
     Configuracion_global->CargarDatosBD();
 
     QSqlDatabase dbMaya  = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDMaya,"Maya");
+    QSqlDatabase dbReports = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDMaya,"Reports");
 
     if (Configuracion_global->cDriverBDMaya == "QSQLITE")
     {
+        dbReports.setDatabaseName(Configuracion_global->cRutaBdMaya);
+        dbReports.open();
         dbMaya.setDatabaseName(Configuracion_global->cRutaBdMaya);
         dbMaya.open();
     }
@@ -41,8 +44,10 @@ Login::Login(QWidget *parent) :
     {
         dbMaya.setDatabaseName("MayaGeneral");
         dbMaya.setHostName(Configuracion_global->cHostBDMaya);
+        dbReports.setHostName(Configuracion_global->cHostBDMaya);
         dbMaya.open(Configuracion_global->cUsuarioBDMaya,Configuracion_global->cPasswordBDMaya);
-        dbMaya.open(Configuracion_global->cUsuarioBDMaya,Configuracion_global->cPasswordBDMaya);
+        dbReports.open(Configuracion_global->cUsuarioBDMaya,Configuracion_global->cPasswordBDMaya);
+
     }
     if (dbMaya.lastError().isValid())
     {

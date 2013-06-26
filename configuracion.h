@@ -176,6 +176,7 @@ public:
     static QString letraDNI(QString Nif);
     static void imprimir(bool toPDF , bool preview = true, QWidget* parent = 0);
     static void imprimir(bool toPDF, bool preview, QMap<QString, QVariant> params, QWidget *parent);
+    static void imprimir(QString repo ,bool toPDF, bool preview, QMap<QString, QVariant> params, QWidget *parent);
     static bool comprobarNIF(QString country_code, QString nif);
     static QString Crypt(QString input);
     static QString DeCrypt(QString input);
