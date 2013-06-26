@@ -100,7 +100,13 @@ public slots:
     void CobrarDeudaTotal(int id_deuda);
     void AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1, QString descTelefono2,
                                QString Telefono2, QString descTelefono3, QString Telefono3,
-                               QString descMovil1, QString Movil1, QString descMovil2, QString Movil2, QString cargo);
+                               QString descMovil1, QString Movil1, QString descMovil2, QString Movil2, QString cargo,
+                               QString email);
+    void GuardarPersonaContacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1, QString descTelefono2,
+                               QString Telefono2, QString descTelefono3, QString Telefono3,
+                               QString descMovil1, QString Movil1, QString descMovil2, QString Movil2, QString cargo,
+                               QString email, int id_cliente);
+    bool BorrarPersona_contacto(int id_persona);
     void GuardarDireccion(bool Anadir, QString Descripcion, QString Direccion1, QString Direccion2, QString CP, QString Poblacion,
                          QString Provincia, QString Pais, int idcliente, int id);
     void DescontarDeuda(int id_deuda,double rPagado);

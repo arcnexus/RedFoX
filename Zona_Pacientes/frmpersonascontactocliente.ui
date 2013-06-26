@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>761</width>
-    <height>480</height>
+    <width>1091</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Personas de contacto</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Maya.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
@@ -42,7 +42,7 @@
          <string>Eliminar seleccionado</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
         </property>
         <property name="iconSize">
@@ -69,8 +69,21 @@
       <item row="0" column="0" colspan="2">
        <widget class="QTableView" name="tabla_PersonasContacto">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 213);</string>
         </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
        </widget>
       </item>
      </layout>
@@ -88,45 +101,10 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="3" column="3">
-       <widget class="QLineEdit" name="txtTelefono2">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="5">
-       <widget class="QLineEdit" name="txtTelefono3">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
+      <item row="4" column="2">
+       <widget class="QLabel" name="label_9">
         <property name="text">
-         <string>Nombre:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1" colspan="5">
-       <widget class="QLineEdit" name="txtNombre">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>Descripción T1:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3">
-       <widget class="QLineEdit" name="txtDescripcionT2">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string>Descripción M2:</string>
         </property>
        </widget>
       </item>
@@ -137,10 +115,24 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="2">
-       <widget class="QLabel" name="label_6">
+      <item row="3" column="2">
+       <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Descripción T2:</string>
+         <string>telefono 2:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QLineEdit" name="txtTelefono2">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Descripción M1:</string>
         </property>
        </widget>
       </item>
@@ -158,24 +150,31 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="2">
-       <widget class="QLabel" name="label_3">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_10">
         <property name="text">
-         <string>telefono 2:</string>
+         <string>Cargo:</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_2">
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>Telefono 1:</string>
+         <string>Descripción T1:</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="txtTelefono1">
+      <item row="2" column="3">
+       <widget class="QLineEdit" name="txtDescripcionT2">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Descripción T2:</string>
         </property>
        </widget>
       </item>
@@ -186,43 +185,15 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_8">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>Descripción M1:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="txtDescripcionM1">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>Descripción M2:</string>
+         <string>Nombre:</string>
         </property>
        </widget>
       </item>
       <item row="4" column="3">
        <widget class="QLineEdit" name="txtDescripcionM2">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="label_11">
-        <property name="text">
-         <string>Móvil 1:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLineEdit" name="txtMovil1">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -235,8 +206,64 @@
         </property>
        </widget>
       </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="txtDescripcionM1">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="txtTelefono1">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="5">
+       <widget class="QLineEdit" name="txtNombre">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
       <item row="5" column="3">
        <widget class="QLineEdit" name="txtMovil2">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Telefono 1:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="txtMovil1">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Móvil 1:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <widget class="QLineEdit" name="txtCargo">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="5">
+       <widget class="QLineEdit" name="txtTelefono3">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -251,7 +278,7 @@
          <string>Añadir</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
         </property>
         <property name="iconSize">
@@ -262,17 +289,31 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_10">
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_13">
         <property name="text">
-         <string>Cargo:</string>
+         <string>Mail:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="txtCargo">
+      <item row="6" column="1" colspan="3">
+       <widget class="QLineEdit" name="txtMail">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="5">
+       <widget class="QPushButton" name="btnGuardar">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Guardar</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
         </property>
        </widget>
       </item>
@@ -308,7 +349,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
       <string>Aceptar</string>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/OK.png</normaloff>:/Icons/PNG/OK.png</iconset>
      </property>
      <property name="iconSize">
@@ -334,13 +375,15 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
   <tabstop>txtMovil1</tabstop>
   <tabstop>txtDescripcionM2</tabstop>
   <tabstop>txtMovil2</tabstop>
+  <tabstop>txtMail</tabstop>
   <tabstop>btnAnadir</tabstop>
+  <tabstop>btnGuardar</tabstop>
+  <tabstop>tabla_PersonasContacto</tabstop>
   <tabstop>btnAceptar</tabstop>
   <tabstop>btnEliminar</tabstop>
-  <tabstop>tabla_PersonasContacto</tabstop>
  </tabstops>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -350,8 +393,8 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>702</x>
-     <y>460</y>
+     <x>1075</x>
+     <y>502</y>
     </hint>
     <hint type="destinationlabel">
      <x>480</x>
@@ -366,28 +409,12 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
    <slot>Anadir()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>677</x>
-     <y>416</y>
+     <x>1071</x>
+     <y>425</y>
     </hint>
     <hint type="destinationlabel">
      <x>327</x>
      <y>444</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnEliminar</sender>
-   <signal>clicked()</signal>
-   <receiver>frmPersonasContactoCliente</receiver>
-   <slot>Borrar()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>740</x>
-     <y>211</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>205</x>
-     <y>439</y>
     </hint>
    </hints>
   </connection>

@@ -1283,7 +1283,7 @@ color: rgb(0, 0, 0);</string>
    <item row="2" column="1" rowspan="2" colspan="2">
     <widget class="QTabWidget" name="tabWidget_5">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <property name="styleSheet">
@@ -1810,14 +1810,21 @@ color: rgb(0, 0, 0);</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1" colspan="3">
-           <widget class="QLineEdit" name="txtCargo">
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_34">
+            <property name="text">
+             <string>email:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1" colspan="5">
+           <widget class="QLineEdit" name="txtemail_contacto">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="3">
+          <item row="9" column="4">
            <widget class="QPushButton" name="btnGuardarContacto">
             <property name="text">
              <string>Guardar</string>
@@ -1834,6 +1841,13 @@ color: rgb(0, 0, 0);</string>
             </property>
            </widget>
           </item>
+          <item row="1" column="1" colspan="5">
+           <widget class="QLineEdit" name="txtCargo">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -1842,6 +1856,15 @@ color: rgb(0, 0, 0);</string>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);
 alternate-background-color: rgb(255, 254, 202);</string>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
          </property>
         </widget>
        </item>
@@ -2325,7 +2348,7 @@ color: rgb(255, 255, 255);</string>
   <tabstop>txtMovil1</tabstop>
   <tabstop>txtDescripcionM2</tabstop>
   <tabstop>txtMovil2</tabstop>
-  <tabstop>btnGuardarContacto</tabstop>
+  <tabstop>txtemail_contacto</tabstop>
   <tabstop>btnAnadir_persona_contacto</tabstop>
   <tabstop>txtnDiaCobro</tabstop>
   <tabstop>txtnDto</tabstop>
@@ -2394,6 +2417,9 @@ color: rgb(255, 255, 255);</string>
   <tabstop>btnBorrar</tabstop>
   <tabstop>txtdFechaUltimaCompra</tabstop>
   <tabstop>tablaContactos</tabstop>
+  <tabstop>btnAnadirEntrega</tabstop>
+  <tabstop>tabla_entregas</tabstop>
+  <tabstop>btnGuardarContacto</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>

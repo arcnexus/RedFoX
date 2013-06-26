@@ -746,10 +746,7 @@ QString Configuracion::letraDNI(QString Nif)
 void Configuracion::imprimir(bool toPDF,bool preview, QWidget *parent)
 {
     QSqlDatabase db = QSqlDatabase::database("Maya");
-    db.setHostName("localhost");
-    db.setUserName("root");
-    db.setPassword("marco");
-    db.open();
+    //db.open();
     if(db.isValid()) {
         DBFileDialog rptDiag;
         rptDiag.setWindowTitle(tr("Load Report from Database"));
@@ -832,10 +829,7 @@ void Configuracion::imprimir(bool toPDF,bool preview, QWidget *parent)
 void Configuracion::imprimir(bool toPDF,bool preview,QMap<QString,QVariant> params, QWidget *parent)
 {
     QSqlDatabase db = QSqlDatabase::database("Maya");
-    db.setHostName("localhost");
-    db.setUserName("root");
-    db.setPassword("marco");
-    db.open();
+    //db.open();
     if(db.isValid()) {
         DBFileDialog rptDiag;
         rptDiag.setWindowTitle(tr("Load Report from Database"));
@@ -1132,8 +1126,8 @@ void Configuracion::readCambio(QString s)
     {
         emit cambioReady(f,to);//double, qString....
     }
-    else
-        qDebug()<<s;
+
+      //  qDebug()<<s;
 }
 /*
  *connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(unSLOT(float);

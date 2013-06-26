@@ -21,13 +21,17 @@ public:
 
 private:
     Ui::frmPersonasContactoCliente *ui;
+    int id_cliente;
+    int id;
 
 
 
 private slots:
     void Anadir();
-    void Borrar();
 
+    void on_btnEliminar_clicked();
+    void on_tabla_PersonasContacto_clicked(const QModelIndex &index);
+    void on_btnGuardar_clicked();
 };
 
 #endif // FRMPERSONASCONTACTOCLIENTE_H

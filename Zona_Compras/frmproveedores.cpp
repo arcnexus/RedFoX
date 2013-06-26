@@ -23,7 +23,9 @@ frmProveedores::frmProveedores(QWidget *parent) :
   MayaModule(ModuleZone(),ModuleName(),parent),
   ui(new Ui::frmProveedores),
   toolButton(tr("Proveedores"),":/Icons/PNG/proveedores_2.png",this),
-  menuButton(QIcon(":/Icons/PNG/proveedores_2.png"),tr("Proveedores"),this)
+  menuButton(QIcon(":/Icons/PNG/proveedores_2.png"),tr("Proveedores"),this),
+  push(new QPushButton(QIcon(":/Icons/PNG/proveedores_2.png"),"",this))
+
 {
     ui->setupUi(this);
     oProveedor->id = 0;
@@ -1006,7 +1008,8 @@ void frmProveedores::nuevo_contacto()
     oProveedor->anadir_persona_contacto(oProveedor->id,ui->txtNombre->text(),ui->txtDescripcionT1->text(),
                                    ui->txtTelefono1->text(),ui->txtDescripcionT2->text(),ui->txtTelefono2->text(),
                                    ui->txtDescripcionT3->text(),ui->txtTelefono3->text(),ui->txtDescripcionM1->text(),
-                                   ui->txtMovil1->text(),ui->txtDescripcionM2->text(),ui->txtMovil2->text(),ui->txtCargo->text());
+                                   ui->txtMovil1->text(),ui->txtDescripcionM2->text(),ui->txtMovil2->text(),ui->txtCargo->text(),
+                                        ui->txtemail_contacto->text());
     ui->txtDescripcionM1->setText("");
     ui->txtDescripcionM2->setText("");
     ui->txtDescripcionT1->setText("");
@@ -1019,6 +1022,7 @@ void frmProveedores::nuevo_contacto()
     ui->txtTelefono2->setText("");
     ui->txtTelefono3->setText("");
     ui->txtCargo->setText("");
+    ui->txtemail_contacto->setText("");
     ui->txtNombre->setFocus();
 
     contactos();
@@ -1029,7 +1033,8 @@ void frmProveedores::guardar_contacto()
     oProveedor->guardar_persona_contacto(this->id_contacto,ui->txtNombre->text(),ui->txtDescripcionT1->text(),
                                    ui->txtTelefono1->text(),ui->txtDescripcionT2->text(),ui->txtTelefono2->text(),
                                    ui->txtDescripcionT3->text(),ui->txtTelefono3->text(),ui->txtDescripcionM1->text(),
-                                   ui->txtMovil1->text(),ui->txtDescripcionM2->text(),ui->txtMovil2->text(),ui->txtCargo->text());
+                                   ui->txtMovil1->text(),ui->txtDescripcionM2->text(),ui->txtMovil2->text(),ui->txtCargo->text(),
+                                   ui->txtemail_contacto->text());
     ui->txtDescripcionM1->setText("");
     ui->txtDescripcionM2->setText("");
     ui->txtDescripcionT1->setText("");
@@ -1042,6 +1047,7 @@ void frmProveedores::guardar_contacto()
     ui->txtTelefono2->setText("");
     ui->txtTelefono3->setText("");
     ui->txtCargo->setText("");
+    ui->txtemail_contacto->setText("");
     ui->txtNombre->setFocus();
 
     contactos();
@@ -1058,6 +1064,7 @@ void frmProveedores::guardar_contacto()
     ui->txtTelefono2->setReadOnly(true);
     ui->txtTelefono3->setReadOnly(true);
     ui->txtCargo->setReadOnly(true);
+    ui->txtcEmail->setReadOnly(true);
 }
 
 void frmProveedores::editar_contacto()
@@ -1084,11 +1091,13 @@ void frmProveedores::editar_contacto()
         ui->txtDescripcionT3->setText(queryContactos.record().value("desctelefono3").toString());
         ui->txtDescripcionM1->setText(queryContactos.record().value("descmovil1").toString());
         ui->txtDescripcionM2->setText(queryContactos.record().value("descmovil2").toString());
-        ui->txtcTelefono1->setText(queryContactos.record().value("telefono1").toString());
-        ui->txtcTelefono2->setText(queryContactos.record().value("telefono2").toString());
-        ui->txtcTelefono3->setText(queryContactos.record().value("telefono3").toString());
+        ui->txtTelefono1->setText(queryContactos.record().value("telefono1").toString());
+        ui->txtTelefono2->setText(queryContactos.record().value("telefono2").toString());
+        ui->txtTelefono3->setText(queryContactos.record().value("telefono3").toString());
         ui->txtMovil1->setText(queryContactos.record().value("movil1").toString());
         ui->txtMovil2->setText(queryContactos.record().value("movil2").toString());
+        ui->txtCargo->setText(queryContactos.record().value("cargo_empresa").toString());
+        ui->txtemail_contacto->setText(queryContactos.record().value("email").toString());
 
         ui->btnGuardarContacto->setVisible("true");
         ui->txtDescripcionM1->setReadOnly(false);
@@ -1103,6 +1112,7 @@ void frmProveedores::editar_contacto()
         ui->txtTelefono2->setReadOnly(false);
         ui->txtTelefono3->setReadOnly(false);
         ui->txtCargo->setReadOnly(false);
+        ui->txtemail_contacto->setReadOnly(false);
         ui->txtNombre->setFocus();
     }
 }

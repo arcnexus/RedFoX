@@ -434,7 +434,7 @@ void Cliente::CobrarDeudaTotal(int id_deuda)
 
 void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
                                     QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3,
-                                    QString descMovil1, QString Movil1, QString descMovil2, QString Movil2,QString cargo)
+                                    QString descMovil1, QString Movil1, QString descMovil2, QString Movil2, QString cargo, QString email)
 {
     QSqlQuery qContactos(QSqlDatabase::database("Maya"));
     qContactos.prepare("INSERT INTO Personascontactocliente "
@@ -450,7 +450,8 @@ void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono
                        "desctelefono3,"
                        "descmovil1,"
                        "descmovil2,"
-                       "cargo_empresa)"
+                       "cargo_empresa,"
+                       "email)"
                        " VALUES ("
                       ":nombre,"
                       ":telefono1,"
@@ -464,7 +465,8 @@ void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono
                       ":desctelefono3,"
                       ":descmovil1,"
                       ":descmovil2,"
-                       ":cargo);");
+                      ":cargo,"
+                      ":email);");
 
 
                        qContactos.bindValue(":nombre",Nombre);
@@ -480,9 +482,65 @@ void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono
                        qContactos.bindValue(":descmovil1",descMovil1);
                        qContactos.bindValue(":descmovil2",descMovil2);
                        qContactos.bindValue(":cargo",cargo);
+                       qContactos.bindValue(":email",email);
                        if(!qContactos.exec())
                            QMessageBox::warning(qApp->activeWindow(),tr("Añadir personas de contacto"),
                                                 tr("Falló el añadir una persona de contacto: %1").arg(qContactos.lastError().text()));
+}
+
+void Cliente::GuardarPersonaContacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
+                                     QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3,
+                                     QString descMovil1, QString Movil1, QString descMovil2, QString Movil2,
+                                     QString cargo, QString email,int id_cliente)
+{
+    QSqlQuery qContactos(QSqlDatabase::database("Maya"));
+    qContactos.prepare("UPDATE Personascontactocliente set "
+                       "nombre =:nombre,"
+                       "telefono1 = :telefono1,"
+                       "telefono2 = :telefono2,"
+                       "telefono3 = :telefono3,"
+                       "movil =:movil,"
+                       "movil2 =:movil2,"
+                       "idcliente =:idcliente,"
+                       "desctelefono1 =:desctelefono1,"
+                       "desctelefono2 =:desctelefono2,"
+                       "desctelefono3 =:desctelefono3,"
+                       "descmovil1 =:descmovil1,"
+                       "descmovil2 =:descmovil2,"
+                       "cargo_empresa =:cargo_empresa,"
+                       "email =:email where id = :id");
+                       qContactos.bindValue(":nombre",Nombre);
+                       qContactos.bindValue(":telefono1",Telefono1);
+                       qContactos.bindValue( ":telefono2",Telefono2);
+                       qContactos.bindValue(":telefono3",Telefono3);
+                       qContactos.bindValue(":movil",Movil1);
+                       qContactos.bindValue(":movil2",Movil2);
+                       qContactos.bindValue(":idcliente",id_cliente);
+                       qContactos.bindValue(":desctelefono1",descTelefono1);
+                       qContactos.bindValue(":desctelefono2",descTelefono2);
+                       qContactos.bindValue(":desctelefono3",descTelefono3);
+                       qContactos.bindValue(":descmovil1",descMovil1);
+                       qContactos.bindValue(":descmovil2",descMovil2);
+                       qContactos.bindValue(":cargo",cargo);
+                       qContactos.bindValue(":email",email);
+                       qContactos.bindValue(":id",Id);
+                       if(!qContactos.exec())
+                           QMessageBox::warning(qApp->activeWindow(),tr("editar personas de contacto"),
+                                                tr("Falló el guardar una persona de contacto: %1").arg(qContactos.lastError().text()));
+}
+
+bool Cliente::BorrarPersona_contacto(int id_persona)
+{
+    QSqlQuery queryPersona(QSqlDatabase::database("Maya"));
+    if(queryPersona.exec("delete from Personascontactocliente where id ="+QString::number(id_persona)))
+        return true;
+    else
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Personas contacto cliente"),
+                             tr("Ocurrió un error al borrar: %1").arg(queryPersona.lastError().text()),
+                             tr("Aceptar"));
+        return false;
+    }
 }
 
 void Cliente::GuardarDireccion(bool Anadir, QString Descripcion, QString Direccion1, QString Direccion2, QString CP, QString Poblacion,

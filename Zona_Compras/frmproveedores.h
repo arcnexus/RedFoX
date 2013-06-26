@@ -20,7 +20,8 @@ public:
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+    void hideButton(){toolButton.hide();}
+    QPushButton* wantShortCut(bool& ok){ok = true; return push;}
 public slots:
     void DesbloquerCampos();
     void BloquearCampos();
@@ -97,10 +98,12 @@ private slots:
 
     void on_btnAnadirEntrega_clicked();
 
+
 private:
     Ui::frmProveedores *ui;
     ToolBarButton toolButton;
     QAction menuButton;
+    QPushButton *push;
 };
 
 #endif // FRMPROVEEDORES_H

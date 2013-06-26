@@ -733,10 +733,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     updateDivisas();
 
-    QMap<QString,QVariant> _map;
-   _map["id_cab"] = 2;
-   _map["id_cliente"] = 4;
-   Configuracion::imprimir(true,true,_map,this);
+//    QMap<QString,QVariant> _map;
+//   _map["id_cab"] = 2;
+//   _map["id_cliente"] = 3;
+//   Configuracion::imprimir(true,true,_map,this);
 }
 
 void MainWindow::block_main()

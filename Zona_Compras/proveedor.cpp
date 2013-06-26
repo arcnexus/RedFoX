@@ -38,7 +38,8 @@ return true;
 
 void Proveedor::anadir_persona_contacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
                                         QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3,
-                                        QString descMovil1, QString Movil1, QString descMovil2, QString Movil2,QString cargo)
+                                        QString descMovil1, QString Movil1, QString descMovil2, QString Movil2,QString cargo,
+                                        QString email)
     {
         QSqlQuery qContactos(QSqlDatabase::database("Maya"));
         qContactos.prepare("INSERT INTO personascontactoproveedor "
@@ -54,7 +55,8 @@ void Proveedor::anadir_persona_contacto(int Id, QString Nombre, QString descTele
                            "desctelefono3,"
                            "descmovil1,"
                            "descmovil2,"
-                           "cargo_empresa)"
+                           "cargo_empresa,"
+                           "email)"
                            " VALUES ("
                           ":nombre,"
                           ":telefono1,"
@@ -68,7 +70,8 @@ void Proveedor::anadir_persona_contacto(int Id, QString Nombre, QString descTele
                           ":desctelefono3,"
                           ":descmovil1,"
                           ":descmovil2,"
-                           ":cargo);");
+                          ":cargo,"
+                          ":email);");
 
 
                            qContactos.bindValue(":nombre",Nombre);
@@ -84,12 +87,16 @@ void Proveedor::anadir_persona_contacto(int Id, QString Nombre, QString descTele
                            qContactos.bindValue(":descmovil1",descMovil1);
                            qContactos.bindValue(":descmovil2",descMovil2);
                            qContactos.bindValue(":cargo",cargo);
+                           qContactos.bindValue(":email",email);
                            if(!qContactos.exec())
                                QMessageBox::warning(qApp->activeWindow(),tr("Añadir personas de contacto"),
                                                     tr("Falló el añadir una persona de contacto: %1").arg(qContactos.lastError().text()));
 }
 
-void Proveedor::guardar_persona_contacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1, QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3, QString descMovil1, QString Movil1, QString descMovil2, QString Movil2, QString cargo)
+void Proveedor::guardar_persona_contacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
+                                         QString descTelefono2, QString Telefono2, QString descTelefono3,
+                                         QString Telefono3, QString descMovil1, QString Movil1, QString descMovil2,
+                                         QString Movil2, QString cargo, QString email)
 {
     QSqlQuery qContactos(QSqlDatabase::database("Maya"));
     qContactos.prepare("UPDATE personascontactoproveedor SET "
@@ -104,7 +111,8 @@ void Proveedor::guardar_persona_contacto(int Id, QString Nombre, QString descTel
     "desctelefono3 =:desctelefono3,"
     "descmovil1 =:descmovil1,"
     "descmovil2 =:descmovil2,"
-    "cargo_empresa =:cargo_empresa "
+    "cargo_empresa =:cargo_empresa,"
+    "email =:email"
     " where id = :id");
 
 
@@ -112,7 +120,7 @@ void Proveedor::guardar_persona_contacto(int Id, QString Nombre, QString descTel
     qContactos.bindValue(":telefono1",Telefono1);
     qContactos.bindValue( ":telefono2",Telefono2);
     qContactos.bindValue(":telefono3",Telefono3);
-    qContactos.bindValue(":movil",Movil1);
+    qContactos.bindValue(":movil1",Movil1);
     qContactos.bindValue(":movil2",Movil2);
     qContactos.bindValue(":idproveedor",Id);
     qContactos.bindValue(":desctelefono1",descTelefono1);
@@ -120,7 +128,8 @@ void Proveedor::guardar_persona_contacto(int Id, QString Nombre, QString descTel
     qContactos.bindValue(":desctelefono3",descTelefono3);
     qContactos.bindValue(":descmovil1",descMovil1);
     qContactos.bindValue(":descmovil2",descMovil2);
-    qContactos.bindValue(":cargo",cargo);
+    qContactos.bindValue(":cargo_empresa",cargo);
+    qContactos.bindValue(":email",email);
     qContactos.bindValue(":id",Id);
     if(!qContactos.exec())
         QMessageBox::warning(qApp->activeWindow(),tr("Editar personas de contacto"),
