@@ -99,6 +99,8 @@ private slots:
     void on_btnAnadirEntrega_clicked();
 
 
+    void on_txtcCif_editingFinished();
+
 private:
     Ui::frmProveedores *ui;
     ToolBarButton toolButton;

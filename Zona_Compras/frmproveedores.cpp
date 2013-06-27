@@ -41,6 +41,12 @@ frmProveedores::frmProveedores(QWidget *parent) :
     ui->txtcCodigoFormaPago->setModel(qmFormaPago);
     oProveedor->idFormadePago = Configuracion_global->Devolver_id_forma_pago(ui->txtcCodigoFormaPago->currentText());
 
+    // ---------------
+    // Cargar divisas
+    //----------------
+    QSqlQueryModel * modelDivisas = new QSqlQueryModel(this);
+    modelDivisas->setQuery("select moneda from monedas",QSqlDatabase::database("Maya"));
+    ui->cboDivisas->setModel(modelDivisas);
 
     // ----------------
     // Cargar Paises
@@ -1160,4 +1166,15 @@ void frmProveedores::on_btnAnadirEntrega_clicked()
             historiales();
     }
 
+}
+
+void frmProveedores::on_txtcCif_editingFinished()
+{
+    blockSignals(true);
+    if (ui->txtcCif->text().length() == 8)
+    {
+        QString cCIF = Configuracion::letraDNI(ui->txtcCif->text());
+        ui->txtcCif->setText(cCIF.toUpper());
+    }
+    blockSignals(false);
 }

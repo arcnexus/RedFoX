@@ -924,7 +924,7 @@ void Configuracion::imprimir(QString repo, bool toPDF, bool preview, QMap<QStrin
     if(db.isValid()) {
         QString source = "";
         QSqlQuery q(QSqlDatabase::database("Maya"));
-        q.prepare("SELECT report_source FROM mayageneral.report where report_name =:name  order by report_grade desc limit 1;");
+        q.prepare("SELECT report_source FROM report where report_name =:name  order by report_grade desc limit 1;");
         q.bindValue(":name",repo);
         if(q.exec())
             if(q.first())

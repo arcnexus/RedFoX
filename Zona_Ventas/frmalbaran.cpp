@@ -68,14 +68,14 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
 
     connect(ui->chklRecargoEq,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
 
-    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran > -1 order by nAlbaran  limit 1 "))
-    {
-        LLenarCampos();
-        QString filter = QString("Id_Cab = '%1'").arg(oAlbaran->id);
-        helper.fillTable("empresa","lin_alb",filter);        
-    }
-    else
-    {
+//    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where nAlbaran > -1 order by nAlbaran  limit 1 "))
+//    {
+//        LLenarCampos();
+//        QString filter = QString("Id_Cab = '%1'").arg(oAlbaran->id);
+//        helper.fillTable("empresa","lin_alb",filter);
+//    }
+//    else
+//    {
         VaciarCampos();
         ui->btn_borrar->setEnabled(false);
         ui->btnEditar->setEnabled(false);
@@ -85,7 +85,8 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
         ui->btnImprimir->setEnabled(false);
         ui->btnBuscar->setEnabled(false);
         oAlbaran->id = -1;
-    }
+        ui->btnSiguiente->setEnabled(true);
+  //  }
 }
 
 FrmAlbaran::~FrmAlbaran()
@@ -557,49 +558,49 @@ void FrmAlbaran::on_btn_borrar_clicked()
 
 void FrmAlbaran::totalChanged(double base, double dto, double subTotal, double iva, double re, double total, QString moneda)
 {
-    ui->txtrBase->setText(QString::number(base)+moneda);
-    ui->txtrImporteDescuento->setText(QString::number(dto)+moneda);
-    ui->txtrSubtotal->setText(QString::number(subTotal)+moneda);
-    ui->txtrImporteIva->setText(QString::number(iva)+moneda);
-    ui->txtrTotalRecargoEq->setText(QString::number(re)+moneda);
-    ui->txtrTotal->setText(QString::number(total)+moneda);
+    ui->txtrBase->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2))+moneda);
+    ui->txtrImporteDescuento->setText(Configuracion_global->FormatoNumerico(QString::number(dto,'f',2))+moneda);
+    ui->txtrSubtotal->setText(Configuracion_global->FormatoNumerico(QString::number(subTotal,'f',2))+moneda);
+    ui->txtrImporteIva->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2))+moneda);
+    ui->txtrTotalRecargoEq->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2))+moneda);
+    ui->txtrTotal->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2))+moneda);
 
-    ui->txtrBaseTotal_2->setText(QString::number(base)+moneda);
-    ui->txtrTotalIVA_2->setText(QString::number(iva)+moneda);
-    ui->txtrTotalRecargoEq_2->setText(QString::number(re)+moneda);
-    ui->txtrTotal_2->setText(QString::number(total)+moneda);
+    ui->txtrBaseTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2))+moneda);
+    ui->txtrTotalIVA_2->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2))+moneda);
+    ui->txtrTotalRecargoEq_2->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2))+moneda);
+    ui->txtrTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2))+moneda);
 }
 
 void FrmAlbaran::desglose1Changed(double base, double iva, double re, double total)
 {
-    ui->txtrBase1->setText(QString::number(base));
-    ui->txtrIVA1->setText(QString::number(iva));
-    ui->txtrRecargoEq1->setText(QString::number(re));
-    ui->txtrTotal1->setText(QString::number(total));
+    ui->txtrBase1->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)));
+    ui->txtrIVA1->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)));
+    ui->txtrRecargoEq1->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)));
+    ui->txtrTotal1->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)));
 }
 
 void FrmAlbaran::desglose2Changed(double base, double iva, double re, double total)
 {
-    ui->txtrBase2->setText(QString::number(base));
-    ui->txtrIVA2->setText(QString::number(iva));
-    ui->txtrRecargoEq2->setText(QString::number(re));
-    ui->txtrTotal2->setText(QString::number(total));
+    ui->txtrBase2->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)));
+    ui->txtrIVA2->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)));
+    ui->txtrRecargoEq2->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)));
+    ui->txtrTotal2->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)));
 }
 
 void FrmAlbaran::desglose3Changed(double base, double iva, double re, double total)
 {
-    ui->txtrBase3->setText(QString::number(base));
-    ui->txtrIVA3->setText(QString::number(iva));
-    ui->txtrRecargoEq3->setText(QString::number(re));
-    ui->txtrTotal3->setText(QString::number(total));
+    ui->txtrBase3->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)));
+    ui->txtrIVA3->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)));
+    ui->txtrRecargoEq3->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)));
+    ui->txtrTotal3->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)));
 }
 
 void FrmAlbaran::desglose4Changed(double base, double iva, double re, double total)
 {
-    ui->txtrBase4->setText(QString::number(base));
-    ui->txtrIVA4->setText(QString::number(iva));
-    ui->txtrRecargoEq4->setText(QString::number(re));
-    ui->txtrTotal4->setText(QString::number(total));
+    ui->txtrBase4->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)));
+    ui->txtrIVA4->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)));
+    ui->txtrRecargoEq4->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)));
+    ui->txtrTotal4->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)));
 }
 
 void FrmAlbaran::lineaReady(lineaDetalle * ld)

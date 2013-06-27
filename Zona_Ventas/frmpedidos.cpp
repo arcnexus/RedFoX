@@ -5,6 +5,7 @@
 #include "../Almacen/articulo.h"
 
 #include "../Busquedas/frmbuscarcliente.h"
+#include "../Zona_Ventas/factura.h"
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
     MayaModule(ModuleZone(),ModuleName(),parent),
@@ -22,6 +23,10 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     ui->lblImpreso->setVisible(false);
     ui->lblNumFactura->setVisible(false);
     ui->txtcNumFra->setVisible(false);
+    ui->lblAlbaran->setVisible(false);
+    ui->txtcAlbaran->setVisible(false);
+    ui->txtdFechaFactura->setVisible(false);
+
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de pedidos de clientes"));
 
@@ -387,10 +392,7 @@ void FrmPedidos::LLenarPedido()
 
     oPedido->lImpreso = ui->lblImpreso->isVisible();
 
-    oPedido->lFacturado=ui->lblFacturado->isVisible();
-    oPedido->lFacturado=ui->txtdFechaFactura->isVisible();
-    oPedido->lFacturado=ui->txtcNumFra->isVisible();
-    oPedido->cFactura=ui->txtcNumFra->text().toDouble();
+   // oPedido->cFactura=ui->txtcNumFra->text().toDouble();
     oPedido->dFechaFactura=ui->txtdFechaFactura->date();
 
     oPedido->tComentario=ui->txttComentario->toPlainText();
@@ -784,12 +786,128 @@ void FrmPedidos::lineaDeleted(lineaDetalle * ld)
 
 void FrmPedidos::convertir_enAlbaran()
 {
-    //TODO FrmPedidos::convertir_enAlbaran()
 }
 
 void FrmPedidos::convertir_enFactura()
 {
-    //TODO FrmPedidos::convertir_enFactura()
+    if(oPedido->cFactura.isEmpty())
+    {
+        if(QMessageBox::question(this,tr("Pedidos a proveedores"),tr("¿Desea realmente facturar este pedido?"),
+                                 tr("No"),tr("Sí"))==QMessageBox::Accepted)
+        {
+            LLenarPedido();
+            Factura oFactura(this);
+            //-----------------------
+            // LLeno objeto factura
+            //-----------------------
+            oCliente3->Recuperar("select * from clientes where cCodigoCliente ='"+ui->txtcCodigoCliente->text()+"'");
+            oFactura.cCif = oCliente3->cCifNif;
+            oFactura.cCliente = oCliente3->cNombreFiscal;
+            oFactura.cCodigoCliente = oCliente3->cCodigoCliente;
+            oFactura.cCodigoEntidad = oCliente3->cEntidadBancaria;
+            oFactura.cCp = oCliente3->cCp;
+            oFactura.cDCCuenta = oCliente3->cDc;
+            oFactura.cDireccion = oCliente3->cDireccion1;
+            oFactura.cDireccion2 = oCliente3->cDireccion2;
+            oFactura.cFormaPago = oCliente3->cFormaPago;
+            oFactura.cNumeroCuenta = oCliente3->cCuentaCorriente;
+            oFactura.cOficinaEntidad = oCliente3->cOficinaBancaria;
+            oFactura.cPedidoCliente = ui->txtcPedido->text().toInt();
+            oFactura.cPoblacion =oCliente3->cPoblacion;
+            oFactura.cProvincia = oCliente3->cProvincia;
+            oFactura.dFecha = QDate::currentDate();
+            oFactura.idPais = oCliente3->idPais;
+            oFactura.id_FormaPago = Configuracion_global->Devolver_id_forma_pago(oCliente3->cFormaPago);
+            oFactura.iId_Cliente = oCliente3->id;
+            oFactura.lRecargoEquivalencia = oCliente3->lRecargoEquivalencia;
+            oFactura.nDto = oCliente3->nPorcDtoCliente;
+            oFactura.nPorcentajeIVA1 = oPedido->nPorcentajeIVA1;
+            oFactura.nPorcentajeIVA2 = oPedido->nPorcentajeIVA2;
+            oFactura.nPorcentajeIVA3 = oPedido->nPorcentajeIVA3;
+            oFactura.nPorcentajeIVA4 = oPedido->nPorcentajeIVA4;
+            oFactura.nRec1 = oPedido->nPorcentajeRecargoEq1;
+            oFactura.nRec2 = oPedido->nPorcentajeRecargoEq2;
+            oFactura.nRec3 = oPedido->nPorcentajeRecargoEq3;
+            oFactura.nRec4 = oPedido->nPorcentajeRecargoEq4;
+            oFactura.rBase = oPedido->rBaseTotal;
+            oFactura.rBase1 = oPedido->rBase1;
+            oFactura.rBase2 = oPedido->rBase2;
+            oFactura.rBase3 = oPedido->rBase3;
+            oFactura.rBase4 = oPedido->rBase4;
+            oFactura.rImporteDescuento = oPedido->rDto;
+            oFactura.rImporteIva = oPedido->rIvaTotal;
+            oFactura.rIVA1 = oPedido->rImporteIva1;
+            oFactura.rIVA2 = oPedido->rImporteIva2;
+            oFactura.rIVA3 = oPedido->rImporteIva3;
+            oFactura.rIVA4 = oPedido->rImporteIva4;
+            oFactura.rRecargoEq1 = oPedido->rImporteRecargoEq1;
+            oFactura.rRecargoEq2 = oPedido->rImporteRecargoEq2;
+            oFactura.rRecargoEq3 = oPedido->rImporteRecargoEq3;
+            oFactura.rRecargoEq4 = oPedido->rImporteRecargoEq4;
+            oFactura.rSubtotal = oPedido->rSubtotal;
+            oFactura.rTotal = oPedido->rTotalPedido;
+            oFactura.rTotal1 = oPedido->rTotal1;
+            oFactura.rTotal2 = oPedido->rTotal2;
+            oFactura.rTotal3 = oPedido->rTotal3;
+            oFactura.rTotal4 = oPedido->rTotal4;
+            oFactura.rTotalRecargoEq = oPedido->rRecargoEqTotal;
+
+
+            // TODO INSERTAR LÍNEAS
+            QSqlQuery lineas_ped(QSqlDatabase::database("empresa"));
+            QSqlQuery lineas_fac(QSqlDatabase::database("empresa"));
+
+            if(lineas_ped.exec("Select * from lin_ped where Id_Cab ="+QString::number(oPedido->id)))
+            {
+                while (lineas_ped.next()) {
+                    lineas_fac.prepare("INSERT INTO lin_fac(id_Cab, id_Articulo, cCodigo, nCantidad,"
+                                       "cDescripcion, rPvp, rSubTotal, rDto, nDto, nPorcIva, rTotal)"
+                                       " VALUES (:id_Cab, :id_Articulo,:cCodigo,:nCantidad,"
+                                       ":cDescripcion,:rPvp,:rSubTotal,:rDto,:nDto,:nPorcIva,"
+                                       ":rTotal);");
+                    lineas_fac.bindValue(":id_Cab", lineas_ped.record().value("Id_Cab").toInt());
+                    lineas_fac.bindValue(":id_Articulo",lineas_ped.record().value("id_Articulo").toInt());
+                    lineas_fac.bindValue(":cCodigo",lineas_ped.record().value("cCodigo").toString());
+                    lineas_fac.bindValue(":nCantidad", lineas_ped.record().value("nCantidad").toInt());
+                    lineas_fac.bindValue(":cDescripcion",lineas_ped.record().value("cDescripcion").toString());
+                    lineas_fac.bindValue(":rPvp",lineas_ped.record().value("rPvp").toDouble());
+                    lineas_fac.bindValue(":rSubTotal",lineas_ped.record().value("rSubTotal").toDouble());
+                    lineas_fac.bindValue(":rDto",lineas_ped.record().value("rDto").toDouble());
+                    lineas_fac.bindValue(":nDto",lineas_ped.record().value("nDto").toDouble());
+                    lineas_fac.bindValue(":nPorcIva",lineas_ped.record().value("nPorcIva").toDouble());
+                    lineas_fac.bindValue(":rTotal",lineas_ped.record().value("rTotal").toDouble());
+
+                    lineas_fac.exec();
+                }
+            }
+
+
+            // ----------------------------------
+            // Creamos la cabecera de la factura
+            //-----------------------------------
+            oFactura.AnadirFactura();
+            oFactura.cFactura = oFactura.NuevoNumeroFactura();
+            oFactura.GuardarFactura(oFactura.id,true);
+
+
+            ui->btn_convertir->setEnabled(false);
+            QString texto;
+            texto = tr("Se ha creado una nueva factura.\ncon el número ")+ oFactura.cFactura+
+                       tr("\n y de importe: ")+QString::number(oFactura.rTotal,'f',2);
+            TimedMessageBox * t = new TimedMessageBox(this,texto);
+            //-------------------------------------
+            // Insertamos datos factura en pedido
+            //-------------------------------------
+            oPedido->cFactura =oFactura.cFactura;
+            oPedido->lFacturado = true;
+            oPedido->GuardarPedido(oPedido->id);
+            ui->txtcNumFra->setText(oPedido->cFactura);
+            ui->txtcNumFra->setVisible(true);
+            ui->lblFacturado->setVisible(true);
+        }
+    } else
+        QMessageBox::warning(this,tr("Pedidos a Proveedor"),tr("Este pedido ya ha sido traspasado"),tr("Aceptar"));
+
 }
 
 void FrmPedidos::on_tabWidget_2_currentChanged(int index)

@@ -1283,7 +1283,7 @@ color: rgb(0, 0, 0);</string>
    <item row="2" column="1" rowspan="2" colspan="2">
     <widget class="QTabWidget" name="tabWidget_5">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <property name="styleSheet">

@@ -36,40 +36,40 @@ bool Pedidos::AnadirPedido()
     this->nPorcentajeRecargoEq1 = Configuracion_global->reList.at(3).toDouble();
     this->lRecargoEquivalencia = 0;
 
-    QSqlQuery cab_ped(QSqlDatabase::database("empresa"));
-     cab_ped.prepare("INSERT INTO ped_cli (nPedido,nPorcentajeIva1,nPorcentajeIva2,nPorcentajeIva3,nPorcentajeIva4,"
+    QSqlQuery ped_cli(QSqlDatabase::database("empresa"));
+     ped_cli.prepare("INSERT INTO ped_cli (nPedido,nPorcentajeIva1,nPorcentajeIva2,nPorcentajeIva3,nPorcentajeIva4,"
                      "nPorcentajeRecargoEq1,nPorcentajeRecargoEq2,nPorcentajeRecargoEq3,nPorcentajeRecargoEq4,id_Cliente)"
                    " VALUES (:nPedido,:nPorcentajeIva1,:nPorcentajeIva2,:nPorcentajeIva3,:nPorcentajeIva4,"
                      ":nPorcentajeRecargoEq1,:nPorcentajeRecargoEq2,:nPorcentajeRecargoEq3,:nPorcentajeRecargoEq4,:id_Cliente)");
 
      this->nPedido = NuevoNumeroPedido();
-     cab_ped.bindValue(":nPedido",nPedido);
-     cab_ped.bindValue(":nPorcentajeIva1",this->nPorcentajeIVA1);
-     cab_ped.bindValue(":nPorcentajeIva2",this->nPorcentajeIVA2);
-     cab_ped.bindValue(":nPorcentajeIva3",this->nPorcentajeIVA3);
-     cab_ped.bindValue(":nPorcentajeIva4",this->nPorcentajeIVA4);
-     cab_ped.bindValue(":nPorcentajeRecargoEq1",this->nPorcentajeRecargoEq1);
-     cab_ped.bindValue(":nPorcentajeRecargoEq2",this->nPorcentajeRecargoEq1);
-     cab_ped.bindValue(":nPorcentajeRecargoEq3",this->nPorcentajeRecargoEq1);
-     cab_ped.bindValue(":nPorcentajeRecargoEq4",this->nPorcentajeRecargoEq1);
-     cab_ped.bindValue(":id_Cliente",iId_Cliente);
-     if(!cab_ped.exec())
+     ped_cli.bindValue(":nPedido",nPedido);
+     ped_cli.bindValue(":nPorcentajeIva1",this->nPorcentajeIVA1);
+     ped_cli.bindValue(":nPorcentajeIva2",this->nPorcentajeIVA2);
+     ped_cli.bindValue(":nPorcentajeIva3",this->nPorcentajeIVA3);
+     ped_cli.bindValue(":nPorcentajeIva4",this->nPorcentajeIVA4);
+     ped_cli.bindValue(":nPorcentajeRecargoEq1",this->nPorcentajeRecargoEq1);
+     ped_cli.bindValue(":nPorcentajeRecargoEq2",this->nPorcentajeRecargoEq1);
+     ped_cli.bindValue(":nPorcentajeRecargoEq3",this->nPorcentajeRecargoEq1);
+     ped_cli.bindValue(":nPorcentajeRecargoEq4",this->nPorcentajeRecargoEq1);
+     ped_cli.bindValue(":id_Cliente",iId_Cliente);
+     if(!ped_cli.exec())
      {
-         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Pedido:", cab_ped.lastError().text());
+         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Pedido:", ped_cli.lastError().text());
          return false;
      }
      else
      {
-         this->id = cab_ped.lastInsertId().toInt();
+         this->id = ped_cli.lastInsertId().toInt();
          return true;
      }
 }
 // Guardar el Pedido
 bool Pedidos::GuardarPedido(int nId_Pedido)
 {
-    QSqlQuery cab_ped(QSqlDatabase::database("empresa"));
+    QSqlQuery ped_cli(QSqlDatabase::database("empresa"));
 
-    cab_ped.prepare( "UPDATE ped_cli SET "
+    ped_cli.prepare( "UPDATE ped_cli SET "
                      "nAlbaran =:nAlbaran,nPedido =:nPedido, dFecha =:dFecha  , cPedido =:cPedido  , id_Cliente =:id_Cliente  ,"
                      "cCodigoCliente  =:cCodigoCliente  ,  cCliente =:cCliente  , cDireccion =:cDireccion,"
                      "cDireccion2 =:cDireccion2  , cPoblacion =:cPoblacion  ,cProvincia  =:cProvincia  ,"
@@ -90,7 +90,7 @@ bool Pedidos::GuardarPedido(int nId_Pedido)
                      "rTotal1  =:rTotal1  ,  rTotal2  =:rTotal2  ,  rTotal3  =:rTotal3  ,"
                      "rTotal4  =:rTotal4  ,rBaseTotal  =:rBaseTotal  ,  rIvaTotal  =:rIvaTotal  ,"
                      "rRecargoEqTotal  =:rRecargoEqTotal  ,  rTotalAlbaran  =:rTotalAlbaran  ,"
-                     "lImpreso  =:lImpreso  ,lFacturado  =:lFacturado  ,  cFactura  =:cFactura  ,"
+                     "lImpreso  =:lImpreso  ,lFacturado  =:lFacturado  , "
                      "dFechaFactura  =:dFechaFactura  ,  tComentario  =:tComentario  ,"
                      "rACuenta  =:rACuenta  ,lTraspasadoAlb  =:lTraspasadoAlb  ,"
                      "lTraspasadoFac  =:lTraspasadoFac  ,  cDireccionEntrega  =:cDireccionEntrega  ,"
@@ -101,76 +101,76 @@ bool Pedidos::GuardarPedido(int nId_Pedido)
                      "rTotalPedido  =:rTotalPedido"
                      " WHERE Id = :id");
 
-    cab_ped.bindValue(":nAlbaran",nAlbaran);
-    cab_ped.bindValue(":nPedido",nPedido);
-    cab_ped.bindValue(":dFecha",dFecha);
-    cab_ped.bindValue(":cPedido",cPedido);
-    cab_ped.bindValue(":id_Cliente",iId_Cliente);
-    cab_ped.bindValue(":cCodigoCliente",cCodigoCliente);
-    cab_ped.bindValue(":cCliente",cCliente);
-    cab_ped.bindValue(":cDireccion",cDireccion);
-    cab_ped.bindValue(":cDireccion2",cDireccion2);
-    cab_ped.bindValue(":cPoblacion",cPoblacion);
-    cab_ped.bindValue(":cProvincia",cProvincia);
-    cab_ped.bindValue(":cCP",cCp);
-    cab_ped.bindValue(":idpais",id_pais);
-    cab_ped.bindValue(":cCif",cCif);
-    cab_ped.bindValue(":lRecargoEquivalencia",lRecargoEquivalencia);
-    cab_ped.bindValue(":rSubtotal",rSubtotal);
-    cab_ped.bindValue(":rDto",rDto);
-  //  cab_ped.bindValue(":nDto",nDto);
-    cab_ped.bindValue(":rBase1",rBase1);
-    cab_ped.bindValue(":rBase2",rBase2);
-    cab_ped.bindValue(":rBase3",rBase3);
-    cab_ped.bindValue(":rBase4",rBase4);
-    cab_ped.bindValue(":nPorcentajeIva1",nPorcentajeIVA1);
-    cab_ped.bindValue(":nPorcentajeIva2",nPorcentajeIVA2);
-    cab_ped.bindValue(":nPorcentajeIva3",nPorcentajeIVA3);
-    cab_ped.bindValue(":nPorcentajeIva4",nPorcentajeIVA4);
-    cab_ped.bindValue(":rImporteIva1",rImporteIva1);
-    cab_ped.bindValue(":rImporteIva2",rImporteIva2);
-    cab_ped.bindValue(":rImporteIva3",rImporteIva3);
-    cab_ped.bindValue(":rImporteIva4",rImporteIva4);
-    cab_ped.bindValue(":nPorcentajeRecargoEq1",nPorcentajeRecargoEq1);
-    cab_ped.bindValue(":nPorcentajeRecargoEq2",nPorcentajeRecargoEq2);
-    cab_ped.bindValue(":nPorcentajeRecargoEq3",nPorcentajeRecargoEq3);
-    cab_ped.bindValue(":nPorcentajeRecargoEq4",nPorcentajeRecargoEq4);
-    cab_ped.bindValue(":rImporteRecargoEq1",rImporteRecargoEq1);
-    cab_ped.bindValue(":rImporteRecargoEq2",rImporteRecargoEq2);
-    cab_ped.bindValue(":rImporteRecargoEq3",rImporteRecargoEq3);
-    cab_ped.bindValue(":rImporteRecargoEq4",rImporteRecargoEq4);
-    cab_ped.bindValue(":rTotal1",rTotal1);
-    cab_ped.bindValue(":rTotal2",rTotal2);
-    cab_ped.bindValue(":rTotal3",rTotal3);
-    cab_ped.bindValue(":rTotal4",rTotal4);
-    cab_ped.bindValue(":rBaseTotal",rBaseTotal);
-    cab_ped.bindValue(":rIvaTotal",rIvaTotal);
-    cab_ped.bindValue(":rRecargoEqTotal",rRecargoEqTotal);
-    cab_ped.bindValue(":rTotalAlbaran",rTotalAlbaran);
-    cab_ped.bindValue(":lImpreso",lImpreso);
-    cab_ped.bindValue(":lFacturado",lFacturado);
-    cab_ped.bindValue(":cFactura",cFactura);
-    cab_ped.bindValue(":dFechaFactura",dFechaFactura);
-    cab_ped.bindValue(":tComentario",tComentario);
-    cab_ped.bindValue(":rACuenta",rACuenta);
-    cab_ped.bindValue(":lTraspasadoAlb",lTraspasadoAlb);
-    cab_ped.bindValue(":lTraspasadoFac",lTraspasadoFac);
-    cab_ped.bindValue(":cDireccionEntrega",cDireccionEntrega);
-    cab_ped.bindValue(":cDireccionEntrega2",cDireccionEntrega2);
-    cab_ped.bindValue(":cCPEntrega",cCPEntrega);
-    cab_ped.bindValue(":cPoblacionEntrega",cPoblacionEntrega);
-    cab_ped.bindValue(":cProvinciaEntrega",cProvinciaEntrega);
-    cab_ped.bindValue(":cPaisEntrega",cPaisEntrega);
-    cab_ped.bindValue(":lEnviado",lEnviado);
-    cab_ped.bindValue(":lCompleto",lCompleto);
-    cab_ped.bindValue(":lEntregado",lEntregado);
-    cab_ped.bindValue(":dFechaLimiteEntrega",dFechaLimiteEntrega);
-    cab_ped.bindValue(":rTotalPedido",rTotalPedido);
-    cab_ped.bindValue(":id",nId_Pedido);
-    if(!cab_ped.exec())
+    ped_cli.bindValue(":nAlbaran",nAlbaran);
+    ped_cli.bindValue(":nPedido",nPedido);
+    ped_cli.bindValue(":dFecha",dFecha);
+    ped_cli.bindValue(":cPedido",cPedido);
+    ped_cli.bindValue(":id_Cliente",iId_Cliente);
+    ped_cli.bindValue(":cCodigoCliente",cCodigoCliente);
+    ped_cli.bindValue(":cCliente",cCliente);
+    ped_cli.bindValue(":cDireccion",cDireccion);
+    ped_cli.bindValue(":cDireccion2",cDireccion2);
+    ped_cli.bindValue(":cPoblacion",cPoblacion);
+    ped_cli.bindValue(":cProvincia",cProvincia);
+    ped_cli.bindValue(":cCP",cCp);
+    ped_cli.bindValue(":idpais",id_pais);
+    ped_cli.bindValue(":cCif",cCif);
+    ped_cli.bindValue(":lRecargoEquivalencia",lRecargoEquivalencia);
+    ped_cli.bindValue(":rSubtotal",rSubtotal);
+    ped_cli.bindValue(":rDto",rDto);
+  //  ped_cli.bindValue(":nDto",nDto);
+    ped_cli.bindValue(":rBase1",rBase1);
+    ped_cli.bindValue(":rBase2",rBase2);
+    ped_cli.bindValue(":rBase3",rBase3);
+    ped_cli.bindValue(":rBase4",rBase4);
+    ped_cli.bindValue(":nPorcentajeIva1",nPorcentajeIVA1);
+    ped_cli.bindValue(":nPorcentajeIva2",nPorcentajeIVA2);
+    ped_cli.bindValue(":nPorcentajeIva3",nPorcentajeIVA3);
+    ped_cli.bindValue(":nPorcentajeIva4",nPorcentajeIVA4);
+    ped_cli.bindValue(":rImporteIva1",rImporteIva1);
+    ped_cli.bindValue(":rImporteIva2",rImporteIva2);
+    ped_cli.bindValue(":rImporteIva3",rImporteIva3);
+    ped_cli.bindValue(":rImporteIva4",rImporteIva4);
+    ped_cli.bindValue(":nPorcentajeRecargoEq1",nPorcentajeRecargoEq1);
+    ped_cli.bindValue(":nPorcentajeRecargoEq2",nPorcentajeRecargoEq2);
+    ped_cli.bindValue(":nPorcentajeRecargoEq3",nPorcentajeRecargoEq3);
+    ped_cli.bindValue(":nPorcentajeRecargoEq4",nPorcentajeRecargoEq4);
+    ped_cli.bindValue(":rImporteRecargoEq1",rImporteRecargoEq1);
+    ped_cli.bindValue(":rImporteRecargoEq2",rImporteRecargoEq2);
+    ped_cli.bindValue(":rImporteRecargoEq3",rImporteRecargoEq3);
+    ped_cli.bindValue(":rImporteRecargoEq4",rImporteRecargoEq4);
+    ped_cli.bindValue(":rTotal1",rTotal1);
+    ped_cli.bindValue(":rTotal2",rTotal2);
+    ped_cli.bindValue(":rTotal3",rTotal3);
+    ped_cli.bindValue(":rTotal4",rTotal4);
+    ped_cli.bindValue(":rBaseTotal",rBaseTotal);
+    ped_cli.bindValue(":rIvaTotal",rIvaTotal);
+    ped_cli.bindValue(":rRecargoEqTotal",rRecargoEqTotal);
+    ped_cli.bindValue(":rTotalAlbaran",rTotalAlbaran);
+    ped_cli.bindValue(":lImpreso",lImpreso);
+    ped_cli.bindValue(":lFacturado",lFacturado);
+   // ped_cli.bindValue(":cFactura",cFactura);
+    ped_cli.bindValue(":dFechaFactura",dFechaFactura);
+    ped_cli.bindValue(":tComentario",tComentario);
+    ped_cli.bindValue(":rACuenta",rACuenta);
+    ped_cli.bindValue(":lTraspasadoAlb",lTraspasadoAlb);
+    ped_cli.bindValue(":lTraspasadoFac",lTraspasadoFac);
+    ped_cli.bindValue(":cDireccionEntrega",cDireccionEntrega);
+    ped_cli.bindValue(":cDireccionEntrega2",cDireccionEntrega2);
+    ped_cli.bindValue(":cCPEntrega",cCPEntrega);
+    ped_cli.bindValue(":cPoblacionEntrega",cPoblacionEntrega);
+    ped_cli.bindValue(":cProvinciaEntrega",cProvinciaEntrega);
+    ped_cli.bindValue(":cPaisEntrega",cPaisEntrega);
+    ped_cli.bindValue(":lEnviado",lEnviado);
+    ped_cli.bindValue(":lCompleto",lCompleto);
+    ped_cli.bindValue(":lEntregado",lEntregado);
+    ped_cli.bindValue(":dFechaLimiteEntrega",dFechaLimiteEntrega);
+    ped_cli.bindValue(":rTotalPedido",rTotalPedido);
+    ped_cli.bindValue(":id",nId_Pedido);
+    if(!ped_cli.exec())
     {
-        QMessageBox::critical(qApp->activeWindow(),QObject::tr("error al guardar datos Pedido:"), cab_ped.lastError().text());
-        qDebug() << cab_ped.lastQuery();
+        QMessageBox::critical(qApp->activeWindow(),QObject::tr("error al guardar datos Pedido:"), ped_cli.lastError().text());
+        qDebug() << ped_cli.lastQuery();
         return false;
     }
     else
@@ -181,18 +181,18 @@ bool Pedidos::GuardarPedido(int nId_Pedido)
 
 bool Pedidos::RecuperarPedido(QString cSQL)
 {
-    QSqlQuery cab_ped(QSqlDatabase::database("empresa"));
-    cab_ped.prepare(cSQL);
-    if( !cab_ped.exec() )
+    QSqlQuery ped_cli(QSqlDatabase::database("empresa"));
+    ped_cli.prepare(cSQL);
+    if( !ped_cli.exec() )
     {
-        QMessageBox::critical(qApp->activeWindow(), "Error:", cab_ped.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(), "Error:", ped_cli.lastError().text());
         return false;
     }
     else
     {
-        if (cab_ped.next())
+        if (ped_cli.next())
         {
-            QSqlRecord r = cab_ped.record();
+            QSqlRecord r = ped_cli.record();
             id = r.value("Id").toInt();
             nAlbaran = r.value("nAlbaran").toInt();
             nPedido = r.value("nPedido").toInt();
@@ -273,14 +273,14 @@ bool Pedidos::RecuperarPedido(QString cSQL)
 
 int Pedidos::NuevoNumeroPedido()
 {
-    QSqlQuery cab_ped(QSqlDatabase::database("empresa"));
+    QSqlQuery ped_cli(QSqlDatabase::database("empresa"));
     int nPedido = 0;
-    cab_ped.prepare("Select nPedido from ped_cli order by nPedido desc limit 1");
-    if(cab_ped.exec())
+    ped_cli.prepare("Select nPedido from ped_cli order by nPedido desc limit 1");
+    if(ped_cli.exec())
     {
-        if(cab_ped.next())
+        if(ped_cli.next())
         {
-            nPedido= cab_ped.value(0).toInt();
+            nPedido= ped_cli.value(0).toInt();
             nPedido ++;
         }
     }
