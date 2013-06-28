@@ -337,7 +337,7 @@ QMenuBar {
      border-left-style: solid; /* just a single line */
      border-top-right-radius: 3px; /* same radius as the QComboBox */
      border-bottom-right-radius: 3px;
-     color:#0;
+     color:#2E9AFE;
  }
 
  QComboBox::item:selected { /* when user selects item using mouse or keyboard */

@@ -554,3 +554,8 @@ void FrmUsuarios::on_botBuscar_user_clicked()
 {
     //TODO buscar user
 }
+
+void FrmUsuarios::on_botAnadir_user_clicked()
+{
+    crear_User();
+}

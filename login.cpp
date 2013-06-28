@@ -15,6 +15,8 @@ Login::Login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Login)
 {
+    qDebug() << Configuracion::SHA256HashString("admin");
+    qDebug() << Configuracion::SHA256HashString("patata");
     //this->setWindowFlags(Qt::Dialog|Qt::CustomizeWindowHint|Qt::WindowTitleHint/*|Qt::WindowStaysOnTopHint*/);
     ui->setupUi(this);
     //--------------------------------------------
