@@ -133,6 +133,9 @@ public:
     QString Devolver_tarifa(int id_tarifa);
     QString Devolver_tipo_gasto(int id_gasto);
     int Devolver_id_tipo_gasto(QString desc);
+    int Devolver_id_cuenta_contable(QString codigo_cta);
+    QString Devolver_descripcion_cuenta_contable(QString codigo_cta);
+    QString Devolver_codigo_cta_contable(int id);
 
     QSqlTableModel* client_model;
     void CargarClientes();
@@ -154,6 +157,14 @@ public:
     QString cCuentaIvaSoportado2;
     QString cCuentaIvaSoportado3;
     QString cCuentaIvaSoportado4;
+    QString cCuentaIvaRepercutidoRe1;
+    QString cCuentaIvaRepercutidoRe2;
+    QString cCuentaIvaRepercutidoRe3;
+    QString cCuentaIvaRepercutidoRe4;
+    QString cCuentaIvaSoportadoRe1;
+    QString cCuentaIvaSoportadoRe2;
+    QString cCuentaIvaSoportadoRe3;
+    QString cCuentaIvaSoportadoRe4;
     QString cCuentaDeudasClientes;
     QString cCuentaCobrosClientes;
     QString cCuentaDeudasProveedor;

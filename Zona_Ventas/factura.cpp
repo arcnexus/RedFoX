@@ -14,6 +14,10 @@ bool Factura::AnadirFactura()
     this->nPorcentajeIVA2 = Configuracion_global->ivas[keys.at(1)].value("nIVA").toDouble();
     this->nPorcentajeIVA3 = Configuracion_global->ivas[keys.at(2)].value("nIVA").toDouble();
     this->nPorcentajeIVA4 = Configuracion_global->ivas[keys.at(3)].value("nIVA").toDouble();
+    this->nRec1 = Configuracion_global->reList.at(0).toDouble();
+    this->nRec2 = Configuracion_global->reList.at(1).toDouble();
+    this->nRec3 = Configuracion_global->reList.at(2).toDouble();
+    this->nRec4 = Configuracion_global->reList.at(3).toDouble();
 
     this->lRecargoEquivalencia = 0;
     QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
@@ -75,10 +79,10 @@ bool Factura::AnadirFactura()
      cab_fac.bindValue(":rTotal2",0);
      cab_fac.bindValue(":rTotal3",0);
      cab_fac.bindValue(":rTotal4",0);
-     cab_fac.bindValue(":nRec1",0);
-     cab_fac.bindValue(":nRec2",0);
-     cab_fac.bindValue(":nRec3",0);
-     cab_fac.bindValue(":nRec4",0);
+     cab_fac.bindValue(":nRec1",this->nRec1);
+     cab_fac.bindValue(":nRec2",this->nRec2);
+     cab_fac.bindValue(":nRec3",this->nRec3);
+     cab_fac.bindValue(":nRec4",this->nRec4);
      cab_fac.bindValue(":rRecargoEq1",0);
      cab_fac.bindValue(":rRecargoEq2",0);
      cab_fac.bindValue(":rRecargoEq3",0);
@@ -458,7 +462,7 @@ bool Factura::CobrarFactura()
 {
     // marcar factura como cobrada
     this->lCobrada = true;
-    QSqlQuery Cliente(QSqlDatabase::database("empresa"));
+    QSqlQuery Cliente(QSqlDatabase::database("Maya"));
 
     // Añadimos acumulados ficha cliente.
     Cliente.prepare("Update clientes set dFechaUltimaCompra = :dFechaUltimaCompra, "
@@ -485,4 +489,21 @@ bool Factura::CobrarFactura()
         return false;
     }
     return true;
- }
+}
+
+bool Factura::GuardarApunte(int nasiento, int nid)
+{
+    QSqlQuery factura(QSqlDatabase::database("empresa"));
+
+    factura.prepare("Update cab_fac set asiento =:asiento, lContabilizada = 1 where id =:id ");
+    factura.bindValue(":asiento",nasiento);
+    factura.bindValue(":id",nid);
+    if (!factura.exec())
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("facturas clientes"),
+                             tr("No se ha podido guardar el numero de apunte"),
+                             tr("OK"));
+        return false;
+    } else
+        return true;
+}

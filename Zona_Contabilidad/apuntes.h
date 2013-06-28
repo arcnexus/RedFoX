@@ -26,6 +26,8 @@ public:
     QDate fechaAsiento;
     int posenasiento;
     QString cta_principal;
+    QString comentarioD;
+    QString comentarioH;
 
     
 signals:

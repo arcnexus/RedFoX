@@ -106,7 +106,15 @@ void Empresa::Recuperar(QString cSQL)
             this->cCuenta_iva_soportado2 = registro.field("cuenta_iva_soportado2").value().toString();
             this->cCuenta_iva_soportado3 = registro.field("cuenta_iva_soportado3").value().toString();
             this->cCuenta_iva_soportado4 = registro.field("cuenta_iva_soportado4").value().toString();
-		} 
+            this->cCuenta_iva_repercutido_re1 = registro.field("cuenta_iva_repercutido1_re").value().toString();
+            this->cCuenta_iva_repercutido_re2 = registro.field("cuenta_iva_repercutido2_re").value().toString();
+            this->cCuenta_iva_repercutido_re3 = registro.field("cuenta_iva_repercutido3_re").value().toString();
+            this->cCuenta_iva_repercutido_re4 = registro.field("cuenta_iva_repercutido4_re").value().toString();
+            this->cCuenta_iva_soportado_re1 = registro.field("cuenta_iva_soportado1_re").value().toString();
+            this->cCuenta_iva_soportado_re2 = registro.field("cuenta_iva_soportado2_re").value().toString();
+            this->cCuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
+            this->cCuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
+        }
 		else 
 		{
             TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),
@@ -199,6 +207,14 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->cCuenta_iva_soportado2 = registro.field("cuenta_iva_soportado2").value().toString();
             this->cCuenta_iva_soportado3 = registro.field("cuenta_iva_soportado3").value().toString();
             this->cCuenta_iva_soportado4 = registro.field("cuenta_iva_soportado4").value().toString();
+            this->cCuenta_iva_repercutido_re1 = registro.field("cuenta_iva_repercutido1_re").value().toString();
+            this->cCuenta_iva_repercutido_re2 = registro.field("cuenta_iva_repercutido2_re").value().toString();
+            this->cCuenta_iva_repercutido_re3 = registro.field("cuenta_iva_repercutido3_re").value().toString();
+            this->cCuenta_iva_repercutido_re4 = registro.field("cuenta_iva_repercutido4_re").value().toString();
+            this->cCuenta_iva_soportado_re1 = registro.field("cuenta_iva_soportado1_re").value().toString();
+            this->cCuenta_iva_soportado_re2 = registro.field("cuenta_iva_soportado2_re").value().toString();
+            this->cCuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
+            this->cCuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
         } else {
             if (nProcede == 1)
                 TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
@@ -283,6 +299,14 @@ void Empresa::Guardar()
                      "cuenta_iva_soportado2 =:cuenta_iva_soportado2,"
                      "cuenta_iva_soportado3 =:cuenta_iva_soportado3,"
                      "cuenta_iva_soportado4 =:cuenta_iva_soportado4,"
+                     "cuenta_iva_repercutido1_re = :cuenta_iva_repercutido1_re,"
+                     "cuenta_iva_repercutido2_re = :cuenta_iva_repercutido2_re,"
+                     "cuenta_iva_repercutido3_re = :cuenta_iva_repercutido3_re,"
+                     "cuenta_iva_repercutido4_re = :cuenta_iva_repercutido4_re,"
+                     "cuenta_iva_soportado1_re =:cuenta_iva_soportado1_re,"
+                     "cuenta_iva_soportado2_re =:cuenta_iva_soportado2_re,"
+                     "cuenta_iva_soportado3_re =:cuenta_iva_soportado3_re,"
+                     "cuenta_iva_soportado4_re =:cuenta_iva_soportado4_re,"
                      "cCuentaPagos =:cCuentaPagos"
                      " where id=:nID");
 
@@ -357,6 +381,15 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":cuenta_iva_soportado2",this->cCuenta_iva_soportado2);
     qEmpresa.bindValue(":cuenta_iva_soportado3",this->cCuenta_iva_soportado3);
     qEmpresa.bindValue(":cuenta_iva_soportado4",this->cCuenta_iva_soportado4);
+    qEmpresa.bindValue(":cuenta_iva_repercutido1_re",this->cCuenta_iva_repercutido_re1);
+    qEmpresa.bindValue(":cuenta_iva_repercutido2_re",this->cCuenta_iva_repercutido_re2);
+    qEmpresa.bindValue(":cuenta_iva_repercutido3_re",this->cCuenta_iva_repercutido_re3);
+    qEmpresa.bindValue(":cuenta_iva_repercutido4_re",this->cCuenta_iva_repercutido_re4);
+    qEmpresa.bindValue(":cuenta_iva_soportado1_re",this->cCuenta_iva_soportado_re1);
+    qEmpresa.bindValue(":cuenta_iva_soportado2_re",this->cCuenta_iva_soportado_re2);
+    qEmpresa.bindValue(":cuenta_iva_soportado3_re",this->cCuenta_iva_soportado_re3);
+    qEmpresa.bindValue(":cuenta_iva_soportado4_re",this->cCuenta_iva_soportado_re4);
+
     qEmpresa.bindValue(":nID",this->id);
 
 
@@ -438,7 +471,14 @@ void Empresa::Vaciar()
     this->cCuenta_iva_soportado2 = "";
     this->cCuenta_iva_soportado3 = "";
     this->cCuenta_iva_soportado4 = "";
-
+    this->cCuenta_iva_repercutido_re1 = "";
+    this->cCuenta_iva_repercutido_re2 = "";
+    this->cCuenta_iva_repercutido_re3 = "";
+    this->cCuenta_iva_repercutido_re4 = "";
+    this->cCuenta_iva_soportado_re1 = "";
+    this->cCuenta_iva_soportado_re2 = "";
+    this->cCuenta_iva_soportado_re3 = "";
+    this->cCuenta_iva_soportado_re4 = "";
 }
 
 bool Empresa::Borrar(int nId)

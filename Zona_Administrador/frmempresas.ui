@@ -776,7 +776,7 @@
             </size>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="tab">
             <property name="styleSheet">
@@ -1015,6 +1015,48 @@ color: rgb(255, 255, 255);</string>
              </item>
              <item row="1" column="1">
               <layout class="QGridLayout" name="gridLayout_13">
+               <item row="3" column="4">
+                <widget class="QLineEdit" name="ivarepercutido3">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="3">
+                <widget class="QLabel" name="label_65">
+                 <property name="text">
+                  <string>E</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLineEdit" name="ivasoportado4">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_59">
+                 <property name="text">
+                  <string>R</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="ivasoportado2">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="3">
+                <widget class="QLabel" name="label_63">
+                 <property name="text">
+                  <string>R</string>
+                 </property>
+                </widget>
+               </item>
                <item row="0" column="1">
                 <widget class="QLabel" name="label_38">
                  <property name="styleSheet">
@@ -1030,7 +1072,21 @@ color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="0" column="3">
+               <item row="4" column="2">
+                <widget class="QLineEdit" name="ivasoportadore4">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="2">
+                <widget class="QLineEdit" name="ivasoportadore3">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="4">
                 <widget class="QLabel" name="label_39">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(0, 0, 127);
@@ -1059,42 +1115,28 @@ color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="2">
+               <item row="1" column="3">
                 <widget class="QLabel" name="label_62">
                  <property name="text">
                   <string>N</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="3">
+               <item row="1" column="4">
                 <widget class="QLineEdit" name="ivarepercutido1">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_59">
-                 <property name="text">
-                  <string>R</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLineEdit" name="ivasoportado2">
+               <item row="4" column="4">
+                <widget class="QLineEdit" name="ivarepercutido4">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="2">
-                <widget class="QLabel" name="label_63">
-                 <property name="text">
-                  <string>R</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="3">
+               <item row="2" column="4">
                 <widget class="QLineEdit" name="ivarepercutido2">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -1115,17 +1157,10 @@ color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="2">
+               <item row="3" column="3">
                 <widget class="QLabel" name="label_64">
                  <property name="text">
                   <string>SR</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="3">
-                <widget class="QLineEdit" name="ivarepercutido3">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
@@ -1136,22 +1171,65 @@ color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="1">
-                <widget class="QLineEdit" name="ivasoportado4">
+               <item row="1" column="2">
+                <widget class="QLineEdit" name="ivasoportadore1">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="2">
-                <widget class="QLabel" name="label_65">
-                 <property name="text">
-                  <string>E</string>
+               <item row="2" column="2">
+                <widget class="QLineEdit" name="ivasoportadore2">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="3">
-                <widget class="QLineEdit" name="ivarepercutido4">
+               <item row="0" column="2">
+                <widget class="QLabel" name="label_66">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>IVA soportado RE</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="5">
+                <widget class="QLabel" name="label_67">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>IVA repercutido RE</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="5">
+                <widget class="QLineEdit" name="ivarepercutidore1">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="5">
+                <widget class="QLineEdit" name="ivarepercutidore2">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="5">
+                <widget class="QLineEdit" name="ivarepercutidore3">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="5">
+                <widget class="QLineEdit" name="ivarepercutidore4">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>

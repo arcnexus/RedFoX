@@ -8,6 +8,11 @@ Cliente::Cliente(QObject *parent) :
 {
 }
 void Cliente::Guardar() {
+    bool transaccion = true;
+    QSqlDatabase::database("Maya").transaction();
+    if(Configuracion_global->contabilidad)
+        QSqlDatabase::database("dbconta").transaction();
+
     QSqlQuery query(QSqlDatabase::database("Maya"));
     query.prepare( "UPDATE clientes set "
                    "cCodigoCliente = :cCodigoCliente,"
@@ -127,13 +132,43 @@ void Cliente::Guardar() {
 
 
     if(!query.exec()){
+        transaccion :false;
         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos cliente. Descripción Error: ", query.lastError().text());
     } else {
         if (Configuracion_global->EnlaceWeb ==true)
             GuardarWeb();
        // QMessageBox::information(qApp->activeWindow(),"Guardar datos","Los datos se han guardado correctamente:","Ok");
     }
-        ;
+    // --------------------------
+    // Cuenta contable
+    //---------------------------
+    if(Configuracion_global->contabilidad)
+    {
+        Cuentas_contables cuenta(this);
+        cuenta.activo = true;
+        cuenta.codigo_cta = this->cCodigoCliente;
+        cuenta.descripcion = this->cNombreFiscal;
+        cuenta.codigo_balance = "ABIII1";
+        cuenta.saldo = 0;
+        bool succes = cuenta.anadir_cuenta();
+        if(!succes)
+            transaccion = false;
+
+    }
+    if(transaccion)
+    {
+        QSqlDatabase::database("Maya").commit();
+        if(Configuracion_global->contabilidad)
+            QSqlDatabase::database("dbconta").commit();
+
+    } else
+    {
+        QSqlDatabase::database("Maya").rollback();
+        if(Configuracion_global->contabilidad)
+            QSqlDatabase::database("dbconta").rollback();
+        QMessageBox::critical(qApp->activeWindow(),tr("error al guardar datos cliente. Descripción Error: "),
+                              tr("No se pudo realizar la transacción, no se guardó la ficha"));
+    }
 
 }
 

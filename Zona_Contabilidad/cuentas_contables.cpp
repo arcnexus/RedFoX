@@ -6,7 +6,7 @@ Cuentas_contables::Cuentas_contables(QObject *parent) :
 
 }
 
-void Cuentas_contables::anadir_cuenta()
+bool Cuentas_contables::anadir_cuenta()
 {
     QSqlQuery query_cuentas(QSqlDatabase::database("dbconta"));
     query_cuentas.prepare("INSERT INTO plan_general "
@@ -21,10 +21,15 @@ void Cuentas_contables::anadir_cuenta()
     query_cuentas.bindValue(":afecta_a",this->afecta_a);
     query_cuentas.bindValue(":saldo",this->saldo);
     if(!query_cuentas.exec())
+    {
         QMessageBox::warning(qApp->activeWindow(),tr("Añadir cuentas contables"),
                              tr("Falló la inserción de la cuenta contable: %1").arg(query_cuentas.lastError().text()));
-    else
+        return false;
+    } else
+    {
         this->id = query_cuentas.lastInsertId().toInt();
+        return true;
+    }
 }
 
 void Cuentas_contables::guardar_cuenta()

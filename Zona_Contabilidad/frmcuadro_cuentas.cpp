@@ -107,7 +107,7 @@ void frmCuadro_cuentas::llenar_tabla()
     ui->tabla_cuentas->setModel(model_cuentas);
     ui->tabla_cuentas->setColumnHidden(0,true);
     ui->tabla_cuentas->setColumnWidth(1,100);
-    ui->tabla_cuentas->setColumnWidth(2,150);
+    ui->tabla_cuentas->setColumnWidth(2,160);
     ui->tabla_cuentas->setColumnWidth(3,100);
     ui->tabla_cuentas->setItemDelegateForColumn(3,new MonetaryDelegate);
     QStringList cabecera;

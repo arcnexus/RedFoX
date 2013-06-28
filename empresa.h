@@ -184,6 +184,14 @@ public:
     QString cCuenta_iva_soportado2;
     QString cCuenta_iva_soportado3;
     QString cCuenta_iva_soportado4;
+    QString cCuenta_iva_repercutido_re1;
+    QString cCuenta_iva_repercutido_re2;
+    QString cCuenta_iva_repercutido_re3;
+    QString cCuenta_iva_repercutido_re4;
+    QString cCuenta_iva_soportado_re1;
+    QString cCuenta_iva_soportado_re2;
+    QString cCuenta_iva_soportado_re3;
+    QString cCuenta_iva_soportado_re4;
     // BD Contabilidad
     QString HostBD_contabilidad;
     QString NombreBD_contabilidad;

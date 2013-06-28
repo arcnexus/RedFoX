@@ -25,10 +25,10 @@ bool apuntes::nuevalinea()
     QSqlQuery query_apunte(QSqlDatabase::database("dbconta"));
     query_apunte.prepare("INSERT INTO diario (id_cuenta, id_documento,cuentaD,descripcionD,"
                          "cuentaH,descripcionH,importeD,importeH,asiento,id_cuentaD,id_cuentaH,"
-                         "fechaAsiento,posenasiento) "
+                         "fechaAsiento,posenasiento,comentarioD,comentarioH) "
                          "VALUES (:id_cuenta,:id_documento,:cuentaD,:descripcionD,:cuentaH,"
                          ":descripcionH,:importeD,:importeH,:asiento,:id_cuentaD,:id_cuentaH,"
-                         ":fechaAsiento,:posenasiento);");
+                         ":fechaAsiento,:posenasiento,:comentarioD,:comentarioH);");
     query_apunte.bindValue(":id_cuenta",this->id_cuenta);
     query_apunte.bindValue(":id_documento",this->id_documento);
     query_apunte.bindValue(":cuentaD",this->cuentaD);
@@ -42,6 +42,8 @@ bool apuntes::nuevalinea()
     query_apunte.bindValue(":id_cuentaH",this->id_cuentaH);
     query_apunte.bindValue(":fechaAsiento",this->fechaAsiento);
     query_apunte.bindValue(":posenasiento",this->posenasiento);
+    query_apunte.bindValue(":comentarioD",this->comentarioD);
+    query_apunte.bindValue(":comentarioH",this->comentarioH);
 
     if(!query_apunte.exec())
     {
@@ -74,4 +76,6 @@ void apuntes::clear()
     fechaAsiento = QDate::currentDate();
     posenasiento = 0;
     cta_principal = "";
+    comentarioD = "";
+    comentarioH = "";
 }

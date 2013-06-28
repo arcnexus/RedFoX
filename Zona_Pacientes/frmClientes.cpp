@@ -33,10 +33,12 @@ frmClientes::frmClientes(QWidget *parent) :
     if (Configuracion_global->medic){
         push->setToolTip(tr("Gestión del fichero de pacientes/clientes"));
         ui->textoTitulo->setText(tr("Gestión de Pacientes - datos administrativos"));
+        menuButton.setText("Gestión\nPacientes");
     }
     else{
         push->setToolTip(tr("Gestión del fichero de clientes"));
         ui->textoTitulo->setText(tr("Gestión de Clientes"));
+        menuButton.setText("Gestión\nClientes");
     }
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     ValidarCC();

@@ -23,7 +23,7 @@ public:
 signals:
     
 public slots:
-    void anadir_cuenta();
+    bool anadir_cuenta();
     void guardar_cuenta();
     void recuperar_cuenta(QString cuenta);
     void recuperar_cuenta(int id);

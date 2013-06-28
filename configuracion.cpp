@@ -482,6 +482,48 @@ int Configuracion::Devolver_id_tipo_gasto(QString desc)
     return 0;
 }
 
+int Configuracion::Devolver_id_cuenta_contable(QString codigo_cta)
+{
+    QSqlQuery queryCuenta(QSqlDatabase::database("dbconta"));
+    if(queryCuenta.exec("select id from plan_general where codigo_cta = '"+codigo_cta+"'"))
+    {
+        queryCuenta.next();
+        return queryCuenta.record().value("id").toInt();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar identificador cuenta contable"),
+                             tr("Fallo la recuperación del identificador: ")+queryCuenta.lastError().text(),
+                             tr("Aceptar"));
+}
+
+QString Configuracion::Devolver_descripcion_cuenta_contable(QString codigo_cta)
+{
+    QSqlQuery queryCuenta(QSqlDatabase::database("dbconta"));
+    if(queryCuenta.exec("select descripcion from plan_general where codigo_cta = '"+codigo_cta+"'"))
+    {
+        queryCuenta.next();
+        return queryCuenta.record().value("descripcion").toString();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar cuenta contable"),
+                             tr("Fallo la recuperación de la descripción de la cuenta: ")+queryCuenta.lastError().text(),
+                             tr("Aceptar"));
+}
+
+QString Configuracion::Devolver_codigo_cta_contable(int id)
+{
+    QSqlQuery queryCuenta(QSqlDatabase::database("dbconta"));
+    if(queryCuenta.exec("select codigo_cta from plan_general where id = "+QString::number(id)))
+    {
+        queryCuenta.next();
+        return queryCuenta.record().value("codigo_cta").toString();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar cuenta contable"),
+                             tr("Fallo al recuperar el código de la cuenta: ")+queryCuenta.lastError().text(),
+                             tr("Aceptar"));
+}
+
 void Configuracion::CargarClientes()
 {
     if(client_model == 0)
@@ -600,6 +642,14 @@ void Configuracion::CargarDatos()
         this->cCuentaIvaSoportado2 = qEmpresa.record().value("cuenta_iva_soportado2").toString();
         this->cCuentaIvaSoportado3 = qEmpresa.record().value("cuenta_iva_soportado3").toString();
         this->cCuentaIvaSoportado4 = qEmpresa.record().value("cuenta_iva_soportado4").toString();
+        this->cCuentaIvaRepercutidoRe1 = qEmpresa.record().value("cuenta_iva_repercutido1_re").toString();
+        this->cCuentaIvaRepercutidoRe2 = qEmpresa.record().value("cuenta_iva_repercutido2_re").toString();
+        this->cCuentaIvaRepercutidoRe3 = qEmpresa.record().value("cuenta_iva_repercutido3_re").toString();
+        this->cCuentaIvaRepercutidoRe4 = qEmpresa.record().value("cuenta_iva_repercutido4_re").toString();
+        this->cCuentaIvaSoportadoRe1 = qEmpresa.record().value("cuenta_iva_soportado1_re").toString();
+        this->cCuentaIvaSoportadoRe2 = qEmpresa.record().value("cuenta_iva_soportado2_re").toString();
+        this->cCuentaIvaSoportadoRe3 = qEmpresa.record().value("cuenta_iva_soportado3_re").toString();
+        this->cCuentaIvaSoportadoRe4 = qEmpresa.record().value("cuenta_iva_soportado4_re").toString();
         this->medic = qEmpresa.record().value("medica").toBool();
         this->internacional = qEmpresa.record().value("internacional").toBool();
         this->margen = qEmpresa.record().value("margen").toDouble();

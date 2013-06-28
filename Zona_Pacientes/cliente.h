@@ -2,6 +2,7 @@
 #define CLIENTE_H
 
 #include "../Auxiliares/Globlal_Include.h"
+#include "../Zona_Contabilidad/cuentas_contables.h"
 class Cliente : public QObject
 {
     Q_OBJECT

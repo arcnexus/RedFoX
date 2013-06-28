@@ -72,6 +72,7 @@ public:
     QString cDCCuenta;
     QString cNumeroCuenta;
     int cPedidoCliente;
+    int apunte;
 
 signals:
 
@@ -82,6 +83,7 @@ public slots:
     QString NuevoNumeroFactura();
     bool BorrarLineasFactura(int id_lin);
     bool CobrarFactura();
+    bool GuardarApunte(int nasiento, int nid);
 };
 
 #endif // FACTURA_H

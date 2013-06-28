@@ -112,6 +112,23 @@ void FrmEmpresas::LLenarCampos()
     ui->cboGestionInternacional->setChecked(oEmpresa.empresa_internacional);
     ui->txtCuenta_venta_mercaderias->setText(oEmpresa.cCuenta_venta_mercaderias);
     ui->txtCuenta_venta_servicios->setText(oEmpresa.cCuenta_venta_servicios);
+    ui->ivarepercutido1->setText(oEmpresa.cCuenta_iva_repercutido1);
+    ui->ivarepercutido2->setText(oEmpresa.cCuenta_iva_repercutido2);
+    ui->ivarepercutido3->setText(oEmpresa.cCuenta_iva_repercutido3);
+    ui->ivarepercutido4->setText(oEmpresa.cCuenta_iva_repercutido4);
+    ui->ivarepercutidore1->setText(oEmpresa.cCuenta_iva_repercutido_re1);
+    ui->ivarepercutidore2->setText(oEmpresa.cCuenta_iva_repercutido_re2);
+    ui->ivarepercutidore3->setText(oEmpresa.cCuenta_iva_repercutido_re3);
+    ui->ivarepercutidore4->setText(oEmpresa.cCuenta_iva_repercutido_re4);
+    ui->ivasoportado1->setText(oEmpresa.cCuenta_iva_soportado1);
+    ui->ivasoportado2->setText(oEmpresa.cCuenta_iva_soportado2);
+    ui->ivasoportado3->setText(oEmpresa.cCuenta_iva_soportado3);
+    ui->ivasoportado4->setText(oEmpresa.cCuenta_iva_soportado4);
+    ui->ivasoportadore1->setText(oEmpresa.cCuenta_iva_soportado_re1);
+    ui->ivasoportadore2->setText(oEmpresa.cCuenta_iva_soportado_re2);
+    ui->ivasoportadore3->setText(oEmpresa.cCuenta_iva_soportado_re3);
+    ui->ivasoportadore4->setText(oEmpresa.cCuenta_iva_soportado_re4);
+
 }
 
 void FrmEmpresas::CargarCamposEnEmpresa()
@@ -180,8 +197,22 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.actualizardivisas = ui->chk_upate_divisas->isChecked();
     oEmpresa.empresa_internacional = ui->cboGestionInternacional->isChecked();
     oEmpresa.empresa_medica = ui->dboEmpresaMedica->isChecked();
-
-
+    oEmpresa.cCuenta_iva_repercutido1 = ui->ivarepercutido1->text();
+    oEmpresa.cCuenta_iva_repercutido2 = ui->ivarepercutido2->text();
+    oEmpresa.cCuenta_iva_repercutido3 = ui->ivarepercutido3->text();
+    oEmpresa.cCuenta_iva_repercutido4 = ui->ivarepercutido4->text();
+    oEmpresa.cCuenta_iva_soportado1 = ui->ivasoportado1->text();
+    oEmpresa.cCuenta_iva_soportado2 = ui->ivasoportado2->text();
+    oEmpresa.cCuenta_iva_soportado3 = ui->ivasoportado3->text();
+    oEmpresa.cCuenta_iva_soportado4 = ui->ivasoportado4->text();
+    oEmpresa.cCuenta_iva_repercutido_re1 = ui->ivarepercutidore1->text();
+    oEmpresa.cCuenta_iva_repercutido_re2 = ui->ivarepercutidore2->text();
+    oEmpresa.cCuenta_iva_repercutido_re3 = ui->ivarepercutidore3->text();
+    oEmpresa.cCuenta_iva_repercutido_re4 = ui->ivarepercutidore4->text();
+    oEmpresa.cCuenta_iva_soportado_re1 = ui->ivasoportadore1->text();
+    oEmpresa.cCuenta_iva_soportado_re2 = ui->ivasoportadore2->text();
+    oEmpresa.cCuenta_iva_soportado_re3 = ui->ivasoportadore3->text();
+    oEmpresa.cCuenta_iva_soportado_re4 = ui->ivasoportadore4->text();
 }
 
 
