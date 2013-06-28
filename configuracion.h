@@ -146,18 +146,26 @@ public:
     QString cCuentaClientes;
     QString cCuentaProveedores;
     QString cCuentaAcreedores;
-    QString cCuentaIvaRepercutido;
-    QString cCuentaIvaSoportado;
+    QString cCuentaIvaRepercutido1;
+    QString cCuentaIvaRepercutido2;
+    QString cCuentaIvaRepercutido3;
+    QString cCuentaIvaRepercutido4;
+    QString cCuentaIvaSoportado1;
+    QString cCuentaIvaSoportado2;
+    QString cCuentaIvaSoportado3;
+    QString cCuentaIvaSoportado4;
     QString cCuentaDeudasClientes;
     QString cCuentaCobrosClientes;
     QString cCuentaDeudasProveedor;
     QString cCuentaPagosProveedor;
+    QString cCuentaVentaMercaderias;
+    QString cCuentaVentaServicios;
     int id_tarifa_predeterminada;
     bool actualizardivisas;
 
 
 
-    QString FormatoNumerico(QString cTexto);
+    QString toFormatoMoneda(QString cTexto);
     double MonedatoDouble(QString moneda);
     bool EsNumero(QString texto);
     void CargarDatos();

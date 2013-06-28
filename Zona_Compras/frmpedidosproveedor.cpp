@@ -312,51 +312,51 @@ void FrmPedidosProveedor::lineaDeleted(lineaDetalle * ld)
 
 void FrmPedidosProveedor::totalChanged(double base, double dto, double subTotal, double iva, double re, double total, QString moneda)
 {
-    ui->txtrBase->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)+moneda));
-    ui->txtrImporteDescuento->setText(Configuracion_global->FormatoNumerico(QString::number(dto,'f',2)+moneda));
-    ui->txtrSubtotal->setText(Configuracion_global->FormatoNumerico(QString::number(subTotal,'f',2)+moneda));
-    ui->txtrImporteIva->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)+moneda));
-    ui->txtrTotalRecargoEq->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)+moneda));
-    ui->txtrTotal->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)+moneda));
-    ui->lbl_total->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)+moneda));
+    ui->txtrBase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)+moneda));
+    ui->txtrImporteDescuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',2)+moneda));
+    ui->txtrSubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subTotal,'f',2)+moneda));
+    ui->txtrImporteIva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)+moneda));
+    ui->txtrTotalRecargoEq->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)+moneda));
+    ui->txtrTotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)+moneda));
+    ui->lbl_total->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)+moneda));
 
-    ui->txtrBaseTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)+moneda));
-    ui->txtrTotalIVA_2->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)+moneda));
-    ui->txtrTotalRecargoEq_2->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)+moneda));
-    ui->txtrTotal_2->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)+moneda));
+    ui->txtrBaseTotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)+moneda));
+    ui->txtrTotalIVA_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)+moneda));
+    ui->txtrTotalRecargoEq_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)+moneda));
+    ui->txtrTotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)+moneda));
     this->moneda = moneda;
 }
 
 void FrmPedidosProveedor::desglose1Changed(double base, double iva, double re, double total)
 {
-    ui->txtrBase1->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)));
-    ui->txtrIVA1->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)));
-    ui->txtrRecargoEq1->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)));
-    ui->txtrTotal1->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)));
+    ui->txtrBase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
+    ui->txtrIVA1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
+    ui->txtrRecargoEq1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txtrTotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
 void FrmPedidosProveedor::desglose2Changed(double base, double iva, double re, double total)
 {
-    ui->txtrBase2->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)));
-    ui->txtrIVA2->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)));
-    ui->txtrRecargoEq2->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)));
-    ui->txtrTotal2->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)));
+    ui->txtrBase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
+    ui->txtrIVA2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
+    ui->txtrRecargoEq2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txtrTotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
 void FrmPedidosProveedor::desglose3Changed(double base, double iva, double re, double total)
 {
-    ui->txtrBase3->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)));
-    ui->txtrIVA3->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)));
-    ui->txtrRecargoEq3->setText(Configuracion_global->FormatoNumerico( QString::number(re,'f',2)));
-    ui->txtrTotal3->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)));
+    ui->txtrBase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
+    ui->txtrIVA3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
+    ui->txtrRecargoEq3->setText(Configuracion_global->toFormatoMoneda( QString::number(re,'f',2)));
+    ui->txtrTotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
 void FrmPedidosProveedor::desglose4Changed(double base, double iva, double re, double total)
 {
-    ui->txtrBase4->setText(Configuracion_global->FormatoNumerico(QString::number(base,'f',2)));
-    ui->txtrIVA4->setText(Configuracion_global->FormatoNumerico(QString::number(iva,'f',2)));
-    ui->txtrRecargoEq4->setText(Configuracion_global->FormatoNumerico(QString::number(re,'f',2)));
-    ui->txtrTotal4->setText(Configuracion_global->FormatoNumerico(QString::number(total,'f',2)));
+    ui->txtrBase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
+    ui->txtrIVA4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
+    ui->txtrRecargoEq4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txtrTotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
 
@@ -562,30 +562,30 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txtcPoblacionEntrega->setText(oPedido_proveedor->cPoblacionEntrega);
     ui->txtcProvinciaEntrega->setText(oPedido_proveedor->cProvinciaEntrega);
     ui->txtHorarioEntrega->setText(oPedido_proveedor->cHorarioActivo);
-    ui->txtrBase1->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rBase1,'f',2)));
-    ui->txtrBase2->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rBase2,'f',2)));
-    ui->txtrBase3->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rBase3,'f',2)));
-    ui->txtrBase4->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rBase4,'f',2)));
+    ui->txtrBase1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rBase1,'f',2)));
+    ui->txtrBase2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rBase2,'f',2)));
+    ui->txtrBase3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rBase3,'f',2)));
+    ui->txtrBase4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rBase4,'f',2)));
     ui->txtnIva1->setText(QString::number(oPedido_proveedor->niva1));
     ui->txtnIva2->setText(QString::number(oPedido_proveedor->niva2));
     ui->txtnIva3->setText(QString::number(oPedido_proveedor->niva3));
     ui->txtnIva4->setText(QString::number(oPedido_proveedor->niva4));
-    ui->txtrIVA1->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->riva1,'f',2)));
-    ui->txtrIVA2->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->riva2,'f',2)));
-    ui->txtrIVA3->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->riva3,'f',2)));
-    ui->txtrIVA4->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->riva4,'f',2)));
+    ui->txtrIVA1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->riva1,'f',2)));
+    ui->txtrIVA2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->riva2,'f',2)));
+    ui->txtrIVA3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->riva3,'f',2)));
+    ui->txtrIVA4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->riva4,'f',2)));
     ui->txtnRec1->setText(QString::number(oPedido_proveedor->nrec1));
     ui->txtnRec2->setText(QString::number(oPedido_proveedor->nrec2));
     ui->txtnRec3->setText(QString::number(oPedido_proveedor->nrec3));
     ui->txtnRec4->setText(QString::number(oPedido_proveedor->nrec4));
-    ui->txtrRecargoEq1->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rrec1,'f',2)));
-    ui->txtrRecargoEq2->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rrec2,'f',2)));
-    ui->txtrRecargoEq3->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rrec3,'f',2)));
-    ui->txtrRecargoEq4->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rrec4,'f',2)));
-    ui->txtrTotal1->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rtotal1,'f',2)));
-    ui->txtrTotal2->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rtotal2,'f',2)));
-    ui->txtrTotal3->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rtotal3,'f',2)));
-    ui->txtrTotal4->setText(Configuracion_global->FormatoNumerico(QString::number(oPedido_proveedor->rtotal4,'f',2)));
+    ui->txtrRecargoEq1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rrec1,'f',2)));
+    ui->txtrRecargoEq2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rrec2,'f',2)));
+    ui->txtrRecargoEq3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rrec3,'f',2)));
+    ui->txtrRecargoEq4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rrec4,'f',2)));
+    ui->txtrTotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rtotal1,'f',2)));
+    ui->txtrTotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rtotal2,'f',2)));
+    ui->txtrTotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rtotal3,'f',2)));
+    ui->txtrTotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rtotal4,'f',2)));
     QString filter = QString("id_cab = '%1'").arg(oPedido_proveedor->id);
     helper.fillTable("empresa","lin_ped_pro",filter);
     helper.resizeTable();

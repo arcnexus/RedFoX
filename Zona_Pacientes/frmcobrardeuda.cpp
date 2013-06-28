@@ -23,13 +23,13 @@ void frmCobrarDeuda::calcular()
     importe = importe + ui->txtImporteTarjeta->text().toDouble();
     importe = importe + ui->txtImporteTransferencia->text().toDouble();
 
-    ui->txtImporteCheque->setText(Configuracion_global->FormatoNumerico(ui->txtImporteCheque->text()));
-    ui->txtImporteEfectivo->setText(Configuracion_global->FormatoNumerico(ui->txtImporteEfectivo->text()));
-    ui->txtImporteInternet->setText(Configuracion_global->FormatoNumerico(ui->txtImporteInternet->text()));
-    ui->txtImporteTarjeta->setText(Configuracion_global->FormatoNumerico(ui->txtImporteTarjeta->text()));
-    ui->txtImporteTransferencia->setText(Configuracion_global->FormatoNumerico(ui->txtImporteTransferencia->text()));
+    ui->txtImporteCheque->setText(Configuracion_global->toFormatoMoneda(ui->txtImporteCheque->text()));
+    ui->txtImporteEfectivo->setText(Configuracion_global->toFormatoMoneda(ui->txtImporteEfectivo->text()));
+    ui->txtImporteInternet->setText(Configuracion_global->toFormatoMoneda(ui->txtImporteInternet->text()));
+    ui->txtImporteTarjeta->setText(Configuracion_global->toFormatoMoneda(ui->txtImporteTarjeta->text()));
+    ui->txtImporteTransferencia->setText(Configuracion_global->toFormatoMoneda(ui->txtImporteTransferencia->text()));
 
-    ui->txtImporteTotal->setText(Configuracion_global->FormatoNumerico(QString::number(importe,'f',2)));
+    ui->txtImporteTotal->setText(Configuracion_global->toFormatoMoneda(QString::number(importe,'f',2)));
 
 }
 

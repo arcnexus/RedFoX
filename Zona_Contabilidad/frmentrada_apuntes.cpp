@@ -102,19 +102,19 @@ void FrmEntrada_apuntes::totales_asiento(int asiento)
 
     }
     descuadre = importedebe - importehaber;
-    ui->txttotal_debe->setText(Configuracion_global->FormatoNumerico(QString::number(importedebe,'f',2)));
-    ui->txttotal_haber->setText(Configuracion_global->FormatoNumerico(QString::number(importehaber,'f',2)));
+    ui->txttotal_debe->setText(Configuracion_global->toFormatoMoneda(QString::number(importedebe,'f',2)));
+    ui->txttotal_haber->setText(Configuracion_global->toFormatoMoneda(QString::number(importehaber,'f',2)));
     if(descuadre <0)
     {
         ui->txtdescuadre_asiento->setStyleSheet("color:red; background-color:white");
-        ui->txtdescuadre_asiento->setText(Configuracion_global->FormatoNumerico(QString::number(descuadre,'f',2)));
+        ui->txtdescuadre_asiento->setText(Configuracion_global->toFormatoMoneda(QString::number(descuadre,'f',2)));
         ui->txtdescuadre_asiento->setText(ui->txtdescuadre_asiento->text().append(" D"));
     } else
     {
         ui->txtdescuadre_asiento->setStyleSheet("color:black; background-color:white");
         if(descuadre >0)
         {
-            ui->txtdescuadre_asiento->setText(Configuracion_global->FormatoNumerico(QString::number(descuadre,'f',2)));
+            ui->txtdescuadre_asiento->setText(Configuracion_global->toFormatoMoneda(QString::number(descuadre,'f',2)));
             ui->txtdescuadre_asiento->setText(ui->txtdescuadre_asiento->text().append(" H"));
             ui->txtdescuadre_asiento->setStyleSheet("color:red; background-color:white");
         }

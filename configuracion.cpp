@@ -67,7 +67,7 @@ Configuracion::Configuracion(QObject* parent) :
 }
 
 
-QString Configuracion::FormatoNumerico(QString cTexto)
+QString Configuracion::toFormatoMoneda(QString cTexto)
 {
     QString aux = cTexto;
     aux.remove(",");
@@ -590,6 +590,16 @@ void Configuracion::CargarDatos()
         this->tamanocodigo = qEmpresa.record().value("tamanocodigo").toInt();
         this->cCuentaCobrosClientes = qEmpresa.record().value("cCuentaCobros").toString();
         this->cCuentaPagosProveedor = qEmpresa.record().value("cCuentaPagos").toString();
+        this->cCuentaVentaMercaderias = qEmpresa.record().value("cuenta_ventas_mercaderias").toString();
+        this->cCuentaVentaServicios = qEmpresa.record().value("cuenta_ventas_servicios").toString();
+        this->cCuentaIvaRepercutido1 = qEmpresa.record().value("cuenta_iva_repercutido1").toString();
+        this->cCuentaIvaRepercutido2 = qEmpresa.record().value("cuenta_iva_repercutido2").toString();
+        this->cCuentaIvaRepercutido3 = qEmpresa.record().value("cuenta_iva_repercutido3").toString();
+        this->cCuentaIvaRepercutido4 = qEmpresa.record().value("cuenta_iva_repercutido4").toString();
+        this->cCuentaIvaSoportado1 = qEmpresa.record().value("cuenta_iva_soportado1").toString();
+        this->cCuentaIvaSoportado2 = qEmpresa.record().value("cuenta_iva_soportado2").toString();
+        this->cCuentaIvaSoportado3 = qEmpresa.record().value("cuenta_iva_soportado3").toString();
+        this->cCuentaIvaSoportado4 = qEmpresa.record().value("cuenta_iva_soportado4").toString();
         this->medic = qEmpresa.record().value("medica").toBool();
         this->internacional = qEmpresa.record().value("internacional").toBool();
         this->margen = qEmpresa.record().value("margen").toDouble();
@@ -1155,7 +1165,7 @@ void Configuracion::format_text()
     if(lineEdit)
     {
         lineEdit->blockSignals(true);        
-        lineEdit->setText(FormatoNumerico(lineEdit->text()));
+        lineEdit->setText(toFormatoMoneda(lineEdit->text()));
         QApplication::processEvents();
         lineEdit->blockSignals(false);
     }

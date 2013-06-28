@@ -43,7 +43,7 @@ void frmCuadro_cuentas::llenar_campos()
     ui->txtcodigo_cuenta->setText(cuentas->codigo_cta);
     ui->txtdescripcion_cuenta->setText(cuentas->descripcion);
     ui->txtDesglose_balance->setText(cuentas->desglose_balance);
-    ui->txtsaldo_cta->setText(Configuracion_global->FormatoNumerico(QString::number(cuentas->saldo)));
+    ui->txtsaldo_cta->setText(Configuracion_global->toFormatoMoneda(QString::number(cuentas->saldo)));
 }
 
 void frmCuadro_cuentas::llenar_objeto()

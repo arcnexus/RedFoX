@@ -37,6 +37,7 @@ public:
     QString ModuleMenuPath(){return tr("");}
     void hideButton(){toolButton.hide();}
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
+
 private slots:
     void on_btnSiguiente_clicked();
 
@@ -62,6 +63,10 @@ private slots:
     void on_btnEditar_clicked();
     void lineaReady(lineaDetalle* ld);
     void lineaDeleted(lineaDetalle*);
+    void on_tabWidget_2_currentChanged(int index);
+
+    bool crear_asiento();
+    
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;
@@ -74,6 +79,7 @@ private:
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton *push;
+    QString moneda;
 };
 
 #endif // FRMFACTURAS_H

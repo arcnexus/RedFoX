@@ -14,7 +14,7 @@ void MonetaryDelegate_contabilidad::setModelData(QWidget *editor, QAbstractItemM
     lineedit->text();
     lineedit->setReadOnly(this->readonly);
 
-    QString valor = Configuracion_global->FormatoNumerico(lineedit->text());
+    QString valor = Configuracion_global->toFormatoMoneda(lineedit->text());
     model->setData(index,valor,Qt::EditRole);
     lineedit->setAlignment(Qt::AlignRight);
 }
@@ -22,7 +22,7 @@ void MonetaryDelegate_contabilidad::setModelData(QWidget *editor, QAbstractItemM
 void MonetaryDelegate_contabilidad::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QString texto = index.model()->data(index, Qt::DisplayRole).toString();
-     texto = Configuracion_global->FormatoNumerico(texto);
+     texto = Configuracion_global->toFormatoMoneda(texto);
      if(texto =="0,00")
          texto = "";
      QStyleOptionViewItem myOption = option;

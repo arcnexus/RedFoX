@@ -110,6 +110,8 @@ void FrmEmpresas::LLenarCampos()
     ui->chk_upate_divisas->setChecked(oEmpresa.actualizardivisas);
     ui->dboEmpresaMedica->setChecked(oEmpresa.empresa_medica);
     ui->cboGestionInternacional->setChecked(oEmpresa.empresa_internacional);
+    ui->txtCuenta_venta_mercaderias->setText(oEmpresa.cCuenta_venta_mercaderias);
+    ui->txtCuenta_venta_servicios->setText(oEmpresa.cCuenta_venta_servicios);
 }
 
 void FrmEmpresas::CargarCamposEnEmpresa()
@@ -154,6 +156,8 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.setcCodigoCuentaClientes(ui->txtcCuentaCliente->text());
     oEmpresa.setcCodigoCuentaProveedor(ui->txtcCuentaProveedores->text());
     oEmpresa.setcCodigoCuentaAcreedores(ui->txtcCuentaAcreedores->text());
+    oEmpresa.cCuenta_venta_mercaderias = ui->txtCuenta_venta_mercaderias->text();
+    oEmpresa.cCuenta_venta_servicios = ui->txtCuenta_venta_servicios->text();
     oEmpresa.id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisas->currentText());
     oEmpresa.contabilidad = ui->chkContabilidad->isChecked();
     oEmpresa.consultas = ui->txtConsultas->value();

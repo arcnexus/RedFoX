@@ -161,10 +161,10 @@ void frmClientes::LLenarCampos()
     ui->txtcWeb->setText(oCliente->cWeb);
     ui->txtdFechaAlta->setDate(oCliente->dFechaalta);
     ui->txtdFechaUltimaCompra->setDate(oCliente->dFechaCompra);
-    ui->txtrImporteAcumulado->setText(Configuracion_global->FormatoNumerico(QString::number( oCliente->rAcumuladoVentas)));
-    ui->txtrVentasEjercicio->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->rVentasEjercicio)));
-    ui->txtrRiesgoPermitido->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->rRiesgoMaximo)));
-    ui->txtrDeudaActual->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->rDeudaActual)));
+    ui->txtrImporteAcumulado->setText(Configuracion_global->toFormatoMoneda(QString::number( oCliente->rAcumuladoVentas)));
+    ui->txtrVentasEjercicio->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->rVentasEjercicio)));
+    ui->txtrRiesgoPermitido->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->rRiesgoMaximo)));
+    ui->txtrDeudaActual->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->rDeudaActual)));
     ui->txttComentarios->setText(oCliente->tComentarios);
 
 
@@ -194,8 +194,8 @@ void frmClientes::LLenarCampos()
     ui->txtnDiaPago1->setValue(oCliente->nDiaPago1);
     ui->txtnDiaPago2->setValue(oCliente->nDiaPago2);
    // ui->cbonTarifaCliente->lineEdit)->setText(oCliente->nTarifaCliente));
-    ui->txtrImporteACuenta->setText( Configuracion_global->FormatoNumerico(QString::number(oCliente->rImporteACuenta,'f',2)));
-    ui->txtrVales->setText(Configuracion_global->FormatoNumerico(QString::number(oCliente->rVales,'f',2)));
+    ui->txtrImporteACuenta->setText( Configuracion_global->toFormatoMoneda(QString::number(oCliente->rImporteACuenta,'f',2)));
+    ui->txtrVales->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->rVales,'f',2)));
     ui->txtcEntidadBancaria->setText(oCliente->cEntidadBancaria);
     ui->txtcOficinaBancaria->setText(oCliente->cOficinaBancaria);
     ui->txtcDc->setText(oCliente->cDc);
@@ -1076,7 +1076,7 @@ void frmClientes::TablaDeudas_clicked(const QModelIndex &index)
 
 void frmClientes::txtrRiesgoPermitido_editingFinished()
 {
-    ui->txtrRiesgoPermitido->setText(Configuracion_global->FormatoNumerico(ui->txtrRiesgoPermitido->text()));
+    ui->txtrRiesgoPermitido->setText(Configuracion_global->toFormatoMoneda(ui->txtrRiesgoPermitido->text()));
 }
 
 void frmClientes::on_btnFichaPaciente_clicked()

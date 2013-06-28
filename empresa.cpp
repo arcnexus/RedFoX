@@ -77,6 +77,8 @@ void Empresa::Recuperar(QString cSQL)
             this->Tamanocodigo = registro.field("tamanocodigo").value().toInt();
             this->cCuentaCobros = registro.field("cCuentaCobros").value().toString();
             this->cCuentaPagos = registro.field("cCuentaPagos").value().toString();
+            this->cCuenta_venta_mercaderias = registro.field("cuenta_ventas_mercaderias").value().toString();
+            this->cCuenta_venta_servicios = registro.field("cuenta_ventas_servicios").value().toString();
             this->contabilidad = registro.field("contabilidad").value().toBool();
             this->consultas = registro.field("consultas").value().toInt();
             this->primer_dia_laborable = registro.field("primer_dia_laborable").value().toString();
@@ -96,6 +98,14 @@ void Empresa::Recuperar(QString cSQL)
             this->actualizardivisas = registro.field("actualizardivisas").value().toInt();
             this->empresa_internacional = registro.field("medica").value().toBool();
             this->empresa_medica = registro.field("internacional").value().toBool();
+            this->cCuenta_iva_repercutido1 = registro.field("cuenta_iva_repercutido1").value().toString();
+            this->cCuenta_iva_repercutido2 = registro.field("cuenta_iva_repercutido2").value().toString();
+            this->cCuenta_iva_repercutido3 = registro.field("cuenta_iva_repercutido3").value().toString();
+            this->cCuenta_iva_repercutido4 = registro.field("cuenta_iva_repercutido4").value().toString();
+            this->cCuenta_iva_soportado1 = registro.field("cuenta_iva_soportado1").value().toString();
+            this->cCuenta_iva_soportado2 = registro.field("cuenta_iva_soportado2").value().toString();
+            this->cCuenta_iva_soportado3 = registro.field("cuenta_iva_soportado3").value().toString();
+            this->cCuenta_iva_soportado4 = registro.field("cuenta_iva_soportado4").value().toString();
 		} 
 		else 
 		{
@@ -160,6 +170,8 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->Tamanocodigo = registro.field("tamanocodigo").value().toInt();
             this->cCuentaCobros = registro.field("cCuentaCobros").value().toString();
             this->cCuentaPagos = registro.field("cCuentaPagos").value().toString();
+            this->cCuenta_venta_mercaderias = registro.field("cuenta_ventas_mercaderias").value().toString();
+            this->cCuenta_venta_servicios = registro.field("cuenta_ventas_servicios").value().toString();
             this->contabilidad = registro.field("contabilidad").value().toBool();
             this->consultas = registro.field("consultas").value().toInt();
             this->primer_dia_laborable = registro.field("primer_dia_laborable").value().toString();
@@ -179,6 +191,14 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->actualizardivisas = registro.field("actualizardivisas").value().toInt();
             this->empresa_internacional = registro.field("medica").value().toBool();
             this->empresa_medica = registro.field("internacional").value().toBool();
+            this->cCuenta_iva_repercutido1 = registro.field("cuenta_iva_repercutido1").value().toString();
+            this->cCuenta_iva_repercutido2 = registro.field("cuenta_iva_repercutido2").value().toString();
+            this->cCuenta_iva_repercutido3 = registro.field("cuenta_iva_repercutido3").value().toString();
+            this->cCuenta_iva_repercutido4 = registro.field("cuenta_iva_repercutido4").value().toString();
+            this->cCuenta_iva_soportado1 = registro.field("cuenta_iva_soportado1").value().toString();
+            this->cCuenta_iva_soportado2 = registro.field("cuenta_iva_soportado2").value().toString();
+            this->cCuenta_iva_soportado3 = registro.field("cuenta_iva_soportado3").value().toString();
+            this->cCuenta_iva_soportado4 = registro.field("cuenta_iva_soportado4").value().toString();
         } else {
             if (nProcede == 1)
                 TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
@@ -234,6 +254,8 @@ void Empresa::Guardar()
                      "autocodigo=:autocodigo,"
                      "tamanocodigo =:tamanocodigo,"
                      "cCuentaCobros =:cCuentaCobros,"
+                     "cuenta_ventas_mercaderias = :cuenta_ventas_mercaderias,"
+                     "cuenta_ventas_servicios =:cuenta_ventas_servicios,"
                      "contabilidad =:contabilidad,"
                      "consultas = :consultas,"
                      "primer_dia_laborable =:primer_dia_laborable,"
@@ -253,6 +275,14 @@ void Empresa::Guardar()
                      "actualizardivisas =:actualizardivisas,"
                      "medica =:medica,"
                      "internacional =:internacional,"
+                     "cuenta_iva_repercutido1 = :cuenta_iva_repercutido1,"
+                     "cuenta_iva_repercutido2 = :cuenta_iva_repercutido2,"
+                     "cuenta_iva_repercutido3 = :cuenta_iva_repercutido3,"
+                     "cuenta_iva_repercutido4 = :cuenta_iva_repercutido4,"
+                     "cuenta_iva_soportado1 =:cuenta_iva_soportado1,"
+                     "cuenta_iva_soportado2 =:cuenta_iva_soportado2,"
+                     "cuenta_iva_soportado3 =:cuenta_iva_soportado3,"
+                     "cuenta_iva_soportado4 =:cuenta_iva_soportado4,"
                      "cCuentaPagos =:cCuentaPagos"
                      " where id=:nID");
 
@@ -294,6 +324,8 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":codigocuentaclientes", this->cCuentaClientes);
     qEmpresa.bindValue(":codigocuentaproveedores", this->cCuentaProveedores);
     qEmpresa.bindValue(":codigocuentaacreedores", this->cCuentaAcreeedores);
+    qEmpresa.bindValue(":cuenta_ventas_mercaderias",this->cCuenta_venta_mercaderias);
+    qEmpresa.bindValue(":cuenta_ventas_servicios",this->cCuenta_venta_servicios);
     qEmpresa.bindValue(":autocodigo",this->Autocodificar);
     qEmpresa.bindValue(":tamanocodigo",this->Tamanocodigo);
     qEmpresa.bindValue(":cCuentaCobros",this->cCuentaCobros);
@@ -317,6 +349,14 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":actualizardivisas",this->actualizardivisas);
     qEmpresa.bindValue(":medica",this->empresa_medica);
     qEmpresa.bindValue(":internacional",this->empresa_internacional);
+    qEmpresa.bindValue(":cuenta_iva_repercutido1",this->cCuenta_iva_repercutido1);
+    qEmpresa.bindValue(":cuenta_iva_repercutido2",this->cCuenta_iva_repercutido2);
+    qEmpresa.bindValue(":cuenta_iva_repercutido3",this->cCuenta_iva_repercutido3);
+    qEmpresa.bindValue(":cuenta_iva_repercutido4",this->cCuenta_iva_repercutido4);
+    qEmpresa.bindValue(":cuenta_iva_soportado1",this->cCuenta_iva_soportado1);
+    qEmpresa.bindValue(":cuenta_iva_soportado2",this->cCuenta_iva_soportado2);
+    qEmpresa.bindValue(":cuenta_iva_soportado3",this->cCuenta_iva_soportado3);
+    qEmpresa.bindValue(":cuenta_iva_soportado4",this->cCuenta_iva_soportado4);
     qEmpresa.bindValue(":nID",this->id);
 
 
@@ -368,6 +408,8 @@ void Empresa::Vaciar()
     this->cCuentaAcreeedores = "410";
     this->cCuentaClientes = "430";
     this->cCuentaProveedores= "400";
+    this->cCuenta_venta_mercaderias = "700";
+    this->cCuenta_venta_servicios = "";
     this->Autocodificar = true;
     this->Tamanocodigo = 13;
     this->cCuentaCobros = "";
@@ -388,6 +430,14 @@ void Empresa::Vaciar()
     this->ticket_factura = false;
     this->id_tarifa_predeterminada = 0;
     this->actualizardivisas = false;
+    this->cCuenta_iva_repercutido1 = "";
+    this->cCuenta_iva_repercutido2 = "";
+    this->cCuenta_iva_repercutido3 = "";
+    this->cCuenta_iva_repercutido4 = "";
+    this->cCuenta_iva_soportado1 = "";
+    this->cCuenta_iva_soportado2 = "";
+    this->cCuenta_iva_soportado3 = "";
+    this->cCuenta_iva_soportado4 = "";
 
 }
 

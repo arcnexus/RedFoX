@@ -41,7 +41,7 @@ FrmTarifas::~FrmTarifas()
 void FrmTarifas::capturar_coste(float Coste)
 {
     this->coste = Coste;
-    ui->txtCosteLocal->setText(Configuracion_global->FormatoNumerico(QString::number(Coste)));
+    ui->txtCosteLocal->setText(Configuracion_global->toFormatoMoneda(QString::number(Coste)));
 }
 
 void FrmTarifas::capturar_datos(int id, QString costeLocal){
@@ -61,7 +61,7 @@ void FrmTarifas::capturar_datos(int id, QString costeLocal){
         }
         ui->txtPais->setText(Configuracion_global->Devolver_pais(queryTarifas.record().field("id_pais").value().toInt()));
         ui->txtMoneda->setText(Configuracion_global->Devolver_moneda(queryTarifas.record().field("id_monedas").value().toInt()));
-        ui->txtPVPDivisa->setText(Configuracion_global->FormatoNumerico(queryTarifas.record().field("pvp").value().toString()));
+        ui->txtPVPDivisa->setText(Configuracion_global->toFormatoMoneda(queryTarifas.record().field("pvp").value().toString()));
         ui->txtCosteLocal->setText(costeLocal);
         if(queryTarifas.record().value("margen").toDouble() == 0)
             ui->spinMargen->setValue(Configuracion_global->margen);
@@ -142,11 +142,11 @@ void FrmTarifas::calcular_precio(double margen)
         blockSignals(true);
         //NOTE 70% /0.30 - 40 /0.60
         double pvp = (ui->txtCosteLocal->text().replace(",",".").toDouble()*100)/(100-margen);
-        QString cPvp = Configuracion_global->FormatoNumerico(QString::number(pvp,'f',2));
+        QString cPvp = Configuracion_global->toFormatoMoneda(QString::number(pvp,'f',2));
         this->pvpDivisa = cPvp.toDouble();
         ui->txtPVPLocal->setText(cPvp);
         double valordivisa = ui->txtPVPLocal->text().replace(",",".").toDouble() * ui->txtValorDivisa->text().replace(",",".").toDouble();
-        ui->txtPVPDivisa->setText(Configuracion_global->FormatoNumerico(QString::number(valordivisa,'f',2)));
+        ui->txtPVPDivisa->setText(Configuracion_global->toFormatoMoneda(QString::number(valordivisa,'f',2)));
         this->pvpDivisa = valordivisa;
         blockSignals(false);
 }

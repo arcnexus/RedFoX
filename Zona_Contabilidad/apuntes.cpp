@@ -23,15 +23,14 @@ int apuntes::nuevo_numero_apunte()
 bool apuntes::nuevalinea()
 {
     QSqlQuery query_apunte(QSqlDatabase::database("dbconta"));
-    query_apunte.prepare("INSERT INTO diario id_cuenta, id_documento,DH,cuentaD,descripcionD,"
+    query_apunte.prepare("INSERT INTO diario (id_cuenta, id_documento,cuentaD,descripcionD,"
                          "cuentaH,descripcionH,importeD,importeH,asiento,id_cuentaD,id_cuentaH,"
-                         "fechaAsiento,posenasiento,cta_principal) "
-                         "VALUES (:id_cuenta,:id_documento,:DH,:cuentaD,:descripcionD,:cuentaH,"
+                         "fechaAsiento,posenasiento) "
+                         "VALUES (:id_cuenta,:id_documento,:cuentaD,:descripcionD,:cuentaH,"
                          ":descripcionH,:importeD,:importeH,:asiento,:id_cuentaD,:id_cuentaH,"
-                         ":fechaAsiento,:posenasiento,:cta_principal);");
+                         ":fechaAsiento,:posenasiento);");
     query_apunte.bindValue(":id_cuenta",this->id_cuenta);
     query_apunte.bindValue(":id_documento",this->id_documento);
-    query_apunte.bindValue(":DH",this->DH);
     query_apunte.bindValue(":cuentaD",this->cuentaD);
     query_apunte.bindValue(":descripcionD",this->descripcionD);
     query_apunte.bindValue(":cuentaH",this->cuentaH);
@@ -43,7 +42,7 @@ bool apuntes::nuevalinea()
     query_apunte.bindValue(":id_cuentaH",this->id_cuentaH);
     query_apunte.bindValue(":fechaAsiento",this->fechaAsiento);
     query_apunte.bindValue(":posenasiento",this->posenasiento);
-    query_apunte.bindValue(":cta_principal",this->cta_principal);
+
     if(!query_apunte.exec())
     {
         QMessageBox::warning(qApp->activeWindow(),tr("Gestión de apuntes"),
@@ -54,4 +53,25 @@ bool apuntes::nuevalinea()
     {
         return true;
     }
+}
+
+void apuntes::clear()
+{
+
+    id = 0;
+    id_cuenta = 0;
+    id_documento = 0;
+    DH = "";
+    cuentaD = "";
+    descripcionD = "";
+    cuentaH = "";
+    descripcionH = "";
+    importeD = 0;
+    importeH = 0;
+    asiento = 0;
+    id_cuentaD = 0;
+    id_cuentaH = 0;
+    fechaAsiento = QDate::currentDate();
+    posenasiento = 0;
+    cta_principal = "";
 }

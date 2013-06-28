@@ -85,7 +85,7 @@ void FrmAsociarProveedor::setcodigo()
 
 void FrmAsociarProveedor::setpvd()
 {
-    ui->txtPVD->setText(configuracion.FormatoNumerico(ui->txtPVD->text()));
+    ui->txtPVD->setText(configuracion.toFormatoMoneda(ui->txtPVD->text()));
     this->pvd = ui->txtPVD->text().toDouble();
 }
 

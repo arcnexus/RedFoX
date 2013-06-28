@@ -717,7 +717,7 @@ QString Cliente::NuevoCodigoCliente()
         cNum.prepend("0");
     }
     cCodigo = Configuracion_global->cCuentaClientes + cNum;
-    cCuentaIvaRepercutido = Configuracion_global->cCuentaIvaRepercutido +cNum;
+    cCuentaIvaRepercutido = Configuracion_global->cCuentaIvaRepercutido1 +cNum;
 
     return cCodigo;
 }

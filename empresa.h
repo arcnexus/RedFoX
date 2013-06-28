@@ -174,6 +174,17 @@ public:
     QString cCuentaAcreeedores;
     QString cCuentaCobros;
     QString cCuentaPagos;
+    QString cCuenta_venta_mercaderias;
+    QString cCuenta_venta_servicios;
+    QString cCuenta_iva_repercutido1;
+    QString cCuenta_iva_repercutido2;
+    QString cCuenta_iva_repercutido3;
+    QString cCuenta_iva_repercutido4;
+    QString cCuenta_iva_soportado1;
+    QString cCuenta_iva_soportado2;
+    QString cCuenta_iva_soportado3;
+    QString cCuenta_iva_soportado4;
+    // BD Contabilidad
     QString HostBD_contabilidad;
     QString NombreBD_contabilidad;
     QString UsuarioBD_contabilidad;

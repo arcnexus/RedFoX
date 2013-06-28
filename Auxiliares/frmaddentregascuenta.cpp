@@ -17,7 +17,7 @@ frmAddEntregasCuenta::~frmAddEntregasCuenta()
 
 void frmAddEntregasCuenta::on_txtImporte_editingFinished()
 {
-    ui->txtImporte->setText(Configuracion_global->FormatoNumerico(ui->txtImporte->text()));
+    ui->txtImporte->setText(Configuracion_global->toFormatoMoneda(ui->txtImporte->text()));
     this->importe = ui->txtImporte->text().replace(",",".").toDouble();
 }
 

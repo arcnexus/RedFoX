@@ -263,13 +263,13 @@ void FrmArticulos::LLenarCampos()
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
    ui->txtrDto->setText(QString::number(oArticulo->rDto,'f',2));
-   ui->txtrCoste->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->rCoste,'f',2)));
+   ui->txtrCoste->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->rCoste,'f',2)));
    ui->txtdFechaUltimaCompra->setDate(oArticulo->dUltimaCompra);
    ui->txtdFechaUltimaVenta->setDate(oArticulo->dUltimaVenta);
    ui->txtnUnidadesCompradas->setText(QString::number(oArticulo->nUnidadesCompradas));
    ui->txtnUnidadesVendidas->setText(QString::number(oArticulo->nUnidadesVendidas));
-   ui->txtrAcumuladoCompras->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->rAcumuladoCompras,'f',2)));
-   ui->txtrAcumuladoVentas->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->rAcumuladoVentas,'f',2)));
+   ui->txtrAcumuladoCompras->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->rAcumuladoCompras,'f',2)));
+   ui->txtrAcumuladoVentas->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->rAcumuladoVentas,'f',2)));
    ui->txttComentario->setText(oArticulo->tComentario);
    ui->txtnStockMaximo->setText(QString::number(oArticulo->nStockMaximo));
    ui->txtnStockMinimo->setText(QString::number(oArticulo->nStockMinimo));
@@ -337,7 +337,7 @@ void FrmArticulos::LLenarCampos()
       ui->lbl_en_promocion->setVisible(true);
   else
       ui->lbl_en_promocion->setVisible(false);
-  ui->txtCoste_real->setText(Configuracion_global->FormatoNumerico(QString::number(oArticulo->coste_real,'f',2)));
+  ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',2)));
 
 
   // ------------------

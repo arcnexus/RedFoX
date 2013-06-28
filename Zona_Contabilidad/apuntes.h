@@ -13,7 +13,7 @@ public:
     int id;
     int id_cuenta;
     int id_documento;
-    char DH;
+    QString DH;
     QString cuentaD;
     QString descripcionD;
     QString cuentaH;
@@ -33,6 +33,7 @@ signals:
 public slots:
     int nuevo_numero_apunte();
     bool nuevalinea();
+    void clear();
 };
 
 #endif // APUNTES_H
