@@ -31,6 +31,8 @@ private slots:
     void on_botBuscar_user_clicked();
     void on_botAnterior_user_clicked();
     void on_botSiguiente_user_clicked();
+    void on_botAnadir_user_clicked();
+
 private:
     Ui::FrmUsuarios *ui;
     void getModulesFromDB();
