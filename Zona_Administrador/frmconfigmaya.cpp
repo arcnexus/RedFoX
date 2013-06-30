@@ -84,36 +84,14 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     else
         ui->radMysql->setChecked(false);
 
-    if (settings.value("EnlacePrestaShop") == 1)
-        ui->chkPrestaShop->setChecked(true);
-    else
-        ui->chkPrestaShop->setChecked(false);
-    if(settings.value("medicum")==1)
-        ui->chkmedicum->setChecked(true);
-    else
-        ui->chkmedicum->setChecked(false);
-    if(settings.value("conta")==1)
-        ui->chkconta->setChecked(true);
-    else
-        ui->chkconta->setChecked(false);
-    if (settings.value("vad_alop")==1)
-        ui->chkVademecum_alopatico->setChecked(true);
-    else
-        ui->chkVademecum_alopatico->setChecked(false);
-    if (settings.value("vad_home")==1)
-        ui->chkVademecum_homeopatia->setChecked(true);
-    else
-        ui->chkVademecum_homeopatia->setChecked(false);
-    if (settings.value("vad_MTC")==1)
-        ui->chkVademecum_MTC->setChecked(true);
-    else
-        ui->chkVademecum_MTC->setChecked(false);
-    if(settings.value("vad_fito")==1)
-        ui->chk_vademecum_fitoterapia->setChecked(true);
-    else
-        ui->chk_vademecum_fitoterapia->setChecked(false);
+    ui->chkPrestaShop->setChecked(settings.value("EnlaceWeb").toBool());
 
-
+    ui->chkmedicum->setChecked(settings.value("medicum").toBool());
+    ui->chkconta->setChecked(settings.value("conta").toBool());
+    ui->chkVademecum_alopatico->setChecked(settings.value("vad_alop").toBool());
+    ui->chkVademecum_homeopatia->setChecked(settings.value("vad_home").toBool());
+    ui->chkVademecum_MTC->setChecked(settings.value("vad_MTC").toBool());
+    ui->chk_vademecum_fitoterapia->setChecked(settings.value("vad_fito").toBool());
 }
 
 frmConfigmaya::~frmConfigmaya()
@@ -156,10 +134,6 @@ void frmConfigmaya::configurar()
         settings.setValue("lProfesional",0);
 
     settings.setValue("nIRPF",ui->txtPorcIRPF->text());
-    if (ui->chkPrestaShop->isChecked())
-        settings.setValue("EnlaceTiendaWeb",1);
-    else
-        settings.setValue("EnlaceTiendaWeb",0);
     settings.setValue("contrasenaactiva",ui->txtContrasenaActiva->text());
     settings.setValue("nDigitosCuentas",ui->spinDigitosCuentaContable->value());
     settings.setValue("cCuentaClientes",ui->txtCuentaClientes->text());
@@ -206,7 +180,7 @@ void frmConfigmaya::configurar()
    settings.setValue("Pass_web",ui->txtPasswordDBWeb->text());
    settings.setValue("puertoTiendaWeb",ui->txtPuerto_DBWeb->text());
    settings.setValue("nombreBDTiendaWeb",ui->txtNombreBDWeb->text());
-   settings.setValue("EnlaceWeb",ui->chkPrestaShop->isEnabled());
+   settings.setValue("EnlaceWeb",ui->chkPrestaShop->isChecked());
 
 
    settings.setValue("HostDB_MediTec",ui->txtHostBD_MediTec->text());

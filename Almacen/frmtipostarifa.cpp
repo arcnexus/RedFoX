@@ -26,3 +26,8 @@ FrmTiposTarifa::~FrmTiposTarifa()
 {
     delete ui;
 }
+
+void FrmTiposTarifa::on_btnAgregarTarifa_clicked()
+{
+
+}

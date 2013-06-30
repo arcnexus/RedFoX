@@ -138,7 +138,7 @@ void ArchivosGeneralesExt::handle_fomasPago()
 {
     Db_table_View form(qApp->activeWindow());
     form.set_db("Maya");
-    form.set_table("FormPago");
+    form.set_table("formpago");
 
     form.setWindowTitle(tr("Formas de pago"));
 

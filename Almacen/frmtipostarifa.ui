@@ -14,7 +14,7 @@
    <string>Tipos de Tarifa</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Maya.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
@@ -242,7 +242,7 @@ color: rgb(255,255,255);</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
      </property>
      <property name="iconSize">
@@ -259,7 +259,7 @@ color: rgb(255,255,255);</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
      </property>
      <property name="iconSize">
@@ -316,7 +316,7 @@ color: rgb(255,255,255);</string>
        </widget>
       </item>
       <item row="1" column="0" colspan="2">
-       <widget class="QRadioButton" name="radioButton">
+       <widget class="QRadioButton" name="radTodos">
         <property name="text">
          <string>Todos los productos y servicios</string>
         </property>
@@ -326,77 +326,77 @@ color: rgb(255,255,255);</string>
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QRadioButton" name="radioButton_2">
+       <widget class="QRadioButton" name="radSeccion">
         <property name="text">
          <string>Por Seccion</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QRadioButton" name="radioButton_3">
+       <widget class="QRadioButton" name="radFamilia">
         <property name="text">
          <string>por Familia</string>
         </property>
        </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QRadioButton" name="radioButton_4">
+       <widget class="QRadioButton" name="radSubfamilia">
         <property name="text">
          <string>por Sub-Familia</string>
         </property>
        </widget>
       </item>
       <item row="5" column="0">
-       <widget class="QRadioButton" name="radioButton_5">
+       <widget class="QRadioButton" name="radSubSubFamilia">
         <property name="text">
          <string>por Sub-Sub-Familia</string>
         </property>
        </widget>
       </item>
       <item row="6" column="0">
-       <widget class="QRadioButton" name="radioButton_6">
+       <widget class="QRadioButton" name="radGrupoArticulo">
         <property name="text">
          <string>por Grupo Artículo</string>
         </property>
        </widget>
       </item>
       <item row="7" column="2">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="btnAgregarTarifa">
         <property name="text">
          <string>Agregar</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1" colspan="2">
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="cboSeccion">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
       <item row="3" column="1" colspan="2">
-       <widget class="QComboBox" name="comboBox_2">
+       <widget class="QComboBox" name="cboFamilia">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
       <item row="4" column="1" colspan="2">
-       <widget class="QComboBox" name="comboBox_3">
+       <widget class="QComboBox" name="cboSubFamilia">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
       <item row="5" column="1" colspan="2">
-       <widget class="QComboBox" name="comboBox_4">
+       <widget class="QComboBox" name="cboSubSubFamilia">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
       <item row="6" column="1" colspan="2">
-       <widget class="QComboBox" name="comboBox_6">
+       <widget class="QComboBox" name="cboGrupoArticulo">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -429,7 +429,7 @@ color: rgb(255,255,255);</string>
          <string>Cerrar</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
         </property>
         <property name="iconSize">
@@ -459,7 +459,7 @@ color: rgb(255,255,255);</string>
          <string>Guardar</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
         </property>
         <property name="iconSize">
@@ -476,7 +476,7 @@ color: rgb(255,255,255);</string>
          <string>Deshacer</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
         </property>
         <property name="iconSize">
@@ -493,7 +493,7 @@ color: rgb(255,255,255);</string>
          <string>Editar</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
         </property>
         <property name="iconSize">
@@ -539,21 +539,21 @@ color: rgb(255,255,255);</string>
   <tabstop>btnGuardar</tabstop>
   <tabstop>btnDeshacer</tabstop>
   <tabstop>btnCerrar</tabstop>
-  <tabstop>radioButton</tabstop>
-  <tabstop>radioButton_2</tabstop>
-  <tabstop>comboBox</tabstop>
-  <tabstop>radioButton_3</tabstop>
-  <tabstop>comboBox_2</tabstop>
-  <tabstop>radioButton_4</tabstop>
-  <tabstop>comboBox_3</tabstop>
-  <tabstop>radioButton_5</tabstop>
-  <tabstop>comboBox_4</tabstop>
-  <tabstop>radioButton_6</tabstop>
-  <tabstop>comboBox_6</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>radTodos</tabstop>
+  <tabstop>radSeccion</tabstop>
+  <tabstop>cboSeccion</tabstop>
+  <tabstop>radFamilia</tabstop>
+  <tabstop>cboFamilia</tabstop>
+  <tabstop>radSubfamilia</tabstop>
+  <tabstop>cboSubFamilia</tabstop>
+  <tabstop>radSubSubFamilia</tabstop>
+  <tabstop>cboSubSubFamilia</tabstop>
+  <tabstop>radGrupoArticulo</tabstop>
+  <tabstop>cboGrupoArticulo</tabstop>
+  <tabstop>btnAgregarTarifa</tabstop>
  </tabstops>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections>
   <connection>

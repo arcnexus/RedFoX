@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>513</height>
+    <height>545</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -62,7 +62,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>110</width>
+       <width>135</width>
        <height>374</height>
       </size>
      </property>
@@ -279,6 +279,39 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
        </widget>
       </item>
       <item row="7" column="0">
+       <widget class="QPushButton" name="botListados">
+        <property name="minimumSize">
+         <size>
+          <width>115</width>
+          <height>45</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>118</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:disabled{color: 0; }
+QPushButton:enabled{color: rgb(255,255,255); }</string>
+        </property>
+        <property name="text">
+         <string>Listados</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/List.png</normaloff>:/Icons/PNG/List.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
        <widget class="QPushButton" name="btnBorrar">
         <property name="minimumSize">
          <size>
@@ -3667,6 +3700,58 @@ alternate-background-color: rgb(255, 255, 175);</string>
                 </attribute>
                </widget>
               </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="pushButton_2">
+                <property name="text">
+                 <string>Añadir presupuesto</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="tab_9">
+             <property name="styleSheet">
+              <string notr="true">background-color: #ecefed;</string>
+             </property>
+             <attribute name="title">
+              <string>Pedidos</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_26">
+              <item row="0" column="0">
+               <widget class="QTableView" name="tablaPedidos">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 175);</string>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::SingleSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="pushButton_3">
+                <property name="text">
+                 <string>Añadir Pedido</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
             <widget class="QWidget" name="tab_7">
@@ -3690,6 +3775,17 @@ alternate-background-color: rgb(255, 255, 175);</string>
                 </property>
                </widget>
               </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="pushButton_4">
+                <property name="text">
+                 <string>Añadir Albarán</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
             <widget class="QWidget" name="tab_Facturas">
@@ -3704,6 +3800,17 @@ alternate-background-color: rgb(255, 255, 175);</string>
                <widget class="QTableView" name="tablaFacturas">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="pushButton_5">
+                <property name="text">
+                 <string>Añadir Factura</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                 </property>
                </widget>
               </item>
@@ -3724,6 +3831,17 @@ alternate-background-color: rgb(255, 255, 175);</string>
                 </property>
                </widget>
               </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="pushButton_6">
+                <property name="text">
+                 <string>Añadir Ticket</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
             <widget class="QWidget" name="tab_12">
@@ -3738,6 +3856,17 @@ alternate-background-color: rgb(255, 255, 175);</string>
                <widget class="QTableView" name="tablaVales">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="pushButton_7">
+                <property name="text">
+                 <string>Crear vale, abono por devolución </string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
                 </property>
                </widget>
               </item>

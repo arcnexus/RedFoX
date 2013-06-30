@@ -43,7 +43,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->lblFacturaImpresa->setVisible(false);
     // Rellenar formas de pago
     QSqlQueryModel *  modelFP = new QSqlQueryModel();
-    modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("empresa"));
+    modelFP->setQuery("Select cFormaPago,id from formpago",QSqlDatabase::database("empresa"));
     ui->txtcFormaPago->setModel(modelFP);
     // valores edicion
     this->Altas = false;

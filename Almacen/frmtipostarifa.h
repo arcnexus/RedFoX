@@ -16,6 +16,9 @@ public:
     explicit FrmTiposTarifa(QWidget *parent = 0);
     ~FrmTiposTarifa();
     
+private slots:
+    void on_btnAgregarTarifa_clicked();
+
 private:
     Ui::FrmTiposTarifa *ui;
 };

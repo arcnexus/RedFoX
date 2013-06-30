@@ -45,7 +45,7 @@ frmClientes::frmClientes(QWidget *parent) :
     //oCliente->Actualizar_de_web();
     // Rellenar formas de pago
     modelFP = new QSqlQueryModel();
-    modelFP->setQuery("Select cFormaPago,id from FormPago",QSqlDatabase::database("Maya"));
+    modelFP->setQuery("Select cFormaPago,id from formpago",QSqlDatabase::database("Maya"));
 
     // Ocultar campos según configuración
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);

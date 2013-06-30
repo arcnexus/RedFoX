@@ -60,7 +60,7 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     ui->cbo_grupo_gasto->setCurrentIndex(-1);
     QSqlQueryModel *modelfp = new QSqlQueryModel(this);
 
-    modelfp->setQuery("select cFormapago from FormPago",QSqlDatabase::database("Maya"));
+    modelfp->setQuery("select cFormapago from formpago",QSqlDatabase::database("Maya"));
     ui->cbocFormaPago->setModel(modelfp);
     ui->cbocFormaPago->setCurrentIndex(-1);
 

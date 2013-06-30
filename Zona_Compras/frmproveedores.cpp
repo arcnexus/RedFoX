@@ -36,7 +36,7 @@ frmProveedores::frmProveedores(QWidget *parent) :
     // cargar datos forma de pago.
     //---------------------------
     QSqlQueryModel *qmFormaPago = new QSqlQueryModel(this);
-    qmFormaPago->setQuery("select cCodigo, cFormapago from FormPago",QSqlDatabase::database("Maya"));
+    qmFormaPago->setQuery("select cCodigo, cFormapago from formpago",QSqlDatabase::database("Maya"));
 
     ui->txtcCodigoFormaPago->setModel(qmFormaPago);
     oProveedor->idFormadePago = Configuracion_global->Devolver_id_forma_pago(ui->txtcCodigoFormaPago->currentText());
@@ -502,7 +502,7 @@ void frmProveedores::on_txtcCP_editingFinished()
 
 void frmProveedores::on_btnBorrar_clicked()
 {
-    int ndev = QMessageBox::question(NULL,tr("Gestión de proveedores"),tr("Está seguro/a de borrar el proveedor?\n"
+    int ndev = QMessageBox::question(this,tr("Gestión de proveedores"),tr("Está seguro/a de borrar el proveedor?\n"
                                                                           "se borrarán todos los historiales de ese proveedor.\n"
                                                                           " Esta opción no se puede deshacer"),
                                      tr("Borrar"),tr("Cancelar Borrado"));

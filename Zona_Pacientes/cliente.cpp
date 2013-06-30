@@ -669,7 +669,8 @@ void Cliente::Borrar(int id_cliente)
         }
         if (borrado_ok ==true) {
             QSqlDatabase::database("Maya").commit();
-            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Borrado correctamente"));
+            // TODO - reactivar timedMessage cuando esté arreglado el bug.
+          //  TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Borrado correctamente"));
         } else {
             QSqlDatabase::database("Maya").rollback();
             QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),

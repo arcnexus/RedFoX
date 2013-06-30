@@ -475,10 +475,12 @@ void Proveedor::Borrar(int nId)
     //QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
     qProveedor->prepare("delete from proveedores where Id = "+QString::number(nId));
     if(qProveedor->exec())
-        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Se ha borrado la ficha del proveedor"));
-   else
-        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Proveedores"),QObject::tr("No Se ha borrado la ficha del proveedor ERROR: ")+
-                             qProveedor->lastError().text(),QObject::tr("Aceptar"));
+        QMessageBox::information(qApp->activeWindow(),tr("Gestión de Proveedores"),
+                                 tr("Se ha borrado correctamente la ficha del proveedor")+
+                             qProveedor->lastError().text(),tr("Aceptar"));   else
+        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Proveedores"),
+                             tr("No Se ha borrado la ficha del proveedor ERROR:  %1").arg(qProveedor->lastError().text())
+                             ,tr("Aceptar"));
 }
 
 void Proveedor::clear()

@@ -362,7 +362,7 @@ int Configuracion::Devolver_id_idioma(QString idioma)
 int Configuracion::Devolver_id_forma_pago(QString cFormaPago)
 {
     QSqlQuery queryFP(QSqlDatabase::database("Maya"));
-    if(queryFP.exec("select id from FormPago where cFormapago = '"+cFormaPago+"'")){
+    if(queryFP.exec("select id from formpago where cFormapago = '"+cFormaPago+"'")){
         queryFP.next();
         int id = queryFP.record().value("id").toInt();
         return id;
@@ -377,7 +377,7 @@ int Configuracion::Devolver_id_forma_pago(QString cFormaPago)
 int Configuracion::Devolver_id_codigo_forma_pago(QString cCodigo)
 {
     QSqlQuery queryFP(QSqlDatabase::database("Maya"));
-    if(queryFP.exec("select id from FormPago where cCodigo = '"+cCodigo+"'")){
+    if(queryFP.exec("select id from formpago where cCodigo = '"+cCodigo+"'")){
         queryFP.next();
         int id = queryFP.record().value("id").toInt();
         return id;
@@ -392,7 +392,7 @@ int Configuracion::Devolver_id_codigo_forma_pago(QString cCodigo)
 QString Configuracion::Devolver_forma_pago(int id)
 {
     QSqlQuery queryFP(QSqlDatabase::database("Maya"));
-    if(queryFP.exec("select cFormapago from FormPago where id = "+QString::number(id))){
+    if(queryFP.exec("select cFormapago from formpago where id = "+QString::number(id))){
         queryFP.next();
         QString cFP = queryFP.record().value("cFormapago").toString();
         return cFP;
@@ -407,7 +407,7 @@ QString Configuracion::Devolver_forma_pago(int id)
 QString Configuracion::Devolver_codigo_forma_pago(int id)
 {
     QSqlQuery queryFP(QSqlDatabase::database("Maya"));
-    if(queryFP.exec("select cCodigo from FormPago where id = "+QString::number(id))){
+    if(queryFP.exec("select cCodigo from formpago where id = "+QString::number(id))){
         queryFP.next();
         QString cFP = queryFP.record().value("cCodigo").toString();
         return cFP;
