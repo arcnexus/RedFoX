@@ -184,15 +184,15 @@ void FrmPedidos::LLenarCampos()
 
     ui->txtcomentario->setText(oPedido->comentario);
     ui->txtentregado_a_cuenta->setText(QString::number(oPedido->entregado_a_cuenta));
-    //oPedido->lTraspasadoAlb;
-    //oPedido->lTraspasadoFac;
-    ui->txtdireccion1Entrega->setText(oPedido->direccion1Entrega);
-    ui->txtdireccion1Entrega_2->setText(oPedido->direccion1Entrega2);
-    ui->txtcpEntrega->setText(oPedido->cpEntrega);
-    ui->txtpoblacionEntrega->setText(oPedido->poblacionEntrega);
-    ui->txtprovinciaEntrega->setText(oPedido->provinciaEntrega);
+    //oPedido->traspasadoAlb;
+    //oPedido->traspasadoFac;
+    ui->txtdireccion1_entrega->setText(oPedido->direccion1_entrega);
+    ui->txtdireccion1_entrega_2->setText(oPedido->direccion1_entrega2);
+    ui->txtcp_entrega->setText(oPedido->cp_entrega);
+    ui->txtpoblacion_entrega->setText(oPedido->poblacion_entrega);
+    ui->txtprovincia_entrega->setText(oPedido->provincia_entrega);
     ui->txtpaisEntrega->setText(oPedido->paisEntrega);
-    ui->chklEnviado->setChecked(oPedido->lEnviado==1);
+    ui->chkenviado->setChecked(oPedido->enviado==1);
     ui->chklCompleto->setChecked(oPedido->lCompleto==1);
     ui->chklEntregado->setChecked(oPedido->lEntregado==1);
     ui->txtfechaLimiteEntrega->setDate(oPedido->fechaLimiteEntrega);
@@ -397,15 +397,15 @@ void FrmPedidos::LLenarPedido()
 
     oPedido->comentario=ui->txtcomentario->toPlainText();
     oPedido->entregado_a_cuenta=ui->txtentregado_a_cuenta->text().replace(_moneda,"").replace(",",".").toDouble();
-    //oPedido->lTraspasadoAlb;
-    //oPedido->lTraspasadoFac;
-    oPedido->direccion1Entrega=ui->txtdireccion1Entrega->text();
-    oPedido->direccion1Entrega2=ui->txtdireccion1Entrega_2->text();
-    oPedido->cpEntrega=ui->txtcpEntrega->text();
-    oPedido->poblacionEntrega=ui->txtpoblacionEntrega->text();
-    oPedido->provinciaEntrega=ui->txtprovinciaEntrega->text();
+    //oPedido->traspasadoAlb;
+    //oPedido->traspasadoFac;
+    oPedido->direccion1_entrega=ui->txtdireccion1_entrega->text();
+    oPedido->direccion1_entrega2=ui->txtdireccion1_entrega_2->text();
+    oPedido->cp_entrega=ui->txtcp_entrega->text();
+    oPedido->poblacion_entrega=ui->txtpoblacion_entrega->text();
+    oPedido->provincia_entrega=ui->txtprovincia_entrega->text();
     oPedido->paisEntrega=ui->txtpaisEntrega->text();
-    oPedido->lEnviado=ui->chklEnviado->isChecked();
+    oPedido->enviado=ui->chkenviado->isChecked();
     oPedido->lCompleto=ui->chklCompleto->isChecked();
     oPedido->lEntregado=ui->chklEntregado->isChecked();
     oPedido->fechaLimiteEntrega=ui->txtfechaLimiteEntrega->date();

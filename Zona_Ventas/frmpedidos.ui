@@ -553,7 +553,7 @@ color: rgb(0, 64, 64);</string>
                </widget>
               </item>
               <item row="0" column="1" colspan="3">
-               <widget class="QLineEdit" name="txtdireccion1Entrega">
+               <widget class="QLineEdit" name="txtdireccion1_entrega">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -573,7 +573,7 @@ color: rgb(0, 64, 64);</string>
                </widget>
               </item>
               <item row="1" column="1" colspan="3">
-               <widget class="QLineEdit" name="txtdireccion1Entrega_2">
+               <widget class="QLineEdit" name="txtdireccion1_entrega_2">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -593,7 +593,7 @@ color: rgb(0, 64, 64);</string>
                </widget>
               </item>
               <item row="2" column="1">
-               <widget class="QLineEdit" name="txtcpEntrega">
+               <widget class="QLineEdit" name="txtcp_entrega">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -612,7 +612,7 @@ color: rgb(0, 64, 64);</string>
                </widget>
               </item>
               <item row="2" column="2" colspan="2">
-               <widget class="QLineEdit" name="txtpoblacionEntrega">
+               <widget class="QLineEdit" name="txtpoblacion_entrega">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -638,7 +638,7 @@ color: rgb(0, 64, 64);</string>
                </widget>
               </item>
               <item row="3" column="1">
-               <widget class="QLineEdit" name="txtprovinciaEntrega">
+               <widget class="QLineEdit" name="txtprovincia_entrega">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -681,7 +681,7 @@ color: rgb(0, 64, 64);</string>
             <item row="0" column="0" rowspan="2" colspan="3">
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <item>
-               <widget class="QCheckBox" name="chklEnviado">
+               <widget class="QCheckBox" name="chkenviado">
                 <property name="text">
                  <string>Enviado</string>
                 </property>

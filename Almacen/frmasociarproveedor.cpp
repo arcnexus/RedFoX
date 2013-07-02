@@ -23,9 +23,9 @@ FrmAsociarProveedor::FrmAsociarProveedor(QWidget *parent) :
     connect(ui->txtCodigo,SIGNAL(editingFinished()),this,SLOT(setcodigo()));
     connect(ui->txtDescoferta,SIGNAL(editingFinished()),this,SLOT(setDescOferta()));
     connect(ui->txtPVD,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
-    connect(ui->txtPVDReal,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
+    connect(ui->txtpvd_real,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
     connect(ui->txtPVD,SIGNAL(editingFinished()),this,SLOT(setpvd()));
-    connect(ui->txtPVDReal,SIGNAL(editingFinished()),this,SLOT(setpvdReal()));
+    connect(ui->txtpvd_real,SIGNAL(editingFinished()),this,SLOT(setpvd_real()));
     connect(ui->tablaproveedores,SIGNAL(clicked(QModelIndex)), this,SLOT(seleccionarPro(QModelIndex)));
 //    connect(ui->btnAnadir,SIGNAL(clicked()),this,SLOT(accept()));
 
@@ -55,8 +55,8 @@ void FrmAsociarProveedor::seteditar(QString id)
             this->codigo = ui->txtCodigo->text();
             ui->txtPVD->setText(QString::number(queryProvAlt.record().value("pvd").toDouble(),'f',2));
             this->pvd = ui->txtPVD->text().toDouble();
-            ui->txtPVDReal->setText(QString::number(queryProvAlt.record().value("pvdreal").toDouble(),'f',2));
-            this->pvdreal = ui->txtPVDReal->text().toDouble();
+            ui->txtpvd_real->setText(QString::number(queryProvAlt.record().value("pvd_real").toDouble(),'f',2));
+            this->pvd_real = ui->txtpvd_real->text().toDouble();
             ui->txtDescoferta->setText(queryProvAlt.record().value("descoferta").toString());
             this->DescOferta = ui->txtDescoferta->text();
             int index = ui->cboDivisa->findText(queryProvAlt.record().value("moneda").toString());
@@ -112,9 +112,9 @@ void FrmAsociarProveedor::seleccionarPro(QModelIndex indice)
 
 }
 
-void FrmAsociarProveedor::setpvdReal()
+void FrmAsociarProveedor::setpvd_real()
 {
-    this->pvdreal = ui->txtPVDReal->text().toDouble();
+    this->pvd_real = ui->txtpvd_real->text().toDouble();
 }
 
 void FrmAsociarProveedor::setidDivisa()
@@ -132,7 +132,7 @@ void FrmAsociarProveedor::Aceptar()
         cMensajeError = cMensajeError +tr("Falta el código del artículo en el proveedor\n");
     if(ui->txtPVD->text().trimmed()=="0,00")
         cMensajeError = cMensajeError + tr("Falta el precio de coste\n");
-    if(ui->txtPVDReal->text().trimmed() == "0,00")
+    if(ui->txtpvd_real->text().trimmed() == "0,00")
         cMensajeError = cMensajeError + tr("Falta poner el precio de coste real\n");
     if(ui->cboDivisa->currentText().isEmpty())
         cMensajeError = cMensajeError + tr("Falta establecer Divisa tarifa proveedor");

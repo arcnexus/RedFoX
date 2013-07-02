@@ -97,9 +97,9 @@ public:
     QString getcSubSubFamilia(int nid);
     QString getcGrupo(int nid);
     bool agregar_proveedor_alternativo(int id_art, int id_proveedor, QString codigo, double pvd, QString descoferta,
-                                       QString oferta, double pvdreal, int id_divisa);
+                                       QString oferta, double pvd_real, int id_divisa);
     bool guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta,
-                                       QString oferta, double pvdreal, int id_divisa);
+                                       QString oferta, double pvd_real, int id_divisa);
     bool cambiarProveedorPrincipal(int id,int id_proveedor);
     bool cambiar_pvp();
     static bool agregarStock(int id, int value);

@@ -81,11 +81,11 @@ bool Articulo::Recuperar(QString cSQL)
                this->descripcion_reducida = registro.field("descripcion_reducida").value().toString();
                this->id_proveedor = registro.field("id_proveedor").value().toInt();
                this->id_familia = registro.field("id_familia").value().toInt();
-               this->familia = registro.field("familia").value().toString();
+              // this->familia = registro.field("familia").value().toString();
                this->id_seccion = registro.field("id_seccion").value().toInt();
-               this->seccion = registro.field("seccion").value().toString();
+              // this->seccion = registro.field("seccion").value().toString();
                this->id_subfamilia = registro.field("id_subfamilia").value().toInt();
-               this->subfamilia = registro.field("subfamilia").value().toString();
+               //this->subfamilia = registro.field("sub_familia").value().toString();
                this->tipo_iva = registro.field("tipo_iva").value().toDouble();
                this->coste = registro.field("coste").value().toDouble();
 
@@ -602,7 +602,7 @@ int Articulo::getidFamilia(QString familia_)
 int Articulo::getidSubFamilia(QString subfamilia_)
 {
     QSqlQuery Query(QSqlDatabase::database("Maya"));
-    Query.prepare("select id from subfamilias where subfamilia = :cValor ");
+    Query.prepare("select id from subfamilias where sub_familia = :cValor ");
     Query.bindValue(":cValor",subfamilia_);
     if(!Query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Sub-Familia"),
@@ -615,7 +615,7 @@ int Articulo::getidSubFamilia(QString subfamilia_)
 int Articulo::getidSubSufFamilia(QString cSubSubFamilia_)
 {
     QSqlQuery Query(QSqlDatabase::database("Maya"));
-    Query.prepare("select id from subsubfamilias where subsubfamilia = :cValor ");
+    Query.prepare("select id from subsubfamilias where subsub_familia = :cValor ");
     Query.bindValue(":cValor",cSubSubFamilia_);
     if(!Query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Sub-Sub-Familia"),
@@ -628,7 +628,7 @@ int Articulo::getidSubSufFamilia(QString cSubSubFamilia_)
 int Articulo::getidGrupo(QString cGrupo_)
 {
     QSqlQuery Query(QSqlDatabase::database("Maya"));
-    Query.prepare("select id from gruposart where grupoart = :cValor ");
+    Query.prepare("select id from gruposart where grupo_art = :cValor ");
     Query.bindValue(":cValor",cGrupo_);
     if(!Query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Grupo Artículo"),
@@ -668,7 +668,7 @@ QString Articulo::getfamilia(int nid)
 QString Articulo::getsubfamilia(int nid)
 {
     QSqlQuery Query(QSqlDatabase::database("Maya"));
-    Query.prepare("select subfamilia from subfamilias where id = :cValor ");
+    Query.prepare("select sub_familia from subfamilias where id = :cValor ");
     Query.bindValue(":cValor",nid);
     if(!Query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Sub-Familias"),
@@ -682,7 +682,7 @@ QString Articulo::getsubfamilia(int nid)
 QString Articulo::getcSubSubFamilia(int nid)
 {
     QSqlQuery Query(QSqlDatabase::database("Maya"));
-    Query.prepare("select subsubfamilia from subsubfamilias where id = :cValor ");
+    Query.prepare("select subsub_familia from subsubfamilias where id = :cValor ");
     Query.bindValue(":cValor",nid);
     if(!Query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Sub-sub-Familias"),
@@ -695,7 +695,7 @@ QString Articulo::getcSubSubFamilia(int nid)
 QString Articulo::getcGrupo(int nid)
 {
     QSqlQuery Query(QSqlDatabase::database("Maya"));
-    Query.prepare("select grupoart from gruposart where id = :cValor ");
+    Query.prepare("select grupo_art from gruposart where id = :cValor ");
     Query.bindValue(":cValor",nid);
     if(!Query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Grupo Artículo"),
@@ -706,20 +706,20 @@ QString Articulo::getcGrupo(int nid)
 }
 
 bool Articulo::agregar_proveedor_alternativo(int id_art, int id_proveedor, QString codigo, double pvd, QString descoferta, QString oferta,
-                                             double pvdreal,int id_divisa)
+                                             double pvd_real,int id_divisa)
 {
     QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("Maya"));
 
     query_proveedor_alternativo.prepare("INSERT INTO articulos_prov_frec "
-                                        "(id_articulo,id_proveedor,pvd,oferta,codigo,descoferta,pvdreal,id_divisa)"
-                                        " VALUES (:id_articulo,:id_proveedor,:pvd, :oferta,:codigo,:descoferta,:pvdreal,:id_divisa)");
+                                        "(id_articulo,id_proveedor,pvd,oferta,codigo,descoferta,pvd_real,id_divisa)"
+                                        " VALUES (:id_articulo,:id_proveedor,:pvd, :oferta,:codigo,:descoferta,:pvd_real,:id_divisa)");
     query_proveedor_alternativo.bindValue(":id_articulo",id_art);
     query_proveedor_alternativo.bindValue(":id_proveedor",id_proveedor);
     query_proveedor_alternativo.bindValue(":codigo",codigo);
     query_proveedor_alternativo.bindValue(":pvd",pvd);
     query_proveedor_alternativo.bindValue(":oferta",oferta);
     query_proveedor_alternativo.bindValue(":descoferta",descoferta);
-    query_proveedor_alternativo.bindValue(":pvdreal",pvdreal);
+    query_proveedor_alternativo.bindValue(":pvd_real",pvd_real);
     query_proveedor_alternativo.bindValue(":id_divisa",id_divisa);
     if(!query_proveedor_alternativo.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Insertar proveedor frecuente"),
@@ -732,18 +732,19 @@ bool Articulo::agregar_proveedor_alternativo(int id_art, int id_proveedor, QStri
 
 }
 
-bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta, QString oferta, double pvdreal, int id_divisa)
+bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta, QString oferta,
+                                           double pvd_real, int id_divisa)
 {
     QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("Maya"));
 
     query_proveedor_alternativo.prepare("UPDATE articulos_prov_frec  set pvd = :pvd,oferta = :oferta, codigo = :codigo, "
-                                        "descoferta = :descoferta, pvdreal = :pvdreal, id_divisa =:id_divisa "
+                                        "descoferta = :descoferta, pvd_real = :pvd_real, id_divisa =:id_divisa "
                                         "where id = :id");
     query_proveedor_alternativo.bindValue(":codigo",codigo);
     query_proveedor_alternativo.bindValue(":pvd",pvd);
     query_proveedor_alternativo.bindValue(":oferta",oferta);
     query_proveedor_alternativo.bindValue(":descoferta",descoferta);
-    query_proveedor_alternativo.bindValue(":pvdreal",pvdreal);
+    query_proveedor_alternativo.bindValue(":pvd_real",pvd_real);
     query_proveedor_alternativo.bindValue(":id_divisa",id_divisa);
     query_proveedor_alternativo.bindValue(":id",id);
     if(!query_proveedor_alternativo.exec()) {
