@@ -5,37 +5,37 @@ Visitas::Visitas(QObject *parent) :
 {
 }
 
-int Visitas::AnadirVisita(int nIdEpisodio,QString cMedico)
+int Visitas::AnadirVisita(int nid_episodio,QString cMedico)
 {
     QSqlQuery qVisita(QSqlDatabase::database("dbmedica"));
-    int nIdVisita;
-    qVisita.prepare("INSERT INTO visitas (idepisodio,fechahora,medico) "
-                    "VALUES (:idepisodio,:fechahora,:medico)");
-    qVisita.bindValue(":idepisodio",nIdEpisodio);
-    qVisita.bindValue(":fechahora",QDate::currentDate());
+    int nidVisita;
+    qVisita.prepare("INSERT INTO visitas (id_episodio,fecha_hora,medico) "
+                    "VALUES (:id_episodio,:fecha_hora,:medico)");
+    qVisita.bindValue(":id_episodio",nid_episodio);
+    qVisita.bindValue(":fecha_hora",QDate::currentDate());
     qVisita.bindValue(":medico",cMedico);
     if(!qVisita.exec()){
         QMessageBox::warning(qApp->activeWindow(),tr("Visitas"),tr("Ocurrio un error al crear una nueva visita")+
                              qVisita.lastError().text(),tr("Aceptar"));
-        nIdVisita = 0;
+        nidVisita = 0;
     }
     else {
-        nIdVisita = qVisita.lastInsertId().toInt();
+        nidVisita = qVisita.lastInsertId().toInt();
     }
-    return nIdVisita;
+    return nidVisita;
 }
 
-void Visitas::RecuperarVisita(int nIdVisita)
+void Visitas::RecuperarVisita(int nidVisita)
 {
     QSqlQuery qVisita(QSqlDatabase::database("dbmedica"));
-    qVisita.prepare("select * from visitas where id = :nId");
-    qVisita.bindValue(":nId",nIdVisita);
+    qVisita.prepare("select * from visitas where id = :nid");
+    qVisita.bindValue(":nid",nidVisita);
     if(qVisita.exec()) {
         qVisita.next();
         QSqlRecord rVisita = qVisita.record();
-        this->id = nIdVisita;
-        this->idepisodio = rVisita.field("idepisodio").value().toInt();
-        this->fechahora = rVisita.field("fechahora").value().toDateTime();
+        this->id = nidVisita;
+        this->id_episodio = rVisita.field("id_episodio").value().toInt();
+        this->fecha_hora = rVisita.field("fecha_hora").value().toDateTime();
         this->medico = rVisita.field("medico").value().toString();
         this->exploracion = rVisita.field("exploracion").value().toString();
         this->tratamiento = rVisita.field("tratamiento").value().toString();
@@ -55,24 +55,24 @@ void Visitas::GuardarDatos()
 {
     QSqlQuery qVisita(QSqlDatabase::database("dbmedica"));
     qVisita.prepare("UPDATE visitas SET "
-                    "idepisodio =:idEpisodio,"
-                    "fechahora  = :fechahora,"
+                    "id_episodio =:id_episodio,"
+                    "fecha_hora  = :fecha_hora,"
                     "medico  =  :medico,"
                     "exploracion  =  :exploracion,"
                     "tratamiento  =  :tratamiento,"
                     "lengua  = :lengua,"
                     "pulso  = :pulso,"
                     "diagnostico =:diagnostico"
-                    " WHERE id = :nId");
-    qVisita.bindValue(":idEpisodio",this->idepisodio);
-    qVisita.bindValue(":fechahora",this->fechahora);
+                    " WHERE id = :nid");
+    qVisita.bindValue(":id_episodio",this->id_episodio);
+    qVisita.bindValue(":fecha_hora",this->fecha_hora);
     qVisita.bindValue(":medico",this->medico);
     qVisita.bindValue(":exploracion",this->exploracion);
     qVisita.bindValue(":tratamiento",this->tratamiento);
     qVisita.bindValue(":lengua",this->lengua);
     qVisita.bindValue(":pulso",this->pulso);
     qVisita.bindValue(":diagnostico",this->diagnostico);
-    qVisita.bindValue(":nId", this->id);
+    qVisita.bindValue(":nid", this->id);
     if(!qVisita.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Visitas"),tr("Ocurrió un error al modificar los datos de la visita: ")+
                              qVisita.lastError().text(),tr("Aceptar"));

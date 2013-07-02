@@ -42,7 +42,7 @@
        <string>Importe Deuda:</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="txtImporteDeuda">
+     <widget class="QLineEdit" name="txtimporte_deuda">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -65,7 +65,7 @@ color: rgb(170, 0, 0);</string>
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="txtImporteEfectivo">
+     <widget class="QLineEdit" name="txtimporte_efectivo">
       <property name="geometry">
        <rect>
         <x>150</x>
@@ -97,7 +97,7 @@ color: rgb(170, 0, 0);</string>
        <string>Efectivo</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="txtImporteTarjeta">
+     <widget class="QLineEdit" name="txtimporte_tarjeta">
       <property name="geometry">
        <rect>
         <x>150</x>
@@ -129,7 +129,7 @@ color: rgb(170, 0, 0);</string>
        <string>Tarjeta:</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="txtImporteCheque">
+     <widget class="QLineEdit" name="txtimporte_cheque">
       <property name="geometry">
        <rect>
         <x>150</x>
@@ -293,22 +293,22 @@ color: rgb(0, 85, 0);</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>txtImporteEfectivo</tabstop>
-  <tabstop>txtImporteTarjeta</tabstop>
-  <tabstop>txtImporteCheque</tabstop>
+  <tabstop>txtimporte_efectivo</tabstop>
+  <tabstop>txtimporte_tarjeta</tabstop>
+  <tabstop>txtimporte_cheque</tabstop>
   <tabstop>txtImporteTransferencia</tabstop>
   <tabstop>txtImporteInternet</tabstop>
   <tabstop>txtImporteTotal</tabstop>
   <tabstop>btnCancelar</tabstop>
   <tabstop>btnCobrar</tabstop>
-  <tabstop>txtImporteDeuda</tabstop>
+  <tabstop>txtimporte_deuda</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>
  </resources>
  <connections>
   <connection>
-   <sender>txtImporteEfectivo</sender>
+   <sender>txtimporte_efectivo</sender>
    <signal>editingFinished()</signal>
    <receiver>frmCobrarDeuda</receiver>
    <slot>calcular()</slot>
@@ -324,7 +324,7 @@ color: rgb(0, 85, 0);</string>
    </hints>
   </connection>
   <connection>
-   <sender>txtImporteTarjeta</sender>
+   <sender>txtimporte_tarjeta</sender>
    <signal>editingFinished()</signal>
    <receiver>frmCobrarDeuda</receiver>
    <slot>calcular()</slot>
@@ -340,7 +340,7 @@ color: rgb(0, 85, 0);</string>
    </hints>
   </connection>
   <connection>
-   <sender>txtImporteCheque</sender>
+   <sender>txtimporte_cheque</sender>
    <signal>editingFinished()</signal>
    <receiver>frmCobrarDeuda</receiver>
    <slot>calcular()</slot>
@@ -356,7 +356,7 @@ color: rgb(0, 85, 0);</string>
    </hints>
   </connection>
   <connection>
-   <sender>txtImporteCheque</sender>
+   <sender>txtimporte_cheque</sender>
    <signal>editingFinished()</signal>
    <receiver>frmCobrarDeuda</receiver>
    <slot>calcular()</slot>

@@ -1,5 +1,5 @@
-#ifndef FRMPEDIDOS_H
-#define FRMPEDIDOS_H
+#ifndef FRMPEDidOS_H
+#define FRMPEDidOS_H
 
 #include "../Auxiliares/Globlal_Include.h"
 
@@ -21,8 +21,8 @@ public:
     Pedidos *oPedido;
     Cliente *oCliente3;
 
-    moduleZone ModuleZone(){return Ventas;}
-    QString ModuleName(){return "Pedidos Ventas";}
+    module_zone module_zone(){return Ventas;}
+    QString module_name(){return "Pedidos Ventas";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -47,7 +47,7 @@ private slots:
 
     void on_btn_borrar_clicked();
 
-    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
+    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);
@@ -55,7 +55,7 @@ private slots:
     void lineaReady(lineaDetalle*);
     void lineaDeleted(lineaDetalle*);
 
-    void convertir_enAlbaran();
+    void convertir_ealbaran();
     void convertir_enFactura();
     void on_tabWidget_2_currentChanged(int index);
 
@@ -80,4 +80,4 @@ private:
     QPushButton* push;
 };
 
-#endif // FRMPEDIDOS_H
+#endif // FRMPEDidOS_H

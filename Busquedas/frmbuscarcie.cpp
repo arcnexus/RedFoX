@@ -68,7 +68,7 @@ void FrmBuscarCIE::finishedSlotCIE(QNetworkReply* reply)
      QDomNode n = drugList.firstChild();
 
        QStringList list;
-       list <<"ID"<<"CÓDIGO"<<"DENOMINACIÓN";
+       list <<"id"<<"CÓDIGO"<<"DENOMINACIÓN";
 
      ui->tablaCIE->setColumnCount(3);
      ui->tablaCIE->setColumnWidth(0,0);

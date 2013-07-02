@@ -20,7 +20,7 @@ public:
     const QString getUsuario() const;
     const QString getPass() const;
     const QString getEmpresa() const;
-    int getIdUser();
+    int getid_user();
 private slots:
 	void init();
     void on_btnAcceder_clicked();

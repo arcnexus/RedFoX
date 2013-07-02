@@ -11,14 +11,14 @@ class Visitas : public QObject
 signals:
     
 public slots:
-    int AnadirVisita(int nIdEpisodio, QString cMedico);
-    void RecuperarVisita(int nIdVisita);
+    int AnadirVisita(int nid_episodio, QString cMedico);
+    void RecuperarVisita(int nidVisita);
     void GuardarDatos();
 
 public:
     int id;
-    int idepisodio;
-    QDateTime fechahora;
+    int id_episodio;
+    QDateTime fecha_hora;
     QString medico;
     QString exploracion;
     QString tratamiento;

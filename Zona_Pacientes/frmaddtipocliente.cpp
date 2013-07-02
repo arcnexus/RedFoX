@@ -32,16 +32,16 @@ void FrmAddTipoCliente::LLenarTablaSubfamilias(QModelIndex index)
 {
 
     QSqlQueryModel* modelo = (QSqlQueryModel*)ui->list_Familia->model();
-    int nId = modelo->record(index.row()).value("id").toInt();
-    cFamiliaRetorno = modelo->record(index.row()).value("descripcion").toString();
+    int nid = modelo->record(index.row()).value("id").toInt();
+    familiaRetorno = modelo->record(index.row()).value("descripcion").toString();
     QSqlQuery qFamilia(QSqlDatabase::database("Maya"));
-    qFamilia.prepare(QString("select * from maestro_subfamilia_cliente where id_maestro_familia_cliente = %1 ").arg(nId));
+    qFamilia.prepare(QString("select * from maestro_subfamilia_cliente where id_maestro_familia_cliente = %1 ").arg(nid));
     if (qFamilia.exec()) {
         // Cargo datos en tabla
         QStringList cabecera;
         cabecera  <<tr("A")<< tr("Subfamilia");
         QSqlRecord reg;
-        QString cDescripcion;
+        QString descripcion;
         QString cValores;
 
         ui->table_Subfamilia->setColumnCount(2);
@@ -61,8 +61,8 @@ void FrmAddTipoCliente::LLenarTablaSubfamilias(QModelIndex index)
             ui->table_Subfamilia->setItem(pos,0,newItem);
 
             // Sub-familia
-            cDescripcion = reg.field("descripcion").value().toString();
-            QTableWidgetItem *newItem1 = new QTableWidgetItem(cDescripcion);
+            descripcion = reg.field("descripcion").value().toString();
+            QTableWidgetItem *newItem1 = new QTableWidgetItem(descripcion);
             // para que los elementos no sean editables
             newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
             newItem1->setTextColor(Qt::black); // color de los items
@@ -80,7 +80,7 @@ void FrmAddTipoCliente::validar()
     if(ui->table_Subfamilia->currentRow()>-1){
         QAbstractItemModel* model = ui->table_Subfamilia->model() ;
         QString valorSubfamilia =  model->index( ui->table_Subfamilia->currentRow(), 1 ).data( Qt::DisplayRole ).toString();
-        cFamiliaRetorno = cFamiliaRetorno + " - "+ valorSubfamilia;
+        familiaRetorno = familiaRetorno + " - "+ valorSubfamilia;
       accept();
     } else {
         QMessageBox::warning(this,tr("Tipo Cliente"),tr("Debe tener seleccionada una subfamilia"),tr("Aceptar"));

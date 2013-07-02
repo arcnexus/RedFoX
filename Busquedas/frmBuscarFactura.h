@@ -12,12 +12,12 @@ class FrmBuscarFactura : public QDialog
     Q_OBJECT
 
 signals:
-    void enviar_id_Factura(int Id_Factura);
+    void enviar_id_factura(int id_factura);
 
 public:
     explicit FrmBuscarFactura(QWidget *parent = 0);
     ~FrmBuscarFactura();
-    int DevolverID();
+    int Devolverid();
     
 private slots:
     void on_pushButton_clicked();

@@ -49,7 +49,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
     </widget>
    </item>
    <item row="3" column="2">
-    <widget class="QPushButton" name="btnAlbaran">
+    <widget class="QPushButton" name="btalbaran">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -59,7 +59,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
     </widget>
    </item>
    <item row="3" column="8">
-    <widget class="QPushButton" name="btnEtiquetas">
+    <widget class="QPushButton" name="btetiquetas">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -124,7 +124,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
 color: rgb(255, 255, 255);</string>
         </property>
         <property name="text">
-         <string>FILTRAR PEDIDOS</string>
+         <string>FILTRAR PEDidOS</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -247,7 +247,7 @@ color: rgb(255, 85, 0);
 background-color: rgb(0,0,58);</string>
      </property>
      <property name="text">
-      <string>RECEPCIÓN DE PEDIDOS</string>
+      <string>RECEPCIÓN DE PEDidOS</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -467,10 +467,10 @@ color: rgb(255, 255, 255);</string>
   <tabstop>txtNumPedido</tabstop>
   <tabstop>btnBuscar</tabstop>
   <tabstop>tablaPedidos</tabstop>
-  <tabstop>btnAlbaran</tabstop>
+  <tabstop>btalbaran</tabstop>
   <tabstop>btnFactura</tabstop>
   <tabstop>btnImprimir</tabstop>
-  <tabstop>btnEtiquetas</tabstop>
+  <tabstop>btetiquetas</tabstop>
  </tabstops>
  <resources/>
  <connections/>

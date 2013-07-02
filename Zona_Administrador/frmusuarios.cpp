@@ -10,7 +10,7 @@ void FrmUsuarios::getModulesFromDB()
     {
         AuxModule* m = new AuxModule(this,q.record().value(2).toString());
         m->id = q.record().value(0).toInt();
-        MayaModule::moduleZone z = static_cast<MayaModule::moduleZone>(q.record().value(1).toInt());
+        MayaModule::module_zone z = static_cast<MayaModule::module_zone>(q.record().value(1).toInt());
         m->zone = z;
         switch (z) {
         case MayaModule::Mantenimiento:
@@ -67,7 +67,7 @@ void FrmUsuarios::getModulesFromDB()
 }
 
 FrmUsuarios::FrmUsuarios(QWidget *parent) :
-    MayaModule(ModuleZone(),ModuleName(),parent),
+    MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmUsuarios),
     toolButton(tr("Usuarios"),":/Icons/PNG/users.png",this),
     menuButton(QIcon(":/Icons/PNG/users.png"),tr("Usuarios"),this)
@@ -425,7 +425,7 @@ void FrmUsuarios::crear_User()
     QSqlQuery q(QSqlDatabase::database("Maya"));
     for(i=_modulos.begin(); i!=_modulos.end(); ++i)
     {
-        q.prepare("INSERT INTO accesousuarios (idUser, idModulo, idNivelAcceso) VALUES (:id, :mod, 1);");
+        q.prepare("INSERT INTO accesousuarios (id_user, id_modulo, id_nivel_acceso) VALUES (:id, :mod, 1);");
         q.bindValue(":id",last_id);
         q.bindValue(":mod",(*i)->id);
         q.exec();
@@ -443,20 +443,20 @@ void FrmUsuarios::llenar_user(QSqlRecord record)
     llenarModulos(record.value(0).toInt());
 }
 
-void FrmUsuarios::llenarModulos(int idUser)
+void FrmUsuarios::llenarModulos(int id_user)
 {
     QSqlQuery q(QSqlDatabase::database("Maya"));
-    q.prepare("SELECT * FROM accesousuarios WHERE idUser=:id;");
-    q.bindValue(":id",idUser);
+    q.prepare("SELECT * FROM accesousuarios WHERE id_user=:id;");
+    q.bindValue(":id",id_user);
     q.exec();
     while(q.next())
     {
-        int idModulo = q.record().value(2).toInt();
+        int id_modulo = q.record().value(2).toInt();
         int idAcceso = q.record().value(3).toInt();
         QVector<AuxModule*>::Iterator i;
         for(i=_modulos.begin();i!=_modulos.end();++i)
         {
-            if((*i)->id == idModulo)
+            if((*i)->id == id_modulo)
             {
                 (*i)->setNivel(idAcceso);
                 break;
@@ -480,7 +480,7 @@ void FrmUsuarios::on_botGuardar_user_clicked()
         QSqlQuery q2(QSqlDatabase::database("Maya"));
         for(i=_modulos.begin(); i!=_modulos.end(); ++i)
         {
-            q2.prepare("UPDATE accesousuarios SET idNivelAcceso=:lvl WHERE idModulo=:mod AND idUser=:id;");
+            q2.prepare("UPDATE accesousuarios SET id_nivel_acceso=:lvl WHERE id_modulo=:mod AND id_user=:id;");
             q2.bindValue(":id",id);
             q2.bindValue(":mod",(*i)->id);
             q2.bindValue(":lvl",(*i)->nivel());

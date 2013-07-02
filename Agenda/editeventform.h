@@ -30,8 +30,8 @@ public:
     int id_spec;
     int id_depart;
 
-    bool isPrivado;
-    void setIsPrivado(bool b);
+    bool isprivado;
+    void setIsprivado(bool b);
 private slots:
     void on_btn_getColor_clicked();
 

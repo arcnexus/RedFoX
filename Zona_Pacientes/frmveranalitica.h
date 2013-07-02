@@ -15,15 +15,15 @@ public:
     explicit FrmVerAnalitica(QWidget *parent = 0);
     ~FrmVerAnalitica();
 public slots:
-    void capturaId(int nId);
+    void capturaid(int nid);
     void capturaPaciente(QString);
 private:
     Ui::FrmVerAnalitica *ui;
-    int nID;
+    int nid;
     int nEdited;
 private slots:
-    void llenarTabla(int nID);
-    void cargarDatos(int nID);
+    void llenarTabla(int nid);
+    void cargarDatos(int nid);
     void cargarDatos();
     void editarDatos();
     void guardarDatos();
@@ -32,7 +32,7 @@ private slots:
     void addLineas();
     void BorrarLineas();
 signals:
-    void pasarID(int);
+    void pasarid(int);
     void pasarPaciente(QString);
     void pasarFecha(QDate);
     void pasarAnalitica(QString);

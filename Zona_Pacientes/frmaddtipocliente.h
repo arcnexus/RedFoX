@@ -15,7 +15,7 @@ class FrmAddTipoCliente : public QDialog
 public:
     explicit FrmAddTipoCliente(QWidget *parent = 0);
     ~FrmAddTipoCliente();
-    QString cFamiliaRetorno;
+    QString familiaRetorno;
     
 private:
     Ui::FrmAddTipoCliente *ui;

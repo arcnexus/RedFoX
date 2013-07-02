@@ -17,8 +17,8 @@ public:
     ~frmCuadro_cuentas();
     Cuentas_contables *cuentas;
     
-    moduleZone ModuleZone(){return Contabilidad;}
-    QString ModuleName(){return "Cuadro de cuentas";}
+    module_zone module_zone(){return Contabilidad;}
+    QString module_name(){return "Cuadro de cuentas";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}

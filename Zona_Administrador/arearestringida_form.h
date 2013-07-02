@@ -1,5 +1,5 @@
-#ifndef AREARESTRINGIDA_FORM_H
-#define AREARESTRINGIDA_FORM_H
+#ifndef AREARESTRINGidA_FORM_H
+#define AREARESTRINGidA_FORM_H
 
 #include "../Auxiliares/Globlal_Include.h"
 
@@ -22,4 +22,4 @@ private:
     bool m_valido;
 };
 
-#endif // AREARESTRINGIDA_FORM_H
+#endif // AREARESTRINGidA_FORM_H

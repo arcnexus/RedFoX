@@ -17,8 +17,8 @@ public:
     ~FrmUsuarios();
     
 
-    moduleZone ModuleZone(){return AdminZone;}
-    QString ModuleName(){return "Control de usuarios";}
+    module_zone module_zone(){return AdminZone;}
+    QString module_name(){return "Control de usuarios";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -48,7 +48,7 @@ private:
     void addSecMedicModule(AuxModule *m);
     void addInfoMedicModule(AuxModule *m);
     void llenar_user(QSqlRecord record);
-    void llenarModulos(int idUser);
+    void llenarModulos(int id_user);
 
     QVector<AuxModule*> _modulos;
 

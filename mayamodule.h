@@ -9,7 +9,7 @@ class MayaModule : public QDialog
 {
     Q_OBJECT
 public:
-    enum moduleZone{
+    enum module_zone{
         AdminZone = 0 , Mantenimiento , Compras , Ventas , Archivos , Almacen , Utilidades ,Contabilidad
         , SecretariaMedica,  InformacionMedica, NoZone
     };
@@ -23,16 +23,16 @@ public:
         Administrador
     };
 
-    explicit MayaModule(moduleZone zone , QString name , QWidget *parent = 0);
+    explicit MayaModule(module_zone zone , QString name , QWidget *parent = 0);
     ~MayaModule();
-    virtual moduleZone ModuleZone(){return NoZone;}
-    virtual QString ModuleName(){return "";}
+    virtual module_zone module_zone(){return NoZone;}
+    virtual QString module_name(){return "";}
     virtual ToolBarButton * ModuleToolBarButton() = 0;
     virtual QAction * ModuleMenuBarButton() = 0;
     virtual QString ModuleMenuPath() = 0; // Use '|' to subPaths
     virtual QPushButton* wantShortCut(bool& ok) = 0;
 
-    bool userHaveAcces(int idUser);
+    bool userHaveAcces(int id_user);
     accessLevel userLevelInModule(){return _user_level;}
 
     virtual void hideButton() =0; //Used for showing the Dialog as stand alone window
@@ -42,9 +42,9 @@ signals:
 public slots:
 
 private:
-    void tryRegisterModule(moduleZone zone , QString name);
-    void RegisterModule(moduleZone zone , QString name);    
-    moduleZone _zone;
+    void tryRegisterModule(module_zone zone , QString name);
+    void RegisterModule(module_zone zone , QString name);    
+    module_zone _zone;
     QString _name;
     int _id_modulo;
     accessLevel _user_level;

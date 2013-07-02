@@ -103,7 +103,7 @@ QString Cuentas_contables::completar_cuenta(QString cuenta_)
         QString base = cuenta_.left(pos-1);
         QString resto = cuenta_.right(pos+1);
 
-        int tamano_cuenta = Configuracion_global->nDigitosCuentasContables;
+        int tamano_cuenta = Configuracion_global->digitos_cuentas_contables;
         int tamano = cuenta_.size()-1;
         for(int zero = 0;zero <tamano_cuenta - tamano;zero++)
         {

@@ -70,7 +70,7 @@ void EfectivoCaja::recalc()
         total += (*i)->valorMoneda();
         ++i;
     }
-    ui->spinTotal->setValue(total);
+    ui->spitotal->setValue(total);
 }
 
 void EfectivoCaja::on_checkBox_toggled(bool checked)

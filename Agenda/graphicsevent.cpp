@@ -202,7 +202,7 @@ void GraphicsEvent::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void GraphicsEvent::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(isReadOnly || (isPrivado && (id_user != Configuracion_global->id_usuario_activo)))
+    if(isReadOnly || (isprivado && (id_user != Configuracion_global->id_usuario_activo)))
         return;
 
     QGraphicsItem::mousePressEvent(event);
@@ -249,7 +249,7 @@ void GraphicsEvent::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsEvent::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(isReadOnly || (isPrivado && (id_user != Configuracion_global->id_usuario_activo)))
+    if(isReadOnly || (isprivado && (id_user != Configuracion_global->id_usuario_activo)))
         return;
 
     QGraphicsItem::mouseReleaseEvent(event);
@@ -273,7 +273,7 @@ void GraphicsEvent::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsEvent::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(isReadOnly || (isPrivado && (id_user != Configuracion_global->id_usuario_activo)))
+    if(isReadOnly || (isprivado && (id_user != Configuracion_global->id_usuario_activo)))
         return;
 
     if(on_click)
@@ -347,7 +347,7 @@ void GraphicsEvent::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 
 void GraphicsEvent::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
-    if(isReadOnly || (isPrivado && (id_user != Configuracion_global->id_usuario_activo)))
+    if(isReadOnly || (isprivado && (id_user != Configuracion_global->id_usuario_activo)))
         return;
    QMenu menu;
    menu.addAction("Editar");
@@ -404,14 +404,14 @@ bool GraphicsEvent::isInJail(QPointF pos)
 
 void GraphicsEvent::EditThis()
 {
-    if(isReadOnly || (isPrivado && (id_user != Configuracion_global->id_usuario_activo)))
+    if(isReadOnly || (isprivado && (id_user != Configuracion_global->id_usuario_activo)))
         return;
     QString aux = asunto.replace("<br>","\n");
     EditEventForm form(qApp->activeWindow());
     form.setColor(QColor::fromRgb(red,green,blue));
     form.setCita(isCita,id_cliente);
     form.setAsunto(titulo,asunto);
-    form.setIsPrivado(isPrivado);
+    form.setIsprivado(isprivado);
     if(form.exec() == QDialog::Accepted)
     {
         this->id_spec = form.id_spec;
@@ -423,7 +423,7 @@ void GraphicsEvent::EditThis()
         this->blue = form.event_color.blue();
         this->titulo = form.titulo;
         this->asunto = form.asunto.replace("\n","<br>");
-        this->isPrivado = form.isPrivado;
+        this->isprivado = form.isprivado;
         updateThis();
     }
 
@@ -432,7 +432,7 @@ void GraphicsEvent::EditThis()
 void GraphicsEvent::updateThis()
 {
     QString st;
-    if(isPrivado && (id_user != Configuracion_global->id_usuario_activo))
+    if(isprivado && (id_user != Configuracion_global->id_usuario_activo))
     {
         this->setToolTip(tr("Evento privado"));
         return;
@@ -443,13 +443,13 @@ void GraphicsEvent::updateThis()
         QString telefono_cliente;
         for (int i=0;i<Configuracion_global->client_model->rowCount();i++)
         {
-            if(Configuracion_global->client_model->record(i).value("Id").toInt() == id_cliente)
+            if(Configuracion_global->client_model->record(i).value("id").toInt() == id_cliente)
             {
-                nombre_cliente = Configuracion_global->client_model->record(i).value("cNombreFiscal").toString();
+                nombre_cliente = Configuracion_global->client_model->record(i).value("nombre_fiscal").toString();
                 telefono_cliente = QString("%1 , %2 , %3")
-                        .arg(Configuracion_global->client_model->record(i).value("cTelefono1").toString())
-                        .arg(Configuracion_global->client_model->record(i).value("cTelefono2").toString())
-                        .arg(Configuracion_global->client_model->record(i).value("cMovil").toString());
+                        .arg(Configuracion_global->client_model->record(i).value("telefono1").toString())
+                        .arg(Configuracion_global->client_model->record(i).value("telefono2").toString())
+                        .arg(Configuracion_global->client_model->record(i).value("movil").toString());
                 break;
             }
         }
@@ -494,19 +494,19 @@ void GraphicsEvent::updateThis()
 
     QSqlQuery q(QSqlDatabase::database("Maya"));
     q.prepare("UPDATE agenda SET "
-              " cHora=:cHora, cInicio=:cInicio, cFin=:cFin, cAsunto=:cAsunto,"
-              "cDescripcionAsunto=:cDescripcionAsunto, cEstado=:cEstado, cAvisarTiempo=:cAvisarTiempo,"
+              " hora=:hora, cInicio=:cInicio, cFin=:cFin, cAsunto=:cAsunto,"
+              "descripcionAsunto=:descripcionAsunto, cEstado=:cEstado, cAvisarTiempo=:cAvisarTiempo,"
               "cImportancia=:cImportancia, color=:color,"
               "id_especialidad=:id_especialidad, id_departamento=:id_departamento,"
-              "isMedica=:isMedica, Id_Cliente=:Id_Cliente, isCita=:isCita, isPrivado=:isPrivado "
-              " WHERE Id =:id;");
+              "isMedica=:isMedica, id_cliente=:id_cliente, isCita=:isCita, isprivado=:isprivado "
+              " WHERE id =:id;");
 
     QString sColor = QString("%1;%2;%3").arg(red).arg(green).arg(blue);
-    q.bindValue(":cHora",0);
+    q.bindValue(":hora",0);
     q.bindValue(":cInicio",start);
     q.bindValue(":cFin",end);
     q.bindValue(":cAsunto",titulo);
-    q.bindValue(":cDescripcionAsunto",asunto);
+    q.bindValue(":descripcionAsunto",asunto);
     q.bindValue(":cEstado",0);
     q.bindValue(":cAvisarTiempo",0);
     q.bindValue(":cImportancia",0);
@@ -514,10 +514,10 @@ void GraphicsEvent::updateThis()
     q.bindValue(":id_especialidad",0);//FIXME - Agenda: parametros evento
     q.bindValue(":id_departamento",0);
     q.bindValue(":isMedica",Configuracion_global->medic);
-    q.bindValue(":Id_Cliente",id_cliente);
+    q.bindValue(":id_cliente",id_cliente);
     q.bindValue(":isCita",isCita);
     q.bindValue(":id",id);
-    q.bindValue(":isPrivado",isPrivado);
+    q.bindValue(":isprivado",isprivado);
 
     if(!q.exec())
     {
@@ -579,22 +579,22 @@ void GraphicsEvent::shareThis()
         }
         QSqlQuery q(QSqlDatabase::database("Maya"));
         q.prepare("INSERT INTO agenda"
-                  "(dFecha, cHora, id_Usuario, cInicio, cFin, cAsunto,"
-                  "cDescripcionAsunto, cEstado, cAvisarTiempo, cImportancia, color,"
-                  "id_especialidad, id_departamento, isMedica, Id_Cliente, isCita , isPrivado)"
+                  "(fecha, hora, id_Usuario, cInicio, cFin, cAsunto,"
+                  "descripcionAsunto, cEstado, cAvisarTiempo, cImportancia, color,"
+                  "id_especialidad, id_departamento, isMedica, id_cliente, isCita , isprivado)"
                   "VALUES "
-                  "(:dFecha, :cHora, :id_Usuario, :cInicio, :cFin, :cAsunto,"
-                  ":cDescripcionAsunto, :cEstado, :cAvisarTiempo, :cImportancia, :color,"
-                  ":id_especialidad, :id_departamento, :isMedica, :Id_Cliente, :isCita , :isPrivado)");
+                  "(:fecha, :hora, :id_Usuario, :cInicio, :cFin, :cAsunto,"
+                  ":descripcionAsunto, :cEstado, :cAvisarTiempo, :cImportancia, :color,"
+                  ":id_especialidad, :id_departamento, :isMedica, :id_cliente, :isCita , :isprivado)");
 
         QString sColor = QString("%1;%2;%3").arg(red).arg(green).arg(blue);
-        q.bindValue(":dFecha",start.date());
-        q.bindValue(":cHora",0);
+        q.bindValue(":fecha",start.date());
+        q.bindValue(":hora",0);
         q.bindValue(":id_Usuario",iUser);
         q.bindValue(":cInicio",start);
         q.bindValue(":cFin",end);
         q.bindValue(":cAsunto",titulo);
-        q.bindValue(":cDescripcionAsunto",asunto);
+        q.bindValue(":descripcionAsunto",asunto);
         q.bindValue(":cEstado",0);
         q.bindValue(":cAvisarTiempo",0);
         q.bindValue(":cImportancia",0);
@@ -602,9 +602,9 @@ void GraphicsEvent::shareThis()
         q.bindValue(":id_especialidad",0);//FIXME - Agenda: parametros evento
         q.bindValue(":id_departamento",0);
         q.bindValue(":isMedica",Configuracion_global->medic);
-        q.bindValue(":Id_Cliente",id_cliente);
+        q.bindValue(":id_cliente",id_cliente);
         q.bindValue(":isCita",isCita);
-        q.bindValue(":isPrivado",isPrivado);
+        q.bindValue(":isprivado",isprivado);
 
         q.exec();
     }

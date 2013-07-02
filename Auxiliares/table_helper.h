@@ -16,7 +16,7 @@ struct lineaDetalle
     int cantidad_old;
     QString descripcion;
     double importe;
-    double subTotal;
+    double subtotal;
     double dto;
     double dto_perc;
     double iva_perc;
@@ -33,7 +33,7 @@ public:
     ~Table_Helper();
     void help_table(QTableWidget* table);
     void setDatabase(QString db, QString table);
-    void setIdHeader(int id){m_idCab = id;}
+    void setidHeader(int id){m_idCab = id;}
     void set_Searcher(Db_table_View* table_view);
     void set_moneda(QString moneda);
     void set2Divisas(bool b){use2divisas = b;}
@@ -46,7 +46,7 @@ public:
 signals:
     void lineaReady(lineaDetalle*);
     void lineaDeleted(lineaDetalle*);
-    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
+    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);
@@ -64,12 +64,12 @@ private:
     QString moneda;
     int tarifa;
 
-    void calcularTotal();
-    double calcularDtoLinea(int row);
-    double calcularBaseLinea(int row);
-    double calcularIVALinea(int row);
+    void calculatotal();
+    double calculadtoLinea(int row);
+    double calculabaseLinea(int row);
+    double calculaivaLinea(int row);
     double calcularRELinea(int row);
-    double calcularTotalLinea(int row);
+    double calculatotalLinea(int row);
 
     void calcularDesglose();
     void calcular_por_Base(QString base);

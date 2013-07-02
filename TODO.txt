@@ -9,7 +9,7 @@ FRMEMPRESAS.CPP
 [END] -Agregar Buscador por codigo postal como en clientes.cpp
 [END]-Agregar buscador por población como en clientes.cpp
  - Al agregar empresa hacer que tome el año en curso como ejercicio actual
- - En pestaña cuentas comprobar que el numero de cuenta bancaria es correcto.
+ - En pestaña cuentas comprobar que el numero de cuenta bancaria es corecto.
 [END] ??? - ¿Forzar tamaño botones navegación? Solo Linux
 [END] - En pestaña BD en combos de driver dejar solo mySQL y SQLite.
  

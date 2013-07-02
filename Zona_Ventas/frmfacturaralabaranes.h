@@ -15,8 +15,8 @@ public:
     explicit FrmFacturarAlabaranes(QWidget *parent = 0);
     ~FrmFacturarAlabaranes();
     
-    moduleZone ModuleZone(){return Ventas;}
-    QString ModuleName(){return "Facturar Albaranes Ventas";}
+    module_zone module_zone(){return Ventas;}
+    QString module_name(){return "Facturar Albaranes Ventas";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}

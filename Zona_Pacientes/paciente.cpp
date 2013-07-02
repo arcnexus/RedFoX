@@ -12,47 +12,47 @@ Paciente::~Paciente()
     if(qepisodio)
         delete qepisodio;
 }
-void Paciente::RecuperarPaciente(int idCliente)
+void Paciente::RecuperarPaciente(int id_cliente)
 {
 //    SqlCalls *llamadas = new SqlCalls();
 //    QStringList parametros;
-//    parametros.append(QString::number(idCliente));
-//    QSqlQuery qpaciente = llamadas->RecuperarPaciente(idCliente);
+//    parametros.append(QString::number(id_cliente));
+//    QSqlQuery qpaciente = llamadas->RecuperarPaciente(id_cliente);
 //    if (qpaciente.next()) {
 //        QSqlRecord rPaciente = qpaciente.record();
 
 //        Paciente *oPaciente = new Paciente();
         QScopedPointer<QSqlQuery>paciente (new QSqlQuery(QSqlDatabase::database("dbmedica")));
        // QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-        QString queryPaciente = "select * from pacientes where idcliente = :idcliente";
+        QString queryPaciente = "select * from pacientes where id_cliente = :id_cliente";
         paciente->prepare(queryPaciente);
 
-        paciente->bindValue(":idcliente",idCliente);
+        paciente->bindValue(":id_cliente",id_cliente);
         if (paciente->exec()) {
             paciente->next();
             QSqlRecord rPaciente = paciente->record();
             this->id = rPaciente.field("id").value().toInt();
-            this->idCliente = rPaciente.field("idcliente").value().toInt();
-            this->numhistoria = rPaciente.field("numhistoria").value().toInt();
+            this->id_cliente = rPaciente.field("id_cliente").value().toInt();
+            this->num_historia = rPaciente.field("num_historia").value().toInt();
             this->alcohol = rPaciente.field("alcohol").value().toInt();
-            this->alergiasConocidas = rPaciente.field("alergiasConocidas").value().toString();
-            this->antecedentesFamiliares = rPaciente.field("antecedentesFamiliares").value().toString();
-            this->cirugiasPrevias = rPaciente.field("cirugiasPrevias").value().toString();
+            this->alergias_conocidas = rPaciente.field("alergias_conocidas").value().toString();
+            this->antecedentes_familiares = rPaciente.field("antecedentes_familiares").value().toString();
+            this->cirugias_previas = rPaciente.field("cirugias_previas").value().toString();
             this->diastole = rPaciente.field("diastole").value().toDouble();
-            this->enfermedadesConocidas = rPaciente.field("enfermedadesConocidas").value().toString();
+            this->enfermedadesConocidas = rPaciente.field("enfermedades_conocidas").value().toString();
             this->familia = rPaciente.field("familia").value().toString();
-            this->fechaAlta = rPaciente.field("fechaAlta").value().toDate();
+            this->fecha_alta = rPaciente.field("fecha_alta").value().toDate();
             this->filiacion = rPaciente.field("filiacion").value().toString();
-            this->habitosDrogas = rPaciente.field("habitosDrogas").value().toString();
+            this->habitos_drogas = rPaciente.field("habitos_drogas").value().toString();
             this->hijos = rPaciente.field("hijos").value().toInt();
             this->historial = rPaciente.field("historial").value().toString();
-            this->idMutua = rPaciente.field("idMutua").value().toInt();
-            this->IMC = rPaciente.field("IMC").value().toDouble();
+            this->id_mutua = rPaciente.field("id_mutua").value().toInt();
+            this->imc = rPaciente.field("imc").value().toDouble();
             this->nacimiento = rPaciente.field("nacimiento").value().toDateTime();
-            this->nivelEstudios = rPaciente.field("nivelEstudios").value().toString();
-            this->numSS = rPaciente.field("numSS").value().toString();
-            this->otrasDrogas = rPaciente.field("otrasDrogas").value().toInt();
-            this->perimetroCraneal = rPaciente.field("perimetroCraneal").value().toDouble();
+            this->nivel_estudios = rPaciente.field("nivel_estudios").value().toString();
+            this->num_ss = rPaciente.field("num_ss").value().toString();
+            this->otras_drogas = rPaciente.field("otras_drogas").value().toInt();
+            this->perimetro_craneal = rPaciente.field("perimetro_craneal").value().toDouble();
             this->peso = rPaciente.field("peso").value().toDouble();
             this->profesion = rPaciente.field("profesion").value().toString();
             this->sexo = rPaciente.field("sexo").value().toString();
@@ -74,26 +74,26 @@ void Paciente::GuardarPaciente()
 {
     QString cSql;
     cSql = "UPDATE pacientes SET "
-            "idcliente = :idcliente,"
+            "id_cliente = :id_cliente,"
             "alcohol = :alcohol,"
-            "alergiasConocidas = :alergiasConocidas,"
-            "antecedentesFamiliares = :antecedentesFamiliares,"
-            "cirugiasPrevias =:cirugiasPrevias,"
+            "alergias_conocidas = :alergias_conocidas,"
+            "antecedentes_familiares = :antecedentes_familiares,"
+            "cirugias_previas =:cirugias_previas,"
             "diastole = :diastole,"
-            "enfermedadesConocidas= :enfermedadesConocidas,"
+            "enfermedades_conocidas= :enfermedadesConocidas,"
             "familia =:familia,"
-            "fechaAlta =:fechaAlta,"
+            "fecha_alta =:fecha_alta,"
             "filiacion = :filiacion,"
-            "habitosDrogas = :habitosDrogas,"
+            "habitos_drogas = :habitos_drogas,"
             "hijos = :hijos,"
             "historial = :historial,"
-            "idMutua =:idMutua,"
-            "IMC =:IMC,"
+            "id_mutua =:id_mutua,"
+            "imc =:imc,"
             "nacimiento =:nacimiento,"
-            "nivelEstudios =:nivelEstudios,"
-            "numSS = :numSS,"
-            "otrasDrogas = :otrasDrogas,"
-            "perimetroCraneal = :perimetroCraneal,"
+            "nivel_estudios =:nivel_estudios,"
+            "num_ss = :num_ss,"
+            "otras_drogas = :otras_drogas,"
+            "perimetro_craneal = :perimetro_craneal,"
             "peso = :peso,"
             "profesion = :profesion,"
             "sexo = :sexo,"
@@ -101,31 +101,31 @@ void Paciente::GuardarPaciente()
             "tabaco = :tabaco,"
             "talla = :talla,"
             "trabaja = :trabaja,"
-            "numhistoria =:numhistoria"
+            "num_historia =:num_historia"
             " WHERE id = :id";
     QScopedPointer<QSqlQuery>qPaciente (new QSqlQuery(QSqlDatabase::database("dbmedica")));
     //QSqlQuery *qPaciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     qPaciente->prepare(cSql);
-    qPaciente->bindValue(":idcliente",this->idCliente);
+    qPaciente->bindValue(":id_cliente",this->id_cliente);
     qPaciente->bindValue(":alcohol",this->alcohol);
-    qPaciente->bindValue(":alergiasConocidas",this->alergiasConocidas);
-    qPaciente->bindValue(":antecedentesFamiliares",this->antecedentesFamiliares);
-    qPaciente->bindValue(":cirugiasPrevias",this->cirugiasPrevias);
+    qPaciente->bindValue(":alergias_conocidas",this->alergias_conocidas);
+    qPaciente->bindValue(":antecedentes_familiares",this->antecedentes_familiares);
+    qPaciente->bindValue(":cirugias_previas",this->cirugias_previas);
     qPaciente->bindValue(":diastole",this->diastole);
     qPaciente->bindValue(":enfermedadesConocidas",this->enfermedadesConocidas);
     qPaciente->bindValue(":familia",this->familia);
-    qPaciente->bindValue(":fechaAlta",this->fechaAlta);
+    qPaciente->bindValue(":fecha_alta",this->fecha_alta);
     qPaciente->bindValue(":filiacion",this->filiacion);
-    qPaciente->bindValue(":habitosDrogas",this->habitosDrogas);
+    qPaciente->bindValue(":habitos_drogas",this->habitos_drogas);
     qPaciente->bindValue(":hijos",this->hijos);
     qPaciente->bindValue(":historial",this->historial);
-    qPaciente->bindValue(":idMutua", this->idMutua);
-    qPaciente->bindValue(":IMC",this->IMC);
+    qPaciente->bindValue(":id_mutua", this->id_mutua);
+    qPaciente->bindValue(":imc",this->imc);
     qPaciente->bindValue(":nacimiento",this->nacimiento);
-    qPaciente->bindValue(":nivelEstudios",this->nivelEstudios);
-    qPaciente->bindValue(":numSS",this->numSS);
-    qPaciente->bindValue(":otrasDrogas",this->otrasDrogas);
-    qPaciente->bindValue(":perimetroCraneal", this->perimetroCraneal);
+    qPaciente->bindValue(":nivel_estudios",this->nivel_estudios);
+    qPaciente->bindValue(":num_ss",this->num_ss);
+    qPaciente->bindValue(":otras_drogas",this->otras_drogas);
+    qPaciente->bindValue(":perimetro_craneal", this->perimetro_craneal);
     qPaciente->bindValue(":peso",this->peso);
     qPaciente->bindValue(":profesion",this->profesion);
     qPaciente->bindValue(":sexo",this->sexo);
@@ -133,7 +133,7 @@ void Paciente::GuardarPaciente()
     qPaciente->bindValue(":tabaco", this->tabaco);
     qPaciente->bindValue(":talla",this->talla);
     qPaciente->bindValue(":trabaja",this->trabaja);
-    qPaciente->bindValue(":numhistoria",this->numhistoria);
+    qPaciente->bindValue(":num_historia",this->num_historia);
     qPaciente->bindValue(":id",this->id);
     if(!qPaciente->exec()) {
         qDebug() << cSql;
@@ -147,12 +147,12 @@ void Paciente::GuardarPaciente()
     }
 }
 
-int Paciente::AnadirPaciente(int idCliente)
+int Paciente::AnadirPaciente(int id_cliente)
 {
     QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    paciente->prepare("insert into pacientes (idCliente,numhistoria) values (:idCliente,:numhistoria)");
-    paciente->bindValue(":idCliente",idCliente);
-    paciente->bindValue(":numhistoria",QString::number(idCliente));
+    paciente->prepare("insert into pacientes (id_cliente,num_historia) values (:id_cliente,:num_historia)");
+    paciente->bindValue(":id_cliente",id_cliente);
+    paciente->bindValue(":num_historia",QString::number(id_cliente));
     if (!paciente->exec())
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error Pacientes"),QObject::tr("No se ha podido insertar un nuevo paciente"),
                              QObject::tr("Aceptar"));
@@ -174,25 +174,25 @@ bool Paciente::getalcoholbool()
         return true;
 }
 
-int Paciente::getnumHistoria()
+int Paciente::getnum_historia()
 {
-    return this->numhistoria;
+    return this->num_historia;
 }
 
-QString Paciente::getalergiasConocidas()
+QString Paciente::getalergias_conocidas()
 {
-    return this->alergiasConocidas;
+    return this->alergias_conocidas;
 }
 
-QString Paciente::getantecedentesFamiliares()
+QString Paciente::getantecedentes_familiares()
 {
-    return this->antecedentesFamiliares;
+    return this->antecedentes_familiares;
 
 }
 
-QString Paciente::getcirugiasPrevias()
+QString Paciente::getcirugias_previas()
 {
-    return this->cirugiasPrevias;
+    return this->cirugias_previas;
 }
 
 double Paciente::getdiastole()
@@ -210,9 +210,9 @@ QString Paciente::getfamilia()
     return this->familia;
 }
 
-QDate Paciente::getfechaAlta()
+QDate Paciente::getfecha_alta()
 {
-    return this->fechaAlta;
+    return this->fecha_alta;
 }
 
 QString Paciente::getfiliacion()
@@ -220,9 +220,9 @@ QString Paciente::getfiliacion()
     return this->filiacion;
 }
 
-QString Paciente::gethabitosDrogas()
+QString Paciente::gethabitos_drogas()
 {
-    return this->habitosDrogas;
+    return this->habitos_drogas;
 }
 
 int Paciente::gethijos()
@@ -240,19 +240,19 @@ int Paciente::getid()
     return this->id;
 }
 
-int Paciente::getidCliente()
+int Paciente::getid_cliente()
 {
-    return this->idCliente;
+    return this->id_cliente;
 }
 
-int Paciente::getidMutua()
+int Paciente::getid_mutua()
 {
-    return this->idMutua;
+    return this->id_mutua;
 }
 
-double Paciente::getIMC()
+double Paciente::getimc()
 {
-    return this->IMC;
+    return this->imc;
 
 }
 
@@ -261,34 +261,34 @@ QDateTime Paciente::getnacimiento()
     return this->nacimiento;
 }
 
-QString Paciente::getnivelEstudios()
+QString Paciente::getnivel_estudios()
 {
-    return nivelEstudios;
+    return nivel_estudios;
 }
 
-QString Paciente::getnumSS()
+QString Paciente::getnum_ss()
 {
-    return this->numSS;
+    return this->num_ss;
 }
 
-int Paciente::getotrasDrogas()
+int Paciente::getotras_drogas()
 {
-    return this->otrasDrogas;
+    return this->otras_drogas;
 
 
 }
 
-bool Paciente::getotrasDrogasbool()
+bool Paciente::getotras_drogasbool()
 {
-    if (this->otrasDrogas == 0)
+    if (this->otras_drogas == 0)
         return false;
     else
         return true;
 }
 
-double Paciente::getperimetroCraneal()
+double Paciente::getperimetro_craneal()
 {
-    return this->perimetroCraneal;
+    return this->perimetro_craneal;
 }
 
 double Paciente::getpeso()
@@ -348,24 +348,24 @@ void Paciente::setalcohol(int alcohol)
     this->alcohol = alcohol;
 }
 
-void Paciente::setnumHistoria(int numhistoria)
+void Paciente::setnum_historia(int num_historia)
 {
-    this->numhistoria = numhistoria;
+    this->num_historia = num_historia;
 }
 
-void Paciente::setalergiasConocidas(QString alergiasConocidas)
+void Paciente::setalergias_conocidas(QString alergias_conocidas)
 {
-    this->alergiasConocidas = alergiasConocidas;
+    this->alergias_conocidas = alergias_conocidas;
 }
 
-void Paciente::setantecedentesFamiliares(QString antecedentesFamiliares)
+void Paciente::setantecedentes_familiares(QString antecedentes_familiares)
 {
-    this->antecedentesFamiliares = antecedentesFamiliares;
+    this->antecedentes_familiares = antecedentes_familiares;
 }
 
-void Paciente::setcirugiasPrevias(QString cirugiasPrevias)
+void Paciente::setcirugias_previas(QString cirugias_previas)
 {
-    this->cirugiasPrevias = cirugiasPrevias;
+    this->cirugias_previas = cirugias_previas;
 }
 
 void Paciente::setdiastole(double diastole)
@@ -383,9 +383,9 @@ void Paciente::setfamilia(QString familia)
     this->familia = familia;
 }
 
-void Paciente::setfechaAlta(QDate fechaAlta)
+void Paciente::setfecha_alta(QDate fecha_alta)
 {
-    this->fechaAlta = fechaAlta;
+    this->fecha_alta = fecha_alta;
 }
 
 void Paciente::setfiliacion(QString filiacion)
@@ -393,9 +393,9 @@ void Paciente::setfiliacion(QString filiacion)
     this->filiacion = filiacion;
 }
 
-void Paciente::sethabitosDrogas(QString habitosDrogas)
+void Paciente::sethabitos_drogas(QString habitos_drogas)
 {
-    this->habitosDrogas = habitosDrogas;
+    this->habitos_drogas = habitos_drogas;
 }
 
 void Paciente::sethijos(int hijos)
@@ -413,19 +413,19 @@ void Paciente::setid(int id)
     this->id = id;
 }
 
-void Paciente::setidCliente(int idCliente)
+void Paciente::setid_cliente(int id_cliente)
 {
-    this->idCliente = idCliente;
+    this->id_cliente = id_cliente;
 }
 
-void Paciente::setidMutua(int idMutua)
+void Paciente::setid_mutua(int id_mutua)
 {
-    this->idMutua = idMutua;
+    this->id_mutua = id_mutua;
 }
 
-void Paciente::setIMC(double IMC)
+void Paciente::setimc(double imc)
 {
-    this->IMC = IMC;
+    this->imc = imc;
 }
 
 void Paciente::setnacimiento(QDateTime nacimiento)
@@ -433,25 +433,25 @@ void Paciente::setnacimiento(QDateTime nacimiento)
     this->nacimiento = nacimiento;
 }
 
-void Paciente::setnivelEstudios(QString nivelEstudios)
+void Paciente::setnivel_estudios(QString nivel_estudios)
 {
-    this->nivelEstudios = nivelEstudios;
+    this->nivel_estudios = nivel_estudios;
 }
 
-void Paciente::setnumSS(QString numSS)
+void Paciente::setnum_ss(QString num_ss)
 {
-    this->numSS = numSS;
+    this->num_ss = num_ss;
 }
 
-void Paciente::setotrasDrogas(int otrasDrogas)
+void Paciente::setotras_drogas(int otras_drogas)
 {
-    this->otrasDrogas = otrasDrogas;
+    this->otras_drogas = otras_drogas;
 
 }
 
-void Paciente::setperimetroCraneal(double perimetroCraneal)
+void Paciente::setperimetro_craneal(double perimetro_craneal)
 {
-    this->perimetroCraneal = perimetroCraneal;
+    this->perimetro_craneal = perimetro_craneal;
 }
 
 void Paciente::setpeso(double peso)

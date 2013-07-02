@@ -15,7 +15,7 @@ class frmPersonasContactoCliente : public QDialog
 public:
     explicit frmPersonasContactoCliente(QWidget *parent = 0);
     ~frmPersonasContactoCliente();
-    int nIdCliente;
+    int nid_cliente;
    void  RefrescarTabla();
     Cliente oCliente;
 

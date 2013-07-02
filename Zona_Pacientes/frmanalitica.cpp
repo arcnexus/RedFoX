@@ -20,7 +20,7 @@ FrmAnalitica::FrmAnalitica(QWidget *parent) :
      * RELLENO COMBO
      *---------------------------------*/
     QSqlQueryModel *qTipos = new QSqlQueryModel(this);
-    qTipos->setQuery("select tipoanalisis from tiposanalitica",QSqlDatabase::database("dbmedica"));
+    qTipos->setQuery("select tipo_analisis from tiposanalitica",QSqlDatabase::database("dbmedica"));
     ui->cboTipoAnalitica->setModel(qTipos);
 
 
@@ -29,7 +29,7 @@ FrmAnalitica::FrmAnalitica(QWidget *parent) :
      *---------------------------------*/
     ui->txtFechaAnalitica->setDate(QDate::currentDate());
 
-    oAnalitica.setFechaAnalisis(QDate::currentDate());
+    oAnalitica.setfecha_analisis(QDate::currentDate());
 
     /*----------------------------------
      *LLenar Tabla
@@ -49,9 +49,9 @@ void FrmAnalitica::llenartabla()
     QStringList list;
     list <<tr("DESCRIPCIÓN")<<tr("VALOR") <<tr("REFERENCIA")<<tr("id");
     QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    QString cSQL = " select * from analitica2 where idanalitica =:idanalitica";
+    QString cSQL = " select * from analitica2 where id_analitica =:id_analitica";
     qAnalitica->prepare(cSQL);
-    qAnalitica->bindValue(":idanalitica",oAnalitica.getId());
+    qAnalitica->bindValue(":id_analitica",oAnalitica.getid());
     ui->tablaAnalitica->setRowCount(0);
     ui->tablaAnalitica->setColumnCount(4);
     ui->tablaAnalitica->setColumnWidth(0,450);
@@ -86,7 +86,7 @@ void FrmAnalitica::llenartabla()
             ui->tablaAnalitica->setItem(pos,2,newItem2);
 
 
-            // Id
+            // id
             QTableWidgetItem *newItem3 = new QTableWidgetItem(QString::number(reg.field("id").value().toInt()));
             // para que los elementos no sean editables
             newItem3->setFlags(newItem3->flags() & (~Qt::ItemIsEditable));
@@ -105,16 +105,16 @@ void FrmAnalitica::AnadirCamposAnalitica()
 {
     Frmanalitica2 frmanalitica2;
     connect(this,SIGNAL(pasartipo(QString,int)),&frmanalitica2,SLOT(cargarDatos(QString,int)));
-    emit pasartipo(ui->cboTipoAnalitica->currentText(),oAnalitica.getId());
+    emit pasartipo(ui->cboTipoAnalitica->currentText(),oAnalitica.getid());
 
     frmanalitica2.exec();
     llenartabla();
 
 }
 
-void FrmAnalitica::capturaID(int idAna)
+void FrmAnalitica::capturaid(int idAna)
 {
-    oAnalitica.setId(idAna);
+    oAnalitica.setid(idAna);
 }
 
 void FrmAnalitica::capturaPaciente(QString Paciente)
@@ -135,13 +135,13 @@ void FrmAnalitica::AsignarAnalitica(QString Analitica)
 
 void FrmAnalitica::AsignarFecha()
 {
-    oAnalitica.setFechaAnalisis(ui->txtFechaAnalitica->date());
+    oAnalitica.setfecha_analisis(ui->txtFechaAnalitica->date());
 }
 
 void FrmAnalitica::AsignarFecha(QDate Fecha)
 {
     ui->txtFechaAnalitica->setDate(Fecha);
-    oAnalitica.setFechaAnalisis(Fecha);
+    oAnalitica.setfecha_analisis(Fecha);
 }
 
 void FrmAnalitica::GuardarYCerrar()
@@ -149,12 +149,12 @@ void FrmAnalitica::GuardarYCerrar()
     QSqlQuery *qAna = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     qAna->prepare("UPDATE Analitica SET "
                   "analisis = :analisis,"
-                  "fechaanalisis = :fechaanalisis,"
-                  "tipoanalisis = :tipoanalisis "
+                  "fecha_analisis = :fecha_analisis,"
+                  "tipo_analisis = :tipo_analisis "
                   "WHERE id =:id");
     qAna->bindValue(":analisis",oAnalitica.getAnalisis());
-    qAna->bindValue(":fechaanalisis",oAnalitica.getFechaAnalisis());
-    qAna->bindValue(":id",oAnalitica.getId());
+    qAna->bindValue(":fecha_analisis",oAnalitica.getfecha_analisis());
+    qAna->bindValue(":id",oAnalitica.getid());
 
     if(!qAna->exec()){
         QMessageBox::warning(this,tr("Analítica"),tr("No se pudo actualizar la cabecera de analítica:")+

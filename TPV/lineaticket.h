@@ -10,23 +10,23 @@ public:
     explicit LineaTicket(QObject *parent = 0);
     
     void getDatos_linea(QSqlRecord r);
-    bool save_Linea(int ID_Cab);
+    bool save_Linea(int id_Cab);
 
     QList<QTableWidgetItem*> toTableRow();
 
-    int 	Id;
+    int 	id;
     int 	id_Cab;
-    int 	id_Articulo;
-    QString cCodigo;
-    QString cDescripcion;
-    double 	rPvp;
-    double 	nCantidad;
-    double 	rImporte;//< esto que es en la bd
-    double 	nPorcentajeIva;
-    double 	nPorcDto;
-    double 	nTotal;
-    double 	rSubTotal;
-    QDate 	dFechaLinea;
+    int 	id_articulo;
+    QString codigo;
+    QString descripcion;
+    double 	pvp;
+    double 	cantidad;
+    double 	importe;//< esto que es en la bd
+    double 	porc_iva;
+    double 	porc_dto;
+    double 	total;
+    double 	subtotal;
+    QDate 	fecha_linea;
 signals:
     
 public slots:

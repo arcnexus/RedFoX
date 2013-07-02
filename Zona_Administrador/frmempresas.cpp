@@ -4,7 +4,7 @@
 #include "../Busquedas/frmbuscarpoblacion.h"
 
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
-    MayaModule(ModuleZone(),ModuleName(),parent),
+    MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmEmpresas),
     toolButton(tr("Empresas"),":/Icons/PNG/empresa.png",this),
     menuButton(QIcon(":/Icons/PNG/empresa.png"),tr("Empresa"),this)
@@ -13,8 +13,8 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     ui->txtMensaje->setText("ATENCION: Modifique con cuidado. Cambiar estos\n valores puede hacer que el programa deje\n de funcionar");
 
     connect(ui->botCerrar,SIGNAL(clicked()),this,SLOT(close()));
-    connect(ui->txtcPoblacion,SIGNAL(editingFinished()),this,SLOT(txtcPoblacion_editingFinished()));
-    connect(ui->txtcCP,SIGNAL(editingFinished()),this,SLOT(txtcCp_editingFinished()));
+    connect(ui->txtpoblacion,SIGNAL(editingFinished()),this,SLOT(txtpoblacion_editingFinished()));
+    connect(ui->txtcp,SIGNAL(editingFinished()),this,SLOT(txtcp_editingFinished()));
     //------------------
     // LLeno divisas
     //------------------
@@ -39,11 +39,11 @@ FrmEmpresas::~FrmEmpresas()
 
 void FrmEmpresas::LLenarCampos()
 {
-    ui->txtcCodigo->setText(oEmpresa.getcCodigo());
-    ui->txtEmpresa->setText(oEmpresa.getcNombre());
-    ui->txtRutaBd->setText(oEmpresa.getcRutaBDSqLite());
+    ui->txtcodigo->setText(oEmpresa.getcodigo());
+    ui->txtEmpresa->setText(oEmpresa.getnombre());
+    ui->txtRutaBd->setText(oEmpresa.getruta_bd_sqlite());
     ui->txtcHost->setText(oEmpresa.getcHost());
-    ui->txtcNombreBd->setText(oEmpresa.getcNombreBD());
+    ui->txtnombre_bd->setText(oEmpresa.getnombre_bd());
     ui->txtcUser->setText(oEmpresa.getcUser());
     ui->txtcPassword->setText(oEmpresa.getcContrasena());
     ui->txtcPuerto->setText(oEmpresa.getcPuerto());
@@ -51,9 +51,9 @@ void FrmEmpresas::LLenarCampos()
     if(indice!=-1)
        ui->txtcDriver->setCurrentIndex(indice);
 
-    ui->txtRutaBd->setText(oEmpresa.getcRutaBDSqLite());
+    ui->txtRutaBd->setText(oEmpresa.getruta_bd_sqlite());
     ui->txtcHostmedic->setText(oEmpresa.getcHostMed());
-    ui->txtcNombreBdMedic->setText(oEmpresa.getcNombreBDMed());
+    ui->txtnombre_bdMedic->setText(oEmpresa.getnombre_bdMed());
     ui->txtcUserMedic->setText(oEmpresa.getcUserMed());
     ui->txtcPasswordBdMedic->setText(oEmpresa.getcContrasenaMed());
     ui->txtcPuertoMedic->setText(oEmpresa.getcPuertoMed());
@@ -63,28 +63,28 @@ void FrmEmpresas::LLenarCampos()
     //ui->txtcDriverMedica->setCurrentIndex(indice);
 
 
-    ui->txtcDireccion->setText(oEmpresa.getcDireccion());
-    ui->txtcCP->setText(oEmpresa.getcCp());
-    ui->txtcPoblacion->setText(oEmpresa.getcPoblacion());
-    ui->txtcProvincia->setText(oEmpresa.getcProvincia());
-    ui->txtcPais->setText(oEmpresa.getcPais());
-    ui->txtcTelefono1->setText(oEmpresa.getcTelefono1());
-    ui->txtcTelefono2->setText(oEmpresa.getcTelefono2());
-    ui->txtcFax->setText(oEmpresa.getcFax());
+    ui->txtdireccion1->setText(oEmpresa.getdireccion1());
+    ui->txtcp->setText(oEmpresa.getcp());
+    ui->txtpoblacion->setText(oEmpresa.getpoblacion());
+    ui->txtprovincia->setText(oEmpresa.getprovincia());
+    ui->txtpais->setText(oEmpresa.getpais());
+    ui->txttelefono1->setText(oEmpresa.gettelefono1());
+    ui->txttelefono2->setText(oEmpresa.gettelefono2());
+    ui->txtfax->setText(oEmpresa.getfax());
     ui->txtcMail->setText(oEmpresa.getcMail());
-    ui->txtcWeb->setText(oEmpresa.getcWeb());
-    ui->txtcCif->setText(oEmpresa.getcCif());
+    ui->txtweb->setText(oEmpresa.getweb());
+    ui->txtcif->setText(oEmpresa.getcif());
     ui->txtcInscripcion->setText(oEmpresa.getcInscripcion());
-    ui->txtcCometarioAlbaran->setText(oEmpresa.getcComentarioAlbaran());
-    ui->txtcComentarioFactura->setText(oEmpresa.getcComentarioFactura());
-    ui->txtcComentarioTicket->setText(oEmpresa.getcComentarioTicket());
-    ui->txtnEjercicio->setValue(oEmpresa.getnEjercicio());
-    ui->txtnDigitosFactura->setText(QString::number(oEmpresa.getnDigitosFactura()));
-    ui->txtcSerieFactura->setText(oEmpresa.getcSerie());
-    ui->txtnDigitosCuentas->setValue(oEmpresa.getnDigitosCuentas());
-    ui->txtcCuentaCliente->setText(oEmpresa.getcCuentaClientes());
-    ui->txtcCuentaProveedores->setText(oEmpresa.getcCuentaProveedores());
-    ui->txtcCuentaAcreedores->setText(oEmpresa.getcCuentaAcreedores());
+    ui->txtcCometarioAlbaran->setText(oEmpresa.getccomentario_albaran());
+    ui->txtccomentario_factura->setText(oEmpresa.getccomentario_factura());
+    ui->txtccomentario_ticket->setText(oEmpresa.getccomentario_ticket());
+    ui->txtejercicio->setValue(oEmpresa.getejercicio());
+    ui->txtndigitos_factura->setText(QString::number(oEmpresa.getndigitos_factura()));
+    ui->txtserieFactura->setText(oEmpresa.getserie());
+    ui->txtdigitos_cuentas->setValue(oEmpresa.getdigitos_cuentas());
+    ui->txtcuentaCliente->setText(oEmpresa.getcuenta_clientes());
+    ui->txtcuenta_proveedores->setText(oEmpresa.getcuenta_proveedores());
+    ui->txtcuenta_acreedores->setText(oEmpresa.getcuenta_acreedores());
     QString cDivisa = Configuracion_global->Devolver_moneda(oEmpresa.id_divisa);
     int nIndex = ui->cboDivisas->findText(cDivisa);
     ui->cboDivisas->setCurrentIndex(nIndex);
@@ -99,52 +99,52 @@ void FrmEmpresas::LLenarCampos()
     ui->txt_horario_ultimo_dia->setText(oEmpresa.horario_ultimo_dia);
 
     ui->txtHost_contabilidad->setText(oEmpresa.HostBD_contabilidad);
-    ui->txtNombre_BDConta->setText(oEmpresa.NombreBD_contabilidad);
+    ui->txtNombre_BDConta->setText(oEmpresa.nombre_bd_contabilidad);
     ui->txtUsuario_contabilidad->setText(oEmpresa.UsuarioBD_contabilidad);
-    ui->txtPasswordBDConta->setText(oEmpresa.ContrasenaBD_contabilidad);
+    ui->txtpassword_bd_conta->setText(oEmpresa.ContrasenaBD_contabilidad);
     ui->txtPuertoBDConta->setText(oEmpresa.puertoDB_contabilidad);
-    ui->txtRutaBDConta->setText(oEmpresa.RutaBD_Contabilidad_sqlite);
+    ui->txtruta_bd_conta->setText(oEmpresa.RutaBD_Contabilidad_sqlite);
     ui->chk_ticket_factura->setChecked(oEmpresa.ticket_factura);
     index = ui->cboTarifa->findText(Configuracion_global->Devolver_tarifa(oEmpresa.id_tarifa_predeterminada));
     ui->cboTarifa->setCurrentIndex(index);
-    ui->chk_upate_divisas->setChecked(oEmpresa.actualizardivisas);
+    ui->chk_upate_divisas->setChecked(oEmpresa.actualizar_divisas);
     ui->dboEmpresaMedica->setChecked(oEmpresa.empresa_medica);
     ui->cboGestionInternacional->setChecked(oEmpresa.empresa_internacional);
-    ui->txtCuenta_venta_mercaderias->setText(oEmpresa.cCuenta_venta_mercaderias);
-    ui->txtCuenta_venta_servicios->setText(oEmpresa.cCuenta_venta_servicios);
-    ui->ivarepercutido1->setText(oEmpresa.cCuenta_iva_repercutido1);
-    ui->ivarepercutido2->setText(oEmpresa.cCuenta_iva_repercutido2);
-    ui->ivarepercutido3->setText(oEmpresa.cCuenta_iva_repercutido3);
-    ui->ivarepercutido4->setText(oEmpresa.cCuenta_iva_repercutido4);
-    ui->ivarepercutidore1->setText(oEmpresa.cCuenta_iva_repercutido_re1);
-    ui->ivarepercutidore2->setText(oEmpresa.cCuenta_iva_repercutido_re2);
-    ui->ivarepercutidore3->setText(oEmpresa.cCuenta_iva_repercutido_re3);
-    ui->ivarepercutidore4->setText(oEmpresa.cCuenta_iva_repercutido_re4);
-    ui->ivasoportado1->setText(oEmpresa.cCuenta_iva_soportado1);
-    ui->ivasoportado2->setText(oEmpresa.cCuenta_iva_soportado2);
-    ui->ivasoportado3->setText(oEmpresa.cCuenta_iva_soportado3);
-    ui->ivasoportado4->setText(oEmpresa.cCuenta_iva_soportado4);
-    ui->ivasoportadore1->setText(oEmpresa.cCuenta_iva_soportado_re1);
-    ui->ivasoportadore2->setText(oEmpresa.cCuenta_iva_soportado_re2);
-    ui->ivasoportadore3->setText(oEmpresa.cCuenta_iva_soportado_re3);
-    ui->ivasoportadore4->setText(oEmpresa.cCuenta_iva_soportado_re4);
+    ui->txtCuenta_venta_mercaderias->setText(oEmpresa.cuenta_venta_mercaderias);
+    ui->txtCuenta_venta_servicios->setText(oEmpresa.cuenta_venta_servicios);
+    ui->ivarepercutido1->setText(oEmpresa.cuenta_iva_repercutido1);
+    ui->ivarepercutido2->setText(oEmpresa.cuenta_iva_repercutido2);
+    ui->ivarepercutido3->setText(oEmpresa.cuenta_iva_repercutido3);
+    ui->ivarepercutido4->setText(oEmpresa.cuenta_iva_repercutido4);
+    ui->ivarepercutidore1->setText(oEmpresa.cuenta_iva_repercutido_re1);
+    ui->ivarepercutidore2->setText(oEmpresa.cuenta_iva_repercutido_re2);
+    ui->ivarepercutidore3->setText(oEmpresa.cuenta_iva_repercutido_re3);
+    ui->ivarepercutidore4->setText(oEmpresa.cuenta_iva_repercutido_re4);
+    ui->ivasoportado1->setText(oEmpresa.cuenta_iva_soportado1);
+    ui->ivasoportado2->setText(oEmpresa.cuenta_iva_soportado2);
+    ui->ivasoportado3->setText(oEmpresa.cuenta_iva_soportado3);
+    ui->ivasoportado4->setText(oEmpresa.cuenta_iva_soportado4);
+    ui->ivasoportadore1->setText(oEmpresa.cuenta_iva_soportado_re1);
+    ui->ivasoportadore2->setText(oEmpresa.cuenta_iva_soportado_re2);
+    ui->ivasoportadore3->setText(oEmpresa.cuenta_iva_soportado_re3);
+    ui->ivasoportadore4->setText(oEmpresa.cuenta_iva_soportado_re4);
 
 }
 
 void FrmEmpresas::CargarCamposEnEmpresa()
 {
-    oEmpresa.setcCodigo(ui->txtcCodigo->text());
-    oEmpresa.setcNombre(ui->txtEmpresa->text());
-    oEmpresa.setcRutaBDSqLite(ui->txtRutaBd->text());
+    oEmpresa.setcodigo(ui->txtcodigo->text());
+    oEmpresa.setnombre(ui->txtEmpresa->text());
+    oEmpresa.setruta_bd_sqlite(ui->txtRutaBd->text());
     oEmpresa.setcHost(ui->txtcHost->text());
-    oEmpresa.setcNombreBD(ui->txtcNombreBd->text());
+    oEmpresa.setnombre_bd(ui->txtnombre_bd->text());
     oEmpresa.setcUser(ui->txtcUser->text());
     oEmpresa.setcContrasena(ui->txtcPassword->text());
     oEmpresa.setcPuerto(ui->txtcPuerto->text());
     oEmpresa.setcDriverBD(ui->txtcDriver->currentText());
 
     oEmpresa.setcHostMed(ui->txtcHostmedic->text());
-    oEmpresa.setcNombreBDMed(ui->txtcNombreBdMedic->text());
+    oEmpresa.setnombre_bdMed(ui->txtnombre_bdMedic->text());
     oEmpresa.setcUserMed(ui->txtcUserMedic->text());
     oEmpresa.setcContrasenaMed(ui->txtcPasswordBdMedic ->text());
     oEmpresa.setcPuertoMed(ui->txtcPuertoMedic->text());
@@ -152,29 +152,29 @@ void FrmEmpresas::CargarCamposEnEmpresa()
 
 
 
-    oEmpresa.setcSerie(ui->txtcSerieFactura->text());
-    oEmpresa.setcDireccion(ui->txtcDireccion->text());
-    oEmpresa.setcCP(ui->txtcCP->text());
-    oEmpresa.setcPoblacion(ui->txtcPoblacion->text());
-    oEmpresa.setcProvincia(ui->txtcProvincia->text());
-    oEmpresa.setcPais(ui->txtcPais->text());
-    oEmpresa.setcTelefono1(ui->txtcTelefono1->text());
-    oEmpresa.setcTelefono2(ui->txtcPais->text());
-    oEmpresa.setcFax(ui->txtcFax->text());
+    oEmpresa.setserie(ui->txtserieFactura->text());
+    oEmpresa.setdireccion1(ui->txtdireccion1->text());
+    oEmpresa.setcp(ui->txtcp->text());
+    oEmpresa.setpoblacion(ui->txtpoblacion->text());
+    oEmpresa.setprovincia(ui->txtprovincia->text());
+    oEmpresa.setpais(ui->txtpais->text());
+    oEmpresa.settelefono1(ui->txttelefono1->text());
+    oEmpresa.settelefono2(ui->txtpais->text());
+    oEmpresa.setfax(ui->txtfax->text());
     oEmpresa.setcMail(ui->txtcMail->text());
-    oEmpresa.setcWeb(ui->txtcWeb->text());
-    oEmpresa.setcCif(ui->txtcCif->text());
+    oEmpresa.setweb(ui->txtweb->text());
+    oEmpresa.setcif(ui->txtcif->text());
     oEmpresa.setcInscripcion(ui->txtcInscripcion->text());
     oEmpresa.setcComemtarioAlbaran(ui->txtcCometarioAlbaran->toPlainText());
-    oEmpresa.setcComentarioFactura(ui->txtcComentarioFactura->toPlainText());
-    oEmpresa.setcComentarioTicket(ui->txtcComentarioTicket->toPlainText());
-    oEmpresa.setnEjercicio(ui->txtnEjercicio->text().toInt());
-    oEmpresa.setnDigitosCuentas(ui->txtnDigitosCuentas->text().toInt());
-    oEmpresa.setcCodigoCuentaClientes(ui->txtcCuentaCliente->text());
-    oEmpresa.setcCodigoCuentaProveedor(ui->txtcCuentaProveedores->text());
-    oEmpresa.setcCodigoCuentaAcreedores(ui->txtcCuentaAcreedores->text());
-    oEmpresa.cCuenta_venta_mercaderias = ui->txtCuenta_venta_mercaderias->text();
-    oEmpresa.cCuenta_venta_servicios = ui->txtCuenta_venta_servicios->text();
+    oEmpresa.setccomentario_factura(ui->txtccomentario_factura->toPlainText());
+    oEmpresa.setccomentario_ticket(ui->txtccomentario_ticket->toPlainText());
+    oEmpresa.setejercicio(ui->txtejercicio->text().toInt());
+    oEmpresa.setdigitos_cuentas(ui->txtdigitos_cuentas->text().toInt());
+    oEmpresa.setcodigo_cuenta_clientes(ui->txtcuentaCliente->text());
+    oEmpresa.setcodigoCuentaProveedor(ui->txtcuenta_proveedores->text());
+    oEmpresa.setcodigo_cuenta_acreedores(ui->txtcuenta_acreedores->text());
+    oEmpresa.cuenta_venta_mercaderias = ui->txtCuenta_venta_mercaderias->text();
+    oEmpresa.cuenta_venta_servicios = ui->txtCuenta_venta_servicios->text();
     oEmpresa.id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisas->currentText());
     oEmpresa.contabilidad = ui->chkContabilidad->isChecked();
     oEmpresa.consultas = ui->txtConsultas->value();
@@ -186,33 +186,33 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.horario_ultimo_dia = ui->txt_horario_ultimo_dia->text();
 
     oEmpresa.HostBD_contabilidad = ui->txtHost_contabilidad->text();
-    oEmpresa.NombreBD_contabilidad = ui->txtNombre_BDConta->text();
+    oEmpresa.nombre_bd_contabilidad = ui->txtNombre_BDConta->text();
     oEmpresa.UsuarioBD_contabilidad = ui->txtUsuario_contabilidad->text();
-    oEmpresa.ContrasenaBD_contabilidad = ui->txtPasswordBDConta->text();
+    oEmpresa.ContrasenaBD_contabilidad = ui->txtpassword_bd_conta->text();
     oEmpresa.puertoDB_contabilidad = ui->txtPuertoBDConta->text();
-    oEmpresa.DriverDB_contabilidad = ui->txtcDriver->currentText();
-    oEmpresa.RutaBD_Contabilidad_sqlite = ui->txtRutaBDConta->text();
+    oEmpresa.driver_db_contabilidad = ui->txtcDriver->currentText();
+    oEmpresa.RutaBD_Contabilidad_sqlite = ui->txtruta_bd_conta->text();
     oEmpresa.ticket_factura = ui->chk_ticket_factura->isChecked();
     oEmpresa.id_tarifa_predeterminada = Configuracion_global->Devolver_id_tarifa(ui->cboTarifa->currentText());
-    oEmpresa.actualizardivisas = ui->chk_upate_divisas->isChecked();
+    oEmpresa.actualizar_divisas = ui->chk_upate_divisas->isChecked();
     oEmpresa.empresa_internacional = ui->cboGestionInternacional->isChecked();
     oEmpresa.empresa_medica = ui->dboEmpresaMedica->isChecked();
-    oEmpresa.cCuenta_iva_repercutido1 = ui->ivarepercutido1->text();
-    oEmpresa.cCuenta_iva_repercutido2 = ui->ivarepercutido2->text();
-    oEmpresa.cCuenta_iva_repercutido3 = ui->ivarepercutido3->text();
-    oEmpresa.cCuenta_iva_repercutido4 = ui->ivarepercutido4->text();
-    oEmpresa.cCuenta_iva_soportado1 = ui->ivasoportado1->text();
-    oEmpresa.cCuenta_iva_soportado2 = ui->ivasoportado2->text();
-    oEmpresa.cCuenta_iva_soportado3 = ui->ivasoportado3->text();
-    oEmpresa.cCuenta_iva_soportado4 = ui->ivasoportado4->text();
-    oEmpresa.cCuenta_iva_repercutido_re1 = ui->ivarepercutidore1->text();
-    oEmpresa.cCuenta_iva_repercutido_re2 = ui->ivarepercutidore2->text();
-    oEmpresa.cCuenta_iva_repercutido_re3 = ui->ivarepercutidore3->text();
-    oEmpresa.cCuenta_iva_repercutido_re4 = ui->ivarepercutidore4->text();
-    oEmpresa.cCuenta_iva_soportado_re1 = ui->ivasoportadore1->text();
-    oEmpresa.cCuenta_iva_soportado_re2 = ui->ivasoportadore2->text();
-    oEmpresa.cCuenta_iva_soportado_re3 = ui->ivasoportadore3->text();
-    oEmpresa.cCuenta_iva_soportado_re4 = ui->ivasoportadore4->text();
+    oEmpresa.cuenta_iva_repercutido1 = ui->ivarepercutido1->text();
+    oEmpresa.cuenta_iva_repercutido2 = ui->ivarepercutido2->text();
+    oEmpresa.cuenta_iva_repercutido3 = ui->ivarepercutido3->text();
+    oEmpresa.cuenta_iva_repercutido4 = ui->ivarepercutido4->text();
+    oEmpresa.cuenta_iva_soportado1 = ui->ivasoportado1->text();
+    oEmpresa.cuenta_iva_soportado2 = ui->ivasoportado2->text();
+    oEmpresa.cuenta_iva_soportado3 = ui->ivasoportado3->text();
+    oEmpresa.cuenta_iva_soportado4 = ui->ivasoportado4->text();
+    oEmpresa.cuenta_iva_repercutido_re1 = ui->ivarepercutidore1->text();
+    oEmpresa.cuenta_iva_repercutido_re2 = ui->ivarepercutidore2->text();
+    oEmpresa.cuenta_iva_repercutido_re3 = ui->ivarepercutidore3->text();
+    oEmpresa.cuenta_iva_repercutido_re4 = ui->ivarepercutidore4->text();
+    oEmpresa.cuenta_iva_soportado_re1 = ui->ivasoportadore1->text();
+    oEmpresa.cuenta_iva_soportado_re2 = ui->ivasoportadore2->text();
+    oEmpresa.cuenta_iva_soportado_re3 = ui->ivasoportadore3->text();
+    oEmpresa.cuenta_iva_soportado_re4 = ui->ivasoportadore4->text();
 }
 
 
@@ -275,7 +275,7 @@ void FrmEmpresas::on_botGuardar_clicked()
                 return;
         }
 
-        oEmpresa.Anadir(ui->txtcCodigo->text());
+        oEmpresa.Anadir(ui->txtcodigo->text());
         ui->botAnadir->setText("Añadir");
         ui->botAnadir->setIcon(QIcon(":/Icons/PNG/add.png"));
         CargarCamposEnEmpresa();
@@ -296,24 +296,24 @@ void FrmEmpresas::on_botGuardar_clicked()
     }
 }
 
-void FrmEmpresas::txtcPoblacion_editingFinished()
+void FrmEmpresas::txtpoblacion_editingFinished()
 {
-    ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
-    if (ui->txtcCP->text().isEmpty() && !ui->txtcPoblacion->text().isEmpty())
+    ui->txtpoblacion->setText(ui->txtpoblacion->text().toUpper());
+    if (ui->txtcp->text().isEmpty() && !ui->txtpoblacion->text().isEmpty())
     {
        FrmBuscarPoblacion BuscarPoblacion;
-       BuscarPoblacion.setcPoblacion(ui->txtcPoblacion->text(),1);
+       BuscarPoblacion.setpoblacion(ui->txtpoblacion->text(),1);
        if(BuscarPoblacion.exec())
        {
-        //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
-         int nId = BuscarPoblacion.DevolverID();
-         if(nId > 0)
+        //  BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
+         int nid = BuscarPoblacion.Devolverid();
+         if(nid > 0)
          {
              QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
-             QString cId;
-             cId = QString::number(nId);
-             qPoblacion.prepare("select poblacion, CP, provincia from poblaciones where id = :cId");
-             qPoblacion.bindValue(":cId",cId);
+             QString cid;
+             cid = QString::number(nid);
+             qPoblacion.prepare("select poblacion, CP, provincia from poblaciones where id = :cid");
+             qPoblacion.bindValue(":cid",cid);
              if(!qPoblacion.exec())
              {
                  QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
@@ -322,33 +322,33 @@ void FrmEmpresas::txtcPoblacion_editingFinished()
              {
                  if (qPoblacion.next())
                  {
-                     ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
-                     ui->txtcCP->setText(qPoblacion.value(1).toString());
-                     ui->txtcProvincia->setText(qPoblacion.value(2).toString());
-                     ui->txtcPais->setText("ESPAÑA");
+                     ui->txtpoblacion->setText(qPoblacion.value(0).toString());
+                     ui->txtcp->setText(qPoblacion.value(1).toString());
+                     ui->txtprovincia->setText(qPoblacion.value(2).toString());
+                     ui->txtpais->setText("ESPAÑA");
                  }
              }
          }
        }
     }
 }
-void FrmEmpresas::txtcCp_editingFinished()
+void FrmEmpresas::txtcp_editingFinished()
 {
-    if (!ui->txtcCP->text().isEmpty() && ui->txtcPoblacion->text().isEmpty())
+    if (!ui->txtcp->text().isEmpty() && ui->txtpoblacion->text().isEmpty())
     {
         FrmBuscarPoblacion BuscarPoblacion;
-        BuscarPoblacion.setcPoblacion(ui->txtcCP->text(),0);
+        BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
         if(BuscarPoblacion.exec())
         {
 
-            int nId = BuscarPoblacion.DevolverID();
-            if(nId > 0)
+            int nid = BuscarPoblacion.Devolverid();
+            if(nid > 0)
             {
                 QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
-                QString cId;
-                cId = QString::number(nId);
-                qPoblacion.prepare("select poblacion, CP,provincia from poblaciones where id = :cId");
-                qPoblacion.bindValue(":cId",cId);
+                QString cid;
+                cid = QString::number(nid);
+                qPoblacion.prepare("select poblacion, CP,provincia from poblaciones where id = :cid");
+                qPoblacion.bindValue(":cid",cid);
                 if(!qPoblacion.exec())
                 {
                     QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
@@ -357,10 +357,10 @@ void FrmEmpresas::txtcCp_editingFinished()
                 {
                     if (qPoblacion.next())
                     {
-                        ui->txtcCP->setText(qPoblacion.value(1).toString());
-                        ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
-                        ui->txtcProvincia->setText(qPoblacion.value(2).toString());
-                        ui->txtcPais->setText("ESPAÑA");
+                        ui->txtcp->setText(qPoblacion.value(1).toString());
+                        ui->txtpoblacion->setText(qPoblacion.value(0).toString());
+                        ui->txtprovincia->setText(qPoblacion.value(2).toString());
+                        ui->txtpais->setText("ESPAÑA");
                     }
                 }
             }
@@ -384,11 +384,11 @@ void FrmEmpresas::on_botAnadir_clicked()
             if(get_last.next())
             {
                 int last_id = get_last.record().value("id").toInt()  + 1;
-                ui->txtcCodigo->setText(QString::number(last_id));
+                ui->txtcodigo->setText(QString::number(last_id));
             }
             else
             {
-                ui->txtcCodigo->setText("1");
+                ui->txtcodigo->setText("1");
             }
         }
     }
@@ -545,11 +545,11 @@ bool FrmEmpresas::crear_empresa_mysql(copy_db_progressFrm *form)
     if(file.open(QFile::ReadOnly))
     {
         QSqlQuery query;
-        QString qs = QString("CREATE DATABASE %1;").arg(ui->txtcNombreBd->text());
+        QString qs = QString("CREATE DATABASE %1;").arg(ui->txtnombre_bd->text());
         if(query.exec(qs))
         {
             db.close();
-            db.setDatabaseName(ui->txtcNombreBd->text());
+            db.setDatabaseName(ui->txtnombre_bd->text());
             db.open();
         }
         else
@@ -615,11 +615,11 @@ bool FrmEmpresas::crear_medica_mysql(copy_db_progressFrm *form)
     if(file.open(QFile::ReadOnly))
     {
         QSqlQuery query;
-        QString qs = QString("CREATE DATABASE %1;").arg(ui->txtcNombreBdMedic->text());
+        QString qs = QString("CREATE DATABASE %1;").arg(ui->txtnombre_bdMedic->text());
         if(query.exec(qs))
         {
             db.close();
-            db.setDatabaseName(ui->txtcNombreBdMedic->text());
+            db.setDatabaseName(ui->txtnombre_bdMedic->text());
             db.open();
         }
         else
@@ -679,14 +679,14 @@ void FrmEmpresas::borrar_mysql()
     if(db.open())
     {
         QSqlQuery query;
-        query.prepare("DROP DATABASE "+oEmpresa.getcNombreBD());
+        query.prepare("DROP DATABASE "+oEmpresa.getnombre_bd());
         if(!query.exec())
         {
             qDebug() << query.lastQuery();
             qDebug() << query.lastError();
             valid = false;
         }
-        query.prepare("DROP DATABASE "+oEmpresa.getcNombreBDMed());
+        query.prepare("DROP DATABASE "+oEmpresa.getnombre_bdMed());
         if(!query.exec())
         {
             qDebug() << query.lastQuery();
@@ -717,7 +717,7 @@ void FrmEmpresas::borrar_mysql()
 
 void FrmEmpresas::borrar_sqlite()
 {
-    QFile::remove(oEmpresa.getcRutaBDSqLite());
+    QFile::remove(oEmpresa.getruta_bd_sqlite());
     oEmpresa.Borrar(oEmpresa.getid());
 }
 

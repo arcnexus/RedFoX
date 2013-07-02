@@ -40,9 +40,9 @@ public:
     // generic Inserts
     int addRec(const QString &statment,const QString &connection);
     int addRec(const QString &statment,const QStringList &parameters,const QString &connection);
-    QSqlQuery RecuperarPaciente(int idCliente);
+    QSqlQuery RecuperarPaciente(int id_cliente);
 
-  //  int CrearPaciente(int idCliente);
+  //  int CrearPaciente(int id_cliente);
 private:
     QStringList m_connections;
     QString m_defaultConnection;

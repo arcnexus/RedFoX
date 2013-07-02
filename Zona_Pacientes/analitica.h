@@ -9,8 +9,8 @@ class Analitica : public QObject
 
 public:
     int id;
-    int idpaciente;
-    int idepisodio;
+    int id_paciente;
+    int id_episodio;
     QString analisis;
     QString comentarios;
     QString valorreferencia;
@@ -19,27 +19,27 @@ public:
 
     explicit Analitica(QObject *parent = 0);
     void AnadirAnalitica();
-    void AnadirLineas(int idanalitica, QString descripcion, QString valor, QString referencia, QString comentarios, QString tipo);
-    void recuperarDatos(int nId);
-    void GuardarDatos(int nId);
+    void AnadirLineas(int id_analitica, QString descripcion, QString valor, QString referencia, QString comentarios, QString tipo);
+    void recuperarDatos(int nid);
+    void GuardarDatos(int nid);
     void GuardarLineas(int id, QString valor, QString referencia, QString comentarios);
     void EliminarAnalitica(int id);
     void EliminarLinea(int id);
-    void setId(int id) {this->id =id;}
-    void setIdEpisodio(int idepisodio) {this->idepisodio = idepisodio;}
+    void setid(int id) {this->id =id;}
+    void setid_episodio(int id_episodio) {this->id_episodio = id_episodio;}
     void setAnalisis(QString Analisis) {this->analisis = Analisis;}
-    void setComentarios(QString comentarios) {this->comentarios = comentarios;}
+    void secomentarios(QString comentarios) {this->comentarios = comentarios;}
     void setValor(QString valor) {this->valor = valor;}
     void setValorReferencia(QString valor) {this->valorreferencia = valor;}
-    void setFechaAnalisis(QDate fecha) {this->fecha=fecha;}
+    void setfecha_analisis(QDate fecha) {this->fecha=fecha;}
 
-    int getId() {return this->id;}
-    int getIdEpisodio() {return this->idepisodio;}
+    int getid() {return this->id;}
+    int getid_episodio() {return this->id_episodio;}
     QString getAnalisis() {return this->analisis;}
-    QString getComentarios() {return this->comentarios;}
+    QString gecomentarios() {return this->comentarios;}
     QString getValor() {return this->valor;}
     QString getValorReferencia() {return this->valorreferencia;}
-    QDate getFechaAnalisis() {return this->fecha; }
+    QDate getfecha_analisis() {return this->fecha; }
 
 signals:
     

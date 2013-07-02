@@ -138,7 +138,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtNumHistoriaClinica">
+          <widget class="QLineEdit" name="txtnum_historiaClinica">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -337,7 +337,7 @@ background-color: rgb(255, 255, 255);</string>
                   </widget>
                  </item>
                  <item row="1" column="1">
-                  <widget class="QComboBox" name="cboNivelEstudios">
+                  <widget class="QComboBox" name="cbonivel_estudios">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -476,7 +476,7 @@ background-color: rgb(255, 255, 255);</string>
                   </widget>
                  </item>
                  <item row="0" column="1">
-                  <widget class="QDateEdit" name="txtFechaAlta">
+                  <widget class="QDateEdit" name="txtfecha_alta">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -546,7 +546,7 @@ color: rgb(0, 0, 0);</string>
                   </widget>
                  </item>
                  <item row="0" column="1" rowspan="4">
-                  <widget class="QPlainTextEdit" name="txtOtrasDrogas">
+                  <widget class="QPlainTextEdit" name="txtotras_drogas">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -571,7 +571,7 @@ color: rgb(0, 0, 0);</string>
                   </widget>
                  </item>
                  <item row="2" column="0">
-                  <widget class="QCheckBox" name="chkOtrasDrogas">
+                  <widget class="QCheckBox" name="chkotras_drogas">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -650,7 +650,7 @@ color: rgb(255,255,255);</string>
 color: rgb(255,255,255);</string>
                    </property>
                    <property name="text">
-                    <string>ENFERMEDADES CONOCIDAS</string>
+                    <string>ENFERMEDADES CONOCidAS</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -658,7 +658,7 @@ color: rgb(255,255,255);</string>
                   </widget>
                  </item>
                  <item row="1" column="0">
-                  <widget class="QTextEdit" name="txtAntecedentesFamiliares">
+                  <widget class="QTextEdit" name="txtantecedentes_familiares">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -713,7 +713,7 @@ background-color: rgb(255, 255, 255);</string>
 color: rgb(255,255,255);</string>
                    </property>
                    <property name="text">
-                    <string>ALERGIAS CONOCIDAS</string>
+                    <string>ALERGIAS CONOCidAS</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -741,7 +741,7 @@ color: rgb(255,255,255);</string>
                   </widget>
                  </item>
                  <item row="1" column="0">
-                  <widget class="QTextEdit" name="txtAlergiasConocidas">
+                  <widget class="QTextEdit" name="txtalergias_conocidas">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -758,7 +758,7 @@ color: rgb(0, 0, 0);</string>
                   </widget>
                  </item>
                  <item row="1" column="1">
-                  <widget class="QTextEdit" name="txtCirugiasPrevias">
+                  <widget class="QTextEdit" name="txtcirugias_previas">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1117,7 +1117,7 @@ color: rgb(255, 0, 0);</string>
                         </widget>
                        </item>
                        <item>
-                        <widget class="QDateTimeEdit" name="txtFechaHoraVisita">
+                        <widget class="QDateTimeEdit" name="txtfecha_horaVisita">
                          <property name="styleSheet">
                           <string notr="true">background-color: rgb(255, 255, 255);</string>
                          </property>
@@ -1609,7 +1609,7 @@ color: rgb(255, 255, 255);</string>
                       </widget>
                      </item>
                      <item row="0" column="14" colspan="2">
-                      <widget class="QDateEdit" name="txtInicioTratamientoFarma">
+                      <widget class="QDateEdit" name="txtinicio_tratamientoFarma">
                        <property name="enabled">
                         <bool>false</bool>
                        </property>
@@ -1667,7 +1667,7 @@ color: rgb(255, 255, 255);</string>
                       </widget>
                      </item>
                      <item row="6" column="12" rowspan="3" colspan="4">
-                      <widget class="QTextEdit" name="txtComentariosFarma">
+                      <widget class="QTextEdit" name="txcomentariosFarma">
                        <property name="enabled">
                         <bool>false</bool>
                        </property>
@@ -1989,7 +1989,7 @@ color: rgb(222, 222, 222);</string>
                          </widget>
                         </item>
                         <item row="1" column="1" colspan="4">
-                         <widget class="QComboBox" name="comboBox_tipoImagen">
+                         <widget class="QComboBox" name="comboBox_tipo_imagen">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -2012,7 +2012,7 @@ color: rgb(222, 222, 222);</string>
                          </widget>
                         </item>
                         <item row="0" column="3" colspan="2">
-                         <widget class="QDateTimeEdit" name="dateEdit_fechaimagen">
+                         <widget class="QDateTimeEdit" name="dateEdit_fecha_imagen">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -2210,7 +2210,7 @@ background-color: rgb(219, 255, 208);</string>
                       </widget>
                      </item>
                      <item row="1" column="7" rowspan="3">
-                      <widget class="QPlainTextEdit" name="txtComentariosImagen">
+                      <widget class="QPlainTextEdit" name="txcomentariosImagen">
                        <property name="enabled">
                         <bool>false</bool>
                        </property>
@@ -2371,7 +2371,7 @@ color: rgb(255,255,255);</string>
                        </property>
                        <layout class="QGridLayout" name="gridLayout_14">
                         <item row="2" column="3">
-                         <widget class="QToolButton" name="btnAnadirMotivosDerivacionInterconsulta">
+                         <widget class="QToolButton" name="btnAnadirMotivosDeivacionInterconsulta">
                           <property name="toolTip">
                            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Añadir motivo interconsulta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                           </property>
@@ -2394,15 +2394,15 @@ color: rgb(255,255,255);</string>
                         <item row="1" column="0">
                          <widget class="QLabel" name="label_22">
                           <property name="text">
-                           <string>Derivar a Dr/a:</string>
+                           <string>Deivar a Dr/a:</string>
                           </property>
                          </widget>
                         </item>
                         <item row="2" column="1" colspan="2">
-                         <widget class="QComboBox" name="cboMotivoDerivacionInterconsulta"/>
+                         <widget class="QComboBox" name="cboMotivoDeivacionInterconsulta"/>
                         </item>
                         <item row="2" column="4">
-                         <widget class="QPushButton" name="btnDocumentosDerivadosInterconsulta">
+                         <widget class="QPushButton" name="btnDocumentosDeivadosInterconsulta">
                           <property name="text">
                            <string>Documentos</string>
                           </property>
@@ -2413,7 +2413,7 @@ color: rgb(255,255,255);</string>
                          </widget>
                         </item>
                         <item row="1" column="1" colspan="4">
-                         <widget class="QLineEdit" name="txtDerivaraInterconsulta">
+                         <widget class="QLineEdit" name="txtDeivaraInterconsulta">
                           <property name="styleSheet">
                            <string notr="true">background-color: rgb(255, 255, 255);</string>
                           </property>
@@ -3060,7 +3060,7 @@ color: rgb(0, 0, 0);</string>
                       </widget>
                      </item>
                      <item row="0" column="2" colspan="3">
-                      <widget class="QLineEdit" name="txtIdentificadorEpisodio">
+                      <widget class="QLineEdit" name="txtidentificadorEpisodio">
                        <property name="enabled">
                         <bool>false</bool>
                        </property>
@@ -3079,7 +3079,7 @@ color: rgb(0, 0, 128);</string>
                      <item row="0" column="0" colspan="2">
                       <widget class="QLabel" name="label_90">
                        <property name="text">
-                        <string>Identificador:</string>
+                        <string>identificador:</string>
                        </property>
                       </widget>
                      </item>
@@ -3188,7 +3188,7 @@ color: rgb(0, 0, 0);</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="txtIMC">
+                  <widget class="QLineEdit" name="txtimc">
                    <property name="styleSheet">
                     <string notr="true">background-color: rgb(255, 255, 255);</string>
                    </property>
@@ -3252,7 +3252,7 @@ color: rgb(0, 0, 0);</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="txtIMC_3">
+                  <widget class="QLineEdit" name="txtimc_3">
                    <property name="styleSheet">
                     <string notr="true">background-color: rgb(255, 255, 255);</string>
                    </property>
@@ -3281,7 +3281,7 @@ color: rgb(0, 0, 0);</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="txtPerimetroCraneal">
+                  <widget class="QLineEdit" name="txtperimetro_craneal">
                    <property name="styleSheet">
                     <string notr="true">background-color: rgb(255, 255, 255);</string>
                    </property>
@@ -3392,7 +3392,7 @@ color: rgb(0, 0, 0);</string>
               <item row="1" column="1" rowspan="2">
                <layout class="QGridLayout" name="gridLayout_28">
                 <item row="0" column="1">
-                 <widget class="QDateEdit" name="cboFechaInicioTratamiento_pestana_H_Farmacologico">
+                 <widget class="QDateEdit" name="cboFechainicio_tratamiento_pestana_H_Farmacologico">
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
@@ -3412,7 +3412,7 @@ color: rgb(0, 0, 0);</string>
                  </widget>
                 </item>
                 <item row="3" column="0" colspan="2">
-                 <widget class="QTextEdit" name="txtComentariosFarmaco_PestanaHFarmacologia">
+                 <widget class="QTextEdit" name="txcomentariosFarmaco_PestanaHFarmacologia">
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(255, 255, 255);
     border:1px solid grey;</string>
@@ -3503,7 +3503,7 @@ color: rgb(255,255,255);</string>
                </widget>
               </item>
               <item row="4" column="0" colspan="2">
-               <widget class="QTextEdit" name="txtComentariosImagen_PestanaDImagen">
+               <widget class="QTextEdit" name="txcomentariosImagen_PestanaDImagen">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);
     border:1px solid grey;</string>
@@ -3879,7 +3879,7 @@ color: rgb(255,255,255);</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>txtNumHistoriaClinica</tabstop>
+  <tabstop>txtnum_historiaClinica</tabstop>
   <tabstop>radHombre</tabstop>
   <tabstop>radMujer</tabstop>
   <tabstop>txtNacimiento</tabstop>

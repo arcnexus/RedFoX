@@ -8,11 +8,11 @@ class Episodio : public QObject
     Q_OBJECT
 public:
     int id;
-    int idPaciente;
+    int id_paciente;
     int cerrado;
     int privado;
     int idcie;
-    int iddoctor;
+    int id_doctor;
     QString doctor;
     QDate fecha;
     QString cie;
@@ -21,19 +21,19 @@ public:
     QString codigocie;
     bool Altas;
     Episodio(QObject* parent = 0);
-    void NuevoEpisodio(int idPaciente);
-    void RecuperarEpisodio(int idEpisodio);
-    QString RecuperarDoctor(int iddoctor);
-    int RecuperarIdDoctor(QString doctor);
+    void NuevoEpisodio(int id_paciente);
+    void RecuperarEpisodio(int id_episodio);
+    QString RecuperarDoctor(int id_doctor);
+    int Recuperarid_doctor(QString doctor);
     void setAltas(bool state) {this->Altas = state;}
     bool getAltas() {return this->Altas;}
 
     void GuardarEpisodio();
     int getid();
-    int getidPaciente();
+    int getid_paciente();
     int getcerrado();
     int getprivado();
-    int getiddoctor() {return this->iddoctor;}
+    int getid_doctor() {return this->id_doctor;}
     QString getdoctor();
     QDate getfecha();
     QString getCIE();
@@ -43,10 +43,10 @@ public:
     QString getcodigocie();
 
     void setid(int id);
-    void setidPaciente(int idPaciente);
+    void setid_paciente(int id_paciente);
     void setcerrado(int cerrado);
     void setprivado(int privado);
-    void setiddoctor(int iddoctor) {this->iddoctor = iddoctor;}
+    void setid_doctor(int id_doctor) {this->id_doctor = id_doctor;}
     void setdoctor(QString doctor);
     void setfecha(QDate fecha);
     void setCIE(QString CIE);

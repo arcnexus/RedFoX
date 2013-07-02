@@ -152,6 +152,29 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btnBuscar">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>45</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Buscar</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="botEditar">
         <property name="minimumSize">
          <size>
@@ -601,7 +624,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="txtrDto">
+           <widget class="QLineEdit" name="txtdto">
             <property name="minimumSize">
              <size>
               <width>62</width>
@@ -655,7 +678,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="txtcCodigoFabricante">
+           <widget class="QLineEdit" name="txtcodigo_fabricante">
             <property name="maximumSize">
              <size>
               <width>120</width>
@@ -690,7 +713,7 @@ color: rgb(255, 255, 255);</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_7">
           <item row="1" column="0">
-           <widget class="QTextEdit" name="txttComentario">
+           <widget class="QTextEdit" name="txtcomentario">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -738,7 +761,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="txtcCodigo">
+           <widget class="QLineEdit" name="txtcodigo">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -786,7 +809,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="txtcCodigoBarras">
+           <widget class="QLineEdit" name="txtcodigo_barras">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -805,7 +828,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
          </layout>
-         <zorder>txtcCodigoBarras</zorder>
+         <zorder>txtcodigo_barras</zorder>
          <zorder>label_3</zorder>
         </widget>
        </item>
@@ -939,7 +962,7 @@ alternate-background-color: rgb(255, 255, 202);</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_13">
           <item row="0" column="0">
-           <widget class="QCheckBox" name="chklMostrarWeb">
+           <widget class="QCheckBox" name="chkmostrar_web">
             <property name="toolTip">
              <string>Seleccionar si se desea que el artículo aparezca en la tienda virtual en su web</string>
             </property>
@@ -1005,7 +1028,7 @@ alternate-background-color: rgb(255, 255, 202);</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
           <item row="0" column="0">
-           <widget class="QCheckBox" name="chklControlarStock">
+           <widget class="QCheckBox" name="chkcontrolar_stock">
             <property name="text">
              <string>Controlar stock</string>
             </property>
@@ -1062,7 +1085,7 @@ background-color: rgb(255, 255, 127);</string>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="txtrCoste">
+           <widget class="QLineEdit" name="txtcoste">
             <property name="maximumSize">
              <size>
               <width>120</width>
@@ -1084,7 +1107,7 @@ background-color: rgb(255, 255, 127);</string>
         </widget>
        </item>
        <item row="2" column="1" colspan="6">
-        <widget class="QLineEdit" name="txtcDescripcionResumida">
+        <widget class="QLineEdit" name="txtdescripcionResumida">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -1097,7 +1120,7 @@ background-color: rgb(255, 255, 127);</string>
         </widget>
        </item>
        <item row="1" column="1" colspan="6">
-        <widget class="QLineEdit" name="txtcDescripcion">
+        <widget class="QLineEdit" name="txtdescripcion">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -1135,7 +1158,7 @@ background-color: rgb(255, 255, 127);</string>
         </widget>
        </item>
        <item row="3" column="2" colspan="4">
-        <widget class="QLineEdit" name="txtcProveedor">
+        <widget class="QLineEdit" name="txtproveedor">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -1221,7 +1244,7 @@ background-color: rgb(255, 255, 127);</string>
            </widget>
           </item>
           <item row="1" column="0" colspan="6">
-           <widget class="QLineEdit" name="txtcSeccion">
+           <widget class="QLineEdit" name="txtseccion">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1241,7 +1264,7 @@ color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item row="3" column="0" colspan="6">
-           <widget class="QLineEdit" name="txtcFamilia">
+           <widget class="QLineEdit" name="txtfamilia">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1354,7 +1377,7 @@ color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item row="5" column="0" colspan="6">
-           <widget class="QLineEdit" name="txtcSubFamilia">
+           <widget class="QLineEdit" name="txtsubfamilia">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1755,7 +1778,7 @@ alternate-background-color: rgb(255, 255,210);</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_36">
           <item row="1" column="2">
-           <widget class="QDateEdit" name="txtdFechaUltimaVenta">
+           <widget class="QDateEdit" name="txtfechaUltimaVenta">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1778,7 +1801,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="0" column="2">
-           <widget class="QDateEdit" name="txtdFechaUltimaCompra">
+           <widget class="QDateEdit" name="txtfecha_ultima_compra">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1856,7 +1879,7 @@ color: rbg(0,0,0);</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_33">
           <item row="1" column="1">
-           <widget class="QLineEdit" name="txtStockfisico">
+           <widget class="QLineEdit" name="txtstock_fisico_almacen">
             <property name="maximumSize">
              <size>
               <width>120</width>
@@ -1893,7 +1916,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="txtnStockMinimo">
+           <widget class="QLineEdit" name="txtstock_minimo">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -1933,7 +1956,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="1" column="5">
-           <widget class="QLineEdit" name="txtnStockReal_2">
+           <widget class="QLineEdit" name="txtstock_real_2">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1968,7 +1991,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="0" column="5">
-           <widget class="QLineEdit" name="txtnStockMaximo">
+           <widget class="QLineEdit" name="txtstock_maximo">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -2022,7 +2045,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="0" column="4">
-           <widget class="QLineEdit" name="txtnCantidadPendienteRecibir">
+           <widget class="QLineEdit" name="txtcantidad_pendiente_recibir">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2058,7 +2081,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="2" column="4">
-           <widget class="QLineEdit" name="txtnReservados">
+           <widget class="QLineEdit" name="txtreservados">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2087,7 +2110,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="1" column="4">
-           <widget class="QDateEdit" name="txtdFechaPrevistaRecepcion">
+           <widget class="QDateEdit" name="txtfecha_prevista_recepcion">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2167,7 +2190,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="txtnUnidadesCompradas">
+           <widget class="QLineEdit" name="txtunidades_compradas">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2203,7 +2226,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="0" column="3">
-           <widget class="QLineEdit" name="txtrAcumuladoCompras">
+           <widget class="QLineEdit" name="txtacumulado_compras">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2239,7 +2262,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="txtnUnidadesVendidas">
+           <widget class="QLineEdit" name="txtunidades_vendidas">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2275,7 +2298,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="1" column="3">
-           <widget class="QLineEdit" name="txtrAcumuladoVentas">
+           <widget class="QLineEdit" name="txtacumulado_ventas">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2591,7 +2614,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="3" column="2">
-           <widget class="QLineEdit" name="txtRegalode">
+           <widget class="QLineEdit" name="txtregalo_de">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -2674,7 +2697,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QTextEdit" name="txtComentarios_promocion">
+           <widget class="QTextEdit" name="txcomentarios_promocion">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -3026,62 +3049,6 @@ Imagen.</string>
           <bool>true</bool>
          </property>
         </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab">
-      <property name="styleSheet">
-       <string notr="true">background-color: #ecefed;</string>
-      </property>
-      <attribute name="title">
-       <string>Búsqueda</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Buscar:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="txtBuscarArticulo">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="botBuscarArtRapido">
-           <property name="icon">
-            <iconset resource="../maya.qrc">
-             <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0" colspan="2">
-          <widget class="QLabel" name="lblMensajeRecuperar">
-           <property name="minimumSize">
-            <size>
-             <width>250</width>
-             <height>50</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realice&lt;span style=&quot; font-weight:600; color:#0000c0;&quot;&gt; dobleclick&lt;/span&gt; sobre el artículo&lt;/p&gt;&lt;p&gt;a recuperar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="3">
-          <widget class="QTableView" name="TablaBuscarArt">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </item>
       </layout>
      </widget>
@@ -5806,28 +5773,28 @@ alternate-background-color: rgb(255, 255, 255);</string>
  </customwidgets>
  <tabstops>
   <tabstop>Pestanas</tabstop>
-  <tabstop>txtcCodigo</tabstop>
-  <tabstop>txtcCodigoBarras</tabstop>
-  <tabstop>txtcCodigoFabricante</tabstop>
-  <tabstop>txtcDescripcion</tabstop>
-  <tabstop>txtcDescripcionResumida</tabstop>
+  <tabstop>txtcodigo</tabstop>
+  <tabstop>txtcodigo_barras</tabstop>
+  <tabstop>txtcodigo_fabricante</tabstop>
+  <tabstop>txtdescripcion</tabstop>
+  <tabstop>txtdescripcionResumida</tabstop>
   <tabstop>txtCodigoProveedor</tabstop>
-  <tabstop>txtcProveedor</tabstop>
+  <tabstop>txtproveedor</tabstop>
   <tabstop>btnBuscarProveedor</tabstop>
   <tabstop>cboTipoIVA</tabstop>
-  <tabstop>txtrCoste</tabstop>
-  <tabstop>chklMostrarWeb</tabstop>
-  <tabstop>chklControlarStock</tabstop>
+  <tabstop>txtcoste</tabstop>
+  <tabstop>chkmostrar_web</tabstop>
+  <tabstop>chkcontrolar_stock</tabstop>
   <tabstop>txtMargen</tabstop>
   <tabstop>txtMargen_min</tabstop>
-  <tabstop>txtrDto</tabstop>
+  <tabstop>txtdto</tabstop>
   <tabstop>TablaTarifas</tabstop>
   <tabstop>btnAnadirTarifa</tabstop>
   <tabstop>btnEditartarifa</tabstop>
   <tabstop>btnBorrarTarifa</tabstop>
-  <tabstop>txttComentario</tabstop>
-  <tabstop>txtcFamilia</tabstop>
-  <tabstop>txtcSubFamilia</tabstop>
+  <tabstop>txtcomentario</tabstop>
+  <tabstop>txtfamilia</tabstop>
+  <tabstop>txtsubfamilia</tabstop>
   <tabstop>txtcSubSubFamilia</tabstop>
   <tabstop>botBuscarSubSubFamilia</tabstop>
   <tabstop>txtcGupoArt</tabstop>
@@ -5836,19 +5803,19 @@ alternate-background-color: rgb(255, 255, 255);</string>
   <tabstop>btnEditarProveedorFrecuente</tabstop>
   <tabstop>btnBorrarProveedores</tabstop>
   <tabstop>btnAsignarProveedor</tabstop>
-  <tabstop>txtnUnidadesCompradas</tabstop>
-  <tabstop>txtrAcumuladoCompras</tabstop>
-  <tabstop>txtnUnidadesVendidas</tabstop>
-  <tabstop>txtrAcumuladoVentas</tabstop>
-  <tabstop>txtnStockMinimo</tabstop>
-  <tabstop>txtnStockMaximo</tabstop>
-  <tabstop>txtStockfisico</tabstop>
-  <tabstop>txtnStockReal_2</tabstop>
-  <tabstop>txtnCantidadPendienteRecibir</tabstop>
-  <tabstop>txtdFechaPrevistaRecepcion</tabstop>
-  <tabstop>txtnReservados</tabstop>
-  <tabstop>txtdFechaUltimaCompra</tabstop>
-  <tabstop>txtdFechaUltimaVenta</tabstop>
+  <tabstop>txtunidades_compradas</tabstop>
+  <tabstop>txtacumulado_compras</tabstop>
+  <tabstop>txtunidades_vendidas</tabstop>
+  <tabstop>txtacumulado_ventas</tabstop>
+  <tabstop>txtstock_minimo</tabstop>
+  <tabstop>txtstock_maximo</tabstop>
+  <tabstop>txtstock_fisico_almacen</tabstop>
+  <tabstop>txtstock_real_2</tabstop>
+  <tabstop>txtcantidad_pendiente_recibir</tabstop>
+  <tabstop>txtfecha_prevista_recepcion</tabstop>
+  <tabstop>txtreservados</tabstop>
+  <tabstop>txtfecha_ultima_compra</tabstop>
+  <tabstop>txtfechaUltimaVenta</tabstop>
   <tabstop>chkArticulo_promocionado</tabstop>
   <tabstop>txtDescripcion_promocion</tabstop>
   <tabstop>radOferta1</tabstop>
@@ -5856,17 +5823,15 @@ alternate-background-color: rgb(255, 255, 255);</string>
   <tabstop>radOferta3</tabstop>
   <tabstop>radOferta4</tabstop>
   <tabstop>txtpor_cada</tabstop>
-  <tabstop>txtRegalode</tabstop>
+  <tabstop>txtregalo_de</tabstop>
   <tabstop>txtDtoOferta</tabstop>
   <tabstop>txt_dto_web</tabstop>
   <tabstop>txtoferta_pvp_fijo</tabstop>
-  <tabstop>txtComentarios_promocion</tabstop>
+  <tabstop>txcomentarios_promocion</tabstop>
   <tabstop>botCambiarImagen</tabstop>
   <tabstop>botCambiarImagen_2</tabstop>
   <tabstop>botCambiarImagen_3</tabstop>
   <tabstop>botCambiarImagen_4</tabstop>
-  <tabstop>txtBuscarArticulo</tabstop>
-  <tabstop>TablaBuscarArt</tabstop>
   <tabstop>cboTipoGrafica</tabstop>
   <tabstop>radGrafica_unidades</tabstop>
   <tabstop>radGrafica_importes</tabstop>
@@ -5980,7 +5945,6 @@ alternate-background-color: rgb(255, 255, 255);</string>
   <tabstop>txtImporte_ventas_febrero</tabstop>
   <tabstop>txtImporte_ventas_marzo</tabstop>
   <tabstop>txtImporte_ventas_abril</tabstop>
-  <tabstop>botBuscarArtRapido</tabstop>
   <tabstop>txtUnid_ventas_mayo</tabstop>
   <tabstop>txtUnid_ventas_junio</tabstop>
   <tabstop>txtImporte_ventas_junio</tabstop>

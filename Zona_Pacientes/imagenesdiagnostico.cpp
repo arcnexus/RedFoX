@@ -14,20 +14,20 @@ void ImagenesDiagnostico::guardarDatosDB()
                          "comentarios = :comentarios,"
                          "evaluada =:evaluada,"
                          "descripcion = :descripcion,"
-                         "fechaimagen = :fechaimagen,"
-                         "idtipoimagen = :idtipoimagen "
+                         "fecha_imagen = :fecha_imagen,"
+                         "id_tipo_imagen = :id_tipo_imagen "
                          "WHERE id =:id");
 
 
         qImagen->bindValue(":comentarios",this->Comentarios);
         qImagen->bindValue(":evaluada",this->Evaluada);
         qImagen->bindValue(":descripcion",this->Descripcion);
-        qImagen->bindValue(":fechaimagen",this->FechaImagen);
-        qImagen->bindValue(":idtipoimagen",this->idTipoImagen);
+        qImagen->bindValue(":fecha_imagen",this->fecha_imagen);
+        qImagen->bindValue(":id_tipo_imagen",this->id_tipo_imagen);
         qImagen->bindValue(":id",this->id);
 
         if(qImagen->exec()){
-            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("La imagen ha sido modificada correctamente"));
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("La imagen ha sido modificada corectamente"));
             emit refrescarlista();
         } else
             TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Ocurrió un error al modificar la imagen en el episodio:\n")+
@@ -46,12 +46,12 @@ void ImagenesDiagnostico::llenarObjetoconDatosDB()
     if (qImagen->exec()) {
         qImagen->next();
         QSqlRecord rImagen = qImagen->record();
-        this->idEpisodio = rImagen.field("idepisodio").value().toInt();
+        this->id_episodio = rImagen.field("id_episodio").value().toInt();
         this->Comentarios = rImagen.field("comentarios").value().toString();
         this->Descripcion = rImagen.field("descripcion").value().toString();
-        this->FechaImagen = rImagen.field("fechaimagen").value().toDate();
-        this->LocalizacionImagen = rImagen.field("localizacionimagen").value().toString();
-        this->idTipoImagen = rImagen.field("idtipoimagen").value().toInt();
+        this->fecha_imagen = rImagen.field("fecha_imagen").value().toDate();
+        this->localizacion_imagen = rImagen.field("localizacion_imagen").value().toString();
+        this->id_tipo_imagen = rImagen.field("id_tipo_imagen").value().toInt();
         this->Evaluada =rImagen.field("evaluada").value().toInt();
     } else {
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Imagenes Diagnóstico"),QObject::tr("No se ha podido recuperar el registro de imagen"),
@@ -70,12 +70,12 @@ void ImagenesDiagnostico::llenarObjetoconDatosDB(int nid)
     if (qImagen->exec()) {
         qImagen->next();
         QSqlRecord rImagen = qImagen->record();
-        this->idEpisodio = rImagen.field("idepisodio").value().toInt();
+        this->id_episodio = rImagen.field("id_episodio").value().toInt();
         this->Comentarios = rImagen.field("comentarios").value().toString();
         this->Descripcion = rImagen.field("descripcion").value().toString();
-        this->FechaImagen = rImagen.field("fechaimagen").value().toDate();
-        this->LocalizacionImagen = rImagen.field("localizacionimagen").value().toString();
-        this->idTipoImagen = rImagen.field("idtipoimagen").value().toInt();
+        this->fecha_imagen = rImagen.field("fecha_imagen").value().toDate();
+        this->localizacion_imagen = rImagen.field("localizacion_imagen").value().toString();
+        this->id_tipo_imagen = rImagen.field("id_tipo_imagen").value().toInt();
         this->Evaluada =rImagen.field("evaluada").value().toInt();
     } else {
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Imagenes Diagnóstico"),QObject::tr("No se ha podido recuperar el registro de imagen"),
@@ -100,11 +100,11 @@ void ImagenesDiagnostico::BorrarImagen(int nid)
     }
 }
 
-int ImagenesDiagnostico::DevolverId_tipo_imagen(QString TipoImagen)
+int ImagenesDiagnostico::Devolverid_tipo_imagen(QString tipo_imagen)
 {
     QSqlQuery queryTiposImagen(QSqlDatabase::database("dbmedica"));
-    queryTiposImagen.prepare("Select id from tiposimagen where descripcion = :TipoImagen");
-    queryTiposImagen.bindValue(":TipoImagen",TipoImagen);
+    queryTiposImagen.prepare("Select id from tiposimagen where descripcion = :tipo_imagen");
+    queryTiposImagen.bindValue(":tipo_imagen",tipo_imagen);
     if(queryTiposImagen.exec()){
         queryTiposImagen.next();
         return queryTiposImagen.record().value("id").toInt();

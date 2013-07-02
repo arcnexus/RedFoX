@@ -12,7 +12,7 @@ public:
     QList<QAction *> Extensions();
     QString ExtensionPath(){return "";}// Use '|' to subPaths
 
-    MayaModule::moduleZone ModuleZone(){return MayaModule::SecretariaMedica;}
+    MayaModule::module_zone module_zone(){return MayaModule::SecretariaMedica;}
 signals:
     
 public slots:

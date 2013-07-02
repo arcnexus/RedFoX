@@ -22,8 +22,8 @@ public:
     explicit frmClientes(QWidget *parent = 0);
     ~frmClientes();
     bool Altas;
-    moduleZone ModuleZone(){return Mantenimiento;}
-    QString ModuleName(){return "Clientes";}
+    module_zone module_zone(){return Mantenimiento;}
+    QString module_name(){return "Clientes";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -36,7 +36,7 @@ public slots:
     void LLenarCampos();
     void LLenarCliente();
     void VaciarCampos();
-   // void SetId_Cliente(int id_Cliente);
+   // void Setid_cliente(int id_cliente);
 
 signals:
     void enviahistoriaynombre(int,QString);
@@ -55,13 +55,13 @@ private slots:
 
     void txtSegundoApellido_editingFinished();
 
-    void txtcNombre_editingFinished();
+    void txtnombre_editingFinished();
 
-    void txtcPoblacion_editingFinished();
+    void txtpoblacion_editingFinished();
 
-    void txtcProvincia_editingFinished();
+    void txtprovincia_editingFinished();
 
-    void txtcCifNif_editingFinished();
+    void txtcif_nif_editingFinished();
 
     void on_btnEditar_clicked();
     void bloquearCampos();
@@ -73,11 +73,11 @@ private slots:
 
     void on_btnBuscar_clicked();
 
-    void txtcCp_editingFinished();
+    void txtcp_editingFinished();
 
-    void txtcCPAlternativa_editingFinished();
+    void txtcpAlternativa_editingFinished();
 
-    void txtcPoblacionAlternativa_editingFinished();
+    void txtpoblacionAlternativa_editingFinished();
 
     void TablaDeudas_clicked(const QModelIndex &index);
 
@@ -85,12 +85,12 @@ private slots:
 
     void on_btnFichaPaciente_clicked();
     void AddCustomerType();
-    void AnadirDireccionAlternativa();
-    void GuardarDireccionAlternativa();
-    void DeshacerDireccionAlternativa();
-    void BorrarDireccionAlternativa();
-    void EditarDireccionAlternativa();
-    void CargarDireccionAlternativa(QModelIndex);
+    void AnadirdireccionAlternativa();
+    void GuardardireccionAlternativa();
+    void DeshacerdireccionAlternativa();
+    void BorrardireccionAlternativa();
+    void EditardireccionAlternativa();
+    void CargardireccionAlternativa(QModelIndex);
     void ValidarCC();
     void validarNifIntrac();
     void Contactos();
@@ -108,14 +108,14 @@ private:
     QSqlQueryModel *modelFP;
     QSqlQueryModel *modelFacturas;
     QSqlQueryModel *modelPoblaciones;
-    QSqlQueryModel *qModelDireccion;
+    QSqlQueryModel *qModeldireccion;
     QSqlDatabase dbCliente;
     FrmBuscarPoblacion BuscarPoblacion;
     QSqlQuery tbpaciente;
     Cliente* oCliente;
     SqlCalls *llamadasSQL;
-    bool AnadirDireccion /*= false*/;
-    int idDireccionAlternativa;
+    bool Anadirdireccion /*= false*/;
+    int iddireccionAlternativa;
 
     ToolBarButton toolButton;
     QAction menuButton;

@@ -64,12 +64,12 @@
      <item>
       <widget class="QLabel" name="label_8">
        <property name="text">
-        <string>SubTotal:</string>
+        <string>subtotal:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrSubtotal">
+      <widget class="QLineEdit" name="txtsubtotal">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
@@ -92,7 +92,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrImporteDescuento">
+      <widget class="QLineEdit" name="txtimporte_descuento">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
@@ -112,7 +112,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrBase">
+      <widget class="QLineEdit" name="txtbase">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -138,7 +138,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrImporteIva">
+      <widget class="QLineEdit" name="txtiva">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
@@ -158,7 +158,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrTotalRecargoEq">
+      <widget class="QLineEdit" name="txttotal_recargo">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -184,7 +184,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrTotal">
+      <widget class="QLineEdit" name="txttotal">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
@@ -584,7 +584,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="txtcAlbaran">
+           <widget class="QLineEdit" name="txtalbaran">
             <property name="maximumSize">
              <size>
               <width>120</width>
@@ -604,7 +604,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item>
-           <widget class="QDateEdit" name="txtdFecha">
+           <widget class="QDateEdit" name="txtfecha">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -658,7 +658,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QLineEdit" name="txtcCp">
+           <widget class="QLineEdit" name="txtcp">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -677,7 +677,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="3" column="1" colspan="7">
-           <widget class="QLineEdit" name="txtcDireccion2">
+           <widget class="QLineEdit" name="txtdireccion2">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -704,14 +704,14 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="0" column="6">
-           <widget class="QCheckBox" name="chklRecargoEq">
+           <widget class="QCheckBox" name="chklporc_rec">
             <property name="text">
              <string>Recargo de equivalencia</string>
             </property>
            </widget>
           </item>
           <item row="2" column="1" colspan="7">
-           <widget class="QLineEdit" name="txtcDireccion">
+           <widget class="QLineEdit" name="txtdireccion1">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -724,7 +724,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="5" column="1" colspan="4">
-           <widget class="QLineEdit" name="txtcProvincia">
+           <widget class="QLineEdit" name="txtprovincia">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -781,7 +781,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="1" colspan="7">
-           <widget class="QLineEdit" name="txtcProveedor">
+           <widget class="QLineEdit" name="txtproveedor">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -818,7 +818,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="0" column="4">
-           <widget class="QLineEdit" name="txtcCif">
+           <widget class="QLineEdit" name="txtcif">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -837,7 +837,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="txtcCodigoProveedor">
+           <widget class="QLineEdit" name="txtcodigoProveedor">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -856,7 +856,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="4" column="2" colspan="6">
-           <widget class="QLineEdit" name="txtcPoblacion">
+           <widget class="QLineEdit" name="txtpoblacion">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -991,7 +991,7 @@ color: rgb(255, 255, 255);</string>
          </column>
          <column>
           <property name="text">
-           <string>SubTotal</string>
+           <string>subtotal</string>
           </property>
          </column>
          <column>
@@ -1058,7 +1058,7 @@ color: rgb(255, 255, 255);</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="1" column="3">
-        <widget class="QDateEdit" name="txtdFechaFactura">
+        <widget class="QDateEdit" name="txtfecha_factura">
          <property name="displayFormat">
           <string>dd/MM/yyyy</string>
          </property>
@@ -1072,7 +1072,7 @@ color: rgb(255, 255, 255);</string>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="txtcPedidoCliente">
+        <widget class="QLineEdit" name="txtpedido_cliente">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1135,7 +1135,7 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="txtrACuenta">
+             <widget class="QLineEdit" name="txtentregado_a_cuenta">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -1200,7 +1200,7 @@ alternate-background-color: rgb(255, 255, 222);</string>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLabel" name="lblFacturado">
+        <widget class="QLabel" name="lbfacturado">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(0, 170, 0);
 color: rgb(255, 255, 255);</string>
@@ -1282,7 +1282,7 @@ color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item row="2" column="6">
-          <widget class="QLineEdit" name="txtrTotal2">
+          <widget class="QLineEdit" name="txttotal2">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1308,7 +1308,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="1" column="4">
-          <widget class="QLineEdit" name="txtnRec1">
+          <widget class="QLineEdit" name="txtporc_rec1">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1340,7 +1340,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="1" column="3">
-          <widget class="QLineEdit" name="txtrIVA1">
+          <widget class="QLineEdit" name="txtiva1">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1366,7 +1366,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QLineEdit" name="txtnPorcentajeIva1">
+          <widget class="QLineEdit" name="txtporc_iva1">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1398,7 +1398,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="3" column="5">
-          <widget class="QLineEdit" name="txtrRecargoEq3">
+          <widget class="QLineEdit" name="txtporc_rec3">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1440,7 +1440,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="3" column="4">
-          <widget class="QLineEdit" name="txtnRec3">
+          <widget class="QLineEdit" name="txtporc_rec3">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1472,7 +1472,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QLineEdit" name="txtrBase3">
+          <widget class="QLineEdit" name="txtbase3">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1498,7 +1498,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="5" column="6">
-          <widget class="QLineEdit" name="txtrTotal_2">
+          <widget class="QLineEdit" name="txttotal_2">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1524,7 +1524,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="4" column="4">
-          <widget class="QLineEdit" name="txtnRec4">
+          <widget class="QLineEdit" name="txtporc_rec4">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1556,7 +1556,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="1" column="5">
-          <widget class="QLineEdit" name="txtrRecargoEq1">
+          <widget class="QLineEdit" name="txtporc_rec1">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1582,7 +1582,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="4" column="3">
-          <widget class="QLineEdit" name="txtrIVA4">
+          <widget class="QLineEdit" name="txtiva4">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1608,7 +1608,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="4" column="2">
-          <widget class="QLineEdit" name="txtnPorcentajeIva4">
+          <widget class="QLineEdit" name="txtporc_iva4">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1640,7 +1640,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="5" column="5">
-          <widget class="QLineEdit" name="txtrTotalRecargoEq_3">
+          <widget class="QLineEdit" name="txttotal_recargo_3">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1682,7 +1682,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="txtrBase2">
+          <widget class="QLineEdit" name="txtbase2">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1708,7 +1708,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QLineEdit" name="txtrBase4">
+          <widget class="QLineEdit" name="txtbase4">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1760,7 +1760,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="5" column="3">
-          <widget class="QLineEdit" name="txtrTotalIVA">
+          <widget class="QLineEdit" name="txttotal_iva">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1796,7 +1796,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="txtrBase1">
+          <widget class="QLineEdit" name="txtbase1">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1854,7 +1854,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="2" column="3">
-          <widget class="QLineEdit" name="txtrIVA2">
+          <widget class="QLineEdit" name="txtiva2">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1880,7 +1880,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="4" column="6">
-          <widget class="QLineEdit" name="txtrTotal4">
+          <widget class="QLineEdit" name="txttotal4">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1906,7 +1906,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QLineEdit" name="txtrBaseTotal">
+          <widget class="QLineEdit" name="txtbase_total">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1932,7 +1932,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="3" column="6">
-          <widget class="QLineEdit" name="txtrTotal3">
+          <widget class="QLineEdit" name="txttotal3">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1968,7 +1968,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="4" column="5">
-          <widget class="QLineEdit" name="txtrRecargoEq4">
+          <widget class="QLineEdit" name="txtporc_rec4">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1994,7 +1994,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="2" column="5">
-          <widget class="QLineEdit" name="txtrRecargoEq2">
+          <widget class="QLineEdit" name="txtporc_rec2">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -2020,7 +2020,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="2" column="4">
-          <widget class="QLineEdit" name="txtnRec2">
+          <widget class="QLineEdit" name="txtporc_rec2">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -2052,7 +2052,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="3" column="3">
-          <widget class="QLineEdit" name="txtrIVA3">
+          <widget class="QLineEdit" name="txtiva3">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -2078,7 +2078,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="3" column="2">
-          <widget class="QLineEdit" name="txtnPorcentajeIva3">
+          <widget class="QLineEdit" name="txtporc_iva3">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -2110,7 +2110,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="2" column="2">
-          <widget class="QLineEdit" name="txtnPorcentajeIva2">
+          <widget class="QLineEdit" name="txtporc_iva2">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -2142,7 +2142,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="1" column="6">
-          <widget class="QLineEdit" name="txtrTotal1">
+          <widget class="QLineEdit" name="txttotal1">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -2203,7 +2203,7 @@ color: rgb(0, 64, 64);</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
        <item row="0" column="0">
-        <widget class="QTextEdit" name="txttComentario">
+        <widget class="QTextEdit" name="txtcomentario">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -2229,23 +2229,23 @@ color: rgb(0, 64, 64);</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>txtdFecha</tabstop>
-  <tabstop>txtcCodigoProveedor</tabstop>
-  <tabstop>txtcCif</tabstop>
+  <tabstop>txtfecha</tabstop>
+  <tabstop>txtcodigoProveedor</tabstop>
+  <tabstop>txtcif</tabstop>
   <tabstop>botBuscarCliente</tabstop>
-  <tabstop>txtcProveedor</tabstop>
-  <tabstop>txtcDireccion</tabstop>
-  <tabstop>txtcDireccion2</tabstop>
-  <tabstop>txtcCp</tabstop>
-  <tabstop>txtcProvincia</tabstop>
+  <tabstop>txtproveedor</tabstop>
+  <tabstop>txtdireccion1</tabstop>
+  <tabstop>txtdireccion2</tabstop>
+  <tabstop>txtcp</tabstop>
+  <tabstop>txtprovincia</tabstop>
   <tabstop>cbo_pais</tabstop>
-  <tabstop>txtcPedidoCliente</tabstop>
-  <tabstop>txtdFechaFactura</tabstop>
+  <tabstop>txtpedido_cliente</tabstop>
+  <tabstop>txtfecha_factura</tabstop>
   <tabstop>txtcNumFra</tabstop>
-  <tabstop>txtrACuenta</tabstop>
+  <tabstop>txtentregado_a_cuenta</tabstop>
   <tabstop>btnAnadirEntrega</tabstop>
   <tabstop>tabla_entregas</tabstop>
-  <tabstop>txttComentario</tabstop>
+  <tabstop>txtcomentario</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnAnterior</tabstop>
   <tabstop>btnSiguiente</tabstop>
@@ -2260,41 +2260,41 @@ color: rgb(0, 64, 64);</string>
   <tabstop>btn_borrarLinea</tabstop>
   <tabstop>tabWidget_2</tabstop>
   <tabstop>btnAnadirLinea</tabstop>
-  <tabstop>txtrTotal2</tabstop>
-  <tabstop>txtnRec1</tabstop>
-  <tabstop>txtrIVA1</tabstop>
-  <tabstop>txtnPorcentajeIva1</tabstop>
-  <tabstop>txtrRecargoEq3</tabstop>
-  <tabstop>txtnRec3</tabstop>
-  <tabstop>txtrBase3</tabstop>
-  <tabstop>txtrTotal_2</tabstop>
-  <tabstop>txtnRec4</tabstop>
-  <tabstop>txtrRecargoEq1</tabstop>
-  <tabstop>txtrIVA4</tabstop>
-  <tabstop>txtnPorcentajeIva4</tabstop>
-  <tabstop>txtrTotalRecargoEq_3</tabstop>
-  <tabstop>txtrBase2</tabstop>
-  <tabstop>txtrBase4</tabstop>
-  <tabstop>txtrTotalIVA</tabstop>
-  <tabstop>txtrBase1</tabstop>
-  <tabstop>txtrIVA2</tabstop>
-  <tabstop>txtrTotal4</tabstop>
-  <tabstop>txtrBaseTotal</tabstop>
-  <tabstop>txtrTotal3</tabstop>
-  <tabstop>txtrRecargoEq4</tabstop>
-  <tabstop>txtrRecargoEq2</tabstop>
-  <tabstop>txtnRec2</tabstop>
-  <tabstop>txtrIVA3</tabstop>
-  <tabstop>txtnPorcentajeIva3</tabstop>
-  <tabstop>txtnPorcentajeIva2</tabstop>
-  <tabstop>txtrTotal1</tabstop>
+  <tabstop>txttotal2</tabstop>
+  <tabstop>txtporc_rec1</tabstop>
+  <tabstop>txtiva1</tabstop>
+  <tabstop>txtporc_iva1</tabstop>
+  <tabstop>txtporc_rec3</tabstop>
+  <tabstop>txtporc_rec3</tabstop>
+  <tabstop>txtbase3</tabstop>
+  <tabstop>txttotal_2</tabstop>
+  <tabstop>txtporc_rec4</tabstop>
+  <tabstop>txtporc_rec1</tabstop>
+  <tabstop>txtiva4</tabstop>
+  <tabstop>txtporc_iva4</tabstop>
+  <tabstop>txttotal_recargo_3</tabstop>
+  <tabstop>txtbase2</tabstop>
+  <tabstop>txtbase4</tabstop>
+  <tabstop>txttotal_iva</tabstop>
+  <tabstop>txtbase1</tabstop>
+  <tabstop>txtiva2</tabstop>
+  <tabstop>txttotal4</tabstop>
+  <tabstop>txtbase_total</tabstop>
+  <tabstop>txttotal3</tabstop>
+  <tabstop>txtporc_rec4</tabstop>
+  <tabstop>txtporc_rec2</tabstop>
+  <tabstop>txtporc_rec2</tabstop>
+  <tabstop>txtiva3</tabstop>
+  <tabstop>txtporc_iva3</tabstop>
+  <tabstop>txtporc_iva2</tabstop>
+  <tabstop>txttotal1</tabstop>
   <tabstop>Lineas</tabstop>
-  <tabstop>txtrSubtotal</tabstop>
-  <tabstop>txtrImporteDescuento</tabstop>
-  <tabstop>txtrBase</tabstop>
-  <tabstop>txtrImporteIva</tabstop>
-  <tabstop>txtrTotalRecargoEq</tabstop>
-  <tabstop>txtrTotal</tabstop>
+  <tabstop>txtsubtotal</tabstop>
+  <tabstop>txtimporte_descuento</tabstop>
+  <tabstop>txtbase</tabstop>
+  <tabstop>txtiva</tabstop>
+  <tabstop>txttotal_recargo</tabstop>
+  <tabstop>txttotal</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>

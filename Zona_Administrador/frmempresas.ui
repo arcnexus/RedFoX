@@ -363,7 +363,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLineEdit" name="txtcCodigo">
+        <widget class="QLineEdit" name="txtcodigo">
          <property name="maximumSize">
           <size>
            <width>100</width>
@@ -379,7 +379,7 @@
         </widget>
        </item>
        <item row="0" column="3">
-        <widget class="QSpinBox" name="txtnEjercicio">
+        <widget class="QSpinBox" name="txtejercicio">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -445,7 +445,7 @@
          <item row="0" column="0" colspan="8">
           <layout class="QGridLayout" name="gridLayout_8">
            <item row="1" column="2" colspan="3">
-            <widget class="QLineEdit" name="txtcPoblacion">
+            <widget class="QLineEdit" name="txtpoblacion">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
              </property>
@@ -459,14 +459,14 @@
             </widget>
            </item>
            <item row="0" column="1" colspan="4">
-            <widget class="QLineEdit" name="txtcDireccion">
+            <widget class="QLineEdit" name="txtdireccion1">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QLineEdit" name="txtcCP">
+            <widget class="QLineEdit" name="txtcp">
              <property name="maximumSize">
               <size>
                <width>100</width>
@@ -486,7 +486,7 @@
             </widget>
            </item>
            <item row="2" column="4">
-            <widget class="QLineEdit" name="txtcPais">
+            <widget class="QLineEdit" name="txtpais">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
              </property>
@@ -507,7 +507,7 @@
             </widget>
            </item>
            <item row="2" column="1" colspan="2">
-            <widget class="QLineEdit" name="txtcProvincia">
+            <widget class="QLineEdit" name="txtprovincia">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
              </property>
@@ -541,7 +541,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="txtcCif">
+            <widget class="QLineEdit" name="txtcif">
              <property name="maximumSize">
               <size>
                <width>150</width>
@@ -575,7 +575,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="txtnDigitosFactura">
+            <widget class="QLineEdit" name="txtndigitos_factura">
              <property name="maximumSize">
               <size>
                <width>30</width>
@@ -595,7 +595,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="txtcSerieFactura">
+            <widget class="QLineEdit" name="txtserieFactura">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
              </property>
@@ -614,7 +614,7 @@
           </widget>
          </item>
          <item row="2" column="3">
-          <widget class="QSpinBox" name="txtTamanocodigoart">
+          <widget class="QSpinBox" name="txttamano_codigoart">
            <property name="value">
             <number>15</number>
            </property>
@@ -630,7 +630,7 @@
          <item row="3" column="0" colspan="2">
           <layout class="QGridLayout" name="gridLayout_7">
            <item row="0" column="1">
-            <widget class="QLineEdit" name="txtcTelefono1">
+            <widget class="QLineEdit" name="txttelefono1">
              <property name="minimumSize">
               <size>
                <width>110</width>
@@ -650,7 +650,7 @@
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QLineEdit" name="txtcTelefono2">
+            <widget class="QLineEdit" name="txttelefono2">
              <property name="minimumSize">
               <size>
                <width>110</width>
@@ -684,7 +684,7 @@
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QLineEdit" name="txtcFax">
+            <widget class="QLineEdit" name="txtfax">
              <property name="minimumSize">
               <size>
                <width>110</width>
@@ -730,7 +730,7 @@
             </widget>
            </item>
            <item row="4" column="1" colspan="2">
-            <widget class="QLineEdit" name="txtcWeb">
+            <widget class="QLineEdit" name="txtweb">
              <property name="minimumSize">
               <size>
                <width>221</width>
@@ -787,7 +787,7 @@
             </attribute>
             <layout class="QGridLayout" name="gridLayout_9">
              <item row="0" column="0">
-              <widget class="QTextEdit" name="txtcComentarioFactura">
+              <widget class="QTextEdit" name="txtccomentario_factura">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 192);</string>
                </property>
@@ -821,7 +821,7 @@
             </attribute>
             <layout class="QGridLayout" name="gridLayout_11">
              <item row="2" column="0">
-              <widget class="QTextEdit" name="txtcComentarioTicket">
+              <widget class="QTextEdit" name="txtccomentario_ticket">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -913,28 +913,28 @@ color: rgb(255, 255, 255);</string>
               </spacer>
              </item>
              <item row="2" column="2">
-              <widget class="QLineEdit" name="txtcCuentaCliente">
+              <widget class="QLineEdit" name="txtcuentaCliente">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
              <item row="3" column="2">
-              <widget class="QLineEdit" name="txtcCuentaProveedores">
+              <widget class="QLineEdit" name="txtcuenta_proveedores">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
              <item row="4" column="2">
-              <widget class="QLineEdit" name="txtcCuentaAcreedores">
+              <widget class="QLineEdit" name="txtcuenta_acreedores">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
              <item row="1" column="2">
-              <widget class="QSpinBox" name="txtnDigitosCuentas">
+              <widget class="QSpinBox" name="txtdigitos_cuentas">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -1546,7 +1546,7 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item row="1" column="3">
-             <widget class="QLineEdit" name="txtcNombreBd">
+             <widget class="QLineEdit" name="txtnombre_bd">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -1686,7 +1686,7 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item row="5" column="3" rowspan="2">
-             <widget class="QLineEdit" name="txtPasswordBDConta">
+             <widget class="QLineEdit" name="txtpassword_bd_conta">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -1760,7 +1760,7 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item row="8" column="3">
-             <widget class="QLineEdit" name="txtcNombreBdMedic">
+             <widget class="QLineEdit" name="txtnombre_bdMedic">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -1953,7 +1953,7 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </item>
             <item row="3" column="2">
-             <widget class="QLineEdit" name="txtRutaBDConta">
+             <widget class="QLineEdit" name="txtruta_bd_conta">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>

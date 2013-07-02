@@ -138,7 +138,7 @@ background-color: rgb(0, 0, 58);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtcFactura">
+          <widget class="QLineEdit" name="txtfactura">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -165,7 +165,7 @@ background-color: rgb(0, 0, 58);</string>
           </widget>
          </item>
          <item>
-          <widget class="QDateEdit" name="txtdFecha">
+          <widget class="QDateEdit" name="txtfecha">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -230,7 +230,7 @@ background-color: rgb(0, 0, 58);</string>
           </widget>
          </item>
          <item>
-          <widget class="QDateEdit" name="txtdFechaCobro">
+          <widget class="QDateEdit" name="txtfecha_cobro">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -265,7 +265,7 @@ background-color: rgb(0, 0, 58);</string>
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="lblContabilizada">
+          <widget class="QLabel" name="lbcontabilizada">
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 128, 0);</string>
            </property>
@@ -328,7 +328,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </widget>
             </item>
             <item row="5" column="1">
-             <widget class="QLineEdit" name="txtcCp">
+             <widget class="QLineEdit" name="txtcp">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -354,7 +354,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </widget>
             </item>
             <item row="6" column="1">
-             <widget class="QLineEdit" name="txtcProvincia">
+             <widget class="QLineEdit" name="txtprovincia">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -382,7 +382,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
             <item row="12" column="0" colspan="2">
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <item>
-               <widget class="QLineEdit" name="txtcCodigoEntidad">
+               <widget class="QLineEdit" name="txtcodigo_entidad">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -392,7 +392,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="txtcDCCuenta">
+               <widget class="QLineEdit" name="txtdc_cuenta">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -402,7 +402,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="txtcOficinaEntidad">
+               <widget class="QLineEdit" name="txtoficina_entidad">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -412,7 +412,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="txtcNumeroCuenta">
+               <widget class="QLineEdit" name="txtnumero_cuenta">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -433,7 +433,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
             <item row="0" column="1">
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <item>
-               <widget class="QLineEdit" name="txtcCodigoCliente">
+               <widget class="QLineEdit" name="txtcodigo_cliente">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -499,7 +499,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLineEdit" name="txtcDireccion2">
+             <widget class="QLineEdit" name="txtdireccion2">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -512,7 +512,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="txtcCliente">
+             <widget class="QLineEdit" name="txtcliente">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -525,7 +525,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QLineEdit" name="txtcPoblacion">
+             <widget class="QLineEdit" name="txtpoblacion">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -565,7 +565,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLineEdit" name="txtcDireccion">
+             <widget class="QLineEdit" name="txtdireccion1">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -578,7 +578,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </widget>
             </item>
             <item row="9" column="1">
-             <widget class="QCheckBox" name="chklRecargoEquivalencia">
+             <widget class="QCheckBox" name="chkrecargo_equivalencia">
               <property name="text">
                <string>Recargo Equivalencia</string>
               </property>
@@ -591,7 +591,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </widget>
             </item>
             <item row="8" column="1">
-             <widget class="QLineEdit" name="txtcCif">
+             <widget class="QLineEdit" name="txtcif">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -641,7 +641,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_4">
             <item row="4" column="1">
-             <widget class="QComboBox" name="txtcFormaPago">
+             <widget class="QComboBox" name="txtforma_pago">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -657,7 +657,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="txtrEntregadoaCuenta">
+             <widget class="QLineEdit" name="txtentregado_a_cuenta">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -679,7 +679,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLineEdit" name="txtrImportePendiente">
+             <widget class="QLineEdit" name="txtimporte_pendiente">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -755,7 +755,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="txtcPedidoCliente">
+             <widget class="QLineEdit" name="txtpedido_cliente">
               <property name="maximumSize">
                <size>
                 <width>100</width>
@@ -766,14 +766,14 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
             </item>
            </layout>
            <zorder>label_24</zorder>
-           <zorder>txtcPedidoCliente</zorder>
+           <zorder>txtpedido_cliente</zorder>
            <zorder>label_21</zorder>
-           <zorder>txtrEntregadoaCuenta</zorder>
+           <zorder>txtentregado_a_cuenta</zorder>
            <zorder>anadirEntrega</zorder>
-           <zorder>txtrImportePendiente</zorder>
+           <zorder>txtimporte_pendiente</zorder>
            <zorder>label_22</zorder>
            <zorder>label_20</zorder>
-           <zorder>txtcFormaPago</zorder>
+           <zorder>txtforma_pago</zorder>
            <zorder>verticalSpacer_2</zorder>
           </widget>
          </item>
@@ -894,7 +894,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
          </column>
          <column>
           <property name="text">
-           <string>SubTotal</string>
+           <string>subtotal</string>
           </property>
          </column>
          <column>
@@ -1009,7 +1009,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="txtrBase1">
+          <widget class="QLineEdit" name="txtbase1">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1026,7 +1026,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QLineEdit" name="txtnPorcentajeIva1">
+          <widget class="QLineEdit" name="txtporc_iva1">
            <property name="maximumSize">
             <size>
              <width>45</width>
@@ -1049,7 +1049,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="1" column="3">
-          <widget class="QLineEdit" name="txtrIVA1">
+          <widget class="QLineEdit" name="txtiva1">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1066,7 +1066,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="1" column="4">
-          <widget class="QLineEdit" name="txtnRec1">
+          <widget class="QLineEdit" name="txtporc_rec1">
            <property name="maximumSize">
             <size>
              <width>45</width>
@@ -1089,7 +1089,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="1" column="5">
-          <widget class="QLineEdit" name="txtrRecargoEq1">
+          <widget class="QLineEdit" name="txtporc_rec1">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1106,7 +1106,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="1" column="6">
-          <widget class="QLineEdit" name="txtrTotal1">
+          <widget class="QLineEdit" name="txttotal1">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1139,7 +1139,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="txtrBase2">
+          <widget class="QLineEdit" name="txtbase2">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1156,7 +1156,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="2" column="2">
-          <widget class="QLineEdit" name="txtnPorcentajeIva2">
+          <widget class="QLineEdit" name="txtporc_iva2">
            <property name="maximumSize">
             <size>
              <width>45</width>
@@ -1179,7 +1179,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="2" column="3">
-          <widget class="QLineEdit" name="txtrIVA2">
+          <widget class="QLineEdit" name="txtiva2">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1196,7 +1196,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="2" column="4">
-          <widget class="QLineEdit" name="txtnRec2">
+          <widget class="QLineEdit" name="txtporc_rec2">
            <property name="maximumSize">
             <size>
              <width>45</width>
@@ -1219,7 +1219,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="2" column="5">
-          <widget class="QLineEdit" name="txtrRecargoEq2">
+          <widget class="QLineEdit" name="txtporc_rec2">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1236,7 +1236,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="2" column="6">
-          <widget class="QLineEdit" name="txtrTotal2">
+          <widget class="QLineEdit" name="txttotal2">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1269,7 +1269,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QLineEdit" name="txtrBase3">
+          <widget class="QLineEdit" name="txtbase3">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1286,7 +1286,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="3" column="2">
-          <widget class="QLineEdit" name="txtnPorcentajeIva3">
+          <widget class="QLineEdit" name="txtporc_iva3">
            <property name="maximumSize">
             <size>
              <width>45</width>
@@ -1309,7 +1309,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="3" column="3">
-          <widget class="QLineEdit" name="txtrIVA3">
+          <widget class="QLineEdit" name="txtiva3">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1326,7 +1326,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="3" column="4">
-          <widget class="QLineEdit" name="txtnRec3">
+          <widget class="QLineEdit" name="txtporc_rec3">
            <property name="maximumSize">
             <size>
              <width>45</width>
@@ -1349,7 +1349,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="3" column="5">
-          <widget class="QLineEdit" name="txtrRecargoEq3">
+          <widget class="QLineEdit" name="txtporc_rec3">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1366,7 +1366,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="3" column="6">
-          <widget class="QLineEdit" name="txtrTotal3">
+          <widget class="QLineEdit" name="txttotal3">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1399,7 +1399,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QLineEdit" name="txtrBase4">
+          <widget class="QLineEdit" name="txtbase4">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1416,7 +1416,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="4" column="2">
-          <widget class="QLineEdit" name="txtnPorcentajeIva4">
+          <widget class="QLineEdit" name="txtporc_iva4">
            <property name="maximumSize">
             <size>
              <width>45</width>
@@ -1439,7 +1439,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="4" column="3">
-          <widget class="QLineEdit" name="txtrIVA4">
+          <widget class="QLineEdit" name="txtiva4">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1456,7 +1456,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="4" column="4">
-          <widget class="QLineEdit" name="txtnRec4">
+          <widget class="QLineEdit" name="txtporc_rec4">
            <property name="maximumSize">
             <size>
              <width>45</width>
@@ -1479,7 +1479,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="4" column="5">
-          <widget class="QLineEdit" name="txtrRecargoEq4">
+          <widget class="QLineEdit" name="txtporc_rec4">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1496,7 +1496,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="4" column="6">
-          <widget class="QLineEdit" name="txtrTotal4">
+          <widget class="QLineEdit" name="txttotal4">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1513,7 +1513,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="6" column="1">
-          <widget class="QLineEdit" name="txtrBaseTotal_2">
+          <widget class="QLineEdit" name="txtbase_total_2">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(17, 82, 2);
@@ -1531,7 +1531,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
           </widget>
          </item>
          <item row="6" column="3">
-          <widget class="QLineEdit" name="txtnIva_2">
+          <widget class="QLineEdit" name="txtiva_2">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1548,7 +1548,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="6" column="5">
-          <widget class="QLineEdit" name="txtrTotalRecargoEq">
+          <widget class="QLineEdit" name="txttotal_recargo">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1565,7 +1565,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="6" column="6">
-          <widget class="QLineEdit" name="txtrTotal_2">
+          <widget class="QLineEdit" name="txttotal_2">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1589,7 +1589,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="7" column="2">
-          <widget class="QLineEdit" name="txtnIRPF">
+          <widget class="QLineEdit" name="txtirpf">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1612,7 +1612,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="7" column="6">
-          <widget class="QLineEdit" name="txtrImporteIRPF">
+          <widget class="QLineEdit" name="txtimporte_irpf">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1803,7 +1803,7 @@ color: rgb(23, 76, 7);</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
-        <widget class="QTextEdit" name="txttComentario">
+        <widget class="QTextEdit" name="txtcomentario">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -2049,7 +2049,7 @@ color: rgb(23, 76, 7);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrBase">
+      <widget class="QLineEdit" name="txtbase">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
@@ -2072,7 +2072,7 @@ color: rgb(23, 76, 7);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrImporteIRPF_2">
+      <widget class="QLineEdit" name="txtimporte_irpf_2">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
@@ -2095,7 +2095,7 @@ color: rgb(23, 76, 7);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrImporteIva">
+      <widget class="QLineEdit" name="txtiva">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
@@ -2110,7 +2110,7 @@ color: rgb(23, 76, 7);</string>
      <item>
       <widget class="QLabel" name="label_8">
        <property name="text">
-        <string>SubTotal:</string>
+        <string>subtotal:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2118,7 +2118,7 @@ color: rgb(23, 76, 7);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrSubtotal">
+      <widget class="QLineEdit" name="txtsubtotal">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
@@ -2144,7 +2144,7 @@ color: rgb(23, 76, 7);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrImporteDescuento">
+      <widget class="QLineEdit" name="txtimporte_descuento">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
@@ -2167,7 +2167,7 @@ color: rgb(23, 76, 7);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrTotal">
+      <widget class="QLineEdit" name="txttotal">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>

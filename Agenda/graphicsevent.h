@@ -33,7 +33,7 @@ public:
     int id_cliente;
     int id_spec;
     int id_depart;
-    bool isPrivado;
+    bool isprivado;
 
 signals:
     void updateScene();

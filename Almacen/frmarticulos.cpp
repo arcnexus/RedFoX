@@ -14,7 +14,7 @@
 
 
 FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
-    MayaModule(ModuleZone(),ModuleName(),parent),
+    MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmArticulos),
     toolButton(tr("Almacen"),":/Icons/PNG/Box.png",this),
     menuButton(QIcon(":/Icons/PNG/Box.png"),tr("Almacen"),this),
@@ -28,7 +28,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     // Cargar valores IVA
     //Configuracion_global->CargarDatos();
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
-    ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
+    ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("tipo"));
     // Cargar empresas
     QSqlQueryModel *modelEmpresa = new QSqlQueryModel(this);
     modelEmpresa->setQuery("select * from vistaEmpresa",QSqlDatabase::database("Maya"));
@@ -51,8 +51,8 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     // TARIFAS
     //---------------------
     tarifa_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("Maya"));
-    tarifa_model->setTable("viewTarifa");
-    tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
+    tarifa_model->setTable("viewtarifa");
+    tarifa_model->setFilter("id_articulo = "+QString::number(oArticulo->id));
     tarifa_model->select();
     QStringList headers;
     headers << "Pais" << "Moneda" << "Codigo de tarifa" << "Descripción";
@@ -71,13 +71,13 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     //--------------------------------
     // CAMPOS MONEDA
     //--------------------------------
-    //ui->txtrCoste->setValidator(Configuracion_global->validator_cantidad);
+    //ui->txtcoste->setValidator(Configuracion_global->validator_cantidad);
 
 
     //-----------------------------------------
     // CONEXIONES
     //-----------------------------------------
-    connect(ui->txtrCoste,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
+    connect(ui->txtcoste,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
     connect(ui->btnAnadirProveedores,SIGNAL(clicked()),this,SLOT(anadir_proveedor_clicked()));
     connect(ui->tablaLotes,SIGNAL(clicked(QModelIndex)),this,SLOT(TablaTrazabilidad_clicked(QModelIndex)));
     connect(ui->radGrafica_unidades,SIGNAL(clicked()),this,SLOT(GraficaUnidades()));
@@ -125,14 +125,14 @@ void FrmArticulos::on_botAnadir_clicked()
             this->anadir = true;
             LLenarCampos();
             //ui->lblImagenArticulo->setPixmap(QPixmap::fromImage());
-            ui->txtcCodigo->setFocus();
+            ui->txtcodigo->setFocus();
         }
     }
 }
 
 void FrmArticulos::on_botGuardar_clicked()
 {
-    if(!ui->txtcSeccion->text().isEmpty())
+    if(!ui->txtseccion->text().isEmpty())
     {
         bloquearCampos(true);
         CargarCamposEnArticulo();
@@ -149,21 +149,21 @@ void FrmArticulos::on_botGuardar_clicked()
 
 void FrmArticulos::on_botSiguiente_clicked()
 {
-    QString cCodigo = oArticulo->cCodigo;
-    oArticulo->Recuperar("Select * from articulos where cCodigo >'"+cCodigo+"' order by cCodigo limit 1 ",1);
+    QString codigo = oArticulo->codigo;
+    oArticulo->Recuperar("Select * from articulos where codigo >'"+codigo+"' order by codigo limit 1 ",1);
     LLenarCampos();
     ui->botBorrar->setEnabled(true);
     ui->botAnterior->setEnabled(true);
     ui->botEditar->setEnabled(true);
-    tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
+    tarifa_model->setFilter("id_articulo = "+QString::number(oArticulo->id));
     tarifa_model->select();
 }
 void FrmArticulos::on_botAnterior_clicked()
 {
-    QString cCodigo =oArticulo->cCodigo;
-    oArticulo->Recuperar("Select * from articulos where cCodigo <'"+cCodigo+"' order by cCodigo desc limit 1 ",2);
+    QString codigo =oArticulo->codigo;
+    oArticulo->Recuperar("Select * from articulos where codigo <'"+codigo+"' order by codigo desc limit 1 ",2);
     LLenarCampos();
-    tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
+    tarifa_model->setFilter("id_articulo = "+QString::number(oArticulo->id));
     tarifa_model->select();
 
 }
@@ -213,7 +213,6 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->botEditar->setEnabled(state);
     ui->botGuardar->setEnabled(!state);
     ui->botSiguiente->setEnabled(state);
-    // activo controles que deben estar activos.
 
     // Botones artículos
     ui->botBuscarSeccion->setEnabled(!state);
@@ -239,64 +238,66 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->btnAnadirTarifa->setEnabled(!state);
     ui->btnEditartarifa->setEnabled(!state);
     ui->btnBorrarTarifa->setEnabled(!state);
+    // activo controles que deben estar activos.
     ui->checkBox->setEnabled(true);
+
 }
 
 void FrmArticulos::LLenarCampos()
 {
 
-   ui->txtcCodigo->setText(oArticulo->cCodigo);
-   ui->lblCodigo->setText(oArticulo->cCodigo);
-   ui->txtcCodigoBarras->setText(oArticulo->cCodigoBarras);
-   ui->txtcCodigoFabricante->setText(oArticulo->cCodigoFabricante);
-   ui->txtcDescripcion->setText(oArticulo->cDescripcion);
-   ui->lblDescripcion->setText(oArticulo->cDescripcion);
+   ui->txtcodigo->setText(oArticulo->codigo);
+   ui->lblCodigo->setText(oArticulo->codigo);
+   ui->txtcodigo_barras->setText(oArticulo->codigo_barras);
+   ui->txtcodigo_fabricante->setText(oArticulo->codigo_fabricante);
+   ui->txtdescripcion->setText(oArticulo->descripcion);
+   ui->lblDescripcion->setText(oArticulo->descripcion);
    ui->lblCodigo->setVisible(true);
    ui->lblDescripcion->setVisible(true);
-   ui->txtcDescripcionResumida->setText(oArticulo->cDescripcionReducida);
-   ui->txtcProveedor->setText(oArticulo->cProveedor);
+   ui->txtdescripcionResumida->setText(oArticulo->descripcion_reducida);
+   ui->txtproveedor->setText(oArticulo->proveedor);
    ui->txtCodigoProveedor->setText(oArticulo->cCodProveedor);
-   ui->txtcFamilia->setText(oArticulo->cFamilia);
-   ui->txtcSeccion->setText(oArticulo->cSeccion);
-   ui->txtcSubFamilia->setText(oArticulo->cSubfamilia);
-   int nIndex = ui->cboTipoIVA->findText(QString::number(oArticulo->nTipoIva));
+   ui->txtfamilia->setText(oArticulo->familia);
+   ui->txtseccion->setText(oArticulo->seccion);
+   ui->txtsubfamilia->setText(oArticulo->subfamilia);
+   int nIndex = ui->cboTipoIVA->findText(QString::number(oArticulo->tipo_iva));
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
-   ui->txtrDto->setText(QString::number(oArticulo->rDto,'f',2));
-   ui->txtrCoste->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->rCoste,'f',2)));
-   ui->txtdFechaUltimaCompra->setDate(oArticulo->dUltimaCompra);
-   ui->txtdFechaUltimaVenta->setDate(oArticulo->dUltimaVenta);
-   ui->txtnUnidadesCompradas->setText(QString::number(oArticulo->nUnidadesCompradas));
-   ui->txtnUnidadesVendidas->setText(QString::number(oArticulo->nUnidadesVendidas));
-   ui->txtrAcumuladoCompras->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->rAcumuladoCompras,'f',2)));
-   ui->txtrAcumuladoVentas->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->rAcumuladoVentas,'f',2)));
-   ui->txttComentario->setText(oArticulo->tComentario);
-   ui->txtnStockMaximo->setText(QString::number(oArticulo->nStockMaximo));
-   ui->txtnStockMinimo->setText(QString::number(oArticulo->nStockMinimo));
-   //ui->txtnStockReal->setText(QString::number(oArticulo->nStockReal));
-   ui->txtnStockReal_2->setText(QString::number(oArticulo->nStockReal));
-   ui->txtStockfisico->setText(QString::number(oArticulo->nStockFisico));
+   ui->txtdto->setText(QString::number(oArticulo->dto,'f',2));
+   ui->txtcoste->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste,'f',2)));
+   ui->txtfecha_ultima_compra->setDate(oArticulo->ultima_compra);
+   ui->txtfechaUltimaVenta->setDate(oArticulo->ultima_venta);
+   ui->txtunidades_compradas->setText(QString::number(oArticulo->unidades_compradas));
+   ui->txtunidades_vendidas->setText(QString::number(oArticulo->unidades_vendidas));
+   ui->txtacumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->acumulado_compras,'f',2)));
+   ui->txtacumulado_ventas->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->acumulado_ventas,'f',2)));
+   ui->txtcomentario->setText(oArticulo->comentario);
+   ui->txtstock_maximo->setText(QString::number(oArticulo->stock_maximo));
+   ui->txtstock_minimo->setText(QString::number(oArticulo->stock_minimo));
+   //ui->txtstock_real->setText(QString::number(oArticulo->stock_real));
+   ui->txtstock_real_2->setText(QString::number(oArticulo->stock_real));
+   ui->txtstock_fisico_almacen->setText(QString::number(oArticulo->nstock_fisico_almacen));
 
-   if (oArticulo->lControlarStock==1)
-        ui->chklControlarStock->setChecked(true);
+   if (oArticulo->controlar_stock==1)
+        ui->chkcontrolar_stock->setChecked(true);
    else
-       ui->chklControlarStock->setChecked(false);
+       ui->chkcontrolar_stock->setChecked(false);
 
-   ui->txtnCantidadPendienteRecibir->setText(QString::number(oArticulo->nCantidadPendienteRecibir));
-   ui->txtdFechaPrevistaRecepcion->setDate(oArticulo->dFechaPrevistaRecepcion);
-   ui->txtnReservados->setText(QString::number(oArticulo->nReservados));
-   ui->txtcSeccion->setText(oArticulo->getcSeccion(oArticulo->id_Seccion));
-   ui->txtcFamilia->setText(oArticulo->getcFamilia(oArticulo->id_Familia));
-   ui->txtcSubFamilia->setText(oArticulo->getcSubFamilia(oArticulo->id_SubFamilia));
-   ui->txtcSubSubFamilia->setText((oArticulo->getcSubSubFamilia(oArticulo->idsubsubfamilia)));
-   ui->txtcGupoArt->setText(oArticulo->getcGrupo(oArticulo->idgrupoart));
+   ui->txtcantidad_pendiente_recibir->setText(QString::number(oArticulo->cantidad_pendiente_recibir));
+   ui->txtfecha_prevista_recepcion->setDate(oArticulo->fecha_prevista_recepcion);
+   ui->txtreservados->setText(QString::number(oArticulo->reservados));
+   ui->txtseccion->setText(oArticulo->getseccion(oArticulo->id_seccion));
+   ui->txtfamilia->setText(oArticulo->getfamilia(oArticulo->id_familia));
+   ui->txtsubfamilia->setText(oArticulo->getsubfamilia(oArticulo->id_subfamilia));
+   ui->txtcSubSubFamilia->setText((oArticulo->getcSubSubFamilia(oArticulo->id_subsub_familia)));
+   ui->txtcGupoArt->setText(oArticulo->getcGrupo(oArticulo->id_grupo_art));
   // ui->txtMargen->setValue(oArticulo->margen);
   // ui->txtMargen_min->setValue((oArticulo->margen_min));
 
-   if (oArticulo->lMostrarWeb==1)
-        ui->chklMostrarWeb->setChecked(true);
+   if (oArticulo->mostrar_web==1)
+        ui->chkmostrar_web->setChecked(true);
     else
-       ui->chklMostrarWeb->setChecked(false);
+       ui->chkmostrar_web->setChecked(false);
    //-----------------------------
    // Recuperamos imagen desde BD
    //-----------------------------
@@ -310,7 +311,7 @@ void FrmArticulos::LLenarCampos()
   if(nIndex >-1)
       ui->cboTipoIVA->setCurrentIndex(nIndex);
 
-  ui->chkArticulo_promocionado->setChecked(oArticulo->articulopromocionado);
+  ui->chkArticulo_promocionado->setChecked(oArticulo->articulo_promocionado);
   ui->framePromocion->setEnabled(false);
   ui->txtDescripcion_promocion->setText(oArticulo->descripcion_promocion);
   switch (oArticulo->tipo_oferta) {
@@ -329,11 +330,11 @@ void FrmArticulos::LLenarCampos()
   }
 
   ui->txtpor_cada->setText(QString::number(oArticulo->por_cada));
-  ui->txtRegalode->setText(QString::number(oArticulo->regalode));
+  ui->txtregalo_de->setText(QString::number(oArticulo->regalo_de));
   ui->txt_dto_web->setText(QString::number(oArticulo->porc_dto_web,'f',2));
   ui->txtoferta_pvp_fijo->setText(QString::number(oArticulo->oferta_pvp_fijo,'f',2));
-  ui->txtComentarios_promocion->setPlainText(oArticulo->comentario_oferta);
-  if (oArticulo->articulopromocionado)
+  ui->txcomentarios_promocion->setPlainText(oArticulo->comentario_oferta);
+  if (oArticulo->articulo_promocionado)
       ui->lbl_en_promocion->setVisible(true);
   else
       ui->lbl_en_promocion->setVisible(false);
@@ -355,52 +356,52 @@ void FrmArticulos::LLenarCampos()
 
 void FrmArticulos::CargarCamposEnArticulo()
 {
-    oArticulo->cCodigo= ui->txtcCodigo->text();
-    oArticulo->cCodigoBarras =ui->txtcCodigoBarras->text();
-    oArticulo->cCodigoFabricante=ui->txtcCodigoFabricante->text();
-    oArticulo->cDescripcion =ui->txtcDescripcion->text();
-    oArticulo->cDescripcionReducida = ui->txtcDescripcionResumida->text();
-    oArticulo->cFamilia=ui->txtcFamilia->text();
-    oArticulo->cSeccion=ui->txtcSeccion->text();
-    oArticulo->cSubfamilia=ui->txtcSubFamilia->text();
-    oArticulo->nTipoIva=Configuracion_global->ivas[ui->cboTipoIVA->currentText()].value("nIva").toDouble();
-    oArticulo->id_tiposiva = Configuracion_global->getIdIva(ui->cboTipoIVA->currentText());
-    oArticulo->rCoste=ui->txtrCoste->text().replace(",",".").toDouble();
-    oArticulo->dUltimaCompra= ui->txtdFechaUltimaCompra->date();
-    oArticulo->dUltimaVenta= ui->txtdFechaUltimaVenta->date();
-    oArticulo->nUnidadesCompradas= ui->txtnUnidadesCompradas->text().toDouble();
-    oArticulo->nUnidadesVendidas=ui->txtnUnidadesVendidas->text().toDouble();
-    oArticulo->rAcumuladoCompras= ui->txtrAcumuladoCompras->text().replace(",",".").toDouble();
-    oArticulo->rAcumuladoVentas= ui->txtrAcumuladoVentas->text().replace(",",".").toDouble();
-    oArticulo->tComentario=ui->txttComentario->toPlainText();
-    oArticulo->nStockMaximo=ui->txtnStockMaximo->text().toInt();
-    oArticulo->nStockMinimo=ui->txtnStockMinimo->text().toInt();
-  //  oArticulo->nStockReal=ui->txtnStockReal->text().toInt();
+    oArticulo->codigo= ui->txtcodigo->text();
+    oArticulo->codigo_barras =ui->txtcodigo_barras->text();
+    oArticulo->codigo_fabricante=ui->txtcodigo_fabricante->text();
+    oArticulo->descripcion =ui->txtdescripcion->text();
+    oArticulo->descripcion_reducida = ui->txtdescripcionResumida->text();
+    oArticulo->familia=ui->txtfamilia->text();
+    oArticulo->seccion=ui->txtseccion->text();
+    oArticulo->subfamilia=ui->txtsubfamilia->text();
+    oArticulo->tipo_iva=Configuracion_global->ivas[ui->cboTipoIVA->currentText()].value("iva").toDouble();
+    oArticulo->id_tiposiva = Configuracion_global->getidIva(ui->cboTipoIVA->currentText());
+    oArticulo->coste=ui->txtcoste->text().replace(",",".").toDouble();
+    oArticulo->ultima_compra= ui->txtfecha_ultima_compra->date();
+    oArticulo->ultima_venta= ui->txtfechaUltimaVenta->date();
+    oArticulo->unidades_compradas= ui->txtunidades_compradas->text().toDouble();
+    oArticulo->unidades_vendidas=ui->txtunidades_vendidas->text().toDouble();
+    oArticulo->acumulado_compras= ui->txtacumulado_compras->text().replace(",",".").toDouble();
+    oArticulo->acumulado_ventas= ui->txtacumulado_ventas->text().replace(",",".").toDouble();
+    oArticulo->comentario=ui->txtcomentario->toPlainText();
+    oArticulo->stock_maximo=ui->txtstock_maximo->text().toInt();
+    oArticulo->stock_minimo=ui->txtstock_minimo->text().toInt();
+  //  oArticulo->stock_real=ui->txtstock_real->text().toInt();
 
-    if (ui->chklControlarStock->isChecked())
-       oArticulo->lControlarStock=1;
+    if (ui->chkcontrolar_stock->isChecked())
+       oArticulo->controlar_stock=1;
     else
-        oArticulo->lControlarStock=0;
+        oArticulo->controlar_stock=0;
 
-    oArticulo->nCantidadPendienteRecibir=ui->txtnCantidadPendienteRecibir->text().toInt();
-    oArticulo->dFechaPrevistaRecepcion =ui->txtdFechaPrevistaRecepcion->date();
-    oArticulo->nReservados =ui->txtnReservados->text().toInt();
-    if (ui->chklMostrarWeb->isChecked())
-        oArticulo->lMostrarWeb = 1;
+    oArticulo->cantidad_pendiente_recibir=ui->txtcantidad_pendiente_recibir->text().toInt();
+    oArticulo->fecha_prevista_recepcion =ui->txtfecha_prevista_recepcion->date();
+    oArticulo->reservados =ui->txtreservados->text().toInt();
+    if (ui->chkmostrar_web->isChecked())
+        oArticulo->mostrar_web = 1;
     else
-        oArticulo->lMostrarWeb = 0;
-    oArticulo->id_tiposiva = Configuracion_global->getIdIva(ui->cboTipoIVA->currentText());
-    oArticulo->id_Seccion = oArticulo->getIdSeccion(ui->txtcSeccion->text());
-    oArticulo->id_Familia  = oArticulo->getIdFamilia(ui->txtcFamilia->text());
-    oArticulo->id_SubFamilia = oArticulo->getIdSubFamilia(ui->txtcSubFamilia->text());
-    oArticulo->idsubsubfamilia = oArticulo->getIdSubSufFamilia(ui->txtcSubSubFamilia->text());
-    oArticulo->idgrupoart = oArticulo->getIdGrupo(ui->txtcGupoArt->text());
+        oArticulo->mostrar_web = 0;
+    oArticulo->id_tiposiva = Configuracion_global->getidIva(ui->cboTipoIVA->currentText());
+    oArticulo->id_seccion = oArticulo->getidSeccion(ui->txtseccion->text());
+    oArticulo->id_familia  = oArticulo->getidFamilia(ui->txtfamilia->text());
+    oArticulo->id_subfamilia = oArticulo->getidSubFamilia(ui->txtsubfamilia->text());
+    oArticulo->id_subsub_familia = oArticulo->getidSubSufFamilia(ui->txtcSubSubFamilia->text());
+    oArticulo->id_grupo_art = oArticulo->getidGrupo(ui->txtcGupoArt->text());
     oArticulo->cCodProveedor = ui->txtCodigoProveedor->text();
-    oArticulo->cProveedor = ui->txtcProveedor->text();
+    oArticulo->proveedor = ui->txtproveedor->text();
 
-//    this->idweb = registro.field("idweb").value().toInt();
-  //  oArticulo->stockfisico = ui->txtStockFisico->text().toInt();
-    oArticulo->articulopromocionado = ui->chkArticulo_promocionado->isChecked();
+//    this->id_web = registro.field("id_web").value().toInt();
+  //  oArticulo->stock_fisico_almacen = ui->txtstock_fisico_almacen->text().toInt();
+    oArticulo->articulo_promocionado = ui->chkArticulo_promocionado->isChecked();
     oArticulo->descripcion_promocion = ui->txtDescripcion_promocion->text();
 
     if(ui->radOferta1->isChecked())
@@ -414,10 +415,10 @@ void FrmArticulos::CargarCamposEnArticulo()
 
 
     oArticulo->por_cada = ui->txtpor_cada->text().toInt();
-    oArticulo->regalode = ui->txtRegalode->text().toInt();
+    oArticulo->regalo_de = ui->txtregalo_de->text().toInt();
     oArticulo->porc_dto_web = ui->txt_dto_web->text().replace(",",".").toDouble();
     oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().replace(",",".").toDouble();
-    oArticulo->comentario_oferta = ui->txtComentarios_promocion->toPlainText();
+    oArticulo->comentario_oferta = ui->txcomentarios_promocion->toPlainText();
     oArticulo->coste_real = ui->txtCoste_real->text().replace(",",".").toDouble();
    // oArticulo->margen = ui->txtMargen->value();
    // oArticulo->margen_min = ui->txtMargen_min->value();
@@ -427,35 +428,35 @@ void FrmArticulos::CargarCamposEnArticulo()
 void FrmArticulos::VaciarCampos()
 {
    oArticulo->Vaciar();
-   ui->txtcCodigo->setText("");
-   ui->txtcCodigoBarras->setText("");
-   ui->txtcCodigoFabricante->setText("");
-   ui->txtcDescripcion->setText("");
-   ui->txtcDescripcionResumida->setText("");
-   ui->txtcProveedor->setText("");
-   ui->txtcFamilia->setText("");
-   ui->txtcSeccion->setText("");
-   ui->txtcSubFamilia->setText("");
+   ui->txtcodigo->setText("");
+   ui->txtcodigo_barras->setText("");
+   ui->txtcodigo_fabricante->setText("");
+   ui->txtdescripcion->setText("");
+   ui->txtdescripcionResumida->setText("");
+   ui->txtproveedor->setText("");
+   ui->txtfamilia->setText("");
+   ui->txtseccion->setText("");
+   ui->txtsubfamilia->setText("");
    ui->cboTipoIVA->setEditText("");
-   ui->txtrCoste->setText("0,00");
-   ui->txtrDto->setText("0");
-   ui->txtdFechaUltimaCompra->setDate(QDate::currentDate());
-   ui->txtdFechaUltimaVenta->setDate(QDate::currentDate());
-   ui->txtnUnidadesCompradas->setText("0");
-   ui->txtnUnidadesVendidas->setText("0");
-   ui->txtrAcumuladoCompras->setText("0,00");
-   ui->txtrAcumuladoVentas->setText("0,00");
-   ui->txttComentario->setText("");
-   ui->txtnStockMaximo->setText("0");
-   ui->txtnStockMinimo->setText("0");
-  // ui->txtnStockReal->setText("0");
-   ui->txtnStockReal_2->setText("0");
-  // ui->txtStockFisico->setText("0");
-   ui->chklControlarStock->setChecked(false);
-   ui->txtnCantidadPendienteRecibir->setText("0");
-   ui->txtdFechaPrevistaRecepcion->setDate(QDate::currentDate());
-   ui->txtnReservados->setText("0");
-   ui->chklMostrarWeb->setChecked(false);
+   ui->txtcoste->setText("0,00");
+   ui->txtdto->setText("0");
+   ui->txtfecha_ultima_compra->setDate(QDate::currentDate());
+   ui->txtfechaUltimaVenta->setDate(QDate::currentDate());
+   ui->txtunidades_compradas->setText("0");
+   ui->txtunidades_vendidas->setText("0");
+   ui->txtacumulado_compras->setText("0,00");
+   ui->txtacumulado_ventas->setText("0,00");
+   ui->txtcomentario->setText("");
+   ui->txtstock_maximo->setText("0");
+   ui->txtstock_minimo->setText("0");
+  // ui->txtstock_real->setText("0");
+   ui->txtstock_real_2->setText("0");
+  // ui->txtstock_fisico_almacen->setText("0");
+   ui->chkcontrolar_stock->setChecked(false);
+   ui->txtcantidad_pendiente_recibir->setText("0");
+   ui->txtfecha_prevista_recepcion->setDate(QDate::currentDate());
+   ui->txtreservados->setText("0");
+   ui->chkmostrar_web->setChecked(false);
    ui->txtCodigoProveedor->setText("");
    ui->chkArticulo_promocionado->setChecked(false);
    ui->txtDescripcion_promocion->setText("");
@@ -464,10 +465,10 @@ void FrmArticulos::VaciarCampos()
    ui->radOferta3->setChecked(false);
    ui->radOferta4->setChecked(false);
    ui->txtpor_cada->setText("0");
-   ui->txtRegalode->setText("0");
+   ui->txtregalo_de->setText("0");
    ui->txt_dto_web->setText("0");
    ui->txtoferta_pvp_fijo->setText("0");
-   ui->txtComentarios_promocion->setPlainText("");
+   ui->txcomentarios_promocion->setPlainText("");
    ui->txtCoste_real->setText("0,00");
    //ui->txtMargen->setValue(0);
    //ui->txtMargen_min->setValue(0);
@@ -495,12 +496,12 @@ void FrmArticulos::rellenar_grafica_proveedores()
     //----------------------
     // GRAFICA SEGÚN PVDREAL
     //----------------------
-    QSqlQuery queryProveed("select cProveedor,pvdreal from proveedores_frecuentes where id_art = "+
+    QSqlQuery queryProveed("select proveedor,pvdreal from proveedores_frecuentes where id_art = "+
                            QString::number(oArticulo->id),QSqlDatabase::database("Maya"));
     if(queryProveed.exec()){
 
         while (queryProveed.next()) {
-            ui->graf_prov->addItem(queryProveed.record().value("cProveedor").toString().left(4),
+            ui->graf_prov->addItem(queryProveed.record().value("proveedor").toString().left(4),
                                    queryProveed.record().value("pvdreal").toFloat()/*,Qt::blue*/);
 
 
@@ -516,7 +517,7 @@ void FrmArticulos::rellenar_grafica_proveedores()
 void FrmArticulos::on_botEditar_clicked()
 {
     bloquearCampos(false);
-    ui->txtcCodigo->setFocus();
+    ui->txtcodigo->setFocus();
     if (ui->chkArticulo_promocionado->isChecked())
         ui->framePromocion->setEnabled(true);
     else
@@ -539,17 +540,17 @@ void FrmArticulos::on_botDeshacer_clicked()
     if(this->anadir)
     {
         QSqlQuery qArt(QSqlDatabase::database("Maya"));
-        qArt.prepare("delete from articulos where id = :nId");
-        qArt.bindValue("nId",oArticulo->id);
+        qArt.prepare("delete from articulos where id = :nid");
+        qArt.bindValue("nid",oArticulo->id);
         if(qArt.exec());
             VaciarCampos();
         this->anadir = false;
     } else
         {
-        int nId = oArticulo->id;
-        QString cSql = "Select * from articulos where Id =" +QString::number(oArticulo->id);
+        int nid = oArticulo->id;
+        QString cSql = "Select * from articulos where id =" +QString::number(oArticulo->id);
         oArticulo->Recuperar(cSql);
-        oArticulo->id = nId;
+        oArticulo->id = nid;
 
         LLenarCampos();
     }
@@ -575,17 +576,17 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
     form.set_columnHide(0);
     form.set_columnHide(2);
 
-    form.set_selection("cSeccion");
+    form.set_selection("seccion");
     if(form.exec() == QDialog::Accepted)
     {
-        ui->txtcSeccion->setText(form.selected_value);
+        ui->txtseccion->setText(form.selected_value);
         QSqlQuery qSeccion(QSqlDatabase::database("Maya"));
-        qSeccion.prepare("select id from secciones where cSeccion = :seccion");
+        qSeccion.prepare("select id from secciones where seccion = :seccion");
         qSeccion.bindValue(":seccion",form.selected_value);
         if(qSeccion.exec())
         {
             qSeccion.next();
-            oArticulo->id_Seccion= qSeccion.value(0).toInt();
+            oArticulo->id_seccion= qSeccion.value(0).toInt();
         }
         else
         {
@@ -598,8 +599,8 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
 
 void FrmArticulos::AnadirSeccion()
 {
-    QLineEdit *txtcSeccionNueva = new QLineEdit(ventana);
-    layout->addWidget(txtcSeccionNueva,2,1,2,1);
+    QLineEdit *txtseccionNueva = new QLineEdit(ventana);
+    layout->addWidget(txtseccionNueva,2,1,2,1);
 }
 
 bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
@@ -622,20 +623,20 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
     headers << tr("Codigo") << tr("Familia") << tr("Pertenece a");
     form.set_table_headers(headers);
 
-    form.set_relation(3,QSqlRelation("secciones","id","cSeccion"));
+    form.set_relation(3,QSqlRelation("secciones","id","seccion"));
 
     form.set_columnHide(0);
 
-    form.set_selection("cFamilia");
+    form.set_selection("familia");
     QSqlQuery query(QSqlDatabase::database("Maya"));
-    query.prepare(QString("SELECT id FROM secciones WHERE cFamilia = '%1' ").arg(ui->txtcFamilia->text()));
+    query.prepare(QString("SELECT id FROM secciones WHERE familia = '%1' ").arg(ui->txtfamilia->text()));
     if (query.exec())
         if(query.next())
-            form.set_filter("Id_Seccion = "+query.record().value(0).toString());
+            form.set_filter("id_seccion = "+query.record().value(0).toString());
 
     if(form.exec() == QDialog::Accepted)
     {
-        ui->txtcFamilia->setText(form.selected_value);
+        ui->txtfamilia->setText(form.selected_value);
     }
 }
 
@@ -651,20 +652,20 @@ void FrmArticulos::on_botBuscarSubfamilia_clicked()
     headers << tr("SubFamilia") << tr("Pertenece a");
     form.set_table_headers(headers);
 
-    form.set_relation(2,QSqlRelation("familias","id","cFamilia"));
+    form.set_relation(2,QSqlRelation("familias","id","familia"));
 
     form.set_columnHide(0);
 
-    form.set_selection("cSubfamilia");
+    form.set_selection("subfamilia");
     QSqlQuery query(QSqlDatabase::database("Maya"));
-    query.prepare(QString("SELECT id FROM familias WHERE cFamilia = '%1'").arg(ui->txtcFamilia->text()));
+    query.prepare(QString("SELECT id FROM familias WHERE familia = '%1'").arg(ui->txtfamilia->text()));
     if (query.exec())
         if(query.next())
-            form.set_filter("Id_Seccion = "+query.record().value(0).toString());
+            form.set_filter("id_seccion = "+query.record().value(0).toString());
 
     if(form.exec() == QDialog::Accepted)
     {
-        ui->txtcSubFamilia->setText(form.selected_value);
+        ui->txtsubfamilia->setText(form.selected_value);
     }
 }
 
@@ -680,20 +681,20 @@ void FrmArticulos::on_botBuscarSubSubFamilia_clicked()
     headers << tr("SubsubFamilia") << tr("Pertenece a");
     form.set_table_headers(headers);
 
-    form.set_relation(2,QSqlRelation("subfamilias","id","cSubfamilia"));
+    form.set_relation(2,QSqlRelation("subfamilias","id","subfamilia"));
 
     form.set_columnHide(0);
 
     form.set_selection("cSubsubfamilia");
     QSqlQuery query(QSqlDatabase::database("Maya"));
-    query.prepare(QString("SELECT id FROM subfamilias WHERE cFamilia = '%1'").arg(ui->txtcFamilia->text()));
+    query.prepare(QString("SELECT id FROM subfamilias WHERE familia = '%1'").arg(ui->txtfamilia->text()));
     if (query.exec())
         if(query.next())
             form.set_filter("idsubfamilia = "+query.record().value(0).toString());
 
     if(form.exec() == QDialog::Accepted)
     {
-        ui->txtcSubFamilia->setText(form.selected_value);
+        ui->txtsubfamilia->setText(form.selected_value);
     }
 }
 
@@ -703,13 +704,13 @@ void FrmArticulos::on_btnBuscarProveedor_clicked()
     if(buscar.exec()==QDialog::Accepted)
     {
         QSqlQuery qProv(QSqlDatabase::database("Maya"));
-        qProv.prepare("Select * from proveedores where id =:nId");
-        qProv.bindValue(":nId",buscar.nIdProv);
+        qProv.prepare("Select * from proveedores where id =:nid");
+        qProv.bindValue(":nid",buscar.nidProv);
         if(qProv.exec()){
             qProv.next();
-            ui->txtCodigoProveedor->setText(qProv.record().field("cCodigo").value().toString());
-            ui->txtcProveedor->setText(qProv.record().field("cProveedor").value().toString());
-            oArticulo->id_Proveedor = buscar.nIdProv;
+            ui->txtCodigoProveedor->setText(qProv.record().field("codigo").value().toString());
+            ui->txtproveedor->setText(qProv.record().field("proveedor").value().toString());
+            oArticulo->id_proveedor = buscar.nidProv;
         }
     }
 
@@ -722,16 +723,16 @@ void FrmArticulos::on_btnAnadirTarifa_clicked()
     if(addTarifa.exec() ==QDialog::Accepted)
     {
         QSqlQuery qTarifa(QSqlDatabase::database("Maya"));
-        qTarifa.prepare("INSERT INTO tarifas (id_Articulo, id_pais,"
-                        "id_monedas, margen, margenminimo, pvp, id_codigotarifa) "
-                        "VALUES (:id, :id_pais,:id_monedas,:margen,:margenminimo,:pvp,:id_codigotarifa);");
+        qTarifa.prepare("INSERT INTO tarifas (id_articulo, id_pais,"
+                        "id_monedas, margen, margen_minimo, pvp, id_codigo_tarifa) "
+                        "VALUES (:id, :id_pais,:id_monedas,:margen,:margen_minimo,:pvp,:id_codigo_tarifa);");
         qTarifa.bindValue(":id",oArticulo->id);
         qTarifa.bindValue(":id_pais",addTarifa.id_pais);
         qTarifa.bindValue(":id_monedas",addTarifa.id_moneda);
         qTarifa.bindValue(":margen",addTarifa.margen);
-        qTarifa.bindValue(":margenminimo",addTarifa.margen_min);
+        qTarifa.bindValue(":margen_minimo",addTarifa.margen_min);
         qTarifa.bindValue(":pvp",addTarifa.pvpDivisa);
-        qTarifa.bindValue(":id_codigotarifa",addTarifa.codigoTarifa);
+        qTarifa.bindValue(":id_codigo_tarifa",addTarifa.codigoTarifa);
         if(qTarifa.exec()) {
             LlenarTablas();
         } else {
@@ -757,11 +758,11 @@ void FrmArticulos::btnEditarTarifa_clicked()
         queryTarifas.prepare(
         "UPDATE tarifas SET "
         "margen = :margen,"
-        "margenminimo = :margenminimo,"
+        "margen_minimo = :margen_minimo,"
         "pvp = :pvp "
         " WHERE id = :id");
         queryTarifas.bindValue(":margen",editTarifa.margen);
-        queryTarifas.bindValue(":margenMinimo",editTarifa.margen_min);
+        queryTarifas.bindValue(":margen_minimo",editTarifa.margen_min);
         queryTarifas.bindValue(":pvp",editTarifa.pvpDivisa);
         queryTarifas.bindValue(":id",pKey);
         if(!queryTarifas.exec())
@@ -810,7 +811,7 @@ void FrmArticulos::anadir_proveedor_clicked()
     // Proveedores frecuentes
     //-----------------------
     modelProv = new QSqlQueryModel(this);
-    modelProv->setQuery("Select id,codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta from proveedores_frecuentes where id_art = "+
+    modelProv->setQuery("Select id,codpro,proveedor,codigo,pvd,pvdreal,moneda,descoferta from proveedores_frecuentes where id_art = "+
                         QString::number(oArticulo->id),
                         QSqlDatabase::database("Maya"));
 
@@ -895,15 +896,15 @@ void FrmArticulos::asignar_proveedor_principal_clicked()
             ui->txtCodigoProveedor->setText(pKey.toString());
             index1=modelProv->index(celda.row(),2);
             pKey=modelProv->data(index1,Qt::EditRole);
-            ui->txtcProveedor->setText(pKey.toString());
+            ui->txtproveedor->setText(pKey.toString());
     }
 
 }
 void FrmArticulos::calcular_codigo()
 {
-    if (Configuracion_global->Autocodigoart == true) {
-        if(!ui->txtcSeccion->text().isEmpty() && (ui->txtcCodigo->text().isEmpty() || ui->txtcCodigo->text() =="autocodigo"))
-                ui->txtcCodigo->setText(oArticulo->autocodigo());
+    if (Configuracion_global->auto_codigoart == true) {
+        if(!ui->txtseccion->text().isEmpty() && (ui->txtcodigo->text().isEmpty() || ui->txtcodigo->text() =="auto_codigo"))
+                ui->txtcodigo->setText(oArticulo->auto_codigo());
         else {
 
             QMessageBox mensaje;
@@ -931,7 +932,7 @@ void FrmArticulos::trazabilidad2(int id)
     modelTrazabilidad2->setHeaderData(1,Qt::Horizontal,tr("CLIENTE"));
     modelTrazabilidad2->setHeaderData(2,Qt::Horizontal,tr("DOCUMENTO"));
     modelTrazabilidad2->setHeaderData(3,Qt::Horizontal,tr("Ticket"));
-    modelTrazabilidad2->setHeaderData(4,Qt::Horizontal,tr("UNID. VEND."));
+    modelTrazabilidad2->setHeaderData(4,Qt::Horizontal,tr("UNid. VEND."));
     modelTrazabilidad2->setHeaderData(5,Qt::Horizontal,tr("FECHA VENTA"));
 }
 
@@ -1282,7 +1283,7 @@ void FrmArticulos::MostrarGrafica_comparativa(bool grafica_unidades)
 void FrmArticulos::LLenarGraficas()
 {
     QSqlQuery queryAcumulados(QSqlDatabase::database("empresa"));
-    if(!queryAcumulados.exec("select * from acum_articulos where id_Articulo=" +QString::number(oArticulo->id))){
+    if(!queryAcumulados.exec("select * from acum_articulos where id_articulo=" +QString::number(oArticulo->id))){
         QMessageBox::warning(this,tr("Acumulados ejercicio"),
                              tr("Ocurrió un error al recuperar ficha de acumulados: %1").arg(queryAcumulados.lastError().text()),
                              tr("Aceptar"));
@@ -1291,98 +1292,98 @@ void FrmArticulos::LLenarGraficas()
         //--------------------
         // Undidades compradas
         //--------------------
-        ui->txtUnid_compras_enero->setText(queryAcumulados.record().value("unid_comp_enero").toString());
-        ui->txtUnid_compras_febrero->setText(queryAcumulados.record().value("unid_comp_febrero").toString());
-        ui->txtUnid_compras_marzo->setText(queryAcumulados.record().value("unid_comp_marzo").toString());
-        ui->txtUnid_compras_abril->setText(queryAcumulados.record().value("unid_comp_abril").toString());
-        ui->txtUnid_compras_mayo->setText(queryAcumulados.record().value("unid_comp_mayo").toString());
-        ui->txtUnid_compras_junio->setText(queryAcumulados.record().value("unid_comp_junio").toString());
-        ui->txtUnid_compras_julio->setText(queryAcumulados.record().value("unid_comp_julio").toString());
-        ui->txtUnid_compras_agosto->setText(queryAcumulados.record().value("unid_comp_agosto").toString());
-        ui->txtUnid_compras_septiembre->setText(queryAcumulados.record().value("unid_comp_septiembre").toString());
-        ui->txtUnid_compras_octubre->setText(queryAcumulados.record().value("unid_comp_octubre").toString());
-        ui->txtUnid_compras_noviembre->setText(queryAcumulados.record().value("unid_comp_noviembre").toString());
-        ui->txtUnid_compras_diciembre->setText(queryAcumulados.record().value("unid_comp_diciembre").toString());
+        ui->txtUnid_compras_enero->setText(QString::number(queryAcumulados.record().value("unid_comp_enero").toDouble()));
+        ui->txtUnid_compras_febrero->setText(QString::number(queryAcumulados.record().value("unid_comp_febrero").toDouble()));
+        ui->txtUnid_compras_marzo->setText(QString::number(queryAcumulados.record().value("unid_comp_marzo").toDouble()));
+        ui->txtUnid_compras_abril->setText(QString::number(queryAcumulados.record().value("unid_comp_abril").toDouble()));
+        ui->txtUnid_compras_mayo->setText(QString::number(queryAcumulados.record().value("unid_comp_mayo").toDouble()));
+        ui->txtUnid_compras_junio->setText(QString::number(queryAcumulados.record().value("unid_comp_junio").toDouble()));
+        ui->txtUnid_compras_julio->setText(QString::number(queryAcumulados.record().value("unid_comp_julio").toDouble()));
+        ui->txtUnid_compras_agosto->setText(QString::number(queryAcumulados.record().value("unid_comp_agosto").toDouble()));
+        ui->txtUnid_compras_septiembre->setText(QString::number(queryAcumulados.record().value("unid_comp_septiembre").toDouble()));
+        ui->txtUnid_compras_octubre->setText(QString::number(queryAcumulados.record().value("unid_comp_octubre").toDouble()));
+        ui->txtUnid_compras_noviembre->setText(QString::number(queryAcumulados.record().value("unid_comp_noviembre").toDouble()));
+        ui->txtUnid_compras_diciembre->setText(QString::number(queryAcumulados.record().value("unid_comp_diciembre").toDouble()));
 
         //--------------------
         // Undidades vendidas
         //--------------------
-        ui->txtUnid_ventas_enero->setText(queryAcumulados.record().value("unid_vent_enero").toString());
-        ui->txtUnid_ventas_febrero->setText(queryAcumulados.record().value("unid_vent_febrero").toString());
-        ui->txtUnid_ventas_marzo->setText(queryAcumulados.record().value("unid_vent_marzo").toString());
-        ui->txtUnid_ventas_abril->setText(queryAcumulados.record().value("unid_vent_abril").toString());
-        ui->txtUnid_ventas_mayo->setText(queryAcumulados.record().value("unid_vent_mayo").toString());
-        ui->txtUnid_ventas_junio->setText(queryAcumulados.record().value("unid_vent_junio").toString());
-        ui->txtUnid_ventas_julio->setText(queryAcumulados.record().value("unid_vent_julio").toString());
-        ui->txtUnid_ventas_agosto->setText(queryAcumulados.record().value("unid_vent_agosto").toString());
-        ui->txtUnid_ventas_septiembre->setText(queryAcumulados.record().value("unid_vent_septiembre").toString());
-        ui->txtUnid_ventas_octubre->setText(queryAcumulados.record().value("unid_vent_octubre").toString());
-        ui->txtUnid_ventas_noviembre->setText(queryAcumulados.record().value("unid_vent_noviembre").toString());
-        ui->txtUnid_ventas_diciembre->setText(queryAcumulados.record().value("unid_vent_diciembre").toString());
+        ui->txtUnid_ventas_enero->setText(QString::number(queryAcumulados.record().value("unid_vent_enero").toDouble()));
+        ui->txtUnid_ventas_febrero->setText(QString::number(queryAcumulados.record().value("unid_vent_febrero").toDouble()));
+        ui->txtUnid_ventas_marzo->setText(QString::number(queryAcumulados.record().value("unid_vent_marzo").toDouble()));
+        ui->txtUnid_ventas_abril->setText(QString::number(queryAcumulados.record().value("unid_vent_abril").toDouble()));
+        ui->txtUnid_ventas_mayo->setText(QString::number(queryAcumulados.record().value("unid_vent_mayo").toDouble()));
+        ui->txtUnid_ventas_junio->setText(QString::number(queryAcumulados.record().value("unid_vent_junio").toDouble()));
+        ui->txtUnid_ventas_julio->setText(QString::number(queryAcumulados.record().value("unid_vent_julio").toDouble()));
+        ui->txtUnid_ventas_agosto->setText(QString::number(queryAcumulados.record().value("unid_vent_agosto").toDouble()));
+        ui->txtUnid_ventas_septiembre->setText(QString::number(queryAcumulados.record().value("unid_vent_septiembre").toDouble()));
+        ui->txtUnid_ventas_octubre->setText(QString::number(queryAcumulados.record().value("unid_vent_octubre").toDouble()));
+        ui->txtUnid_ventas_noviembre->setText(QString::number(queryAcumulados.record().value("unid_vent_noviembre").toDouble()));
+        ui->txtUnid_ventas_diciembre->setText(QString::number(queryAcumulados.record().value("unid_vent_diciembre").toDouble()));
 
         //--------------------
         // Importe compras
         //--------------------
-        ui->txtImporte_compras_enero->setText(queryAcumulados.record().value("acum_comp_enero").toString());
-        ui->txtImporte_compras_febrero->setText(queryAcumulados.record().value("acum_comp_febrero").toString());
-        ui->txtImporte_compras_marzo->setText(queryAcumulados.record().value("acum_comp_marzo").toString());
-        ui->txtImporte_compras_abril->setText(queryAcumulados.record().value("acum_comp_abril").toString());
-        ui->txtImporte_compras_mayo->setText(queryAcumulados.record().value("acum_comp_mayo").toString());
-        ui->txtImporte_compras_junio->setText(queryAcumulados.record().value("acum_comp_junio").toString());
-        ui->txtImporte_compras_julio->setText(queryAcumulados.record().value("acum_comp_julio").toString());
-        ui->txtImporte_compras_agosto->setText(queryAcumulados.record().value("acum_comp_agosto").toString());
-        ui->txtImporte_compras_septiembre->setText(queryAcumulados.record().value("acum_comp_septiembre").toString());
-        ui->txtImporte_compras_octubre->setText(queryAcumulados.record().value("acum_comp_octubre").toString());
-        ui->txtImporte_compras_noviembre->setText(queryAcumulados.record().value("acum_comp_noviembre").toString());
-        ui->txtImporte_compras_diciembre->setText(queryAcumulados.record().value("acum_comp_diciembre").toString());
+        ui->txtImporte_compras_enero->setText(QString::number(queryAcumulados.record().value("acum_comp_enero").toDouble()));
+        ui->txtImporte_compras_febrero->setText(QString::number(queryAcumulados.record().value("acum_comp_febrero").toDouble()));
+        ui->txtImporte_compras_marzo->setText(QString::number(queryAcumulados.record().value("acum_comp_marzo").toDouble()));
+        ui->txtImporte_compras_abril->setText(QString::number(queryAcumulados.record().value("acum_comp_abril").toDouble()));
+        ui->txtImporte_compras_mayo->setText(QString::number(queryAcumulados.record().value("acum_comp_mayo").toDouble()));
+        ui->txtImporte_compras_junio->setText(QString::number(queryAcumulados.record().value("acum_comp_junio").toDouble()));
+        ui->txtImporte_compras_julio->setText(QString::number(queryAcumulados.record().value("acum_comp_julio").toDouble()));
+        ui->txtImporte_compras_agosto->setText(QString::number(queryAcumulados.record().value("acum_comp_agosto").toDouble()));
+        ui->txtImporte_compras_septiembre->setText(QString::number(queryAcumulados.record().value("acum_comp_septiembre").toDouble()));
+        ui->txtImporte_compras_octubre->setText(QString::number(queryAcumulados.record().value("acum_comp_octubre").toDouble()));
+        ui->txtImporte_compras_noviembre->setText(QString::number(queryAcumulados.record().value("acum_comp_noviembre").toDouble()));
+        ui->txtImporte_compras_diciembre->setText(QString::number(queryAcumulados.record().value("acum_comp_diciembre").toDouble()));
 
         //--------------------
         // Importe Ventas
         //--------------------
-        ui->txtImporte_ventas_enero->setText(queryAcumulados.record().value("acum_vent_enero").toString());
-        ui->txtImporte_ventas_febrero->setText(queryAcumulados.record().value("acum_vent_febrero").toString());
-        ui->txtImporte_ventas_marzo->setText(queryAcumulados.record().value("acum_vent_marzo").toString());
-        ui->txtImporte_ventas_abril->setText(queryAcumulados.record().value("acum_vent_abril").toString());
-        ui->txtImporte_ventas_mayo->setText(queryAcumulados.record().value("acum_vent_mayo").toString());
-        ui->txtImporte_ventas_junio->setText(queryAcumulados.record().value("acum_vent_junio").toString());
-        ui->txtImporte_ventas_julio->setText(queryAcumulados.record().value("acum_vent_julio").toString());
-        ui->txtImporte_ventas_agosto->setText(queryAcumulados.record().value("acum_vent_agosto").toString());
-        ui->txtImporte_ventas_septiembre->setText(queryAcumulados.record().value("acum_vent_septiembre").toString());
-        ui->txtImporte_ventas_octubre->setText(queryAcumulados.record().value("acum_vent_octubre").toString());
-        ui->txtImporte_ventas_noviembre->setText(queryAcumulados.record().value("acum_vent_noviembre").toString());
-        ui->txtImporte_ventas_diciembre->setText(queryAcumulados.record().value("acum_vent_diciembre").toString());
+        ui->txtImporte_ventas_enero->setText(QString::number(queryAcumulados.record().value("acum_vent_enero").toDouble()));
+        ui->txtImporte_ventas_febrero->setText(QString::number(queryAcumulados.record().value("acum_vent_febrero").toDouble()));
+        ui->txtImporte_ventas_marzo->setText(QString::number(queryAcumulados.record().value("acum_vent_marzo").toDouble()));
+        ui->txtImporte_ventas_abril->setText(QString::number(queryAcumulados.record().value("acum_vent_abril").toDouble()));
+        ui->txtImporte_ventas_mayo->setText(QString::number(queryAcumulados.record().value("acum_vent_mayo").toDouble()));
+        ui->txtImporte_ventas_junio->setText(QString::number(queryAcumulados.record().value("acum_vent_junio").toDouble()));
+        ui->txtImporte_ventas_julio->setText(QString::number(queryAcumulados.record().value("acum_vent_julio").toDouble()));
+        ui->txtImporte_ventas_agosto->setText(QString::number(queryAcumulados.record().value("acum_vent_agosto").toDouble()));
+        ui->txtImporte_ventas_septiembre->setText(QString::number(queryAcumulados.record().value("acum_vent_septiembre").toDouble()));
+        ui->txtImporte_ventas_octubre->setText(QString::number(queryAcumulados.record().value("acum_vent_octubre").toDouble()));
+        ui->txtImporte_ventas_noviembre->setText(QString::number(queryAcumulados.record().value("acum_vent_noviembre").toDouble()));
+        ui->txtImporte_ventas_diciembre->setText(QString::number(queryAcumulados.record().value("acum_vent_diciembre").toDouble()));
 
         //-----------------------------------------
         // Undidades vendidas (Grafica comparativa)
         //-----------------------------------------
-        ui->txtUnid_ventas_enero_EA->setText(queryAcumulados.record().value("unid_vent_enero").toString());
-        ui->txtUnid_ventas_febrero_EA->setText(queryAcumulados.record().value("unid_vent_febrero").toString());
-        ui->txtUnid_ventas_marzo_EA->setText(queryAcumulados.record().value("unid_vent_marzo").toString());
-        ui->txtUnid_ventas_abril_EA->setText(queryAcumulados.record().value("unid_vent_abril").toString());
-        ui->txtUnid_ventas_mayo_EA->setText(queryAcumulados.record().value("unid_vent_mayo").toString());
-        ui->txtUnid_ventas_junio_EA->setText(queryAcumulados.record().value("unid_vent_junio").toString());
-        ui->txtUnid_ventas_julio_EA->setText(queryAcumulados.record().value("unid_vent_julio").toString());
-        ui->txtUnid_ventas_agosto_EA->setText(queryAcumulados.record().value("unid_vent_agosto").toString());
-        ui->txtUnid_ventas_septiembre_EA->setText(queryAcumulados.record().value("unid_vent_septiembre").toString());
-        ui->txtUnid_ventas_octubre_EA->setText(queryAcumulados.record().value("unid_vent_octubre").toString());
-        ui->txtUnid_ventas_noviembre_EA->setText(queryAcumulados.record().value("unid_vent_noviembre").toString());
-        ui->txtUnid_ventas_diciembre_EA->setText(queryAcumulados.record().value("unid_vent_diciembre").toString());
+        ui->txtUnid_ventas_enero_EA->setText(QString::number(queryAcumulados.record().value("unid_vent_enero").toDouble()));
+        ui->txtUnid_ventas_febrero_EA->setText(QString::number(queryAcumulados.record().value("unid_vent_febrero").toDouble()));
+        ui->txtUnid_ventas_marzo_EA->setText(QString::number(queryAcumulados.record().value("unid_vent_marzo").toDouble()));
+        ui->txtUnid_ventas_abril_EA->setText(QString::number(queryAcumulados.record().value("unid_vent_abril").toDouble()));
+        ui->txtUnid_ventas_mayo_EA->setText(QString::number(queryAcumulados.record().value("unid_vent_mayo").toDouble()));
+        ui->txtUnid_ventas_junio_EA->setText(QString::number(queryAcumulados.record().value("unid_vent_junio").toDouble()));
+        ui->txtUnid_ventas_julio_EA->setText(QString::number(queryAcumulados.record().value("unid_vent_julio").toDouble()));
+        ui->txtUnid_ventas_agosto_EA->setText(QString::number(queryAcumulados.record().value("unid_vent_agosto").toDouble()));
+        ui->txtUnid_ventas_septiembre_EA->setText(QString::number(queryAcumulados.record().value("unid_vent_septiembre").toDouble()));
+        ui->txtUnid_ventas_octubre_EA->setText(QString::number(queryAcumulados.record().value("unid_vent_octubre").toDouble()));
+        ui->txtUnid_ventas_noviembre_EA->setText(QString::number(queryAcumulados.record().value("unid_vent_noviembre").toDouble()));
+        ui->txtUnid_ventas_diciembre_EA->setText(QString::number(queryAcumulados.record().value("unid_vent_diciembre").toDouble()));
 
         //--------------------
         // Importe Ventas
         //--------------------
-        ui->txtImporte_ventas_enero_EA->setText(queryAcumulados.record().value("acum_vent_enero").toString());
-        ui->txtImporte_ventas_febrero_EA->setText(queryAcumulados.record().value("acum_vent_febrero").toString());
-        ui->txtImporte_ventas_marzo_EA->setText(queryAcumulados.record().value("acum_vent_marzo").toString());
-        ui->txtImporte_ventas_abril_EA->setText(queryAcumulados.record().value("acum_vent_abril").toString());
-        ui->txtImporte_ventas_mayo_EA->setText(queryAcumulados.record().value("acum_vent_mayo").toString());
-        ui->txtImporte_ventas_junio_EA->setText(queryAcumulados.record().value("acum_vent_junio").toString());
-        ui->txtImporte_ventas_julio_EA->setText(queryAcumulados.record().value("acum_vent_julio").toString());
-        ui->txtImporte_ventas_agosto_EA->setText(queryAcumulados.record().value("acum_vent_agosto").toString());
-        ui->txtImporte_ventas_septiembre_EA->setText(queryAcumulados.record().value("acum_vent_septiembre").toString());
-        ui->txtImporte_ventas_octubre_EA->setText(queryAcumulados.record().value("acum_vent_octubre").toString());
-        ui->txtImporte_ventas_noviembre_EA->setText(queryAcumulados.record().value("acum_vent_noviembre").toString());
-        ui->txtImporte_ventas_diciembre_EA->setText(queryAcumulados.record().value("acum_vent_diciembre").toString());
+        ui->txtImporte_ventas_enero_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_enero").toDouble()));
+        ui->txtImporte_ventas_febrero_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_febrero").toDouble()));
+        ui->txtImporte_ventas_marzo_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_marzo").toDouble()));
+        ui->txtImporte_ventas_abril_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_abril").toDouble()));
+        ui->txtImporte_ventas_mayo_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_mayo").toDouble()));
+        ui->txtImporte_ventas_junio_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_junio").toDouble()));
+        ui->txtImporte_ventas_julio_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_julio").toDouble()));
+        ui->txtImporte_ventas_agosto_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_agosto").toDouble()));
+        ui->txtImporte_ventas_septiembre_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_septiembre").toDouble()));
+        ui->txtImporte_ventas_octubre_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_octubre").toDouble()));
+        ui->txtImporte_ventas_noviembre_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_noviembre").toDouble()));
+        ui->txtImporte_ventas_diciembre_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_diciembre").toDouble()));
 
     }
     if(ui->Pestanas->currentIndex()==5){
@@ -1412,11 +1413,11 @@ void FrmArticulos::LLenarGrafica_comparativa(int index)
 
             if (queryEmpresa.record().value("driverBD").toString() == "QSQLITE")
                 {
-                dbEmpresa2.setDatabaseName(queryEmpresa.record().value("RutaBDSqLite").toString());
+                dbEmpresa2.setDatabaseName(queryEmpresa.record().value("ruta_bd_sqlite").toString());
                     dbEmpresa2.open();
             } else  {
 
-                dbEmpresa2.setDatabaseName(queryEmpresa.record().value("nombreBD").toString());
+                dbEmpresa2.setDatabaseName(queryEmpresa.record().value("nombre_bd").toString());
                 dbEmpresa2.setHostName(queryEmpresa.record().value("host").toString());
                 dbEmpresa2.open(queryEmpresa.record().value("user").toString(),
                                     queryEmpresa.record().value("contrasena").toString());
@@ -1426,7 +1427,7 @@ void FrmArticulos::LLenarGrafica_comparativa(int index)
             }
             if(dbEmpresa2.isOpen()) {
                 QSqlQuery acum2(QSqlDatabase::database("empresa2"));
-                if(acum2.exec("select * from acum_articulos where id_Articulo ="+QString::number(oArticulo->id))){
+                if(acum2.exec("select * from acum_articulos where id_articulo ="+QString::number(oArticulo->id))){
                     acum2.next();
                     //-----------------------------------------
                     // Undidades vendidas (Grafica comparativa)
@@ -1483,13 +1484,11 @@ void FrmArticulos::LlenarTablas()
     // Tarifas
     //---------------------
     QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
-    modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margenminimo, pvp,simbolo "
-                         "from viewTarifa where id_Articulo = "+QString::number(oArticulo->id),
+    modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margen_minimo, pvp,simbolo "
+                         "from viewtarifa where id_articulo = "+QString::number(oArticulo->id),
                          QSqlDatabase::database("Maya"));
     ui->TablaTarifas->setModel(modelTarifa);
-    MonetaryDelegate *Delegado = new MonetaryDelegate(this);
-    ui->TablaTarifas->setItemDelegateForColumn(7,Delegado);
-    modelTarifa->setHeaderData(0,Qt::Horizontal,tr("ID"));
+    modelTarifa->setHeaderData(0,Qt::Horizontal,tr("id"));
     modelTarifa->setHeaderData(1,Qt::Horizontal,tr("CODIGO"));
     modelTarifa->setHeaderData(2,Qt::Horizontal,tr("DESCRIPCIÓN"));
     modelTarifa->setHeaderData(3,Qt::Horizontal,tr("PAIS"));
@@ -1525,7 +1524,7 @@ void FrmArticulos::LlenarTablas()
     // Proveedores frecuentes
     //-----------------------
 
-    modelProv->setQuery("Select id,codpro,cProveedor,codigo,pvd,pvdreal,moneda,descoferta,id_prov from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
+    modelProv->setQuery("Select id,codpro,proveedor,codigo,pvd,pvdreal,moneda,descoferta,id_prov from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
                         QSqlDatabase::database("Maya"));
 
     ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
@@ -1566,22 +1565,22 @@ void FrmArticulos::LlenarTablas()
     rellenar_grafica_proveedores();
 
     // ------------------
-    // TABLA TRAZABILIDAD
+    // TABLA TRAZABILidAD
     // ------------------
     modelTrazabilidad1 = new QSqlQueryModel(this);
-    modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_Articulo = "+QString::number(oArticulo->id),
+    modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_articulo = "+QString::number(oArticulo->id),
                                   QSqlDatabase::database("Maya"));
     ui->tablaLotes->setModel(modelTrazabilidad1);
     ui->tablaLotes->setColumnHidden(0,true);
     ui->tablaLotes->setColumnHidden(6,true);
      modelTrazabilidad1->setHeaderData(1,Qt::Horizontal,tr("LOTE"));
-     modelTrazabilidad1->setHeaderData(2,Qt::Horizontal,tr("CANTIDAD"));
+     modelTrazabilidad1->setHeaderData(2,Qt::Horizontal,tr("CANTidAD"));
      modelTrazabilidad1->setHeaderData(3,Qt::Horizontal,tr("STOCK LOTE"));
      modelTrazabilidad1->setHeaderData(4,Qt::Horizontal,tr("STOCK REAL"));
      modelTrazabilidad1->setHeaderData(5,Qt::Horizontal,tr("FAC.COMPRA"));
-     modelTrazabilidad1->setHeaderData(6,Qt::Horizontal,tr("ID"));
+     modelTrazabilidad1->setHeaderData(6,Qt::Horizontal,tr("id"));
      modelTrazabilidad1->setHeaderData(7,Qt::Horizontal,tr("FEC.COMPRA"));
-     modelTrazabilidad1->setHeaderData(8,Qt::Horizontal,tr("CADUCIDAD"));
+     modelTrazabilidad1->setHeaderData(8,Qt::Horizontal,tr("CADUCidAD"));
      modelTrazabilidad1->setHeaderData(9,Qt::Horizontal,tr("PROVEEDOR"));
      modelTrazabilidad1->setHeaderData(10,Qt::Horizontal,tr("DESCRIPCIÓN"));
      modelTrazabilidad1->setHeaderData(11,Qt::Horizontal,tr("CÓDIGO"));
@@ -1838,12 +1837,12 @@ void FrmArticulos::on_botCambiarImagen_4_clicked()
 
 void FrmArticulos::actualizar()
 {
-    if(!oArticulo->cCodigo.isEmpty())
+    if(!oArticulo->codigo.isEmpty())
     {
-        QString cCodigo = oArticulo->cCodigo;
-        oArticulo->Recuperar("Select * from articulos where cCodigo ='"+cCodigo+"' order by cCodigo limit 1 ",1);
+        QString codigo = oArticulo->codigo;
+        oArticulo->Recuperar("Select * from articulos where codigo ='"+codigo+"' order by codigo limit 1 ",1);
         LLenarCampos();
-        tarifa_model->setFilter("id_Articulo = "+QString::number(oArticulo->id));
+        tarifa_model->setFilter("id_articulo = "+QString::number(oArticulo->id));
         tarifa_model->select();
     }
 }
@@ -1867,7 +1866,7 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
             f.close();
         }
         QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("Maya"));
-        Articulo->prepare("update articulos set "+campo+" =:imagen where Id = :nid");
+        Articulo->prepare("update articulos set "+campo+" =:imagen where id = :nid");
         Articulo->bindValue(":imagen",ba);
         Articulo->bindValue(":nid",oArticulo->id);
         if (!Articulo->exec())
@@ -1876,47 +1875,45 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
     }
 }
 
-void FrmArticulos::on_botBuscar_clicked()
-{
-    db_consulta_view busqueda(this);
-    busqueda.set_db("Maya");
-    busqueda.set_texto_tabla("Artículos");
-    QStringList listacampos;
-    listacampos <<"cDescripcion" << "cCodigo" << "cCodigoBarras";
-    busqueda.set_campoBusqueda(listacampos);
-    busqueda.set_SQL("select id,cCodigo,cCodigoBarras,cCodigoFabricante,cDescripcion,cDescripcionReducida from articulos");
-   // busqueda.set_filtro("id >0 limit 0,100");
-    QStringList cabecera;
-    cabecera << tr("Código") <<tr("Cod. Barras") << tr("Cod. prov.") << tr("Descripción") << tr("Desc. Reducida");
-    busqueda.set_headers(cabecera);
-    QVariantList tamanos;
-    tamanos <<"0" << "120" << "120" <<"120" <<"300" <<"200";
-    busqueda.set_tamano_columnas(tamanos);
-    busqueda.set_titulo(tr("Búsqueda de artículos"));
-    if(busqueda.exec() == QDialog::Accepted) {
-        int id_art = busqueda.get_id();
-        oArticulo->Recuperar("Select * from articulos where id = "+QString::number(id_art));
-        LLenarCampos();
-        ui->botAnterior->setEnabled(true);
-        ui->botEditar->setEnabled(true);
-        ui->botBorrar->setEnabled(true);
-    }
-
-}
-
-void FrmArticulos::on_txtrCoste_editingFinished()
+void FrmArticulos::on_txtcoste_editingFinished()
 {
     double inicio, fin;
-    inicio = oArticulo->rCoste;
+    inicio = oArticulo->coste;
 
     // Doy valor a coste_real
-    ui->txtCoste_real->setText(ui->txtrCoste->text());
+    ui->txtCoste_real->setText(ui->txtcoste->text());
 
-    fin = ui->txtrCoste->text().replace(",",".").toDouble();
+    fin = ui->txtcoste->text().replace(",",".").toDouble();
     if (inicio != fin)
     {
         blockSignals(true);
         // TODO recalcular tarifas
          blockSignals(false);
     }
+}
+
+void FrmArticulos::on_btnBuscar_clicked()
+{
+    db_consulta_view consulta;
+    QStringList campos;
+    campos <<"codigo" <<"codigo_barras" << "codigo_fabricante"<< "descripcion" << "coste";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("articulos");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste from articulos");
+    QStringList cabecera;
+    QVariantList tamanos;
+    cabecera  << tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste");
+    tamanos <<"0" << "100" << "100" << "100" << "300" <<"130";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Artículos");
+    if(consulta.exec())
+    {
+        int id = consulta.get_id();
+        oArticulo->Recuperar("select * from articulos where id="+QString::number(id));
+        LLenarCampos();
+        ui->botAnterior->setEnabled(true);
+        ui->botEditar->setEnabled(true);
+   }
 }

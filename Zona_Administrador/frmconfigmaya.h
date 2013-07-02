@@ -15,8 +15,8 @@ class frmConfigmaya : public MayaModule
 public:
     explicit frmConfigmaya(QWidget *parent = 0);
     ~frmConfigmaya();
-    moduleZone ModuleZone(){return AdminZone;}
-    QString ModuleName(){return "Configuracion general";}
+    module_zone module_zone(){return AdminZone;}
+    QString module_name(){return "Configuracion general";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}

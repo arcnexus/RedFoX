@@ -333,10 +333,10 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="txtcCodigoFormaPago"/>
+          <widget class="QComboBox" name="txtcodigoFormaPago"/>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtcFormaPago">
+          <widget class="QLineEdit" name="txtforma_pago">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -372,7 +372,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLineEdit" name="txtcEntidadBancariaProveedor">
+        <widget class="QLineEdit" name="txtentidad_bancaria_proveedor">
          <property name="maximumSize">
           <size>
            <width>70</width>
@@ -385,7 +385,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLineEdit" name="txtcOficinaBancariaProveedor">
+        <widget class="QLineEdit" name="txtoficina_bancaria_proveedor">
          <property name="maximumSize">
           <size>
            <width>70</width>
@@ -398,7 +398,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
         </widget>
        </item>
        <item row="2" column="2">
-        <widget class="QLineEdit" name="txtcDCProveedor">
+        <widget class="QLineEdit" name="txtdc_proveedor">
          <property name="maximumSize">
           <size>
            <width>50</width>
@@ -411,14 +411,14 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
         </widget>
        </item>
        <item row="2" column="3" colspan="3">
-        <widget class="QLineEdit" name="txtcCCProveedor">
+        <widget class="QLineEdit" name="txtcc_proveedor">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
        <item row="6" column="0">
-        <widget class="QLineEdit" name="txtcEntidadPagoProveedor">
+        <widget class="QLineEdit" name="txtentidad_pago_proveedor">
          <property name="maximumSize">
           <size>
            <width>70</width>
@@ -438,7 +438,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
         </widget>
        </item>
        <item row="6" column="1">
-        <widget class="QLineEdit" name="txtcOficinaPagoProveedor">
+        <widget class="QLineEdit" name="txtoficina_pago_proveedor">
          <property name="maximumSize">
           <size>
            <width>70</width>
@@ -451,7 +451,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
         </widget>
        </item>
        <item row="6" column="2">
-        <widget class="QLineEdit" name="txtcDCPagoProveedor">
+        <widget class="QLineEdit" name="txtdc_pago_proveedor">
          <property name="maximumSize">
           <size>
            <width>50</width>
@@ -464,7 +464,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
         </widget>
        </item>
        <item row="6" column="3" colspan="3">
-        <widget class="QLineEdit" name="txtcCuentaPagoProveedor">
+        <widget class="QLineEdit" name="txtcuentaPagoProveedor">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -526,7 +526,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="txtcCuentaAplicacion">
+          <widget class="QLineEdit" name="txtcuenta_aplicacion">
            <property name="maximumSize">
             <size>
              <width>150</width>
@@ -814,7 +814,7 @@ alternate-background-color: rgb(255, 255, 207);</string>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QTextEdit" name="txttTextoparaPedidos">
+        <widget class="QTextEdit" name="txttexto_para_pedidos">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -838,7 +838,7 @@ alternate-background-color: rgb(255, 255, 207);</string>
         </widget>
        </item>
        <item row="0" column="2" colspan="2">
-        <widget class="QDateEdit" name="txtdFechaUltimaCompra">
+        <widget class="QDateEdit" name="txtfecha_ultima_compra">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -868,7 +868,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="1" column="2" colspan="2">
-        <widget class="QLineEdit" name="txtrAcumuladoCompras">
+        <widget class="QLineEdit" name="txtacumulado_compras">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -1303,7 +1303,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="0" column="5" colspan="5">
-          <widget class="QLineEdit" name="txtcProveedor">
+          <widget class="QLineEdit" name="txtproveedor">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -1317,7 +1317,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="6" column="6" colspan="4">
-          <widget class="QLineEdit" name="txtcTelefono3">
+          <widget class="QLineEdit" name="txttelefono3">
            <property name="maximumSize">
             <size>
              <width>120</width>
@@ -1337,14 +1337,14 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="2" column="1" colspan="9">
-          <widget class="QLineEdit" name="txtcDireccion1">
+          <widget class="QLineEdit" name="txtdireccion1">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
           </widget>
          </item>
          <item row="3" column="1" colspan="9">
-          <widget class="QLineEdit" name="txtcDireccion2">
+          <widget class="QLineEdit" name="txtdireccion2">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -1358,7 +1358,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QLineEdit" name="txtcCP">
+          <widget class="QLineEdit" name="txtcp">
            <property name="maximumSize">
             <size>
              <width>80</width>
@@ -1378,7 +1378,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="6" column="1" colspan="3">
-          <widget class="QLineEdit" name="txtcTelefono1">
+          <widget class="QLineEdit" name="txttelefono1">
            <property name="maximumSize">
             <size>
              <width>120</width>
@@ -1391,7 +1391,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="6" column="4" colspan="2">
-          <widget class="QLineEdit" name="txtcTelefono2">
+          <widget class="QLineEdit" name="txttelefono2">
            <property name="maximumSize">
             <size>
              <width>120</width>
@@ -1411,7 +1411,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="7" column="5" colspan="5">
-          <widget class="QLineEdit" name="txtcEmail">
+          <widget class="QLineEdit" name="txtemail">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -1425,7 +1425,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="9" column="1" colspan="8">
-          <widget class="QLineEdit" name="txtcWeb">
+          <widget class="QLineEdit" name="txtweb">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -1450,7 +1450,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="10" column="2" colspan="8">
-          <widget class="QLineEdit" name="txtcPersonaContacto">
+          <widget class="QLineEdit" name="txtpersona_contacto">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -1464,7 +1464,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="4" column="2" colspan="8">
-          <widget class="QLineEdit" name="txtcPoblacion">
+          <widget class="QLineEdit" name="txtpoblacion">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -1484,7 +1484,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="5" column="1" colspan="4">
-          <widget class="QLineEdit" name="txtcProvincia">
+          <widget class="QLineEdit" name="txtprovincia">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -1498,7 +1498,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="1" column="1" colspan="3">
-          <widget class="QLineEdit" name="txtcCif">
+          <widget class="QLineEdit" name="txtcif">
            <property name="maximumSize">
             <size>
              <width>120</width>
@@ -1511,7 +1511,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="0" column="1" colspan="3">
-          <widget class="QLineEdit" name="txtcCodigo">
+          <widget class="QLineEdit" name="txtcodigo">
            <property name="maximumSize">
             <size>
              <width>100</width>
@@ -1534,7 +1534,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="7" column="1" colspan="3">
-          <widget class="QLineEdit" name="txtcMovil">
+          <widget class="QLineEdit" name="txtmovil">
            <property name="minimumSize">
             <size>
              <width>82</width>
@@ -1560,10 +1560,10 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="5" column="6" colspan="4">
-          <widget class="QComboBox" name="txtcPais"/>
+          <widget class="QComboBox" name="txtpais"/>
          </item>
          <item row="8" column="1" colspan="4">
-          <widget class="QLineEdit" name="txtcFax">
+          <widget class="QLineEdit" name="txtfax">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -1577,7 +1577,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="1" column="5">
-          <widget class="QDateEdit" name="txtdFechaAlta">
+          <widget class="QDateEdit" name="txtfecha_alta">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -1888,7 +1888,7 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </widget>
          </item>
          <item row="0" column="1" colspan="2">
-          <widget class="QLineEdit" name="txtrDeudaActual">
+          <widget class="QLineEdit" name="txtdeuda_actual">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1918,7 +1918,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="txtrEntregadoaCuenta">
+          <widget class="QLineEdit" name="txtentregado_a_cuenta">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1941,7 +1941,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="1" column="2" colspan="3">
-          <widget class="QCheckBox" name="chklRecargoEquivalencia">
+          <widget class="QCheckBox" name="chkrecargo_equivalencia">
            <property name="text">
             <string>Recargo Equivalencia</string>
            </property>
@@ -1955,7 +1955,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="txtnTipoRetencionIRPF">
+          <widget class="QLineEdit" name="txttipo_retencioirpf">
            <property name="maximumSize">
             <size>
              <width>50</width>
@@ -1975,7 +1975,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="2" column="4">
-          <widget class="QLineEdit" name="txtrRetencionIRPF">
+          <widget class="QLineEdit" name="txtretencion_irpf">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -2005,7 +2005,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="0" column="4">
-          <widget class="QLineEdit" name="txtrDeudaMaxima">
+          <widget class="QLineEdit" name="txtdeuda_maxima">
            <property name="maximumSize">
             <size>
              <width>100</width>
@@ -2077,7 +2077,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtnDiaCobro">
+          <widget class="QLineEdit" name="txtdia_cobro">
            <property name="maximumSize">
             <size>
              <width>60</width>
@@ -2100,7 +2100,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtnDto">
+          <widget class="QLineEdit" name="txtdto">
            <property name="maximumSize">
             <size>
              <width>60</width>
@@ -2154,7 +2154,7 @@ color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtcTelefonoAlmacen">
+          <widget class="QLineEdit" name="txttelefono_almacen">
            <property name="maximumSize">
             <size>
              <width>120</width>
@@ -2174,7 +2174,7 @@ color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtcFaxAlmacen">
+          <widget class="QLineEdit" name="txtfax_almacen">
            <property name="maximumSize">
             <size>
              <width>120</width>
@@ -2198,7 +2198,7 @@ color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item row="0" column="1" colspan="4">
-          <widget class="QLineEdit" name="txtcDireccionAlmacen">
+          <widget class="QLineEdit" name="txtdireccion_almacen">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -2212,7 +2212,7 @@ color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="txtcCPAlmacen">
+          <widget class="QLineEdit" name="txtcp_almacen">
            <property name="maximumSize">
             <size>
              <width>100</width>
@@ -2225,7 +2225,7 @@ color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item row="1" column="2" colspan="3">
-          <widget class="QLineEdit" name="txtcPoblacionAlmacen">
+          <widget class="QLineEdit" name="txtpoblacion_almacen">
            <property name="minimumSize">
             <size>
              <width>273</width>
@@ -2245,7 +2245,7 @@ color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item row="2" column="1" colspan="2">
-          <widget class="QLineEdit" name="txtcProvinciaAmacen">
+          <widget class="QLineEdit" name="txtprovinciaAmacen">
            <property name="maximumSize">
             <size>
              <width>193</width>
@@ -2268,7 +2268,7 @@ color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item row="2" column="4">
-          <widget class="QComboBox" name="txtcPaisAlmacen"/>
+          <widget class="QComboBox" name="txtpaisAlmacen"/>
          </item>
         </layout>
        </item>
@@ -2296,7 +2296,7 @@ color: rgb(255, 255, 255);</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_11">
        <item row="0" column="0">
-        <widget class="QTextEdit" name="txttComentarios">
+        <widget class="QTextEdit" name="txtcomentarios">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -2316,26 +2316,26 @@ color: rgb(255, 255, 255);</string>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>txtcCodigo</tabstop>
-  <tabstop>txtcProveedor</tabstop>
-  <tabstop>txtcCif</tabstop>
-  <tabstop>txtdFechaAlta</tabstop>
+  <tabstop>txtcodigo</tabstop>
+  <tabstop>txtproveedor</tabstop>
+  <tabstop>txtcif</tabstop>
+  <tabstop>txtfecha_alta</tabstop>
   <tabstop>cboDivisas</tabstop>
-  <tabstop>txtcDireccion1</tabstop>
-  <tabstop>txtcDireccion2</tabstop>
-  <tabstop>txtcCP</tabstop>
-  <tabstop>txtcPoblacion</tabstop>
-  <tabstop>txtcProvincia</tabstop>
-  <tabstop>txtcPais</tabstop>
-  <tabstop>txtcTelefono1</tabstop>
-  <tabstop>txtcTelefono2</tabstop>
-  <tabstop>txtcTelefono3</tabstop>
-  <tabstop>txtcMovil</tabstop>
-  <tabstop>txtcEmail</tabstop>
-  <tabstop>txtcFax</tabstop>
-  <tabstop>txtcWeb</tabstop>
+  <tabstop>txtdireccion1</tabstop>
+  <tabstop>txtdireccion2</tabstop>
+  <tabstop>txtcp</tabstop>
+  <tabstop>txtpoblacion</tabstop>
+  <tabstop>txtprovincia</tabstop>
+  <tabstop>txtpais</tabstop>
+  <tabstop>txttelefono1</tabstop>
+  <tabstop>txttelefono2</tabstop>
+  <tabstop>txttelefono3</tabstop>
+  <tabstop>txtmovil</tabstop>
+  <tabstop>txtemail</tabstop>
+  <tabstop>txtfax</tabstop>
+  <tabstop>txtweb</tabstop>
   <tabstop>btnAbrirWeb</tabstop>
-  <tabstop>txtcPersonaContacto</tabstop>
+  <tabstop>txtpersona_contacto</tabstop>
   <tabstop>txtNombre</tabstop>
   <tabstop>txtCargo</tabstop>
   <tabstop>txtDescripcionT1</tabstop>
@@ -2350,28 +2350,28 @@ color: rgb(255, 255, 255);</string>
   <tabstop>txtMovil2</tabstop>
   <tabstop>txtemail_contacto</tabstop>
   <tabstop>btnAnadir_persona_contacto</tabstop>
-  <tabstop>txtnDiaCobro</tabstop>
-  <tabstop>txtnDto</tabstop>
-  <tabstop>txtrDeudaActual</tabstop>
-  <tabstop>txtrDeudaMaxima</tabstop>
-  <tabstop>txtrEntregadoaCuenta</tabstop>
-  <tabstop>chklRecargoEquivalencia</tabstop>
-  <tabstop>txtnTipoRetencionIRPF</tabstop>
-  <tabstop>txtrRetencionIRPF</tabstop>
+  <tabstop>txtdia_cobro</tabstop>
+  <tabstop>txtdto</tabstop>
+  <tabstop>txtdeuda_actual</tabstop>
+  <tabstop>txtdeuda_maxima</tabstop>
+  <tabstop>txtentregado_a_cuenta</tabstop>
+  <tabstop>chkrecargo_equivalencia</tabstop>
+  <tabstop>txttipo_retencioirpf</tabstop>
+  <tabstop>txtretencion_irpf</tabstop>
   <tabstop>radioButton</tabstop>
   <tabstop>radioButton_3</tabstop>
   <tabstop>radioButton_2</tabstop>
   <tabstop>tablaPagos</tabstop>
-  <tabstop>txtcDireccionAlmacen</tabstop>
-  <tabstop>txtcCPAlmacen</tabstop>
-  <tabstop>txtcPoblacionAlmacen</tabstop>
-  <tabstop>txtcProvinciaAmacen</tabstop>
-  <tabstop>txtcPaisAlmacen</tabstop>
-  <tabstop>txtcTelefonoAlmacen</tabstop>
-  <tabstop>txtcFaxAlmacen</tabstop>
-  <tabstop>txttComentarios</tabstop>
+  <tabstop>txtdireccion_almacen</tabstop>
+  <tabstop>txtcp_almacen</tabstop>
+  <tabstop>txtpoblacion_almacen</tabstop>
+  <tabstop>txtprovinciaAmacen</tabstop>
+  <tabstop>txtpaisAlmacen</tabstop>
+  <tabstop>txttelefono_almacen</tabstop>
+  <tabstop>txtfax_almacen</tabstop>
+  <tabstop>txtcomentarios</tabstop>
   <tabstop>tabWidget_3</tabstop>
-  <tabstop>txtcCuentaAplicacion</tabstop>
+  <tabstop>txtcuenta_aplicacion</tabstop>
   <tabstop>tablaAsientos</tabstop>
   <tabstop>pestanaHistAlbaranes</tabstop>
   <tabstop>tablacolumnasFacturas</tabstop>
@@ -2381,9 +2381,9 @@ color: rgb(255, 255, 255);</string>
   <tabstop>tablaColumnasPedidos</tabstop>
   <tabstop>btnNuevoPedido</tabstop>
   <tabstop>tablaArticulos</tabstop>
-  <tabstop>txttTextoparaPedidos</tabstop>
+  <tabstop>txttexto_para_pedidos</tabstop>
   <tabstop>tabWidget_5</tabstop>
-  <tabstop>txtrAcumuladoCompras</tabstop>
+  <tabstop>txtacumulado_compras</tabstop>
   <tabstop>txtEnero</tabstop>
   <tabstop>txtFebrero</tabstop>
   <tabstop>txtMarzo</tabstop>
@@ -2397,16 +2397,16 @@ color: rgb(255, 255, 255);</string>
   <tabstop>txtNoviembre</tabstop>
   <tabstop>txtDiciembre</tabstop>
   <tabstop>tabWidget_2</tabstop>
-  <tabstop>txtcCodigoFormaPago</tabstop>
-  <tabstop>txtcFormaPago</tabstop>
-  <tabstop>txtcEntidadBancariaProveedor</tabstop>
-  <tabstop>txtcOficinaBancariaProveedor</tabstop>
-  <tabstop>txtcDCProveedor</tabstop>
-  <tabstop>txtcCCProveedor</tabstop>
-  <tabstop>txtcEntidadPagoProveedor</tabstop>
-  <tabstop>txtcOficinaPagoProveedor</tabstop>
-  <tabstop>txtcDCPagoProveedor</tabstop>
-  <tabstop>txtcCuentaPagoProveedor</tabstop>
+  <tabstop>txtcodigoFormaPago</tabstop>
+  <tabstop>txtforma_pago</tabstop>
+  <tabstop>txtentidad_bancaria_proveedor</tabstop>
+  <tabstop>txtoficina_bancaria_proveedor</tabstop>
+  <tabstop>txtdc_proveedor</tabstop>
+  <tabstop>txtcc_proveedor</tabstop>
+  <tabstop>txtentidad_pago_proveedor</tabstop>
+  <tabstop>txtoficina_pago_proveedor</tabstop>
+  <tabstop>txtdc_pago_proveedor</tabstop>
+  <tabstop>txtcuentaPagoProveedor</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnSiguiente</tabstop>
   <tabstop>btnAnterior</tabstop>
@@ -2415,7 +2415,7 @@ color: rgb(255, 255, 255);</string>
   <tabstop>btnGuardar</tabstop>
   <tabstop>btnDeshacer</tabstop>
   <tabstop>btnBorrar</tabstop>
-  <tabstop>txtdFechaUltimaCompra</tabstop>
+  <tabstop>txtfecha_ultima_compra</tabstop>
   <tabstop>tablaContactos</tabstop>
   <tabstop>btnAnadirEntrega</tabstop>
   <tabstop>tabla_entregas</tabstop>
@@ -2426,7 +2426,7 @@ color: rgb(255, 255, 255);</string>
  </resources>
  <connections>
   <connection>
-   <sender>txtcCodigoFormaPago</sender>
+   <sender>txtcodigoFormaPago</sender>
    <signal>currentIndexChanged(QString)</signal>
    <receiver>frmProveedores</receiver>
    <slot>cargar_forma_pago(QString)</slot>

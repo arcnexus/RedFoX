@@ -21,7 +21,7 @@ FrmBuscarProveedor::~FrmBuscarProveedor()
 void FrmBuscarProveedor::on_btnBuscar_clicked()
 {
     modelo = new QSqlQueryModel(this);
-    modelo->setQuery("select id, cProveedor, cCodigo,cCif from proveedores where cProveedor like'"+ui->txtcBuscar->text()+"%'",
+    modelo->setQuery("select id, proveedor, codigo,cif from proveedores where proveedor like'"+ui->txtcBuscar->text()+"%'",
                      QSqlDatabase::database("Maya"));
     ui->tableProv->setModel(modelo);
     ui->tableProv->setColumnHidden(0,true);
@@ -39,7 +39,7 @@ void FrmBuscarProveedor::Aceptar()
     QModelIndex index=modelo->index(celda.row(),0);     ///< '0' id
 
     QVariant pKey=modelo->data(index,Qt::EditRole);
-    this->nIdProv = pKey.toInt();
+    this->nidProv = pKey.toInt();
     accept();
 }
 

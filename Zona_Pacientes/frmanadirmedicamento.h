@@ -14,7 +14,7 @@ class FrmAnadirMedicamento : public QDialog
 public:
     explicit FrmAnadirMedicamento(QWidget *parent = 0);
     ~FrmAnadirMedicamento();
-    int idMedicamento;
+    int id_medicamento;
     QString cRetMedicamento;
     QStringList cMedicList;
 

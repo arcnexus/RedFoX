@@ -30,8 +30,8 @@ public:
     ~frmFacturas();
     Factura *oFactura;
     Cliente *oCliente1;
-    moduleZone ModuleZone(){return Ventas;}
-    QString ModuleName(){return "Facturas Ventas";}
+    module_zone module_zone(){return Ventas;}
+    QString module_name(){return "Facturas Ventas";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -55,7 +55,7 @@ private slots:
 
     void on_btnImprimir_clicked();
 
-    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
+    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);

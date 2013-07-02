@@ -14,20 +14,20 @@ public:
     int id_cuenta;
     int id_documento;
     QString DH;
-    QString cuentaD;
-    QString descripcionD;
-    QString cuentaH;
-    QString descripcionH;
-    double importeD;
-    double importeH;
+    QString cuenta_d;
+    QString descripcion_d;
+    QString cuenta_h;
+    QString descripcion_h;
+    double importe_d;
+    double importe_h;
     int asiento;
-    int id_cuentaD;
-    int id_cuentaH;
-    QDate fechaAsiento;
-    int posenasiento;
+    int id_cuenta_d;
+    int id_cuenta_h;
+    QDate fecha_asiento;
+    int pos_en_asiento;
     QString cta_principal;
-    QString comentarioD;
-    QString comentarioH;
+    QString comentario_d;
+    QString comentario_h;
 
     
 signals:

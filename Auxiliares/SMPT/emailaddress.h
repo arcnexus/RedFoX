@@ -48,7 +48,7 @@ public:
 
 private:
 
-    /* [3] Private members */
+    /* [3] private members */
 
     QString name;
     QString address;

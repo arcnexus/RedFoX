@@ -25,8 +25,8 @@ public:
     QSqlQueryModel *modelTrazabilidad1;
     QSqlQueryModel *modelTrazabilidad2;
 
-    moduleZone ModuleZone(){return Almacen;}
-    QString ModuleName(){return "Articulos";}
+    module_zone module_zone(){return Almacen;}
+    QString module_name(){return "Articulos";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}    
@@ -96,9 +96,9 @@ private slots:
     void on_botCambiarImagen_4_clicked();
     void actualizar();
 
-    void on_botBuscar_clicked();
+    void on_txtcoste_editingFinished();
 
-    void on_txtrCoste_editingFinished();
+    void on_btnBuscar_clicked();
 
 public slots:
     void AnadirSeccion();

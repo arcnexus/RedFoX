@@ -21,10 +21,10 @@ FrmInformacionFarmaco::~FrmInformacionFarmaco()
     delete ui;
 }
 
-void FrmInformacionFarmaco::capturarid(QString ccodigonacional)
+void FrmInformacionFarmaco::capturarid(QString codigo_nacional)
 {
     QString cUrl = "http://demo.vademecumdata.es/vweb/xml/ws_drug/SearchByCodeFull?value="+
-            ccodigonacional;
+            codigo_nacional;
     // Recupero valores conexión Vademecum
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
     QString cClave1 = settings.value("Clave1").toString();
@@ -75,7 +75,7 @@ void FrmInformacionFarmaco::finishedSlotBuscarMedicamento(QNetworkReply* reply)
                     ui->txtDosificacion->setText(e.text());
                 }
                 if (e.tagName() == "national_code") {
-                    ui->txtCodigoNacional->setText(e.text());
+                    ui->txtcodigo_nacional->setText(e.text());
                 }
                 if (e.tagName() == "name_laboratory") {
                     ui->txtLaboratorio->setText(e.text());
@@ -111,7 +111,7 @@ void FrmInformacionFarmaco::finishedSlotBuscarMedicamento(QNetworkReply* reply)
                     mes = e.text().mid(5,2).toInt();
                     dia = e.text().mid(8,2).toInt();
                     alta.setDate(ano,mes,dia);
-                    ui->txtFechaAlta->setDate(alta);
+                    ui->txtfecha_alta->setDate(alta);
                 }
                 if (e.tagName() == "fecha_baja") {
                     if (e.text()!="0" && !e.text().isEmpty()) {
@@ -185,7 +185,7 @@ void FrmInformacionFarmaco::finishedSlotBuscarMedicamento(QNetworkReply* reply)
 
                                             for (int i = 0; i < attributes.count(); i ++) {
                                                 QDomElement e3 = attributes.at(i).toElement();
-                                                if (e3.tagName() == "ID_IND") {
+                                                if (e3.tagName() == "id_IND") {
                                                     ui->listaIndicaciones->setRowCount(pos+1);
                                                     QTableWidgetItem *newItem = new QTableWidgetItem(e3.text());
                                                     // para que los elementos no sean editables

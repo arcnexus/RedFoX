@@ -102,7 +102,7 @@ void DivisionAlmacenExt::handle_actions()
           headers << tr("Codigo") << tr("Familia") << tr("Pertenece a");
           form.set_table_headers(headers);
 
-          form.set_relation(3,QSqlRelation("secciones","id","cSeccion"));
+          form.set_relation(3,QSqlRelation("secciones","id","seccion"));
 
           form.set_columnHide(0);
           form.exec();
@@ -119,7 +119,7 @@ void DivisionAlmacenExt::handle_actions()
           headers << tr("SubFamilia") << tr("Pertenece a");
           form.set_table_headers(headers);
                                    //tabla a buscar, columna relacionada y lo que quiero mostar
-          form.set_relation(2,QSqlRelation("familias","id","cFamilia"));
+          form.set_relation(2,QSqlRelation("familias","id","familia"));
 
           form.set_columnHide(0);
           form.exec();
@@ -136,7 +136,7 @@ void DivisionAlmacenExt::handle_actions()
           headers << tr("SubSubFamilia") << tr("Pertenece a");
           form.set_table_headers(headers);
 
-          form.set_relation(2,QSqlRelation("subfamilias","id","cSubfamilia"));
+          form.set_relation(2,QSqlRelation("subfamilias","id","subfamilia"));
 
           form.set_columnHide(0);
           form.exec();

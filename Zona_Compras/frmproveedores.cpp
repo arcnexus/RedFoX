@@ -20,7 +20,7 @@
 Proveedor *oProveedor = new Proveedor();
 
 frmProveedores::frmProveedores(QWidget *parent) :
-  MayaModule(ModuleZone(),ModuleName(),parent),
+  MayaModule(module_zone(),module_name(),parent),
   ui(new Ui::frmProveedores),
   toolButton(tr("Proveedores"),":/Icons/PNG/proveedores_2.png",this),
   menuButton(QIcon(":/Icons/PNG/proveedores_2.png"),tr("Proveedores"),this),
@@ -30,16 +30,16 @@ frmProveedores::frmProveedores(QWidget *parent) :
     ui->setupUi(this);
     oProveedor->id = 0;
     BloquearCampos();
-    ui->txtdFechaAlta->setDate(QDate::currentDate());
-    ui->txtdFechaUltimaCompra->setDate(QDate::currentDate());
+    ui->txtfecha_alta->setDate(QDate::currentDate());
+    ui->txtfecha_ultima_compra->setDate(QDate::currentDate());
     //---------------------------
     // cargar datos forma de pago.
     //---------------------------
     QSqlQueryModel *qmFormaPago = new QSqlQueryModel(this);
-    qmFormaPago->setQuery("select cCodigo, cFormapago from formpago",QSqlDatabase::database("Maya"));
+    qmFormaPago->setQuery("select codigo, forma_pago from formpago",QSqlDatabase::database("Maya"));
 
-    ui->txtcCodigoFormaPago->setModel(qmFormaPago);
-    oProveedor->idFormadePago = Configuracion_global->Devolver_id_forma_pago(ui->txtcCodigoFormaPago->currentText());
+    ui->txtcodigoFormaPago->setModel(qmFormaPago);
+    oProveedor->idFormadePago = Configuracion_global->Devolver_id_forma_pago(ui->txtcodigoFormaPago->currentText());
 
     // ---------------
     // Cargar divisas
@@ -53,16 +53,16 @@ frmProveedores::frmProveedores(QWidget *parent) :
     // ----------------
     QSqlQueryModel * modelPais = new QSqlQueryModel(this);
     modelPais->setQuery("select pais from paises",QSqlDatabase::database("Maya"));
-    ui->txtcPais->setModel(modelPais);
-    oProveedor->idpais = Configuracion_global->Devolver_id_pais(ui->txtcPais->currentText());
+    ui->txtpais->setModel(modelPais);
+    oProveedor->id_pais = Configuracion_global->Devolver_id_pais(ui->txtpais->currentText());
 
     // ---------------------
     // Cargar Paises almacen
     // ---------------------
     QSqlQueryModel * modelPaisAlmacen = new QSqlQueryModel(this);
     modelPaisAlmacen->setQuery("select pais from paises",QSqlDatabase::database("Maya"));
-    ui->txtcPaisAlmacen->setModel(modelPaisAlmacen);
-    oProveedor->idPaisAlmacen = Configuracion_global->Devolver_id_pais(ui->txtcPaisAlmacen->currentText());
+    ui->txtpaisAlmacen->setModel(modelPaisAlmacen);
+    oProveedor->id_pais_almacen = Configuracion_global->Devolver_id_pais(ui->txtpaisAlmacen->currentText());
 
 
     // -----------------------
@@ -87,84 +87,84 @@ frmProveedores::~frmProveedores()
 }
 void frmProveedores::LLenarCampos()
 {
-    ui->lblCodigoProveedor->setText(oProveedor->cCodigo);
-    ui->lblproveedor->setText(oProveedor->cProveedor);
-    ui->txtcCodigo->setText(oProveedor->cCodigo);
-    ui->txtcProveedor->setText(oProveedor->cProveedor);
-    ui->txtcCif->setText(oProveedor->cCif);
-    ui->txtcDireccion1->setText(oProveedor->cDireccion1);
-    ui->txtcDireccion2->setText(oProveedor->cDireccion2);
-    ui->txtcCP->setText(oProveedor->cCP);
-    ui->txtcPoblacion->setText(oProveedor->cPoblacion);
-    ui->txtcProvincia->setText(oProveedor->cProvincia);
-    int index = ui->txtcPais->findText(oProveedor->cPais);
-    ui->txtcPais->setCurrentIndex(index);
-    ui->txtcTelefono1->setText(oProveedor->cTelefono1);
-    ui->txtcTelefono2->setText(oProveedor->cTelefono2);
-    ui->txtcTelefono3->setText(oProveedor->cTelefono3);
-    ui->txtcFax->setText(oProveedor->cFax);
-    ui->txtcMovil->setText(oProveedor->cMovil);
-    ui->txtcEmail->setText(oProveedor->cEMail);
-    ui->txtcWeb->setText(oProveedor->cWeb);
-    ui->txtcPersonaContacto->setText(oProveedor->cPersonaContacto);
-    ui->txtnDiaCobro->setText(QString::number(oProveedor->nDiaCobro));
-    ui->txtcDireccionAlmacen->setText(oProveedor->cDireccionAlmacen);
-    ui->txtcCPAlmacen->setText(oProveedor->cCPAlmacen);
-    ui->txtcPoblacionAlmacen->setText(oProveedor->cPoblacionAlmacen);
-    ui->txtcProvinciaAmacen->setText(oProveedor->cProvinciaAlmacen);
-    index = ui->txtcPaisAlmacen->findText(oProveedor->cPaisAlmacen);
-    ui->txtcPaisAlmacen->setCurrentIndex(index);
-    ui->txtcTelefonoAlmacen->setText(oProveedor->cTelefonoAlmacen);
-    ui->txtcFaxAlmacen->setText(oProveedor->cFaxAlmacen);
+    ui->lblCodigoProveedor->setText(oProveedor->codigo);
+    ui->lblproveedor->setText(oProveedor->proveedor);
+    ui->txtcodigo->setText(oProveedor->codigo);
+    ui->txtproveedor->setText(oProveedor->proveedor);
+    ui->txtcif->setText(oProveedor->cif);
+    ui->txtdireccion1->setText(oProveedor->direccion1);
+    ui->txtdireccion2->setText(oProveedor->direccion2);
+    ui->txtcp->setText(oProveedor->cp);
+    ui->txtpoblacion->setText(oProveedor->poblacion);
+    ui->txtprovincia->setText(oProveedor->provincia);
+    int index = ui->txtpais->findText(oProveedor->pais);
+    ui->txtpais->setCurrentIndex(index);
+    ui->txttelefono1->setText(oProveedor->telefono1);
+    ui->txttelefono2->setText(oProveedor->telefono2);
+    ui->txttelefono3->setText(oProveedor->telefono3);
+    ui->txtfax->setText(oProveedor->fax);
+    ui->txtmovil->setText(oProveedor->movil);
+    ui->txtemail->setText(oProveedor->email);
+    ui->txtweb->setText(oProveedor->web);
+    ui->txtpersona_contacto->setText(oProveedor->persona_contacto);
+    ui->txtdia_cobro->setText(QString::number(oProveedor->dia_cobro));
+    ui->txtdireccion_almacen->setText(oProveedor->direccion_almacen);
+    ui->txtcp_almacen->setText(oProveedor->cp_almacen);
+    ui->txtpoblacion_almacen->setText(oProveedor->poblacion_almacen);
+    ui->txtprovinciaAmacen->setText(oProveedor->provincia_almacen);
+    index = ui->txtpaisAlmacen->findText(oProveedor->paisAlmacen);
+    ui->txtpaisAlmacen->setCurrentIndex(index);
+    ui->txttelefono_almacen->setText(oProveedor->telefono_almacen);
+    ui->txtfax_almacen->setText(oProveedor->fax_almacen);
 
-    int nIndex = ui->txtcCodigoFormaPago->findText(oProveedor->cCodigoFormaPago);
+    int nIndex = ui->txtcodigoFormaPago->findText(oProveedor->codigoFormaPago);
     if (nIndex !=-1)
     {
-        ui->txtcCodigoFormaPago->setCurrentIndex(nIndex);
-        ui->txtcFormaPago->setText(Configuracion_global->Devolver_forma_pago(oProveedor->idFormadePago));
+        ui->txtcodigoFormaPago->setCurrentIndex(nIndex);
+        ui->txtforma_pago->setText(Configuracion_global->Devolver_forma_pago(oProveedor->idFormadePago));
 
     } else
     {
-        ui->txtcFormaPago->setText("");
+        ui->txtforma_pago->setText("");
     }
 
-    ui->txtdFechaUltimaCompra->setDate(oProveedor->dFechaUltimaCompra);
-    ui->txtrAcumuladoCompras->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->rAcumuladoCompras,'f',2)));
-    ui->txtcEntidadBancariaProveedor->setText(oProveedor->cEntidadBancariaProveedor);
-    ui->txtcOficinaBancariaProveedor->setText(oProveedor->cOficinaBancariaProveedor);
-    ui->txtcDCProveedor->setText(oProveedor->cDCProveedor);
-    ui->txtcCCProveedor->setText(oProveedor->cCCProveedor);
-    ui->txtcEntidadPagoProveedor->setText(oProveedor->cEntidadPagoProveedor);
-    ui->txtcOficinaPagoProveedor->setText(oProveedor->cOficinaPagoProveedor);
-    ui->txtcDCPagoProveedor->setText(oProveedor->cDCPagoProveedor);
-    ui->txtrEntregadoaCuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->rEntregadoaCuenta,'f',2)));
-    ui->txtrRetencionIRPF->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->rRetencionIRPF,'f',2)));
-    ui->txtnTipoRetencionIRPF->setText(QString::number(oProveedor->nTipoRetencion));
-    ui->txtcCuentaAplicacion->setText(oProveedor->cCuentaAplicacion);
-    ui->txttComentarios->setText(oProveedor->tComentarios);
-    ui->txtnDto->setText(QString::number(oProveedor->nDto));
-    ui->txtdFechaAlta->setDate(oProveedor->dFechaAlta);
-    ui->txtrDeudaMaxima->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->rDeudaMaxima,'f',2)));
-    ui->txtrDeudaActual->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->rDeudaActual,'f',2)));
-    if (oProveedor->lRecargoEquivalencia==1)
-        ui->chklRecargoEquivalencia->setChecked(true);
+    ui->txtfecha_ultima_compra->setDate(oProveedor->fecha_ultima_compra);
+    ui->txtacumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->acumulado_compras,'f',2)));
+    ui->txtentidad_bancaria_proveedor->setText(oProveedor->entidad_bancaria_proveedor);
+    ui->txtoficina_bancaria_proveedor->setText(oProveedor->oficina_bancaria_proveedor);
+    ui->txtdc_proveedor->setText(oProveedor->dc_proveedor);
+    ui->txtcc_proveedor->setText(oProveedor->cc_proveedor);
+    ui->txtentidad_pago_proveedor->setText(oProveedor->entidad_pago_proveedor);
+    ui->txtoficina_pago_proveedor->setText(oProveedor->oficina_pago_proveedor);
+    ui->txtdc_pago_proveedor->setText(oProveedor->dc_pago_proveedor);
+    ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->entregado_a_cuenta,'f',2)));
+    ui->txtretencion_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->retencion_irpf,'f',2)));
+    ui->txttipo_retencioirpf->setText(QString::number(oProveedor->tipo_retencion));
+    ui->txtcuenta_aplicacion->setText(oProveedor->cuenta_aplicacion);
+    ui->txtcomentarios->setText(oProveedor->comentarios);
+    ui->txtdto->setText(QString::number(oProveedor->dto));
+    ui->txtfecha_alta->setDate(oProveedor->fecha_alta);
+    ui->txtdeuda_maxima->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->deuda_maxima,'f',2)));
+    ui->txtdeuda_actual->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->deuda_actual,'f',2)));
+    if (oProveedor->recargo_equivalencia==1)
+        ui->chkrecargo_equivalencia->setChecked(true);
     else
-        ui->chklRecargoEquivalencia->setChecked(false);
-    ui->txttTextoparaPedidos->setPlainText(oProveedor->tTextoparaPedidos);
+        ui->chkrecargo_equivalencia->setChecked(false);
+    ui->txttexto_para_pedidos->setPlainText(oProveedor->texto_para_pedidos);
 
     QString cOk;
-    if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
-            !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
-        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
-                                              ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+    if(!ui->txtentidad_pago_proveedor->text().isEmpty() && !ui->txtoficina_pago_proveedor->text().isEmpty() &&
+            !ui->txtdc_pago_proveedor->text().isEmpty() && !ui->txtcuentaPagoProveedor->text().isEmpty())
+        cOk = Configuracion_global->ValidarCC(ui->txtentidad_pago_proveedor->text(),ui->txtoficina_pago_proveedor->text(),
+                                              ui->txtdc_pago_proveedor->text(),ui->txtcuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
-    if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
-            !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
-        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
-                               ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+    if(!ui->txtentidad_bancaria_proveedor->text().isEmpty() && !ui->txtoficina_bancaria_proveedor->text().isEmpty() &&
+            !ui->txtdc_proveedor->text().isEmpty() && !ui->txtcc_proveedor->text().isEmpty())
+        cOk = Configuracion_global->ValidarCC(ui->txtentidad_bancaria_proveedor->text(),ui->txtoficina_bancaria_proveedor->text(),
+                               ui->txtdc_proveedor->text(),ui->txtcc_proveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
@@ -197,59 +197,59 @@ void frmProveedores::LLenarCampos()
 
 void frmProveedores::CargarCamposEnProveedor()
 {
-    oProveedor->cCodigo = ui->txtcCodigo->text();
-    oProveedor->cProveedor =ui->txtcProveedor->text();
-    oProveedor->cCif = ui->txtcCif->text();
-    oProveedor->cDireccion1 = ui->txtcDireccion1->text();
-    oProveedor->cDireccion2 = ui->txtcDireccion2->text();
-    oProveedor->cCP = ui->txtcCP->text();
-    oProveedor->cPoblacion = ui->txtcPoblacion->text();
-    oProveedor->cProvincia = ui->txtcProvincia->text();
-    oProveedor->cPais = ui->txtcPais->currentText();
-    oProveedor->cTelefono1 = ui->txtcTelefono1->text();
-    oProveedor->cTelefono2 = ui->txtcTelefono2->text();
-    oProveedor->cTelefono3 = ui->txtcTelefono3->text();
-    oProveedor->cFax = ui->txtcFax->text();
-    oProveedor->cMovil = ui->txtcMovil->text();
-    oProveedor->cEMail = ui->txtcEmail->text();
-    oProveedor->cWeb = ui->txtcWeb->text();
-    oProveedor->cPersonaContacto = ui->txtcPersonaContacto->text();
-    oProveedor->nDiaCobro = ui->txtnDiaCobro->text().toInt();
-    oProveedor->cDireccionAlmacen = ui->txtcDireccionAlmacen->text();
-    oProveedor->cCPAlmacen = ui->txtcCPAlmacen->text();
-    oProveedor->cPoblacionAlmacen = ui->txtcPoblacionAlmacen->text();
-    oProveedor->cProvinciaAlmacen = ui->txtcProvinciaAmacen->text();
-    oProveedor->cPaisAlmacen = ui->txtcPaisAlmacen->currentText();
-    oProveedor->cTelefonoAlmacen = ui->txtcTelefonoAlmacen->text();
-    oProveedor->cFaxAlmacen = ui->txtcFaxAlmacen->text();
-    oProveedor->cCodigoFormaPago = ui->txtcCodigoFormaPago->currentText();
-    oProveedor->dFechaUltimaCompra = ui->txtdFechaUltimaCompra->date();
-    oProveedor->rAcumuladoCompras = ui->txtrAcumuladoCompras->text().replace(",",".").toDouble();
-    oProveedor->cEntidadBancariaProveedor = ui->txtcEntidadBancariaProveedor->text();
-    oProveedor->cOficinaBancariaProveedor = ui->txtcOficinaBancariaProveedor->text();
-    oProveedor->cDCProveedor = ui->txtcDCProveedor->text();
-    oProveedor->cCCProveedor = ui->txtcCCProveedor->text();
-    oProveedor->cEntidadPagoProveedor = ui->txtcEntidadPagoProveedor->text();
-    oProveedor->cOficinaPagoProveedor = ui->txtcOficinaPagoProveedor->text();
-    oProveedor->cDCPagoProveedor = ui->txtcDCPagoProveedor->text();
-    oProveedor->rRetencionIRPF = ui->txtrRetencionIRPF->text().replace(",",".").toDouble();
-    oProveedor->nTipoRetencion = ui->txtnTipoRetencionIRPF->text().toInt();
-    oProveedor->cCuentaAplicacion = ui->txtcCuentaAplicacion->text();
-    oProveedor->tComentarios = ui->txttComentarios->toPlainText();
-    oProveedor->nDto = ui->txtnDto->text().replace(",",".").toDouble();
-    oProveedor->dFechaAlta = ui->txtdFechaAlta->date();
-    oProveedor->rDeudaMaxima = ui->txtrDeudaMaxima->text().replace(",",".").toDouble();
-    oProveedor->rDeudaActual = ui->txtrDeudaActual->text().replace(",",".").toDouble();
-    oProveedor->lRecargoEquivalencia = ui->chklRecargoEquivalencia->isChecked();
-    oProveedor->tTextoparaPedidos = ui->txttTextoparaPedidos->toPlainText();
-    cargar_forma_pago(ui->txtcCodigoFormaPago->currentText());
+    oProveedor->codigo = ui->txtcodigo->text();
+    oProveedor->proveedor =ui->txtproveedor->text();
+    oProveedor->cif = ui->txtcif->text();
+    oProveedor->direccion1 = ui->txtdireccion1->text();
+    oProveedor->direccion2 = ui->txtdireccion2->text();
+    oProveedor->cp = ui->txtcp->text();
+    oProveedor->poblacion = ui->txtpoblacion->text();
+    oProveedor->provincia = ui->txtprovincia->text();
+    oProveedor->pais = ui->txtpais->currentText();
+    oProveedor->telefono1 = ui->txttelefono1->text();
+    oProveedor->telefono2 = ui->txttelefono2->text();
+    oProveedor->telefono3 = ui->txttelefono3->text();
+    oProveedor->fax = ui->txtfax->text();
+    oProveedor->movil = ui->txtmovil->text();
+    oProveedor->email = ui->txtemail->text();
+    oProveedor->web = ui->txtweb->text();
+    oProveedor->persona_contacto = ui->txtpersona_contacto->text();
+    oProveedor->dia_cobro = ui->txtdia_cobro->text().toInt();
+    oProveedor->direccion_almacen = ui->txtdireccion_almacen->text();
+    oProveedor->cp_almacen = ui->txtcp_almacen->text();
+    oProveedor->poblacion_almacen = ui->txtpoblacion_almacen->text();
+    oProveedor->provincia_almacen = ui->txtprovinciaAmacen->text();
+    oProveedor->paisAlmacen = ui->txtpaisAlmacen->currentText();
+    oProveedor->telefono_almacen = ui->txttelefono_almacen->text();
+    oProveedor->fax_almacen = ui->txtfax_almacen->text();
+    oProveedor->codigoFormaPago = ui->txtcodigoFormaPago->currentText();
+    oProveedor->fecha_ultima_compra = ui->txtfecha_ultima_compra->date();
+    oProveedor->acumulado_compras = ui->txtacumulado_compras->text().replace(",",".").toDouble();
+    oProveedor->entidad_bancaria_proveedor = ui->txtentidad_bancaria_proveedor->text();
+    oProveedor->oficina_bancaria_proveedor = ui->txtoficina_bancaria_proveedor->text();
+    oProveedor->dc_proveedor = ui->txtdc_proveedor->text();
+    oProveedor->cc_proveedor = ui->txtcc_proveedor->text();
+    oProveedor->entidad_pago_proveedor = ui->txtentidad_pago_proveedor->text();
+    oProveedor->oficina_pago_proveedor = ui->txtoficina_pago_proveedor->text();
+    oProveedor->dc_pago_proveedor = ui->txtdc_pago_proveedor->text();
+    oProveedor->retencion_irpf = ui->txtretencion_irpf->text().replace(",",".").toDouble();
+    oProveedor->tipo_retencion = ui->txttipo_retencioirpf->text().toInt();
+    oProveedor->cuenta_aplicacion = ui->txtcuenta_aplicacion->text();
+    oProveedor->comentarios = ui->txtcomentarios->toPlainText();
+    oProveedor->dto = ui->txtdto->text().replace(",",".").toDouble();
+    oProveedor->fecha_alta = ui->txtfecha_alta->date();
+    oProveedor->deuda_maxima = ui->txtdeuda_maxima->text().replace(",",".").toDouble();
+    oProveedor->deuda_actual = ui->txtdeuda_actual->text().replace(",",".").toDouble();
+    oProveedor->recargo_equivalencia = ui->chkrecargo_equivalencia->isChecked();
+    oProveedor->texto_para_pedidos = ui->txttexto_para_pedidos->toPlainText();
+    cargar_forma_pago(ui->txtcodigoFormaPago->currentText());
 
 }
 
 void frmProveedores::cargar_forma_pago(QString codigo)
 {
     int id_forma_pago = Configuracion_global->Devolver_id_codigo_forma_pago(codigo);
-    ui->txtcFormaPago->setText(Configuracion_global->Devolver_forma_pago(id_forma_pago));
+    ui->txtforma_pago->setText(Configuracion_global->Devolver_forma_pago(id_forma_pago));
     oProveedor->idFormadePago = id_forma_pago;
 }
 void frmProveedores::DesbloquerCampos()
@@ -394,7 +394,7 @@ void frmProveedores::                          on_btnGuardar_clicked()
         cTexto = cTexto + tr("Debe elegir una forma de pago")+"\n";
     }
 
-    if (oProveedor->idpais == 0)
+    if (oProveedor->id_pais == 0)
     {
         lGuardar = false;
         cTexto = cTexto + tr("Debe elegir el pais del Proveedor")+"\n";
@@ -413,7 +413,7 @@ void frmProveedores::                          on_btnGuardar_clicked()
 void frmProveedores::on_btnEditar_clicked()
 {
     DesbloquerCampos();
-    ui->txtcCodigo->setFocus();
+    ui->txtcodigo->setFocus();
 }
 
 void frmProveedores::on_btnAnadir_clicked()
@@ -422,70 +422,70 @@ void frmProveedores::on_btnAnadir_clicked()
     oProveedor->Anadir();
     LLenarCampos();
     DesbloquerCampos();
-    ui->txtcCodigo->setFocus();
+    ui->txtcodigo->setFocus();
 }
 
 
-void frmProveedores::on_txtcPoblacion_editingFinished()
+void frmProveedores::on_txtpoblacion_editingFinished()
 {
-    ui->txtcPoblacion->setText(ui->txtcPoblacion->text().toUpper());
-    if (ui->txtcCP->text().isEmpty() && !ui->txtcPoblacion->text().isEmpty() && !ui->txtcCP->isReadOnly()) {
+    ui->txtpoblacion->setText(ui->txtpoblacion->text().toUpper());
+    if (ui->txtcp->text().isEmpty() && !ui->txtpoblacion->text().isEmpty() && !ui->txtcp->isReadOnly()) {
         FrmBuscarPoblacion BuscarPoblacion;
 
         //Configuracion_global->CargarDatos();
-        BuscarPoblacion.setcPoblacion(ui->txtcPoblacion->text(),1);
+        BuscarPoblacion.setpoblacion(ui->txtpoblacion->text(),1);
         if(BuscarPoblacion.exec()) {
-            //  BuscarPoblacion.setcPoblacion(ui->txtcCp->text(),0);
-            int nId = BuscarPoblacion.DevolverID();
+            //  BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
+            int nid = BuscarPoblacion.Devolverid();
 
-            if(nId > 0) {
+            if(nid > 0) {
                 QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
-                QString cId;
-                cId = QString::number(nId);
-                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cId");
-                qPoblacion.bindValue(":id",cId);
+                QString cid;
+                cid = QString::number(nid);
+                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cid");
+                qPoblacion.bindValue(":id",cid);
                 if(!qPoblacion.exec()) {
                     QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                 } else {
                     if (qPoblacion.next()) {
-                        ui->txtcPoblacion->setText(qPoblacion.value(0).toString());
-                        ui->txtcCP->setText(qPoblacion.value(1).toString());
-                        ui->txtcProvincia->setText(qPoblacion.value(2).toString());
-                        int index = ui->txtcPais->findText(Configuracion_global->cPais);
-                        ui->txtcPais->setCurrentIndex(index);
+                        ui->txtpoblacion->setText(qPoblacion.value(0).toString());
+                        ui->txtcp->setText(qPoblacion.value(1).toString());
+                        ui->txtprovincia->setText(qPoblacion.value(2).toString());
+                        int index = ui->txtpais->findText(Configuracion_global->pais);
+                        ui->txtpais->setCurrentIndex(index);
                     }
                 }
 
             }
         }
     }
-    ui->txtcTelefono1->setFocus();
+    ui->txttelefono1->setFocus();
 
 }
 
-void frmProveedores::on_txtcCP_editingFinished()
+void frmProveedores::on_txtcp_editingFinished()
 {
-    if (!ui->txtcCP->text().isEmpty() && ui->txtcPoblacion->text().isEmpty() && !ui->txtcCP->isReadOnly()){
+    if (!ui->txtcp->text().isEmpty() && ui->txtpoblacion->text().isEmpty() && !ui->txtcp->isReadOnly()){
         FrmBuscarPoblacion BuscarPoblacion;
 
-        BuscarPoblacion.setcPoblacion(ui->txtcCP->text(),0);
+        BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
         if(BuscarPoblacion.exec()) {
-            int nId = BuscarPoblacion.DevolverID();
-            if(nId > 0) {
+            int nid = BuscarPoblacion.Devolverid();
+            if(nid > 0) {
                 QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
-                QString cId;
-                cId = QString::number(nId);
-                qPoblacion.prepare("select  poblacion,  cp, provincia from poblaciones where id = :cId");
-                qPoblacion.bindValue(":id",cId);
+                QString cid;
+                cid = QString::number(nid);
+                qPoblacion.prepare("select  poblacion,  cp, provincia from poblaciones where id = :cid");
+                qPoblacion.bindValue(":id",cid);
                 if(!qPoblacion.exec()) {
                     QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                 } else {
                     if (qPoblacion.next()) {
-                        ui->txtcPoblacion->setText(qPoblacion.record().value("poblacion").toString());
-                        ui->txtcProvincia->setText(qPoblacion.record().value("provincia").toString());
-                        int index = ui->txtcPais->findText(Configuracion_global->cPais);
-                        ui->txtcPais->setCurrentIndex(index);
-                        ui->txtcTelefono1->setFocus();
+                        ui->txtpoblacion->setText(qPoblacion.record().value("poblacion").toString());
+                        ui->txtprovincia->setText(qPoblacion.record().value("provincia").toString());
+                        int index = ui->txtpais->findText(Configuracion_global->pais);
+                        ui->txtpais->setCurrentIndex(index);
+                        ui->txttelefono1->setFocus();
                     }
                 }
 
@@ -526,59 +526,28 @@ void frmProveedores::on_btnDeshacer_clicked()
     }
 }
 
-void frmProveedores::on_txtcEntidadBancariaProveedor_editingFinished()
+void frmProveedores::on_txtentidad_bancaria_proveedor_editingFinished()
 {
 
     QString cOk;
-    if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
-            !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
-        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
-                                 ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+    if(!ui->txtentidad_bancaria_proveedor->text().isEmpty() && !ui->txtoficina_bancaria_proveedor->text().isEmpty() &&
+            !ui->txtdc_proveedor->text().isEmpty() && !ui->txtcc_proveedor->text().isEmpty())
+        cOk = Configuracion_global->ValidarCC(ui->txtentidad_bancaria_proveedor->text(),ui->txtoficina_bancaria_proveedor->text(),
+                                 ui->txtdc_proveedor->text(),ui->txtcc_proveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
 }
 
-void frmProveedores::on_txtcOficinaBancariaProveedor_editingFinished()
+void frmProveedores::on_txtoficina_bancaria_proveedor_editingFinished()
 {
 
     QString cOk;
-    if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
-            !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
-        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
-                                 ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
-    if(cOk == "1")
-        ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
-    else
-        ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
-
-}
-
-void frmProveedores::on_txtcDCProveedor_editingFinished()
-{
-
-    QString cOk;
-    if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
-            !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
-        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
-                                 ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
-    if(cOk == "1")
-        ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
-    else
-        ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
-}
-
-
-
-void frmProveedores::on_txtcCCProveedor_editingFinished()
-{
-
-    QString cOk;
-    if(!ui->txtcEntidadBancariaProveedor->text().isEmpty() && !ui->txtcOficinaBancariaProveedor->text().isEmpty() &&
-            !ui->txtcDCProveedor->text().isEmpty() && !ui->txtcCCProveedor->text().isEmpty())
-        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadBancariaProveedor->text(),ui->txtcOficinaBancariaProveedor->text(),
-                                 ui->txtcDCProveedor->text(),ui->txtcCCProveedor->text());
+    if(!ui->txtentidad_bancaria_proveedor->text().isEmpty() && !ui->txtoficina_bancaria_proveedor->text().isEmpty() &&
+            !ui->txtdc_proveedor->text().isEmpty() && !ui->txtcc_proveedor->text().isEmpty())
+        cOk = Configuracion_global->ValidarCC(ui->txtentidad_bancaria_proveedor->text(),ui->txtoficina_bancaria_proveedor->text(),
+                                 ui->txtdc_proveedor->text(),ui->txtcc_proveedor->text());
     if(cOk == "1")
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
@@ -586,14 +555,45 @@ void frmProveedores::on_txtcCCProveedor_editingFinished()
 
 }
 
-void frmProveedores::on_txtcEntidadPagoProveedor_editingFinished()
+void frmProveedores::on_txtdc_proveedor_editingFinished()
 {
 
     QString cOk;
-    if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
-            !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
-        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
-                                 ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+    if(!ui->txtentidad_bancaria_proveedor->text().isEmpty() && !ui->txtoficina_bancaria_proveedor->text().isEmpty() &&
+            !ui->txtdc_proveedor->text().isEmpty() && !ui->txtcc_proveedor->text().isEmpty())
+        cOk = Configuracion_global->ValidarCC(ui->txtentidad_bancaria_proveedor->text(),ui->txtoficina_bancaria_proveedor->text(),
+                                 ui->txtdc_proveedor->text(),ui->txtcc_proveedor->text());
+    if(cOk == "1")
+        ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
+    else
+        ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
+}
+
+
+
+void frmProveedores::on_txtcc_proveedor_editingFinished()
+{
+
+    QString cOk;
+    if(!ui->txtentidad_bancaria_proveedor->text().isEmpty() && !ui->txtoficina_bancaria_proveedor->text().isEmpty() &&
+            !ui->txtdc_proveedor->text().isEmpty() && !ui->txtcc_proveedor->text().isEmpty())
+        cOk = Configuracion_global->ValidarCC(ui->txtentidad_bancaria_proveedor->text(),ui->txtoficina_bancaria_proveedor->text(),
+                                 ui->txtdc_proveedor->text(),ui->txtcc_proveedor->text());
+    if(cOk == "1")
+        ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
+    else
+        ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
+
+}
+
+void frmProveedores::on_txtentidad_pago_proveedor_editingFinished()
+{
+
+    QString cOk;
+    if(!ui->txtentidad_pago_proveedor->text().isEmpty() && !ui->txtoficina_pago_proveedor->text().isEmpty() &&
+            !ui->txtdc_pago_proveedor->text().isEmpty() && !ui->txtcuentaPagoProveedor->text().isEmpty())
+        cOk = Configuracion_global->ValidarCC(ui->txtentidad_pago_proveedor->text(),ui->txtoficina_pago_proveedor->text(),
+                                 ui->txtdc_pago_proveedor->text(),ui->txtcuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
@@ -601,14 +601,14 @@ void frmProveedores::on_txtcEntidadPagoProveedor_editingFinished()
 
 }
 
-void frmProveedores::on_txtcOficinaPagoProveedor_editingFinished()
+void frmProveedores::on_txtoficina_pago_proveedor_editingFinished()
 {
 
     QString cOk;
-    if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
-            !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
-        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
-                                 ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+    if(!ui->txtentidad_pago_proveedor->text().isEmpty() && !ui->txtoficina_pago_proveedor->text().isEmpty() &&
+            !ui->txtdc_pago_proveedor->text().isEmpty() && !ui->txtcuentaPagoProveedor->text().isEmpty())
+        cOk = Configuracion_global->ValidarCC(ui->txtentidad_pago_proveedor->text(),ui->txtoficina_pago_proveedor->text(),
+                                 ui->txtdc_pago_proveedor->text(),ui->txtcuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
@@ -616,77 +616,77 @@ void frmProveedores::on_txtcOficinaPagoProveedor_editingFinished()
 
 }
 
-void frmProveedores::on_txtcDCPagoProveedor_editingFinished()
+void frmProveedores::on_txtdc_pago_proveedor_editingFinished()
 {
     QString cOk;
-    if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
-            !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
-        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
-                                 ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+    if(!ui->txtentidad_pago_proveedor->text().isEmpty() && !ui->txtoficina_pago_proveedor->text().isEmpty() &&
+            !ui->txtdc_pago_proveedor->text().isEmpty() && !ui->txtcuentaPagoProveedor->text().isEmpty())
+        cOk = Configuracion_global->ValidarCC(ui->txtentidad_pago_proveedor->text(),ui->txtoficina_pago_proveedor->text(),
+                                 ui->txtdc_pago_proveedor->text(),ui->txtcuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
 }
 
-void frmProveedores::on_txtcCuentaPagoProveedor_editingFinished()
+void frmProveedores::on_txtcuentaPagoProveedor_editingFinished()
 {
     QString cOk;
-    if(!ui->txtcEntidadPagoProveedor->text().isEmpty() && !ui->txtcOficinaPagoProveedor->text().isEmpty() &&
-            !ui->txtcDCPagoProveedor->text().isEmpty() && !ui->txtcCuentaPagoProveedor->text().isEmpty())
-        cOk = Configuracion_global->ValidarCC(ui->txtcEntidadPagoProveedor->text(),ui->txtcOficinaPagoProveedor->text(),
-                                 ui->txtcDCPagoProveedor->text(),ui->txtcCuentaPagoProveedor->text());
+    if(!ui->txtentidad_pago_proveedor->text().isEmpty() && !ui->txtoficina_pago_proveedor->text().isEmpty() &&
+            !ui->txtdc_pago_proveedor->text().isEmpty() && !ui->txtcuentaPagoProveedor->text().isEmpty())
+        cOk = Configuracion_global->ValidarCC(ui->txtentidad_pago_proveedor->text(),ui->txtoficina_pago_proveedor->text(),
+                                 ui->txtdc_pago_proveedor->text(),ui->txtcuentaPagoProveedor->text());
     if(cOk == "1")
         ui->lblcuenta2Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblcuenta2Valida->setText(tr("La cuenta no es válida"));
 }
 
-void frmProveedores::on_txtcCPAlmacen_editingFinished()
+void frmProveedores::on_txtcp_almacen_editingFinished()
 {
-    if (!ui->txtcCPAlmacen->isReadOnly()) {
-        if (!ui->txtcCPAlmacen->text().isEmpty() && ui->txtcPoblacionAlmacen->text().isEmpty()) {
+    if (!ui->txtcp_almacen->isReadOnly()) {
+        if (!ui->txtcp_almacen->text().isEmpty() && ui->txtpoblacion_almacen->text().isEmpty()) {
             FrmBuscarPoblacion BuscarPoblacion;
 
             //Configuracion_global->CargarDatos();
-            BuscarPoblacion.setcPoblacion(ui->txtcCPAlmacen->text(),0);
+            BuscarPoblacion.setpoblacion(ui->txtcp_almacen->text(),0);
             if(BuscarPoblacion.exec()) {
-                int nId = BuscarPoblacion.DevolverID();
-                if(nId > 0) {
+                int nid = BuscarPoblacion.Devolverid();
+                if(nid > 0) {
                     QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
-                    QString cId;
-                    cId = QString::number(nId);
-                    qPoblacion.prepare("select poblacion, cp, provincia from poblaciones where id = :cId");
-                    qPoblacion.bindValue(":id",cId);
+                    QString cid;
+                    cid = QString::number(nid);
+                    qPoblacion.prepare("select poblacion, cp, provincia from poblaciones where id = :cid");
+                    qPoblacion.bindValue(":id",cid);
                     if(!qPoblacion.exec()) {
                         QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
                     } else {
                         if (qPoblacion.next()) {
-                            ui->txtcPoblacionAlmacen->setText(qPoblacion.value(0).toString());
-                            ui->txtcProvinciaAmacen->setText(qPoblacion.value(2).toString());
-                            int index = ui->txtcPaisAlmacen->findText(Configuracion_global->cPais);
-                            ui->txtcPaisAlmacen->setCurrentIndex(index);
+                            ui->txtpoblacion_almacen->setText(qPoblacion.value(0).toString());
+                            ui->txtprovinciaAmacen->setText(qPoblacion.value(2).toString());
+                            int index = ui->txtpaisAlmacen->findText(Configuracion_global->pais);
+                            ui->txtpaisAlmacen->setCurrentIndex(index);
                         }
                     }
 
                 }
             }
         }
-        ui->txtcTelefonoAlmacen->setFocus();
+        ui->txttelefono_almacen->setFocus();
     }
 }
 
-void frmProveedores::on_txtcPais_currentIndexChanged(const QString &arg1)
+void frmProveedores::on_txtpais_currentIndexChanged(const QString &arg1)
 {
-    QString cPais = arg1;
-   oProveedor->idpais = Configuracion_global->Devolver_id_pais(cPais);
+    QString pais = arg1;
+   oProveedor->id_pais = Configuracion_global->Devolver_id_pais(pais);
 }
 
 
-void frmProveedores::on_txtcCodigoFormaPago_currentIndexChanged(const QString &arg1)
+void frmProveedores::on_txtcodigoFormaPago_currentIndexChanged(const QString &arg1)
 {
-    QString cCodigo = arg1;
-    oProveedor->idFormadePago = Configuracion_global->Devolver_id_codigo_forma_pago(cCodigo);
+    QString codigo = arg1;
+    oProveedor->idFormadePago = Configuracion_global->Devolver_id_codigo_forma_pago(codigo);
 }
 
 void frmProveedores::on_btnNuevaFactura_clicked()
@@ -739,14 +739,14 @@ void frmProveedores::historiales()
     // Cargar historial Pedidos
     //--------------------------
     QSqlQueryModel *modelPedidos = new QSqlQueryModel(this);
-    modelPedidos->setQuery("select id,nPedido,dFecha,rTotal,lRecibidoCompleto from ped_pro where id_Proveedor ="+
-                           QString::number(oProveedor->id)+" order by nPedido desc",QSqlDatabase::database("empresa"));
+    modelPedidos->setQuery("select id,pedido,fecha,total,recibido_completo from ped_pro where id_proveedor ="+
+                           QString::number(oProveedor->id)+" order by pedido desc",QSqlDatabase::database("empresa"));
     ui->tablaColumnasPedidos->setModel(modelPedidos);
     ui->tablaColumnasPedidos->setColumnHidden(0,true);
     ui->tablaColumnasPedidos->setColumnWidth(1,120);
     ui->tablaColumnasPedidos->setColumnWidth(1,120);
     ui->tablaColumnasPedidos->setColumnWidth(3,120);
-    modelPedidos->setHeaderData(1,Qt::Horizontal,"PEDIDO");
+    modelPedidos->setHeaderData(1,Qt::Horizontal,"PEDidO");
     ui->tablaColumnasPedidos->setItemDelegateForColumn(2, new DateDelegate);
     modelPedidos->setHeaderData(2,Qt::Horizontal,"Fecha");
     ui->tablaColumnasPedidos->setItemDelegateForColumn(3,new MonetaryDelegate);
@@ -758,9 +758,9 @@ void frmProveedores::historiales()
     // Cargar Historial Facturas
     //--------------------------
     QSqlQueryModel *modelFacturas = new QSqlQueryModel(this);
-    modelFacturas->setQuery("select id,cFactura,dFecha,cPedido,rTotalBase,rTotalIva,rTotalRetencion,rTotalRecargoEq,rTotal,rImporteDeudaPendiente"
-                            " from fac_pro where id_Proveedor = "+QString::number(oProveedor->id)+
-                            " order by cFactura desc",QSqlDatabase::database("empresa"));
+    modelFacturas->setQuery("select id,factura,fecha,pedido,total_base,total_iva,total_retencion,total_recargo,total,importe_deuda_pendiente"
+                            " from fac_pro where id_proveedor = "+QString::number(oProveedor->id)+
+                            " order by factura desc",QSqlDatabase::database("empresa"));
     ui->tablacolumnasFacturas->setModel(modelFacturas);
     ui->tablacolumnasFacturas->setColumnHidden(0,true);
     modelFacturas->setHeaderData(1,Qt::Horizontal,"N.Factura");
@@ -786,9 +786,9 @@ void frmProveedores::historiales()
     // Cargar Historial Albaranes
     //---------------------------
     QSqlQueryModel *modelAlbaranes = new QSqlQueryModel(this);
-    modelAlbaranes->setQuery("select id,cAlbaran,dFecha,rBaseTotal,rIvaTotal,"
-                             " rTotal from alb_pro where id_Proveedor = "+QString::number(oProveedor->id)+
-                             " order by cAlbaran desc ",QSqlDatabase::database("empresa"));
+    modelAlbaranes->setQuery("select id,albaran,fecha,base_total,iva_total,"
+                             " total from alb_pro where id_proveedor = "+QString::number(oProveedor->id)+
+                             " order by albaran desc ",QSqlDatabase::database("empresa"));
     ui->tablaColumnasAlbaran->setModel(modelAlbaranes);
     ui->tablaColumnasAlbaran->setColumnHidden(0,true);
     modelAlbaranes->setHeaderData(1,Qt::Horizontal,"N.Albarán");
@@ -813,8 +813,8 @@ void frmProveedores::historiales()
     // Artículos proveedor
     //---------------------
     QSqlQueryModel *modelArticulo = new QSqlQueryModel(this);
-    modelArticulo->setQuery("select cCodigo,cCodigoBarras, cDescripcion,rCoste "
-                           "from articulos where id_Proveedor =" +QString::number(oProveedor->id),
+    modelArticulo->setQuery("select codigo,codigo_barras, descripcion,coste "
+                           "from articulos where id_proveedor =" +QString::number(oProveedor->id),
                            QSqlDatabase::database("Maya"));
 
 
@@ -859,9 +859,9 @@ void frmProveedores::historiales()
     //----------------------
     QSqlQueryModel *modelAsientos = new QSqlQueryModel(this);
 
-    modelAsientos->setQuery("select id,asiento,fechaAsiento,cuentaD,descripcionD, importeD,cuentaH,descripcionH,importeH "
-                            "from diario where cta_principal = '"+oProveedor->cCuentaAplicacion +
-                            "' order by asiento + ' '+posenasiento",
+    modelAsientos->setQuery("select id,asiento,fecha_asiento,cuenta_d,descripcion_d, importe_d,cuenta_h,descripcion_h,importe_h "
+                            "from diario where cta_principal = '"+oProveedor->cuenta_aplicacion +
+                            "' order by asiento + ' '+pos_en_asiento",
                             QSqlDatabase::database("dbconta"));
 
     ui->tablaAsientos->setModel(modelAsientos);
@@ -946,15 +946,15 @@ void frmProveedores::grafica()
 void frmProveedores::contactos()
 {
     QSqlQueryModel *modelContactos= new QSqlQueryModel(this);
-    modelContactos->setQuery("select id,idproveedor,cargo_empresa, nombre, desctelefono1,telefono1,desctelefono2,telefono2,"
-                             "desctelefono3, telefono3, descmovil1,movil1,descmovil2,movil2 "
-                             "from personascontactoproveedor where idproveedor ="+QString::number(oProveedor->id),
+    modelContactos->setQuery("select id,id_proveedor,cargo_empresa, nombre, desc_telefono1,telefono1,desc_telefono2,telefono2,"
+                             "desc_telefono3, telefono3, desc_movil1,movil1,desc_movil2,movil2 "
+                             "from personascontactoproveedor where id_proveedor ="+QString::number(oProveedor->id),
                              QSqlDatabase::database("Maya"));
 
     ui->tablaContactos->setModel(modelContactos);
 
-    modelContactos->setHeaderData(0,Qt::Horizontal,tr("ID"));
-    modelContactos->setHeaderData(1,Qt::Horizontal,tr("IDPROVEEDOR"));
+    modelContactos->setHeaderData(0,Qt::Horizontal,tr("id"));
+    modelContactos->setHeaderData(1,Qt::Horizontal,tr("id_proveedor"));
     modelContactos->setHeaderData(2,Qt::Horizontal,tr("CARGO"));
     modelContactos->setHeaderData(3,Qt::Horizontal,tr("NOMBRE"));
     modelContactos->setHeaderData(4,Qt::Horizontal,tr("DESC.T1"));
@@ -1070,15 +1070,15 @@ void frmProveedores::guardar_contacto()
     ui->txtTelefono2->setReadOnly(true);
     ui->txtTelefono3->setReadOnly(true);
     ui->txtCargo->setReadOnly(true);
-    ui->txtcEmail->setReadOnly(true);
+    ui->txtemail->setReadOnly(true);
 }
 
 void frmProveedores::editar_contacto()
 
 {
     QModelIndex index= ui->tablaContactos->currentIndex();
-    int nId = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
-    this->id_contacto = nId;
+    int nid = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
+    this->id_contacto = nid;
     QSqlQuery queryContactos(QSqlDatabase::database("Maya"));
     queryContactos.prepare("select * from personascontactoproveedor where id = :id");
     queryContactos.bindValue(":id",this->id_contacto);
@@ -1092,11 +1092,11 @@ void frmProveedores::editar_contacto()
         queryContactos.next();
         ui->txtNombre->setText(queryContactos.record().value("nombre").toString());
         ui->txtCargo->setText(queryContactos.record().value("cargo_empresa").toString());
-        ui->txtDescripcionT1->setText(queryContactos.record().value("desctelefono1").toString());
-        ui->txtDescripcionT2->setText(queryContactos.record().value("desctelefono2").toString());
-        ui->txtDescripcionT3->setText(queryContactos.record().value("desctelefono3").toString());
-        ui->txtDescripcionM1->setText(queryContactos.record().value("descmovil1").toString());
-        ui->txtDescripcionM2->setText(queryContactos.record().value("descmovil2").toString());
+        ui->txtDescripcionT1->setText(queryContactos.record().value("desc_telefono1").toString());
+        ui->txtDescripcionT2->setText(queryContactos.record().value("desc_telefono2").toString());
+        ui->txtDescripcionT3->setText(queryContactos.record().value("desc_telefono3").toString());
+        ui->txtDescripcionM1->setText(queryContactos.record().value("desc_movil1").toString());
+        ui->txtDescripcionM2->setText(queryContactos.record().value("desc_movil2").toString());
         ui->txtTelefono1->setText(queryContactos.record().value("telefono1").toString());
         ui->txtTelefono2->setText(queryContactos.record().value("telefono2").toString());
         ui->txtTelefono3->setText(queryContactos.record().value("telefono3").toString());
@@ -1126,8 +1126,8 @@ void frmProveedores::editar_contacto()
 void frmProveedores::borrar_contacto()
 {
     QModelIndex index= ui->tablaContactos->currentIndex();
-    int nId = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
-    this->id_contacto = nId;
+    int nid = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
+    this->id_contacto = nid;
     QSqlQuery queryContactos(QSqlDatabase::database("Maya"));
     queryContactos.prepare("delete from personascontactoproveedor where id = :id");
     queryContactos.bindValue(":id",this->id_contacto);
@@ -1147,7 +1147,7 @@ void frmProveedores::on_btnBuscar_clicked()
     FrmBuscarProveedor frmBuscar(this);
     if(frmBuscar.exec() == QDialog::Accepted)
     {
-        int id_pro = frmBuscar.nIdProv;
+        int id_pro = frmBuscar.nidProv;
         oProveedor->Recuperar("select * from proveedores where id = "+QString::number(id_pro));
         this->LLenarCampos();
     }
@@ -1168,13 +1168,13 @@ void frmProveedores::on_btnAnadirEntrega_clicked()
 
 }
 
-void frmProveedores::on_txtcCif_editingFinished()
+void frmProveedores::on_txtcif_editingFinished()
 {
     blockSignals(true);
-    if (ui->txtcCif->text().length() == 8)
+    if (ui->txtcif->text().length() == 8)
     {
-        QString cCIF = Configuracion::letraDNI(ui->txtcCif->text());
-        ui->txtcCif->setText(cCIF.toUpper());
+        QString cif = Configuracion::letraDNI(ui->txtcif->text());
+        ui->txtcif->setText(cif.toUpper());
     }
     blockSignals(false);
 }

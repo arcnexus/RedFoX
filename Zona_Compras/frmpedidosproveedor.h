@@ -1,5 +1,5 @@
-#ifndef FRMPEDIDOSPROVEEDOR_H
-#define FRMPEDIDOSPROVEEDOR_H
+#ifndef FRMPEDidOSPROVEEDOR_H
+#define FRMPEDidOSPROVEEDOR_H
 
 #include <QDialog>
 #include "../Auxiliares/Globlal_Include.h"
@@ -23,8 +23,8 @@ public:
     void llenarProveedor(int id,bool isNew = false);
     PedidoProveedor *oPedido_proveedor;// = new PedidoProveedor(this);
     int id;
-    moduleZone ModuleZone(){return Compras;}
-    QString ModuleName(){return "Pedidos provedor";}
+    module_zone module_zone(){return Compras;}
+    QString module_name(){return "Pedidos provedor";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -36,7 +36,7 @@ signals:
 private slots:
     void lineaReady(lineaDetalle*);
     void lineaDeleted(lineaDetalle *ld);
-    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
+    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);
@@ -82,4 +82,4 @@ private:
     QPushButton* shortCut;
 };
 
-#endif // FRMPEDIDOSPROVEEDOR_H
+#endif // FRMPEDidOSPROVEEDOR_H

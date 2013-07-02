@@ -1,5 +1,5 @@
-#ifndef PEDIDOPROVEEDOR_H
-#define PEDIDOPROVEEDOR_H
+#ifndef PEDidOPROVEEDOR_H
+#define PEDidOPROVEEDOR_H
 
 #include <QObject>
 #include "../Auxiliares/Globlal_Include.h"
@@ -10,76 +10,74 @@ public:
     explicit PedidoProveedor(QObject *parent = 0);
     
     int	id;
-    int 	nPedido;
-    int     nEjercicio;
-    QDate	dFecha;
-    QDate	dRecepcion;
-    int 	Id_Proveedor;
-    QString	cCodigoProveedor;
-    QString	cProveedor;
-    QString	cDireccion1;
-    QString	cDireccion2;
-    QString	cCP;
-    QString	cPoblacion;
-    QString	cProvincia;
-    int  	idpais;
-    QString	cCifNif;
-    double	rBaseTotal;
-    double	rSubotal;
-    double	rDto;
-    double	nIVA;
-    double	rRecTotal;
-    double	rTotal;
+    int 	pedido;
+    int     ejercicio;
+    QDate	fecha;
+    QDate	recepcion;
+    int 	id_proveedor;
+    QString	codigoProveedor;
+    QString	proveedor;
+    QString	direccion1;
+    QString	direccion2;
+    QString	cp;
+    QString	poblacion;
+    QString	provincia;
+    int  	id_pais;
+    QString	cif_nif;
+    double	base_total;
+    double	subtotal;
+    double	dto;
+    double	iva;
+    double	recTotal;
+    double	total;
     bool	lEnviado;
-    bool	lRecibido;
-    bool	lRecibidoCompleto;
+    bool	recibido;
+    bool	recibido_completo;
     bool    lGeneroPendiente;
-    bool    lRecargoEquivalencia;
-    double	rBase1;
-    double	rBase2;
-    double	rBase3;
-    double	rBase4;
-    double	nPorcIva1;
-
+    bool    recargo_equivalencia;
+    double	base1;
+    double	base2;
+    double	base3;
+    double	base4;
 
     bool lTraspasado;
-    int nPedidoCliente;
-    int Id_FormaPago;
-    QString tComentario;
-    QDate dFechaEntrega;
-    QString cDireccion1Entrega;
-    QString cDireccion2Entrega;
-    QString cCPEntrega;
-    QString cPoblacionEntrega;
-    QString cProvinciaEntrega;
+    int pedido_cliente;
+    int id_forma_pago;
+    QString comentario;
+    QDate fechaEntrega;
+    QString direccion1Entrega;
+    QString direccion2Entrega;
+    QString cpEntrega;
+    QString poblacionEntrega;
+    QString provinciaEntrega;
     int id_paisEntrega;
-    QString cNombreCliente;
-    QString cHorarioActivo;
+    QString nombre_cliente;
+    QString horarioActivo;
 
-    int niva1;
-    int niva2;
-    int niva3;
-    int niva4;
-    double riva1;
-    double riva2;
-    double riva3;
-    double riva4;
-    double rdto1;
-    double rdto2;
-    double rdto3;
-    double rdto4;
-    int nrec1;
-    int nrec2;
-    int nrec3;
-    int nrec4;
-    double rrec1;
-    double rrec2;
-    double rrec3;
-    double rrec4;
-    double rtotal1;
-    double rtotal2;
-    double rtotal3;
-    double rtotal4;
+    float porc_iva1;
+    float porc_iva2;
+    float porc_iva3;
+    float porc_iva4;
+    double iva1;
+    double iva2;
+    double iva3;
+    double iva4;
+    double dto1;
+    double dto2;
+    double dto3;
+    double dto4;
+    float porc_rec1;
+    float porc_rec2;
+    float porc_rec3;
+    float porc_rec4;
+    double rec1;
+    double rec2;
+    double rec3;
+    double rec4;
+    double total1;
+    double total2;
+    double total3;
+    double total4;
 
 
 signals:
@@ -112,4 +110,4 @@ private:
 
 };
 
-#endif // PEDIDOPROVEEDOR_H
+#endif // PEDidOPROVEEDOR_H

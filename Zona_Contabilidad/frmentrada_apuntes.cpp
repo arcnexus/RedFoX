@@ -5,7 +5,7 @@
 #include "../Zona_Contabilidad/cuentas_contables.h"
 
 FrmEntrada_apuntes::FrmEntrada_apuntes(QWidget *parent) :
-    MayaModule(ModuleZone(),ModuleName(),parent),
+    MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmEntrada_apuntes),
     toolButton(tr("Diario"),":/Icons/PNG/asientos.png",this),
     menuButton(QIcon(":/Icons/PNG/asientos.png"),tr("Diario"),this),
@@ -25,14 +25,14 @@ FrmEntrada_apuntes::~FrmEntrada_apuntes()
 void FrmEntrada_apuntes::llenar_objeto()
 {
     oApunte->asiento = ui->txtnum_asiento->text().toInt();
-    oApunte->cuentaD = ui->txtcuenta_debe->text();
-    oApunte->cuentaH = ui->txtcuenta_haber->text();
-    oApunte->descripcionD = ui->txtdesc_cuenta_debe->text();
-    oApunte->descripcionH = ui->txtdesc_cuenta_haber->text();
-    oApunte->fechaAsiento = ui->txtfecha_asiento->date();
-    oApunte->importeD = ui->txtimporte_debe->text().replace(",",".").toDouble();
-    oApunte->importeH = ui->txtimporte_haber->text().replace(",",".").toDouble();
-    // TODO oApunte->posenasiento =
+    oApunte->cuenta_d = ui->txtcuenta_debe->text();
+    oApunte->cuenta_h = ui->txtcuenta_haber->text();
+    oApunte->descripcion_d = ui->txtdesc_cuenta_debe->text();
+    oApunte->descripcion_h = ui->txtdesc_cuenta_haber->text();
+    oApunte->fecha_asiento = ui->txtfecha_asiento->date();
+    oApunte->importe_d = ui->txtimporte_debe->text().replace(",",".").toDouble();
+    oApunte->importe_h = ui->txtimporte_haber->text().replace(",",".").toDouble();
+    // TODO oApunte->pos_en_asiento =
 
 }
 
@@ -47,7 +47,7 @@ void FrmEntrada_apuntes::clear()
     ui->txtfecha_asiento->setDate(QDate::currentDate());
     ui->txtimporte_debe->setText("0,00");
     ui->txtimporte_haber->setText("0,00");
-    int index = ui->cbo_moneda->findText(Configuracion_global->codDivisaLocal);
+    int index = ui->cbo_moneda->findText(Configuracion_global->cod_divisa_local);
     ui->cbo_moneda->setCurrentIndex(index);
     ui->btnbuscar_cuenta_debe->setText("");
     ui->btnbuscar_cuenta_haber->setText("");
@@ -58,8 +58,8 @@ void FrmEntrada_apuntes::clear()
 void FrmEntrada_apuntes::llenar_tabla_apunte(int asiento)
 {
     QSqlQueryModel *modelApunte = new QSqlQueryModel(this);
-    QString cSQL ="select id,posenasiento,fechaAsiento,cuentaD,descripcionD,importeD,cuentaH,descripcionH,importeH "
-            "from diario where asiento = "+QString::number(asiento)+"  order by posenasiento";
+    QString cSQL ="select id,pos_en_asiento,fecha_asiento,cuenta_d,descripcion_d,importe_d,cuenta_h,descripcion_h,importe_h "
+            "from diario where asiento = "+QString::number(asiento)+"  order by pos_en_asiento";
  //   qDebug() << cSQL;
     modelApunte->setQuery(cSQL,QSqlDatabase::database("dbconta"));
     ui->tabla_asientos->setModel(modelApunte);
@@ -91,19 +91,19 @@ void FrmEntrada_apuntes::llenar_tabla_apunte(int asiento)
 void FrmEntrada_apuntes::totales_asiento(int asiento)
 {
     QSqlQuery queryAsiento(QSqlDatabase::database("dbconta"));
-    queryAsiento.exec("select * from diario where asiento = "+QString::number(asiento)+"  order by posenasiento");
+    queryAsiento.exec("select * from diario where asiento = "+QString::number(asiento)+"  order by pos_en_asiento");
     int lineas=0;
-    double importedebe,importehaber,descuadre;
+    double importe_debe,importe_haber,descuadre;
     while (queryAsiento.next())
     {
         lineas++;
-        importedebe += queryAsiento.record().value("importeD").toDouble();
-        importehaber += queryAsiento.record().value("importeH").toDouble();
+        importe_debe += queryAsiento.record().value("importe_d").toDouble();
+        importe_haber += queryAsiento.record().value("importe_h").toDouble();
 
     }
-    descuadre = importedebe - importehaber;
-    ui->txttotal_debe->setText(Configuracion_global->toFormatoMoneda(QString::number(importedebe,'f',2)));
-    ui->txttotal_haber->setText(Configuracion_global->toFormatoMoneda(QString::number(importehaber,'f',2)));
+    descuadre = importe_debe - importe_haber;
+    ui->txttotal_debe->setText(Configuracion_global->toFormatoMoneda(QString::number(importe_debe,'f',2)));
+    ui->txttotal_haber->setText(Configuracion_global->toFormatoMoneda(QString::number(importe_haber,'f',2)));
     if(descuadre <0)
     {
         ui->txtdescuadre_asiento->setStyleSheet("color:red; background-color:white");

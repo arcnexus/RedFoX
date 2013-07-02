@@ -828,7 +828,7 @@ background-color: rgb(0, 0, 57);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtcNombre">
+          <widget class="QLineEdit" name="txtnombre">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -907,7 +907,7 @@ background-color: rgb(0, 0, 57);</string>
        <item row="6" column="0">
         <widget class="QLabel" name="label_14">
          <property name="text">
-          <string>Direccion 2:                </string>
+          <string>direccion 2:                </string>
          </property>
         </widget>
        </item>
@@ -932,7 +932,7 @@ background-color: rgb(0, 0, 57);</string>
         </widget>
        </item>
        <item row="3" column="1" colspan="5">
-        <widget class="QLineEdit" name="txtcNombreFiscal">
+        <widget class="QLineEdit" name="txtnombre_fiscal">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -973,7 +973,7 @@ background-color: rgb(255, 85, 0);</string>
         </widget>
        </item>
        <item row="9" column="4">
-        <widget class="QLineEdit" name="txtcFax">
+        <widget class="QLineEdit" name="txtfax">
          <property name="minimumSize">
           <size>
            <width>100</width>
@@ -999,7 +999,7 @@ background-color: rgb(255, 85, 0);</string>
         </widget>
        </item>
        <item row="8" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtcProvincia">
+        <widget class="QLineEdit" name="txtprovincia">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1154,7 +1154,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="10" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtcWeb">
+        <widget class="QLineEdit" name="txtweb">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1170,7 +1170,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="7" column="1">
-        <widget class="QLineEdit" name="txtcCp">
+        <widget class="QLineEdit" name="txtcp">
          <property name="minimumSize">
           <size>
            <width>88</width>
@@ -1189,7 +1189,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="7" column="3" colspan="3">
-        <widget class="QLineEdit" name="txtcPoblacion">
+        <widget class="QLineEdit" name="txtpoblacion">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1225,7 +1225,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="8" column="6">
-        <widget class="QLineEdit" name="txtcTelefono2">
+        <widget class="QLineEdit" name="txttelefono2">
          <property name="minimumSize">
           <size>
            <width>100</width>
@@ -1238,7 +1238,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="6" column="1" colspan="5">
-        <widget class="QLineEdit" name="txtcDireccion2">
+        <widget class="QLineEdit" name="txtdireccion2">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1265,7 +1265,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="4" column="1" colspan="5">
-        <widget class="QLineEdit" name="txtcNombreComercial">
+        <widget class="QLineEdit" name="txtnombre_comercial">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1291,7 +1291,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="10" column="4">
-        <widget class="QLineEdit" name="txtcEMail">
+        <widget class="QLineEdit" name="txtemail">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1325,7 +1325,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="8" column="4">
-        <widget class="QLineEdit" name="txtcTelefono1">
+        <widget class="QLineEdit" name="txttelefono1">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1383,7 +1383,7 @@ color: rgb(255,255,255);</string>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="txtcCodigoCliente">
+             <widget class="QLineEdit" name="txtcodigo_cliente">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -1422,7 +1422,7 @@ color: rgb(255,255,255);</string>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="txtcCifNif">
+             <widget class="QLineEdit" name="txtcif_nif">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -1475,7 +1475,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="5" column="1" colspan="5">
-        <widget class="QLineEdit" name="txtcDireccion1">
+        <widget class="QLineEdit" name="txtdireccion1">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1488,7 +1488,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="9" column="6">
-        <widget class="QLineEdit" name="txtcMovil">
+        <widget class="QLineEdit" name="txtmovil">
          <property name="minimumSize">
           <size>
            <width>129</width>
@@ -1520,11 +1520,11 @@ color: rgb(255,255,255);</string>
        <string notr="true">background-color: #ecefed;</string>
       </property>
       <attribute name="title">
-       <string>Direcciones alternativas</string>
+       <string>direcciones alternativas</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
        <item row="1" column="0" rowspan="2" colspan="2">
-        <widget class="QListView" name="lista_DireccionesAlternativas">
+        <widget class="QListView" name="lista_direccionesAlternativas">
          <property name="maximumSize">
           <size>
            <width>200</width>
@@ -1544,7 +1544,7 @@ alternate-background-color: rgb(255, 255, 127);</string>
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QPushButton" name="btnBorrarDireccion">
+        <widget class="QPushButton" name="btnBorrardireccion">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -1567,7 +1567,7 @@ alternate-background-color: rgb(255, 255, 127);</string>
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QPushButton" name="btnAnadirDireccion">
+        <widget class="QPushButton" name="btnAnadirdireccion">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -1605,7 +1605,7 @@ alternate-background-color: rgb(255, 255, 127);</string>
        <item row="0" column="2" rowspan="2">
         <layout class="QGridLayout" name="gridLayout_4">
          <item row="2" column="1" colspan="4">
-          <widget class="QLineEdit" name="txtcDireccionAlternativa2">
+          <widget class="QLineEdit" name="txtdireccion1Alternativa2">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -1618,7 +1618,7 @@ alternate-background-color: rgb(255, 255, 127);</string>
           </widget>
          </item>
          <item row="1" column="1" colspan="4">
-          <widget class="QLineEdit" name="txtcDireccionAlternativa1">
+          <widget class="QLineEdit" name="txtdireccion1Alternativa1">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -1640,7 +1640,7 @@ alternate-background-color: rgb(255, 255, 127);</string>
          <item row="3" column="1" colspan="4">
           <layout class="QHBoxLayout" name="horizontalLayout_13">
            <item>
-            <widget class="QLineEdit" name="txtcCpPoblacionAlternativa">
+            <widget class="QLineEdit" name="txtcpPoblacionAlternativa">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -1659,7 +1659,7 @@ alternate-background-color: rgb(255, 255, 127);</string>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="txtcPoblacionAlternativa">
+            <widget class="QLineEdit" name="txtpoblacionAlternativa">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -1695,7 +1695,7 @@ alternate-background-color: rgb(255, 255, 127);</string>
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QLineEdit" name="txtcProvinciaAlternativa">
+          <widget class="QLineEdit" name="txtprovinciaAlternativa">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -1722,7 +1722,7 @@ alternate-background-color: rgb(255, 255, 127);</string>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="txtcDescripcionDireccion">
+          <widget class="QLineEdit" name="txtdescripcion_direccion">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -1736,7 +1736,7 @@ color: rgb(0, 0, 255);</string>
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QPushButton" name="btnGuardarDireccionAlternativa">
+          <widget class="QPushButton" name="btnGuardardireccionAlternativa">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1760,7 +1760,7 @@ color: rgb(0, 0, 255);</string>
           </widget>
          </item>
          <item row="5" column="2" colspan="3">
-          <widget class="QPushButton" name="btnDeshacerDireccionAlternativa">
+          <widget class="QPushButton" name="btnDeshacerdireccionAlternativa">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1774,7 +1774,7 @@ color: rgb(0, 0, 255);</string>
           </widget>
          </item>
          <item row="5" column="0">
-          <widget class="QPushButton" name="btnEditarDireccionAlternativa">
+          <widget class="QPushButton" name="btnEditardireccionAlternativa">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1802,7 +1802,7 @@ color: rgb(0, 0, 255);</string>
 color: rgb(255,255,255);</string>
          </property>
          <property name="text">
-          <string>DIRECCIONES</string>
+          <string>direccionES</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -1829,7 +1829,7 @@ color: rgb(255,255,255);</string>
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="txtnDiaPago1">
+          <widget class="QSpinBox" name="txtdia_pago1">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -1849,7 +1849,7 @@ color: rgb(255,255,255);</string>
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="txtnDiaPago2">
+          <widget class="QSpinBox" name="txtdia_pago2">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -1903,7 +1903,7 @@ color: rgb(255,255,255);</string>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="txtcCuentaContable">
+             <widget class="QLineEdit" name="txtcuenta_contable">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -1923,7 +1923,7 @@ color: rgb(255,255,255);</string>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="txtcCuentaIvaRepercutido">
+             <widget class="QLineEdit" name="txtcuenta_iva_repercutido">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -1943,7 +1943,7 @@ color: rgb(255,255,255);</string>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLineEdit" name="txtcCuentaDeudas">
+             <widget class="QLineEdit" name="txtcuenta_deudas">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -1963,7 +1963,7 @@ color: rgb(255,255,255);</string>
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLineEdit" name="txtcCuentaCobros">
+             <widget class="QLineEdit" name="txtcuenta_cobros">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -2010,7 +2010,7 @@ color: rgb(255,255,255);</string>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cbocFormaPago">
+          <widget class="QComboBox" name="cboforma_pago">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -2036,7 +2036,7 @@ color: rgb(255,255,255);</string>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="txtnPorcDtoCliente">
+            <widget class="QLineEdit" name="txtporc_dto_cliente">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -2063,7 +2063,7 @@ color: rgb(255,255,255);</string>
           </layout>
          </item>
          <item>
-          <widget class="QCheckBox" name="chklRecargoEquivalencia">
+          <widget class="QCheckBox" name="chkrecargo_equivalencia">
            <property name="styleSheet">
             <string notr="true">color: rgb(0, 0, 0);</string>
            </property>
@@ -2093,7 +2093,7 @@ color: rgb(255,255,255);</string>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cbonTarifaCliente">
+          <widget class="QComboBox" name="cbotarifa_cliente">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -2175,7 +2175,7 @@ color: rgb(255,255,255);</string>
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLineEdit" name="txtcEntidadBancaria">
+             <widget class="QLineEdit" name="txtentidad_bancaria">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -2214,7 +2214,7 @@ color: rgb(255,255,255);</string>
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QLineEdit" name="txtcOficinaBancaria">
+             <widget class="QLineEdit" name="txtoficina_bancaria">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -2253,7 +2253,7 @@ color: rgb(255,255,255);</string>
              </widget>
             </item>
             <item row="5" column="1">
-             <widget class="QLineEdit" name="txtcDc">
+             <widget class="QLineEdit" name="txtdc">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -2279,7 +2279,7 @@ color: rgb(255,255,255);</string>
              </widget>
             </item>
             <item row="6" column="1" colspan="2">
-             <widget class="QLineEdit" name="txtcCuentaCorriente">
+             <widget class="QLineEdit" name="txtcuenta_corriente">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -2302,7 +2302,7 @@ color: rgb(255,255,255);</string>
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QLineEdit" name="txtrImporteACuenta">
+             <widget class="QLineEdit" name="txtimporte_a_cuenta">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -2328,7 +2328,7 @@ background-color: rgb(255, 249, 173);</string>
              </widget>
             </item>
             <item row="2" column="2">
-             <widget class="QLineEdit" name="txtrVales">
+             <widget class="QLineEdit" name="txtvales">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -2779,7 +2779,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="txtrDeudaActual">
+          <widget class="QLineEdit" name="txtdeuda_actual">
            <property name="maximumSize">
             <size>
              <width>100</width>
@@ -2802,7 +2802,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QDateEdit" name="txtdFechaUltimaCompra">
+          <widget class="QDateEdit" name="txtfecha_ultima_compra">
            <property name="maximumSize">
             <size>
              <width>100</width>
@@ -2824,7 +2824,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="txtrImporteAcumulado">
+          <widget class="QLineEdit" name="txtimporteAcumulado">
            <property name="maximumSize">
             <size>
              <width>100</width>
@@ -2861,7 +2861,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QLineEdit" name="txtrVentasEjercicio">
+          <widget class="QLineEdit" name="txtventas_ejercicio">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -2974,7 +2974,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item>
-          <widget class="QTextEdit" name="txttComentarioBloqueo">
+          <widget class="QTextEdit" name="txtcomentario_bloqueo">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -2994,7 +2994,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtcAccesoWeb">
+          <widget class="QLineEdit" name="txtacceso_web">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -3008,7 +3008,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtcPasswordWeb">
+          <widget class="QLineEdit" name="txtpassword_web">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -3033,7 +3033,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
         </widget>
        </item>
        <item row="1" column="1" colspan="3">
-        <widget class="QTextEdit" name="txttComentarios">
+        <widget class="QTextEdit" name="txtcomentarios">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -3047,7 +3047,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QDateEdit" name="txtdFechaNacimiento">
+        <widget class="QDateEdit" name="txtfecha_nacimiento">
          <property name="maximumSize">
           <size>
            <width>100</width>
@@ -3074,12 +3074,12 @@ alternate-background-color: rgb(255, 255, 255);</string>
        <item row="3" column="2">
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string>Idioma Documentos:</string>
+          <string>idioma Documentos:</string>
          </property>
         </widget>
        </item>
        <item row="3" column="3">
-        <widget class="QComboBox" name="cboIdiomaDocumentos"/>
+        <widget class="QComboBox" name="cboidiomaDocumentos"/>
        </item>
        <item row="4" column="0" colspan="4">
         <widget class="QFrame" name="frame_5">
@@ -3115,7 +3115,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
              </spacer>
             </item>
             <item row="0" column="1">
-             <widget class="QDateEdit" name="txtdFechaAlta">
+             <widget class="QDateEdit" name="txtfecha_alta">
               <property name="maximumSize">
                <size>
                 <width>100</width>
@@ -3981,63 +3981,63 @@ alternate-background-color: rgb(255, 250, 178);</string>
   <tabstop>btnBorrar</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>btnFichaPaciente</tabstop>
-  <tabstop>txtcCifNif</tabstop>
+  <tabstop>txtcif_nif</tabstop>
   <tabstop>txtCifIntracomunitario</tabstop>
   <tabstop>btnValidarVIES</tabstop>
-  <tabstop>txtcNombre</tabstop>
+  <tabstop>txtnombre</tabstop>
   <tabstop>txtPrimerApellido</tabstop>
   <tabstop>txtSegundoApellido</tabstop>
-  <tabstop>txtcNombreFiscal</tabstop>
-  <tabstop>txtcNombreComercial</tabstop>
-  <tabstop>txtcDireccion1</tabstop>
-  <tabstop>txtcDireccion2</tabstop>
-  <tabstop>txtcCp</tabstop>
-  <tabstop>txtcPoblacion</tabstop>
-  <tabstop>txtcProvincia</tabstop>
+  <tabstop>txtnombre_fiscal</tabstop>
+  <tabstop>txtnombre_comercial</tabstop>
+  <tabstop>txtdireccion1</tabstop>
+  <tabstop>txtdireccion2</tabstop>
+  <tabstop>txtcp</tabstop>
+  <tabstop>txtpoblacion</tabstop>
+  <tabstop>txtprovincia</tabstop>
   <tabstop>cboPais</tabstop>
-  <tabstop>txtcTelefono1</tabstop>
-  <tabstop>txtcTelefono2</tabstop>
-  <tabstop>txtcFax</tabstop>
-  <tabstop>txtcMovil</tabstop>
-  <tabstop>txtcWeb</tabstop>
-  <tabstop>txtcEMail</tabstop>
+  <tabstop>txttelefono1</tabstop>
+  <tabstop>txttelefono2</tabstop>
+  <tabstop>txtfax</tabstop>
+  <tabstop>txtmovil</tabstop>
+  <tabstop>txtweb</tabstop>
+  <tabstop>txtemail</tabstop>
   <tabstop>btnAdd_TipoCliente</tabstop>
   <tabstop>btndel_TipoCliente</tabstop>
-  <tabstop>lista_DireccionesAlternativas</tabstop>
-  <tabstop>btnAnadirDireccion</tabstop>
-  <tabstop>btnBorrarDireccion</tabstop>
-  <tabstop>txtcDescripcionDireccion</tabstop>
-  <tabstop>txtcDireccionAlternativa1</tabstop>
-  <tabstop>txtcDireccionAlternativa2</tabstop>
-  <tabstop>txtcCpPoblacionAlternativa</tabstop>
-  <tabstop>txtcPoblacionAlternativa</tabstop>
-  <tabstop>txtcProvinciaAlternativa</tabstop>
+  <tabstop>lista_direccionesAlternativas</tabstop>
+  <tabstop>btnAnadirdireccion</tabstop>
+  <tabstop>btnBorrardireccion</tabstop>
+  <tabstop>txtdescripcion_direccion</tabstop>
+  <tabstop>txtdireccion1Alternativa1</tabstop>
+  <tabstop>txtdireccion1Alternativa2</tabstop>
+  <tabstop>txtcpPoblacionAlternativa</tabstop>
+  <tabstop>txtpoblacionAlternativa</tabstop>
+  <tabstop>txtprovinciaAlternativa</tabstop>
   <tabstop>cbopaisAlternativa</tabstop>
-  <tabstop>btnGuardarDireccionAlternativa</tabstop>
-  <tabstop>btnDeshacerDireccionAlternativa</tabstop>
-  <tabstop>txtnPorcDtoCliente</tabstop>
-  <tabstop>chklRecargoEquivalencia</tabstop>
-  <tabstop>cbonTarifaCliente</tabstop>
-  <tabstop>cbocFormaPago</tabstop>
-  <tabstop>txtnDiaPago1</tabstop>
-  <tabstop>txtnDiaPago2</tabstop>
+  <tabstop>btnGuardardireccionAlternativa</tabstop>
+  <tabstop>btnDeshacerdireccionAlternativa</tabstop>
+  <tabstop>txtporc_dto_cliente</tabstop>
+  <tabstop>chkrecargo_equivalencia</tabstop>
+  <tabstop>cbotarifa_cliente</tabstop>
+  <tabstop>cboforma_pago</tabstop>
+  <tabstop>txtdia_pago1</tabstop>
+  <tabstop>txtdia_pago2</tabstop>
   <tabstop>pushButton</tabstop>
-  <tabstop>txtcCuentaContable</tabstop>
-  <tabstop>txtcCuentaIvaRepercutido</tabstop>
-  <tabstop>txtcCuentaDeudas</tabstop>
-  <tabstop>txtcCuentaCobros</tabstop>
+  <tabstop>txtcuenta_contable</tabstop>
+  <tabstop>txtcuenta_iva_repercutido</tabstop>
+  <tabstop>txtcuenta_deudas</tabstop>
+  <tabstop>txtcuenta_cobros</tabstop>
   <tabstop>chkClienteEmpresa</tabstop>
-  <tabstop>txtcEntidadBancaria</tabstop>
-  <tabstop>txtcOficinaBancaria</tabstop>
-  <tabstop>txtcDc</tabstop>
-  <tabstop>txtcCuentaCorriente</tabstop>
+  <tabstop>txtentidad_bancaria</tabstop>
+  <tabstop>txtoficina_bancaria</tabstop>
+  <tabstop>txtdc</tabstop>
+  <tabstop>txtcuenta_corriente</tabstop>
   <tabstop>chklBloqueoCliente</tabstop>
-  <tabstop>txttComentarioBloqueo</tabstop>
-  <tabstop>txtcAccesoWeb</tabstop>
-  <tabstop>txtcPasswordWeb</tabstop>
-  <tabstop>txttComentarios</tabstop>
-  <tabstop>txtdFechaNacimiento</tabstop>
-  <tabstop>txtdFechaAlta</tabstop>
+  <tabstop>txtcomentario_bloqueo</tabstop>
+  <tabstop>txtacceso_web</tabstop>
+  <tabstop>txtpassword_web</tabstop>
+  <tabstop>txtcomentarios</tabstop>
+  <tabstop>txtfecha_nacimiento</tabstop>
+  <tabstop>txtfecha_alta</tabstop>
   <tabstop>txtrRiesgoPermitido</tabstop>
   <tabstop>tabWidget_2</tabstop>
   <tabstop>tablaPresupuestos</tabstop>
@@ -4052,10 +4052,10 @@ alternate-background-color: rgb(255, 250, 178);</string>
  </resources>
  <connections>
   <connection>
-   <sender>btnAnadirDireccion</sender>
+   <sender>btnAnadirdireccion</sender>
    <signal>clicked()</signal>
    <receiver>frmClientes</receiver>
-   <slot>AnadirDireccionAlternativa()</slot>
+   <slot>AnadirdireccionAlternativa()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>228</x>
@@ -4068,10 +4068,10 @@ alternate-background-color: rgb(255, 250, 178);</string>
    </hints>
   </connection>
   <connection>
-   <sender>btnBorrarDireccion</sender>
+   <sender>btnBorrardireccion</sender>
    <signal>clicked()</signal>
    <receiver>frmClientes</receiver>
-   <slot>BorrarDireccionAlternativa()</slot>
+   <slot>BorrardireccionAlternativa()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>314</x>
@@ -4102,7 +4102,7 @@ alternate-background-color: rgb(255, 250, 178);</string>
  </connections>
  <slots>
   <slot>AddCustomerType()</slot>
-  <slot>AnadirDireccionAlternativa()</slot>
-  <slot>BorrarDireccionAlternativa()</slot>
+  <slot>AnadirdireccionAlternativa()</slot>
+  <slot>BorrardireccionAlternativa()</slot>
  </slots>
 </ui>

@@ -1,5 +1,5 @@
-#ifndef FRMORDEN_PEDIDO_PRODUCTO_H
-#define FRMORDEN_PEDIDO_PRODUCTO_H
+#ifndef FRMORDEN_PEDidO_PRODUCTO_H
+#define FRMORDEN_PEDidO_PRODUCTO_H
 
 #include <QDialog>
 #include "../mayamodule.h"
@@ -14,8 +14,8 @@ class FrmOrden_Pedido_Producto : public MayaModule
 public:
     explicit FrmOrden_Pedido_Producto(QWidget *parent = 0);
     ~FrmOrden_Pedido_Producto();
-    moduleZone ModuleZone(){return Compras;}
-    QString ModuleName(){return "Orden de pedido";}
+    module_zone module_zone(){return Compras;}
+    QString module_name(){return "Orden de pedido";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -26,4 +26,4 @@ private:
     QAction menuButton;
 };
 
-#endif // FRMORDEN_PEDIDO_PRODUCTO_H
+#endif // FRMORDEN_PEDidO_PRODUCTO_H

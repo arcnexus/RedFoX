@@ -669,7 +669,7 @@ void MainWindow::loadSecMedModules(QSplashScreen *splash)
 
 void MainWindow::updateDivisas()
 {
-    if(Configuracion_global->actualizardivisas)
+    if(Configuracion_global->actualizar_divisas)
     {
         connect(Configuracion_global,SIGNAL(cambioReady(float,QString)),this,SLOT(actualizar_divisas(float,QString)));
         QSqlQuery divisas(QSqlDatabase::database("Maya"));

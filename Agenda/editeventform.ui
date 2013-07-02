@@ -19,7 +19,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
-    <widget class="QCheckBox" name="chk_isPrivado">
+    <widget class="QCheckBox" name="chk_isprivado">
      <property name="text">
       <string>Evento privado</string>
      </property>
@@ -207,7 +207,7 @@
   <zorder>departamento_group</zorder>
   <zorder>txt_asunto</zorder>
   <zorder>txt_tituloEvento</zorder>
-  <zorder>chk_isPrivado</zorder>
+  <zorder>chk_isprivado</zorder>
  </widget>
  <resources>
   <include location="../maya.qrc"/>

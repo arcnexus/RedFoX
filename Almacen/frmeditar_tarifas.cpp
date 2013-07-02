@@ -16,8 +16,8 @@ frmEditar_tarifas::~frmEditar_tarifas()
 void frmEditar_tarifas::setFiltro(int id)
 {
     QSqlQuery tarifa(QSqlDatabase::database("Maya"));
-    if(tarifa.exec("select id,pvp,pais,moneda,simbolo,codigo_tarifa,descripcion,margen,margenminimo "
-                          "from viewTarifa where id_Articulo = "+QString::number(id)))
+    if(tarifa.exec("select id,pvp,pais,moneda,simbolo,codigo_tarifa,descripcion,margen,margen_minimo "
+                          "from viewtarifa where id_articulo = "+QString::number(id)))
     {
         ui->tabla_tarifa->setColumnCount(3);
         QStringList cabecera;

@@ -24,8 +24,8 @@ public:
     void DesbloquearCampos();
     void LLenarAlbaran();
 
-    moduleZone ModuleZone(){return Ventas;}
-    QString ModuleName(){return "Albaranes Ventas";}
+    module_zone module_zone(){return Ventas;}
+    QString module_name(){return "Albaranes Ventas";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -48,7 +48,7 @@ private slots:
 
     void on_btn_borrar_clicked();
 
-    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
+    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);

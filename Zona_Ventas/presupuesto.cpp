@@ -14,104 +14,104 @@ bool Presupuesto::AnadirPresupuesto()
 {
     QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
 
-    this->nIva1 = Configuracion_global->ivaList.at(0).toDouble();
-    this->nIva2 = Configuracion_global->ivaList.at(1).toDouble();
-    this->nIva3 = Configuracion_global->ivaList.at(2).toDouble();
-    this->nIva4 = Configuracion_global->ivaList.at(3).toDouble();
+    this->iva1 = Configuracion_global->ivaList.at(0).toDouble();
+    this->iva2 = Configuracion_global->ivaList.at(1).toDouble();
+    this->iva3 = Configuracion_global->ivaList.at(2).toDouble();
+    this->iva4 = Configuracion_global->ivaList.at(3).toDouble();
 
-    this->nRecargoEquivalencia1 = Configuracion_global->reList.at(0).toDouble();
-    this->nRecargoEquivalencia2 = Configuracion_global->reList.at(1).toDouble();
-    this->nRecargoEquivalencia3 = Configuracion_global->reList.at(2).toDouble();
-    this->nRecargoEquivalencia4 = Configuracion_global->reList.at(3).toDouble();
+    this->porc_porc_recuivalencia1 = Configuracion_global->reList.at(0).toDouble();
+    this->porc_porc_recuivalencia2 = Configuracion_global->reList.at(1).toDouble();
+    this->porc_porc_recuivalencia3 = Configuracion_global->reList.at(2).toDouble();
+    this->porc_porc_recuivalencia4 = Configuracion_global->reList.at(3).toDouble();
 
     QSqlQuery cab_pre(QSqlDatabase::database("empresa"));
-    cab_pre.prepare("INSERT INTO cab_pre (nPresupuesto, dFecha, dValidoHasta,"
-                    "id_Cliente, cCodigoCliente, cCliente, cCif, cDireccion, cDireccion2, cCP,"
-                    "cPoblacion, cProvincia, idpais, cTelefono, cMovil, cFax, nDto, tComentarios,"
-                    "rImporte, rBase, rDescuento, rTotal, lImpreso, lAprobado, dFechaAprobacion,"
-                    "rImporteFactura, rImportePendiente, cFactura, nAlbaran, nPedido, id_FormaPago,"
-                    "tLugarEntrega, cAtencionde, rBase1, rBase2, rBase3, rBase4, nIva1, nIva2, nIva3,"
-                    "nIva4, rIva1, rIva2, rIva3, rIva4, nRecargoEquivalencia1, nRecargoEquivalencia2,"
-                    "nRecargoEquivalencia3, nRecargoEquivalencia4, rRec1, rRec2, rRec3, rRec4, rTotal1,"
-                    "rTotal2, rTotal3, rTotal4, lRecargoEquivalencia, cEmail, rTotalIva, rTotalRec,"
-                    "rImporte1, rImporte2, rImporte3, rImporte4) "
+    cab_pre.prepare("INSERT INTO cab_pre (nPresupuesto, fecha, dValidoHasta,"
+                    "id_cliente, codigo_cliente, cliente, cif, direccion1, direccion2, cp,"
+                    "poblacion, provincia, id_pais, telefono, movil, fax, dto, comentarios,"
+                    "importe, base, rDescuento, total, impreso, lAprobado, fechaAprobacion,"
+                    "importeFactura, importe_pendiente, factura, albaran, pedido, id_forma_pago,"
+                    "tLugarEntrega, cAtencionde, base1, base2, base3, base4, iva1, iva2, iva3,"
+                    "iva4, iva1, iva2, iva3, iva4, porc_porc_recuivalencia1, porc_porc_recuivalencia2,"
+                    "porc_porc_recuivalencia3, porc_porc_recuivalencia4, rec1, rec2, rec3, rec4, total1,"
+                    "total2, total3, total4, recargo_equivalencia, email, total_iva, totalRec,"
+                    "importe1, importe2, importe3, importe4) "
                     "VALUES"
-                    "(:nPresupuesto, :dFecha, :dValidoHasta,"
-                    ":id_Cliente, :cCodigoCliente, :cCliente, :cCif, :cDireccion, :cDireccion2, :cCP,"
-                    ":cPoblacion, :cProvincia, :idpais, :cTelefono, :cMovil, :cFax, :nDto, :tComentarios,"
-                    ":rImporte, :rSubtotal, :rDescuento, :rTotal, :lImpreso, :lAprobado, :dFechaAprobacion,"
-                    ":rImporteFactura, :rImportePendiente, :cFactura, :nAlbaran, :nPedido, :id_FormaPago,"
-                    ":tLugarEntrega, :cAtencionde, :rBase1, :rBase2, :rBase3, :rBase4, :nIva1, :nIva2, :nIva3,"
-                    ":nIva4, :rIva1, :rIva2, :rIva3, :rIva4, :nRecargoEquivalencia1, :nRecargoEquivalencia2,"
-                    ":nRecargoEquivalencia3, :nRecargoEquivalencia4, :rRec1, :rRec2, :rRec3, :rRec4, :rTotal1,"
-                    ":rTotal2, :rTotal3, :rTotal4, :lRecargoEquivalencia, :cEmail, :rTotalIva, :rTotalRec,"
-                    ":rImporte1, :rImporte2, :rImporte3, :rImporte4)");
+                    "(:nPresupuesto, :fecha, :dValidoHasta,"
+                    ":id_cliente, :codigo_cliente, :cliente, :cif, :direccion1, :direccion2, :cp,"
+                    ":poblacion, :provincia, :id_pais, :telefono, :movil, :fax, :dto, :comentarios,"
+                    ":importe, :subtotal, :rDescuento, :total, :impreso, :lAprobado, :fechaAprobacion,"
+                    ":importeFactura, :importe_pendiente, :factura, :albaran, :pedido, :id_forma_pago,"
+                    ":tLugarEntrega, :cAtencionde, :base1, :base2, :base3, :base4, :iva1, :iva2, :iva3,"
+                    ":iva4, :iva1, :iva2, :iva3, :iva4, :porc_porc_recuivalencia1, :porc_porc_recuivalencia2,"
+                    ":porc_porc_recuivalencia3, :porc_porc_recuivalencia4, :rec1, :rec2, :rec3, :rec4, :total1,"
+                    ":total2, :total3, :total4, :recargo_equivalencia, :email, :total_iva, :totalRec,"
+                    ":importe1, :importe2, :importe3, :importe4)");
 
     cab_pre.bindValue(":nPresupuesto",nPresupuesto);
-    cab_pre.bindValue(":dFecha",dFecha);
+    cab_pre.bindValue(":fecha",fecha);
     cab_pre.bindValue(":dValidoHasta",dValidoHasta);
-    cab_pre.bindValue(":id_Cliente",id_cliente);
-    cab_pre.bindValue(":cCodigoCliente",cCodigoCliente);
-    cab_pre.bindValue(":cCliente",cCliente);
-    cab_pre.bindValue(":cCif",cCif);
-    cab_pre.bindValue(":cDireccion",cDireccion);
-    cab_pre.bindValue(":cDireccion2",cDireccion2);
-    cab_pre.bindValue(":cCP",cCP);
-    cab_pre.bindValue(":cPoblacion",cPoblacion);
-    cab_pre.bindValue(":cProvincia",cProvincia);
-    cab_pre.bindValue(":idpais",idPais);
-    cab_pre.bindValue(":cTelefono",cTelefono);
-    cab_pre.bindValue(":cMovil",cMovil);
-    cab_pre.bindValue(":cFax",cFax);
-    cab_pre.bindValue(":nDto",0);
-    cab_pre.bindValue(":tComentarios",tComentarios);
-    cab_pre.bindValue(":rImporte",0);
-    cab_pre.bindValue(":rSubtotal",0);
+    cab_pre.bindValue(":id_cliente",id_cliente);
+    cab_pre.bindValue(":codigo_cliente",codigo_cliente);
+    cab_pre.bindValue(":cliente",cliente);
+    cab_pre.bindValue(":cif",cif);
+    cab_pre.bindValue(":direccion1",direccion1);
+    cab_pre.bindValue(":direccion2",direccion2);
+    cab_pre.bindValue(":cp",cp);
+    cab_pre.bindValue(":poblacion",poblacion);
+    cab_pre.bindValue(":provincia",provincia);
+    cab_pre.bindValue(":id_pais",id_pais);
+    cab_pre.bindValue(":telefono",telefono);
+    cab_pre.bindValue(":movil",movil);
+    cab_pre.bindValue(":fax",fax);
+    cab_pre.bindValue(":dto",0);
+    cab_pre.bindValue(":comentarios",comentarios);
+    cab_pre.bindValue(":importe",0);
+    cab_pre.bindValue(":subtotal",0);
     cab_pre.bindValue(":rDescuento",0);
-    cab_pre.bindValue(":rTotal",0);
-    cab_pre.bindValue(":lImpreso",lImpreso);
+    cab_pre.bindValue(":total",0);
+    cab_pre.bindValue(":impreso",impreso);
     cab_pre.bindValue(":lAprobado",lAprobado);
-    cab_pre.bindValue(":dFechaAprobacion",dFechaAprobacion);
-    cab_pre.bindValue(":rImporteFactura",0);
-    cab_pre.bindValue(":rImportePendiente",0);
-    cab_pre.bindValue(":cFactura",cFactura);
-    cab_pre.bindValue(":nAlbaran",nAlbaran);
-    cab_pre.bindValue(":nPedido",nPedido);
-    cab_pre.bindValue(":id_FormaPago",id_FormaPago);
+    cab_pre.bindValue(":fechaAprobacion",fechaAprobacion);
+    cab_pre.bindValue(":importeFactura",0);
+    cab_pre.bindValue(":importe_pendiente",0);
+    cab_pre.bindValue(":factura",factura);
+    cab_pre.bindValue(":albaran",albaran);
+    cab_pre.bindValue(":pedido",pedido);
+    cab_pre.bindValue(":id_forma_pago",id_forma_pago);
     cab_pre.bindValue(":tLugarEntrega",tLugarEntrega);
     cab_pre.bindValue(":cAtencionde",cAtencionde);
-    cab_pre.bindValue(":rBase1",0);
-    cab_pre.bindValue(":rBase2",0);
-    cab_pre.bindValue(":rBase3",0);
-    cab_pre.bindValue(":rBase4",0);
-    cab_pre.bindValue(":nIva1",nIva1);
-    cab_pre.bindValue(":nIva2",nIva2);
-    cab_pre.bindValue(":nIva3",nIva3);
-    cab_pre.bindValue(":nIva4",nIva4);
-    cab_pre.bindValue(":rIva1",0);
-    cab_pre.bindValue(":rIva2",0);
-    cab_pre.bindValue(":rIva3",0);
-    cab_pre.bindValue(":rIva4",0);
-    cab_pre.bindValue(":nRecargoEquivalencia1",nRecargoEquivalencia1);
-    cab_pre.bindValue(":nRecargoEquivalencia2",nRecargoEquivalencia2);
-    cab_pre.bindValue(":nRecargoEquivalencia3",nRecargoEquivalencia3);
-    cab_pre.bindValue(":nRecargoEquivalencia4",nRecargoEquivalencia4);
-    cab_pre.bindValue(":rRec1",0);
-    cab_pre.bindValue(":rRec2",0);
-    cab_pre.bindValue(":rRec3",0);
-    cab_pre.bindValue(":rRec4",0);
-    cab_pre.bindValue(":rTotal1",0);
-    cab_pre.bindValue(":rTotal2",0);
-    cab_pre.bindValue(":rTotal3",0);
-    cab_pre.bindValue(":rTotal4",0);
-    cab_pre.bindValue(":lRecargoEquivalencia",lRecargoEquivalencia);
-    cab_pre.bindValue(":cEmail",cEmail);
-    cab_pre.bindValue(":rTotalIva",0);
-    cab_pre.bindValue(":rTotalRec",0);
-    cab_pre.bindValue(":rImporte1",0);
-    cab_pre.bindValue(":rImporte2",0);
-    cab_pre.bindValue(":rImporte3",0);
-    cab_pre.bindValue(":rImporte4",0);
+    cab_pre.bindValue(":base1",0);
+    cab_pre.bindValue(":base2",0);
+    cab_pre.bindValue(":base3",0);
+    cab_pre.bindValue(":base4",0);
+    cab_pre.bindValue(":iva1",iva1);
+    cab_pre.bindValue(":iva2",iva2);
+    cab_pre.bindValue(":iva3",iva3);
+    cab_pre.bindValue(":iva4",iva4);
+    cab_pre.bindValue(":iva1",0);
+    cab_pre.bindValue(":iva2",0);
+    cab_pre.bindValue(":iva3",0);
+    cab_pre.bindValue(":iva4",0);
+    cab_pre.bindValue(":porc_porc_recuivalencia1",porc_porc_recuivalencia1);
+    cab_pre.bindValue(":porc_porc_recuivalencia2",porc_porc_recuivalencia2);
+    cab_pre.bindValue(":porc_porc_recuivalencia3",porc_porc_recuivalencia3);
+    cab_pre.bindValue(":porc_porc_recuivalencia4",porc_porc_recuivalencia4);
+    cab_pre.bindValue(":rec1",0);
+    cab_pre.bindValue(":rec2",0);
+    cab_pre.bindValue(":rec3",0);
+    cab_pre.bindValue(":rec4",0);
+    cab_pre.bindValue(":total1",0);
+    cab_pre.bindValue(":total2",0);
+    cab_pre.bindValue(":total3",0);
+    cab_pre.bindValue(":total4",0);
+    cab_pre.bindValue(":recargo_equivalencia",recargo_equivalencia);
+    cab_pre.bindValue(":email",email);
+    cab_pre.bindValue(":total_iva",0);
+    cab_pre.bindValue(":totalRec",0);
+    cab_pre.bindValue(":importe1",0);
+    cab_pre.bindValue(":importe2",0);
+    cab_pre.bindValue(":importe3",0);
+    cab_pre.bindValue(":importe4",0);
 
      if(!cab_pre.exec())
      {
@@ -134,76 +134,76 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
         if (qCab_pre.next())
         {
             QSqlRecord registro = qCab_pre.record();
-            this->id = registro.field("Id").value().toInt();
+            this->id = registro.field("id").value().toInt();
             this->nPresupuesto = registro.field("nPresupuesto").value().toInt();
-            this->dFecha = registro.field("dFecha").value().toDate();
+            this->fecha = registro.field("fecha").value().toDate();
             this->dValidoHasta = registro.field("dValidoHasta").value().toDate();
             this->id_cliente = registro.field("id_cliente").value().toInt();
-            this->cCodigoCliente= registro.field("cCodigoCliente").value().toString();
-            this->cCliente = registro.field("cCliente").value().toString();
-            this->cCif = registro.field("cCif").value().toString();
-            this->cDireccion = registro.field("cDireccion").value().toString();
-            this->cDireccion2 = registro.field("cDireccion2").value().toString();
-            this->cCP = registro.field("cCP").value().toString();
-            this->cPoblacion = registro.field("cPoblacion").value().toString();
-            this->cProvincia = registro.field("cProvincia").value().toString();
-            this->idPais = registro.field("idpais").value().toInt();
-            this->cTelefono = registro.field("cTelefono").value().toString();
-            this->cMovil = registro.field("cMovil").value().toString();
-            this->cFax = registro.field("cFax").value().toString();
-            this->cEmail = registro.field("cEmail").value().toString();
-            this->nDto = registro.field("nDto").value().toDouble();
-            this->tComentarios = registro.field("tComentarios").value().toString();
-            this->rImporte = registro.field("rImporte").value().toDouble();
-            this->rBase = registro.field("rBase").value().toDouble();
+            this->codigo_cliente= registro.field("codigo_cliente").value().toString();
+            this->cliente = registro.field("cliente").value().toString();
+            this->cif = registro.field("cif").value().toString();
+            this->direccion1 = registro.field("direccion1").value().toString();
+            this->direccion2 = registro.field("direccion2").value().toString();
+            this->cp = registro.field("cp").value().toString();
+            this->poblacion = registro.field("poblacion").value().toString();
+            this->provincia = registro.field("provincia").value().toString();
+            this->id_pais = registro.field("id_pais").value().toInt();
+            this->telefono = registro.field("telefono").value().toString();
+            this->movil = registro.field("movil").value().toString();
+            this->fax = registro.field("fax").value().toString();
+            this->email = registro.field("email").value().toString();
+            this->dto = registro.field("dto").value().toDouble();
+            this->comentarios = registro.field("comentarios").value().toString();
+            this->importe = registro.field("importe").value().toDouble();
+            this->base = registro.field("base").value().toDouble();
             this->rDescuento = registro.field("rDescuento").value().toDouble();
-            this->rTotal = registro.field("rTotal").value().toDouble();
-            this->lImpreso = registro.field("lImpreso").value().toBool();
+            this->total = registro.field("total").value().toDouble();
+            this->impreso = registro.field("impreso").value().toBool();
             this->lAprobado = registro.field("lAprobado").value().toBool();
-            this->dFechaAprobacion = registro.field("dFechaAprobacion").value().toDate();
-            this->rImporteFactura = registro.field("rImporteFactura").value().toDouble();
-            this->cFactura = registro.field("cFactura").value().toString();
-            this->nAlbaran = registro.field("nAlbaran").value().toInt();
-            this->nPedido = registro.field("nPedido").value().toInt();
+            this->fechaAprobacion = registro.field("fechaAprobacion").value().toDate();
+            this->importeFactura = registro.field("importeFactura").value().toDouble();
+            this->factura = registro.field("factura").value().toString();
+            this->albaran = registro.field("albaran").value().toInt();
+            this->pedido = registro.field("pedido").value().toInt();
 
-            this->id_FormaPago = registro.field("id_FormaPago").value().toInt();
+            this->id_forma_pago = registro.field("id_forma_pago").value().toInt();
             QSqlQuery q(QSqlDatabase::database("empresa"));
-            if(q.exec("SELECT * FROM formpago WHERE id = "+QString::number(id_FormaPago)))
+            if(q.exec("SELECT * FROM formpago WHERE id = "+QString::number(id_forma_pago)))
                 if(q.next())
                 {
-                    this->cCodigoFormaPago = q.record().value("cCodigo").toString();
-                    this->cDescripcionFormaPago = q.record().value("cFormapago").toString();
+                    this->codigoFormaPago = q.record().value("codigo").toString();
+                    this->descripcionFormaPago = q.record().value("forma_pago").toString();
                 }
 
             this->tLugarEntrega = registro.field("tLugarEntrega").value().toString();
             this->cAtencionde = registro.field("cAtencionde").value().toString();
-            this->rBase1 = registro.field("rImporte1").value().toDouble();
-            this->rBase2 = registro.field("rImporte2").value().toDouble();
-            this->rBase3 = registro.field("rImporte3").value().toDouble();
-            this->rBase4 = registro.field("rImporte4").value().toDouble();
-            this->nIva1 = registro.field("nIva1").value().toDouble();
-            this->nIva2 = registro.field("nIva2").value().toDouble();
-            this->nIva3 = registro.field("nIva3").value().toDouble();
-            this->nIva4 = registro.field("nIva4").value().toDouble();
-            this->rIva1 = registro.field("rIva1").value().toDouble();
-            this->rIva2 = registro.field("rIva2").value().toDouble();
-            this->rIva3 = registro.field("rIva3").value().toDouble();
-            this->rIva4 = registro.field("rIva4").value().toDouble();
-            this->rTotalIva = registro.field("rTotalIva").value().toDouble();
-            this->nRecargoEquivalencia1 = registro.field("nRecargoEquivalencia1").value().toDouble();
-            this->nRecargoEquivalencia2 = registro.field("nRecargoEquivalencia2").value().toDouble();
-            this->nRecargoEquivalencia3 = registro.field("nRecargoEquivalencia3").value().toDouble();
-            this->nRecargoEquivalencia4 = registro.field("nRecargoEquivalencia4").value().toDouble();
-            this->rRec1 = registro.field("rRec1").value().toDouble();
-            this->rRec2 = registro.field("rRec2").value().toDouble();
-            this->rRec3 = registro.field("rRec3").value().toDouble();
-            this->rRec4 = registro.field("rRec4").value().toDouble();
-            this->rTotalRec = registro.field("rTotalRec").value().toDouble();
-            this->rTotal1 = registro.field("rTotal1").value().toDouble();
-            this->rTotal2 = registro.field("rTotal2").value().toDouble();
-            this->rTotal3 = registro.field("rTotal3").value().toDouble();
-            this->rTotal4 = registro.field("rTotal4").value().toDouble();
-            this->lRecargoEquivalencia = registro.field("lRecargoEquivalencia").value().toBool();
+            this->base1 = registro.field("importe1").value().toDouble();
+            this->base2 = registro.field("importe2").value().toDouble();
+            this->base3 = registro.field("importe3").value().toDouble();
+            this->base4 = registro.field("importe4").value().toDouble();
+            this->iva1 = registro.field("iva1").value().toDouble();
+            this->iva2 = registro.field("iva2").value().toDouble();
+            this->iva3 = registro.field("iva3").value().toDouble();
+            this->iva4 = registro.field("iva4").value().toDouble();
+            this->iva1 = registro.field("iva1").value().toDouble();
+            this->iva2 = registro.field("iva2").value().toDouble();
+            this->iva3 = registro.field("iva3").value().toDouble();
+            this->iva4 = registro.field("iva4").value().toDouble();
+            this->total_iva = registro.field("total_iva").value().toDouble();
+            this->porc_porc_recuivalencia1 = registro.field("porc_porc_recuivalencia1").value().toDouble();
+            this->porc_porc_recuivalencia2 = registro.field("porc_porc_recuivalencia2").value().toDouble();
+            this->porc_porc_recuivalencia3 = registro.field("porc_porc_recuivalencia3").value().toDouble();
+            this->porc_porc_recuivalencia4 = registro.field("porc_porc_recuivalencia4").value().toDouble();
+            this->rec1 = registro.field("rec1").value().toDouble();
+            this->rec2 = registro.field("rec2").value().toDouble();
+            this->rec3 = registro.field("rec3").value().toDouble();
+            this->rec4 = registro.field("rec4").value().toDouble();
+            this->totalRec = registro.field("totalRec").value().toDouble();
+            this->total1 = registro.field("total1").value().toDouble();
+            this->total2 = registro.field("total2").value().toDouble();
+            this->total3 = registro.field("total3").value().toDouble();
+            this->total4 = registro.field("total4").value().toDouble();
+            this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toBool();
             return true;
         }
      }
@@ -212,17 +212,17 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
 
 bool Presupuesto::siguiente()
 {
-    return RecuperarPresupuesto("Select * from cab_pre where Id >'"+
-                                    QString::number(id)+"' order by Id  limit 1 ");
+    return RecuperarPresupuesto("Select * from cab_pre where id >'"+
+                                    QString::number(id)+"' order by id  limit 1 ");
 }
 
 bool Presupuesto::anterior()
 {
-   return RecuperarPresupuesto("Select * from cab_pre where Id <'"+QString::number(id)+
-                               "' order by Id desc limit 1 ");
+   return RecuperarPresupuesto("Select * from cab_pre where id <'"+QString::number(id)+
+                               "' order by id desc limit 1 ");
 }
 
-bool Presupuesto::GuardarPres(int nId_Presupuesto)
+bool Presupuesto::GuardarPres(int nid_Presupuesto)
 {
 
     if (this->nPresupuesto == 0)
@@ -230,96 +230,96 @@ bool Presupuesto::GuardarPres(int nId_Presupuesto)
 
     QSqlQuery cab_pre(QSqlDatabase::database("empresa"));
     cab_pre.prepare("UPDATE cab_pre SET "
-                    "dFecha = :dFecha, dValidoHasta = :dValidoHasta, id_Cliente = :id_Cliente,"
-                    "cCodigoCliente =  :cCodigoCliente, cCliente = :cCliente, cCif = :cCif,"
-                    "cDireccion = :cDireccion, cDireccion2 = :cDireccion2, cCP = :cCP,"
-                    "cPoblacion = :cPoblacion, cProvincia = :cProvincia, idpais = :idpais,"
-                    "cTelefono = :cTelefono, cMovil = :cMovil, cFax = :cFax,"
-                    "tComentarios = :tComentarios, rImporte = :rImporte, rBase =:rSubtotal,"
-                    "rDescuento = :rDescuento, rTotal = :rTotal, lImpreso = :lImpreso,"
-                    "lAprobado = :lAprobado, dFechaAprobacion = :dFechaAprobacion,"
-                    "rImporteFactura =:rImporteFactura, rImportePendiente = :rImportePendiente,"
-                    "cFactura = :cFactura, nAlbaran = :nAlbaran, nPedido=:nPedido,"
-                    "id_FormaPago =:id_FormaPago, tLugarEntrega=:tLugarEntrega,"
-                    "cAtencionde=:cAtencionde, rBase1=:rBase1, rBase2=:rBase2, rBase3=:rBase3,"
-                    "rBase4=:rBase4, nIva1=:nIva1, nIva2=:nIva2, nIva3=:nIva3,"
-                    "nIva4=:nIva4, rIva1=:rIva1, rIva2=:rIva2, rIva3=:rIva3, rIva4=:rIva4,"
-                    "nRecargoEquivalencia1=:nRecargoEquivalencia1,"
-                    "nRecargoEquivalencia2=:nRecargoEquivalencia2,"
-                    "nRecargoEquivalencia3=:nRecargoEquivalencia3,"
-                    "nRecargoEquivalencia4=:nRecargoEquivalencia4,"
-                    "rRec1=:rRec1, rRec2=:rRec2, rRec3=:rRec3, rRec4=:rRec4, rTotal1=:rTotal1,"
-                    "rTotal2=:rTotal2, rTotal3=:rTotal3, rTotal4=:rTotal4,"
-                    "lRecargoEquivalencia=:lRecargoEquivalencia, cEmail=:cEmail,"
-                    "rTotalIva=:rTotalIva, rTotalRec=:rTotalRec,"
-                    "rImporte1=:rImporte1, rImporte2=:rImporte2,"
-                    "rImporte3=:rImporte3, rImporte4=:rImporte4 "
-                    "WHERE Id = :nnPresupuesto");
+                    "fecha = :fecha, dValidoHasta = :dValidoHasta, id_cliente = :id_cliente,"
+                    "codigo_cliente =  :codigo_cliente, cliente = :cliente, cif = :cif,"
+                    "direccion1 = :direccion1, direccion2 = :direccion2, cp = :cp,"
+                    "poblacion = :poblacion, provincia = :provincia, id_pais = :id_pais,"
+                    "telefono = :telefono, movil = :movil, fax = :fax,"
+                    "comentarios = :comentarios, importe = :importe, base =:subtotal,"
+                    "rDescuento = :rDescuento, total = :total, impreso = :impreso,"
+                    "lAprobado = :lAprobado, fechaAprobacion = :fechaAprobacion,"
+                    "importeFactura =:importeFactura, importe_pendiente = :importe_pendiente,"
+                    "factura = :factura, albaran = :albaran, pedido=:pedido,"
+                    "id_forma_pago =:id_forma_pago, tLugarEntrega=:tLugarEntrega,"
+                    "cAtencionde=:cAtencionde, base1=:base1, base2=:base2, base3=:base3,"
+                    "base4=:base4, iva1=:iva1, iva2=:iva2, iva3=:iva3,"
+                    "iva4=:iva4, iva1=:iva1, iva2=:iva2, iva3=:iva3, iva4=:iva4,"
+                    "porc_porc_recuivalencia1=:porc_porc_recuivalencia1,"
+                    "porc_porc_recuivalencia2=:porc_porc_recuivalencia2,"
+                    "porc_porc_recuivalencia3=:porc_porc_recuivalencia3,"
+                    "porc_porc_recuivalencia4=:porc_porc_recuivalencia4,"
+                    "rec1=:rec1, rec2=:rec2, rec3=:rec3, rec4=:rec4, total1=:total1,"
+                    "total2=:total2, total3=:total3, total4=:total4,"
+                    "recargo_equivalencia=:recargo_equivalencia, email=:email,"
+                    "total_iva=:total_iva, totalRec=:totalRec,"
+                    "importe1=:importe1, importe2=:importe2,"
+                    "importe3=:importe3, importe4=:importe4 "
+                    "WHERE id = :nnPresupuesto");
 
-    cab_pre.bindValue(":dFecha",dFecha);
+    cab_pre.bindValue(":fecha",fecha);
     cab_pre.bindValue(":dValidoHasta",dValidoHasta);
-    cab_pre.bindValue(":id_Cliente",id_cliente);
-    cab_pre.bindValue(":cCodigoCliente",cCodigoCliente);
-    cab_pre.bindValue(":cCliente",cCliente);
-    cab_pre.bindValue(":cCif",cCif);
-    cab_pre.bindValue(":cDireccion",cDireccion);
-    cab_pre.bindValue(":cDireccion2",cDireccion2);
-    cab_pre.bindValue(":cCP",cCP);
-    cab_pre.bindValue(":cPoblacion",cPoblacion);
-    cab_pre.bindValue(":cProvincia",cProvincia);
-    cab_pre.bindValue(":idpais",idPais);
-    cab_pre.bindValue(":cTelefono",cTelefono);
-    cab_pre.bindValue(":cMovil",cMovil);
-    cab_pre.bindValue(":cFax",cFax);
-    cab_pre.bindValue(":tComentarios",tComentarios);
-    cab_pre.bindValue(":rImporte",rImporte);
-    cab_pre.bindValue(":rSubtotal",rBase);
+    cab_pre.bindValue(":id_cliente",id_cliente);
+    cab_pre.bindValue(":codigo_cliente",codigo_cliente);
+    cab_pre.bindValue(":cliente",cliente);
+    cab_pre.bindValue(":cif",cif);
+    cab_pre.bindValue(":direccion1",direccion1);
+    cab_pre.bindValue(":direccion2",direccion2);
+    cab_pre.bindValue(":cp",cp);
+    cab_pre.bindValue(":poblacion",poblacion);
+    cab_pre.bindValue(":provincia",provincia);
+    cab_pre.bindValue(":id_pais",id_pais);
+    cab_pre.bindValue(":telefono",telefono);
+    cab_pre.bindValue(":movil",movil);
+    cab_pre.bindValue(":fax",fax);
+    cab_pre.bindValue(":comentarios",comentarios);
+    cab_pre.bindValue(":importe",importe);
+    cab_pre.bindValue(":subtotal",base);
     cab_pre.bindValue(":rDescuento",rDescuento);
-    cab_pre.bindValue(":rTotal",rTotal);
-    cab_pre.bindValue(":lImpreso",lImpreso);
+    cab_pre.bindValue(":total",total);
+    cab_pre.bindValue(":impreso",impreso);
     cab_pre.bindValue(":lAprobado",lAprobado);
-    cab_pre.bindValue(":dFechaAprobacion",dFechaAprobacion);
-    cab_pre.bindValue(":rImporteFactura",rImporteFactura);
-    cab_pre.bindValue(":rImportePendiente",0);//TODO preguntar a Marc
-    cab_pre.bindValue(":cFactura",cFactura);
-    cab_pre.bindValue(":nAlbaran",nAlbaran);
-    cab_pre.bindValue(":nPedido",nPedido);
-    cab_pre.bindValue(":id_FormaPago",id_FormaPago);
+    cab_pre.bindValue(":fechaAprobacion",fechaAprobacion);
+    cab_pre.bindValue(":importeFactura",importeFactura);
+    cab_pre.bindValue(":importe_pendiente",0);//TODO preguntar a Marc
+    cab_pre.bindValue(":factura",factura);
+    cab_pre.bindValue(":albaran",albaran);
+    cab_pre.bindValue(":pedido",pedido);
+    cab_pre.bindValue(":id_forma_pago",id_forma_pago);
     cab_pre.bindValue(":tLugarEntrega",tLugarEntrega);
     cab_pre.bindValue(":cAtencionde",cAtencionde);
-    cab_pre.bindValue(":rBase1",rBase1);
-    cab_pre.bindValue(":rBase2",rBase2);
-    cab_pre.bindValue(":rBase3",rBase3);
-    cab_pre.bindValue(":rBase4",rBase4);
-    cab_pre.bindValue(":nIva1",nIva1);
-    cab_pre.bindValue(":nIva2",nIva2);
-    cab_pre.bindValue(":nIva3",nIva3);
-    cab_pre.bindValue(":nIva4",nIva4);
-    cab_pre.bindValue(":rIva1",rIva1);
-    cab_pre.bindValue(":rIva2",rIva2);
-    cab_pre.bindValue(":rIva3",rIva3);
-    cab_pre.bindValue(":rIva4",rIva4);
-    cab_pre.bindValue(":nRecargoEquivalencia1",nRecargoEquivalencia1);
-    cab_pre.bindValue(":nRecargoEquivalencia2",nRecargoEquivalencia2);
-    cab_pre.bindValue(":nRecargoEquivalencia3",nRecargoEquivalencia3);
-    cab_pre.bindValue(":nRecargoEquivalencia4",nRecargoEquivalencia4);
-    cab_pre.bindValue(":rRec1",rRec1);
-    cab_pre.bindValue(":rRec2",rRec2);
-    cab_pre.bindValue(":rRec3",rRec3);
-    cab_pre.bindValue(":rRec4",rRec4);
-    cab_pre.bindValue(":rTotal1",rTotal1);
-    cab_pre.bindValue(":rTotal2",rTotal2);
-    cab_pre.bindValue(":rTotal3",rTotal3);
-    cab_pre.bindValue(":rTotal4",rTotal4);
-    cab_pre.bindValue(":lRecargoEquivalencia",lRecargoEquivalencia);
-    cab_pre.bindValue(":cEmail",cEmail);
-    cab_pre.bindValue(":rTotalIva",rTotalIva);
-    cab_pre.bindValue(":rTotalRec",rTotalRec);
-    cab_pre.bindValue(":rImporte1",0);
-    cab_pre.bindValue(":rImporte2",0);
-    cab_pre.bindValue(":rImporte3",0);
-    cab_pre.bindValue(":rImporte4",0);
-    cab_pre.bindValue(":nnPresupuesto",nId_Presupuesto);
+    cab_pre.bindValue(":base1",base1);
+    cab_pre.bindValue(":base2",base2);
+    cab_pre.bindValue(":base3",base3);
+    cab_pre.bindValue(":base4",base4);
+    cab_pre.bindValue(":iva1",iva1);
+    cab_pre.bindValue(":iva2",iva2);
+    cab_pre.bindValue(":iva3",iva3);
+    cab_pre.bindValue(":iva4",iva4);
+    cab_pre.bindValue(":iva1",iva1);
+    cab_pre.bindValue(":iva2",iva2);
+    cab_pre.bindValue(":iva3",iva3);
+    cab_pre.bindValue(":iva4",iva4);
+    cab_pre.bindValue(":porc_porc_recuivalencia1",porc_porc_recuivalencia1);
+    cab_pre.bindValue(":porc_porc_recuivalencia2",porc_porc_recuivalencia2);
+    cab_pre.bindValue(":porc_porc_recuivalencia3",porc_porc_recuivalencia3);
+    cab_pre.bindValue(":porc_porc_recuivalencia4",porc_porc_recuivalencia4);
+    cab_pre.bindValue(":rec1",rec1);
+    cab_pre.bindValue(":rec2",rec2);
+    cab_pre.bindValue(":rec3",rec3);
+    cab_pre.bindValue(":rec4",rec4);
+    cab_pre.bindValue(":total1",total1);
+    cab_pre.bindValue(":total2",total2);
+    cab_pre.bindValue(":total3",total3);
+    cab_pre.bindValue(":total4",total4);
+    cab_pre.bindValue(":recargo_equivalencia",recargo_equivalencia);
+    cab_pre.bindValue(":email",email);
+    cab_pre.bindValue(":total_iva",total_iva);
+    cab_pre.bindValue(":totalRec",totalRec);
+    cab_pre.bindValue(":importe1",0);
+    cab_pre.bindValue(":importe2",0);
+    cab_pre.bindValue(":importe3",0);
+    cab_pre.bindValue(":importe4",0);
+    cab_pre.bindValue(":nnPresupuesto",nid_Presupuesto);
 
     if(!cab_pre.exec())
     {
@@ -329,10 +329,10 @@ bool Presupuesto::GuardarPres(int nId_Presupuesto)
     return true;
 }
 
-bool Presupuesto::BorrarLineas(int nId_Presupuesto)
+bool Presupuesto::BorrarLineas(int nid_Presupuesto)
 {
     QSqlQuery query(QSqlDatabase::database("empresa"));
-    QString sql = QString("DELETE FROM lin_pre WHERE Id_Cab = %1").arg(nId_Presupuesto);
+    QString sql = QString("DELETE FROM lin_pre WHERE id_Cab = %1").arg(nid_Presupuesto);
     query.prepare(sql);
     if(query.exec())
         return true;

@@ -18,9 +18,9 @@ frmPersonasContactoCliente::~frmPersonasContactoCliente()
 void frmPersonasContactoCliente::RefrescarTabla()
 {
     QSqlQueryModel *lista = new QSqlQueryModel(this);
-    QString cSQL = "select id, nombre, cargo_empresa, desctelefono1,telefono1, desctelefono2, "
-            "telefono2, descmovil1, movil,email"
-            " from Personascontactocliente where  idcliente= "+ QString::number(nIdCliente);
+    QString cSQL = "select id, nombre, cargo_empresa, desc_telefono1,telefono1, desc_telefono2, "
+            "telefono2, desc_movil1, movil,email"
+            " from Personascontactocliente where  id_cliente= "+ QString::number(nid_cliente);
     lista->setQuery(cSQL,QSqlDatabase::database("Maya"));
 ;
 
@@ -49,7 +49,7 @@ void frmPersonasContactoCliente::RefrescarTabla()
 
 void frmPersonasContactoCliente::Anadir()
 {
-   oCliente.AnadirPersonaContacto(nIdCliente,ui->txtNombre->text(),ui->txtDescripcionT1->text(),
+   oCliente.AnadirPersonaContacto(nid_cliente,ui->txtNombre->text(),ui->txtDescripcionT1->text(),
                                   ui->txtTelefono1->text(),ui->txtDescripcionT2->text(),ui->txtTelefono2->text(),
                                   ui->txtDescripcionT3->text(),ui->txtTelefono3->text(),ui->txtDescripcionM1->text(),
                                   ui->txtMovil1->text(),ui->txtDescripcionM2->text(),ui->txtMovil2->text(),ui->txtCargo->text(),
@@ -92,18 +92,18 @@ void frmPersonasContactoCliente::on_tabla_PersonasContacto_clicked(const QModelI
         ui->btnAnadir->setEnabled(false);
         ui->txtNombre->setText(queryPersonas.record().value("nombre").toString());
         ui->txtCargo->setText(queryPersonas.record().value("cargo_empresa").toString());
-        ui->txtDescripcionM1->setText(queryPersonas.record().value("descmovil1").toString());
-        ui->txtDescripcionM2->setText(queryPersonas.record().value("descmovil2").toString());
+        ui->txtDescripcionM1->setText(queryPersonas.record().value("desc_movil1").toString());
+        ui->txtDescripcionM2->setText(queryPersonas.record().value("desc_movil2").toString());
         ui->txtMovil1->setText(queryPersonas.record().value("movil").toString());
         ui->txtMovil2->setText(queryPersonas.record().value("movil2").toString());
-        ui->txtDescripcionT1->setText(queryPersonas.record().value("desctelefono1").toString());
-        ui->txtDescripcionT2->setText(queryPersonas.record().value("desctelefono2").toString());
-        ui->txtDescripcionT3->setText(queryPersonas.record().value("desctelefono3").toString());
+        ui->txtDescripcionT1->setText(queryPersonas.record().value("desc_telefono1").toString());
+        ui->txtDescripcionT2->setText(queryPersonas.record().value("desc_telefono2").toString());
+        ui->txtDescripcionT3->setText(queryPersonas.record().value("desc_telefono3").toString());
         ui->txtTelefono1->setText(queryPersonas.record().value("telefono1").toString());
         ui->txtTelefono2->setText(queryPersonas.record().value("telefono2").toString());
         ui->txtTelefono3->setText(queryPersonas.record().value("telefono3").toString());
         ui->txtMail->setText(queryPersonas.record().value("email").toString());
-        this->id_cliente = queryPersonas.record().value("idcliente").toInt();
+        this->id_cliente = queryPersonas.record().value("id_cliente").toInt();
     }
 
 }

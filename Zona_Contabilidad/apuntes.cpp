@@ -23,27 +23,27 @@ int apuntes::nuevo_numero_apunte()
 bool apuntes::nuevalinea()
 {
     QSqlQuery query_apunte(QSqlDatabase::database("dbconta"));
-    query_apunte.prepare("INSERT INTO diario (id_cuenta, id_documento,cuentaD,descripcionD,"
-                         "cuentaH,descripcionH,importeD,importeH,asiento,id_cuentaD,id_cuentaH,"
-                         "fechaAsiento,posenasiento,comentarioD,comentarioH) "
-                         "VALUES (:id_cuenta,:id_documento,:cuentaD,:descripcionD,:cuentaH,"
-                         ":descripcionH,:importeD,:importeH,:asiento,:id_cuentaD,:id_cuentaH,"
-                         ":fechaAsiento,:posenasiento,:comentarioD,:comentarioH);");
+    query_apunte.prepare("INSERT INTO diario (id_cuenta, id_documento,cuenta_d,descripcion_d,"
+                         "cuenta_h,descripcion_h,importe_d,importe_h,asiento,id_cuenta_d,id_cuenta_h,"
+                         "fecha_asiento,pos_en_asiento,comentario_d,comentario_h) "
+                         "VALUES (:id_cuenta,:id_documento,:cuenta_d,:descripcion_d,:cuenta_h,"
+                         ":descripcion_h,:importe_d,:importe_h,:asiento,:id_cuenta_d,:id_cuenta_h,"
+                         ":fecha_asiento,:pos_en_asiento,:comentario_d,:comentario_h);");
     query_apunte.bindValue(":id_cuenta",this->id_cuenta);
     query_apunte.bindValue(":id_documento",this->id_documento);
-    query_apunte.bindValue(":cuentaD",this->cuentaD);
-    query_apunte.bindValue(":descripcionD",this->descripcionD);
-    query_apunte.bindValue(":cuentaH",this->cuentaH);
-    query_apunte.bindValue(":descripcionH",this->descripcionH);
-    query_apunte.bindValue(":importeD",this->importeD);
-    query_apunte.bindValue(":importeH",this->importeH);
+    query_apunte.bindValue(":cuenta_d",this->cuenta_d);
+    query_apunte.bindValue(":descripcion_d",this->descripcion_d);
+    query_apunte.bindValue(":cuenta_h",this->cuenta_h);
+    query_apunte.bindValue(":descripcion_h",this->descripcion_h);
+    query_apunte.bindValue(":importe_d",this->importe_d);
+    query_apunte.bindValue(":importe_h",this->importe_h);
     query_apunte.bindValue(":asiento",this->asiento);
-    query_apunte.bindValue(":id_cuentaD",this->id_cuentaD);
-    query_apunte.bindValue(":id_cuentaH",this->id_cuentaH);
-    query_apunte.bindValue(":fechaAsiento",this->fechaAsiento);
-    query_apunte.bindValue(":posenasiento",this->posenasiento);
-    query_apunte.bindValue(":comentarioD",this->comentarioD);
-    query_apunte.bindValue(":comentarioH",this->comentarioH);
+    query_apunte.bindValue(":id_cuenta_d",this->id_cuenta_d);
+    query_apunte.bindValue(":id_cuenta_h",this->id_cuenta_h);
+    query_apunte.bindValue(":fecha_asiento",this->fecha_asiento);
+    query_apunte.bindValue(":pos_en_asiento",this->pos_en_asiento);
+    query_apunte.bindValue(":comentario_d",this->comentario_d);
+    query_apunte.bindValue(":comentario_h",this->comentario_h);
 
     if(!query_apunte.exec())
     {
@@ -64,18 +64,18 @@ void apuntes::clear()
     id_cuenta = 0;
     id_documento = 0;
     DH = "";
-    cuentaD = "";
-    descripcionD = "";
-    cuentaH = "";
-    descripcionH = "";
-    importeD = 0;
-    importeH = 0;
+    cuenta_d = "";
+    descripcion_d = "";
+    cuenta_h = "";
+    descripcion_h = "";
+    importe_d = 0;
+    importe_h = 0;
     asiento = 0;
-    id_cuentaD = 0;
-    id_cuentaH = 0;
-    fechaAsiento = QDate::currentDate();
-    posenasiento = 0;
+    id_cuenta_d = 0;
+    id_cuenta_h = 0;
+    fecha_asiento = QDate::currentDate();
+    pos_en_asiento = 0;
     cta_principal = "";
-    comentarioD = "";
-    comentarioH = "";
+    comentario_d = "";
+    comentario_h = "";
 }

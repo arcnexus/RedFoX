@@ -63,7 +63,7 @@ void FrmAnadirMedicamento::finishedSlotMedicamento(QNetworkReply* reply)
      QDomNode n = drugList.firstChild();
 
        QStringList list;
-       list <<"NOMBRE"<<"ID"<<"DOSIFICACIÓN"<<"EMPAQUETADO"<<"CODIGO NACIONAL";
+       list <<"NOMBRE"<<"id"<<"DOSIFICACIÓN"<<"EMPAQUETADO"<<"CODIGO NACIONAL";
 
      ui->tablamedicamentos->setColumnCount(5);
      ui->tablamedicamentos->setColumnWidth(0,350);

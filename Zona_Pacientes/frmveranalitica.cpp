@@ -27,7 +27,7 @@ FrmVerAnalitica::~FrmVerAnalitica()
     delete ui;
 }
 
-void FrmVerAnalitica::llenarTabla(int nID)
+void FrmVerAnalitica::llenarTabla(int nid)
 {
 
     //QTableWidget *tablaAnalitica = new QTableWidget(this);
@@ -38,9 +38,9 @@ void FrmVerAnalitica::llenarTabla(int nID)
     list <<tr("DESCRIPCIÓN")<<tr("VALOR") <<tr("REFERENCIA") <<tr("COMENTARIOS") <<tr("id");
     QScopedPointer<QSqlQuery>qAnalitica (new QSqlQuery(QSqlDatabase::database("dbmedica")));
     //QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    QString cSQL = " select * from analitica2 where idanalitica =:idanalitica";
+    QString cSQL = " select * from analitica2 where id_analitica =:id_analitica";
     qAnalitica->prepare(cSQL);
-    qAnalitica->bindValue(":idanalitica",nID);
+    qAnalitica->bindValue(":id_analitica",nid);
     ui->tablaAnalitica->setRowCount(0);
     ui->tablaAnalitica->setColumnCount(5);
     ui->tablaAnalitica->setColumnWidth(0,150);
@@ -89,7 +89,7 @@ void FrmVerAnalitica::llenarTabla(int nID)
             ui->tablaAnalitica->setItem(pos,3,newItem3);
 
 
-            // Id
+            // id
             QTableWidgetItem *newItem4 = new QTableWidgetItem(QString::number(reg.field("id").value().toInt()));
             // para que los elementos no sean editables
             newItem4->setFlags(newItem4->flags() & (~Qt::ItemIsEditable));
@@ -105,11 +105,11 @@ void FrmVerAnalitica::llenarTabla(int nID)
     ui->tablaAnalitica->blockSignals(false);
 }
 
-void FrmVerAnalitica::capturaId(int nId)
+void FrmVerAnalitica::capturaid(int nid)
 {
-    nID = nId;
-    cargarDatos(nID);
-    llenarTabla(nID);
+    nid = nid;
+    cargarDatos(nid);
+    llenarTabla(nid);
 }
 
 void FrmVerAnalitica::capturaPaciente(QString Paciente)
@@ -117,23 +117,23 @@ void FrmVerAnalitica::capturaPaciente(QString Paciente)
     ui->txtPaciente->setText(Paciente);
 }
 
-void FrmVerAnalitica::cargarDatos(int nID)
+void FrmVerAnalitica::cargarDatos(int nid)
 {
     Analitica oAna;
-    oAna.recuperarDatos(nID);
+    oAna.recuperarDatos(nid);
     ui->txtAnalitica->setText(oAna.getAnalisis());
-    ui->txtFechaAnalitica->setDate(oAna.getFechaAnalisis());
-    ui->txtComentarios->setText(oAna.getComentarios());
+    ui->txtFechaAnalitica->setDate(oAna.getfecha_analisis());
+    ui->txcomentarios->setText(oAna.gecomentarios());
 
 }
 
 void FrmVerAnalitica::cargarDatos()
 {
     Analitica oAna;
-    oAna.recuperarDatos(nID);
+    oAna.recuperarDatos(nid);
     ui->txtAnalitica->setText(oAna.getAnalisis());
-    ui->txtFechaAnalitica->setDate(oAna.getFechaAnalisis());
-    ui->txtComentarios->setText(oAna.getComentarios());
+    ui->txtFechaAnalitica->setDate(oAna.getfecha_analisis());
+    ui->txcomentarios->setText(oAna.gecomentarios());
 
 }
 
@@ -141,7 +141,7 @@ void FrmVerAnalitica::editarDatos()
 {
     ui->txtAnalitica->setReadOnly(false);
     ui->txtFechaAnalitica->setReadOnly(false);
-    ui->txtComentarios->setReadOnly(false);
+    ui->txcomentarios->setReadOnly(false);
     ui->btnEditar->setEnabled(false);
     ui->btnGuardar->setEnabled(true);
     ui->btnDeshacer->setEnabled(true);
@@ -154,17 +154,17 @@ void FrmVerAnalitica::guardarDatos()
 {
     ui->txtAnalitica->setReadOnly(true);
     ui->txtFechaAnalitica->setReadOnly(true);
-    ui->txtComentarios->setReadOnly(true);
+    ui->txcomentarios->setReadOnly(true);
     ui->btnEditar->setEnabled(true);
     ui->btnGuardar->setEnabled(false);
     ui->btnDeshacer->setEnabled(false);
     ui->btnCerrar->setEnabled(true);
     Analitica oAnalit;
-    oAnalit.setId(nID);
+    oAnalit.setid(nid);
     oAnalit.setAnalisis(ui->txtAnalitica->text());
-    oAnalit.setFechaAnalisis(ui->txtFechaAnalitica->date());
-    oAnalit.setComentarios(ui->txtComentarios->toPlainText());
-    oAnalit.GuardarDatos(nID);
+    oAnalit.setfecha_analisis(ui->txtFechaAnalitica->date());
+    oAnalit.secomentarios(ui->txcomentarios->toPlainText());
+    oAnalit.GuardarDatos(nid);
 
 }
 
@@ -194,16 +194,16 @@ void FrmVerAnalitica::Deshacer()
 void FrmVerAnalitica::addLineas()
 {
     FrmAnalitica frmAnalitica;
-    connect(this,SIGNAL(pasarID(int)),&frmAnalitica,SLOT(capturaID(int)));
+    connect(this,SIGNAL(pasarid(int)),&frmAnalitica,SLOT(capturaid(int)));
     connect(this,SIGNAL(pasarPaciente(QString)),&frmAnalitica,SLOT(capturaPaciente(QString)));
     connect(this,SIGNAL(pasarFecha(QDate)),&frmAnalitica,SLOT(AsignarFecha(QDate)));
     connect(this,SIGNAL(pasarAnalitica(QString)),&frmAnalitica,SLOT(AsignarAnalitica(QString)));
-    emit pasarID(nID);
+    emit pasarid(nid);
     emit pasarPaciente(ui->txtPaciente->text());
     emit pasarFecha(ui->txtFechaAnalitica->date());
     emit pasarAnalitica(ui->txtAnalitica->text());
     frmAnalitica.exec();
-    llenarTabla(nID);
+    llenarTabla(nid);
 }
 
 void FrmVerAnalitica::BorrarLineas()
@@ -212,7 +212,7 @@ void FrmVerAnalitica::BorrarLineas()
     {
         Analitica oAnalitica;
         oAnalitica.EliminarLinea(ui->tablaAnalitica->item(ui->tablaAnalitica->currentRow(),4)->text().toInt());
-        llenarTabla(nID);
+        llenarTabla(nid);
     }
 }
 

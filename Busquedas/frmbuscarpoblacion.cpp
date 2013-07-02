@@ -16,7 +16,7 @@ FrmBuscarPoblacion::~FrmBuscarPoblacion()
     //delete ModelPoblaciones;
 }
 
-int FrmBuscarPoblacion::DevolverID()
+int FrmBuscarPoblacion::Devolverid()
 {
     if(ModelPoblaciones)
     {
@@ -30,9 +30,9 @@ int FrmBuscarPoblacion::DevolverID()
     return -1;
 }
 
-void FrmBuscarPoblacion::setcPoblacion(QString cPoblacion, int nPoblacion)
+void FrmBuscarPoblacion::setpoblacion(QString poblacion, int nPoblacion)
 {
-    // cPoblacion = Cadena a Buscar
+    // poblacion = Cadena a Buscar
     // nPoblacion = 1 - buscar por nombre de la población (se pasará el nombre de la población como cadena)
     // nPoblacion = 0 - Buscar por cp (se pasará el código postal como cadena)
     //NOTE - pointer parent
@@ -41,17 +41,17 @@ void FrmBuscarPoblacion::setcPoblacion(QString cPoblacion, int nPoblacion)
     //Creamos Objeto de la clase Cabecera para las cabeceras horizontales
     Cabecera = new QHeaderView(Qt::Horizontal,this);
     QString cSQL;
-    this->cPoblacion = cPoblacion;
+    this->poblacion = poblacion;
     if (nPoblacion ==1)
     {
         // Busqueda por población
-       cSQL = "Select  id,poblacion,cp from poblaciones where poblacion like '"+cPoblacion.trimmed()+
+       cSQL = "Select  id,poblacion,cp from poblaciones where poblacion like '"+poblacion.trimmed()+
                     "%'";
     }
     else
     {
        //NOTE - Busqueda por codigo postal
-       cSQL = "Select  id,poblacion,cp from poblaciones where cp  = '"+cPoblacion.trimmed()+
+       cSQL = "Select  id,poblacion,cp from poblaciones where cp  = '"+poblacion.trimmed()+
                  "'";
     }
     ui->ListaPoblaciones->setSelectionBehavior(QAbstractItemView::SelectRows);

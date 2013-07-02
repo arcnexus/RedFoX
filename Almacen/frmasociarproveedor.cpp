@@ -8,7 +8,7 @@ FrmAsociarProveedor::FrmAsociarProveedor(QWidget *parent) :
 {
     ui->setupUi(this);
     modelProveedor = new QSqlQueryModel(this);
-    modelProveedor->setQuery("select cProveedor from proveedores",QSqlDatabase::database("Maya"));
+    modelProveedor->setQuery("select proveedor from proveedores",QSqlDatabase::database("Maya"));
     ui->tablaproveedores->setModel(modelProveedor);
     // -----------------------------
     // Divisa
@@ -61,7 +61,7 @@ void FrmAsociarProveedor::seteditar(QString id)
             this->DescOferta = ui->txtDescoferta->text();
             int index = ui->cboDivisa->findText(queryProvAlt.record().value("moneda").toString());
             ui->cboDivisa->setCurrentIndex(index);
-            modelProveedor->setQuery("select cProveedor from proveedores where id="+
+            modelProveedor->setQuery("select proveedor from proveedores where id="+
                                      queryProvAlt.record().value("id_prov").toString(),QSqlDatabase::database("Maya"));
             ui->tablaproveedores->setModel(modelProveedor);
             ui->tablaproveedores->selectRow(0);
@@ -72,7 +72,7 @@ void FrmAsociarProveedor::seteditar(QString id)
 void FrmAsociarProveedor::filtrar_proveedor()
 {
     modelProveedor = new QSqlQueryModel(this);
-    modelProveedor->setQuery("select cProveedor from proveedores where cProveedor like '"+ui->txtBuscarProveedores->text().trimmed()+"%'",
+    modelProveedor->setQuery("select proveedor from proveedores where proveedor like '"+ui->txtBuscarProveedores->text().trimmed()+"%'",
                              QSqlDatabase::database("Maya"));
 
     ui->tablaproveedores->setModel(modelProveedor);
@@ -98,9 +98,9 @@ void FrmAsociarProveedor::setDescOferta()
 void FrmAsociarProveedor::seleccionarPro(QModelIndex indice)
 {
     QSqlQueryModel* modelo = (QSqlQueryModel*)ui->tablaproveedores->model();
-    QString prov = modelo->record(indice.row()).value("cProveedor").toString();
+    QString prov = modelo->record(indice.row()).value("proveedor").toString();
     QSqlQuery qProv(QSqlDatabase::database("Maya"));
-    qProv.prepare("select id from proveedores where cProveedor ='"+prov+"'");
+    qProv.prepare("select id from proveedores where proveedor ='"+prov+"'");
     if (qProv.exec()) {
         qProv.next();
         this->id_proveedor = qProv.record().value("id").toInt();
@@ -117,7 +117,7 @@ void FrmAsociarProveedor::setpvdReal()
     this->pvdreal = ui->txtPVDReal->text().toDouble();
 }
 
-void FrmAsociarProveedor::setIdDivisa()
+void FrmAsociarProveedor::setidDivisa()
 {
     this->id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
 }

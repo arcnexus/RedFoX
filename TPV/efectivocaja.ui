@@ -60,7 +60,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="spinTotal">
+      <widget class="QDoubleSpinBox" name="spitotal">
        <property name="maximum">
         <double>99990000.000000000000000</double>
        </property>

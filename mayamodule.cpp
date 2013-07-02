@@ -1,6 +1,6 @@
 #include "mayamodule.h"
 
-MayaModule::MayaModule(moduleZone zone , QString name ,QWidget *parent) :
+MayaModule::MayaModule(module_zone zone , QString name ,QWidget *parent) :
     QDialog(parent)
 {
     _zone = zone;
@@ -13,12 +13,12 @@ MayaModule::~MayaModule()
 {
 }
 
-bool MayaModule::userHaveAcces(int idUser)
+bool MayaModule::userHaveAcces(int id_user)
 {
     QSqlQuery q(QSqlDatabase::database("Maya"));
-    q.prepare("SELECT * FROM accesousuarios where idModulo = :id and idUser=:idUser");
+    q.prepare("SELECT * FROM accesousuarios where id_modulo = :id and id_user=:id_user");
     q.bindValue(":id",_id_modulo);
-    q.bindValue(":idUser",idUser);
+    q.bindValue(":id_user",id_user);
     if(q.exec())
     {
         if(q.next())
@@ -29,10 +29,10 @@ bool MayaModule::userHaveAcces(int idUser)
     return (_user_level != SinAcceso);
 }
 
-void MayaModule::tryRegisterModule(moduleZone zone, QString name)
+void MayaModule::tryRegisterModule(module_zone zone, QString name)
 {
     QSqlQuery q(QSqlDatabase::database("Maya"));
-    q.prepare("SELECT * FROM modulos where ModuleName = :name");
+    q.prepare("SELECT * FROM modulos where module_name = :name");
     q.bindValue(":name",name);
     if(q.exec())
     {
@@ -43,12 +43,12 @@ void MayaModule::tryRegisterModule(moduleZone zone, QString name)
     }
 }
 
-void MayaModule::RegisterModule(moduleZone zone , QString name)
+void MayaModule::RegisterModule(module_zone zone , QString name)
 {
     QSqlQuery q(QSqlDatabase::database("Maya"));
     QSqlQuery q2(QSqlDatabase::database("Maya"));
 
-    q.prepare("INSERT INTO modulos (ModuleZone, ModuleName) VALUES (:zone, :name);");
+    q.prepare("INSERT INTO modulos (module_zone, module_name) VALUES (:zone, :name);");
     q.bindValue(":zone",zone);
     q.bindValue(":name",name);
     q.exec();
@@ -58,10 +58,10 @@ void MayaModule::RegisterModule(moduleZone zone , QString name)
     while(q.next())
     {
         //insertamos "Sin acceso" para todos los usuarios por defecto
-        q2.prepare("INSERT INTO accesousuarios (idUser, idModulo, idNivelAcceso) "
-                   "VALUES (:id, :idModulo, 1);");
+        q2.prepare("INSERT INTO accesousuarios (id_user, id_modulo, id_nivel_acceso) "
+                   "VALUES (:id, :id_modulo, 1);");
         q2.bindValue(":id",q.record().value(0).toInt());
-        q2.bindValue(":idModulo",_id_modulo);
+        q2.bindValue(":id_modulo",_id_modulo);
         q2.exec();
     }
 }

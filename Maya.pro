@@ -162,7 +162,8 @@ SOURCES += main.cpp\
     Zona_Contabilidad/apuntes.cpp \
     Auxiliares/monetarydelegate_contabilidad.cpp \
     Zona_Contabilidad/frmcuadro_cuentas.cpp \
-    Zona_Contabilidad/cuentas_contables.cpp
+    Zona_Contabilidad/cuentas_contables.cpp \
+    Almacen/tipostarifa.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -289,7 +290,8 @@ HEADERS  += mainwindow.h \
     Zona_Contabilidad/apuntes.h \
     Auxiliares/monetarydelegate_contabilidad.h \
     Zona_Contabilidad/frmcuadro_cuentas.h \
-    Zona_Contabilidad/cuentas_contables.h
+    Zona_Contabilidad/cuentas_contables.h \
+    Almacen/tipostarifa.h
 
 
 
@@ -488,3 +490,5 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/BlinkLabel/win32/debug/
 
 INCLUDEPATH += $$PWD/BlinkLabel
 DEPENDPATH += $$PWD/BlinkLabel
+
+

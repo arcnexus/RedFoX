@@ -9,35 +9,35 @@ public:
     Farmacologia();
 
     int getidFarmacologia();
-    int getidmedicamento();
+    int getid_medicamento();
     QString getmedicamento();
-    QDate getiniciotratamiento();
-    QString getindicacionposologia();
-    QString getcomentarios();
-    int getidepisodio();
+    QDate getinicio_tratamiento();
+    QString getindicacion_posologia();
+    QString gecomentarios();
+    int getid_episodio();
     int getactivo();
-    QString getcodigonacional();
+    QString getcodigo_nacional();
 
     void setidFarmacologia(int id);
-    void setidmedicamento(int idmedicamento);
+    void setid_medicamento(int id_medicamento);
     void setmedicamento(QString medicamento);
-    void setiniciotratamiento(QDate iniciotratamiento);
-    void setindicacionposologia(QString indicacionposologia);
-    void setcomentarios(QString comentarios);
-    void setidepisodio(int idepisodio);
+    void setinicio_tratamiento(QDate inicio_tratamiento);
+    void setindicacion_posologia(QString indicacion_posologia);
+    void secomentarios(QString comentarios);
+    void setid_episodio(int id_episodio);
     void setactivo(int activo);
-    void setcodigonacional(QString codigonacional);
+    void setcodigo_nacional(QString codigo_nacional);
 
     int id;
-    int idpaciente;
-    int idmedicamento;
+    int id_paciente;
+    int id_medicamento;
     QString medicamento;
-    QDate iniciotratamiento;
-    QString indicacionposologia;
+    QDate inicio_tratamiento;
+    QString indicacion_posologia;
     QString comentarios;
-    int idepisodio;
+    int id_episodio;
     int activo;
-    QString codigonacional;
+    QString codigo_nacional;
  public slots:
     void AnadirFarmaco();
     void modificarFarmaco(int id);

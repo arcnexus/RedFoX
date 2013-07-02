@@ -83,8 +83,8 @@ public:
     bool useAnimation(){return m_animation;}
     void setAnimation(bool b){m_animation = b;this->repaint();}
 
-    int animationDuration(){return m_aniDuration;}
-    void setAnimationDuration(int i){m_aniDuration = i;}
+    int animationDuration(){return m_aniduration;}
+    void setAnimationDuration(int i){m_aniduration = i;}
 
     void addItem(QString nombre, float value);
     void addItem(QString nombre, float value, QColor color);
@@ -117,7 +117,7 @@ private:
     bool m_values;
     bool m_valuesEnY;
     bool m_animation;
-    int m_aniDuration;
+    int m_aniduration;
 
     QFont m_letraLeyenda;
     QFont m_letra;

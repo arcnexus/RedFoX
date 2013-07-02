@@ -11,7 +11,7 @@ EditEventForm::EditEventForm(QWidget *parent) :
     this->setWindowTitle("Editar evento");
 
     ui->combo_cliente->setModel(Configuracion_global->client_model);
-    ui->combo_cliente->setModelColumn(Configuracion_global->client_model->fieldIndex("cNombreFiscal"));
+    ui->combo_cliente->setModelColumn(Configuracion_global->client_model->fieldIndex("nombre_fiscal"));
 
     connect(ui->time_start,SIGNAL(timeChanged(QTime)),this,SLOT(timeChanged(QTime)));
     connect(ui->time_end,SIGNAL(timeChanged(QTime)),this,SLOT(timeChanged(QTime)));
@@ -61,7 +61,7 @@ void EditEventForm::setCita(bool is, int id)
 
     for (int i=0;i<Configuracion_global->client_model->rowCount();i++)
     {
-        if (Configuracion_global->client_model->record(i).value("Id").toInt() == id)
+        if (Configuracion_global->client_model->record(i).value("id").toInt() == id)
         {
                 ui->combo_cliente->setCurrentIndex(i);
                 break;
@@ -77,9 +77,9 @@ void EditEventForm::setAsunto(QString t, QString a)
     ui->txt_tituloEvento->setText(t);
 }
 
-void EditEventForm::setIsPrivado(bool b)
+void EditEventForm::setIsprivado(bool b)
 {
-    ui->chk_isPrivado->setChecked(b);
+    ui->chk_isprivado->setChecked(b);
 }
 
 void EditEventForm::on_btn_getColor_clicked()
@@ -99,14 +99,14 @@ void EditEventForm::on_btn_cancelar_clicked()
 
 void EditEventForm::on_btn_guardar_clicked()
 {
-    isPrivado = ui->chk_isPrivado->isChecked();
+    isprivado = ui->chk_isprivado->isChecked();
     isCita = ui->reunion_group->isChecked();
     titulo = ui->txt_tituloEvento->text();
     asunto = ui->txt_asunto->toPlainText();
     asunto.replace("\n","<br>");
     isCita = ui->reunion_group->isChecked();
     QSqlRelationalTableModel* client_model = (QSqlRelationalTableModel*)ui->combo_cliente->model();
-    id_cliente = client_model->record(ui->combo_cliente->currentIndex()).value("Id").toInt();
+    id_cliente = client_model->record(ui->combo_cliente->currentIndex()).value("id").toInt();
     id_spec = 0;//FIXME especialidad / departamento en agenda
     id_depart = 0;
     start = ui->time_start->time();
@@ -119,12 +119,12 @@ void EditEventForm::on_pushButton_clicked()
     FrmBuscarCliente BuscarClientes(this);
     if(BuscarClientes.exec() == QDialog::Accepted)
     {
-        int nId = BuscarClientes.DevolverID();
-        QString cId = QString::number(nId);
+        int nid = BuscarClientes.Devolverid();
+        QString cid = QString::number(nid);
 
         Cliente oCliente;
-        oCliente.Recuperar("Select * from clientes where id ="+cId+" order by id limit 1 ");
-        QString name = oCliente.cNombreFiscal;
+        oCliente.Recuperar("Select * from clientes where id ="+cid+" order by id limit 1 ");
+        QString name = oCliente.nombre_fiscal;
         int i = ui->combo_cliente->findText(name);
         ui->combo_cliente->setCurrentIndex(i);
     }

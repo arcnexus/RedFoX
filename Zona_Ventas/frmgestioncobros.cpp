@@ -2,7 +2,7 @@
 #include "ui_frmgestioncobros.h"
 
 frmGestionCobros::frmGestionCobros(QWidget *parent) :
-    MayaModule(ModuleZone(),ModuleName(),parent),
+    MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::frmGestionCobros),
     toolButton(tr("Gest. Cobros"),":/Icons/PNG/Cobros.png",this),
     menuButton(QIcon(":/Icons/PNG/Cobros.png"),tr("Gest. Cobros"),this)
@@ -12,7 +12,7 @@ frmGestionCobros::frmGestionCobros(QWidget *parent) :
     ui->txtfecha_fin->setDate(QDate::currentDate().addDays(7));
     ui->txtbuscar_cliente->setText("a");
     QSqlQueryModel *modelo_clientes = new QSqlQueryModel(this);
-    modelo_clientes->setQuery("select id,cCodigoCliente, cNombreFiscal, cCifNif from clientes where cNombreFiscal like '%a' limit 0,150",
+    modelo_clientes->setQuery("select id,codigo_cliente, nombre_fiscal, cif_nif from clientes where nombre_fiscal like '%a' limit 0,150",
                               QSqlDatabase::database("Maya"));
 
     ui->tabla_clientes->setModel(modelo_clientes);
@@ -38,18 +38,18 @@ void frmGestionCobros::on_txtbuscar_cliente_textChanged(const QString &arg1)
     QSqlQueryModel *modelo_clientes = new QSqlQueryModel(this);
     QString indice,cSQL;
     if(ui->radNombre->isChecked())
-        indice = "cNombreFiscal";
+        indice = "nombre_fiscal";
     if(ui->radCif->isChecked())
-        indice = "cCifNif";
+        indice = "cif_nif";
     if(ui->radCodigo->isChecked())
-        indice = "cCifNif";
+        indice = "cif_nif";
     if (ui->radEmpieza->isChecked())
     {
-        cSQL = "select id,cCodigoCliente, cNombreFiscal, cCifNif from clientes where "+indice+
+        cSQL = "select id,codigo_cliente, nombre_fiscal, cif_nif from clientes where "+indice+
                 " like '"+arg1.trimmed()+"%'";
         modelo_clientes->setQuery(cSQL,QSqlDatabase::database("Maya"));
     } else {
-        cSQL= "select id,cCodigoCliente, cNombreFiscal, cCifNif from clientes where "+indice+
+        cSQL= "select id,codigo_cliente, nombre_fiscal, cif_nif from clientes where "+indice+
                                           " like '%"+arg1.trimmed()+"%'";
         modelo_clientes->setQuery(cSQL,QSqlDatabase::database("Maya"));
     }

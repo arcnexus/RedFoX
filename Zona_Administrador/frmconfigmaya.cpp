@@ -8,7 +8,7 @@
 //Configuracion * Configuracion_global = 0;
 
 frmConfigmaya::frmConfigmaya(QWidget *parent) :
-    MayaModule(ModuleZone(),ModuleName(),parent),
+    MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::frmConfigmaya),
     toolButton(tr("Configuracion\nGeneral"),":/Icons/PNG/Config.png",this),
     menuButton(QIcon(":/Icons/PNG/Config.png"),tr("Configuracion General"),this)
@@ -32,21 +32,21 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     ui->txtUsuario->setText(settings.value("cUserBDMaya").toString());
     ui->txtPassword->setText(settings.value("cPasswordBDMaya").toString());
     ui->txtPuerto->setText(settings.value("cPuertoDBMaya").toString());
-    ui->txtDireccionBD->setText(settings.value("cRutaDBMaya").toString());
+    ui->txtdireccionBD->setText(settings.value("cRutaDBMaya").toString());
 
 
     ui->txtHostWeb->setText(settings.value("hostTiendaWeb").toString());
     ui->txtUsuarioDBweb->setText(settings.value("usuarioTiendaWeb").toString());
     ui->txtPasswordDBWeb->setText(settings.value("Pass_web").toString());
     ui->txtPuerto_DBWeb->setText(settings.value("puertoTiendaWeb").toString());
-    ui->txtNombreBDWeb->setText((settings.value("nombreBDTiendaWeb").toString()));
+    ui->txtnombre_bdWeb->setText((settings.value("nombre_bdTiendaWeb").toString()));
 
-    int nindex = ui->cboPaises->findText(settings.value("cPais").toString());
+    int nindex = ui->cboPaises->findText(settings.value("pais").toString());
     if (nindex > -1)
         ui->cboPaises->setCurrentIndex(nindex);
 
 
-    ui->spinDigitosFactura->setValue(settings.value("nDigitosFactura").toInt());
+    ui->spindigitos_factura->setValue(settings.value("ndigitos_factura").toInt());
 
 
     if(settings.value("lProfesional")==1)
@@ -54,14 +54,14 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     else
         ui->chkProfesional->setChecked(false);
 
-    ui->txtPorcIRPF->setText(settings.value("nIRPF").toString());
+    ui->txtPorcIRPF->setText(settings.value("irpf").toString());
 
-    ui->spinDigitosCuentaContable->setValue(settings.value("nDigitosCuentas").toInt());
-    ui->txtCuentaClientes->setText(settings.value("cCuentaClientes").toString());
-    ui->txtCuentaProveedores->setText(settings.value("cCuentaProveedores").toString());
-    ui->txtCuentaAcreedores->setText(settings.value("cCuentaAcreedores").toString());
-    ui->txtCuentaCobros->setText(settings.value("cuentacobros").toString());
-    ui->txtCuentaPagos->setText(settings.value("cuentapagos").toString());
+    ui->spidigitos_cuentaContable->setValue(settings.value("digitos_cuentas").toInt());
+    ui->txtCuentaClientes->setText(settings.value("cuenta_clientes").toString());
+    ui->txtCuentaProveedores->setText(settings.value("cuenta_proveedores").toString());
+    ui->txtCuentaAcreedores->setText(settings.value("cuenta_acreedores").toString());
+    ui->txtcuenta_cobros->setText(settings.value("cuenta_cobros").toString());
+    ui->txtcuenta_pagos->setText(settings.value("cuenta_pagos").toString());
     nindex = ui->cboUsuarioActivo->findText(settings.value("cUsuarioActivo").toString());
     if (nindex >-1)
         ui->cboUsuarioActivo->setCurrentIndex(nindex);
@@ -75,7 +75,7 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     ui->txtclaveV4_1->setText(settings.value("Clave7").toString());
     ui->txtclaveV4_2->setText(settings.value("Clave8").toString());
     ui->txtHostBD_MediTec->setText(settings.value("HostDB_MediTec").toString());
-    ui->txtNombreBD_MediTec->setText(settings.value("NombreDB_MediTec").toString());
+    ui->txtnombre_bd_MediTec->setText(settings.value("NombreDB_MediTec").toString());
     ui->txtUsuarioDB_MediTec->setText(settings.value("UsuarioDB_MediTec").toString());
     ui->txtPasswordDB_MediTec->setText(settings.value("PasswordDB_MediTec").toString());
     ui->txtPuerto_DB_MediTec->setText(settings.value("PuertoDB_MediTec").toString());
@@ -84,7 +84,7 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     else
         ui->radMysql->setChecked(false);
 
-    ui->chkPrestaShop->setChecked(settings.value("EnlaceWeb").toBool());
+    ui->chkPrestaShop->setChecked(settings.value("enlace_web").toBool());
 
     ui->chkmedicum->setChecked(settings.value("medicum").toBool());
     ui->chkconta->setChecked(settings.value("conta").toBool());
@@ -108,7 +108,7 @@ void frmConfigmaya::configurar()
         settings.setValue("cDriverBDMaya","QMYSQL");
     else
         //settings.setValue("cRutaDBMaya",qApp->applicationDirPath()+"/DB/Maya.sqlite");
-        settings.setValue("cRutaDBMaya",ui->txtDireccionBD->text());
+        settings.setValue("cRutaDBMaya",ui->txtdireccionBD->text());
 //    QDir directorioBd(qApp->applicationDirPath()+"/DB");
 //    if(!directorioBd.exists())
 //    {
@@ -125,22 +125,22 @@ void frmConfigmaya::configurar()
     settings.setValue("cHostBDMaya",ui->txtHost->text());
     settings.setValue("cUserBDMaya",ui->txtUsuario->text());
     settings.setValue("cPasswordBDMaya",ui->txtPassword->text());
-    settings.setValue("cPais",ui->cboPaises->currentText());
+    settings.setValue("pais",ui->cboPaises->currentText());
     settings.setValue(("cPuertoDBMaya"),ui->txtPuerto->text());
-    settings.setValue("nDigitosFactura",ui->spinDigitosFactura->value());
+    settings.setValue("ndigitos_factura",ui->spindigitos_factura->value());
     if(ui->chkProfesional->isChecked())
         settings.setValue("lProfesional",1);
     else
         settings.setValue("lProfesional",0);
 
-    settings.setValue("nIRPF",ui->txtPorcIRPF->text());
+    settings.setValue("irpf",ui->txtPorcIRPF->text());
     settings.setValue("contrasenaactiva",ui->txtContrasenaActiva->text());
-    settings.setValue("nDigitosCuentas",ui->spinDigitosCuentaContable->value());
-    settings.setValue("cCuentaClientes",ui->txtCuentaClientes->text());
-    settings.setValue("cCuentaProveedores",ui->txtCuentaProveedores->text());
-    settings.setValue("cCuentaAcreedores",ui->txtCuentaAcreedores->text());
-    settings.setValue("cuentacobros",ui->txtCuentaCobros->text());
-    settings.setValue("cuentapagos",ui->txtCuentaPagos->text());
+    settings.setValue("digitos_cuentas",ui->spidigitos_cuentaContable->value());
+    settings.setValue("cuenta_clientes",ui->txtCuentaClientes->text());
+    settings.setValue("cuenta_proveedores",ui->txtCuentaProveedores->text());
+    settings.setValue("cuenta_acreedores",ui->txtCuentaAcreedores->text());
+    settings.setValue("cuenta_cobros",ui->txtcuenta_cobros->text());
+    settings.setValue("cuenta_pagos",ui->txtcuenta_pagos->text());
     settings.setValue("cUsuarioActivo",ui->cboUsuarioActivo->currentText());
     settings.setValue("Clave1",ui->txtclaveV1_1->text());
     settings.setValue("Clave2",ui->txtclaveV1_2->text());
@@ -179,12 +179,12 @@ void frmConfigmaya::configurar()
    settings.setValue("usuarioTiendaWeb",ui->txtUsuarioDBweb->text());
    settings.setValue("Pass_web",ui->txtPasswordDBWeb->text());
    settings.setValue("puertoTiendaWeb",ui->txtPuerto_DBWeb->text());
-   settings.setValue("nombreBDTiendaWeb",ui->txtNombreBDWeb->text());
-   settings.setValue("EnlaceWeb",ui->chkPrestaShop->isChecked());
+   settings.setValue("nombre_bdTiendaWeb",ui->txtnombre_bdWeb->text());
+   settings.setValue("enlace_web",ui->chkPrestaShop->isChecked());
 
 
    settings.setValue("HostDB_MediTec",ui->txtHostBD_MediTec->text());
-   settings.setValue("NombreDB_MediTec",ui->txtNombreBD_MediTec->text());
+   settings.setValue("NombreDB_MediTec",ui->txtnombre_bd_MediTec->text());
    settings.setValue("UsuarioDB_MediTec",ui->txtUsuarioDB_MediTec->text());
    settings.setValue("PasswordDB_MediTec",ui->txtPasswordDB_MediTec->text());
    settings.setValue("PuertoDB_MediTec",ui->txtPuerto_DB_MediTec->text());

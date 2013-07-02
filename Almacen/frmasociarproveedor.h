@@ -35,7 +35,7 @@ private slots:
     void setDescOferta();
     void seleccionarPro(QModelIndex indicde);
     void setpvdReal();
-    void setIdDivisa();
+    void setidDivisa();
 public slots:
     void Aceptar();
 };

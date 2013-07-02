@@ -12,12 +12,12 @@ class FrmBuscarCliente : public QDialog
     Q_OBJECT
 
 signals:
-    void enviar_id_cliente(int Id_Cliente);
+    void enviar_id_cliente(int id_cliente);
 
 public:
     explicit FrmBuscarCliente(QWidget *parent = 0);
     ~FrmBuscarCliente();
-    int DevolverID();
+    int Devolverid();
     
 private slots:
     void on_pushButton_clicked();

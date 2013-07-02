@@ -31,54 +31,54 @@ void Empresa::Recuperar(QString cSQL)
             QSqlRecord registro = qEmpresa.record();
             this->id = registro.field("id").value().toInt();
             this->id_divisa = registro.field("id_divisa").value().toInt();
-            this->cCodigo = registro.field("codigo").value().toString();
-            this->cNombre = registro.field("nombre").value().toString();
-            this->nDigitosFactura = registro.field("digitosfactura").value().toInt();
-            this->cSerie = registro.field("serie").value().toString();
-            this->cRutaBDSqLite = registro.field("RutaBDSqLite").value().toString();
+            this->codigo = registro.field("codigo").value().toString();
+            this->nombre = registro.field("nombre").value().toString();
+            this->ndigitos_factura = registro.field("digitos_factura").value().toInt();
+            this->serie = registro.field("serie").value().toString();
+            this->ruta_bd_sqlite = registro.field("ruta_bd_sqlite").value().toString();
             this->cHost = registro.field("host").value().toString();
             this->cUser = registro.field("user").value().toString();
             this->cContrasena = registro.field("contrasena").value().toString();
             this->cPuerto = registro.field("puerto").value().toString();
-            this->cNombreBD = registro.field("nombreBD").value().toString();
-            this->cHostMed = registro.field("hostBDMedica").value().toString();
-            this->cUserMed = registro.field("userBDMedica").value().toString();
-            this->cContrasenaMed = registro.field("contrasenaBDMedica").value().toString();
-            this->cPuertoMed = registro.field("puertoBDMedica").value().toString();
-            this->cNombreBDMed = registro.field("nombreBDMedica").value().toString();
-            this->cDriverBDMed = registro.field("driverBDMedica").value().toString();
-            this->cHostMed = registro.field("hostBDMedica").value().toString();
-            this->cUserMed = registro.field("userBDMedica").value().toString();
-            this->cContrasenaMed = registro.field("contrasenaBDMedica").value().toString();
-            this->cPuertoMed = registro.field("puertoBDMedica").value().toString();
-            this->cNombreBDMed = registro.field("nombreBDMedica").value().toString();
-            this->cDriverBDMed = registro.field("driverBDMedica").value().toString();
-            this->cDireccion = registro.field("Direccion").value().toString();
-            this->cCp = registro.field("cp").value().toString();
-            this->cPoblacion = registro.field("poblacion").value().toString();
-            this->cProvincia = registro.field("provincia").value().toString();
-            this->cPais = registro.field("pais").value().toString();
-            this->cTelefono1 = registro.field("telefono1").value().toString();
-            this->cTelefono2 = registro.field("telefono2").value().toString();
-            this->cFax = registro.field("fax").value().toString();
+            this->nombre_bd = registro.field("nombre_bd").value().toString();
+            this->cHostMed = registro.field("host_bd_medica").value().toString();
+            this->cUserMed = registro.field("user_bd_medica").value().toString();
+            this->cContrasenaMed = registro.field("contrasena_bd_medica").value().toString();
+            this->cPuertoMed = registro.field("puerto_bd_medica").value().toString();
+            this->nombre_bdMed = registro.field("nombre_bd_medica").value().toString();
+            this->cDriverBDMed = registro.field("driver_bd_medica").value().toString();
+            this->cHostMed = registro.field("host_bd_medica").value().toString();
+            this->cUserMed = registro.field("user_bd_medica").value().toString();
+            this->cContrasenaMed = registro.field("contrasena_bd_medica").value().toString();
+            this->cPuertoMed = registro.field("puerto_bd_medica").value().toString();
+            this->nombre_bdMed = registro.field("nombre_bd_medica").value().toString();
+            this->cDriverBDMed = registro.field("driver_bd_medica").value().toString();
+            this->direccion1 = registro.field("direccion").value().toString();
+            this->cp = registro.field("cp").value().toString();
+            this->poblacion = registro.field("poblacion").value().toString();
+            this->provincia = registro.field("provincia").value().toString();
+            this->pais = registro.field("pais").value().toString();
+            this->telefono1 = registro.field("telefono1").value().toString();
+            this->telefono2 = registro.field("telefono2").value().toString();
+            this->fax = registro.field("fax").value().toString();
             this->cMail = registro.field("mail").value().toString();
-            this->cWeb =registro.field("web").value().toString();
-            this->cCif = registro.field("cif").value().toString();
+            this->web =registro.field("web").value().toString();
+            this->cif = registro.field("cif").value().toString();
             this->cInscripcion = registro.field("inscripcion").value().toString();
-            this->cComentarioAlbaran = registro.field("comentarioalbaran").value().toString();
-            this->cComentarioFactura = registro.field("comentariofactura").value().toString();
-            this->cComentarioTicket = registro.field("comentarioticket").value().toString();
-            this->nEjercicio = registro.field("ejercicio").value().toInt();
-            this->nDigitosCuentas = registro.field("ndigitoscuenta").value().toInt();
-            this->cCuentaClientes = registro.field("codigocuentaclientes").value().toString();
-            this->cCuentaAcreeedores = registro.field("codigocuentaacreedores").value().toString();
-            this->cCuentaProveedores = registro.field("codigocuentaproveedores").value().toString();
-            this->Autocodificar = registro.field("autocodigo").value().toBool();
-            this->Tamanocodigo = registro.field("tamanocodigo").value().toInt();
-            this->cCuentaCobros = registro.field("cCuentaCobros").value().toString();
-            this->cCuentaPagos = registro.field("cCuentaPagos").value().toString();
-            this->cCuenta_venta_mercaderias = registro.field("cuenta_ventas_mercaderias").value().toString();
-            this->cCuenta_venta_servicios = registro.field("cuenta_ventas_servicios").value().toString();
+            this->ccomentario_albaran = registro.field("comentario_albaran").value().toString();
+            this->ccomentario_factura = registro.field("comentario_factura").value().toString();
+            this->ccomentario_ticket = registro.field("comentario_ticket").value().toString();
+            this->ejercicio = registro.field("ejercicio").value().toInt();
+            this->digitos_cuentas = registro.field("digitos_cuenta").value().toInt();
+            this->cuenta_clientes = registro.field("codigo_cuenta_clientes").value().toString();
+            this->cuentaAcreeedores = registro.field("codigo_cuenta_acreedores").value().toString();
+            this->cuenta_proveedores = registro.field("codigo_cuenta_proveedores").value().toString();
+            this->Autocodificar = registro.field("auto_codigo").value().toBool();
+            this->tamano_codigo = registro.field("tamano_codigo").value().toInt();
+            this->cuenta_cobros = registro.field("cuenta_cobros").value().toString();
+            this->cuenta_pagos = registro.field("cuenta_pagos").value().toString();
+            this->cuenta_venta_mercaderias = registro.field("cuenta_ventas_mercaderias").value().toString();
+            this->cuenta_venta_servicios = registro.field("cuenta_ventas_servicios").value().toString();
             this->contabilidad = registro.field("contabilidad").value().toBool();
             this->consultas = registro.field("consultas").value().toInt();
             this->primer_dia_laborable = registro.field("primer_dia_laborable").value().toString();
@@ -86,34 +86,34 @@ void Empresa::Recuperar(QString cSQL)
             this->horario_primer_dia = registro.field("horario_primer_dia").value().toString();
             this->horario_dia_normal = registro.field("horario_dia_normal").value().toString();
             this->horario_ultimo_dia = registro.field("horario_ultimo_dia").value().toString();
-            this->HostBD_contabilidad = registro.field("hostBDConta").value().toString();
-            this->NombreBD_contabilidad = registro.field("nombreBDConta").value().toString();
-            this->UsuarioBD_contabilidad = registro.field("userBDConta").value().toString();
-            this->ContrasenaBD_contabilidad = registro.field("passwordBDConta").value().toString();
-            this->puertoDB_contabilidad = registro.field("puertoDBConta").value().toString();
-            this->RutaBD_Contabilidad_sqlite = registro.field("rutaBDConta").value().toString();
-            this->DriverDB_contabilidad = registro.field("driverBDConta").value().toString();
+            this->HostBD_contabilidad = registro.field("host_bd_conta").value().toString();
+            this->nombre_bd_contabilidad = registro.field("nombre_bdConta").value().toString();
+            this->UsuarioBD_contabilidad = registro.field("user_bd_conta").value().toString();
+            this->ContrasenaBD_contabilidad = registro.field("password_bd_conta").value().toString();
+            this->puertoDB_contabilidad = registro.field("puerto_db_conta").value().toString();
+            this->RutaBD_Contabilidad_sqlite = registro.field("ruta_bd_conta").value().toString();
+            this->driver_db_contabilidad = registro.field("driver_db_conta").value().toString();
             this->ticket_factura = registro.field("ticket_factura").value().toBool();
             this->id_tarifa_predeterminada = registro.field("id_tarifa_predeterminada").value().toInt();
-            this->actualizardivisas = registro.field("actualizardivisas").value().toInt();
+            this->actualizar_divisas = registro.field("actualizar_divisas").value().toInt();
             this->empresa_internacional = registro.field("medica").value().toBool();
             this->empresa_medica = registro.field("internacional").value().toBool();
-            this->cCuenta_iva_repercutido1 = registro.field("cuenta_iva_repercutido1").value().toString();
-            this->cCuenta_iva_repercutido2 = registro.field("cuenta_iva_repercutido2").value().toString();
-            this->cCuenta_iva_repercutido3 = registro.field("cuenta_iva_repercutido3").value().toString();
-            this->cCuenta_iva_repercutido4 = registro.field("cuenta_iva_repercutido4").value().toString();
-            this->cCuenta_iva_soportado1 = registro.field("cuenta_iva_soportado1").value().toString();
-            this->cCuenta_iva_soportado2 = registro.field("cuenta_iva_soportado2").value().toString();
-            this->cCuenta_iva_soportado3 = registro.field("cuenta_iva_soportado3").value().toString();
-            this->cCuenta_iva_soportado4 = registro.field("cuenta_iva_soportado4").value().toString();
-            this->cCuenta_iva_repercutido_re1 = registro.field("cuenta_iva_repercutido1_re").value().toString();
-            this->cCuenta_iva_repercutido_re2 = registro.field("cuenta_iva_repercutido2_re").value().toString();
-            this->cCuenta_iva_repercutido_re3 = registro.field("cuenta_iva_repercutido3_re").value().toString();
-            this->cCuenta_iva_repercutido_re4 = registro.field("cuenta_iva_repercutido4_re").value().toString();
-            this->cCuenta_iva_soportado_re1 = registro.field("cuenta_iva_soportado1_re").value().toString();
-            this->cCuenta_iva_soportado_re2 = registro.field("cuenta_iva_soportado2_re").value().toString();
-            this->cCuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
-            this->cCuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
+            this->cuenta_iva_repercutido1 = registro.field("cuenta_iva_repercutido1").value().toString();
+            this->cuenta_iva_repercutido2 = registro.field("cuenta_iva_repercutido2").value().toString();
+            this->cuenta_iva_repercutido3 = registro.field("cuenta_iva_repercutido3").value().toString();
+            this->cuenta_iva_repercutido4 = registro.field("cuenta_iva_repercutido4").value().toString();
+            this->cuenta_iva_soportado1 = registro.field("cuenta_iva_soportado1").value().toString();
+            this->cuenta_iva_soportado2 = registro.field("cuenta_iva_soportado2").value().toString();
+            this->cuenta_iva_soportado3 = registro.field("cuenta_iva_soportado3").value().toString();
+            this->cuenta_iva_soportado4 = registro.field("cuenta_iva_soportado4").value().toString();
+            this->cuenta_iva_repercutido_re1 = registro.field("cuenta_iva_repercutido1_re").value().toString();
+            this->cuenta_iva_repercutido_re2 = registro.field("cuenta_iva_repercutido2_re").value().toString();
+            this->cuenta_iva_repercutido_re3 = registro.field("cuenta_iva_repercutido3_re").value().toString();
+            this->cuenta_iva_repercutido_re4 = registro.field("cuenta_iva_repercutido4_re").value().toString();
+            this->cuenta_iva_soportado_re1 = registro.field("cuenta_iva_soportado1_re").value().toString();
+            this->cuenta_iva_soportado_re2 = registro.field("cuenta_iva_soportado2_re").value().toString();
+            this->cuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
+            this->cuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
         }
 		else 
 		{
@@ -135,51 +135,51 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             QSqlRecord registro = qEmpresa.record();
             this->id = registro.field("id").value().toInt();
             this->id_divisa = registro.field("id_divisa").value().toInt();
-            this->cCodigo = registro.field("codigo").value().toString();
-            this->cNombre = registro.field("nombre").value().toString();
-            this->nDigitosFactura = registro.field("digitosfactura").value().toInt();
-            this->cSerie = registro.field("serie").value().toString();
-            this->cRutaBDSqLite = registro.field("RutaBDSqLite").value().toString();
+            this->codigo = registro.field("codigo").value().toString();
+            this->nombre = registro.field("nombre").value().toString();
+            this->ndigitos_factura = registro.field("digitos_factura").value().toInt();
+            this->serie = registro.field("serie").value().toString();
+            this->ruta_bd_sqlite = registro.field("ruta_bd_sqlite").value().toString();
             this->cHost = registro.field("host").value().toString();
             this->cUser = registro.field("user").value().toString();
             this->cContrasena = registro.field("contrasena").value().toString();
             this->cPuerto = registro.field("puerto").value().toString();
-            this->cNombreBD = registro.field("nombreBD").value().toString();
+            this->nombre_bd = registro.field("nombre_bd").value().toString();
             this->cDriverBD = registro.field("driverBD").value().toString();
 
-            this->cHostMed = registro.field("hostBDMedica").value().toString();
-            this->cUserMed = registro.field("userBDMedica").value().toString();
-            this->cContrasenaMed = registro.field("contrasenaBDMedica").value().toString();
-            this->cPuertoMed = registro.field("puertoBDMedica").value().toString();
-            this->cNombreBDMed = registro.field("nombreBDMedica").value().toString();
-            this->cDriverBDMed = registro.field("driverBDMedica").value().toString();
+            this->cHostMed = registro.field("host_bd_medica").value().toString();
+            this->cUserMed = registro.field("user_bd_medica").value().toString();
+            this->cContrasenaMed = registro.field("contrasena_bd_medica").value().toString();
+            this->cPuertoMed = registro.field("puerto_bd_medica").value().toString();
+            this->nombre_bdMed = registro.field("nombre_bd_medica").value().toString();
+            this->cDriverBDMed = registro.field("driver_bd_medica").value().toString();
 
-            this->cDireccion = registro.field("Direccion").value().toString();
-            this->cCp = registro.field("cp").value().toString();
-            this->cPoblacion = registro.field("poblacion").value().toString();
-            this->cProvincia = registro.field("provincia").value().toString();
-            this->cPais = registro.field("pais").value().toString();
-            this->cTelefono1 = registro.field("telefono1").value().toString();
-            this->cTelefono2 = registro.field("telefono2").value().toString();
-            this->cFax = registro.field("fax").value().toString();
+            this->direccion1 = registro.field("direccion").value().toString();
+            this->cp = registro.field("cp").value().toString();
+            this->poblacion = registro.field("poblacion").value().toString();
+            this->provincia = registro.field("provincia").value().toString();
+            this->pais = registro.field("pais").value().toString();
+            this->telefono1 = registro.field("telefono1").value().toString();
+            this->telefono2 = registro.field("telefono2").value().toString();
+            this->fax = registro.field("fax").value().toString();
             this->cMail = registro.field("mail").value().toString();
-            this->cWeb =registro.field("web").value().toString();
-            this->cCif = registro.field("cif").value().toString();
+            this->web =registro.field("web").value().toString();
+            this->cif = registro.field("cif").value().toString();
             this->cInscripcion = registro.field("inscripcion").value().toString();
-            this->cComentarioAlbaran = registro.field("comentarioalbaran").value().toString();
-            this->cComentarioFactura = registro.field("comentariofactura").value().toString();
-            this->cComentarioTicket = registro.field("comentarioticket").value().toString();
-            this->nEjercicio = registro.field("ejercicio").value().toInt();
-            this->nDigitosCuentas = registro.field("ndigitoscuenta").value().toInt();
-            this->cCuentaClientes = registro.field("codigocuentaclientes").value().toString();
-            this->cCuentaAcreeedores = registro.field("codigocuentaacreedores").value().toString();
-            this->cCuentaProveedores = registro.field("codigocuentaproveedores").value().toString();
-            this->Autocodificar = registro.field("autocodigo").value().toBool();
-            this->Tamanocodigo = registro.field("tamanocodigo").value().toInt();
-            this->cCuentaCobros = registro.field("cCuentaCobros").value().toString();
-            this->cCuentaPagos = registro.field("cCuentaPagos").value().toString();
-            this->cCuenta_venta_mercaderias = registro.field("cuenta_ventas_mercaderias").value().toString();
-            this->cCuenta_venta_servicios = registro.field("cuenta_ventas_servicios").value().toString();
+            this->ccomentario_albaran = registro.field("comentario_albaran").value().toString();
+            this->ccomentario_factura = registro.field("comentario_factura").value().toString();
+            this->ccomentario_ticket = registro.field("comentario_ticket").value().toString();
+            this->ejercicio = registro.field("ejercicio").value().toInt();
+            this->digitos_cuentas = registro.field("digitos_cuenta").value().toInt();
+            this->cuenta_clientes = registro.field("codigo_cuenta_clientes").value().toString();
+            this->cuentaAcreeedores = registro.field("codigo_cuenta_acreedores").value().toString();
+            this->cuenta_proveedores = registro.field("codigo_cuenta_proveedores").value().toString();
+            this->Autocodificar = registro.field("auto_codigo").value().toBool();
+            this->tamano_codigo = registro.field("tamano_codigo").value().toInt();
+            this->cuenta_cobros = registro.field("cuenta_cobros").value().toString();
+            this->cuenta_pagos = registro.field("cuenta_pagos").value().toString();
+            this->cuenta_venta_mercaderias = registro.field("cuenta_ventas_mercaderias").value().toString();
+            this->cuenta_venta_servicios = registro.field("cuenta_ventas_servicios").value().toString();
             this->contabilidad = registro.field("contabilidad").value().toBool();
             this->consultas = registro.field("consultas").value().toInt();
             this->primer_dia_laborable = registro.field("primer_dia_laborable").value().toString();
@@ -187,34 +187,34 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->horario_primer_dia = registro.field("horario_primer_dia").value().toString();
             this->horario_dia_normal = registro.field("horario_dia_normal").value().toString();
             this->horario_ultimo_dia = registro.field("horario_ultimo_dia").value().toString();
-            this->HostBD_contabilidad = registro.field("hostDBConta").value().toString();
-            this->NombreBD_contabilidad = registro.field("nombreDBConta").value().toString();
-            this->UsuarioBD_contabilidad = registro.field("userDBConta").value().toString();
-            this->ContrasenaBD_contabilidad = registro.field("passwordDBConta").value().toString();
-            this->puertoDB_contabilidad = registro.field("puertoDBConta").value().toString();
-            this->RutaBD_Contabilidad_sqlite = registro.field("rutaBDConta").value().toString();
-            this->DriverDB_contabilidad = registro.field("driverBDConta").value().toString();
+            this->HostBD_contabilidad = registro.field("host_db_conta").value().toString();
+            this->nombre_bd_contabilidad = registro.field("nombre_db_conta").value().toString();
+            this->UsuarioBD_contabilidad = registro.field("user_db_conta").value().toString();
+            this->ContrasenaBD_contabilidad = registro.field("password_db_conta").value().toString();
+            this->puertoDB_contabilidad = registro.field("puerto_db_conta").value().toString();
+            this->RutaBD_Contabilidad_sqlite = registro.field("ruta_bd_conta").value().toString();
+            this->driver_db_contabilidad = registro.field("driver_db_conta").value().toString();
             this->ticket_factura = registro.field("ticket_factura").value().toBool();
             this->id_tarifa_predeterminada = registro.field("id_tarifa_predeterminada").value().toInt();
-            this->actualizardivisas = registro.field("actualizardivisas").value().toInt();
+            this->actualizar_divisas = registro.field("actualizar_divisas").value().toInt();
             this->empresa_internacional = registro.field("medica").value().toBool();
             this->empresa_medica = registro.field("internacional").value().toBool();
-            this->cCuenta_iva_repercutido1 = registro.field("cuenta_iva_repercutido1").value().toString();
-            this->cCuenta_iva_repercutido2 = registro.field("cuenta_iva_repercutido2").value().toString();
-            this->cCuenta_iva_repercutido3 = registro.field("cuenta_iva_repercutido3").value().toString();
-            this->cCuenta_iva_repercutido4 = registro.field("cuenta_iva_repercutido4").value().toString();
-            this->cCuenta_iva_soportado1 = registro.field("cuenta_iva_soportado1").value().toString();
-            this->cCuenta_iva_soportado2 = registro.field("cuenta_iva_soportado2").value().toString();
-            this->cCuenta_iva_soportado3 = registro.field("cuenta_iva_soportado3").value().toString();
-            this->cCuenta_iva_soportado4 = registro.field("cuenta_iva_soportado4").value().toString();
-            this->cCuenta_iva_repercutido_re1 = registro.field("cuenta_iva_repercutido1_re").value().toString();
-            this->cCuenta_iva_repercutido_re2 = registro.field("cuenta_iva_repercutido2_re").value().toString();
-            this->cCuenta_iva_repercutido_re3 = registro.field("cuenta_iva_repercutido3_re").value().toString();
-            this->cCuenta_iva_repercutido_re4 = registro.field("cuenta_iva_repercutido4_re").value().toString();
-            this->cCuenta_iva_soportado_re1 = registro.field("cuenta_iva_soportado1_re").value().toString();
-            this->cCuenta_iva_soportado_re2 = registro.field("cuenta_iva_soportado2_re").value().toString();
-            this->cCuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
-            this->cCuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
+            this->cuenta_iva_repercutido1 = registro.field("cuenta_iva_repercutido1").value().toString();
+            this->cuenta_iva_repercutido2 = registro.field("cuenta_iva_repercutido2").value().toString();
+            this->cuenta_iva_repercutido3 = registro.field("cuenta_iva_repercutido3").value().toString();
+            this->cuenta_iva_repercutido4 = registro.field("cuenta_iva_repercutido4").value().toString();
+            this->cuenta_iva_soportado1 = registro.field("cuenta_iva_soportado1").value().toString();
+            this->cuenta_iva_soportado2 = registro.field("cuenta_iva_soportado2").value().toString();
+            this->cuenta_iva_soportado3 = registro.field("cuenta_iva_soportado3").value().toString();
+            this->cuenta_iva_soportado4 = registro.field("cuenta_iva_soportado4").value().toString();
+            this->cuenta_iva_repercutido_re1 = registro.field("cuenta_iva_repercutido1_re").value().toString();
+            this->cuenta_iva_repercutido_re2 = registro.field("cuenta_iva_repercutido2_re").value().toString();
+            this->cuenta_iva_repercutido_re3 = registro.field("cuenta_iva_repercutido3_re").value().toString();
+            this->cuenta_iva_repercutido_re4 = registro.field("cuenta_iva_repercutido4_re").value().toString();
+            this->cuenta_iva_soportado_re1 = registro.field("cuenta_iva_soportado1_re").value().toString();
+            this->cuenta_iva_soportado_re2 = registro.field("cuenta_iva_soportado2_re").value().toString();
+            this->cuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
+            this->cuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
         } else {
             if (nProcede == 1)
                 TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
@@ -230,46 +230,46 @@ void Empresa::Guardar()
     qEmpresa = QSqlQuery(QSqlDatabase::database("Maya"));
     qEmpresa.prepare("update empresas set "
                      "id_divisa =:id_divisa,"
-                     "codigo =:cCodigo,"
-                     "nombre =:cNombre,"
-                     "digitosfactura =:nDigitosFactura,"
-                     "serie =:cSerie,"
-                     "RutaBDSqLite =:cRutaBDSqLite,"
+                     "codigo =:codigo,"
+                     "nombre =:nombre,"
+                     "digitos_factura =:ndigitos_factura,"
+                     "serie =:serie,"
+                     "ruta_bd_sqlite =:ruta_bd_sqlite,"
                      "host =:cHost,"
                      "user =:cUser,"
                      "contrasena =:cContrasena,"
                      "puerto=:cPuerto,"
-                     "nombreBD =:cNombreBD,"
+                     "nombre_bd =:nombre_bd,"
                      "driverBD =:cDriverBD,"
-                     "hostBDMedica =:cHostDBMedica,"
-                     "userBDMedica =:cUserDBMedica,"
-                     "contrasenaBDMedica =:cContrasenaDBMedica,"
-                     "puertoBDMedica=:cPuertoDBMedica,"
-                     "nombreBDMedica=:cNombreBDMedica,"
-                     "driverBDMedica=:cDriverBDMedica,"
-                     "Direccion=:cDireccion,"
-                     "cp=:cCP,"
-                     "poblacion=:cPoblacion,"
-                     "provincia=:cProvincia,"
-                     "pais=:cPais,"
-                     "telefono1=:cTelefono1,"
-                     "telefono2=:cTelefono2,"
-                     "fax=:cFax,"
+                     "host_bd_medica =:cHostDBMedica,"
+                     "user_bd_medica =:cUserDBMedica,"
+                     "contrasena_bd_medica =:cContrasenaDBMedica,"
+                     "puerto_bd_medica=:cPuertoDBMedica,"
+                     "nombre_bd_medica=:nombre_bd_medica,"
+                     "driver_bd_medica=:driver_bd_medica,"
+                     "direccion=:direccion1,"
+                     "cp=:cp,"
+                     "poblacion=:poblacion,"
+                     "provincia=:provincia,"
+                     "pais=:pais,"
+                     "telefono1=:telefono1,"
+                     "telefono2=:telefono2,"
+                     "fax=:fax,"
                      "mail=:cMail,"
-                     "web=:cWeb,"
-                     "cif=:cCif,"
+                     "web=:web,"
+                     "cif=:cif,"
                      "inscripcion =:cInscripcion,"
-                     "comentarioalbaran=:cComentarioAlbaran,"
-                     "comentariofactura=:cComentarioFactura,"
-                     "comentarioticket=:cComentarioTicket,"
+                     "comentario_albaran=:ccomentario_albaran,"
+                     "comentario_factura=:ccomentario_factura,"
+                     "comentario_ticket=:ccomentario_ticket,"
                      "ejercicio=:ejercicio, "
-                     "ndigitoscuenta =:ndigitoscuentas,"
-                     "codigocuentaclientes =:codigocuentaclientes,"
-                     "codigocuentaproveedores =:codigocuentaproveedores,"
-                     "codigocuentaacreedores =:codigocuentaacreedores, "
-                     "autocodigo=:autocodigo,"
-                     "tamanocodigo =:tamanocodigo,"
-                     "cCuentaCobros =:cCuentaCobros,"
+                     "digitos_cuenta =:digitos_cuentas,"
+                     "codigo_cuenta_clientes =:codigo_cuenta_clientes,"
+                     "codigo_cuenta_proveedores =:codigo_cuenta_proveedores,"
+                     "codigo_cuenta_acreedores =:codigo_cuenta_acreedores, "
+                     "auto_codigo=:auto_codigo,"
+                     "tamano_codigo =:tamano_codigo,"
+                     "cuenta_cobros =:cuenta_cobros,"
                      "cuenta_ventas_mercaderias = :cuenta_ventas_mercaderias,"
                      "cuenta_ventas_servicios =:cuenta_ventas_servicios,"
                      "contabilidad =:contabilidad,"
@@ -279,16 +279,16 @@ void Empresa::Guardar()
                      "horario_primer_dia =:horario_primer_dia,"
                      "horario_dia_normal =:horario_dia_normal,"
                      "horario_ultimo_dia =:horario_ultimo_dia,"
-                     "hostDBConta =:hostDBConta,"
-                     "nombreDBConta =:nombreBDConta,"
-                     "userDBConta =:userBDConta,"
-                     "passwordDBConta =:passwordBDConta,"
-                     "puertoDBConta = :puertoDBConta,"
-                     "rutaDBConta =:rutaBDConta,"
-                     "driverDBConta =:driverBDConta,"
+                     "host_db_conta =:host_db_conta,"
+                     "nombre_db_conta =:nombre_bdConta,"
+                     "user_db_conta =:user_bd_conta,"
+                     "password_db_conta =:password_bd_conta,"
+                     "puerto_db_conta = :puerto_db_conta,"
+                     "rutaDBConta =:ruta_bd_conta,"
+                     "driver_db_conta =:driver_db_conta,"
                      "ticket_factura =:ticket_factura,"
                      "id_tarifa_predeterminada =:id_tarifa_predeterminada,"
-                     "actualizardivisas =:actualizardivisas,"
+                     "actualizar_divisas =:actualizar_divisas,"
                      "medica =:medica,"
                      "internacional =:internacional,"
                      "cuenta_iva_repercutido1 = :cuenta_iva_repercutido1,"
@@ -307,53 +307,53 @@ void Empresa::Guardar()
                      "cuenta_iva_soportado2_re =:cuenta_iva_soportado2_re,"
                      "cuenta_iva_soportado3_re =:cuenta_iva_soportado3_re,"
                      "cuenta_iva_soportado4_re =:cuenta_iva_soportado4_re,"
-                     "cCuentaPagos =:cCuentaPagos"
-                     " where id=:nID");
+                     "cuenta_pagos =:cuenta_pagos"
+                     " where id=:nid");
 
     qEmpresa.bindValue(":id_divisa",this->id_divisa);
-    qEmpresa.bindValue(":cCodigo",this->cCodigo);
-    qEmpresa.bindValue(":cNombre",this->cNombre);
-    qEmpresa.bindValue(":nDigitosFactura", this->nDigitosFactura);
-    qEmpresa.bindValue(":cSerie",this->cSerie);
-    qEmpresa.bindValue(":cRutaBDSqLite",this->cRutaBDSqLite);
+    qEmpresa.bindValue(":codigo",this->codigo);
+    qEmpresa.bindValue(":nombre",this->nombre);
+    qEmpresa.bindValue(":ndigitos_factura", this->ndigitos_factura);
+    qEmpresa.bindValue(":serie",this->serie);
+    qEmpresa.bindValue(":ruta_bd_sqlite",this->ruta_bd_sqlite);
     qEmpresa.bindValue(":cHost",this->cHost);
     qEmpresa.bindValue(":cUser",this->cUser);
     qEmpresa.bindValue(":cContrasena",this->cContrasena);
     qEmpresa.bindValue(":cPuerto",this->cPuerto);
-    qEmpresa.bindValue(":cNombreBD",this->cNombreBD);
+    qEmpresa.bindValue(":nombre_bd",this->nombre_bd);
     qEmpresa.bindValue(":cDriverBD", this->cDriverBD);
     qEmpresa.bindValue(":cHostDBMedica",this->cHostMed);
     qEmpresa.bindValue(":cUserDBMedica",this->cUserMed);
     qEmpresa.bindValue(":cContrasenaDBMedica",this->cContrasenaMed);
     qEmpresa.bindValue(":cPuertoDBMedica",this->cPuertoMed);
-    qEmpresa.bindValue(":cNombreBDMedica",this->cNombreBDMed);
-    qEmpresa.bindValue(":cDriverBDMedica",this->cDriverBDMed);
-    qEmpresa.bindValue(":cDireccion",this->cDireccion);
-    qEmpresa.bindValue(":cCP",this->cCp);
-    qEmpresa.bindValue(":cPoblacion",this->cPoblacion);
-    qEmpresa.bindValue(":cProvincia",this->cProvincia);
-    qEmpresa.bindValue(":cPais",this->cPais);
-    qEmpresa.bindValue(":cTelefono1",this->cTelefono1);
-    qEmpresa.bindValue(":cTelefono2",this->cTelefono2);
-    qEmpresa.bindValue(":cFax",this->cFax);
+    qEmpresa.bindValue(":nombre_bd_medica",this->nombre_bdMed);
+    qEmpresa.bindValue(":driver_bd_medica",this->cDriverBDMed);
+    qEmpresa.bindValue(":direccion1",this->direccion1);
+    qEmpresa.bindValue(":cp",this->cp);
+    qEmpresa.bindValue(":poblacion",this->poblacion);
+    qEmpresa.bindValue(":provincia",this->provincia);
+    qEmpresa.bindValue(":pais",this->pais);
+    qEmpresa.bindValue(":telefono1",this->telefono1);
+    qEmpresa.bindValue(":telefono2",this->telefono2);
+    qEmpresa.bindValue(":fax",this->fax);
     qEmpresa.bindValue(":cMail",this->cMail);
-    qEmpresa.bindValue(":cWeb", this->cWeb);
-    qEmpresa.bindValue(":cCif",this->cCif);
+    qEmpresa.bindValue(":web", this->web);
+    qEmpresa.bindValue(":cif",this->cif);
     qEmpresa.bindValue(":cInscripcion", this->cInscripcion);
-    qEmpresa.bindValue(":cComentarioAlbaran",this->cComentarioAlbaran);
-    qEmpresa.bindValue(":cComentarioFactura", this->cComentarioFactura);
-    qEmpresa.bindValue(":cComentarioTicket",this->cComentarioTicket);
-    qEmpresa.bindValue(":ejercicio",this->nEjercicio);
-    qEmpresa.bindValue(":ndigitoscuentas",this->nDigitosCuentas);
-    qEmpresa.bindValue(":codigocuentaclientes", this->cCuentaClientes);
-    qEmpresa.bindValue(":codigocuentaproveedores", this->cCuentaProveedores);
-    qEmpresa.bindValue(":codigocuentaacreedores", this->cCuentaAcreeedores);
-    qEmpresa.bindValue(":cuenta_ventas_mercaderias",this->cCuenta_venta_mercaderias);
-    qEmpresa.bindValue(":cuenta_ventas_servicios",this->cCuenta_venta_servicios);
-    qEmpresa.bindValue(":autocodigo",this->Autocodificar);
-    qEmpresa.bindValue(":tamanocodigo",this->Tamanocodigo);
-    qEmpresa.bindValue(":cCuentaCobros",this->cCuentaCobros);
-    qEmpresa.bindValue(":cCuentaPagos",this->cCuentaPagos);
+    qEmpresa.bindValue(":ccomentario_albaran",this->ccomentario_albaran);
+    qEmpresa.bindValue(":ccomentario_factura", this->ccomentario_factura);
+    qEmpresa.bindValue(":ccomentario_ticket",this->ccomentario_ticket);
+    qEmpresa.bindValue(":ejercicio",this->ejercicio);
+    qEmpresa.bindValue(":digitos_cuentas",this->digitos_cuentas);
+    qEmpresa.bindValue(":codigo_cuenta_clientes", this->cuenta_clientes);
+    qEmpresa.bindValue(":codigo_cuenta_proveedores", this->cuenta_proveedores);
+    qEmpresa.bindValue(":codigo_cuenta_acreedores", this->cuentaAcreeedores);
+    qEmpresa.bindValue(":cuenta_ventas_mercaderias",this->cuenta_venta_mercaderias);
+    qEmpresa.bindValue(":cuenta_ventas_servicios",this->cuenta_venta_servicios);
+    qEmpresa.bindValue(":auto_codigo",this->Autocodificar);
+    qEmpresa.bindValue(":tamano_codigo",this->tamano_codigo);
+    qEmpresa.bindValue(":cuenta_cobros",this->cuenta_cobros);
+    qEmpresa.bindValue(":cuenta_pagos",this->cuenta_pagos);
     qEmpresa.bindValue(":contabilidad",this->contabilidad);
     qEmpresa.bindValue(":consultas",this->consultas);
     qEmpresa.bindValue(":primer_dia_laborable",this->primer_dia_laborable);
@@ -361,36 +361,36 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":horario_primer_dia",this->horario_primer_dia);
     qEmpresa.bindValue(":horario_dia_normal",this->horario_dia_normal);
     qEmpresa.bindValue(":horario_ultimo_dia",this->horario_ultimo_dia);
-    qEmpresa.bindValue(":hostDBConta",this->HostBD_contabilidad);
-    qEmpresa.bindValue(":nombreBDConta",this->NombreBD_contabilidad);
-    qEmpresa.bindValue(":userBDConta",this->UsuarioBD_contabilidad);
-    qEmpresa.bindValue(":passwordBDConta",this->ContrasenaBD_contabilidad);
-    qEmpresa.bindValue(":puertoDBConta",this->puertoDB_contabilidad);
-    qEmpresa.bindValue(":rutaBDConta",this->RutaBD_Contabilidad_sqlite);
-    qEmpresa.bindValue(":driverBDConta",this->DriverDB_contabilidad);
+    qEmpresa.bindValue(":host_db_conta",this->HostBD_contabilidad);
+    qEmpresa.bindValue(":nombre_bdConta",this->nombre_bd_contabilidad);
+    qEmpresa.bindValue(":user_bd_conta",this->UsuarioBD_contabilidad);
+    qEmpresa.bindValue(":password_bd_conta",this->ContrasenaBD_contabilidad);
+    qEmpresa.bindValue(":puerto_db_conta",this->puertoDB_contabilidad);
+    qEmpresa.bindValue(":ruta_bd_conta",this->RutaBD_Contabilidad_sqlite);
+    qEmpresa.bindValue(":driver_db_conta",this->driver_db_contabilidad);
     qEmpresa.bindValue(":ticket_factura",this->ticket_factura);
     qEmpresa.bindValue(":id_tarifa_predeterminada",this->id_tarifa_predeterminada);
-    qEmpresa.bindValue(":actualizardivisas",this->actualizardivisas);
+    qEmpresa.bindValue(":actualizar_divisas",this->actualizar_divisas);
     qEmpresa.bindValue(":medica",this->empresa_medica);
     qEmpresa.bindValue(":internacional",this->empresa_internacional);
-    qEmpresa.bindValue(":cuenta_iva_repercutido1",this->cCuenta_iva_repercutido1);
-    qEmpresa.bindValue(":cuenta_iva_repercutido2",this->cCuenta_iva_repercutido2);
-    qEmpresa.bindValue(":cuenta_iva_repercutido3",this->cCuenta_iva_repercutido3);
-    qEmpresa.bindValue(":cuenta_iva_repercutido4",this->cCuenta_iva_repercutido4);
-    qEmpresa.bindValue(":cuenta_iva_soportado1",this->cCuenta_iva_soportado1);
-    qEmpresa.bindValue(":cuenta_iva_soportado2",this->cCuenta_iva_soportado2);
-    qEmpresa.bindValue(":cuenta_iva_soportado3",this->cCuenta_iva_soportado3);
-    qEmpresa.bindValue(":cuenta_iva_soportado4",this->cCuenta_iva_soportado4);
-    qEmpresa.bindValue(":cuenta_iva_repercutido1_re",this->cCuenta_iva_repercutido_re1);
-    qEmpresa.bindValue(":cuenta_iva_repercutido2_re",this->cCuenta_iva_repercutido_re2);
-    qEmpresa.bindValue(":cuenta_iva_repercutido3_re",this->cCuenta_iva_repercutido_re3);
-    qEmpresa.bindValue(":cuenta_iva_repercutido4_re",this->cCuenta_iva_repercutido_re4);
-    qEmpresa.bindValue(":cuenta_iva_soportado1_re",this->cCuenta_iva_soportado_re1);
-    qEmpresa.bindValue(":cuenta_iva_soportado2_re",this->cCuenta_iva_soportado_re2);
-    qEmpresa.bindValue(":cuenta_iva_soportado3_re",this->cCuenta_iva_soportado_re3);
-    qEmpresa.bindValue(":cuenta_iva_soportado4_re",this->cCuenta_iva_soportado_re4);
+    qEmpresa.bindValue(":cuenta_iva_repercutido1",this->cuenta_iva_repercutido1);
+    qEmpresa.bindValue(":cuenta_iva_repercutido2",this->cuenta_iva_repercutido2);
+    qEmpresa.bindValue(":cuenta_iva_repercutido3",this->cuenta_iva_repercutido3);
+    qEmpresa.bindValue(":cuenta_iva_repercutido4",this->cuenta_iva_repercutido4);
+    qEmpresa.bindValue(":cuenta_iva_soportado1",this->cuenta_iva_soportado1);
+    qEmpresa.bindValue(":cuenta_iva_soportado2",this->cuenta_iva_soportado2);
+    qEmpresa.bindValue(":cuenta_iva_soportado3",this->cuenta_iva_soportado3);
+    qEmpresa.bindValue(":cuenta_iva_soportado4",this->cuenta_iva_soportado4);
+    qEmpresa.bindValue(":cuenta_iva_repercutido1_re",this->cuenta_iva_repercutido_re1);
+    qEmpresa.bindValue(":cuenta_iva_repercutido2_re",this->cuenta_iva_repercutido_re2);
+    qEmpresa.bindValue(":cuenta_iva_repercutido3_re",this->cuenta_iva_repercutido_re3);
+    qEmpresa.bindValue(":cuenta_iva_repercutido4_re",this->cuenta_iva_repercutido_re4);
+    qEmpresa.bindValue(":cuenta_iva_soportado1_re",this->cuenta_iva_soportado_re1);
+    qEmpresa.bindValue(":cuenta_iva_soportado2_re",this->cuenta_iva_soportado_re2);
+    qEmpresa.bindValue(":cuenta_iva_soportado3_re",this->cuenta_iva_soportado_re3);
+    qEmpresa.bindValue(":cuenta_iva_soportado4_re",this->cuenta_iva_soportado_re4);
 
-    qEmpresa.bindValue(":nID",this->id);
+    qEmpresa.bindValue(":nid",this->id);
 
 
     if (!qEmpresa.exec())
@@ -399,7 +399,7 @@ void Empresa::Guardar()
     else {
         QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión de Empresas")
                                  ,QObject::tr("La ficha de la empresa ha sido modificada\n"
-                                              "ADMINISTRADOR: Verifique funcionamiento correcto\n"
+                                              "ADMINISTRADOR: Verifique funcionamiento corecto\n"
                                               "antes de dar acceso a usuarios"),
                                  QObject::tr("OK"));
     }
@@ -410,43 +410,43 @@ void Empresa::Guardar()
 void Empresa::Vaciar()
 {
     this->id_divisa = 0;
-    this->cCodigo = "";
-    this->cNombre = "";
-    this->nDigitosFactura = 0;
-    this->cSerie = "";
-    this->cRutaBDSqLite = "";
+    this->codigo = "";
+    this->nombre = "";
+    this->ndigitos_factura = 0;
+    this->serie = "";
+    this->ruta_bd_sqlite = "";
     this->cHost = "";
     this->cUser = "";
     this->cContrasena = "";
     this->cPuerto = "";
-    this->cNombreBD = "";
+    this->nombre_bd = "";
     this->cDriverBD = "";
     this->cCodEmpresa = "";
-    this->cComentarioAlbaran = "";
-    this->cComentarioFactura = "";
-    this->cComentarioTicket = "";
-    this->cCp = "";
-    this->cDireccion = "";
-    this->cPoblacion = "";
-    this->cFax = "";
+    this->ccomentario_albaran = "";
+    this->ccomentario_factura = "";
+    this->ccomentario_ticket = "";
+    this->cp = "";
+    this->direccion1 = "";
+    this->poblacion = "";
+    this->fax = "";
     this->cInscripcion = "";
     this->cMail = "";
-    this->cPais = "";
-    this->cTelefono1 = "";
-    this->cTelefono2 = "";
-    this->cWeb  = "";
-    this->cCif = "";
-    this->nEjercicio = 2000;
-    this->nDigitosCuentas = 0;
-    this->cCuentaAcreeedores = "410";
-    this->cCuentaClientes = "430";
-    this->cCuentaProveedores= "400";
-    this->cCuenta_venta_mercaderias = "700";
-    this->cCuenta_venta_servicios = "";
+    this->pais = "";
+    this->telefono1 = "";
+    this->telefono2 = "";
+    this->web  = "";
+    this->cif = "";
+    this->ejercicio = 2000;
+    this->digitos_cuentas = 0;
+    this->cuentaAcreeedores = "410";
+    this->cuenta_clientes = "430";
+    this->cuenta_proveedores= "400";
+    this->cuenta_venta_mercaderias = "700";
+    this->cuenta_venta_servicios = "";
     this->Autocodificar = true;
-    this->Tamanocodigo = 13;
-    this->cCuentaCobros = "";
-    this->cCuentaPagos = "";
+    this->tamano_codigo = 13;
+    this->cuenta_cobros = "";
+    this->cuenta_pagos = "";
     this->contabilidad = false;
     this->consultas = 1;
     this->primer_dia_laborable = "";
@@ -455,33 +455,33 @@ void Empresa::Vaciar()
     this->horario_primer_dia = "";
     this->horario_ultimo_dia = "";
     this->HostBD_contabilidad = "";
-    this->NombreBD_contabilidad = "";
+    this->nombre_bd_contabilidad = "";
     this->ContrasenaBD_contabilidad = "";
     this->puertoDB_contabilidad = "";
     this->RutaBD_Contabilidad_sqlite = "";
-    this->DriverDB_contabilidad = "";
+    this->driver_db_contabilidad = "";
     this->ticket_factura = false;
     this->id_tarifa_predeterminada = 0;
-    this->actualizardivisas = false;
-    this->cCuenta_iva_repercutido1 = "";
-    this->cCuenta_iva_repercutido2 = "";
-    this->cCuenta_iva_repercutido3 = "";
-    this->cCuenta_iva_repercutido4 = "";
-    this->cCuenta_iva_soportado1 = "";
-    this->cCuenta_iva_soportado2 = "";
-    this->cCuenta_iva_soportado3 = "";
-    this->cCuenta_iva_soportado4 = "";
-    this->cCuenta_iva_repercutido_re1 = "";
-    this->cCuenta_iva_repercutido_re2 = "";
-    this->cCuenta_iva_repercutido_re3 = "";
-    this->cCuenta_iva_repercutido_re4 = "";
-    this->cCuenta_iva_soportado_re1 = "";
-    this->cCuenta_iva_soportado_re2 = "";
-    this->cCuenta_iva_soportado_re3 = "";
-    this->cCuenta_iva_soportado_re4 = "";
+    this->actualizar_divisas = false;
+    this->cuenta_iva_repercutido1 = "";
+    this->cuenta_iva_repercutido2 = "";
+    this->cuenta_iva_repercutido3 = "";
+    this->cuenta_iva_repercutido4 = "";
+    this->cuenta_iva_soportado1 = "";
+    this->cuenta_iva_soportado2 = "";
+    this->cuenta_iva_soportado3 = "";
+    this->cuenta_iva_soportado4 = "";
+    this->cuenta_iva_repercutido_re1 = "";
+    this->cuenta_iva_repercutido_re2 = "";
+    this->cuenta_iva_repercutido_re3 = "";
+    this->cuenta_iva_repercutido_re4 = "";
+    this->cuenta_iva_soportado_re1 = "";
+    this->cuenta_iva_soportado_re2 = "";
+    this->cuenta_iva_soportado_re3 = "";
+    this->cuenta_iva_soportado_re4 = "";
 }
 
-bool Empresa::Borrar(int nId)
+bool Empresa::Borrar(int nid)
 {
     qEmpresa = QSqlQuery(QSqlDatabase::database("Maya"));
     //    frmDecision *Decision = new frmDecision();
@@ -489,8 +489,8 @@ bool Empresa::Borrar(int nId)
     //                          QObject::tr("Se borrarán todos los datos de la empresa"),QObject::tr("Borrar"),QObject::tr("Cancelar"));
     //    int elegido = Decision->exec();
     //   if(elegido == 1) {
-    qEmpresa.prepare("Delete from empresas where id = "+QString::number(nId));
-    //qEmpresa.bindValue(":id",nId);
+    qEmpresa.prepare("Delete from empresas where id = "+QString::number(nid));
+    //qEmpresa.bindValue(":id",nid);
     if(!qEmpresa.exec())
     {
         qDebug() << qEmpresa.lastQuery();
@@ -501,8 +501,8 @@ bool Empresa::Borrar(int nId)
     else
     {
         // Busco el id más proximo
-        qEmpresa.prepare("select * from articulos where id <:nId");
-        qEmpresa.bindValue(":nId",this->id);
+        qEmpresa.prepare("select * from articulos where id <:nid");
+        qEmpresa.bindValue(":nid",this->id);
         qEmpresa.exec();
         QSqlRecord registro = qEmpresa.record();
         this->id = registro.field("id").value().toInt();
@@ -517,29 +517,29 @@ int Empresa::getid()
     return this->id;
 }
 
-QString Empresa::getcCodigo()
+QString Empresa::getcodigo()
 {
-    return this->cCodigo;
+    return this->codigo;
 }
 
-QString Empresa::getcNombre()
+QString Empresa::getnombre()
 {
-    return this->cNombre;
+    return this->nombre;
 }
 
-int Empresa::getnDigitosFactura()
+int Empresa::getndigitos_factura()
 {
-    return this->nDigitosFactura;
+    return this->ndigitos_factura;
 }
 
-QString Empresa::getcSerie()
+QString Empresa::getserie()
 {
-    return this->cSerie;
+    return this->serie;
 }
 
-QString Empresa::getcRutaBDSqLite()
+QString Empresa::getruta_bd_sqlite()
 {
-    return this->cRutaBDSqLite;
+    return this->ruta_bd_sqlite;
 }
 
 QString Empresa::getcHost()
@@ -557,9 +557,9 @@ QString Empresa::getcContrasena()
     return this->cContrasena;
 }
 
-QString Empresa::getcNombreBD()
+QString Empresa::getnombre_bd()
 {
-    return this->cNombreBD;
+    return this->nombre_bd;
 }
 
 QString Empresa::getcPuerto()
@@ -572,9 +572,9 @@ QString Empresa::getcDriverBD()
     return this->cDriverBD;
 }
 
-QString Empresa::getcRutaBDSqLiteMed()
+QString Empresa::getruta_bd_sqliteMed()
 {
-    return this->cRutaBDSqLiteMed;
+    return this->ruta_bd_sqliteMed;
 }
 
 QString Empresa::getcHostMed()
@@ -592,9 +592,9 @@ QString Empresa::getcContrasenaMed()
     return this->cContrasenaMed;
 }
 
-QString Empresa::getcNombreBDMed()
+QString Empresa::getnombre_bdMed()
 {
-    return this->cNombreBDMed;
+    return this->nombre_bdMed;
 }
 
 QString Empresa::getcPuertoMed()
@@ -607,44 +607,44 @@ QString Empresa::getcDriverBDMed()
     return this->cDriverBDMed;
 }
 
-QString Empresa::getcDireccion()
+QString Empresa::getdireccion1()
 {
-    return this->cDireccion;
+    return this->direccion1;
 }
 
-QString Empresa::getcCp()
+QString Empresa::getcp()
 {
-    return this->cCp;
+    return this->cp;
 }
 
-QString Empresa::getcPoblacion()
+QString Empresa::getpoblacion()
 {
-    return this->cPoblacion;
+    return this->poblacion;
 }
 
-QString Empresa::getcProvincia()
+QString Empresa::getprovincia()
 {
-    return this->cProvincia;
+    return this->provincia;
 }
 
-QString Empresa::getcPais()
+QString Empresa::getpais()
 {
-    return this->cPais;
+    return this->pais;
 }
 
-QString Empresa::getcTelefono1()
+QString Empresa::gettelefono1()
 {
-    return this->cTelefono1;
+    return this->telefono1;
 }
 
-QString Empresa::getcTelefono2()
+QString Empresa::gettelefono2()
 {
-    return this->cTelefono2;
+    return this->telefono2;
 }
 
-QString Empresa::getcFax()
+QString Empresa::getfax()
 {
-    return this->cFax;
+    return this->fax;
 }
 
 QString Empresa::getcMail()
@@ -652,19 +652,19 @@ QString Empresa::getcMail()
     return this->cMail;
 }
 
-QString Empresa::getcWeb()
+QString Empresa::getweb()
 {
-    return this->cWeb;
+    return this->web;
 }
 
-int Empresa::getnEjercicio()
+int Empresa::getejercicio()
 {
-    return this->nEjercicio;
+    return this->ejercicio;
 }
 
-QString Empresa::getcCif()
+QString Empresa::getcif()
 {
-    return this->cCif;
+    return this->cif;
 }
 
 QString Empresa::getcInscripcion()
@@ -672,39 +672,39 @@ QString Empresa::getcInscripcion()
     return this->cInscripcion;
 }
 
-QString Empresa::getcComentarioFactura()
+QString Empresa::getccomentario_factura()
 {
-    return this->cComentarioFactura;
+    return this->ccomentario_factura;
 }
 
-QString Empresa::getcComentarioAlbaran()
+QString Empresa::getccomentario_albaran()
 {
-    return this->cComentarioAlbaran;
+    return this->ccomentario_albaran;
 }
 
-QString Empresa::getcComentarioTicket()
+QString Empresa::getccomentario_ticket()
 {
-    return this->cComentarioTicket;
+    return this->ccomentario_ticket;
 }
 
-int Empresa::getnDigitosCuentas()
+int Empresa::getdigitos_cuentas()
 {
-    return this->nDigitosCuentas;
+    return this->digitos_cuentas;
 }
 
-QString Empresa::getcCuentaClientes()
+QString Empresa::getcuenta_clientes()
 {
-    return this->cCuentaClientes;
+    return this->cuenta_clientes;
 }
 
-QString Empresa::getcCuentaProveedores()
+QString Empresa::getcuenta_proveedores()
 {
-    return this->cCuentaProveedores;
+    return this->cuenta_proveedores;
 }
 
-QString Empresa::getcCuentaAcreedores()
+QString Empresa::getcuenta_acreedores()
 {
-    return this->cCuentaAcreeedores;
+    return this->cuentaAcreeedores;
 }
 
 
@@ -713,29 +713,29 @@ void Empresa::setid(int id)
     this->id = id;
 }
 
-void Empresa::setcCodigo(QString cCodigo)
+void Empresa::setcodigo(QString codigo)
 {
-    this->cCodigo = cCodigo;
+    this->codigo = codigo;
 }
 
-void Empresa::setcNombre(QString cNombre)
+void Empresa::setnombre(QString nombre)
 {
-    this->cNombre = cNombre;
+    this->nombre = nombre;
 }
 
-void Empresa::setnDigitosFactura(int nDigitosFactura)
+void Empresa::setndigitos_factura(int ndigitos_factura)
 {
-    this->nDigitosFactura = nDigitosFactura;
+    this->ndigitos_factura = ndigitos_factura;
 }
 
-void Empresa::setcSerie(QString cSerie)
+void Empresa::setserie(QString serie)
 {
-    this->cSerie = cSerie;
+    this->serie = serie;
 }
 
-void Empresa::setcRutaBDSqLite(QString cRutaBDSqLite)
+void Empresa::setruta_bd_sqlite(QString ruta_bd_sqlite)
 {
-    this->cRutaBDSqLite = cRutaBDSqLite;
+    this->ruta_bd_sqlite = ruta_bd_sqlite;
 }
 
 void Empresa::setcHost(QString cHost)
@@ -753,9 +753,9 @@ void Empresa::setcContrasena(QString cContrasena)
     this->cContrasena = cContrasena;
 }
 
-void Empresa::setcNombreBD(QString cNombreBD)
+void Empresa::setnombre_bd(QString nombre_bd)
 {
-    this->cNombreBD = cNombreBD;
+    this->nombre_bd = nombre_bd;
 }
 
 void Empresa::setcPuerto(QString cPuerto)
@@ -768,9 +768,9 @@ void Empresa::setcDriverBD(QString cDriverBD)
     this->cDriverBD = cDriverBD;
 }
 
-void Empresa::setcRutaBDSqLiteMed(QString cRutaBDSqLiteMed)
+void Empresa::setruta_bd_sqliteMed(QString ruta_bd_sqliteMed)
 {
-    this->cRutaBDSqLiteMed = cRutaBDSqLiteMed;
+    this->ruta_bd_sqliteMed = ruta_bd_sqliteMed;
 }
 
 void Empresa::setcHostMed(QString cHostMed)
@@ -788,9 +788,9 @@ void Empresa::setcContrasenaMed(QString cContrasenaMed)
     this->cContrasenaMed = cContrasenaMed;
 }
 
-void Empresa::setcNombreBDMed(QString cNombreBDMed)
+void Empresa::setnombre_bdMed(QString nombre_bdMed)
 {
-    this->cNombreBDMed = cNombreBDMed;
+    this->nombre_bdMed = nombre_bdMed;
 }
 
 void Empresa::setcPuertoMed(QString cPuertoMed)
@@ -803,44 +803,44 @@ void Empresa::setcDriverBDMed(QString cDriverBDMed)
     this->cDriverBDMed = cDriverBDMed;
 }
 
-void Empresa::setcDireccion(QString cDireccion)
+void Empresa::setdireccion1(QString direccion1)
 {
-    this->cDireccion = cDireccion;
+    this->direccion1 = direccion1;
 }
 
-void Empresa::setcCP(QString cCp)
+void Empresa::setcp(QString cp)
 {
-    this->cCp = cCp;
+    this->cp = cp;
 }
 
-void Empresa::setcPoblacion(QString cPoblacion)
+void Empresa::setpoblacion(QString poblacion)
 {
-    this->cPoblacion = cPoblacion;
+    this->poblacion = poblacion;
 }
 
-void Empresa::setcProvincia(QString cProvincia)
+void Empresa::setprovincia(QString provincia)
 {
-    this->cProvincia = cProvincia;
+    this->provincia = provincia;
 }
 
-void Empresa::setcPais(QString cPais)
+void Empresa::setpais(QString pais)
 {
-    this->cPais;
+    this->pais;
 }
 
-void Empresa::setcTelefono1(QString cTelefono1)
+void Empresa::settelefono1(QString telefono1)
 {
-    this->cTelefono1 = cTelefono1;
+    this->telefono1 = telefono1;
 }
 
-void Empresa::setcTelefono2(QString cTelefono2)
+void Empresa::settelefono2(QString telefono2)
 {
-    this->cTelefono2 = cTelefono2;
+    this->telefono2 = telefono2;
 }
 
-void Empresa::setcFax(QString cFax)
+void Empresa::setfax(QString fax)
 {
-    this->cFax = cFax;
+    this->fax = fax;
 }
 
 void Empresa::setcMail(QString cMail)
@@ -848,19 +848,19 @@ void Empresa::setcMail(QString cMail)
     this->cMail = cMail;
 }
 
-void Empresa::setcWeb(QString cWeb)
+void Empresa::setweb(QString web)
 {
-    this->cWeb = cWeb;
+    this->web = web;
 }
 
-void Empresa::setcCif(QString cCif)
+void Empresa::setcif(QString cif)
 {
-    this->cCif = cCif;
+    this->cif = cif;
 }
 
-void Empresa::setnEjercicio(int nEjercicio)
+void Empresa::setejercicio(int ejercicio)
 {
-    this->nEjercicio = nEjercicio;
+    this->ejercicio = ejercicio;
 
 }
 
@@ -869,39 +869,39 @@ void Empresa::setcInscripcion(QString cInscripcion)
     this->cInscripcion = cInscripcion;
 }
 
-void Empresa::setcComentarioFactura(QString cComentarioFactura)
+void Empresa::setccomentario_factura(QString ccomentario_factura)
 {
-    this->cComentarioFactura = cComentarioFactura;
+    this->ccomentario_factura = ccomentario_factura;
 }
 
-void Empresa::setcComemtarioAlbaran(QString cComentarioAlbaran)
+void Empresa::setcComemtarioAlbaran(QString ccomentario_albaran)
 {
-    this->cComentarioAlbaran = cComentarioAlbaran;
+    this->ccomentario_albaran = ccomentario_albaran;
 }
 
-void Empresa::setcComentarioTicket(QString cComentarioTicket)
+void Empresa::setccomentario_ticket(QString ccomentario_ticket)
 {
-    this->cComentarioTicket = cComentarioTicket;
+    this->ccomentario_ticket = ccomentario_ticket;
 }
 
-void Empresa::setnDigitosCuentas(int nDigitosCuentas)
+void Empresa::setdigitos_cuentas(int digitos_cuentas)
 {
-    this->nDigitosCuentas = nDigitosCuentas;
+    this->digitos_cuentas = digitos_cuentas;
 }
 
-void Empresa::setcCodigoCuentaClientes(QString cCuentaClientes)
+void Empresa::setcodigo_cuenta_clientes(QString cuenta_clientes)
 {
-    this->cCuentaClientes = cCuentaClientes;
+    this->cuenta_clientes = cuenta_clientes;
 }
 
-void Empresa::setcCodigoCuentaProveedor(QString cCuentaProveedores)
+void Empresa::setcodigoCuentaProveedor(QString cuenta_proveedores)
 {
-    this->cCuentaProveedores = cCuentaProveedores;
+    this->cuenta_proveedores = cuenta_proveedores;
 }
 
-void Empresa::setcCodigoCuentaAcreedores(QString cCuentaAcreeedores)
+void Empresa::setcodigo_cuenta_acreedores(QString cuentaAcreeedores)
 {
-    this->cCuentaAcreeedores = cCuentaAcreeedores;
+    this->cuentaAcreeedores = cuentaAcreeedores;
 }
 
 

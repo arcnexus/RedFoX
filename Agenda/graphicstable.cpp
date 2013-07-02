@@ -24,13 +24,13 @@ void GraphicsTable::setSize(qreal w, qreal h)
     checkCollisions();
 }
 
-void GraphicsTable::appendEvento(int id ,QDateTime start, QDateTime end, QColor color,QString titulo, QString asunto ,int id_cliente , bool isCita , bool isPrivado)
+void GraphicsTable::appendEvento(int id ,QDateTime start, QDateTime end, QColor color,QString titulo, QString asunto ,int id_cliente , bool isCita , bool isprivado)
 {
     GraphicsEvent * evento = new GraphicsEvent(this);
 
     evento->id = id;
 
-    evento->isPrivado = isPrivado;
+    evento->isprivado = isprivado;
 
     evento->id_cliente = id_cliente;
 
@@ -69,26 +69,26 @@ void GraphicsTable::appendEvento(int id ,QDateTime start, QDateTime end, QColor 
     checkCollisions();
 }
 
-void GraphicsTable::addEvento(QColor color, QDateTime start, QDateTime end ,QString titulo, QString asunto, bool isCita , int id_cliente , bool isPrivado)
+void GraphicsTable::addEvento(QColor color, QDateTime start, QDateTime end ,QString titulo, QString asunto, bool isCita , int id_cliente , bool isprivado)
 {
     QSqlQuery q(QSqlDatabase::database("Maya"));
     q.prepare("INSERT INTO agenda"
-              "(dFecha, cHora, id_Usuario, cInicio, cFin, cAsunto,"
-              "cDescripcionAsunto, cEstado, cAvisarTiempo, cImportancia, color,"
-              "id_especialidad, id_departamento, isMedica, Id_Cliente, isCita , isPrivado)"
+              "(fecha, hora, id_Usuario, cInicio, cFin, cAsunto,"
+              "descripcionAsunto, cEstado, cAvisarTiempo, cImportancia, color,"
+              "id_especialidad, id_departamento, isMedica, id_cliente, isCita , isprivado)"
               "VALUES "
-              "(:dFecha, :cHora, :id_Usuario, :cInicio, :cFin, :cAsunto,"
-              ":cDescripcionAsunto, :cEstado, :cAvisarTiempo, :cImportancia, :color,"
-              ":id_especialidad, :id_departamento, :isMedica, :Id_Cliente, :isCita , :isPrivado)");
+              "(:fecha, :hora, :id_Usuario, :cInicio, :cFin, :cAsunto,"
+              ":descripcionAsunto, :cEstado, :cAvisarTiempo, :cImportancia, :color,"
+              ":id_especialidad, :id_departamento, :isMedica, :id_cliente, :isCita , :isprivado)");
 
     QString sColor = QString("%1;%2;%3").arg(color.red()).arg(color.green()).arg(color.blue());
-    q.bindValue(":dFecha",m_date);
-    q.bindValue(":cHora",0);
+    q.bindValue(":fecha",m_date);
+    q.bindValue(":hora",0);
     q.bindValue(":id_Usuario",m_user);
     q.bindValue(":cInicio",start);
     q.bindValue(":cFin",end);
     q.bindValue(":cAsunto",titulo);
-    q.bindValue(":cDescripcionAsunto",asunto);
+    q.bindValue(":descripcionAsunto",asunto);
     q.bindValue(":cEstado",0);
     q.bindValue(":cAvisarTiempo",0);
     q.bindValue(":cImportancia",0);
@@ -96,14 +96,14 @@ void GraphicsTable::addEvento(QColor color, QDateTime start, QDateTime end ,QStr
     q.bindValue(":id_especialidad",0);//FIXME - Agenda: parametros evento
     q.bindValue(":id_departamento",0);
     q.bindValue(":isMedica",Configuracion_global->medic);
-    q.bindValue(":Id_Cliente",id_cliente);
+    q.bindValue(":id_cliente",id_cliente);
     q.bindValue(":isCita",isCita);
-    q.bindValue(":isPrivado",isPrivado);
+    q.bindValue(":isprivado",isprivado);
 
     int id = 0;
     if(q.exec())
         id = q.lastInsertId().toInt();
-    appendEvento(id , start, end, color,titulo, asunto , id_cliente, isCita, isPrivado );
+    appendEvento(id , start, end, color,titulo, asunto , id_cliente, isCita, isprivado );
 }
 
 qreal GraphicsTable::timeToPos( int hour , int minute)
@@ -124,7 +124,7 @@ void GraphicsTable::UpdateEventos()
 
     QSqlQuery q(QSqlDatabase::database("Maya"));
     QString fecha = m_date.toString("yyyy-MM-dd");
-    QString sql = QString("SELECT * FROM agenda where dFecha = '%1' and id_Usuario = %2")
+    QString sql = QString("SELECT * FROM agenda where fecha = '%1' and id_Usuario = %2")
             .arg(fecha).arg(m_user);
     q.prepare(sql);
     if(q.exec())
@@ -176,7 +176,7 @@ void GraphicsTable::eventClosing()
         eventos.remove(eventos.indexOf(e));
         int id = e->id;
         QSqlQuery q(QSqlDatabase::database("Maya"));
-        QString sql = QString("DELETE FROM agenda WHERE Id = %1").arg(id);
+        QString sql = QString("DELETE FROM agenda WHERE id = %1").arg(id);
         if(!q.exec(sql))
             qDebug() << q.lastError();
         e->deleteLater();
@@ -250,10 +250,10 @@ void GraphicsTable::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void GraphicsTable::showEvento(QSqlRecord r)
 {
-    int id = r.value("Id").toInt();
+    int id = r.value("id").toInt();
 
     bool isCita = r.value("isCita").toBool();
-    int id_cliente = r.value("Id_Cliente").toInt();
+    int id_cliente = r.value("id_cliente").toInt();
     QDateTime start = r.value("cInicio").toDateTime();
     QDateTime end = r.value("cFin").toDateTime();
     QString auxColor = r.value("color").toString();
@@ -269,8 +269,8 @@ void GraphicsTable::showEvento(QSqlRecord r)
     }
     QColor color = QColor::fromRgb(red,green,blue);
     QString titulo = r.value("cAsunto").toString();
-    QString asunto = r.value("cDescripcionAsunto").toString();
-    bool priv = r.value("isPrivado").toBool();
+    QString asunto = r.value("descripcionAsunto").toString();
+    bool priv = r.value("isprivado").toBool();
     appendEvento(id,start,end,color,titulo,asunto,id_cliente,isCita,priv);
 }
 

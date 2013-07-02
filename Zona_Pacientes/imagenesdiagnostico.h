@@ -10,12 +10,12 @@ class ImagenesDiagnostico : public QObject
 
 public:
     int id;
-    int idEpisodio;
+    int id_episodio;
     QString Descripcion;
-    QDate FechaImagen;
-    int idTipoImagen;
+    QDate fecha_imagen;
+    int id_tipo_imagen;
     QString Comentarios;
-    QString LocalizacionImagen;
+    QString localizacion_imagen;
     int Evaluada;
 
 public:
@@ -26,7 +26,7 @@ public slots:
     void llenarObjetoconDatosDB();
     void llenarObjetoconDatosDB(int nid);
     void BorrarImagen(int nid);
-    int DevolverId_tipo_imagen(QString TipoImagen);
+    int Devolverid_tipo_imagen(QString tipo_imagen);
     QString DevolverTexto_tipo_imagen(int id);
 
 private slots:

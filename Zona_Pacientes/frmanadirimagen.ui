@@ -80,7 +80,7 @@
     </widget>
    </item>
    <item row="2" column="1" colspan="2">
-    <widget class="QComboBox" name="comboBox_TipoImagen"/>
+    <widget class="QComboBox" name="comboBox_tipo_imagen"/>
    </item>
    <item row="5" column="5">
     <widget class="QPushButton" name="pushButton__Anadir">
@@ -127,7 +127,7 @@
     <widget class="QTextEdit" name="textEdit_ComentariosImagen"/>
    </item>
    <item row="1" column="2">
-    <widget class="QDateEdit" name="dateEdit_FechaImagen">
+    <widget class="QDateEdit" name="dateEdit_fecha_imagen">
      <property name="displayFormat">
       <string>dd/MM/yyyy</string>
      </property>
@@ -157,8 +157,8 @@
  </widget>
  <tabstops>
   <tabstop>txtDescripcion</tabstop>
-  <tabstop>dateEdit_FechaImagen</tabstop>
-  <tabstop>comboBox_TipoImagen</tabstop>
+  <tabstop>dateEdit_fecha_imagen</tabstop>
+  <tabstop>comboBox_tipo_imagen</tabstop>
   <tabstop>textEdit_ComentariosImagen</tabstop>
   <tabstop>checkBox_ImagenEvaluada</tabstop>
   <tabstop>pushButton_BuscarImagen</tabstop>

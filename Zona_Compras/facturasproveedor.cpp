@@ -7,16 +7,16 @@ FacturasProveedor::FacturasProveedor(QObject *parent) :
 int FacturasProveedor::anadir_factura()
 {
     QSqlQuery queryFactura(QSqlDatabase::database("empresa"));
-    queryFactura.prepare("insert into fac_pro (Id_Proveedor,nPorcIva1,nPorcIva2,nPorcIva3,nPorcIva4,nREC1,nREC2,nREC3,nREC4) "
-                         " values (0,:nIva1,:nIva2,:nIva3,:nIva4,:nREC1,:nREC2,:nREC3,:nREC4)");
-    queryFactura.bindValue(":nIva1",Configuracion_global->ivaList.at(0));
-    queryFactura.bindValue(":nIva2",Configuracion_global->ivaList.at(1));
-    queryFactura.bindValue(":nIva3",Configuracion_global->ivaList.at(2));
-    queryFactura.bindValue(":nIva4",Configuracion_global->ivaList.at(3));
-    queryFactura.bindValue(":nREC1",Configuracion_global->reList.at(0));
-    queryFactura.bindValue(":nREC2",Configuracion_global->reList.at(1));
-    queryFactura.bindValue(":nREC3",Configuracion_global->reList.at(2));
-    queryFactura.bindValue(":nREC4",Configuracion_global->reList.at(3));
+    queryFactura.prepare("insert into fac_pro (id_proveedor,porc_iva1,porc_iva2,porc_iva3,porc_iva4,porc_rec1,porc_rec2,porc_rec3,porc_rec4) "
+                         " values (0,:iva1,:iva2,:iva3,:iva4,:porc_rec1,:porc_rec2,:porc_rec3,:porc_rec4)");
+    queryFactura.bindValue(":porc_iva1",Configuracion_global->ivaList.at(0));
+    queryFactura.bindValue(":porc_iva2",Configuracion_global->ivaList.at(1));
+    queryFactura.bindValue(":porc_iva3",Configuracion_global->ivaList.at(2));
+    queryFactura.bindValue(":porc_iva4",Configuracion_global->ivaList.at(3));
+    queryFactura.bindValue(":porc_rec1",Configuracion_global->reList.at(0));
+    queryFactura.bindValue(":porc_rec2",Configuracion_global->reList.at(1));
+    queryFactura.bindValue(":porc_rec3",Configuracion_global->reList.at(2));
+    queryFactura.bindValue(":porc_rec4",Configuracion_global->reList.at(3));
 
     if(queryFactura.exec())
     {
@@ -35,50 +35,50 @@ void FacturasProveedor::guardar_factura()
 {
     QSqlQuery queryFactura(QSqlDatabase::database("empresa"));
     queryFactura.prepare("UPDATE fac_pro SET "
-                         "cFactura =:cFactura,"
-                         "dFecha =:dFecha,"
-                         "dRecepcion =:dRecepcion,"
-                         "cPedido =:cPedido,"
-                         "Id_Proveedor =:Id_Proveedor,"
-                         "cProveedor =:cProveedor,"
-                         "cCifProveedor =:cCifProveedor,"
-                         "lRetencionIRPF =:lRetencionIRPF,"
-                         "lRecargoEquivalencia =:lRecargoEquivalencia,"
-                         "rBase1 =:rBase1,"
-                         "rBase2 =:rBase2,"
-                         "rBase3 =:rBase3,"
-                         "rBase4 =:rBase4,"
-                         "nPorcIva1 =:nPorcIva1,"
-                         "nPorcIva2 =:nPorcIva2,"
-                         "nPorcIva3 =:nPorcIva3,"
-                         "nPorcIva4 =:nPorcIva4,"
-                         "rIVA1 =:rIVA1,"
-                         "rIVA2 =:rIVA2,"
-                         "rIVA3 =:rIVA3,"
-                         "rIVA4 =:rIVA4,"
-                         "nREC1 =:nREC1,"
-                         "nREC2 =:nREC2,"
-                         "nREC3 =:nREC3,"
-                         "nREC4 =:nREC4,"
-                         "rREC1 =:rREC1,"
-                         "rREC2 =:rREC2,"
-                         "rREC3 =:rREC3,"
-                         "rREC4 =:rREC4,"
-                         "rTotal1 =:rTotal1,"
-                         "rTotal2 =:rTotal2,"
-                         "rTotal3 =:rTotal3,"
-                         "rTotal4 =:rTotal4,"
-                         "rTotalBase =:rTotalBase,"
-                         "rTotalIVA =:rTotalIVA,"
-                         "rTotalRetencion =:rTotalRetencion,"
-                         "rTotalRecargoEq =:rTotalRecargoEq,"
-                         "rTotal =:rTotal,"
-                         "cFormaPago =:cFormaPago,"
-                         "rImportePagadoTotal =:rImportePagadoTotal,"
-                         "Id_TipoGasto =:Id_TipoGasto,"
-                         "tComentario =:tComentario,"
-                         "lPagado =:lPagado,"
-                         "rImporteDeudaPendiente =:rImporteDeudaPendiente,"
+                         "factura =:factura,"
+                         "fecha =:fecha,"
+                         "recepcion =:recepcion,"
+                         "pedido =:pedido,"
+                         "id_proveedor =:id_proveedor,"
+                         "proveedor =:proveedor,"
+                         "cif_proveedor =:cif_proveedor,"
+                         "retencion_irpf =:retencion_irpf,"
+                         "recargo_equivalencia =:recargo_equivalencia,"
+                         "base1 =:base1,"
+                         "base2 =:base2,"
+                         "base3 =:base3,"
+                         "base4 =:base4,"
+                         "porc_iva1 =:porc_iva1,"
+                         "porc_iva2 =:porc_iva2,"
+                         "porc_iva3 =:porc_iva3,"
+                         "porc_iva4 =:porc_iva4,"
+                         "iva1 =:iva1,"
+                         "iva2 =:iva2,"
+                         "iva3 =:iva3,"
+                         "iva4 =:iva4,"
+                         "porc_rec1 =:porc_rec1,"
+                         "porc_rec2 =:porc_rec2,"
+                         "porc_rec3 =:porc_rec3,"
+                         "porc_rec4 =:porc_rec4,"
+                         "rec1 =:rec1,"
+                         "rec2 =:rec2,"
+                         "rec3 =:rec3,"
+                         "rec4 =:rec4,"
+                         "total1 =:total1,"
+                         "total2 =:total2,"
+                         "total3 =:total3,"
+                         "total4 =:total4,"
+                         "total_base =:total_base,"
+                         "total_iva =:total_iva,"
+                         "total_retencion =:total_retencion,"
+                         "total_recargo =:total_recargo,"
+                         "total =:total,"
+                         "forma_pago =:forma_pago,"
+                         "importe_pagado_total =:importe_pagado_total,"
+                         "id_tipo_gasto =:id_tipo_gasto,"
+                         "comentario =:comentario,"
+                         "pagado =:pagado,"
+                         "importe_deuda_pendiente =:importe_deuda_pendiente,"
                          "desc_gasto1 = :desc_gasto1,"
                          "desc_gasto2 = :desc_gasto2,"
                          "desc_gasto3 = :desc_gasto3,"
@@ -86,53 +86,53 @@ void FacturasProveedor::guardar_factura()
                          "imp_gasto2 = :imp_gasto2,"
                          "imp_gasto3 = :imp_gasto3,"
                          "gasto_to_coste =:gasto_to_coste,"
-                         "cCAlbaran =:cCAlbaran "
+                         "albaran =:albaran "
                          "WHERE id =:id");
 
-    queryFactura.bindValue(":cFactura",this->cFactura);
-    queryFactura.bindValue(":dFecha",this->dFecha);
-    queryFactura.bindValue(":dRecepcion",this->dRecepcion);
-    queryFactura.bindValue(":cPedido",this->cPedido);
-    queryFactura.bindValue(":Id_Proveedor",this->Id_Proveedor);
-    queryFactura.bindValue(":cProveedor",this->cProveedor);
-    queryFactura.bindValue(":cCifProveedor",this->cCifProveedor);
-    queryFactura.bindValue(":lRetencionIRPF",this->lRetencionIRPF);
-    queryFactura.bindValue(":lRecargoEquivalencia",this->lRecargoEquivalencia);
-    queryFactura.bindValue(":rBase1",this->rBase1);
-    queryFactura.bindValue(":rBase2",this->rBase2);
-    queryFactura.bindValue(":rBase3",this->rBase3);
-    queryFactura.bindValue(":rBase4",this->rBase4);
-    queryFactura.bindValue(":nPorcIva1",this->nPorcIva1);
-    queryFactura.bindValue(":nPorcIva2",this->nPorcIva2);
-    queryFactura.bindValue(":nPorcIva3",this->nPorcIva3);
-    queryFactura.bindValue(":nPorcIva4",this->nPorcIva4);
-    queryFactura.bindValue(":rIVA1",this->rIVA1);
-    queryFactura.bindValue(":rIVA2",this->rIVA2);
-    queryFactura.bindValue(":rIVA3",this->rIVA3);
-    queryFactura.bindValue(":rIVA4",this->rIVA4);
-    queryFactura.bindValue(":nREC1",this->nREC1);
-    queryFactura.bindValue(":nREC2",this->nREC2);
-    queryFactura.bindValue(":nREC3",this->nREC3);
-    queryFactura.bindValue(":nREC4",this->nREC4);
-    queryFactura.bindValue(":rREC1",this->rREC1);
-    queryFactura.bindValue(":rREC2",this->rREC2);
-    queryFactura.bindValue(":rREC3",this->rREC3);
-    queryFactura.bindValue(":rREC4",this->rREC4);
-    queryFactura.bindValue(":rTotal1",this->rTotal1);
-    queryFactura.bindValue(":rTotal2",this->rTotal2);
-    queryFactura.bindValue(":rTotal3",this->rTotal3);
-    queryFactura.bindValue(":rTotal4",this->rTotal4);
-    queryFactura.bindValue(":rTotalBase",this->rTotalBase);
-    queryFactura.bindValue(":rTotalIVA",this->rTotalIVA);
-    queryFactura.bindValue(":rTotalRetencion",this->rTotalRetencion);
-    queryFactura.bindValue(":rTotalRecargoEq",this->rTotalRecargoEq);
-    queryFactura.bindValue(":rTotal",this->rTotal);
-    queryFactura.bindValue(":cFormaPago",this->cFormaPago);
-    queryFactura.bindValue(":rImportePagadoTotal",this->rImportePagadoTotal);
-    queryFactura.bindValue(":Id_TipoGasto",this->Id_TipoGasto);
-    queryFactura.bindValue(":tComentario",this->tComentario);
-    queryFactura.bindValue(":lPagado",this->lPagado);
-    queryFactura.bindValue(":rImporteDeudaPendiente",this->rImporteDeudaPendiente);
+    queryFactura.bindValue(":factura",this->factura);
+    queryFactura.bindValue(":fecha",this->fecha);
+    queryFactura.bindValue(":recepcion",this->recepcion);
+    queryFactura.bindValue(":pedido",this->pedido);
+    queryFactura.bindValue(":id_proveedor",this->id_proveedor);
+    queryFactura.bindValue(":proveedor",this->proveedor);
+    queryFactura.bindValue(":cif_proveedor",this->cif_proveedor);
+    queryFactura.bindValue(":retencion_irpf",this->retencion_irpf);
+    queryFactura.bindValue(":recargo_equivalencia",this->recargo_equivalencia);
+    queryFactura.bindValue(":base1",this->base1);
+    queryFactura.bindValue(":base2",this->base2);
+    queryFactura.bindValue(":base3",this->base3);
+    queryFactura.bindValue(":base4",this->base4);
+    queryFactura.bindValue(":porc_iva1",this->porc_iva1);
+    queryFactura.bindValue(":porc_iva2",this->porc_iva2);
+    queryFactura.bindValue(":porc_iva3",this->porc_iva3);
+    queryFactura.bindValue(":porc_iva4",this->porc_iva4);
+    queryFactura.bindValue(":iva1",this->iva1);
+    queryFactura.bindValue(":iva2",this->iva2);
+    queryFactura.bindValue(":iva3",this->iva3);
+    queryFactura.bindValue(":iva4",this->iva4);
+    queryFactura.bindValue(":porc_rec1",this->porc_rec1);
+    queryFactura.bindValue(":porc_rec2",this->porc_rec2);
+    queryFactura.bindValue(":porc_rec3",this->porc_rec3);
+    queryFactura.bindValue(":porc_rec4",this->porc_rec4);
+    queryFactura.bindValue(":rec1",this->rec1);
+    queryFactura.bindValue(":rec2",this->rec2);
+    queryFactura.bindValue(":rec3",this->rec3);
+    queryFactura.bindValue(":rec4",this->rec4);
+    queryFactura.bindValue(":total1",this->total1);
+    queryFactura.bindValue(":total2",this->total2);
+    queryFactura.bindValue(":total3",this->total3);
+    queryFactura.bindValue(":total4",this->total4);
+    queryFactura.bindValue(":total_base",this->total_base);
+    queryFactura.bindValue(":total_iva",this->total_iva);
+    queryFactura.bindValue(":total_retencion",this->total_retencion);
+    queryFactura.bindValue(":total_recargo",this->total_recargo);
+    queryFactura.bindValue(":total",this->total);
+    queryFactura.bindValue(":forma_pago",this->forma_pago);
+    queryFactura.bindValue(":importe_pagado_total",this->importe_pagado_total);
+    queryFactura.bindValue(":id_tipo_gasto",this->id_tipo_gasto);
+    queryFactura.bindValue(":comentario",this->comentario);
+    queryFactura.bindValue(":pagado",this->pagado);
+    queryFactura.bindValue(":importe_deuda_pendiente",this->importe_deuda_pendiente);
     queryFactura.bindValue(":desc_gasto1",this->desc_gasto1);
     queryFactura.bindValue(":desc_gasto2",this->desc_gasto2);
     queryFactura.bindValue(":desc_gasto3",this->desc_gasto3);
@@ -140,7 +140,7 @@ void FacturasProveedor::guardar_factura()
     queryFactura.bindValue(":imp_gasto2",this->imp_gasto2);
     queryFactura.bindValue(":imp_gasto3",this->imp_gasto3);
     queryFactura.bindValue(":gasto_to_coste",this->gasto_to_coste);
-    queryFactura.bindValue(":cCAlbaran",this->cCAlbaran);
+    queryFactura.bindValue(":albaran",this->albaran);
     queryFactura.bindValue(":id",this->id);
 
     if(queryFactura.exec())
@@ -182,51 +182,51 @@ void FacturasProveedor::cargar_factura(QSqlQuery queryFact,int accion)
   // accion == 0 - nada : 1 - Anterior : 2 - Siguiente
     if(queryFact.next())
     {
-        this->cFactura = queryFact.record().value("cFactura").toString();
-        this->dFecha = queryFact.record().value("dFecha").toDate();
-        this->dRecepcion = queryFact.record().value("dRecepcion").toDate();
-        this->cPedido = queryFact.record().value("cPedido").toString();
-        this->Id_Proveedor = queryFact.record().value("Id_Proveedor").toInt();
-        this->cProveedor = queryFact.record().value("cProveedor").toString();
-        this->cCifProveedor = queryFact.record().value("cCifProveedor").toString();
-        this->lRetencionIRPF = queryFact.record().value("lRetencionIRPF").toBool();
-        this->lRecargoEquivalencia = queryFact.record().value("lRecargoEquivalencia").toBool();
-        this->rBase1 = queryFact.record().value("rBase1").toDouble();
-        this->rBase2 = queryFact.record().value("rBase2").toDouble();
-        this->rBase3 = queryFact.record().value("rBase3").toDouble();
-        this->rBase4 = queryFact.record().value("rBase4").toDouble();
-        this->nPorcIva1 = queryFact.record().value("nPorcIva1").toDouble();
-        this->nPorcIva2 = queryFact.record().value("nPorcIva2").toDouble();
-        this->nPorcIva3 = queryFact.record().value("nPorcIva3").toDouble();
-        this->nPorcIva4 = queryFact.record().value("nPorcIva4").toDouble();
-        this->rIVA1 = queryFact.record().value("rIVA1").toDouble();
-        this->rIVA2 = queryFact.record().value("rIVA2").toDouble();
-        this->rIVA3 = queryFact.record().value("rIVA3").toDouble();
-        this->rIVA4 = queryFact.record().value("rIVA4").toDouble();
-        this->nREC1 = queryFact.record().value("nREC1").toDouble();
-        this->nREC2 = queryFact.record().value("nREC2").toDouble();
-        this->nREC3 = queryFact.record().value("nREC3").toDouble();
-        this->nREC4 = queryFact.record().value("nREC4").toDouble();
-        this->rREC1 = queryFact.record().value("rREC1").toDouble();
-        this->rREC2 = queryFact.record().value("rREC2").toDouble();
-        this->rREC3 = queryFact.record().value("rREC3").toDouble();
-        this->rREC4 = queryFact.record().value("rREC4").toDouble();
-        this->rTotal1 = queryFact.record().value("rTotal1").toDouble();
-        this->rTotal2 = queryFact.record().value("rTotal2").toDouble();
-        this->rTotal3 = queryFact.record().value("rTotal3").toDouble();
-        this->rTotal4 = queryFact.record().value("rTotal4").toDouble();
-        this->rTotalBase = queryFact.record().value("rTotalBase").toDouble();
-        this->rTotalIVA = queryFact.record().value("rTotalIVA").toDouble();
-        this->rTotalRetencion = queryFact.record().value("rTotalRetencion").toDouble();
-        this->rTotalRecargoEq = queryFact.record().value("rTotalRecargoEq").toDouble();
-        this->rTotal = queryFact.record().value("rTotal").toDouble();
-        this->cFormaPago = queryFact.record().value("cFormaPago").toDouble();
-        this->rImportePagadoTotal = queryFact.record().value("rImportePagadoTotal").toDouble();
-        this->Id_TipoGasto = queryFact.record().value("Id_TipoGasto").toDouble();
-        this->tComentario = queryFact.record().value("tComentario").toString();
-        this->lPagado = queryFact.record().value("lPagado").toBool();
-        this->rImporteDeudaPendiente = queryFact.record().value("rImporteDeudaPendiente").toDouble();
-        this->cCAlbaran = queryFact.record().value("cCAlbaran").toString();
+        this->factura = queryFact.record().value("factura").toString();
+        this->fecha = queryFact.record().value("fecha").toDate();
+        this->recepcion = queryFact.record().value("recepcion").toDate();
+        this->pedido = queryFact.record().value("pedido").toString();
+        this->id_proveedor = queryFact.record().value("id_proveedor").toInt();
+        this->proveedor = queryFact.record().value("proveedor").toString();
+        this->cif_proveedor = queryFact.record().value("cif_proveedor").toString();
+        this->retencion_irpf = queryFact.record().value("retencion_irpf").toBool();
+        this->recargo_equivalencia = queryFact.record().value("recargo_equivalencia").toBool();
+        this->base1 = queryFact.record().value("base1").toDouble();
+        this->base2 = queryFact.record().value("base2").toDouble();
+        this->base3 = queryFact.record().value("base3").toDouble();
+        this->base4 = queryFact.record().value("base4").toDouble();
+        this->porc_iva1 = queryFact.record().value("porc_iva1").toDouble();
+        this->porc_iva2 = queryFact.record().value("porc_iva2").toDouble();
+        this->porc_iva3 = queryFact.record().value("porc_iva3").toDouble();
+        this->porc_iva4 = queryFact.record().value("porc_iva4").toDouble();
+        this->iva1 = queryFact.record().value("iva1").toDouble();
+        this->iva2 = queryFact.record().value("iva2").toDouble();
+        this->iva3 = queryFact.record().value("iva3").toDouble();
+        this->iva4 = queryFact.record().value("iva4").toDouble();
+        this->porc_rec1 = queryFact.record().value("porc_rec1").toDouble();
+        this->porc_rec2 = queryFact.record().value("porc_rec2").toDouble();
+        this->porc_rec3 = queryFact.record().value("porc_rec3").toDouble();
+        this->porc_rec4 = queryFact.record().value("porc_rec4").toDouble();
+        this->rec1 = queryFact.record().value("rec1").toDouble();
+        this->rec2 = queryFact.record().value("rec2").toDouble();
+        this->rec3 = queryFact.record().value("rec3").toDouble();
+        this->rec4 = queryFact.record().value("rec4").toDouble();
+        this->total1 = queryFact.record().value("total1").toDouble();
+        this->total2 = queryFact.record().value("total2").toDouble();
+        this->total3 = queryFact.record().value("total3").toDouble();
+        this->total4 = queryFact.record().value("total4").toDouble();
+        this->total_base = queryFact.record().value("total_base").toDouble();
+        this->total_iva = queryFact.record().value("total_iva").toDouble();
+        this->total_retencion = queryFact.record().value("total_retencion").toDouble();
+        this->total_recargo = queryFact.record().value("total_recargo").toDouble();
+        this->total = queryFact.record().value("total").toDouble();
+        this->forma_pago = queryFact.record().value("forma_pago").toDouble();
+        this->importe_pagado_total = queryFact.record().value("importe_pagado_total").toDouble();
+        this->id_tipo_gasto = queryFact.record().value("id_tipo_gasto").toDouble();
+        this->comentario = queryFact.record().value("comentario").toString();
+        this->pagado = queryFact.record().value("pagado").toBool();
+        this->importe_deuda_pendiente = queryFact.record().value("importe_deuda_pendiente").toDouble();
+        this->albaran = queryFact.record().value("albaran").toString();
         this->id = queryFact.record().value("id").toInt();
         this->desc_gasto1 = queryFact.record().value("desc_gasto1").toString();
         this->desc_gasto2 = queryFact.record().value("desc_gasto2").toString();

@@ -13,7 +13,7 @@ Pedidos::~Pedidos()
 bool Pedidos::BorrarLineas(int Iped)
 {
     QSqlQuery query(QSqlDatabase::database("empresa"));
-    QString sql = QString("DELETE FROM lin_ped WHERE Id_Cab = %1").arg(Iped);
+    QString sql = QString("DELETE FROM lin_ped WHERE id_Cab = %1").arg(Iped);
     query.prepare(sql);
     if(query.exec())
         return true;
@@ -25,34 +25,34 @@ bool Pedidos::BorrarLineas(int Iped)
 }
 bool Pedidos::AnadirPedido()
 {
-    this->nPorcentajeIVA1 = Configuracion_global->ivaList.at(0).toDouble();
-    this->nPorcentajeIVA2 = Configuracion_global->ivaList.at(1).toDouble();
-    this->nPorcentajeIVA3 = Configuracion_global->ivaList.at(2).toDouble();
-    this->nPorcentajeIVA4 = Configuracion_global->ivaList.at(3).toDouble();
+    this->porc_iva1 = Configuracion_global->ivaList.at(0).toDouble();
+    this->porc_iva2 = Configuracion_global->ivaList.at(1).toDouble();
+    this->porc_iva3 = Configuracion_global->ivaList.at(2).toDouble();
+    this->porc_iva4 = Configuracion_global->ivaList.at(3).toDouble();
 
-    this->nPorcentajeRecargoEq1 = Configuracion_global->reList.at(0).toDouble();
-    this->nPorcentajeRecargoEq1 = Configuracion_global->reList.at(1).toDouble();
-    this->nPorcentajeRecargoEq1 = Configuracion_global->reList.at(2).toDouble();
-    this->nPorcentajeRecargoEq1 = Configuracion_global->reList.at(3).toDouble();
-    this->lRecargoEquivalencia = 0;
+    this->porc_rec1 = Configuracion_global->reList.at(0).toDouble();
+    this->porc_rec1 = Configuracion_global->reList.at(1).toDouble();
+    this->porc_rec1 = Configuracion_global->reList.at(2).toDouble();
+    this->porc_rec1 = Configuracion_global->reList.at(3).toDouble();
+    this->recargo_equivalencia = 0;
 
     QSqlQuery ped_cli(QSqlDatabase::database("empresa"));
-     ped_cli.prepare("INSERT INTO ped_cli (nPedido,nPorcentajeIva1,nPorcentajeIva2,nPorcentajeIva3,nPorcentajeIva4,"
-                     "nPorcentajeRecargoEq1,nPorcentajeRecargoEq2,nPorcentajeRecargoEq3,nPorcentajeRecargoEq4,id_Cliente)"
-                   " VALUES (:nPedido,:nPorcentajeIva1,:nPorcentajeIva2,:nPorcentajeIva3,:nPorcentajeIva4,"
-                     ":nPorcentajeRecargoEq1,:nPorcentajeRecargoEq2,:nPorcentajeRecargoEq3,:nPorcentajeRecargoEq4,:id_Cliente)");
+     ped_cli.prepare("INSERT INTO ped_cli (pedido,porc_iva1,porc_iva2,porc_iva3,porc_iva4,"
+                     "porc_rec1,porc_rec2,porc_rec3,porc_rec4,id_cliente)"
+                   " VALUES (:pedido,:porc_iva1,:porc_iva2,:porc_iva3,:porc_iva4,"
+                     ":porc_rec1,:porc_rec2,:porc_rec3,:porc_rec4,:id_cliente)");
 
-     this->nPedido = NuevoNumeroPedido();
-     ped_cli.bindValue(":nPedido",nPedido);
-     ped_cli.bindValue(":nPorcentajeIva1",this->nPorcentajeIVA1);
-     ped_cli.bindValue(":nPorcentajeIva2",this->nPorcentajeIVA2);
-     ped_cli.bindValue(":nPorcentajeIva3",this->nPorcentajeIVA3);
-     ped_cli.bindValue(":nPorcentajeIva4",this->nPorcentajeIVA4);
-     ped_cli.bindValue(":nPorcentajeRecargoEq1",this->nPorcentajeRecargoEq1);
-     ped_cli.bindValue(":nPorcentajeRecargoEq2",this->nPorcentajeRecargoEq1);
-     ped_cli.bindValue(":nPorcentajeRecargoEq3",this->nPorcentajeRecargoEq1);
-     ped_cli.bindValue(":nPorcentajeRecargoEq4",this->nPorcentajeRecargoEq1);
-     ped_cli.bindValue(":id_Cliente",iId_Cliente);
+     this->pedido = NuevoNumeroPedido();
+     ped_cli.bindValue(":pedido",pedido);
+     ped_cli.bindValue(":porc_iva1",this->porc_iva1);
+     ped_cli.bindValue(":porc_iva2",this->porc_iva2);
+     ped_cli.bindValue(":porc_iva3",this->porc_iva3);
+     ped_cli.bindValue(":porc_iva4",this->porc_iva4);
+     ped_cli.bindValue(":porc_rec1",this->porc_rec1);
+     ped_cli.bindValue(":porc_rec2",this->porc_rec1);
+     ped_cli.bindValue(":porc_rec3",this->porc_rec1);
+     ped_cli.bindValue(":porc_rec4",this->porc_rec1);
+     ped_cli.bindValue(":id_cliente",id_cliente);
      if(!ped_cli.exec())
      {
          QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Pedido:", ped_cli.lastError().text());
@@ -65,108 +65,108 @@ bool Pedidos::AnadirPedido()
      }
 }
 // Guardar el Pedido
-bool Pedidos::GuardarPedido(int nId_Pedido)
+bool Pedidos::GuardarPedido(int nid_Pedido)
 {
     QSqlQuery ped_cli(QSqlDatabase::database("empresa"));
 
     ped_cli.prepare( "UPDATE ped_cli SET "
-                     "nAlbaran =:nAlbaran,nPedido =:nPedido, dFecha =:dFecha  , cPedido =:cPedido  , id_Cliente =:id_Cliente  ,"
-                     "cCodigoCliente  =:cCodigoCliente  ,  cCliente =:cCliente  , cDireccion =:cDireccion,"
-                     "cDireccion2 =:cDireccion2  , cPoblacion =:cPoblacion  ,cProvincia  =:cProvincia  ,"
-                     "cCP  =:cCP  ,  idpais  =:idpais  ,  cCif  =:cCif  ,"
-                     "lRecargoEquivalencia  =:lRecargoEquivalencia  ,  rSubtotal  =:rSubtotal ,"
-                     "rDto  =:rDto  ,  rBase1  =:rBase1  ,  rBase2  =:rBase2  ,"
-                     "rBase3  =:rBase3  ,  rBase4  =:rBase4  ,  nPorcentajeIva1  =:nPorcentajeIva1  ,"
-                     "nPorcentajeIva2  =:nPorcentajeIva2  ,  nPorcentajeIva3  =:nPorcentajeIva3  ,"
-                     "nPorcentajeIva4  =:nPorcentajeIva4  ,  rImporteIva1  =:rImporteIva1  ,"
-                     "rImporteIva2  =:rImporteIva2  ,  rImporteIva3  =:rImporteIva3  ,"
-                     "rImporteIva4  =:rImporteIva4  ,  nPorcentajeRecargoEq1  =:nPorcentajeRecargoEq1  ,"
-                     "nPorcentajeRecargoEq2  =:nPorcentajeRecargoEq2  ,  nPorcentajeRecargoEq3  =:nPorcentajeRecargoEq3  ,"
-                     "nPorcentajeRecargoEq4  =:nPorcentajeRecargoEq4  ,"
-                     "rImporteRecargoEq1  =:rImporteRecargoEq1  ,"
-                     "rImporteRecargoEq2  =:rImporteRecargoEq2  ,"
-                     "rImporteRecargoEq3  =:rImporteRecargoEq3  ,"
-                     "rImporteRecargoEq4  =:rImporteRecargoEq4  ,"
-                     "rTotal1  =:rTotal1  ,  rTotal2  =:rTotal2  ,  rTotal3  =:rTotal3  ,"
-                     "rTotal4  =:rTotal4  ,rBaseTotal  =:rBaseTotal  ,  rIvaTotal  =:rIvaTotal  ,"
-                     "rRecargoEqTotal  =:rRecargoEqTotal  ,  rTotalAlbaran  =:rTotalAlbaran  ,"
-                     "lImpreso  =:lImpreso  ,lFacturado  =:lFacturado  , "
-                     "dFechaFactura  =:dFechaFactura  ,  tComentario  =:tComentario  ,"
-                     "rACuenta  =:rACuenta  ,lTraspasadoAlb  =:lTraspasadoAlb  ,"
-                     "lTraspasadoFac  =:lTraspasadoFac  ,  cDireccionEntrega  =:cDireccionEntrega  ,"
-                     "cDireccionEntrega2  =:cDireccionEntrega2  ,cCPEntrega  =:cCPEntrega  ,"
-                     "cPoblacionEntrega  =:cPoblacionEntrega  ,  cProvinciaEntrega  =:cProvinciaEntrega  ,"
-                     "cPaisEntrega  =:cPaisEntrega  ,lEnviado  =:lEnviado  ,  lCompleto  =:lCompleto  ,"
-                     "lEntregado  =:lEntregado  ,  dFechaLimiteEntrega  =:dFechaLimiteEntrega  ,"
-                     "rTotalPedido  =:rTotalPedido"
-                     " WHERE Id = :id");
+                     "albaran =:albaran,pedido =:pedido, fecha =:fecha  , pedido =:pedido  , id_cliente =:id_cliente  ,"
+                     "codigo_cliente  =:codigo_cliente  ,  cliente =:cliente  , direccion1 =:direccion1,"
+                     "direccion2 =:direccion2  , poblacion =:poblacion  ,provincia  =:provincia  ,"
+                     "cp  =:cp  ,  id_pais  =:id_pais  ,  cif  =:cif  ,"
+                     "recargo_equivalencia  =:recargo_equivalencia  ,  subtotal  =:subtotal ,"
+                     "dto  =:dto  ,  base1  =:base1  ,  base2  =:base2  ,"
+                     "base3  =:base3  ,  base4  =:base4  ,  porc_iva1  =:porc_iva1  ,"
+                     "porc_iva2  =:porc_iva2  ,  porc_iva3  =:porc_iva3  ,"
+                     "porc_iva4  =:porc_iva4  ,  iva1  =:iva1  ,"
+                     "iva2  =:iva2  ,  iva3  =:iva3  ,"
+                     "iva4  =:iva4  ,  porc_rec1  =:porc_rec1  ,"
+                     "porc_rec2  =:porc_rec2  ,  porc_rec3  =:porc_rec3  ,"
+                     "porc_rec4  =:porc_rec4  ,"
+                     "rec1  =:rec1  ,"
+                     "rec2  =:rec2  ,"
+                     "rec3  =:rec3  ,"
+                     "rec4  =:rec4  ,"
+                     "total1  =:total1  ,  total2  =:total2  ,  total3  =:total3  ,"
+                     "total4  =:total4  ,base_total  =:base_total  ,  iva_total  =:iva_total  ,"
+                     "rec_total  =:rec_total  ,  total_albaran  =:total_albaran  ,"
+                     "impreso  =:impreso  ,facturado  =:facturado  , "
+                     "fecha_factura  =:fecha_factura  ,  comentario  =:comentario  ,"
+                     "entregado_a_cuenta  =:entregado_a_cuenta  ,lTraspasadoAlb  =:lTraspasadoAlb  ,"
+                     "lTraspasadoFac  =:lTraspasadoFac  ,  direccion1Entrega  =:direccion1Entrega  ,"
+                     "direccion1Entrega2  =:direccion1Entrega2  ,cpEntrega  =:cpEntrega  ,"
+                     "poblacionEntrega  =:poblacionEntrega  ,  provinciaEntrega  =:provinciaEntrega  ,"
+                     "paisEntrega  =:paisEntrega  ,lEnviado  =:lEnviado  ,  lCompleto  =:lCompleto  ,"
+                     "lEntregado  =:lEntregado  ,  fechaLimiteEntrega  =:fechaLimiteEntrega  ,"
+                     "totalPedido  =:totalPedido"
+                     " WHERE id = :id");
 
-    ped_cli.bindValue(":nAlbaran",nAlbaran);
-    ped_cli.bindValue(":nPedido",nPedido);
-    ped_cli.bindValue(":dFecha",dFecha);
-    ped_cli.bindValue(":cPedido",cPedido);
-    ped_cli.bindValue(":id_Cliente",iId_Cliente);
-    ped_cli.bindValue(":cCodigoCliente",cCodigoCliente);
-    ped_cli.bindValue(":cCliente",cCliente);
-    ped_cli.bindValue(":cDireccion",cDireccion);
-    ped_cli.bindValue(":cDireccion2",cDireccion2);
-    ped_cli.bindValue(":cPoblacion",cPoblacion);
-    ped_cli.bindValue(":cProvincia",cProvincia);
-    ped_cli.bindValue(":cCP",cCp);
-    ped_cli.bindValue(":idpais",id_pais);
-    ped_cli.bindValue(":cCif",cCif);
-    ped_cli.bindValue(":lRecargoEquivalencia",lRecargoEquivalencia);
-    ped_cli.bindValue(":rSubtotal",rSubtotal);
-    ped_cli.bindValue(":rDto",rDto);
-  //  ped_cli.bindValue(":nDto",nDto);
-    ped_cli.bindValue(":rBase1",rBase1);
-    ped_cli.bindValue(":rBase2",rBase2);
-    ped_cli.bindValue(":rBase3",rBase3);
-    ped_cli.bindValue(":rBase4",rBase4);
-    ped_cli.bindValue(":nPorcentajeIva1",nPorcentajeIVA1);
-    ped_cli.bindValue(":nPorcentajeIva2",nPorcentajeIVA2);
-    ped_cli.bindValue(":nPorcentajeIva3",nPorcentajeIVA3);
-    ped_cli.bindValue(":nPorcentajeIva4",nPorcentajeIVA4);
-    ped_cli.bindValue(":rImporteIva1",rImporteIva1);
-    ped_cli.bindValue(":rImporteIva2",rImporteIva2);
-    ped_cli.bindValue(":rImporteIva3",rImporteIva3);
-    ped_cli.bindValue(":rImporteIva4",rImporteIva4);
-    ped_cli.bindValue(":nPorcentajeRecargoEq1",nPorcentajeRecargoEq1);
-    ped_cli.bindValue(":nPorcentajeRecargoEq2",nPorcentajeRecargoEq2);
-    ped_cli.bindValue(":nPorcentajeRecargoEq3",nPorcentajeRecargoEq3);
-    ped_cli.bindValue(":nPorcentajeRecargoEq4",nPorcentajeRecargoEq4);
-    ped_cli.bindValue(":rImporteRecargoEq1",rImporteRecargoEq1);
-    ped_cli.bindValue(":rImporteRecargoEq2",rImporteRecargoEq2);
-    ped_cli.bindValue(":rImporteRecargoEq3",rImporteRecargoEq3);
-    ped_cli.bindValue(":rImporteRecargoEq4",rImporteRecargoEq4);
-    ped_cli.bindValue(":rTotal1",rTotal1);
-    ped_cli.bindValue(":rTotal2",rTotal2);
-    ped_cli.bindValue(":rTotal3",rTotal3);
-    ped_cli.bindValue(":rTotal4",rTotal4);
-    ped_cli.bindValue(":rBaseTotal",rBaseTotal);
-    ped_cli.bindValue(":rIvaTotal",rIvaTotal);
-    ped_cli.bindValue(":rRecargoEqTotal",rRecargoEqTotal);
-    ped_cli.bindValue(":rTotalAlbaran",rTotalAlbaran);
-    ped_cli.bindValue(":lImpreso",lImpreso);
-    ped_cli.bindValue(":lFacturado",lFacturado);
-   // ped_cli.bindValue(":cFactura",cFactura);
-    ped_cli.bindValue(":dFechaFactura",dFechaFactura);
-    ped_cli.bindValue(":tComentario",tComentario);
-    ped_cli.bindValue(":rACuenta",rACuenta);
+    ped_cli.bindValue(":albaran",albaran);
+    ped_cli.bindValue(":pedido",pedido);
+    ped_cli.bindValue(":fecha",fecha);
+    ped_cli.bindValue(":pedido",pedido);
+    ped_cli.bindValue(":id_cliente",id_cliente);
+    ped_cli.bindValue(":codigo_cliente",codigo_cliente);
+    ped_cli.bindValue(":cliente",cliente);
+    ped_cli.bindValue(":direccion1",direccion1);
+    ped_cli.bindValue(":direccion2",direccion2);
+    ped_cli.bindValue(":poblacion",poblacion);
+    ped_cli.bindValue(":provincia",provincia);
+    ped_cli.bindValue(":cp",cp);
+    ped_cli.bindValue(":id_pais",id_pais);
+    ped_cli.bindValue(":cif",cif);
+    ped_cli.bindValue(":recargo_equivalencia",recargo_equivalencia);
+    ped_cli.bindValue(":subtotal",subtotal);
+    ped_cli.bindValue(":dto",dto);
+  //  ped_cli.bindValue(":dto",dto);
+    ped_cli.bindValue(":base1",base1);
+    ped_cli.bindValue(":base2",base2);
+    ped_cli.bindValue(":base3",base3);
+    ped_cli.bindValue(":base4",base4);
+    ped_cli.bindValue(":porc_iva1",porc_iva1);
+    ped_cli.bindValue(":porc_iva2",porc_iva2);
+    ped_cli.bindValue(":porc_iva3",porc_iva3);
+    ped_cli.bindValue(":porc_iva4",porc_iva4);
+    ped_cli.bindValue(":iva1",iva1);
+    ped_cli.bindValue(":iva2",iva2);
+    ped_cli.bindValue(":iva3",iva3);
+    ped_cli.bindValue(":iva4",iva4);
+    ped_cli.bindValue(":porc_rec1",porc_rec1);
+    ped_cli.bindValue(":porc_rec2",porc_rec2);
+    ped_cli.bindValue(":porc_rec3",porc_rec3);
+    ped_cli.bindValue(":porc_rec4",porc_rec4);
+    ped_cli.bindValue(":rec1",rec1);
+    ped_cli.bindValue(":rec2",rec2);
+    ped_cli.bindValue(":rec3",rec3);
+    ped_cli.bindValue(":rec4",rec4);
+    ped_cli.bindValue(":total1",total1);
+    ped_cli.bindValue(":total2",total2);
+    ped_cli.bindValue(":total3",total3);
+    ped_cli.bindValue(":total4",total4);
+    ped_cli.bindValue(":base_total",base_total);
+    ped_cli.bindValue(":iva_total",iva_total);
+    ped_cli.bindValue(":rec_total",rec_total);
+    ped_cli.bindValue(":total_albaran",total_albaran);
+    ped_cli.bindValue(":impreso",impreso);
+    ped_cli.bindValue(":facturado",facturado);
+   // ped_cli.bindValue(":factura",factura);
+    ped_cli.bindValue(":fecha_factura",fecha_factura);
+    ped_cli.bindValue(":comentario",comentario);
+    ped_cli.bindValue(":entregado_a_cuenta",entregado_a_cuenta);
     ped_cli.bindValue(":lTraspasadoAlb",lTraspasadoAlb);
     ped_cli.bindValue(":lTraspasadoFac",lTraspasadoFac);
-    ped_cli.bindValue(":cDireccionEntrega",cDireccionEntrega);
-    ped_cli.bindValue(":cDireccionEntrega2",cDireccionEntrega2);
-    ped_cli.bindValue(":cCPEntrega",cCPEntrega);
-    ped_cli.bindValue(":cPoblacionEntrega",cPoblacionEntrega);
-    ped_cli.bindValue(":cProvinciaEntrega",cProvinciaEntrega);
-    ped_cli.bindValue(":cPaisEntrega",cPaisEntrega);
+    ped_cli.bindValue(":direccion1Entrega",direccion1Entrega);
+    ped_cli.bindValue(":direccion1Entrega2",direccion1Entrega2);
+    ped_cli.bindValue(":cpEntrega",cpEntrega);
+    ped_cli.bindValue(":poblacionEntrega",poblacionEntrega);
+    ped_cli.bindValue(":provinciaEntrega",provinciaEntrega);
+    ped_cli.bindValue(":paisEntrega",paisEntrega);
     ped_cli.bindValue(":lEnviado",lEnviado);
     ped_cli.bindValue(":lCompleto",lCompleto);
     ped_cli.bindValue(":lEntregado",lEntregado);
-    ped_cli.bindValue(":dFechaLimiteEntrega",dFechaLimiteEntrega);
-    ped_cli.bindValue(":rTotalPedido",rTotalPedido);
-    ped_cli.bindValue(":id",nId_Pedido);
+    ped_cli.bindValue(":fechaLimiteEntrega",fechaLimiteEntrega);
+    ped_cli.bindValue(":totalPedido",totalPedido);
+    ped_cli.bindValue(":id",nid_Pedido);
     if(!ped_cli.exec())
     {
         QMessageBox::critical(qApp->activeWindow(),QObject::tr("error al guardar datos Pedido:"), ped_cli.lastError().text());
@@ -193,77 +193,77 @@ bool Pedidos::RecuperarPedido(QString cSQL)
         if (ped_cli.next())
         {
             QSqlRecord r = ped_cli.record();
-            id = r.value("Id").toInt();
-            nAlbaran = r.value("nAlbaran").toInt();
-            nPedido = r.value("nPedido").toInt();
-            dFecha = r.value("dFecha").toDate();
-            cPedido = r.value("cPedido").toString();
-            iId_Cliente = r.value("id_Cliente").toInt();
-            cCodigoCliente = r.value("cCodigoCliente").toString();
-            cCliente = r.value("cCliente").toString();
-            cDireccion = r.value("cDireccion").toString();
-            cDireccion2 = r.value("cDireccion2").toString();
-            cPoblacion = r.value("cPoblacion").toString();
-            cProvincia = r.value("cProvincia").toString();
-            cCp = r.value("cCp").toString();
-            cCif = r.value("cCif").toString();
-            lRecargoEquivalencia = r.value("lRecargoEquivalencia").toInt();
-            rSubtotal = r.value("rSubtotal").toDouble();
-            rDto = r.value("rDto").toDouble();
-            nDto = r.value("nDto").toDouble();
-            rBase1 = r.value("rBase1").toDouble();
-            rBase2 = r.value("rBase2").toDouble();
-            rBase3 = r.value("rBase3").toDouble();
-            rBase4 = r.value("rBase4").toDouble();
-            nPorcentajeIVA1 = r.value("nPorcentajeIva1").toDouble();
-            nPorcentajeIVA2 = r.value("nPorcentajeIva2").toDouble();
-            nPorcentajeIVA3 = r.value("nPorcentajeIva3").toDouble();
-            nPorcentajeIVA4 = r.value("nPorcentajeIva4").toDouble();
-            rImporteIva1 = r.value("rImporteIva1").toDouble();
-            rImporteIva2 = r.value("rImporteIva2").toDouble();
-            rImporteIva3 = r.value("rImporteIva3").toDouble();
-            rImporteIva4 = r.value("rImporteIva4").toDouble();
-            nPorcentajeRecargoEq1 = r.value("nPorcentajeRecargoEq1").toDouble();
-            nPorcentajeRecargoEq2 = r.value("nPorcentajeRecargoEq2").toDouble();
-            nPorcentajeRecargoEq3 = r.value("nPorcentajeRecargoEq3").toDouble();
-            nPorcentajeRecargoEq4 = r.value("nPorcentajeRecargoEq4").toDouble();
-            rImporteRecargoEq1 = r.value("rImporteRecargoEq1").toDouble();
-            rImporteRecargoEq2 = r.value("rImporteRecargoEq2").toDouble();
-            rImporteRecargoEq3 = r.value("rImporteRecargoEq3").toDouble();
-            rImporteRecargoEq4 = r.value("rImporteRecargoEq4").toDouble();
-            rTotal1 = r.value("rTotal1").toDouble();
-            rTotal2 = r.value("rTotal2").toDouble();
-            rTotal3 = r.value("rTotal3").toDouble();
-            rTotal4 = r.value("rTotal4").toDouble();
-            rBaseTotal = r.value("rBaseTotal").toDouble();
-            rIvaTotal = r.value("rIvaTotal").toDouble();
-            rRecargoEqTotal = r.value("rRecargoEqTotal").toDouble();
-            rTotalAlbaran = r.value("rTotalAlbaran").toDouble();
-            lImpreso = r.value("lImpreso").toInt();
-            lFacturado = r.value("lFacturado").toInt();
-            cFactura = r.value("cFactura").toString();
-            dFechaFactura = r.value("dFechaFactura").toDate();
-            tComentario = r.value("tComentario").toString();
-            rACuenta = r.value("rACuenta").toDouble();
+            id = r.value("id").toInt();
+            albaran = r.value("albaran").toInt();
+            pedido = r.value("pedido").toInt();
+            fecha = r.value("fecha").toDate();
+            //pedido = r.value("pedido").toString();
+            id_cliente = r.value("id_cliente").toInt();
+            codigo_cliente = r.value("codigo_cliente").toString();
+            cliente = r.value("cliente").toString();
+            direccion1 = r.value("direccion1").toString();
+            direccion2 = r.value("direccion2").toString();
+            poblacion = r.value("poblacion").toString();
+            provincia = r.value("provincia").toString();
+            cp = r.value("cp").toString();
+            cif = r.value("cif").toString();
+            recargo_equivalencia = r.value("recargo_equivalencia").toInt();
+            subtotal = r.value("subtotal").toDouble();
+            dto = r.value("dto").toDouble();
+            dto = r.value("dto").toDouble();
+            base1 = r.value("base1").toDouble();
+            base2 = r.value("base2").toDouble();
+            base3 = r.value("base3").toDouble();
+            base4 = r.value("base4").toDouble();
+            porc_iva1 = r.value("porc_iva1").toDouble();
+            porc_iva2 = r.value("porc_iva2").toDouble();
+            porc_iva3 = r.value("porc_iva3").toDouble();
+            porc_iva4 = r.value("porc_iva4").toDouble();
+            iva1 = r.value("iva1").toDouble();
+            iva2 = r.value("iva2").toDouble();
+            iva3 = r.value("iva3").toDouble();
+            iva4 = r.value("iva4").toDouble();
+            porc_rec1 = r.value("porc_rec1").toDouble();
+            porc_rec2 = r.value("porc_rec2").toDouble();
+            porc_rec3 = r.value("porc_rec3").toDouble();
+            porc_rec4 = r.value("porc_rec4").toDouble();
+            rec1 = r.value("rec1").toDouble();
+            rec2 = r.value("rec2").toDouble();
+            rec3 = r.value("rec3").toDouble();
+            rec4 = r.value("rec4").toDouble();
+            total1 = r.value("total1").toDouble();
+            total2 = r.value("total2").toDouble();
+            total3 = r.value("total3").toDouble();
+            total4 = r.value("total4").toDouble();
+            base_total = r.value("base_total").toDouble();
+            iva_total = r.value("iva_total").toDouble();
+            rec_total = r.value("rec_total").toDouble();
+            total_albaran = r.value("total_albaran").toDouble();
+            impreso = r.value("impreso").toInt();
+            facturado = r.value("facturado").toInt();
+            factura = r.value("factura").toString();
+            fecha_factura = r.value("fecha_factura").toDate();
+            comentario = r.value("comentario").toString();
+            entregado_a_cuenta = r.value("entregado_a_cuenta").toDouble();
             lTraspasadoAlb = r.value("lTraspasadoAlb").toInt();
             lTraspasadoFac = r.value("lTraspasadoFac").toInt();
-            cDireccionEntrega = r.value("cDireccionEntrega").toString();
-            cDireccionEntrega2 = r.value("cDireccionEntrega2").toString();
-            cCPEntrega = r.value("cCPEntrega").toString();
-            cPoblacionEntrega = r.value("cPoblacionEntrega").toString();
-            cProvinciaEntrega = r.value("cProvinciaEntrega").toString();
-            cPaisEntrega = r.value("cPaisEntrega").toString();
+            direccion1Entrega = r.value("direccion1Entrega").toString();
+            direccion1Entrega2 = r.value("direccion1Entrega2").toString();
+            cpEntrega = r.value("cpEntrega").toString();
+            poblacionEntrega = r.value("poblacionEntrega").toString();
+            provinciaEntrega = r.value("provinciaEntrega").toString();
+            paisEntrega = r.value("paisEntrega").toString();
             lEnviado = r.value("lEnviado").toInt();
             lCompleto = r.value("lCompleto").toInt();
             lEntregado = r.value("lEntregado").toInt();
-            dFechaLimiteEntrega = r.value("dFechaLimiteEntrega").toDate();
-            rTotalPedido = r.value("rTotalPedido").toDouble();
+            fechaLimiteEntrega = r.value("fechaLimiteEntrega").toDate();
+            totalPedido = r.value("totalPedido").toDouble();
 
-            this->id_pais = r.field("idpais").value().toInt();
+            this->id_pais = r.field("id_pais").value().toInt();
             QSqlQuery q(QSqlDatabase::database("empresa"));
             if(q.exec("SELECT * FROM paises WHERE id="+QString::number(id_pais)))
                 if(q.next())
-                    cPais = q.record().value("pais").toString();
+                    pais = q.record().value("pais").toString();
            }
         else
             return false;
@@ -274,17 +274,17 @@ bool Pedidos::RecuperarPedido(QString cSQL)
 int Pedidos::NuevoNumeroPedido()
 {
     QSqlQuery ped_cli(QSqlDatabase::database("empresa"));
-    int nPedido = 0;
-    ped_cli.prepare("Select nPedido from ped_cli order by nPedido desc limit 1");
+    int pedido = 0;
+    ped_cli.prepare("Select pedido from ped_cli order by pedido desc limit 1");
     if(ped_cli.exec())
     {
         if(ped_cli.next())
         {
-            nPedido= ped_cli.value(0).toInt();
-            nPedido ++;
+            pedido= ped_cli.value(0).toInt();
+            pedido ++;
         }
     }
-    return qMax(1,nPedido);
+    return qMax(1,pedido);
 }
 
 void Pedidos::FacturarPedido()

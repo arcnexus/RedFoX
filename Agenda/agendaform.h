@@ -18,8 +18,8 @@ public:
     explicit AgendaForm(QWidget *parent = 0);
     ~AgendaForm();
 
-    moduleZone ModuleZone(){return Utilidades;}
-    QString ModuleName(){return "Agenda";}
+    module_zone module_zone(){return Utilidades;}
+    QString module_name(){return "Agenda";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}

@@ -1,5 +1,5 @@
-#ifndef FRMRECEPCION_PEDIDOS_H
-#define FRMRECEPCION_PEDIDOS_H
+#ifndef FRMRECEPCION_PEDidOS_H
+#define FRMRECEPCION_PEDidOS_H
 
 #include <QDialog>
 #include "../Auxiliares/Globlal_Include.h"
@@ -16,8 +16,8 @@ public:
     explicit Frmrecepcion_pedidos(QWidget *parent = 0);
     ~Frmrecepcion_pedidos();
     bool paso;
-    moduleZone ModuleZone(){return Compras;}
-    QString ModuleName(){return "Recepcion de pedidos";}
+    module_zone module_zone(){return Compras;}
+    QString module_name(){return "Recepcion de pedidos";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -55,4 +55,4 @@ signals:
 
 };
 
-#endif // FRMRECEPCION_PEDIDOS_H
+#endif // FRMRECEPCION_PEDidOS_H

@@ -3,7 +3,7 @@
 #include "editeventform.h"
 #include "../db_table_view.h"
 AgendaForm::AgendaForm(QWidget *parent) :
-    MayaModule(ModuleZone(),ModuleName(),parent),
+    MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::AgendaForm),
     toolButton(tr("Agenda"),":/Icons/PNG/Calender.png",this),
     menuButton(QIcon(":/Icons/PNG/Calender.png"),tr("Agenda"),this)
@@ -63,7 +63,7 @@ void AgendaForm::on_pushButton_clicked()
         asunto.replace("\n","<br>");
         bool isCita = form.isCita;
         int id_cliente = form.id_cliente;
-        table->addEvento(form.event_color,s,e,tituloEvento,asunto,isCita,id_cliente,form.isPrivado);
+        table->addEvento(form.event_color,s,e,tituloEvento,asunto,isCita,id_cliente,form.isprivado);
     }
 }
 

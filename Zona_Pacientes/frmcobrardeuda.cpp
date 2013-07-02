@@ -17,16 +17,16 @@ void frmCobrarDeuda::calcular()
 {
     double importe = 0;
 
-    importe = importe + ui->txtImporteCheque->text().toDouble();
-    importe = importe + ui->txtImporteEfectivo->text().toDouble();
+    importe = importe + ui->txtimporte_cheque->text().toDouble();
+    importe = importe + ui->txtimporte_efectivo->text().toDouble();
     importe = importe + ui->txtImporteInternet->text().toDouble();
-    importe = importe + ui->txtImporteTarjeta->text().toDouble();
+    importe = importe + ui->txtimporte_tarjeta->text().toDouble();
     importe = importe + ui->txtImporteTransferencia->text().toDouble();
 
-    ui->txtImporteCheque->setText(Configuracion_global->toFormatoMoneda(ui->txtImporteCheque->text()));
-    ui->txtImporteEfectivo->setText(Configuracion_global->toFormatoMoneda(ui->txtImporteEfectivo->text()));
+    ui->txtimporte_cheque->setText(Configuracion_global->toFormatoMoneda(ui->txtimporte_cheque->text()));
+    ui->txtimporte_efectivo->setText(Configuracion_global->toFormatoMoneda(ui->txtimporte_efectivo->text()));
     ui->txtImporteInternet->setText(Configuracion_global->toFormatoMoneda(ui->txtImporteInternet->text()));
-    ui->txtImporteTarjeta->setText(Configuracion_global->toFormatoMoneda(ui->txtImporteTarjeta->text()));
+    ui->txtimporte_tarjeta->setText(Configuracion_global->toFormatoMoneda(ui->txtimporte_tarjeta->text()));
     ui->txtImporteTransferencia->setText(Configuracion_global->toFormatoMoneda(ui->txtImporteTransferencia->text()));
 
     ui->txtImporteTotal->setText(Configuracion_global->toFormatoMoneda(QString::number(importe,'f',2)));

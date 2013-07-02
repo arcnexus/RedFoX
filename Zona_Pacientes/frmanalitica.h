@@ -18,10 +18,10 @@ public:
     
 private:
     Ui::FrmAnalitica *ui;
-    int idanalitica;
+    int id_analitica;
     Analitica oAnalitica;
 public slots:
-    void capturaID(int);
+    void capturaid(int);
     void capturaPaciente(QString);
 private slots:
     void AnadirCamposAnalitica();

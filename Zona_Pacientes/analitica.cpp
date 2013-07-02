@@ -11,11 +11,11 @@ void Analitica::AnadirAnalitica()
     if(this->analisis.isEmpty())
         this->setAnalisis(tr("pendiente determinar"));
     QSqlQuery *qAna = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qAna->prepare("Insert INTO Analitica (idepisodio,idpaciente analisis, comentarios)"
-                  " VALUES (:idepisodio,:idpaciente :analisis, :comentarios)");
-    qAna->bindValue(":idepisodio",this->idepisodio);
+    qAna->prepare("Insert INTO Analitica (id_episodio,id_paciente analisis, comentarios)"
+                  " VALUES (:id_episodio,:id_paciente :analisis, :comentarios)");
+    qAna->bindValue(":id_episodio",this->id_episodio);
     qAna->bindValue(":analisis", this->analisis);
-    qAna->bindValue(":idpaciente",this->idpaciente);
+    qAna->bindValue(":id_paciente",this->id_paciente);
     qAna->bindValue(":comentarios",this->comentarios);
     if(!qAna->exec()){
         QMessageBox::warning(qApp->activeWindow(),tr("Nueva Analítica"),tr("Falló al insertar una nueva analítica: ")+
@@ -23,16 +23,16 @@ void Analitica::AnadirAnalitica()
 
         qDebug() << qAna->lastQuery();
     } else
-        this->setId(qAna->lastInsertId().toInt());
+        this->setid(qAna->lastInsertId().toInt());
 }
 
-void Analitica::AnadirLineas(int idanalitica, QString descripcion, QString valor, QString referencia,
+void Analitica::AnadirLineas(int id_analitica, QString descripcion, QString valor, QString referencia,
                              QString comentarios,QString tipo)
 {
     QSqlQuery *qAna = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qAna->prepare("INSERT INTO analitica2 (idanalitica, descripcion, valor, referencia, comentarios,"
-                  "tipo) VALUES (:idanalitica, :descripcion, :valor, :referencia, :comentarios,:tipo)");
-    qAna->bindValue(":idanalitica",idanalitica);
+    qAna->prepare("INSERT INTO analitica2 (id_analitica, descripcion, valor, referencia, comentarios,"
+                  "tipo) VALUES (:id_analitica, :descripcion, :valor, :referencia, :comentarios,:tipo)");
+    qAna->bindValue(":id_analitica",id_analitica);
     qAna->bindValue(":descripcion",descripcion);
     qAna->bindValue(":valor",valor);
     qAna->bindValue(":referencia",referencia);
@@ -47,17 +47,17 @@ void Analitica::AnadirLineas(int idanalitica, QString descripcion, QString valor
 
 }
 
-void Analitica::recuperarDatos(int nId)
+void Analitica::recuperarDatos(int nid)
 {
     QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     qAnalitica->prepare("select * from Analitica where id = :id");
-    qAnalitica->bindValue(":id",nId);
+    qAnalitica->bindValue(":id",nid);
     if (qAnalitica->exec()) {
         qAnalitica->next();
         QSqlRecord qRec = qAnalitica->record();
-        this->idpaciente = qRec.field("idpaciente").value().toInt();
+        this->id_paciente = qRec.field("id_paciente").value().toInt();
         this->analisis = qRec.field("analisis").value().toString();
-        this->fecha = qRec.field("fechaanalisis").value().toDate();
+        this->fecha = qRec.field("fecha_analisis").value().toDate();
         this->comentarios = qRec.field("comentarios").value().toString();
     } else {
         QMessageBox::warning(qApp->activeWindow(),tr("Analítica"),tr("Error en la carga de datos de analitica: ")+
@@ -68,20 +68,20 @@ void Analitica::recuperarDatos(int nId)
 
 }
 
-void Analitica::GuardarDatos(int nId)
+void Analitica::GuardarDatos(int nid)
 {
     QSqlQuery *qAnalitica = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     qAnalitica->prepare("UPDATE Analitica SET "
                         "analisis = :analisis,"
-                        "idpaciente = :idpaciente,"
+                        "id_paciente = :id_paciente,"
                         "comentarios = :comentarios,"
-                        "fechaanalisis = :fechaanalisis"
+                        "fecha_analisis = :fecha_analisis"
                         " WHERE id = :id");
     qAnalitica->bindValue(":analisis",this->analisis);
-    qAnalitica->bindValue(":idpaciente",this->idpaciente);
+    qAnalitica->bindValue(":id_paciente",this->id_paciente);
     qAnalitica->bindValue(":comentarios",this->comentarios);
-    qAnalitica->bindValue(":fechaanalisis",this->fecha);
-    qAnalitica->bindValue(":id",nId);
+    qAnalitica->bindValue(":fecha_analisis",this->fecha);
+    qAnalitica->bindValue(":id",nid);
     if(!qAnalitica->exec())
         QMessageBox::warning(qApp->activeWindow(),tr("Analítica"),tr("Error al guardar los datos de analitica: ")+
                                                      qAnalitica->lastError().text(),tr("Aceptar"));
@@ -120,8 +120,8 @@ void Analitica::EliminarAnalitica(int id)
         // TODO - Registrar paso en registro movimientos traumaticos
         if(Contra == "AAAA"){
             QSqlQuery qlineas = QSqlQuery(QSqlDatabase::database("dbmedica"));
-            qlineas.prepare("delete from analitica2 where idanalitica = :idAnalitica");
-            qlineas.bindValue(":idAnalitica",id);
+            qlineas.prepare("delete from analitica2 where id_analitica = :id_analitica");
+            qlineas.bindValue(":id_analitica",id);
             if(!qlineas.exec())
                 QMessageBox::warning(qApp->activeWindow(),tr("Analitica"),tr("Ocurrió un error al borrar la línea. No se puede Borrar: ")+
                                      qlineas.lastError().text(),tr("Aceptar"));

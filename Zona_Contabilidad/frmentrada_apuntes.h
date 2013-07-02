@@ -18,8 +18,8 @@ class FrmEntrada_apuntes : public MayaModule
 public:
     explicit FrmEntrada_apuntes(QWidget *parent = 0);
     ~FrmEntrada_apuntes();
-    moduleZone ModuleZone(){return Contabilidad;}
-    QString ModuleName(){return "Entrada Apuntes";}
+    module_zone module_zone(){return Contabilidad;}
+    QString module_name(){return "Entrada Apuntes";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}

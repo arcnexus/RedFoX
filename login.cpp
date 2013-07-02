@@ -82,7 +82,7 @@ const QString Login::getEmpresa() const
     return ui->cboEmpresa->currentText();
 }
 
-int Login::getIdUser()
+int Login::getid_user()
 {
     return m_id;
 }
@@ -91,12 +91,12 @@ int Login::getIdUser()
 void Login::on_btnAcceder_clicked()
 {
     QSqlQuery qEmpresa(QSqlDatabase::database("Maya"));
-    qEmpresa.prepare("select id, nombreBD from empresas where nombre = :nombreemp");
+    qEmpresa.prepare("select id, nombre_bd from empresas where nombre = :nombreemp");
     qEmpresa.bindValue(":nombreemp",ui->cboEmpresa->currentText());
     if(qEmpresa.exec())
     {
         Configuracion_global->idEmpresa = qEmpresa.record().field("id").value().toInt();
-        Configuracion_global->cNombreBDEmpresa = qEmpresa.record().field("nombreBD").value().toString();
+        Configuracion_global->nombre_bd_empresa = qEmpresa.record().field("nombre_bd").value().toString();
     }
     else
         QMessageBox::warning(this,tr("ABRIR EMPRESA"),tr("No se encuentra la empresa"),tr("Aceptar"));
@@ -123,7 +123,7 @@ void Login::on_btnAcceder_clicked()
                 settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
                 settings.setValue("nNivelAcceso",rUsuario.field("nivelacceso").value().toInt());
                 settings.setValue("cCategoria",rUsuario.field("categoria").value().toString());
-                Configuracion_global->id_usuario_activo = this->getIdUser();
+                Configuracion_global->id_usuario_activo = this->getid_user();
                 Login::done(QDialog::Accepted);
             }
 			else 

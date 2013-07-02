@@ -5,17 +5,17 @@ Episodio::Episodio(QObject *parent) : QObject(parent)
 {
 }
 
-void Episodio::NuevoEpisodio(int idPaciente)
+void Episodio::NuevoEpisodio(int id_paciente)
 {
-    RecuperarIdDoctor(this->doctor);
+    Recuperarid_doctor(this->doctor);
     QSqlQuery *qEpisodio = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qEpisodio->prepare("INSERT INTO episodios (idpaciente,cerrado,privado,fecha,descripcion,cie,iddoctor,historial) "
-                       "VALUES (:idpaciente,:cerrado,:privado,:fecha,:descripcion,:cie,:iddoctor,:historial)");
+    qEpisodio->prepare("INSERT INTO episodios (id_paciente,cerrado,privado,fecha,descripcion,cie,id_doctor,historial) "
+                       "VALUES (:id_paciente,:cerrado,:privado,:fecha,:descripcion,:cie,:id_doctor,:historial)");
 
-    qEpisodio->bindValue(":idpaciente",idPaciente);
+    qEpisodio->bindValue(":id_paciente",id_paciente);
     qEpisodio->bindValue(":cerrado",this->cerrado);
     qEpisodio->bindValue(":privado",this->privado);
-    qEpisodio->bindValue(":iddoctor",this->iddoctor);
+    qEpisodio->bindValue(":id_doctor",this->id_doctor);
     qEpisodio->bindValue(":fecha",this->fecha);
     qEpisodio->bindValue(":historial",this->historial);
     qEpisodio->bindValue(":cie",this->cie);
@@ -34,22 +34,22 @@ void Episodio::NuevoEpisodio(int idPaciente)
 void Episodio::GuardarEpisodio()
 {
     if(!this->doctor.isEmpty())
-        RecuperarIdDoctor(this->doctor);
+        Recuperarid_doctor(this->doctor);
     QSqlQuery *qEpisodio = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     qEpisodio->prepare("UPDATE episodios SET "
-                       "idpaciente = :idpaciente,"
+                       "id_paciente = :id_paciente,"
                        "cerrado = :cerrado,"
                        "privado = :privado,"
-                       "iddoctor = :iddoctor,"
+                       "id_doctor = :id_doctor,"
                        "fecha = :fecha,"
                        "historial = :historial,"
                        "cie = :cie,"
                        "descripcion = :descripcion "
                        "WHERE id =:id");
-    qEpisodio->bindValue(":idpaciente",this->idPaciente);
+    qEpisodio->bindValue(":id_paciente",this->id_paciente);
     qEpisodio->bindValue(":cerrado",this->cerrado);
     qEpisodio->bindValue(":privado",this->privado);
-    qEpisodio->bindValue(":iddoctor",this->iddoctor);
+    qEpisodio->bindValue(":id_doctor",this->id_doctor);
     qEpisodio->bindValue(":fecha",this->fecha);
     qEpisodio->bindValue(":historial",this->historial);
     qEpisodio->bindValue(":cie",this->cie);
@@ -63,25 +63,25 @@ void Episodio::GuardarEpisodio()
 
 }
 
-void Episodio::RecuperarEpisodio(int idEpisodio)
+void Episodio::RecuperarEpisodio(int id_episodio)
 {
     QSqlQuery *qEpisodio = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qEpisodio->prepare("Select * from episodios where id = :idEpisodio");
-    qEpisodio->bindValue(":idEpisodio",idEpisodio);
+    qEpisodio->prepare("Select * from episodios where id = :id_episodio");
+    qEpisodio->bindValue(":id_episodio",id_episodio);
     if(qEpisodio->exec()) {
         qEpisodio->next();
 
         QSqlRecord rEpisodio = qEpisodio->record();
         this->id =rEpisodio.field("id").value().toInt();
-        this->setidPaciente(rEpisodio.field("idpaciente").value().toInt());
+        this->setid_paciente(rEpisodio.field("id_paciente").value().toInt());
         this->setcerrado(rEpisodio.field("cerrado").value().toInt());
         this->setCIE(rEpisodio.field("cie").value().toString());
         this->setdescripcion(rEpisodio.field("descripcion").value().toString());
-        this->setiddoctor(rEpisodio.field("iddoctor").value().toInt());
+        this->setid_doctor(rEpisodio.field("id_doctor").value().toInt());
         this->setfecha(rEpisodio.field("fecha").value().toDate());
         this->sethistorial(rEpisodio.field("historial").value().toString());
         this->setprivado(rEpisodio.field("privado").value().toInt());
-        RecuperarDoctor(this->iddoctor);
+        RecuperarDoctor(this->id_doctor);
     } else {
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR: Recuperar episodio"),QObject::tr("No se pudo recuperar el episodio. ERROR servidor:")+
                              qEpisodio->lastError().text(),QObject::tr("Aceptar"));
@@ -89,11 +89,11 @@ void Episodio::RecuperarEpisodio(int idEpisodio)
     delete qEpisodio;
 }
 
-QString Episodio::RecuperarDoctor(int iddoctor)
+QString Episodio::RecuperarDoctor(int id_doctor)
 {
     QSqlQuery qDoctor(QSqlDatabase::database("dbmedica"));
-    qDoctor.prepare("select nombre from doctores where id = :nId");
-    qDoctor.bindValue(":nId",iddoctor);
+    qDoctor.prepare("select nombre from doctores where id = :nid");
+    qDoctor.bindValue(":nid",id_doctor);
     if(qDoctor.exec()) {
         qDoctor.next();
         QSqlRecord rDoctor = qDoctor.record();
@@ -105,7 +105,7 @@ QString Episodio::RecuperarDoctor(int iddoctor)
     return "";
 }
 
-int Episodio::RecuperarIdDoctor(QString doctor)
+int Episodio::Recuperarid_doctor(QString doctor)
 {
     QSqlQuery qDoctor(QSqlDatabase::database("dbmedica"));
     qDoctor.prepare("select id from doctores where nombre = :doctor");
@@ -113,8 +113,8 @@ int Episodio::RecuperarIdDoctor(QString doctor)
     if(qDoctor.exec()) {
         qDoctor.next();
         QSqlRecord rDoctor = qDoctor.record();
-        this->iddoctor = rDoctor.value("id").toInt();
-        return this->iddoctor;
+        this->id_doctor = rDoctor.value("id").toInt();
+        return this->id_doctor;
     } else {
         QMessageBox::warning(qApp->activeWindow(),tr("Doctores"),tr("No se puede recuperar el Doctor"),tr("Aceptar"));
     }
@@ -128,9 +128,9 @@ int Episodio::getid()
     return this->id;
 }
 
-int Episodio::getidPaciente()
+int Episodio::getid_paciente()
 {
-    return this->idPaciente;
+    return this->id_paciente;
 }
 
 int Episodio::getcerrado()
@@ -183,9 +183,9 @@ void Episodio::setid(int id)
     this->id = id;
 }
 
-void Episodio::setidPaciente(int idPaciente)
+void Episodio::setid_paciente(int id_paciente)
 {
-    this->idPaciente = idPaciente;
+    this->id_paciente = id_paciente;
 }
 
 void Episodio::setcerrado(int cerrado)

@@ -16,7 +16,7 @@ public:
     explicit FrmBuscarProveedor(QWidget *parent = 0);
     ~FrmBuscarProveedor();
     QString cProv;
-    int nIdProv;
+    int nidProv;
 
     
 private:

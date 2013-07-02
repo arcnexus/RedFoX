@@ -23,18 +23,19 @@ public:
     // CAMPOS
     //--------
     int id;
-    QString cAlbaran;
-    QDate dFecha;
-    int id_Proveedor;
-    QString cProveedor;
-    QString cCifproveedor;
-    double rTotal1,rTotal2,rTotal3,rTotal4;
-    double nIva1,nIva2,nIva3,nIva4,rIva1,rIva2,rIva3,rIva4;
-    double rBase1,rBase2,rBase3,rBase4;
-    QString cFactura;
-    double rBaseTotal,rIvaTotal,rTotal;
-    QString tComentario;
-    int nPedido;
+    QString albaran;
+    QDate fecha;
+    int id_proveedor;
+    QString proveedor;
+    QString cif_proveedor;
+    double total1,total2,total3,total4;
+    double iva1,iva2,iva3,iva4;
+    float porc_iva1,porc_iva2,porc_iva3,porc_iva4;
+    double base1,base2,base3,base4;
+    QString factura;
+    double base_total,iva_total,total;
+    QString comentario;
+    int pedido;
 signals:
     
 public slots:

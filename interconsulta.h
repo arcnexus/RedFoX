@@ -8,12 +8,12 @@ class Interconsulta : public QObject
     Q_OBJECT
 private:
     int id;
-    int idPaciente;
-    int idEpisodio;
+    int id_paciente;
+    int id_episodio;
     QString referidode;
     QString motivoReferido;
-    QString derivara;
-    QString motivoDerivacion;
+    QString deivara;
+    QString motivoDeivacion;
     QString peticion;
     QString respuesta;
     int recibido;
@@ -24,12 +24,12 @@ private:
 public:
     explicit Interconsulta(QObject *parent = 0);
     void setid(int id) {this->id = id;}
-    void setidPaciente(int idPaciente) {this->idPaciente = idPaciente;}
-    void setidEpisodio(int idEpisodio) {this->idEpisodio = idEpisodio;}
+    void setid_paciente(int id_paciente) {this->id_paciente = id_paciente;}
+    void setid_episodio(int id_episodio) {this->id_episodio = id_episodio;}
     void setreferidode(QString referidode) {this->referidode = referidode;}
     void setmotivoReferido(QString motivoReferido) {this->motivoReferido = motivoReferido;}
-    void setderivara(QString derivara) {this->derivara = derivara; }
-    void setmotivoDerivacion(QString motivoDerivacion) {this->motivoDerivacion = motivoDerivacion;}
+    void setdeivara(QString deivara) {this->deivara = deivara; }
+    void setmotivoDeivacion(QString motivoDeivacion) {this->motivoDeivacion = motivoDeivacion;}
     void setpeticion(QString peticion) {this->peticion = peticion;}
     void setrespuesta(QString respuesta) {this->respuesta = respuesta;}
     void setrecibido(int recibido) {this->recibido = recibido;}
@@ -37,12 +37,12 @@ public:
     void setfechaRespuesta(QDate fechaRespuesta) {this->fechaRespuesta = fechaRespuesta;}
 
     int getid() {return this->id;}
-    int getidPaciente() {return this->idPaciente;}
-    int getidEpisodio() {return this->idEpisodio;}
+    int getid_paciente() {return this->id_paciente;}
+    int getid_episodio() {return this->id_episodio;}
     QString getreferidode() {return this->referidode;}
     QString getmotivoReferido() {return this->motivoReferido;}
-    QString getderivara() {return this->derivara;}
-    QString getmotivoDerivacion() {return this->motivoDerivacion;}
+    QString getdeivara() {return this->deivara;}
+    QString getmotivoDeivacion() {return this->motivoDeivacion;}
     QString getpeticion() {return this->peticion;}
     QString getrespuesta() {return this->respuesta;}
     int getrecibido() {return this->recibido;}
@@ -52,7 +52,7 @@ public:
 signals:
     
 public slots:
-    void AnadirInterconsulta(int idEpisodio,int idPaciente);
+    void AnadirInterconsulta(int id_episodio,int id_paciente);
 
     
 

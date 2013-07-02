@@ -24,7 +24,7 @@ bool EntregasCuenta::Anadir(int tipo, int id_pro_cli, double importe, QDate fech
         queryEntregas.bindValue(":disponible",importe);
         if(queryEntregas.exec())
         {
-            queryEntregas.prepare("update clientes set rImporteACuenta = rImporteACuenta + :importe"
+            queryEntregas.prepare("update clientes set importe_a_cuenta = importe_a_cuenta + :importe"
                                   " where id =:id_cli");
             if(queryEntregas.exec()){
                 QSqlDatabase::database("Maya").commit();
@@ -53,7 +53,7 @@ bool EntregasCuenta::Anadir(int tipo, int id_pro_cli, double importe, QDate fech
         queryEntregas.bindValue(":disponible",importe);
         if(queryEntregas.exec())
         {
-            queryEntregas.prepare("update proveedores set rEntregadoaCuenta = rEntregadoaCuenta + :importe"
+            queryEntregas.prepare("update proveedores set entregado_a_cuenta = entregado_a_cuenta + :importe"
                                   " where id =:id_pro");
             queryEntregas.bindValue(":importe",importe);
             queryEntregas.bindValue(":id_pro",id_pro_cli);

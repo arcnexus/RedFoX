@@ -18,8 +18,8 @@ public:
     explicit FrmCajaMinuta(QWidget *parent = 0);
     ~FrmCajaMinuta();
     
-    moduleZone ModuleZone(){return Ventas;}
-    QString ModuleName(){return "FormTPV";}
+    module_zone module_zone(){return Ventas;}
+    QString module_name(){return "FormTPV";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -38,7 +38,7 @@ private:
     bool keys_onCodigo(int key);
     bool keys_lineas(int key);
 
-    bool rellenarArticulo(QString cCodigo);
+    bool rellenarArticulo(QString codigo);
     Ticket ticket;
     int linea_row;
     int linea_column;

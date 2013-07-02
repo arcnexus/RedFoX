@@ -220,7 +220,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="2" column="1" colspan="2">
-        <widget class="QSpinBox" name="spinDigitosFactura">
+        <widget class="QSpinBox" name="spindigitos_factura">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -266,7 +266,7 @@ color: rgb(255,255,255);</string>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QSpinBox" name="spinDigitosCuentaContable">
+          <widget class="QSpinBox" name="spidigitos_cuentaContable">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -280,7 +280,7 @@ color: rgb(255,255,255);</string>
           </widget>
          </item>
          <item row="0" column="3">
-          <widget class="QLineEdit" name="txtCuentaCobros">
+          <widget class="QLineEdit" name="txtcuenta_cobros">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -308,7 +308,7 @@ color: rgb(255,255,255);</string>
           </widget>
          </item>
          <item row="1" column="3">
-          <widget class="QLineEdit" name="txtCuentaPagos">
+          <widget class="QLineEdit" name="txtcuenta_pagos">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
@@ -567,7 +567,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="0" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtNombreBDWeb">
+        <widget class="QLineEdit" name="txtnombre_bdWeb">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -615,7 +615,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="txtNombreBD_MediTec">
+        <widget class="QLineEdit" name="txtnombre_bd_MediTec">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
@@ -752,7 +752,7 @@ color: rgb(255,255,255);</string>
        </widget>
       </item>
       <item row="3" column="4">
-       <widget class="QLineEdit" name="txtDireccionBD">
+       <widget class="QLineEdit" name="txtdireccionBD">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -768,7 +768,7 @@ color: rgb(255,255,255);</string>
       <item row="3" column="3">
        <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>Direccion BD:</string>
+         <string>direccion BD:</string>
         </property>
        </widget>
       </item>
@@ -812,7 +812,7 @@ color: rgb(255,255,255);</string>
   <tabstop>txtUsuario</tabstop>
   <tabstop>txtPassword</tabstop>
   <tabstop>txtPuerto</tabstop>
-  <tabstop>txtDireccionBD</tabstop>
+  <tabstop>txtdireccionBD</tabstop>
   <tabstop>chkmedicum</tabstop>
   <tabstop>chkconta</tabstop>
   <tabstop>cboUsuarioActivo</tabstop>
@@ -822,13 +822,13 @@ color: rgb(255,255,255);</string>
   <tabstop>chkPrestaShop</tabstop>
   <tabstop>chkProfesional</tabstop>
   <tabstop>txtPorcIRPF</tabstop>
-  <tabstop>spinDigitosFactura</tabstop>
-  <tabstop>spinDigitosCuentaContable</tabstop>
+  <tabstop>spindigitos_factura</tabstop>
+  <tabstop>spidigitos_cuentaContable</tabstop>
   <tabstop>txtCuentaClientes</tabstop>
   <tabstop>txtCuentaProveedores</tabstop>
   <tabstop>txtCuentaAcreedores</tabstop>
-  <tabstop>txtCuentaCobros</tabstop>
-  <tabstop>txtCuentaPagos</tabstop>
+  <tabstop>txtcuenta_cobros</tabstop>
+  <tabstop>txtcuenta_pagos</tabstop>
   <tabstop>chkVademecum_alopatico</tabstop>
   <tabstop>txtclaveV1_1</tabstop>
   <tabstop>txtclaveV1_2</tabstop>
@@ -841,7 +841,7 @@ color: rgb(255,255,255);</string>
   <tabstop>chkVademecum_MTC</tabstop>
   <tabstop>txtclaveV4_1</tabstop>
   <tabstop>txtclaveV4_2</tabstop>
-  <tabstop>txtNombreBDWeb</tabstop>
+  <tabstop>txtnombre_bdWeb</tabstop>
   <tabstop>txtHostWeb</tabstop>
   <tabstop>txtUsuarioDBweb</tabstop>
   <tabstop>txtPasswordDBWeb</tabstop>

@@ -19,7 +19,7 @@ class FrmFichaPaciente : public QDialog
 public:
     explicit FrmFichaPaciente(QWidget *parent = 0);
     ~FrmFichaPaciente();
-    void cargarDatos(int idcliente);
+    void cargarDatos(int id_cliente);
     void cargarEpisodio(int control);
     void guardarDatosPaciente();
     Paciente *oPaciente;
@@ -67,7 +67,7 @@ private slots:
     void on_BtnDeshacerPaciente_clicked();
     void AnadirVisita();
     void ListaVisita_Clicked(QModelIndex index);
-    void CargarVisita(int nId);
+    void CargarVisita(int nid);
     void bntEditarVisita_clicked();
     void btnGuardarVisita_clicked();
     void btnDeshacerVisita_clicked();
@@ -77,7 +77,7 @@ private slots:
     void ListaHistorialImagenes_clicked(QModelIndex index);
 signals:
     void pasaid(int);
-    void pasaCodigoNacional(QString);
+    void pasacodigo_nacional(QString);
     void pasaPaciente(QString);
 
 private:

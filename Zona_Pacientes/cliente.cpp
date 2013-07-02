@@ -15,119 +15,119 @@ void Cliente::Guardar() {
 
     QSqlQuery query(QSqlDatabase::database("Maya"));
     query.prepare( "UPDATE clientes set "
-                   "cCodigoCliente = :cCodigoCliente,"
-                   "cApellido1 = :cApellido1,"
-                   "cApellido2 = :cApellido2,"
-                   "cNombre= :cNombre,"
-                   "cNombreFiscal= :cNombreFiscal,"
-                   "cNombreComercial= :cNombreComercial,"
-                   "cPersonaContacto= :cPersonaContacto,"
-                   "cCifNif =:cCifNif,"
-                   "cDireccion1= :cDireccion1,"
-                   "cDireccion2= :cDireccion2,"
-                   "cCP= :cCP,"
-                   "cPoblacion= :cPoblacion,"
-                   "cProvincia= :cProvincia,"
-                   "idPais= :idPais,"
-                   "cTelefono1 = :cTelefono1,"
-                   "cTelefono2 = :cTelefono2,"
-                   "cFax=:cFax,"
-                   "cMovil=:cMovil,"
-                   "cEmail=:cEmail,"
-                   "cWeb=:cWeb,"
-                   "dFechaAlta=:dFechaAlta,"
-                   "dFechaUltimaCompra=:dFechaUltimaCompra,"
-                   "rAcumuladoVentas=:rAcumuladoVentas,"
-                   "rVentasEjercicio=:rVentasEjercicio,"
-                   "rRiesgoMaximo=:rRiesgoMaximo,"
-                   "rDeudaActual=:rDeudaActual,"
-                   "tComentarios=:tComentarios,"
-                   "lBloqueado=:lBloqueado,"
-                   "tComentarioBloqueo =:tComentarioBloqueo,"
-                   "nPorcDtoCliente=:nPorcDtoCliente,"
-                   "lRecargoEquivalencia=:lRecargoEquivalencia,"
-                   "cCuentaContable=:cCuentaContable,"
-                   "cCuentaIvaRepercutido=:cCuentaIvaRepercutido,"
-                   "cCuentaDeudas=:cCuentaDeudas,"
-                   "cCuentaCobros=:cCuentaCobros,"
-                   "nDiaPago1=:nDiaPago1,"
-                   "nDiaPago2=:nDiaPago2,"
-                   "nTarifaCliente=:nTarifaCliente,"
-                   "rImporteACuenta=:rImporteaCuenta,"
-                   "rVales=:rVales,"
-                   "cCentidadBancaria=:cEntidadBancaria,"
-                   "cOficinaBancaria=:cOficinaBancaria,"
-                   "cDC=:cDC,"
-                   "cCuentaCorriente=:cCuentaCorriente,"
-                   "dFechaNacimiento=:dFechaNacimiento,"
-                   "rImportePendiente=:rImportePendiente,"
-                   "cAccesoWeb =:cAccesoWeb,"
-                   "cPasswordWeb=:cPasswordWeb,"
-                   "id_idiomadocumentos=:id_idioma,"
+                   "codigo_cliente = :codigo_cliente,"
+                   "apellido1 = :apellido1,"
+                   "apellido2 = :apellido2,"
+                   "nombre= :nombre,"
+                   "nombre_fiscal= :nombre_fiscal,"
+                   "nombre_comercial= :nombre_comercial,"
+                   "persona_contacto= :persona_contacto,"
+                   "cif_nif =:cif_nif,"
+                   "direccion1= :direccion1,"
+                   "direccion2= :direccion2,"
+                   "cp= :cp,"
+                   "poblacion= :poblacion,"
+                   "provincia= :provincia,"
+                   "id_pais= :id_pais,"
+                   "telefono1 = :telefono1,"
+                   "telefono2 = :telefono2,"
+                   "fax=:fax,"
+                   "movil=:movil,"
+                   "email=:email,"
+                   "web=:web,"
+                   "fecha_alta=:fecha_alta,"
+                   "fecha_ultima_compra=:fecha_ultima_compra,"
+                   "acumulado_ventas=:acumulado_ventas,"
+                   "ventas_ejercicio=:ventas_ejercicio,"
+                   "riesgo_maximo=:riesgo_maximo,"
+                   "deuda_actual=:deuda_actual,"
+                   "comentarios=:comentarios,"
+                   "bloqueado=:bloqueado,"
+                   "comentario_bloqueo =:comentario_bloqueo,"
+                   "porc_dto_cliente=:porc_dto_cliente,"
+                   "recargo_equivalencia=:recargo_equivalencia,"
+                   "cuenta_contable=:cuenta_contable,"
+                   "cuenta_iva_repercutido=:cuenta_iva_repercutido,"
+                   "cuenta_deudas=:cuenta_deudas,"
+                   "cuenta_cobros=:cuenta_cobros,"
+                   "dia_pago1=:dia_pago1,"
+                   "dia_pago2=:dia_pago2,"
+                   "tarifa_cliente=:tarifa_cliente,"
+                   "importe_a_cuenta=:importe_a_cuenta,"
+                   "vales=:vales,"
+                   "entidad_bancaria=:entidad_bancaria,"
+                   "oficina_bancaria=:oficina_bancaria,"
+                   "dc=:dc,"
+                   "cuenta_corriente=:cuenta_corriente,"
+                   "fecha_nacimiento=:fecha_nacimiento,"
+                   "importe_pendiente=:importe_pendiente,"
+                   "acceso_web =:acceso_web,"
+                   "password_web=:password_web,"
+                   "id_idioma_documentos=:id_idioma,"
                    "cif_vies=:cif_vies,"
                    "id_web =:id_web"
-                   "nIRPF =:nIRPF"
+                   "irpf =:irpf"
                    " WHERE id =:id" );
 
-    query.bindValue(":cCodigoCliente", this->cCodigoCliente);
-    query.bindValue(":cApellido1", this->cApellido1);
-    query.bindValue(":cApellido2",this->cApellido2);
-    query.bindValue(":cNombre",this->cNombre);
-    query.bindValue(":cNombreFiscal",this->cNombreFiscal);
-    query.bindValue(":cNombreComercial",this->cNombreComercial);
-    query.bindValue(":cPersonaContacto",this->cPersonaContacto);
-    query.bindValue(":cCifNif",this->cCifNif);
-    query.bindValue(":cDireccion1",this->cDireccion1);
-    query.bindValue(":cDireccion2",this->cDireccion2);
-    query.bindValue(":cCP",this->cCp);
-    query.bindValue(":cPoblacion",this->cPoblacion);
-    query.bindValue(":cProvincia", this->cProvincia);
-    query.bindValue(":idPais",this->idPais);
-    query.bindValue(":cTelefono1", this->cTelefono1);
-    query.bindValue(":cTelefono2",this->cTelefono2);
-    query.bindValue(":cFax",this->cFax);
-    query.bindValue(":cMovil",this->cMovil);
-    query.bindValue(":cEmail",this->cEmail);
-    query.bindValue(":cWeb",this->cWeb);
-    query.bindValue(":dFechaAlta",this->dFechaalta);
-    query.bindValue(":dFechaUltimaCompra",this->dFechaCompra);
-    query.bindValue(":rAcumuladoVentas",this->rAcumuladoVentas);
-    query.bindValue(":rVentasEjercicio",this->rVentasEjercicio);
-    query.bindValue(":rRiesgoMaximo",this->rRiesgoMaximo);
-    query.bindValue(":rDeudaActual",this->rDeudaActual);
-    query.bindValue(":tComentarios",this->tComentarios);
-    query.bindValue(":lBloqueado",this->lBloqueado);
-    query.bindValue(":tComentarioBloqueo",this->tComentarioBloqueo);
-    query.bindValue(":nPorcDtoCliente", this->nPorcDtoCliente);
-    query.bindValue(":lRecargoEquivalencia",this->lRecargoEquivalencia);
-    query.bindValue(":cCuentaContable",this->cCuentaContable);
-    query.bindValue(":cCuentaIvaRepercutido",this->cCuentaIvaRepercutido);
-    query.bindValue(":cCuentaDeudas", this->cCuentaDeudas);
-    query.bindValue(":cCuentaCobros", this->cCuentaCobros);
-    query.bindValue(":nDiaPago1",this->nDiaPago1);
-    query.bindValue(":nDiaPago2",this->nDiaPago2);
-    query.bindValue(":nTarifaCliente",this->nTarifaCliente);
-    QString rImporteACuenta;
-    rImporteACuenta = QString::number(this->rImporteACuenta);
-    rImporteACuenta = rImporteACuenta.replace(".","");
-    this->rImporteACuenta = rImporteACuenta.toDouble();
-    query.bindValue(":rImporteACuenta",this->rImporteACuenta);
-    query.bindValue(":rVales",this->rVales);
-    query.bindValue(":cEntidadBancaria", this->cEntidadBancaria);
-    query.bindValue(":cOficinaBancaria",this->cOficinaBancaria);
-    query.bindValue(":cDC",this->cDc);
-    query.bindValue(":cCuentaCorriente",this->cCuentaCorriente);
-    query.bindValue(":dFechaNacimiento",this->dFechaNacimiento);
-    query.bindValue(":rImportePendiente",this->rImportePendiente);
-    query.bindValue(":cAccesoWeb",this->cAccesoWeb);
-    query.bindValue(":id_idioma",this->idIdioma);
-    query.bindValue(":cif_vies",this->cCifVies);
-    query.bindValue(":cPasswordWeb",this->cPasswordWeb);
+    query.bindValue(":codigo_cliente", this->codigo_cliente);
+    query.bindValue(":apellido1", this->apellido1);
+    query.bindValue(":apellido2",this->apellido2);
+    query.bindValue(":nombre",this->nombre);
+    query.bindValue(":nombre_fiscal",this->nombre_fiscal);
+    query.bindValue(":nombre_comercial",this->nombre_comercial);
+    query.bindValue(":persona_contacto",this->persona_contacto);
+    query.bindValue(":cif_nif",this->cif_nif);
+    query.bindValue(":direccion1",this->direccion1);
+    query.bindValue(":direccion2",this->direccion2);
+    query.bindValue(":cp",this->cp);
+    query.bindValue(":poblacion",this->poblacion);
+    query.bindValue(":provincia", this->provincia);
+    query.bindValue(":id_pais",this->id_pais);
+    query.bindValue(":telefono1", this->telefono1);
+    query.bindValue(":telefono2",this->telefono2);
+    query.bindValue(":fax",this->fax);
+    query.bindValue(":movil",this->movil);
+    query.bindValue(":email",this->email);
+    query.bindValue(":web",this->web);
+    query.bindValue(":fecha_alta",this->fecha_alta);
+    query.bindValue(":fecha_ultima_compra",this->fechaCompra);
+    query.bindValue(":acumulado_ventas",this->acumulado_ventas);
+    query.bindValue(":ventas_ejercicio",this->ventas_ejercicio);
+    query.bindValue(":riesgo_maximo",this->riesgo_maximo);
+    query.bindValue(":deuda_actual",this->deuda_actual);
+    query.bindValue(":comentarios",this->comentarios);
+    query.bindValue(":bloqueado",this->bloqueado);
+    query.bindValue(":comentario_bloqueo",this->comentario_bloqueo);
+    query.bindValue(":porc_dto_cliente", this->porc_dto_cliente);
+    query.bindValue(":recargo_equivalencia",this->recargo_equivalencia);
+    query.bindValue(":cuenta_contable",this->cuenta_contable);
+    query.bindValue(":cuenta_iva_repercutido",this->cuenta_iva_repercutido);
+    query.bindValue(":cuenta_deudas", this->cuenta_deudas);
+    query.bindValue(":cuenta_cobros", this->cuenta_cobros);
+    query.bindValue(":dia_pago1",this->dia_pago1);
+    query.bindValue(":dia_pago2",this->dia_pago2);
+    query.bindValue(":tarifa_cliente",this->tarifa_cliente);
+    QString importe_a_cuenta;
+    importe_a_cuenta = QString::number(this->importe_a_cuenta);
+    importe_a_cuenta = importe_a_cuenta.replace(".","");
+    this->importe_a_cuenta = importe_a_cuenta.toDouble();
+    query.bindValue(":importe_a_cuenta",this->importe_a_cuenta);
+    query.bindValue(":vales",this->vales);
+    query.bindValue(":entidad_bancaria", this->entidad_bancaria);
+    query.bindValue(":oficina_bancaria",this->oficina_bancaria);
+    query.bindValue(":dc",this->dc);
+    query.bindValue(":cuenta_corriente",this->cuenta_corriente);
+    query.bindValue(":fecha_nacimiento",this->fecha_nacimiento);
+    query.bindValue(":importe_pendiente",this->importe_pendiente);
+    query.bindValue(":acceso_web",this->acceso_web);
+    query.bindValue(":id_idioma",this->ididioma);
+    query.bindValue(":cif_vies",this->cifVies);
+    query.bindValue(":password_web",this->password_web);
     query.bindValue("id_web",this->id_web);
     if (this->lIRPF)
-        query.bindValue(":nIRPF",1);
+        query.bindValue(":irpf",1);
     else
-        query.bindValue(":nIRPF",0);
+        query.bindValue(":irpf",0);
     query.bindValue(":id",this->id);
 
 
@@ -135,9 +135,9 @@ void Cliente::Guardar() {
         transaccion :false;
         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos cliente. Descripción Error: ", query.lastError().text());
     } else {
-        if (Configuracion_global->EnlaceWeb ==true)
+        if (Configuracion_global->enlace_web ==true)
             GuardarWeb();
-       // QMessageBox::information(qApp->activeWindow(),"Guardar datos","Los datos se han guardado correctamente:","Ok");
+       // QMessageBox::information(qApp->activeWindow(),"Guardar datos","Los datos se han guardado corectamente:","Ok");
     }
     // --------------------------
     // Cuenta contable
@@ -146,8 +146,8 @@ void Cliente::Guardar() {
     {
         Cuentas_contables cuenta(this);
         cuenta.activo = true;
-        cuenta.codigo_cta = this->cCodigoCliente;
-        cuenta.descripcion = this->cNombreFiscal;
+        cuenta.codigo_cta = this->codigo_cliente;
+        cuenta.descripcion = this->nombre_fiscal;
         cuenta.codigo_balance = "ABIII1";
         cuenta.saldo = 0;
         bool succes = cuenta.anadir_cuenta();
@@ -177,150 +177,150 @@ void Cliente::GuardarWeb()
    Configuracion_global->AbrirDbWeb();
    QSqlQuery query(QSqlDatabase::database("dbweb"));
    query.prepare( "UPDATE clientes set "
-                  "cCodigoCliente = :cCodigoCliente,"
-                  "cApellido1 = :cApellido1,"
-                  "cApellido2 = :cApellido2,"
-                  "cNombre= :cNombre,"
-                  "cNombreFiscal= :cNombreFiscal,"
-                  "cNombreComercial= :cNombreComercial,"
-                  "cPersonaContacto= :cPersonaContacto,"
-                  "cCifNif =:cCifNif,"
-                  "cDireccion1= :cDireccion1,"
-                  "cDireccion2= :cDireccion2,"
-                  "cCP= :cCP,"
-                  "cPoblacion= :cPoblacion,"
-                  "cProvincia= :cProvincia,"
-                  "idPais= :idPais,"
-                  "cTelefono1 = :cTelefono1,"
-                  "cTelefono2 = :cTelefono2,"
-                  "cFax=:cFax,"
-                  "cMovil=:cMovil,"
-                  "cEmail=:cEmail,"
-                  "cWeb=:cWeb,"
-                  "dFechaAlta=:dFechaAlta,"
-                  "dFechaUltimaCompra=:dFechaUltimaCompra,"
-                  "rAcumuladoVentas=:rAcumuladoVentas,"
-                  "rVentasEjercicio=:rVentasEjercicio,"
-                  "rRiesgoMaximo=:rRiesgoMaximo,"
-                  "rDeudaActual=:rDeudaActual,"
-                  "tComentarios=:tComentarios,"
-                  "lBloqueado=:lBloqueado,"
-                  "tComentarioBloqueo =:tComentarioBloqueo,"
-                  "nPorcDtoCliente=:nPorcDtoCliente,"
-                  "lRecargoEquivalencia=:lRecargoEquivalencia,"
-                  "cCuentaContable=:cCuentaContable,"
-                  "cCuentaIvaRepercutido=:cCuentaIvaRepercutido,"
-                  "cCuentaDeudas=:cCuentaDeudas,"
-                  "cCuentaCobros=:cCuentaCobros,"
-                  "nDiaPago1=:nDiaPago1,"
-                  "nDiaPago2=:nDiaPago2,"
-                  "nTarifaCliente=:nTarifaCliente,"
-                  "rImporteACuenta=:rImporteaCuenta,"
-                  "rVales=:rVales,"
-                  "cCentidadBancaria=:cEntidadBancaria,"
-                  "cOficinaBancaria=:cOficinaBancaria,"
-                  "cDC=:cDC,"
-                  "cCuentaCorriente=:cCuentaCorriente,"
-                  "dFechaNacimiento=:dFechaNacimiento,"
-                  "rImportePendiente=:rImportePendiente,"
-                  "cAccesoWeb =:cAccesoWeb,"
-                  "cPasswordWeb=:cPasswordWeb,"
-                  "id_idiomadocumentos=:id_idioma,"
+                  "codigo_cliente = :codigo_cliente,"
+                  "apellido1 = :apellido1,"
+                  "apellido2 = :apellido2,"
+                  "nombre= :nombre,"
+                  "nombre_fiscal= :nombre_fiscal,"
+                  "nombre_comercial= :nombre_comercial,"
+                  "persona_contacto= :persona_contacto,"
+                  "cif_nif =:cif_nif,"
+                  "direccion1= :direccion1,"
+                  "direccion2= :direccion2,"
+                  "cp= :cp,"
+                  "poblacion= :poblacion,"
+                  "provincia= :provincia,"
+                  "id_pais= :id_pais,"
+                  "telefono1 = :telefono1,"
+                  "telefono2 = :telefono2,"
+                  "fax=:fax,"
+                  "movil=:movil,"
+                  "email=:email,"
+                  "web=:web,"
+                  "fecha_alta=:fecha_alta,"
+                  "fecha_ultima_compra=:fecha_ultima_compra,"
+                  "acumulado_ventas=:acumulado_ventas,"
+                  "ventas_ejercicio=:ventas_ejercicio,"
+                  "riesgo_maximo=:riesgo_maximo,"
+                  "deuda_actual=:deuda_actual,"
+                  "comentarios=:comentarios,"
+                  "bloqueado=:bloqueado,"
+                  "comentario_bloqueo =:comentario_bloqueo,"
+                  "porc_dto_cliente=:porc_dto_cliente,"
+                  "recargo_equivalencia=:recargo_equivalencia,"
+                  "cuenta_contable=:cuenta_contable,"
+                  "cuenta_iva_repercutido=:cuenta_iva_repercutido,"
+                  "cuenta_deudas=:cuenta_deudas,"
+                  "cuenta_cobros=:cuenta_cobros,"
+                  "dia_pago1=:dia_pago1,"
+                  "dia_pago2=:dia_pago2,"
+                  "tarifa_cliente=:tarifa_cliente,"
+                  "importe_a_cuenta=:importe_a_cuenta,"
+                  "vales=:vales,"
+                  "entidad_bancaria=:entidad_bancaria,"
+                  "oficina_bancaria=:oficina_bancaria,"
+                  "dc=:dc,"
+                  "cuenta_corriente=:cuenta_corriente,"
+                  "fecha_nacimiento=:fecha_nacimiento,"
+                  "importe_pendiente=:importe_pendiente,"
+                  "acceso_web =:acceso_web,"
+                  "password_web=:password_web,"
+                  "id_idioma_documentos=:id_idioma,"
                   "cif_vies=:cif_vies,"
                   "id_local =:id_local,"
-                  "nIRPF =:nIRPF"
+                  "irpf =:irpf"
                   " WHERE id =:id_web" );
 
-   query.bindValue(":cCodigoCliente", this->cCodigoCliente);
-   query.bindValue(":cApellido1", this->cApellido1);
-   query.bindValue(":cApellido2",this->cApellido2);
-   query.bindValue(":cNombre",this->cNombre);
-   query.bindValue(":cNombreFiscal",this->cNombreFiscal);
-   query.bindValue(":cNombreComercial",this->cNombreComercial);
-   query.bindValue(":cPersonaContacto",this->cPersonaContacto);
-   query.bindValue(":cCifNif",this->cCifNif);
-   query.bindValue(":cDireccion1",this->cDireccion1);
-   query.bindValue(":cDireccion2",this->cDireccion2);
-   query.bindValue(":cCP",this->cCp);
-   query.bindValue(":cPoblacion",this->cPoblacion);
-   query.bindValue(":cProvincia", this->cProvincia);
-   query.bindValue(":idPais",this->idPais);
-   query.bindValue(":cTelefono1", this->cTelefono1);
-   query.bindValue(":cTelefono2",this->cTelefono2);
-   query.bindValue(":cFax",this->cFax);
-   query.bindValue(":cMovil",this->cMovil);
-   query.bindValue(":cEmail",this->cEmail);
-   query.bindValue(":cWeb",this->cWeb);
-   query.bindValue(":dFechaAlta",this->dFechaalta);
-   query.bindValue(":dFechaUltimaCompra",this->dFechaCompra);
-   query.bindValue(":rAcumuladoVentas",this->rAcumuladoVentas);
-   query.bindValue(":rVentasEjercicio",this->rVentasEjercicio);
-   query.bindValue(":rRiesgoMaximo",this->rRiesgoMaximo);
-   query.bindValue(":rDeudaActual",this->rDeudaActual);
-   query.bindValue(":tComentarios",this->tComentarios);
-   query.bindValue(":lBloqueado",this->lBloqueado);
-   query.bindValue(":tComentarioBloqueo",this->tComentarioBloqueo);
-   query.bindValue(":nPorcDtoCliente", this->nPorcDtoCliente);
-   query.bindValue(":lRecargoEquivalencia",this->lRecargoEquivalencia);
-   query.bindValue(":cCuentaContable",this->cCuentaContable);
-   query.bindValue(":cCuentaIvaRepercutido",this->cCuentaIvaRepercutido);
-   query.bindValue(":cCuentaDeudas", this->cCuentaDeudas);
-   query.bindValue(":cCuentaCobros", this->cCuentaCobros);
-   query.bindValue(":nDiaPago1",this->nDiaPago1);
-   query.bindValue(":nDiaPago2",this->nDiaPago2);
-   query.bindValue(":nTarifaCliente",this->nTarifaCliente);
-   QString rImporteACuenta;
-   rImporteACuenta = QString::number(this->rImporteACuenta);
-   rImporteACuenta = rImporteACuenta.replace(".","");
-   this->rImporteACuenta = rImporteACuenta.toDouble();
-   query.bindValue(":rImporteACuenta",this->rImporteACuenta);
-   query.bindValue(":rVales",this->rVales);
-   query.bindValue(":cEntidadBancaria", this->cEntidadBancaria);
-   query.bindValue(":cOficinaBancaria",this->cOficinaBancaria);
-   query.bindValue(":cDC",this->cDc);
-   query.bindValue(":cCuentaCorriente",this->cCuentaCorriente);
-   query.bindValue(":dFechaNacimiento",this->dFechaNacimiento);
-   query.bindValue(":rImportePendiente",this->rImportePendiente);
-   query.bindValue(":cAccesoWeb",this->cAccesoWeb);
-   query.bindValue(":id_idioma",this->idIdioma);
-   query.bindValue(":cif_vies",this->cCifVies);
-   query.bindValue(":cPasswordWeb",this->cPasswordWeb);
+   query.bindValue(":codigo_cliente", this->codigo_cliente);
+   query.bindValue(":apellido1", this->apellido1);
+   query.bindValue(":apellido2",this->apellido2);
+   query.bindValue(":nombre",this->nombre);
+   query.bindValue(":nombre_fiscal",this->nombre_fiscal);
+   query.bindValue(":nombre_comercial",this->nombre_comercial);
+   query.bindValue(":persona_contacto",this->persona_contacto);
+   query.bindValue(":cif_nif",this->cif_nif);
+   query.bindValue(":direccion1",this->direccion1);
+   query.bindValue(":direccion2",this->direccion2);
+   query.bindValue(":cp",this->cp);
+   query.bindValue(":poblacion",this->poblacion);
+   query.bindValue(":provincia", this->provincia);
+   query.bindValue(":id_pais",this->id_pais);
+   query.bindValue(":telefono1", this->telefono1);
+   query.bindValue(":telefono2",this->telefono2);
+   query.bindValue(":fax",this->fax);
+   query.bindValue(":movil",this->movil);
+   query.bindValue(":email",this->email);
+   query.bindValue(":web",this->web);
+   query.bindValue(":fecha_alta",this->fecha_alta);
+   query.bindValue(":fecha_ultima_compra",this->fechaCompra);
+   query.bindValue(":acumulado_ventas",this->acumulado_ventas);
+   query.bindValue(":ventas_ejercicio",this->ventas_ejercicio);
+   query.bindValue(":riesgo_maximo",this->riesgo_maximo);
+   query.bindValue(":deuda_actual",this->deuda_actual);
+   query.bindValue(":comentarios",this->comentarios);
+   query.bindValue(":bloqueado",this->bloqueado);
+   query.bindValue(":comentario_bloqueo",this->comentario_bloqueo);
+   query.bindValue(":porc_dto_cliente", this->porc_dto_cliente);
+   query.bindValue(":recargo_equivalencia",this->recargo_equivalencia);
+   query.bindValue(":cuenta_contable",this->cuenta_contable);
+   query.bindValue(":cuenta_iva_repercutido",this->cuenta_iva_repercutido);
+   query.bindValue(":cuenta_deudas", this->cuenta_deudas);
+   query.bindValue(":cuenta_cobros", this->cuenta_cobros);
+   query.bindValue(":dia_pago1",this->dia_pago1);
+   query.bindValue(":dia_pago2",this->dia_pago2);
+   query.bindValue(":tarifa_cliente",this->tarifa_cliente);
+   QString importe_a_cuenta;
+   importe_a_cuenta = QString::number(this->importe_a_cuenta);
+   importe_a_cuenta = importe_a_cuenta.replace(".","");
+   this->importe_a_cuenta = importe_a_cuenta.toDouble();
+   query.bindValue(":importe_a_cuenta",this->importe_a_cuenta);
+   query.bindValue(":vales",this->vales);
+   query.bindValue(":entidad_bancaria", this->entidad_bancaria);
+   query.bindValue(":oficina_bancaria",this->oficina_bancaria);
+   query.bindValue(":dc",this->dc);
+   query.bindValue(":cuenta_corriente",this->cuenta_corriente);
+   query.bindValue(":fecha_nacimiento",this->fecha_nacimiento);
+   query.bindValue(":importe_pendiente",this->importe_pendiente);
+   query.bindValue(":acceso_web",this->acceso_web);
+   query.bindValue(":id_idioma",this->ididioma);
+   query.bindValue(":cif_vies",this->cifVies);
+   query.bindValue(":password_web",this->password_web);
    if (this->lIRPF)
-       query.bindValue(":nIRPF",1);
+       query.bindValue(":irpf",1);
    else
-       query.bindValue(":nIRPF",0);
-   query.bindValue(":idweb",this->id_web);
+       query.bindValue(":irpf",0);
+   query.bindValue(":id_web",this->id_web);
    query.bindValue(":id_local",this->id);
 
 
    if(!query.exec()){
        QMessageBox::critical(qApp->activeWindow(),"error al guardar datos cliente en la web. Descripción Error: ", query.executedQuery());
    } else {
-      // QMessageBox::information(qApp->activeWindow(),"Guardar datos","Los datos se han guardado correctamente:","Ok");
+      // QMessageBox::information(qApp->activeWindow(),"Guardar datos","Los datos se han guardado corectamente:","Ok");
    }
        ;
    Configuracion_global->CerrarDbWeb();
 }
 void Cliente::Anadir() {
     QSqlQuery query(QSqlDatabase::database("Maya"));
-         query.prepare("INSERT INTO clientes (cCodigoCliente,cCuentaContable,cCuentaIvaRepercutido,"
-                       "cCuentaDeudas,cCuentaCobros,nTarifaCliente) "
-                       "VALUES (:cCodigoCliente,:cCuentaContable,:cCuentaIvaRepercutido,"
-                       ":cCuentaDeudas,:cCuentaCobros,:nTarifaCliente)");
-         query.bindValue(":cCodigoCliente", this->cCodigoCliente);
-         query.bindValue(":cCuentaContable",this->cCuentaContable);
-         query.bindValue(":cCuentaIvaRepercutido",this->cCuentaIvaRepercutido);
-         query.bindValue(":cCuentaDeudas", this->cCuentaDeudas);
-         query.bindValue(":cCuentaCobros", this->cCuentaCobros);
-         query.bindValue(":nTarifaCliente",this->nTarifaCliente);
+         query.prepare("INSERT INTO clientes (codigo_cliente,cuenta_contable,cuenta_iva_repercutido,"
+                       "cuenta_deudas,cuenta_cobros,tarifa_cliente) "
+                       "VALUES (:codigo_cliente,:cuenta_contable,:cuenta_iva_repercutido,"
+                       ":cuenta_deudas,:cuenta_cobros,:tarifa_cliente)");
+         query.bindValue(":codigo_cliente", this->codigo_cliente);
+         query.bindValue(":cuenta_contable",this->cuenta_contable);
+         query.bindValue(":cuenta_iva_repercutido",this->cuenta_iva_repercutido);
+         query.bindValue(":cuenta_deudas", this->cuenta_deudas);
+         query.bindValue(":cuenta_cobros", this->cuenta_cobros);
+         query.bindValue(":tarifa_cliente",this->tarifa_cliente);
 
          if(!query.exec()){
              QMessageBox::critical(qApp->activeWindow(),"error al insertar:", query.executedQuery());
          } else{
-             TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Cliente insertado Correctamente");
-             int nId = query.lastInsertId().toInt();
-             this->id = nId;
-             if (Configuracion_global->EnlaceWeb)
+             TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Cliente insertado Corectamente");
+             int nid = query.lastInsertId().toInt();
+             this->id = nid;
+             if (Configuracion_global->enlace_web)
                  anadirWeb();
          }
 }
@@ -330,8 +330,8 @@ void Cliente::anadirWeb()
 
     Configuracion_global->AbrirDbWeb();
     QSqlQuery queryClienteWeb(QSqlDatabase::database("dbweb"));
-    queryClienteWeb.prepare("INSERT INTO clientes (cCodigoCliente,id_local) VALUES (:cCodigoCliente,:id_local)");
-    queryClienteWeb.bindValue(":cCodigoCliente",this->cCodigoCliente);
+    queryClienteWeb.prepare("INSERT INTO clientes (codigo_cliente,id_local) VALUES (:codigo_cliente,:id_local)");
+    queryClienteWeb.bindValue(":codigo_cliente",this->codigo_cliente);
     queryClienteWeb.bindValue(":id_local",this->id);
 
     if(!queryClienteWeb.exec())
@@ -354,63 +354,63 @@ void Cliente::Recuperar(QString cSQL) {
         if (qryCliente->next()) {            
             QSqlRecord registro = qryCliente->record();
             this->id = registro.field("id").value().toInt();
-            this->cCodigoCliente= registro.field("cCodigoCliente").value().toString();
-            this->cApellido1 = registro.field("cApellido1").value().toString();
-            this->cApellido2 = registro.field("cApellido2").value().toString();
-            this->cNombre = registro.field("cNombre").value().toString();
-            this->cNombreFiscal = registro.field("cNombreFiscal").value().toString();
-            this->cNombreComercial = registro.field("cNombreComercial").value().toString();
-            this->cPersonaContacto = registro.field("cPersonaContacto").value().toString();
-            this->cCifNif = registro.field("cCifNif").value().toString();
-            this->cDireccion1 = registro.field("cDireccion1").value().toString();
-            this->cDireccion2 = registro.field("cDireccion2").value().toString();
-            this->cCp = registro.field("cCP").value().toString();
-            this->cPoblacion = registro.field("cPoblacion").value().toString();
-            this->cProvincia = registro.field("cProvincia").value().toString();
-            this->cPais = registro.field("cPais").value().toString();
-            this->idPais = registro.field("idpais").value().toInt();
-            this->cTelefono1 = registro.field("cTelefono1").value().toString();
-            this->cTelefono2 = registro.field("cTelefono2").value().toString();
-            this->cFax =registro.field("cFax").value().toString();
-            this->cMovil = registro.field("cMovil").value().toString();
-            this->cEmail = registro.field("cEmail").value().toString();
-            this->cWeb = registro.field("cWeb").value().toString();
-            this->dFechaalta = registro.field("dFechaAlta").value().toDate();
-            this->dFechaCompra = registro.field("dFechaCompra").value().toDate();
-            this->rAcumuladoVentas = registro.field("rAcumuladoVentas").value().toDouble();
-            this->rVentasEjercicio = registro.field("rVentasEjercicio").value().toDouble();
-            this->rRiesgoMaximo = registro.field("rRiesgoMaximo").value().toDouble();
-            this->rDeudaActual = registro.field("rDeudaActual").value().toDouble();
-            this->tComentarios = registro.field("tComentarios").value().toString();
-            this->lBloqueado = registro.field("lBloqueado").value().toInt();
-            this->tComentarioBloqueo = registro.field("tComentarioBloqueo").value().toString();
-            this->nPorcDtoCliente = registro.field("nPorcDtoCliente").value().toDouble();
-            this->lRecargoEquivalencia = registro.field("lRecargoEquivalencia").value().toInt();
-            this->cCuentaContable = registro.field("cCuentaContable").value().toString();
-            this->cCuentaIvaRepercutido = registro.field("cCuentaIvaRepercutido").value().toString();
-            this->cCuentaDeudas = registro.field("cCuentaDeudas").value().toString();
-            this->cCuentaCobros = registro.field("cCuentaCobros").value().toString();
-            this->cFormaPago = registro.field("cFormaPago").value().toString();
-            this->nDiaPago1 = registro.field("nDiaPago1").value().toInt();
-            this->nDiaPago2 = registro.field("nDiaPago2").value().toInt();
-            this->nTarifaCliente = registro.field("nTarifaCliente").value().toInt();
-            this->rImporteACuenta = registro.field("rImporteACuenta").value().toDouble();
-            this->rVales = registro.field("rVales").value().toDouble();
-            this->cEntidadBancaria = registro.field("cCEntidadBancaria").value().toString();
-            this->cOficinaBancaria = registro.field("cOficinaBancaria").value().toString();
-            this->cDc = registro.field("cDC").value().toString();
-            this->cCuentaCorriente = registro.field("cCuentaCorriente").value().toString();
-            this->dFechaNacimiento = registro.field("dFechaNacimiento").value().toDate();
-            this->rImportePendiente = registro.field("rImportePendiente").value().toDouble();
-            this->cAccesoWeb = registro.field("cAccesoWeb").value().toString();
-            this->cPasswordWeb = registro.field("cPasswordWeb").value().toString();
-            this->idIdioma = registro.field("id_idiomadocumentos").value().toInt();
-            this->idioma = Configuracion_global->Devolver_idioma(this->idIdioma);
-            this->cCifVies = registro.field("cif_vies").value().toString();
+            this->codigo_cliente= registro.field("codigo_cliente").value().toString();
+            this->apellido1 = registro.field("apellido1").value().toString();
+            this->apellido2 = registro.field("apellido2").value().toString();
+            this->nombre = registro.field("nombre").value().toString();
+            this->nombre_fiscal = registro.field("nombre_fiscal").value().toString();
+            this->nombre_comercial = registro.field("nombre_comercial").value().toString();
+            this->persona_contacto = registro.field("persona_contacto").value().toString();
+            this->cif_nif = registro.field("cif_nif").value().toString();
+            this->direccion1 = registro.field("direccion1").value().toString();
+            this->direccion2 = registro.field("direccion2").value().toString();
+            this->cp = registro.field("cp").value().toString();
+            this->poblacion = registro.field("poblacion").value().toString();
+            this->provincia = registro.field("provincia").value().toString();
+            this->pais = registro.field("pais").value().toString();
+            this->id_pais = registro.field("id_pais").value().toInt();
+            this->telefono1 = registro.field("telefono1").value().toString();
+            this->telefono2 = registro.field("telefono2").value().toString();
+            this->fax =registro.field("fax").value().toString();
+            this->movil = registro.field("movil").value().toString();
+            this->email = registro.field("email").value().toString();
+            this->web = registro.field("web").value().toString();
+            this->fecha_alta = registro.field("fecha_alta").value().toDate();
+            this->fechaCompra = registro.field("fechaCompra").value().toDate();
+            this->acumulado_ventas = registro.field("acumulado_ventas").value().toDouble();
+            this->ventas_ejercicio = registro.field("ventas_ejercicio").value().toDouble();
+            this->riesgo_maximo = registro.field("riesgo_maximo").value().toDouble();
+            this->deuda_actual = registro.field("deuda_actual").value().toDouble();
+            this->comentarios = registro.field("comentarios").value().toString();
+            this->bloqueado = registro.field("bloqueado").value().toInt();
+            this->comentario_bloqueo = registro.field("comentario_bloqueo").value().toString();
+            this->porc_dto_cliente = registro.field("porc_dto_cliente").value().toDouble();
+            this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toInt();
+            this->cuenta_contable = registro.field("cuenta_contable").value().toString();
+            this->cuenta_iva_repercutido = registro.field("cuenta_iva_repercutido").value().toString();
+            this->cuenta_deudas = registro.field("cuenta_deudas").value().toString();
+            this->cuenta_cobros = registro.field("cuenta_cobros").value().toString();
+            this->forma_pago = registro.field("forma_pago").value().toString();
+            this->dia_pago1 = registro.field("dia_pago1").value().toInt();
+            this->dia_pago2 = registro.field("dia_pago2").value().toInt();
+            this->tarifa_cliente = registro.field("tarifa_cliente").value().toInt();
+            this->importe_a_cuenta = registro.field("importe_a_cuenta").value().toDouble();
+            this->vales = registro.field("vales").value().toDouble();
+            this->entidad_bancaria = registro.field("entidad_bancaria").value().toString();
+            this->oficina_bancaria = registro.field("oficina_bancaria").value().toString();
+            this->dc = registro.field("dc").value().toString();
+            this->cuenta_corriente = registro.field("cuenta_corriente").value().toString();
+            this->fecha_nacimiento = registro.field("fecha_nacimiento").value().toDate();
+            this->importe_pendiente = registro.field("importe_pendiente").value().toDouble();
+            this->acceso_web = registro.field("acceso_web").value().toString();
+            this->password_web = registro.field("password_web").value().toString();
+            this->ididioma = registro.field("id_idioma_documentos").value().toInt();
+            this->idioma = Configuracion_global->Devolver_idioma(this->ididioma);
+            this->cifVies = registro.field("cif_vies").value().toString();
             this->id_web = registro.value("id_web").toInt();
-            this->idTarifa = registro.value("nTarifaCliente").toInt();
-            int nIRPF =registro.field("nIRPF").value().toInt();
-            if (nIRPF==1)
+            this->idTarifa = registro.value("tarifa_cliente").toInt();
+            int irpf =registro.field("irpf").value().toInt();
+            if (irpf==1)
                 this->lIRPF = true;
             else
                 this->lIRPF = false;
@@ -424,38 +424,38 @@ void Cliente::Recuperar(QString cSQL) {
 
 }
 
-void Cliente::AnadirDeuda(int id_cliente, QDate dFechaDeuda, QDate dFechaVto, QString cDocumento, int id_Tiquet,
-                          int id_Factura, int nTipo, double rImporteDeuda, double rPagado = 0, double rPendienteCobro = 0,
-                          QString cEntidad = "", QString cOficina = "", QString cDC="", QString cCuenta = "") {
+void Cliente::AnadirDeuda(int id_cliente, QDate fechaDeuda, QDate fechaVto, QString documento, int id_Tiquet,
+                          int id_factura, int tipo, double importe_deuda, double pagado = 0, double pendiente_cobro = 0,
+                          QString entidad = "", QString oficina = "", QString dc="", QString cuenta = "") {
     QSqlQuery qCliente(QSqlDatabase::database("Maya"));
-    double rImporte;
-    rImporte = this->rDeudaActual + rImporteDeuda;
-    qCliente.prepare("Update clientes set  rDeudaActual = :rImporte where id =:id_cliente");
-    qCliente.bindValue(":rImporte",rImporte);
+    double importe;
+    importe = this->deuda_actual + importe_deuda;
+    qCliente.prepare("Update clientes set  deuda_actual = :importe where id =:id_cliente");
+    qCliente.bindValue(":importe",importe);
     qCliente.bindValue(":id", id_cliente);
     if(!qCliente.exec()) {
         QMessageBox::critical(qApp->activeWindow(),tr("Añadir deuda cliente"),tr("Ha fallado la inserción de la deuda en la ficha del paciente"),tr("&Aceptar"));
     }
 
     QSqlQuery qClientes_Deuda(QSqlDatabase::database("Maya"));
-    qClientes_Deuda.prepare("Insert into clientes_deuda (Id_Cliente,dFecha,dVencimiento,cDocumento,Id_Ticket,Id_Factura,nTipo,"
-                            "rImporte,rPagado,rPendienteCobro,cEntidad,cOficina,cDC,cCuenta Values (:Id_Cliente,:dFecha,:dVencimiento,"
-                            ":cDocumento,:Id_Ticket,:Id_Factura,:nTipo,:rImporte,:rPagado,:rPendienteCobro,:cEntidad,:cOficina,"
-                            ":cDC,:cCuenta)" );
-    qClientes_Deuda.bindValue(":Id_Cliente",id_cliente);
-    qClientes_Deuda.bindValue(":dFecha",dFechaDeuda);
-    qClientes_Deuda.bindValue(":dVencimiento",dFechaVto);
-    qClientes_Deuda.bindValue(":cDocumento",cDocumento);
-    qClientes_Deuda.bindValue(":Id_Tiquet",id_Tiquet);
-    qClientes_Deuda.bindValue(":Id_Factura",id_Factura);
-    qClientes_Deuda.bindValue(":nTipo",nTipo);
-    qClientes_Deuda.bindValue(":rImporte",rImporteDeuda);
-    qClientes_Deuda.bindValue(":rPagado",rPagado);
-    qClientes_Deuda.bindValue(":rPendienteCobro",rPendienteCobro);
-    qClientes_Deuda.bindValue(":cEntidad",cEntidad);
-    qClientes_Deuda.bindValue(":cOficina",cOficina);
-    qClientes_Deuda.bindValue(":cDC",cDC);
-    qClientes_Deuda.bindValue(":cCuenta",cCuenta);
+    qClientes_Deuda.prepare("Insert into clientes_deuda (id_cliente,fecha,vencimiento,documento,id_ticket,id_factura,tipo,"
+                            "importe,pagado,pendiente_cobro,entidad,oficina,dc,cuenta Values (:id_cliente,:fecha,:vencimiento,"
+                            ":documento,:id_ticket,:id_factura,:tipo,:importe,:pagado,:pendiente_cobro,:entidad,:oficina,"
+                            ":dc,:cuenta)" );
+    qClientes_Deuda.bindValue(":id_cliente",id_cliente);
+    qClientes_Deuda.bindValue(":fecha",fechaDeuda);
+    qClientes_Deuda.bindValue(":vencimiento",fechaVto);
+    qClientes_Deuda.bindValue(":documento",documento);
+    qClientes_Deuda.bindValue(":id_Tiquet",id_Tiquet);
+    qClientes_Deuda.bindValue(":id_factura",id_factura);
+    qClientes_Deuda.bindValue(":tipo",tipo);
+    qClientes_Deuda.bindValue(":importe",importe_deuda);
+    qClientes_Deuda.bindValue(":pagado",pagado);
+    qClientes_Deuda.bindValue(":pendiente_cobro",pendiente_cobro);
+    qClientes_Deuda.bindValue(":entidad",entidad);
+    qClientes_Deuda.bindValue(":oficina",oficina);
+    qClientes_Deuda.bindValue(":dc",dc);
+    qClientes_Deuda.bindValue(":cuenta",cuenta);
     if(!qClientes_Deuda.exec()) {
         QMessageBox::critical(qApp->activeWindow(),tr("Añadir deuda cliente"),tr("Falló la inserción en la tabla de deudas"),tr("&Aceptar"));
     }
@@ -467,9 +467,9 @@ void Cliente::CobrarDeudaTotal(int id_deuda)
 
 }
 
-void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
-                                    QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3,
-                                    QString descMovil1, QString Movil1, QString descMovil2, QString Movil2, QString cargo, QString email)
+void Cliente::AnadirPersonaContacto(int id, QString Nombre, QString desc_telefono1, QString Telefono1,
+                                    QString desc_telefono2, QString Telefono2, QString desc_telefono3, QString Telefono3,
+                                    QString desc_movil1, QString Movil1, QString desc_movil2, QString Movil2, QString cargo, QString email)
 {
     QSqlQuery qContactos(QSqlDatabase::database("Maya"));
     qContactos.prepare("INSERT INTO Personascontactocliente "
@@ -479,12 +479,12 @@ void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono
                        "telefono3,"
                        "movil,"
                        "movil2,"
-                       "idcliente,"
-                       "desctelefono1,"
-                       "desctelefono2,"
-                       "desctelefono3,"
-                       "descmovil1,"
-                       "descmovil2,"
+                       "id_cliente,"
+                       "desc_telefono1,"
+                       "desc_telefono2,"
+                       "desc_telefono3,"
+                       "desc_movil1,"
+                       "desc_movil2,"
                        "cargo_empresa,"
                        "email)"
                        " VALUES ("
@@ -494,12 +494,12 @@ void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono
                       ":telefono3,"
                       ":movil,"
                       ":movil2,"
-                      ":idcliente,"
-                      ":desctelefono1,"
-                      ":desctelefono2,"
-                      ":desctelefono3,"
-                      ":descmovil1,"
-                      ":descmovil2,"
+                      ":id_cliente,"
+                      ":desc_telefono1,"
+                      ":desc_telefono2,"
+                      ":desc_telefono3,"
+                      ":desc_movil1,"
+                      ":desc_movil2,"
                       ":cargo,"
                       ":email);");
 
@@ -510,12 +510,12 @@ void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono
                        qContactos.bindValue(":telefono3",Telefono3);
                        qContactos.bindValue(":movil",Movil1);
                        qContactos.bindValue(":movil2",Movil2);
-                       qContactos.bindValue(":idcliente",Id);
-                       qContactos.bindValue(":desctelefono1",descTelefono1);
-                       qContactos.bindValue(":desctelefono2",descTelefono2);
-                       qContactos.bindValue(":desctelefono3",descTelefono3);
-                       qContactos.bindValue(":descmovil1",descMovil1);
-                       qContactos.bindValue(":descmovil2",descMovil2);
+                       qContactos.bindValue(":id_cliente",id);
+                       qContactos.bindValue(":desc_telefono1",desc_telefono1);
+                       qContactos.bindValue(":desc_telefono2",desc_telefono2);
+                       qContactos.bindValue(":desc_telefono3",desc_telefono3);
+                       qContactos.bindValue(":desc_movil1",desc_movil1);
+                       qContactos.bindValue(":desc_movil2",desc_movil2);
                        qContactos.bindValue(":cargo",cargo);
                        qContactos.bindValue(":email",email);
                        if(!qContactos.exec())
@@ -523,9 +523,9 @@ void Cliente::AnadirPersonaContacto(int Id, QString Nombre, QString descTelefono
                                                 tr("Falló el añadir una persona de contacto: %1").arg(qContactos.lastError().text()));
 }
 
-void Cliente::GuardarPersonaContacto(int Id, QString Nombre, QString descTelefono1, QString Telefono1,
-                                     QString descTelefono2, QString Telefono2, QString descTelefono3, QString Telefono3,
-                                     QString descMovil1, QString Movil1, QString descMovil2, QString Movil2,
+void Cliente::GuardarPersonaContacto(int id, QString Nombre, QString desc_telefono1, QString Telefono1,
+                                     QString desc_telefono2, QString Telefono2, QString desc_telefono3, QString Telefono3,
+                                     QString desc_movil1, QString Movil1, QString desc_movil2, QString Movil2,
                                      QString cargo, QString email,int id_cliente)
 {
     QSqlQuery qContactos(QSqlDatabase::database("Maya"));
@@ -536,12 +536,12 @@ void Cliente::GuardarPersonaContacto(int Id, QString Nombre, QString descTelefon
                        "telefono3 = :telefono3,"
                        "movil =:movil,"
                        "movil2 =:movil2,"
-                       "idcliente =:idcliente,"
-                       "desctelefono1 =:desctelefono1,"
-                       "desctelefono2 =:desctelefono2,"
-                       "desctelefono3 =:desctelefono3,"
-                       "descmovil1 =:descmovil1,"
-                       "descmovil2 =:descmovil2,"
+                       "id_cliente =:id_cliente,"
+                       "desc_telefono1 =:desc_telefono1,"
+                       "desc_telefono2 =:desc_telefono2,"
+                       "desc_telefono3 =:desc_telefono3,"
+                       "desc_movil1 =:desc_movil1,"
+                       "desc_movil2 =:desc_movil2,"
                        "cargo_empresa =:cargo_empresa,"
                        "email =:email where id = :id");
                        qContactos.bindValue(":nombre",Nombre);
@@ -550,15 +550,15 @@ void Cliente::GuardarPersonaContacto(int Id, QString Nombre, QString descTelefon
                        qContactos.bindValue(":telefono3",Telefono3);
                        qContactos.bindValue(":movil",Movil1);
                        qContactos.bindValue(":movil2",Movil2);
-                       qContactos.bindValue(":idcliente",id_cliente);
-                       qContactos.bindValue(":desctelefono1",descTelefono1);
-                       qContactos.bindValue(":desctelefono2",descTelefono2);
-                       qContactos.bindValue(":desctelefono3",descTelefono3);
-                       qContactos.bindValue(":descmovil1",descMovil1);
-                       qContactos.bindValue(":descmovil2",descMovil2);
+                       qContactos.bindValue(":id_cliente",id_cliente);
+                       qContactos.bindValue(":desc_telefono1",desc_telefono1);
+                       qContactos.bindValue(":desc_telefono2",desc_telefono2);
+                       qContactos.bindValue(":desc_telefono3",desc_telefono3);
+                       qContactos.bindValue(":desc_movil1",desc_movil1);
+                       qContactos.bindValue(":desc_movil2",desc_movil2);
                        qContactos.bindValue(":cargo",cargo);
                        qContactos.bindValue(":email",email);
-                       qContactos.bindValue(":id",Id);
+                       qContactos.bindValue(":id",id);
                        if(!qContactos.exec())
                            QMessageBox::warning(qApp->activeWindow(),tr("editar personas de contacto"),
                                                 tr("Falló el guardar una persona de contacto: %1").arg(qContactos.lastError().text()));
@@ -578,46 +578,46 @@ bool Cliente::BorrarPersona_contacto(int id_persona)
     }
 }
 
-void Cliente::GuardarDireccion(bool Anadir, QString Descripcion, QString Direccion1, QString Direccion2, QString CP, QString Poblacion,
-                               QString Provincia, QString Pais,int idcliente,int id)
+void Cliente::Guardardireccion(bool Anadir, QString Descripcion, QString direccion1, QString direccion2, QString CP, QString Poblacion,
+                               QString Provincia, QString Pais,int id_cliente,int id)
 {
-    QSqlQuery qDirecciones(QSqlDatabase::database("Maya"));
+    QSqlQuery qdirecciones(QSqlDatabase::database("Maya"));
     if(Anadir){
-        qDirecciones.prepare("INSERT INTO cliente_direcciones (`descripcion,` `direccion1`, `direccion2`, `cp`, `poblacion`,"
-                         "`provincia`, `idpais`, `idcliente`) "
-                         "VALUES (:descripcion,:direccion1,:direccion2,:cp, :poblacion,:provincia,:idpais,:idcliente)");
+        qdirecciones.prepare("INSERT INTO cliente_direcciones (`descripcion,` `direccion1`, `direccion2`, `cp`, `poblacion`,"
+                         "`provincia`, `id_pais`, `id_cliente`) "
+                         "VALUES (:descripcion,:direccion1,:direccion2,:cp, :poblacion,:provincia,:id_pais,:id_cliente)");
 
     } else {
-        qDirecciones.prepare("UPDATE cliente_direcciones SET "
+        qdirecciones.prepare("UPDATE cliente_direcciones SET "
                              "descripcion = :descripcion,"
                              "direccion1 = :direccion1,"
                              "direccion2 = :direccion2,"
                              "cp = :cp,"
                              "poblacion = :poblacion,"
                              "provincia = :provincia,"
-                             "idpais = :idpais,"
-                             "idcliente =:idcliente "
+                             "id_pais = :id_pais,"
+                             "id_cliente =:id_cliente "
                              "WHERE id =:id");
     }
-    qDirecciones.bindValue(":descripcion",Descripcion);
-    qDirecciones.bindValue(":direccion1",Direccion1);
-    qDirecciones.bindValue(":direccion2",Direccion2);
-    qDirecciones.bindValue(":cp",CP);
-    qDirecciones.bindValue(":poblacion",Poblacion);
-    qDirecciones.bindValue(":provincia",Provincia);
-    qDirecciones.bindValue(":idpais",BuscaridPais(Pais));
-    qDirecciones.bindValue(":idcliente",idcliente);
+    qdirecciones.bindValue(":descripcion",Descripcion);
+    qdirecciones.bindValue(":direccion1",direccion1);
+    qdirecciones.bindValue(":direccion2",direccion2);
+    qdirecciones.bindValue(":cp",CP);
+    qdirecciones.bindValue(":poblacion",Poblacion);
+    qdirecciones.bindValue(":provincia",Provincia);
+    qdirecciones.bindValue(":id_pais",Buscarid_pais(Pais));
+    qdirecciones.bindValue(":id_cliente",id_cliente);
     if(!Anadir)
-        qDirecciones.bindValue(":id",id);
+        qdirecciones.bindValue(":id",id);
 
-    if(!qDirecciones.exec()){
-        qDebug() << qDirecciones.lastQuery();
+    if(!qdirecciones.exec()){
+        qDebug() << qdirecciones.lastQuery();
         QMessageBox::warning(qApp->activeWindow(),tr("Añadir/Guardar dirección"),
-                             tr("Ocurrió un error al guardar los datos de dirección: %1").arg(qDirecciones.lastError().text()),
+                             tr("Ocurrió un error al guardar los datos de dirección: %1").arg(qdirecciones.lastError().text()),
                              tr("Aceptar"));
     }
 }
-void Cliente::DescontarDeuda(int id_deuda, double rPagado){
+void Cliente::DescontarDeuda(int id_deuda, double pagado){
     QSqlQuery qClientes_deuda(QSqlDatabase::database("Maya"));
     qClientes_deuda.prepare("Select * from clientes_deuda where id =:id_deuda");
     qClientes_deuda.bindValue(":id_deuda",id_deuda);
@@ -638,21 +638,21 @@ void Cliente::Borrar(int id_cliente)
         QSqlDatabase::database("empresa").transaction();
 
         QSqlQuery qTipos(QSqlDatabase::database("Maya"));
-        qTipos.prepare("delete from tipocliente where idcliente =:idcliente");
-        qTipos.bindValue(":idcliente",id_cliente);
+        qTipos.prepare("delete from tipocliente where id_cliente =:id_cliente");
+        qTipos.bindValue(":id_cliente",id_cliente);
         if (!qTipos.exec()) {
             QMessageBox::warning(qApp->activeWindow(),tr("Borrar Cliente"),tr("Falló el borrado de tipos de cliente"),
                                  tr("Aceptar"));
             borrado_ok = false;
         }
-        if (Configuracion_global->EnlaceWeb)
+        if (Configuracion_global->enlace_web)
             BorrarWeb(this->id_web);
 
 
-        QSqlQuery qDirecciones(QSqlDatabase::database("Maya"));
-        qDirecciones.prepare("Delete from cliente_direcciones where idcliente =:idcli");
-        qDirecciones.bindValue(":idcliente",id_cliente);
-        if(!qDirecciones.exec()) {
+        QSqlQuery qdirecciones(QSqlDatabase::database("Maya"));
+        qdirecciones.prepare("Delete from cliente_direcciones where id_cliente =:idcli");
+        qdirecciones.bindValue(":id_cliente",id_cliente);
+        if(!qdirecciones.exec()) {
             QMessageBox::warning(qApp->activeWindow(),tr("Borrar cliente"),tr("Falló el borrado de direcciones alternativas"),
                                  tr("Aceptar"));
             borrado_ok = false;
@@ -660,7 +660,7 @@ void Cliente::Borrar(int id_cliente)
 
 
         QSqlQuery qryCliente(QSqlDatabase::database("Maya"));
-        qryCliente.prepare("Delete from clientes where id = :id_Cliente");
+        qryCliente.prepare("Delete from clientes where id = :id_cliente");
         qryCliente.bindValue(":id",id_cliente);
         if(!qryCliente.exec()) {
             QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),
@@ -670,7 +670,7 @@ void Cliente::Borrar(int id_cliente)
         if (borrado_ok ==true) {
             QSqlDatabase::database("Maya").commit();
             // TODO - reactivar timedMessage cuando esté arreglado el bug.
-          //  TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Borrado correctamente"));
+          //  TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Borrado corectamente"));
         } else {
             QSqlDatabase::database("Maya").rollback();
             QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),
@@ -721,44 +721,44 @@ void Cliente::Actualizar_de_web()
     Configuracion_global->CerrarDbWeb();
 }
 
-QString Cliente::NuevoCodigoCliente()
+QString Cliente::Nuevocodigo_cliente()
 {
-    QString cCodigo;
+    QString codigo;
     QString cNum;
     unsigned long nCodigo;
     QSqlQuery *qClientes = new QSqlQuery(QSqlDatabase::database("Maya"));
-    if(qClientes->exec("select cCodigoCliente from clientes  order by cCodigoCliente desc limit 1"))
+    if(qClientes->exec("select codigo_cliente from clientes  order by codigo_cliente desc limit 1"))
     {
         if (qClientes->next())
         {
             QSqlRecord registro = qClientes->record();
-            cCodigo = registro.field("cCodigoCliente").value().toString();
-            nCodigo = cCodigo.toULong();
+            codigo = registro.field("codigo_cliente").value().toString();
+            nCodigo = codigo.toULong();
             nCodigo ++;
-            cCodigo = QString::number(nCodigo);
+            codigo = QString::number(nCodigo);
         }
    }
     qDebug() <<"ncodigo"<< nCodigo;
-    if(cCodigo.length() == Configuracion_global->nDigitosCuentasContables)
-        cCodigo = cCodigo.mid(Configuracion_global->cCuentaClientes.length());
+    if(codigo.length() == Configuracion_global->digitos_cuentas_contables)
+        codigo = codigo.mid(Configuracion_global->cuenta_clientes.length());
     if (nCodigo == 0 || nCodigo == 1)
     {
         cNum = "1";
     }
     else
-        cNum = cCodigo;
+        cNum = codigo;
 
-    while (cNum.length()< (Configuracion_global->nDigitosCuentasContables - Configuracion_global->cCuentaClientes.length()) )
+    while (cNum.length()< (Configuracion_global->digitos_cuentas_contables - Configuracion_global->cuenta_clientes.length()) )
     {
         cNum.prepend("0");
     }
-    cCodigo = Configuracion_global->cCuentaClientes + cNum;
-    cCuentaIvaRepercutido = Configuracion_global->cCuentaIvaRepercutido1 +cNum;
+    codigo = Configuracion_global->cuenta_clientes + cNum;
+    cuenta_iva_repercutido = Configuracion_global->cuenta_iva_repercutido1 +cNum;
 
-    return cCodigo;
+    return codigo;
 }
 
-int Cliente::BuscaridPais(QString Pais)
+int Cliente::Buscarid_pais(QString Pais)
 {
     QSqlQuery qPais(QSqlDatabase::database("Maya"));
     qPais.prepare("select id from paises where pais =:pais");

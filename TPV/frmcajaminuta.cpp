@@ -15,7 +15,7 @@ background-color: rgb(0, 192, 0);
 color: rgb(255, 255, 255);
 */
 FrmCajaMinuta::FrmCajaMinuta(QWidget *parent) :
-    MayaModule(ModuleZone(),ModuleName(),parent),
+    MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmCajaMinuta),
     ticket(this),
     toolButton(tr("TPV"),":/Icons/PNG/tpv.png",this),
@@ -38,9 +38,9 @@ FrmCajaMinuta::FrmCajaMinuta(QWidget *parent) :
     ui->lineas->setItemDelegateForColumn(2,new SpinBoxDelegate(ui->lineas,false,-99999999999999999.99,99999999999999999.99));
     ui->lineas->setItemDelegateForColumn(2,new SpinBoxDelegate(ui->lineas,true,-99999999999999999.99,99999999999999999.99));
     ui->txtPorcIVAArticulo->setModel(Configuracion_global->iva_model);
-    ui->txtPorcIVAArticulo->setModelColumn(Configuracion_global->iva_model->fieldIndex("cTipo"));
+    ui->txtPorcIVAArticulo->setModelColumn(Configuracion_global->iva_model->fieldIndex("tipo"));
     ticket.set_table(ui->lineas);
-    ui->txtcCodigoArticulo->setFocus();
+    ui->txtcodigoArticulo->setFocus();
 
     bloquearCaja(true);
 }
@@ -103,7 +103,7 @@ bool FrmCajaMinuta::eventFilter(QObject *target, QEvent *event)
         }
 
 
-        else if(target == ui->txtcCodigoArticulo)
+        else if(target == ui->txtcodigoArticulo)
         {
             if(keys_onCodigo(key))
                 return true;
@@ -139,7 +139,7 @@ bool FrmCajaMinuta::eventFilter(QObject *target, QEvent *event)
 
         }
         if((key==Qt::Key_Return)||(key==Qt::Key_Enter))
-            ui->txtcCodigoArticulo->setFocus();
+            ui->txtcodigoArticulo->setFocus();
     }*/
     return false;
 }
@@ -148,28 +148,28 @@ bool FrmCajaMinuta::keys_onCodigo(int key)
 {
     if((key==Qt::Key_Return)||(key==Qt::Key_Enter)|| key==Qt::Key_Tab)
     {
-        if(rellenarArticulo(ui->txtcCodigoArticulo->text()))
+        if(rellenarArticulo(ui->txtcodigoArticulo->text()))
         {
-                ticket.add_linea(ui->txtcCodigoArticulo->text(),
+                ticket.add_linea(ui->txtcodigoArticulo->text(),
                          ui->txtDescripcionArticulo->text(),
                          ui->txtPVPArticulo->text().toDouble(),
                          ui->txtcCantidadArticulo->text().toInt(),
                          ui->txtPVPArticulo->text().toDouble() * ui->txtcCantidadArticulo->text().toInt(),
-                         Configuracion_global->ivas[ui->txtPorcIVAArticulo->currentText()].value("nIVA").toDouble(),
+                         Configuracion_global->ivas[ui->txtPorcIVAArticulo->currentText()].value("iva").toDouble(),
                          ui->txtPorcDtoArticulo->text().toDouble(),
                          ui->txttotalArticulo->text().toDouble(),
-                         ui->txtSubtotalArticulo->text().toDouble(),
+                         ui->txtsubtotalArticulo->text().toDouble(),
                          QDate::currentDate());
         }
         ui->txtcCantidadArticulo->setValue(0);
-        ui->txtcCodigoArticulo->setText("");
+        ui->txtcodigoArticulo->setText("");
         ui->txtDescripcionArticulo->setText("");
         ui->txtPVPArticulo->setText("");
         ui->txtPorcDtoArticulo->setValue(0);
         ui->txtDtoArticulo->setValue(0);
         ui->txttotalArticulo->setText("");
-        ui->txtSubtotalArticulo->setText("");
-        ui->txtcCodigoArticulo->setFocus();
+        ui->txtsubtotalArticulo->setText("");
+        ui->txtcodigoArticulo->setFocus();
         return true;
     }
     return false;
@@ -214,9 +214,9 @@ bool FrmCajaMinuta::keys_lineas(int key)
     return true;
 }
 
-bool FrmCajaMinuta::rellenarArticulo(QString cCodigo)
+bool FrmCajaMinuta::rellenarArticulo(QString codigo)
 {
-    QString sql = QString("SELECT * FROM vistaArt_tarifa WHERE cCodigo = '%1' and tarifa = %2").arg(cCodigo).arg(_currentTarifa);
+    QString sql = QString("SELECT * FROM vistaArt_tarifa WHERE codigo = '%1' and tarifa = %2").arg(codigo).arg(_currentTarifa);
     return true;
 }
 
@@ -225,7 +225,7 @@ void FrmCajaMinuta::on_btnBuscarArt_clicked()
     Db_table_View searcher(this);
     searcher.set_db("Maya");
     searcher.set_table("articulos");
-    searcher.set_selection("cCodigo");
+    searcher.set_selection("codigo");
     searcher.setWindowTitle(tr("Articulos"));
     QStringList headers;
     headers << tr("Codigo")<< "1" << "2" << tr("Descripción");
@@ -239,7 +239,7 @@ void FrmCajaMinuta::on_btnBuscarArt_clicked()
         searcher.set_columnHide(i);
 
     searcher.exec();
-    ui->txtcCodigoArticulo->setText(searcher.selected_value);
+    ui->txtcodigoArticulo->setText(searcher.selected_value);
 }
 
 void FrmCajaMinuta::linea_itemSelectionChanged()
@@ -251,7 +251,7 @@ void FrmCajaMinuta::linea_itemSelectionChanged()
 void FrmCajaMinuta::focusInEvent(QFocusEvent *e)
 {
     Q_UNUSED(e);
-    ui->txtcCodigoArticulo->setFocus();
+    ui->txtcodigoArticulo->setFocus();
     ui->lineas->clearSelection();
 }
 
@@ -263,7 +263,7 @@ void FrmCajaMinuta::on_btn_abrirCerrarCaja_clicked()
         if(caja.exec() == QDialog::Accepted)
         {
             ui->btn_abrirCerrarCaja->setText(tr("Cerrar caja"));
-            ui->btn_abrirCerrarCaja->setIcon(QIcon(":/Icons/PNG/cierrecaja.png"));
+            ui->btn_abrirCerrarCaja->setIcon(QIcon(":/Icons/PNG/cierecaja.png"));
             _currentTarifa = Configuracion_global->id_tarifa_predeterminada;
             bloquearCaja(false);
             emit block();
@@ -291,7 +291,7 @@ void FrmCajaMinuta::bloquearCaja(bool state)
     ui->btnCambioUsuario->setEnabled(!state);
     ui->btnCobrarTicket->setEnabled(!state);
     ui->btnPonerEspera->setEnabled(!state);
-    ui->btnRecuperarEspera->setEnabled(!state);
+    ui->btporc_recuperarEspera->setEnabled(!state);
     ui->btnVerAgenda->setEnabled(!state);
     ui->btnNuevaVisita->setEnabled(!state);
     ui->btnImprimirInforme->setEnabled(!state);
@@ -299,7 +299,7 @@ void FrmCajaMinuta::bloquearCaja(bool state)
 
     ui->frame_3->setEnabled(!state);
 
-    ui->chklRecargoEq->setEnabled(!state);
+    ui->chklporc_rec->setEnabled(!state);
 
     QList<QLineEdit *> lineEditList = ui->tabWidget->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;

@@ -15,18 +15,18 @@ public:
     virtual QList<QAction *> Extensions() = 0;
     virtual QString ExtensionPath() = 0;// Use '|' to subPaths
 
-    virtual MayaModule::moduleZone ModuleZone()=0;
+    virtual MayaModule::module_zone module_zone()=0;
 
 protected:
-    void tryRegisterModule(MayaModule::moduleZone zone , QString name , int& id);//Register each QAction as module
+    void tryRegisterModule(MayaModule::module_zone zone , QString name , int& id);//Register each QAction as module
     MayaModule::accessLevel getUserLvl(int _id_modulo);
-    bool userHaveAcess(int _id_modulo, int idUser);
+    bool userHaveAcess(int _id_modulo, int id_user);
 signals:
     
 public slots:
 
 private:
-    void RegisterModule(MayaModule::moduleZone zone , QString name , int& _id_modulo);
+    void RegisterModule(MayaModule::module_zone zone , QString name , int& _id_modulo);
     QHash<int,MayaModule::accessLevel> _lvls;
 };
 

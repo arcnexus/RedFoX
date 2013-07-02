@@ -14,11 +14,11 @@ public:
     explicit GraphicsTable(QGraphicsItem *parent = 0);
     QRectF boundingRect() const;
     void setSize(qreal w, qreal h);
-    void addEvento(QColor color , QDateTime start , QDateTime end,QString titulo, QString asunto, bool isCita, int id_cliente, bool isPrivado);
+    void addEvento(QColor color , QDateTime start , QDateTime end,QString titulo, QString asunto, bool isCita, int id_cliente, bool isprivado);
     qreal timeToPos(int hour, int minute);    
     QDateTime posToTime(qreal pos);
     void UpdateEventos();
-    void appendEvento(int id ,QDateTime start, QDateTime end, QColor color,QString titulo, QString asunto ,int id_cliente , bool isCita,bool isPrivado);
+    void appendEvento(int id ,QDateTime start, QDateTime end, QColor color,QString titulo, QString asunto ,int id_cliente , bool isCita,bool isprivado);
 signals:
     void main_jail(QRectF jail);
     void horizontalGrid(QVector<qreal>,qreal);

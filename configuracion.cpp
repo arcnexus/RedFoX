@@ -168,13 +168,13 @@ void Configuracion::Cargar_iva()
     {
         while(query.next())
         {
-            QString key = query.record().value("cTipo").toString();
+            QString key = query.record().value("tipo").toString();
             ivas.insert(key,query.record());
         }
     }
     if(ivas.size()!=4)
     {
-        query.prepare("INSERT INTO `tiposiva` (`id`, `nombre_interno`, `cTipo`, `cDescripcionTipoIVA`, `nIVA`, `nRegargoEquivalencia`) VALUES (1, 'base1', 'NORMAL', '21%', 21.00, 4.00), (2, 'base2', 'Reducido', '10%', 10.00, 2.00), (3, 'base3', 'Superreducido', '4%', 4.00, 1.00), (4, 'base4', 'Exento', 'Exento', 0.00, 0.00);");
+        query.prepare("INSERT INTO `tiposiva` (`id`, `nombre_interno`, `tipo`, `descripciotipo_iva`, `iva`, `recargo_equivalencia`) VALUES (1, 'base1', 'NORMAL', '21%', 21.00, 4.00), (2, 'base2', 'Reducido', '10%', 10.00, 2.00), (3, 'base3', 'Superreducido', '4%', 4.00, 1.00), (4, 'base4', 'Exento', 'Exento', 0.00, 0.00);");
         query.exec();
         return Cargar_iva();
     }
@@ -192,36 +192,36 @@ void Configuracion::Cargar_iva()
         QString aux = Configuracion_global->ivas[keys.at(i)].value("nombre_interno").toString();
         if(aux == "base1")
         {
-            base1 = Configuracion_global->ivas[keys.at(i)].value("nIVA").toString();
-            re1 = Configuracion_global->ivas[keys.at(i)].value("nRegargoEquivalencia").toString();
+            base1 = Configuracion_global->ivas[keys.at(i)].value("iva").toString();
+            re1 = Configuracion_global->ivas[keys.at(i)].value("recargo_equivalencia").toString();
         }
         else if(aux == "base2")
         {
-            base2 = Configuracion_global->ivas[keys.at(i)].value("nIVA").toString();
-            re2 = Configuracion_global->ivas[keys.at(i)].value("nRegargoEquivalencia").toString();
+            base2 = Configuracion_global->ivas[keys.at(i)].value("iva").toString();
+            re2 = Configuracion_global->ivas[keys.at(i)].value("recargo_equivalencia").toString();
         }
         else if(aux == "base3")
         {
-            base3 = Configuracion_global->ivas[keys.at(i)].value("nIVA").toString();
-            re3 = Configuracion_global->ivas[keys.at(i)].value("nRegargoEquivalencia").toString();
+            base3 = Configuracion_global->ivas[keys.at(i)].value("iva").toString();
+            re3 = Configuracion_global->ivas[keys.at(i)].value("recargo_equivalencia").toString();
         }
         else if(aux == "base4")
         {
-            base4 = Configuracion_global->ivas[keys.at(i)].value("nIVA").toString();
-            re4 = Configuracion_global->ivas[keys.at(i)].value("nRegargoEquivalencia").toString();
+            base4 = Configuracion_global->ivas[keys.at(i)].value("iva").toString();
+            re4 = Configuracion_global->ivas[keys.at(i)].value("recargo_equivalencia").toString();
         }
     }
     ivaList << base1 << base2 << base3 << base4;
     reList << re1 << re2 << re3 << re4;
 }
 
-int Configuracion::getIdIva(QString cIva)
+int Configuracion::getidIva(QString cIva)
 {
     QSqlQuery qIVA(QSqlDatabase::database("Maya"));
-    qIVA.prepare("select id from tiposiva where cTipo = :cIva");
+    qIVA.prepare("select id from tiposiva where tipo = :cIva");
     qIVA.bindValue(":cIva",cIva);
     if(!qIVA.exec()) {
-        QMessageBox::warning(qApp->activeWindow(),tr("RECUPERAR ID IVA"),
+        QMessageBox::warning(qApp->activeWindow(),tr("RECUPERAR id IVA"),
                              tr("Falló la recuperación del identificador del IVA : %1").arg(qIVA.lastError().text()));
         return 0;
     } else {
@@ -234,15 +234,15 @@ int Configuracion::getIdIva(QString cIva)
 QString Configuracion::setTipoIva(int idIva)
 {
     QSqlQuery qIVA(QSqlDatabase::database("Maya"));
-    qIVA.prepare("select cTipo from tiposiva where id = :id");
+    qIVA.prepare("select tipo from tiposiva where id = :id");
     qIVA.bindValue(":id",idIva);
     if(!qIVA.exec()) {
-        QMessageBox::warning(qApp->activeWindow(),tr("RECUPERAR ID IVA"),
+        QMessageBox::warning(qApp->activeWindow(),tr("RECUPERAR id IVA"),
                              tr("Falló la recuperación del identificador del IVA : %1").arg(qIVA.lastError().text()));
         return 0;
     } else {
         qIVA.next();
-        return qIVA.record().field("cTipo").value().toString();
+        return qIVA.record().field("tipo").value().toString();
     }
 }
 
@@ -254,7 +254,7 @@ void Configuracion::Cargar_paises()
     {
         while(query.next())
         {
-            QString key = query.record().value("cTipo").toString();
+            QString key = query.record().value("tipo").toString();
             paises.insert(key,query.record());
         }
     }
@@ -264,11 +264,11 @@ void Configuracion::Cargar_paises()
     paises_model->select();
 }
 
-int Configuracion::Devolver_id_pais(QString cPais)
+int Configuracion::Devolver_id_pais(QString pais)
 {
     QSqlQuery qPais(QSqlDatabase::database("Maya"));
-    qPais.prepare("select id from paises where pais = :cPais");
-    qPais.bindValue(":cPais",cPais);
+    qPais.prepare("select id from paises where pais = :pais");
+    qPais.bindValue(":pais",pais);
     if(qPais.exec())
     {
         qPais.next();
@@ -281,8 +281,8 @@ int Configuracion::Devolver_id_pais(QString cPais)
 QString Configuracion::Devolver_pais(int id)
 {
     QSqlQuery qPais(QSqlDatabase::database("Maya"));
-    qPais.prepare("select pais from paises where id = :nId");
-    qPais.bindValue(":nId",id);
+    qPais.prepare("select pais from paises where id = :nid");
+    qPais.bindValue(":nid",id);
     if(qPais.exec())
     {
         qPais.next();
@@ -294,8 +294,8 @@ QString Configuracion::Devolver_pais(int id)
 QString Configuracion::Devolver_moneda(int id)
 {
     QSqlQuery qMoneda(QSqlDatabase::database("Maya"));
-    qMoneda.prepare("select moneda from monedas where id = :nId");
-    qMoneda.bindValue(":nId",id);
+    qMoneda.prepare("select moneda from monedas where id = :nid");
+    qMoneda.bindValue(":nid",id);
     if(qMoneda.exec())
     {
         qMoneda.next();
@@ -307,8 +307,8 @@ QString Configuracion::Devolver_moneda(int id)
 QString Configuracion::Devolver_codDivisa(int id)
 {
     QSqlQuery qMoneda(QSqlDatabase::database("Maya"));
-    qMoneda.prepare("select nombreCorto from monedas where id = :nId");
-    qMoneda.bindValue(":nId",id);
+    qMoneda.prepare("select nombreCorto from monedas where id = :nid");
+    qMoneda.bindValue(":nid",id);
     if(qMoneda.exec())
     {
         qMoneda.next();
@@ -331,14 +331,14 @@ int Configuracion::Devolver_id_moneda(QString cDivisa)
 
 QString Configuracion::Devolver_idioma(int id)
 {
-    QSqlQuery qIdioma(QSqlDatabase::database("Maya"));
-    if(qIdioma.exec("select idioma from idiomas where id = "+QString::number(id))) {
-        qIdioma.next();
-        return qIdioma.record().value("idioma").toString();
+    QSqlQuery qidioma(QSqlDatabase::database("Maya"));
+    if(qidioma.exec("select idioma from idiomas where id = "+QString::number(id))) {
+        qidioma.next();
+        return qidioma.record().value("idioma").toString();
     }
     else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Idioma"),
-                             tr("Fallo la recuperación del idioma: ")+qIdioma.lastError().text(),
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar idioma"),
+                             tr("Fallo la recuperación del idioma: ")+qidioma.lastError().text(),
                              tr("Aceptar"));
     }
     return "";
@@ -346,23 +346,23 @@ QString Configuracion::Devolver_idioma(int id)
 
 int Configuracion::Devolver_id_idioma(QString idioma)
 {
-    QSqlQuery qIdioma(QSqlDatabase::database("Maya"));
-    if(qIdioma.exec("select id from idiomas where idioma = '"+idioma+"'")){
-        qIdioma.next();
-        return qIdioma.record().value("id").toInt();
+    QSqlQuery qidioma(QSqlDatabase::database("Maya"));
+    if(qidioma.exec("select id from idiomas where idioma = '"+idioma+"'")){
+        qidioma.next();
+        return qidioma.record().value("id").toInt();
     } else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Idioma"),
-                             tr("Fallo la recuperación del idioma: ")+qIdioma.lastError().text(),
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar idioma"),
+                             tr("Fallo la recuperación del idioma: ")+qidioma.lastError().text(),
                              tr("Aceptar"));
     }
     return 0;
 
 }
 
-int Configuracion::Devolver_id_forma_pago(QString cFormaPago)
+int Configuracion::Devolver_id_forma_pago(QString forma_pago)
 {
     QSqlQuery queryFP(QSqlDatabase::database("Maya"));
-    if(queryFP.exec("select id from formpago where cFormapago = '"+cFormaPago+"'")){
+    if(queryFP.exec("select id from formpago where forma_pago = '"+forma_pago+"'")){
         queryFP.next();
         int id = queryFP.record().value("id").toInt();
         return id;
@@ -374,10 +374,10 @@ int Configuracion::Devolver_id_forma_pago(QString cFormaPago)
     return 0;
 }
 
-int Configuracion::Devolver_id_codigo_forma_pago(QString cCodigo)
+int Configuracion::Devolver_id_codigo_forma_pago(QString codigo)
 {
     QSqlQuery queryFP(QSqlDatabase::database("Maya"));
-    if(queryFP.exec("select id from formpago where cCodigo = '"+cCodigo+"'")){
+    if(queryFP.exec("select id from formpago where codigo = '"+codigo+"'")){
         queryFP.next();
         int id = queryFP.record().value("id").toInt();
         return id;
@@ -392,9 +392,9 @@ int Configuracion::Devolver_id_codigo_forma_pago(QString cCodigo)
 QString Configuracion::Devolver_forma_pago(int id)
 {
     QSqlQuery queryFP(QSqlDatabase::database("Maya"));
-    if(queryFP.exec("select cFormapago from formpago where id = "+QString::number(id))){
+    if(queryFP.exec("select forma_pago from formpago where id = "+QString::number(id))){
         queryFP.next();
-        QString cFP = queryFP.record().value("cFormapago").toString();
+        QString cFP = queryFP.record().value("forma_pago").toString();
         return cFP;
     } else {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
@@ -407,9 +407,9 @@ QString Configuracion::Devolver_forma_pago(int id)
 QString Configuracion::Devolver_codigo_forma_pago(int id)
 {
     QSqlQuery queryFP(QSqlDatabase::database("Maya"));
-    if(queryFP.exec("select cCodigo from formpago where id = "+QString::number(id))){
+    if(queryFP.exec("select codigo from formpago where id = "+QString::number(id))){
         queryFP.next();
-        QString cFP = queryFP.record().value("cCodigo").toString();
+        QString cFP = queryFP.record().value("codigo").toString();
         return cFP;
     } else {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
@@ -549,12 +549,12 @@ void Configuracion::CargarDatosBD()
     this->cUsuarioBDMaya  =   settings.value("cUserBDMaya").toString();
     this->cPasswordBDMaya = settings.value("cPasswordBDMaya").toString();
 
-    this->cNombreBDTiendaWeb = settings.value("nombreBDTiendaWeb").toString();
+    this->nombre_bdTiendaWeb = settings.value("nombre_bdTiendaWeb").toString();
     this->cHostBDTiendaWeb = settings.value("hostTiendaWeb").toString();
     this->cUsuarioTiendaWeb =settings.value("usuarioTiendaWeb").toString();
     this->cPasswordTiendaWeb = settings.value("Pass_web").toString();
     this->cPuertoTiendaWeb =settings.value("puertoTiendaWeb").toString();
-    this->EnlaceWeb = settings.value("EnlaceWeb").toBool();
+    this->enlace_web = settings.value("enlace_web").toBool();
 
 
     this->HostDB_MediTec = settings.value("HostDB_MediTec").toString();
@@ -571,8 +571,8 @@ void Configuracion::AbrirDbWeb()
     // abrir BD WEB
     //--------------
     QSqlDatabase dbWeb = QSqlDatabase::addDatabase("QMYSQL","dbweb");
-    dbWeb.setDatabaseName(Configuracion_global->cNombreBDTiendaWeb);
-        dbWeb.setDatabaseName(Configuracion_global->cNombreBDTiendaWeb);
+    dbWeb.setDatabaseName(Configuracion_global->nombre_bdTiendaWeb);
+        dbWeb.setDatabaseName(Configuracion_global->nombre_bdTiendaWeb);
         dbWeb.setHostName(Configuracion_global->cHostBDTiendaWeb);
         dbWeb.setPassword(Configuracion_global->cPasswordTiendaWeb);
         dbWeb.setUserName(Configuracion_global->cUsuarioTiendaWeb);
@@ -614,42 +614,42 @@ void Configuracion::CargarDatos()
     qEmpresa.bindValue(":id",idEmpresa);
     if (qEmpresa.exec()) {
         qEmpresa.next();
-        this->cPais = qEmpresa.record().field("pais").value().toString();
+        this->pais = qEmpresa.record().field("pais").value().toString();
         this->cEjercicio = qEmpresa.record().field("ejercicio").value().toString();
-        this->nDigitosFactura = qEmpresa.record().field("digitosfactura").value().toInt();
+        this->ndigitos_factura = qEmpresa.record().field("digitos_factura").value().toInt();
 
         if(qEmpresa.record().field("lProfesional").value().toInt()==1)
             this->lProfesional = true;
         else
             this->lProfesional = false;
-        this->nIRPF = qEmpresa.record().field("IIRPF").value().toInt();
-        this->cSerie = qEmpresa.record().field("serie").value().toString();
-        this->nDigitosCuentasContables = qEmpresa.record()./*field("ndigitoscuenta").*/value("ndigitoscuenta").toInt();
-        this->cCuentaClientes = qEmpresa.record().field("codigocuentaclientes").value().toString();
-        this->cCuentaAcreedores = qEmpresa.record().field("codigocuentaacreedores").value().toString();
-        this->cCuentaProveedores = qEmpresa.record().field("codigocuentaproveedores").value().toString();
-        this->Autocodigoart = qEmpresa.record().value("autocodigo").toBool();
-        this->tamanocodigo = qEmpresa.record().value("tamanocodigo").toInt();
-        this->cCuentaCobrosClientes = qEmpresa.record().value("cCuentaCobros").toString();
-        this->cCuentaPagosProveedor = qEmpresa.record().value("cCuentaPagos").toString();
-        this->cCuentaVentaMercaderias = qEmpresa.record().value("cuenta_ventas_mercaderias").toString();
-        this->cCuentaVentaServicios = qEmpresa.record().value("cuenta_ventas_servicios").toString();
-        this->cCuentaIvaRepercutido1 = qEmpresa.record().value("cuenta_iva_repercutido1").toString();
-        this->cCuentaIvaRepercutido2 = qEmpresa.record().value("cuenta_iva_repercutido2").toString();
-        this->cCuentaIvaRepercutido3 = qEmpresa.record().value("cuenta_iva_repercutido3").toString();
-        this->cCuentaIvaRepercutido4 = qEmpresa.record().value("cuenta_iva_repercutido4").toString();
-        this->cCuentaIvaSoportado1 = qEmpresa.record().value("cuenta_iva_soportado1").toString();
-        this->cCuentaIvaSoportado2 = qEmpresa.record().value("cuenta_iva_soportado2").toString();
-        this->cCuentaIvaSoportado3 = qEmpresa.record().value("cuenta_iva_soportado3").toString();
-        this->cCuentaIvaSoportado4 = qEmpresa.record().value("cuenta_iva_soportado4").toString();
-        this->cCuentaIvaRepercutidoRe1 = qEmpresa.record().value("cuenta_iva_repercutido1_re").toString();
-        this->cCuentaIvaRepercutidoRe2 = qEmpresa.record().value("cuenta_iva_repercutido2_re").toString();
-        this->cCuentaIvaRepercutidoRe3 = qEmpresa.record().value("cuenta_iva_repercutido3_re").toString();
-        this->cCuentaIvaRepercutidoRe4 = qEmpresa.record().value("cuenta_iva_repercutido4_re").toString();
-        this->cCuentaIvaSoportadoRe1 = qEmpresa.record().value("cuenta_iva_soportado1_re").toString();
-        this->cCuentaIvaSoportadoRe2 = qEmpresa.record().value("cuenta_iva_soportado2_re").toString();
-        this->cCuentaIvaSoportadoRe3 = qEmpresa.record().value("cuenta_iva_soportado3_re").toString();
-        this->cCuentaIvaSoportadoRe4 = qEmpresa.record().value("cuenta_iva_soportado4_re").toString();
+        this->irpf = qEmpresa.record().field("IIRPF").value().toInt();
+        this->serie = qEmpresa.record().field("serie").value().toString();
+        this->digitos_cuentas_contables = qEmpresa.record()./*field("digitos_cuenta").*/value("digitos_cuenta").toInt();
+        this->cuenta_clientes = qEmpresa.record().field("codigo_cuenta_clientes").value().toString();
+        this->cuenta_acreedores = qEmpresa.record().field("codigo_cuenta_acreedores").value().toString();
+        this->cuenta_proveedores = qEmpresa.record().field("codigo_cuenta_proveedores").value().toString();
+        this->auto_codigoart = qEmpresa.record().value("auto_codigo").toBool();
+        this->tamano_codigo = qEmpresa.record().value("tamano_codigo").toInt();
+        this->cuenta_cobrosClientes = qEmpresa.record().value("cuenta_cobros").toString();
+        this->cuenta_pagosProveedor = qEmpresa.record().value("cuenta_pagos").toString();
+        this->cuentaVentaMercaderias = qEmpresa.record().value("cuenta_ventas_mercaderias").toString();
+        this->cuentaVentaServicios = qEmpresa.record().value("cuenta_ventas_servicios").toString();
+        this->cuenta_iva_repercutido1 = qEmpresa.record().value("cuenta_iva_repercutido1").toString();
+        this->cuenta_iva_repercutido2 = qEmpresa.record().value("cuenta_iva_repercutido2").toString();
+        this->cuenta_iva_repercutido3 = qEmpresa.record().value("cuenta_iva_repercutido3").toString();
+        this->cuenta_iva_repercutido4 = qEmpresa.record().value("cuenta_iva_repercutido4").toString();
+        this->cuentaIvaSoportado1 = qEmpresa.record().value("cuenta_iva_soportado1").toString();
+        this->cuentaIvaSoportado2 = qEmpresa.record().value("cuenta_iva_soportado2").toString();
+        this->cuentaIvaSoportado3 = qEmpresa.record().value("cuenta_iva_soportado3").toString();
+        this->cuentaIvaSoportado4 = qEmpresa.record().value("cuenta_iva_soportado4").toString();
+        this->cuenta_iva_repercutidoRe1 = qEmpresa.record().value("cuenta_iva_repercutido1_re").toString();
+        this->cuenta_iva_repercutidoRe2 = qEmpresa.record().value("cuenta_iva_repercutido2_re").toString();
+        this->cuenta_iva_repercutidoRe3 = qEmpresa.record().value("cuenta_iva_repercutido3_re").toString();
+        this->cuenta_iva_repercutidoRe4 = qEmpresa.record().value("cuenta_iva_repercutido4_re").toString();
+        this->cuentaIvaSoportadoRe1 = qEmpresa.record().value("cuenta_iva_soportado1_re").toString();
+        this->cuentaIvaSoportadoRe2 = qEmpresa.record().value("cuenta_iva_soportado2_re").toString();
+        this->cuentaIvaSoportadoRe3 = qEmpresa.record().value("cuenta_iva_soportado3_re").toString();
+        this->cuentaIvaSoportadoRe4 = qEmpresa.record().value("cuenta_iva_soportado4_re").toString();
         this->medic = qEmpresa.record().value("medica").toBool();
         this->internacional = qEmpresa.record().value("internacional").toBool();
         this->margen = qEmpresa.record().value("margen").toDouble();
@@ -666,21 +666,21 @@ void Configuracion::CargarDatos()
 QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString DC, QString CC)
 {
     // Código Entidad & Código Oficina
-    QString cEntidadOficina = Entidad + Oficina;
-    int longitud = cEntidadOficina.length();
+    QString entidadOficina = Entidad + Oficina;
+    int longitud = entidadOficina.length();
     if (longitud != 8)
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Verificación cuenta bancaria"),
                              QObject::tr("El Codigo  de Entidad más  el  Codigo  de Oficina debe tener 8 dígitos."),
                         QObject::tr("Aceptar"));
     int suma = 0;
-    suma = (cEntidadOficina.mid(0, 1).toInt() * 4);
-    suma = suma + (cEntidadOficina.mid(1, 1).toInt() * 8);
-    suma = suma + (cEntidadOficina.mid(2, 1).toInt() * 5);
-    suma = suma + (cEntidadOficina.mid(3, 1).toInt() * 10);
-    suma = suma + (cEntidadOficina.mid(4, 1).toInt() * 9);
-    suma = suma + (cEntidadOficina.mid(5, 1).toInt() * 7);
-    suma = suma + (cEntidadOficina.mid(6, 1).toInt() * 3);
-    suma = suma + (cEntidadOficina.mid(7, 1).toInt() * 6);
+    suma = (entidadOficina.mid(0, 1).toInt() * 4);
+    suma = suma + (entidadOficina.mid(1, 1).toInt() * 8);
+    suma = suma + (entidadOficina.mid(2, 1).toInt() * 5);
+    suma = suma + (entidadOficina.mid(3, 1).toInt() * 10);
+    suma = suma + (entidadOficina.mid(4, 1).toInt() * 9);
+    suma = suma + (entidadOficina.mid(5, 1).toInt() * 7);
+    suma = suma + (entidadOficina.mid(6, 1).toInt() * 3);
+    suma = suma + (entidadOficina.mid(7, 1).toInt() * 6);
     int resto = suma % 11;
     int primerdigito = 11 - resto;
     if (primerdigito == 10)
@@ -704,8 +704,8 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString DC, Q
         segundodigito = 0;
 
     //Digitos de Control
-    QString cdc = QString::number(primerdigito) + QString::number(segundodigito);
-    if(cdc == DC)
+    QString dc = QString::number(primerdigito) + QString::number(segundodigito);
+    if(dc == DC)
         return "1";
     else
         return "0";
@@ -715,17 +715,17 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString DC, Q
 QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
 {
     // Código Entidad & Código Oficina
-    QString cEntidadOficina = Entidad + Oficina;
-    int longitud = cEntidadOficina.length();
+    QString entidadOficina = Entidad + Oficina;
+    int longitud = entidadOficina.length();
     if (longitud != 8)
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Verificación cuenta bancaria"),
                              QObject::tr("El Codigo  de Entidad más  el  Codigo  de Oficina debe tener 8 dígitos."),
                         QObject::tr("Aceptar"));
     int suma;
-    suma = cEntidadOficina.mid(1, 1).toInt() * 4 + cEntidadOficina.mid(2, 1).toInt() * 8 + cEntidadOficina.mid(3, 1).toInt() * 5 +
-            cEntidadOficina.mid(4, 1).toInt() * 10;
-    suma = suma + cEntidadOficina.mid(5, 1).toInt() * 9 + cEntidadOficina.mid(6, 1).toInt() * 7 + cEntidadOficina.mid(7, 1).toInt() * 3 +
-            cEntidadOficina.mid(8, 1).toInt() * 6;
+    suma = entidadOficina.mid(1, 1).toInt() * 4 + entidadOficina.mid(2, 1).toInt() * 8 + entidadOficina.mid(3, 1).toInt() * 5 +
+            entidadOficina.mid(4, 1).toInt() * 10;
+    suma = suma + entidadOficina.mid(5, 1).toInt() * 9 + entidadOficina.mid(6, 1).toInt() * 7 + entidadOficina.mid(7, 1).toInt() * 3 +
+            entidadOficina.mid(8, 1).toInt() * 6;
     int resto = suma % 11;
     int primerdigito = 11 - resto;
     if (primerdigito == 10)
@@ -749,8 +749,8 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
         segundodigito = 0;
 
     //Digitos de Control
-    QString cdc = QString::number(primerdigito) + QString::number(segundodigito);
-    return cdc;
+    QString dc = QString::number(primerdigito) + QString::number(segundodigito);
+    return dc;
 }
 
 
@@ -816,7 +816,7 @@ void Configuracion::imprimir(bool toPDF,bool preview, QWidget *parent)
             QString errMsg;
             int errLine, errCol;
             QString source = rptDiag.getSource();
-            source.replace("@empresa",Configuracion_global->cNombreBDEmpresa);
+            source.replace("@empresa",Configuracion_global->nombre_bd_empresa);
             if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
                 ORPreRender pre(db);
                 pre.setDom(doc);
@@ -897,7 +897,7 @@ void Configuracion::imprimir(bool toPDF,bool preview,QMap<QString,QVariant> para
             QString errMsg;
             int errLine, errCol;
             QString source = rptDiag.getSource();
-            source.replace("@empresa",Configuracion_global->cNombreBDEmpresa);
+            source.replace("@empresa",Configuracion_global->nombre_bd_empresa);
             if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
                 ORPreRender pre(db);
                 pre.setDom(doc);
@@ -996,7 +996,7 @@ void Configuracion::imprimir(QString repo, bool toPDF, bool preview, QMap<QStrin
             QString errMsg;
             int errLine, errCol;
 
-            source.replace("@empresa",Configuracion_global->cNombreBDEmpresa);
+            source.replace("@empresa",Configuracion_global->nombre_bd_empresa);
             if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
                 ORPreRender pre(db);
                 pre.setDom(doc);

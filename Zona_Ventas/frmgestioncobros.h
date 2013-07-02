@@ -15,8 +15,8 @@ class frmGestionCobros : public MayaModule
 public:
     explicit frmGestionCobros(QWidget *parent = 0);
     ~frmGestionCobros();
-    moduleZone ModuleZone(){return Ventas;}
-    QString ModuleName(){return "Gestion Cobros";}
+    module_zone module_zone(){return Ventas;}
+    QString module_name(){return "Gestion Cobros";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}

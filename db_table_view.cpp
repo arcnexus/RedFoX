@@ -226,7 +226,7 @@ void Db_table_View::on_txtBuscar_textChanged(const QString &arg1)
 {
     if (this->tabla =="vistaArt_tarifa" )
     {
-        QString filtro = "cDescripcion like '%";
+        QString filtro = "descripcion like '%";
         filtro.append(arg1);
         filtro.append("%' and tarifa =");
         filtro.append(QString::number(tarifa));

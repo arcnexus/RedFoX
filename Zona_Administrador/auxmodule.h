@@ -10,7 +10,7 @@ public:
     explicit AuxModule(QWidget *parent = 0, QString label="");
     ~AuxModule();
     int id;
-    MayaModule::moduleZone zone;
+    MayaModule::module_zone zone;
     QString name;
 
     int nivel();

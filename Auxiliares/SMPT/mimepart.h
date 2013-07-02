@@ -57,8 +57,8 @@ public:
 
     void addHeaderLine(const QString & line);
 
-    void setContentId(const QString & cId);
-    const QString & getContentId() const;
+    void setContentid(const QString & cid);
+    const QString & getContentid() const;
 
     void setContentName(const QString & cName);
     const QString & getContentName() const;
@@ -94,7 +94,7 @@ protected:
     QString header;
     QByteArray content;
 
-    QString cId;
+    QString cid;
     QString cName;
     QString cType;
     QString cCharset;

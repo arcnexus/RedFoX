@@ -16,18 +16,18 @@ Frmanalitica2::~Frmanalitica2()
     delete ui;
 }
 
-void Frmanalitica2::cargarDatos(QString cTipo, int idAnalitica)
+void Frmanalitica2::cargarDatos(QString tipo, int id_analitica)
 {
-    this->cTipo = cTipo;
-    this->idAnalitica = idAnalitica;
+    this->tipo = tipo;
+    this->id_analitica = id_analitica;
 
     QSqlQuery *qDatos = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    qDatos->prepare("Select * from tiposanalitica2 where tipo = :cTipo");
-    qDatos->bindValue(":cTipo",cTipo);
+    qDatos->prepare("Select * from tiposanalitica2 where tipo = :tipo");
+    qDatos->bindValue(":tipo",tipo);
     QStringList cabecera;
     cabecera  <<tr("A")<< tr("Analítica")  << tr("Valor Real") <<tr("Valor Referencia") <<tr("Comentarios");
     QSqlRecord reg;
-    QString cDescripcion;
+    QString descripcion;
     QString cValores;
 
     ui->tabla->setColumnCount(5);
@@ -53,8 +53,8 @@ void Frmanalitica2::cargarDatos(QString cTipo, int idAnalitica)
             ui->tabla->setItem(pos,0,newItem);
 
             // Descripcion
-            cDescripcion = reg.field("descripcion").value().toString();
-            QTableWidgetItem *newItem1 = new QTableWidgetItem(cDescripcion);
+            descripcion = reg.field("descripcion").value().toString();
+            QTableWidgetItem *newItem1 = new QTableWidgetItem(descripcion);
             // para que los elementos no sean editables
             newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
             newItem1->setTextColor(Qt::black); // color de los items
@@ -90,9 +90,9 @@ void Frmanalitica2::aceptar()
     for(lin= 0; lin < lineas ; lin++) {
         status = ui->tabla->item(lin,0)->checkState();
         if(status==true){
-            oAnalitica->AnadirLineas(this->idAnalitica,ui->tabla->item(lin,1)->text(),ui->tabla->item(lin,2)->text(),
+            oAnalitica->AnadirLineas(this->id_analitica,ui->tabla->item(lin,1)->text(),ui->tabla->item(lin,2)->text(),
                                      ui->tabla->item(lin,3)->text(),ui->tabla->item(lin,4)->text(),
-                                     this->cTipo);
+                                     this->tipo);
 
         }
     }

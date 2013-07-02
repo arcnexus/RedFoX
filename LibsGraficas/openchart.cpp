@@ -20,7 +20,7 @@ OpenChart::OpenChart(QWidget *parent) :
     m_title = "Un titulo";
     m_valuesEnY = true;
     m_animation = true;
-    m_aniDuration = 700;
+    m_aniduration = 700;
 }
 
 QSize OpenChart::minimumSizeHint() const
@@ -393,7 +393,7 @@ void OpenChart::drawBar(QPainter *painter)
 void OpenChart::drawMultiBar(QPainter *painter)
 {
     double pDist = 15;
-    double iDist = 4;
+    double idist = 4;
     double pieceWidth = (m_width-(pieces.size())*pDist)/pieces.size();
 
     QPen pen;
@@ -418,7 +418,7 @@ void OpenChart::drawMultiBar(QPainter *painter)
             par.second = QColor(r,g,b);
             multibarColors.append(par);
         }
-        double subWidth = (pieceWidth-((pieces.at(i).getValues().size()-1)*iDist))/pieces.at(i).getValues().size();
+        double subWidth = (pieceWidth-((pieces.at(i).getValues().size()-1)*idist))/pieces.at(i).getValues().size();
 
         for(int a=pieces.at(i).getValues().size()-1;a>-1;a--)
         {
@@ -430,7 +430,7 @@ void OpenChart::drawMultiBar(QPainter *painter)
             if(pieceHeigth<0)
                 pieceHeigth = -pieceHeigth;
 
-            int pieceXPos = pDist+i*(pieceWidth + pDist) + (a*(iDist + subWidth));
+            int pieceXPos = pDist+i*(pieceWidth + pDist) + (a*(idist + subWidth));
 
             int blockXPos = pDist+i*(pieceWidth + pDist);
 
@@ -1098,10 +1098,10 @@ void OpenChart::drawYValues(QPainter *painter)
 
     QString aux = s.left(1);
     int toDiv = aux.toInt();
-    double porcion = m_maxValue/toDiv;
+    float porcion = m_maxValue/toDiv;
     porcion = (porcion>0)?porcion : -porcion;
     double pAux = porcion/range;
-    double porcionHeigth = m_heigth*pAux;
+    float porcionHeigth = m_heigth*pAux;
 
     int i = m_xAxis - porcionHeigth;
     for(int a=0;a<m_mayor;a+= porcion)
@@ -1155,7 +1155,7 @@ void OpenChart::startAnimation()
         connect(ani,SIGNAL(finished()),ani,SLOT(deleteLater()));
         ani->setStartValue(0);
         ani->setEndValue(100);
-        ani->setDuration(m_aniDuration);
+        ani->setDuration(m_aniduration);
         ani->start();
     }
     else

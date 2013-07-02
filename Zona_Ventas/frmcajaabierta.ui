@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">background-color:#4c6088</string>
   </property>
-  <widget class="QDateEdit" name="txtdFechaAbertura">
+  <widget class="QDateEdit" name="txtfechaAbertura">
    <property name="geometry">
     <rect>
      <x>119</x>
@@ -58,7 +58,7 @@
     <string>Hora abertura:</string>
    </property>
   </widget>
-  <widget class="QDateTimeEdit" name="txtcHoraAbertura">
+  <widget class="QDateTimeEdit" name="txthoraAbertura">
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -100,7 +100,7 @@
     <string>Usuario abertura:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="txtnCaja">
+  <widget class="QLineEdit" name="txtcaja">
    <property name="geometry">
     <rect>
      <x>70</x>
@@ -171,7 +171,7 @@
     <string>Importe cierre anterior:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="txtrImporteCierreAnterior">
+  <widget class="QLineEdit" name="txtimporteCierreAnterior">
    <property name="geometry">
     <rect>
      <x>540</x>
@@ -283,7 +283,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="txtrImporteACuenta">
+  <widget class="QLineEdit" name="txtimporte_a_cuenta">
    <property name="geometry">
     <rect>
      <x>570</x>
@@ -302,7 +302,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="txtrValesEmitidos">
+  <widget class="QLineEdit" name="txtvalesEmitidos">
    <property name="geometry">
     <rect>
      <x>570</x>
@@ -557,7 +557,7 @@
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="txtrVales">
+   <widget class="QLineEdit" name="txtvales">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -621,7 +621,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLineEdit" name="txtrImporteAbertura">
+   <widget class="QLineEdit" name="txtimporteAbertura">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -711,7 +711,7 @@
      <string>Importe pendiente:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="txtrImportePendiente">
+   <widget class="QLineEdit" name="txtimporte_pendiente">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -730,7 +730,7 @@
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="txtrImporteCierre">
+   <widget class="QLineEdit" name="txtimporteCierre">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -749,7 +749,7 @@
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="txtrImporteCambios">
+   <widget class="QLineEdit" name="txtimporte_cambios">
     <property name="geometry">
      <rect>
       <x>120</x>

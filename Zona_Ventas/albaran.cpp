@@ -18,85 +18,85 @@ bool Albaran::AnadirAlbaran()
     int x = NuevoNumeroAlbaran();
     QSqlQuery q(QSqlDatabase::database("empresa"));
     q.prepare("INSERT INTO cab_alb"
-              "(nAlbaran, dFecha, cPedidoCli, id_Cliente, cCodigoCliente, cCliente,"
-              "cDireccion, cDireccion2, cPoblacion, cProvincia, cCP, idpais, cCif,"
-              "lRecargoEquivalencia, rSubtotal, rDto, nDto, rBase1, rBase2, rBase3,"
-              "rBase4, nPorcentajeIva1, nPorcentajeIva2, nPorcentajeIva3, nPorcentajeIva4,"
-              "rImporteIva1, rImporteIva2, rImporteIva3, rImporteIva4, nPorcentajeRecargoEq1,"
-              "nPorcentajeRecargoEq2, nPorcentajeRecargoEq3, nPorcentajeRecargoEq4,"
-              "rImporteRecargoEq1, rImporteRecargoEq2, rImporteRecargoEq3, rImporteRecargoEq4,"
-              "rTotal1, rTotal2, rTotal3, rTotal4, rBaseTotal, rIvaTotal, rRecargoEqTotal,"
-              "rTotalAlbaran, lImpreso, lFacturado, cFactura, dFechaFactura, tComentario,"
-              "rACuenta) "
+              "(albaran, fecha, pedido_cli, id_cliente, codigo_cliente, cliente,"
+              "direccion1, direccion2, poblacion, provincia, cp, id_pais, cif,"
+              "recargo_equivalencia, subtotal, dto, dto, base1, base2, base3,"
+              "base4, porc_iva1, porc_iva2, porc_iva3, porc_iva4,"
+              "iva1, iva2, iva3, iva4, porc_rec1,"
+              "porc_rec2, porc_rec3, porc_rec4,"
+              "rec1, rec2, rec3, rec4,"
+              "total1, total2, total3, total4, base_total, iva_total, rec_total,"
+              "total_albaran, impreso, facturado, factura, fecha_factura, comentario,"
+              "entregado_a_cuenta) "
               "VALUES"
-              "(:nAlbaran, :dFecha, :cPedidoCli, :id_Cliente, :cCodigoCliente, :cCliente,"
-              ":cDireccion, :cDireccion2, :cPoblacion, :cProvincia, :cCP, :idpais, :cCif,"
-              ":lRecargoEquivalencia, :rSubtotal, :rDto, :nDto, :rBase1, :rBase2, :rBase3,"
-              ":rBase4, :nPorcentajeIva1, :nPorcentajeIva2, :nPorcentajeIva3, :nPorcentajeIva4,"
-              ":rImporteIva1, :rImporteIva2, :rImporteIva3, :rImporteIva4, :nPorcentajeRecargoEq1,"
-              ":nPorcentajeRecargoEq2, :nPorcentajeRecargoEq3, :nPorcentajeRecargoEq4,"
-              ":rImporteRecargoEq1, :rImporteRecargoEq2, :rImporteRecargoEq3, :rImporteRecargoEq4,"
-              ":rTotal1, :rTotal2, :rTotal3, :rTotal4, :rBaseTotal, :rIvaTotal, :rRecargoEqTotal,"
-              ":rTotalAlbaran, :lImpreso, :lFacturado, :cFactura, :dFechaFactura, :tComentario,"
-              ":rACuenta) ");
-    q.bindValue(":nAlbaran",x);
-    q.bindValue(":dFecha",dFecha);
-    q.bindValue(":cPedidoCli",cPedidoCli);
-    q.bindValue(":id_Cliente",iId_Cliente);
-    q.bindValue(":cCodigoCliente",cCodigoCliente);
-    q.bindValue(":cCliente",cCliente);
+              "(:albaran, :fecha, :pedido_cli, :id_cliente, :codigo_cliente, :cliente,"
+              ":direccion1, :direccion2, :poblacion, :provincia, :cp, :id_pais, :cif,"
+              ":recargo_equivalencia, :subtotal, :dto, :dto, :base1, :base2, :base3,"
+              ":base4, :porc_iva1, :porc_iva2, :porc_iva3, :porc_iva4,"
+              ":iva1, :iva2, :iva3, :iva4, :porc_rec1,"
+              ":porc_rec2, :porc_rec3, :porc_rec4,"
+              ":rec1, :rec2, :rec3, :rec4,"
+              ":total1, :total2, :total3, :total4, :base_total, :iva_total, :rec_total,"
+              ":total_albaran, :impreso, :facturado, :factura, :fecha_factura, :comentario,"
+              ":entregado_a_cuenta) ");
+    q.bindValue(":albaran",x);
+    q.bindValue(":fecha",fecha);
+    q.bindValue(":pedido_cli",pedido_cli);
+    q.bindValue(":id_cliente",id_cliente);
+    q.bindValue(":codigo_cliente",codigo_cliente);
+    q.bindValue(":cliente",cliente);
 
-    q.bindValue(":cDireccion",cDireccion);
-    q.bindValue(":cDireccion2",cDireccion2);
-    q.bindValue(":cPoblacion",cPoblacion);
-    q.bindValue(":cProvincia",cProvincia);
-    q.bindValue(":cCP",cCp);
-    q.bindValue(":idpais",idPais);
-    q.bindValue(":cCif",cCif);
+    q.bindValue(":direccion1",direccion1);
+    q.bindValue(":direccion2",direccion2);
+    q.bindValue(":poblacion",poblacion);
+    q.bindValue(":provincia",provincia);
+    q.bindValue(":cp",cp);
+    q.bindValue(":id_pais",id_pais);
+    q.bindValue(":cif",cif);
 
-    q.bindValue(":lRecargoEquivalencia",lRecargoEquivalencia);
-    q.bindValue(":rSubtotal",0);
-    q.bindValue(":rDto",0);
-    q.bindValue(":nDto",0);
-    q.bindValue(":rBase1",0);
-    q.bindValue(":rBase2",0);
-    q.bindValue(":rBase3",0);
-    q.bindValue(":rBase4",0);
-    q.bindValue(":nPorcentajeIva1",0);
-    q.bindValue(":nPorcentajeIva2",0);
-    q.bindValue(":nPorcentajeIva3",0);
-    q.bindValue(":nPorcentajeIva4",0);
+    q.bindValue(":recargo_equivalencia",recargo_equivalencia);
+    q.bindValue(":subtotal",0);
+    q.bindValue(":dto",0);
+    q.bindValue(":dto",0);
+    q.bindValue(":base1",0);
+    q.bindValue(":base2",0);
+    q.bindValue(":base3",0);
+    q.bindValue(":base4",0);
+    q.bindValue(":porc_iva1",0);
+    q.bindValue(":porc_iva2",0);
+    q.bindValue(":porc_iva3",0);
+    q.bindValue(":porc_iva4",0);
 
-    q.bindValue(":rImporteIva1",0);
-    q.bindValue(":rImporteIva2",0);
-    q.bindValue(":rImporteIva3",0);
-    q.bindValue(":rImporteIva4",0);
-    q.bindValue(":nPorcentajeRecargoEq1",0);
-    q.bindValue(":nPorcentajeRecargoEq2",0);
-    q.bindValue(":nPorcentajeRecargoEq3",0);
-    q.bindValue(":nPorcentajeRecargoEq4",0);
+    q.bindValue(":iva1",0);
+    q.bindValue(":iva2",0);
+    q.bindValue(":iva3",0);
+    q.bindValue(":iva4",0);
+    q.bindValue(":porc_rec1",0);
+    q.bindValue(":porc_rec2",0);
+    q.bindValue(":porc_rec3",0);
+    q.bindValue(":porc_rec4",0);
 
-    q.bindValue(":rImporteRecargoEq1",0);
-    q.bindValue(":rImporteRecargoEq2",0);
-    q.bindValue(":rImporteRecargoEq3",0);
-    q.bindValue(":rImporteRecargoEq4",0);
+    q.bindValue(":rec1",0);
+    q.bindValue(":rec2",0);
+    q.bindValue(":rec3",0);
+    q.bindValue(":rec4",0);
 
-    q.bindValue(":rTotal1",0);
-    q.bindValue(":rTotal2",0);
-    q.bindValue(":rTotal3",0);
-    q.bindValue(":rTotal4",0);
-    q.bindValue(":rBaseTotal",0);
-    q.bindValue(":rIvaTotal",0);
-    q.bindValue(":rRecargoEqTotal",0);
+    q.bindValue(":total1",0);
+    q.bindValue(":total2",0);
+    q.bindValue(":total3",0);
+    q.bindValue(":total4",0);
+    q.bindValue(":base_total",0);
+    q.bindValue(":iva_total",0);
+    q.bindValue(":rec_total",0);
 
-    q.bindValue(":rTotalAlbaran",0);
-    q.bindValue(":lImpreso",0);
-    q.bindValue(":lFacturado",0);
-    q.bindValue(":cFactura",cFactura);
-    q.bindValue(":dFechaFactura",dFechaFactura);
-    q.bindValue(":tComentario",tComentario);
+    q.bindValue(":total_albaran",0);
+    q.bindValue(":impreso",0);
+    q.bindValue(":facturado",0);
+    q.bindValue(":factura",factura);
+    q.bindValue(":fecha_factura",fecha_factura);
+    q.bindValue(":comentario",comentario);
 
-    q.bindValue(":rACuenta",0);
+    q.bindValue(":entregado_a_cuenta",0);
 
     if(!q.exec())
     {
@@ -110,89 +110,89 @@ bool Albaran::AnadirAlbaran()
     }
 }
 
-bool Albaran::GuardarAlbaran(int nId_Albaran)
+bool Albaran::GuardarAlbaran(int nid_Albaran)
 {
     QSqlQuery q(QSqlDatabase::database("empresa"));
     q.prepare("UPDATE cab_alb SET "
-              "dFecha=:dFecha, cPedidoCli=:cPedidoCli, id_Cliente=:id_Cliente,"
-              "cCodigoCliente=:cCodigoCliente, cCliente=:cCliente,"
-              "cDireccion=:cDireccion,cDireccion2=:cDireccion2, cPoblacion=:cPoblacion,"
-              "cProvincia=:cProvincia, cCP=:cCP, idpais=:idpais, cCif=:cCif,"
-              "lRecargoEquivalencia=:lRecargoEquivalencia, rSubtotal=:rSubtotal,"
-              "rDto=:rDto, nDto=:nDto, rBase1=:rBase1, rBase2=:rBase2, rBase3=:rBase3,"
-              "rBase4=:rBase4, nPorcentajeIva1=:nPorcentajeIva1, nPorcentajeIva2=:nPorcentajeIva2,"
-              "nPorcentajeIva3=:nPorcentajeIva3, nPorcentajeIva4=:nPorcentajeIva4,"
-              "rImporteIva1=:rImporteIva1, rImporteIva2=:rImporteIva2, rImporteIva3=:rImporteIva3,"
-              "rImporteIva4=:rImporteIva4, nPorcentajeRecargoEq1=:nPorcentajeRecargoEq1,"
-              "nPorcentajeRecargoEq2=:nPorcentajeRecargoEq2, nPorcentajeRecargoEq3=:nPorcentajeRecargoEq3,"
-              "nPorcentajeRecargoEq4=:nPorcentajeRecargoEq4,"
-              "rImporteRecargoEq1=:rImporteRecargoEq1, rImporteRecargoEq2=:rImporteRecargoEq2,"
-              "rImporteRecargoEq3=:rImporteRecargoEq3, rImporteRecargoEq4=:rImporteRecargoEq4,"
-              "rTotal1=:rTotal1, rTotal2=:rTotal2, rTotal3=:rTotal3, rTotal4=:rTotal4,"
-              "rBaseTotal=:rBaseTotal, rIvaTotal=:rIvaTotal, rRecargoEqTotal=:rRecargoEqTotal,"
-              "rTotalAlbaran=:rTotalAlbaran, lImpreso=:lImpreso, lFacturado=:lFacturado,"
-              "cFactura=:cFactura, dFechaFactura=:dFechaFactura, tComentario=:tComentario,"
-              "rACuenta=:rACuenta"
-              " WHERE Id = :nAlbaran");
+              "fecha=:fecha, pedido_cli=:pedido_cli, id_cliente=:id_cliente,"
+              "codigo_cliente=:codigo_cliente, cliente=:cliente,"
+              "direccion1=:direccion1,direccion2=:direccion2, poblacion=:poblacion,"
+              "provincia=:provincia, cp=:cp, id_pais=:id_pais, cif=:cif,"
+              "recargo_equivalencia=:recargo_equivalencia, subtotal=:subtotal,"
+              "dto=:dto, dto=:dto, base1=:base1, base2=:base2, base3=:base3,"
+              "base4=:base4, porc_iva1=:porc_iva1, porc_iva2=:porc_iva2,"
+              "porc_iva3=:porc_iva3, porc_iva4=:porc_iva4,"
+              "iva1=:iva1, iva2=:iva2, iva3=:iva3,"
+              "iva4=:iva4, porc_rec1=:porc_rec1,"
+              "porc_rec2=:porc_rec2, porc_rec3=:porc_rec3,"
+              "porc_rec4=:porc_rec4,"
+              "rec1=:rec1, rec2=:rec2,"
+              "rec3=:rec3, rec4=:rec4,"
+              "total1=:total1, total2=:total2, total3=:total3, total4=:total4,"
+              "base_total=:base_total, iva_total=:iva_total, rec_total=:rec_total,"
+              "total_albaran=:total_albaran, impreso=:impreso, facturado=:facturado,"
+              "factura=:factura, fecha_factura=:fecha_factura, comentario=:comentario,"
+              "entregado_a_cuenta=:entregado_a_cuenta"
+              " WHERE id = :albaran");
 
-    q.bindValue(":nAlbaran",nId_Albaran);
-    q.bindValue(":dFecha",dFecha);
-    q.bindValue(":cPedidoCli",cPedidoCli);
-    q.bindValue(":id_Cliente",iId_Cliente);
-    q.bindValue(":cCodigoCliente",cCodigoCliente);
-    q.bindValue(":cCliente",cCliente);
+    q.bindValue(":albaran",nid_Albaran);
+    q.bindValue(":fecha",fecha);
+    q.bindValue(":pedido_cli",pedido_cli);
+    q.bindValue(":id_cliente",id_cliente);
+    q.bindValue(":codigo_cliente",codigo_cliente);
+    q.bindValue(":cliente",cliente);
 
-    q.bindValue(":cDireccion",cDireccion);
-    q.bindValue(":cDireccion2",cDireccion2);
-    q.bindValue(":cPoblacion",cPoblacion);
-    q.bindValue(":cProvincia",cProvincia);
-    q.bindValue(":cCP",cCp);
-    q.bindValue(":idpais",idPais);
-    q.bindValue(":cCif",cCif);
+    q.bindValue(":direccion1",direccion1);
+    q.bindValue(":direccion2",direccion2);
+    q.bindValue(":poblacion",poblacion);
+    q.bindValue(":provincia",provincia);
+    q.bindValue(":cp",cp);
+    q.bindValue(":id_pais",id_pais);
+    q.bindValue(":cif",cif);
 
-    q.bindValue(":lRecargoEquivalencia",lRecargoEquivalencia);
-    q.bindValue(":rSubtotal",rSubtotal);
-    q.bindValue(":rDto",rDto);
-    q.bindValue(":nDto",nDto);
-    q.bindValue(":rBase1",rBase1);
-    q.bindValue(":rBase2",rBase2);
-    q.bindValue(":rBase3",rBase3);
-    q.bindValue(":rBase4",rBase4);
-    q.bindValue(":nPorcentajeIva1",nPorcentajeIVA1);
-    q.bindValue(":nPorcentajeIva2",nPorcentajeIVA2);
-    q.bindValue(":nPorcentajeIva3",nPorcentajeIVA3);
-    q.bindValue(":nPorcentajeIva4",nPorcentajeIVA4);
+    q.bindValue(":recargo_equivalencia",recargo_equivalencia);
+    q.bindValue(":subtotal",subtotal);
+    q.bindValue(":dto",dto);
+    q.bindValue(":dto",dto);
+    q.bindValue(":base1",base1);
+    q.bindValue(":base2",base2);
+    q.bindValue(":base3",base3);
+    q.bindValue(":base4",base4);
+    q.bindValue(":porc_iva1",porc_iva1);
+    q.bindValue(":porc_iva2",porc_iva2);
+    q.bindValue(":porc_iva3",porc_iva3);
+    q.bindValue(":porc_iva4",porc_iva4);
 
-    q.bindValue(":rImporteIva1",rImporteIva1);
-    q.bindValue(":rImporteIva2",rImporteIva2);
-    q.bindValue(":rImporteIva3",rImporteIva3);
-    q.bindValue(":rImporteIva4",rImporteIva4);
-    q.bindValue(":nPorcentajeRecargoEq1",nPorcentajeRecargoEq1);
-    q.bindValue(":nPorcentajeRecargoEq2",nPorcentajeRecargoEq2);
-    q.bindValue(":nPorcentajeRecargoEq3",nPorcentajeRecargoEq3);
-    q.bindValue(":nPorcentajeRecargoEq4",nPorcentajeRecargoEq4);
+    q.bindValue(":iva1",iva1);
+    q.bindValue(":iva2",iva2);
+    q.bindValue(":iva3",iva3);
+    q.bindValue(":iva4",iva4);
+    q.bindValue(":porc_rec1",porc_rec1);
+    q.bindValue(":porc_rec2",porc_rec2);
+    q.bindValue(":porc_rec3",porc_rec3);
+    q.bindValue(":porc_rec4",porc_rec4);
 
-    q.bindValue(":rImporteRecargoEq1",rImporteRecargoEq1);
-    q.bindValue(":rImporteRecargoEq2",rImporteRecargoEq2);
-    q.bindValue(":rImporteRecargoEq3",rImporteRecargoEq3);
-    q.bindValue(":rImporteRecargoEq4",rImporteRecargoEq4);
+    q.bindValue(":rec1",rec1);
+    q.bindValue(":rec2",rec2);
+    q.bindValue(":rec3",rec3);
+    q.bindValue(":rec4",rec4);
 
-    q.bindValue(":rTotal1",rTotal1);
-    q.bindValue(":rTotal2",rTotal2);
-    q.bindValue(":rTotal3",rTotal3);
-    q.bindValue(":rTotal4",rTotal4);
-    q.bindValue(":rBaseTotal",rBaseTotal);
-    q.bindValue(":rIvaTotal",rIvaTotal);
-    q.bindValue(":rRecargoEqTotal",rRecargoEqTotal);
+    q.bindValue(":total1",total1);
+    q.bindValue(":total2",total2);
+    q.bindValue(":total3",total3);
+    q.bindValue(":total4",total4);
+    q.bindValue(":base_total",base_total);
+    q.bindValue(":iva_total",iva_total);
+    q.bindValue(":rec_total",rec_total);
 
-    q.bindValue(":rTotalAlbaran",rTotalAlbaran);
-    q.bindValue(":lImpreso",lImpreso);
-    q.bindValue(":lFacturado",lFacturado);
-    q.bindValue(":cFactura",cFactura);
-    q.bindValue(":dFechaFactura",dFechaFactura);
-    q.bindValue(":tComentario",tComentario);
+    q.bindValue(":total_albaran",total_albaran);
+    q.bindValue(":impreso",impreso);
+    q.bindValue(":facturado",facturado);
+    q.bindValue(":factura",factura);
+    q.bindValue(":fecha_factura",fecha_factura);
+    q.bindValue(":comentario",comentario);
 
-    q.bindValue(":rACuenta",rACuenta);
+    q.bindValue(":entregado_a_cuenta",entregado_a_cuenta);
 
     if(!q.exec())
     {
@@ -221,59 +221,59 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
             if (cab_alb.next())
             {
                 QSqlRecord r = cab_alb.record();
-                id = r.value("Id").toInt();;
-                nAlbaran= r.value("nAlbaran").toInt();
-                dFecha= r.value("dFecha").toDate();
-                cPedidoCli= r.value("cPedidoCli").toString();
-                iId_Cliente= r.value("id_Cliente").toInt();
-                cCodigoCliente= r.value("cCodigoCliente").toString();
-                cCliente= r.value("cCliente").toString();
-                cDireccion= r.value("cDireccion").toString();
-                cDireccion2= r.value("cDireccion2").toString();
-                cPoblacion= r.value("cPoblacion").toString();
-                cProvincia= r.value("cProvincia").toString();
-                cCp= r.value("cCp").toString();
-                idPais= r.value("idPais").toInt();
-                //cPais= r.value("");
-                cCif= r.value("cCif").toString();
-                lRecargoEquivalencia= r.value("lRecargoEquivalencia").toInt();
-                rSubtotal= r.value("rSubtotal").toDouble();
-                nDto= r.value("nDto").toDouble();
-                rDto= r.value("rDto").toDouble();
-                rBase1= r.value("rBase1").toDouble();
-                rBase2= r.value("rBase2").toDouble();
-                rBase3= r.value("rBase3").toDouble();
-                rBase4= r.value("rBase4").toDouble();
-                nPorcentajeIVA1= r.value("nPorcentajeIVA1").toDouble();
-                nPorcentajeIVA2= r.value("nPorcentajeIVA2").toDouble();
-                nPorcentajeIVA3= r.value("nPorcentajeIVA3").toDouble();
-                nPorcentajeIVA4= r.value("nPorcentajeIVA4").toDouble();
-                rImporteIva1= r.value("rImporteIva1").toDouble();
-                rImporteIva2= r.value("rImporteIva2").toDouble();
-                rImporteIva3= r.value("rImporteIva3").toDouble();
-                rImporteIva4= r.value("rImporteIva4").toDouble();
-                nPorcentajeRecargoEq1= r.value("nPorcentajeRecargoEq1").toDouble();
-                nPorcentajeRecargoEq2= r.value("nPorcentajeRecargoEq2").toDouble();
-                nPorcentajeRecargoEq3= r.value("nPorcentajeRecargoEq3").toDouble();
-                nPorcentajeRecargoEq4= r.value("nPorcentajeRecargoEq4").toDouble();
-                rImporteRecargoEq1= r.value("rImporteRecargoEq1").toDouble();
-                rImporteRecargoEq2= r.value("rImporteRecargoEq2").toDouble();
-                rImporteRecargoEq3= r.value("rImporteRecargoEq3").toDouble();
-                rImporteRecargoEq4= r.value("rImporteRecargoEq4").toDouble();
-                rTotal1= r.value("rTotal1").toDouble();
-                rTotal2= r.value("rTotal2").toDouble();
-                rTotal3= r.value("rTotal3").toDouble();
-                rTotal4= r.value("rTotal4").toDouble();
-                rBaseTotal= r.value("rBaseTotal").toDouble();
-                rIvaTotal= r.value("rIvaTotal").toDouble();
-                rRecargoEqTotal= r.value("rRecargoEqTotal").toDouble();
-                rTotalAlbaran= r.value("rTotalAlbaran").toDouble();
-                lImpreso= r.value("lImpreso").toInt();
-                lFacturado= r.value("lFacturado").toInt();
-                cFactura= r.value("cFactura").toString();
-                dFechaFactura= r.value("dFechaFactura").toDate();
-                tComentario= r.value("tComentario").toString();
-                rACuenta= r.value("rACuenta").toDouble();
+                id = r.value("id").toInt();;
+                albaran= r.value("albaran").toInt();
+                fecha= r.value("fecha").toDate();
+                pedido_cli= r.value("pedido_cli").toString();
+                id_cliente= r.value("id_cliente").toInt();
+                codigo_cliente= r.value("codigo_cliente").toString();
+                cliente= r.value("cliente").toString();
+                direccion1= r.value("direccion1").toString();
+                direccion2= r.value("direccion2").toString();
+                poblacion= r.value("poblacion").toString();
+                provincia= r.value("provincia").toString();
+                cp= r.value("cp").toString();
+                id_pais= r.value("id_pais").toInt();
+                //pais= r.value("");
+                cif= r.value("cif").toString();
+                recargo_equivalencia= r.value("recargo_equivalencia").toInt();
+                subtotal= r.value("subtotal").toDouble();
+                dto= r.value("dto").toDouble();
+                dto= r.value("dto").toDouble();
+                base1= r.value("base1").toDouble();
+                base2= r.value("base2").toDouble();
+                base3= r.value("base3").toDouble();
+                base4= r.value("base4").toDouble();
+                porc_iva1= r.value("porc_iva1").toDouble();
+                porc_iva2= r.value("porc_iva2").toDouble();
+                porc_iva3= r.value("porc_iva3").toDouble();
+                porc_iva4= r.value("porc_iva4").toDouble();
+                iva1= r.value("iva1").toDouble();
+                iva2= r.value("iva2").toDouble();
+                iva3= r.value("iva3").toDouble();
+                iva4= r.value("iva4").toDouble();
+                porc_rec1= r.value("porc_rec1").toDouble();
+                porc_rec2= r.value("porc_rec2").toDouble();
+                porc_rec3= r.value("porc_rec3").toDouble();
+                porc_rec4= r.value("porc_rec4").toDouble();
+                rec1= r.value("rec1").toDouble();
+                rec2= r.value("rec2").toDouble();
+                rec3= r.value("rec3").toDouble();
+                rec4= r.value("rec4").toDouble();
+                total1= r.value("total1").toDouble();
+                total2= r.value("total2").toDouble();
+                total3= r.value("total3").toDouble();
+                total4= r.value("total4").toDouble();
+                base_total= r.value("base_total").toDouble();
+                iva_total= r.value("iva_total").toDouble();
+                rec_total= r.value("rec_total").toDouble();
+                total_albaran= r.value("total_albaran").toDouble();
+                impreso= r.value("impreso").toInt();
+                facturado= r.value("facturado").toInt();
+                factura= r.value("factura").toString();
+                fecha_factura= r.value("fecha_factura").toDate();
+                comentario= r.value("comentario").toString();
+                entregado_a_cuenta= r.value("entregado_a_cuenta").toDouble();
                 return true;
                }
             else //if not next
@@ -284,19 +284,19 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
 int Albaran::NuevoNumeroAlbaran()
 {
     QSqlQuery cab_alb(QSqlDatabase::database("empresa"));
-    int nAlbaran = 1;
-    cab_alb.prepare("Select nAlbaran from cab_alb order by nAlbaran desc limit 1");
+    int albaran = 1;
+    cab_alb.prepare("Select albaran from cab_alb order by albaran desc limit 1");
     if(cab_alb.exec())
     {
         cab_alb.next();
-        nAlbaran= cab_alb.value(0).toInt();
-        nAlbaran ++;
+        albaran= cab_alb.value(0).toInt();
+        albaran ++;
     }
     else
     {
          QMessageBox::critical(qApp->activeWindow(), "error:", cab_alb.lastError().text());
     }
-    return nAlbaran;
+    return albaran;
 }
 
 void Albaran::FacturarAlbaran()

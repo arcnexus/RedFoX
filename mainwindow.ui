@@ -539,7 +539,7 @@ background-color: rgb(133, 170, 142);</string>
            </property>
            <property name="icon">
             <iconset resource="maya.qrc">
-             <normaloff>:/Icons/PNG/cierrecaja.png</normaloff>:/Icons/PNG/cierrecaja.png</iconset>
+             <normaloff>:/Icons/PNG/cierecaja.png</normaloff>:/Icons/PNG/cierecaja.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -701,7 +701,7 @@ selection-color: rgb(0, 0, 0);</string>
     <bool>true</bool>
    </property>
   </action>
-  <action name="btnTipos_de_Iva">
+  <action name="bttipos_de_Iva">
    <property name="icon">
     <iconset resource="maya.qrc">
      <normaloff>:/Icons/PNG/iva3.png</normaloff>:/Icons/PNG/iva3.png</iconset>
@@ -749,7 +749,7 @@ selection-color: rgb(0, 0, 0);</string>
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionPedidos">
+  <action name="actiopedidos">
    <property name="icon">
     <iconset resource="maya.qrc">
      <normaloff>:/Icons/PNG/pedidos_cli.png</normaloff>:/Icons/PNG/pedidos_cli.png</iconset>
@@ -856,7 +856,7 @@ selection-color: rgb(0, 0, 0);</string>
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionTipos_de_imagen">
+  <action name="actiotipos_de_imagen">
    <property name="text">
     <string>Tipos de imagen</string>
    </property>
@@ -864,7 +864,7 @@ selection-color: rgb(0, 0, 0);</string>
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionTipos_de_anal_tica">
+  <action name="actiotipos_de_anal_tica">
    <property name="text">
     <string>Tipos de analítica</string>
    </property>
@@ -888,7 +888,7 @@ selection-color: rgb(0, 0, 0);</string>
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionTipos_de_IVA">
+  <action name="actiotipos_de_IVA">
    <property name="text">
     <string>Tipos de I.V.A</string>
    </property>
@@ -917,7 +917,7 @@ selection-color: rgb(0, 0, 0);</string>
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionAlbaranes_de_proveedores">
+  <action name="actioalbaranes_de_proveedores">
    <property name="text">
     <string>Albaranes de proveedores</string>
    </property>
@@ -933,12 +933,12 @@ selection-color: rgb(0, 0, 0);</string>
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionRecepci_n_de_Pedidos">
+  <action name="actioporc_recepci_n_de_Pedidos">
    <property name="text">
     <string>Recepción de Pedidos</string>
    </property>
   </action>
-  <action name="actionRecepci_n_de_pedidos">
+  <action name="actioporc_recepci_n_de_pedidos">
    <property name="text">
     <string>Recepción  de pedidos</string>
    </property>
@@ -1002,7 +1002,7 @@ selection-color: rgb(0, 0, 0);</string>
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionTipos_de_paciente">
+  <action name="actiotipos_de_paciente">
    <property name="text">
     <string>Tipos de paciente</string>
    </property>
@@ -1034,7 +1034,7 @@ selection-color: rgb(0, 0, 0);</string>
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionAlbaranes_2">
+  <action name="actioalbaranes_2">
    <property name="text">
     <string>Albaranes</string>
    </property>
@@ -1194,7 +1194,7 @@ selection-color: rgb(0, 0, 0);</string>
     <string>Gestión de Pedidos</string>
    </property>
   </action>
-  <action name="actionRecepcion_de_pedido_pro">
+  <action name="actioporc_recepcion_de_pedido_pro">
    <property name="icon">
     <iconset resource="maya.qrc">
      <normaloff>:/Icons/PNG/recepcion_ped.png</normaloff>:/Icons/PNG/recepcion_ped.png</iconset>

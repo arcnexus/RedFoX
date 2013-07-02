@@ -15,8 +15,8 @@ public:
     explicit frmProveedores(QWidget *parent = 0);
     int id_contacto;
     ~frmProveedores();
-    moduleZone ModuleZone(){return Mantenimiento;}
-    QString ModuleName(){return "Proveedores";}
+    module_zone module_zone(){return Mantenimiento;}
+    QString module_name(){return "Proveedores";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -41,37 +41,37 @@ private slots:
 
     void on_btnAnterior_clicked();
 
-    void on_txtcPoblacion_editingFinished();
+    void on_txtpoblacion_editingFinished();
 
-    void on_txtcCP_editingFinished();
+    void on_txtcp_editingFinished();
 
     void on_btnBorrar_clicked();
 
     void on_btnDeshacer_clicked();
 
-    void on_txtcEntidadBancariaProveedor_editingFinished();
+    void on_txtentidad_bancaria_proveedor_editingFinished();
 
-    void on_txtcOficinaBancariaProveedor_editingFinished();
+    void on_txtoficina_bancaria_proveedor_editingFinished();
 
-    void on_txtcDCProveedor_editingFinished();
+    void on_txtdc_proveedor_editingFinished();
 
-    void on_txtcCCProveedor_editingFinished();
+    void on_txtcc_proveedor_editingFinished();
 
-    void on_txtcEntidadPagoProveedor_editingFinished();
+    void on_txtentidad_pago_proveedor_editingFinished();
 
-    void on_txtcOficinaPagoProveedor_editingFinished();
+    void on_txtoficina_pago_proveedor_editingFinished();
 
-    void on_txtcDCPagoProveedor_editingFinished();
+    void on_txtdc_pago_proveedor_editingFinished();
 
-    void on_txtcCuentaPagoProveedor_editingFinished();
+    void on_txtcuentaPagoProveedor_editingFinished();
 
-    void on_txtcCPAlmacen_editingFinished();
+    void on_txtcp_almacen_editingFinished();
 
-    void on_txtcPais_currentIndexChanged(const QString &arg1);
+    void on_txtpais_currentIndexChanged(const QString &arg1);
 
 
 
-    void on_txtcCodigoFormaPago_currentIndexChanged(const QString &arg1);
+    void on_txtcodigoFormaPago_currentIndexChanged(const QString &arg1);
 
 
     void on_btnNuevaFactura_clicked();
@@ -99,7 +99,7 @@ private slots:
     void on_btnAnadirEntrega_clicked();
 
 
-    void on_txtcCif_editingFinished();
+    void on_txtcif_editingFinished();
 
 private:
     Ui::frmProveedores *ui;

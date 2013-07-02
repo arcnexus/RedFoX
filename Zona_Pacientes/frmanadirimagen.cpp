@@ -16,12 +16,12 @@ FrmAnadirImagen::FrmAnadirImagen(QWidget *parent) :
     connect(oImagenesDiagnostico,SIGNAL(ui_ponerDatosEnObjetoImagen()),this,SLOT(GuardarDatosEnObjetoImagen()));
     connect(ui->pushButton__Anadir,SIGNAL(clicked()),this,SLOT(GuardarInfoImagen_en_BD()));
     connect(oImagenesDiagnostico,SIGNAL(cerrarventana()),this,SLOT(close()));
-    connect(ui->comboBox_TipoImagen,SIGNAL(currentIndexChanged(QString)),this,SLOT(CambioTipoImagen(QString)));
+    connect(ui->comboBox_tipo_imagen,SIGNAL(currentIndexChanged(QString)),this,SLOT(Cambiotipo_imagen(QString)));
 
     QSqlQueryModel *qTipos = new QSqlQueryModel(this);
     qTipos->setQuery("Select descripcion from tiposimagen",QSqlDatabase::database("dbmedica"));
-    ui->comboBox_TipoImagen->setModel(qTipos);
-    oImagenesDiagnostico->idTipoImagen = oImagenesDiagnostico->DevolverId_tipo_imagen(ui->comboBox_TipoImagen->currentText());
+    ui->comboBox_tipo_imagen->setModel(qTipos);
+    oImagenesDiagnostico->id_tipo_imagen = oImagenesDiagnostico->Devolverid_tipo_imagen(ui->comboBox_tipo_imagen->currentText());
 }
 
 FrmAnadirImagen::~FrmAnadirImagen()
@@ -29,9 +29,9 @@ FrmAnadirImagen::~FrmAnadirImagen()
     delete ui;
 }
 
-void FrmAnadirImagen::RecuperarId(int cIDEpisodio)
+void FrmAnadirImagen::Recuperarid(int cid_episodio)
 {
-    oImagenesDiagnostico->id= cIDEpisodio;
+    oImagenesDiagnostico->id= cid_episodio;
 }
 
 void FrmAnadirImagen::AnadirImagen()
@@ -53,7 +53,7 @@ void FrmAnadirImagen::AnadirImagen()
             f.close();
         }
         QSqlQuery queryImagenes(QSqlDatabase::database("dbmedica"));
-        queryImagenes.prepare("update imagenes set imagen =:imagen where Id = :nid");
+        queryImagenes.prepare("update imagenes set imagen =:imagen where id = :nid");
         queryImagenes.bindValue(":imagen",ba);
         queryImagenes.bindValue(":nid",oImagenesDiagnostico->id);
         if (!queryImagenes.exec())
@@ -82,13 +82,13 @@ void FrmAnadirImagen::GuardarDatosEnObjetoImagen()
         oImagenesDiagnostico->Evaluada = true;
    else
         oImagenesDiagnostico->Evaluada = false;
-    oImagenesDiagnostico->FechaImagen =ui->dateEdit_FechaImagen->date();
-    oImagenesDiagnostico->idTipoImagen = oImagenesDiagnostico->DevolverId_tipo_imagen(ui->comboBox_TipoImagen->currentText());
+    oImagenesDiagnostico->fecha_imagen =ui->dateEdit_fecha_imagen->date();
+    oImagenesDiagnostico->id_tipo_imagen = oImagenesDiagnostico->Devolverid_tipo_imagen(ui->comboBox_tipo_imagen->currentText());
 
 }
 
-void FrmAnadirImagen::CambioTipoImagen(QString texto)
+void FrmAnadirImagen::Cambiotipo_imagen(QString texto)
 {
-    int id = oImagenesDiagnostico->DevolverId_tipo_imagen(texto);
-    oImagenesDiagnostico->idTipoImagen = id;
+    int id = oImagenesDiagnostico->Devolverid_tipo_imagen(texto);
+    oImagenesDiagnostico->id_tipo_imagen = id;
 }

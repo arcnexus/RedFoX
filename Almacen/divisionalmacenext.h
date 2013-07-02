@@ -12,7 +12,7 @@ public:
     QList<QAction *> Extensions();
     QString ExtensionPath(){return "Divisiones de Almacén";}// Use '|' to subPaths
 
-    MayaModule::moduleZone ModuleZone(){return MayaModule::Almacen;}
+    MayaModule::module_zone module_zone(){return MayaModule::Almacen;}
 signals:
     
 public slots:

@@ -23,8 +23,8 @@ public:
     void LLenarCampos();
     void CargarCamposEnEmpresa();
 
-    moduleZone ModuleZone(){return AdminZone;}
-    QString ModuleName(){return "Control de empresas";}
+    module_zone module_zone(){return AdminZone;}
+    QString module_name(){return "Control de empresas";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -39,9 +39,9 @@ private slots:
 
     void on_botGuardar_clicked();
 
-    void txtcPoblacion_editingFinished();
+    void txtpoblacion_editingFinished();
 
-    void txtcCp_editingFinished();
+    void txtcp_editingFinished();
 
     void on_botAnadir_clicked();
 

@@ -25,8 +25,8 @@ public:
     int id;
 
 
-    moduleZone ModuleZone(){return Compras;}
-    QString ModuleName(){return "Albaranes Proveedor";}
+    module_zone module_zone(){return Compras;}
+    QString module_name(){return "Albaranes Proveedor";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -34,7 +34,7 @@ public:
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
     void resizeTable(int x);
 private slots:
-    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
+    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);

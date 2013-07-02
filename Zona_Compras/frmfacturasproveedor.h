@@ -21,15 +21,15 @@ public:
     void llenarProveedor(int id);
     int id;
 
-    moduleZone ModuleZone(){return Compras;}
-    QString ModuleName(){return "Facturas Proveedor";}
+    module_zone module_zone(){return Compras;}
+    QString module_name(){return "Facturas Proveedor";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
     void hideButton(){toolButton.hide();}
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
 private slots:
-    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
+    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);

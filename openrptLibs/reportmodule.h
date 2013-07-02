@@ -9,8 +9,8 @@ class ReportModule : public MayaModule
     Q_OBJECT
 public:
     explicit ReportModule(QWidget *parent = 0);
-    moduleZone ModuleZone(){return Utilidades;}
-    QString ModuleName(){return "Editor de reportes";}
+    module_zone module_zone(){return Utilidades;}
+    QString module_name(){return "Editor de reportes";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}

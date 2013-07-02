@@ -14,16 +14,16 @@ class FrmBuscarPoblacion : public QDialog
 public:
     explicit FrmBuscarPoblacion(QWidget *parent = 0);
     ~FrmBuscarPoblacion();
-    int DevolverID();
+    int Devolverid();
     int id;
 
 public slots:
-    void  setcPoblacion(QString cPoblacion,int nPoblacion);
+    void  setpoblacion(QString poblacion,int nPoblacion);
 
     
 private:
     Ui::FrmBuscarPoblacion *ui;
-    QString cPoblacion;
+    QString poblacion;
     QString cSelect;
     QSqlQueryModel * ModelPoblaciones;
     QHeaderView *Cabecera;

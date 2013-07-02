@@ -28,7 +28,7 @@ FrmTarifas::FrmTarifas(QWidget *parent) :
     //   Configuracion_global->getCambio("EUR","USD",1);
 
     ui->spinMargen->setValue(Configuracion_global->margen);
-    ui->spinMargenMinimo->setValue(Configuracion_global->margen_minimo);
+    ui->spinmargen_minimo->setValue(Configuracion_global->margen_minimo);
 
 
 }
@@ -54,7 +54,7 @@ void FrmTarifas::capturar_datos(int id, QString costeLocal){
         queryTarifas.next();
         QSqlQuery queryGrupotarifa(QSqlDatabase::database("Maya"));
         if(queryGrupotarifa.exec("select * from codigotarifa where id="+QString::number(
-                                      queryTarifas.record().field("id_codigotarifa").value().toInt()))){
+                                      queryTarifas.record().field("id_codigo_tarifa").value().toInt()))){
             queryGrupotarifa.next();
             ui->txtCodTarifa->setText(queryGrupotarifa.record().field("codigo_tarifa").value().toString());
             ui->txtDescTarifa->setText(queryGrupotarifa.record().field("descripcion").value().toString());
@@ -67,23 +67,23 @@ void FrmTarifas::capturar_datos(int id, QString costeLocal){
             ui->spinMargen->setValue(Configuracion_global->margen);
         else
             ui->spinMargen->setValue(queryTarifas.record().field("margen").value().toDouble());
-        if (queryTarifas.record().value("margenminimo") == 0)
-            ui->spinMargenMinimo->setValue(Configuracion_global->margen_minimo);
+        if (queryTarifas.record().value("margen_minimo") == 0)
+            ui->spinmargen_minimo->setValue(Configuracion_global->margen_minimo);
         else
-            ui->spinMargenMinimo->setValue(queryTarifas.record().field("margenminimo").value().toDouble());
+            ui->spinmargen_minimo->setValue(queryTarifas.record().field("margen_minimo").value().toDouble());
 
         this->id_tarifa = queryTarifas.record().field("id").value().toInt();
         this->id_pais = queryTarifas.record().field("id_pais").value().toInt();
         this->id_moneda = queryTarifas.record().field("id_monedas").value().toInt();
         this->codigoTarifa = queryTarifas.record().field("codigo_tarifa").value().toString();
         this->margen = ui->spinMargen->value();
-        this->margen_min = ui->spinMargenMinimo->value();
+        this->margen_min = ui->spinmargen_minimo->value();
         this->coste = costeLocal.toDouble();
         this->pvpDivisa =ui->txtPVPDivisa->text().toDouble();
         this->cod_divisa = Configuracion_global->Devolver_codDivisa(queryTarifas.record().field("id_monedas").value().toInt());
         // Cargamos valor divisa desde la web
-        if (Configuracion_global->DivisaLocal != ui->txtMoneda->text())
-            Configuracion_global->getCambio(Configuracion_global->codDivisaLocal,this->cod_divisa);
+        if (Configuracion_global->divisa_local != ui->txtMoneda->text())
+            Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,this->cod_divisa);
         else
             asignarcambiodivisa(1);
 
@@ -112,9 +112,9 @@ void FrmTarifas::cargarDatosTarifa(QModelIndex indice)
         this->codigoTarifa = qTarifa.record().field("codigo_tarifa").value().toString();
         this->margen = ui->spinMargen->value();
         this->pvpDivisa = qTarifa.record().field("pvp").value().toDouble();
-        this->margen_min = ui->spinMargenMinimo->value();
-        if (Configuracion_global->DivisaLocal != ui->txtMoneda->text())
-            Configuracion_global->getCambio(Configuracion_global->codDivisaLocal,this->cod_divisa);
+        this->margen_min = ui->spinmargen_minimo->value();
+        if (Configuracion_global->divisa_local != ui->txtMoneda->text())
+            Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,this->cod_divisa);
         else
             asignarcambiodivisa(1);
     }
@@ -156,7 +156,7 @@ void FrmTarifas::calcular_precio(double margen)
 void FrmTarifas::aceptar()
 {
     this->margen = ui->spinMargen->value();
-    this->margen_min = ui->spinMargenMinimo->value();
+    this->margen_min = ui->spinmargen_minimo->value();
     this->accept();
 }
 

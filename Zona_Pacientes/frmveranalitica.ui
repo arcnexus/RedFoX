@@ -237,7 +237,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
-       <widget class="QTextEdit" name="txtComentarios">
+       <widget class="QTextEdit" name="txcomentarios">
         <property name="styleSheet">
          <string notr="true"/>
         </property>

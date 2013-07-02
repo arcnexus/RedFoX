@@ -9,7 +9,7 @@ void LineaTicket::getDatos_linea(QSqlRecord r)
 {
 }
 
-bool LineaTicket::save_Linea(int ID_Cab)
+bool LineaTicket::save_Linea(int id_Cab)
 {
     return true;
 }

@@ -8,11 +8,11 @@ AlbaranProveedor::AlbaranProveedor(QObject *parent) :
 int AlbaranProveedor::anadir()
 {
      QSqlQuery queryAlbaran(QSqlDatabase::database("empresa"));
-     queryAlbaran.prepare("insert into alb_pro (nIva1,nIva2,nIva3,nIva4) values (:nIva1,:nIva2,:nIva3,:nIva4);");
-     queryAlbaran.bindValue(":nIva1",Configuracion_global->ivaList.at(0));
-     queryAlbaran.bindValue(":nIva2",Configuracion_global->ivaList.at(1));
-     queryAlbaran.bindValue(":nIva3",Configuracion_global->ivaList.at(2));
-     queryAlbaran.bindValue(":nIva4",Configuracion_global->ivaList.at(3));
+     queryAlbaran.prepare("insert into alb_pro (iva1,iva2,iva3,iva4) values (:iva1,:iva2,:iva3,:iva4);");
+     queryAlbaran.bindValue(":iva1",Configuracion_global->ivaList.at(0));
+     queryAlbaran.bindValue(":iva2",Configuracion_global->ivaList.at(1));
+     queryAlbaran.bindValue(":iva3",Configuracion_global->ivaList.at(2));
+     queryAlbaran.bindValue(":iva4",Configuracion_global->ivaList.at(3));
      if(queryAlbaran.exec())
      {
              this->id = queryAlbaran.lastInsertId().toInt();
@@ -85,34 +85,34 @@ void AlbaranProveedor::Recuperar(QString cSQL, int val_accion)
 void AlbaranProveedor::Cargar(QSqlQuery query)
 {
     if(query.next()){
-        this->id = query.record().value("Id").toInt();
-        this->cAlbaran = query.record().value("cAlbaran").toString();
-        this->dFecha = query.record().value("dFecha").toDate();
-        this->id_Proveedor = query.record().value("id_Proveedor").toInt();
-        this->cProveedor = query.record().value("cProveedor").toString();
-        this->cCifproveedor = query.record().value("cCifproveedor").toString();
-        this->rTotal1 = query.record().value("rTotal1").toDouble();
-        this->rTotal2 = query.record().value("rTotal2").toDouble();
-        this->rTotal3 = query.record().value("rTotal3").toDouble();
-        this->rTotal4 = query.record().value("rTotal4").toDouble();
-        this->nIva1 = query.record().value("nIva1").toDouble();
-        this->nIva2 = query.record().value("nIva2").toDouble();
-        this->nIva3 = query.record().value("nIva3").toDouble();
-        this->nIva4 = query.record().value("nIva4").toDouble();
-        this->rIva1 = query.record().value("rIva1").toDouble();
-        this->rIva2 = query.record().value("rIva2").toDouble();
-        this->rIva3 = query.record().value("rIva3").toDouble();
-        this->rIva4 = query.record().value("rIva4").toDouble();
-        this->rBase1 = query.record().value("rBase1").toDouble();
-        this->rBase2 = query.record().value("rBase2").toDouble();
-        this->rBase3 = query.record().value("rBase3").toDouble();
-        this->rBase4 = query.record().value("rBase4").toDouble();
-        this->cFactura = query.record().value("cFactura").toString();
-        this->rBaseTotal = query.record().value("rBaseTotal").toDouble();
-        this->rIvaTotal = query.record().value("rIvaTotal").toDouble();
-        this->rTotal = query.record().value("rTotal").toDouble();
-        this->tComentario = query.record().value("tComentario").toString();
-    int nPedido;
+        this->id = query.record().value("id").toInt();
+        this->albaran = query.record().value("albaran").toString();
+        this->fecha = query.record().value("fecha").toDate();
+        this->id_proveedor = query.record().value("id_proveedor").toInt();
+        this->proveedor = query.record().value("proveedor").toString();
+        this->cif_proveedor = query.record().value("cif_proveedor").toString();
+        this->total1 = query.record().value("total1").toDouble();
+        this->total2 = query.record().value("total2").toDouble();
+        this->total3 = query.record().value("total3").toDouble();
+        this->total4 = query.record().value("total4").toDouble();
+        this->iva1 = query.record().value("iva1").toDouble();
+        this->iva2 = query.record().value("iva2").toDouble();
+        this->iva3 = query.record().value("iva3").toDouble();
+        this->iva4 = query.record().value("iva4").toDouble();
+        this->iva1 = query.record().value("iva1").toDouble();
+        this->iva2 = query.record().value("iva2").toDouble();
+        this->iva3 = query.record().value("iva3").toDouble();
+        this->iva4 = query.record().value("iva4").toDouble();
+        this->base1 = query.record().value("base1").toDouble();
+        this->base2 = query.record().value("base2").toDouble();
+        this->base3 = query.record().value("base3").toDouble();
+        this->base4 = query.record().value("base4").toDouble();
+        this->factura = query.record().value("factura").toString();
+        this->base_total = query.record().value("base_total").toDouble();
+        this->iva_total = query.record().value("iva_total").toDouble();
+        this->total = query.record().value("total").toDouble();
+        this->comentario = query.record().value("comentario").toString();
+    int pedido;
     } else
     {
         TimedMessageBox * t;
@@ -138,62 +138,62 @@ void AlbaranProveedor::guardar()
 {
     QSqlQuery queryAlb_pro(QSqlDatabase::database("empresa"));
     queryAlb_pro.prepare("UPDATE alb_pro SET "
-                         "cAlbaran = :cAlbaran,"
-                         "dFecha = :dFecha,"
-                         "id_Proveedor = :id_Proveedor,"
-                         "cProveedor = :cProveedor,"
-                         "cCifProveedor = :cCifProveedor,"
-                         "rTotal1 = :rTotal1,"
-                         "rTotal2 = :rTotal2,"
-                         "rTotal3 = :rTotal3,"
-                         "rTotal4 = :rTotal4,"
-                         "nIva1 = :nIva1,"
-                         "nIva2 = :nIva2,"
-                         "nIva3 = :nIva3,"
-                         "nIva4 = :nIva4,"
-                         "rIva1 = :rIva1,"
-                         "rIva2 = :rIva2,"
-                         "rIva3 = :rIva3,"
-                         "rIva4 = :rIva4,"
-                         "rBase1 = :rBase1,"
-                         "rBase2 = :rBase2,"
-                         "rBase3 = :rBase3,"
-                         "rBase4 = :rBase4,"
-                         "cFactura = :cFactura,"
-                         "rBaseTotal = :rBaseTotal,"
-                         "rIvaTotal = :rIvaTotal,"
-                         "rTotal = :rTotal,"
-                         "tComentario = :tComentario,"
-                         "nPedido = :nPedido "
+                         "albaran = :albaran,"
+                         "fecha = :fecha,"
+                         "id_proveedor = :id_proveedor,"
+                         "proveedor = :proveedor,"
+                         "cif_proveedor = :cif_proveedor,"
+                         "total1 = :total1,"
+                         "total2 = :total2,"
+                         "total3 = :total3,"
+                         "total4 = :total4,"
+                         "porc_iva1 = :iva1,"
+                         "porc_iva2 = :iva2,"
+                         "porc_iva3 = :iva3,"
+                         "porc_iva4 = :iva4,"
+                         "iva1 = :iva1,"
+                         "iva2 = :iva2,"
+                         "iva3 = :iva3,"
+                         "iva4 = :iva4,"
+                         "base1 = :base1,"
+                         "base2 = :base2,"
+                         "base3 = :base3,"
+                         "base4 = :base4,"
+                         "factura = :factura,"
+                         "base_total = :base_total,"
+                         "iva_total = :iva_total,"
+                         "total = :total,"
+                         "comentario = :comentario,"
+                         "pedido = :pedido "
                          " WHERE id =:id;");
 
-    queryAlb_pro.bindValue(":cAlbaran",this->cAlbaran);
-    queryAlb_pro.bindValue(":dFecha",this->dFecha);
-    queryAlb_pro.bindValue(":id_Proveedor",this->id_Proveedor);
-    queryAlb_pro.bindValue(":cProveedor",this->cProveedor);
-    queryAlb_pro.bindValue(":cCifProveedor",this->cCifproveedor);
-    queryAlb_pro.bindValue(":rTotal1",this->rTotal1);
-    queryAlb_pro.bindValue(":rTotal2",this->rTotal2);
-    queryAlb_pro.bindValue(":rTotal3",this->rTotal3);
-    queryAlb_pro.bindValue(":rTotal4",this->rTotal4);
-    queryAlb_pro.bindValue(":nIva1",this->nIva1);
-    queryAlb_pro.bindValue(":nIva2",this->nIva2);
-    queryAlb_pro.bindValue(":nIva3",this->nIva3);
-    queryAlb_pro.bindValue(":nIva4",this->nIva4);
-    queryAlb_pro.bindValue(":rIva1",this->rIva1);
-    queryAlb_pro.bindValue(":rIva2",this->rIva2);
-    queryAlb_pro.bindValue(":rIva3",this->rIva3);
-    queryAlb_pro.bindValue(":rIva4",this->rIva4);
-    queryAlb_pro.bindValue(":rBase1",this->rBase1);
-    queryAlb_pro.bindValue(":rBase2",this->rBase2);
-    queryAlb_pro.bindValue(":rBase3",this->rBase3);
-    queryAlb_pro.bindValue(":rBase4",this->rBase4);
-    queryAlb_pro.bindValue(":cFactura",this->cFactura);
-    queryAlb_pro.bindValue(":rBaseTotal",this->rBaseTotal);
-    queryAlb_pro.bindValue(":rIvaTotal",this->rIvaTotal);
-    queryAlb_pro.bindValue(":rTotal",this->rTotal);
-    queryAlb_pro.bindValue(":tComentario",this->tComentario);
-    queryAlb_pro.bindValue(":nPedido",this->nPedido);
+    queryAlb_pro.bindValue(":albaran",this->albaran);
+    queryAlb_pro.bindValue(":fecha",this->fecha);
+    queryAlb_pro.bindValue(":id_proveedor",this->id_proveedor);
+    queryAlb_pro.bindValue(":proveedor",this->proveedor);
+    queryAlb_pro.bindValue(":cif_proveedor",this->cif_proveedor);
+    queryAlb_pro.bindValue(":total1",this->total1);
+    queryAlb_pro.bindValue(":total2",this->total2);
+    queryAlb_pro.bindValue(":total3",this->total3);
+    queryAlb_pro.bindValue(":total4",this->total4);
+    queryAlb_pro.bindValue(":iva1",this->iva1);
+    queryAlb_pro.bindValue(":iva2",this->iva2);
+    queryAlb_pro.bindValue(":iva3",this->iva3);
+    queryAlb_pro.bindValue(":iva4",this->iva4);
+    queryAlb_pro.bindValue(":iva1",this->iva1);
+    queryAlb_pro.bindValue(":iva2",this->iva2);
+    queryAlb_pro.bindValue(":iva3",this->iva3);
+    queryAlb_pro.bindValue(":iva4",this->iva4);
+    queryAlb_pro.bindValue(":base1",this->base1);
+    queryAlb_pro.bindValue(":base2",this->base2);
+    queryAlb_pro.bindValue(":base3",this->base3);
+    queryAlb_pro.bindValue(":base4",this->base4);
+    queryAlb_pro.bindValue(":factura",this->factura);
+    queryAlb_pro.bindValue(":base_total",this->base_total);
+    queryAlb_pro.bindValue(":iva_total",this->iva_total);
+    queryAlb_pro.bindValue(":total",this->total);
+    queryAlb_pro.bindValue(":comentario",this->comentario);
+    queryAlb_pro.bindValue(":pedido",this->pedido);
     queryAlb_pro.bindValue(":id",this->id);
     if(!queryAlb_pro.exec())
         QMessageBox::warning(qApp->activeWindow(),

@@ -29,8 +29,8 @@ public:
     Presupuesto *oPres;
     Cliente *oClientePres;
 
-    moduleZone ModuleZone(){return Ventas;}
-    QString ModuleName(){return "Presupestos Ventas";}
+    module_zone module_zone(){return Ventas;}
+    QString module_name(){return "Presupestos Ventas";}
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
@@ -53,15 +53,15 @@ private slots:
 
     void on_botBuscarCliente_clicked();
 
-    void totalChanged(double base , double dto ,double subTotal , double iva, double re, double total, QString moneda);
+    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
     void desglose1Changed(double base, double iva, double re, double total);
     void desglose2Changed(double base, double iva, double re, double total);
     void desglose3Changed(double base, double iva, double re, double total);
     void desglose4Changed(double base, double iva, double re, double total);
     void on_btnDeshacer_clicked();
 
-    void convertir_enPedido();
-    void convertir_enAlbaran();
+    void convertir_epedido();
+    void convertir_ealbaran();
     void convertir_enFactura();
     void on_btnBorrar_clicked();
 

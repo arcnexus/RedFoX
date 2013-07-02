@@ -133,7 +133,7 @@ void ClinicaExt::handle_campoAnalitica()
     headers << tr("Tipo") << tr("Descripcion") << tr("Valores de referencia") << tr("Pertenece a:");
     form.set_table_headers(headers);
 
-    form.set_relation(4,QSqlRelation("tiposanalitica","id","tipoanalisis"));
+    form.set_relation(4,QSqlRelation("tiposanalitica","id","tipo_analisis"));
     form.set_columnHide(0);
     form.exec();
 }

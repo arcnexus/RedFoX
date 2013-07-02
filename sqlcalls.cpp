@@ -1,6 +1,6 @@
 #include "sqlcalls.h"
 
-static const QString queryPaciente = "SELECT * FROM pacientes WHERE IdCliente = :idCliente";
+static const QString queryPaciente = "SELECT * FROM pacientes WHERE id_cliente = :id_cliente";
 
 SqlCalls::SqlCalls(QObject *parent) :
     QObject(parent)
@@ -141,12 +141,12 @@ int SqlCalls::addRec(const QString &statment, const QStringList &parameters, con
 
 
 
-QSqlQuery SqlCalls::RecuperarPaciente(int idCliente)
+QSqlQuery SqlCalls::RecuperarPaciente(int id_cliente)
 {
     QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
     paciente->prepare(queryPaciente);
 
-    paciente->bindValue(":idCliente",idCliente);
+    paciente->bindValue(":id_cliente",id_cliente);
     if (paciente->exec())
         return *paciente;
     else
@@ -157,12 +157,12 @@ QSqlQuery SqlCalls::RecuperarPaciente(int idCliente)
 }
 
 
-//int SqlCalls::CrearPaciente(int idCliente)
+//int SqlCalls::CrearPaciente(int id_cliente)
 //{
 //    QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-//    paciente->prepare("insert into pacientes (idCliente,numhistoria) values (:idCliente,:numhistoria)");
-//    paciente->bindValue(":idCliente",idCliente);
-//    paciente->bindValue(":numhistoria",QString::number(idCliente));
+//    paciente->prepare("insert into pacientes (id_cliente,num_historia) values (:id_cliente,:num_historia)");
+//    paciente->bindValue(":id_cliente",id_cliente);
+//    paciente->bindValue(":num_historia",QString::number(id_cliente));
 //    if (!paciente->exec())
 //        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error Pacientes"),QObject::tr("No se ha podido insertar un nuevo paciente"),
 //                             QObject::tr("Aceptar"));

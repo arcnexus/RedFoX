@@ -6,7 +6,7 @@ FrmBuscarFactura::FrmBuscarFactura(QWidget *parent) :
     ui(new Ui::FrmBuscarFactura)
 {
     ui->setupUi(this);
-   // this::connect(this,SIGNAL(enviar_id_Factura(int)),frmFacturas,SLOT(set_id_Factura(int)));
+   // this::connect(this,SIGNAL(enviar_id_factura(int)),frmFacturas,SLOT(set_id_factura(int)));
     ui->FechaFin->setDate(QDate::currentDate());
     ui->FechaInicio->setDisplayFormat("dd/MM/yyyy");
     ui->FechaFin->setDisplayFormat("dd/MM/yyyy");
@@ -23,19 +23,19 @@ void FrmBuscarFactura::on_pushButton_clicked()
     // 1º - Preparamos la Select y la asociamos a un QSqlQueryModel
 
     //QString QDate::toString ( Qt::DateFormat format = Qt::TextDate ) const
-    QDate dFecha1,dFecha2;
+    QDate fecha1,fecha2;
     QString cFecha1,cFecha2,cImporteMaximo;
-    dFecha1 = ui->FechaInicio->date();
-    dFecha2 = ui->FechaFin->date();
-    cFecha1 = dFecha1.toString("yyyy-MM-dd");
-    cFecha2 = dFecha2.toString("yyyy-MM-dd");
+    fecha1 = ui->FechaInicio->date();
+    fecha2 = ui->FechaFin->date();
+    cFecha1 = fecha1.toString("yyyy-MM-dd");
+    cFecha2 = fecha2.toString("yyyy-MM-dd");
     cImporteMaximo = ui->ImporteMaximo->text();
     cImporteMaximo.replace(".","");
     QString  cSQL;
-    cSQL ="Select Id,cFactura,cCliente,dFecha,dFechaCobro,rSubtotal,rImporteDescuento,rImporteDescuentoPP,"
-          "rBase,rImporteIva,rTotal from cab_fac where cCliente like '%"+ui->txtBuscar->text().trimmed()+"%' and "
-          "dFecha >= '"+cFecha1+"' and dFecha <= '"+cFecha2+"' and rTotal >= "+QString::number(ui->Importeminimo->text().toDouble(),'f',2)+
-          " and rTotal <="+QString::number(cImporteMaximo.toDouble(),'f',2)+" order by cFactura";
+    cSQL ="Select id,factura,cliente,fecha,fecha_cobro,subtotal,importe_descuento,importe_descuento_pp,"
+          "base,iva,total from cab_fac where cliente like '%"+ui->txtBuscar->text().trimmed()+"%' and "
+          "fecha >= '"+cFecha1+"' and fecha <= '"+cFecha2+"' and total >= "+QString::number(ui->Importeminimo->text().toDouble(),'f',2)+
+          " and total <="+QString::number(cImporteMaximo.toDouble(),'f',2)+" order by factura";
 
     ModelFacturas = new QSqlQueryModel();
     ModelFacturas->setQuery(cSQL,QSqlDatabase::database("empresa"));
@@ -84,10 +84,10 @@ void FrmBuscarFactura::on_pushButton_clicked()
     ui->Grid->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->Grid->setAlternatingRowColors(true);
     ui->Grid->setFocus();
-    //emit enviar_id_Factura( ui->txtBuscar->text().toInt());
+    //emit enviar_id_factura( ui->txtBuscar->text().toInt());
 }
 
-int FrmBuscarFactura::DevolverID() {
+int FrmBuscarFactura::Devolverid() {
     QModelIndex celda=ui->Grid->currentIndex();
     QModelIndex index=ModelFacturas->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
 

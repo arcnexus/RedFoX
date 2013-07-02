@@ -63,14 +63,14 @@ const QByteArray& MimePart::getContent() const
     return content;
 }
 
-void MimePart::setContentId(const QString & cId)
+void MimePart::setContentid(const QString & cid)
 {
-    this->cId = cId;
+    this->cid = cid;
 }
 
-const QString & MimePart::getContentId() const
+const QString & MimePart::getContentid() const
 {
-    return this->cId;
+    return this->cid;
 }
 
 void MimePart::setContentName(const QString & cName)
@@ -176,9 +176,9 @@ void MimePart::prepare()
     }
     /* ------------------------ */
 
-    /* Content-Id */
-    if (cId != NULL)
-        mimeString.append("Content-ID: <").append(cId).append(">\r\n");
+    /* Content-id */
+    if (cid != NULL)
+        mimeString.append("Content-id: <").append(cid).append(">\r\n");
     /* ---------- */
 
     /* Addition header lines */

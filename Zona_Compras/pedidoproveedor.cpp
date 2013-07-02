@@ -6,15 +6,15 @@
 PedidoProveedor::PedidoProveedor(QObject *parent) :
     QObject(parent)
 {
-    this->nPedido = 0;
+    this->pedido = 0;
 }
 
 int PedidoProveedor::nuevo_pedido_proveedor()
 {
     QSqlQuery queryPedido(QSqlDatabase::database("empresa"));
-    queryPedido.prepare("INSERT INTO ped_pro (`dFecha`,`nEjercicio`,`niva1`,`niva2`,`niva3`,`niva4`) "
-                        "VALUES(:dfecha,:ejercicio,:iva1,:iva2,:iva3,:iva4);");
-    queryPedido.bindValue(":dfecha",QDate::currentDate());
+    queryPedido.prepare("INSERT INTO ped_pro (`fecha`,`ejercicio`,`iva1`,`iva2`,`iva3`,`iva4`) "
+                        "VALUES(:fecha,:ejercicio,:iva1,:iva2,:iva3,:iva4);");
+    queryPedido.bindValue(":fecha",QDate::currentDate());
     queryPedido.bindValue(":ejercicio",Configuracion_global->cEjercicio.toInt());
     queryPedido.bindValue(":iva1",Configuracion_global->ivaList.at(0));
     queryPedido.bindValue(":iva2",Configuracion_global->ivaList.at(1));
@@ -36,146 +36,146 @@ void PedidoProveedor::guardar()
     // Si se trata de un nuevo pedido se le asigna numero de pedido
     //-------------------------------------------------------------
     QString cSql;
-    int nPedido =0;
+    int pedido =0;
     QSqlQuery queryPedido(QSqlDatabase::database("empresa"));
 
-    if(this->nPedido == 0)
+    if(this->pedido == 0)
     {
 
-        if(queryPedido.exec("select nPedido from ped_pro order by nPedido desc limit 0,1"))
+        if(queryPedido.exec("select pedido from ped_pro order by pedido desc limit 0,1"))
         {
             queryPedido.next();
-            nPedido = queryPedido.record().value("nPedido").toInt();
-            nPedido++;
-            this->nPedido = nPedido;
+            pedido = queryPedido.record().value("pedido").toInt();
+            pedido++;
+            this->pedido = pedido;
         }
 
     }
     QSqlQuery queryGuardarPedido(QSqlDatabase::database("empresa"));
-    queryGuardarPedido.prepare("UPDATE ped_pro SET nPedido =  :nPedido,"
-    "nEjercicio =:cSerie,"
-    "dFecha =:dFecha,"
-    "dRecepcion =:dRecepcion,"
-    "Id_Proveedor =:Id_Proveedor,"
-    "cCodigoProveedor =:cCodigoProveedor,"
-    "cProveedor =:cProveedor,"
-    "cDireccion1 =:cDireccion1,"
-    "cDireccion2 =:cDireccion2,"
-    "cCP =:cCP,"
-    "cPoblacion =:cPoblacion,"
-    "cProvincia =:cProvincia,"
-    "idpais =:idpais,"
-    "cCifNif =:cCifNif,"
-    "rBaseTotal =:rBaseTotal,"
-    "rSubotal =:rSubotal,"
-    "rDto =:rDto,"
-     "rRecTotal =:rRecTotal,"
-     "rTotal =:rTotal,"
+    queryGuardarPedido.prepare("UPDATE ped_pro SET pedido =  :pedido,"
+    "ejercicio =:serie,"
+    "fecha =:fecha,"
+    "recepcion =:recepcion,"
+    "id_proveedor =:id_proveedor,"
+    "codigoProveedor =:codigoProveedor,"
+    "proveedor =:proveedor,"
+    "direccion1 =:direccion1,"
+    "direccion2 =:direccion2,"
+    "cp =:cp,"
+    "poblacion =:poblacion,"
+    "provincia =:provincia,"
+    "id_pais =:id_pais,"
+    "cif_nif =:cif_nif,"
+    "base_total =:base_total,"
+    "subtotal =:subtotal,"
+    "dto =:dto,"
+     "recTotal =:recTotal,"
+     "total =:total,"
      "lEnviado =:lEnviado,"
-     "lRecibido =:lRecibido,"
-     "lRecibidoCompleto =:lRecibidoCompleto,"
+     "recibido =:recibido,"
+     "recibido_completo =:recibido_completo,"
      "lGeneroPendiente =:lGeneroPendiente,"
-     "lRecargoEquivalencia =:lRecargoEquivalencia,"
+     "recargo_equivalencia =:recargo_equivalencia,"
      "lTraspasado =:lTraspasado,"
-     "nPedidoCliente =:nPedidoCliente,"
-     "Id_FormaPago =:Id_FormaPago,"
-     "tComentario =:tComentario,"
-     "dFechaEntrega =:dFechaEntrega,"
-     "cDireccion1Entrega =:cDireccion1Entrega,"
-     "cDireccion2Entrega =:cDireccion2Entrega,"
-     "cCPEntrega =:cCPEntrega,"
-     "cPoblacionEntrega =:cPoblacionEntrega,"
-     "cProvinciaEntrega =:cProvinciaEntrega,"
+     "pedido_cliente =:pedido_cliente,"
+     "id_forma_pago =:id_forma_pago,"
+     "comentario =:comentario,"
+     "fechaEntrega =:fechaEntrega,"
+     "direccion1Entrega =:direccion1Entrega,"
+     "direccion2Entrega =:direccion2Entrega,"
+     "cpEntrega =:cpEntrega,"
+     "poblacionEntrega =:poblacionEntrega,"
+     "provinciaEntrega =:provinciaEntrega,"
      "id_paisEntrega =:id_paisEntrega,"
-     "cNombreCliente =:cNombreCliente,"
-     "cHorarioActivo =:cHorarioActivo,"
-     "rBase1 =:rBase1,"
-     "rBase2 =:rBase2,"
-     "rBase3 =:rBase3,"
-     "rBase4 =:rBase4,"
-     "niva1 =:niva1,"
-     "niva2 =:niva2,"
-     "niva3 =:niva3,"
-     "niva4 =:niva4,"
-     "riva1 =:riva1,"
-     "riva2 =:riva2,"
-     "riva3 =:riva3,"
-     "riva4 =:riva4,"
-     "nrec1 =:nrec1,"
-     "nrec2 =:nrec2,"
-     "nrec3 =:nrec3,"
-     "nrec4 =:nrec4,"
-     "rrec1 =:rrec1,"
-     "rrec2 =:rrec2,"
-     "rrec3 =:rrec3,"
-     "rrec4 =:rrec4,"
-     "rtotal1 =:rtotal1,"
-     "rtotal2 =:rtotal2,"
-     "rtotal3 =:rtotal3,"
-     "rtotal4 =:rtotal4 "
+     "nombre_cliente =:nombre_cliente,"
+     "horarioActivo =:horarioActivo,"
+     "base1 =:base1,"
+     "base2 =:base2,"
+     "base3 =:base3,"
+     "base4 =:base4,"
+     "iva1 =:iva1,"
+     "iva2 =:iva2,"
+     "iva3 =:iva3,"
+     "iva4 =:iva4,"
+     "iva1 =:iva1,"
+     "iva2 =:iva2,"
+     "iva3 =:iva3,"
+     "iva4 =:iva4,"
+     "porc_rec1 =:porc_rec1,"
+     "porc_rec2 =:porc_rec2,"
+     "porc_rec3 =:porc_rec3,"
+     "porc_rec4 =:porc_rec4,"
+     "rec1 =:rec1,"
+     "rec2 =:rec2,"
+     "rec3 =:rec3,"
+     "rec4 =:rec4,"
+     "total1 =:total1,"
+     "total2 =:total2,"
+     "total3 =:total3,"
+     "total4 =:total4 "
     " WHERE id = :id;");
 
-    queryGuardarPedido.bindValue(":cSerie",this->nEjercicio);
-    queryGuardarPedido.bindValue(":nPedido",this->nPedido);
-    queryGuardarPedido.bindValue(":dFecha",this->dFecha);
-    queryGuardarPedido.bindValue(":dRecepcion",this->dRecepcion);
-    queryGuardarPedido.bindValue(":Id_Proveedor",this->Id_Proveedor);
-    queryGuardarPedido.bindValue(":cCodigoProveedor",this->cCodigoProveedor);
-    queryGuardarPedido.bindValue(":cProveedor",this->cProveedor);
-    queryGuardarPedido.bindValue(":cDireccion1",this->cDireccion1);
-    queryGuardarPedido.bindValue(":cDireccion2",this->cDireccion2);
-    queryGuardarPedido.bindValue(":cCP",this->cCP);
-    queryGuardarPedido.bindValue(":cPoblacion",this->cPoblacion);
-    queryGuardarPedido.bindValue(":cProvincia",this->cProvincia);
-    queryGuardarPedido.bindValue(":idpais",this->idpais);
-    queryGuardarPedido.bindValue(":cCifNif",this->cCifNif);
-    queryGuardarPedido.bindValue(":rBaseTotal",this->rBaseTotal);
-    queryGuardarPedido.bindValue(":rSubotal",this->rSubotal);
-    queryGuardarPedido.bindValue(":rDto",this->rDto);
-    queryGuardarPedido.bindValue(":rRecTotal",this->rRecTotal);
-    queryGuardarPedido.bindValue(":rTotal",this->rTotal);
+    queryGuardarPedido.bindValue(":serie",this->ejercicio);
+    queryGuardarPedido.bindValue(":pedido",this->pedido);
+    queryGuardarPedido.bindValue(":fecha",this->fecha);
+    queryGuardarPedido.bindValue(":recepcion",this->recepcion);
+    queryGuardarPedido.bindValue(":id_proveedor",this->id_proveedor);
+    queryGuardarPedido.bindValue(":codigoProveedor",this->codigoProveedor);
+    queryGuardarPedido.bindValue(":proveedor",this->proveedor);
+    queryGuardarPedido.bindValue(":direccion1",this->direccion1);
+    queryGuardarPedido.bindValue(":direccion2",this->direccion2);
+    queryGuardarPedido.bindValue(":cp",this->cp);
+    queryGuardarPedido.bindValue(":poblacion",this->poblacion);
+    queryGuardarPedido.bindValue(":provincia",this->provincia);
+    queryGuardarPedido.bindValue(":id_pais",this->id_pais);
+    queryGuardarPedido.bindValue(":cif_nif",this->cif_nif);
+    queryGuardarPedido.bindValue(":base_total",this->base_total);
+    queryGuardarPedido.bindValue(":subtotal",this->subtotal);
+    queryGuardarPedido.bindValue(":dto",this->dto);
+    queryGuardarPedido.bindValue(":recTotal",this->recTotal);
+    queryGuardarPedido.bindValue(":total",this->total);
     queryGuardarPedido.bindValue(":lEnviado",this->lEnviado);
-    queryGuardarPedido.bindValue(":lRecibido",this->lRecibido);
-    queryGuardarPedido.bindValue(":lRecibidoCompleto",this->lRecibidoCompleto);
+    queryGuardarPedido.bindValue(":recibido",this->recibido);
+    queryGuardarPedido.bindValue(":recibido_completo",this->recibido_completo);
     queryGuardarPedido.bindValue(":lGeneroPendiente",this->lGeneroPendiente);
-    queryGuardarPedido.bindValue(":lRecargoEquivalencia",this->lRecargoEquivalencia);
+    queryGuardarPedido.bindValue(":recargo_equivalencia",this->recargo_equivalencia);
     queryGuardarPedido.bindValue(":lTraspasado",this->lTraspasado);
-    queryGuardarPedido.bindValue(":nPedidoCliente",this->nPedidoCliente);
-    queryGuardarPedido.bindValue(":Id_FormaPago",this->Id_FormaPago);
-    queryGuardarPedido.bindValue(":tComentario",this->tComentario);
-    queryGuardarPedido.bindValue(":dFechaEntrega",this->dFechaEntrega);
-    queryGuardarPedido.bindValue(":cDireccion1Entrega",this->cDireccion1Entrega);
-    queryGuardarPedido.bindValue(":cDireccion2Entrega",this->cDireccion2Entrega);
-    queryGuardarPedido.bindValue(":cCPEntrega",this->cCPEntrega);
-    queryGuardarPedido.bindValue(":cPoblacionEntrega",this->cPoblacionEntrega);
-    queryGuardarPedido.bindValue(":cProvinciaEntrega",this->cProvinciaEntrega);
+    queryGuardarPedido.bindValue(":pedido_cliente",this->pedido_cliente);
+    queryGuardarPedido.bindValue(":id_forma_pago",this->id_forma_pago);
+    queryGuardarPedido.bindValue(":comentario",this->comentario);
+    queryGuardarPedido.bindValue(":fechaEntrega",this->fechaEntrega);
+    queryGuardarPedido.bindValue(":direccion1Entrega",this->direccion1Entrega);
+    queryGuardarPedido.bindValue(":direccion2Entrega",this->direccion2Entrega);
+    queryGuardarPedido.bindValue(":cpEntrega",this->cpEntrega);
+    queryGuardarPedido.bindValue(":poblacionEntrega",this->poblacionEntrega);
+    queryGuardarPedido.bindValue(":provinciaEntrega",this->provinciaEntrega);
     queryGuardarPedido.bindValue(":id_paisEntrega",this->id_paisEntrega);
-    queryGuardarPedido.bindValue(":cNombreCliente",this->cNombreCliente);
-    queryGuardarPedido.bindValue(":cHorarioActivo",this->cHorarioActivo);
-    queryGuardarPedido.bindValue(":rBase1",this->rBase1);
-    queryGuardarPedido.bindValue(":rBase2",this->rBase2);
-    queryGuardarPedido.bindValue(":rBase3",this->rBase3);
-    queryGuardarPedido.bindValue(":rBase4",this->rBase4);
-    queryGuardarPedido.bindValue(":niva1",this->niva1);
-    queryGuardarPedido.bindValue(":niva2",this->niva2);
-    queryGuardarPedido.bindValue(":niva3",this->niva3);
-    queryGuardarPedido.bindValue(":niva4",this->niva4);
-    queryGuardarPedido.bindValue(":riva1",this->riva1);
-    queryGuardarPedido.bindValue(":riva2",this->riva2);
-    queryGuardarPedido.bindValue(":riva3",this->riva3);
-    queryGuardarPedido.bindValue(":riva4",this->riva4);
-    queryGuardarPedido.bindValue(":nrec1",this->nrec1);
-    queryGuardarPedido.bindValue(":nrec2",this->nrec2);
-    queryGuardarPedido.bindValue(":nrec3",this->nrec3);
-    queryGuardarPedido.bindValue(":nrec4",this->nrec4);
-    queryGuardarPedido.bindValue(":rrec1",this->rrec1);
-    queryGuardarPedido.bindValue(":rrec2",this->rrec2);
-    queryGuardarPedido.bindValue(":rrec3",this->rrec3);
-    queryGuardarPedido.bindValue(":rrec4",this->rrec4);
-    queryGuardarPedido.bindValue(":rtotal1",this->rtotal1);
-    queryGuardarPedido.bindValue(":rtotal2",this->rtotal2);
-    queryGuardarPedido.bindValue(":rtotal3",this->rtotal3);
-    queryGuardarPedido.bindValue(":rtotal4",this->rtotal4);
+    queryGuardarPedido.bindValue(":nombre_cliente",this->nombre_cliente);
+    queryGuardarPedido.bindValue(":horarioActivo",this->horarioActivo);
+    queryGuardarPedido.bindValue(":base1",this->base1);
+    queryGuardarPedido.bindValue(":base2",this->base2);
+    queryGuardarPedido.bindValue(":base3",this->base3);
+    queryGuardarPedido.bindValue(":base4",this->base4);
+    queryGuardarPedido.bindValue(":iva1",this->iva1);
+    queryGuardarPedido.bindValue(":iva2",this->iva2);
+    queryGuardarPedido.bindValue(":iva3",this->iva3);
+    queryGuardarPedido.bindValue(":iva4",this->iva4);
+    queryGuardarPedido.bindValue(":iva1",this->iva1);
+    queryGuardarPedido.bindValue(":iva2",this->iva2);
+    queryGuardarPedido.bindValue(":iva3",this->iva3);
+    queryGuardarPedido.bindValue(":iva4",this->iva4);
+    queryGuardarPedido.bindValue(":porc_rec1",this->porc_rec1);
+    queryGuardarPedido.bindValue(":porc_rec2",this->porc_rec2);
+    queryGuardarPedido.bindValue(":porc_rec3",this->porc_rec3);
+    queryGuardarPedido.bindValue(":porc_rec4",this->porc_rec4);
+    queryGuardarPedido.bindValue(":rec1",this->rec1);
+    queryGuardarPedido.bindValue(":rec2",this->rec2);
+    queryGuardarPedido.bindValue(":rec3",this->rec3);
+    queryGuardarPedido.bindValue(":rec4",this->rec4);
+    queryGuardarPedido.bindValue(":total1",this->total1);
+    queryGuardarPedido.bindValue(":total2",this->total2);
+    queryGuardarPedido.bindValue(":total3",this->total3);
+    queryGuardarPedido.bindValue(":total4",this->total4);
     queryGuardarPedido.bindValue(":id",this->id);
 
     if(!queryGuardarPedido.exec())
@@ -184,8 +184,8 @@ void PedidoProveedor::guardar()
                              tr("Aceptar"));
 
 //    qDebug() << queryGuardarPedido.lastQuery();
-//    qDebug() << "ID: " << this->id;
-//    qDebug() << "P: " << this->cProveedor;
+//    qDebug() << "id: " << this->id;
+//    qDebug() << "P: " << this->proveedor;
 
 }
 
@@ -243,145 +243,145 @@ void PedidoProveedor::recuperar(QString cadenaSQL, int accion)
 void PedidoProveedor::clear()
 {
     this->id = 0;
-    this->nPedido = 0;
-    this->nEjercicio = 0;
-    this->dFecha = QDate::currentDate();
-    this->dRecepcion = QDate::currentDate();
-    this->Id_Proveedor = 0;
-    this->cCodigoProveedor = "";
-    this->cProveedor = "";
-    this->cDireccion1 = "";
-    this->cDireccion2 = "";
-    this->cCP = "";
-    this->cPoblacion = "";
-    this->cProvincia = "";
-    this->idpais = 0;
-    this->cCifNif = "";
-    this->rBaseTotal = 0;
-    this->rSubotal = 0;
-    this->rDto = 0;
-    this->nIVA = 0;
-    this->rRecTotal = 0;
-    this->rTotal = 0;
+    this->pedido = 0;
+    this->ejercicio = 0;
+    this->fecha = QDate::currentDate();
+    this->recepcion = QDate::currentDate();
+    this->id_proveedor = 0;
+    this->codigoProveedor = "";
+    this->proveedor = "";
+    this->direccion1 = "";
+    this->direccion2 = "";
+    this->cp = "";
+    this->poblacion = "";
+    this->provincia = "";
+    this->id_pais = 0;
+    this->cif_nif = "";
+    this->base_total = 0;
+    this->subtotal = 0;
+    this->dto = 0;
+    this->iva = 0;
+    this->recTotal = 0;
+    this->total = 0;
     this->lEnviado = false;
-    this->lRecibido = false;
-    this->lRecibidoCompleto = false;
+    this->recibido = false;
+    this->recibido_completo = false;
     this->lGeneroPendiente = false;
     this->lTraspasado = false;
-    this->lRecargoEquivalencia = false;
-    this->nPedidoCliente = 0;
-    this->Id_FormaPago = 0;
-    this->tComentario = "";
-    this->dFechaEntrega = QDate::currentDate();
-    this->cDireccion1Entrega = "";
-    this->cDireccion2Entrega = "";
-    this->cCPEntrega = "";
-    this->cPoblacionEntrega = "";
-    this->cProvinciaEntrega = "";
+    this->recargo_equivalencia = false;
+    this->pedido_cliente = 0;
+    this->id_forma_pago = 0;
+    this->comentario = "";
+    this->fechaEntrega = QDate::currentDate();
+    this->direccion1Entrega = "";
+    this->direccion2Entrega = "";
+    this->cpEntrega = "";
+    this->poblacionEntrega = "";
+    this->provinciaEntrega = "";
     this->id_paisEntrega = 0;
-    this->cNombreCliente = "";
-    this->cHorarioActivo = "";
+    this->nombre_cliente = "";
+    this->horarioActivo = "";
 
-    this->rBase1 = 0;
-    this->rBase2 = 0;
-    this->rBase3 = 0;
-    this->rBase4 = 0;
-    this->niva1 = 0;
-    this->niva2 = 0;
-    this->niva3 = 0;
-    this->niva4 = 0;
-    this->riva1 = 0;
-    this->riva2 = 0;
-    this->riva3 = 0;
-    this->riva4 = 0;
-    this->rdto1 = 0;
-    this->rdto2 = 0;
-    this->rdto3 = 0;
-    this->rdto4 = 0;
-    this->nrec1 = 0;
-    this->nrec2 = 0;
-    this->nrec3 = 0;
-    this->nrec4 = 0;
-    this->rrec1 = 0;
-    this->rrec2 = 0;
-    this->rrec3 = 0;
-    this->rrec4 = 0;
-    this->rtotal1 = 0;
-    this->rtotal2 = 0;
-    this->rtotal3 = 0;
-    this->rtotal4 = 0;
+    this->base1 = 0;
+    this->base2 = 0;
+    this->base3 = 0;
+    this->base4 = 0;
+    this->iva1 = 0;
+    this->iva2 = 0;
+    this->iva3 = 0;
+    this->iva4 = 0;
+    this->iva1 = 0;
+    this->iva2 = 0;
+    this->iva3 = 0;
+    this->iva4 = 0;
+    this->dto1 = 0;
+    this->dto2 = 0;
+    this->dto3 = 0;
+    this->dto4 = 0;
+    this->porc_rec1 = 0;
+    this->porc_rec2 = 0;
+    this->porc_rec3 = 0;
+    this->porc_rec4 = 0;
+    this->rec1 = 0;
+    this->rec2 = 0;
+    this->rec3 = 0;
+    this->rec4 = 0;
+    this->total1 = 0;
+    this->total2 = 0;
+    this->total3 = 0;
+    this->total4 = 0;
 }
 
 void PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
 {
     if(queryPedido->next()){
         this->id = queryPedido->record().value("id").toInt();
-        this->nPedido = queryPedido->record().value("nPedido").toInt();
-        this->nEjercicio = queryPedido->record().value("nEjercicio").toInt();
-        this->dFecha = queryPedido->record().value("dFecha").toDate();
-        this->dRecepcion = queryPedido->record().value("dRecepcion").toDate();
-        this->Id_Proveedor = queryPedido->record().value("Id_Proveedor").toInt();
-        this->cCodigoProveedor = queryPedido->record().value("cCodigoProveedor").toString();
-        this->cProveedor = queryPedido->record().value("cProveedor").toString();
-        this->cDireccion1 = queryPedido->record().value("cDireccion1").toString();
-        this->cDireccion2 = queryPedido->record().value("cDireccion2").toString();
-        this->cCP = queryPedido->record().value("cCP").toString();
-        this->cPoblacion = queryPedido->record().value("cPoblacion").toString();
-        this->cProvincia = queryPedido->record().value("cProvincia").toString();
-        this->idpais = queryPedido->record().value("idpais").toInt();
-        this->cCifNif = queryPedido->record().value("cCifNif").toString();
-        this->rBaseTotal = queryPedido->record().value("rBase").toDouble();
-        this->rSubotal = queryPedido->record().value("rSubtotal").toDouble();
-        this->rDto = queryPedido->record().value("rDto").toDouble();
-        this->nIVA = queryPedido->record().value("nIVA").toInt();
-        this->rRecTotal = queryPedido->record().value("rRecTotal").toDouble();
-        this->rTotal = queryPedido->record().value("rTotal").toDouble();
+        this->pedido = queryPedido->record().value("pedido").toInt();
+        this->ejercicio = queryPedido->record().value("ejercicio").toInt();
+        this->fecha = queryPedido->record().value("fecha").toDate();
+        this->recepcion = queryPedido->record().value("recepcion").toDate();
+        this->id_proveedor = queryPedido->record().value("id_proveedor").toInt();
+        this->codigoProveedor = queryPedido->record().value("codigoProveedor").toString();
+        this->proveedor = queryPedido->record().value("proveedor").toString();
+        this->direccion1 = queryPedido->record().value("direccion1").toString();
+        this->direccion2 = queryPedido->record().value("direccion2").toString();
+        this->cp = queryPedido->record().value("cp").toString();
+        this->poblacion = queryPedido->record().value("poblacion").toString();
+        this->provincia = queryPedido->record().value("provincia").toString();
+        this->id_pais = queryPedido->record().value("id_pais").toInt();
+        this->cif_nif = queryPedido->record().value("cif_nif").toString();
+        this->base_total = queryPedido->record().value("base").toDouble();
+        this->subtotal = queryPedido->record().value("subtotal").toDouble();
+        this->dto = queryPedido->record().value("dto").toDouble();
+        this->iva = queryPedido->record().value("iva").toInt();
+        this->recTotal = queryPedido->record().value("recTotal").toDouble();
+        this->total = queryPedido->record().value("total").toDouble();
         this->lEnviado = queryPedido->record().value("lEnviado").toBool();
-        this->lRecibido = queryPedido->record().value("lRecibido").toBool();
-        this->lRecibidoCompleto = queryPedido->record().value("lRecibidoCompleto").toBool();
-        this->lRecargoEquivalencia = queryPedido->record().value("lRecargoEquivalencia").toBool();
+        this->recibido = queryPedido->record().value("recibido").toBool();
+        this->recibido_completo = queryPedido->record().value("recibido_completo").toBool();
+        this->recargo_equivalencia = queryPedido->record().value("recargo_equivalencia").toBool();
         this->lGeneroPendiente = queryPedido->record().value("lGeneroPendiente").toBool();
         this->lTraspasado = queryPedido->record().value("lTraspasado").toBool();
-        this->nPedidoCliente = queryPedido->record().value("nPedidoCliente").toInt();
-        this->Id_FormaPago = queryPedido->record().value("Id_FormaPago").toInt();
-        this->tComentario = queryPedido->record().value("tComentario").toString();
-        this->dFechaEntrega = queryPedido->record().value("dFechaEntrega").toDate();
-        this->cDireccion1Entrega = queryPedido->record().value("cDireccion1Entrega").toString();
-        this->cDireccion2Entrega = queryPedido->record().value("cDireccion2Entrega").toString();
-        this->cCPEntrega = queryPedido->record().value("cCPEntrega").toString();
-        this->cPoblacionEntrega = queryPedido->record().value("cPoblacionEntrega").toString();
-        this->cProvinciaEntrega = queryPedido->record().value("cProvinciaEntrega").toString();
+        this->pedido_cliente = queryPedido->record().value("pedido_cliente").toInt();
+        this->id_forma_pago = queryPedido->record().value("id_forma_pago").toInt();
+        this->comentario = queryPedido->record().value("comentario").toString();
+        this->fechaEntrega = queryPedido->record().value("fechaEntrega").toDate();
+        this->direccion1Entrega = queryPedido->record().value("direccion1Entrega").toString();
+        this->direccion2Entrega = queryPedido->record().value("direccion2Entrega").toString();
+        this->cpEntrega = queryPedido->record().value("cpEntrega").toString();
+        this->poblacionEntrega = queryPedido->record().value("poblacionEntrega").toString();
+        this->provinciaEntrega = queryPedido->record().value("provinciaEntrega").toString();
         this->id_paisEntrega = queryPedido->record().value("id_paisEntrega").toInt();
-        this->cNombreCliente = queryPedido->record().value("cNombreCliente").toString();
-        this->cHorarioActivo = queryPedido->record().value("cHorarioActivo").toString();
-        this->rBase1 = queryPedido->record().value("rBase1").toDouble();
-        this->rBase2 = queryPedido->record().value("rBase2").toDouble();
-        this->rBase3 = queryPedido->record().value("rBase3").toDouble();
-        this->rBase4 = queryPedido->record().value("rBase4").toDouble();
-        this->niva1 = queryPedido->record().value("niva1").toInt();
-        this->niva2 = queryPedido->record().value("niva2").toInt();
-        this->niva3 = queryPedido->record().value("niva3").toInt();
-        this->niva4 = queryPedido->record().value("niva4").toInt();
-        this->riva1 = queryPedido->record().value("riva1").toDouble();
-        this->riva2 = queryPedido->record().value("riva2").toDouble();
-        this->riva3 = queryPedido->record().value("riva3").toDouble();
-        this->riva4 = queryPedido->record().value("riva4").toDouble();
-        this->rdto1 = queryPedido->record().value("rdto1").toDouble();
-        this->rdto2 = queryPedido->record().value("rdto2").toDouble();
-        this->rdto3 = queryPedido->record().value("rdto3").toDouble();
-        this->rdto4 = queryPedido->record().value("rdto4").toDouble();
-        this->nrec1 = queryPedido->record().value("nrec1").toInt();
-        this->nrec2 = queryPedido->record().value("nrec2").toInt();
-        this->nrec3 = queryPedido->record().value("nrec3").toInt();
-        this->nrec4 = queryPedido->record().value("nrec4").toInt();
-        this->rrec1 = queryPedido->record().value("rrec1").toDouble();
-        this->rrec2 = queryPedido->record().value("rrec2").toDouble();
-        this->rrec3 = queryPedido->record().value("rrec3").toDouble();
-        this->rrec4 = queryPedido->record().value("rrec4").toDouble();
-        this->rtotal1 = queryPedido->record().value("rtotal1").toDouble();
-        this->rtotal2 = queryPedido->record().value("rtotal2").toDouble();
-        this->rtotal3 = queryPedido->record().value("rtotal3").toDouble();
-        this->rtotal4 = queryPedido->record().value("rtotal4").toDouble();
+        this->nombre_cliente = queryPedido->record().value("nombre_cliente").toString();
+        this->horarioActivo = queryPedido->record().value("horarioActivo").toString();
+        this->base1 = queryPedido->record().value("base1").toDouble();
+        this->base2 = queryPedido->record().value("base2").toDouble();
+        this->base3 = queryPedido->record().value("base3").toDouble();
+        this->base4 = queryPedido->record().value("base4").toDouble();
+        this->iva1 = queryPedido->record().value("iva1").toInt();
+        this->iva2 = queryPedido->record().value("iva2").toInt();
+        this->iva3 = queryPedido->record().value("iva3").toInt();
+        this->iva4 = queryPedido->record().value("iva4").toInt();
+        this->iva1 = queryPedido->record().value("iva1").toDouble();
+        this->iva2 = queryPedido->record().value("iva2").toDouble();
+        this->iva3 = queryPedido->record().value("iva3").toDouble();
+        this->iva4 = queryPedido->record().value("iva4").toDouble();
+        this->dto1 = queryPedido->record().value("dto1").toDouble();
+        this->dto2 = queryPedido->record().value("dto2").toDouble();
+        this->dto3 = queryPedido->record().value("dto3").toDouble();
+        this->dto4 = queryPedido->record().value("dto4").toDouble();
+        this->porc_rec1 = queryPedido->record().value("porc_rec1").toInt();
+        this->porc_rec2 = queryPedido->record().value("porc_rec2").toInt();
+        this->porc_rec3 = queryPedido->record().value("porc_rec3").toInt();
+        this->porc_rec4 = queryPedido->record().value("porc_rec4").toInt();
+        this->rec1 = queryPedido->record().value("rec1").toDouble();
+        this->rec2 = queryPedido->record().value("rec2").toDouble();
+        this->rec3 = queryPedido->record().value("rec3").toDouble();
+        this->rec4 = queryPedido->record().value("rec4").toDouble();
+        this->total1 = queryPedido->record().value("total1").toDouble();
+        this->total2 = queryPedido->record().value("total2").toDouble();
+        this->total3 = queryPedido->record().value("total3").toDouble();
+        this->total4 = queryPedido->record().value("total4").toDouble();
     } else
     {
         switch (accion) {
@@ -507,27 +507,27 @@ long PedidoProveedor::save()
 {
     QSqlQuery q(QSqlDatabase::database("empresa"));
     q.prepare("INSERT INTO ped_pro"
-              "( nPedido ,  cSerie ,  dFecha ,  dRecepcion ,  Id_Proveedor ,  cCodigoProveedor ,"
-              " cProveedor ,  cDireccion1 ,  cDireccion2 ,  cCP ,  cPoblacion ,  cProvincia ,  idpais ,"
-              " cCifNif ,  rBase ,  rSubotal ,  rDto ,  nIVA ,  rRecTotal ,  rTotal ,  lEnviado ,  lRecibido ,"
-              " lRecibidoCompleto ,  lGeneroPendiente ,  rBase1 ,  rBase2 ,  rBase3 ,  rBase4 ,  nPorcIva1 ,"
-              " nPorcIva2 ,  nPorcIva3 ,  nPorcIva4 ,  rIVA1 ,  rIVA2 ,  rIVA3 ,  rIVA4 ,  rTotal1 ,  rTotal2 ,"
-              " rTotal3 ,  rTotal4 ,  nMargenREC1 ,  nMargenREC2 ,  nMargenREC3 ,  nMargenREC4 ,  rREC1 ,  rREC2 ,"
-              " rREC3 ,  rREC4 ,  lTraspasado ,  nPedidoCliente ,  Id_FormaPago ,  dVencimiento1 ,  dVencimiento2 ,"
-              " dVencimiento3 ,  dVencimiento4 ,  lPagado1 ,  lPagado2 ,  lPagado3 ,  lPagado4 ,  tComentario ,"
-              " dFechaEntrega ,  cDireccion1Entrega ,  cDireccion2Entrega ,  cCPEntrega ,  cPoblacionEntrega ,"
-              " cProvinciaEntrega ,  id_paisEntrega ,  cNombreCliente ,  cHorarioActivo )"
+              "( pedido ,  serie ,  fecha ,  recepcion ,  id_proveedor ,  codigoProveedor ,"
+              " proveedor ,  direccion1 ,  direccion2 ,  cp ,  poblacion ,  provincia ,  id_pais ,"
+              " cif_nif ,  base ,  subtotal ,  dto ,  iva ,  recTotal ,  total ,  lEnviado ,  recibido ,"
+              " recibido_completo ,  lGeneroPendiente ,  base1 ,  base2 ,  base3 ,  base4 ,  porc_iva1 ,"
+              " porc_iva2 ,  porc_iva3 ,  porc_iva4 ,  iva1 ,  iva2 ,  iva3 ,  iva4 ,  total1 ,  total2 ,"
+              " total3 ,  total4 ,  nMargeporc_rec1 ,  nMargeporc_rec2 ,  nMargeporc_rec3 ,  nMargeporc_rec4 ,  rec1 ,  rec2 ,"
+              " rec3 ,  rec4 ,  lTraspasado ,  pedido_cliente ,  id_forma_pago ,  vencimiento1 ,  vencimiento2 ,"
+              " vencimiento3 ,  vencimiento4 ,  pagado1 ,  pagado2 ,  pagado3 ,  pagado4 ,  comentario ,"
+              " fechaEntrega ,  direccion1Entrega ,  direccion2Entrega ,  cpEntrega ,  poblacionEntrega ,"
+              " provinciaEntrega ,  id_paisEntrega ,  nombre_cliente ,  horarioActivo )"
               " VALUES "
-              "( :nPedido ,  :cSerie ,  :dFecha ,  :dRecepcion ,  :Id_Proveedor ,  :cCodigoProveedor ,"
-              " :cProveedor ,  :cDireccion1 ,  :cDireccion2 ,  :cCP ,  :cPoblacion ,  :cProvincia ,  :idpais ,"
-              " :cCifNif ,  :rBase ,  :rSubotal ,  :rDto ,  :nIVA ,  :rRecTotal ,  :rTotal ,  :lEnviado ,  :lRecibido ,"
-              " :lRecibidoCompleto ,  :lGeneroPendiente ,  :rBase1 ,  :rBase2 ,  :rBase3 ,  :rBase4 ,  :nPorcIva1 ,"
-              " :nPorcIva2 ,  :nPorcIva3 ,  :nPorcIva4 ,  :rIVA1 ,  :rIVA2 ,  :rIVA3 ,  :rIVA4 ,  :rTotal1 ,  :rTotal2 ,"
-              " :rTotal3 ,  :rTotal4 ,  :nMargenREC1 ,  :nMargenREC2 ,  :nMargenREC3 ,  :nMargenREC4 ,  :rREC1 ,  :rREC2 ,"
-              " :rREC3 ,  :rREC4 ,  :lTraspasado ,  :nPedidoCliente ,  :Id_FormaPago ,  :dVencimiento1 ,  :dVencimiento2 ,"
-              " :dVencimiento3 ,  :dVencimiento4 ,  :lPagado1 ,  :lPagado2 ,  :lPagado3 ,  :lPagado4 ,  :tComentario ,"
-              " :dFechaEntrega ,  :cDireccion1Entrega ,  :cDireccion2Entrega ,  :cCPEntrega ,  :cPoblacionEntrega ,"
-              " :cProvinciaEntrega ,  :id_paisEntrega ,  :cNombreCliente ,  :cHorarioActivo ");
+              "( :pedido ,  :serie ,  :fecha ,  :recepcion ,  :id_proveedor ,  :codigoProveedor ,"
+              " :proveedor ,  :direccion1 ,  :direccion2 ,  :cp ,  :poblacion ,  :provincia ,  :id_pais ,"
+              " :cif_nif ,  :base ,  :subtotal ,  :dto ,  :iva ,  :recTotal ,  :total ,  :lEnviado ,  :recibido ,"
+              " :recibido_completo ,  :lGeneroPendiente ,  :base1 ,  :base2 ,  :base3 ,  :base4 ,  :porc_iva1 ,"
+              " :porc_iva2 ,  :porc_iva3 ,  :porc_iva4 ,  :iva1 ,  :iva2 ,  :iva3 ,  :iva4 ,  :total1 ,  :total2 ,"
+              " :total3 ,  :total4 ,  :nMargeporc_rec1 ,  :nMargeporc_rec2 ,  :nMargeporc_rec3 ,  :nMargeporc_rec4 ,  :rec1 ,  :rec2 ,"
+              " :rec3 ,  :rec4 ,  :lTraspasado ,  :pedido_cliente ,  :id_forma_pago ,  :vencimiento1 ,  :vencimiento2 ,"
+              " :vencimiento3 ,  :vencimiento4 ,  :pagado1 ,  :pagado2 ,  :pagado3 ,  :pagado4 ,  :comentario ,"
+              " :fechaEntrega ,  :direccion1Entrega ,  :direccion2Entrega ,  :cpEntrega ,  :poblacionEntrega ,"
+              " :provinciaEntrega ,  :id_paisEntrega ,  :nombre_cliente ,  :horarioActivo ");
             return -1;
 }
 
@@ -539,35 +539,35 @@ bool PedidoProveedor::update()
 void PedidoProveedor::fillPedido(QSqlRecord r)
 {
     id = r.value("id").toInt();
-    nPedido = r.value("nPedido").toULongLong();
-    //cSerie = r.value("cSerie").toString();
-    dFecha = r.value("dFecha").toDate();
-    dRecepcion = r.value("dRecepcion").toDate();
-    Id_Proveedor = r.value("Id_Proveedor").toULongLong();
-    cCodigoProveedor = r.value("cCodigoProveedor").toString();
-    cProveedor = r.value("cProveedor").toString();
-    cDireccion1 = r.value("cDireccion1").toString();
-    cDireccion2 = r.value("cDireccion2").toString();
-    cCP = r.value("cCP").toString();
-    cPoblacion= r.value("cPoblacion").toString();
-    cProvincia= r.value("cProvincia").toString();
-    idpais= r.value("idpais").toInt();
-    cCifNif= r.value("cCifNif").toString();
-    //rBase= r.value("rBase").toDouble();
-    rSubotal= r.value("rSubotal").toDouble();
-    rDto= r.value("rDto").toDouble();
-    nIVA= r.value("nIVA").toDouble();
-    rRecTotal= r.value("rRecTotal").toDouble();
-    rTotal= r.value("rTotal").toDouble();
+    pedido = r.value("pedido").toULongLong();
+    //serie = r.value("serie").toString();
+    fecha = r.value("fecha").toDate();
+    recepcion = r.value("recepcion").toDate();
+    id_proveedor = r.value("id_proveedor").toULongLong();
+    codigoProveedor = r.value("codigoProveedor").toString();
+    proveedor = r.value("proveedor").toString();
+    direccion1 = r.value("direccion1").toString();
+    direccion2 = r.value("direccion2").toString();
+    cp = r.value("cp").toString();
+    poblacion= r.value("poblacion").toString();
+    provincia= r.value("provincia").toString();
+    id_pais= r.value("id_pais").toInt();
+    cif_nif= r.value("cif_nif").toString();
+    //base= r.value("base").toDouble();
+    subtotal= r.value("subtotal").toDouble();
+    dto= r.value("dto").toDouble();
+    iva= r.value("iva").toDouble();
+    recTotal= r.value("recTotal").toDouble();
+    total= r.value("total").toDouble();
     lEnviado= r.value("lEnviado").toULongLong();
-    lRecibido= r.value("lRecibido").toULongLong();
-    lRecibidoCompleto= r.value("lRecibidoCompleto").toULongLong();
+    recibido= r.value("recibido").toULongLong();
+    recibido_completo= r.value("recibido_completo").toULongLong();
     lGeneroPendiente= r.value("lGeneroPendiente").toULongLong();
-    lRecargoEquivalencia = r.value("lRecargoEquivalencia").toBool();
-    rBase1= r.value("rBase1").toDouble();
-    rBase2= r.value("rBase2").toDouble();
-    rBase3= r.value("rBase3").toDouble();
-    rBase4= r.value("rBase4").toDouble();
-    nPorcIva1= r.value("nPorcIva1").toDouble();
+    recargo_equivalencia = r.value("recargo_equivalencia").toBool();
+    base1= r.value("base1").toDouble();
+    base2= r.value("base2").toDouble();
+    base3= r.value("base3").toDouble();
+    base4= r.value("base4").toDouble();
+    porc_iva1= r.value("porc_iva1").toDouble();
 }
 
