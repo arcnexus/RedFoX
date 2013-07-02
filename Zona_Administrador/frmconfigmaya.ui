@@ -175,7 +175,7 @@ color: rgb(255,255,255);</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="Pagina_general">
       <property name="styleSheet">
@@ -706,7 +706,7 @@ color: rgb(255,255,255);</string>
 color: rgb(255,255,255);</string>
         </property>
         <property name="text">
-         <string>Configuración BD</string>
+         <string>Configuración BD - Base de datos general</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -736,11 +736,14 @@ color: rgb(255,255,255);</string>
       </item>
       <item row="1" column="3">
        <widget class="QRadioButton" name="radSqlite">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>SQLite</string>
         </property>
         <property name="checked">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -753,6 +756,9 @@ color: rgb(255,255,255);</string>
       </item>
       <item row="3" column="4">
        <widget class="QLineEdit" name="txtdireccionBD">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -767,6 +773,9 @@ color: rgb(255,255,255);</string>
       </item>
       <item row="3" column="3">
        <widget class="QLabel" name="label_5">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>direccion BD:</string>
         </property>
@@ -782,7 +791,10 @@ color: rgb(255,255,255);</string>
       <item row="1" column="1">
        <widget class="QRadioButton" name="radMysql">
         <property name="text">
-         <string>mySQL</string>
+         <string>MySQL</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

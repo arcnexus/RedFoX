@@ -692,7 +692,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //OpenRPT::databaseURL = "QMYSQL://localhost:3306/";
     ui->setupUi(this);
     on_edit = false;
-    Configuracion_global->CargarDatos();
+    //Configuracion_global->CargarDatos();
 
     QPixmap pixmap(":/Icons/PNG/mayafondo_blanco.png");
     QSplashScreen splash(pixmap);

@@ -179,7 +179,7 @@ public:
     QString toFormatoMoneda(QString cTexto);
     double MonedatoDouble(QString moneda);
     bool EsNumero(QString texto);
-    void CargarDatos();
+    void CargarDatos(int id);
     void CargarDatosBD();
     void AbrirDbWeb();
     void CerrarDbWeb();

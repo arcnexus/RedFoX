@@ -174,8 +174,9 @@ void Configuracion::Cargar_iva()
     }
     if(ivas.size()!=4)
     {
-        query.prepare("INSERT INTO `tiposiva` (`id`, `nombre_interno`, `tipo`, `descripciotipo_iva`, `iva`, `recargo_equivalencia`) VALUES (1, 'base1', 'NORMAL', '21%', 21.00, 4.00), (2, 'base2', 'Reducido', '10%', 10.00, 2.00), (3, 'base3', 'Superreducido', '4%', 4.00, 1.00), (4, 'base4', 'Exento', 'Exento', 0.00, 0.00);");
+        query.prepare("INSERT INTO `tiposiva` (`id`, `nombre_interno`, `tipo`, `descripcion_tipo_iva`, `iva`, `regargo_equivalencia`) VALUES (1, 'base1', 'NORMAL', '21%', 21.00, 4.00), (2, 'base2', 'Reducido', '10%', 10.00, 2.00), (3, 'base3', 'Superreducido', '4%', 4.00, 1.00), (4, 'base4', 'Exento', 'Exento', 0.00, 0.00);");
         query.exec();
+        qDebug() << query.lastError().text();
         return Cargar_iva();
     }
 
@@ -542,17 +543,20 @@ void Configuracion::CargarUsuarios()
 
 void Configuracion::CargarDatosBD()
 {
+    QFile f(qApp->applicationDirPath()+"/MayaConfig.ini");
+    if(!f.exists())
+        return;
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
     this->cDriverBDMaya = settings.value("cDriverBDMaya").toString();
     this->cRutaBdMaya = settings.value("cRutaDBMaya").toString();
     this->cHostBDMaya = settings.value("cHostBDMaya").toString();
-    this->cUsuarioBDMaya  =   settings.value("cUserBDMaya").toString();
-    this->cPasswordBDMaya = settings.value("cPasswordBDMaya").toString();
+    this->cUsuarioBDMaya  =   DeCrypt(settings.value("cUserBDMaya").toString());
+    this->cPasswordBDMaya = DeCrypt(settings.value("cPasswordBDMaya").toString());
 
     this->nombre_bdTiendaWeb = settings.value("nombre_bdTiendaWeb").toString();
     this->cHostBDTiendaWeb = settings.value("hostTiendaWeb").toString();
-    this->cUsuarioTiendaWeb =settings.value("usuarioTiendaWeb").toString();
-    this->cPasswordTiendaWeb = settings.value("Pass_web").toString();
+    this->cUsuarioTiendaWeb = DeCrypt(settings.value("usuarioTiendaWeb").toString());
+    this->cPasswordTiendaWeb = DeCrypt(settings.value("Pass_web").toString());
     this->cPuertoTiendaWeb =settings.value("puertoTiendaWeb").toString();
     this->enlace_web = settings.value("enlace_web").toBool();
 
@@ -562,7 +566,6 @@ void Configuracion::CargarDatosBD()
     this->UsuarioDB_MediTec = settings.value("UsuarioDB_MediTec").toString();
     this->PasswordDB_MediTec = settings.value("PasswordDB_MediTec").toString();
     this->PortDB_MediTec =  settings.value("PuertoDB_MediTec").toString();
-
 }
 
 void Configuracion::AbrirDbWeb()
@@ -606,11 +609,11 @@ void Configuracion::CerrarBDMediTec()
 {
     db_meditec.close();
 }
-void Configuracion::CargarDatos()
+void Configuracion::CargarDatos(int id)
 {
     QSqlQuery qEmpresa(QSqlDatabase::database("Maya"));
     qEmpresa.prepare("Select * from empresas where id =:id");
-    idEmpresa = 1;
+    idEmpresa = id;
     qEmpresa.bindValue(":id",idEmpresa);
     if (qEmpresa.exec()) {
         qEmpresa.next();
@@ -1110,29 +1113,31 @@ bool Configuracion::comprobarNIF(QString country_code, QString nif)
 
 QString Configuracion::Crypt(QString input)
 {
+    return input;
     std::string ciphertext;
     std::string plaintext = input.toStdString();
 
-  /*  CryptoPP::AES::Encryption aesEncryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
+    CryptoPP::AES::Encryption aesEncryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
     CryptoPP::CBC_Mode_ExternalCipher::Encryption cbcEncryption( aesEncryption, iv );
 
     CryptoPP::StreamTransformationFilter stfEncryptor(cbcEncryption, new CryptoPP::StringSink( ciphertext ) );
     stfEncryptor.Put( reinterpret_cast<const unsigned char*>( plaintext.c_str() ), plaintext.length() + 1 );
-    stfEncryptor.MessageEnd();*/
+    stfEncryptor.MessageEnd();
 
     return QString::fromStdString(ciphertext);
 }
 
 QString Configuracion::DeCrypt(QString input)
 {
+    return input;
     std::string ciphertext = input.toStdString();
     std::string decryptedtext;
- /*   CryptoPP::AES::Decryption aesDecryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
+    CryptoPP::AES::Decryption aesDecryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
     CryptoPP::CBC_Mode_ExternalCipher::Decryption cbcDecryption( aesDecryption, iv );
 
     CryptoPP::StreamTransformationFilter stfDecryptor(cbcDecryption, new CryptoPP::StringSink( decryptedtext ) );
     stfDecryptor.Put( reinterpret_cast<const unsigned char*>( ciphertext.c_str() ), ciphertext.size() );
-    stfDecryptor.MessageEnd();*/
+    stfDecryptor.MessageEnd();
     return QString::fromStdString(decryptedtext);
 }
 

@@ -27,17 +27,20 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     ui->cboPaises->setModel(Configuracion_global->paises_model);
     ui->cboPaises->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
+    QFile f(qApp->applicationDirPath()+"/MayaConfig.ini");
+    if(!f.exists())
+        return;
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
     ui->txtHost->setText(settings.value("cHostBDMaya").toString());
-    ui->txtUsuario->setText(settings.value("cUserBDMaya").toString());
-    ui->txtPassword->setText(settings.value("cPasswordBDMaya").toString());
+    ui->txtUsuario->setText(Configuracion::DeCrypt(settings.value("cUserBDMaya").toString()));
+    ui->txtPassword->setText(Configuracion::DeCrypt(settings.value("cPasswordBDMaya").toString()));
     ui->txtPuerto->setText(settings.value("cPuertoDBMaya").toString());
     ui->txtdireccionBD->setText(settings.value("cRutaDBMaya").toString());
 
 
     ui->txtHostWeb->setText(settings.value("hostTiendaWeb").toString());
-    ui->txtUsuarioDBweb->setText(settings.value("usuarioTiendaWeb").toString());
-    ui->txtPasswordDBWeb->setText(settings.value("Pass_web").toString());
+    ui->txtUsuarioDBweb->setText(Configuracion::DeCrypt(settings.value("usuarioTiendaWeb").toString()));
+    ui->txtPasswordDBWeb->setText(Configuracion::DeCrypt(settings.value("Pass_web").toString()));
     ui->txtPuerto_DBWeb->setText(settings.value("puertoTiendaWeb").toString());
     ui->txtnombre_bdWeb->setText((settings.value("nombre_bdTiendaWeb").toString()));
 
@@ -107,24 +110,11 @@ void frmConfigmaya::configurar()
     if(ui->radMysql->isChecked())
         settings.setValue("cDriverBDMaya","QMYSQL");
     else
-        //settings.setValue("cRutaDBMaya",qApp->applicationDirPath()+"/DB/Maya.sqlite");
         settings.setValue("cRutaDBMaya",ui->txtdireccionBD->text());
-//    QDir directorioBd(qApp->applicationDirPath()+"/DB");
-//    if(!directorioBd.exists())
-//    {
-//        QDir path(qApp->applicationDirPath());
-//        path.mkdir(qApp->applicationDirPath()+"/DB");
-//    }
-
-//    QFile bd(qApp->applicationDirPath()+"/DB/Maya.sqlite");
-//    if(!bd.exists())
-//    {
-//       //TODO - Descargar Maya.sqlite del servidor??
-//    }
 
     settings.setValue("cHostBDMaya",ui->txtHost->text());
-    settings.setValue("cUserBDMaya",ui->txtUsuario->text());
-    settings.setValue("cPasswordBDMaya",ui->txtPassword->text());
+    settings.setValue("cUserBDMaya",Configuracion::Crypt(ui->txtUsuario->text()));
+    settings.setValue("cPasswordBDMaya",Configuracion::Crypt(ui->txtPassword->text()));
     settings.setValue("pais",ui->cboPaises->currentText());
     settings.setValue(("cPuertoDBMaya"),ui->txtPuerto->text());
     settings.setValue("ndigitos_factura",ui->spindigitos_factura->value());
@@ -176,8 +166,8 @@ void frmConfigmaya::configurar()
    else
        settings.setValue("vad_fito",0);
    settings.setValue("hostTiendaWeb", ui->txtHostWeb->text());
-   settings.setValue("usuarioTiendaWeb",ui->txtUsuarioDBweb->text());
-   settings.setValue("Pass_web",ui->txtPasswordDBWeb->text());
+   settings.setValue("usuarioTiendaWeb",Configuracion::Crypt(ui->txtUsuarioDBweb->text()));
+   settings.setValue("Pass_web",Configuracion::Crypt(ui->txtPasswordDBWeb->text()));
    settings.setValue("puertoTiendaWeb",ui->txtPuerto_DBWeb->text());
    settings.setValue("nombre_bdTiendaWeb",ui->txtnombre_bdWeb->text());
    settings.setValue("enlace_web",ui->chkPrestaShop->isChecked());

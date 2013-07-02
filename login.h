@@ -33,11 +33,14 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_comboGroup_currentIndexChanged(int index);
+
 private:
     Ui::Login *ui;
     QString path;
     QSqlDatabase dbMaya;
     int m_id;
+    QHash<int, QPair<QStringList , QSqlRecord>> _empresas;
 
 };
 
