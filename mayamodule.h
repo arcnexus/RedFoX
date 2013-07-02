@@ -9,10 +9,11 @@ class MayaModule : public QDialog
 {
     Q_OBJECT
 public:
-    enum module_zone{
+    enum module_zone {
         AdminZone = 0 , Mantenimiento , Compras , Ventas , Archivos , Almacen , Utilidades ,Contabilidad
         , SecretariaMedica,  InformacionMedica, NoZone
     };
+
     enum accessLevel{
         SinAcceso = 1,
         Lectura_parcial,
@@ -25,7 +26,7 @@ public:
 
     explicit MayaModule(module_zone zone , QString name , QWidget *parent = 0);
     ~MayaModule();
-    virtual module_zone module_zone(){return NoZone;}
+    virtual module_zone moduleZone(){return NoZone;}
     virtual QString module_name(){return "";}
     virtual ToolBarButton * ModuleToolBarButton() = 0;
     virtual QAction * ModuleMenuBarButton() = 0;
@@ -43,7 +44,7 @@ public slots:
 
 private:
     void tryRegisterModule(module_zone zone , QString name);
-    void RegisterModule(module_zone zone , QString name);    
+    void RegisterModule(module_zone zone , QString name);
     module_zone _zone;
     QString _name;
     int _id_modulo;

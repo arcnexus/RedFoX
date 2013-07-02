@@ -1,6 +1,6 @@
 #include "mayamodule.h"
 
-MayaModule::MayaModule(module_zone zone , QString name ,QWidget *parent) :
+MayaModule::MayaModule(module_zone zone , QString name , QWidget *parent) :
     QDialog(parent)
 {
     _zone = zone;
