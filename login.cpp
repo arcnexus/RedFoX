@@ -15,7 +15,7 @@ Login::Login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Login)
 {
-    //qDebug() << Configuracion::SHA256HashString("admin");
+    qDebug()<< "admin= " << Configuracion::SHA256HashString("admin");
     qDebug() << Configuracion::SHA256HashString("patata");
     //this->setWindowFlags(Qt::Dialog|Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowStaysOnTopHint);
     ui->setupUi(this);
@@ -44,7 +44,7 @@ Login::Login(QWidget *parent) :
     }
     else
     {
-        dbMaya.setDatabaseName("maya_global");
+        dbMaya.setDatabaseName("mayaglobal");
         dbMaya.setHostName(Configuracion_global->cHostBDMaya);
         dbReports.setHostName(Configuracion_global->cHostBDMaya);
         dbMaya.open(Configuracion_global->cUsuarioBDMaya,Configuracion_global->cPasswordBDMaya);

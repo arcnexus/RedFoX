@@ -1167,42 +1167,6 @@ void Configuracion::getCambio(QString from, QString to, float cuanty)
     manager->get(QNetworkRequest(QUrl(url)));
 }
 
-void Configuracion::generarTablaDivisas()
-{
-    QFile f(":/Icons/divisas.txt");
-    if(f.open((QIODevice::ReadOnly | QIODevice::Text)))
-    {
-        QSqlQuery q(QSqlDatabase::database("Maya"));
-        QTextStream in(&f);
-        in.setCodec("UTF-8");
-        QString all = in.readAll();
-        all.remove("\r");
-        all.remove("\n");
-        QStringList blocks = all.split("},",QString::SkipEmptyParts);
-        foreach(const QString &moneda , blocks)
-        {
-            QStringList subBlocks = moneda.split("\",",QString::SkipEmptyParts);
-            QString nombre_corto = subBlocks.at(0).mid(subBlocks.at(0).lastIndexOf("\"")+1);
-            QString nombre = subBlocks.at(1).mid(subBlocks.at(1).lastIndexOf("\"")+1);
-            QString simbol = subBlocks.at(4).mid(subBlocks.at(4).lastIndexOf("\"")+1);
-            simbol.remove("}");
-            simbol = simbol.trimmed();
-            q.prepare("INSERT INTO monedas ("
-                                  "moneda ,"
-                                  "nombreCorto ,"
-                                  "simbolo "
-                                  ")"
-                                  "VALUES ("
-                                  ":moneda, :nombreCorto, :simbolo );");
-            q.bindValue(":moneda",nombre);
-            q.bindValue(":nombreCorto",nombre_corto);
-            q.bindValue(":simbolo",simbol);
-            if(!q.exec())
-                    qDebug()<< q.lastError();
-        }
-    }
-}
-
 void Configuracion::updateTablaDivisas(QString current)
 {
     connect(this,SIGNAL(cambioReady(float,QString)),SLOT(applyCambio(float,QString)));
@@ -1210,7 +1174,7 @@ void Configuracion::updateTablaDivisas(QString current)
     if(q.exec("SELECT * FROM monedas"))
     {
         while(q.next())
-            getCambio(current,q.record().value("nombreCorto").toString());
+            getCambio(current,q.record().value("nombre_corto").toString());
     }
 }
 

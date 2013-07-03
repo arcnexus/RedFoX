@@ -201,7 +201,7 @@ public:
     static QString DeCrypt(QString input);
     static QString SHA256HashString(QString input);
     void getCambio(QString from, QString to , float cuanty = 1);
-    void generarTablaDivisas();
+
     void updateTablaDivisas(QString current);
 
 public slots:

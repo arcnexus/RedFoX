@@ -163,7 +163,8 @@ SOURCES += main.cpp\
     Auxiliares/monetarydelegate_contabilidad.cpp \
     Zona_Contabilidad/frmcuadro_cuentas.cpp \
     Zona_Contabilidad/cuentas_contables.cpp \
-    Almacen/tipostarifa.cpp
+    Almacen/tipostarifa.cpp \
+    Zona_Administrador/addgroupfrom.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -291,7 +292,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/monetarydelegate_contabilidad.h \
     Zona_Contabilidad/frmcuadro_cuentas.h \
     Zona_Contabilidad/cuentas_contables.h \
-    Almacen/tipostarifa.h
+    Almacen/tipostarifa.h \
+    Zona_Administrador/addgroupfrom.h
 
 
 
@@ -356,7 +358,8 @@ FORMS    += mainwindow.ui \
     TPV/efectivocaja.ui \
     TPV/configmonedatpv.ui \
     Zona_Administrador/frmusuarios.ui \
-    Zona_Contabilidad/frmcuadro_cuentas.ui
+    Zona_Contabilidad/frmcuadro_cuentas.ui \
+    Zona_Administrador/addgroupfrom.ui
 
 RESOURCES += \
     maya.qrc

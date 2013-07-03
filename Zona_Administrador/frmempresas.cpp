@@ -2,7 +2,7 @@
 #include "ui_frmempresas.h"
 
 #include "../Busquedas/frmbuscarpoblacion.h"
-
+#include "addgroupfrom.h"
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmEmpresas),
@@ -721,10 +721,6 @@ void FrmEmpresas::borrar_sqlite()
     oEmpresa.Borrar(oEmpresa.getid());
 }
 
-
-
-
-
 void FrmEmpresas::on_btn_ruta_db_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
@@ -760,4 +756,32 @@ void FrmEmpresas::on_botBorrar_clicked()
         else
             borrar_mysql();
     }
+}
+
+void FrmEmpresas::on_addGrupo_clicked()
+{
+    addGroupFrom f(this);
+    if(f.exec() == QDialog::Rejected)
+        return;
+
+    QString nombre = "";
+    QString bd_name = QString("grupo%1").arg(nombre);
+    QString host;
+    QString user;
+    QString pass;
+    int port;
+    QSqlQuery q(QSqlDatabase::database("Maya"));
+    q.prepare("INSERT INTO `mayaglobal`.`grupos` "
+              "(`nombre`, `bd_name`, `bd_driver`, `bd_ruta`, `bd_host`,"
+              "`bd_user`, `bd_pass`, `bd_port`) "
+              "VALUES "
+              "(`:nombre`, `:bd_name`, `QMYSQL`, ` `, `:bd_host`,"
+              "`:bd_user`, `:bd_pass`, `:bd_port`);"
+              );
+   /* q.bindValue(":nombre",x);
+    q.bindValue(":bd_name",x);
+    q.bindValue(":bd_host",x);
+    q.bindValue(":bd_user",x);
+    q.bindValue(":bd_pass",x);
+    q.bindValue(":bd_port",x);*/
 }

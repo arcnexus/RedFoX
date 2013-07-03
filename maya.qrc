@@ -158,6 +158,7 @@
         <file>PNG/find2.png</file>
         <file>PNG/refrescar.png</file>
         <file>PNG/build.png</file>
+        <file>DB/DBGrupo.sql</file>
     </qresource>
     <qresource prefix="/openRPTLangs">
         <file>openrptLibs/traduccion/common_es.qm</file>

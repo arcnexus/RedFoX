@@ -348,21 +348,17 @@
      </item>
      <item row="0" column="1">
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="0">
+       <item row="1" column="5">
+        <widget class="QComboBox" name="cboDivisas"/>
+       </item>
+       <item row="1" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Empresa</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="label_24">
-         <property name="text">
-          <string>Ejercicio:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLineEdit" name="txtcodigo">
          <property name="maximumSize">
           <size>
@@ -378,7 +374,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
+       <item row="1" column="3">
         <widget class="QSpinBox" name="txtejercicio">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -391,7 +387,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="6">
+       <item row="1" column="6">
         <spacer name="horizontalSpacer_4">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -404,7 +400,7 @@
          </property>
         </spacer>
        </item>
-       <item row="1" column="1" colspan="6">
+       <item row="2" column="1" colspan="6">
         <widget class="QLineEdit" name="txtEmpresa">
          <property name="minimumSize">
           <size>
@@ -417,15 +413,36 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="4">
+       <item row="1" column="4">
         <widget class="QLabel" name="label_42">
          <property name="text">
           <string>Divisa: </string>
          </property>
         </widget>
        </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_68">
+         <property name="text">
+          <string>Grupo</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="5">
-        <widget class="QComboBox" name="cboDivisas"/>
+        <widget class="QPushButton" name="addGrupo">
+         <property name="text">
+          <string>Añadir grupo</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="2">
+        <widget class="QLabel" name="label_24">
+         <property name="text">
+          <string>Ejercicio:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="4">
+        <widget class="QComboBox" name="comboGrupo"/>
        </item>
       </layout>
      </item>

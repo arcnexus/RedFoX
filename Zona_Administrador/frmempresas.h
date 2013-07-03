@@ -53,6 +53,8 @@ private slots:
 
     void on_botBorrar_clicked();
 
+    void on_addGrupo_clicked();
+
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
