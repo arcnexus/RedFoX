@@ -837,7 +837,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="txtcodigoProveedor">
+           <widget class="QLineEdit" name="txtcodigo_proveedor">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -2230,7 +2230,7 @@ color: rgb(0, 64, 64);</string>
  </widget>
  <tabstops>
   <tabstop>txtfecha</tabstop>
-  <tabstop>txtcodigoProveedor</tabstop>
+  <tabstop>txtcodigo_proveedor</tabstop>
   <tabstop>txtcif</tabstop>
   <tabstop>botBuscarCliente</tabstop>
   <tabstop>txtproveedor</tabstop>

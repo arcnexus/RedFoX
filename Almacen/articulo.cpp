@@ -86,7 +86,8 @@ bool Articulo::Recuperar(QString cSQL)
               // this->seccion = registro.field("seccion").value().toString();
                this->id_subfamilia = registro.field("id_subfamilia").value().toInt();
                //this->subfamilia = registro.field("sub_familia").value().toString();
-               this->tipo_iva = registro.field("tipo_iva").value().toDouble();
+               this->tipo_iva =registro.field("tipo_iva").value().toDouble();
+               this->codigo_iva = Configuracion_global->Devolver_descripcion_tipo_iva(this->tipo_iva);
                this->coste = registro.field("coste").value().toDouble();
 
                this->dto = registro.field("dto").value().toDouble();
@@ -116,7 +117,7 @@ bool Articulo::Recuperar(QString cSQL)
                this->etiquetas = registro.field("etiquetas").value().toInt();
                this->paquetes = registro.field("paquetes").value().toInt();
                this->localizacion_en_almacen = registro.field("localizacion_en_almacen").value().toString();
-               this->id_tiposiva = registro.field("id_tiposiva").value().toInt();
+               this->id_tipos_iva = registro.field("id_tipos_iva").value().toInt();
                this->id_subsub_familia = registro.field("id_subsub_familia").value().toInt();
                this->id_grupo_art = registro.field("id_grupo_art").value().toInt();
                this->id_web = registro.field("id_web").value().toInt();
@@ -182,7 +183,8 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->seccion = registro.field("seccion").value().toString();
                this->id_subfamilia = registro.field("id_subfamilia").value().toInt();
                this->subfamilia = registro.field("subfamilia").value().toString();
-               this->tipo_iva = registro.field("tipo_iva").value().toDouble();
+               this->tipo_iva =registro.field("tipo_iva").value().toDouble();
+               this->codigo_iva = Configuracion_global->Devolver_descripcion_tipo_iva(this->tipo_iva);
                this->coste = registro.field("coste").value().toDouble();
                this->dto = registro.field("dto").value().toDouble();
                this->ultima_compra = registro.field("ultima_compra").value().toDate();
@@ -210,7 +212,7 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->etiquetas = registro.field("etiquetas").value().toInt();
                this->paquetes = registro.field("paquetes").value().toInt();
                this->localizacion_en_almacen = registro.field("localizacion_en_almacen").value().toString();
-               this->id_tiposiva = registro.field("id_tiposiva").value().toInt();
+               this->id_tipos_iva = registro.field("id_tipos_iva").value().toInt();
                this->id_subsub_familia = registro.field("id_subsub_familia").value().toInt();
                this->id_grupo_art = registro.field("id_grupo_art").value().toInt();
                this->id_web = registro.field("id_web").value().toInt();
@@ -350,7 +352,7 @@ void Articulo::Guardar()
                    "`etiquetas` =:etiquetas,"
                    "`paquetes` =:paquetes,"
                    "`localizacion_en_almacen` =:localizacion_en_almacen,"
-                   "`id_tiposiva` =:id_tiposiva,"
+                   "`id_tipos_iva` =:id_tipos_iva,"
                    "`id_subsub_familia` =:id_subsub_familia,"
                    "`id_grupo_art` =:id_grupo_art,"
                    "`id_web` =:id_web,"
@@ -404,7 +406,7 @@ void Articulo::Guardar()
     query.bindValue(":etiquetas",this->etiquetas);
     query.bindValue(":localizacion_en_almacen",this->localizacion_en_almacen);
     query.bindValue(":id",this->id);
-    query.bindValue(":id_tiposiva",this->id_tiposiva);
+    query.bindValue(":id_tipos_iva",this->id_tipos_iva);
     query.bindValue(":id_subsub_familia",this->id_subsub_familia);
     query.bindValue(":id_grupo_art",this->id_grupo_art);
     query.bindValue(":id_web",this->id_web);

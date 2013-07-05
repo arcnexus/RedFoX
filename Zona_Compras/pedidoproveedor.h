@@ -15,7 +15,7 @@ public:
     QDate	fecha;
     QDate	recepcion;
     int 	id_proveedor;
-    QString	codigoProveedor;
+    QString	codigo_proveedor;
     QString	proveedor;
     QString	direccion1;
     QString	direccion2;
@@ -28,7 +28,7 @@ public:
     double	subtotal;
     double	dto;
     double	iva;
-    double	recTotal;
+    double	rec_total;
     double	total;
     bool	enviado;
     bool	recibido;

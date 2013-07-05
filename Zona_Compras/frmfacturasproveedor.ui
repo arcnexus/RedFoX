@@ -419,7 +419,7 @@ color: rgb(0, 0, 127);</string>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="txtcodigoProveedor">
+           <widget class="QLineEdit" name="txtcodigo_proveedor">
             <property name="minimumSize">
              <size>
               <width>0</width>

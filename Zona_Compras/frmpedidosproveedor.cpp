@@ -101,7 +101,7 @@ void FrmPedidosProveedor::llenarProveedor(int id, bool isNew)
         ui->btnAnadirLinea->clicked();
     }
     prov.Recuperar("Select * from proveedores where id="+QString::number(id),1);
-    ui->txtcodigoProveedor->setText(prov.codigo);
+    ui->txtcodigo_proveedor->setText(prov.codigo);
     ui->txtproveedor->setText(prov.proveedor);
     ui->txtdireccion1->setText(prov.direccion1);
     ui->txtdireccion2->setText(prov.direccion2);
@@ -483,7 +483,7 @@ void FrmPedidosProveedor::editar_pedido()
 {
     bloquearcampos(false);
     emit block();
-    ui->txtcodigoProveedor->setFocus();
+    ui->txtcodigo_proveedor->setFocus();
 }
 void FrmPedidosProveedor::deshacer()
 {
@@ -535,7 +535,7 @@ void FrmPedidosProveedor::llenar_campos()
     ui->lblnombreProveedor->setText(oPedido_proveedor->proveedor);
     ui->txtfecha->setDate(oPedido_proveedor->fecha);
     ui->txtFechaLimite->setDate(oPedido_proveedor->recepcion);
-    ui->txtcodigoProveedor->setText(oPedido_proveedor->codigoProveedor);
+    ui->txtcodigo_proveedor->setText(oPedido_proveedor->codigo_proveedor);
     ui->txtproveedor->setText(oPedido_proveedor->proveedor);
     ui->txtdireccion1->setText(oPedido_proveedor->direccion1);
     ui->txtdireccion2->setText(oPedido_proveedor->direccion2);
@@ -547,7 +547,7 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txtsubtotal->setText(QString::number(oPedido_proveedor->subtotal));
     ui->txtimporte_descuento->setText(QString::number(oPedido_proveedor->dto));
     ui->txtiva->setText(QString::number(oPedido_proveedor->iva));
-    ui->txtporc_rec1->setText(QString::number(oPedido_proveedor->recTotal));
+    ui->txtporc_rec1->setText(QString::number(oPedido_proveedor->rec_total));
     ui->chklporc_rec->setChecked(oPedido_proveedor->recargo_equivalencia);
     ui->txttotal->setText(QString::number(oPedido_proveedor->total));
     ui->chkenviado->setChecked(oPedido_proveedor->enviado);
@@ -566,10 +566,10 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base2,'f',2)));
     ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base3,'f',2)));
     ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base4,'f',2)));
-    ui->txtporc_iva1->setText(QString::number(oPedido_proveedor->iva1));
-    ui->txtporc_iva2->setText(QString::number(oPedido_proveedor->iva2));
-    ui->txtporc_iva3->setText(QString::number(oPedido_proveedor->iva3));
-    ui->txtporc_iva4->setText(QString::number(oPedido_proveedor->iva4));
+    ui->txtporc_iva1->setText(QString::number(oPedido_proveedor->porc_iva1));
+    ui->txtporc_iva2->setText(QString::number(oPedido_proveedor->porc_iva2));
+    ui->txtporc_iva3->setText(QString::number(oPedido_proveedor->porc_iva3));
+    ui->txtporc_iva4->setText(QString::number(oPedido_proveedor->porc_iva4));
     ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva1,'f',2)));
     ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva2,'f',2)));
     ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva3,'f',2)));
@@ -601,7 +601,7 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
     oPedido_proveedor->proveedor = ui->txtproveedor->text();
     oPedido_proveedor->fecha = ui->txtfecha->date();
     oPedido_proveedor->recepcion =ui->txtfechaRecepcion->date();
-    oPedido_proveedor->codigoProveedor = ui->txtcodigoProveedor->text();
+    oPedido_proveedor->codigo_proveedor = ui->txtcodigo_proveedor->text();
     oPedido_proveedor->direccion1 = ui->txtdireccion1->text();
     oPedido_proveedor->direccion2 = ui->txtdireccion2->text();
     oPedido_proveedor->cp = ui->txtcp->text();
@@ -612,7 +612,7 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
     oPedido_proveedor->subtotal = ui->txtsubtotal->text().toDouble();
     oPedido_proveedor->dto = ui->txtimporte_descuento->text().toDouble();
     oPedido_proveedor->iva = ui->txtiva->text().toDouble();
-    oPedido_proveedor->recTotal= ui->txttotal_recargo->text().toDouble();
+    oPedido_proveedor->rec_total= ui->txttotal_recargo->text().toDouble();
     oPedido_proveedor->total = ui->txttotal->text().toDouble();
     oPedido_proveedor->enviado = ui->chkenviado->isChecked();
     oPedido_proveedor->recibido = ui->chkRecibido->isChecked();
@@ -660,7 +660,7 @@ void FrmPedidosProveedor::clear()
     ui->lblSerie->clear();
     ui->txtfecha->clear();
     ui->txtFechaLimite->clear();
-    ui->txtcodigoProveedor->clear();
+    ui->txtcodigo_proveedor->clear();
     ui->txtproveedor->clear();
     ui->txtdireccion1->clear();
     ui->txtdireccion2->clear();

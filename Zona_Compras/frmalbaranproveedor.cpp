@@ -95,7 +95,7 @@ void FrmAlbaranProveedor::llenarProveedor(int id)
     prov.clear();
 
     prov.Recuperar("Select * from proveedores where id="+QString::number(id),0);
-    ui->txtcodigoProveedor->setText(prov.codigo);
+    ui->txtcodigo_proveedor->setText(prov.codigo);
     ui->txtproveedor->setText(prov.proveedor);
     ui->txtdireccion1->setText(prov.direccion1);
     ui->txtdireccion2->setText(prov.direccion2);
@@ -502,7 +502,7 @@ void FrmAlbaranProveedor::on_btnEditar_clicked()
 {
     bloquearcampos(false);
     emit block();
-    ui->txtcodigoProveedor->setFocus();
+    ui->txtcodigo_proveedor->setFocus();
 }
 
 void FrmAlbaranProveedor::on_btnGuardar_clicked()
@@ -622,7 +622,7 @@ void FrmAlbaranProveedor::on_btnAnadir_clicked()
     emit block();
     llenar_campos();
     bloquearcampos(false);
-    ui->txtcodigoProveedor->setFocus();
+    ui->txtcodigo_proveedor->setFocus();
 }
 
 void FrmAlbaranProveedor::on_btnBorrar_clicked()

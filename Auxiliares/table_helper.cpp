@@ -1,6 +1,8 @@
 #include "table_helper.h"
 #include "monetarydelegate.h"
 #include "../Almacen/frmarticulos.h"
+#include "../Busquedas/db_consulta_view.h"
+
 Table_Helper::Table_Helper(QObject *parent) :
     QObject(parent)
 {
@@ -609,9 +611,9 @@ void Table_Helper::rellenar_con_Articulo(int row)
     QSqlQuery query(QSqlDatabase::database("Maya"));
     QString sql;
     if (this->comprando)
-        sql = QString("SELECT * FROM vistaArt_tarifa WHERE codigo = '%1'").arg(codigo);
+        sql = QString("SELECT * FROM vistaart_tarifa WHERE codigo = '%1'").arg(codigo);
     else
-        sql = QString("SELECT * FROM vistaArt_tarifa WHERE codigo = '%1' and tarifa = %2").arg(codigo).arg(tarifa);
+        sql = QString("SELECT * FROM vistaart_tarifa WHERE codigo = '%1' and tarifa = %2").arg(codigo).arg(tarifa);
     query.prepare(sql);
     if(query.exec())
     {
@@ -700,27 +702,52 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
 
 void Table_Helper::searchArticulo()
 {
-    Db_table_View searcher(qApp->activeWindow());
-    searcher.set_db("Maya");
-    searcher.set_table("vistaArt_tarifa");
-
-    searcher.setWindowTitle(tr("Articulos"));
-
-    QStringList headers;
-    headers << tr("Codigo")<< tr("Cod.Barras") << tr("Cod.Fabricante") << tr("Descripción");
-    searcher.set_table_headers(headers);
-    searcher.set_tarifa(this->tarifa);
-
-    searcher.set_readOnly(true);
-    searcher.set_selection("codigo");
-
-    if(searcher.exec() == QDialog::Accepted)
+    db_consulta_view consulta;
+    QStringList campos;
+    campos << "descripcion" <<"codigo" <<"codigo_barras" << "codigo_fabricante" << "coste";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("articulos");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste from articulos");
+    QStringList cabecera;
+    QVariantList tamanos;
+    QVariantList moneda;
+    cabecera  << tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste");
+    tamanos <<"0" << "100" << "100" << "100" << "450" <<"130";
+    moneda <<"5";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_delegate_monetary(moneda);
+    consulta.set_titulo("Busqueda de Artículos");
+    if(consulta.exec())
     {
-        helped_table->item(helped_table->currentRow(),0)->setText(searcher.selected_value);
+
+        helped_table->item(helped_table->currentRow(),0)->setText(Configuracion_global->devolver_codigo_articulo(consulta.get_id()));
         helped_table->setCurrentCell(helped_table->currentRow(),1);
         helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
         rellenar_con_Articulo(helped_table->currentRow());
-    }
+   }
+//    Db_table_View searcher(qApp->activeWindow());
+//    searcher.set_db("Maya");
+//    searcher.set_table("vistaart_tarifa");
+
+//    searcher.setWindowTitle(tr("Articulos"));
+
+//    QStringList headers;
+//    headers << tr("Codigo")<< tr("Cod.Barras") << tr("Cod.Fabricante") << tr("Descripción");
+//    searcher.set_table_headers(headers);
+//    searcher.set_tarifa(this->tarifa);
+
+//    searcher.set_readOnly(true);
+//    searcher.set_selection("codigo");
+
+//    if(searcher.exec() == QDialog::Accepted)
+//    {
+//        helped_table->item(helped_table->currentRow(),0)->setText(searcher.selected_value);
+//        helped_table->setCurrentCell(helped_table->currentRow(),1);
+//        helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
+//        rellenar_con_Articulo(helped_table->currentRow());
+//    }
 }
 
 void Table_Helper::updateLinea(int row)

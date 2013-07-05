@@ -56,7 +56,7 @@ void Db_table_View::set_table(QString tabla)
     //-----------------------
     // Formateo forzado
     //-----------------------
-    if (tabla =="vistaArt_tarifa"){
+    if (tabla =="vistaart_tarifa"){
         QString filtro ="tarifa=";
         filtro.append(QString::number(tarifa));
         set_filter(filtro);
@@ -224,7 +224,7 @@ void Db_table_View::resizeEvent(QResizeEvent *)
 
 void Db_table_View::on_txtBuscar_textChanged(const QString &arg1)
 {
-    if (this->tabla =="vistaArt_tarifa" )
+    if (this->tabla =="vistaart_tarifa" )
     {
         QString filtro = "descripcion like '%";
         filtro.append(arg1);

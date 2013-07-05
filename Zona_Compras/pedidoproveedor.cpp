@@ -12,14 +12,14 @@ PedidoProveedor::PedidoProveedor(QObject *parent) :
 int PedidoProveedor::nuevo_pedido_proveedor()
 {
     QSqlQuery queryPedido(QSqlDatabase::database("empresa"));
-    queryPedido.prepare("INSERT INTO ped_pro (`fecha`,`ejercicio`,`iva1`,`iva2`,`iva3`,`iva4`) "
-                        "VALUES(:fecha,:ejercicio,:iva1,:iva2,:iva3,:iva4);");
+    queryPedido.prepare("INSERT INTO ped_pro (`fecha`,`ejercicio`,`porc_iva1`,`porc_iva2`,`porc_iva3`,`porc_iva4`) "
+                        "VALUES(:fecha,:ejercicio,:porc_iva1,:porc_iva2,:porc_iva3,:porc_iva4);");
     queryPedido.bindValue(":fecha",QDate::currentDate());
     queryPedido.bindValue(":ejercicio",Configuracion_global->cEjercicio.toInt());
-    queryPedido.bindValue(":iva1",Configuracion_global->ivaList.at(0));
-    queryPedido.bindValue(":iva2",Configuracion_global->ivaList.at(1));
-    queryPedido.bindValue(":iva3",Configuracion_global->ivaList.at(2));
-    queryPedido.bindValue(":iva4",Configuracion_global->ivaList.at(3));
+    queryPedido.bindValue(":porc_iva1",Configuracion_global->ivaList.at(0));
+    queryPedido.bindValue(":porc_iva2",Configuracion_global->ivaList.at(1));
+    queryPedido.bindValue(":porc_iva3",Configuracion_global->ivaList.at(2));
+    queryPedido.bindValue(":porc_iva4",Configuracion_global->ivaList.at(3));
     if(!queryPedido.exec())
     {
         QMessageBox::warning(qApp->activeWindow(),tr("ATENCIÓN:"),
@@ -57,7 +57,7 @@ void PedidoProveedor::guardar()
     "fecha =:fecha,"
     "recepcion =:recepcion,"
     "id_proveedor =:id_proveedor,"
-    "codigoProveedor =:codigoProveedor,"
+    "codigo_proveedor =:codigo_proveedor,"
     "proveedor =:proveedor,"
     "direccion1 =:direccion1,"
     "direccion2 =:direccion2,"
@@ -69,7 +69,7 @@ void PedidoProveedor::guardar()
     "base_total =:base_total,"
     "subtotal =:subtotal,"
     "dto =:dto,"
-     "recTotal =:recTotal,"
+     "rec_total =:rec_total,"
      "total =:total,"
      "enviado =:enviado,"
      "recibido =:recibido,"
@@ -120,7 +120,7 @@ void PedidoProveedor::guardar()
     queryGuardarPedido.bindValue(":fecha",this->fecha);
     queryGuardarPedido.bindValue(":recepcion",this->recepcion);
     queryGuardarPedido.bindValue(":id_proveedor",this->id_proveedor);
-    queryGuardarPedido.bindValue(":codigoProveedor",this->codigoProveedor);
+    queryGuardarPedido.bindValue(":codigo_proveedor",this->codigo_proveedor);
     queryGuardarPedido.bindValue(":proveedor",this->proveedor);
     queryGuardarPedido.bindValue(":direccion1",this->direccion1);
     queryGuardarPedido.bindValue(":direccion2",this->direccion2);
@@ -132,7 +132,7 @@ void PedidoProveedor::guardar()
     queryGuardarPedido.bindValue(":base_total",this->base_total);
     queryGuardarPedido.bindValue(":subtotal",this->subtotal);
     queryGuardarPedido.bindValue(":dto",this->dto);
-    queryGuardarPedido.bindValue(":recTotal",this->recTotal);
+    queryGuardarPedido.bindValue(":rec_total",this->rec_total);
     queryGuardarPedido.bindValue(":total",this->total);
     queryGuardarPedido.bindValue(":enviado",this->enviado);
     queryGuardarPedido.bindValue(":recibido",this->recibido);
@@ -248,7 +248,7 @@ void PedidoProveedor::clear()
     this->fecha = QDate::currentDate();
     this->recepcion = QDate::currentDate();
     this->id_proveedor = 0;
-    this->codigoProveedor = "";
+    this->codigo_proveedor = "";
     this->proveedor = "";
     this->direccion1 = "";
     this->direccion2 = "";
@@ -261,7 +261,7 @@ void PedidoProveedor::clear()
     this->subtotal = 0;
     this->dto = 0;
     this->iva = 0;
-    this->recTotal = 0;
+    this->rec_total = 0;
     this->total = 0;
     this->enviado = false;
     this->recibido = false;
@@ -286,10 +286,10 @@ void PedidoProveedor::clear()
     this->base2 = 0;
     this->base3 = 0;
     this->base4 = 0;
-    this->iva1 = 0;
-    this->iva2 = 0;
-    this->iva3 = 0;
-    this->iva4 = 0;
+    this->porc_iva1 = 0;
+    this->porc_iva2 = 0;
+    this->porc_iva3 = 0;
+    this->porc_iva4 = 0;
     this->iva1 = 0;
     this->iva2 = 0;
     this->iva3 = 0;
@@ -321,7 +321,7 @@ void PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
         this->fecha = queryPedido->record().value("fecha").toDate();
         this->recepcion = queryPedido->record().value("recepcion").toDate();
         this->id_proveedor = queryPedido->record().value("id_proveedor").toInt();
-        this->codigoProveedor = queryPedido->record().value("codigo_proveedor").toString();
+        this->codigo_proveedor = queryPedido->record().value("codigo_proveedor").toString();
         this->proveedor = queryPedido->record().value("proveedor").toString();
         this->direccion1 = queryPedido->record().value("direccion1").toString();
         this->direccion2 = queryPedido->record().value("direccion2").toString();
@@ -331,10 +331,10 @@ void PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
         this->id_pais = queryPedido->record().value("id_pais").toInt();
         this->cif_nif = queryPedido->record().value("cif_nif").toString();
         this->base_total = queryPedido->record().value("base").toDouble();
-        this->subtotal = queryPedido->record().value("sub_total").toDouble();
+        this->subtotal = queryPedido->record().value("subtotal").toDouble();
         this->dto = queryPedido->record().value("dto").toDouble();
         this->iva = queryPedido->record().value("iva").toInt();
-        this->recTotal = queryPedido->record().value("rec_total").toDouble();
+        this->rec_total = queryPedido->record().value("rec_total").toDouble();
         this->total = queryPedido->record().value("total").toDouble();
         this->enviado = queryPedido->record().value("enviado").toBool();
         this->recibido = queryPedido->record().value("recibido").toBool();
@@ -507,9 +507,9 @@ long PedidoProveedor::save()
 {
     QSqlQuery q(QSqlDatabase::database("empresa"));
     q.prepare("INSERT INTO ped_pro"
-              "( pedido ,  serie ,  fecha ,  recepcion ,  id_proveedor ,  codigoProveedor ,"
+              "( pedido ,  serie ,  fecha ,  recepcion ,  id_proveedor ,  codigo_proveedor ,"
               " proveedor ,  direccion1 ,  direccion2 ,  cp ,  poblacion ,  provincia ,  id_pais ,"
-              " cif_nif ,  base ,  subtotal ,  dto ,  iva ,  recTotal ,  total ,  enviado ,  recibido ,"
+              " cif_nif ,  base ,  subtotal ,  dto ,  iva ,  rec_total ,  total ,  enviado ,  recibido ,"
               " recibido_completo ,  genero_pendiente ,  base1 ,  base2 ,  base3 ,  base4 ,  porc_iva1 ,"
               " porc_iva2 ,  porc_iva3 ,  porc_iva4 ,  iva1 ,  iva2 ,  iva3 ,  iva4 ,  total1 ,  total2 ,"
               " total3 ,  total4 ,  nMargeporc_rec1 ,  nMargeporc_rec2 ,  nMargeporc_rec3 ,  nMargeporc_rec4 ,  rec1 ,  rec2 ,"
@@ -518,9 +518,9 @@ long PedidoProveedor::save()
               " fecha_entrega ,  direccion1_entrega ,  direccion2_entrega ,  cp_entrega ,  poblacion_entrega ,"
               " provincia_entrega ,  id_pais_entrega ,  nombre_cliente ,  horario_activo )"
               " VALUES "
-              "( :pedido ,  :serie ,  :fecha ,  :recepcion ,  :id_proveedor ,  :codigoProveedor ,"
+              "( :pedido ,  :serie ,  :fecha ,  :recepcion ,  :id_proveedor ,  :codigo_proveedor ,"
               " :proveedor ,  :direccion1 ,  :direccion2 ,  :cp ,  :poblacion ,  :provincia ,  :id_pais ,"
-              " :cif_nif ,  :base ,  :subtotal ,  :dto ,  :iva ,  :recTotal ,  :total ,  :enviado ,  :recibido ,"
+              " :cif_nif ,  :base ,  :subtotal ,  :dto ,  :iva ,  :rec_total ,  :total ,  :enviado ,  :recibido ,"
               " :recibido_completo ,  :genero_pendiente ,  :base1 ,  :base2 ,  :base3 ,  :base4 ,  :porc_iva1 ,"
               " :porc_iva2 ,  :porc_iva3 ,  :porc_iva4 ,  :iva1 ,  :iva2 ,  :iva3 ,  :iva4 ,  :total1 ,  :total2 ,"
               " :total3 ,  :total4 ,  :nMargeporc_rec1 ,  :nMargeporc_rec2 ,  :nMargeporc_rec3 ,  :nMargeporc_rec4 ,  :rec1 ,  :rec2 ,"
@@ -544,7 +544,7 @@ void PedidoProveedor::fillPedido(QSqlRecord r)
     fecha = r.value("fecha").toDate();
     recepcion = r.value("recepcion").toDate();
     id_proveedor = r.value("id_proveedor").toULongLong();
-    codigoProveedor = r.value("codigoProveedor").toString();
+    codigo_proveedor = r.value("codigo_proveedor").toString();
     proveedor = r.value("proveedor").toString();
     direccion1 = r.value("direccion1").toString();
     direccion2 = r.value("direccion2").toString();
@@ -557,7 +557,7 @@ void PedidoProveedor::fillPedido(QSqlRecord r)
     subtotal= r.value("subtotal").toDouble();
     dto= r.value("dto").toDouble();
     iva= r.value("iva").toDouble();
-    recTotal= r.value("recTotal").toDouble();
+    rec_total= r.value("rec_total").toDouble();
     total= r.value("total").toDouble();
     enviado= r.value("enviado").toULongLong();
     recibido= r.value("recibido").toULongLong();

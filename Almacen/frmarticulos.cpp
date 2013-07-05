@@ -256,11 +256,11 @@ void FrmArticulos::LLenarCampos()
    ui->lblDescripcion->setVisible(true);
    ui->txtdescripcionResumida->setText(oArticulo->descripcion_reducida);
    ui->txtproveedor->setText(oArticulo->proveedor);
-   ui->txtCodigoProveedor->setText(oArticulo->cCodProveedor);
+   ui->txtcodigo_proveedor->setText(oArticulo->cCodProveedor);
    ui->txtfamilia->setText(oArticulo->familia);
    ui->txtseccion->setText(oArticulo->seccion);
    ui->txtsubfamilia->setText(oArticulo->subfamilia);
-   int nIndex = ui->cboTipoIVA->findText(QString::number(oArticulo->tipo_iva));
+   int nIndex = ui->cboTipoIVA->findText(oArticulo->codigo_iva);
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
    ui->txtdto->setText(QString::number(oArticulo->dto,'f',2));
@@ -307,7 +307,7 @@ void FrmArticulos::LLenarCampos()
    //-----------------------
    // llenamos combo iva
    //-----------------------
-  nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tiposiva));
+  nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tipos_iva));
   if(nIndex >-1)
       ui->cboTipoIVA->setCurrentIndex(nIndex);
 
@@ -365,7 +365,7 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->seccion=ui->txtseccion->text();
     oArticulo->subfamilia=ui->txtsubfamilia->text();
     oArticulo->tipo_iva=Configuracion_global->ivas[ui->cboTipoIVA->currentText()].value("iva").toDouble();
-    oArticulo->id_tiposiva = Configuracion_global->getidIva(ui->cboTipoIVA->currentText());
+    oArticulo->id_tipos_iva = Configuracion_global->getidIva(ui->cboTipoIVA->currentText());
     oArticulo->coste=ui->txtcoste->text().replace(",",".").toDouble();
     oArticulo->ultima_compra= ui->txtfecha_ultima_compra->date();
     oArticulo->ultima_venta= ui->txtfechaUltimaVenta->date();
@@ -390,13 +390,13 @@ void FrmArticulos::CargarCamposEnArticulo()
         oArticulo->mostrar_web = 1;
     else
         oArticulo->mostrar_web = 0;
-    oArticulo->id_tiposiva = Configuracion_global->getidIva(ui->cboTipoIVA->currentText());
+    oArticulo->id_tipos_iva = Configuracion_global->getidIva(ui->cboTipoIVA->currentText());
     oArticulo->id_seccion = oArticulo->getidSeccion(ui->txtseccion->text());
     oArticulo->id_familia  = oArticulo->getidFamilia(ui->txtfamilia->text());
     oArticulo->id_subfamilia = oArticulo->getidSubFamilia(ui->txtsubfamilia->text());
     oArticulo->id_subsub_familia = oArticulo->getidSubSufFamilia(ui->txtcSubSubFamilia->text());
     oArticulo->id_grupo_art = oArticulo->getidGrupo(ui->txtcGupoArt->text());
-    oArticulo->cCodProveedor = ui->txtCodigoProveedor->text();
+    oArticulo->cCodProveedor = ui->txtcodigo_proveedor->text();
     oArticulo->proveedor = ui->txtproveedor->text();
 
 //    this->id_web = registro.field("id_web").value().toInt();
@@ -457,7 +457,7 @@ void FrmArticulos::VaciarCampos()
    ui->txtfecha_prevista_recepcion->setDate(QDate::currentDate());
    ui->txtreservados->setText("0");
    ui->chkmostrar_web->setChecked(false);
-   ui->txtCodigoProveedor->setText("");
+   ui->txtcodigo_proveedor->setText("");
    ui->chkArticulo_promocionado->setChecked(false);
    ui->txtDescripcion_promocion->setText("");
    ui->radOferta1->setChecked(false);
@@ -708,7 +708,7 @@ void FrmArticulos::on_btnBuscarProveedor_clicked()
         qProv.bindValue(":nid",buscar.nidProv);
         if(qProv.exec()){
             qProv.next();
-            ui->txtCodigoProveedor->setText(qProv.record().field("codigo").value().toString());
+            ui->txtcodigo_proveedor->setText(qProv.record().field("codigo").value().toString());
             ui->txtproveedor->setText(qProv.record().field("proveedor").value().toString());
             oArticulo->id_proveedor = buscar.nidProv;
         }
@@ -893,7 +893,7 @@ void FrmArticulos::asignar_proveedor_principal_clicked()
 
             index1=modelProv->index(celda.row(),1);     ///< '0' es la posicion del registro que nos interesa
             pKey=modelProv->data(index1,Qt::EditRole);
-            ui->txtCodigoProveedor->setText(pKey.toString());
+            ui->txtcodigo_proveedor->setText(pKey.toString());
             index1=modelProv->index(celda.row(),2);
             pKey=modelProv->data(index1,Qt::EditRole);
             ui->txtproveedor->setText(pKey.toString());

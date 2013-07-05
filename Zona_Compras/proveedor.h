@@ -82,7 +82,7 @@ public slots:
     void Vaciar();
     void Borrar(int nid);
     void clear();
-    QString NuevoCodigoProveedor();
+    QString Nuevocodigo_proveedor();
 
 
 };

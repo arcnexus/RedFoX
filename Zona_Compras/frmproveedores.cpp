@@ -87,7 +87,7 @@ frmProveedores::~frmProveedores()
 }
 void frmProveedores::LLenarCampos()
 {
-    ui->lblCodigoProveedor->setText(oProveedor->codigo);
+    ui->lblcodigo_proveedor->setText(oProveedor->codigo);
     ui->lblproveedor->setText(oProveedor->proveedor);
     ui->txtcodigo->setText(oProveedor->codigo);
     ui->txtproveedor->setText(oProveedor->proveedor);

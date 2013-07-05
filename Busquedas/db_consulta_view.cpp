@@ -1,5 +1,7 @@
 #include "db_consulta_view.h"
 #include "ui_db_consulta_view.h"
+#include "../Auxiliares/monetarydelegate.h"
+#include "../Auxiliares/datedelegate.h"
 
 db_consulta_view::db_consulta_view(QWidget *parent) :
     QDialog(parent),
@@ -30,6 +32,7 @@ void db_consulta_view::set_SQL(QString cSQL)
     modelo = new QSqlQueryModel(this);
     modelo->setQuery(cSQL,QSqlDatabase::database(db));
     ui->resultado_list->setModel(modelo);
+
 }
 
 void db_consulta_view::set_filtro(QString filtro)
@@ -41,6 +44,8 @@ void db_consulta_view::set_filtro(QString filtro)
     cSQLFiltered.append(" like '%");
     cSQLFiltered.append(filtro);
     cSQLFiltered.append("%'");
+    cSQLFiltered.append(" order by ");
+    cSQLFiltered.append(ui->cboCampoBusqueda->currentText().trimmed());
 
     modelo->setQuery(cSQLFiltered,QSqlDatabase::database(db));
 }
@@ -63,6 +68,22 @@ void db_consulta_view::set_tamano_columnas(QVariantList tamanos)
 {
     for(int i = 0; i<tamanos.size();i++)
         ui->resultado_list->setColumnWidth(i,tamanos.at(i).toInt());
+}
+
+void db_consulta_view::set_delegate_monetary(QVariantList cols)
+{
+    for(int pos=0; pos <= cols.count()-1;pos++)
+    {
+        ui->resultado_list->setItemDelegateForColumn(cols.at(pos).toInt(),new MonetaryDelegate);
+    }
+}
+
+void db_consulta_view::set_delegate_fecha(QVariantList cols)
+{
+    for(int pos=0; pos <= cols.count()-1;pos++)
+    {
+        ui->resultado_list->setItemDelegateForColumn(cols.at(pos).toInt(),new DateDelegate);
+    }
 }
 
 void db_consulta_view::set_campoBusqueda(QStringList campos)

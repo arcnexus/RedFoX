@@ -295,7 +295,7 @@ void FrmFacturasProveedor::llenarProveedor(int id)
 {
     prov.Recuperar("Select * from proveedores where id="+QString::number(id),0);
 
-    ui->txtcodigoProveedor->setText(prov.codigo);
+    ui->txtcodigo_proveedor->setText(prov.codigo);
     ui->txtproveedor->setText(prov.proveedor);
     ui->lblproveedor->setText(prov.proveedor);
     ui->txtdireccion1->setText(prov.direccion1);
@@ -366,7 +366,7 @@ void FrmFacturasProveedor::on_btnAnadir_clicked()
     emit block();
     llenar_campos();
     bloquearcampos(false);
-    ui->txtcodigoProveedor->setFocus();
+    ui->txtcodigo_proveedor->setFocus();
 }
 
 void FrmFacturasProveedor::llenar_campos()
@@ -574,7 +574,7 @@ void FrmFacturasProveedor::on_btnEditar_clicked()
 {
     bloquearcampos(false);
     emit block();
-    ui->txtcodigoProveedor->setFocus();
+    ui->txtcodigo_proveedor->setFocus();
 }
 
 void FrmFacturasProveedor::on_btnDeshacer_clicked()

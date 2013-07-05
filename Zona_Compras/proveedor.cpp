@@ -147,7 +147,7 @@ void Proveedor::Anadir()
     else {
         int nid  = QProveedor->lastInsertId().toInt();
         Recuperar( "Select * from proveedores where id = "+QString::number(nid));
-        this->codigo = NuevoCodigoProveedor();
+        this->codigo = Nuevocodigo_proveedor();
         this->cuenta_aplicacion = this->codigo;
     }
 }
@@ -537,7 +537,7 @@ void Proveedor::clear()
     this->entregado_a_cuenta =0;
 }
 
-QString Proveedor::NuevoCodigoProveedor()
+QString Proveedor::Nuevocodigo_proveedor()
 {
     QString codigo;
     QString cNum;
