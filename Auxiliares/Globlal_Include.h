@@ -10,6 +10,7 @@
 #include <QHash>
 
 #include <QtGui>
+#include <QProgressDialog>
 #include <QComboBox>
 #include <QDesktopWidget>
 #include <QTableWidget>

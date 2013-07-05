@@ -191,6 +191,7 @@ void addGroupFrom::_insertNewGroup(QString grupo)
     }
     else
     {
+        id = q2.lastInsertId().toInt();
         TimedMessageBox * t = new TimedMessageBox(this, tr("Grupo creado con exito"));
         this->accept();
     }
@@ -199,6 +200,22 @@ void addGroupFrom::_insertNewGroup(QString grupo)
 void addGroupFrom::_insertAdminUser(bool error, QSqlQuery q)
 {
     error &= q.exec("INSERT INTO `usuarios` (`nombre`, `contrasena`, `nivel_acceso`, `categoria`) VALUES ('admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', '99', 'ADMINISTRADOR');");
+}
+
+void addGroupFrom::_insertPoblaciones(bool error, QSqlQuery q)
+{
+    QFile f(":/Icons/DB/poblaciones.sql");
+    if(f.open((QIODevice::ReadOnly | QIODevice::Text)))
+    {
+        QTextStream in(&f);
+        in.setCodec("UTF-8");
+        QString all = in.readAll();
+        all.remove("\r");
+        all.remove("\n");
+        q.prepare(all);
+        if(!q.exec())
+            error = true;
+    }
 }
 
 void addGroupFrom::on_pushButton_2_clicked()
@@ -237,6 +254,8 @@ void addGroupFrom::on_pushButton_2_clicked()
         _insertIVA(q, error);
 
         _insertNivelAcesso(error, q);
+
+        _insertPoblaciones(error,q);
 
         _insertAdminUser(error, q);
 

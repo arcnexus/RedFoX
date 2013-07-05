@@ -29,21 +29,15 @@ public:
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
     void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+
+
 private slots:
     //TODO - boton buscar
     //TODO - boton borrar
 
-    void on_botSiguiente_clicked();
-
-    void on_botAnterior_clicked();
-
-    void on_botGuardar_clicked();
-
     void txtpoblacion_editingFinished();
 
     void txtcp_editingFinished();
-
-    void on_botAnadir_clicked();
 
     void on_btn_ruta_db_clicked();
 
@@ -51,9 +45,11 @@ private slots:
 
     void on_btn_migrar_clicked();
 
-    void on_botBorrar_clicked();
-
     void on_addGrupo_clicked();
+
+    void on_btnAddEmpresa_clicked();
+
+    void on_treeEmpresas_itemSelectionChanged();
 
 private:
     Ui::FrmEmpresas *ui;
@@ -65,11 +61,22 @@ private:
     bool crear_empresa_mysql(copy_db_progressFrm * form);
     bool crear_medica_mysql(copy_db_progressFrm * form);
 
-    void borrar_mysql();
-    void borrar_sqlite();
-
     ToolBarButton toolButton;
     QAction menuButton;
+
+    struct empresa
+    {
+        QString name;
+        QSqlRecord record;
+    };
+
+    QHash<QString, QPair<QList<empresa> , QSqlRecord>> _empresas;
+    void showEmpresas();
+    void getEmpresas();
+    void _addEmpresa();
+    void _llenarCampos(QSqlRecord r);
+
+    void blockGUI(bool block, bool limpia);
 };
 
 #endif // FRMEMPRESAS_H

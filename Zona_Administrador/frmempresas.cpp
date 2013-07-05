@@ -3,6 +3,7 @@
 
 #include "../Busquedas/frmbuscarpoblacion.h"
 #include "addgroupfrom.h"
+
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmEmpresas),
@@ -10,9 +11,11 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     menuButton(QIcon(":/Icons/PNG/empresa.png"),tr("Empresa"),this)
 {
     ui->setupUi(this);
-    ui->txtMensaje->setText("ATENCION: Modifique con cuidado. Cambiar estos\n valores puede hacer que el programa deje\n de funcionar");
+    QStyle *style = this ? this->style() : QApplication::style();
+    QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
+    ui->blinkink->seticon(tmpIcon.pixmap(32,32));
 
-    connect(ui->botCerrar,SIGNAL(clicked()),this,SLOT(close()));
+
     connect(ui->txtpoblacion,SIGNAL(editingFinished()),this,SLOT(txtpoblacion_editingFinished()));
     connect(ui->txtcp,SIGNAL(editingFinished()),this,SLOT(txtcp_editingFinished()));
     //------------------
@@ -29,7 +32,9 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     modelTarifas->setQuery("select descripcion from codigotarifa",QSqlDatabase::database("Maya"));
     ui->cboTarifa->setModel(modelTarifas);
 
-    on_botSiguiente_clicked();
+    getEmpresas();
+    showEmpresas();
+    blockGUI(true,false);
 }
 
 FrmEmpresas::~FrmEmpresas()
@@ -41,22 +46,16 @@ void FrmEmpresas::LLenarCampos()
 {
     ui->txtcodigo->setText(oEmpresa.getcodigo());
     ui->txtEmpresa->setText(oEmpresa.getnombre());
-    ui->txtRutaBd->setText(oEmpresa.getruta_bd_sqlite());
-    ui->txtcHost->setText(oEmpresa.getcHost());
+    ui->txtRutaBd->setText(oEmpresa.getruta_bd_sqlite());   
     ui->txtnombre_bd->setText(oEmpresa.getnombre_bd());
-    ui->txtcUser->setText(oEmpresa.getcUser());
-    ui->txtcPassword->setText(oEmpresa.getcContrasena());
-    ui->txtcPuerto->setText(oEmpresa.getcPuerto());
+
     int indice=ui->txtcDriver->findText(oEmpresa.getcDriverBD());
     if(indice!=-1)
        ui->txtcDriver->setCurrentIndex(indice);
 
     ui->txtRutaBd->setText(oEmpresa.getruta_bd_sqlite());
-    ui->txtcHostmedic->setText(oEmpresa.getcHostMed());
     ui->txtnombre_bdMedic->setText(oEmpresa.getnombre_bdMed());
-    ui->txtcUserMedic->setText(oEmpresa.getcUserMed());
-    ui->txtcPasswordBdMedic->setText(oEmpresa.getcContrasenaMed());
-    ui->txtcPuertoMedic->setText(oEmpresa.getcPuertoMed());
+
 
     //indice=ui->txtcDriverMedica->findText(oEmpresa.getcDriverBDMed());
     //if(indice!=-1)
@@ -98,18 +97,17 @@ void FrmEmpresas::LLenarCampos()
     ui->txt_horario_dia_normal->setText(oEmpresa.horario_dia_normal);
     ui->txt_horario_ultimo_dia->setText(oEmpresa.horario_ultimo_dia);
 
-    ui->txtHost_contabilidad->setText(oEmpresa.HostBD_contabilidad);
+
     ui->txtNombre_BDConta->setText(oEmpresa.nombre_bd_contabilidad);
-    ui->txtUsuario_contabilidad->setText(oEmpresa.UsuarioBD_contabilidad);
-    ui->txtpassword_bd_conta->setText(oEmpresa.ContrasenaBD_contabilidad);
-    ui->txtPuertoBDConta->setText(oEmpresa.puertoDB_contabilidad);
+
+
     ui->txtruta_bd_conta->setText(oEmpresa.RutaBD_Contabilidad_sqlite);
     ui->chk_ticket_factura->setChecked(oEmpresa.ticket_factura);
     index = ui->cboTarifa->findText(Configuracion_global->Devolver_tarifa(oEmpresa.id_tarifa_predeterminada));
     ui->cboTarifa->setCurrentIndex(index);
     ui->chk_upate_divisas->setChecked(oEmpresa.actualizar_divisas);
-    ui->dboEmpresaMedica->setChecked(oEmpresa.empresa_medica);
-    ui->cboGestionInternacional->setChecked(oEmpresa.empresa_internacional);
+    ui->chkMedica->setChecked(oEmpresa.empresa_medica);
+
     ui->txtCuenta_venta_mercaderias->setText(oEmpresa.cuenta_venta_mercaderias);
     ui->txtCuenta_venta_servicios->setText(oEmpresa.cuenta_venta_servicios);
     ui->ivarepercutido1->setText(oEmpresa.cuenta_iva_repercutido1);
@@ -136,18 +134,13 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.setcodigo(ui->txtcodigo->text());
     oEmpresa.setnombre(ui->txtEmpresa->text());
     oEmpresa.setruta_bd_sqlite(ui->txtRutaBd->text());
-    oEmpresa.setcHost(ui->txtcHost->text());
+
     oEmpresa.setnombre_bd(ui->txtnombre_bd->text());
-    oEmpresa.setcUser(ui->txtcUser->text());
-    oEmpresa.setcContrasena(ui->txtcPassword->text());
-    oEmpresa.setcPuerto(ui->txtcPuerto->text());
+
     oEmpresa.setcDriverBD(ui->txtcDriver->currentText());
 
-    oEmpresa.setcHostMed(ui->txtcHostmedic->text());
     oEmpresa.setnombre_bdMed(ui->txtnombre_bdMedic->text());
-    oEmpresa.setcUserMed(ui->txtcUserMedic->text());
-    oEmpresa.setcContrasenaMed(ui->txtcPasswordBdMedic ->text());
-    oEmpresa.setcPuertoMed(ui->txtcPuertoMedic->text());
+
     oEmpresa.setcDriverBDMed(ui->txtcDriver->currentText());
 
 
@@ -185,18 +178,16 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.horario_primer_dia = ui->txt_horario_primer_dia->text();
     oEmpresa.horario_ultimo_dia = ui->txt_horario_ultimo_dia->text();
 
-    oEmpresa.HostBD_contabilidad = ui->txtHost_contabilidad->text();
+
     oEmpresa.nombre_bd_contabilidad = ui->txtNombre_BDConta->text();
-    oEmpresa.UsuarioBD_contabilidad = ui->txtUsuario_contabilidad->text();
-    oEmpresa.ContrasenaBD_contabilidad = ui->txtpassword_bd_conta->text();
-    oEmpresa.puertoDB_contabilidad = ui->txtPuertoBDConta->text();
+
     oEmpresa.driver_db_contabilidad = ui->txtcDriver->currentText();
     oEmpresa.RutaBD_Contabilidad_sqlite = ui->txtruta_bd_conta->text();
     oEmpresa.ticket_factura = ui->chk_ticket_factura->isChecked();
     oEmpresa.id_tarifa_predeterminada = Configuracion_global->Devolver_id_tarifa(ui->cboTarifa->currentText());
     oEmpresa.actualizar_divisas = ui->chk_upate_divisas->isChecked();
-    oEmpresa.empresa_internacional = ui->cboGestionInternacional->isChecked();
-    oEmpresa.empresa_medica = ui->dboEmpresaMedica->isChecked();
+
+    oEmpresa.empresa_medica = ui->chkMedica->isChecked();
     oEmpresa.cuenta_iva_repercutido1 = ui->ivarepercutido1->text();
     oEmpresa.cuenta_iva_repercutido2 = ui->ivarepercutido2->text();
     oEmpresa.cuenta_iva_repercutido3 = ui->ivarepercutido3->text();
@@ -213,87 +204,6 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.cuenta_iva_soportado_re2 = ui->ivasoportadore2->text();
     oEmpresa.cuenta_iva_soportado_re3 = ui->ivasoportadore3->text();
     oEmpresa.cuenta_iva_soportado_re4 = ui->ivasoportadore4->text();
-}
-
-
-void FrmEmpresas::on_botSiguiente_clicked()
-{
-    oEmpresa.Recuperar("select * from empresas where id > "+QString::number(oEmpresa.getid()),1);
-    LLenarCampos();
-}
-
-void FrmEmpresas::on_botAnterior_clicked()
-{
-    oEmpresa.Recuperar("select * from empresas where id < "+QString::number(oEmpresa.getid())+" order by id desc",2);
-    LLenarCampos();
-}
-
-
-void FrmEmpresas::on_botGuardar_clicked()
-{
-    if(ui->botAnadir->text() == "Deshacer")
-    {
-        int idriver = ui->txtcDriver->currentIndex();
-        int idriverMedica = ui->txtcDriver->currentIndex();
-
-        if(ui->txtRutaBd->text().isEmpty() && (idriver == 0 || idriverMedica == 0))
-        {
-            QMessageBox::critical(qApp->activeWindow(),tr("Ruta no valida"),tr("Especifique un ruta valida para la base de datos"),tr("&Aceptar"));
-            return;
-        }
-
-        if( ui->txtcDriver->currentIndex() == 0 )
-        {
-            copy_db_progressFrm frm(this,2);
-            frm.setWindowTitle(tr("Creando base de datos sqlite"));
-            QApplication::processEvents();
-            frm.set_Max_1(2);
-            frm.setProgess_1(tr("Creando base de datos de empresa"),0);
-            frm.setModal(true);
-            frm.show();
-            if(!crear_empresa_sqlite(&frm))
-                return;
-            frm.setProgess_1(tr("Creando base de datos medica"),1);
-            frm.setProgess_2("",0);
-            if(!crear_medica_sqlite(&frm))
-                return;
-        }
-        else
-        {
-            copy_db_progressFrm frm(this,2);
-            frm.setWindowTitle(tr("Creando base de datos mysql"));
-            QApplication::processEvents();
-            frm.set_Max_1(2);
-            frm.setProgess_1(tr("Creando base de datos de empresa"),0);
-            frm.setModal(true);
-            frm.show();
-            if(!crear_empresa_mysql(&frm))
-                return;
-            frm.setProgess_1(tr("Creando base de datos medica"),1);
-            frm.setProgess_2("",0);
-            if(!crear_medica_mysql(&frm))
-                return;
-        }
-
-        oEmpresa.Anadir(ui->txtcodigo->text());
-        ui->botAnadir->setText("Añadir");
-        ui->botAnadir->setIcon(QIcon(":/Icons/PNG/add.png"));
-        CargarCamposEnEmpresa();
-        oEmpresa.Guardar();
-    }
-
-    else
-    {
-        if(ui->btn_migrar->text() == "Migrando..." )
-        {
-            //TODO Migrar
-        }
-        else
-        {
-            CargarCamposEnEmpresa();
-            oEmpresa.Guardar();
-        }
-    }
 }
 
 void FrmEmpresas::txtpoblacion_editingFinished()
@@ -368,39 +278,6 @@ void FrmEmpresas::txtcp_editingFinished()
     }
 }
 
-void FrmEmpresas::on_botAnadir_clicked()
-{
-    if(ui->botAnadir->text() == "Añadir")
-    {
-        ui->btn_migrar->setEnabled(false);
-        ui->botAnadir->setText("Deshacer");
-        ui->botAnadir->setIcon(QIcon(":/Icons/PNG/undo.png"));
-
-        QSqlQuery get_last(QSqlDatabase::database("Maya"));
-        get_last.prepare("SELECT id FROM empresas ORDER BY id DESC LIMIT 1");
-        if(get_last.exec())
-        {
-            limpiar_campos();
-            if(get_last.next())
-            {
-                int last_id = get_last.record().value("id").toInt()  + 1;
-                ui->txtcodigo->setText(QString::number(last_id));
-            }
-            else
-            {
-                ui->txtcodigo->setText("1");
-            }
-        }
-    }
-    else
-    {
-        ui->btn_migrar->setEnabled(true);
-        ui->botAnadir->setText("Añadir");
-        ui->botAnadir->setIcon(QIcon(":/Icons/PNG/add.png"));
-        oEmpresa.Recuperar("select * from empresas where id > "+ QString::number(0),1);
-        LLenarCampos();
-    }
-}
 
 void FrmEmpresas::limpiar_campos()
 {
@@ -414,311 +291,6 @@ void FrmEmpresas::limpiar_campos()
     foreach (txtEdit, lineTxtList) {
         txtEdit->setText("");
     }
-}
-
-bool FrmEmpresas::crear_empresa_sqlite(copy_db_progressFrm *form)
-{
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    QString ruta = ui->txtRutaBd->text() + "\\";
-    QString empresa = ui->txtEmpresa->text()+".sqlite";
-    ruta = ruta + empresa;
-    db.setDatabaseName(ruta);
-
-    if (!db.open())
-    {
-        QMessageBox::critical(this,
-                              tr("Error al crear base de datos"),
-                              tr("Ha sido imposible crear la base de datos"),
-                              tr("Aceptar"));
-        return false;
-    }
-    bool valid = true;
-    QFile file(":/Icons/sql/Db_empresa_sqlite.sql");
-    if(file.open(QFile::ReadOnly))
-    {
-        QSqlQuery query;
-        QString file_data = file.readAll();
-        QStringList querys = file_data.split(";",QString::SkipEmptyParts);
-        form->set_Max_2(querys.size());
-        form->setProgess_2(tr("Creando tablas..."),0);
-        int index = 0;
-        QString _query;
-        foreach(_query,querys)
-        {
-            _query = _query.remove("\r");
-            _query = _query.remove("\n");
-            if(_query == "")
-                continue;
-            valid &= query.exec(_query);
-            index ++;
-            int i = _query.indexOf("\"")+1;
-            QString tabla = _query.mid(i,_query.indexOf("\"",i)-i);
-            form->setProgess_2("Creando tabla: "+tabla , index);
-        }
-    }
-    if(!valid)
-    {
-        db.close();
-        QFile::remove(ruta);
-    }
-    return valid;
-}
-
-bool FrmEmpresas::crear_medica_sqlite(copy_db_progressFrm *form)
-{
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    QString ruta = ui->txtRutaBd->text() + "\\";
-    QString empresa = ui->txtEmpresa->text()+"med.sqlite";
-    ruta = ruta + empresa;
-    db.setDatabaseName(ruta);
-
-    if (!db.open())
-    {
-        QMessageBox::critical(0,
-                              tr("Error al crear base de datos"),
-                              tr("Ha sido imposible crear la base de datos"),
-                              tr("Aceptar"));
-        return false;
-    }
-    bool valid = true;
-    //FIXME  Cambiar fichero
-    QFile file(":/Icons/sql/Db_empresa_sqlite.sql");
-    if(file.open(QFile::ReadOnly))
-    {
-        QSqlQuery query;
-        QString file_data = file.readAll();
-        QStringList querys = file_data.split(";",QString::SkipEmptyParts);
-        form->set_Max_2(querys.size());
-        form->setProgess_2(tr("Creando tablas..."),0);
-        int index = 0;
-        QString _query;
-        foreach(_query,querys)
-        {
-            _query = _query.remove("\r");
-            _query = _query.remove("\n");
-            if(_query == "")
-                continue;
-            valid &= query.exec(_query);
-            index ++;
-            int i = _query.indexOf("\"")+1;
-            QString tabla = _query.mid(i,_query.indexOf("\"",i)-i);
-            form->setProgess_2("Creando tabla: "+tabla , index);
-            qDebug() << "---------------------";
-            if(!valid)
-            {
-            qDebug() << query.lastQuery();
-            qDebug() << query.lastError();
-            }
-        }
-    }
-    else
-        valid=false;
-    if(!valid)
-    {
-        db.close();
-        QFile::remove(ruta);        
-    }
-    return valid;
-}
-
-
-bool FrmEmpresas::crear_empresa_mysql(copy_db_progressFrm *form)
-{
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName(ui->txtcHost->text());
-    db.setUserName(ui->txtcUser->text());
-    db.setPassword(ui->txtcPassword->text());
-    if(!ui->txtcPuerto->text().isEmpty())
-        db.setPort(ui->txtcPuerto->text().toInt());
-
-    if (!db.open())
-    {
-        QMessageBox::critical(this,
-                              tr("Error al crear base de datos"),
-                              tr("Ha sido imposible crear la base de datos"),
-                              tr("Aceptar"));
-        return false;
-    }
-
-    bool valid = true;
-    QFile file(":/Icons/sql/Db_empresa_mysql.sql");
-    if(file.open(QFile::ReadOnly))
-    {
-        QSqlQuery query;
-        QString qs = QString("CREATE DATABASE %1;").arg(ui->txtnombre_bd->text());
-        if(query.exec(qs))
-        {
-            db.close();
-            db.setDatabaseName(ui->txtnombre_bd->text());
-            db.open();
-        }
-        else
-        {
-            QMessageBox::critical(this,
-                                  tr("Error al crear base de datos"),
-                                  tr("Ha sido imposible crear la base de datos"),
-                                  tr("Aceptar"));
-            return false;
-        }
-        QString file_data = file.readAll();
-        QStringList querys = file_data.split(";",QString::SkipEmptyParts);
-        form->set_Max_2(querys.size());
-        form->setProgess_2(tr("Creando tablas..."),0);
-        int index = 0;
-        QString _query;
-        foreach(_query,querys)
-        {
-            _query = _query.remove("\r");
-            _query = _query.remove("\n");
-            if(_query.isEmpty())
-                continue;
-            valid &= query.exec(_query);
-
-            index ++;
-            int i = _query.indexOf("`")+1;
-            QString tabla = _query.mid(i,_query.indexOf("`",i)-i);
-            form->setProgess_2("Creando tabla: "+tabla , index);
-
-            if(!valid)
-                return false;            
-        }
-    }
-    else
-        valid=false;
-    if(!valid)
-    {
-        db.close();
-    }
-    return valid;
-}
-
-bool FrmEmpresas::crear_medica_mysql(copy_db_progressFrm *form)
-{
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName(ui->txtcHostmedic->text());
-    db.setUserName(ui->txtcUserMedic->text());
-    db.setPassword(ui->txtcPasswordBdMedic->text());
-
-    if(!ui->txtcPuerto->text().isEmpty())
-        db.setPort(ui->txtcPuerto->text().toInt());
-
-    if (!db.open())
-    {
-        QMessageBox::critical(this,
-                              tr("Error al crear base de datos"),
-                              tr("Ha sido imposible crear la base de datos"),
-                              tr("Aceptar"));
-        return false;
-    }
-    bool valid = true;
-    QFile file(":/Icons/sql/Db_empresa_medica_mysql.sql");
-    if(file.open(QFile::ReadOnly))
-    {
-        QSqlQuery query;
-        QString qs = QString("CREATE DATABASE %1;").arg(ui->txtnombre_bdMedic->text());
-        if(query.exec(qs))
-        {
-            db.close();
-            db.setDatabaseName(ui->txtnombre_bdMedic->text());
-            db.open();
-        }
-        else
-        {
-            QMessageBox::critical(this,
-                                  tr("Error al crear base de datos"),
-                                  tr("Ha sido imposible crear la base de datos"),
-                                  tr("Aceptar"));
-            return false;
-        }
-        QString file_data = file.readAll();
-        QStringList querys = file_data.split(";",QString::SkipEmptyParts);
-
-        form->set_Max_2(querys.size());
-        form->setProgess_2(tr("Creando tablas..."),0);
-        int index = 0;
-
-        QString _query;
-        foreach(_query,querys)
-        {
-            _query = _query.remove("\r");
-            _query = _query.remove("\n");
-            if(_query.isEmpty())
-                continue;
-
-            index ++;
-            int i = _query.indexOf("`")+1;
-            QString tabla = _query.mid(i,_query.indexOf("`",i)-i);
-            form->setProgess_2("Creando tabla: "+tabla , index);
-
-            valid &= query.exec(_query);
-            if(!valid)
-                return false;
-        }
-    }
-    else
-        valid=false;
-    if(!valid)
-    {
-        db.close();
-    }
-    return valid;
-}
-
-void FrmEmpresas::borrar_mysql()
-{
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName(oEmpresa.getcHost());
-    db.setUserName(oEmpresa.getcUser());
-    db.setPassword(oEmpresa.getcContrasena());
-    if(!oEmpresa.getcPuerto().isEmpty())
-        db.setPort(oEmpresa.getcPuerto().toInt());
-
-    db.transaction();
-    bool valid = true;
-
-    if(db.open())
-    {
-        QSqlQuery query;
-        query.prepare("DROP DATABASE "+oEmpresa.getnombre_bd());
-        if(!query.exec())
-        {
-            qDebug() << query.lastQuery();
-            qDebug() << query.lastError();
-            valid = false;
-        }
-        query.prepare("DROP DATABASE "+oEmpresa.getnombre_bdMed());
-        if(!query.exec())
-        {
-            qDebug() << query.lastQuery();
-            qDebug() << query.lastError();
-            valid = false;
-        }
-    }
-    else
-        valid = false;
-
-    if (valid)
-    {
-        if(oEmpresa.Borrar(oEmpresa.getid()))
-            db.commit();
-        else
-            db.rollback();
-    }
-    else
-    {
-        db.rollback();
-        QMessageBox::critical(this,
-                              tr("Error al borrar base de datos"),
-                              tr("Ha sido imposible borrar la base de datos"),
-                              tr("Aceptar"));
-    }
-
-}
-
-void FrmEmpresas::borrar_sqlite()
-{
-    QFile::remove(oEmpresa.getruta_bd_sqlite());
-    oEmpresa.Borrar(oEmpresa.getid());
 }
 
 void FrmEmpresas::on_btn_ruta_db_clicked()
@@ -745,43 +317,449 @@ void FrmEmpresas::on_btn_migrar_clicked()
     ui->btn_migrar->setText("Migrando...");
 }
 
-void FrmEmpresas::on_botBorrar_clicked()
-{
-    if(QMessageBox::question(this,tr("¿Está seguro?"),
-                          tr("Esta acción no tiene vuelta atras, ¿Desea continuar?"),
-                          tr("No"),tr("Si")) == QMessageBox::Accepted)
-    {
-        if(oEmpresa.getcDriverBD() == "QSQLITE")
-            borrar_sqlite();
-        else
-            borrar_mysql();
-    }
-}
-
 void FrmEmpresas::on_addGrupo_clicked()
 {
     addGroupFrom f(this);
-    if(f.exec() == QDialog::Rejected)
+    if(f.exec() == QDialog::Accepted)
+    {
+        getEmpresas();
+        showEmpresas();
+    }
+}
+
+
+void FrmEmpresas::showEmpresas()
+{
+    ui->treeEmpresas->clear();
+
+    QHashIterator<QString, QPair<QList<empresa> , QSqlRecord>> it(_empresas);
+
+    while(it.hasNext())
+    {
+        it.next();
+        QString grupo_name = it.key();
+
+        QTreeWidgetItem * root = new QTreeWidgetItem(ui->treeEmpresas);
+        root->setText(0,grupo_name);
+        QFont f("Arial");
+        f.setBold(true);
+        f.setItalic(true);
+        f.setWeight(10);
+
+        root->setFont(0,f);
+        root->setTextColor(0,Qt::darkGreen);
+
+        for(int i=0; i<it.value().first.size(); i++)
+        {
+            QTreeWidgetItem * item = new QTreeWidgetItem(root);
+            item->setText(0,it.value().first.at(i).name);
+        }
+        ui->treeEmpresas->addTopLevelItem(root);
+    }
+    ui->treeEmpresas->expandAll();
+}
+
+void FrmEmpresas::getEmpresas()
+{
+    _empresas.clear();
+    QScopedPointer<QSqlQuery>QryEmpresas(new QSqlQuery(QSqlDatabase::database("Global")));
+    //QSqlQuery *QryEmpresas = new QSqlQuery(QSqlDatabase::database("Maya"));
+
+    QryEmpresas->prepare("Select * from grupos");
+
+    if(QryEmpresas->exec())
+    {
+        while (QryEmpresas->next())
+        {
+            QSqlRecord rEmpresa = QryEmpresas->record();
+
+            QString nombre = rEmpresa.value("nombre").toString();
+            QString bd_driver = rEmpresa.value("bd_driver").toString();
+            QString bd_name = rEmpresa.value("bd_name").toString();
+            QString bd_host = rEmpresa.value("bd_host").toString();
+            QString bd_user = rEmpresa.value("bd_user").toString();
+            QString bd_pass = rEmpresa.value("bd_pass").toString();
+            int bd_port = rEmpresa.value("bd_port").toInt();
+
+            QSqlDatabase db = QSqlDatabase::addDatabase(bd_driver);
+            db.setHostName(bd_host);
+            db.setUserName(bd_user);
+            db.setPassword(bd_pass);
+            db.setPort(bd_port);
+            db.setDatabaseName(bd_name);
+
+            if(!db.open())
+                continue;
+
+            QString query = QString("SELECT * FROM %1.empresas;").arg(bd_name);
+            QList<empresa> empresas;
+
+            QSqlQuery q(db);
+            q.exec(query);
+
+            while(q.next())
+            {
+                empresa e;
+                e.name = q.record().value("nombre").toString();
+                e.record = q.record();
+                empresas.append(e);
+            }
+            QPair<QList<empresa> , QSqlRecord> par;
+            par.first = empresas;
+            par.second = rEmpresa;
+            _empresas.insert(nombre,par);
+        }
+    }
+}
+
+void FrmEmpresas::_addEmpresa()
+{
+    if(ui->treeEmpresas->selectedItems().isEmpty())
+        return;
+    QTreeWidgetItem * item;
+
+    if(ui->treeEmpresas->selectedItems().at(0)->childCount()==0)
+    {
+        item = ui->treeEmpresas->selectedItems().at(0)->parent();
+        if(!item)
+            item = ui->treeEmpresas->selectedItems().at(0);
+    }
+    else
+        item = ui->treeEmpresas->selectedItems().at(0);
+
+    QSqlRecord r = _empresas.value(item->text(0)).second;
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName(r.value("bd_host").toString());
+    db.setUserName(r.value("bd_user").toString());
+    db.setPassword(r.value("bd_pass").toString());
+    db.setPort    (r.value("bd_port").toInt());
+    if(db.open())
+    {
+        bool error = false;
+        QProgressDialog d(this);
+        d.setCancelButton(0);
+        QSqlQuery q(db);
+        d.show();        
+
+        QString nEmpresa;
+        if(ui->txtnombre_bd->text().isEmpty())
+        {
+            nEmpresa = QString("emp%1").arg(ui->txtEmpresa->text());
+        }
+        else
+            nEmpresa = ui->txtnombre_bd->text();
+
+        QString nConta;
+        if(ui->txtNombre_BDConta->text().isEmpty())
+        {
+            nConta = QString("emp%1conta").arg(ui->txtEmpresa->text());
+        }
+        else
+            nConta = ui->txtNombre_BDConta->text();
+
+        QString nMedic;
+        if(ui->txtnombre_bdMedic->text().isEmpty())
+        {
+            nMedic = QString("emp%1med").arg(ui->txtEmpresa->text());
+        }
+        else
+            nMedic = ui->txtnombre_bdMedic->text();
+
+
+        QFile f(":/Icons/DB/DBEmpresa.sql");
+        error = !f.open(QFile::ReadOnly);
+        if(!error)
+        {
+            QString s = f.readAll();
+            s.replace("@empresa@",nEmpresa);
+            s.replace("\r\n"," ");
+            QStringList querys = s.split(";",QString::SkipEmptyParts);
+
+            d.setMaximum(querys.size());
+            d.setValue(0);
+            d.setLabelText(tr("Creando tablas"));
+
+            for(int i = 0; i< querys.size();i++)
+            {
+                if(!querys.at(i).isEmpty())
+                {
+                    if(!q.exec(querys.at(i)))
+                    {
+                        qDebug() << q.lastError().text();
+                        qDebug() << querys.at(i);
+                        error = true;
+                        break;
+                    }
+                    d.setValue(i);
+                    QApplication::processEvents();
+                }
+            }
+        }
+
+        if(!error)
+        {
+            QString query = QString(
+                        "INSERT INTO `@grupo@`.`empresas` "
+                        "(`codigo`, `nombre`, `digitos_factura`, `serie`, `nombre_bd`, `nombre_db_conta`,"
+                        "`nombre_bd_medica`, `direccion`, `cp`, `poblacion`, `provincia`, `pais`,"
+                        "`telefono1`, `telefono2`, `fax`, `mail`, `web`, `cif`, `inscripcion`,"
+                        "`comentario_albaran`, `comentario_factura`, `comentario_ticket`,"
+                        "`ejercicio`, `usar_irpf`, `codigo_cuenta_clientes`,"
+                        "`codigo_cuenta_proveedores`, `codigo_cuenta_acreedores`,"
+                        "`digitos_cuenta`, `clave1`, `clave2`, `medica`, `internacional`,"
+                        "`auto_codigo`, `tamanocodigo`, `cuenta_cobros`, `cuenta_pagos`,"
+                        "`id_divisa`, `enlaceweb`, `contabilidad`, `consultas`, `primer_dia_laborable`,"
+                        "`ultimo_dia_laborable`, `horario_primer_dia`, `horario_dia_normal`,"
+                        "`horario_ultimo_dia`, `ticket_factura`, `margen`, `margen_minimo`, `seguimiento`,"
+                        "`id_tarifa_predeterminada`, `actualizardivisas`, `cuenta_ventas_mercaderias`,"
+                        "`cuenta_ventas_servicios`, `cuenta_iva_soportado1`, `cuenta_iva_soportado2`,"
+                        "`cuenta_iva_soportado3`, `cuenta_iva_soportado4`, `cuenta_iva_repercutido1`,"
+                        "`cuenta_iva_repercutido2`, `cuenta_iva_repercutido3`, `cuenta_iva_repercutido4`,"
+                        "`cuenta_iva_repercutido1_re`, `cuenta_iva_repercutido2_re`, `cuenta_iva_repercutido3_re`,"
+                        "`cuenta_iva_repercutido4_re`, `cuenta_iva_soportado1_re`, `cuenta_iva_soportado2_re`,"
+                        "`cuenta_iva_soportado3_re`, `cuenta_iva_soportado4_re`)"
+                        "VALUES "
+                        "(:codigo, :nombre, :digitos_factura, :serie, :nombre_bd, :nombre_db_conta,"
+                        ":nombre_bd_medica, :direccion, :cp, :poblacion, :provincia, :pais,"
+                        ":telefono1, :telefono2, :fax, :mail, :web, :cif, :inscripcion,"
+                        ":comentario_albaran, :comentario_factura, :comentario_ticket,"
+                        ":ejercicio, :usar_irpf, :codigo_cuenta_clientes,"
+                        ":codigo_cuenta_proveedores, :codigo_cuenta_acreedores,"
+                        ":digitos_cuenta, :clave1, :clave2, :medica, :internacional,"
+                        ":auto_codigo, :tamanocodigo, :cuenta_cobros, :cuenta_pagos,"
+                        ":id_divisa, :enlaceweb, :contabilidad, :consultas, :primer_dia_laborable,"
+                        ":ultimo_dia_laborable, :horario_primer_dia, :horario_dia_normal,"
+                        ":horario_ultimo_dia, :ticket_factura, :margen, :margen_minimo, :seguimiento,"
+                        ":id_tarifa_predeterminada, :actualizardivisas, :cuenta_ventas_mercaderias,"
+                        ":cuenta_ventas_servicios, :cuenta_iva_soportado1, :cuenta_iva_soportado2,"
+                        ":cuenta_iva_soportado3, :cuenta_iva_soportado4, :cuenta_iva_repercutido1,"
+                        ":cuenta_iva_repercutido2, :cuenta_iva_repercutido3, :cuenta_iva_repercutido4,"
+                        ":cuenta_iva_repercutido1_re, :cuenta_iva_repercutido2_re, :cuenta_iva_repercutido3_re,"
+                        ":cuenta_iva_repercutido4_re, :cuenta_iva_soportado1_re, :cuenta_iva_soportado2_re,"
+                        ":cuenta_iva_soportado3_re, :cuenta_iva_soportado4_re);"
+                        );
+            query.replace("@grupo@",r.value("bd_name").toString());
+            q.prepare(query);
+            q.bindValue(":codigo",ui->txtcodigo->text());
+            q.bindValue(":nombre",ui->txtEmpresa->text());
+            q.bindValue(":digitos_factura",ui->txtndigitos_factura->text().toInt());
+            q.bindValue(":serie",ui->txtserieFactura->text().toInt());
+            q.bindValue(":nombre_bd",nEmpresa);
+            q.bindValue(":nombre_db_conta",nConta);
+            q.bindValue(":nombre_bd_medica",nMedic);
+            q.bindValue(":direccion",ui->txtdireccion1->text());
+            q.bindValue(":cp",ui->txtcp->text());
+            q.bindValue(":poblacion",ui->txtpoblacion->text());
+            q.bindValue(":provincia",ui->txtprovincia->text());
+            q.bindValue(":pais",ui->txtpais->text());//TODO cambiar esto
+            q.bindValue(":telefono1",ui->txttelefono1->text());
+            q.bindValue(":telefono2",ui->txttelefono2->text());
+            q.bindValue(":fax",ui->txtfax->text());
+            q.bindValue(":mail",ui->txtcMail->text());
+            q.bindValue(":web",ui->txtweb->text());
+            q.bindValue(":cif",ui->txtcif->text());
+            q.bindValue(":inscripcion",ui->txtcInscripcion->text());
+            q.bindValue(":comentario_albaran",ui->txtcCometarioAlbaran->toPlainText());
+            q.bindValue(":comentario_factura",ui->txtccomentario_factura->toPlainText());
+            q.bindValue(":comentario_ticket",ui->txtccomentario_ticket->toPlainText());
+            q.bindValue(":ejercicio",ui->txtejercicio->value());
+            q.bindValue(":usar_irpf",0);//TODO irpf empresa
+            q.bindValue(":codigo_cuenta_clientes",ui->txtcuentaCliente->text());
+            q.bindValue(":codigo_cuenta_proveedores",ui->txtcuenta_proveedores->text());
+            q.bindValue(":codigo_cuenta_acreedores",ui->txtcuenta_acreedores->text());
+            q.bindValue(":digitos_cuenta",ui->txtdigitos_cuentas->value());
+            q.bindValue(":clave1","");//TODO claves
+            q.bindValue(":clave2","");
+            q.bindValue(":medica",ui->chkMedica->isChecked());
+            q.bindValue(":internacional",0);
+            q.bindValue(":auto_codigo",ui->chkAutocodificiar->isChecked());
+            q.bindValue(":tamanocodigo",ui->txttamano_codigoart->value());
+            q.bindValue(":cuenta_cobros","");//TODO c cobros
+            q.bindValue(":cuenta_pagos","");//TODO c pagos
+            q.bindValue(":id_divisa",0);//TODO divisa
+            q.bindValue(":enlaceweb",0);//TODO Grrr
+            q.bindValue(":contabilidad",0);
+            q.bindValue(":consultas",ui->txtConsultas->value());
+            q.bindValue(":primer_dia_laborable",ui->cboPrimer_dia_laborable->currentIndex());
+            q.bindValue(":ultimo_dia_laborable",ui->cbo_ultimo_dia_semana->currentIndex());
+            q.bindValue(":horario_primer_dia",ui->txt_horario_primer_dia->text());
+            q.bindValue(":horario_dia_normal",ui->txt_horario_dia_normal->text());
+            q.bindValue(":horario_ultimo_dia",ui->txt_horario_ultimo_dia->text());
+            q.bindValue(":ticket_factura",ui->chk_ticket_factura->isChecked());
+            q.bindValue(":margen",0);
+            q.bindValue(":margen_minimo",0);
+            q.bindValue(":seguimiento",0);
+            q.bindValue(":id_tarifa_predeterminada",0);
+            q.bindValue(":actualizardivisas",ui->chk_upate_divisas->isChecked());
+            q.bindValue(":cuenta_ventas_mercaderias",ui->txtCuenta_venta_mercaderias->text());
+            q.bindValue(":cuenta_ventas_servicios",ui->txtCuenta_venta_servicios->text());
+            q.bindValue(":cuenta_iva_soportado1",ui->ivasoportado1->text());
+            q.bindValue(":cuenta_iva_soportado2",ui->ivasoportado2->text());
+            q.bindValue(":cuenta_iva_soportado3",ui->ivasoportado3->text());
+            q.bindValue(":cuenta_iva_soportado4",ui->ivasoportado4->text());
+            q.bindValue(":cuenta_iva_repercutido1",ui->ivarepercutido1->text());
+            q.bindValue(":cuenta_iva_repercutido2",ui->ivarepercutido2->text());
+            q.bindValue(":cuenta_iva_repercutido3",ui->ivarepercutido3->text());
+            q.bindValue(":cuenta_iva_repercutido4",ui->ivarepercutido4->text());
+            q.bindValue(":cuenta_iva_repercutido1_re",ui->ivarepercutidore1->text());
+            q.bindValue(":cuenta_iva_repercutido2_re",ui->ivarepercutidore2->text());
+            q.bindValue(":cuenta_iva_repercutido3_re",ui->ivarepercutidore3->text());
+            q.bindValue(":cuenta_iva_repercutido4_re",ui->ivarepercutidore4->text());
+            q.bindValue(":cuenta_iva_soportado1_re",ui->ivasoportadore1->text());
+            q.bindValue(":cuenta_iva_soportado2_re",ui->ivasoportadore2->text());
+            q.bindValue(":cuenta_iva_soportado3_re",ui->ivasoportadore3->text());
+            q.bindValue(":cuenta_iva_soportado4_re",ui->ivasoportadore4->text());
+
+            if(!q.exec())
+                qDebug() << q.lastError().text();
+        }
+    }
+    else
+        qDebug() << db.lastError().text();
+}
+
+void FrmEmpresas::_llenarCampos(QSqlRecord r)
+{
+    ui->txtcodigo->setText(r.value("codigo").toString());
+    ui->txtEmpresa->setText(r.value("nombre").toString());//
+    ui->txtndigitos_factura->setText(r.value("digitos_factura").toString());//->text().toInt());
+    ui->txtserieFactura->setText(r.value("serie").toString());//text().toInt());
+    ui->txtnombre_bd->setText(r.value("nombre_bd").toString());//nEmpresa);
+    ui->txtNombre_BDConta->setText(r.value("nombre_db_conta").toString());//nConta);
+    ui->txtnombre_bdMedic->setText(r.value("nombre_bd_medica").toString());//nMedic);
+    ui->txtdireccion1->setText(r.value("direccion").toString());
+    ui->txtcp->setText(r.value("cp").toString());
+    ui->txtpoblacion->setText(r.value("poblacion").toString());
+    ui->txtprovincia->setText(r.value("provincia").toString());
+    ui->txtpais->setText(r.value("pais").toString());
+    ui->txttelefono1->setText(r.value("telefono1").toString());
+    ui->txttelefono2->setText(r.value("telefono2").toString());
+    ui->txtfax->setText(r.value("fax").toString());
+    ui->txtcMail->setText(r.value("mail").toString());
+    ui->txtweb->setText(r.value("web").toString());
+    ui->txtcif->setText(r.value("cif").toString());
+    ui->txtcInscripcion->setText(r.value("inscripcion").toString());
+    ui->txtcCometarioAlbaran->setText(r.value("comentario_albaran").toString());
+    ui->txtccomentario_factura->setText(r.value("comentario_factura").toString());
+    ui->txtccomentario_ticket->setText(r.value("comentario_ticket").toString());
+    ui->txtejercicio->setValue(r.value("ejercicio").toInt());
+    //r.value("usar_irpf"));//0);//TODO irpf empresa
+    ui->txtcuentaCliente->setText(r.value("codigo_cuenta_clientes").toString());
+    ui->txtcuenta_proveedores->setText(r.value("codigo_cuenta_proveedores").toString());
+    ui->txtcuenta_acreedores->setText(r.value("codigo_cuenta_acreedores").toString());
+    ui->txtdigitos_cuentas->setValue(r.value("digitos_cuenta").toInt());
+    //r.value("clave1"));//""));////TODO claves
+    //r.value("clave2"));//""));//
+    ui->chkMedica->setChecked(r.value("medica").toBool());
+    //r.value("internacional").toString());//0);
+    ui->chkAutocodificiar->setChecked(r.value("auto_codigo").toBool());
+    ui->txttamano_codigoart->setValue(r.value("tamanocodigo").toBool());
+    //r.value("cuenta_cobros").toString());//""));////TODO c cobros
+    //r.value("cuenta_pagos"));//""));////TODO c pagos
+    //r.value("id_divisa"));//0);//TODO divisa
+    //r.value("enlaceweb"));//0);//TODO Grrr
+    //r.value("contabilidad"));//0);
+    //r.value("consultas"));//0);
+    ui->cboPrimer_dia_laborable->setCurrentIndex(r.value("primer_dia_laborable").toInt());
+    ui->cbo_ultimo_dia_semana->setCurrentIndex(r.value("ultimo_dia_laborable").toInt());
+    ui->txt_horario_primer_dia->setText(r.value("horario_primer_dia").toString());
+    ui->txt_horario_dia_normal->setText(r.value("horario_dia_normal").toString());
+    ui->txt_horario_ultimo_dia->setText(r.value("horario_ultimo_dia").toString());
+    ui->chk_ticket_factura->setText(r.value("ticket_factura").toString());
+    //r.value("margen"));//0);
+    //r.value("margen_minimo"));//0);
+    //r.value("seguimiento"));//0);
+    //r.value("id_tarifa_predeterminada"));//0);
+    ui->chk_upate_divisas->setText(r.value("actualizardivisas").toString());
+    ui->txtCuenta_venta_mercaderias->setText(r.value("cuenta_ventas_mercaderias").toString());
+    ui->txtCuenta_venta_servicios->setText(r.value("cuenta_ventas_servicios").toString());
+    ui->ivasoportado1->setText(r.value("cuenta_iva_soportado1").toString());
+    ui->ivasoportado2->setText(r.value("cuenta_iva_soportado2").toString());
+    ui->ivasoportado3->setText(r.value("cuenta_iva_soportado3").toString());
+    ui->ivasoportado4->setText(r.value("cuenta_iva_soportado4").toString());
+    ui->ivarepercutido1->setText(r.value("cuenta_iva_repercutido1").toString());
+    ui->ivarepercutido2->setText(r.value("cuenta_iva_repercutido2").toString());
+    ui->ivarepercutido3->setText(r.value("cuenta_iva_repercutido3").toString());
+    ui->ivarepercutido4->setText(r.value("cuenta_iva_repercutido4").toString());
+    ui->ivarepercutidore1->setText(r.value("cuenta_iva_repercutido1_re").toString());
+    ui->ivarepercutidore2->setText(r.value("cuenta_iva_repercutido2_re").toString());
+    ui->ivarepercutidore3->setText(r.value("cuenta_iva_repercutido3_re").toString());
+    ui->ivarepercutidore4->setText(r.value("cuenta_iva_repercutido4_re").toString());
+    ui->ivasoportadore1->setText(r.value("cuenta_iva_soportado1_re").toString());
+    ui->ivasoportadore2->setText(r.value("cuenta_iva_soportado2_re").toString());
+    ui->ivasoportadore3->setText(r.value("cuenta_iva_soportado3_re").toString());
+    ui->ivasoportadore4->setText(r.value("cuenta_iva_soportado4_re").toString());
+}
+
+void FrmEmpresas::blockGUI(bool block, bool limpia)
+{
+    QList<QLineEdit*> l = this->findChildren<QLineEdit*>();
+    QList<QLineEdit*>::Iterator it;
+    for(it=l.begin();it!=l.end();++it)
+    {
+        if(limpia)
+            (*it)->clear();
+        (*it)->setReadOnly(block);
+    }
+    QList<QTextEdit*> l2 = this->findChildren<QTextEdit*>();
+    QList<QTextEdit*>::Iterator it2;
+    for(it2=l2.begin();it2!=l2.end();++it2)
+    {
+        if(limpia)
+            (*it2)->clear();
+        (*it2)->setReadOnly(block);
+    }
+}
+
+void FrmEmpresas::on_btnAddEmpresa_clicked()
+{
+    if(ui->treeEmpresas->selectedItems().isEmpty())
+    {
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Seleccione un grupo donde crear la empresa"));
+        return;
+    }
+    if(ui->btnAddEmpresa->text()== tr("Añadir Empresa"))
+    {
+        ui->btnAddEmpresa->setText(tr("Guardar"));
+        blockGUI(false, true);
+        ui->addGrupo->setEnabled(false);
+        ui->btnBorrar->setEnabled(false);
+        ui->btnEditar->setEnabled(false);
+    }
+    else
+    {
+        ui->btnAddEmpresa->setText(tr("Añadir Empresa"));
+        _addEmpresa();
+        getEmpresas();
+        showEmpresas();
+        blockGUI(true, false);
+        ui->addGrupo->setEnabled(true);
+        ui->btnBorrar->setEnabled(true);
+        ui->btnEditar->setEnabled(true);
+    }
+}
+
+void FrmEmpresas::on_treeEmpresas_itemSelectionChanged()
+{
+    if(ui->treeEmpresas->selectedItems().isEmpty())
+        return;
+    if(!ui->treeEmpresas->selectedItems().at(0)->childCount()==0)
         return;
 
-    QString nombre = "";
-    QString bd_name = QString("grupo%1").arg(nombre);
-    QString host;
-    QString user;
-    QString pass;
-    int port;
-    QSqlQuery q(QSqlDatabase::database("Maya"));
-    q.prepare("INSERT INTO `mayaglobal`.`grupos` "
-              "(`nombre`, `bd_name`, `bd_driver`, `bd_ruta`, `bd_host`,"
-              "`bd_user`, `bd_pass`, `bd_port`) "
-              "VALUES "
-              "(`:nombre`, `:bd_name`, `QMYSQL`, ` `, `:bd_host`,"
-              "`:bd_user`, `:bd_pass`, `:bd_port`);"
-              );
-   /* q.bindValue(":nombre",x);
-    q.bindValue(":bd_name",x);
-    q.bindValue(":bd_host",x);
-    q.bindValue(":bd_user",x);
-    q.bindValue(":bd_pass",x);
-    q.bindValue(":bd_port",x);*/
+    QTreeWidgetItem * p = ui->treeEmpresas->selectedItems().at(0)->parent();
+    if(!p)
+        return;
+
+    QTreeWidgetItem * item = ui->treeEmpresas->selectedItems().at(0);
+
+    QPair<QList<empresa> , QSqlRecord> x = _empresas.value(p->text(0));
+    QList<empresa>::Iterator it;
+    for(it=x.first.begin();it!=x.first.end();++it)
+    {
+        if( (*it).name == item->text(0) )
+        {
+            _llenarCampos((*it).record);
+        }
+    }
 }

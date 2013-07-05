@@ -21,8 +21,10 @@ public:
     const QString getPass() const;
     const QString getEmpresa() const;
     int getid_user();
+
+
 private slots:
-	void init();
+    void init();
     void on_btnAcceder_clicked();
 
     void Crearconfiguracion_clicked();

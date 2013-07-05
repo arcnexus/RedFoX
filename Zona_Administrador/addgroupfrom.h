@@ -37,6 +37,9 @@ public:
     void _createTables(bool error, QSqlDatabase db);
     void _insertNewGroup(QString grupo);
     void _insertAdminUser(bool error, QSqlQuery q);
+    void _insertPoblaciones(bool error, QSqlQuery q);
+
+    int id;
 private slots:
     void on_pushButton_2_clicked();
 

@@ -24,7 +24,7 @@ bool AreaRestringida_form::es_valido()
 
 void AreaRestringida_form::login()
 {
-    QSqlQuery qryUsers(QSqlDatabase::database("Maya"));
+    QSqlQuery qryUsers(QSqlDatabase::database("Global"));
 
     qryUsers.prepare( "SELECT * FROM usuarios where nombre =:Nombre AND categoria = 'ADMINISTRADOR'" );
     qryUsers.bindValue(":Nombre",ui->lineUsuario->text());

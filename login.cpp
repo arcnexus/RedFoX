@@ -32,25 +32,21 @@ Login::Login(QWidget *parent) :
         Configuracion_global = new Configuracion;
     Configuracion_global->CargarDatosBD();
 
-    QSqlDatabase dbMaya  = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDMaya,"Maya");
-    QSqlDatabase dbReports = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDMaya,"Reports");
+    QSqlDatabase dbGlobal  = QSqlDatabase::addDatabase(Configuracion_global->cDriverBDMaya,"Global");
 
     if (Configuracion_global->cDriverBDMaya == "QSQLITE")
     {
-        dbReports.setDatabaseName(Configuracion_global->cRutaBdMaya);
-        dbReports.open();
-        dbMaya.setDatabaseName(Configuracion_global->cRutaBdMaya);
-        dbMaya.open();
+        dbGlobal.setDatabaseName(Configuracion_global->cRutaBdMaya);
+        dbGlobal.open();
     }
     else
     {
-        dbMaya.setDatabaseName("mayaglobal");
-        dbMaya.setHostName(Configuracion_global->cHostBDMaya);
-        dbReports.setHostName(Configuracion_global->cHostBDMaya);
-        dbMaya.open(Configuracion_global->cUsuarioBDMaya,Configuracion_global->cPasswordBDMaya);
-        dbReports.open(Configuracion_global->cUsuarioBDMaya,Configuracion_global->cPasswordBDMaya);
+        dbGlobal.setDatabaseName("mayaglobal");
+        dbGlobal.setHostName(Configuracion_global->cHostBDMaya);
+        dbGlobal.open(Configuracion_global->cUsuarioBDMaya,Configuracion_global->cPasswordBDMaya);
     }
-    if (dbMaya.lastError().isValid())
+
+    if (dbGlobal.lastError().isValid())
     {
         QMessageBox::critical(0, "error:", dbMaya.lastError().text());
     }
@@ -89,8 +85,7 @@ int Login::getid_user()
 
 void Login::on_btnAcceder_clicked()
 {
-    QSqlDatabase db = QSqlDatabase::database("Maya");
-    db.close();
+
 
     QSqlRecord rEmpresa = _empresas.value(ui->comboGroup->currentIndex()).second;
 
@@ -101,13 +96,21 @@ void Login::on_btnAcceder_clicked()
     QString bd_pass = rEmpresa.value("bd_pass").toString();
     int bd_port = rEmpresa.value("bd_port").toInt();
 
-    db = QSqlDatabase::addDatabase(bd_driver , "Maya");
+    QSqlDatabase db = QSqlDatabase::addDatabase(bd_driver , "Maya");
+    QSqlDatabase dbReports = QSqlDatabase::addDatabase(bd_driver,"Reports");
+
     db.setHostName(bd_host);
     db.setUserName(bd_user);
     db.setPassword(bd_pass);
     db.setPort(bd_port);
     db.setDatabaseName(bd_name);
     db.open();
+
+    dbReports.setHostName(bd_host);
+    dbReports.setUserName(bd_user);
+    dbReports.setPassword(bd_pass);
+    dbReports.setPort(bd_port);
+    dbReports.open();
 
     QSqlQuery qEmpresa(QSqlDatabase::database("Maya"));
     qEmpresa.prepare("select id, nombre_bd from empresas where nombre = :nombreemp");
@@ -183,7 +186,7 @@ void Login::btnEmpresa_clicked()
     {
         FrmEmpresas formEmpresa(this);
         formEmpresa.hideButton();
-        formEmpresa.setWindowState(Qt::WindowMaximized);
+        formEmpresa.setWindowState(Qt::WindowMaximized);        
         formEmpresa.exec();
         init();
     }
@@ -196,8 +199,10 @@ void Login::on_pushButton_clicked()
 
 void Login::init()
 {
+    ui->comboGroup->clear();
     ui->cboEmpresa->clear();
-    QScopedPointer<QSqlQuery>QryEmpresas(new QSqlQuery(QSqlDatabase::database("Maya")));
+    _empresas.clear();
+    QScopedPointer<QSqlQuery>QryEmpresas(new QSqlQuery(QSqlDatabase::database("Global")));
     //QSqlQuery *QryEmpresas = new QSqlQuery(QSqlDatabase::database("Maya"));
 
     QryEmpresas->prepare("Select * from grupos");
