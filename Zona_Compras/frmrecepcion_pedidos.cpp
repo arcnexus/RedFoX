@@ -509,7 +509,7 @@ void Frmrecepcion_pedidos::abrir_albaran()
                                   "base1 =:base1,base2 =:base2,base3 =:base3, base4 =:base4, "
                                   "iva1 =:iva1,iva2 =:iva2, iva3 =:iva3, iva4 =:iva4, "
                                   "total1 =:total1,total2 =:total2,total3 =:total3,total4 =:total4,"
-                                  "porcentaje_rec1=:porcentaje_rec1,porcentaje_rec2=:porcentaje_rec2,"
+                                  "porc_rec1=:porc_rec1,porcentaje_rec2=:porcentaje_rec2,"
                                   "porcentaje_rec3=:porcentaje_rec3,porcentaje_rec4=:porcentaje_rec4,"
                                   "importe_rec1=:importe_rec1,importe_rec2= :importe_rec2,importe_rec3=:importe_rec3,"
                                   "importe_rec4=:importe_rec4,importe_rec_total =:importe_rec_total,"
@@ -600,7 +600,7 @@ void Frmrecepcion_pedidos::abrir_albaran()
             query_albaran.bindValue(":total2",total2);
             query_albaran.bindValue(":total3",total3);
             query_albaran.bindValue(":total4",total4);
-            query_albaran.bindValue(":porcentaje_rec1",Configuracion_global->reList.at(0));
+            query_albaran.bindValue(":porc_rec1",Configuracion_global->reList.at(0));
             query_albaran.bindValue(":porcentaje_rec2",Configuracion_global->reList.at(1));
             query_albaran.bindValue(":porcentaje_rec3",Configuracion_global->reList.at(2));
             query_albaran.bindValue(":porcentaje_rec4",Configuracion_global->reList.at(3));

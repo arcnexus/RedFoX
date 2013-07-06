@@ -90,14 +90,14 @@ bool Articulo::Recuperar(QString cSQL)
                this->codigo_iva = Configuracion_global->Devolver_descripcion_tipo_iva(this->tipo_iva);
                this->coste = registro.field("coste").value().toDouble();
 
-               this->dto = registro.field("dto").value().toDouble();
-               this->ultima_compra = registro.field("ultima_compra").value().toDate();
-               this->ultima_venta = registro.field("ultima_venta").value().toDate();
+               this->porc_dto = registro.field("dto").value().toFloat();
+               this->fecha_ultima_compra = registro.field("fecha_ultima_compra").value().toDate();
+               this->fecha_ultima_venta = registro.field("fecha_ultima_venta").value().toDate();
 
                this->unidades_compradas = registro.field("unidades_compradas").value().toInt();
                this->unidades_vendidas = registro.field("unidades_vendidas").value().toInt();
-               this->acumulado_compras = registro.field("acumulado_compras").value().toDouble();
-               this->acumulado_ventas = registro.field("acumulado_ventas").value().toDouble();
+               this->importe_acumulado_compras = registro.field("importe_acumulado_compras").value().toDouble();
+               this->importe_acumulado_ventas = registro.field("importe_acumulado_ventas").value().toDouble();
                this->comentario = registro.field("comentario").value().toString();
                this->stock_maximo = registro.field("stock_maximo").value().toInt();
                this->stock_minimo = registro.field("stock_minimo").value().toInt();
@@ -112,7 +112,7 @@ bool Articulo::Recuperar(QString cSQL)
                this->pvp_incluye_iva = registro.field("pvp_incluye_iva").value().toInt();
                this->fecha_prevista_recepcion = registro.field("fecha_prevista_recepcion").value().toDate();
                this->cantidad_pendiente_recibir = registro.field("cantidad_pendiente_recibir").value().toInt();
-               this->reservados = registro.field("reservados").value().toInt();
+               this->unidades_reservadas = registro.field("unidades_reservadas").value().toInt();
                this->mostrar_web = registro.field("mostrar_web").value().toInt();
                this->etiquetas = registro.field("etiquetas").value().toInt();
                this->paquetes = registro.field("paquetes").value().toInt();
@@ -186,13 +186,13 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->tipo_iva =registro.field("tipo_iva").value().toDouble();
                this->codigo_iva = Configuracion_global->Devolver_descripcion_tipo_iva(this->tipo_iva);
                this->coste = registro.field("coste").value().toDouble();
-               this->dto = registro.field("dto").value().toDouble();
-               this->ultima_compra = registro.field("ultima_compra").value().toDate();
-               this->ultima_venta = registro.field("ultima_venta").value().toDate();
+               this->porc_dto = registro.field("porc_dto").value().toFloat();
+               this->fecha_ultima_compra = registro.field("fecha_ultima_compra").value().toDate();
+               this->fecha_ultima_venta = registro.field("fecha_ultima_venta").value().toDate();
                this->unidades_compradas = registro.field("unidades_compradas").value().toInt();
                this->unidades_vendidas = registro.field("unidades_vendidas").value().toInt();
-               this->acumulado_compras = registro.field("acumulado_compras").value().toDouble();
-               this->acumulado_ventas = registro.field("acumulado_ventas").value().toDouble();
+               this->importe_acumulado_compras = registro.field("importe_acumulado_compras").value().toDouble();
+               this->importe_acumulado_ventas = registro.field("importe_acumulado_ventas").value().toDouble();
                this->comentario = registro.field("comentario").value().toString();
                this->stock_maximo = registro.field("stock_maximo").value().toInt();
                this->stock_minimo = registro.field("stock_minimo").value().toInt();
@@ -207,7 +207,7 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->pvp_incluye_iva = registro.field("pvp_incluye_iva").value().toInt();
                this->fecha_prevista_recepcion = registro.field("fecha_prevista_recepcion").value().toDate();
                this->cantidad_pendiente_recibir = registro.field("cantidad_pendiente_recibir").value().toInt();
-               this->reservados = registro.field("reservados").value().toInt();
+               this->unidades_reservadas = registro.field("unidades_reservadas").value().toInt();
                this->mostrar_web = registro.field("mostrar_web").value().toInt();
                this->etiquetas = registro.field("etiquetas").value().toInt();
                this->paquetes = registro.field("paquetes").value().toInt();
@@ -329,14 +329,14 @@ void Articulo::Guardar()
                    "`id_subfamilia` =:id_subfamilia,"
                    "`tipo_iva` =:tipo_iva,"
                    "`coste` =:coste,"
-                   "`dto` =:dto,"
-                   "`dtoProveedor` =:dtoProveedor,"
-                   "`ultima_compra` =:ultima_compra,"
-                   "`ultima_venta` =:ultima_venta,"
+                   "`porc_dto` =:porc_dto,"
+                   "`dto_proveedor` =:dto_proveedor,"
+                   "`fecha_ultima_compra` =:fecha_ultima_compra,"
+                   "`fecha_ultima_venta` =:fecha_ultima_venta,"
                    "`unidades_compradas` =:unidades_compradas,"
                    "`unidades_vendidas` =:unidades_vendidas,"
-                   "`acumulado_compras` =:acumulado_compras,"
-                   "`acumulado_ventas` =:acumulado_ventas,"
+                   "`importe_acumulado_compras` =:importe_acumulado_compras,"
+                   "`importe_acumulado_ventas` =:importe_acumulado_ventas,"
                    "`comentario` =:comentario,"
                    "`stock_maximo` =:stock_maximo,"
                    "`stock_minimo` =:stock_minimo,"
@@ -347,7 +347,7 @@ void Articulo::Guardar()
                    "`pvp_incluye_iva` =:pvp_incluye_iva,"
                    "`fecha_prevista_recepcion` =:fecha_prevista_recepcion,"
                    "`cantidad_pendiente_recibir` =:cantidad_pendiente_recibir,"
-                   "`reservados` =:reservados,"
+                   "`unidades_reservadas` =:unidades_reservadas,"
                    "`mostrar_web` =:mostrar_web,"
                    "`etiquetas` =:etiquetas,"
                    "`paquetes` =:paquetes,"
@@ -384,13 +384,13 @@ void Articulo::Guardar()
     query.bindValue(":id_subfamilia",this->id_subfamilia);
     query.bindValue(":subfamilia",this->subfamilia);
     query.bindValue(":tipo_iva",this->tipo_iva);
-    query.bindValue(":dto",this->dto);
-    query.bindValue(":ultima_compra",this->ultima_compra);
-    query.bindValue(":ultima_venta",this->ultima_venta);
+    query.bindValue(":porc_dto",this->porc_dto);
+    query.bindValue(":fecha_ultima_compra",this->fecha_ultima_compra);
+    query.bindValue(":fecha_ultima_venta",this->fecha_ultima_venta);
     query.bindValue(":unidades_compradas",this->unidades_compradas);
     query.bindValue(":unidades_vendidas",this->unidades_vendidas);
-    query.bindValue(":acumulado_compras",this->acumulado_compras);
-    query.bindValue(":acumulado_ventas",this->acumulado_ventas);
+    query.bindValue(":importe_acumulado_compras",this->importe_acumulado_compras);
+    query.bindValue(":importe_acumulado_ventas",this->importe_acumulado_ventas);
     query.bindValue(":comentario",this->comentario);
     query.bindValue(":stock_maximo",this->stock_maximo);
     query.bindValue(":stock_minimo",this->stock_minimo);
@@ -401,7 +401,7 @@ void Articulo::Guardar()
     query.bindValue(":pvp_incluye_iva",this->pvp_incluye_iva);
     query.bindValue(":fecha_prevista_recepcion",fecha_prevista_recepcion);
     query.bindValue(":cantidad_pendiente_recibir",this->cantidad_pendiente_recibir);
-    query.bindValue(":reservados",this->reservados);
+    query.bindValue(":unidades_reservadas",this->unidades_reservadas);
     query.bindValue(":mostrar_web",this->mostrar_web);
     query.bindValue(":etiquetas",this->etiquetas);
     query.bindValue(":localizacion_en_almacen",this->localizacion_en_almacen);
@@ -454,13 +454,13 @@ void Articulo::Vaciar()
     this->subfamilia = "";
     this->tipo_iva = 0;
     this->coste = 0;
-    this->dto = 0;
-    this->ultima_compra = QDate::currentDate();
-    this->ultima_venta = QDate::currentDate();
+    this->porc_dto = 0;
+    this->fecha_ultima_compra = QDate::currentDate();
+    this->fecha_ultima_venta = QDate::currentDate();
     this->unidades_compradas = 0;
     this->unidades_vendidas = 0;
-    this->acumulado_compras = 0;
-    this->acumulado_ventas = 0;
+    this->importe_acumulado_compras = 0;
+    this->importe_acumulado_ventas = 0;
     //this->bImagen = registro.field(36).value().to....
     this->comentario = "";
     this->stock_maximo = 0;
@@ -474,7 +474,7 @@ void Articulo::Vaciar()
     this->pvp_incluye_iva = 0;
     this->fecha_prevista_recepcion = QDate::currentDate();
     this->cantidad_pendiente_recibir = 0;
-    this->reservados = 0;
+    this->unidades_reservadas = 0;
     this->mostrar_web = 0;
     this->etiquetas = 0;
     this->localizacion_en_almacen = "";

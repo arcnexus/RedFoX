@@ -29,11 +29,11 @@ public:
     QString cGrupoArt;
     QString codigo_iva;
     double tipo_iva;
-    double dto;
-    QDate ultima_compra;
-    QDate ultima_venta;
-    double acumulado_compras;
-    double acumulado_ventas;
+    float porc_dto;
+    QDate fecha_ultima_compra;
+    QDate fecha_ultima_venta;
+    double importe_acumulado_compras;
+    double importe_acumulado_ventas;
     QString comentario;
     int stock_maximo;
     int stock_minimo;
@@ -48,7 +48,7 @@ public:
     int pvp_incluye_iva;
     QDate fecha_prevista_recepcion;
     int cantidad_pendiente_recibir;
-    int reservados;
+    int unidades_reservadas;
     int mostrar_web;
     int etiquetas;
     int paquetes;

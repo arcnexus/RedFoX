@@ -6,11 +6,11 @@
 #include "../Auxiliares/spinboxdelegate.h"
 #include "../db_table_view.h"
 
-#include"../Auxiliares/monetarydelegate.h"
+#include "../Auxiliares/monetarydelegate.h"
 
-#include"../Auxiliares/readonlydelegate.h"
-#include"frmlistadosarticulo.h"
-#include"../Busquedas/db_consulta_view.h"
+#include "../Auxiliares/readonlydelegate.h"
+#include "frmlistadosarticulo.h"
+#include "../Busquedas/db_consulta_view.h"
 
 
 FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
@@ -263,14 +263,14 @@ void FrmArticulos::LLenarCampos()
    int nIndex = ui->cboTipoIVA->findText(oArticulo->codigo_iva);
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
-   ui->txtdto->setText(QString::number(oArticulo->dto,'f',2));
+   ui->txtdto->setText(QString::number(oArticulo->porc_dto,'f',2));
    ui->txtcoste->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste,'f',2)));
-   ui->txtfecha_ultima_compra->setDate(oArticulo->ultima_compra);
-   ui->txtfechaUltimaVenta->setDate(oArticulo->ultima_venta);
+   ui->txtfecha_fecha_ultima_compra->setDate(oArticulo->fecha_ultima_compra);
+   ui->txtfechaUltimaVenta->setDate(oArticulo->fecha_ultima_venta);
    ui->txtunidades_compradas->setText(QString::number(oArticulo->unidades_compradas));
    ui->txtunidades_vendidas->setText(QString::number(oArticulo->unidades_vendidas));
-   ui->txtacumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->acumulado_compras,'f',2)));
-   ui->txtacumulado_ventas->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->acumulado_ventas,'f',2)));
+   ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_compras,'f',2)));
+   ui->txtimporte_acumulado_ventas->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_ventas,'f',2)));
    ui->txtcomentario->setText(oArticulo->comentario);
    ui->txtstock_maximo->setText(QString::number(oArticulo->stock_maximo));
    ui->txtstock_minimo->setText(QString::number(oArticulo->stock_minimo));
@@ -285,7 +285,7 @@ void FrmArticulos::LLenarCampos()
 
    ui->txtcantidad_pendiente_recibir->setText(QString::number(oArticulo->cantidad_pendiente_recibir));
    ui->txtfecha_prevista_recepcion->setDate(oArticulo->fecha_prevista_recepcion);
-   ui->txtreservados->setText(QString::number(oArticulo->reservados));
+   ui->txtunidades_reservadas->setText(QString::number(oArticulo->unidades_reservadas));
    ui->txtseccion->setText(oArticulo->getseccion(oArticulo->id_seccion));
    ui->txtfamilia->setText(oArticulo->getfamilia(oArticulo->id_familia));
    ui->txtsubfamilia->setText(oArticulo->getsubfamilia(oArticulo->id_subfamilia));
@@ -367,12 +367,12 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->tipo_iva=Configuracion_global->ivas[ui->cboTipoIVA->currentText()].value("iva").toDouble();
     oArticulo->id_tipos_iva = Configuracion_global->getidIva(ui->cboTipoIVA->currentText());
     oArticulo->coste=ui->txtcoste->text().replace(",",".").toDouble();
-    oArticulo->ultima_compra= ui->txtfecha_ultima_compra->date();
-    oArticulo->ultima_venta= ui->txtfechaUltimaVenta->date();
+    oArticulo->fecha_ultima_compra= ui->txtfecha_fecha_ultima_compra->date();
+    oArticulo->fecha_ultima_venta= ui->txtfechaUltimaVenta->date();
     oArticulo->unidades_compradas= ui->txtunidades_compradas->text().toDouble();
     oArticulo->unidades_vendidas=ui->txtunidades_vendidas->text().toDouble();
-    oArticulo->acumulado_compras= ui->txtacumulado_compras->text().replace(",",".").toDouble();
-    oArticulo->acumulado_ventas= ui->txtacumulado_ventas->text().replace(",",".").toDouble();
+    oArticulo->importe_acumulado_compras= ui->txtimporte_acumulado_compras->text().replace(",",".").toDouble();
+    oArticulo->importe_acumulado_ventas= ui->txtimporte_acumulado_ventas->text().replace(",",".").toDouble();
     oArticulo->comentario=ui->txtcomentario->toPlainText();
     oArticulo->stock_maximo=ui->txtstock_maximo->text().toInt();
     oArticulo->stock_minimo=ui->txtstock_minimo->text().toInt();
@@ -385,7 +385,7 @@ void FrmArticulos::CargarCamposEnArticulo()
 
     oArticulo->cantidad_pendiente_recibir=ui->txtcantidad_pendiente_recibir->text().toInt();
     oArticulo->fecha_prevista_recepcion =ui->txtfecha_prevista_recepcion->date();
-    oArticulo->reservados =ui->txtreservados->text().toInt();
+    oArticulo->unidades_reservadas =ui->txtunidades_reservadas->text().toInt();
     if (ui->chkmostrar_web->isChecked())
         oArticulo->mostrar_web = 1;
     else
@@ -416,6 +416,7 @@ void FrmArticulos::CargarCamposEnArticulo()
 
     oArticulo->por_cada = ui->txtpor_cada->text().toInt();
     oArticulo->regalo_de = ui->txtregalo_de->text().toInt();
+    oArticulo->porc_dto = ui->txtdto->text().toFloat();
     oArticulo->porc_dto_web = ui->txt_dto_web->text().replace(",",".").toDouble();
     oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().replace(",",".").toDouble();
     oArticulo->comentario_oferta = ui->txcomentarios_promocion->toPlainText();
@@ -440,12 +441,12 @@ void FrmArticulos::VaciarCampos()
    ui->cboTipoIVA->setEditText("");
    ui->txtcoste->setText("0,00");
    ui->txtdto->setText("0");
-   ui->txtfecha_ultima_compra->setDate(QDate::currentDate());
+   ui->txtfecha_fecha_ultima_compra->setDate(QDate::currentDate());
    ui->txtfechaUltimaVenta->setDate(QDate::currentDate());
    ui->txtunidades_compradas->setText("0");
    ui->txtunidades_vendidas->setText("0");
-   ui->txtacumulado_compras->setText("0,00");
-   ui->txtacumulado_ventas->setText("0,00");
+   ui->txtimporte_acumulado_compras->setText("0,00");
+   ui->txtimporte_acumulado_ventas->setText("0,00");
    ui->txtcomentario->setText("");
    ui->txtstock_maximo->setText("0");
    ui->txtstock_minimo->setText("0");
@@ -455,7 +456,7 @@ void FrmArticulos::VaciarCampos()
    ui->chkcontrolar_stock->setChecked(false);
    ui->txtcantidad_pendiente_recibir->setText("0");
    ui->txtfecha_prevista_recepcion->setDate(QDate::currentDate());
-   ui->txtreservados->setText("0");
+   ui->txtunidades_reservadas->setText("0");
    ui->chkmostrar_web->setChecked(false);
    ui->txtcodigo_proveedor->setText("");
    ui->chkArticulo_promocionado->setChecked(false);

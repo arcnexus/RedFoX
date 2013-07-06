@@ -30,10 +30,12 @@ public:
     QString cif_proveedor;
     double total1,total2,total3,total4;
     double iva1,iva2,iva3,iva4;
+    double rec1,rec2,rec3,rec4;
     float porc_iva1,porc_iva2,porc_iva3,porc_iva4;
+    float porc_rec1,porc_rec2,porc_rec3,porc_rec4;
     double base1,base2,base3,base4;
     QString factura;
-    double base_total,iva_total,total;
+    double base_total,iva_total,total,importe_rec_total;
     QString comentario;
     int pedido;
 signals:

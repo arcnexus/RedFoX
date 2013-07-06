@@ -868,7 +868,7 @@ color: rgb(0, 0, 0);</string>
         </widget>
        </item>
        <item row="1" column="2" colspan="2">
-        <widget class="QLineEdit" name="txtacumulado_compras">
+        <widget class="QLineEdit" name="txtimporte_acumulado_compras">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -2383,7 +2383,7 @@ color: rgb(255, 255, 255);</string>
   <tabstop>tablaArticulos</tabstop>
   <tabstop>txttexto_para_pedidos</tabstop>
   <tabstop>tabWidget_5</tabstop>
-  <tabstop>txtacumulado_compras</tabstop>
+  <tabstop>txtimporte_acumulado_compras</tabstop>
   <tabstop>txtEnero</tabstop>
   <tabstop>txtFebrero</tabstop>
   <tabstop>txtMarzo</tabstop>

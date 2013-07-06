@@ -16,7 +16,7 @@ TimedMessageBox::TimedMessageBox(QWidget *parent, QString message, Icons icon) :
     _message(message,this),
     _layout(this)
 {    
-    parent->setFocus();
+  //  parent->setFocus();
     this->setWindowFlags(this->windowFlags()^Qt::FramelessWindowHint);
 
     _icon.setPixmap(getIcon(icon));
