@@ -396,7 +396,7 @@ color: rgb(0, 64, 64);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtrDescuento">
+      <widget class="QLineEdit" name="txtdto">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -584,7 +584,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtnPresupuesto">
+          <widget class="QLineEdit" name="txtpresupuesto">
            <property name="maximumSize">
             <size>
              <width>200</width>
@@ -890,7 +890,7 @@ color: rgb(0, 64, 64);</string>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="txtcAtencionde">
+            <widget class="QLineEdit" name="txtatencion_de">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -1079,7 +1079,7 @@ color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item>
-              <widget class="QDateEdit" name="txtdValidoHasta">
+              <widget class="QDateEdit" name="txtvalido_hasta">
                <property name="minimumSize">
                 <size>
                  <width>72</width>
@@ -1155,7 +1155,7 @@ color: rgb(255, 255, 255);</string>
             </widget>
            </item>
            <item>
-            <widget class="QTextEdit" name="txttLugarEntrega">
+            <widget class="QTextEdit" name="txtlugar_entrega">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
              </property>
@@ -1244,7 +1244,7 @@ color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="3" column="3">
-              <widget class="QLineEdit" name="txtimporteFactura">
+              <widget class="QLineEdit" name="txtimporte_factura">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2307,7 +2307,7 @@ color: rgb(23, 76, 7);</string>
   <tabstop>txtprovincia</tabstop>
   <tabstop>txtcif</tabstop>
   <tabstop>chklporc_rec</tabstop>
-  <tabstop>txtcAtencionde</tabstop>
+  <tabstop>txtatencion_de</tabstop>
   <tabstop>txttelefono</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnAnterior</tabstop>
@@ -2317,7 +2317,7 @@ color: rgb(23, 76, 7);</string>
   <tabstop>btnEditar</tabstop>
   <tabstop>btnGuardar</tabstop>
   <tabstop>btnBorrar</tabstop>
-  <tabstop>txtnPresupuesto</tabstop>
+  <tabstop>txtpresupuesto</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>

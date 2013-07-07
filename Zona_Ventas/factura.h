@@ -24,13 +24,13 @@ public:
     QString cif;
     int recargo_equivalencia;
     double subtotal;
-    int dto;
-    int dto_pp;
-    double importe_descuento;
-    double importe_descuento_pp;
+    double dto;
+    double dto_pp;
+    float porc_dto;
+    float porc_dto_pp;
     double base;
-    int irpf;
-    double importe_irpf;
+    double irpf;
+    float porc_irpf;
     double iva;
     double total;
     int impreso;
@@ -69,7 +69,7 @@ public:
     QString codigo_entidad;
     QString oficina_entidad;
     QString dc_cuenta;
-    QString numero_cuenta;
+    QString cuenta_corriente;
     int pedido_cliente;
     int apunte;
 

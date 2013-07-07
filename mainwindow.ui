@@ -737,7 +737,7 @@ selection-color: rgb(0, 0, 0);</string>
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionPresupuestos">
+  <action name="actiopresupuestos">
    <property name="icon">
     <iconset resource="maya.qrc">
      <normaloff>:/Icons/PNG/presupuestos.png</normaloff>:/Icons/PNG/presupuestos.png</iconset>

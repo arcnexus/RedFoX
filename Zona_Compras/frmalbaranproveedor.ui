@@ -138,7 +138,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtiva">
+      <widget class="QLineEdit" name="txtiva_total">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
@@ -2292,7 +2292,7 @@ color: rgb(0, 64, 64);</string>
   <tabstop>txtsubtotal</tabstop>
   <tabstop>txtimporte_descuento</tabstop>
   <tabstop>txtbase</tabstop>
-  <tabstop>txtiva</tabstop>
+  <tabstop>txtiva_total</tabstop>
   <tabstop>txttotal_recargo</tabstop>
   <tabstop>txttotal</tabstop>
  </tabstops>

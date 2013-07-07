@@ -4,8 +4,9 @@
 
 #include "../Almacen/articulo.h"
 
-#include "../Busquedas/frmbuscarcliente.h"
+#include "../Busquedas/db_consulta_view.h"
 #include "../Zona_Ventas/factura.h"
+
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -184,19 +185,19 @@ void FrmPedidos::LLenarCampos()
 
     ui->txtcomentario->setText(oPedido->comentario);
     ui->txtentregado_a_cuenta->setText(QString::number(oPedido->entregado_a_cuenta));
-    //oPedido->traspasadoAlb;
-    //oPedido->traspasadoFac;
-    ui->txtdireccion1_entrega->setText(oPedido->direccion1_entrega);
-    ui->txtdireccion1_entrega_2->setText(oPedido->direccion1_entrega2);
+    //oPedido->traspasado_albaran;
+    //oPedido->traspasado_factura;
+    ui->txtdireccion_entrega1->setText(oPedido->direccion_entrega1);
+    ui->txtdireccion_entrega1_2->setText(oPedido->direccion_entrega2);
     ui->txtcp_entrega->setText(oPedido->cp_entrega);
     ui->txtpoblacion_entrega->setText(oPedido->poblacion_entrega);
     ui->txtprovincia_entrega->setText(oPedido->provincia_entrega);
-    ui->txtpaisEntrega->setText(oPedido->paisEntrega);
+    ui->txtpais_entrega->setText(oPedido->pais_entrega);
     ui->chkenviado->setChecked(oPedido->enviado==1);
-    ui->chklCompleto->setChecked(oPedido->lCompleto==1);
-    ui->chklEntregado->setChecked(oPedido->lEntregado==1);
-    ui->txtfechaLimiteEntrega->setDate(oPedido->fechaLimiteEntrega);
-    ui->txttotal->setText(QString::number(oPedido->totalPedido));
+    ui->chkcompleto->setChecked(oPedido->completo==1);
+    ui->chkentregado->setChecked(oPedido->entregado==1);
+    ui->txtfecha_limite_entrega->setDate(oPedido->fecha_limite_entrega);
+    ui->txttotal->setText(QString::number(oPedido->total_pedido));
 }
 
 void FrmPedidos::LLenarCamposCliente()
@@ -397,19 +398,19 @@ void FrmPedidos::LLenarPedido()
 
     oPedido->comentario=ui->txtcomentario->toPlainText();
     oPedido->entregado_a_cuenta=ui->txtentregado_a_cuenta->text().replace(_moneda,"").replace(",",".").toDouble();
-    //oPedido->traspasadoAlb;
-    //oPedido->traspasadoFac;
-    oPedido->direccion1_entrega=ui->txtdireccion1_entrega->text();
-    oPedido->direccion1_entrega2=ui->txtdireccion1_entrega_2->text();
+    //oPedido->traspasado_albaran;
+    //oPedido->traspasado_factura;
+    oPedido->direccion_entrega1=ui->txtdireccion_entrega1->text();
+    oPedido->direccion_entrega2=ui->txtdireccion_entrega1_2->text();
     oPedido->cp_entrega=ui->txtcp_entrega->text();
     oPedido->poblacion_entrega=ui->txtpoblacion_entrega->text();
     oPedido->provincia_entrega=ui->txtprovincia_entrega->text();
-    oPedido->paisEntrega=ui->txtpaisEntrega->text();
+    oPedido->pais_entrega=ui->txtpais_entrega->text();
     oPedido->enviado=ui->chkenviado->isChecked();
-    oPedido->lCompleto=ui->chklCompleto->isChecked();
-    oPedido->lEntregado=ui->chklEntregado->isChecked();
-    oPedido->fechaLimiteEntrega=ui->txtfechaLimiteEntrega->date();
-    oPedido->totalPedido=ui->txttotal->text().replace(_moneda,"").replace(",",".").toDouble();;
+    oPedido->completo=ui->chkcompleto->isChecked();
+    oPedido->entregado=ui->chkentregado->isChecked();
+    oPedido->fecha_limite_entrega=ui->txtfecha_limite_entrega->date();
+    oPedido->total_pedido=ui->txttotal->text().replace(_moneda,"").replace(",",".").toDouble();;
 }
 
 void FrmPedidos::on_btnSiguiente_clicked()
@@ -524,36 +525,24 @@ void FrmPedidos::on_btnGuardar_clicked()
 
 void FrmPedidos::on_botBuscarCliente_clicked()
 {
-    Db_table_View searcher(qApp->activeWindow());
-    searcher.set_db("Maya");
-    searcher.set_table("clientes");
-
-    searcher.setWindowTitle(tr("Clientes"));
-
-    QStringList headers;
-    headers << tr("Codigo")<< tr("Nombre Fiscal") << tr("DNI/NIF") << tr("Poblacion");
-    searcher.set_table_headers(headers);
-
-    searcher.set_readOnly(true);
-    searcher.set_selection("id");
-
-    searcher.set_columnHide(0);
-    searcher.set_columnHide(2);
-    searcher.set_columnHide(3);
-    searcher.set_columnHide(4);
-    searcher.set_columnHide(6);
-    searcher.set_columnHide(7);
-    searcher.set_columnHide(9);
-    searcher.set_columnHide(10);
-    searcher.set_columnHide(11);
-    for(int i =13;i<55;i++)
-        searcher.set_columnHide(i);
-    if(searcher.exec() == QDialog::Accepted)
+    db_consulta_view consulta;
+    QStringList campos;
+    campos <<"codigo_cliente" <<"nombre_fiscal" << "cif_nif"<< "poblacion" << "telefono1";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("clientes");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo_cliente,nombre_fiscal,cif_nif,poblacion,telefono1 from clientes");
+    QStringList cabecera;
+    QVariantList tamanos;
+    cabecera  << tr("Código") << tr("Nombre") << tr("CIF/NIF") << tr("Población") << tr("Teléfono");
+    tamanos <<"0" << "100" << "300" << "100" << "180" <<"130";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Clientes");
+    if(consulta.exec())
     {
-        QString cid =searcher.selected_value;
-        oPedido->id_cliente = cid.toInt();
-        oCliente3->Recuperar("Select * from clientes where id ="+cid+" order by id limit 1 ");
-        helper.set_tarifa(oCliente3->idTarifa);
+        int id = consulta.get_id();
+        oCliente3->Recuperar("select * from clientes where id="+QString::number(id));
         LLenarCamposCliente();
     }
 }
@@ -671,18 +660,18 @@ void FrmPedidos::lineaReady(lineaDetalle * ld)
 
         QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
         query_lin_ped_pro.prepare("INSERT INTO lin_ped (id_Cab,id_articulo,codigo,"
-                                  "descripcion, cantidad, pvp,subtotal,dto,dto,porc_iva,"
-                                  "total,cantidadaservir) VALUES (:id_cab,:id_articulo,:codigo_articulo_proveedor,"
-                                  ":descripcion,:cantidad,:coste_bruto,:subtotal_coste,:porc_dto,:dto,"
+                                  "descripcion, cantidad, precio,subtotal,porc_dto,dto,porc_iva,"
+                                  "total,cantidad_a_servir) VALUES (:id_cab,:id_articulo,:codigo,"
+                                  ":descripcion,:cantidad,:precio,:subtotal,:porc_dto,:dto,"
                                   ":porc_iva,:total,:cantidad_pendiente);");
         query_lin_ped_pro.bindValue(":id_cab", oPedido->id);
         query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
+        query_lin_ped_pro.bindValue(":codigo",ld->codigo);
         query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
         query_lin_ped_pro.bindValue(":cantidad_pendiente",ld->cantidad);
-        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
-        query_lin_ped_pro.bindValue(":subtotal_coste",ld->subtotal);
+        query_lin_ped_pro.bindValue(":precio",ld->precio);
+        query_lin_ped_pro.bindValue(":subtotal",ld->subtotal);
         query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_ped_pro.bindValue(":dto",ld->dto);
         query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
@@ -711,13 +700,13 @@ void FrmPedidos::lineaReady(lineaDetalle * ld)
 
         query_lin_ped_pro.prepare("UPDATE lin_ped SET "
                                   "id_articulo =:id_articulo,"
-                                  "codigo =:codigo_articulo_proveedor,"
+                                  "codigo =:codigo,"
                                   "descripcion =:descripcion,"
                                   "cantidad =:cantidad,"
-                                  "cantidadaservir =:cantidad_pendiente,"
-                                  "pvp =:coste_bruto,"
-                                  "subtotal =:subtotal_coste,"
-                                  "dto =:porc_dto,"
+                                  "cantidad_a_servir =:cantidad_pendiente,"
+                                  "precio =:precio,"
+                                  "subtotal =:subtotal,"
+                                  "porc_dto =:porc_dto,"
                                   "dto =:dto,"
                                   "porc_iva =:porc_iva,"
                                   "total =:total "
@@ -725,12 +714,12 @@ void FrmPedidos::lineaReady(lineaDetalle * ld)
 
         query_lin_ped_pro.bindValue(":id_cab", oPedido->id);
         query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
+        query_lin_ped_pro.bindValue(":codigo",ld->codigo);
         query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_ped_pro.bindValue(":cantidadaservir",ld->cantidad);
-        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
-        query_lin_ped_pro.bindValue(":subtotal_coste",ld->subtotal);
+        query_lin_ped_pro.bindValue(":cantidad_a_servir",ld->cantidad);
+        query_lin_ped_pro.bindValue(":precio",ld->precio);
+        query_lin_ped_pro.bindValue(":subtotal",ld->subtotal);
         query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_ped_pro.bindValue(":dto",ld->dto);
         query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
@@ -813,7 +802,7 @@ void FrmPedidos::convertir_enFactura()
             oFactura.direccion1 = oCliente3->direccion1;
             oFactura.direccion2 = oCliente3->direccion2;
             oFactura.forma_pago = oCliente3->forma_pago;
-            oFactura.numero_cuenta = oCliente3->cuenta_corriente;
+            oFactura.cuenta_corriente = oCliente3->cuenta_corriente;
             oFactura.oficina_entidad = oCliente3->oficina_bancaria;
             oFactura.pedido_cliente = ui->txtpedido->text().toInt();
             oFactura.poblacion =oCliente3->poblacion;
@@ -837,7 +826,7 @@ void FrmPedidos::convertir_enFactura()
             oFactura.base2 = oPedido->base2;
             oFactura.base3 = oPedido->base3;
             oFactura.base4 = oPedido->base4;
-            oFactura.importe_descuento = oPedido->dto;
+            oFactura.dto = oPedido->dto;
             oFactura.iva = oPedido->iva_total;
             oFactura.iva1 = oPedido->iva1;
             oFactura.iva2 = oPedido->iva2;
@@ -848,7 +837,7 @@ void FrmPedidos::convertir_enFactura()
             oFactura.porc_rec3 = oPedido->rec3;
             oFactura.porc_rec4 = oPedido->rec4;
             oFactura.subtotal = oPedido->subtotal;
-            oFactura.total = oPedido->totalPedido;
+            oFactura.total = oPedido->total_pedido;
             oFactura.total1 = oPedido->total1;
             oFactura.total2 = oPedido->total2;
             oFactura.total3 = oPedido->total3;
@@ -871,9 +860,9 @@ void FrmPedidos::convertir_enFactura()
             {
                 while (lineas_ped.next()) {
                     lineas_fac.prepare("INSERT INTO lin_fac(id_Cab, id_articulo, codigo, cantidad,"
-                                       "descripcion, pvp, subtotal, dto, dto, porc_iva, total)"
+                                       "descripcion, pvp, subtotal, porc_dto, dto, porc_iva, total)"
                                        " VALUES (:id_Cab, :id_articulo,:codigo,:cantidad,"
-                                       ":descripcion,:pvp,:subtotal,:dto,:dto,:porc_iva,"
+                                       ":descripcion,:pvp,:subtotal,:porc_dto,:dto,:porc_iva,"
                                        ":total);");
                     lineas_fac.bindValue(":id_Cab", oFactura.id);
                     lineas_fac.bindValue(":id_articulo",lineas_ped.record().value("id_articulo").toInt());
@@ -882,7 +871,7 @@ void FrmPedidos::convertir_enFactura()
                     lineas_fac.bindValue(":descripcion",lineas_ped.record().value("descripcion").toString());
                     lineas_fac.bindValue(":pvp",lineas_ped.record().value("pvp").toDouble());
                     lineas_fac.bindValue(":subtotal",lineas_ped.record().value("subtotal").toDouble());
-                    lineas_fac.bindValue(":dto",lineas_ped.record().value("dto").toDouble());
+                    lineas_fac.bindValue(":porc_dto",lineas_ped.record().value("porc_dto").toDouble());
                     lineas_fac.bindValue(":dto",lineas_ped.record().value("dto").toDouble());
                     lineas_fac.bindValue(":porc_iva",lineas_ped.record().value("porc_iva").toDouble());
                     lineas_fac.bindValue(":total",lineas_ped.record().value("total").toDouble());

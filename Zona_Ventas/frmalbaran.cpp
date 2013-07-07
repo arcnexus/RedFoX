@@ -2,6 +2,7 @@
 #include "ui_frmalbaran.h"
 #include "albaran.h"
 #include "../Zona_Pacientes/cliente.h"
+#include "../Busquedas/db_consulta_view.h"
 //
 #include "../Almacen/articulo.h"
 
@@ -174,7 +175,7 @@ void FrmAlbaran::LLenarCampos() {
     ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec4,'f',2)));
     ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec_total,'f',2)));
     ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->iva_total,'f',2)));
-    ui->txtpedido_cliente->setText(oAlbaran->pedido_cli);
+    ui->txtpedido_cliente->setText(oAlbaran->pedido_cliente);
     if(oAlbaran->recargo_equivalencia==1)
         ui->chklporc_rec->setChecked(true);
     else
@@ -372,7 +373,7 @@ void FrmAlbaran::LLenarAlbaran()
     else
         oAlbaran->recargo_equivalencia = (0);
 
-    oAlbaran->pedido_cli= (ui->txtpedido_cliente->text());
+    oAlbaran->pedido_cliente= (ui->txtpedido_cliente->text());
     oAlbaran->entregado_a_cuenta = ui->txtentregado_a_cuenta->text().replace(".","").toDouble();
 }
 
@@ -442,38 +443,27 @@ void FrmAlbaran::on_btnAnadir_clicked()
 
 void FrmAlbaran::on_botBuscarCliente_clicked()
 {
-    Db_table_View searcher(qApp->activeWindow());
-    searcher.set_db("Maya");
-    searcher.set_table("clientes");
-
-    searcher.setWindowTitle(tr("Clientes"));
-
-    QStringList headers;
-    headers << tr("Codigo")<< tr("Nombre Fiscal") << tr("DNI/NIF") << tr("Poblacion");
-    searcher.set_table_headers(headers);
-
-    searcher.set_readOnly(true);
-    searcher.set_selection("id");
-
-    searcher.set_columnHide(0);
-    searcher.set_columnHide(2);
-    searcher.set_columnHide(3);
-    searcher.set_columnHide(4);
-    searcher.set_columnHide(6);
-    searcher.set_columnHide(7);
-    searcher.set_columnHide(9);
-    searcher.set_columnHide(10);
-    searcher.set_columnHide(11);
-    for(int i =13;i<55;i++)
-        searcher.set_columnHide(i);
-    if(searcher.exec() == QDialog::Accepted)
+    db_consulta_view consulta;
+    QStringList campos;
+    campos <<"codigo_cliente" <<"nombre_fiscal" << "cif_nif"<< "poblacion" << "telefono1";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("clientes");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo_cliente,nombre_fiscal,cif_nif,poblacion,telefono1 from clientes");
+    QStringList cabecera;
+    QVariantList tamanos;
+    cabecera  << tr("Código") << tr("Nombre") << tr("CIF/NIF") << tr("Población") << tr("Teléfono");
+    tamanos <<"0" << "100" << "300" << "100" << "180" <<"130";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Clientes");
+    if(consulta.exec())
     {
-        QString cid = searcher.selected_value;
-        oAlbaran->id_cliente=(cid.toInt());
-        oCliente2->Recuperar("Select * from clientes where id ="+cid+" order by id limit 1 ");
+        int id = consulta.get_id();
+        oCliente2->Recuperar("select * from clientes where id="+QString::number(id));
         LLenarCamposCliente();
-        helper.set_tarifa(oCliente2->idTarifa);
     }
+
 }
 
 
@@ -625,28 +615,28 @@ void FrmAlbaran::lineaReady(lineaDetalle * ld)
             queryArticulos.next();
         else
             ok_Maya = false;
-        QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
-        query_lin_ped_pro.prepare("INSERT INTO lin_alb (id_Cab, id_articulo, codigo, cantidad,"
-                                  "descripcion, pvp, subtotal, dto,"
+        QSqlQuery query_lin_alb(QSqlDatabase::database("empresa"));
+        query_lin_alb.prepare("INSERT INTO lin_alb (id_Cab, id_articulo, codigo, cantidad,"
+                                  "descripcion, precio, subtotal, porc_dto,"
                                   " dto, porc_iva, total)"
                                   "VALUES (:id_cab,:id_articulo,:codigo,:cantidad,"
-                                  ":descripcion,:coste_bruto,:subtotal_coste,:porc_dto,"
+                                  ":descripcion,:precio,:subtotal,:porc_dto,"
                                   ":dto,:porc_iva,:total);");
-        query_lin_ped_pro.bindValue(":id_cab", oAlbaran->id);
-        query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_ped_pro.bindValue(":codigo",ld->codigo);
-        query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
-        query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
-        query_lin_ped_pro.bindValue(":subtotal_coste",ld->subtotal);
-        query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
-        query_lin_ped_pro.bindValue(":dto",ld->dto);
-        query_lin_ped_pro.bindValue(":iva",0); // importe iva hay que calcularlo
-        query_lin_ped_pro.bindValue(":total",ld->total);
-        if (!query_lin_ped_pro.exec()){
+        query_lin_alb.bindValue(":id_cab", oAlbaran->id);
+        query_lin_alb.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
+        query_lin_alb.bindValue(":codigo",ld->codigo);
+        query_lin_alb.bindValue(":descripcion",ld->descripcion);
+        query_lin_alb.bindValue(":cantidad",ld->cantidad);
+        query_lin_alb.bindValue(":precio",ld->precio);
+        query_lin_alb.bindValue(":subtotal",ld->subtotal);
+        query_lin_alb.bindValue(":porc_dto",ld->dto_perc);
+        query_lin_alb.bindValue(":dto",ld->dto);
+        query_lin_alb.bindValue(":iva",(ld->subtotal *ld->iva_perc)/100); // importe iva hay que calcularlo
+        query_lin_alb.bindValue(":total",ld->total);
+        if (!query_lin_alb.exec()){
             ok_empresa = false;
             QMessageBox::warning(this,tr("Gestión de albaranes"),
-                                 tr("Ocurrió un error al insertar la nueva línea: %1").arg(query_lin_ped_pro.lastError().text()),
+                                 tr("Ocurrió un error al insertar la nueva línea: %1").arg(query_lin_alb.lastError().text()),
                                  tr("Aceptar"));
         }
         //TODO control de stock fact clientes
@@ -660,7 +650,7 @@ void FrmAlbaran::lineaReady(lineaDetalle * ld)
             QSqlDatabase::database("Maya").rollback();
         }
 
-        ld->idLinea = query_lin_ped_pro.lastInsertId().toInt();
+        ld->idLinea = query_lin_alb.lastInsertId().toInt();
 
     } else // Editando linea
     {
@@ -673,36 +663,38 @@ void FrmAlbaran::lineaReady(lineaDetalle * ld)
         else
             ok_Maya = false;
 
-        QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
-        query_lin_ped_pro.prepare("UPDATE lin_alb SET "
+        QSqlQuery query_lin_alb(QSqlDatabase::database("empresa"));
+        query_lin_alb.prepare("UPDATE lin_alb SET "
                                   "id_articulo =:id_articulo,"
-                                  "codigo =:codigo_articulo_proveedor,"
+                                  "codigo =:codigo,"
                                   "descripcion =:descripcion,"
                                   "cantidad =:cantidad,"
-                                  "pvp =:coste_bruto,"
-                                  "subtotal =:subtotal_coste,"
+                                  "precio =:precio,"
+                                  "subtotal =:subtotal,"
                                   "dto =:porc_dto,"
                                   "dto =:dto,"
+                                  "iva =:iva,"
                                   "porc_iva =:porc_iva,"
                                   "total =:total "
                                   "WHERE id = :id;");
 
-        query_lin_ped_pro.bindValue(":id_cab", oAlbaran->id);
-        query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
-        query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
-        query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
-        query_lin_ped_pro.bindValue(":subtotal_coste",ld->subtotal);
-        query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
-        query_lin_ped_pro.bindValue(":dto",ld->dto);
-        query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
-        query_lin_ped_pro.bindValue(":total",ld->total);
-        query_lin_ped_pro.bindValue(":id",ld->idLinea);
+        query_lin_alb.bindValue(":id_cab", oAlbaran->id);
+        query_lin_alb.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
+        query_lin_alb.bindValue(":codigo",ld->codigo);
+        query_lin_alb.bindValue(":descripcion",ld->descripcion);
+        query_lin_alb.bindValue(":cantidad",ld->cantidad);
+        query_lin_alb.bindValue(":precio",ld->precio);
+        query_lin_alb.bindValue(":subtotal",ld->subtotal);
+        query_lin_alb.bindValue(":porc_dto",ld->dto_perc);
+        query_lin_alb.bindValue(":dto",ld->dto);
+        query_lin_alb.bindValue(":porc_iva",ld->iva_perc);
+        query_lin_alb.bindValue(":iva",(ld->subtotal * ld->iva_perc)/100);
+        query_lin_alb.bindValue(":total",ld->total);
+        query_lin_alb.bindValue(":id",ld->idLinea);
 
-        if (!query_lin_ped_pro.exec()) {
+        if (!query_lin_alb.exec()) {
             QMessageBox::warning(this,tr("Gestión de pedidos"),
-                                 tr("Ocurrió un error al guardar la línea: %1").arg(query_lin_ped_pro.lastError().text()),
+                                 tr("Ocurrió un error al guardar la línea: %1").arg(query_lin_alb.lastError().text()),
                                  tr("Aceptar"));
             ok_empresa = false;
         }

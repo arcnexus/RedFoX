@@ -234,7 +234,7 @@ void FrmAlbaranProveedor::totalChanged(double base, double dto, double subtotal,
     ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2))+moneda);
     ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',2))+moneda);
     ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',2))+moneda);
-    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2))+moneda);
+    ui->txtiva_total->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2))+moneda);
     ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2))+moneda);
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2))+moneda);
     ui->lbl_total->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2))+moneda);
@@ -331,7 +331,7 @@ void FrmAlbaranProveedor::llenar_campos()
     ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbPro->base4,'f',2)));
     ui->txtcNumFra->setText(oAlbPro->factura);
     ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbPro->base_total,'f',2)));
-    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbPro->iva_total,'f',2)));
+    ui->txtiva_total->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbPro->iva_total,'f',2)));
     ui->txtimporte_rec_total->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbPro->importe_rec_total,'f',2)));
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbPro->total,'f',2)));
     ui->txtcomentario->setText(oAlbPro->comentario);
@@ -388,17 +388,17 @@ void FrmAlbaranProveedor::lineaReady(lineaDetalle * ld)
 
         QSqlQuery query_lin_alb_pro(QSqlDatabase::database("empresa"));
         query_lin_alb_pro.prepare("INSERT INTO lin_alb_pro (id_cab,id_articulo,codigo_articulo_proveedor,"
-                                  "descripcion, cantidad, coste,subtotal,porc_dto,dto,porc_iva,"
+                                  "descripcion, cantidad, precio,subtotal,porc_dto,dto,porc_iva,"
                                   "iva,total) VALUES (:id_cab,:id_articulo,:codigo_articulo_proveedor,"
-                                  ":descripcion,:cantidad,:coste_bruto,:subtotal_coste,:porc_dto,:dto,"
+                                  ":descripcion,:cantidad,:precio,:subtotal,:porc_dto,:dto,"
                                   ":porc_iva,:iva,:total);");
         query_lin_alb_pro.bindValue(":id_cab", oAlbPro->id);
         query_lin_alb_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
         query_lin_alb_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
         query_lin_alb_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_alb_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_alb_pro.bindValue(":coste_bruto",ld->importe);
-        query_lin_alb_pro.bindValue(":subtotal_coste",ld->subtotal);
+        query_lin_alb_pro.bindValue(":precio",ld->precio);
+        query_lin_alb_pro.bindValue(":subtotal",ld->subtotal);
         query_lin_alb_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_alb_pro.bindValue(":dto",ld->dto);
         query_lin_alb_pro.bindValue(":porc_iva",ld->iva_perc);
@@ -457,11 +457,11 @@ void FrmAlbaranProveedor::lineaReady(lineaDetalle * ld)
         QSqlQuery query_lin_alb_pro(QSqlDatabase::database("empresa"));
         query_lin_alb_pro.prepare("UPDATE lin_alb_pro SET "
                                   "id_articulo =:id_articulo,"
-                                  "codigo_articulo_proveedor =:codigo_articulo_proveedor,"
+                                  "codigo =:codigo,"
                                   "descripcion =:descripcion,"
                                   "cantidad =:cantidad,"
-                                  "coste =:coste_bruto,"
-                                  "subtotal =:subtotal_coste,"
+                                  "precio =:precio,"
+                                  "subtotal =:subtotal,"
                                   "porc_dto =:porc_dto,"
                                   "dto =:dto,"
                                   "porc_iva =:porc_iva,"
@@ -471,15 +471,15 @@ void FrmAlbaranProveedor::lineaReady(lineaDetalle * ld)
 
         query_lin_alb_pro.bindValue(":id_cab", oAlbPro->id);
         query_lin_alb_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_alb_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
+        query_lin_alb_pro.bindValue(":codigo",ld->codigo);
         query_lin_alb_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_alb_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_alb_pro.bindValue(":coste_bruto",ld->importe);
-        query_lin_alb_pro.bindValue(":subtotal_coste",ld->subtotal);
+        query_lin_alb_pro.bindValue(":precio",ld->precio);
+        query_lin_alb_pro.bindValue(":subtotal",ld->subtotal);
         query_lin_alb_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_alb_pro.bindValue(":dto",ld->dto);
         query_lin_alb_pro.bindValue(":porc_iva",ld->iva_perc);
-        query_lin_alb_pro.bindValue(":iva",0); // importe iva hay que calcularlo
+        query_lin_alb_pro.bindValue(":iva",(ld->subtotal * ld->iva_perc)/100);
         query_lin_alb_pro.bindValue(":total",ld->total);
         query_lin_alb_pro.bindValue(":id",ld->idLinea);
 
@@ -569,10 +569,10 @@ void FrmAlbaranProveedor::guardar_campos_en_objeto()
     oAlbPro->base3 = ui->txtbase3->text().replace(",",".").toDouble();
     oAlbPro->base4 = ui->txtbase4->text().replace(",",".").toDouble();
     oAlbPro->factura = ui->txtcNumFra->text().replace(",",".").toDouble();
-    oAlbPro->base_total = ui->txtbase->text().replace(",",".").replace(moneda,"").replace(",",".").toDouble();
-    oAlbPro->iva_total = ui->txtiva->text().replace(",",".").replace(moneda,"").replace(",",".").toDouble();
+    oAlbPro->base_total = ui->txtbase->text().replace(",",".").replace(moneda,"").toDouble();
+    oAlbPro->iva_total = ui->txtiva_total->text().replace(",",".").replace(moneda,"").toDouble();
     oAlbPro->importe_rec_total = ui->txtimporte_rec_total->text().replace(moneda,"").replace(",",".").toDouble();
-    oAlbPro->total = ui->txttotal->text().replace(",",".").replace(moneda,"").replace(",",".").toDouble();
+    oAlbPro->total = ui->txttotal->text().replace(",",".").replace(moneda,"").toDouble();
     oAlbPro->comentario = ui->txtcomentario->toPlainText();
 }
 

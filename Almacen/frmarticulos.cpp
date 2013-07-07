@@ -485,7 +485,7 @@ void FrmArticulos::ChangeValues_TablaProveedores(int row, int column)
 //    else if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
 //        comprobarCantidad(row);
 //    else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
-//        comprobarDescuento(row);
+//        comprobadto(row);
 //    else if(column == 9)
 //        comprobarStock(row);
 

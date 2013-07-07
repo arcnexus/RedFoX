@@ -501,7 +501,7 @@ color: rgb(0, 64, 64);</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">
             <item row="3" column="2">
-             <widget class="QDateEdit" name="txtfechaLimiteEntrega">
+             <widget class="QDateEdit" name="txtfecha_limite_entrega">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
@@ -553,7 +553,7 @@ color: rgb(0, 64, 64);</string>
                </widget>
               </item>
               <item row="0" column="1" colspan="3">
-               <widget class="QLineEdit" name="txtdireccion1_entrega">
+               <widget class="QLineEdit" name="txtdireccion_entrega1">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -573,7 +573,7 @@ color: rgb(0, 64, 64);</string>
                </widget>
               </item>
               <item row="1" column="1" colspan="3">
-               <widget class="QLineEdit" name="txtdireccion1_entrega_2">
+               <widget class="QLineEdit" name="txtdireccion_entrega1_2">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -664,7 +664,7 @@ color: rgb(0, 64, 64);</string>
                </widget>
               </item>
               <item row="3" column="3">
-               <widget class="QLineEdit" name="txtpaisEntrega">
+               <widget class="QLineEdit" name="txtpais_entrega">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -688,14 +688,14 @@ color: rgb(0, 64, 64);</string>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="chklCompleto">
+               <widget class="QCheckBox" name="chkcompleto">
                 <property name="text">
                  <string>Completo</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="chklEntregado">
+               <widget class="QCheckBox" name="chkentregado">
                 <property name="text">
                  <string>Entregado</string>
                 </property>
@@ -2114,7 +2114,7 @@ color: rgb(255, 85, 0);
 background-color: rgb(0, 0, 58);</string>
      </property>
      <property name="text">
-      <string>PEDidOS DE CLIENTES</string>
+      <string>PEDIDOS DE CLIENTES</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

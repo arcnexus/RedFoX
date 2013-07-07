@@ -61,19 +61,19 @@ public:
     QDate fecha_factura;
     QString comentario;
     double entregado_a_cuenta;
-    int traspasadoAlb;
-    int traspasadoFac;
-    QString direccion1_entrega;
-    QString direccion1_entrega2;
+    int traspasado_albaran;
+    int traspasado_factura;
+    QString direccion_entrega1;
+    QString direccion_entrega2;
     QString cp_entrega;
     QString poblacion_entrega;
     QString provincia_entrega;
-    QString paisEntrega;
+    QString pais_entrega;
     int enviado;
-    int lCompleto;
-    int lEntregado;
-    QDate fechaLimiteEntrega;
-    double totalPedido;
+    int completo;
+    int entregado;
+    QDate fecha_limite_entrega;
+    double total_pedido;
 
 public slots:
     bool BorrarLineas(int Iped);

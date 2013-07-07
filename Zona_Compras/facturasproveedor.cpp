@@ -37,7 +37,7 @@ void FacturasProveedor::guardar_factura()
     queryFactura.prepare("UPDATE fac_pro SET "
                          "factura =:factura,"
                          "fecha =:fecha,"
-                         "recepcion =:recepcion,"
+                         "fecha_recepcion =:fecha_recepcion,"
                          "pedido =:pedido,"
                          "id_proveedor =:id_proveedor,"
                          "proveedor =:proveedor,"
@@ -91,7 +91,7 @@ void FacturasProveedor::guardar_factura()
 
     queryFactura.bindValue(":factura",this->factura);
     queryFactura.bindValue(":fecha",this->fecha);
-    queryFactura.bindValue(":recepcion",this->recepcion);
+    queryFactura.bindValue(":fecha_recepcion",this->fecha_recepcion);
     queryFactura.bindValue(":pedido",this->pedido);
     queryFactura.bindValue(":id_proveedor",this->id_proveedor);
     queryFactura.bindValue(":proveedor",this->proveedor);
@@ -184,7 +184,7 @@ void FacturasProveedor::cargar_factura(QSqlQuery queryFact,int accion)
     {
         this->factura = queryFact.record().value("factura").toString();
         this->fecha = queryFact.record().value("fecha").toDate();
-        this->recepcion = queryFact.record().value("recepcion").toDate();
+        this->fecha_recepcion = queryFact.record().value("fecha_recepcion").toDate();
         this->pedido = queryFact.record().value("pedido").toString();
         this->id_proveedor = queryFact.record().value("id_proveedor").toInt();
         this->proveedor = queryFact.record().value("proveedor").toString();

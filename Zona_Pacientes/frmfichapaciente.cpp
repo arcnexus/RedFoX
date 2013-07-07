@@ -344,7 +344,7 @@ void FrmFichaPaciente::on_btnAnadirEpisodio_clicked()
 
 void FrmFichaPaciente::ListaEpisodio_clicked(QModelIndex index)
 {
-    VaciarCamposHistorialCompleto();
+    VaciarCamposHistoriacompleto();
     int id =ui->listaEpisodios->model()->data(ui->listaEpisodios->model()->index(index.row(),2),Qt::EditRole).toInt();
     oEpisodio->RecuperarEpisodio(id);
     cargarEpisodio(1);
@@ -417,7 +417,7 @@ void FrmFichaPaciente::VaciarCamposEpisodio()
 
 }
 
-void FrmFichaPaciente::VaciarCamposHistorialCompleto()
+void FrmFichaPaciente::VaciarCamposHistoriacompleto()
 {
     VaciarCamposEpisodio();
     //---------------------

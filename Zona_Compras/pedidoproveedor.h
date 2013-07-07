@@ -45,8 +45,8 @@ public:
     int id_forma_pago;
     QString comentario;
     QDate fecha_entrega;
-    QString direccion1_entrega;
-    QString direccion2_entrega;
+    QString direccion_entrega1;
+    QString direccion_entrega2;
     QString cp_entrega;
     QString poblacion_entrega;
     QString provincia_entrega;

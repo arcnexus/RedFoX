@@ -309,7 +309,7 @@ void frmClientes::LLenarCampos()
 
     QSqlQueryModel *Presupuestos = new QSqlQueryModel(this);
 
-    cSQL= "Select id,nPresupuesto,fecha,dValidoHasta,total from cab_pre where id_cliente =" + QString::number(oCliente->id);
+    cSQL= "Select id,presupuesto,fecha,valido_hasta,total from cab_pre where id_cliente =" + QString::number(oCliente->id);
     Presupuestos->setQuery(cSQL,QSqlDatabase::database("empresa"));
     ui->tablaPresupuestos->setModel(Presupuestos);
     ui->tablaPresupuestos->setItemDelegateForColumn(2,new MonetaryDelegate(this,false));

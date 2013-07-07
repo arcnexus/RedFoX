@@ -81,8 +81,8 @@ void PedidoProveedor::guardar()
      "id_forma_pago =:id_forma_pago,"
      "comentario =:comentario,"
      "fecha_entrega =:fecha_entrega,"
-     "direccion1_entrega =:direccion1_entrega,"
-     "direccion2_entrega =:direccion2_entrega,"
+     "direccion_entrega1 =:direccion_entrega1,"
+     "direccion_entrega2 =:direccion_entrega2,"
      "cp_entrega =:cp_entrega,"
      "poblacion_entrega =:poblacion_entrega,"
      "provincia_entrega =:provincia_entrega,"
@@ -144,8 +144,8 @@ void PedidoProveedor::guardar()
     queryGuardarPedido.bindValue(":id_forma_pago",this->id_forma_pago);
     queryGuardarPedido.bindValue(":comentario",this->comentario);
     queryGuardarPedido.bindValue(":fecha_entrega",this->fecha_entrega);
-    queryGuardarPedido.bindValue(":direccion1_entrega",this->direccion1_entrega);
-    queryGuardarPedido.bindValue(":direccion2_entrega",this->direccion2_entrega);
+    queryGuardarPedido.bindValue(":direccion_entrega1",this->direccion_entrega1);
+    queryGuardarPedido.bindValue(":direccion_entrega2",this->direccion_entrega2);
     queryGuardarPedido.bindValue(":cp_entrega",this->cp_entrega);
     queryGuardarPedido.bindValue(":poblacion_entrega",this->poblacion_entrega);
     queryGuardarPedido.bindValue(":provincia_entrega",this->provincia_entrega);
@@ -273,8 +273,8 @@ void PedidoProveedor::clear()
     this->id_forma_pago = 0;
     this->comentario = "";
     this->fecha_entrega = QDate::currentDate();
-    this->direccion1_entrega = "";
-    this->direccion2_entrega = "";
+    this->direccion_entrega1 = "";
+    this->direccion_entrega2 = "";
     this->cp_entrega = "";
     this->poblacion_entrega = "";
     this->provincia_entrega = "";
@@ -346,8 +346,8 @@ void PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
         this->id_forma_pago = queryPedido->record().value("id_forma_pago").toInt();
         this->comentario = queryPedido->record().value("comentario").toString();
         this->fecha_entrega = queryPedido->record().value("fecha_entrega").toDate();
-        this->direccion1_entrega = queryPedido->record().value("direccion1_entrega").toString();
-        this->direccion2_entrega = queryPedido->record().value("direccion2_entrega").toString();
+        this->direccion_entrega1 = queryPedido->record().value("direccion_entrega1").toString();
+        this->direccion_entrega2 = queryPedido->record().value("direccion_entrega2").toString();
         this->cp_entrega = queryPedido->record().value("cp_entrega").toString();
         this->poblacion_entrega = queryPedido->record().value("poblacion_entrega").toString();
         this->provincia_entrega = queryPedido->record().value("provincia_entrega").toString();
@@ -515,7 +515,7 @@ long PedidoProveedor::save()
               " total3 ,  total4 ,  nMargeporc_rec1 ,  nMargeporc_rec2 ,  nMargeporc_rec3 ,  nMargeporc_rec4 ,  rec1 ,  rec2 ,"
               " rec3 ,  rec4 ,  traspasado ,  pedido_cliente ,  id_forma_pago ,  vencimiento1 ,  vencimiento2 ,"
               " vencimiento3 ,  vencimiento4 ,  pagado1 ,  pagado2 ,  pagado3 ,  pagado4 ,  comentario ,"
-              " fecha_entrega ,  direccion1_entrega ,  direccion2_entrega ,  cp_entrega ,  poblacion_entrega ,"
+              " fecha_entrega ,  direccion_entrega1 ,  direccion_entrega2 ,  cp_entrega ,  poblacion_entrega ,"
               " provincia_entrega ,  id_pais_entrega ,  nombre_cliente ,  horario_activo )"
               " VALUES "
               "( :pedido ,  :serie ,  :fecha ,  :recepcion ,  :id_proveedor ,  :codigo_proveedor ,"
@@ -526,7 +526,7 @@ long PedidoProveedor::save()
               " :total3 ,  :total4 ,  :nMargeporc_rec1 ,  :nMargeporc_rec2 ,  :nMargeporc_rec3 ,  :nMargeporc_rec4 ,  :rec1 ,  :rec2 ,"
               " :rec3 ,  :rec4 ,  :traspasado ,  :pedido_cliente ,  :id_forma_pago ,  :vencimiento1 ,  :vencimiento2 ,"
               " :vencimiento3 ,  :vencimiento4 ,  :pagado1 ,  :pagado2 ,  :pagado3 ,  :pagado4 ,  :comentario ,"
-              " :fecha_entrega ,  :direccion1_entrega ,  :direccion2_entrega ,  :cp_entrega ,  :poblacion_entrega ,"
+              " :fecha_entrega ,  :direccion_entrega1 ,  :direccion_entrega2 ,  :cp_entrega ,  :poblacion_entrega ,"
               " :provincia_entrega ,  :id_pais_entrega ,  :nombre_cliente ,  :horario_activo ");
             return -1;
 }

@@ -137,19 +137,19 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
             ok_Maya = false;
 
         QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
-        query_lin_ped_pro.prepare("INSERT INTO lin_ped_pro (id_cab,id_articulo,codigo_articulo_proveedor,"
-                                  "descripcion, cantidad, coste_bruto,subtotal_coste,porc_dto,dto,porc_iva,"
-                                  "iva,total,cantidad_pendiente) VALUES (:id_cab,:id_articulo,:codigo_articulo_proveedor,"
-                                  ":descripcion,:cantidad,:coste_bruto,:subtotal_coste,:porc_dto,:dto,"
+        query_lin_ped_pro.prepare("INSERT INTO lin_ped_pro (id_cab,id_articulo,codigo,"
+                                  "descripcion, cantidad, precio,subtotal,porc_dto,dto,porc_iva,"
+                                  "iva,total,cantidad_pendiente) VALUES (:id_cab,:id_articulo,:codigo,"
+                                  ":descripcion,:cantidad,:precio,:subtotal,:porc_dto,:dto,"
                                   ":porc_iva,:iva,:total,:cantidad_pendiente);");
         query_lin_ped_pro.bindValue(":id_cab", oPedido_proveedor->id);
         query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
+        query_lin_ped_pro.bindValue(":codigo",ld->codigo);
         query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
         query_lin_ped_pro.bindValue(":cantidad_pendiente",ld->cantidad);
-        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
-        query_lin_ped_pro.bindValue(":subtotal_coste",ld->subtotal);
+        query_lin_ped_pro.bindValue(":preio",ld->precio);
+        query_lin_ped_pro.bindValue(":subtotal",ld->subtotal);
         query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_ped_pro.bindValue(":dto",ld->dto);
         query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
@@ -209,12 +209,12 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
         QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
         query_lin_ped_pro.prepare("UPDATE lin_ped_pro SET "
                                   "id_articulo =:id_articulo,"
-                                  "codigo_articulo_proveedor =:codigo_articulo_proveedor,"
+                                  "codigo=:codigo,"
                                   "descripcion =:descripcion,"
                                   "cantidad =:cantidad,"
                                   "cantidad_pendiente =:cantidad_pendiente,"
-                                  "coste_bruto =:coste_bruto,"
-                                  "subtotal_coste =:subtotal_coste,"
+                                  "precio =:precio,"
+                                  "subtotal =:subtotal,"
                                   "porc_dto =:porc_dto,"
                                   "dto =:dto,"
                                   "porc_iva =:porc_iva,"
@@ -224,12 +224,12 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
 
         query_lin_ped_pro.bindValue(":id_cab", oPedido_proveedor->id);
         query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
+        query_lin_ped_pro.bindValue(":codigo",ld->codigo);
         query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
         query_lin_ped_pro.bindValue(":cantidad_pendiente",ld->cantidad);
-        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
-        query_lin_ped_pro.bindValue(":subtotal_coste",ld->subtotal);
+        query_lin_ped_pro.bindValue(":precio",ld->precio);
+        query_lin_ped_pro.bindValue(":subtotal",ld->subtotal);
         query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_ped_pro.bindValue(":dto",ld->dto);
         query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
@@ -552,12 +552,12 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txttotal->setText(QString::number(oPedido_proveedor->total));
     ui->chkenviado->setChecked(oPedido_proveedor->enviado);
     ui->chkRecibido->setChecked(oPedido_proveedor->recibido);
-    ui->chklCompleto->setChecked(oPedido_proveedor->recibido_completo);
+    ui->chkcompleto->setChecked(oPedido_proveedor->recibido_completo);
 
     ui->txtcomentario->setText(oPedido_proveedor->comentario);
     ui->txtfechaRecepcion->setDate(oPedido_proveedor->fecha_entrega);
-    ui->txtdireccion1_entrega->setText(oPedido_proveedor->direccion1_entrega);
-    ui->txtdireccion1_entrega_2->setText(oPedido_proveedor->direccion2_entrega);
+    ui->txtdireccion_entrega1->setText(oPedido_proveedor->direccion_entrega1);
+    ui->txtdireccion_entrega1_2->setText(oPedido_proveedor->direccion_entrega2);
     ui->txtcp_entrega->setText(oPedido_proveedor->cp_entrega);
     ui->txtpoblacion_entrega->setText(oPedido_proveedor->poblacion_entrega);
     ui->txtprovincia_entrega->setText(oPedido_proveedor->provincia_entrega);
@@ -616,12 +616,12 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
     oPedido_proveedor->total = ui->txttotal->text().toDouble();
     oPedido_proveedor->enviado = ui->chkenviado->isChecked();
     oPedido_proveedor->recibido = ui->chkRecibido->isChecked();
-    oPedido_proveedor->recibido_completo = ui->chklCompleto->isChecked();
+    oPedido_proveedor->recibido_completo = ui->chkcompleto->isChecked();
     oPedido_proveedor->recargo_equivalencia = ui->chklporc_rec->isChecked();
     oPedido_proveedor->comentario = ui->txtcomentario->toPlainText();
     oPedido_proveedor->fecha_entrega = ui->txtfechaRecepcion->date();
-    oPedido_proveedor->direccion1_entrega = ui->txtdireccion1_entrega->text();
-    oPedido_proveedor->direccion2_entrega = ui->txtdireccion1_entrega_2->text();
+    oPedido_proveedor->direccion_entrega1 = ui->txtdireccion_entrega1->text();
+    oPedido_proveedor->direccion_entrega2 = ui->txtdireccion_entrega1_2->text();
     oPedido_proveedor->cp_entrega = ui->txtcp_entrega->text();
     oPedido_proveedor->poblacion_entrega = ui->txtpoblacion_entrega->text();
     oPedido_proveedor->provincia_entrega = ui->txtprovincia_entrega->text();
@@ -676,12 +676,12 @@ void FrmPedidosProveedor::clear()
     ui->txttotal->clear();
     ui->chkenviado->setChecked(false);
     ui->chkRecibido->setChecked(false);
-    ui->chklCompleto->setChecked(false);
+    ui->chkcompleto->setChecked(false);
 
     ui->txtcomentario->clear();
     ui->txtfechaRecepcion->clear();
-    ui->txtdireccion1_entrega->clear();
-    ui->txtdireccion1_entrega_2->clear();
+    ui->txtdireccion_entrega1->clear();
+    ui->txtdireccion_entrega1_2->clear();
     ui->txtcp_entrega->clear();
     ui->txtpoblacion_entrega->clear();
     ui->txtprovincia_entrega->clear();

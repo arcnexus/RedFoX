@@ -18,9 +18,9 @@ bool Albaran::AnadirAlbaran()
     int x = NuevoNumeroAlbaran();
     QSqlQuery q(QSqlDatabase::database("empresa"));
     q.prepare("INSERT INTO cab_alb"
-              "(albaran, fecha, pedido_cli, id_cliente, codigo_cliente, cliente,"
+              "(albaran, fecha, pedido_cliente, id_cliente, codigo_cliente, cliente,"
               "direccion1, direccion2, poblacion, provincia, cp, id_pais, cif,"
-              "recargo_equivalencia, subtotal, dto, dto, base1, base2, base3,"
+              "recargo_equivalencia, subtotal, porc_dto, dto, base1, base2, base3,"
               "base4, porc_iva1, porc_iva2, porc_iva3, porc_iva4,"
               "iva1, iva2, iva3, iva4, porc_rec1,"
               "porc_rec2, porc_rec3, porc_rec4,"
@@ -29,9 +29,9 @@ bool Albaran::AnadirAlbaran()
               "total_albaran, impreso, facturado, factura, fecha_factura, comentario,"
               "entregado_a_cuenta) "
               "VALUES"
-              "(:albaran, :fecha, :pedido_cli, :id_cliente, :codigo_cliente, :cliente,"
+              "(:albaran, :fecha, :pedido_cliente, :id_cliente, :codigo_cliente, :cliente,"
               ":direccion1, :direccion2, :poblacion, :provincia, :cp, :id_pais, :cif,"
-              ":recargo_equivalencia, :subtotal, :dto, :dto, :base1, :base2, :base3,"
+              ":recargo_equivalencia, :subtotal, :porc_dto, :dto, :base1, :base2, :base3,"
               ":base4, :porc_iva1, :porc_iva2, :porc_iva3, :porc_iva4,"
               ":iva1, :iva2, :iva3, :iva4, :porc_rec1,"
               ":porc_rec2, :porc_rec3, :porc_rec4,"
@@ -41,7 +41,7 @@ bool Albaran::AnadirAlbaran()
               ":entregado_a_cuenta) ");
     q.bindValue(":albaran",x);
     q.bindValue(":fecha",fecha);
-    q.bindValue(":pedido_cli",pedido_cli);
+    q.bindValue(":pedido_cliente",pedido_cliente);
     q.bindValue(":id_cliente",id_cliente);
     q.bindValue(":codigo_cliente",codigo_cliente);
     q.bindValue(":cliente",cliente);
@@ -57,7 +57,7 @@ bool Albaran::AnadirAlbaran()
     q.bindValue(":recargo_equivalencia",recargo_equivalencia);
     q.bindValue(":subtotal",0);
     q.bindValue(":dto",0);
-    q.bindValue(":dto",0);
+    q.bindValue(":porc_dto",0);
     q.bindValue(":base1",0);
     q.bindValue(":base2",0);
     q.bindValue(":base3",0);
@@ -114,7 +114,7 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
 {
     QSqlQuery q(QSqlDatabase::database("empresa"));
     q.prepare("UPDATE cab_alb SET "
-              "fecha=:fecha, pedido_cli=:pedido_cli, id_cliente=:id_cliente,"
+              "fecha=:fecha, pedido_cliente=:pedido_cliente, id_cliente=:id_cliente,"
               "codigo_cliente=:codigo_cliente, cliente=:cliente,"
               "direccion1=:direccion1,direccion2=:direccion2, poblacion=:poblacion,"
               "provincia=:provincia, cp=:cp, id_pais=:id_pais, cif=:cif,"
@@ -137,7 +137,7 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
 
     q.bindValue(":albaran",nid_Albaran);
     q.bindValue(":fecha",fecha);
-    q.bindValue(":pedido_cli",pedido_cli);
+    q.bindValue(":pedido_cliente",pedido_cliente);
     q.bindValue(":id_cliente",id_cliente);
     q.bindValue(":codigo_cliente",codigo_cliente);
     q.bindValue(":cliente",cliente);
@@ -224,7 +224,7 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 id = r.value("id").toInt();;
                 albaran= r.value("albaran").toInt();
                 fecha= r.value("fecha").toDate();
-                pedido_cli= r.value("pedido_cli").toString();
+                pedido_cliente= r.value("pedido_cliente").toString();
                 id_cliente= r.value("id_cliente").toInt();
                 codigo_cliente= r.value("codigo_cliente").toString();
                 cliente= r.value("cliente").toString();
