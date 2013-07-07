@@ -9,6 +9,9 @@ void MainWindow::crear_barraMantenimiento()
     if(!_mantenModules.isEmpty())
     {
         QWidget* container = new QWidget(this);
+        QScrollArea * scroll = new QScrollArea(this);
+        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        scroll->setWidgetResizable(true);
         QVBoxLayout * box = new QVBoxLayout(container);
         QVector<MayaModule*>::Iterator mantenIter;
         for(mantenIter = _mantenModules.begin(); mantenIter!=_mantenModules.end();++mantenIter)
@@ -37,7 +40,8 @@ void MainWindow::crear_barraMantenimiento()
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
-        ui->modulesStack->addWidget(container);
+        scroll->setWidget(container);
+        ui->modulesStack->addWidget(scroll);
         ui->comboBox->addItem(tr("Mantenimiento"));
     }
     if(!_mantenExtensions.isEmpty())
@@ -71,6 +75,9 @@ void MainWindow::crear_barraAlmacen()
     {
         menu = new QMenu(tr("Almacen"),this);
         QWidget* container = new QWidget(this);
+        QScrollArea * scroll = new QScrollArea(this);
+        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        scroll->setWidgetResizable(true);
         QVBoxLayout * box = new QVBoxLayout(container);
         QVector<MayaModule*>::Iterator almacenIter;
         for(almacenIter = _almacenModules.begin(); almacenIter!=_almacenModules.end();++almacenIter)
@@ -99,7 +106,8 @@ void MainWindow::crear_barraAlmacen()
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
-        ui->modulesStack->addWidget(container);
+        scroll->setWidget(container);
+        ui->modulesStack->addWidget(scroll);
         ui->comboBox->addItem(tr("Almacen"));
     }
     if(!_almacenExtensions.isEmpty())
@@ -132,7 +140,11 @@ void MainWindow::crear_barraVentas()
     {
         QMenu* menu = new QMenu(tr("Ventas"),this);
         QWidget* container = new QWidget(this);
+        QScrollArea * scroll = new QScrollArea(this);
+        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        scroll->setWidgetResizable(true);
         QVBoxLayout * box = new QVBoxLayout(container);
+
         QVector<MayaModule*>::Iterator ventasIter;
         for(ventasIter = _ventasModules.begin(); ventasIter!=_ventasModules.end();++ventasIter)
         {
@@ -160,7 +172,8 @@ void MainWindow::crear_barraVentas()
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
-        ui->modulesStack->addWidget(container);
+        scroll->setWidget(container);
+        ui->modulesStack->addWidget(scroll);
         ui->comboBox->addItem(tr("Ventas"));
         ui->menubar->addMenu(menu);
     }
@@ -177,6 +190,9 @@ void MainWindow::crear_barraCompras()
     {
         QMenu* menu = new QMenu(tr("Compras"),this);
         QWidget* container = new QWidget(this);
+        QScrollArea * scroll = new QScrollArea(this);
+        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        scroll->setWidgetResizable(true);
         QVBoxLayout * box = new QVBoxLayout(container);
         QVector<MayaModule*>::Iterator comprasIter;
         for(comprasIter = _comprasModules.begin(); comprasIter!=_comprasModules.end();++comprasIter)
@@ -205,7 +221,8 @@ void MainWindow::crear_barraCompras()
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
-        ui->modulesStack->addWidget(container);
+        scroll->setWidget(container);
+        ui->modulesStack->addWidget(scroll);
         ui->comboBox->addItem(tr("Compras"));
         ui->menubar->addMenu(menu);
     }
@@ -220,6 +237,9 @@ void MainWindow::crear_barraUtils()
     {
         QMenu* menu = new QMenu(tr("Utilidades"),this);
         QWidget* container = new QWidget(this);
+        QScrollArea * scroll = new QScrollArea(this);
+        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        scroll->setWidgetResizable(true);
         QVBoxLayout * box = new QVBoxLayout(container);
         QVector<MayaModule*>::Iterator utilIter;
         for(utilIter =  _utilsModules.begin(); utilIter!= _utilsModules.end();++utilIter)
@@ -248,7 +268,8 @@ void MainWindow::crear_barraUtils()
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
-        ui->modulesStack->addWidget(container);
+        scroll->setWidget(container);
+        ui->modulesStack->addWidget(scroll);
         ui->comboBox->addItem(tr("Utilidades"));
         ui->menubar->addMenu(menu);
     }
@@ -263,6 +284,9 @@ void MainWindow::crear_barraAdmin()
     {
         QMenu* menu = new QMenu(tr("Administrador"),this);
         QWidget* container = new QWidget(this);
+        QScrollArea * scroll = new QScrollArea(this);
+        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        scroll->setWidgetResizable(true);
         QVBoxLayout * box = new QVBoxLayout(container);
         QVector<MayaModule*>::Iterator Iter;
         for(Iter =  _adminModules.begin(); Iter!=_adminModules.end();++Iter)
@@ -291,7 +315,8 @@ void MainWindow::crear_barraAdmin()
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
-        ui->modulesStack->addWidget(container);
+        scroll->setWidget(container);
+        ui->modulesStack->addWidget(scroll);
         ui->comboBox->addItem(tr("Administrador"));
         ui->menubar->addMenu(menu);
     }
@@ -307,6 +332,9 @@ void MainWindow::crear_barraContabilidad()
     {
         QMenu* menu = new QMenu(tr("Contabilidad"),this);
         QWidget* container = new QWidget(this);
+        QScrollArea * scroll = new QScrollArea(this);
+        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        scroll->setWidgetResizable(true);
         QVBoxLayout * box = new QVBoxLayout(container);
         QVector<MayaModule*>::Iterator Iter;
         for(Iter =  _contaModules.begin(); Iter!=_contaModules.end();++Iter)
@@ -335,7 +363,8 @@ void MainWindow::crear_barraContabilidad()
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
-        ui->modulesStack->addWidget(container);
+        scroll->setWidget(container);
+        ui->modulesStack->addWidget(scroll);
         ui->comboBox->addItem(tr("Contabilidad"));
         ui->menubar->addMenu(menu);
     }
@@ -351,6 +380,9 @@ void MainWindow::crear_barraClinica()
     {
         menu = new QMenu(tr("Clinica"),this);
         QWidget* container = new QWidget(this);
+        QScrollArea * scroll = new QScrollArea(this);
+        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        scroll->setWidgetResizable(true);
         QVBoxLayout * box = new QVBoxLayout(container);
         QVector<MayaModule*>::Iterator almacenIter;
         for(almacenIter = _clinicaModules.begin(); almacenIter!=_clinicaModules.end();++almacenIter)
@@ -379,7 +411,8 @@ void MainWindow::crear_barraClinica()
         }
         box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
         container->setLayout(box);
-        ui->modulesStack->addWidget(container);
+        scroll->setWidget(container);
+        ui->modulesStack->addWidget(scroll);
         ui->comboBox->addItem(tr("Almacen"));
     }
     if(!_clinicaExtensions.isEmpty())
@@ -689,10 +722,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    //OpenRPT::databaseURL = "QMYSQL://localhost:3306/";
     ui->setupUi(this);
     on_edit = false;
-    //Configuracion_global->CargarDatos();
 
     QPixmap pixmap(":/Icons/PNG/mayafondo_blanco.png");
     QSplashScreen splash(pixmap);
@@ -732,11 +763,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
 
     updateDivisas();
-
-//    QMap<QString,QVariant> _map;
-//   _map["id_cab"] = 1;
-//   _map["id_cliente"] = 3;
-//   Configuracion::imprimir("hola",true,true,_map,this);
 }
 
 void MainWindow::block_main()

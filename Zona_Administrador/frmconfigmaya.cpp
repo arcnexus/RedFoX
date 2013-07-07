@@ -13,11 +13,8 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     toolButton(tr("Configuracion\nGeneral"),":/Icons/PNG/Config.png",this),
     menuButton(QIcon(":/Icons/PNG/Config.png"),tr("Configuracion General"),this)
 {
-    if(!Configuracion_global)
-        Configuracion_global = new Configuracion;
-    Configuracion_global->CargarDatosBD();
     Configuracion_global->Cargar_iva();
-    Configuracion_global->Cargar_paises();
+    //Configuracion_global->Cargar_paises();
     ui->setupUi(this);
     QSqlQueryModel *qUsers = new QSqlQueryModel(this);
     qUsers->setQuery("select nombre from usuarios",QSqlDatabase::database("Maya"));
@@ -116,7 +113,7 @@ void frmConfigmaya::configurar()
     settings.setValue("cUserBDMaya",Configuracion::Crypt(ui->txtUsuario->text()));
     settings.setValue("cPasswordBDMaya",Configuracion::Crypt(ui->txtPassword->text()));
     settings.setValue("pais",ui->cboPaises->currentText());
-    settings.setValue(("cPuertoDBMaya"),ui->txtPuerto->text());
+    settings.setValue(("global_port"),ui->txtPuerto->text());
     settings.setValue("ndigitos_factura",ui->spindigitos_factura->value());
     if(ui->chkProfesional->isChecked())
         settings.setValue("lProfesional",1);

@@ -250,18 +250,20 @@ QString Configuracion::setTipoIva(int idIva)
 void Configuracion::Cargar_paises()
 {
     paises.clear();
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(groupDB);
     if(query.exec("SELECT * FROM paises"))
     {
         while(query.next())
         {
-            QString key = query.record().value("tipo").toString();
+            QString key = query.record().value("pais").toString();
             paises.insert(key,query.record());
         }
     }
     if(paises_model == 0)
-        paises_model = new QSqlTableModel(this,QSqlDatabase::database("Maya"));
-    paises_model->setTable("paises");
+    {
+        paises_model = new QSqlTableModel(this,groupDB);
+        paises_model->setTable("paises");
+    }
     paises_model->select();
 }
 
@@ -541,17 +543,18 @@ void Configuracion::CargarUsuarios()
     usuarios_model->select();
 }
 
-void Configuracion::CargarDatosBD()
+bool Configuracion::CargarDatosBD()
 {
     QFile f(qApp->applicationDirPath()+"/MayaConfig.ini");
     if(!f.exists())
-        return;
+        return false;
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
-    this->cDriverBDMaya = settings.value("cDriverBDMaya").toString();
-    this->cRutaBdMaya = settings.value("cRutaDBMaya").toString();
-    this->cHostBDMaya = settings.value("cHostBDMaya").toString();
-    this->cUsuarioBDMaya  =   DeCrypt(settings.value("cUserBDMaya").toString());
-    this->cPasswordBDMaya = DeCrypt(settings.value("cPasswordBDMaya").toString());
+    this->global_driver = settings.value("cDriverBDMaya").toString();
+    this->global_routeLite = settings.value("cRutaDBMaya").toString();
+    this->global_host = settings.value("cHostBDMaya").toString();
+    this->global_user  =   DeCrypt(settings.value("cUserBDMaya").toString());
+    this->global_pass = DeCrypt(settings.value("cPasswordBDMaya").toString());
+    this->global_port = settings.value("global_port").toInt();
 
     this->nombre_bdTiendaWeb = settings.value("nombre_bdTiendaWeb").toString();
     this->cHostBDTiendaWeb = settings.value("hostTiendaWeb").toString();
@@ -566,6 +569,26 @@ void Configuracion::CargarDatosBD()
     this->UsuarioDB_MediTec = settings.value("UsuarioDB_MediTec").toString();
     this->PasswordDB_MediTec = settings.value("PasswordDB_MediTec").toString();
     this->PortDB_MediTec =  settings.value("PuertoDB_MediTec").toString();
+
+    this->globalDB = QSqlDatabase::addDatabase(Configuracion_global->global_driver,"Global");
+
+    if (this->global_driver == "QSQLITE")
+    {
+        this->globalDB.setDatabaseName(Configuracion_global->global_routeLite);
+        this->globalDB.open();
+    }
+    else
+    {
+        this->globalDB.setDatabaseName("mayaglobal");
+        this->globalDB.setHostName(Configuracion_global->global_host);
+        this->globalDB.open(Configuracion_global->global_user,Configuracion_global->global_pass);
+    }
+
+    if (this->globalDB.lastError().isValid())
+    {
+        QMessageBox::critical(0, "error:", this->globalDB.lastError().text());
+    }
+    return !this->globalDB.lastError().isValid();
 }
 
 void Configuracion::AbrirDbWeb()
@@ -613,8 +636,7 @@ void Configuracion::CargarDatos(int id)
 {
     QSqlQuery qEmpresa(QSqlDatabase::database("Maya"));
     qEmpresa.prepare("Select * from empresas where id =:id");
-    idEmpresa = id;
-    qEmpresa.bindValue(":id",idEmpresa);
+    qEmpresa.bindValue(":id",id);
     if (qEmpresa.exec()) {
         qEmpresa.next();
         this->pais = qEmpresa.record().field("pais").value().toString();

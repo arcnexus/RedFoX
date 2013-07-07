@@ -574,7 +574,7 @@ background-color: rgb(133, 170, 142);</string>
        </property>
        <property name="maximumSize">
         <size>
-         <width>120</width>
+         <width>135</width>
          <height>16777215</height>
         </size>
        </property>
@@ -602,6 +602,12 @@ selection-color: rgb(0, 0, 0);</string>
         </item>
         <item>
          <widget class="QStackedWidget" name="modulesStack">
+          <property name="minimumSize">
+           <size>
+            <width>131</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="currentIndex">
            <number>-1</number>
           </property>

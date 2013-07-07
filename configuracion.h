@@ -36,50 +36,55 @@ class Configuracion: public QObject
 public:
     Configuracion(QObject * parent = 0);
 
-    QString cRutaBdMaya;
+    QSqlDatabase globalDB;
+    QString global_driver;
+    QString global_host;
+    QString global_user;
+    QString global_pass;
+    int global_port;
+    QString global_routeLite;
+
+    QSqlDatabase groupDB;
+    QString group_DBName;
+    QString group_host;
+    QString group_user;
+    QString group_pass;
+    int group_port;
+    QString group_Driver;
+
+    QSqlDatabase empresaDB;
+    QString nombre_bd_empresa;
+    QString ruta_bd_empresa;
+
+    QSqlDatabase reportsDB;
+
+    QSqlDatabase medicaDB;
+    QString nombre_bd_medica;
+    QString ruta_bd_medica;
+
+    QSqlDatabase contaDB;
+    QString nombre_bd_conta;
+    QString RutaBD_Conta;
+
+    QString nombre_bdTiendaWeb;
+    QString cHostBDTiendaWeb;
+    QString cUsuarioTiendaWeb;
+    QString cPasswordTiendaWeb;
+    QString cPuertoTiendaWeb;
+
+    QString HostDB_MediTec;
+    QString NombreDB_MediTec;
+    QString UsuarioDB_MediTec;
+    QString PasswordDB_MediTec;
+    QString PortDB_MediTec;
+
     QString serie;
     int ndigitos_factura;
     QString cConector;
     int idEmpresa;
     QString cCodEmpresaActiva;
     QString nombreEmpresa;
-    QString ruta_bd_empresa;
-    QString driver_bd_empresa;
-    QString host_bd_empresa;
-    QString usuario_bd_empresa;
-    QString password_bd_empresa;
-    QString nombre_bd_empresa;
-    QString cPuertoBDEmpresa;
-    QString ruta_bd_medica;
-    QString driver_bd_medica;
-    QString host_bd_medica;
-    QString usuario_bd_medica;
-    QString password_bd_medica;
-    QString nombre_bd_medica;
-    QString cpuerto_bd_medica;
-    QString cDriverBDMaya;
-    QString cHostBDMaya;
-    QString cUsuarioBDMaya;
-    QString cPasswordBDMaya;
-    QString nombre_bdMaya;
-    QString cPuertoBDMaya;
-    QString nombre_bdTiendaWeb;
-    QString cHostBDTiendaWeb;
-    QString cUsuarioTiendaWeb;
-    QString cPasswordTiendaWeb;
-    QString cPuertoTiendaWeb;
-    QString HostDB_MediTec;
-    QString NombreDB_MediTec;
-    QString UsuarioDB_MediTec;
-    QString PasswordDB_MediTec;
-    QString PortDB_MediTec;
-    QString RutaBD_Conta;
-    QString driver_db_conta;
-    QString host_db_conta;
-    QString nombre_db_conta;
-    QString usuario_db_conta;
-    QString password_db_conta;
-    QString port_db_conta;
+
     bool contabilidad;
     bool ticket_factura;
 
@@ -180,7 +185,7 @@ public:
     double MonedatoDouble(QString moneda);
     bool EsNumero(QString texto);
     void CargarDatos(int id);
-    void CargarDatosBD();
+    bool CargarDatosBD();
     void AbrirDbWeb();
     void CerrarDbWeb();
     void AbridBDMediTec();

@@ -20,6 +20,8 @@
 
 #include "mainwindow.h"
 #include "login.h"
+#include "configuracion.h"
+
 #include <QStyleFactory>
 #include "openrptLibs/include/data.h"
 
@@ -35,28 +37,21 @@ bool cargarEmpresa(QString empresa)
     QryEmpresa.bindValue(":nombre",empresa.trimmed());
     if (QryEmpresa.exec())
     {
-        QryEmpresa.next();
+        if(!QryEmpresa.next())
+            return false;
 
         QApplication::processEvents();
         QSqlRecord record = QryEmpresa.record();
 
         // DBEMpresa
-        //splash.showMessage(tr("Cargando configuración de base de datos"),Qt::AlignBottom);
-        Configuracion_global->driver_bd_empresa = record.field("driver_bd").value().toString();
-        Configuracion_global->host_bd_empresa = record.field("host").value().toString();
-        Configuracion_global->nombre_bd_empresa =record.field("nombre_bd").value().toString();
-        Configuracion_global->password_bd_empresa =record.field("contrasena").value().toString();
+        //splash.showMessage(tr("Cargando configuración de base de datos"),Qt::AlignBottom);        
+
         Configuracion_global->ruta_bd_empresa = record.field("ruta_bd_sqlite").value().toString();
-        Configuracion_global->usuario_bd_empresa = record.field("user").value().toString();
+
         Configuracion_global->divisa_local = Configuracion_global->Devolver_moneda(record.field("id_divisa").value().toInt());
         Configuracion_global->cod_divisa_local = Configuracion_global->Devolver_codDivisa(record.field("id_divisa").value().toInt());
         Configuracion_global->divisa_local_reducida = "";
-        Configuracion_global->driver_db_conta = record.field("driver_db_conta").value().toString();
-        Configuracion_global->host_db_conta= record.field("host_db_conta").value().toString();
-        Configuracion_global->nombre_db_conta = record.value("nombre_db_conta").toString();
-        Configuracion_global->usuario_db_conta = record.field("user_db_conta").value().toString();
-        Configuracion_global->password_db_conta = record.field("password_db_conta").value().toString();
-        Configuracion_global->port_db_conta = record.field("puerto_db_conta").value().toString();
+
         Configuracion_global->contabilidad = record.field("contabilidad").value().toBool();
         Configuracion_global->ticket_factura = record.field("ticket_factura").value().toBool(); // el tiquet y la factura son correlativos
         Configuracion_global->id_tarifa_predeterminada = record.field("id_tarifa_predeterminada").value().toInt();
@@ -78,12 +73,9 @@ bool cargarEmpresa(QString empresa)
 
         //DBMedica
         //splash.showMessage(tr("Cargando configuración médica"),Qt::AlignBottom);
-        Configuracion_global->driver_bd_medica = record.field("driver_bd_medica").value().toString();
-        Configuracion_global->host_bd_medica = record.field("host_bd_medica").value().toString();
-        Configuracion_global->nombre_bd_medica =record.field("nombre_bd_medica").value().toString();
-        Configuracion_global->password_bd_medica =record.field("contrasena_bd_medica").value().toString();
+
         Configuracion_global->ruta_bd_medica = record.field("ruta_bd_medica_sqlite").value().toString();
-        Configuracion_global->usuario_bd_medica = record.field("user_bd_medica").value().toString();
+
 
         QApplication::processEvents();
 
@@ -111,17 +103,17 @@ bool cargarEmpresa(QString empresa)
 
         // Abro empresa activa
         //splash.showMessage(tr("Cargando datos de la empresa activa"),Qt::AlignBottom);
-        QSqlDatabase dbEmpresa = QSqlDatabase::addDatabase(Configuracion_global->driver_bd_empresa,"empresa");
-        if (Configuracion_global->driver_bd_empresa =="QSQLITE")
+        Configuracion_global->empresaDB = QSqlDatabase::addDatabase(Configuracion_global->group_Driver,"empresa");
+        if (Configuracion_global->group_Driver =="QSQLITE")
         {
-            dbEmpresa.setDatabaseName(Configuracion_global->ruta_bd_empresa);
-            dbEmpresa.open();
+            Configuracion_global->empresaDB.setDatabaseName(Configuracion_global->ruta_bd_empresa);
+            Configuracion_global->empresaDB.open();
         }
         else
         {
-            dbEmpresa.setDatabaseName(Configuracion_global->nombre_bd_empresa);
-            dbEmpresa.setHostName(Configuracion_global->host_bd_empresa);
-            dbEmpresa.open(Configuracion_global->usuario_bd_empresa,Configuracion_global->password_bd_empresa);
+            Configuracion_global->empresaDB.setDatabaseName(Configuracion_global->nombre_bd_empresa);
+            Configuracion_global->empresaDB.setHostName(Configuracion_global->group_host);
+            Configuracion_global->empresaDB.open(Configuracion_global->group_user,Configuracion_global->group_pass);
         }
 
         QApplication::processEvents();
@@ -130,48 +122,47 @@ bool cargarEmpresa(QString empresa)
         //----------------------
 
         //splash.showMessage(tr("Abriendo base de datos médica"),Qt::AlignBottom);
-        QSqlDatabase dbMedica = QSqlDatabase::addDatabase(Configuracion_global->driver_bd_empresa,"dbmedica");
-        if (Configuracion_global->driver_bd_medica =="QSQLITE")
+        Configuracion_global->medicaDB = QSqlDatabase::addDatabase(Configuracion_global->group_Driver,"dbmedica");
+        if (Configuracion_global->group_Driver =="QSQLITE")
         {
-            dbMedica.setDatabaseName(Configuracion_global->ruta_bd_medica);
-            qDebug() << "Medica:" << Configuracion_global->ruta_bd_medica;
-            if(!dbMedica.open())
+            Configuracion_global->medicaDB.setDatabaseName(Configuracion_global->ruta_bd_medica);
+            if(!Configuracion_global->medicaDB.open())
                 QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR DB"),QObject::tr("No se ha podido abrir la BD medica"),
                 QObject::tr("Aceptar"));
         }
         else
         {
-            dbMedica.setDatabaseName(Configuracion_global->nombre_bd_medica);
-            dbMedica.setHostName(Configuracion_global->host_bd_medica);
-            dbMedica.open(Configuracion_global->usuario_bd_medica,Configuracion_global->password_bd_medica);
+            Configuracion_global->medicaDB.setDatabaseName(Configuracion_global->nombre_bd_medica);
+            Configuracion_global->medicaDB.setHostName(Configuracion_global->group_host);
+            Configuracion_global->medicaDB.open(Configuracion_global->group_user,Configuracion_global->group_pass);
         }
-        if (dbMedica.lastError().isValid())
+        if (Configuracion_global->medicaDB.lastError().isValid())
         {
-            QMessageBox::critical(qApp->activeWindow(), "error:", dbMedica.lastError().text());
+            QMessageBox::critical(qApp->activeWindow(), "error:", Configuracion_global->medicaDB.lastError().text());
         }
         if(Configuracion_global->contabilidad)
         {
             //----------------------------
             // Abro empresa Contabilidad
             //----------------------------
-            QSqlDatabase dbConta = QSqlDatabase::addDatabase(Configuracion_global->driver_db_conta,"dbconta");
-            if (Configuracion_global->driver_db_conta =="QSQLITE")
+            Configuracion_global->contaDB = QSqlDatabase::addDatabase(Configuracion_global->group_Driver,"dbconta");
+            if (Configuracion_global->group_Driver =="QSQLITE")
             {
-                dbMedica.setDatabaseName(Configuracion_global->RutaBD_Conta);
-                if(!dbConta.open())
+                Configuracion_global->contaDB.setDatabaseName(Configuracion_global->RutaBD_Conta);
+                if(!Configuracion_global->contaDB.open())
                     QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR DB"),
                                          QObject::tr("No se ha podido abrir la BD de Contabilidad"),
                                          QObject::tr("Aceptar"));
             }
             else
             {
-                dbConta.setDatabaseName(Configuracion_global->nombre_db_conta);
-                dbConta.setHostName(Configuracion_global->host_db_conta);
-                dbConta.open(Configuracion_global->usuario_db_conta,Configuracion_global->password_db_conta);
+                Configuracion_global->contaDB.setDatabaseName(Configuracion_global->nombre_bd_conta);
+                Configuracion_global->contaDB.setHostName(Configuracion_global->group_host);
+                Configuracion_global->contaDB.open(Configuracion_global->group_user,Configuracion_global->group_pass);
             }
-            if (dbConta.lastError().isValid())
+            if (Configuracion_global->contaDB.lastError().isValid())
             {
-                QMessageBox::critical(qApp->activeWindow(), "error al conectar a la BD de contabilidad:", dbConta.lastError().text());
+                QMessageBox::critical(qApp->activeWindow(), "error al conectar a la BD de contabilidad:", Configuracion_global->contaDB.lastError().text());
             }
 
         }
@@ -193,7 +184,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     qDebug() << "drivers: "<< QSqlDatabase::drivers();
-    QStringList d = QSqlDatabase::drivers();
+    QStringList d = QSqlDatabase::drivers();    
 
     if(d.isEmpty())
     {
@@ -202,6 +193,8 @@ int main(int argc, char *argv[])
                                                                   "Por favor instala un driver Sql para usar Maya"));
         return 0;
     }
+
+    Configuracion_global = new Configuracion;
 
     QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
     #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
@@ -239,8 +232,8 @@ int main(int argc, char *argv[])
            w.showInfo();
            Configuracion_global->id_usuario_activo = l.getid_user();
 #ifdef Q_OS_WIN32
-           w.show();
-           w.setWindowState(Qt::WindowMinimized);
+           //w.show();
+           //w.setWindowState(Qt::WindowMinimized);
            w.showMaximized();
 #else
            QRect dr= QApplication::desktop()->rect();
