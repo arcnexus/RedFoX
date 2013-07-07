@@ -405,8 +405,8 @@ double Table_Helper::calculaivaLinea(int row)
     double base = calculabaseLinea(row);
     base -= calculadtoLinea(row);
     qDebug() << helped_table->item(row,7)->text();
-    double porc_iva = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("iva").toDouble();
-
+    //double porc_iva = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("iva").toDouble();
+    double porc_iva = helped_table->item(row,7)->text().toDouble();
     double total_iva = (base * porc_iva)/100;
 
     return total_iva;
@@ -419,8 +419,8 @@ double Table_Helper::calcularRELinea(int row)
         double base = helped_table->item(row,4)->text().replace(",",".").toDouble();
         base -= calculadtoLinea(row);
 
-        double re = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("recargo_equivalencia").toDouble();
-
+        //double re = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("recargo_equivalencia").toDouble();
+        double re = helped_table->item(row,7)->text().toDouble();
         double total_re = (base * re)/100;
 
         return total_re;
@@ -571,40 +571,70 @@ void Table_Helper::calcular_por_Base(QString sbase)
     double total = 0;
     for(int i=0; i<helped_table->rowCount();i++)
     {
-        QString name = helped_table->item(i,7)->text();
-        if(Configuracion_global->ivas[name].value("nombre_interno").toString() == sbase)
-        {
-            double row_base = calculabaseLinea(i);
-            row_base-= calculadtoLinea(i);
+//        QString name = helped_table->item(i,7)->text();
+//       // if(Configuracion_global->ivas[name].value("iva").toString() == sbase)
 
-            double iva_value = Configuracion_global->ivas[name].value("iva").toDouble();
-            double aux_iva = (row_base * iva_value) /100;
+//        {
+//            double row_base = calculabaseLinea(i);
+//            row_base-= calculadtoLinea(i);
 
-            //Acumulo por linea
-            base += row_base;
-            iva += aux_iva;
-            /*********************/
+//            double iva_value = Configuracion_global->ivas[name].value("iva").toDouble();
+//            double aux_iva = (row_base * iva_value) /100;
 
-            if(use_re)
-            {
-                double re_value = Configuracion_global->ivas[name].value("recargo_equivalencia").toDouble();
-                double aux_re = (row_base * re_value) /100;
-                re += aux_re;
-                total+=aux_re;
-            }
-            total += row_base;
-            total += aux_iva;
-        }
-    }
+//            //Acumulo por linea
+//            base += row_base;
+//            iva += aux_iva;
+//            /*********************/
+
+//            if(use_re)
+//            {
+//                double re_value = Configuracion_global->ivas[name].value("recargo_equivalencia").toDouble();
+//                double aux_re = (row_base * re_value) /100;
+//                re += aux_re;
+//                total+=aux_re;
+//            }
+//            total += row_base;
+//            total += aux_iva;
+//        }
+
+//        base = calculabaseLinea(i);
+//        iva = calculaivaLinea(i);
+//        re = calcularRELinea(i);
+//        total = calculatotalLinea(i);
+
 
     if(sbase == "base1")
+    {
+        base = calculabaseLinea(i);
+        iva = calculaivaLinea(i);
+        re = calcularRELinea(i);
+        total = calculatotalLinea(i);
         emit desglose1Changed(base, iva, re, total);
+    }
     else if(sbase == "base2")
+    {
+        base = calculabaseLinea(i);
+        iva = calculaivaLinea(i);
+        re = calcularRELinea(i);
+        total = calculatotalLinea(i);
         emit desglose2Changed(base, iva, re, total);
-    else if(sbase == "base3")
+    }
+    else if(sbase == "base3"){
+        base = calculabaseLinea(i);
+        iva = calculaivaLinea(i);
+        re = calcularRELinea(i);
+        total = calculatotalLinea(i);
         emit desglose3Changed(base, iva, re, total);
+    }
     else if(sbase == "base4")
+    {
+        base = calculabaseLinea(i);
+        iva = calculaivaLinea(i);
+        re = calcularRELinea(i);
+        total = calculatotalLinea(i);
         emit desglose4Changed(base, iva, re, total);
+    }
+    }
 }
 
 void Table_Helper::rellenar_con_Articulo(int row)
