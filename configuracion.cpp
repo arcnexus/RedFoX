@@ -181,8 +181,10 @@ void Configuracion::Cargar_iva()
     }
 
     if(iva_model == 0)
+    {
         iva_model = new QSqlTableModel(this,QSqlDatabase::database("Maya"));
-    iva_model->setTable("tiposiva");
+        iva_model->setTable("tiposiva");
+    }
     iva_model->select();
 
     QString base1 , base2 , base3 ,base4;
