@@ -90,7 +90,7 @@ private:
     void BloquearCamposEpisodio(bool state);
     void LLenarEpisodio();
     void VaciarCamposEpisodio();
-    void VaciarCamposHistorialCompleto();
+    void VaciarCamposHistoriacompleto();
     void BloquearCamposImagen();
 public:
     int id_farmaco;

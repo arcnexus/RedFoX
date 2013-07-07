@@ -1133,7 +1133,7 @@ background-color: rgb(255, 255, 127);</string>
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QLineEdit" name="txtCodigoProveedor">
+        <widget class="QLineEdit" name="txtcodigo_proveedor">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -1801,7 +1801,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="0" column="2">
-           <widget class="QDateEdit" name="txtfecha_ultima_compra">
+           <widget class="QDateEdit" name="txtfecha_fecha_ultima_compra">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2081,7 +2081,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="2" column="4">
-           <widget class="QLineEdit" name="txtreservados">
+           <widget class="QLineEdit" name="txtunidades_reservadas">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2226,7 +2226,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="0" column="3">
-           <widget class="QLineEdit" name="txtacumulado_compras">
+           <widget class="QLineEdit" name="txtimporte_acumulado_compras">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2298,7 +2298,7 @@ color: rbg(0,0,0);</string>
            </widget>
           </item>
           <item row="1" column="3">
-           <widget class="QLineEdit" name="txtacumulado_ventas">
+           <widget class="QLineEdit" name="txtimporte_acumulado_ventas">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -5778,7 +5778,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
   <tabstop>txtcodigo_fabricante</tabstop>
   <tabstop>txtdescripcion</tabstop>
   <tabstop>txtdescripcionResumida</tabstop>
-  <tabstop>txtCodigoProveedor</tabstop>
+  <tabstop>txtcodigo_proveedor</tabstop>
   <tabstop>txtproveedor</tabstop>
   <tabstop>btnBuscarProveedor</tabstop>
   <tabstop>cboTipoIVA</tabstop>
@@ -5804,17 +5804,17 @@ alternate-background-color: rgb(255, 255, 255);</string>
   <tabstop>btnBorrarProveedores</tabstop>
   <tabstop>btnAsignarProveedor</tabstop>
   <tabstop>txtunidades_compradas</tabstop>
-  <tabstop>txtacumulado_compras</tabstop>
+  <tabstop>txtimporte_acumulado_compras</tabstop>
   <tabstop>txtunidades_vendidas</tabstop>
-  <tabstop>txtacumulado_ventas</tabstop>
+  <tabstop>txtimporte_acumulado_ventas</tabstop>
   <tabstop>txtstock_minimo</tabstop>
   <tabstop>txtstock_maximo</tabstop>
   <tabstop>txtstock_fisico_almacen</tabstop>
   <tabstop>txtstock_real_2</tabstop>
   <tabstop>txtcantidad_pendiente_recibir</tabstop>
   <tabstop>txtfecha_prevista_recepcion</tabstop>
-  <tabstop>txtreservados</tabstop>
-  <tabstop>txtfecha_ultima_compra</tabstop>
+  <tabstop>txtunidades_reservadas</tabstop>
+  <tabstop>txtfecha_fecha_ultima_compra</tabstop>
   <tabstop>txtfechaUltimaVenta</tabstop>
   <tabstop>chkArticulo_promocionado</tabstop>
   <tabstop>txtDescripcion_promocion</tabstop>

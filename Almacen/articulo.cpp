@@ -81,22 +81,23 @@ bool Articulo::Recuperar(QString cSQL)
                this->descripcion_reducida = registro.field("descripcion_reducida").value().toString();
                this->id_proveedor = registro.field("id_proveedor").value().toInt();
                this->id_familia = registro.field("id_familia").value().toInt();
-               this->familia = registro.field("familia").value().toString();
+              // this->familia = registro.field("familia").value().toString();
                this->id_seccion = registro.field("id_seccion").value().toInt();
-               this->seccion = registro.field("seccion").value().toString();
+              // this->seccion = registro.field("seccion").value().toString();
                this->id_subfamilia = registro.field("id_subfamilia").value().toInt();
-               this->subfamilia = registro.field("subfamilia").value().toString();
-               this->tipo_iva = registro.field("tipo_iva").value().toDouble();
+               //this->subfamilia = registro.field("sub_familia").value().toString();
+               this->tipo_iva =registro.field("tipo_iva").value().toDouble();
+               this->codigo_iva = Configuracion_global->Devolver_descripcion_tipo_iva(this->tipo_iva);
                this->coste = registro.field("coste").value().toDouble();
 
-               this->dto = registro.field("dto").value().toDouble();
-               this->ultima_compra = registro.field("ultima_compra").value().toDate();
-               this->ultima_venta = registro.field("ultima_venta").value().toDate();
+               this->porc_dto = registro.field("dto").value().toFloat();
+               this->fecha_ultima_compra = registro.field("fecha_ultima_compra").value().toDate();
+               this->fecha_ultima_venta = registro.field("fecha_ultima_venta").value().toDate();
 
                this->unidades_compradas = registro.field("unidades_compradas").value().toInt();
                this->unidades_vendidas = registro.field("unidades_vendidas").value().toInt();
-               this->acumulado_compras = registro.field("acumulado_compras").value().toDouble();
-               this->acumulado_ventas = registro.field("acumulado_ventas").value().toDouble();
+               this->importe_acumulado_compras = registro.field("importe_acumulado_compras").value().toDouble();
+               this->importe_acumulado_ventas = registro.field("importe_acumulado_ventas").value().toDouble();
                this->comentario = registro.field("comentario").value().toString();
                this->stock_maximo = registro.field("stock_maximo").value().toInt();
                this->stock_minimo = registro.field("stock_minimo").value().toInt();
@@ -111,12 +112,12 @@ bool Articulo::Recuperar(QString cSQL)
                this->pvp_incluye_iva = registro.field("pvp_incluye_iva").value().toInt();
                this->fecha_prevista_recepcion = registro.field("fecha_prevista_recepcion").value().toDate();
                this->cantidad_pendiente_recibir = registro.field("cantidad_pendiente_recibir").value().toInt();
-               this->reservados = registro.field("reservados").value().toInt();
+               this->unidades_reservadas = registro.field("unidades_reservadas").value().toInt();
                this->mostrar_web = registro.field("mostrar_web").value().toInt();
                this->etiquetas = registro.field("etiquetas").value().toInt();
                this->paquetes = registro.field("paquetes").value().toInt();
                this->localizacion_en_almacen = registro.field("localizacion_en_almacen").value().toString();
-               this->id_tiposiva = registro.field("id_tiposiva").value().toInt();
+               this->id_tipos_iva = registro.field("id_tipos_iva").value().toInt();
                this->id_subsub_familia = registro.field("id_subsub_familia").value().toInt();
                this->id_grupo_art = registro.field("id_grupo_art").value().toInt();
                this->id_web = registro.field("id_web").value().toInt();
@@ -182,15 +183,16 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->seccion = registro.field("seccion").value().toString();
                this->id_subfamilia = registro.field("id_subfamilia").value().toInt();
                this->subfamilia = registro.field("subfamilia").value().toString();
-               this->tipo_iva = registro.field("tipo_iva").value().toDouble();
+               this->tipo_iva =registro.field("tipo_iva").value().toDouble();
+               this->codigo_iva = Configuracion_global->Devolver_descripcion_tipo_iva(this->tipo_iva);
                this->coste = registro.field("coste").value().toDouble();
-               this->dto = registro.field("dto").value().toDouble();
-               this->ultima_compra = registro.field("ultima_compra").value().toDate();
-               this->ultima_venta = registro.field("ultima_venta").value().toDate();
+               this->porc_dto = registro.field("porc_dto").value().toFloat();
+               this->fecha_ultima_compra = registro.field("fecha_ultima_compra").value().toDate();
+               this->fecha_ultima_venta = registro.field("fecha_ultima_venta").value().toDate();
                this->unidades_compradas = registro.field("unidades_compradas").value().toInt();
                this->unidades_vendidas = registro.field("unidades_vendidas").value().toInt();
-               this->acumulado_compras = registro.field("acumulado_compras").value().toDouble();
-               this->acumulado_ventas = registro.field("acumulado_ventas").value().toDouble();
+               this->importe_acumulado_compras = registro.field("importe_acumulado_compras").value().toDouble();
+               this->importe_acumulado_ventas = registro.field("importe_acumulado_ventas").value().toDouble();
                this->comentario = registro.field("comentario").value().toString();
                this->stock_maximo = registro.field("stock_maximo").value().toInt();
                this->stock_minimo = registro.field("stock_minimo").value().toInt();
@@ -205,12 +207,12 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->pvp_incluye_iva = registro.field("pvp_incluye_iva").value().toInt();
                this->fecha_prevista_recepcion = registro.field("fecha_prevista_recepcion").value().toDate();
                this->cantidad_pendiente_recibir = registro.field("cantidad_pendiente_recibir").value().toInt();
-               this->reservados = registro.field("reservados").value().toInt();
+               this->unidades_reservadas = registro.field("unidades_reservadas").value().toInt();
                this->mostrar_web = registro.field("mostrar_web").value().toInt();
                this->etiquetas = registro.field("etiquetas").value().toInt();
                this->paquetes = registro.field("paquetes").value().toInt();
                this->localizacion_en_almacen = registro.field("localizacion_en_almacen").value().toString();
-               this->id_tiposiva = registro.field("id_tiposiva").value().toInt();
+               this->id_tipos_iva = registro.field("id_tipos_iva").value().toInt();
                this->id_subsub_familia = registro.field("id_subsub_familia").value().toInt();
                this->id_grupo_art = registro.field("id_grupo_art").value().toInt();
                this->id_web = registro.field("id_web").value().toInt();
@@ -327,14 +329,14 @@ void Articulo::Guardar()
                    "`id_subfamilia` =:id_subfamilia,"
                    "`tipo_iva` =:tipo_iva,"
                    "`coste` =:coste,"
-                   "`dto` =:dto,"
-                   "`dtoProveedor` =:dtoProveedor,"
-                   "`ultima_compra` =:ultima_compra,"
-                   "`ultima_venta` =:ultima_venta,"
+                   "`porc_dto` =:porc_dto,"
+                   "`dto_proveedor` =:dto_proveedor,"
+                   "`fecha_ultima_compra` =:fecha_ultima_compra,"
+                   "`fecha_ultima_venta` =:fecha_ultima_venta,"
                    "`unidades_compradas` =:unidades_compradas,"
                    "`unidades_vendidas` =:unidades_vendidas,"
-                   "`acumulado_compras` =:acumulado_compras,"
-                   "`acumulado_ventas` =:acumulado_ventas,"
+                   "`importe_acumulado_compras` =:importe_acumulado_compras,"
+                   "`importe_acumulado_ventas` =:importe_acumulado_ventas,"
                    "`comentario` =:comentario,"
                    "`stock_maximo` =:stock_maximo,"
                    "`stock_minimo` =:stock_minimo,"
@@ -345,12 +347,12 @@ void Articulo::Guardar()
                    "`pvp_incluye_iva` =:pvp_incluye_iva,"
                    "`fecha_prevista_recepcion` =:fecha_prevista_recepcion,"
                    "`cantidad_pendiente_recibir` =:cantidad_pendiente_recibir,"
-                   "`reservados` =:reservados,"
+                   "`unidades_reservadas` =:unidades_reservadas,"
                    "`mostrar_web` =:mostrar_web,"
                    "`etiquetas` =:etiquetas,"
                    "`paquetes` =:paquetes,"
                    "`localizacion_en_almacen` =:localizacion_en_almacen,"
-                   "`id_tiposiva` =:id_tiposiva,"
+                   "`id_tipos_iva` =:id_tipos_iva,"
                    "`id_subsub_familia` =:id_subsub_familia,"
                    "`id_grupo_art` =:id_grupo_art,"
                    "`id_web` =:id_web,"
@@ -382,13 +384,13 @@ void Articulo::Guardar()
     query.bindValue(":id_subfamilia",this->id_subfamilia);
     query.bindValue(":subfamilia",this->subfamilia);
     query.bindValue(":tipo_iva",this->tipo_iva);
-    query.bindValue(":dto",this->dto);
-    query.bindValue(":ultima_compra",this->ultima_compra);
-    query.bindValue(":ultima_venta",this->ultima_venta);
+    query.bindValue(":porc_dto",this->porc_dto);
+    query.bindValue(":fecha_ultima_compra",this->fecha_ultima_compra);
+    query.bindValue(":fecha_ultima_venta",this->fecha_ultima_venta);
     query.bindValue(":unidades_compradas",this->unidades_compradas);
     query.bindValue(":unidades_vendidas",this->unidades_vendidas);
-    query.bindValue(":acumulado_compras",this->acumulado_compras);
-    query.bindValue(":acumulado_ventas",this->acumulado_ventas);
+    query.bindValue(":importe_acumulado_compras",this->importe_acumulado_compras);
+    query.bindValue(":importe_acumulado_ventas",this->importe_acumulado_ventas);
     query.bindValue(":comentario",this->comentario);
     query.bindValue(":stock_maximo",this->stock_maximo);
     query.bindValue(":stock_minimo",this->stock_minimo);
@@ -399,12 +401,12 @@ void Articulo::Guardar()
     query.bindValue(":pvp_incluye_iva",this->pvp_incluye_iva);
     query.bindValue(":fecha_prevista_recepcion",fecha_prevista_recepcion);
     query.bindValue(":cantidad_pendiente_recibir",this->cantidad_pendiente_recibir);
-    query.bindValue(":reservados",this->reservados);
+    query.bindValue(":unidades_reservadas",this->unidades_reservadas);
     query.bindValue(":mostrar_web",this->mostrar_web);
     query.bindValue(":etiquetas",this->etiquetas);
     query.bindValue(":localizacion_en_almacen",this->localizacion_en_almacen);
     query.bindValue(":id",this->id);
-    query.bindValue(":id_tiposiva",this->id_tiposiva);
+    query.bindValue(":id_tipos_iva",this->id_tipos_iva);
     query.bindValue(":id_subsub_familia",this->id_subsub_familia);
     query.bindValue(":id_grupo_art",this->id_grupo_art);
     query.bindValue(":id_web",this->id_web);
@@ -452,13 +454,13 @@ void Articulo::Vaciar()
     this->subfamilia = "";
     this->tipo_iva = 0;
     this->coste = 0;
-    this->dto = 0;
-    this->ultima_compra = QDate::currentDate();
-    this->ultima_venta = QDate::currentDate();
+    this->porc_dto = 0;
+    this->fecha_ultima_compra = QDate::currentDate();
+    this->fecha_ultima_venta = QDate::currentDate();
     this->unidades_compradas = 0;
     this->unidades_vendidas = 0;
-    this->acumulado_compras = 0;
-    this->acumulado_ventas = 0;
+    this->importe_acumulado_compras = 0;
+    this->importe_acumulado_ventas = 0;
     //this->bImagen = registro.field(36).value().to....
     this->comentario = "";
     this->stock_maximo = 0;
@@ -472,7 +474,7 @@ void Articulo::Vaciar()
     this->pvp_incluye_iva = 0;
     this->fecha_prevista_recepcion = QDate::currentDate();
     this->cantidad_pendiente_recibir = 0;
-    this->reservados = 0;
+    this->unidades_reservadas = 0;
     this->mostrar_web = 0;
     this->etiquetas = 0;
     this->localizacion_en_almacen = "";
@@ -602,7 +604,7 @@ int Articulo::getidFamilia(QString familia_)
 int Articulo::getidSubFamilia(QString subfamilia_)
 {
     QSqlQuery Query(QSqlDatabase::database("Maya"));
-    Query.prepare("select id from subfamilias where subfamilia = :cValor ");
+    Query.prepare("select id from subfamilias where sub_familia = :cValor ");
     Query.bindValue(":cValor",subfamilia_);
     if(!Query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Sub-Familia"),
@@ -615,7 +617,7 @@ int Articulo::getidSubFamilia(QString subfamilia_)
 int Articulo::getidSubSufFamilia(QString cSubSubFamilia_)
 {
     QSqlQuery Query(QSqlDatabase::database("Maya"));
-    Query.prepare("select id from subsubfamilias where subsubfamilia = :cValor ");
+    Query.prepare("select id from subsubfamilias where subsub_familia = :cValor ");
     Query.bindValue(":cValor",cSubSubFamilia_);
     if(!Query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Sub-Sub-Familia"),
@@ -628,7 +630,7 @@ int Articulo::getidSubSufFamilia(QString cSubSubFamilia_)
 int Articulo::getidGrupo(QString cGrupo_)
 {
     QSqlQuery Query(QSqlDatabase::database("Maya"));
-    Query.prepare("select id from gruposart where grupoart = :cValor ");
+    Query.prepare("select id from gruposart where grupo_art = :cValor ");
     Query.bindValue(":cValor",cGrupo_);
     if(!Query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Grupo Artículo"),
@@ -668,7 +670,7 @@ QString Articulo::getfamilia(int nid)
 QString Articulo::getsubfamilia(int nid)
 {
     QSqlQuery Query(QSqlDatabase::database("Maya"));
-    Query.prepare("select subfamilia from subfamilias where id = :cValor ");
+    Query.prepare("select sub_familia from subfamilias where id = :cValor ");
     Query.bindValue(":cValor",nid);
     if(!Query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Sub-Familias"),
@@ -682,7 +684,7 @@ QString Articulo::getsubfamilia(int nid)
 QString Articulo::getcSubSubFamilia(int nid)
 {
     QSqlQuery Query(QSqlDatabase::database("Maya"));
-    Query.prepare("select subsubfamilia from subsubfamilias where id = :cValor ");
+    Query.prepare("select subsub_familia from subsubfamilias where id = :cValor ");
     Query.bindValue(":cValor",nid);
     if(!Query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Sub-sub-Familias"),
@@ -695,7 +697,7 @@ QString Articulo::getcSubSubFamilia(int nid)
 QString Articulo::getcGrupo(int nid)
 {
     QSqlQuery Query(QSqlDatabase::database("Maya"));
-    Query.prepare("select grupoart from gruposart where id = :cValor ");
+    Query.prepare("select grupo_art from gruposart where id = :cValor ");
     Query.bindValue(":cValor",nid);
     if(!Query.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar Grupo Artículo"),
@@ -706,20 +708,20 @@ QString Articulo::getcGrupo(int nid)
 }
 
 bool Articulo::agregar_proveedor_alternativo(int id_art, int id_proveedor, QString codigo, double pvd, QString descoferta, QString oferta,
-                                             double pvdreal,int id_divisa)
+                                             double pvd_real,int id_divisa)
 {
     QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("Maya"));
 
     query_proveedor_alternativo.prepare("INSERT INTO articulos_prov_frec "
-                                        "(id_articulo,id_proveedor,pvd,oferta,codigo,descoferta,pvdreal,id_divisa)"
-                                        " VALUES (:id_articulo,:id_proveedor,:pvd, :oferta,:codigo,:descoferta,:pvdreal,:id_divisa)");
+                                        "(id_articulo,id_proveedor,pvd,oferta,codigo,descoferta,pvd_real,id_divisa)"
+                                        " VALUES (:id_articulo,:id_proveedor,:pvd, :oferta,:codigo,:descoferta,:pvd_real,:id_divisa)");
     query_proveedor_alternativo.bindValue(":id_articulo",id_art);
     query_proveedor_alternativo.bindValue(":id_proveedor",id_proveedor);
     query_proveedor_alternativo.bindValue(":codigo",codigo);
     query_proveedor_alternativo.bindValue(":pvd",pvd);
     query_proveedor_alternativo.bindValue(":oferta",oferta);
     query_proveedor_alternativo.bindValue(":descoferta",descoferta);
-    query_proveedor_alternativo.bindValue(":pvdreal",pvdreal);
+    query_proveedor_alternativo.bindValue(":pvd_real",pvd_real);
     query_proveedor_alternativo.bindValue(":id_divisa",id_divisa);
     if(!query_proveedor_alternativo.exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Insertar proveedor frecuente"),
@@ -732,18 +734,19 @@ bool Articulo::agregar_proveedor_alternativo(int id_art, int id_proveedor, QStri
 
 }
 
-bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta, QString oferta, double pvdreal, int id_divisa)
+bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta, QString oferta,
+                                           double pvd_real, int id_divisa)
 {
     QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("Maya"));
 
     query_proveedor_alternativo.prepare("UPDATE articulos_prov_frec  set pvd = :pvd,oferta = :oferta, codigo = :codigo, "
-                                        "descoferta = :descoferta, pvdreal = :pvdreal, id_divisa =:id_divisa "
+                                        "descoferta = :descoferta, pvd_real = :pvd_real, id_divisa =:id_divisa "
                                         "where id = :id");
     query_proveedor_alternativo.bindValue(":codigo",codigo);
     query_proveedor_alternativo.bindValue(":pvd",pvd);
     query_proveedor_alternativo.bindValue(":oferta",oferta);
     query_proveedor_alternativo.bindValue(":descoferta",descoferta);
-    query_proveedor_alternativo.bindValue(":pvdreal",pvdreal);
+    query_proveedor_alternativo.bindValue(":pvd_real",pvd_real);
     query_proveedor_alternativo.bindValue(":id_divisa",id_divisa);
     query_proveedor_alternativo.bindValue(":id",id);
     if(!query_proveedor_alternativo.exec()) {

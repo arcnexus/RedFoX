@@ -174,7 +174,7 @@ void Configuracion::Cargar_iva()
     }
     if(ivas.size()!=4)
     {
-        query.prepare("INSERT INTO `tiposiva` (`id`, `nombre_interno`, `tipo`, `descripcion_tipo_iva`, `iva`, `regargo_equivalencia`) VALUES (1, 'base1', 'NORMAL', '21%', 21.00, 4.00), (2, 'base2', 'Reducido', '10%', 10.00, 2.00), (3, 'base3', 'Superreducido', '4%', 4.00, 1.00), (4, 'base4', 'Exento', 'Exento', 0.00, 0.00);");
+        query.prepare("INSERT INTO `tiposiva` (`id`, `nombre_interno`, `tipo`, `descripcion_tipo_iva`, `iva`, `recargo_equivalencia`) VALUES (1, 'base1', 'NORMAL', '21%', 21.00, 4.00), (2, 'base2', 'Reducido', '10%', 10.00, 2.00), (3, 'base3', 'Superreducido', '4%', 4.00, 1.00), (4, 'base4', 'Exento', 'Exento', 0.00, 0.00);");
         query.exec();
         qDebug() << query.lastError().text();
         return Cargar_iva();
@@ -499,6 +499,20 @@ int Configuracion::Devolver_id_cuenta_contable(QString codigo_cta)
                              tr("Aceptar"));
 }
 
+QString Configuracion::Devolver_descripcion_tipo_iva(double tipo)
+{
+    QSqlQuery query_iva(QSqlDatabase::database("Maya"));
+    if(query_iva.exec("select tipo from tiposiva where iva = "+QString::number(tipo)))
+    {
+        query_iva.next();
+        return query_iva.record().value("tipo").toString();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar tipo de iva"),
+                             tr("Fallo la recuperación del tipo de iva: ")+query_iva.lastError().text(),
+                             tr("Aceptar"));
+}
+
 QString Configuracion::Devolver_descripcion_cuenta_contable(QString codigo_cta)
 {
     QSqlQuery queryCuenta(QSqlDatabase::database("dbconta"));
@@ -526,6 +540,50 @@ QString Configuracion::Devolver_codigo_cta_contable(int id)
                              tr("Fallo al recuperar el código de la cuenta: ")+queryCuenta.lastError().text(),
                              tr("Aceptar"));
 }
+
+QString Configuracion::devolver_codigo_articulo(int id)
+{
+    QSqlQuery query_art(QSqlDatabase::database("Maya"));
+    if(query_art.exec("select codigo from articulos where id = "+QString::number(id)))
+    {
+        query_art.next();
+        return query_art.record().value("codigo").toString();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar artículo"),
+                             tr("Fallo al recuperar el código de artículo: ")+query_art.lastError().text(),
+                             tr("Aceptar"));
+
+}
+
+QString Configuracion::devolver_codigo_barras(int id)
+{
+    QSqlQuery query_art(QSqlDatabase::database("Maya"));
+    if(query_art.exec("select codigo_barras from articulos where id = "+QString::number(id)))
+    {
+        query_art.next();
+        return query_art.record().value("codigo_barras").toString();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar artículo"),
+                             tr("Fallo al recuperar el código de barras del artículo: ")+query_art.lastError().text(),
+                             tr("Aceptar"));
+}
+
+QString Configuracion::devolver_referencia_articulo(int id)
+{
+    QSqlQuery query_art(QSqlDatabase::database("Maya"));
+    if(query_art.exec("select codigo_fabricante from articulos where id = "+QString::number(id)))
+    {
+        query_art.next();
+        return query_art.record().value("codigo_fabricante").toString();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar artículo"),
+                             tr("Fallo al recuperar la referencia de artículo: ")+query_art.lastError().text(),
+                             tr("Aceptar"));
+}
+
 
 void Configuracion::CargarClientes()
 {

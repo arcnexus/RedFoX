@@ -106,7 +106,7 @@
        </widget>
       </item>
       <item row="3" column="2">
-       <widget class="QLineEdit" name="txtPVDReal">
+       <widget class="QLineEdit" name="txtpvd_real">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -247,7 +247,7 @@
   <tabstop>tablaproveedores</tabstop>
   <tabstop>txtCodigo</tabstop>
   <tabstop>txtPVD</tabstop>
-  <tabstop>txtPVDReal</tabstop>
+  <tabstop>txtpvd_real</tabstop>
   <tabstop>cboDivisa</tabstop>
   <tabstop>txtDescoferta</tabstop>
   <tabstop>btnAnadir</tabstop>

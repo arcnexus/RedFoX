@@ -468,7 +468,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
               </widget>
              </item>
              <item row="1" column="4" colspan="3">
-              <widget class="QLineEdit" name="txtcAtencionde">
+              <widget class="QLineEdit" name="txtatencion_de">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -2322,7 +2322,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
   <tabstop>txtcliente</tabstop>
   <tabstop>chklporc_rec</tabstop>
   <tabstop>txtcif</tabstop>
-  <tabstop>txtcAtencionde</tabstop>
+  <tabstop>txtatencion_de</tabstop>
   <tabstop>txttelefono</tabstop>
   <tabstop>txtmovil</tabstop>
   <tabstop>txtfax</tabstop>

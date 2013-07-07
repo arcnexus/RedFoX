@@ -22,7 +22,7 @@ public:
     int id;
     QString factura;
     QDate fecha;
-    QDate recepcion;
+    QDate fecha_recepcion;
     QString pedido;
     int id_proveedor;
     QString proveedor;

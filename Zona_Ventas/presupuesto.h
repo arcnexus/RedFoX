@@ -9,9 +9,9 @@ public:
     Presupuesto();
     ~Presupuesto();
     int id;
-    int nPresupuesto;
+    int presupuesto;
     QDate fecha;
-    QDate dValidoHasta;
+    QDate valido_hasta;
     int id_cliente;
     QString codigo_cliente;
     QString cliente;
@@ -33,12 +33,12 @@ public:
     double importe3;
     double importe4;
     double base;
-    double rDescuento;
+    float porc_dto;
     double total;
     bool impreso;
-    bool lAprobado;
-    QDate fechaAprobacion;
-    double importeFactura;
+    bool aprobado;
+    QDate fecha_aprobacion;
+    double importe_factura;
     double importe_pendiente;
     QString factura;
     int albaran;
@@ -46,8 +46,8 @@ public:
     int id_forma_pago;
     QString codigoFormaPago;
     QString descripcionFormaPago;
-    QString tLugarEntrega;
-    QString cAtencionde;
+    QString lugar_entrega;
+    QString atencion_de;
     double base1;
     double base2;
     double base3;
@@ -60,10 +60,10 @@ public:
     float porc_iva2;
     float porc_iva3;
     float porc_iva4;
-    float porc_porc_recuivalencia1;
-    float porc_porc_recuivalencia2;
-    float porc_porc_recuivalencia3;
-    float porc_porc_recuivalencia4;
+    float porc_rec1;
+    float porc_rec2;
+    float porc_rec3;
+    float porc_rec4;
     double rec1;
     double rec2;
     double rec3;
@@ -75,7 +75,7 @@ public:
     bool recargo_equivalencia;
     QString email;
     double total_iva;
-    double totalRec;
+    double total_recargo;
 
 public slots:
     // Metodos de trabajo Clase Presupuesto

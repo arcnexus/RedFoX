@@ -99,18 +99,18 @@ void FrmFacturasProveedor::lineaReady(lineaDetalle * ld)
             ok_Maya = false;
 
         QSqlQuery query_lin_fac_pro(QSqlDatabase::database("empresa"));
-        query_lin_fac_pro.prepare("INSERT INTO lin_fac_pro (id_cab,id_articulo,codigo_articulo_proveedor,"
-                                  "descripcion, cantidad, coste,subtotal,dto,dto,iva,"
-                                  "iva,total) VALUES (:id_cab,:id_articulo,:codigo_articulo_proveedor,"
-                                  ":descripcion,:cantidad,:coste_bruto,:subtotal_coste,:porc_dto,:dto,"
+        query_lin_fac_pro.prepare("INSERT INTO lin_fac_pro (id_cab,id_articulo,codigo,"
+                                  "descripcion, cantidad, precio,subtotal,porc_dto,dto,porc_iva,"
+                                  "iva,total) VALUES (:id_cab,:id_articulo,:codigo,"
+                                  ":descripcion,:cantidad,:precio,:subtotal,:porc_dto,:dto,"
                                   ":porc_iva,:iva,:total);");
         query_lin_fac_pro.bindValue(":id_cab", oFacPro->id);
         query_lin_fac_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_fac_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
+        query_lin_fac_pro.bindValue(":codigo",ld->codigo);
         query_lin_fac_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_fac_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_fac_pro.bindValue(":coste_bruto",ld->importe);
-        query_lin_fac_pro.bindValue(":subtotal_coste",ld->subtotal);
+        query_lin_fac_pro.bindValue(":precio",ld->precio);
+        query_lin_fac_pro.bindValue(":subtotal",ld->subtotal);
         query_lin_fac_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_fac_pro.bindValue(":dto",ld->dto);
         query_lin_fac_pro.bindValue(":porc_iva",ld->iva_perc);
@@ -169,29 +169,29 @@ void FrmFacturasProveedor::lineaReady(lineaDetalle * ld)
         QSqlQuery query_lin_fac_pro(QSqlDatabase::database("empresa"));
         query_lin_fac_pro.prepare("UPDATE lin_fac_pro SET "
                                   "id_articulo =:id_articulo,"
-                                  "codigo_articulo_proveedor =:codigo_articulo_proveedor,"
+                                  "codigo =:codigo,"
                                   "descripcion =:descripcion,"
                                   "cantidad =:cantidad,"
-                                  "coste =:coste_bruto,"
-                                  "subtotal =:subtotal_coste,"
-                                  "dto =:porc_dto,"
+                                  "precio =:precio,"
+                                  "subtotal =:subtotal,"
+                                  "porc_dto =:porc_dto,"
                                   "dto =:dto,"
-                                  "iva =:porc_iva,"
+                                  "porc_iva =:porc_iva,"
                                   "iva =:iva,"
                                   "total =:total "
                                   "WHERE id = :id;");
 
         query_lin_fac_pro.bindValue(":id_cab", oFacPro->id);
         query_lin_fac_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_fac_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
+        query_lin_fac_pro.bindValue(":codigo",ld->codigo);
         query_lin_fac_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_fac_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_fac_pro.bindValue(":coste_bruto",ld->importe);
-        query_lin_fac_pro.bindValue(":subtotal_coste",ld->subtotal);
+        query_lin_fac_pro.bindValue(":precio",ld->precio);
+        query_lin_fac_pro.bindValue(":subtotal",ld->subtotal);
         query_lin_fac_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_fac_pro.bindValue(":dto",ld->dto);
         query_lin_fac_pro.bindValue(":porc_iva",ld->iva_perc);
-        query_lin_fac_pro.bindValue(":iva",0); // importe iva hay que calcularlo
+        query_lin_fac_pro.bindValue(":iva",(ld->subtotal * ld->iva_perc)/100);
         query_lin_fac_pro.bindValue(":total",ld->total);
         query_lin_fac_pro.bindValue(":id",ld->idLinea);
 
@@ -295,7 +295,7 @@ void FrmFacturasProveedor::llenarProveedor(int id)
 {
     prov.Recuperar("Select * from proveedores where id="+QString::number(id),0);
 
-    ui->txtcodigoProveedor->setText(prov.codigo);
+    ui->txtcodigo_proveedor->setText(prov.codigo);
     ui->txtproveedor->setText(prov.proveedor);
     ui->lblproveedor->setText(prov.proveedor);
     ui->txtdireccion1->setText(prov.direccion1);
@@ -366,7 +366,7 @@ void FrmFacturasProveedor::on_btnAnadir_clicked()
     emit block();
     llenar_campos();
     bloquearcampos(false);
-    ui->txtcodigoProveedor->setFocus();
+    ui->txtcodigo_proveedor->setFocus();
 }
 
 void FrmFacturasProveedor::llenar_campos()
@@ -374,7 +374,7 @@ void FrmFacturasProveedor::llenar_campos()
     ui->txtfactura->setText(oFacPro->factura);
     ui->lblFactura->setText(oFacPro->factura);
     ui->txtfecha->setDate(oFacPro->fecha);
-    ui->txtrecepcion->setDate(oFacPro->recepcion);
+    ui->txtrecepcion->setDate(oFacPro->fecha_recepcion);
     ui->txtpedidoProveedor->setText(oFacPro->pedido);
     ui->txtproveedor->setText(oFacPro->proveedor);
     llenarProveedor(oFacPro->id_proveedor);
@@ -446,7 +446,7 @@ void FrmFacturasProveedor::llenar_fac_pro()
 
     oFacPro->factura = ui->txtfactura->text();
     oFacPro->fecha = ui->txtfecha->date();
-    oFacPro->recepcion = ui->txtrecepcion->date();
+    oFacPro->fecha_recepcion = ui->txtrecepcion->date();
     oFacPro->pedido = ui->txtpedidoProveedor->text();
     oFacPro->proveedor = ui->txtproveedor->text();
     oFacPro->cif_proveedor = ui->txtcif->text();
@@ -574,7 +574,7 @@ void FrmFacturasProveedor::on_btnEditar_clicked()
 {
     bloquearcampos(false);
     emit block();
-    ui->txtcodigoProveedor->setFocus();
+    ui->txtcodigo_proveedor->setFocus();
 }
 
 void FrmFacturasProveedor::on_btnDeshacer_clicked()

@@ -635,7 +635,7 @@ void Cliente::Borrar(int id_cliente)
                           tr("No"),tr("Si")) == QMessageBox::Accepted)
     {
         bool borrado_ok = true;
-        QSqlDatabase::database("empresa").transaction();
+        QSqlDatabase::database("Maya").transaction();
 
         QSqlQuery qTipos(QSqlDatabase::database("Maya"));
         qTipos.prepare("delete from tipocliente where id_cliente =:id_cliente");
@@ -650,7 +650,7 @@ void Cliente::Borrar(int id_cliente)
 
 
         QSqlQuery qdirecciones(QSqlDatabase::database("Maya"));
-        qdirecciones.prepare("Delete from cliente_direcciones where id_cliente =:idcli");
+        qdirecciones.prepare("Delete from cliente_direcciones where id_cliente =:id_cliente");
         qdirecciones.bindValue(":id_cliente",id_cliente);
         if(!qdirecciones.exec()) {
             QMessageBox::warning(qApp->activeWindow(),tr("Borrar cliente"),tr("Falló el borrado de direcciones alternativas"),
@@ -661,7 +661,7 @@ void Cliente::Borrar(int id_cliente)
 
         QSqlQuery qryCliente(QSqlDatabase::database("Maya"));
         qryCliente.prepare("Delete from clientes where id = :id_cliente");
-        qryCliente.bindValue(":id",id_cliente);
+        qryCliente.bindValue(":id_cliente",id_cliente);
         if(!qryCliente.exec()) {
             QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),
                                   tr("Falló el borrado de la deuda del cliente"),tr("&Aceptar"));
@@ -669,8 +669,7 @@ void Cliente::Borrar(int id_cliente)
         }
         if (borrado_ok ==true) {
             QSqlDatabase::database("Maya").commit();
-            // TODO - reactivar timedMessage cuando esté arreglado el bug.
-          //  TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Borrado corectamente"));
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Borrado corectamente"));
         } else {
             QSqlDatabase::database("Maya").rollback();
             QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),

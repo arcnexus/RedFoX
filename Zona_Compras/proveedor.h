@@ -40,7 +40,7 @@ public:
     int idFormadePago;
     QString codigoFormaPago;
     QDate fecha_ultima_compra;
-    double acumulado_compras;
+    double importe_acumulado_compras;
     QString entidad_bancaria_proveedor;
     QString oficina_bancaria_proveedor;
     QString dc_proveedor;
@@ -82,7 +82,7 @@ public slots:
     void Vaciar();
     void Borrar(int nid);
     void clear();
-    QString NuevoCodigoProveedor();
+    QString Nuevocodigo_proveedor();
 
 
 };

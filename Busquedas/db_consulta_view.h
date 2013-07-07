@@ -21,6 +21,8 @@ public:
     void set_titulo(QString titulo);
     void set_headers(QStringList cabecera);
     void set_tamano_columnas(QVariantList tamanos);
+    void set_delegate_monetary(QVariantList cols);
+    void set_delegate_fecha(QVariantList cols);
     void set_campoBusqueda(QStringList campos);
     void set_db(QString nombre_db);
     int get_id() {return this->id;}
@@ -33,7 +35,6 @@ private:
     QString cSQLFiltered;
     QStringList headers;
     QString db;
-
     QString tabla;
     int id;
     QSqlQueryModel *modelo;

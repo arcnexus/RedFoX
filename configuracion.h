@@ -139,8 +139,12 @@ public:
     QString Devolver_tipo_gasto(int id_gasto);
     int Devolver_id_tipo_gasto(QString desc);
     int Devolver_id_cuenta_contable(QString codigo_cta);
+    QString Devolver_descripcion_tipo_iva(double tipo);
     QString Devolver_descripcion_cuenta_contable(QString codigo_cta);
     QString Devolver_codigo_cta_contable(int id);
+    QString devolver_codigo_articulo(int id);
+    QString devolver_codigo_barras(int id);
+    QString devolver_referencia_articulo(int id);
 
     QSqlTableModel* client_model;
     void CargarClientes();

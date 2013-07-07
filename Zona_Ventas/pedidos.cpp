@@ -92,13 +92,13 @@ bool Pedidos::GuardarPedido(int nid_Pedido)
                      "rec_total  =:rec_total  ,  total_albaran  =:total_albaran  ,"
                      "impreso  =:impreso  ,facturado  =:facturado  , "
                      "fecha_factura  =:fecha_factura  ,  comentario  =:comentario  ,"
-                     "entregado_a_cuenta  =:entregado_a_cuenta  ,lTraspasadoAlb  =:lTraspasadoAlb  ,"
-                     "lTraspasadoFac  =:lTraspasadoFac  ,  direccion1Entrega  =:direccion1Entrega  ,"
-                     "direccion1Entrega2  =:direccion1Entrega2  ,cpEntrega  =:cpEntrega  ,"
-                     "poblacionEntrega  =:poblacionEntrega  ,  provinciaEntrega  =:provinciaEntrega  ,"
-                     "paisEntrega  =:paisEntrega  ,lEnviado  =:lEnviado  ,  lCompleto  =:lCompleto  ,"
-                     "lEntregado  =:lEntregado  ,  fechaLimiteEntrega  =:fechaLimiteEntrega  ,"
-                     "totalPedido  =:totalPedido"
+                     "entregado_a_cuenta  =:entregado_a_cuenta  ,traspasado_albaran  =:traspasado_albaran  ,"
+                     "traspasado_factura  =:traspasado_factura  ,  direccion_entrega1  =:direccion_entrega1  ,"
+                     "direccion_entrega2  =:direccion_entrega2  ,cp_entrega  =:cp_entrega  ,"
+                     "poblacion_entrega  =:poblacion_entrega  ,  provincia_entrega  =:provincia_entrega  ,"
+                     "pais_entrega  =:pais_entrega  ,enviado  =:enviado  ,  completo  =:completo  ,"
+                     "entregado  =:entregado  ,  fecha_limite_entrega  =:fecha_limite_entrega  ,"
+                     "total_pedido  =:total_pedido"
                      " WHERE id = :id");
 
     ped_cli.bindValue(":albaran",albaran);
@@ -153,19 +153,19 @@ bool Pedidos::GuardarPedido(int nid_Pedido)
     ped_cli.bindValue(":fecha_factura",fecha_factura);
     ped_cli.bindValue(":comentario",comentario);
     ped_cli.bindValue(":entregado_a_cuenta",entregado_a_cuenta);
-    ped_cli.bindValue(":lTraspasadoAlb",lTraspasadoAlb);
-    ped_cli.bindValue(":lTraspasadoFac",lTraspasadoFac);
-    ped_cli.bindValue(":direccion1Entrega",direccion1Entrega);
-    ped_cli.bindValue(":direccion1Entrega2",direccion1Entrega2);
-    ped_cli.bindValue(":cpEntrega",cpEntrega);
-    ped_cli.bindValue(":poblacionEntrega",poblacionEntrega);
-    ped_cli.bindValue(":provinciaEntrega",provinciaEntrega);
-    ped_cli.bindValue(":paisEntrega",paisEntrega);
-    ped_cli.bindValue(":lEnviado",lEnviado);
-    ped_cli.bindValue(":lCompleto",lCompleto);
-    ped_cli.bindValue(":lEntregado",lEntregado);
-    ped_cli.bindValue(":fechaLimiteEntrega",fechaLimiteEntrega);
-    ped_cli.bindValue(":totalPedido",totalPedido);
+    ped_cli.bindValue(":traspasado_albaran",traspasado_albaran);
+    ped_cli.bindValue(":traspasado_factura",traspasado_factura);
+    ped_cli.bindValue(":direccion_entrega1",direccion_entrega1);
+    ped_cli.bindValue(":direccion_entrega2",direccion_entrega2);
+    ped_cli.bindValue(":cp_entrega",cp_entrega);
+    ped_cli.bindValue(":poblacion_entrega",poblacion_entrega);
+    ped_cli.bindValue(":provincia_entrega",provincia_entrega);
+    ped_cli.bindValue(":pais_entrega",pais_entrega);
+    ped_cli.bindValue(":enviado",enviado);
+    ped_cli.bindValue(":completo",completo);
+    ped_cli.bindValue(":entregado",entregado);
+    ped_cli.bindValue(":fecha_limite_entrega",fecha_limite_entrega);
+    ped_cli.bindValue(":total_pedido",total_pedido);
     ped_cli.bindValue(":id",nid_Pedido);
     if(!ped_cli.exec())
     {
@@ -209,7 +209,7 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             cif = r.value("cif").toString();
             recargo_equivalencia = r.value("recargo_equivalencia").toInt();
             subtotal = r.value("subtotal").toDouble();
-            dto = r.value("dto").toDouble();
+            porc_dto = r.value("porc_dto").toDouble();
             dto = r.value("dto").toDouble();
             base1 = r.value("base1").toDouble();
             base2 = r.value("base2").toDouble();
@@ -245,19 +245,19 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             fecha_factura = r.value("fecha_factura").toDate();
             comentario = r.value("comentario").toString();
             entregado_a_cuenta = r.value("entregado_a_cuenta").toDouble();
-            lTraspasadoAlb = r.value("lTraspasadoAlb").toInt();
-            lTraspasadoFac = r.value("lTraspasadoFac").toInt();
-            direccion1Entrega = r.value("direccion1Entrega").toString();
-            direccion1Entrega2 = r.value("direccion1Entrega2").toString();
-            cpEntrega = r.value("cpEntrega").toString();
-            poblacionEntrega = r.value("poblacionEntrega").toString();
-            provinciaEntrega = r.value("provinciaEntrega").toString();
-            paisEntrega = r.value("paisEntrega").toString();
-            lEnviado = r.value("lEnviado").toInt();
-            lCompleto = r.value("lCompleto").toInt();
-            lEntregado = r.value("lEntregado").toInt();
-            fechaLimiteEntrega = r.value("fechaLimiteEntrega").toDate();
-            totalPedido = r.value("totalPedido").toDouble();
+            traspasado_albaran = r.value("traspasado_albaran").toInt();
+            traspasado_factura = r.value("traspasado_factura").toInt();
+            direccion_entrega1 = r.value("direccion_entrega1").toString();
+            direccion_entrega2 = r.value("direccion_entrega2").toString();
+            cp_entrega = r.value("cp_entrega").toString();
+            poblacion_entrega = r.value("poblacion_entrega").toString();
+            provincia_entrega = r.value("provincia_entrega").toString();
+            pais_entrega = r.value("pais_entrega").toString();
+            enviado = r.value("enviado").toInt();
+            completo = r.value("completo").toInt();
+            entregado = r.value("entregado").toInt();
+            fecha_limite_entrega = r.value("fecha_limite_entrega").toDate();
+            total_pedido = r.value("total_pedido").toDouble();
 
             this->id_pais = r.field("id_pais").value().toInt();
             QSqlQuery q(QSqlDatabase::database("empresa"));

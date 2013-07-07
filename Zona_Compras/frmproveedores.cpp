@@ -87,7 +87,7 @@ frmProveedores::~frmProveedores()
 }
 void frmProveedores::LLenarCampos()
 {
-    ui->lblCodigoProveedor->setText(oProveedor->codigo);
+    ui->lblcodigo_proveedor->setText(oProveedor->codigo);
     ui->lblproveedor->setText(oProveedor->proveedor);
     ui->txtcodigo->setText(oProveedor->codigo);
     ui->txtproveedor->setText(oProveedor->proveedor);
@@ -129,7 +129,7 @@ void frmProveedores::LLenarCampos()
     }
 
     ui->txtfecha_ultima_compra->setDate(oProveedor->fecha_ultima_compra);
-    ui->txtacumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->acumulado_compras,'f',2)));
+    ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->importe_acumulado_compras,'f',2)));
     ui->txtentidad_bancaria_proveedor->setText(oProveedor->entidad_bancaria_proveedor);
     ui->txtoficina_bancaria_proveedor->setText(oProveedor->oficina_bancaria_proveedor);
     ui->txtdc_proveedor->setText(oProveedor->dc_proveedor);
@@ -224,7 +224,7 @@ void frmProveedores::CargarCamposEnProveedor()
     oProveedor->fax_almacen = ui->txtfax_almacen->text();
     oProveedor->codigoFormaPago = ui->txtcodigoFormaPago->currentText();
     oProveedor->fecha_ultima_compra = ui->txtfecha_ultima_compra->date();
-    oProveedor->acumulado_compras = ui->txtacumulado_compras->text().replace(",",".").toDouble();
+    oProveedor->importe_acumulado_compras = ui->txtimporte_acumulado_compras->text().replace(",",".").toDouble();
     oProveedor->entidad_bancaria_proveedor = ui->txtentidad_bancaria_proveedor->text();
     oProveedor->oficina_bancaria_proveedor = ui->txtoficina_bancaria_proveedor->text();
     oProveedor->dc_proveedor = ui->txtdc_proveedor->text();

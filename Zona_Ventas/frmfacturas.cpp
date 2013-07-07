@@ -1,6 +1,6 @@
 #include "frmfacturas.h"
 #include "ui_frmfacturas.h"
-#include "../Busquedas/frmbuscarcliente.h"
+#include "../Busquedas/db_consulta_view.h"
 #include "../Busquedas/frmBuscarFactura.h"
 #include "../Zona_Contabilidad/apuntes.h"
 
@@ -165,7 +165,7 @@ void frmFacturas::LLenarCampos() {
     ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda( QString::number(oFactura->subtotal,'f',2)));
     //ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto,'f',2)));
     //ui->txtdto_pp->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto_pp,'f',2)));
-    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->importe_descuento,'f',2)));
+    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto,'f',2)));
     //ui->txtimporte_descuento_pp->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->importe_descuento_pp,'f',2)));
     ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number( oFactura->base,'f',2)));
     ui->txtiva_2->setText(Configuracion_global->toFormatoMoneda(QString::number( oFactura->iva,'f',2)));
@@ -226,7 +226,7 @@ void frmFacturas::LLenarCampos() {
     ui->txtcodigo_entidad->setText(oFactura->codigo_entidad);
     ui->txtoficina_entidad->setText(oFactura->oficina_entidad);
     ui->txtdc_cuenta->setText(oFactura->dc_cuenta);
-    ui->txtnumero_cuenta->setText(oFactura->numero_cuenta);
+    ui->txtnumero_cuenta->setText(oFactura->cuenta_corriente);
     ui->txtpedido_cliente->setText(QString::number(oFactura->pedido_cliente));
     if(oFactura->irpf!=0)
         ui->lblIRPF_3->setVisible(true);
@@ -240,8 +240,8 @@ void frmFacturas::LLenarCampos() {
         ui->txtfecha_cobro->setVisible(false);
     }
     ui->txtirpf->setText(QString::number(oFactura->irpf));
-    ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->importe_irpf,'f',2)));
-    ui->txtimporte_irpf_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->importe_irpf,'f',2)));
+    ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->irpf,'f',2)));
+    ui->txtimporte_irpf_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->irpf,'f',2)));
 
     QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
     helper.fillTable("empresa","lin_fac",filter);
@@ -421,7 +421,7 @@ void frmFacturas::LLenarFactura() {
     oFactura->subtotal = (ui->txtsubtotal->text().replace(",",".").replace(moneda,"").toDouble());
     //oFactura->dto = (ui->txtdto->text().replace(",",".").toDouble());
     //oFactura->dto_pp = (ui->txtdto_pp->text().replace(",",".").toDouble());
-    oFactura->importe_descuento = (ui->txtimporte_descuento->text().replace(moneda,"").replace(",",".").toDouble());
+    oFactura->dto = (ui->txtimporte_descuento->text().replace(moneda,"").replace(",",".").toDouble());
     //oFactura->importe_descuento_pp = (ui->txtimporte_descuento_pp->text().replace(",",".").toDouble());
     oFactura->base = (ui->txtbase->text().replace(",",".").replace(moneda,"").toDouble());
     oFactura->iva = (ui->txtiva->text().replace(",",".").replace(moneda,"").toDouble());
@@ -458,13 +458,13 @@ void frmFacturas::LLenarFactura() {
     oFactura->codigo_entidad = (ui->txtcodigo_entidad->text());
     oFactura->oficina_entidad = (ui->txtoficina_entidad->text());
     oFactura->dc_cuenta = (ui->txtdc_cuenta->text());
-    oFactura->numero_cuenta = (ui->txtnumero_cuenta->text());
+    oFactura->cuenta_corriente = (ui->txtnumero_cuenta->text());
     bool ok;
     int nPed = ui->txtpedido_cliente->text().toInt(&ok);
 
     oFactura->pedido_cliente = ok ? nPed : 0;
     oFactura->irpf = (ui->txtirpf->text().replace(",",".").toDouble());
-    oFactura->importe_irpf = (ui->txtimporte_irpf->text().replace(",",".").toDouble());
+    oFactura->irpf = (ui->txtimporte_irpf->text().replace(",",".").toDouble());
 }
 
 void frmFacturas::on_btnSiguiente_clicked()
@@ -581,38 +581,27 @@ void frmFacturas::on_btnDeshacer_clicked()
 
 void frmFacturas::on_botBuscarCliente_clicked()
 {
-    Db_table_View searcher(qApp->activeWindow());
-    searcher.set_db("Maya");
-    searcher.set_table("clientes");
-
-    searcher.setWindowTitle(tr("Clientes"));
-
-    QStringList headers;
-    headers << tr("Codigo")<< tr("Nombre Fiscal") << tr("DNI/NIF") << tr("Poblacion");
-    searcher.set_table_headers(headers);
-
-    searcher.set_readOnly(true);
-    searcher.set_selection("id");
-
-    searcher.set_columnHide(0);
-    searcher.set_columnHide(2);
-    searcher.set_columnHide(3);
-    searcher.set_columnHide(4);
-    searcher.set_columnHide(6);
-    searcher.set_columnHide(7);
-    searcher.set_columnHide(9);
-    searcher.set_columnHide(10);
-    searcher.set_columnHide(11);
-    for(int i =13;i<55;i++)
-        searcher.set_columnHide(i);
-    if(searcher.exec() == QDialog::Accepted)
+    db_consulta_view consulta;
+    QStringList campos;
+    campos <<"codigo_cliente" <<"nombre_fiscal" << "cif_nif"<< "poblacion" << "telefono1";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("clientes");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo_cliente,nombre_fiscal,cif_nif,poblacion,telefono1 from clientes");
+    QStringList cabecera;
+    QVariantList tamanos;
+    cabecera  << tr("Código") << tr("Nombre") << tr("CIF/NIF") << tr("Población") << tr("Teléfono");
+    tamanos <<"0" << "100" << "300" << "100" << "180" <<"130";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Clientes");
+    if(consulta.exec())
     {
-        QString cid = searcher.selected_value;
-        oFactura->id_cliente = cid.toInt();
-        oCliente1->Recuperar("Select * from clientes where id ="+cid+" order by id limit 1 ");
+        int id = consulta.get_id();
+        oCliente1->Recuperar("select * from clientes where id="+QString::number(id));
         LLenarCamposCliente();
-        helper.set_tarifa(oCliente1->idTarifa);
     }
+
 }
 
 void frmFacturas::on_btnBuscar_clicked()
@@ -733,7 +722,7 @@ void frmFacturas::lineaReady(lineaDetalle * ld)
             ok_Maya = false;
         QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
         query_lin_ped_pro.prepare("INSERT INTO lin_fac (id_Cab, id_articulo, codigo, cantidad,"
-                                  "descripcion, pvp, subtotal, dto,"
+                                  "descripcion, pvp, subtotal, porc_dto,"
                                   " dto, porc_iva, total)"
                                   "VALUES (:id_cab,:id_articulo,:codigo,:cantidad,"
                                   ":descripcion,:coste_bruto,:subtotal_coste,:porc_dto,"
@@ -743,7 +732,7 @@ void frmFacturas::lineaReady(lineaDetalle * ld)
         query_lin_ped_pro.bindValue(":codigo",ld->codigo);
         query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
+        query_lin_ped_pro.bindValue(":coste_bruto",ld->precio);
         query_lin_ped_pro.bindValue(":subtotal_coste",ld->subtotal);
         query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_ped_pro.bindValue(":dto",ld->dto);
@@ -787,7 +776,7 @@ void frmFacturas::lineaReady(lineaDetalle * ld)
                                   "cantidad =:cantidad,"
                                   "pvp =:coste_bruto,"
                                   "subtotal =:subtotal_coste,"
-                                  "dto =:porc_dto,"
+                                  "porc_dto =:porc_dto,"
                                   "dto =:dto,"
                                   "porc_iva =:porc_iva,"
                                   "total =:total "
@@ -798,7 +787,7 @@ void frmFacturas::lineaReady(lineaDetalle * ld)
         query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
         query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_ped_pro.bindValue(":coste_bruto",ld->importe);
+        query_lin_ped_pro.bindValue(":coste_bruto",ld->precio);
         query_lin_ped_pro.bindValue(":subtotal_coste",ld->subtotal);
         query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_ped_pro.bindValue(":dto",ld->dto);

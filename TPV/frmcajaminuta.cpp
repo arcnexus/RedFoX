@@ -216,7 +216,7 @@ bool FrmCajaMinuta::keys_lineas(int key)
 
 bool FrmCajaMinuta::rellenarArticulo(QString codigo)
 {
-    QString sql = QString("SELECT * FROM vistaArt_tarifa WHERE codigo = '%1' and tarifa = %2").arg(codigo).arg(_currentTarifa);
+    QString sql = QString("SELECT * FROM vistaart_tarifa WHERE codigo = '%1' and tarifa = %2").arg(codigo).arg(_currentTarifa);
     return true;
 }
 

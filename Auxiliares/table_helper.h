@@ -15,7 +15,7 @@ struct lineaDetalle
     int cantidad;
     int cantidad_old;
     QString descripcion;
-    double importe;
+    double precio;
     double subtotal;
     double dto;
     double dto_perc;
@@ -76,7 +76,7 @@ private:
 
     void comprobarCantidad(int row);
     void comprobarStock(int row);
-    void comprobarDescuento(int row);
+    void comprobadto(int row);
     void rellenar_con_Articulo(int row);
     bool comprando;
     bool use_re;  

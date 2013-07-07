@@ -138,7 +138,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtiva">
+      <widget class="QLineEdit" name="txtiva_total">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
@@ -560,7 +560,7 @@ color: rgb(255, 255, 255);</string>
    <item row="2" column="0" colspan="6">
     <widget class="QTabWidget" name="tabWidget_2">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab_5">
       <property name="styleSheet">
@@ -837,7 +837,7 @@ color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="txtcodigoProveedor">
+           <widget class="QLineEdit" name="txtcodigo_proveedor">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -1398,7 +1398,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="3" column="5">
-          <widget class="QLineEdit" name="txtporc_rec3">
+          <widget class="QLineEdit" name="txtrec3">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1556,7 +1556,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="1" column="5">
-          <widget class="QLineEdit" name="txtporc_rec1">
+          <widget class="QLineEdit" name="txtrec1">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1640,7 +1640,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="5" column="5">
-          <widget class="QLineEdit" name="txttotal_recargo_3">
+          <widget class="QLineEdit" name="txtimporte_rec_total">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1968,7 +1968,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="4" column="5">
-          <widget class="QLineEdit" name="txtporc_rec4">
+          <widget class="QLineEdit" name="txtrec4">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1994,7 +1994,7 @@ color: rgb(0, 64, 64);</string>
           </widget>
          </item>
          <item row="2" column="5">
-          <widget class="QLineEdit" name="txtporc_rec2">
+          <widget class="QLineEdit" name="txtrec2">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -2230,7 +2230,7 @@ color: rgb(0, 64, 64);</string>
  </widget>
  <tabstops>
   <tabstop>txtfecha</tabstop>
-  <tabstop>txtcodigoProveedor</tabstop>
+  <tabstop>txtcodigo_proveedor</tabstop>
   <tabstop>txtcif</tabstop>
   <tabstop>botBuscarCliente</tabstop>
   <tabstop>txtproveedor</tabstop>
@@ -2264,15 +2264,15 @@ color: rgb(0, 64, 64);</string>
   <tabstop>txtporc_rec1</tabstop>
   <tabstop>txtiva1</tabstop>
   <tabstop>txtporc_iva1</tabstop>
-  <tabstop>txtporc_rec3</tabstop>
-  <tabstop>txtporc_rec3</tabstop>
+  <tabstop>txtrec3</tabstop>
+  <tabstop>txtrec3</tabstop>
   <tabstop>txtbase3</tabstop>
   <tabstop>txttotal_2</tabstop>
   <tabstop>txtporc_rec4</tabstop>
   <tabstop>txtporc_rec1</tabstop>
   <tabstop>txtiva4</tabstop>
   <tabstop>txtporc_iva4</tabstop>
-  <tabstop>txttotal_recargo_3</tabstop>
+  <tabstop>txtimporte_rec_total</tabstop>
   <tabstop>txtbase2</tabstop>
   <tabstop>txtbase4</tabstop>
   <tabstop>txttotal_iva</tabstop>
@@ -2282,8 +2282,8 @@ color: rgb(0, 64, 64);</string>
   <tabstop>txtbase_total</tabstop>
   <tabstop>txttotal3</tabstop>
   <tabstop>txtporc_rec4</tabstop>
-  <tabstop>txtporc_rec2</tabstop>
-  <tabstop>txtporc_rec2</tabstop>
+  <tabstop>txtrec2</tabstop>
+  <tabstop>txtrec2</tabstop>
   <tabstop>txtiva3</tabstop>
   <tabstop>txtporc_iva3</tabstop>
   <tabstop>txtporc_iva2</tabstop>
@@ -2292,7 +2292,7 @@ color: rgb(0, 64, 64);</string>
   <tabstop>txtsubtotal</tabstop>
   <tabstop>txtimporte_descuento</tabstop>
   <tabstop>txtbase</tabstop>
-  <tabstop>txtiva</tabstop>
+  <tabstop>txtiva_total</tabstop>
   <tabstop>txttotal_recargo</tabstop>
   <tabstop>txttotal</tabstop>
  </tabstops>

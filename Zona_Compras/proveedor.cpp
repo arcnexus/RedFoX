@@ -147,7 +147,7 @@ void Proveedor::Anadir()
     else {
         int nid  = QProveedor->lastInsertId().toInt();
         Recuperar( "Select * from proveedores where id = "+QString::number(nid));
-        this->codigo = NuevoCodigoProveedor();
+        this->codigo = Nuevocodigo_proveedor();
         this->cuenta_aplicacion = this->codigo;
     }
 }
@@ -190,7 +190,7 @@ void Proveedor::Recuperar(QString cSQL)
             this->idFormadePago = rProveedor.field("id_forma_pago").value().toInt();
             this->codigoFormaPago = Configuracion_global->Devolver_codigo_forma_pago(this->idFormadePago);
             this->fecha_ultima_compra = rProveedor.field("fecha_ultima_compra").value().toDate();
-            this->acumulado_compras = rProveedor.field("acumulado_compras").value().toDouble();
+            this->importe_acumulado_compras = rProveedor.field("importe_acumulado_compras").value().toDouble();
             this->entidad_bancaria_proveedor = rProveedor.field("entidad_bancaria_proveedor").value().toString();
             this->oficina_bancaria_proveedor = rProveedor.field("oficina_bancaria_proveedor").value().toString();
             this->dc_proveedor = rProveedor.field("dc_proveedor").value().toString();
@@ -259,7 +259,7 @@ void Proveedor::Recuperar(QString cSQL, int nProcede)
             this->idFormadePago = rProveedor.field("id_forma_pago").value().toInt();
             this->codigoFormaPago = Configuracion_global->Devolver_codigo_forma_pago(this->idFormadePago);
             this->fecha_ultima_compra = rProveedor.field("fecha_ultima_compra").value().toDate();
-            this->acumulado_compras = rProveedor.field("acumulado_compras").value().toDouble();
+            this->importe_acumulado_compras = rProveedor.field("importe_acumulado_compras").value().toDouble();
             this->entidad_bancaria_proveedor = rProveedor.field("entidad_bancaria_proveedor").value().toString();
             this->oficina_bancaria_proveedor = rProveedor.field("oficina_bancaria_proveedor").value().toString();
             this->dc_proveedor = rProveedor.field("dc_proveedor").value().toString();
@@ -337,7 +337,7 @@ void Proveedor::Guardar()
                         "fax_almacen =:fax_almacen,"
                         "id_forma_pago =:id_forma_pago,"
                         "fecha_ultima_compra =:fecha_ultima_compra,"
-                        "acumulado_compras =:acumulado_compras,"
+                        "importe_acumulado_compras =:importe_acumulado_compras,"
                         "entidad_bancaria_proveedor =:entidad_bancaria_proveedor,"
                         "oficina_bancaria_proveedor =:oficina_bancaria_proveedor,"
                         "dc_proveedor =:dc_proveedor,"
@@ -385,7 +385,7 @@ void Proveedor::Guardar()
     queryProveedor.bindValue(":fax_almacen",this->fax_almacen);
     queryProveedor.bindValue(":id_forma_pago",this->idFormadePago);
     queryProveedor.bindValue(":fecha_ultima_compra",this->fecha_ultima_compra);
-    queryProveedor.bindValue(":acumulado_compras",this->acumulado_compras);
+    queryProveedor.bindValue(":importe_acumulado_compras",this->importe_acumulado_compras);
     queryProveedor.bindValue(":entidad_bancaria_proveedor",this->entidad_bancaria_proveedor);
     queryProveedor.bindValue(":oficina_bancaria_proveedor",this->oficina_bancaria_proveedor);
     queryProveedor.bindValue(":dc_proveedor",this->dc_proveedor);
@@ -446,7 +446,7 @@ void Proveedor::Vaciar()
     this->fax_almacen = "";
     this->codigoFormaPago = "";
     this->fecha_ultima_compra = QDate::currentDate();
-    this->acumulado_compras = 0;
+    this->importe_acumulado_compras = 0;
     this->entidad_bancaria_proveedor ="";
     this->oficina_bancaria_proveedor = "";
     this->dc_proveedor = "";
@@ -516,7 +516,7 @@ void Proveedor::clear()
     this->idFormadePago = 0;
     this->codigoFormaPago = "";
     this->fecha_ultima_compra = QDate::currentDate();
-    this->acumulado_compras = 0;
+    this->importe_acumulado_compras = 0;
     this->entidad_bancaria_proveedor = "";
     this->oficina_bancaria_proveedor = "";
     this->dc_proveedor = "";
@@ -537,7 +537,7 @@ void Proveedor::clear()
     this->entregado_a_cuenta =0;
 }
 
-QString Proveedor::NuevoCodigoProveedor()
+QString Proveedor::Nuevocodigo_proveedor()
 {
     QString codigo;
     QString cNum;

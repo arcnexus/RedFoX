@@ -6,11 +6,11 @@
 #include "../Auxiliares/spinboxdelegate.h"
 #include "../db_table_view.h"
 
-#include"../Auxiliares/monetarydelegate.h"
+#include "../Auxiliares/monetarydelegate.h"
 
-#include"../Auxiliares/readonlydelegate.h"
-#include"frmlistadosarticulo.h"
-#include"../Busquedas/db_consulta_view.h"
+#include "../Auxiliares/readonlydelegate.h"
+#include "frmlistadosarticulo.h"
+#include "../Busquedas/db_consulta_view.h"
 
 
 FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
@@ -256,21 +256,21 @@ void FrmArticulos::LLenarCampos()
    ui->lblDescripcion->setVisible(true);
    ui->txtdescripcionResumida->setText(oArticulo->descripcion_reducida);
    ui->txtproveedor->setText(oArticulo->proveedor);
-   ui->txtCodigoProveedor->setText(oArticulo->cCodProveedor);
+   ui->txtcodigo_proveedor->setText(oArticulo->cCodProveedor);
    ui->txtfamilia->setText(oArticulo->familia);
    ui->txtseccion->setText(oArticulo->seccion);
    ui->txtsubfamilia->setText(oArticulo->subfamilia);
-   int nIndex = ui->cboTipoIVA->findText(QString::number(oArticulo->tipo_iva));
+   int nIndex = ui->cboTipoIVA->findText(oArticulo->codigo_iva);
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
-   ui->txtdto->setText(QString::number(oArticulo->dto,'f',2));
+   ui->txtdto->setText(QString::number(oArticulo->porc_dto,'f',2));
    ui->txtcoste->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste,'f',2)));
-   ui->txtfecha_ultima_compra->setDate(oArticulo->ultima_compra);
-   ui->txtfechaUltimaVenta->setDate(oArticulo->ultima_venta);
+   ui->txtfecha_fecha_ultima_compra->setDate(oArticulo->fecha_ultima_compra);
+   ui->txtfechaUltimaVenta->setDate(oArticulo->fecha_ultima_venta);
    ui->txtunidades_compradas->setText(QString::number(oArticulo->unidades_compradas));
    ui->txtunidades_vendidas->setText(QString::number(oArticulo->unidades_vendidas));
-   ui->txtacumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->acumulado_compras,'f',2)));
-   ui->txtacumulado_ventas->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->acumulado_ventas,'f',2)));
+   ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_compras,'f',2)));
+   ui->txtimporte_acumulado_ventas->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_ventas,'f',2)));
    ui->txtcomentario->setText(oArticulo->comentario);
    ui->txtstock_maximo->setText(QString::number(oArticulo->stock_maximo));
    ui->txtstock_minimo->setText(QString::number(oArticulo->stock_minimo));
@@ -285,7 +285,7 @@ void FrmArticulos::LLenarCampos()
 
    ui->txtcantidad_pendiente_recibir->setText(QString::number(oArticulo->cantidad_pendiente_recibir));
    ui->txtfecha_prevista_recepcion->setDate(oArticulo->fecha_prevista_recepcion);
-   ui->txtreservados->setText(QString::number(oArticulo->reservados));
+   ui->txtunidades_reservadas->setText(QString::number(oArticulo->unidades_reservadas));
    ui->txtseccion->setText(oArticulo->getseccion(oArticulo->id_seccion));
    ui->txtfamilia->setText(oArticulo->getfamilia(oArticulo->id_familia));
    ui->txtsubfamilia->setText(oArticulo->getsubfamilia(oArticulo->id_subfamilia));
@@ -307,7 +307,7 @@ void FrmArticulos::LLenarCampos()
    //-----------------------
    // llenamos combo iva
    //-----------------------
-  nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tiposiva));
+  nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tipos_iva));
   if(nIndex >-1)
       ui->cboTipoIVA->setCurrentIndex(nIndex);
 
@@ -365,14 +365,14 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->seccion=ui->txtseccion->text();
     oArticulo->subfamilia=ui->txtsubfamilia->text();
     oArticulo->tipo_iva=Configuracion_global->ivas[ui->cboTipoIVA->currentText()].value("iva").toDouble();
-    oArticulo->id_tiposiva = Configuracion_global->getidIva(ui->cboTipoIVA->currentText());
+    oArticulo->id_tipos_iva = Configuracion_global->getidIva(ui->cboTipoIVA->currentText());
     oArticulo->coste=ui->txtcoste->text().replace(",",".").toDouble();
-    oArticulo->ultima_compra= ui->txtfecha_ultima_compra->date();
-    oArticulo->ultima_venta= ui->txtfechaUltimaVenta->date();
+    oArticulo->fecha_ultima_compra= ui->txtfecha_fecha_ultima_compra->date();
+    oArticulo->fecha_ultima_venta= ui->txtfechaUltimaVenta->date();
     oArticulo->unidades_compradas= ui->txtunidades_compradas->text().toDouble();
     oArticulo->unidades_vendidas=ui->txtunidades_vendidas->text().toDouble();
-    oArticulo->acumulado_compras= ui->txtacumulado_compras->text().replace(",",".").toDouble();
-    oArticulo->acumulado_ventas= ui->txtacumulado_ventas->text().replace(",",".").toDouble();
+    oArticulo->importe_acumulado_compras= ui->txtimporte_acumulado_compras->text().replace(",",".").toDouble();
+    oArticulo->importe_acumulado_ventas= ui->txtimporte_acumulado_ventas->text().replace(",",".").toDouble();
     oArticulo->comentario=ui->txtcomentario->toPlainText();
     oArticulo->stock_maximo=ui->txtstock_maximo->text().toInt();
     oArticulo->stock_minimo=ui->txtstock_minimo->text().toInt();
@@ -385,18 +385,18 @@ void FrmArticulos::CargarCamposEnArticulo()
 
     oArticulo->cantidad_pendiente_recibir=ui->txtcantidad_pendiente_recibir->text().toInt();
     oArticulo->fecha_prevista_recepcion =ui->txtfecha_prevista_recepcion->date();
-    oArticulo->reservados =ui->txtreservados->text().toInt();
+    oArticulo->unidades_reservadas =ui->txtunidades_reservadas->text().toInt();
     if (ui->chkmostrar_web->isChecked())
         oArticulo->mostrar_web = 1;
     else
         oArticulo->mostrar_web = 0;
-    oArticulo->id_tiposiva = Configuracion_global->getidIva(ui->cboTipoIVA->currentText());
+    oArticulo->id_tipos_iva = Configuracion_global->getidIva(ui->cboTipoIVA->currentText());
     oArticulo->id_seccion = oArticulo->getidSeccion(ui->txtseccion->text());
     oArticulo->id_familia  = oArticulo->getidFamilia(ui->txtfamilia->text());
     oArticulo->id_subfamilia = oArticulo->getidSubFamilia(ui->txtsubfamilia->text());
     oArticulo->id_subsub_familia = oArticulo->getidSubSufFamilia(ui->txtcSubSubFamilia->text());
     oArticulo->id_grupo_art = oArticulo->getidGrupo(ui->txtcGupoArt->text());
-    oArticulo->cCodProveedor = ui->txtCodigoProveedor->text();
+    oArticulo->cCodProveedor = ui->txtcodigo_proveedor->text();
     oArticulo->proveedor = ui->txtproveedor->text();
 
 //    this->id_web = registro.field("id_web").value().toInt();
@@ -416,6 +416,7 @@ void FrmArticulos::CargarCamposEnArticulo()
 
     oArticulo->por_cada = ui->txtpor_cada->text().toInt();
     oArticulo->regalo_de = ui->txtregalo_de->text().toInt();
+    oArticulo->porc_dto = ui->txtdto->text().toFloat();
     oArticulo->porc_dto_web = ui->txt_dto_web->text().replace(",",".").toDouble();
     oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().replace(",",".").toDouble();
     oArticulo->comentario_oferta = ui->txcomentarios_promocion->toPlainText();
@@ -440,12 +441,12 @@ void FrmArticulos::VaciarCampos()
    ui->cboTipoIVA->setEditText("");
    ui->txtcoste->setText("0,00");
    ui->txtdto->setText("0");
-   ui->txtfecha_ultima_compra->setDate(QDate::currentDate());
+   ui->txtfecha_fecha_ultima_compra->setDate(QDate::currentDate());
    ui->txtfechaUltimaVenta->setDate(QDate::currentDate());
    ui->txtunidades_compradas->setText("0");
    ui->txtunidades_vendidas->setText("0");
-   ui->txtacumulado_compras->setText("0,00");
-   ui->txtacumulado_ventas->setText("0,00");
+   ui->txtimporte_acumulado_compras->setText("0,00");
+   ui->txtimporte_acumulado_ventas->setText("0,00");
    ui->txtcomentario->setText("");
    ui->txtstock_maximo->setText("0");
    ui->txtstock_minimo->setText("0");
@@ -455,9 +456,9 @@ void FrmArticulos::VaciarCampos()
    ui->chkcontrolar_stock->setChecked(false);
    ui->txtcantidad_pendiente_recibir->setText("0");
    ui->txtfecha_prevista_recepcion->setDate(QDate::currentDate());
-   ui->txtreservados->setText("0");
+   ui->txtunidades_reservadas->setText("0");
    ui->chkmostrar_web->setChecked(false);
-   ui->txtCodigoProveedor->setText("");
+   ui->txtcodigo_proveedor->setText("");
    ui->chkArticulo_promocionado->setChecked(false);
    ui->txtDescripcion_promocion->setText("");
    ui->radOferta1->setChecked(false);
@@ -484,7 +485,7 @@ void FrmArticulos::ChangeValues_TablaProveedores(int row, int column)
 //    else if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
 //        comprobarCantidad(row);
 //    else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
-//        comprobarDescuento(row);
+//        comprobadto(row);
 //    else if(column == 9)
 //        comprobarStock(row);
 
@@ -494,15 +495,15 @@ void FrmArticulos::ChangeValues_TablaProveedores(int row, int column)
 void FrmArticulos::rellenar_grafica_proveedores()
 {
     //----------------------
-    // GRAFICA SEGÚN PVDREAL
+    // GRAFICA SEGÚN pvd_real
     //----------------------
-    QSqlQuery queryProveed("select proveedor,pvdreal from proveedores_frecuentes where id_art = "+
+    QSqlQuery queryProveed("select proveedor,pvd_real from proveedores_frecuentes where id_art = "+
                            QString::number(oArticulo->id),QSqlDatabase::database("Maya"));
     if(queryProveed.exec()){
 
         while (queryProveed.next()) {
             ui->graf_prov->addItem(queryProveed.record().value("proveedor").toString().left(4),
-                                   queryProveed.record().value("pvdreal").toFloat()/*,Qt::blue*/);
+                                   queryProveed.record().value("pvd_real").toFloat()/*,Qt::blue*/);
 
 
         }
@@ -708,7 +709,7 @@ void FrmArticulos::on_btnBuscarProveedor_clicked()
         qProv.bindValue(":nid",buscar.nidProv);
         if(qProv.exec()){
             qProv.next();
-            ui->txtCodigoProveedor->setText(qProv.record().field("codigo").value().toString());
+            ui->txtcodigo_proveedor->setText(qProv.record().field("codigo").value().toString());
             ui->txtproveedor->setText(qProv.record().field("proveedor").value().toString());
             oArticulo->id_proveedor = buscar.nidProv;
         }
@@ -800,7 +801,7 @@ void FrmArticulos::anadir_proveedor_clicked()
     frmAsociar.setAnadir();
     if(frmAsociar.exec() == QDialog::Accepted) {
         bool ok = oArticulo->agregar_proveedor_alternativo(oArticulo->id,frmAsociar.id_proveedor,frmAsociar.codigo,frmAsociar.pvd,
-                                                 frmAsociar.DescOferta,frmAsociar.Oferta,frmAsociar.pvdreal,frmAsociar.id_divisa);
+                                                 frmAsociar.DescOferta,frmAsociar.Oferta,frmAsociar.pvd_real,frmAsociar.id_divisa);
         if (!ok)
             QMessageBox::warning(this,tr("Nuevo proveedor frecuente"),tr("Falló la inserción del proveedor"),tr("Aceptar"));
         LLenarCampos();
@@ -811,7 +812,7 @@ void FrmArticulos::anadir_proveedor_clicked()
     // Proveedores frecuentes
     //-----------------------
     modelProv = new QSqlQueryModel(this);
-    modelProv->setQuery("Select id,codpro,proveedor,codigo,pvd,pvdreal,moneda,descoferta from proveedores_frecuentes where id_art = "+
+    modelProv->setQuery("Select id,codpro,proveedor,codigo,pvd,pvd_real,moneda,descoferta from proveedores_frecuentes where id_art = "+
                         QString::number(oArticulo->id),
                         QSqlDatabase::database("Maya"));
 
@@ -830,7 +831,7 @@ void FrmArticulos::editar_proveedor_clicked()
     frmAsociar.seteditar(pKey.toString());
     if(frmAsociar.exec() == QDialog::Accepted) {
         bool ok = oArticulo->guardarProveedorAlternativo(pKey.toInt(),frmAsociar.codigo,frmAsociar.pvd,
-                                                 frmAsociar.DescOferta,frmAsociar.Oferta,frmAsociar.pvdreal,frmAsociar.id_divisa);
+                                                 frmAsociar.DescOferta,frmAsociar.Oferta,frmAsociar.pvd_real,frmAsociar.id_divisa);
         if (!ok)
             QMessageBox::warning(this,tr("Guardar proveedor frecuente"),tr("Falló la edición del proveedor"),tr("Aceptar"));
         LLenarCampos();
@@ -893,7 +894,7 @@ void FrmArticulos::asignar_proveedor_principal_clicked()
 
             index1=modelProv->index(celda.row(),1);     ///< '0' es la posicion del registro que nos interesa
             pKey=modelProv->data(index1,Qt::EditRole);
-            ui->txtCodigoProveedor->setText(pKey.toString());
+            ui->txtcodigo_proveedor->setText(pKey.toString());
             index1=modelProv->index(celda.row(),2);
             pKey=modelProv->data(index1,Qt::EditRole);
             ui->txtproveedor->setText(pKey.toString());
@@ -1487,6 +1488,8 @@ void FrmArticulos::LlenarTablas()
     modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margen_minimo, pvp,simbolo "
                          "from viewtarifa where id_articulo = "+QString::number(oArticulo->id),
                          QSqlDatabase::database("Maya"));
+    if (modelTarifa->lastError().isValid())
+        return;
     ui->TablaTarifas->setModel(modelTarifa);
     modelTarifa->setHeaderData(0,Qt::Horizontal,tr("id"));
     modelTarifa->setHeaderData(1,Qt::Horizontal,tr("CODIGO"));
@@ -1520,13 +1523,16 @@ void FrmArticulos::LlenarTablas()
     ui->TablaTarifas->horizontalHeader()->resizeSection(7,85);
     ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(8,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(8,20);
-    //-----------------------
-    // Proveedores frecuentes
-    //-----------------------
+//    //-----------------------
+//    // Proveedores frecuentes
+//    //-----------------------
 
-    modelProv->setQuery("Select id,codpro,proveedor,codigo,pvd,pvdreal,moneda,descoferta,id_prov from proveedores_frecuentes where id_art = "+QString::number(oArticulo->id),
+    modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,desc_oferta,id_prov from proveedores_frecuentes "
+    "where id_art = "+QString::number(oArticulo->id),
                         QSqlDatabase::database("Maya"));
 
+    if (modelProv->lastError().isValid())
+        return;
     ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
     ui->tablaProveedores->setItemDelegateForColumn(4,new MonetaryDelegate);
     ui->tablaProveedores->setModel(modelProv);
@@ -1560,9 +1566,9 @@ void FrmArticulos::LlenarTablas()
     // Grafica proveedores
     //--------------------
 
-    ui->graf_prov->Clear();
-    ////uigraf_prov->verValoresEjeY(false);
-    rellenar_grafica_proveedores();
+   ui->graf_prov->Clear();
+
+   rellenar_grafica_proveedores();
 
     // ------------------
     // TABLA TRAZABILidAD
@@ -1570,6 +1576,8 @@ void FrmArticulos::LlenarTablas()
     modelTrazabilidad1 = new QSqlQueryModel(this);
     modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_articulo = "+QString::number(oArticulo->id),
                                   QSqlDatabase::database("Maya"));
+    if (modelTrazabilidad1->lastError().isValid())
+        return;
     ui->tablaLotes->setModel(modelTrazabilidad1);
     ui->tablaLotes->setColumnHidden(0,true);
     ui->tablaLotes->setColumnHidden(6,true);

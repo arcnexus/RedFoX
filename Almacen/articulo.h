@@ -27,13 +27,13 @@ public:
     QString cSubSubFamilia;
     int id_grupoart;
     QString cGrupoArt;
-    QString codigoIva;
+    QString codigo_iva;
     double tipo_iva;
-    double dto;
-    QDate ultima_compra;
-    QDate ultima_venta;
-    double acumulado_compras;
-    double acumulado_ventas;
+    float porc_dto;
+    QDate fecha_ultima_compra;
+    QDate fecha_ultima_venta;
+    double importe_acumulado_compras;
+    double importe_acumulado_ventas;
     QString comentario;
     int stock_maximo;
     int stock_minimo;
@@ -48,13 +48,13 @@ public:
     int pvp_incluye_iva;
     QDate fecha_prevista_recepcion;
     int cantidad_pendiente_recibir;
-    int reservados;
+    int unidades_reservadas;
     int mostrar_web;
     int etiquetas;
     int paquetes;
     QString localizacion_en_almacen;
     double pvp;
-    int id_tiposiva;
+    int id_tipos_iva;
     int id_subsub_familia;
     int id_grupo_art;
     int id_web;
@@ -97,9 +97,9 @@ public:
     QString getcSubSubFamilia(int nid);
     QString getcGrupo(int nid);
     bool agregar_proveedor_alternativo(int id_art, int id_proveedor, QString codigo, double pvd, QString descoferta,
-                                       QString oferta, double pvdreal, int id_divisa);
+                                       QString oferta, double pvd_real, int id_divisa);
     bool guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta,
-                                       QString oferta, double pvdreal, int id_divisa);
+                                       QString oferta, double pvd_real, int id_divisa);
     bool cambiarProveedorPrincipal(int id,int id_proveedor);
     bool cambiar_pvp();
     static bool agregarStock(int id, int value);
