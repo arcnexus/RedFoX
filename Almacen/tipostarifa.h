@@ -21,7 +21,10 @@ public:
     int id_monedas;
     float margen;
     float margen_min;
+    void clear();
 public slots:
+    int anadir();
+    bool guardar();
     void recuperar(QString cSql);
     void recuperar(int id);
     void cargar_datos(QSqlQuery queryTarifa);

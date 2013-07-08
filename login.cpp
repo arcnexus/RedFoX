@@ -243,7 +243,7 @@ void Login::init()
     ui->cboEmpresa->addItems(_empresas.value(0).first);
 	this->ui->lineUsuario->setFocus();
 
-    this->ui->lineUsuario->setText("marco");
+    this->ui->lineUsuario->setText("marc");
 	this->ui->linePassword->setText("patata");
 }
 

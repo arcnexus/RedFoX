@@ -23,6 +23,20 @@ private slots:
 
     void on_listatarifas_clicked(const QModelIndex &index);
 
+    void on_btnAnadir_clicked();
+
+    void activar_controles(bool state);
+
+    void on_btnEditar_clicked();
+
+    void on_btnGuardar_clicked();
+
+    void on_btnDeshacer_clicked();
+
+    void llenar_lista();
+
+    void cargar_datos_en_objeto();
+
 private:
     Ui::FrmTiposTarifa *ui;
     TiposTarifa *oTipostarifa;

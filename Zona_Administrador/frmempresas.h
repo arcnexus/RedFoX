@@ -70,7 +70,7 @@ private:
         QSqlRecord record;
     };
 
-    QHash<QString, QPair<QList<empresa> , QSqlRecord>> _empresas;
+    QHash<QString, QPair<QList<empresa> , QSqlRecord> > _empresas;
     void showEmpresas();
     void getEmpresas();
     void _addEmpresa();

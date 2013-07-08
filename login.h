@@ -42,7 +42,7 @@ private:
     QString path;
     QSqlDatabase dbMaya;
     int m_id;
-    QHash<int, QPair<QStringList , QSqlRecord>> _empresas;
+    QHash<int, QPair<QStringList , QSqlRecord> > _empresas;
 
 };
 

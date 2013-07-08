@@ -332,7 +332,7 @@ void FrmEmpresas::showEmpresas()
 {
     ui->treeEmpresas->clear();
 
-    QHashIterator<QString, QPair<QList<empresa> , QSqlRecord>> it(_empresas);
+    QHashIterator<QString, QPair<QList<empresa> , QSqlRecord> > it(_empresas);
 
     while(it.hasNext())
     {
