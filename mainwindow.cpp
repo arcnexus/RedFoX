@@ -711,7 +711,7 @@ void MainWindow::updateDivisas()
             while (divisas.next()) {
                if(divisas.record().value("fecha_cambio").toDate()!=QDate::currentDate())
                 {
-                    Configuracion_global->getCambio("EUR",divisas.record().value("nombreCorto").toString(),1);
+                    Configuracion_global->getCambio("EUR",divisas.record().value("nombre_corto").toString(),1);
                 }
             }
         }
@@ -793,7 +793,7 @@ void MainWindow::actualizar_divisas(float valor_divisa, QString divisaDest)
 {
     QSqlQuery valor(QSqlDatabase::database("Maya"));
     QString fecha_hoy = QDate::currentDate().toString("yyyy.MM.dd");
-    valor.prepare("update monedas set cambio =:divisa,fecha_cambio =:fecha where nombreCorto =:id");
+    valor.prepare("update monedas set cambio =:divisa,fecha_cambio =:fecha where nombre_corto =:id");
     valor.bindValue(":divisa",valor_divisa);
     valor.bindValue(":fecha",fecha_hoy);
     valor.bindValue(":id",divisaDest);

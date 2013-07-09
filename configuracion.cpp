@@ -312,12 +312,12 @@ QString Configuracion::Devolver_moneda(int id)
 QString Configuracion::Devolver_codDivisa(int id)
 {
     QSqlQuery qMoneda(QSqlDatabase::database("Maya"));
-    qMoneda.prepare("select nombreCorto from monedas where id = :nid");
+    qMoneda.prepare("select nombre_corto from monedas where id = :nid");
     qMoneda.bindValue(":nid",id);
     if(qMoneda.exec())
     {
         qMoneda.next();
-        return qMoneda.record().field("nombreCorto").value().toString();
+        return qMoneda.record().field("nombre_corto").value().toString();
     }
     return "";
 }
@@ -1311,7 +1311,7 @@ void Configuracion::applyCambio(float f, QString target)
     qDebug() << i << target;
     i++;
     QSqlQuery q(QSqlDatabase::database("Maya"));
-    QString sql = QString("UPDATE monedas SET cambio = '%1' WHERE nombreCorto ='%2';").arg(f).arg(target);
+    QString sql = QString("UPDATE monedas SET cambio = '%1' WHERE nombre_corto ='%2';").arg(f).arg(target);
     if(!q.exec(sql))
         qDebug() << q.lastError();
 }

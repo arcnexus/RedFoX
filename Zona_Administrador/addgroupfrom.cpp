@@ -101,9 +101,9 @@ void addGroupFrom::_insertMonedas(QSqlQuery q, bool error)
                       "simbolo "
                       ")"
                       "VALUES ("
-                      ":moneda, :nombreCorto, :simbolo );");
+                      ":moneda, :nombre_corto, :simbolo );");
             q.bindValue(":moneda",nombre);
-            q.bindValue(":nombreCorto",nombre_corto);
+            q.bindValue(":nombre_corto",nombre_corto);
             q.bindValue(":simbolo",simbol);
             if(!q.exec())
                 error = true;

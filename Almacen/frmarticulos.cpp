@@ -751,10 +751,10 @@ void FrmArticulos::btnEditarTarifa_clicked()
     QModelIndex index1=tarifa_model->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
 
     QVariant pKey = tarifa_model->data(index1,Qt::EditRole);
-
-    FrmTarifas editTarifa(this);
-    editTarifa.capturar_datos(pKey.toInt(),ui->txtCoste_real->text());
-    if(editTarifa.exec() ==QDialog::Accepted) {
+    int nid = pKey.toInt();
+    FrmTarifas *editTarifa = new FrmTarifas(this);
+    editTarifa->capturar_datos(pKey.toInt(),ui->txtCoste_real->text());
+    if(editTarifa->exec() ==QDialog::Accepted) {
         QSqlQuery queryTarifas(QSqlDatabase::database("Maya"));
         queryTarifas.prepare(
         "UPDATE tarifas SET "
@@ -762,9 +762,9 @@ void FrmArticulos::btnEditarTarifa_clicked()
         "margen_minimo = :margen_minimo,"
         "pvp = :pvp "
         " WHERE id = :id");
-        queryTarifas.bindValue(":margen",editTarifa.margen);
-        queryTarifas.bindValue(":margen_minimo",editTarifa.margen_min);
-        queryTarifas.bindValue(":pvp",editTarifa.pvpDivisa);
+        queryTarifas.bindValue(":margen",editTarifa->margen);
+        queryTarifas.bindValue(":margen_minimo",editTarifa->margen_min);
+        queryTarifas.bindValue(":pvp",editTarifa->pvpDivisa);
         queryTarifas.bindValue(":id",pKey);
         if(!queryTarifas.exec())
             QMessageBox::warning(this,tr("ATENCIÓN"),

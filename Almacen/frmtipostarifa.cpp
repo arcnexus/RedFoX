@@ -32,6 +32,10 @@ void FrmTiposTarifa::cargarDatos()
     ui->txtDescripcion->setText(oTipostarifa->descripcion);
     ui->spnMargen->setValue(oTipostarifa->margen);
     ui->spnMargen_min->setValue(oTipostarifa->margen_min);
+    int nindex = ui->cboMoneda->findText(Configuracion_global->Devolver_moneda(oTipostarifa->id_monedas));
+    ui->cboMoneda->setCurrentIndex(nindex);
+    nindex = ui->cboPais->findText(Configuracion_global->Devolver_pais(oTipostarifa->id_pais));
+    ui->cboPais->setCurrentIndex(nindex);
     //ui->txtImpDto->setText(Configuracion_global->toFormatoMoneda( QString::number(oTipostarifa->importe_dto,'f',2)));
     //ui->txtPromocion->setText(oTipostarifa->desc_promo);
 }

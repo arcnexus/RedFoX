@@ -58,8 +58,8 @@ bool TiposTarifa::guardar()
     query_tarifas.bindValue(":codigo_tarifa",this->codigo_tarifa);
     query_tarifas.bindValue(":id_pais",this->id_pais);
     query_tarifas.bindValue(":id_monedas",this->id_monedas);
-    query_tarifas.bindValue(":margen",Configuracion_global->margen);
-    query_tarifas.bindValue(":margen_min",Configuracion_global->margen_minimo);
+    query_tarifas.bindValue(":margen",this->margen);
+    query_tarifas.bindValue(":margen_min",this->margen_min);
     query_tarifas.bindValue(":id",this->id);
     if(query_tarifas.exec())
         return true;

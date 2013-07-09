@@ -51,42 +51,46 @@ void FrmTarifas::capturar_datos(int id, QString costeLocal){
         QMessageBox::warning(this,tr("Editar"),
                              tr("Ocurrió un error al recuperar los datos: %1").arg(queryTarifas.lastError().text()));
     }else {
-        queryTarifas.next();
-        QSqlQuery queryGrupotarifa(QSqlDatabase::database("Maya"));
-        if(queryGrupotarifa.exec("select * from codigotarifa where id="+QString::number(
-                                      queryTarifas.record().field("id_codigo_tarifa").value().toInt()))){
-            queryGrupotarifa.next();
-            ui->txtCodTarifa->setText(queryGrupotarifa.record().field("codigo_tarifa").value().toString());
-            ui->txtDescTarifa->setText(queryGrupotarifa.record().field("descripcion").value().toString());
+        if (queryTarifas.next())
+        {
+            QSqlQuery queryGrupotarifa(QSqlDatabase::database("Maya"));
+            int nId = queryTarifas.record().value("id_codigo_tarifa").toInt();
+            QString cSQL1 = "select * from codigotarifa where id=";
+            cSQL1.append(QString::number(nId));
+            qDebug() << cSQL1;
+            if(queryGrupotarifa.exec(cSQL1)){
+                queryGrupotarifa.next();
+                ui->txtCodTarifa->setText(queryGrupotarifa.record().field("codigo_tarifa").value().toString());
+                ui->txtDescTarifa->setText(queryGrupotarifa.record().field("descripcion").value().toString());
+            }
+            ui->txtPais->setText(Configuracion_global->Devolver_pais(queryTarifas.record().field("id_pais").value().toInt()));
+            ui->txtMoneda->setText(Configuracion_global->Devolver_moneda(queryTarifas.record().value("id_monedas").toInt()));
+            ui->txtPVPDivisa->setText(Configuracion_global->toFormatoMoneda(queryTarifas.record().value("pvp").toString()));
+            ui->txtCosteLocal->setText(costeLocal);
+            if(queryTarifas.record().value("margen").toDouble() == 0)
+                ui->spinMargen->setValue(Configuracion_global->margen);
+            else
+                ui->spinMargen->setValue(queryTarifas.record().field("margen").value().toDouble());
+            if (queryTarifas.record().value("margen_minimo") == 0)
+                ui->spinmargen_minimo->setValue(Configuracion_global->margen_minimo);
+            else
+                ui->spinmargen_minimo->setValue(queryTarifas.record().field("margen_minimo").value().toDouble());
+
+            this->id_tarifa = queryTarifas.record().field("id").value().toInt();
+            this->id_pais = queryTarifas.record().field("id_pais").value().toInt();
+            this->id_moneda = queryTarifas.record().field("id_monedas").value().toInt();
+            this->codigoTarifa = queryTarifas.record().field("codigo_tarifa").value().toString();
+            this->margen = ui->spinMargen->value();
+            this->margen_min = ui->spinmargen_minimo->value();
+            this->coste = costeLocal.toDouble();
+            this->pvpDivisa =ui->txtPVPDivisa->text().toDouble();
+            this->cod_divisa = Configuracion_global->Devolver_codDivisa(queryTarifas.record().field("id_monedas").value().toInt());
+            // Cargamos valor divisa desde la web
+            if (Configuracion_global->divisa_local != ui->txtMoneda->text())
+                Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,this->cod_divisa);
+            else
+                asignarcambiodivisa(1);
         }
-        ui->txtPais->setText(Configuracion_global->Devolver_pais(queryTarifas.record().field("id_pais").value().toInt()));
-        ui->txtMoneda->setText(Configuracion_global->Devolver_moneda(queryTarifas.record().field("id_monedas").value().toInt()));
-        ui->txtPVPDivisa->setText(Configuracion_global->toFormatoMoneda(queryTarifas.record().field("pvp").value().toString()));
-        ui->txtCosteLocal->setText(costeLocal);
-        if(queryTarifas.record().value("margen").toDouble() == 0)
-            ui->spinMargen->setValue(Configuracion_global->margen);
-        else
-            ui->spinMargen->setValue(queryTarifas.record().field("margen").value().toDouble());
-        if (queryTarifas.record().value("margen_minimo") == 0)
-            ui->spinmargen_minimo->setValue(Configuracion_global->margen_minimo);
-        else
-            ui->spinmargen_minimo->setValue(queryTarifas.record().field("margen_minimo").value().toDouble());
-
-        this->id_tarifa = queryTarifas.record().field("id").value().toInt();
-        this->id_pais = queryTarifas.record().field("id_pais").value().toInt();
-        this->id_moneda = queryTarifas.record().field("id_monedas").value().toInt();
-        this->codigoTarifa = queryTarifas.record().field("codigo_tarifa").value().toString();
-        this->margen = ui->spinMargen->value();
-        this->margen_min = ui->spinmargen_minimo->value();
-        this->coste = costeLocal.toDouble();
-        this->pvpDivisa =ui->txtPVPDivisa->text().toDouble();
-        this->cod_divisa = Configuracion_global->Devolver_codDivisa(queryTarifas.record().field("id_monedas").value().toInt());
-        // Cargamos valor divisa desde la web
-        if (Configuracion_global->divisa_local != ui->txtMoneda->text())
-            Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,this->cod_divisa);
-        else
-            asignarcambiodivisa(1);
-
 
    }
 }
