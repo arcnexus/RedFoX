@@ -1249,6 +1249,24 @@ void Configuracion::getCambio(QString from, QString to, float cuanty)
     manager->get(QNetworkRequest(QUrl(url)));
 }
 
+float Configuracion::getCambioBlock(QString from, QString to, float cuanty)
+{
+    QString url = QString("https://www.google.com/finance/converter?a=%1&from=%2&to=%3")
+            .arg(cuanty)
+            .arg(from)
+            .arg(to);
+    QNetworkAccessManager * manager = new QNetworkAccessManager(this);
+    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(cambioReplyBlock(QNetworkReply*)));
+    manager->get(QNetworkRequest(QUrl(url)));
+    _block = true;
+    while(_block)
+    {
+        QApplication::processEvents();
+        QThread::msleep(100);
+    }
+    return _cambio;
+}
+
 void Configuracion::updateTablaDivisas(QString current)
 {
     connect(this,SIGNAL(cambioReady(float,QString)),SLOT(applyCambio(float,QString)));
@@ -1305,6 +1323,40 @@ void Configuracion::cambioReply(QNetworkReply *reply)
     reply->manager()->deleteLater();
 }
 
+void Configuracion::cambioReplyBlock(QNetworkReply *reply)
+{
+    reply->deleteLater();
+    if(reply->error() == QNetworkReply::NoError)
+        {
+            // Get the http status code
+            int v = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+            if (v >= 200 && v < 300) // Success
+            {
+                // Here we got the final reply
+                //QString replyText = reply->readAll();
+                _cambio = readCambioBlock(reply->readAll());
+                _block = false;
+            }
+            else if (v >= 300 && v < 400) // Redirection
+            {
+
+                // Get the redirection url
+                QUrl newUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
+                // Because the redirection url can be relative,
+                // we have to use the previous one to resolve it
+                newUrl = reply->url().resolved(newUrl);
+
+                QNetworkAccessManager *manager = reply->manager();
+                connect(manager,SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)),this,SLOT(onIgnoreSSLErrors(QNetworkReply*,QList<QSslError>)));
+                connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(cambioReplyBlock(QNetworkReply*)));
+                QNetworkRequest redirection(newUrl);
+                manager->get(redirection);
+                return; // to keep the manager for the next request
+            }
+        }
+    reply->manager()->deleteLater();
+}
+
 void Configuracion::applyCambio(float f, QString target)
 {
     static int i= 1;
@@ -1333,6 +1385,23 @@ void Configuracion::readCambio(QString s)
     }
     else
         qDebug()<<s;
+}
+
+float Configuracion::readCambioBlock(QString s)
+{
+    QString place = "<span class=bld>";
+    int index = s.indexOf(place)+place.size();
+    int end = s.indexOf(" ",index);
+    int end2 = s.indexOf("</span>",end);
+    QString sFloat = s.mid(index,end-index);
+    QString to = s.mid(end+1,end2-end-1);
+    bool ok;
+    float f = sFloat.toFloat(&ok);
+
+    if(ok)
+        return f;
+    else
+        return 0.0;
 }
 /*
  *connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(unSLOT(float);
