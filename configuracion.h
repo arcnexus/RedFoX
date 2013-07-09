@@ -210,6 +210,7 @@ public:
     static QString DeCrypt(QString input);
     static QString SHA256HashString(QString input);
     void getCambio(QString from, QString to , float cuanty = 1);
+    float getCambioBlock(QString from, QString to , float cuanty = 1);
 
     void updateTablaDivisas(QString current);
 
@@ -217,13 +218,17 @@ public slots:
     void format_text();    
 private slots:
     void cambioReply(QNetworkReply * reply);
+    void cambioReplyBlock(QNetworkReply * reply);
     void applyCambio(float f,QString target);
 signals:
     void cambioReady(float,QString target = "");
 private:
     void readCambio(QString s);
+    float readCambioBlock(QString s);
     static byte key[ CryptoPP::AES::DEFAULT_KEYLENGTH ];
     static byte iv[ CryptoPP::AES::BLOCKSIZE ];
+    bool _block;
+    float _cambio;
 };
 
 #endif // CONFIGURACION_H
