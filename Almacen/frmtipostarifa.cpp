@@ -18,6 +18,10 @@ FrmTiposTarifa::FrmTiposTarifa(QWidget *parent) :
     monedas->setQuery("Select moneda from monedas",QSqlDatabase::database("Maya"));
     ui->cboMoneda->setModel(monedas);
     activar_controles(false);
+    //-------------------------------
+    // CAMBIO DIVISA
+    //-------------------------------
+    bool b = connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(asignarcambiodivisa(float)));
 
 }
 
@@ -52,6 +56,15 @@ void FrmTiposTarifa::on_btnAgregarTarifa_clicked()
             int id = 0;
             bool end = false;
             QSqlQuery queryArticulo(QSqlDatabase::database("Maya"));
+            // TODO PREPARAR PARA MULTIDIVISA
+            QString cod_div_local = Configuracion_global->cod_divisa_local;
+            QString cod_div_extra = Configuracion_global->Devolver_codDivisa(oTipostarifa->id_monedas);
+            if (cod_div_local!= cod_div_extra)
+                Configuracion_global->getCambio(cod_div_local,cod_div_extra,1);
+            else
+            {
+                oTipostarifa->valor_divisa = 1;
+            }
             while (end == false)
             {
                 if (queryArticulo.exec("select * from articulos where id >" + QString::number(id)))
@@ -67,6 +80,7 @@ void FrmTiposTarifa::on_btnAgregarTarifa_clicked()
                             if(!querytarifa.next())
                             {
                                 ui->lblDescArt->setText(queryArticulo.record().value("descripcion").toString());
+                                QApplication::processEvents();
                                 querytarifa.prepare("INSERT INTO tarifas (id_articulo,id_pais,id_monedas,margen,"
                                                     "margen_minimo,pvp,id_codigo_tarifa) VALUES (:id_articulo,:id_pais,"
                                                     ":id_monedas,:margen,:margen_minimo,:pvp,:id_codigo_tarifa);");
@@ -75,21 +89,22 @@ void FrmTiposTarifa::on_btnAgregarTarifa_clicked()
                                 querytarifa.bindValue(":id_monedas",oTipostarifa->id_monedas);
                                 querytarifa.bindValue(":margen",oTipostarifa->margen);
                                 querytarifa.bindValue(":margen_minimo",oTipostarifa->margen_min);
-                                double pvp = (queryArticulo.record().value("coste").toDouble()*100)/(100-oTipostarifa->margen);
-                                querytarifa.bindValue(":pvp",pvp);
-                                querytarifa.bindValue(":id_codigo_tarifa",oTipostarifa->id);
-                                if(!querytarifa.exec())
-                                    QMessageBox::warning(this,tr("Gestión tipos de tarifa"),
-                                                         tr("Ocurrió un fallo al crear la tarifa: %1").arg(querytarifa.lastError().text()));
+
+                                double coste = queryArticulo.record().value("coste_real").toDouble();
+                                float margen = queryArticulo.record().value("margen").toFloat();
+                                double pvp, pvp_divisa;
+                                pvp = (coste*100)/(100-margen);
+                                pvp_divisa = pvp * oTipostarifa->valor_divisa;
+                                if (oTipostarifa->valor_divisa == 1)
+                                    querytarifa.bindValue(":pvp",pvp);
+                                else
+                                    querytarifa.bindValue(":pvp",pvp_divisa);
                             }
-                        }
-
-
-
-                    }else
+                     }else
                     {
                         end = true;
                     }
+                 }
             }
 
         }
@@ -178,4 +193,9 @@ void FrmTiposTarifa::cargar_datos_en_objeto()
     oTipostarifa->margen_min = ui->spnMargen_min->value();
     oTipostarifa->id_monedas = Configuracion_global->Devolver_id_moneda(ui->cboMoneda->currentText());
     oTipostarifa->id_pais = Configuracion_global->Devolver_id_pais(ui->cboPais->currentText());
+}
+
+void FrmTiposTarifa::asignarcambiodivisa(float valor)
+{
+    oTipostarifa->valor_divisa = valor;
 }

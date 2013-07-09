@@ -21,6 +21,7 @@ public:
     int id_monedas;
     float margen;
     float margen_min;
+    float valor_divisa;
     void clear();
 public slots:
     int anadir();

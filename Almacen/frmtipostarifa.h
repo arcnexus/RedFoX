@@ -36,6 +36,7 @@ private slots:
     void llenar_lista();
 
     void cargar_datos_en_objeto();
+    void asignarcambiodivisa(float valor);
 
 private:
     Ui::FrmTiposTarifa *ui;
