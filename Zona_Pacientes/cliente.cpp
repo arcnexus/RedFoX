@@ -65,8 +65,9 @@ void Cliente::Guardar() {
                    "password_web=:password_web,"
                    "id_idioma_documentos=:id_idioma,"
                    "cif_vies=:cif_vies,"
-                   "id_web =:id_web"
-                   "irpf =:irpf"
+                   "id_web =:id_web,"
+                   "irpf =:irpf,"
+                   "observaciones =:observaciones"
                    " WHERE id =:id" );
 
     query.bindValue(":codigo_cliente", this->codigo_cliente);
@@ -128,6 +129,7 @@ void Cliente::Guardar() {
         query.bindValue(":irpf",1);
     else
         query.bindValue(":irpf",0);
+    query.bindValue(":observaciones",this->observaciones);
     query.bindValue(":id",this->id);
 
 
@@ -228,7 +230,8 @@ void Cliente::GuardarWeb()
                   "id_idioma_documentos=:id_idioma,"
                   "cif_vies=:cif_vies,"
                   "id_local =:id_local,"
-                  "irpf =:irpf"
+                  "irpf =:irpf,"
+                  "observaciones = :observaciones"
                   " WHERE id =:id_web" );
 
    query.bindValue(":codigo_cliente", this->codigo_cliente);
@@ -290,6 +293,7 @@ void Cliente::GuardarWeb()
    else
        query.bindValue(":irpf",0);
    query.bindValue(":id_web",this->id_web);
+   query.bindValue(":observaciones",this->observaciones);
    query.bindValue(":id_local",this->id);
 
 
@@ -409,6 +413,7 @@ void Cliente::Recuperar(QString cSQL) {
             this->cifVies = registro.field("cif_vies").value().toString();
             this->id_web = registro.value("id_web").toInt();
             this->idTarifa = registro.value("tarifa_cliente").toInt();
+            this->observaciones = registro.value("observaciones").toString();
             int irpf =registro.field("irpf").value().toInt();
             if (irpf==1)
                 this->lIRPF = true;

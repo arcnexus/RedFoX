@@ -18,11 +18,6 @@ FrmTiposTarifa::FrmTiposTarifa(QWidget *parent) :
     monedas->setQuery("Select moneda from monedas",QSqlDatabase::database("Maya"));
     ui->cboMoneda->setModel(monedas);
     activar_controles(false);
-    //-------------------------------
-    // CAMBIO DIVISA
-    //-------------------------------
-    bool b = connect(Configuracion_global,SIGNAL(cambioReady(float)),this,SLOT(asignarcambiodivisa(float)));
-
 }
 
 FrmTiposTarifa::~FrmTiposTarifa()
@@ -60,11 +55,14 @@ void FrmTiposTarifa::on_btnAgregarTarifa_clicked()
             QString cod_div_local = Configuracion_global->cod_divisa_local;
             QString cod_div_extra = Configuracion_global->Devolver_codDivisa(oTipostarifa->id_monedas);
             if (cod_div_local!= cod_div_extra)
-                Configuracion_global->getCambio(cod_div_local,cod_div_extra,1);
+                oTipostarifa->valor_divisa = Configuracion_global->getCambioBlock(cod_div_local,cod_div_extra);
+                //Configuracion_global->getCambio(cod_div_local,cod_div_extra,1);
             else
             {
                 oTipostarifa->valor_divisa = 1;
             }
+
+
             while (end == false)
             {
                 if (queryArticulo.exec("select * from articulos where id >" + QString::number(id)))

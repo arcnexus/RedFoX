@@ -188,14 +188,13 @@ void frmClientes::LLenarCampos()
     ui->txtcuenta_deudas->setText(oCliente->cuenta_deudas);
     ui->txtcuenta_cobros->setText(oCliente->cuenta_cobros);
     int indice=ui->cboforma_pago->findText(oCliente->forma_pago);
-
-    if(indice!=-1)
-        ui->cboforma_pago->setCurrentIndex(indice);
+    ui->cboforma_pago->setCurrentIndex(indice);
 
     //ui->cboforma_pago->setItemText);
     ui->txtdia_pago1->setValue(oCliente->dia_pago1);
     ui->txtdia_pago2->setValue(oCliente->dia_pago2);
-   // ui->cbotarifa_cliente->lineEdit)->setText(oCliente->tarifa_cliente));
+    indice = ui->cbotarifa_cliente->findText(Configuracion_global->Devolver_tarifa(oCliente->tarifa_cliente));
+    ui->cbotarifa_cliente->setCurrentIndex( indice);
     ui->txtimporte_a_cuenta->setText( Configuracion_global->toFormatoMoneda(QString::number(oCliente->importe_a_cuenta,'f',2)));
     ui->txtvales->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->vales,'f',2)));
     ui->txtentidad_bancaria->setText(oCliente->entidad_bancaria);
@@ -205,6 +204,7 @@ void frmClientes::LLenarCampos()
     ui->txtfecha_nacimiento->setDate(oCliente->fecha_nacimiento);
     ui->txtacceso_web->setText(oCliente->acceso_web);
     ui->txtpassword_web->setText(oCliente->password_web);
+    ui->txtObservaciones->setText(oCliente->observaciones);
     if (oCliente->lIRPF)
         ui->chkClienteEmpresa->setChecked(true);
     else
@@ -510,6 +510,7 @@ void frmClientes::VaciarCampos()
     ui->txtpassword_web->setText("");
     ui->txtPrimerApellido->setFocus();
     ui->chkClienteEmpresa->setChecked(false);
+    ui->txtObservaciones->setText("");
 
     //------------------
     // Tipos de clientes
@@ -576,6 +577,7 @@ void frmClientes::LLenarCliente()
     oCliente->password_web=ui->txtpassword_web->text();
     oCliente->ididioma = Configuracion_global->Devolver_id_idioma(ui->cboidiomaDocumentos->currentText());
     oCliente->idioma = ui->cboidiomaDocumentos->currentText();
+    oCliente->observaciones = ui->txtObservaciones->text();
     if (ui->chkClienteEmpresa)
         oCliente->lIRPF =true;
     else

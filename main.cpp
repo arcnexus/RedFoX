@@ -196,7 +196,7 @@ int main(int argc, char *argv[])
 
     Configuracion_global = new Configuracion;
 
-    float f = Configuracion_global->getCambioBlock("EUR","USD");
+
 
     QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
     #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)

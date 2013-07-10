@@ -227,6 +227,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`clientes` (
   `cif_vies` VARCHAR(35) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `id_web` INT(11) NULL DEFAULT NULL ,
   `id_monedas` INT(11) NULL DEFAULT NULL ,
+  `observaciones` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_clientes_2_idx` (`id_idioma_documentos` ASC) )
 ENGINE = InnoDB

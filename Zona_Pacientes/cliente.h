@@ -81,6 +81,8 @@ public:
     int idTarifa;
     int ididioma;
     QString idioma;
+    QString observaciones;
+
     QSqlQuery queryClienteWeb;
     QSqlDatabase db;
     QSqlQuery *qryCliente;
