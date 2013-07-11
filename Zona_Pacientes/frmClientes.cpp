@@ -46,6 +46,17 @@ frmClientes::frmClientes(QWidget *parent) :
     // Rellenar formas de pago
     modelFP = new QSqlQueryModel();
     modelFP->setQuery("Select forma_pago,id from formpago",QSqlDatabase::database("Maya"));
+    // Rellenar transportistas
+
+    QSqlQueryModel *queryTransportistas = new QSqlQueryModel(this);
+    queryTransportistas->setQuery("Select transportista from transportista",QSqlDatabase::database("Maya"));
+    ui->cbotransportista->setModel(queryTransportistas);
+    // Rellenar agentes
+
+    QSqlQueryModel *queryAgentes = new QSqlQueryModel(this);
+    queryAgentes->setQuery("Select nombre from agentes",QSqlDatabase::database("Maya"));
+    ui->cboagente->setModel(queryAgentes);
+
 
     // Ocultar campos según configuración
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
@@ -210,10 +221,25 @@ void frmClientes::LLenarCampos()
     else
         ui->chkClienteEmpresa->setChecked(false);
     indice = ui->cboidiomaDocumentos->findText(oCliente->idioma);
-    if(indice >-1)
         ui->cboidiomaDocumentos->setCurrentIndex(indice);
-    else
-        ui->cboidiomaDocumentos->setCurrentIndex(-1);
+
+    ui->txtvisa1_caduca_ano->setText(QString::number(oCliente->visa1_caduca_ano));
+    ui->txtvisa1_caduca_mes->setText(QString::number(oCliente->visa1_caduca_mes));
+    ui->txtvisa1_cod_valid->setText(QString::number(oCliente->visa1_cod_valid));
+    ui->txtvisa2_caduca_ano->setText(QString::number(oCliente->visa2_caduca_ano));
+    ui->txtvisa2_caduca_mes->setText(QString::number(oCliente->visa2_caduca_mes));
+    ui->txtvisa2_cod_valid->setText(QString::number(oCliente->visa2_cod_valid));
+    ui->txtvisa_distancia1->setText(oCliente->visa_distancia1);
+    ui->txtvisa_distancia2->setText(oCliente->visa_distancia2);
+    indice = ui->cbotransportista->findText(Configuracion_global->devolver_transportista(oCliente->id_transportista));
+    ui->cbotransportista->setCurrentIndex(indice);
+
+    indice = ui->cboagente->findText(Configuracion_global->devolver_agente(oCliente->id_agente));
+    ui->cboagente->setCurrentIndex(indice);
+
+    // --------------------------
+    // Validaciones de seguridad
+    //---------------------------
     ValidarCC();
 
     // Tablas
@@ -495,10 +521,10 @@ void frmClientes::VaciarCampos()
     ui->txtcuenta_cobros->setText("");
 
 
-    //ui->cboforma_pago->setItemText();
+    ui->cboforma_pago->setCurrentIndex(-1);
     ui->txtdia_pago1->setValue(0);
     ui->txtdia_pago2->setValue(0);
-   // ui->cbotarifa_cliente->lineEdit()->setText(oCliente->gettarifa_cliente());
+    ui->cbotarifa_cliente->setCurrentIndex(-1);
     ui->txtimporte_a_cuenta->setText("");
     ui->txtvales->setText("");
     ui->txtentidad_bancaria->setText("");
@@ -511,6 +537,17 @@ void frmClientes::VaciarCampos()
     ui->txtPrimerApellido->setFocus();
     ui->chkClienteEmpresa->setChecked(false);
     ui->txtObservaciones->setText("");
+    ui->cboagente->setCurrentIndex(-1);
+    ui->cbotransportista->setCurrentIndex(-1);
+    ui->txtvisa1_caduca_ano->setText("");
+    ui->txtvisa1_caduca_mes->setText("");
+    ui->txtvisa1_cod_valid->setText("");
+    ui->txtvisa2_caduca_ano->setText("");
+    ui->txtvisa2_caduca_mes->setText("");
+    ui->txtvisa2_cod_valid->setText("");
+    ui->txtvisa_distancia1->setText("");
+    ui->txtvisa_distancia2->setText("");
+
 
     //------------------
     // Tipos de clientes
@@ -589,6 +626,16 @@ void frmClientes::LLenarCliente()
         qTarifa.next();
         oCliente->tarifa_cliente = qTarifa.record().field("id").value().toInt();
     }
+    oCliente->visa1_caduca_ano = ui->txtvisa1_caduca_ano->text().toInt();
+    oCliente->visa1_caduca_mes = ui->txtvisa1_caduca_mes->text().toInt();
+    oCliente->visa1_cod_valid = ui->txtvisa1_cod_valid->text().toInt();
+    oCliente->visa2_caduca_ano = ui->txtvisa2_caduca_ano->text().toInt();
+    oCliente->visa2_caduca_mes = ui->txtvisa2_caduca_mes->text().toInt();
+    oCliente->visa2_cod_valid = ui->txtvisa2_cod_valid->text().toInt();
+    oCliente->visa_distancia1 = ui->txtvisa_distancia1->text();
+    oCliente->visa_distancia2 = ui->txtvisa_distancia2->text();
+    oCliente->id_transportista = Configuracion_global->devolver_id_transportista(ui->cbotransportista->currentText());
+    oCliente->id_agente = Configuracion_global->devolver_id_agente(ui->cboagente->currentText());
 }
 
 
@@ -628,7 +675,7 @@ void frmClientes::on_btnGuardar_clicked()
         LLenarCliente();
         oCliente->Guardar();
         bloquearCampos();
-        Configuracion_global->CargarClientes();
+      // NOTE ??? porqué?  Configuracion_global->CargarClientes();
         emit unblock();
     } else
     {

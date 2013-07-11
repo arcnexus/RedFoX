@@ -228,6 +228,16 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`clientes` (
   `id_web` INT(11) NULL DEFAULT NULL ,
   `id_monedas` INT(11) NULL DEFAULT NULL ,
   `observaciones` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `visa_distancia1` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `visa_distancia2` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `visa1_caduca_mes` INT(2) NULL ,
+  `visa2_caduca_mes` INT(2) NULL ,
+  `visa1_caduca_ano` INT(4) NULL ,
+  `visa2_caduca_ano` INT(4) NULL ,
+  `visa1_cod_valid` INT(3) NULL ,
+  `visa2_cod_valid` INT(3) NULL ,
+  `id_agente` INT(11) NULL ,
+  `id_transportista` INT(11) NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_clientes_2_idx` (`id_idioma_documentos` ASC) )
 ENGINE = InnoDB
@@ -287,6 +297,43 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`clientes_intervalo_horario` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+CREATE  TABLE IF NOT EXISTS `@grupo@`.`agentes` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(45) NULL ,
+  `codigo` VARCHAR(15) NULL ,
+  `dni` VARCHAR(15) NULL ,
+  `telefono` VARCHAR(15) NULL ,
+  `movill` VARCHAR(15) NULL ,
+  `email` VARCHAR(150) NULL ,
+  `comentarios` TEXT NULL ,
+  `facturado` DOUBLE NULL ,
+  `pendiente` DOUBLE NULL ,
+  PRIMARY KEY (`id`) )
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8;
+
+CREATE  TABLE IF NOT EXISTS `@grupo@`.`transportista` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `codigo` VARCHAR(15) NULL ,
+  `transportista` VARCHAR(70) NULL ,
+  `cif` VARCHAR(13) NULL ,
+  `direccion1` VARCHAR(45) NULL ,
+  `direccion2` VARCHAR(45) NULL ,
+  `cp` VARCHAR(10) NULL ,
+  `poblacion` VARCHAR(45) NULL ,
+  `provincia` VARCHAR(45) NULL ,
+  `pais` VARCHAR(45) NULL ,
+  `telefono1` VARCHAR(20) NULL ,
+  `telefono2` VARCHAR(20) NULL ,
+  `fax` VARCHAR(20) NULL ,
+  `movil` VARCHAR(20) NULL ,
+  `email` VARCHAR(100) NULL ,
+  `web` VARCHAR(100) NULL ,
+  PRIMARY KEY (`id`) )
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8;
+
 
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`codigotarifa` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,

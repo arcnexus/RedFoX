@@ -586,6 +586,67 @@ QString Configuracion::devolver_referencia_articulo(int id)
                              tr("Aceptar"));
 }
 
+QString Configuracion::devolver_agente(int id)
+{
+    QSqlQuery query(QSqlDatabase::database("Maya"));
+    if(query.exec("select nombre from agentes where id = "+QString::number(id)))
+    {
+        query.next();
+        return query.record().value("nombre").toString();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar agente"),
+                             tr("Fallo al recuperar el agente")+query.lastError().text(),
+                             tr("Aceptar"));
+}
+
+int Configuracion::devolver_id_agente(QString agente)
+{
+    QSqlQuery query(QSqlDatabase::database("Maya"));
+    if(query.exec("select id from agentes where nombre = '"+agente+"'"))
+    {
+        query.next();
+        return query.record().value("id").toInt();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar identificador agente"),
+                             tr("Fallo la recuperación del identificador: ")+query.lastError().text(),
+                             tr("Aceptar"));
+
+}
+
+QString Configuracion::devolver_transportista(int id)
+{
+    QSqlQuery query(QSqlDatabase::database("Maya"));
+    if(query.exec("select transportista from transportista where id = "+QString::number(id)))
+    {
+        query.next();
+        return query.record().value("transportista").toString();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar transportista"),
+                             tr("Fallo al recuperar el transportista")+query.lastError().text(),
+                             tr("Aceptar"));
+
+}
+
+int Configuracion::devolver_id_transportista(QString transportista)
+{
+    QSqlQuery query(QSqlDatabase::database("Maya"));
+    if(query.exec("select id from transportista where transportista = '"+transportista+"'"))
+    {
+        query.next();
+        return query.record().value("id").toInt();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar identificador transportista"),
+                             tr("Fallo la recuperación del identificador: ")+query.lastError().text(),
+                             tr("Aceptar"));
+
+}
+
+
+
 
 void Configuracion::CargarClientes()
 {

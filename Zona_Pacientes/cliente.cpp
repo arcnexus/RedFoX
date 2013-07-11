@@ -67,6 +67,16 @@ void Cliente::Guardar() {
                    "cif_vies=:cif_vies,"
                    "id_web =:id_web,"
                    "irpf =:irpf,"
+                   "visa_distancia1 =:visa_distancia1,"
+                   "visa_distancia2 =:visa_distancia2,"
+                   "visa1_caduca_mes =:visa1_caduca_mes,"
+                   "visa2_caduca_mes =:visa2_caduca_mes,"
+                   "visa1_caduca_ano =:visa1_caduca_ano,"
+                   "visa2_caduca_ano =:visa2_caduca_ano,"
+                   "visa1_cod_valid =:visa1_cod_valid,"
+                   "visa2_cod_valid =:visa2_cod_valid,"
+                   "id_agente =:id_agente,"
+                   "id_transportista =:id_transportista,"
                    "observaciones =:observaciones"
                    " WHERE id =:id" );
 
@@ -130,7 +140,17 @@ void Cliente::Guardar() {
     else
         query.bindValue(":irpf",0);
     query.bindValue(":observaciones",this->observaciones);
+    query.bindValue(":visa_distancia1",this->visa_distancia1);
+    query.bindValue(":visa_distancia2",this->visa_distancia2);
     query.bindValue(":id",this->id);
+    query.bindValue(":visa1_caduca_mes",this->visa1_caduca_mes);
+    query.bindValue(":visa2_caduca_mes",this->visa2_caduca_mes);
+    query.bindValue(":visa1_caduca_ano",this->visa1_caduca_ano);
+    query.bindValue(":visa2_caduca_ano",this->visa2_caduca_ano);
+    query.bindValue(":visa1_cod_valid",this->visa1_cod_valid);
+    query.bindValue(":visa2_cod_valid",this->visa2_cod_valid);
+    query.bindValue(":id_agente",this->id_agente);
+    query.bindValue(":id_transportista",this->id_transportista);
 
 
     if(!query.exec()){
@@ -231,7 +251,17 @@ void Cliente::GuardarWeb()
                   "cif_vies=:cif_vies,"
                   "id_local =:id_local,"
                   "irpf =:irpf,"
-                  "observaciones = :observaciones"
+                  "observaciones = :observaciones,"
+                  "visa_distancia1 =:visa_distancia1,"
+                  "visa_distancia2 =:visa_distancia2,"
+                  "visa1_caduca_mes =:visa1_caduca_mes,"
+                  "visa2_caduca_mes =:visa2_caduca_mes,"
+                  "visa1_caduca_ano =:visa1_caduca_ano,"
+                  "visa2_caduca_ano =:visa2_caduca_ano,"
+                  "visa1_cod_valid =:visa1_cod_valid,"
+                  "visa2_cod_valid =:visa2_cod_valid,"
+                  "id_agente =:id_agente,"
+                  "id_transportista =:id_transportista,"
                   " WHERE id =:id_web" );
 
    query.bindValue(":codigo_cliente", this->codigo_cliente);
@@ -295,6 +325,14 @@ void Cliente::GuardarWeb()
    query.bindValue(":id_web",this->id_web);
    query.bindValue(":observaciones",this->observaciones);
    query.bindValue(":id_local",this->id);
+   query.bindValue(":visa1_caduca_mes",this->visa1_caduca_mes);
+   query.bindValue(":visa2_caduca_mes",this->visa2_caduca_mes);
+   query.bindValue(":visa1_caduca_ano",this->visa1_caduca_ano);
+   query.bindValue(":visa2_caduca_ano",this->visa2_caduca_ano);
+   query.bindValue(":visa1_cod_valid",this->visa1_cod_valid);
+   query.bindValue(":visa2_cod_valid",this->visa2_cod_valid);
+   query.bindValue(":id_agente",this->id_agente);
+   query.bindValue(":id_transportista",this->id_transportista);
 
 
    if(!query.exec()){
@@ -414,6 +452,16 @@ void Cliente::Recuperar(QString cSQL) {
             this->id_web = registro.value("id_web").toInt();
             this->idTarifa = registro.value("tarifa_cliente").toInt();
             this->observaciones = registro.value("observaciones").toString();
+            this->visa1_caduca_mes =registro.field("visa1_caduca_mes").value().toInt();
+            this->visa2_caduca_mes = registro.field("visa2_caduca_mes").value().toInt();
+            this->visa1_caduca_ano = registro.field("visa1_caduca_ano").value().toInt();
+            this->visa2_caduca_ano = registro.field("visa2_caduca_ano").value().toInt();
+            this->visa1_cod_valid = registro.field("visa1_cod_valid").value().toInt();
+            this->visa2_cod_valid = registro.field("visa2_cod_valid").value().toInt();
+            this->visa_distancia1 = registro.field("visa_distancia1").value().toString();
+            this->visa_distancia2 = registro.field("visa_distancia2").value().toString();
+            this->id_agente = registro.field("id_agente").value().toInt();
+            this->id_transportista = registro.field("id_transportista").value().toInt();
             int irpf =registro.field("irpf").value().toInt();
             if (irpf==1)
                 this->lIRPF = true;

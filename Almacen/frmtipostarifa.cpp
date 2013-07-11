@@ -87,9 +87,10 @@ void FrmTiposTarifa::on_btnAgregarTarifa_clicked()
                                 querytarifa.bindValue(":id_monedas",oTipostarifa->id_monedas);
                                 querytarifa.bindValue(":margen",oTipostarifa->margen);
                                 querytarifa.bindValue(":margen_minimo",oTipostarifa->margen_min);
+                                querytarifa.bindValue(":id_codigo_tarifa",oTipostarifa->id);
 
                                 double coste = queryArticulo.record().value("coste_real").toDouble();
-                                float margen = queryArticulo.record().value("margen").toFloat();
+                                float margen = oTipostarifa->margen;
                                 double pvp, pvp_divisa;
                                 pvp = (coste*100)/(100-margen);
                                 pvp_divisa = pvp * oTipostarifa->valor_divisa;
@@ -97,13 +98,19 @@ void FrmTiposTarifa::on_btnAgregarTarifa_clicked()
                                     querytarifa.bindValue(":pvp",pvp);
                                 else
                                     querytarifa.bindValue(":pvp",pvp_divisa);
+                                if(!querytarifa.exec())
+                                {
+                                    QMessageBox::warning(this,tr("Tipos de tarifas"),
+                                                         tr("Ocurrió un error al crear la tarifa: %1 ").arg(querytarifa.lastError().text()),
+                                                         tr("Aceptar"));
+                                    break;
+                                }
                             }
-                     }else
-                    {
+                        }
+                     } else {
                         end = true;
                     }
-                 }
-            }
+                }
 
         }
         ui->lblDescArt->setText(tr("¡Proceso terminado!"));

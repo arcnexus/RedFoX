@@ -82,7 +82,16 @@ public:
     int ididioma;
     QString idioma;
     QString observaciones;
-
+    QString visa_distancia1;
+    QString visa_distancia2;
+    int visa1_caduca_mes;
+    int visa2_caduca_mes;
+    int visa1_caduca_ano;
+    int visa2_caduca_ano;
+    int visa1_cod_valid;
+    int visa2_cod_valid;
+    int id_agente;
+    int id_transportista;
     QSqlQuery queryClienteWeb;
     QSqlDatabase db;
     QSqlQuery *qryCliente;

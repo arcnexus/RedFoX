@@ -145,6 +145,10 @@ public:
     QString devolver_codigo_articulo(int id);
     QString devolver_codigo_barras(int id);
     QString devolver_referencia_articulo(int id);
+    QString devolver_agente(int id);
+    int devolver_id_agente(QString agente);
+    QString devolver_transportista(int id);
+    int devolver_id_transportista(QString transportista);
 
     QSqlTableModel* client_model;
     void CargarClientes();
