@@ -362,7 +362,15 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_pre` (
   `importe2` DOUBLE NULL DEFAULT NULL ,
   `importe3` DOUBLE NULL DEFAULT NULL ,
   `importe4` DOUBLE NULL DEFAULT NULL ,
-  PRIMARY KEY (`id`) )
+  `porc_dto_pp` FLOAT NULL DEFAULT '0' , 
+  `dto_pp` DOUBLE NULL DEFAULT '0' ,
+  `gastos_distribuidos1` VARCHAR(100) NULL  DEFAULT NULL ,
+  `gastos_distribuidos2` VARCHAR(100) NULL  DEFAULT NULL ,
+  `gastos_distribuidos3` VARCHAR(100) NULL  DEFAULT NULL ,
+  `importe_gasto1` DOUBLE NULL  DEFAULT '0',
+  `importe_gasto2` DOUBLE NULL  DEFAULT '0',
+  `importe_gasto3` DOUBLE NULL  DEFAULT '0',
+   PRIMARY KEY (`id`) ) 
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
@@ -426,10 +434,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_tpv` (
   `numero_albaran` INT(11) NULL DEFAULT '0' ,
   `numero_factura` INT(11) NULL DEFAULT '0' ,
   `id_cierre` INT(11) NULL DEFAULT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_cab_tpv_cierrecaja_id_idx` (`id_cierre` ASC) ,
-  INDEX `fk_cab_tpv__clientes_id_idx` (`id_cliente` ASC) ,
-  INDEX `fk_cab_tpv_formapago_id_idx` (`id_forma_pago` ASC) )
+  PRIMARY KEY (`id`) 
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
