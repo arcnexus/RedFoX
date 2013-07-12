@@ -1,4 +1,4 @@
-﻿CREATE SCHEMA IF NOT EXISTS `@grupo@` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `@grupo@` DEFAULT CHARACTER SET utf8 ;
 
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`accesousuarios` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
@@ -242,7 +242,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`clientes` (
   PRIMARY KEY (`id`) ,
   INDEX `fk_clientes_2_idx` (`id_idioma_documentos` ASC) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 9180
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -352,7 +352,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`codigotarifa` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `descripcion_UNIQUE` (`descripcion` ASC) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`departamento` (
@@ -477,7 +477,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`modulos` (
   `module_name` VARCHAR(45) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 179
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`monedas` (
@@ -499,7 +499,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`nivelacceso` (
   `nombre` VARCHAR(45) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`paises` (
@@ -578,7 +578,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`poblaciones` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 58752
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`proveedor_a_cuenta` (
@@ -591,7 +591,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`proveedor_a_cuenta` (
   PRIMARY KEY (`id`) ,
   INDEX `fk_proveedor_a_cuenta_1_idx` (`id_proveedor` ASC) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`proveedores` (
@@ -741,7 +741,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`tiposiva` (
   `recargo_equivalencia` DECIMAL(9,2) NULL DEFAULT '0.00' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
