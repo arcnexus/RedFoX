@@ -89,23 +89,23 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
     ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
     BloquearCampos(true);
-    if(oPres->siguiente())
-    {
-        LLenarCampos();
-        QString filter = QString("id_Cab = '%1'").arg(oPres->id);
-        helper.fillTable("empresa","lin_pre",filter);
-        ui->btnAnterior->setEnabled(false);
-    }
-    else
-    {
+//    if(oPres->siguiente())
+//    {
+//        LLenarCampos();
+//        QString filter = QString("id_Cab = '%1'").arg(oPres->id);
+//        helper.fillTable("empresa","lin_pre",filter);
+//        ui->btnAnterior->setEnabled(false);
+//    }
+//    else
+//    {
         ui->btnBorrar->setEnabled(false);
         ui->btnEditar->setEnabled(false);
         ui->btn_convertir->setEnabled(false);
         ui->btnAnterior->setEnabled(false);
-        ui->btnSiguiente->setEnabled(false);
-        ui->btnBuscar->setEnabled(false);
+        ui->btnSiguiente->setEnabled(true);
+        ui->btnBuscar->setEnabled(true);
         ui->btnImprimir->setEnabled(false);
-    }
+//    }
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
@@ -195,6 +195,12 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total,'f',2)));
     ui->txtemail->setText(oPres->email);
     ui->chklporc_rec->setChecked(oPres->recargo_equivalencia);
+    oClientePres->Recuperar("Select * from clientes where id ="+QString::number(oPres->id_cliente));
+    helper.set_tarifa(oClientePres->tarifa_cliente);
+    helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
+    helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
+    helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
+    helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
 }
 
 void FrmPresupuestosCli::LLenarCamposCliente()
@@ -230,6 +236,7 @@ void FrmPresupuestosCli::LLenarCamposCliente()
         ui->chklporc_rec->setChecked(false);
         oPres->recargo_equivalencia = 0;
     }
+    oPres->id_cliente = oClientePres->id;
 }
 
 void FrmPresupuestosCli::LLenarPresupuesto()
@@ -410,6 +417,7 @@ void FrmPresupuestosCli::BloquearCampos(bool state)
     ui->btnBuscar->setEnabled(state);
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
+    ui->btndeshacer->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
     ui->btnAnadirLinea->setEnabled(!state);
     ui->btn_borrarLinea->setEnabled(!state);
@@ -572,6 +580,7 @@ void FrmPresupuestosCli::on_botBuscarCliente_clicked()
         int id = consulta.get_id();
         oClientePres->Recuperar("select * from clientes where id="+QString::number(id));
         LLenarCamposCliente();
+        helper.set_tarifa(oClientePres->tarifa_cliente);
     }
 }
 
@@ -828,4 +837,14 @@ void FrmPresupuestosCli::on_tabWidget_currentChanged(int index)
 {
     Q_UNUSED(index);
     helper.resizeTable();
+}
+
+
+
+void FrmPresupuestosCli::on_btndeshacer_clicked()
+{
+    QSqlDatabase::database("Maya").rollback();
+    QSqlDatabase::database("empresa").rollback();
+    BloquearCampos(true);
+    LLenarCampos();
 }

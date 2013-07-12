@@ -632,7 +632,10 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_alb` (
   `porc_dto` FLOAT NULL DEFAULT '0' ,
   `porc_iva` FLOAT NULL DEFAULT '0' ,
   `iva` DOUBLE NULL DEFAULT '0' ,
+  `porc_rec` FLOAT NULL  DEFAULT '0' ,
+  `rec` DOUBLE NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
+
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -648,6 +651,8 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_alb_pro` (
   `precio` DOUBLE NULL DEFAULT '0' ,
   `porc_dto` FLOAT NULL DEFAULT '0' ,
   `porc_iva` FLOAT NULL DEFAULT '0' ,
+  `porc_rec` FLOAT NULL  DEFAULT '0' ,
+  `rec` DOUBLE NULL DEFAULT '0' ,
   `cantidad` INT(11) NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
   `dto` DOUBLE NULL DEFAULT '0' ,
@@ -673,6 +678,10 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_fac` (
   `dto` DOUBLE NULL DEFAULT '0' ,
   `porc_dto` FLOAT NULL DEFAULT '0' ,
   `porc_iva` FLOAT NULL DEFAULT '0' ,
+  `iva` DOUBLE NULL DEFAULT '0' ,	
+  `porc_rec` FLOAT NULL  DEFAULT '0' ,
+  `rec` DOUBLE NULL DEFAULT '0' ,
+
   `total` DOUBLE NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
@@ -697,6 +706,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_fac_pro` (
   `iva` DOUBLE NULL DEFAULT '0' ,
   `pedido` INT(11) NULL DEFAULT '0' ,
   `porc_rec` FLOAT NULL DEFAULT '0' ,
+  `rec` DOUBLE NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) ,
   INDEX `cCodigo` (`codigo` ASC) )
 ENGINE = InnoDB
@@ -716,6 +726,9 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_ped` (
   `dto` DOUBLE NULL DEFAULT '0' ,
   `porc_dto` DOUBLE NULL DEFAULT '0' ,
   `porc_iva` DOUBLE NULL DEFAULT '0' ,
+  `iva` DOUBLE NULL DEFAULT '0' ,
+  `porc_rec` FLOAT NULL  DEFAULT '0' ,
+  `rec` DOUBLE NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
   `cantidad_a_servir` FLOAT NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
@@ -737,6 +750,8 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_ped_pro` (
   `dto` DOUBLE NULL DEFAULT '0' ,
   `porc_iva` FLOAT NULL DEFAULT '0' ,
   `iva` DOUBLE NULL DEFAULT '0' ,
+  `porc_rec` FLOAT NULL  DEFAULT '0' ,
+  `rec` DOUBLE NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
   `cantidad_recibida` INT(11) NULL DEFAULT '0' ,
   `etiquetas` INT(11) NULL DEFAULT '0' ,
@@ -761,6 +776,8 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_pre` (
   `dto` DOUBLE NULL DEFAULT '0' ,
   `porc_iva` FLOAT NULL DEFAULT '0' ,
   `iva` DOUBLE NULL DEFAULT '0' ,
+  `porc_rec` FLOAT NULL  DEFAULT '0' ,
+  `rec` DOUBLE NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
@@ -795,6 +812,9 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_tpv` (
   `cantidad` FLOAT NULL DEFAULT '0' ,
   `importe` DOUBLE NULL DEFAULT '0' ,
   `porc_iva` FLOAT NULL DEFAULT '0' ,
+  `iva` DOUBLE NULL DEFAULT '0' ,
+  `porc_rec` FLOAT NULL  DEFAULT '0' ,
+  `rec` DOUBLE NULL DEFAULT '0' ,
   `porc_dto` FLOAT NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
   `subtotal` DOUBLE NULL DEFAULT '0' ,

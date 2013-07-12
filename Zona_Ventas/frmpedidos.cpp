@@ -922,3 +922,10 @@ void FrmPedidos::on_tabWidget_2_currentChanged(int index)
     Q_UNUSED(index);
     helper.resizeTable();
 }
+
+void FrmPedidos::on_btndeshacer_clicked()
+{
+    QSqlDatabase::database("Maya").rollback();
+    QSqlDatabase::database("empresa").rollback();
+    LLenarCampos();
+}

@@ -69,6 +69,9 @@ private slots:
     void lineaDeleted(lineaDetalle*);
     void on_tabWidget_currentChanged(int index);
 
+
+    void on_btndeshacer_clicked();
+
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;

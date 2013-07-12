@@ -56,6 +56,8 @@ private slots:
 
     void lineaReady(lineaDetalle*);
     void lineaDeleted(lineaDetalle*);
+    void on_btndeshacer_clicked();
+
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;

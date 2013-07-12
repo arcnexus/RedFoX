@@ -20,6 +20,7 @@ struct lineaDetalle
     double dto;
     double dto_perc;
     double iva_perc;
+    double rec_perc;
     double total;
     double importe_moneda_extrangera;
     int cantidad_pendiente;
@@ -43,6 +44,7 @@ public:
     void resizeTable();
     void fillTable(QString db , QString table , QString filter);
     lineaDetalle * getLineaDetalleFromRecord(QSqlRecord r);
+    double porc_iva1,porc_iva2,porc_iva3,porc_iva4;
 signals:
     void lineaReady(lineaDetalle*);
     void lineaDeleted(lineaDetalle*);

@@ -144,7 +144,7 @@ color: rgb(255, 255, 255);</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_5">
       <property name="styleSheet">
@@ -619,6 +619,9 @@ alternate-background-color: rgb(255, 255, 219);</string>
          <property name="cornerButtonEnabled">
           <bool>true</bool>
          </property>
+         <property name="columnCount">
+          <number>10</number>
+         </property>
          <attribute name="horizontalHeaderCascadingSectionResizes">
           <bool>false</bool>
          </attribute>
@@ -680,11 +683,8 @@ alternate-background-color: rgb(255, 255, 219);</string>
            <string>% I.V.A.</string>
           </property>
          </column>
-         <column>
-          <property name="text">
-           <string>Total</string>
-          </property>
-         </column>
+         <column/>
+         <column/>
         </widget>
        </item>
       </layout>

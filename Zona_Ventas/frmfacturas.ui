@@ -854,6 +854,9 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <property name="cornerButtonEnabled">
           <bool>true</bool>
          </property>
+         <property name="columnCount">
+          <number>10</number>
+         </property>
          <attribute name="horizontalHeaderCascadingSectionResizes">
           <bool>false</bool>
          </attribute>
@@ -917,6 +920,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
            <string>Total</string>
           </property>
          </column>
+         <column/>
         </widget>
        </item>
       </layout>
@@ -1978,6 +1982,23 @@ color: rgb(23, 76, 7);</string>
         </property>
         <property name="shortcut">
          <string>Ctrl+S</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btndeshacer">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Deshacer</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
         </property>
        </widget>
       </item>

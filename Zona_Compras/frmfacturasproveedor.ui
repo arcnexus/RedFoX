@@ -554,6 +554,9 @@ color: rgb(0, 0, 127);</string>
              <property name="cornerButtonEnabled">
               <bool>true</bool>
              </property>
+             <property name="columnCount">
+              <number>10</number>
+             </property>
              <attribute name="horizontalHeaderCascadingSectionResizes">
               <bool>false</bool>
              </attribute>
@@ -617,6 +620,7 @@ color: rgb(0, 0, 127);</string>
                <string>Total</string>
               </property>
              </column>
+             <column/>
             </widget>
            </item>
            <item row="2" column="0" colspan="3">

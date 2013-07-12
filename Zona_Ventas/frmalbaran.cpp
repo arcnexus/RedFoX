@@ -741,3 +741,10 @@ void FrmAlbaran::lineaDeleted(lineaDetalle * ld)
 
 
 
+
+void FrmAlbaran::on_btndeshacer_clicked()
+{
+    QSqlDatabase::database("Maya").rollback();
+    QSqlDatabase::database("empresa").rollback();
+    LLenarCampos();
+}

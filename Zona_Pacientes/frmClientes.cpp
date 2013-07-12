@@ -57,6 +57,11 @@ frmClientes::frmClientes(QWidget *parent) :
     queryAgentes->setQuery("Select nombre from agentes",QSqlDatabase::database("Maya"));
     ui->cboagente->setModel(queryAgentes);
 
+    //------------------------
+    // Rellenar grupos de iva
+    //------------------------
+    ui->cboGrupo_Iva->addItems(Configuracion_global->grupo_iva);
+
 
     // Ocultar campos según configuración
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
@@ -236,6 +241,8 @@ void frmClientes::LLenarCampos()
 
     indice = ui->cboagente->findText(Configuracion_global->devolver_agente(oCliente->id_agente));
     ui->cboagente->setCurrentIndex(indice);
+    indice = ui->cboGrupo_Iva->findText(oCliente->grupo_iva);
+    ui->cboGrupo_Iva->setCurrentIndex(indice);
 
     // --------------------------
     // Validaciones de seguridad
@@ -636,6 +643,7 @@ void frmClientes::LLenarCliente()
     oCliente->visa_distancia2 = ui->txtvisa_distancia2->text();
     oCliente->id_transportista = Configuracion_global->devolver_id_transportista(ui->cbotransportista->currentText());
     oCliente->id_agente = Configuracion_global->devolver_id_agente(ui->cboagente->currentText());
+    oCliente->grupo_iva = ui->cboGrupo_Iva->currentText();
 }
 
 
@@ -792,10 +800,24 @@ void frmClientes::txtprovincia_editingFinished()
 
 void frmClientes::txtcif_nif_editingFinished()
 {
-    if (ui->txtcif_nif->text().length() == 8){
-        QString cif = Configuracion::letraDNI(ui->txtcif_nif->text());
-        ui->txtcif_nif->setText(cif.toUpper());
-   }
+    blockSignals(true);
+    if(oCliente->cif_nif != ui->txtcif_nif->text())
+        if(QMessageBox::question(this,tr("Gestión de clientes"),tr("¿Desea cambiar el CIF/DNI del cliente?"),
+                                 tr("No"),tr("Sí")) == QMessageBox::Accepted)
+        {
+            if (ui->txtcif_nif->text().length() == 8){
+                QString cif = Configuracion::letraDNI(ui->txtcif_nif->text());
+                ui->txtcif_nif->setText(cif.toUpper());
+            } else if (ui->txtcif_nif->text().length() < 8)
+            {
+                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("DNI Demasiado pequeño para calcular letra"));
+            }
+        } else
+        {
+           ui->txtcif_nif->setText(oCliente->cif_nif);
+        }
+    blockSignals(false);
+
 }
 
 void frmClientes::on_btnEditar_clicked()

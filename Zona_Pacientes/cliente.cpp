@@ -77,7 +77,8 @@ void Cliente::Guardar() {
                    "visa2_cod_valid =:visa2_cod_valid,"
                    "id_agente =:id_agente,"
                    "id_transportista =:id_transportista,"
-                   "observaciones =:observaciones"
+                   "observaciones =:observaciones,"
+                   "grupo_iva =:grupo_iva"
                    " WHERE id =:id" );
 
     query.bindValue(":codigo_cliente", this->codigo_cliente);
@@ -151,6 +152,7 @@ void Cliente::Guardar() {
     query.bindValue(":visa2_cod_valid",this->visa2_cod_valid);
     query.bindValue(":id_agente",this->id_agente);
     query.bindValue(":id_transportista",this->id_transportista);
+    query.bindValue(":grupo_iva",this->grupo_iva);
 
 
     if(!query.exec()){
@@ -262,6 +264,7 @@ void Cliente::GuardarWeb()
                   "visa2_cod_valid =:visa2_cod_valid,"
                   "id_agente =:id_agente,"
                   "id_transportista =:id_transportista,"
+                  "grupo_iva =:grupo_iva"
                   " WHERE id =:id_web" );
 
    query.bindValue(":codigo_cliente", this->codigo_cliente);
@@ -318,6 +321,7 @@ void Cliente::GuardarWeb()
    query.bindValue(":id_idioma",this->ididioma);
    query.bindValue(":cif_vies",this->cifVies);
    query.bindValue(":password_web",this->password_web);
+   query.bindValue(":grupo_iva",this->grupo_iva);
    if (this->lIRPF)
        query.bindValue(":irpf",1);
    else
@@ -463,6 +467,7 @@ void Cliente::Recuperar(QString cSQL) {
             this->id_agente = registro.field("id_agente").value().toInt();
             this->id_transportista = registro.field("id_transportista").value().toInt();
             int irpf =registro.field("irpf").value().toInt();
+            this->grupo_iva = registro.field("grupo_iva").value().toString();
             if (irpf==1)
                 this->lIRPF = true;
             else

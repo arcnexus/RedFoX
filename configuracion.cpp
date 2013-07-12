@@ -28,6 +28,7 @@ Configuracion::Configuracion(QObject* parent) :
     usuarios_model = 0;
     validator_cantidad = new QDoubleValidator(-99999999999999999.00,99999999999999999.00,2,this);
     validator_porciento = new QDoubleValidator(0,100,2,this);
+    grupo_iva << tr("Nacional") << tr("Europeo") << tr("canarias") << tr("Internacional");
 
     //AES keys
     //TODO generar una ¿mejor?
@@ -583,6 +584,20 @@ QString Configuracion::devolver_referencia_articulo(int id)
     } else
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar artículo"),
                              tr("Fallo al recuperar la referencia de artículo: ")+query_art.lastError().text(),
+                             tr("Aceptar"));
+}
+
+float Configuracion::devolver_rec_iva(float porc_iva)
+{
+    QSqlQuery query(QSqlDatabase::database("Maya"));
+    if(query.exec("select recargo_equivalencia from tiposiva where iva = "+QString::number(porc_iva)))
+    {
+        query.next();
+        return query.record().value("recargo_equivalencia").toFloat();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar R.E."),
+                             tr("Fallo al recuperar el R.E")+query.lastError().text(),
                              tr("Aceptar"));
 }
 

@@ -114,6 +114,7 @@ public:
     QHash <QString,QSqlRecord> ivas;
     QSqlTableModel* iva_model;
     QStringList ivaList;
+    QStringList grupo_iva;
     QStringList reList;
     void Cargar_iva();
     int getidIva(QString cIva);
@@ -145,6 +146,7 @@ public:
     QString devolver_codigo_articulo(int id);
     QString devolver_codigo_barras(int id);
     QString devolver_referencia_articulo(int id);
+    float devolver_rec_iva(float porc_iva);
     QString devolver_agente(int id);
     int devolver_id_agente(QString agente);
     QString devolver_transportista(int id);

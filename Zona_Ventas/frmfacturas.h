@@ -67,6 +67,8 @@ private slots:
 
     bool crear_asiento();
     
+    void on_btndeshacer_clicked();
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;

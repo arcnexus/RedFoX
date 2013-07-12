@@ -1002,3 +1002,11 @@ bool frmFacturas::crear_asiento()
     ok = oFactura->GuardarApunte(apunte,oFactura->id);
     return ok;
 }
+
+void frmFacturas::on_btndeshacer_clicked()
+{
+    QSqlDatabase::database("Maya").rollback();
+    QSqlDatabase::database("empresa").rollback();
+    LLenarCampos();
+    BloquearCampos(true);
+}

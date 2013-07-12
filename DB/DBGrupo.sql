@@ -238,6 +238,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`clientes` (
   `visa2_cod_valid` INT(3) NULL ,
   `id_agente` INT(11) NULL ,
   `id_transportista` INT(11) NULL ,
+  `grupo_iva` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_clientes_2_idx` (`id_idioma_documentos` ASC) )
 ENGINE = InnoDB
@@ -737,7 +738,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`tiposiva` (
   `tipo` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `descripcion_tipo_iva` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `iva` DECIMAL(9,2) NULL DEFAULT '0.00' ,
-  `regargo_equivalencia` DECIMAL(9,2) NULL DEFAULT '0.00' ,
+  `recargo_equivalencia` DECIMAL(9,2) NULL DEFAULT '0.00' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 5

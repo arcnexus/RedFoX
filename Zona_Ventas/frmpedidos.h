@@ -59,6 +59,8 @@ private slots:
     void convertir_enFactura();
     void on_tabWidget_2_currentChanged(int index);
 
+    void on_btndeshacer_clicked();
+
 private:
     Ui::frmPedidos *ui;
 

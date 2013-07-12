@@ -306,6 +306,23 @@ color: rgb(0, 0, 127);</string>
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btndeshacer">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Deshacer</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btnBorrar">
         <property name="minimumSize">
          <size>
@@ -1345,11 +1362,12 @@ alternate-background-color: rgb(252, 255, 187);</string>
           <bool>false</bool>
          </property>
          <property name="columnCount">
-          <number>9</number>
+          <number>10</number>
          </property>
          <attribute name="horizontalHeaderStretchLastSection">
           <bool>true</bool>
          </attribute>
+         <column/>
          <column/>
          <column/>
          <column/>

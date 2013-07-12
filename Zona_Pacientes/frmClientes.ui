@@ -840,7 +840,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <property name="styleSheet">
@@ -2125,17 +2125,14 @@ color: rgb(255,255,255);</string>
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_9">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+          <widget class="QLabel" name="label_64">
+           <property name="text">
+            <string>Grupo_iva:</string>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cboGrupo_Iva"/>
          </item>
          <item>
           <widget class="QLabel" name="label_33">
