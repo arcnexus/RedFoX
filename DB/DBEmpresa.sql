@@ -235,7 +235,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_fac` (
   `recargo_equivalencia` TINYINT(1) NULL DEFAULT '0' ,
   `subtotal` DOUBLE NULL DEFAULT '0' ,
   `porc_dto` FLOAT NULL DEFAULT '0' ,
-  `porc_dtp_pp` FLOAT NULL DEFAULT '0' ,
+  `porc_dto_pp` FLOAT NULL DEFAULT '0' ,
   `dto` DOUBLE NULL DEFAULT '0' ,
   `dto_pp` DOUBLE NULL DEFAULT '0' ,
   `base` DOUBLE NULL DEFAULT '0' ,
@@ -434,7 +434,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_tpv` (
   `numero_albaran` INT(11) NULL DEFAULT '0' ,
   `numero_factura` INT(11) NULL DEFAULT '0' ,
   `id_cierre` INT(11) NULL DEFAULT NULL ,
-  PRIMARY KEY (`id`) 
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;

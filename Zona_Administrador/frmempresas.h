@@ -51,6 +51,8 @@ private slots:
 
     void on_treeEmpresas_itemSelectionChanged();
 
+    void on_btnEditar_clicked();
+
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;

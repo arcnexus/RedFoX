@@ -42,7 +42,9 @@ bool cargarEmpresa(QString empresa)
 
         QApplication::processEvents();
         QSqlRecord record = QryEmpresa.record();
-
+        //-----------------------
+        // Cargar datos empresa
+        //-----------------------
         // DBEMpresa
         //splash.showMessage(tr("Cargando configuración de base de datos"),Qt::AlignBottom);        
 
@@ -56,6 +58,7 @@ bool cargarEmpresa(QString empresa)
         Configuracion_global->ticket_factura = record.field("ticket_factura").value().toBool(); // el tiquet y la factura son correlativos
         Configuracion_global->id_tarifa_predeterminada = record.field("id_tarifa_predeterminada").value().toInt();
         Configuracion_global->actualizar_divisas = record.field("actualizar_divisas").value().toBool();
+        Configuracion_global->ndigitos_factura = record.field("digitos_factura").value().toInt();
 
         if(record.field("medica").value().toInt()==1)
             Configuracion_global->medic = true;

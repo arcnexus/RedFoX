@@ -118,7 +118,7 @@ background-color: rgb(0, 0, 58);</string>
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <property name="styleSheet">
@@ -1093,7 +1093,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="1" column="5">
-          <widget class="QLineEdit" name="txtporc_rec1">
+          <widget class="QLineEdit" name="txtrec1">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1223,7 +1223,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="2" column="5">
-          <widget class="QLineEdit" name="txtporc_rec2">
+          <widget class="QLineEdit" name="txtrec2">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1353,7 +1353,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="3" column="5">
-          <widget class="QLineEdit" name="txtporc_rec3">
+          <widget class="QLineEdit" name="txtrec3">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1483,7 +1483,7 @@ color: rgb(23, 76, 7);</string>
           </widget>
          </item>
          <item row="4" column="5">
-          <widget class="QLineEdit" name="txtporc_rec4">
+          <widget class="QLineEdit" name="txtrec4">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1535,7 +1535,7 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
           </widget>
          </item>
          <item row="6" column="3">
-          <widget class="QLineEdit" name="txtiva_2">
+          <widget class="QLineEdit" name="txtiva_total">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(23, 76, 7);</string>
@@ -1869,6 +1869,9 @@ color: rgb(23, 76, 7);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnAnterior">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -1938,6 +1941,9 @@ color: rgb(23, 76, 7);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnImprimir">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -1961,6 +1967,9 @@ color: rgb(23, 76, 7);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnEditar">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -1986,24 +1995,10 @@ color: rgb(23, 76, 7);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btndeshacer">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Deshacer</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../maya.qrc">
-          <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="btnGuardar">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2026,7 +2021,30 @@ color: rgb(23, 76, 7);</string>
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btndeshacer">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Deshacer</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btnCobrar">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>

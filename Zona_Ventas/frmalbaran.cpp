@@ -182,6 +182,12 @@ void FrmAlbaran::LLenarCampos() {
         ui->chklporc_rec->setChecked(false);
 
     ui->txtentregado_a_cuenta->setText(QString::number(oAlbaran->entregado_a_cuenta));
+    oCliente2->Recuperar("Select * from clientes where id ="+QString::number(oAlbaran->id_cliente));
+    helper.set_tarifa(oCliente2->tarifa_cliente);
+    helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
+    helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
+    helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
+    helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
 
     QString filter = QString("id_Cab = '%1'").arg(oAlbaran->id);
     helper.fillTable("empresa","lin_alb",filter);
@@ -207,6 +213,13 @@ void FrmAlbaran::LLenarCamposCliente()
         ui->chklporc_rec->setChecked(false);
         oAlbaran->recargo_equivalencia = (0);
     }
+    oCliente2->Recuperar("Select * from clientes where id ="+QString::number(oAlbaran->id_cliente));
+    helper.set_tarifa(oCliente2->tarifa_cliente);
+    helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
+    helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
+    helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
+    helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
+    oAlbaran->id_cliente = oCliente2->id;
 }
 
 void FrmAlbaran::VaciarCampos() {
