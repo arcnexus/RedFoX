@@ -287,8 +287,8 @@ void Table_Helper::addRow(QSqlRecord r)
     helped_table->item(row,2)->setText(r.value("descripcion").toString());
     helped_table->item(row,3)->setText(r.value("precio").toString());
     helped_table->item(row,4)->setText(r.value("subtotal").toString());
-    helped_table->item(row,5)->setText(r.value("porc_dto").toString());
-    helped_table->item(row,6)->setText(r.value("dto").toString());
+    helped_table->item(row,6)->setText(r.value("porc_dto").toString());
+    helped_table->item(row,5)->setText(r.value("dto").toString());
     helped_table->item(row,7)->setText(r.value("porc_iva").toString());
     helped_table->item(row,8)->setText(r.value("porc_rec").toString());
     m_rows.append(lrow);
