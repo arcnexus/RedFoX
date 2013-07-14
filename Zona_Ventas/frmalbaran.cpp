@@ -132,13 +132,13 @@ void FrmAlbaran::LLenarCampos() {
     ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->total_albaran,'f',2)));
     ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec_total,'f',2)));
     lEstado = oAlbaran->impreso;
-    if((lEstado == 1)) {
+    if((lEstado == true)) {
         ui->lbimpreso->setVisible(true);
     } else {
         ui->lbimpreso->setVisible(false);
     }
     lEstado = oAlbaran->facturado;
-    if ((lEstado == 1)) {
+    if ((lEstado == true)) {
         ui->lbfacturado->setVisible(true);
         ui->txtfecha_factura->setVisible(true);
         ui->txtcNumFra->setVisible(true);
@@ -153,10 +153,10 @@ void FrmAlbaran::LLenarCampos() {
     ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->base2,'f',2)));
     ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->base3,'f',2)));
     ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->base4,'f',2)));
-    //ui->txtporc_iva1->setText(QString::number(oAlbaran->porc_iva1));
-    //ui->txtporc_iva2->setText(QString::number(oAlbaran->porc_iva2));
-    //ui->txtporc_iva3->setText(QString::number(oAlbaran->porc_iva3));
-    //ui->txtporc_iva4->setText(QString::number(oAlbaran->porc_iva4));
+    ui->txtporc_iva1->setText(QString::number(oAlbaran->porc_iva1));
+    ui->txtporc_iva2->setText(QString::number(oAlbaran->porc_iva2));
+    ui->txtporc_iva3->setText(QString::number(oAlbaran->porc_iva3));
+    ui->txtporc_iva4->setText(QString::number(oAlbaran->porc_iva4));
     ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->iva1,'f',2)));
     ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->iva2,'f',2)));
     ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->iva3,'f',2)));
@@ -165,10 +165,10 @@ void FrmAlbaran::LLenarCampos() {
     ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->total2,'f',2)));
     ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->total3,'f',2)));
     ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->total4,'f',2)));
-    //ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->porc_rec1,'f',2)));
-    //ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->porc_rec2,'f',2)));
-    //ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->porc_rec3,'f',2)));
-    //ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->porc_rec4,'f',2)));
+    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->porc_rec1,'f',2)));
+    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->porc_rec2,'f',2)));
+    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->porc_rec3,'f',2)));
+    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->porc_rec4,'f',2)));
     ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec1,'f',2)));
     ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec2,'f',2)));
     ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec3,'f',2)));
@@ -176,7 +176,7 @@ void FrmAlbaran::LLenarCampos() {
     ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec_total,'f',2)));
     ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->iva_total,'f',2)));
     ui->txtpedido_cliente->setText(oAlbaran->pedido_cliente);
-    if(oAlbaran->recargo_equivalencia==1)
+    if(oAlbaran->recargo_equivalencia==true)
         ui->chklporc_rec->setChecked(true);
     else
         ui->chklporc_rec->setChecked(false);
@@ -484,7 +484,7 @@ void FrmAlbaran::on_botBuscarCliente_clicked()
 void FrmAlbaran::on_btnEditar_clicked()
 {
     in_edit = true;
-    if (!oAlbaran->facturado == 1)
+    if (!oAlbaran->facturado == true)
     {
             BloquearCampos(false);
             emit block();
@@ -760,4 +760,10 @@ void FrmAlbaran::on_btndeshacer_clicked()
     QSqlDatabase::database("Maya").rollback();
     QSqlDatabase::database("empresa").rollback();
     LLenarCampos();
+}
+
+void FrmAlbaran::on_tabWidget_2_currentChanged(int index)
+{
+    Q_UNUSED(index);
+    helper.resizeTable();
 }

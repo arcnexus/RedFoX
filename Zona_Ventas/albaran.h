@@ -25,7 +25,7 @@ public:
     int id_pais;
     QString pais;
     QString cif;
-    int recargo_equivalencia;
+    bool recargo_equivalencia;
     double subtotal;
     double dto;
     float porc_dto;
@@ -57,8 +57,8 @@ public:
     double iva_total;
     double rec_total;
     double total_albaran;
-    int impreso;
-    int facturado;
+    bool impreso;
+    bool facturado;
     QString factura;
     QDate fecha_factura;
     QString comentario;

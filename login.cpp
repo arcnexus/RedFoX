@@ -161,8 +161,7 @@ void Login::Crearconfiguracion_clicked()
 {
     AreaRestringida_form check(this);
     check.exec();
-    if(check.es_valido())
-    {
+    if(check.es_valido())    {
         frmConfigmaya frmConf;
         frmConf.hideButton();
         if(frmConf.exec()==QDialog::Accepted)

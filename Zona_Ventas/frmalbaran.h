@@ -58,6 +58,8 @@ private slots:
     void lineaDeleted(lineaDetalle*);
     void on_btndeshacer_clicked();
 
+    void on_tabWidget_2_currentChanged(int index);
+
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;

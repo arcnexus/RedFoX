@@ -236,7 +236,7 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 id_pais= r.value("id_pais").toInt();
                 //pais= r.value("");
                 cif= r.value("cif").toString();
-                recargo_equivalencia= r.value("recargo_equivalencia").toInt();
+                recargo_equivalencia= r.value("recargo_equivalencia").toBool();
                 subtotal= r.value("subtotal").toDouble();
                 dto= r.value("dto").toDouble();
                 dto= r.value("dto").toDouble();
@@ -268,8 +268,8 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 iva_total= r.value("iva_total").toDouble();
                 rec_total= r.value("rec_total").toDouble();
                 total_albaran= r.value("total_albaran").toDouble();
-                impreso= r.value("impreso").toInt();
-                facturado= r.value("facturado").toInt();
+                impreso= r.value("impreso").toBool();
+                facturado= r.value("facturado").toBool();
                 factura= r.value("factura").toString();
                 fecha_factura= r.value("fecha_factura").toDate();
                 comentario= r.value("comentario").toString();
