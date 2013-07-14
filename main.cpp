@@ -162,6 +162,7 @@ bool cargarEmpresa(QString empresa)
                 Configuracion_global->contaDB.setDatabaseName(Configuracion_global->nombre_bd_conta);
                 Configuracion_global->contaDB.setHostName(Configuracion_global->group_host);
                 Configuracion_global->contaDB.open(Configuracion_global->group_user,Configuracion_global->group_pass);
+                // qDebug() << Configuracion_global->contaDB.lastError().text();
             }
             if (Configuracion_global->contaDB.lastError().isValid())
             {
