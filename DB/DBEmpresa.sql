@@ -434,7 +434,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_tpv` (
   `numero_albaran` INT(11) NULL DEFAULT '0' ,
   `numero_factura` INT(11) NULL DEFAULT '0' ,
   `id_cierre` INT(11) NULL DEFAULT NULL ,
-  PRIMARY KEY (`id`) 
+  PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
