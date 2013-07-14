@@ -621,75 +621,78 @@ void FrmEmpresas::_addEmpresa()
 
 void FrmEmpresas::_llenarCampos(QSqlRecord r)
 {
-    ui->txtcodigo->setText(r.value("codigo").toString());
-    ui->txtEmpresa->setText(r.value("nombre").toString());//
-    ui->txtndigitos_factura->setText(r.value("digitos_factura").toString());//->text().toInt());
-    ui->txtserieFactura->setText(r.value("serie").toString());//text().toInt());
-    ui->txtnombre_bd->setText(r.value("nombre_bd").toString());//nEmpresa);
-    ui->txtNombre_BDConta->setText(r.value("nombre_db_conta").toString());//nConta);
-    ui->txtnombre_bdMedic->setText(r.value("nombre_bd_medica").toString());//nMedic);
-    ui->txtdireccion1->setText(r.value("direccion").toString());
-    ui->txtcp->setText(r.value("cp").toString());
-    ui->txtpoblacion->setText(r.value("poblacion").toString());
-    ui->txtprovincia->setText(r.value("provincia").toString());
-    ui->txtpais->setText(r.value("pais").toString());
-    ui->txttelefono1->setText(r.value("telefono1").toString());
-    ui->txttelefono2->setText(r.value("telefono2").toString());
-    ui->txtfax->setText(r.value("fax").toString());
-    ui->txtcMail->setText(r.value("mail").toString());
-    ui->txtweb->setText(r.value("web").toString());
-    ui->txtcif->setText(r.value("cif").toString());
-    ui->txtcInscripcion->setText(r.value("inscripcion").toString());
-    ui->txtcCometarioAlbaran->setText(r.value("comentario_albaran").toString());
-    ui->txtccomentario_factura->setText(r.value("comentario_factura").toString());
-    ui->txtccomentario_ticket->setText(r.value("comentario_ticket").toString());
-    ui->txtejercicio->setValue(r.value("ejercicio").toInt());
-    //r.value("usar_irpf"));//0);//TODO irpf empresa
-    ui->txtcuentaCliente->setText(r.value("codigo_cuenta_clientes").toString());
-    ui->txtcuenta_proveedores->setText(r.value("codigo_cuenta_proveedores").toString());
-    ui->txtcuenta_acreedores->setText(r.value("codigo_cuenta_acreedores").toString());
-    ui->txtdigitos_cuentas->setValue(r.value("digitos_cuenta").toInt());
-    //r.value("clave1"));//""));////TODO claves
-    //r.value("clave2"));//""));//
-    ui->chkMedica->setChecked(r.value("medica").toBool());
-    //r.value("internacional").toString());//0);
-    ui->chkAutocodificiar->setChecked(r.value("auto_codigo").toBool());
-    ui->txttamano_codigoart->setValue(r.value("tamanocodigo").toBool());
-    //r.value("cuenta_cobros").toString());//""));////TODO c cobros
-    //r.value("cuenta_pagos"));//""));////TODO c pagos
-    //r.value("id_divisa"));//0);//TODO divisa
-    //r.value("enlaceweb"));//0);//TODO Grrr
-    //r.value("contabilidad"));//0);
-    //r.value("consultas"));//0);
-    ui->cboPrimer_dia_laborable->setCurrentIndex(r.value("primer_dia_laborable").toInt());
-    ui->cbo_ultimo_dia_semana->setCurrentIndex(r.value("ultimo_dia_laborable").toInt());
-    ui->txt_horario_primer_dia->setText(r.value("horario_primer_dia").toString());
-    ui->txt_horario_dia_normal->setText(r.value("horario_dia_normal").toString());
-    ui->txt_horario_ultimo_dia->setText(r.value("horario_ultimo_dia").toString());
-    ui->chk_ticket_factura->setText(r.value("ticket_factura").toString());
-    //r.value("margen"));//0);
-    //r.value("margen_minimo"));//0);
-    //r.value("seguimiento"));//0);
-    //r.value("id_tarifa_predeterminada"));//0);
-    ui->chk_upate_divisas->setText(r.value("actualizardivisas").toString());
-    ui->txtCuenta_venta_mercaderias->setText(r.value("cuenta_ventas_mercaderias").toString());
-    ui->txtCuenta_venta_servicios->setText(r.value("cuenta_ventas_servicios").toString());
-    ui->ivasoportado1->setText(r.value("cuenta_iva_soportado1").toString());
-    ui->ivasoportado2->setText(r.value("cuenta_iva_soportado2").toString());
-    ui->ivasoportado3->setText(r.value("cuenta_iva_soportado3").toString());
-    ui->ivasoportado4->setText(r.value("cuenta_iva_soportado4").toString());
-    ui->ivarepercutido1->setText(r.value("cuenta_iva_repercutido1").toString());
-    ui->ivarepercutido2->setText(r.value("cuenta_iva_repercutido2").toString());
-    ui->ivarepercutido3->setText(r.value("cuenta_iva_repercutido3").toString());
-    ui->ivarepercutido4->setText(r.value("cuenta_iva_repercutido4").toString());
-    ui->ivarepercutidore1->setText(r.value("cuenta_iva_repercutido1_re").toString());
-    ui->ivarepercutidore2->setText(r.value("cuenta_iva_repercutido2_re").toString());
-    ui->ivarepercutidore3->setText(r.value("cuenta_iva_repercutido3_re").toString());
-    ui->ivarepercutidore4->setText(r.value("cuenta_iva_repercutido4_re").toString());
-    ui->ivasoportadore1->setText(r.value("cuenta_iva_soportado1_re").toString());
-    ui->ivasoportadore2->setText(r.value("cuenta_iva_soportado2_re").toString());
-    ui->ivasoportadore3->setText(r.value("cuenta_iva_soportado3_re").toString());
-    ui->ivasoportadore4->setText(r.value("cuenta_iva_soportado4_re").toString());
+    oEmpresa.id = r.value("id").toInt();
+    oEmpresa.Recuperar("select * from empresas where id = "+QString::number(oEmpresa.id));
+    LLenarCampos();
+//    ui->txtcodigo->setText(r.value("codigo").toString());
+//    ui->txtEmpresa->setText(r.value("nombre").toString());//
+//    ui->txtndigitos_factura->setText(r.value("digitos_factura").toString());//->text().toInt());
+//    ui->txtserieFactura->setText(r.value("serie").toString());//text().toInt());
+//    ui->txtnombre_bd->setText(r.value("nombre_bd").toString());//nEmpresa);
+//    ui->txtNombre_BDConta->setText(r.value("nombre_db_conta").toString());//nConta);
+//    ui->txtnombre_bdMedic->setText(r.value("nombre_bd_medica").toString());//nMedic);
+//    ui->txtdireccion1->setText(r.value("direccion").toString());
+//    ui->txtcp->setText(r.value("cp").toString());
+//    ui->txtpoblacion->setText(r.value("poblacion").toString());
+//    ui->txtprovincia->setText(r.value("provincia").toString());
+//    ui->txtpais->setText(r.value("pais").toString());
+//    ui->txttelefono1->setText(r.value("telefono1").toString());
+//    ui->txttelefono2->setText(r.value("telefono2").toString());
+//    ui->txtfax->setText(r.value("fax").toString());
+//    ui->txtcMail->setText(r.value("mail").toString());
+//    ui->txtweb->setText(r.value("web").toString());
+//    ui->txtcif->setText(r.value("cif").toString());
+//    ui->txtcInscripcion->setText(r.value("inscripcion").toString());
+//    ui->txtcCometarioAlbaran->setText(r.value("comentario_albaran").toString());
+//    ui->txtccomentario_factura->setText(r.value("comentario_factura").toString());
+//    ui->txtccomentario_ticket->setText(r.value("comentario_ticket").toString());
+//    ui->txtejercicio->setValue(r.value("ejercicio").toInt());
+//    //r.value("usar_irpf"));//0);//TODO irpf empresa
+//    ui->txtcuentaCliente->setText(r.value("codigo_cuenta_clientes").toString());
+//    ui->txtcuenta_proveedores->setText(r.value("codigo_cuenta_proveedores").toString());
+//    ui->txtcuenta_acreedores->setText(r.value("codigo_cuenta_acreedores").toString());
+//    ui->txtdigitos_cuentas->setValue(r.value("digitos_cuenta").toInt());
+//    //r.value("clave1"));//""));////TODO claves
+//    //r.value("clave2"));//""));//
+//    ui->chkMedica->setChecked(r.value("medica").toBool());
+//    //r.value("internacional").toString());//0);
+//    ui->chkAutocodificiar->setChecked(r.value("auto_codigo").toBool());
+//    ui->txttamano_codigoart->setValue(r.value("tamanocodigo").toBool());
+//    //r.value("cuenta_cobros").toString());//""));////TODO c cobros
+//    //r.value("cuenta_pagos"));//""));////TODO c pagos
+//    //r.value("id_divisa"));//0);//TODO divisa
+//    //r.value("enlaceweb"));//0);//TODO Grrr
+//    //r.value("contabilidad"));//0);
+//    //r.value("consultas"));//0);
+//    ui->cboPrimer_dia_laborable->setCurrentIndex(r.value("primer_dia_laborable").toInt());
+//    ui->cbo_ultimo_dia_semana->setCurrentIndex(r.value("ultimo_dia_laborable").toInt());
+//    ui->txt_horario_primer_dia->setText(r.value("horario_primer_dia").toString());
+//    ui->txt_horario_dia_normal->setText(r.value("horario_dia_normal").toString());
+//    ui->txt_horario_ultimo_dia->setText(r.value("horario_ultimo_dia").toString());
+//    ui->chk_ticket_factura->setText(r.value("ticket_factura").toString());
+//    //r.value("margen"));//0);
+//    //r.value("margen_minimo"));//0);
+//    //r.value("seguimiento"));//0);
+//    //r.value("id_tarifa_predeterminada"));//0);
+//    ui->chk_upate_divisas->setChecked(r.value("actualizardivisas").toBool());
+//    ui->txtCuenta_venta_mercaderias->setText(r.value("cuenta_ventas_mercaderias").toString());
+//    ui->txtCuenta_venta_servicios->setText(r.value("cuenta_ventas_servicios").toString());
+//    ui->ivasoportado1->setText(r.value("cuenta_iva_soportado1").toString());
+//    ui->ivasoportado2->setText(r.value("cuenta_iva_soportado2").toString());
+//    ui->ivasoportado3->setText(r.value("cuenta_iva_soportado3").toString());
+//    ui->ivasoportado4->setText(r.value("cuenta_iva_soportado4").toString());
+//    ui->ivarepercutido1->setText(r.value("cuenta_iva_repercutido1").toString());
+//    ui->ivarepercutido2->setText(r.value("cuenta_iva_repercutido2").toString());
+//    ui->ivarepercutido3->setText(r.value("cuenta_iva_repercutido3").toString());
+//    ui->ivarepercutido4->setText(r.value("cuenta_iva_repercutido4").toString());
+//    ui->ivarepercutidore1->setText(r.value("cuenta_iva_repercutido1_re").toString());
+//    ui->ivarepercutidore2->setText(r.value("cuenta_iva_repercutido2_re").toString());
+//    ui->ivarepercutidore3->setText(r.value("cuenta_iva_repercutido3_re").toString());
+//    ui->ivarepercutidore4->setText(r.value("cuenta_iva_repercutido4_re").toString());
+//    ui->ivasoportadore1->setText(r.value("cuenta_iva_soportado1_re").toString());
+//    ui->ivasoportadore2->setText(r.value("cuenta_iva_soportado2_re").toString());
+//    ui->ivasoportadore3->setText(r.value("cuenta_iva_soportado3_re").toString());
+//    ui->ivasoportadore4->setText(r.value("cuenta_iva_soportado4_re").toString());
 }
 
 void FrmEmpresas::blockGUI(bool block, bool limpia)
@@ -761,5 +764,22 @@ void FrmEmpresas::on_treeEmpresas_itemSelectionChanged()
         {
             _llenarCampos((*it).record);
         }
+    }
+}
+
+void FrmEmpresas::on_btnEditar_clicked()
+{
+
+    if(ui->btnEditar->text() == tr("Editar"))
+    {
+        ui->btnEditar->setText(tr("Guardar"));
+        blockGUI(false,false);
+        ui->txtdireccion1->setFocus();
+    } else
+    {
+        CargarCamposEnEmpresa();
+        blockGUI(true,false);
+        ui->btnEditar->setText(tr("Editar"));
+        oEmpresa.Guardar();
     }
 }

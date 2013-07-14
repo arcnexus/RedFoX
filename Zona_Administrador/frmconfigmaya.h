@@ -28,6 +28,7 @@ private:
 private slots:
     void configurar();
 
+    void on_btnAnadir_cuentas_clicked();
 };
 
 #endif // FRMCONFIGMAYA_H

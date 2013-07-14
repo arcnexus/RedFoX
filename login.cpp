@@ -101,16 +101,17 @@ void Login::on_btnAcceder_clicked()
 
 
     QSqlQuery qEmpresa(QSqlDatabase::database("Maya"));
-    qEmpresa.prepare("select id, nombre_bd from empresas where nombre = :nombreemp");
+    qEmpresa.prepare("select * from empresas where nombre = :nombreemp");
     qEmpresa.bindValue(":nombreemp",ui->cboEmpresa->currentText());
 
     if(qEmpresa.exec())
     {
         if(qEmpresa.next())
         {
-            Configuracion_global->nombre_bd_empresa = qEmpresa.record().field("nombre_bd").value().toString();
-            Configuracion_global->nombre_bd_conta = qEmpresa.record().field("nombre_bd_conta").value().toString();
-            Configuracion_global->nombre_bd_medica = qEmpresa.record().field("nombre_bd_medica").value().toString();
+            Configuracion_global->nombre_bd_empresa = qEmpresa.record().value("nombre_bd").toString();
+            Configuracion_global->nombre_bd_conta = qEmpresa.record().value("nombre_db_conta").toString();
+            //qDebug() << Configuracion_global->nombre_bd_conta;
+            Configuracion_global->nombre_bd_medica = qEmpresa.record().value("nombre_bd_medica").toString();
         }
         else
             QMessageBox::warning(this,tr("ABRIR EMPRESA"),tr("No se encuentra la empresa"),tr("Aceptar"));

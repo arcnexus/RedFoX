@@ -83,6 +83,7 @@ public slots:
     bool BorrarLineasFactura(int id_lin);
     bool CobrarFactura();
     bool GuardarApunte(int nasiento, int nid);
+    bool Apunte();
 };
 
 #endif // FACTURA_H

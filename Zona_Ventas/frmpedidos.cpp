@@ -198,10 +198,17 @@ void FrmPedidos::LLenarCampos()
     ui->chkentregado->setChecked(oPedido->entregado==1);
     ui->txtfecha_limite_entrega->setDate(oPedido->fecha_limite_entrega);
     ui->txttotal->setText(QString::number(oPedido->total_pedido));
+    oCliente3->Recuperar("Select * from clientes where id ="+QString::number(oPedido->id_cliente));
+    helper.set_tarifa(oPedido->tarifa_cliente);
+    helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
+    helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
+    helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
+    helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
 }
 
 void FrmPedidos::LLenarCamposCliente()
 {
+    oPedido->id_cliente = oCliente3->id;
     ui->lblTopcliente->setText(oCliente3->nombre_fiscal);
     ui->txtcodigo_cliente->setText(oCliente3->codigo_cliente);
     ui->txtcliente->setText(oCliente3->nombre_fiscal);
@@ -220,6 +227,8 @@ void FrmPedidos::LLenarCamposCliente()
         ui->chklporc_rec->setChecked(false);
         oPedido->recargo_equivalencia = (0);
     }
+    oCliente3->Recuperar("Select * from clientes where id ="+QString::number(oPedido->id_cliente));
+    helper.set_tarifa(oPedido->tarifa_cliente);
 }
 
 void FrmPedidos::VaciarCampos()

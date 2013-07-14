@@ -264,6 +264,13 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             if(q.exec("SELECT * FROM paises WHERE id="+QString::number(id_pais)))
                 if(q.next())
                     pais = q.record().value("pais").toString();
+            // Tarifa
+            QSqlQuery queryCliente(QSqlDatabase::database("Maya"));
+            if(queryCliente.exec("select tarifa_cliente from clientes where id = "+QString::number(this->id_cliente)));
+                if (queryCliente.next())
+                    tarifa_cliente = queryCliente.record().value("tarifa_cliente").toInt();
+
+
            }
         else
             return false;

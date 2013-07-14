@@ -22,7 +22,7 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
 
 
     ui->cboPaises->setModel(Configuracion_global->paises_model);
-    ui->cboPaises->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+   // ui->cboPaises->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
     QFile f(qApp->applicationDirPath()+"/MayaConfig.ini");
     if(!f.exists())
@@ -92,6 +92,7 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     ui->chkVademecum_homeopatia->setChecked(settings.value("vad_home").toBool());
     ui->chkVademecum_MTC->setChecked(settings.value("vad_MTC").toBool());
     ui->chk_vademecum_fitoterapia->setChecked(settings.value("vad_fito").toBool());
+    ui->txtnombre_cliente->setText("");
 }
 
 frmConfigmaya::~frmConfigmaya()
@@ -177,4 +178,59 @@ void frmConfigmaya::configurar()
    settings.setValue("PuertoDB_MediTec",ui->txtPuerto_DB_MediTec->text());
 
     accept();
+}
+
+void frmConfigmaya::on_btnAnadir_cuentas_clicked()
+{
+    QSqlQuery q_clientes(QSqlDatabase::database("Maya"));
+    QSqlQuery q_cuentas(QSqlDatabase::database("dbconta")) ;
+    bool registros = true;
+    int id = 0;
+   while (registros) {
+       if(!q_clientes.exec("select * from clientes where id >"+QString::number(id)+" limit 0,1"))
+            qDebug () << q_clientes.lastError().text();
+        if(q_clientes.next())
+        {
+
+            ui->txtnombre_cliente->setText("Validando...: " + q_clientes.record().value("nombre_fiscal").toString());
+            QApplication::processEvents();
+            if(q_cuentas.exec("select codigo_cta from plan_general where codigo_cta ='"+q_clientes.record().value("codigo_cliente").toString()+"' limit 0,1"))
+            {
+                qDebug() <<q_cuentas.lastQuery();
+                id++;
+                if (!q_cuentas.next())
+                {
+                    // ----------------------------------
+                    // Si no existe la cuenta la creamos
+                    // ----------------------------------
+                    q_cuentas.prepare("INSERT INTO plan_general (codigo_cta,descripcion,activo,codigo_balance,"
+                                      "cif_nif,direccion,"
+                                      "cp,poblacion,provincia,pais)"
+                                      "VALUES (:codigo_cta,:descripcion,:activo,:codigo_balance,"
+                                      ":cif_nif,:direccion,:cp,:poblacion,"
+                                      ":provincia,pais);");
+
+                    q_cuentas.bindValue(":codigo_cta",q_clientes.record().value("codigo_cliente").toString());
+                    q_cuentas.bindValue(":descripcion",q_clientes.record().value("nombre_fiscal").toString());
+                    q_cuentas.bindValue(":activo",true);
+                    q_cuentas.bindValue(":codigo_balance","ABIII1");
+                    q_cuentas.bindValue(":cif_nif",q_clientes.record().value("cif_nif").toString());
+                    q_cuentas.bindValue(":direccion",q_clientes.record().value("direccion1").toString());
+                    q_cuentas.bindValue(":cp",q_clientes.record().value("cp").toString());
+                    q_cuentas.bindValue(":poblacion",q_clientes.record().value("poblacion").toString());
+                    q_cuentas.bindValue(":provincia",q_clientes.record().value("provincia").toString());
+                    q_cuentas.bindValue(":pais",q_clientes.record().value("pais").toString());
+                    if(!q_cuentas.exec())
+                        QMessageBox::warning(this,tr("Configuración contable de Maya"),
+                                             tr("No se puede crear la cuenta : %1").arg(q_cuentas.lastError().text()));
+
+
+                }
+            } else
+                qDebug() << q_cuentas.lastError().text();
+        }else
+        {
+            registros = false;
+        }
+    }
 }

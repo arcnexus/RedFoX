@@ -104,23 +104,23 @@ frmFacturas::frmFacturas( QWidget *parent) :
 
     ui->btnGuardar->setMenu(menu_guardar);
 
-    if(oFactura->RecuperarFactura("Select * from cab_fac where id > -1 order by factura  limit 1 "))
-    {
-        LLenarCampos();
-        QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
-        helper.fillTable("empresa","lin_fac",filter);
-    }
-    else
-    {
+//    if(oFactura->RecuperarFactura("Select * from cab_fac where id > -1 order by factura  limit 1 "))
+//    {
+//        LLenarCampos();
+//        QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
+//        helper.fillTable("empresa","lin_fac",filter);
+//    }
+//    else
+//    {
         VaciarCampos();
       //  ui->btn_borrar->setEnabled(false);
         ui->btnEditar->setEnabled(false);
-        ui->btnSiguiente->setEnabled(false);
+        ui->btnSiguiente->setEnabled(true);
         ui->btnAnterior->setEnabled(false);
         ui->btnImprimir->setEnabled(false);
         ui->btnBuscar->setEnabled(false);
         oFactura->id = -1;
-    }
+   // }
 }
 
 frmFacturas::~frmFacturas()
@@ -168,7 +168,7 @@ void frmFacturas::LLenarCampos() {
     ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto,'f',2)));
     //ui->txtimporte_descuento_pp->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->importe_descuento_pp,'f',2)));
     ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number( oFactura->base,'f',2)));
-    ui->txtiva_2->setText(Configuracion_global->toFormatoMoneda(QString::number( oFactura->iva,'f',2)));
+    ui->txtiva_total->setText(Configuracion_global->toFormatoMoneda(QString::number( oFactura->iva,'f',2)));
     ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->iva,'f',2)));
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->total,'f',2)));
     lEstado = oFactura->impreso;
@@ -242,6 +242,13 @@ void frmFacturas::LLenarCampos() {
     ui->txtirpf->setText(QString::number(oFactura->irpf));
     ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->irpf,'f',2)));
     ui->txtimporte_irpf_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->irpf,'f',2)));
+    oCliente1->Recuperar("Select * from clientes where id ="+QString::number(oFactura->id_cliente));
+    helper.set_tarifa(oCliente1->tarifa_cliente);
+    helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
+    helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
+    helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
+    helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
+    oFactura->id_cliente = oCliente1->id;
 
     QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
     helper.fillTable("empresa","lin_fac",filter);
@@ -275,10 +282,17 @@ void frmFacturas::LLenarCamposCliente()
         ui->txtirpf->setText("0,00");
         oFactura->irpf = (Configuracion_global->irpf);
     }
-    helper.set_tarifa(oCliente1->idTarifa);
+    oCliente1->Recuperar("Select * from clientes where id ="+QString::number(oFactura->id_cliente));
+    helper.set_tarifa(oCliente1->tarifa_cliente);
+    helper.porc_iva1 = ui->txtporc_iva1->text().toFloat();
+    helper.porc_iva2 = ui->txtporc_iva2->text().toFloat();
+    helper.porc_iva3 = ui->txtporc_iva3->text().toFloat();
+    helper.porc_iva4 = ui->txtporc_iva4->text().toFloat();
+    oFactura->id_cliente = oCliente1->id;
 }
 
-void frmFacturas::VaciarCampos() {
+void frmFacturas::VaciarCampos()
+{
     QDate fecha;
     ui->lblCliente->setText("");
     ui->lblFactura->setText("");
@@ -300,7 +314,7 @@ void frmFacturas::VaciarCampos() {
     ui->txtimporte_descuento->setText("0,00");
     //ui->txtimporte_descuento_pp->setText("0,00");
     ui->txtbase->setText("0,00");
-    ui->txtiva_2->setText(0);
+    ui->txtiva_total->setText(0);
     ui->txtiva->setText("0,00");
     ui->txttotal->setText("0,00");
     ui->lblFacturaImpresa->setVisible(false);
@@ -314,17 +328,14 @@ void frmFacturas::VaciarCampos() {
     ui->txtbase3->setText(0);
     ui->txtbase4->setText(0);
 
-    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
-
-
-    ui->txtporc_iva1->setText(QString::number(Configuracion_global->ivas[keys.at(0)].value("iva").toDouble()));
-    ui->txtporc_iva2->setText(QString::number(Configuracion_global->ivas[keys.at(1)].value("iva").toDouble()));
-    ui->txtporc_iva3->setText(QString::number(Configuracion_global->ivas[keys.at(2)].value("iva").toDouble()));
-    ui->txtporc_iva4->setText(QString::number(Configuracion_global->ivas[keys.at(3)].value("iva").toDouble()));
-    ui->txtporc_rec1->clear();
-    ui->txtporc_rec2->clear();
-    ui->txtporc_rec3->clear();
-    ui->txtporc_rec4->clear();
+    ui->txtporc_iva1->setText(QString::number(Configuracion_global->ivaList.at(0).toFloat()));
+    ui->txtporc_iva2->setText(QString::number(Configuracion_global->ivaList.at(1).toFloat()));
+    ui->txtporc_iva3->setText(QString::number(Configuracion_global->ivaList.at(2).toFloat()));
+    ui->txtporc_iva4->setText(QString::number(Configuracion_global->ivaList.at(3).toFloat()));
+    ui->txtporc_rec1->setText(QString::number(Configuracion_global->reList.at(0).toFloat()));
+    ui->txtporc_rec2->setText(QString::number(Configuracion_global->reList.at(1).toFloat()));
+    ui->txtporc_rec3->setText(QString::number(Configuracion_global->reList.at(2).toFloat()));
+    ui->txtporc_rec4->setText(QString::number(Configuracion_global->reList.at(3).toFloat()));
     ui->txtiva1->setText(0);
     ui->txtiva2->setText(0);
     ui->txtiva3->setText(0);
@@ -388,6 +399,7 @@ void frmFacturas::BloquearCampos(bool state)
     ui->btnBuscar->setEnabled(state);
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
+    ui->btndeshacer->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
     ui->botBuscarCliente->setEnabled(!state);
 
@@ -478,6 +490,8 @@ void frmFacturas::on_btnSiguiente_clicked()
        // ui->btn_borrar->setEnabled(true);
         ui->btnEditar->setEnabled(true);
         ui->btnAnterior->setEnabled(true);
+        ui->btnImprimir->setEnabled(true);
+        ui->btnCobrar->setEnabled(true);
     }
     else
     {
@@ -485,7 +499,7 @@ void frmFacturas::on_btnSiguiente_clicked()
                                                           "No hay mas facturas disponibles"));
         VaciarCampos();
       //  ui->btn_borrar->setEnabled(false);
-        ui->btnEditar->setEnabled(false);
+        //ui->btnEditar->setEnabled(false);
         ui->btnSiguiente->setEnabled(false);
         oFactura->id++;
     }
@@ -519,29 +533,33 @@ void frmFacturas::Guardar_factura()
 {
 
     QSqlDatabase::database("empresa").transaction();
+    QSqlDatabase::database("dbconta").transaction();
     bool succes = true;
     LLenarFactura();
 
     if(sender()==actionGuardaBorrador)
-        oFactura->factura = ("BORRADOR");
+        oFactura->factura = tr("BORRADOR");
     else
+        if(oFactura->factura.isEmpty())
         oFactura->factura = oFactura->NuevoNumeroFactura();
 
     succes = oFactura->GuardarFactura(oFactura->id,false);
     if(succes)
     {
         LLenarCampos();
-        if(Configuracion_global->contabilidad)
+        if(Configuracion_global->contabilidad && oFactura->factura !=tr("BORRADOR"))
             succes = crear_asiento();
-        if(succes)
-            succes = QSqlDatabase::database("empresa").commit();
-        else
+        if(!succes)
+
             QMessageBox::critical(this,tr("Error"),
                                   tr("Error al crear el asiento contable")+QSqlDatabase::database("empresa").lastError().text(),
                                   tr("&Aceptar"));
     }
     if(succes)
     {
+        if(Configuracion_global->contabilidad)
+            QSqlDatabase::database("dbconta").commit();
+        QSqlDatabase::database("empresa").commit();
         TimedMessageBox * t = new TimedMessageBox(this,tr("Factura guardada con éxito"));
         BloquearCampos(true);
         emit unblock();
@@ -552,6 +570,8 @@ void frmFacturas::Guardar_factura()
                               tr("Error al guardar la factura.\n")+QSqlDatabase::database("empresa").lastError().text(),
                               tr("&Aceptar"));
         QSqlDatabase::database("empresa").rollback();
+        if(Configuracion_global->contabilidad)
+            QSqlDatabase::database("dbconta").rollback();
     }
 
 
@@ -631,7 +651,7 @@ void frmFacturas::totalChanged(double base, double dto, double subtotal, double 
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2))+moneda);
 
     ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2))+moneda);
-    ui->txtiva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2))+moneda);
+    ui->txtiva_total->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2))+moneda);
     ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2))+moneda);
     ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2))+moneda);
 }
@@ -640,7 +660,7 @@ void frmFacturas::desglose1Changed(double base, double iva, double re, double to
 {
     ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
     ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
     ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
@@ -648,7 +668,7 @@ void frmFacturas::desglose2Changed(double base, double iva, double re, double to
 {
     ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
     ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txtrec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
     ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
@@ -656,7 +676,7 @@ void frmFacturas::desglose3Changed(double base, double iva, double re, double to
 {
     ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
     ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txtrec3->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
     ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
@@ -664,7 +684,7 @@ void frmFacturas::desglose4Changed(double base, double iva, double re, double to
 {
     ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
     ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txtrec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
     ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
@@ -722,17 +742,17 @@ void frmFacturas::lineaReady(lineaDetalle * ld)
             ok_Maya = false;
         QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
         query_lin_ped_pro.prepare("INSERT INTO lin_fac (id_Cab, id_articulo, codigo, cantidad,"
-                                  "descripcion, pvp, subtotal, porc_dto,"
+                                  "descripcion, precio, subtotal, porc_dto,"
                                   " dto, porc_iva, total)"
                                   "VALUES (:id_cab,:id_articulo,:codigo,:cantidad,"
-                                  ":descripcion,:coste_bruto,:subtotal_coste,:porc_dto,"
+                                  ":descripcion,:precio,:subtotal_coste,:porc_dto,"
                                   ":dto,:porc_iva,:total);");
         query_lin_ped_pro.bindValue(":id_cab", oFactura->id);
         query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
         query_lin_ped_pro.bindValue(":codigo",ld->codigo);
         query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_ped_pro.bindValue(":coste_bruto",ld->precio);
+        query_lin_ped_pro.bindValue(":precio",ld->precio);
         query_lin_ped_pro.bindValue(":subtotal_coste",ld->subtotal);
         query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_ped_pro.bindValue(":dto",ld->dto);
@@ -774,11 +794,12 @@ void frmFacturas::lineaReady(lineaDetalle * ld)
                                   "codigo =:codigo_articulo_proveedor,"
                                   "descripcion =:descripcion,"
                                   "cantidad =:cantidad,"
-                                  "pvp =:coste_bruto,"
+                                  "precio =:precio,"
                                   "subtotal =:subtotal_coste,"
                                   "porc_dto =:porc_dto,"
                                   "dto =:dto,"
                                   "porc_iva =:porc_iva,"
+                                  "porc_rec =:porc_rec,"
                                   "total =:total "
                                   "WHERE id = :id;");
 
@@ -787,11 +808,12 @@ void frmFacturas::lineaReady(lineaDetalle * ld)
         query_lin_ped_pro.bindValue(":codigo_articulo_proveedor",ld->codigo);
         query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
         query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_ped_pro.bindValue(":coste_bruto",ld->precio);
+        query_lin_ped_pro.bindValue(":precio",ld->precio);
         query_lin_ped_pro.bindValue(":subtotal_coste",ld->subtotal);
         query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
         query_lin_ped_pro.bindValue(":dto",ld->dto);
         query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
+        query_lin_ped_pro.bindValue(":porc_rec",ld->rec_perc);
         query_lin_ped_pro.bindValue(":total",ld->total);
         query_lin_ped_pro.bindValue(":id",ld->idLinea);
 
@@ -853,154 +875,8 @@ void frmFacturas::on_tabWidget_2_currentChanged(int index)
 
 bool frmFacturas::crear_asiento()
 {
-    apuntes oApunte;
-    int apunte;
-    bool ok = true;
-    bool nuevo;
-    int pos = 1;
-    oCliente1->Recuperar("select * from clientes where id = " + QString::number(oFactura->id_cliente));
-
-    oApunte.cuenta_d = oCliente1->codigo_cliente;
-    oApunte.cuenta_h = Configuracion_global->cuentaVentaMercaderias;
-    oApunte.descripcion_d = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_d);
-    oApunte.id_cuenta_d = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_d);
-    oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-    oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-    oApunte.comentario_d = tr("Nuestra factura num: ")+oFactura->factura;
-    oApunte.comentario_h = tr("Ventas mercaderias factura num: ")+oFactura->factura;
-    oApunte.fecha_asiento = oFactura->fecha;
-    oApunte.id_documento = oFactura->id;
-    oApunte.importe_d = oFactura->total;
-    oApunte.importe_h = oFactura->base;
-    oApunte.pos_en_asiento = pos;
-    oApunte.asiento = oApunte.nuevo_numero_apunte();
-    apunte = oApunte.asiento;
-    nuevo = oApunte.nuevalinea();
-    if(!nuevo)
-        ok = false;
-    pos++;
-    if(oFactura->iva1 !=0)
-    {
-        oApunte.clear();
-        oApunte.asiento = apunte;
-        oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportado1;
-        oApunte.importe_h = oFactura->iva1;
-        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-        oApunte.comentario_h = tr("IVA ")+Configuracion_global->ivaList.at(0)+tr("% - factura num: ")+oFactura->factura;
-        oApunte.pos_en_asiento = pos;
-        pos ++;
-        nuevo = oApunte.nuevalinea();
-        if(!nuevo)
-            ok = false;
-    }
-    if(oFactura->porc_rec1 !=0)
-    {
-        oApunte.clear();
-        oApunte.asiento = apunte;
-        oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportadoRe1;
-        oApunte.importe_h = oFactura->porc_rec1;
-        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-        oApunte.comentario_h = tr("RE ")+Configuracion_global->reList.at(0)+tr("% - factura num: ")+oFactura->factura;
-        oApunte.pos_en_asiento = pos;
-        pos ++;
-        nuevo = oApunte.nuevalinea();
-        if(!nuevo)
-            ok = false;
-    }
-    if(oFactura->iva2 !=0)
-    {
-        oApunte.clear();
-        oApunte.asiento = apunte;
-        oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportado2;
-        oApunte.importe_h = oFactura->iva2;
-        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-        oApunte.comentario_h = tr("IVA ")+Configuracion_global->ivaList.at(1)+tr("% - factura num: ")+oFactura->factura;
-        oApunte.pos_en_asiento = pos;
-        pos ++;
-        nuevo =oApunte.nuevalinea();
-        if(!nuevo)
-            ok = false;
-    }
-    if(oFactura->porc_rec2 !=0)
-    {
-        oApunte.clear();
-        oApunte.asiento = apunte;
-        oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportadoRe2;
-        oApunte.importe_h = oFactura->porc_rec2;
-        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-        oApunte.comentario_h = tr("RE ")+Configuracion_global->reList.at(1)+tr("% - factura num: ")+oFactura->factura;
-        oApunte.pos_en_asiento = pos;
-        pos ++;
-        nuevo = oApunte.nuevalinea();
-        if(!nuevo)
-            ok = false;
-    }
-    if(oFactura->iva3 !=0)
-    {
-        oApunte.clear();
-        oApunte.asiento = apunte;
-        oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportado3;
-        oApunte.importe_h = oFactura->iva3;
-        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-        oApunte.comentario_h = tr("IVA ")+Configuracion_global->ivaList.at(2)+tr("% - factura num: ")+oFactura->factura;
-        oApunte.pos_en_asiento = pos;
-        pos ++;
-        nuevo = oApunte.nuevalinea();
-        if(!nuevo)
-            ok = false;
-    }
-    if(oFactura->porc_rec3 !=0)
-    {
-        oApunte.clear();
-        oApunte.asiento = apunte;
-        oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportadoRe3;
-        oApunte.importe_h = oFactura->porc_rec3;
-        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-        oApunte.comentario_h = tr("RE ")+Configuracion_global->reList.at(2)+tr("% - factura num: ")+oFactura->factura;
-        oApunte.pos_en_asiento = pos;
-        pos ++;
-        nuevo = oApunte.nuevalinea();
-        if(!nuevo)
-            ok = false;
-    }
-    if(oFactura->iva4 !=0)
-    {
-        oApunte.clear();
-        oApunte.asiento = apunte;
-        oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportado4;
-        oApunte.importe_h = oFactura->iva4;
-        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-        oApunte.comentario_h = tr("IVA ")+Configuracion_global->ivaList.at(3)+tr("% - factura num: ")+oFactura->factura;
-        oApunte.pos_en_asiento = pos;
-        pos ++;
-        nuevo = oApunte.nuevalinea();
-        if(!nuevo)
-            ok = false;
-    }
-    if(oFactura->porc_rec4 !=0)
-    {
-        oApunte.clear();
-        oApunte.asiento = apunte;
-        oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportadoRe4;
-        oApunte.importe_h = oFactura->porc_rec4;
-        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-        oApunte.comentario_h = tr("RE ")+Configuracion_global->reList.at(3)+tr("% - factura num: ")+oFactura->factura;
-        oApunte.pos_en_asiento = pos;
-        pos ++;
-        nuevo = oApunte.nuevalinea();
-        if(!nuevo)
-            ok = false;
-    }
-    ok = oFactura->GuardarApunte(apunte,oFactura->id);
-    return ok;
+    bool creado = oFactura->Apunte();
+    return creado;
 }
 
 void frmFacturas::on_btndeshacer_clicked()

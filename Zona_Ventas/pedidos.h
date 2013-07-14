@@ -74,6 +74,7 @@ public:
     int entregado;
     QDate fecha_limite_entrega;
     double total_pedido;
+    int tarifa_cliente;
 
 public slots:
     bool BorrarLineas(int Iped);

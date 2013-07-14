@@ -141,7 +141,7 @@ public:
     int id_tarifa_predeterminada;
     bool empresa_medica;
     bool empresa_internacional;
-
+    bool enlace_web;
     int consultas;
     QString primer_dia_laborable;
     QString ultimo_dia_laborable;

@@ -114,6 +114,7 @@ void Empresa::Recuperar(QString cSQL)
             this->cuenta_iva_soportado_re2 = registro.field("cuenta_iva_soportado2_re").value().toString();
             this->cuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
             this->cuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
+            this->enlace_web = registro.field("enlace_web").value().toBool();
         }
 		else 
 		{
@@ -215,6 +216,7 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->cuenta_iva_soportado_re2 = registro.field("cuenta_iva_soportado2_re").value().toString();
             this->cuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
             this->cuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
+            this->enlace_web = registro.field("enlace_web").value().toBool();
         } else {
             if (nProcede == 1)
                 TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
@@ -235,18 +237,8 @@ void Empresa::Guardar()
                      "digitos_factura =:ndigitos_factura,"
                      "serie =:serie,"
                      "ruta_bd_sqlite =:ruta_bd_sqlite,"
-                     "host =:cHost,"
-                     "user =:cUser,"
-                     "contrasena =:cContrasena,"
-                     "puerto=:cPuerto,"
                      "nombre_bd =:nombre_bd,"
-                     "driverBD =:cDriverBD,"
-                     "host_bd_medica =:cHostDBMedica,"
-                     "user_bd_medica =:cUserDBMedica,"
-                     "contrasena_bd_medica =:cContrasenaDBMedica,"
-                     "puerto_bd_medica=:cPuertoDBMedica,"
                      "nombre_bd_medica=:nombre_bd_medica,"
-                     "driver_bd_medica=:driver_bd_medica,"
                      "direccion=:direccion1,"
                      "cp=:cp,"
                      "poblacion=:poblacion,"
@@ -279,13 +271,7 @@ void Empresa::Guardar()
                      "horario_primer_dia =:horario_primer_dia,"
                      "horario_dia_normal =:horario_dia_normal,"
                      "horario_ultimo_dia =:horario_ultimo_dia,"
-                     "host_db_conta =:host_db_conta,"
                      "nombre_db_conta =:nombre_bdConta,"
-                     "user_db_conta =:user_bd_conta,"
-                     "password_db_conta =:password_bd_conta,"
-                     "puerto_db_conta = :puerto_db_conta,"
-                     "rutaDBConta =:ruta_bd_conta,"
-                     "driver_db_conta =:driver_db_conta,"
                      "ticket_factura =:ticket_factura,"
                      "id_tarifa_predeterminada =:id_tarifa_predeterminada,"
                      "actualizar_divisas =:actualizar_divisas,"
@@ -307,7 +293,8 @@ void Empresa::Guardar()
                      "cuenta_iva_soportado2_re =:cuenta_iva_soportado2_re,"
                      "cuenta_iva_soportado3_re =:cuenta_iva_soportado3_re,"
                      "cuenta_iva_soportado4_re =:cuenta_iva_soportado4_re,"
-                     "cuenta_pagos =:cuenta_pagos"
+                     "cuenta_pagos =:cuenta_pagos,"
+                     "enlace_web =:enlace_web"
                      " where id=:nid");
 
     qEmpresa.bindValue(":id_divisa",this->id_divisa);
@@ -316,18 +303,8 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":ndigitos_factura", this->ndigitos_factura);
     qEmpresa.bindValue(":serie",this->serie);
     qEmpresa.bindValue(":ruta_bd_sqlite",this->ruta_bd_sqlite);
-    qEmpresa.bindValue(":cHost",this->cHost);
-    qEmpresa.bindValue(":cUser",this->cUser);
-    qEmpresa.bindValue(":cContrasena",this->cContrasena);
-    qEmpresa.bindValue(":cPuerto",this->cPuerto);
     qEmpresa.bindValue(":nombre_bd",this->nombre_bd);
-    qEmpresa.bindValue(":cDriverBD", this->cDriverBD);
-    qEmpresa.bindValue(":cHostDBMedica",this->cHostMed);
-    qEmpresa.bindValue(":cUserDBMedica",this->cUserMed);
-    qEmpresa.bindValue(":cContrasenaDBMedica",this->cContrasenaMed);
-    qEmpresa.bindValue(":cPuertoDBMedica",this->cPuertoMed);
     qEmpresa.bindValue(":nombre_bd_medica",this->nombre_bdMed);
-    qEmpresa.bindValue(":driver_bd_medica",this->cDriverBDMed);
     qEmpresa.bindValue(":direccion1",this->direccion1);
     qEmpresa.bindValue(":cp",this->cp);
     qEmpresa.bindValue(":poblacion",this->poblacion);
@@ -361,13 +338,7 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":horario_primer_dia",this->horario_primer_dia);
     qEmpresa.bindValue(":horario_dia_normal",this->horario_dia_normal);
     qEmpresa.bindValue(":horario_ultimo_dia",this->horario_ultimo_dia);
-    qEmpresa.bindValue(":host_db_conta",this->HostBD_contabilidad);
     qEmpresa.bindValue(":nombre_bdConta",this->nombre_bd_contabilidad);
-    qEmpresa.bindValue(":user_bd_conta",this->UsuarioBD_contabilidad);
-    qEmpresa.bindValue(":password_bd_conta",this->ContrasenaBD_contabilidad);
-    qEmpresa.bindValue(":puerto_db_conta",this->puertoDB_contabilidad);
-    qEmpresa.bindValue(":ruta_bd_conta",this->RutaBD_Contabilidad_sqlite);
-    qEmpresa.bindValue(":driver_db_conta",this->driver_db_contabilidad);
     qEmpresa.bindValue(":ticket_factura",this->ticket_factura);
     qEmpresa.bindValue(":id_tarifa_predeterminada",this->id_tarifa_predeterminada);
     qEmpresa.bindValue(":actualizar_divisas",this->actualizar_divisas);
@@ -389,6 +360,7 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":cuenta_iva_soportado2_re",this->cuenta_iva_soportado_re2);
     qEmpresa.bindValue(":cuenta_iva_soportado3_re",this->cuenta_iva_soportado_re3);
     qEmpresa.bindValue(":cuenta_iva_soportado4_re",this->cuenta_iva_soportado_re4);
+    qEmpresa.bindValue(":enlace_web",this->enlace_web);
 
     qEmpresa.bindValue(":nid",this->id);
 
@@ -399,7 +371,7 @@ void Empresa::Guardar()
     else {
         QMessageBox::information(qApp->activeWindow(),QObject::tr("Gestión de Empresas")
                                  ,QObject::tr("La ficha de la empresa ha sido modificada\n"
-                                              "ADMINISTRADOR: Verifique funcionamiento corecto\n"
+                                              "ADMINISTRADOR: Verifique funcionamiento correcto\n"
                                               "antes de dar acceso a usuarios"),
                                  QObject::tr("OK"));
     }
@@ -479,6 +451,7 @@ void Empresa::Vaciar()
     this->cuenta_iva_soportado_re2 = "";
     this->cuenta_iva_soportado_re3 = "";
     this->cuenta_iva_soportado_re4 = "";
+    this->enlace_web = false;
 }
 
 bool Empresa::Borrar(int nid)
