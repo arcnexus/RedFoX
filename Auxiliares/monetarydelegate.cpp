@@ -13,7 +13,9 @@ void MonetaryDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
     QLineEdit *lineedit = static_cast<QLineEdit*>(editor);
     lineedit->text();
     lineedit->setReadOnly(this->readonly);
-    QString valor = Configuracion_global->toFormatoMoneda(lineedit->text());
+    double valor_moneda = lineedit->text().toDouble();
+    QString valor_moneda_string = QString::number(valor_moneda,'f',2);
+    QString valor = Configuracion_global->toFormatoMoneda(valor_moneda_string);
     model->setData(index,valor,Qt::EditRole);
     lineedit->setAlignment(Qt::AlignRight);
 }
@@ -21,7 +23,9 @@ void MonetaryDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
 void MonetaryDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QString texto = index.model()->data(index, Qt::DisplayRole).toString();
-     texto = Configuracion_global->toFormatoMoneda(texto);
+    double valor_moneda = texto.toDouble();
+    QString valor_moneda_string = QString::number(valor_moneda,'f',2);
+     texto = Configuracion_global->toFormatoMoneda(valor_moneda_string);
 
      QStyleOptionViewItem myOption = option;
      myOption.displayAlignment = Qt::AlignRight | Qt::AlignVCenter;
