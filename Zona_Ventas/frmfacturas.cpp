@@ -433,7 +433,7 @@ void frmFacturas::LLenarFactura() {
     oFactura->subtotal = (ui->txtsubtotal->text().replace(",",".").replace(moneda,"").toDouble());
     //oFactura->dto = (ui->txtdto->text().replace(",",".").toDouble());
     //oFactura->dto_pp = (ui->txtdto_pp->text().replace(",",".").toDouble());
-    oFactura->dto = (ui->txtimporte_descuento->text().replace(moneda,"").replace(",",".").toDouble());
+    oFactura->dto = (ui->txtimporte_descuento->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
     //oFactura->importe_descuento_pp = (ui->txtimporte_descuento_pp->text().replace(",",".").toDouble());
     oFactura->base = (ui->txtbase->text().replace(",",".").replace(moneda,"").toDouble());
     oFactura->iva = (ui->txtiva->text().replace(",",".").replace(moneda,"").toDouble());

@@ -28,24 +28,22 @@ bool Presupuesto::AnadirPresupuesto()
     cab_pre.prepare("INSERT INTO cab_pre (presupuesto, fecha, valido_hasta,"
                     "id_cliente, codigo_cliente, cliente, cif, direccion1, direccion2, cp,"
                     "poblacion, provincia, id_pais, telefono, movil, fax, porc_dto, comentarios,"
-                    "importe, base, dto, total, impreso, aprobado, fecha_aprobacion,"
+                    "base, dto, total, impreso, aprobado, fecha_aprobacion,"
                     "importe_factura, importe_pendiente, factura, albaran, pedido, id_forma_pago,"
                     "lugar_entrega, atencion_de, base1, base2, base3, base4, porc_iva1, porc_iva2, porc_iva3,"
                     "porc_iva4, iva1, iva2, iva3, iva4, porc_rec1, porc_rec2,"
                     "porc_rec3, porc_rec4, rec1, rec2, rec3, rec4, total1,"
-                    "total2, total3, total4, recargo_equivalencia, email, total_iva, total_recargo,"
-                    "importe1, importe2, importe3, importe4) "
+                    "total2, total3, total4, recargo_equivalencia, email, total_iva, total_recargo) "
                     "VALUES"
                     "(:presupuesto, :fecha, :valido_hasta,"
                     ":id_cliente, :codigo_cliente, :cliente, :cif, :direccion1, :direccion2, :cp,"
                     ":poblacion, :provincia, :id_pais, :telefono, :movil, :fax, :porc_dto, :comentarios,"
-                    ":importe, :subtotal, :dto, :total, :impreso, :aprobado, :fecha_aprobacion,"
+                    ":base, :dto, :total, :impreso, :aprobado, :fecha_aprobacion,"
                     ":importe_factura, :importe_pendiente, :factura, :albaran, :pedido, :id_forma_pago,"
                     ":lugar_entrega, :atencion_de, :base1, :base2, :base3, :base4, :porc_iva1, :porc_iva2, :porc_iva3,"
                     ":porc_iva4, :iva1, :iva2, :iva3, :iva4, :porc_rec1, :porc_rec2,"
                     ":porc_rec3, :porc_rec4, :rec1, :rec2, :rec3, :rec4, :total1,"
-                    ":total2, :total3, :total4, :recargo_equivalencia, :email, :total_iva, :total_recargo,"
-                    ":importe1, :importe2, :importe3, :importe4)");
+                    ":total2, :total3, :total4, :recargo_equivalencia, :email, :total_iva, :total_recargo)");
 
     cab_pre.bindValue(":presupuesto",presupuesto);
     cab_pre.bindValue(":fecha",fecha);
@@ -65,8 +63,7 @@ bool Presupuesto::AnadirPresupuesto()
     cab_pre.bindValue(":fax",fax);
     cab_pre.bindValue(":porc_dto",0);
     cab_pre.bindValue(":comentarios",comentarios);
-    cab_pre.bindValue(":importe",0);
-    cab_pre.bindValue(":subtotal",0);
+    cab_pre.bindValue(":base",0);
     cab_pre.bindValue(":dto",0);
     cab_pre.bindValue(":total",0);
     cab_pre.bindValue(":impreso",impreso);
@@ -154,7 +151,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->email = registro.field("email").value().toString();
             this->porc_dto = registro.field("porc_dto").value().toDouble();
             this->comentarios = registro.field("comentarios").value().toString();
-            this->importe = registro.field("importe").value().toDouble();
+            this->subtotal = registro.field("subtotal").value().toDouble();
             this->base = registro.field("base").value().toDouble();
             this->dto = registro.field("dto").value().toDouble();
             this->total = registro.field("total").value().toDouble();
@@ -177,10 +174,10 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
 
             this->lugar_entrega = registro.field("lugar_entrega").value().toString();
             this->atencion_de = registro.field("atencion_de").value().toString();
-            this->base1 = registro.field("importe1").value().toDouble();
-            this->base2 = registro.field("importe2").value().toDouble();
-            this->base3 = registro.field("importe3").value().toDouble();
-            this->base4 = registro.field("importe4").value().toDouble();
+            this->base1 = registro.field("base1").value().toDouble();
+            this->base2 = registro.field("base2").value().toDouble();
+            this->base3 = registro.field("base3").value().toDouble();
+            this->base4 = registro.field("base4").value().toDouble();
             this->porc_iva1 = registro.field("porc_iva1").value().toDouble();
             this->porc_iva2 = registro.field("porc_iva2").value().toDouble();
             this->porc_iva3 = registro.field("porc_iva3").value().toDouble();
@@ -235,7 +232,7 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
                     "direccion1 = :direccion1, direccion2 = :direccion2, cp = :cp,"
                     "poblacion = :poblacion, provincia = :provincia, id_pais = :id_pais,"
                     "telefono = :telefono, movil = :movil, fax = :fax,"
-                    "comentarios = :comentarios, importe = :importe, base =:subtotal,"
+                    "comentarios = :comentarios, base =:subtotal,"
                     "dto = :dto,porc_dto =:porc_dto, total = :total, impreso = :impreso,"
                     "aprobado = :aprobado, fecha_aprobacion = :fecha_aprobacion,"
                     "importe_factura =:importe_factura, importe_pendiente = :importe_pendiente,"
@@ -251,9 +248,7 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
                     "rec1=:rec1, rec2=:rec2, rec3=:rec3, rec4=:rec4, total1=:total1,"
                     "total2=:total2, total3=:total3, total4=:total4,"
                     "recargo_equivalencia=:recargo_equivalencia, email=:email,"
-                    "total_iva=:total_iva, total_recargo=:total_recargo,"
-                    "importe1=:importe1, importe2=:importe2,"
-                    "importe3=:importe3, importe4=:importe4 "
+                    "total_iva=:total_iva, total_recargo=:total_recargo "
                     "WHERE id = :npresupuesto");
 
     cab_pre.bindValue(":fecha",fecha);
@@ -272,7 +267,6 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
     cab_pre.bindValue(":movil",movil);
     cab_pre.bindValue(":fax",fax);
     cab_pre.bindValue(":comentarios",comentarios);
-    cab_pre.bindValue(":importe",importe);
     cab_pre.bindValue(":subtotal",base);
     cab_pre.bindValue(":dto",dto);
     cab_pre.bindValue(":porc_dto",porc_dto);
@@ -316,10 +310,6 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
     cab_pre.bindValue(":email",email);
     cab_pre.bindValue(":total_iva",total_iva);
     cab_pre.bindValue(":total_recargo",total_recargo);
-    cab_pre.bindValue(":importe1",0);
-    cab_pre.bindValue(":importe2",0);
-    cab_pre.bindValue(":importe3",0);
-    cab_pre.bindValue(":importe4",0);
     cab_pre.bindValue(":npresupuesto",nid_Presupuesto);
 
     if(!cab_pre.exec())

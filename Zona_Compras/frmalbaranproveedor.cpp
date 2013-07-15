@@ -571,7 +571,7 @@ void FrmAlbaranProveedor::guardar_campos_en_objeto()
     oAlbPro->factura = ui->txtcNumFra->text().replace(",",".").toDouble();
     oAlbPro->base_total = ui->txtbase->text().replace(",",".").replace(moneda,"").toDouble();
     oAlbPro->iva_total = ui->txtiva_total->text().replace(",",".").replace(moneda,"").toDouble();
-    oAlbPro->importe_rec_total = ui->txtimporte_rec_total->text().replace(moneda,"").replace(",",".").toDouble();
+    oAlbPro->importe_rec_total = ui->txtimporte_rec_total->text().replace(".","").replace(moneda,"").replace(",",".").toDouble();
     oAlbPro->total = ui->txttotal->text().replace(",",".").replace(moneda,"").toDouble();
     oAlbPro->comentario = ui->txtcomentario->toPlainText();
 }

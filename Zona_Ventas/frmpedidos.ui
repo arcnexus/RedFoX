@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1094</width>
-    <height>561</height>
+    <width>1162</width>
+    <height>569</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_5">
       <property name="styleSheet">
@@ -2044,7 +2044,7 @@ color: rgb(23, 76, 7);</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btndeshacer">
+       <widget class="QPushButton" name="btnDeshacer">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2171,7 +2171,7 @@ background-color: rgb(0, 0, 58);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtbase">
+      <widget class="QLineEdit" name="txtsubtotal">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -2210,7 +2210,7 @@ color: rgb(0, 64, 64);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtimporte_descuento">
+      <widget class="QLineEdit" name="txtdto">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -2243,7 +2243,7 @@ color: rgb(0, 64, 64);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtsubtotal">
+      <widget class="QLineEdit" name="txtbase">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -2318,7 +2318,7 @@ color: rgb(0, 64, 64);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txttotal_recargo">
+      <widget class="QLineEdit" name="txtrec">
        <property name="enabled">
         <bool>false</bool>
        </property>

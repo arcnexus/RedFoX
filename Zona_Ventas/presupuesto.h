@@ -27,11 +27,11 @@ public:
     QString fax;
     double dto;
     QString comentarios;
-    double importe;
-    double importe1;
-    double importe2;
-    double importe3;
-    double importe4;
+    double subtotal;
+//    double subtotal1;
+//    double subtotal2;
+//    double subtotal3;
+//    double subtotal4;
     double base;
     float porc_dto;
     double total;

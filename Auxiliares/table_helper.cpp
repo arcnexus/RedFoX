@@ -34,6 +34,8 @@ void Table_Helper::help_table(QTableWidget *table)
     helped_table->setItemDelegateForColumn(9,new MonetaryDelegate(helped_table,false));
     helped_table->setColumnWidth(2,220);
 
+
+
     QStringList headers;
     if (!this->comprando) {
         headers << tr("Referencia") << tr("Cantidad") << tr("Descripcion") << tr("P.V.P") << tr("subtotal");
@@ -251,6 +253,7 @@ void Table_Helper::addRow(QSqlRecord r)
     QTableWidgetItem * item = new QTableWidgetItem;
     helped_table->setItem(row,1,item);
     item->setText("1");
+    item->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
     for(int i = 2;i < helped_table->columnCount();i++)
     {
@@ -265,6 +268,7 @@ void Table_Helper::addRow(QSqlRecord r)
     QTableWidgetItem * porc_re = helped_table->item(row,8);
     porc_re->setFlags(porc_re->flags()^Qt::ItemIsEnabled);
     porc_re->setText("0");
+    porc_re->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
     QTableWidgetItem * total = helped_table->item(row,9);
     total->setFlags(total->flags()^Qt::ItemIsEnabled);
@@ -272,7 +276,8 @@ void Table_Helper::addRow(QSqlRecord r)
     helped_table->item(row,3)->setText("0");
     helped_table->item(row,5)->setText("0");
     helped_table->item(row,6)->setText("0");
-
+    helped_table->item(row,6)->setTextAlignment(Qt::AlignVCenter | Qt::AlignRight);
+    helped_table->item(row,7)->setTextAlignment(Qt::AlignVCenter | Qt::AlignRight);
 
 
     helped_table->blockSignals(false);

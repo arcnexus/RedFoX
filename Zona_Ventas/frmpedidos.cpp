@@ -144,7 +144,7 @@ void FrmPedidos::LLenarCampos()
     ui->chklporc_rec->setChecked(oPedido->recargo_equivalencia==1);
         helper.set_tarifa(oCliente3->tarifa_cliente);
     ui->txtsubtotal->setText(QString::number(oPedido->subtotal));
-    ui->txtimporte_descuento->setText(QString::number(oPedido->dto));
+    ui->txtdto->setText(QString::number(oPedido->dto));
     //oPedido->dto;
     ui->txtbase1->setText(QString::number(oPedido->base1));
     ui->txtbase2->setText(QString::number(oPedido->base2));
@@ -249,7 +249,7 @@ void FrmPedidos::VaciarCampos()
     //ui->txtpais->setText("");
     ui->txtcif->setText("");
     ui->txtsubtotal->setText(0);
-    ui->txtimporte_descuento->setText("0,00");
+    ui->txtdto->setText("0,00");
     ui->txtbase->setText("0,00");
     ui->txtiva->setText("0,00");
     ui->txttotal->setText("0,00");
@@ -284,7 +284,8 @@ void FrmPedidos::VaciarCampos()
     ui->txtporc_rec2->setText(0);
     ui->txtporc_rec3->setText(0);
     ui->txtporc_rec4->setText(0);
-    ui->txttotal_recargo->setText(0);
+    ui->txttotal_recargo_2->setText(0);
+    ui->txtrec->setText("0,00");
     ui->txtentregado_a_cuenta->setText("0,00");
     ui->txtpedido_cliente->setText("");
     ui->txttotal_iva_2->setText("0,00");
@@ -335,7 +336,7 @@ void FrmPedidos::BloquearCampos(bool state)
     ui->btnAnadir->setEnabled(state);
     ui->btnAnterior->setEnabled(state);
     ui->btnBuscar->setEnabled(state);
-    //ui->btnDeshacer->setEnabled(!state);
+    ui->btnDeshacer->setEnabled(!state);
     ui->btnEditar->setEnabled(state);    
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
@@ -368,7 +369,7 @@ void FrmPedidos::LLenarPedido()
     oPedido->cif=ui->txtcif->text();
     oPedido->recargo_equivalencia=ui->chklporc_rec->isChecked();
     oPedido->subtotal=ui->txtsubtotal->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->dto=ui->txtimporte_descuento->text().replace(_moneda,"").replace(",",".").toDouble();
+    oPedido->dto=ui->txtdto->text().replace(_moneda,"").replace(",",".").toDouble();
     //oPedido->dto;
     oPedido->base1=ui->txtbase1->text().replace(_moneda,"").replace(",",".").toDouble();
     oPedido->base2=ui->txtbase2->text().replace(_moneda,"").replace(",",".").toDouble();
@@ -602,10 +603,10 @@ void FrmPedidos::totalChanged(double base , double dto ,double subtotal , double
 {
     _moneda = moneda;
     ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2))+moneda);
-    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',2))+moneda);
+    ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',2))+moneda);
     ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',2))+moneda);
     ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2))+moneda);
-    ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2))+moneda);
+    ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2))+moneda);
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2))+moneda);
 
     ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2))+moneda);
@@ -932,9 +933,3 @@ void FrmPedidos::on_tabWidget_2_currentChanged(int index)
     helper.resizeTable();
 }
 
-void FrmPedidos::on_btndeshacer_clicked()
-{
-    QSqlDatabase::database("Maya").rollback();
-    QSqlDatabase::database("empresa").rollback();
-    LLenarCampos();
-}

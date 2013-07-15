@@ -144,10 +144,10 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtmovil->setText(oPres->movil);
     ui->txtfax->setText(oPres->fax);
     ui->txtcomentario->setPlainText(oPres->comentarios);
-    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->importe,'f',2)));
-    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->base,'f',2)));
-    ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->dto,'f',2)));
-    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total,'f',2)));
+    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->base,'f',2)+moneda));
+    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->subtotal,'f',2)+moneda));
+    ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->dto,'f',2)+moneda));
+    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total,'f',2)+moneda));
     ui->lbimpreso->setVisible(oPres->impreso);
     ui->chklAprovado->setChecked(oPres->aprobado);
     ui->txtfechaAprovacion->setDate(oPres->fecha_aprobacion);
@@ -166,7 +166,7 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->base2,'f',2)));
     ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->base3,'f',2)));
     ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->base4,'f',2)));
-    ui->txtbase_total->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->importe,'f',2)));
+    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->base,'f',2)+moneda));
 
     //ui->txtporc_iva1->setText(QString::number(oPres->iva1));
     //ui->txtporc_iva2->setText(QString::number(oPres->iva2));
@@ -176,14 +176,14 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->iva2,'f',2)));
     ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->iva3,'f',2)));
     ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->iva4,'f',2)));
-    ui->txttotal_iva->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total_iva,'f',2)));
-    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total_iva,'f',2)));
+    ui->txttotal_iva->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total_iva,'f',2)+moneda));
+    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total_iva,'f',2)+moneda));
     //ui->txtporc_rec1->setText(QString::number(oPres->porc_rec1));
     //ui->txtporc_rec2->setText(QString::number(oPres->porc_rec2));
     //ui->txtporc_rec3->setText(QString::number(oPres->porc_rec3));
     //ui->txtporc_rec4->setText(QString::number(oPres->porc_rec4));
-    ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total_recargo,'f',2)));
-    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total_recargo,'f',2)));
+    ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total_recargo,'f',2)));
+    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total_recargo,'f',2)+moneda));
     ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->rec1,'f',2)));
     ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->rec2,'f',2)));
     ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->rec3,'f',2)));
@@ -192,7 +192,7 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total2,'f',2)));
     ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total3,'f',2)));
     ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total4,'f',2)));
-    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total,'f',2)));
+    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total,'f',2)+moneda));
     ui->txtemail->setText(oPres->email);
     ui->chklporc_rec->setChecked(oPres->recargo_equivalencia);
     oClientePres->Recuperar("Select * from clientes where id ="+QString::number(oPres->id_cliente));
@@ -260,15 +260,14 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     oPres->fax = (ui->txtfax->text());
     oPres->comentarios = (ui->txtcomentario->toPlainText());
 
-    oPres->importe = ui->txtbase->text().replace(moneda,"") .toDouble();
-    oPres->base = (ui->txtsubtotal->text().replace(moneda,"") .toDouble());
-    oPres->dto = (ui->txtdto->text().replace(moneda,"") .toDouble());
-    oPres->total = (ui->txttotal->text().replace(moneda,"") .toDouble());
+    oPres->base = (ui->txtbase->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->dto = (ui->txtdto->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->total = (ui->txttotal->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
 
     oPres->aprobado = ui->chklAprovado->isChecked();
 
     oPres->fecha_aprobacion = (ui->txtfechaAprovacion->date());
-    oPres->importe_factura = (ui->txtimporte_factura->text().replace(moneda,"") .toDouble());
+    oPres->importe_factura = (ui->txtimporte_factura->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
 
     if(ui->txtfactura->text()=="")
         oPres->factura = "0";
@@ -285,34 +284,35 @@ void FrmPresupuestosCli::LLenarPresupuesto()
 
     oPres->lugar_entrega = (ui->txtlugar_entrega->toPlainText());
     oPres->atencion_de = (ui->txtatencion_de->text());
-    oPres->base1 = (ui->txtbase1->text().replace(moneda,"") .toDouble());
-    oPres->base2 = (ui->txtbase2->text().replace(moneda,"") .toDouble());
-    oPres->base3 = (ui->txtbase3->text().replace(moneda,"") .toDouble());
-    oPres->base4 = (ui->txtbase4->text().replace(moneda,"") .toDouble());
+    oPres->base1 = (ui->txtbase1->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->base2 = (ui->txtbase2->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->base3 = (ui->txtbase3->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->base4 = (ui->txtbase4->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
     //oPres->iva1 = (ui->txtporc_iva1->text().toDouble());
     //oPres->iva2 = (ui->txtporc_iva2->text().toDouble());
     //oPres->iva3 = (ui->txtporc_iva3->text().toDouble());
     //oPres->iva4 = (ui->txtporc_iva4->text().toDouble());
-    oPres->iva1 = (ui->txtiva1->text().replace(moneda,"") .toDouble());
-    oPres->iva2 = (ui->txtiva2->text().replace(moneda,"") .toDouble());
-    oPres->iva3 = (ui->txtiva3->text().replace(moneda,"") .toDouble());
-    oPres->iva4 = (ui->txtiva4->text().replace(moneda,"") .toDouble());
+    oPres->iva1 = (ui->txtiva1->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->iva2 = (ui->txtiva2->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->iva3 = (ui->txtiva3->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->iva4 = (ui->txtiva4->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
     //oPres->porc_rec1 = (ui->txtporc_rec1->text().toDouble());
     //oPres->porc_rec2 = (ui->txtporc_rec2->text().toDouble());
     //oPres->porc_rec3 = (ui->txtporc_rec3->text().toDouble());
     //oPres->porc_rec4 = (ui->txtporc_rec4->text().toDouble());
     oPres->recargo_equivalencia = ui->chklporc_rec->isChecked();
-    oPres->rec1 = (ui->txtporc_rec1->text().replace(moneda,"") .toDouble());
-    oPres->rec2 = (ui->txtporc_rec2->text().replace(moneda,"") .toDouble());
-    oPres->rec3 = (ui->txtporc_rec3->text().replace(moneda,"") .toDouble());
-    oPres->rec4 = (ui->txtporc_rec4->text().replace(moneda,"") .toDouble());
-    oPres->total1 = (ui->txttotal1->text().replace(moneda,"") .toDouble());
-    oPres->total2 = (ui->txttotal2->text().replace(moneda,"") .toDouble());
-    oPres->total3 = (ui->txttotal3->text().replace(moneda,"") .toDouble());
-    oPres->total4 = (ui->txttotal4->text().replace(moneda,"") .toDouble());
-    oPres->total_iva = ui->txttotal_iva->text().replace(moneda,"") .toDouble();
-    oPres->total_recargo = ui->txttotal_recargo->text().replace(moneda,"") .toDouble();
+    oPres->rec1 = (ui->txtporc_rec1->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->rec2 = (ui->txtporc_rec2->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->rec3 = (ui->txtporc_rec3->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->rec4 = (ui->txtporc_rec4->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->total1 = (ui->txttotal1->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->total2 = (ui->txttotal2->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->total3 = (ui->txttotal3->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->total4 = (ui->txttotal4->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
+    oPres->total_iva = ui->txttotal_iva->text().replace(".","").replace(moneda,"").replace(",",".").toDouble();
+    oPres->total_recargo = ui->txttotal_recargo_2->text().replace(".","").replace(moneda,"").replace(",",".").toDouble();
     oPres->email = (ui->txtemail->text());
+    oPres->subtotal = (ui->txtsubtotal->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
 }
 void FrmPresupuestosCli::VaciarCampos()
 {
@@ -587,49 +587,49 @@ void FrmPresupuestosCli::on_botBuscarCliente_clicked()
 void FrmPresupuestosCli::totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda)
 {
     this->moneda = moneda;
-    ui->txtbase->setText(QString::number(base)+moneda);
-    ui->txtdto->setText(QString::number(dto)+moneda);
-    ui->txtsubtotal->setText(QString::number(subtotal)+moneda);
-    ui->txtiva->setText(QString::number(iva)+moneda);
-    ui->txttotal_recargo->setText(QString::number(re)+moneda);
-    ui->txttotal->setText(QString::number(total)+moneda);
+    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2))+moneda);
+    ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',2))+moneda);
+    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',2))+moneda);
+    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2))+moneda);
+    ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2))+moneda);
+    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2))+moneda);
 
-    ui->txtbase_total->setText(QString::number(subtotal)+moneda);
-    ui->txttotal_iva->setText(QString::number(iva)+moneda);
-    ui->txttotal_recargo_2->setText(QString::number(re)+moneda);
-    ui->txttotal_2->setText(QString::number(total)+moneda);
+    ui->txttotal_base->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2))+moneda);
+    ui->txttotal_iva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2))+moneda);
+    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2))+moneda);
+    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2))+moneda);
 }
 
 void FrmPresupuestosCli::desglose1Changed(double base, double iva, double re, double total)
 {
-    ui->txtbase1->setText(QString::number(base));
-    ui->txtiva1->setText(QString::number(iva));
-    ui->txtporc_rec1->setText(QString::number(re));
-    ui->txttotal1->setText(QString::number(total));
+    ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
+    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
+    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
 void FrmPresupuestosCli::desglose2Changed(double base, double iva, double re, double total)
 {
-    ui->txtbase2->setText(QString::number(base));
-    ui->txtiva2->setText(QString::number(iva));
-    ui->txtporc_rec2->setText(QString::number(re));
-    ui->txttotal2->setText(QString::number(total));
+    ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
+    ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
+    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
 void FrmPresupuestosCli::desglose3Changed(double base, double iva, double re, double total)
 {
-    ui->txtbase3->setText(QString::number(base));
-    ui->txtiva3->setText(QString::number(iva));
-    ui->txtporc_rec3->setText(QString::number(re));
-    ui->txttotal3->setText(QString::number(total));
+    ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
+    ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
+    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
 void FrmPresupuestosCli::desglose4Changed(double base, double iva, double re, double total)
 {
-    ui->txtbase4->setText(QString::number(base));
-    ui->txtiva4->setText(QString::number(iva));
-    ui->txtporc_rec4->setText(QString::number(re));
-    ui->txttotal4->setText(QString::number(total));
+    ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
+    ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
+    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
 void FrmPresupuestosCli::on_btnDeshacer_clicked()

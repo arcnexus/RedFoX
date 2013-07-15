@@ -324,12 +324,14 @@ void FrmAlbaran::BloquearCampos(bool state)
     ui->btnBuscar->setEnabled(state);
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
+    ui->btndeshacer->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
     ui->botBuscarCliente->setEnabled(!state);
     ui->btnFacturar->setEnabled(!state);
     ui->txtalbaran->setReadOnly(true);
     ui->btnAnadirLinea->setEnabled(!state);
     ui->btn_borrarLinea->setEnabled(!state);
+    ui->btn_borrar->setEnabled(state);
 
     helper.blockTable(state);
 }

@@ -5,11 +5,14 @@ SpinBoxDelegate::SpinBoxDelegate(QObject *parent ,bool isDecimal, int min, int m
 {
     this->max = max;
     this->min = min;
+
     decimal = isDecimal;
 }
 
+
 QWidget *SpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+
     if(decimal)
     {
         QDoubleSpinBox * spin = new QDoubleSpinBox(parent);
@@ -18,6 +21,7 @@ QWidget *SpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewIt
             spin->setMaximum(max);
         else
             spin->setMaximum(999999999);
+        spin->setAlignment(Qt::AlignRight);
         return spin;
     }
     else
@@ -28,6 +32,7 @@ QWidget *SpinBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewIt
             spin->setMaximum(max);
         else
             spin->setMaximum(999999999);
+        spin->setAlignment(Qt::AlignRight);
         return spin;
     }
 }
