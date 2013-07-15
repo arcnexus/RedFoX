@@ -762,6 +762,7 @@ void FrmAlbaran::on_btndeshacer_clicked()
     QSqlDatabase::database("Maya").rollback();
     QSqlDatabase::database("empresa").rollback();
     LLenarCampos();
+    BloquearCampos(true);
 }
 
 void FrmAlbaran::on_tabWidget_2_currentChanged(int index)
