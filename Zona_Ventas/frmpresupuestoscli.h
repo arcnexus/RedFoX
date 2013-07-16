@@ -72,6 +72,8 @@ private slots:
 
     void on_btndeshacer_clicked();
 
+    void on_txtcodigo_cliente_editingFinished();
+
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;

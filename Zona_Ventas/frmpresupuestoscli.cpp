@@ -27,11 +27,13 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     // cargar datos FormaPago
     ui->cboFormaPago->setInsertPolicy(QComboBox::NoInsert);
     ui->cboFormaPago->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
-    QSqlTableModel* model = new QSqlTableModel(ui->cboFormaPago,QSqlDatabase::database("empresa"));
+    QSqlTableModel* model = new QSqlTableModel(ui->cboFormaPago,QSqlDatabase::database("maya"));
     model->setTable("formpago");
     model->select();
+
     ui->cboFormaPago->setModel(model);
     ui->cboFormaPago->setModelColumn(model->fieldIndex("forma_pago"));
+
 
     oPres = new Presupuesto();
     oClientePres = new Cliente();
@@ -168,20 +170,20 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->base4,'f',2)));
     ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->base,'f',2)+moneda));
 
-    //ui->txtporc_iva1->setText(QString::number(oPres->iva1));
-    //ui->txtporc_iva2->setText(QString::number(oPres->iva2));
-    //ui->txtporc_iva3->setText(QString::number(oPres->iva3));
-    //ui->txtporc_iva4->setText(QString::number(oPres->iva4));
+    ui->txtporc_iva1->setText(QString::number(oPres->iva1));
+    ui->txtporc_iva2->setText(QString::number(oPres->iva2));
+    ui->txtporc_iva3->setText(QString::number(oPres->iva3));
+    ui->txtporc_iva4->setText(QString::number(oPres->iva4));
     ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->iva1,'f',2)));
     ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->iva2,'f',2)));
     ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->iva3,'f',2)));
     ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->iva4,'f',2)));
     ui->txttotal_iva->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total_iva,'f',2)+moneda));
     ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total_iva,'f',2)+moneda));
-    //ui->txtporc_rec1->setText(QString::number(oPres->porc_rec1));
-    //ui->txtporc_rec2->setText(QString::number(oPres->porc_rec2));
-    //ui->txtporc_rec3->setText(QString::number(oPres->porc_rec3));
-    //ui->txtporc_rec4->setText(QString::number(oPres->porc_rec4));
+    ui->txtporc_rec1->setText(QString::number(oPres->porc_rec1));
+    ui->txtporc_rec2->setText(QString::number(oPres->porc_rec2));
+    ui->txtporc_rec3->setText(QString::number(oPres->porc_rec3));
+    ui->txtporc_rec4->setText(QString::number(oPres->porc_rec4));
     ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total_recargo,'f',2)));
     ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->total_recargo,'f',2)+moneda));
     ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->rec1,'f',2)));
@@ -213,6 +215,9 @@ void FrmPresupuestosCli::LLenarCamposCliente()
     ui->txtcp->setText(oClientePres->cp);
     ui->txtpoblacion->setText(oClientePres->poblacion);
     ui->txtprovincia->setText(oClientePres->provincia);
+    ui->txtatencion_de->setText(oClientePres->apellido1 + " "+ oClientePres->apellido2 + ", "+oClientePres->nombre);
+    ui->txtmovil->setText(oClientePres->movil);
+    ui->txtfax->setText(oClientePres->fax);
 
     QList<QString> keys = Configuracion_global->paises.uniqueKeys();
     for (int i = 0;i<keys.size();i++)
@@ -288,18 +293,18 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     oPres->base2 = (ui->txtbase2->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
     oPres->base3 = (ui->txtbase3->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
     oPres->base4 = (ui->txtbase4->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
-    //oPres->iva1 = (ui->txtporc_iva1->text().toDouble());
-    //oPres->iva2 = (ui->txtporc_iva2->text().toDouble());
-    //oPres->iva3 = (ui->txtporc_iva3->text().toDouble());
-    //oPres->iva4 = (ui->txtporc_iva4->text().toDouble());
+    oPres->iva1 = (ui->txtporc_iva1->text().toDouble());
+    oPres->iva2 = (ui->txtporc_iva2->text().toDouble());
+    oPres->iva3 = (ui->txtporc_iva3->text().toDouble());
+    oPres->iva4 = (ui->txtporc_iva4->text().toDouble());
     oPres->iva1 = (ui->txtiva1->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
     oPres->iva2 = (ui->txtiva2->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
     oPres->iva3 = (ui->txtiva3->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
     oPres->iva4 = (ui->txtiva4->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
-    //oPres->porc_rec1 = (ui->txtporc_rec1->text().toDouble());
-    //oPres->porc_rec2 = (ui->txtporc_rec2->text().toDouble());
-    //oPres->porc_rec3 = (ui->txtporc_rec3->text().toDouble());
-    //oPres->porc_rec4 = (ui->txtporc_rec4->text().toDouble());
+    oPres->porc_rec1 = (ui->txtporc_rec1->text().toDouble());
+    oPres->porc_rec2 = (ui->txtporc_rec2->text().toDouble());
+    oPres->porc_rec3 = (ui->txtporc_rec3->text().toDouble());
+    oPres->porc_rec4 = (ui->txtporc_rec4->text().toDouble());
     oPres->recargo_equivalencia = ui->chklporc_rec->isChecked();
     oPres->rec1 = (ui->txtporc_rec1->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
     oPres->rec2 = (ui->txtporc_rec2->text().replace(".","").replace(moneda,"").replace(",",".").toDouble());
@@ -328,7 +333,7 @@ void FrmPresupuestosCli::VaciarCampos()
     ui->txtcp->setText("");
     ui->txtpoblacion->setText("");
     ui->txtprovincia->setText("");
-    //ui->txtpais->setText("");
+    ui->combo_Pais->setCurrentIndex(-1);
     ui->txttelefono->setText("");
     ui->txtmovil->setText("");
     ui->txtfax->setText("");
@@ -351,18 +356,18 @@ void FrmPresupuestosCli::VaciarCampos()
     ui->txtbase2->setText("0,00");
     ui->txtbase3->setText("0,00");
     ui->txtbase4->setText("0,00");
-   // ui->txtporc_iva1->setText("0");
-   // ui->txtporc_iva2->setText("0");
-   // ui->txtporc_iva3->setText("0");
-   // ui->txtporc_iva4->setText("0");
+    ui->txtporc_iva1->setText("0");
+    ui->txtporc_iva2->setText("0");
+    ui->txtporc_iva3->setText("0");
+    ui->txtporc_iva4->setText("0");
     ui->txtiva1->setText("0,00");
     ui->txtiva2->setText("0,00");
     ui->txtiva3->setText("0,00");
     ui->txtiva4->setText("0,00");
-    //ui->txtporc_rec1->setText("0");
-    //ui->txtporc_rec2->setText("0");
-    //ui->txtporc_rec3->setText("0");
-    //ui->txtporc_rec4->setText("0");
+    ui->txtporc_rec1->setText("0");
+    ui->txtporc_rec2->setText("0");
+    ui->txtporc_rec3->setText("0");
+    ui->txtporc_rec4->setText("0");
     ui->txtporc_rec1->setText("0,00");
     ui->txtporc_rec2->setText("0,00");
     ui->txtporc_rec3->setText("0,00");
@@ -847,4 +852,13 @@ void FrmPresupuestosCli::on_btndeshacer_clicked()
     QSqlDatabase::database("empresa").rollback();
     BloquearCampos(true);
     LLenarCampos();
+}
+
+void FrmPresupuestosCli::on_txtcodigo_cliente_editingFinished()
+{
+    if(ui->txtcodigo_cliente->text() != oPres->codigo_cliente){
+        oClientePres->Recuperar("select * from clientes where codigo_cliente='"+ui->txtcodigo_cliente->text()+"'");
+        LLenarCamposCliente();
+        helper.set_tarifa(oClientePres->tarifa_cliente);
+    }
 }
