@@ -29,7 +29,7 @@ void EfectivoCaja::valueChanged(double)
 
 void EfectivoCaja::fillMonedas()
 {
-    QSqlQuery q(QSqlDatabase::database("empresa"));
+    QSqlQuery q(Configuracion_global->empresaDB);
     q.exec("SELECT * FROM moneda_caja");
     while(q.next())
     {

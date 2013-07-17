@@ -69,6 +69,11 @@ private slots:
     
     void on_btndeshacer_clicked();
 
+    void on_txtcodigo_cliente_editingFinished();
+
+    void on_anadirEntrega_clicked();
+
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;

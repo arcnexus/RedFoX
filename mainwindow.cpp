@@ -705,7 +705,7 @@ void MainWindow::updateDivisas()
     if(Configuracion_global->actualizar_divisas)
     {
         connect(Configuracion_global,SIGNAL(cambioReady(float,QString)),this,SLOT(actualizar_divisas(float,QString)));
-        QSqlQuery divisas(QSqlDatabase::database("Maya"));
+        QSqlQuery divisas(Configuracion_global->groupDB);
         if(divisas.exec("select * from monedas"))
         {
             while (divisas.next()) {
@@ -791,7 +791,7 @@ void MainWindow::showInfo()
 
 void MainWindow::actualizar_divisas(float valor_divisa, QString divisaDest)
 {
-    QSqlQuery valor(QSqlDatabase::database("Maya"));
+    QSqlQuery valor(Configuracion_global->groupDB);
     QString fecha_hoy = QDate::currentDate().toString("yyyy.MM.dd");
     valor.prepare("update monedas set cambio =:divisa,fecha_cambio =:fecha where nombre_corto =:id");
     valor.bindValue(":divisa",valor_divisa);

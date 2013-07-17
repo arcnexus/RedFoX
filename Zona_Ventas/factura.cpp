@@ -8,6 +8,24 @@ Factura::Factura(QObject *parent) :
     this->id =0;
 }
 
+bool Factura::set_impresa(bool state)
+{
+    QSqlQuery q_cab_fac(Configuracion_global->empresaDB);
+    q_cab_fac.prepare("update cab_fac set impreso = :state where id = :id");
+    q_cab_fac.bindValue(":state",state);
+    q_cab_fac.bindValue(":id",this->id);
+    if(!q_cab_fac.exec())
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Impresión de facturas"),
+                             tr("Ocurrió un error al guardar estado de impresión: %1").arg(q_cab_fac.lastError().text()),
+                             tr("Aceptar"));
+        return false;
+    } else
+    {
+        return true;
+    }
+}
+
 // Metodos utilidad Clase
 bool Factura::AnadirFactura()
 {
@@ -22,7 +40,7 @@ bool Factura::AnadirFactura()
     this->porc_rec4 = Configuracion_global->reList.at(3).toFloat();
 
     this->recargo_equivalencia = 0;
-    QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
+    QSqlQuery cab_fac(Configuracion_global->empresaDB);
      cab_fac.prepare("INSERT INTO cab_fac (codigo_cliente,factura,fecha,fecha_cobro,id_cliente,cliente,direccion1,direccion2,"
                    "cp,poblacion,provincia,id_pais,cif,recargo_equivalencia,subtotal,porc_dto,porc_dto_pp,dto,dto_pp,"
                    "base,iva,total,impreso,cobrado,contabilizado,id_forma_pago,forma_pago,comentario,"
@@ -58,9 +76,9 @@ bool Factura::AnadirFactura()
      cab_fac.bindValue(":base",0);
      cab_fac.bindValue(":iva",0);
      cab_fac.bindValue(":total",0);
-     cab_fac.bindValue(":impreso",0);
-     cab_fac.bindValue(":cobrado",0);
-     cab_fac.bindValue(":contabilizado",0);
+     cab_fac.bindValue(":impreso",false);
+     cab_fac.bindValue(":cobrado",false);
+     cab_fac.bindValue(":contabilizado",false);
      cab_fac.bindValue(":id_forma_pago",this->id_forma_pago);
      cab_fac.bindValue(":forma_pago",this->forma_pago);
      cab_fac.bindValue(":comentario",this->comentario);
@@ -114,7 +132,7 @@ bool Factura::AnadirFactura()
 bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
 {
     bool succes = true;
-    QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
+    QSqlQuery cab_fac(Configuracion_global->empresaDB);
     cab_fac.prepare( "UPDATE cab_fac set "
                      "codigo_cliente = :codigo_cliente,"
                      "factura = :factura,"
@@ -206,7 +224,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
     cab_fac.bindValue(":total",this->total);
     cab_fac.bindValue(":impreso",this->impreso);
     cab_fac.bindValue(":cobrado",this->cobrado);
-    cab_fac.bindValue(":contabilizado",this->lContablilizada);
+    cab_fac.bindValue(":contabilizado",this->contablilizada);
     cab_fac.bindValue(":id_forma_pago",this->id_forma_pago);
     cab_fac.bindValue(":forma_pago",this->forma_pago);
     cab_fac.bindValue(":comentario",this->comentario);
@@ -265,7 +283,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
             else
             {
                 // Busco ficha cliente
-                QSqlQuery Cliente(QSqlDatabase::database("empresa"));
+                QSqlQuery Cliente(Configuracion_global->empresaDB);
                 Cliente.prepare("Select * from clientes where codigo_cliente = :codigo_cliente");
                 Cliente.bindValue(":codigo_cliente",this->codigo_cliente);
                 if (Cliente.exec())
@@ -275,7 +293,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
 
                     // Genero deuda cliente
 
-                    QSqlQuery Deudacliente(QSqlDatabase::database("empresa"));
+                    QSqlQuery Deudacliente(Configuracion_global->empresaDB);
                     Deudacliente.prepare("Insert into clientes_deuda (id_cliente,fecha,vencimiento,documento,id_ticket,id_factura,tipo,"
                                          "importe,pagado,pendiente_cobro,entidad,oficina,dc,cuenta)"
                                          " values (:id_cliente,:fecha,:vencimiento,:documento,:id_tiquet,:id_factura,:tipo,"
@@ -333,7 +351,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
 }
 
 bool Factura::RecuperarFactura(QString cSQL){
-        QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
+        QSqlQuery cab_fac(Configuracion_global->empresaDB);
         cab_fac.prepare(cSQL);
         if( !cab_fac.exec() )
         {
@@ -359,7 +377,7 @@ bool Factura::RecuperarFactura(QString cSQL){
                 this->provincia = registro.field("provincia").value().toString();
                 this->id_pais = registro.field("id_pais").value().toInt();
                 this->cif =registro.field("cif").value().toString();
-                this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toInt();
+                this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toBool();
                 this->subtotal = registro.field("subtotal").value().toDouble();
                 this->porc_dto = registro.field("porc_dto").value().toFloat();
                 this->porc_dto_pp = registro.field("porc_dto_pp").value().toFloat();
@@ -369,9 +387,9 @@ bool Factura::RecuperarFactura(QString cSQL){
                 this->iva = registro.field("iva").value().toInt();
                 this->iva = registro.field("iva").value().toDouble();
                 this->total = registro.field("total").value().toDouble();
-                this->impreso = registro.field("impreso").value().toInt();
-                this->cobrado = registro.field("cobrado").value().toInt();
-                this->lContablilizada = registro.field("contabilizado").value().toInt();
+                this->impreso = registro.field("impreso").value().toBool();
+                this->cobrado = registro.field("cobrado").value().toBool();
+                this->contablilizada = registro.field("contabilizado").value().toBool();
                 this->id_forma_pago = registro.field("id_forma_pago").value().toInt();
                 this->forma_pago = registro.field("forma_pago").value().toString();
                 this->comentario = registro.field("comentario").value().toString();
@@ -409,6 +427,7 @@ bool Factura::RecuperarFactura(QString cSQL){
                 this->pedido_cliente = registro.field("pedido_cliente").value().toInt();
                 this->porc_irpf = registro.field("porc_irpf").value().toInt();
                 this->irpf = registro.field("irpf").value().toDouble();
+                this->apunte = registro.field("asiento").value().toInt();
                 return true;
                }
             else
@@ -419,7 +438,7 @@ bool Factura::RecuperarFactura(QString cSQL){
 }
 
 QString Factura::NuevoNumeroFactura() {
-    QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
+    QSqlQuery cab_fac(Configuracion_global->empresaDB);
     QString cNum,serie;
     QString cNumFac;
     int inum;
@@ -445,7 +464,7 @@ QString Factura::NuevoNumeroFactura() {
 
 bool Factura::BorrarLineasFactura(int id_lin)
 {
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(Configuracion_global->empresaDB);
         QString sql = QString("DELETE FROM lin_fac WHERE id_Cab = %1").arg(id_lin);
         query.prepare(sql);
         if(query.exec())
@@ -461,7 +480,7 @@ bool Factura::CobrarFactura()
 {
     // marcar factura como cobrada
     this->cobrado = true;
-    QSqlQuery Cliente(QSqlDatabase::database("Maya"));
+    QSqlQuery Cliente(Configuracion_global->groupDB);
 
     // Añadimos acumulados ficha cliente.
     Cliente.prepare("Update clientes set fecha_ultima_compra = :fecha_ultima_compra, "
@@ -479,7 +498,7 @@ bool Factura::CobrarFactura()
                              tr("OK"));
         return false;
     }
-    QSqlQuery cab_fac(QSqlDatabase::database("empresa"));
+    QSqlQuery cab_fac(Configuracion_global->empresaDB);
     cab_fac.prepare("update cab_fac set cobrado = 1 where id =:id_cab");
     cab_fac.bindValue(":id_cab",this->id);
     if(!cab_fac.exec())
@@ -492,7 +511,7 @@ bool Factura::CobrarFactura()
 
 bool Factura::GuardarApunte(int nasiento, int nid)
 {
-    QSqlQuery factura(QSqlDatabase::database("empresa"));
+    QSqlQuery factura(Configuracion_global->empresaDB);
 
     factura.prepare("Update cab_fac set asiento =:asiento, contabilizado = 1 where id =:id ");
     factura.bindValue(":asiento",nasiento);

@@ -8,7 +8,7 @@ Empresa::Empresa(QObject *parent) :
 
 void Empresa::Anadir(QString id)
 {
-    qEmpresa = QSqlQuery(QSqlDatabase::database("Maya"));
+    qEmpresa = QSqlQuery(Configuracion_global->groupDB);
     qEmpresa.prepare("insert into empresas (id) values (:id)");
     qEmpresa.bindValue(":id",id);
     if (!qEmpresa.exec())
@@ -20,7 +20,7 @@ void Empresa::Anadir(QString id)
 
 void Empresa::Recuperar(QString cSQL)
 {
-    qEmpresa = QSqlQuery(QSqlDatabase::database("Maya"));
+    qEmpresa = QSqlQuery(Configuracion_global->groupDB);
     if (!qEmpresa.exec(cSQL))
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de Empresas"),QObject::tr("No se puede recuperar la ficha de empresa"),
                              qEmpresa.lastError().text());
@@ -126,7 +126,7 @@ void Empresa::Recuperar(QString cSQL)
 
 void Empresa::Recuperar(QString cSQL, int nProcede)
 {
-    qEmpresa = QSqlQuery(QSqlDatabase::database("Maya"));
+    qEmpresa = QSqlQuery(Configuracion_global->groupDB);
     if (!qEmpresa.exec(cSQL))
         TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),
                                                   QObject::tr("No se puede recuperar la ficha de empresa\n")+
@@ -229,7 +229,7 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
 
 void Empresa::Guardar()
 {
-    qEmpresa = QSqlQuery(QSqlDatabase::database("Maya"));
+    qEmpresa = QSqlQuery(Configuracion_global->groupDB);
     qEmpresa.prepare("update empresas set "
                      "id_divisa =:id_divisa,"
                      "codigo =:codigo,"
@@ -456,7 +456,7 @@ void Empresa::Vaciar()
 
 bool Empresa::Borrar(int nid)
 {
-    qEmpresa = QSqlQuery(QSqlDatabase::database("Maya"));
+    qEmpresa = QSqlQuery(Configuracion_global->groupDB);
     //    frmDecision *Decision = new frmDecision();
     //    Decision->Inicializar(QObject::tr("Borrar Empresa"),QObject::tr("¿Desea realmente Borrar esta ficha de empresa"),QObject::tr("Esta opción no se puede deshacer"),
     //                          QObject::tr("Se borrarán todos los datos de la empresa"),QObject::tr("Borrar"),QObject::tr("Cancelar"));

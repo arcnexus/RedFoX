@@ -32,7 +32,7 @@ Q_IMPORT_PLUGIN(qsqlite)
 #endif
 bool cargarEmpresa(QString empresa)
 {
-    QSqlQuery QryEmpresa(QSqlDatabase::database("Maya"));
+    QSqlQuery QryEmpresa(Configuracion_global->groupDB);
     QryEmpresa.prepare("Select * from empresas where nombre = :nombre");
     QryEmpresa.bindValue(":nombre",empresa.trimmed());
     if (QryEmpresa.exec())
@@ -244,9 +244,12 @@ int main(int argc, char *argv[])
 #else
            QRect dr= QApplication::desktop()->rect();
            int ancho = dr.width();
+           int alto = dr.height();
            w.setMaximumWidth(ancho);
+           w.setMaximumHeight(alto-60);
            w.setWindowState(Qt::WindowMaximized);
            w.setFixedWidth(ancho);
+           w.setFixedHeight(alto-60);
            w.showMaximized();
 #endif
            return a.exec();

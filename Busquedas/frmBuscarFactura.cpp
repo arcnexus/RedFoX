@@ -32,13 +32,14 @@ void FrmBuscarFactura::on_pushButton_clicked()
     cImporteMaximo = ui->ImporteMaximo->text();
     cImporteMaximo.replace(".","");
     QString  cSQL;
-    cSQL ="Select id,factura,cliente,fecha,fecha_cobro,subtotal,importe_descuento,importe_descuento_pp,"
+    cSQL ="Select id,factura,cliente,fecha,fecha_cobro,subtotal,dto,dto_pp,"
           "base,iva,total from cab_fac where cliente like '%"+ui->txtBuscar->text().trimmed()+"%' and "
-          "fecha >= '"+cFecha1+"' and fecha <= '"+cFecha2+"' and total >= "+QString::number(ui->Importeminimo->text().toDouble(),'f',2)+
+          "fecha >= '"+cFecha1+"' and fecha <= '"+cFecha2+"' and total >= "+
+            QString::number(ui->Importeminimo->text().replace(",",".").toDouble(),'f',2)+
           " and total <="+QString::number(cImporteMaximo.toDouble(),'f',2)+" order by factura";
 
     ModelFacturas = new QSqlQueryModel();
-    ModelFacturas->setQuery(cSQL,QSqlDatabase::database("empresa"));
+    ModelFacturas->setQuery(cSQL,Configuracion_global->empresaDB);
     ui->Grid->setModel(ModelFacturas);
     ui->Grid->setGridStyle(Qt::DotLine);
 

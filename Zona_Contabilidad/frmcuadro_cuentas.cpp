@@ -103,7 +103,7 @@ void frmCuadro_cuentas::on_btnguardar_clicked()
 void frmCuadro_cuentas::llenar_tabla()
 {
     QSqlQueryModel *model_cuentas = new QSqlQueryModel(this);
-    model_cuentas->setQuery("select id, codigo_cta, descripcion, saldo from plan_general",QSqlDatabase::database("dbconta"));
+    model_cuentas->setQuery("select id, codigo_cta, descripcion, saldo from plan_general",Configuracion_global->contaDB);
     ui->tabla_cuentas->setModel(model_cuentas);
     ui->tabla_cuentas->setColumnHidden(0,true);
     ui->tabla_cuentas->setColumnWidth(1,100);

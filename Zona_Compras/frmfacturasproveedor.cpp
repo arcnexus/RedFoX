@@ -55,12 +55,12 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     //-----------------------------
     ui->btn_cerrar->setVisible(showCerrar);
     QSqlQueryModel *modeltipogasto = new QSqlQueryModel(this);
-    modeltipogasto->setQuery("select descripcion from grupos_gasto",QSqlDatabase::database("Maya"));
+    modeltipogasto->setQuery("select descripcion from grupos_gasto",Configuracion_global->groupDB);
     ui->cbo_grupo_gasto->setModel(modeltipogasto);
     ui->cbo_grupo_gasto->setCurrentIndex(-1);
     QSqlQueryModel *modelfp = new QSqlQueryModel(this);
 
-    modelfp->setQuery("select forma_pago from formpago",QSqlDatabase::database("Maya"));
+    modelfp->setQuery("select forma_pago from formpago",Configuracion_global->groupDB);
     ui->cboforma_pago->setModel(modelfp);
     ui->cboforma_pago->setCurrentIndex(-1);
 
@@ -85,12 +85,12 @@ void FrmFacturasProveedor::lineaReady(lineaDetalle * ld)
     bool ok_empresa,ok_Maya;
     ok_empresa = true;
     ok_Maya = true;
-    QSqlDatabase::database("empresa").transaction();
-    QSqlDatabase::database("Maya").transaction();
+    Configuracion_global->empresaDB.transaction();
+    Configuracion_global->groupDB.transaction();
     if (ld->idLinea == -1)
     {
         //qDebug()<< ld->idLinea;
-        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        QSqlQuery queryArticulos(Configuracion_global->groupDB);
         queryArticulos.prepare("select id from articulos where codigo =:codigo");
         queryArticulos.bindValue(":codigo",ld->codigo);
         if(queryArticulos.exec())
@@ -98,7 +98,7 @@ void FrmFacturasProveedor::lineaReady(lineaDetalle * ld)
         else
             ok_Maya = false;
 
-        QSqlQuery query_lin_fac_pro(QSqlDatabase::database("empresa"));
+        QSqlQuery query_lin_fac_pro(Configuracion_global->empresaDB);
         query_lin_fac_pro.prepare("INSERT INTO lin_fac_pro (id_cab,id_articulo,codigo,"
                                   "descripcion, cantidad, precio,subtotal,porc_dto,dto,porc_iva,"
                                   "iva,total) VALUES (:id_cab,:id_articulo,:codigo,"
@@ -132,12 +132,12 @@ void FrmFacturasProveedor::lineaReady(lineaDetalle * ld)
         queryArticulos.bindValue(":cantidad2",ld->cantidad);
         queryArticulos.bindValue(":codigo",ld->codigo);
         if(queryArticulos.exec() && ok_empresa){
-            QSqlDatabase::database("empresa").commit();
-            QSqlDatabase::database("Maya").commit();
+            Configuracion_global->empresaDB.commit();
+            Configuracion_global->groupDB.commit();
         } else
         {
-            QSqlDatabase::database("empresa").rollback();
-            QSqlDatabase::database("Maya").rollback();
+            Configuracion_global->empresaDB.rollback();
+            Configuracion_global->groupDB.rollback();
         }
 
         ld->idLinea = query_lin_fac_pro.lastInsertId().toInt();
@@ -147,7 +147,7 @@ void FrmFacturasProveedor::lineaReady(lineaDetalle * ld)
         // --------------------------
         // Descuento unidades pedidas
         //---------------------------
-        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        QSqlQuery queryArticulos(Configuracion_global->groupDB);
         queryArticulos.prepare("update articulos set "
                                "stock_real = stock_real - :cantidad where codigo=:codigo");
         queryArticulos.bindValue(":cantidad",ld->cantidad_old);
@@ -166,7 +166,7 @@ void FrmFacturasProveedor::lineaReady(lineaDetalle * ld)
             queryArticulos.next();
         else
             ok_Maya = false;
-        QSqlQuery query_lin_fac_pro(QSqlDatabase::database("empresa"));
+        QSqlQuery query_lin_fac_pro(Configuracion_global->empresaDB);
         query_lin_fac_pro.prepare("UPDATE lin_fac_pro SET "
                                   "id_articulo =:id_articulo,"
                                   "codigo =:codigo,"
@@ -209,12 +209,12 @@ void FrmFacturasProveedor::lineaReady(lineaDetalle * ld)
         queryArticulos.bindValue(":cantidad_recibir",ld->cantidad);
         queryArticulos.bindValue(":codigo",ld->codigo);
         if(queryArticulos.exec() && ok_empresa && ok_Maya){
-            QSqlDatabase::database("empresa").commit();
-            QSqlDatabase::database("Maya").commit();
+            Configuracion_global->empresaDB.commit();
+            Configuracion_global->groupDB.commit();
         } else
         {
-            QSqlDatabase::database("empresa").rollback();
-            QSqlDatabase::database("Maya").rollback();
+            Configuracion_global->empresaDB.rollback();
+            Configuracion_global->groupDB.rollback();
         }
     }
     ld->cantidad_old = ld->cantidad;

@@ -10,7 +10,7 @@ Proveedor::Proveedor(QObject *parent) :
 
 void Proveedor::cargaracumulados(int id_proveedor)
 {
-    QSqlQuery query_acumulados(QSqlDatabase::database("empresa"));
+    QSqlQuery query_acumulados(Configuracion_global->empresaDB);
     if(query_acumulados.exec("select * from acum_proveedores where id_proveedor = "+QString::number(id_proveedor)))
     {
         query_acumulados.next();
@@ -41,7 +41,7 @@ void Proveedor::anadir_persona_contacto(int id, QString Nombre, QString desc_tel
                                         QString desc_movil1, QString Movil1, QString desc_movil2, QString Movil2,QString cargo,
                                         QString email)
     {
-        QSqlQuery qContactos(QSqlDatabase::database("Maya"));
+        QSqlQuery qContactos(Configuracion_global->groupDB);
         qContactos.prepare("INSERT INTO personascontactoproveedor "
                            "(nombre,"
                            "telefono1,"
@@ -98,7 +98,7 @@ void Proveedor::guardar_persona_contacto(int id, QString Nombre, QString desc_te
                                          QString Telefono3, QString desc_movil1, QString Movil1, QString desc_movil2,
                                          QString Movil2, QString cargo, QString email)
 {
-    QSqlQuery qContactos(QSqlDatabase::database("Maya"));
+    QSqlQuery qContactos(Configuracion_global->groupDB);
     qContactos.prepare("UPDATE personascontactoproveedor SET "
     "nombre =:nombre,"
     "telefono1 =:telefono1,"
@@ -138,8 +138,8 @@ void Proveedor::guardar_persona_contacto(int id, QString Nombre, QString desc_te
 
 void Proveedor::Anadir()
 {
-    QScopedPointer<QSqlQuery>QProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
-    //QSqlQuery *QProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
+    QScopedPointer<QSqlQuery>QProveedor(new QSqlQuery(Configuracion_global->groupDB));
+    //QSqlQuery *QProveedor = new QSqlQuery(Configuracion_global->groupDB);
     if (!QProveedor->exec("insert into proveedores (codigo) values('')"))
             QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de proveedores"),
                                  QObject::tr("No se ha podido crear una nueva ficha de proveedor. Error: ")+
@@ -154,8 +154,8 @@ void Proveedor::Anadir()
 
 void Proveedor::Recuperar(QString cSQL)
 {
-    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
-   // QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
+    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(Configuracion_global->groupDB));
+   // QSqlQuery *qProveedor = new QSqlQuery(Configuracion_global->groupDB);
     if(qProveedor->exec(cSQL)) {
         if(qProveedor->next()) {
             QSqlRecord rProveedor = qProveedor->record();
@@ -223,8 +223,8 @@ void Proveedor::Recuperar(QString cSQL)
 
 void Proveedor::Recuperar(QString cSQL, int nProcede)
 {
-    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
-    //QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
+    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(Configuracion_global->groupDB));
+    //QSqlQuery *qProveedor = new QSqlQuery(Configuracion_global->groupDB);
     if(qProveedor->exec(cSQL)) {
         if(qProveedor->next()) {
             QSqlRecord rProveedor = qProveedor->record();
@@ -306,8 +306,8 @@ void Proveedor::Recuperar(QString cSQL, int nProcede)
 
 void Proveedor::Guardar()
 {
-   // QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
-    QSqlQuery queryProveedor(QSqlDatabase::database("Maya"));
+   // QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(Configuracion_global->groupDB));
+    QSqlQuery queryProveedor(Configuracion_global->groupDB);
 
     queryProveedor.prepare("UPDATE proveedores SET "
                         " codigo =:codigo,"
@@ -471,8 +471,8 @@ void Proveedor::Vaciar()
 
 void Proveedor::Borrar(int nid)
 {
-    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(QSqlDatabase::database("Maya")));
-    //QSqlQuery *qProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
+    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(Configuracion_global->groupDB));
+    //QSqlQuery *qProveedor = new QSqlQuery(Configuracion_global->groupDB);
     qProveedor->prepare("delete from proveedores where id = "+QString::number(nid));
     if(qProveedor->exec())
         QMessageBox::information(qApp->activeWindow(),tr("Gestión de Proveedores"),
@@ -542,8 +542,8 @@ QString Proveedor::Nuevocodigo_proveedor()
     QString codigo;
     QString cNum;
     int nCodigo;
-    QScopedPointer<QSqlQuery>qProveedores(new QSqlQuery(QSqlDatabase::database("Maya")));
-    //QSqlQuery *qProveedores = new QSqlQuery(QSqlDatabase::database("Maya"));
+    QScopedPointer<QSqlQuery>qProveedores(new QSqlQuery(Configuracion_global->groupDB));
+    //QSqlQuery *qProveedores = new QSqlQuery(Configuracion_global->groupDB);
     if(qProveedores->exec("select codigo from proveedores  order by codigo desc limit 1")) {
         if (qProveedores->next()) {
             QSqlRecord registro = qProveedores->record();

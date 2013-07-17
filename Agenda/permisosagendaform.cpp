@@ -4,7 +4,7 @@
 PermisosAgendaForm::PermisosAgendaForm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PermisosAgendaForm),
-    model(this,QSqlDatabase::database("Maya"))
+    model(this,Configuracion_global->groupDB)
 {
     model.setTable("permisos_agenda");
     model.setRelation(model.fieldIndex("id_Usuario_agenda"),QSqlRelation("usuarios","id","nombre"));
@@ -42,7 +42,7 @@ void PermisosAgendaForm::on_btn_add_clicked()
         int id_editor = Configuracion_global->usuarios_model->record(ui->combo_from->currentIndex()).value(0).toInt();
         int id_agenda = Configuracion_global->usuarios_model->record(ui->combo_to->currentIndex()).value(0).toInt();
 
-        QSqlQuery q(QSqlDatabase::database("Maya"));
+        QSqlQuery q(Configuracion_global->groupDB);
         q.prepare("INSERT INTO permisos_agenda (id_Usuario_editor ,id_Usuario_agenda)"
                   "VALUES ( :editor, :agenda)");
         q.bindValue(":editor",id_editor);

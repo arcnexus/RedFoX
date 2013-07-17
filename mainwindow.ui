@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="maya.qrc">
-    <normaloff>:/Icons/PNG/maya_logo2.png</normaloff>:/Icons/PNG/maya_logo2.png</iconset>
+    <normaloff>:/Icons/PNG/maya_logo.png</normaloff>:/Icons/PNG/maya_logo.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">
@@ -575,7 +575,7 @@ background-color: rgb(133, 170, 142);</string>
        <property name="maximumSize">
         <size>
          <width>135</width>
-         <height>16777215</height>
+         <height>620</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -588,7 +588,16 @@ background-color: rgb(133, 170, 142);</string>
         <enum>QFrame::Raised</enum>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
-        <property name="margin">
+        <property name="leftMargin">
+         <number>1</number>
+        </property>
+        <property name="topMargin">
+         <number>1</number>
+        </property>
+        <property name="rightMargin">
+         <number>1</number>
+        </property>
+        <property name="bottomMargin">
          <number>1</number>
         </property>
         <item>

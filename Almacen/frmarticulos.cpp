@@ -31,7 +31,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("tipo"));
     // Cargar empresas
     QSqlQueryModel *modelEmpresa = new QSqlQueryModel(this);
-    modelEmpresa->setQuery("select * from vistaEmpresa",QSqlDatabase::database("Maya"));
+    modelEmpresa->setQuery("select * from vistaEmpresa",Configuracion_global->groupDB);
     ui->cboEmpresa2->setModel(modelEmpresa);
     ui->lblCodigo->setVisible(false);
     ui->lblDescripcion->setVisible(false);
@@ -50,7 +50,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     // --------------------
     // TARIFAS
     //---------------------
-    tarifa_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("Maya"));
+    tarifa_model = new QSqlRelationalTableModel(this,Configuracion_global->groupDB);
     tarifa_model->setTable("viewtarifa");
     tarifa_model->setFilter("id_articulo = "+QString::number(oArticulo->id));
     tarifa_model->select();
@@ -106,7 +106,7 @@ FrmArticulos::~FrmArticulos()
 
 void FrmArticulos::on_botAnadir_clicked()
 {
-    QSqlQuery querySecciones(QSqlDatabase::database("Maya"));
+    QSqlQuery querySecciones(Configuracion_global->groupDB);
     querySecciones.prepare("select id from secciones order by id desc limit 1 ");
     if (querySecciones.exec()){
         querySecciones.next();
@@ -498,7 +498,7 @@ void FrmArticulos::rellenar_grafica_proveedores()
     // GRAFICA SEGÚN pvd_real
     //----------------------
     QSqlQuery queryProveed("select proveedor,pvd_real from proveedores_frecuentes where id_art = "+
-                           QString::number(oArticulo->id),QSqlDatabase::database("Maya"));
+                           QString::number(oArticulo->id),Configuracion_global->groupDB);
     if(queryProveed.exec()){
 
         while (queryProveed.next()) {
@@ -540,7 +540,7 @@ void FrmArticulos::on_botDeshacer_clicked()
 {
     if(this->anadir)
     {
-        QSqlQuery qArt(QSqlDatabase::database("Maya"));
+        QSqlQuery qArt(Configuracion_global->groupDB);
         qArt.prepare("delete from articulos where id = :nid");
         qArt.bindValue("nid",oArticulo->id);
         if(qArt.exec());
@@ -581,7 +581,7 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
     if(form.exec() == QDialog::Accepted)
     {
         ui->txtseccion->setText(form.selected_value);
-        QSqlQuery qSeccion(QSqlDatabase::database("Maya"));
+        QSqlQuery qSeccion(Configuracion_global->groupDB);
         qSeccion.prepare("select id from secciones where seccion = :seccion");
         qSeccion.bindValue(":seccion",form.selected_value);
         if(qSeccion.exec())
@@ -629,7 +629,7 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
     form.set_columnHide(0);
 
     form.set_selection("familia");
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     query.prepare(QString("SELECT id FROM secciones WHERE familia = '%1' ").arg(ui->txtfamilia->text()));
     if (query.exec())
         if(query.next())
@@ -658,7 +658,7 @@ void FrmArticulos::on_botBuscarSubfamilia_clicked()
     form.set_columnHide(0);
 
     form.set_selection("subfamilia");
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     query.prepare(QString("SELECT id FROM familias WHERE familia = '%1'").arg(ui->txtfamilia->text()));
     if (query.exec())
         if(query.next())
@@ -687,7 +687,7 @@ void FrmArticulos::on_botBuscarSubSubFamilia_clicked()
     form.set_columnHide(0);
 
     form.set_selection("cSubsubfamilia");
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     query.prepare(QString("SELECT id FROM subfamilias WHERE familia = '%1'").arg(ui->txtfamilia->text()));
     if (query.exec())
         if(query.next())
@@ -704,7 +704,7 @@ void FrmArticulos::on_btnBuscarProveedor_clicked()
     FrmBuscarProveedor buscar(this);
     if(buscar.exec()==QDialog::Accepted)
     {
-        QSqlQuery qProv(QSqlDatabase::database("Maya"));
+        QSqlQuery qProv(Configuracion_global->groupDB);
         qProv.prepare("Select * from proveedores where id =:nid");
         qProv.bindValue(":nid",buscar.nidProv);
         if(qProv.exec()){
@@ -723,7 +723,7 @@ void FrmArticulos::on_btnAnadirTarifa_clicked()
     addTarifa.capturar_coste(ui->txtCoste_real->text().replace(",",".").toFloat());
     if(addTarifa.exec() ==QDialog::Accepted)
     {
-        QSqlQuery qTarifa(QSqlDatabase::database("Maya"));
+        QSqlQuery qTarifa(Configuracion_global->groupDB);
         qTarifa.prepare("INSERT INTO tarifas (id_articulo, id_pais,"
                         "id_monedas, margen, margen_minimo, pvp, id_codigo_tarifa) "
                         "VALUES (:id, :id_pais,:id_monedas,:margen,:margen_minimo,:pvp,:id_codigo_tarifa);");
@@ -755,7 +755,7 @@ void FrmArticulos::btnEditarTarifa_clicked()
     FrmTarifas *editTarifa = new FrmTarifas(this);
     editTarifa->capturar_datos(pKey.toInt(),ui->txtCoste_real->text());
     if(editTarifa->exec() ==QDialog::Accepted) {
-        QSqlQuery queryTarifas(QSqlDatabase::database("Maya"));
+        QSqlQuery queryTarifas(Configuracion_global->groupDB);
         queryTarifas.prepare(
         "UPDATE tarifas SET "
         "margen = :margen,"
@@ -785,7 +785,7 @@ void FrmArticulos::btnBorrarTarifa_clicked()
                              tr("¿Desea realmente borrar esta tarifa para este artículo?"),
                              tr("No"),
                              tr("Borrar"))==QMessageBox::Accepted){
-        QSqlQuery queryTarifa(QSqlDatabase::database("Maya"));
+        QSqlQuery queryTarifa(Configuracion_global->groupDB);
         if(!queryTarifa.exec("delete from tarifas where id ="+QString::number(pKey.toInt())))
             QMessageBox::warning(this,tr("Borrar"),
                                  tr("Ocurrió un error al borrar: %1").arg(queryTarifa.lastError().text()));
@@ -814,7 +814,7 @@ void FrmArticulos::anadir_proveedor_clicked()
     modelProv = new QSqlQueryModel(this);
     modelProv->setQuery("Select id,codpro,proveedor,codigo,pvd,pvd_real,moneda,descoferta from proveedores_frecuentes where id_art = "+
                         QString::number(oArticulo->id),
-                        QSqlDatabase::database("Maya"));
+                        Configuracion_global->groupDB);
 
     ui->tablaProveedores->setModel(modelProv);
     ui->tablaProveedores->setColumnHidden(0,true);
@@ -858,7 +858,7 @@ void FrmArticulos::borrar_proveedor_clicked()
     mensaje.setIcon(QMessageBox::Question);
 
     if(mensaje.exec()==QMessageBox::Yes) {
-        QSqlQuery queryProv(QSqlDatabase::database("Maya"));
+        QSqlQuery queryProv(Configuracion_global->groupDB);
         queryProv.prepare("delete from articulos_prov_frec where id =:id");
         queryProv.bindValue(":id",pKey.toString());
         if(!queryProv.exec())
@@ -927,7 +927,7 @@ void FrmArticulos::trazabilidad2(int id)
     modelTrazabilidad2 = new QSqlQueryModel(this);
     modelTrazabilidad2->setQuery("select codigocuentacliente,cliente, documento_venta,numero_ticket,unidades_vendidas,"
                                  "fecha_venta from trazabilidad2 where id_trazabilidad1 ="+QString::number(id),
-                                 QSqlDatabase::database("Maya"));
+                                 Configuracion_global->groupDB);
     ui->tablaVentas->setModel(modelTrazabilidad2);
     modelTrazabilidad2->setHeaderData(0,Qt::Horizontal,tr("C.CLIENTE"));
     modelTrazabilidad2->setHeaderData(1,Qt::Horizontal,tr("CLIENTE"));
@@ -1283,7 +1283,7 @@ void FrmArticulos::MostrarGrafica_comparativa(bool grafica_unidades)
 
 void FrmArticulos::LLenarGraficas()
 {
-    QSqlQuery queryAcumulados(QSqlDatabase::database("empresa"));
+    QSqlQuery queryAcumulados(Configuracion_global->empresaDB);
     if(!queryAcumulados.exec("select * from acum_articulos where id_articulo=" +QString::number(oArticulo->id))){
         QMessageBox::warning(this,tr("Acumulados ejercicio"),
                              tr("Ocurrió un error al recuperar ficha de acumulados: %1").arg(queryAcumulados.lastError().text()),
@@ -1400,12 +1400,12 @@ void FrmArticulos::LLenarGraficas()
 void FrmArticulos::LLenarGrafica_comparativa(int index)
 {
     // Conecto a la BD de la otra empresa
-    QSqlQuery queryEmpresa_2(QSqlDatabase::database("Maya"));
+    QSqlQuery queryEmpresa_2(Configuracion_global->groupDB);
     queryEmpresa_2.prepare("Select * from vistaEmpresa where empresa =:empresa");
     queryEmpresa_2.bindValue(":empresa",ui->cboEmpresa2->currentText().trimmed());
     if (queryEmpresa_2.exec()){
         if(queryEmpresa_2.next()){
-            QSqlQuery queryEmpresa(QSqlDatabase::database("Maya"));
+            QSqlQuery queryEmpresa(Configuracion_global->groupDB);
             queryEmpresa.exec("select * from empresas where id="+ queryEmpresa_2.record().value("id").toString());
             queryEmpresa.next();
             QString cDriver;
@@ -1487,7 +1487,7 @@ void FrmArticulos::LlenarTablas()
     QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
     modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margen_minimo, pvp,simbolo "
                          "from viewtarifa where id_articulo = "+QString::number(oArticulo->id),
-                         QSqlDatabase::database("Maya"));
+                         Configuracion_global->groupDB);
     if (modelTarifa->lastError().isValid())
         return;
     ui->TablaTarifas->setModel(modelTarifa);
@@ -1529,7 +1529,7 @@ void FrmArticulos::LlenarTablas()
 
     modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,desc_oferta,id_prov from proveedores_frecuentes "
     "where id_art = "+QString::number(oArticulo->id),
-                        QSqlDatabase::database("Maya"));
+                        Configuracion_global->groupDB);
 
     if (modelProv->lastError().isValid())
         return;
@@ -1575,7 +1575,7 @@ void FrmArticulos::LlenarTablas()
     // ------------------
     modelTrazabilidad1 = new QSqlQueryModel(this);
     modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_articulo = "+QString::number(oArticulo->id),
-                                  QSqlDatabase::database("Maya"));
+                                  Configuracion_global->groupDB);
     if (modelTrazabilidad1->lastError().isValid())
         return;
     ui->tablaLotes->setModel(modelTrazabilidad1);
@@ -1873,7 +1873,7 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
             ba = f.readAll();
             f.close();
         }
-        QSqlQuery *Articulo = new QSqlQuery(QSqlDatabase::database("Maya"));
+        QSqlQuery *Articulo = new QSqlQuery(Configuracion_global->groupDB);
         Articulo->prepare("update articulos set "+campo+" =:imagen where id = :nid");
         Articulo->bindValue(":imagen",ba);
         Articulo->bindValue(":nid",oArticulo->id);

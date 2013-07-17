@@ -80,6 +80,7 @@
 
 #include "../configuracion.h"
 #include "timedmessagebox.h"
+#include "frmdialogoimprimir.h"
 extern Configuracion * Configuracion_global;
 extern bool medic;
 extern bool internacional;

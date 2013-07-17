@@ -74,6 +74,8 @@ private slots:
 
     void on_txtcodigo_cliente_editingFinished();
 
+    void on_btnImprimir_clicked();
+
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;

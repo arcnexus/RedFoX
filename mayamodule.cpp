@@ -15,7 +15,7 @@ MayaModule::~MayaModule()
 
 bool MayaModule::userHaveAcces(int id_user)
 {
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     q.prepare("SELECT * FROM accesousuarios where id_modulo = :id and id_user=:id_user");
     q.bindValue(":id",_id_modulo);
     q.bindValue(":id_user",id_user);
@@ -31,7 +31,7 @@ bool MayaModule::userHaveAcces(int id_user)
 
 void MayaModule::tryRegisterModule(module_zone zone, QString name)
 {
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     q.prepare("SELECT * FROM modulos where module_name = :name");
     q.bindValue(":name",name);
     if(q.exec())
@@ -45,8 +45,8 @@ void MayaModule::tryRegisterModule(module_zone zone, QString name)
 
 void MayaModule::RegisterModule(module_zone zone , QString name)
 {
-    QSqlQuery q(QSqlDatabase::database("Maya"));
-    QSqlQuery q2(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
+    QSqlQuery q2(Configuracion_global->groupDB);
 
     q.prepare("INSERT INTO modulos (module_zone, module_name) VALUES (:zone, :name);");
     q.bindValue(":zone",zone);

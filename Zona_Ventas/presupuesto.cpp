@@ -24,7 +24,7 @@ bool Presupuesto::AnadirPresupuesto()
     this->porc_rec3 = Configuracion_global->reList.at(2).toDouble();
     this->porc_rec4 = Configuracion_global->reList.at(3).toDouble();
 
-    QSqlQuery cab_pre(QSqlDatabase::database("empresa"));
+    QSqlQuery cab_pre(Configuracion_global->empresaDB);
     cab_pre.prepare("INSERT INTO cab_pre (presupuesto, fecha, valido_hasta,"
                     "id_cliente, codigo_cliente, cliente, cif, direccion1, direccion2, cp,"
                     "poblacion, provincia, id_pais, telefono, movil, fax, porc_dto, comentarios,"
@@ -124,7 +124,7 @@ bool Presupuesto::AnadirPresupuesto()
 
 bool Presupuesto::RecuperarPresupuesto(QString cSQL)
 {
-    QSqlQuery qCab_pre(QSqlDatabase::database("empresa"));
+    QSqlQuery qCab_pre(Configuracion_global->empresaDB);
     qCab_pre.prepare(cSQL);
     if( qCab_pre.exec() )
     {
@@ -164,7 +164,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->pedido = registro.field("pedido").value().toInt();
 
             this->id_forma_pago = registro.field("id_forma_pago").value().toInt();
-            QSqlQuery q(QSqlDatabase::database("empresa"));
+            QSqlQuery q(Configuracion_global->empresaDB);
             if(q.exec("SELECT * FROM formpago WHERE id = "+QString::number(id_forma_pago)))
                 if(q.next())
                 {
@@ -225,7 +225,7 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
     if (this->presupuesto == 0)
         this->presupuesto = NuevoNumeroPresupuesto();
 
-    QSqlQuery cab_pre(QSqlDatabase::database("empresa"));
+    QSqlQuery cab_pre(Configuracion_global->empresaDB);
     cab_pre.prepare("UPDATE cab_pre SET "
                     "fecha = :fecha, valido_hasta = :valido_hasta, id_cliente = :id_cliente,"
                     "codigo_cliente =  :codigo_cliente, cliente = :cliente, cif = :cif,"
@@ -322,7 +322,7 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
 
 bool Presupuesto::BorrarLineas(int nid_Presupuesto)
 {
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(Configuracion_global->empresaDB);
     QString sql = QString("DELETE FROM lin_pre WHERE id_Cab = %1").arg(nid_Presupuesto);
     query.prepare(sql);
     if(query.exec())
@@ -336,7 +336,7 @@ bool Presupuesto::BorrarLineas(int nid_Presupuesto)
 
 int Presupuesto::NuevoNumeroPresupuesto()
 {
-    QSqlQuery cab_pre(QSqlDatabase::database("empresa"));
+    QSqlQuery cab_pre(Configuracion_global->empresaDB);
     int presupuesto;
     cab_pre.prepare("Select presupuesto from cab_pre order by presupuesto desc limit 1");
     if(cab_pre.exec()) {

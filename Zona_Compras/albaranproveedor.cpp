@@ -7,7 +7,7 @@ AlbaranProveedor::AlbaranProveedor(QObject *parent) :
 
 int AlbaranProveedor::anadir()
 {
-     QSqlQuery queryAlbaran(QSqlDatabase::database("empresa"));
+     QSqlQuery queryAlbaran(Configuracion_global->empresaDB);
      queryAlbaran.prepare("insert into alb_pro (porc_iva1,porc_iva2,porc_iva3,porc_iva4,"
                           "porc_rec1,porc_rec2,porc_rec3,porc_rec4) "
                           "values (:porc_iva1,:porc_iva2,:porc_iva3,:porc_iva4,"
@@ -36,7 +36,7 @@ int AlbaranProveedor::anadir()
 
 void AlbaranProveedor::Recuperar(int id)
 {
-    QSqlQuery queryAlbaran(QSqlDatabase::database("empresa"));
+    QSqlQuery queryAlbaran(Configuracion_global->empresaDB);
     if (queryAlbaran.exec("Select * from alb_pro where id = "+QString::number(id)))
         Cargar(queryAlbaran);
     else
@@ -49,24 +49,24 @@ void AlbaranProveedor::Recuperar(int id)
 bool AlbaranProveedor::borrar(int id_alb)
 {
     bool transaccion = true;
-    QSqlDatabase::database("empresa").transaction();
-    QSqlQuery queryAlbpro(QSqlDatabase::database("empresa"));
+    Configuracion_global->empresaDB.transaction();
+    QSqlQuery queryAlbpro(Configuracion_global->empresaDB);
 
     transaccion &= queryAlbpro.exec("delete from lin_alb_pro where id_cab = "+QString::number(id_alb));
     transaccion &= queryAlbpro.exec("delete from alb_pro where id ="+QString::number(id_alb));
 
     // TODO --- Actualizar stock
     if(transaccion)
-        transaccion = QSqlDatabase::database("empresa").commit();
+        transaccion = Configuracion_global->empresaDB.commit();
     if(!transaccion)
-        QSqlDatabase::database("empresa").rollback();
+        Configuracion_global->empresaDB.rollback();
     return transaccion;
 }
 
 
 void AlbaranProveedor::Recuperar(QString cSQL)
 {
-    QSqlQuery queryAlbaran(QSqlDatabase::database("empresa"));
+    QSqlQuery queryAlbaran(Configuracion_global->empresaDB);
     if (queryAlbaran.exec(cSQL))
         Cargar(queryAlbaran);
     else
@@ -79,7 +79,7 @@ void AlbaranProveedor::Recuperar(QString cSQL)
 void AlbaranProveedor::Recuperar(QString cSQL, int val_accion)
 {
     this->accion = val_accion;
-    QSqlQuery queryAlbaran(QSqlDatabase::database("empresa"));
+    QSqlQuery queryAlbaran(Configuracion_global->empresaDB);
     if (queryAlbaran.exec(cSQL))
         Cargar(queryAlbaran);
     else
@@ -152,7 +152,7 @@ void AlbaranProveedor::Cargar(QSqlQuery query)
 
 void AlbaranProveedor::guardar()
 {
-    QSqlQuery queryAlb_pro(QSqlDatabase::database("empresa"));
+    QSqlQuery queryAlb_pro(Configuracion_global->empresaDB);
     queryAlb_pro.prepare("UPDATE alb_pro SET "
                          "albaran = :albaran,"
                          "fecha = :fecha,"

@@ -36,7 +36,7 @@ frmProveedores::frmProveedores(QWidget *parent) :
     // cargar datos forma de pago.
     //---------------------------
     QSqlQueryModel *qmFormaPago = new QSqlQueryModel(this);
-    qmFormaPago->setQuery("select codigo, forma_pago from formpago",QSqlDatabase::database("Maya"));
+    qmFormaPago->setQuery("select codigo, forma_pago from formpago",Configuracion_global->groupDB);
 
     ui->txtcodigoFormaPago->setModel(qmFormaPago);
     oProveedor->idFormadePago = Configuracion_global->Devolver_id_forma_pago(ui->txtcodigoFormaPago->currentText());
@@ -45,14 +45,14 @@ frmProveedores::frmProveedores(QWidget *parent) :
     // Cargar divisas
     //----------------
     QSqlQueryModel * modelDivisas = new QSqlQueryModel(this);
-    modelDivisas->setQuery("select moneda from monedas",QSqlDatabase::database("Maya"));
+    modelDivisas->setQuery("select moneda from monedas",Configuracion_global->groupDB);
     ui->cboDivisas->setModel(modelDivisas);
 
     // ----------------
     // Cargar Paises
     // ----------------
     QSqlQueryModel * modelPais = new QSqlQueryModel(this);
-    modelPais->setQuery("select pais from paises",QSqlDatabase::database("Maya"));
+    modelPais->setQuery("select pais from paises",Configuracion_global->groupDB);
     ui->txtpais->setModel(modelPais);
     oProveedor->id_pais = Configuracion_global->Devolver_id_pais(ui->txtpais->currentText());
 
@@ -60,7 +60,7 @@ frmProveedores::frmProveedores(QWidget *parent) :
     // Cargar Paises almacen
     // ---------------------
     QSqlQueryModel * modelPaisAlmacen = new QSqlQueryModel(this);
-    modelPaisAlmacen->setQuery("select pais from paises",QSqlDatabase::database("Maya"));
+    modelPaisAlmacen->setQuery("select pais from paises",Configuracion_global->groupDB);
     ui->txtpaisAlmacen->setModel(modelPaisAlmacen);
     oProveedor->id_pais_almacen = Configuracion_global->Devolver_id_pais(ui->txtpaisAlmacen->currentText());
 
@@ -439,7 +439,7 @@ void frmProveedores::on_txtpoblacion_editingFinished()
             int nid = BuscarPoblacion.Devolverid();
 
             if(nid > 0) {
-                QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
+                QSqlQuery qPoblacion(Configuracion_global->groupDB);
                 QString cid;
                 cid = QString::number(nid);
                 qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cid");
@@ -472,7 +472,7 @@ void frmProveedores::on_txtcp_editingFinished()
         if(BuscarPoblacion.exec()) {
             int nid = BuscarPoblacion.Devolverid();
             if(nid > 0) {
-                QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
+                QSqlQuery qPoblacion(Configuracion_global->groupDB);
                 QString cid;
                 cid = QString::number(nid);
                 qPoblacion.prepare("select  poblacion,  cp, provincia from poblaciones where id = :cid");
@@ -653,7 +653,7 @@ void frmProveedores::on_txtcp_almacen_editingFinished()
             if(BuscarPoblacion.exec()) {
                 int nid = BuscarPoblacion.Devolverid();
                 if(nid > 0) {
-                    QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
+                    QSqlQuery qPoblacion(Configuracion_global->groupDB);
                     QString cid;
                     cid = QString::number(nid);
                     qPoblacion.prepare("select poblacion, cp, provincia from poblaciones where id = :cid");
@@ -740,7 +740,7 @@ void frmProveedores::historiales()
     //--------------------------
     QSqlQueryModel *modelPedidos = new QSqlQueryModel(this);
     modelPedidos->setQuery("select id,pedido,fecha,total,recibido_completo from ped_pro where id_proveedor ="+
-                           QString::number(oProveedor->id)+" order by pedido desc",QSqlDatabase::database("empresa"));
+                           QString::number(oProveedor->id)+" order by pedido desc",Configuracion_global->empresaDB);
     ui->tablaColumnasPedidos->setModel(modelPedidos);
     ui->tablaColumnasPedidos->setColumnHidden(0,true);
     ui->tablaColumnasPedidos->setColumnWidth(1,120);
@@ -760,7 +760,7 @@ void frmProveedores::historiales()
     QSqlQueryModel *modelFacturas = new QSqlQueryModel(this);
     modelFacturas->setQuery("select id,factura,fecha,pedido,total_base,total_iva,total_retencion,total_recargo,total,importe_deuda_pendiente"
                             " from fac_pro where id_proveedor = "+QString::number(oProveedor->id)+
-                            " order by factura desc",QSqlDatabase::database("empresa"));
+                            " order by factura desc",Configuracion_global->empresaDB);
     ui->tablacolumnasFacturas->setModel(modelFacturas);
     ui->tablacolumnasFacturas->setColumnHidden(0,true);
     modelFacturas->setHeaderData(1,Qt::Horizontal,"N.Factura");
@@ -788,7 +788,7 @@ void frmProveedores::historiales()
     QSqlQueryModel *modelAlbaranes = new QSqlQueryModel(this);
     modelAlbaranes->setQuery("select id,albaran,fecha,base_total,iva_total,"
                              " total from alb_pro where id_proveedor = "+QString::number(oProveedor->id)+
-                             " order by albaran desc ",QSqlDatabase::database("empresa"));
+                             " order by albaran desc ",Configuracion_global->empresaDB);
     ui->tablaColumnasAlbaran->setModel(modelAlbaranes);
     ui->tablaColumnasAlbaran->setColumnHidden(0,true);
     modelAlbaranes->setHeaderData(1,Qt::Horizontal,"N.Albarán");
@@ -815,7 +815,7 @@ void frmProveedores::historiales()
     QSqlQueryModel *modelArticulo = new QSqlQueryModel(this);
     modelArticulo->setQuery("select codigo,codigo_barras, descripcion,coste "
                            "from articulos where id_proveedor =" +QString::number(oProveedor->id),
-                           QSqlDatabase::database("Maya"));
+                           Configuracion_global->groupDB);
 
 
     ui->tablaArticulos->setModel(modelArticulo);
@@ -828,7 +828,7 @@ void frmProveedores::historiales()
     QSqlQueryModel *modeloDeudas = new QSqlQueryModel(this);
     modeloDeudas->setQuery("select id,documento,fecha_deuda,vencimiento,importe_deuda,pagado,pendiente,pago_por,"
                            "numero_tarjeta_cuenta,asiento_numero from deudas_proveedores where id_proveedor = "+
-                           QString::number(oProveedor->id)+ " order by fecha_deuda desc",QSqlDatabase::database("empresa"));
+                           QString::number(oProveedor->id)+ " order by fecha_deuda desc",Configuracion_global->empresaDB);
     ui->tablaPagos->setModel(modeloDeudas);
     ui->tablaPagos->setColumnHidden(0,true);
     ui->tablaPagos->setColumnWidth(1,80);
@@ -862,7 +862,7 @@ void frmProveedores::historiales()
     modelAsientos->setQuery("select id,asiento,fecha_asiento,cuenta_d,descripcion_d, importe_d,cuenta_h,descripcion_h,importe_h "
                             "from diario where cta_principal = '"+oProveedor->cuenta_aplicacion +
                             "' order by asiento + ' '+pos_en_asiento",
-                            QSqlDatabase::database("dbconta"));
+                            Configuracion_global->contaDB);
 
     ui->tablaAsientos->setModel(modelAsientos);
     ui->tablaAsientos->setColumnHidden(0,true);
@@ -884,7 +884,7 @@ void frmProveedores::historiales()
     //------------------------------
     QSqlQueryModel * modelEntregas = new QSqlQueryModel(this);
     modelEntregas->setQuery("select id,fecha_entrega,concepto,importe,disponible from proveedor_a_cuenta where id_proveedor = "+QString::number(oProveedor->id),
-                            QSqlDatabase::database("Maya"));
+                            Configuracion_global->groupDB);
     ui->tabla_entregas->setModel(modelEntregas);
     ui->tabla_entregas->setColumnHidden(0,true);
     ui->tabla_entregas->setColumnWidth(1,100);
@@ -949,7 +949,7 @@ void frmProveedores::contactos()
     modelContactos->setQuery("select id,id_proveedor,cargo_empresa, nombre, desc_telefono1,telefono1,desc_telefono2,telefono2,"
                              "desc_telefono3, telefono3, desc_movil1,movil1,desc_movil2,movil2 "
                              "from personascontactoproveedor where id_proveedor ="+QString::number(oProveedor->id),
-                             QSqlDatabase::database("Maya"));
+                             Configuracion_global->groupDB);
 
     ui->tablaContactos->setModel(modelContactos);
 
@@ -1079,7 +1079,7 @@ void frmProveedores::editar_contacto()
     QModelIndex index= ui->tablaContactos->currentIndex();
     int nid = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
     this->id_contacto = nid;
-    QSqlQuery queryContactos(QSqlDatabase::database("Maya"));
+    QSqlQuery queryContactos(Configuracion_global->groupDB);
     queryContactos.prepare("select * from personascontactoproveedor where id = :id");
     queryContactos.bindValue(":id",this->id_contacto);
     if (!queryContactos.exec())
@@ -1128,7 +1128,7 @@ void frmProveedores::borrar_contacto()
     QModelIndex index= ui->tablaContactos->currentIndex();
     int nid = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
     this->id_contacto = nid;
-    QSqlQuery queryContactos(QSqlDatabase::database("Maya"));
+    QSqlQuery queryContactos(Configuracion_global->groupDB);
     queryContactos.prepare("delete from personascontactoproveedor where id = :id");
     queryContactos.bindValue(":id",this->id_contacto);
     if (!queryContactos.exec())

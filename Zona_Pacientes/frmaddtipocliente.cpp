@@ -1,6 +1,6 @@
 #include "frmaddtipocliente.h"
 #include "ui_frmaddtipocliente.h"
-//#include "/Auxiliares/Globlal_Include.h"
+#include "../Auxiliares/Globlal_Include.h"
 #include  "QtSql"
 #include "QSqlDatabase"
 #include <QMessageBox>
@@ -14,7 +14,7 @@ FrmAddTipoCliente::FrmAddTipoCliente(QWidget *parent) :
     // CARGAR LISTA/TABLA
     //----------------------
     QSqlQueryModel *m_familia = new QSqlQueryModel(this);
-    m_familia->setQuery("select descripcion, id from maestro_familia_cliente",QSqlDatabase::database("Maya"));
+    m_familia->setQuery("select descripcion, id from maestro_familia_cliente",Configuracion_global->groupDB);
     ui->list_Familia->setModel(m_familia);
 
     //-----------------------
@@ -34,7 +34,7 @@ void FrmAddTipoCliente::LLenarTablaSubfamilias(QModelIndex index)
     QSqlQueryModel* modelo = (QSqlQueryModel*)ui->list_Familia->model();
     int nid = modelo->record(index.row()).value("id").toInt();
     familiaRetorno = modelo->record(index.row()).value("descripcion").toString();
-    QSqlQuery qFamilia(QSqlDatabase::database("Maya"));
+    QSqlQuery qFamilia(Configuracion_global->groupDB);
     qFamilia.prepare(QString("select * from maestro_subfamilia_cliente where id_maestro_familia_cliente = %1 ").arg(nid));
     if (qFamilia.exec()) {
         // Cargo datos en tabla

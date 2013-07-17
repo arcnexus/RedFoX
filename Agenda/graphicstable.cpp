@@ -71,7 +71,7 @@ void GraphicsTable::appendEvento(int id ,QDateTime start, QDateTime end, QColor 
 
 void GraphicsTable::addEvento(QColor color, QDateTime start, QDateTime end ,QString titulo, QString asunto, bool isCita , int id_cliente , bool isprivado)
 {
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     q.prepare("INSERT INTO agenda"
               "(fecha, hora, id_Usuario, cInicio, cFin, cAsunto,"
               "descripcionAsunto, cEstado, cAvisarTiempo, cImportancia, color,"
@@ -122,7 +122,7 @@ void GraphicsTable::UpdateEventos()
         /*e->deleteLater()*/delete e;
     this->eventos.clear();
 
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     QString fecha = m_date.toString("yyyy-MM-dd");
     QString sql = QString("SELECT * FROM agenda where fecha = '%1' and id_Usuario = %2")
             .arg(fecha).arg(m_user);
@@ -175,7 +175,7 @@ void GraphicsTable::eventClosing()
     {
         eventos.remove(eventos.indexOf(e));
         int id = e->id;
-        QSqlQuery q(QSqlDatabase::database("Maya"));
+        QSqlQuery q(Configuracion_global->groupDB);
         QString sql = QString("DELETE FROM agenda WHERE id = %1").arg(id);
         if(!q.exec(sql))
             qDebug() << q.lastError();

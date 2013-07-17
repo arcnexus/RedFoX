@@ -15,7 +15,7 @@ FrmTiposTarifa::FrmTiposTarifa(QWidget *parent) :
     ui->cboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
     llenar_lista();
     QSqlQueryModel *monedas = new QSqlQueryModel(this);
-    monedas->setQuery("Select moneda from monedas",QSqlDatabase::database("Maya"));
+    monedas->setQuery("Select moneda from monedas",Configuracion_global->groupDB);
     ui->cboMoneda->setModel(monedas);
     activar_controles(false);
 }
@@ -50,7 +50,7 @@ void FrmTiposTarifa::on_btnAgregarTarifa_clicked()
         {
             int id = 0;
             bool end = false;
-            QSqlQuery queryArticulo(QSqlDatabase::database("Maya"));
+            QSqlQuery queryArticulo(Configuracion_global->groupDB);
             // TODO PREPARAR PARA MULTIDIVISA
             QString cod_div_local = Configuracion_global->cod_divisa_local;
             QString cod_div_extra = Configuracion_global->Devolver_codDivisa(oTipostarifa->id_monedas);
@@ -69,7 +69,7 @@ void FrmTiposTarifa::on_btnAgregarTarifa_clicked()
                     if(queryArticulo.next()){
                         id = queryArticulo.record().value("id").toInt();
                         // Comprovamos que no exista ya la tarifa
-                        QSqlQuery querytarifa(QSqlDatabase::database("Maya"));
+                        QSqlQuery querytarifa(Configuracion_global->groupDB);
                         querytarifa.prepare("Select id from tarifas where id_codigo_tarifa = :id_codigo_tarifa and id_articulo =:id_art");
                         querytarifa.bindValue(":id_codigo_tarifa",oTipostarifa->id);
                         querytarifa.bindValue(":id_art",queryArticulo.record().value("id").toInt());
@@ -184,7 +184,7 @@ void FrmTiposTarifa::on_btnDeshacer_clicked()
 void FrmTiposTarifa::llenar_lista()
 {
     QSqlQueryModel *mTarifas = new QSqlQueryModel(this);
-    mTarifas->setQuery("select id,descripcion from codigotarifa",QSqlDatabase::database("Maya"));
+    mTarifas->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
     ui->listatarifas->setModel(mTarifas);
     ui->listatarifas->setColumnHidden(0,true);
     mTarifas->setHeaderData(1,Qt::Horizontal,tr("Tarifa"));

@@ -3,7 +3,7 @@
 
 void FrmUsuarios::getModulesFromDB()
 {
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     q.prepare("SELECT * FROM modulos;");
     q.exec();
     while(q.next())
@@ -406,7 +406,7 @@ void FrmUsuarios::addInfoMedicModule(AuxModule *m)
 }
 void FrmUsuarios::crear_User()
 {
-    QSqlQuery add_user(QSqlDatabase::database("Maya"));
+    QSqlQuery add_user(Configuracion_global->groupDB);
 
     add_user.prepare("INSERT INTO usuarios (nombre,contrasena,categoria) "
                      "VALUES (:nombre,:contrasena,:categoria)");
@@ -422,7 +422,7 @@ void FrmUsuarios::crear_User()
     ui->txt_id_user->setText(QString::number(last_id));
 
     QVector<AuxModule*>::Iterator i;
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     for(i=_modulos.begin(); i!=_modulos.end(); ++i)
     {
         q.prepare("INSERT INTO accesousuarios (id_user, id_modulo, id_nivel_acceso) VALUES (:id, :mod, 1);");
@@ -445,7 +445,7 @@ void FrmUsuarios::llenar_user(QSqlRecord record)
 
 void FrmUsuarios::llenarModulos(int id_user)
 {
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     q.prepare("SELECT * FROM accesousuarios WHERE id_user=:id;");
     q.bindValue(":id",id_user);
     q.exec();
@@ -467,7 +467,7 @@ void FrmUsuarios::llenarModulos(int id_user)
 void FrmUsuarios::on_botGuardar_user_clicked()
 {
     int id=ui->txt_id_user->text().toInt();
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     q.prepare("UPDATE usuarios SET nombre=:name, categoria=:cat WHERE id=:id;");
     q.bindValue(":name",ui->txt_nombre_user->text());
     //q.bindValue(":lvl",ui->spin_nacceso_user->value());
@@ -477,7 +477,7 @@ void FrmUsuarios::on_botGuardar_user_clicked()
     if(q.exec())
     {
         QVector<AuxModule*>::Iterator i;
-        QSqlQuery q2(QSqlDatabase::database("Maya"));
+        QSqlQuery q2(Configuracion_global->groupDB);
         for(i=_modulos.begin(); i!=_modulos.end(); ++i)
         {
             q2.prepare("UPDATE accesousuarios SET id_nivel_acceso=:lvl WHERE id_modulo=:mod AND id_user=:id;");
@@ -508,7 +508,7 @@ void FrmUsuarios::on_btn_modPass_clicked()
     {
         ui->btn_modPass->setText(tr("Modificar"));
         ui->txt_pass_user->setReadOnly(true);
-        QSqlQuery q(QSqlDatabase::database("Maya"));
+        QSqlQuery q(Configuracion_global->groupDB);
         q.prepare("UPDATE usuarios SET contrasena=:pass WHERE id=:id;");
         q.bindValue(":id",ui->txt_id_user->text());
         q.bindValue(":pass",Configuracion::SHA256HashString(ui->txt_pass_user->text()));
@@ -518,7 +518,7 @@ void FrmUsuarios::on_btn_modPass_clicked()
 }
 void FrmUsuarios::on_botSiguiente_user_clicked()
 {
-    QSqlQuery next_user(QSqlDatabase::database("Maya"));
+    QSqlQuery next_user(Configuracion_global->groupDB);
     QString sql = QString("SELECT * FROM usuarios WHERE id > %1 LIMIT 1 ")
             .arg(ui->txt_id_user->text());
     next_user.prepare(sql);
@@ -535,7 +535,7 @@ void FrmUsuarios::on_botSiguiente_user_clicked()
 
 void FrmUsuarios::on_botAnterior_user_clicked()
 {
-    QSqlQuery next_user(QSqlDatabase::database("Maya"));
+    QSqlQuery next_user(Configuracion_global->groupDB);
     QString sql = QString("SELECT * FROM usuarios WHERE id < %1 ORDER BY id DESC LIMIT 1")
             .arg(ui->txt_id_user->text());
     next_user.prepare(sql);

@@ -8,7 +8,7 @@ Articulo::Articulo(QObject *parent) : QObject(parent)
 
 void Articulo::Anadir()
 {
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     query.prepare("INSERT INTO articulos (codigo)"
                        " VALUES (:codigo)");
     if(Configuracion_global->auto_codigoart ==false)
@@ -28,10 +28,10 @@ void Articulo::Anadir()
          //--------------------------
          // Añado tarifas a artículo
          //--------------------------
-         QSqlQuery queryTarifas(QSqlDatabase::database("Maya"));
+         QSqlQuery queryTarifas(Configuracion_global->groupDB);
          if(queryTarifas.exec("select * from codigotarifa")){
              while (queryTarifas.next()){
-                 QSqlQuery anadirTarifa(QSqlDatabase::database("Maya"));
+                 QSqlQuery anadirTarifa(Configuracion_global->groupDB);
                  anadirTarifa.prepare("INSERT INTO tarifas ("
                                    "id_articulo,"
                                    "id_pais,"
@@ -66,7 +66,7 @@ void Articulo::Anadir()
 
 bool Articulo::Recuperar(QString cSQL)
 {
-    QSqlQuery qryArticulo(QSqlDatabase::database("Maya"));
+    QSqlQuery qryArticulo(Configuracion_global->groupDB);
     qryArticulo.prepare(cSQL);
     if (qryArticulo.exec())
     {
@@ -134,7 +134,7 @@ bool Articulo::Recuperar(QString cSQL)
                this->coste_real = registro.field("coste_real").value().toDouble();
 
                // Recupero proveedor
-               QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
+               QSqlQuery *qryProveedor = new QSqlQuery(Configuracion_global->groupDB);
                qryProveedor->prepare("select id,codigo,proveedor from proveedores where id = :id");
                qryProveedor->bindValue(":id",this->id_proveedor);
                if (!qryProveedor->exec()) {
@@ -165,7 +165,7 @@ bool Articulo::Recuperar(QString cSQL)
 
 void Articulo::Recuperar(QString cSQL, int nProcede)
 {
-    QSqlQuery qryArticulo(QSqlDatabase::database("Maya"));
+    QSqlQuery qryArticulo(Configuracion_global->groupDB);
     qryArticulo.prepare(cSQL);
     if (qryArticulo.exec()) {
            if (qryArticulo.next()){
@@ -229,7 +229,7 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
                this->coste_real = registro.field("coste_real").value().toDouble();
 
                // Recupero proveedor
-               QSqlQuery *qryProveedor = new QSqlQuery(QSqlDatabase::database("Maya"));
+               QSqlQuery *qryProveedor = new QSqlQuery(Configuracion_global->groupDB);
                qryProveedor->prepare("select id,codigo,proveedor from proveedores where id = :id");
                qryProveedor->bindValue(":id",this->id_proveedor);
                if (!qryProveedor->exec()) {
@@ -262,7 +262,7 @@ void Articulo::Guardar()
 
     if (this->codigo == "auto_codigo"){
         QString nuevo_codigo;
-        QSqlQuery querycodigo(QSqlDatabase::database("Maya"));
+        QSqlQuery querycodigo(Configuracion_global->groupDB);
 
         // seccion
         querycodigo.prepare("select codigo from secciones where id = :id");
@@ -316,7 +316,7 @@ void Articulo::Guardar()
         }
 
     }
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     query.prepare( "UPDATE articulos SET "
                    "`codigo`=:codigo,"
                    "`codigo_barras` =:codigo_barras,"
@@ -499,7 +499,7 @@ void Articulo::Borrar(int nid)
                              qApp->tr("¿Desea realmente Borrar este artículo?\nEsta opción no se puede deshacer"),
                              qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted)
     {
-        QSqlQuery qryArticulo(QSqlDatabase::database("Maya"));
+        QSqlQuery qryArticulo(Configuracion_global->groupDB);
         qryArticulo.prepare("Delete from articulos where id = :nid");
         // TODO - Borrar estadisticas y tarifas
 
@@ -530,7 +530,7 @@ void Articulo::Devolucion(int id, int cantidad, double importe, QString cMotivo,
 
 void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4)
 {
-    QSqlQuery qryArticulo(QSqlDatabase::database("Maya"));
+    QSqlQuery qryArticulo(Configuracion_global->groupDB);
     qryArticulo.prepare("Select bImagen,bImagen2,bImagen3,bImagen4 from articulos where id = :id");
     qryArticulo.bindValue(":id",this->id);
     if (qryArticulo.exec()) {
@@ -577,7 +577,7 @@ void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabe
 
 int Articulo::getidSeccion(QString seccion_)
 {
-    QSqlQuery Query(QSqlDatabase::database("Maya"));
+    QSqlQuery Query(Configuracion_global->groupDB);
     Query.prepare("select id from secciones where seccion = :cValor ");
     Query.bindValue(":cValor",seccion_);
     if(!Query.exec()) {
@@ -590,7 +590,7 @@ int Articulo::getidSeccion(QString seccion_)
 
 int Articulo::getidFamilia(QString familia_)
 {
-    QSqlQuery Query(QSqlDatabase::database("Maya"));
+    QSqlQuery Query(Configuracion_global->groupDB);
     Query.prepare("select id from familias where familia = :cValor ");
     Query.bindValue(":cValor",familia_);
     if(!Query.exec()) {
@@ -603,7 +603,7 @@ int Articulo::getidFamilia(QString familia_)
 
 int Articulo::getidSubFamilia(QString subfamilia_)
 {
-    QSqlQuery Query(QSqlDatabase::database("Maya"));
+    QSqlQuery Query(Configuracion_global->groupDB);
     Query.prepare("select id from subfamilias where sub_familia = :cValor ");
     Query.bindValue(":cValor",subfamilia_);
     if(!Query.exec()) {
@@ -616,7 +616,7 @@ int Articulo::getidSubFamilia(QString subfamilia_)
 
 int Articulo::getidSubSufFamilia(QString cSubSubFamilia_)
 {
-    QSqlQuery Query(QSqlDatabase::database("Maya"));
+    QSqlQuery Query(Configuracion_global->groupDB);
     Query.prepare("select id from subsubfamilias where subsub_familia = :cValor ");
     Query.bindValue(":cValor",cSubSubFamilia_);
     if(!Query.exec()) {
@@ -629,7 +629,7 @@ int Articulo::getidSubSufFamilia(QString cSubSubFamilia_)
 
 int Articulo::getidGrupo(QString cGrupo_)
 {
-    QSqlQuery Query(QSqlDatabase::database("Maya"));
+    QSqlQuery Query(Configuracion_global->groupDB);
     Query.prepare("select id from gruposart where grupo_art = :cValor ");
     Query.bindValue(":cValor",cGrupo_);
     if(!Query.exec()) {
@@ -642,7 +642,7 @@ int Articulo::getidGrupo(QString cGrupo_)
 
 QString Articulo::getseccion(int nid)
 {
-    QSqlQuery Query(QSqlDatabase::database("Maya"));
+    QSqlQuery Query(Configuracion_global->groupDB);
     Query.prepare("select seccion from secciones where id = :cValor ");
     Query.bindValue(":cValor",nid);
     if(!Query.exec()) {
@@ -654,7 +654,7 @@ QString Articulo::getseccion(int nid)
 }
 QString Articulo::getfamilia(int nid)
 {
-    QSqlQuery Query(QSqlDatabase::database("Maya"));
+    QSqlQuery Query(Configuracion_global->groupDB);
     Query.prepare("select familia from familias where id = :cValor ");
     Query.bindValue(":cValor",nid);
     if(!Query.exec()) {
@@ -669,7 +669,7 @@ QString Articulo::getfamilia(int nid)
 
 QString Articulo::getsubfamilia(int nid)
 {
-    QSqlQuery Query(QSqlDatabase::database("Maya"));
+    QSqlQuery Query(Configuracion_global->groupDB);
     Query.prepare("select sub_familia from subfamilias where id = :cValor ");
     Query.bindValue(":cValor",nid);
     if(!Query.exec()) {
@@ -683,7 +683,7 @@ QString Articulo::getsubfamilia(int nid)
 
 QString Articulo::getcSubSubFamilia(int nid)
 {
-    QSqlQuery Query(QSqlDatabase::database("Maya"));
+    QSqlQuery Query(Configuracion_global->groupDB);
     Query.prepare("select subsub_familia from subsubfamilias where id = :cValor ");
     Query.bindValue(":cValor",nid);
     if(!Query.exec()) {
@@ -696,7 +696,7 @@ QString Articulo::getcSubSubFamilia(int nid)
 
 QString Articulo::getcGrupo(int nid)
 {
-    QSqlQuery Query(QSqlDatabase::database("Maya"));
+    QSqlQuery Query(Configuracion_global->groupDB);
     Query.prepare("select grupo_art from gruposart where id = :cValor ");
     Query.bindValue(":cValor",nid);
     if(!Query.exec()) {
@@ -710,7 +710,7 @@ QString Articulo::getcGrupo(int nid)
 bool Articulo::agregar_proveedor_alternativo(int id_art, int id_proveedor, QString codigo, double pvd, QString descoferta, QString oferta,
                                              double pvd_real,int id_divisa)
 {
-    QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("Maya"));
+    QSqlQuery query_proveedor_alternativo(Configuracion_global->groupDB);
 
     query_proveedor_alternativo.prepare("INSERT INTO articulos_prov_frec "
                                         "(id_articulo,id_proveedor,pvd,oferta,codigo,descoferta,pvd_real,id_divisa)"
@@ -737,7 +737,7 @@ bool Articulo::agregar_proveedor_alternativo(int id_art, int id_proveedor, QStri
 bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta, QString oferta,
                                            double pvd_real, int id_divisa)
 {
-    QSqlQuery query_proveedor_alternativo(QSqlDatabase::database("Maya"));
+    QSqlQuery query_proveedor_alternativo(Configuracion_global->groupDB);
 
     query_proveedor_alternativo.prepare("UPDATE articulos_prov_frec  set pvd = :pvd,oferta = :oferta, codigo = :codigo, "
                                         "descoferta = :descoferta, pvd_real = :pvd_real, id_divisa =:id_divisa "
@@ -764,7 +764,7 @@ bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, Q
 
 bool Articulo::cambiarProveedorPrincipal(int id, int id_proveedor)
 {
-    QSqlQuery queryProveedor(QSqlDatabase::database("Maya"));
+    QSqlQuery queryProveedor(Configuracion_global->groupDB);
     queryProveedor.prepare("update articulos Set id_proveedor = :id_proveedor where id = :id");
     queryProveedor.bindValue(":id_proveedor",id_proveedor);
     queryProveedor.bindValue(":id",id);
@@ -782,7 +782,7 @@ bool Articulo::cambiarProveedorPrincipal(int id, int id_proveedor)
 
 bool Articulo::cambiar_pvp()
 {
-    QSqlQuery tarifas(QSqlDatabase::database("Maya"));
+    QSqlQuery tarifas(Configuracion_global->groupDB);
     tarifas.prepare("select * from tarifas where id_articulo = :id");
     tarifas.bindValue(":id",this->id);
 
@@ -790,7 +790,7 @@ bool Articulo::cambiar_pvp()
         FrmTarifas editTarifa(qApp->activeWindow());
         while (tarifas.next())
         {
-//            QSqlQuery qTarifa(QSqlDatabase::database("Maya"));
+//            QSqlQuery qTarifa(Configuracion_global->groupDB);
 //            qTarifa.prepare("select * from codigotarifa where descripcion ='"+ this->ct+"'");
 
 //            if(qTarifa.exec()){
@@ -804,7 +804,7 @@ bool Articulo::cambiar_pvp()
 //                editTarifa. asignarcambiodivisa(1);
 
             editTarifa.calcular_precio(tarifas.record().value("margen").toDouble());
-            QSqlQuery queryTarifas(QSqlDatabase::database("Maya"));
+            QSqlQuery queryTarifas(Configuracion_global->groupDB);
             queryTarifas.prepare(
             "UPDATE tarifas SET "
             "margen = :margen,"
@@ -841,7 +841,7 @@ QString Articulo::auto_codigo()
     codigoIni = this->seccion+this->familia+this->subfamilia+this->cSubSubFamilia+this->cGrupoArt;
     tamano_codigoIni = codigoIni.length();
     QSqlQuery queryArt("select codigo from articulos where codigo like '"+codigoIni+"%' order by codigo desc limit 1",
-                       QSqlDatabase::database("Maya"));
+                       Configuracion_global->groupDB);
     if(queryArt.exec()){
         queryArt.next();
         QString lastcode = queryArt.record().value("codigo").toString();

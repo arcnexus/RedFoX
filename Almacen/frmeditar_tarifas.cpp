@@ -15,7 +15,7 @@ frmEditar_tarifas::~frmEditar_tarifas()
 
 void frmEditar_tarifas::setFiltro(int id)
 {
-    QSqlQuery tarifa(QSqlDatabase::database("Maya"));
+    QSqlQuery tarifa(Configuracion_global->groupDB);
     if(tarifa.exec("select id,pvp,pais,moneda,simbolo,codigo_tarifa,descripcion,margen,margen_minimo "
                           "from viewtarifa where id_articulo = "+QString::number(id)))
     {

@@ -164,7 +164,7 @@ void Configuracion::Cargar_iva()
     ivaList.clear();
     reList.clear();
 
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     if(query.exec("SELECT * FROM tiposiva"))
     {
         while(query.next())
@@ -183,7 +183,7 @@ void Configuracion::Cargar_iva()
 
     if(iva_model == 0)
     {
-        iva_model = new QSqlTableModel(this,QSqlDatabase::database("Maya"));
+        iva_model = new QSqlTableModel(this,Configuracion_global->groupDB);
         iva_model->setTable("tiposiva");
     }
     iva_model->select();
@@ -221,7 +221,7 @@ void Configuracion::Cargar_iva()
 
 int Configuracion::getidIva(QString cIva)
 {
-    QSqlQuery qIVA(QSqlDatabase::database("Maya"));
+    QSqlQuery qIVA(Configuracion_global->groupDB);
     qIVA.prepare("select id from tiposiva where tipo = :cIva");
     qIVA.bindValue(":cIva",cIva);
     if(!qIVA.exec()) {
@@ -237,7 +237,7 @@ int Configuracion::getidIva(QString cIva)
 
 QString Configuracion::setTipoIva(int idIva)
 {
-    QSqlQuery qIVA(QSqlDatabase::database("Maya"));
+    QSqlQuery qIVA(Configuracion_global->groupDB);
     qIVA.prepare("select tipo from tiposiva where id = :id");
     qIVA.bindValue(":id",idIva);
     if(!qIVA.exec()) {
@@ -272,7 +272,7 @@ void Configuracion::Cargar_paises()
 
 int Configuracion::Devolver_id_pais(QString pais)
 {
-    QSqlQuery qPais(QSqlDatabase::database("Maya"));
+    QSqlQuery qPais(Configuracion_global->groupDB);
     qPais.prepare("select id from paises where pais = :pais");
     qPais.bindValue(":pais",pais);
     if(qPais.exec())
@@ -286,7 +286,7 @@ int Configuracion::Devolver_id_pais(QString pais)
 
 QString Configuracion::Devolver_pais(int id)
 {
-    QSqlQuery qPais(QSqlDatabase::database("Maya"));
+    QSqlQuery qPais(Configuracion_global->groupDB);
     qPais.prepare("select pais from paises where id = :nid");
     qPais.bindValue(":nid",id);
     if(qPais.exec())
@@ -299,7 +299,7 @@ QString Configuracion::Devolver_pais(int id)
 
 QString Configuracion::Devolver_moneda(int id)
 {
-    QSqlQuery qMoneda(QSqlDatabase::database("Maya"));
+    QSqlQuery qMoneda(Configuracion_global->groupDB);
     qMoneda.prepare("select moneda from monedas where id = :nid");
     qMoneda.bindValue(":nid",id);
     if(qMoneda.exec())
@@ -312,7 +312,7 @@ QString Configuracion::Devolver_moneda(int id)
 
 QString Configuracion::Devolver_codDivisa(int id)
 {
-    QSqlQuery qMoneda(QSqlDatabase::database("Maya"));
+    QSqlQuery qMoneda(Configuracion_global->groupDB);
     qMoneda.prepare("select nombre_corto from monedas where id = :nid");
     qMoneda.bindValue(":nid",id);
     if(qMoneda.exec())
@@ -325,7 +325,7 @@ QString Configuracion::Devolver_codDivisa(int id)
 
 int Configuracion::Devolver_id_moneda(QString cDivisa)
 {
-    QSqlQuery queryMoneda(QSqlDatabase::database("Maya"));
+    QSqlQuery queryMoneda(Configuracion_global->groupDB);
     queryMoneda.prepare("select id from monedas where moneda = :cDivisa");
     queryMoneda.bindValue(":cDivisa",cDivisa);
     if(queryMoneda.exec())
@@ -337,7 +337,7 @@ int Configuracion::Devolver_id_moneda(QString cDivisa)
 
 QString Configuracion::Devolver_idioma(int id)
 {
-    QSqlQuery qidioma(QSqlDatabase::database("Maya"));
+    QSqlQuery qidioma(Configuracion_global->groupDB);
     if(qidioma.exec("select idioma from idiomas where id = "+QString::number(id))) {
         qidioma.next();
         return qidioma.record().value("idioma").toString();
@@ -352,7 +352,7 @@ QString Configuracion::Devolver_idioma(int id)
 
 int Configuracion::Devolver_id_idioma(QString idioma)
 {
-    QSqlQuery qidioma(QSqlDatabase::database("Maya"));
+    QSqlQuery qidioma(Configuracion_global->groupDB);
     if(qidioma.exec("select id from idiomas where idioma = '"+idioma+"'")){
         qidioma.next();
         return qidioma.record().value("id").toInt();
@@ -367,7 +367,7 @@ int Configuracion::Devolver_id_idioma(QString idioma)
 
 int Configuracion::Devolver_id_forma_pago(QString forma_pago)
 {
-    QSqlQuery queryFP(QSqlDatabase::database("Maya"));
+    QSqlQuery queryFP(Configuracion_global->groupDB);
     if(queryFP.exec("select id from formpago where forma_pago = '"+forma_pago+"'")){
         queryFP.next();
         int id = queryFP.record().value("id").toInt();
@@ -382,7 +382,7 @@ int Configuracion::Devolver_id_forma_pago(QString forma_pago)
 
 int Configuracion::Devolver_id_codigo_forma_pago(QString codigo)
 {
-    QSqlQuery queryFP(QSqlDatabase::database("Maya"));
+    QSqlQuery queryFP(Configuracion_global->groupDB);
     if(queryFP.exec("select id from formpago where codigo = '"+codigo+"'")){
         queryFP.next();
         int id = queryFP.record().value("id").toInt();
@@ -397,7 +397,7 @@ int Configuracion::Devolver_id_codigo_forma_pago(QString codigo)
 
 QString Configuracion::Devolver_forma_pago(int id)
 {
-    QSqlQuery queryFP(QSqlDatabase::database("Maya"));
+    QSqlQuery queryFP(Configuracion_global->groupDB);
     if(queryFP.exec("select forma_pago from formpago where id = "+QString::number(id))){
         queryFP.next();
         QString cFP = queryFP.record().value("forma_pago").toString();
@@ -412,7 +412,7 @@ QString Configuracion::Devolver_forma_pago(int id)
 
 QString Configuracion::Devolver_codigo_forma_pago(int id)
 {
-    QSqlQuery queryFP(QSqlDatabase::database("Maya"));
+    QSqlQuery queryFP(Configuracion_global->groupDB);
     if(queryFP.exec("select codigo from formpago where id = "+QString::number(id))){
         queryFP.next();
         QString cFP = queryFP.record().value("codigo").toString();
@@ -428,7 +428,7 @@ QString Configuracion::Devolver_codigo_forma_pago(int id)
 
 int Configuracion::Devolver_id_tarifa(QString cTarifa)
 {
-    QSqlQuery queryTarifa(QSqlDatabase::database("Maya"));
+    QSqlQuery queryTarifa(Configuracion_global->groupDB);
     if(queryTarifa.exec("select id from codigotarifa where descripcion = '"+cTarifa+"'")){
         queryTarifa.next();
         int id = queryTarifa.record().value("id").toInt();
@@ -444,7 +444,7 @@ int Configuracion::Devolver_id_tarifa(QString cTarifa)
 
 QString Configuracion::Devolver_tarifa(int id_tarifa)
 {
-    QSqlQuery queryTarifa(QSqlDatabase::database("Maya"));
+    QSqlQuery queryTarifa(Configuracion_global->groupDB);
     if(queryTarifa.exec("select descripcion from codigotarifa where id = "+QString::number(id_tarifa))){
         queryTarifa.next();
         QString cTarifa = queryTarifa.record().value("descripcion").toString();
@@ -459,7 +459,7 @@ QString Configuracion::Devolver_tarifa(int id_tarifa)
 
 QString Configuracion::Devolver_tipo_gasto(int id_gasto)
 {
-    QSqlQuery queryGasto(QSqlDatabase::database("Maya"));
+    QSqlQuery queryGasto(Configuracion_global->groupDB);
     if(queryGasto.exec("select descripcion from grupos_gasto where id = "+QString::number(id_gasto))){
         queryGasto.next();
         QString cGasto = queryGasto.record().value("descripcion").toString();
@@ -475,7 +475,7 @@ QString Configuracion::Devolver_tipo_gasto(int id_gasto)
 int Configuracion::Devolver_id_tipo_gasto(QString desc)
 {
 
-    QSqlQuery queryGasto(QSqlDatabase::database("Maya"));
+    QSqlQuery queryGasto(Configuracion_global->groupDB);
     if(queryGasto.exec("select id from grupos_gasto where descripcion = '"+desc+"'")){
         queryGasto.next();
         int id = queryGasto.record().value("id").toInt();
@@ -490,7 +490,7 @@ int Configuracion::Devolver_id_tipo_gasto(QString desc)
 
 int Configuracion::Devolver_id_cuenta_contable(QString codigo_cta)
 {
-    QSqlQuery queryCuenta(QSqlDatabase::database("dbconta"));
+    QSqlQuery queryCuenta(Configuracion_global->contaDB);
     if(queryCuenta.exec("select id from plan_general where codigo_cta = '"+codigo_cta+"'"))
     {
         queryCuenta.next();
@@ -504,7 +504,7 @@ int Configuracion::Devolver_id_cuenta_contable(QString codigo_cta)
 
 QString Configuracion::Devolver_descripcion_tipo_iva(double tipo)
 {
-    QSqlQuery query_iva(QSqlDatabase::database("Maya"));
+    QSqlQuery query_iva(Configuracion_global->groupDB);
     if(query_iva.exec("select tipo from tiposiva where iva = "+QString::number(tipo)))
     {
         query_iva.next();
@@ -518,7 +518,7 @@ QString Configuracion::Devolver_descripcion_tipo_iva(double tipo)
 
 QString Configuracion::Devolver_descripcion_cuenta_contable(QString codigo_cta)
 {
-    QSqlQuery queryCuenta(QSqlDatabase::database("dbconta"));
+    QSqlQuery queryCuenta(Configuracion_global->contaDB);
     if(queryCuenta.exec("select descripcion from plan_general where codigo_cta = '"+codigo_cta+"'"))
     {
         queryCuenta.next();
@@ -532,7 +532,7 @@ QString Configuracion::Devolver_descripcion_cuenta_contable(QString codigo_cta)
 
 QString Configuracion::Devolver_codigo_cta_contable(int id)
 {
-    QSqlQuery queryCuenta(QSqlDatabase::database("dbconta"));
+    QSqlQuery queryCuenta(Configuracion_global->contaDB);
     if(queryCuenta.exec("select codigo_cta from plan_general where id = "+QString::number(id)))
     {
         queryCuenta.next();
@@ -546,7 +546,7 @@ QString Configuracion::Devolver_codigo_cta_contable(int id)
 
 QString Configuracion::devolver_codigo_articulo(int id)
 {
-    QSqlQuery query_art(QSqlDatabase::database("Maya"));
+    QSqlQuery query_art(Configuracion_global->groupDB);
     if(query_art.exec("select codigo from articulos where id = "+QString::number(id)))
     {
         query_art.next();
@@ -561,7 +561,7 @@ QString Configuracion::devolver_codigo_articulo(int id)
 
 QString Configuracion::devolver_codigo_barras(int id)
 {
-    QSqlQuery query_art(QSqlDatabase::database("Maya"));
+    QSqlQuery query_art(Configuracion_global->groupDB);
     if(query_art.exec("select codigo_barras from articulos where id = "+QString::number(id)))
     {
         query_art.next();
@@ -575,7 +575,7 @@ QString Configuracion::devolver_codigo_barras(int id)
 
 QString Configuracion::devolver_referencia_articulo(int id)
 {
-    QSqlQuery query_art(QSqlDatabase::database("Maya"));
+    QSqlQuery query_art(Configuracion_global->groupDB);
     if(query_art.exec("select codigo_fabricante from articulos where id = "+QString::number(id)))
     {
         query_art.next();
@@ -589,7 +589,7 @@ QString Configuracion::devolver_referencia_articulo(int id)
 
 float Configuracion::devolver_rec_iva(float porc_iva)
 {
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     if(query.exec("select recargo_equivalencia from tiposiva where iva = "+QString::number(porc_iva)))
     {
         query.next();
@@ -603,7 +603,7 @@ float Configuracion::devolver_rec_iva(float porc_iva)
 
 QString Configuracion::devolver_agente(int id)
 {
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     if(query.exec("select nombre from agentes where id = "+QString::number(id)))
     {
         query.next();
@@ -617,7 +617,7 @@ QString Configuracion::devolver_agente(int id)
 
 int Configuracion::devolver_id_agente(QString agente)
 {
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     if(query.exec("select id from agentes where nombre = '"+agente+"'"))
     {
         query.next();
@@ -632,7 +632,7 @@ int Configuracion::devolver_id_agente(QString agente)
 
 QString Configuracion::devolver_transportista(int id)
 {
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     if(query.exec("select transportista from transportista where id = "+QString::number(id)))
     {
         query.next();
@@ -647,7 +647,7 @@ QString Configuracion::devolver_transportista(int id)
 
 int Configuracion::devolver_id_transportista(QString transportista)
 {
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     if(query.exec("select id from transportista where transportista = '"+transportista+"'"))
     {
         query.next();
@@ -666,7 +666,7 @@ int Configuracion::devolver_id_transportista(QString transportista)
 void Configuracion::CargarClientes()
 {
     if(client_model == 0)
-        client_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("Maya"));
+        client_model = new QSqlRelationalTableModel(this,Configuracion_global->groupDB);
     client_model->setTable("clientes");
     client_model->select();
 }
@@ -674,7 +674,7 @@ void Configuracion::CargarClientes()
 void Configuracion::CargarUsuarios()
 {
     if(usuarios_model == 0)
-        usuarios_model = new QSqlRelationalTableModel(this,QSqlDatabase::database("Maya"));
+        usuarios_model = new QSqlRelationalTableModel(this,Configuracion_global->groupDB);
     usuarios_model->setTable("usuarios");
     usuarios_model->select();
 }
@@ -770,7 +770,7 @@ void Configuracion::CerrarBDMediTec()
 }
 void Configuracion::CargarDatos(int id)
 {
-    QSqlQuery qEmpresa(QSqlDatabase::database("Maya"));
+    QSqlQuery qEmpresa(Configuracion_global->groupDB);
     qEmpresa.prepare("Select * from empresas where id =:id");
     qEmpresa.bindValue(":id",id);
     if (qEmpresa.exec()) {
@@ -1144,7 +1144,7 @@ void Configuracion::imprimir(QString repo, bool toPDF, bool preview, QMap<QStrin
     QSqlDatabase db = QSqlDatabase::database("Reports");
     if(db.isValid()) {
         QString source = "";
-        QSqlQuery q(QSqlDatabase::database("Maya"));
+        QSqlQuery q(Configuracion_global->groupDB);
         q.prepare("SELECT report_source FROM report where report_name =:name  order by report_grade desc limit 1;");
         q.bindValue(":name",repo);
         if(q.exec())
@@ -1244,7 +1244,7 @@ bool Configuracion::comprobarNIF(QString country_code, QString nif)
     QByteArray  nif_bytes = nif.toLatin1();
     ns2__checkVat.vatNumber = nif_bytes.data();
 
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     QString sql = QString("SELECT * FROM paises where pais = '%1'").arg(country_code);
     q.prepare(sql);
     if(q.exec())
@@ -1346,7 +1346,7 @@ float Configuracion::getCambioBlock(QString from, QString to, float cuanty)
 void Configuracion::updateTablaDivisas(QString current)
 {
     connect(this,SIGNAL(cambioReady(float,QString)),SLOT(applyCambio(float,QString)));
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     if(q.exec("SELECT * FROM monedas"))
     {
         while(q.next())
@@ -1438,7 +1438,7 @@ void Configuracion::applyCambio(float f, QString target)
     static int i= 1;
     qDebug() << i << target;
     i++;
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     QString sql = QString("UPDATE monedas SET cambio = '%1' WHERE nombre_corto ='%2';").arg(f).arg(target);
     if(!q.exec(sql))
         qDebug() << q.lastError();

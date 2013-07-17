@@ -69,7 +69,7 @@ void Frmrecepcion_pedidos::on_btnBuscar_clicked()
         consulta = " select id,pedido,ejercicio,fecha,proveedor from ped_pro where pedido = "+ui->txtNumPedido->text();
     }
 
-    modelPedidos->setQuery(consulta,QSqlDatabase::database("empresa"));
+    modelPedidos->setQuery(consulta,Configuracion_global->empresaDB);
     ui->tablaPedidos->setModel(modelPedidos);
     ui->tablaPedidos->setColumnHidden(0,true);
     modelPedidos->setHeaderData(1,Qt::Horizontal,tr("Pedido"));
@@ -92,7 +92,7 @@ void Frmrecepcion_pedidos::on_chkForzarCierre_clicked()
     {
         QModelIndex index = ui->tablaPedidos->currentIndex();
         int nid =ui->tablaPedidos->model()->data(ui->tablaPedidos->model()->index(index.row(),0),Qt::EditRole).toInt();
-        QSqlQuery queryPedido(QSqlDatabase::database("empresa"));
+        QSqlQuery queryPedido(Configuracion_global->empresaDB);
         queryPedido.prepare("update ped_pro set recibido_completo =:estado where id = :id");
         int estado;
         if(ui->chkForzarCierre->isChecked())
@@ -114,7 +114,7 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
 {
     int nid =ui->tablaPedidos->model()->data(ui->tablaPedidos->model()->index(index.row(),0),Qt::EditRole).toInt();
     id_pedido = nid;
-    QSqlQuery query_lineas(QSqlDatabase::database("empresa"));
+    QSqlQuery query_lineas(Configuracion_global->empresaDB);
     query_lineas.prepare("select * from lin_ped_pro where id_cab = :nid");
     query_lineas.bindValue(":nid",nid);
     int pos = 0;
@@ -235,18 +235,18 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
         if (rec_act!=0)
         {
             bool fallo = false;
-            QSqlDatabase::database("Maya").transaction();
-            QSqlDatabase::database("empresa").transaction();
+            Configuracion_global->groupDB.transaction();
+            Configuracion_global->empresaDB.transaction();
             //----------------------------------------------------
             // Marco el pedido como recibido al cambiar una linea
             //----------------------------------------------------
-            QSqlQuery queryCabecera(QSqlDatabase::database("empresa"));
+            QSqlQuery queryCabecera(Configuracion_global->empresaDB);
             if(!queryCabecera.exec("update ped_pro set recibido = 1 where id ="+QString::number(this->id_pedido)))
                 fallo = true;
             //---------------------------
             // Actualizo linea de pedido
             //---------------------------
-            QSqlQuery queryLineas(QSqlDatabase::database("empresa"));
+            QSqlQuery queryLineas(Configuracion_global->empresaDB);
             queryLineas.prepare("update lin_ped_pro set cantidad_pendiente =:pend, cantidad_recibida = :rec where id =:id");
             queryLineas.bindValue(":pend",nuevo_pend);
             queryLineas.bindValue(":rec",rec);
@@ -270,7 +270,7 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                 //  Si albaran = true  añado Linea albarán
                 // ----------------------------------------
                 if(albaran){
-                    QSqlQuery query_lin_alb_pro(QSqlDatabase::database("empresa"));
+                    QSqlQuery query_lin_alb_pro(Configuracion_global->empresaDB);
                     query_lin_alb_pro.prepare("INSERT INTO lin_alb_pro "
                                               "(id_cab,codigo,descripcion,coste,dto,"
                                               "iva,iva,cantidad,total,"
@@ -305,7 +305,7 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                 //  Si factura = true  añado Linea factura
                 // ----------------------------------------
                 if(factura){
-                    QSqlQuery query_lin_fac_pro(QSqlDatabase::database("empresa"));
+                    QSqlQuery query_lin_fac_pro(Configuracion_global->empresaDB);
                     query_lin_fac_pro.prepare("INSERT INTO lin_fac_pro "
                                               "( id_cab,codigo,descripcion,coste,porc_dto,"
                                               "porc_iva,iva,cantidad,total,"
@@ -341,7 +341,7 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                 // -------------------
 
                 int stock_fisico_almacen, stockreal,nCPR;
-                QSqlQuery queryProducto(QSqlDatabase::database("Maya"));
+                QSqlQuery queryProducto(Configuracion_global->groupDB);
                 if(queryProducto.exec("select stock_fisico_almacen, stock_real, cantidad_pendiente_recibir from articulos where id = " +
                                       QString::number(nid)))
                 {
@@ -370,12 +370,12 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
             }
             if (!fallo)
             {
-                QSqlDatabase::database("empresa").commit();
-                QSqlDatabase::database("Maya").commit();
+                Configuracion_global->empresaDB.commit();
+                Configuracion_global->groupDB.commit();
             } else
             {
-                QSqlDatabase::database("empresa").rollback();
-                QSqlDatabase::database("Maya").rollback();
+                Configuracion_global->empresaDB.rollback();
+                Configuracion_global->groupDB.rollback();
             }
 
             ui->tablaLineas->item(row,5)->setText(QString::number(nuevo_pend));
@@ -394,7 +394,7 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
     if(col ==8 ) // Coste
     {
         int id = ui->tablaLineas->item(row,10)->text().toInt();
-        QSqlQuery queryProducto(QSqlDatabase::database("Maya"));
+        QSqlQuery queryProducto(Configuracion_global->groupDB);
         queryProducto.prepare("select coste from articulos where id =:nid");
         queryProducto.bindValue(":nid",id);
         if(queryProducto.exec())
@@ -410,7 +410,7 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                 // Cambio pvp en linea_pedido
                 //----------------------------
                 int id_linea = ui->tablaLineas->item(row,0)->text().toInt();
-                QSqlQuery queryLineas(QSqlDatabase::database("empresa"));
+                QSqlQuery queryLineas(Configuracion_global->empresaDB);
                 queryLineas.prepare("update lin_ped_pro set coste_bruto =:coste where id =:id_linea");
                 queryLineas.bindValue(":coste",valor);
                 queryLineas.bindValue(":id_linea",id_linea);
@@ -477,7 +477,7 @@ void Frmrecepcion_pedidos::abrir_albaran()
         ui->btalbaran->setText(tr("Crear y cerrar Albarán"));
         ui->txtAlbaran->setFocus();
         albaran =  true;
-        QSqlQuery query_albaran(QSqlDatabase::database("empresa"));
+        QSqlQuery query_albaran(Configuracion_global->empresaDB);
         if(query_albaran.exec("insert into alb_pro  (albaran) values ('temp')"))
             id_albaran = query_albaran.lastInsertId().toInt();
         else
@@ -491,7 +491,7 @@ void Frmrecepcion_pedidos::abrir_albaran()
 
         } else
         {
-            QSqlQuery query_pedido(QSqlDatabase::database("empresa"));
+            QSqlQuery query_pedido(Configuracion_global->empresaDB);
             query_pedido.exec("Select * from ped_pro where id = "+QString::number(id_pedido));
             query_pedido.next();
             QDate fecha;
@@ -502,7 +502,7 @@ void Frmrecepcion_pedidos::abrir_albaran()
             //----------------------------
 
 
-            QSqlQuery query_albaran(QSqlDatabase::database("empresa"));
+            QSqlQuery query_albaran(Configuracion_global->empresaDB);
             query_albaran.prepare("update alb_pro  set albaran =:albaran, fecha = :fecha,id_proveedor=:id_proveedor,"
                                   "proveedor =:proveedor, cif_proveedor =:cif,pedido =:pedido,"
                                   "iva1 =:iva1, iva2 =:iva2, iva3 =:iva3, iva4 =:iva4, "
@@ -531,7 +531,7 @@ void Frmrecepcion_pedidos::abrir_albaran()
             // ----------------------
             // Sumar líneas albarán
             // ----------------------
-            QSqlQuery query_lin_alb_pro(QSqlDatabase::database("empresa"));
+            QSqlQuery query_lin_alb_pro(Configuracion_global->empresaDB);
             query_lin_alb_pro.prepare("select * from lin_alb_pro where id_cab = :id");
             query_lin_alb_pro.bindValue(":id",id_albaran);
             double base1,base2,base3,base4,iva1,iva2,iva3,iva4,dto1,dto2,dto3,dto4,total1,total2,total3,total4;
@@ -665,7 +665,7 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
         ui->btnFactura->setText(tr("Crear y cerrar Factura"));
         ui->txtFactura->setFocus();
         factura =  true;
-        QSqlQuery query_factura(QSqlDatabase::database("empresa"));
+        QSqlQuery query_factura(Configuracion_global->empresaDB);
         query_factura.prepare("insert into fac_pro  (factura,porc_iva1,porc_iva2,porc_iva3,porc_iva4,"
                               "porc_rec1,porc_rec2,porc_rec3,porc_rec4) values "
                               "('temp',:iva1,:iva2,:iva3,:iva4,:porc_rec1,:porc_rec2,:porc_rec3,:porc_rec4)");
@@ -687,7 +687,7 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
                                  tr("Aceptar"));
     } else
     {
-        QSqlQuery query_pedido(QSqlDatabase::database("empresa"));
+        QSqlQuery query_pedido(Configuracion_global->empresaDB);
         query_pedido.exec("Select * from ped_pro where id = "+QString::number(id_pedido));
         query_pedido.next();
         QDate fecha;
@@ -698,7 +698,7 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
         //----------------------------
 
 
-        QSqlQuery query_factura(QSqlDatabase::database("empresa"));
+        QSqlQuery query_factura(Configuracion_global->empresaDB);
         query_factura.prepare("update fac_pro  set factura =:factura, fecha = :fecha,id_proveedor=:id_proveedor,"
                               "proveedor =:proveedor, cif_proveedor =:cif,pedido =:pedido,"
                               "base1 =:base1,base2 =:base2,base3 =:base3, base4 =:base4, "
@@ -720,7 +720,7 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
         // ----------------------
         // Sumar líneas factura
         // ----------------------
-        QSqlQuery query_lin_fac_pro(QSqlDatabase::database("empresa"));
+        QSqlQuery query_lin_fac_pro(Configuracion_global->empresaDB);
         query_lin_fac_pro.prepare("select * from lin_fac_pro where id_cab = :id");
         query_lin_fac_pro.bindValue(":id",id_factura);
         double base1,base2,base3,base4,iva1,iva2,iva3,iva4,dto1,dto2,dto3,dto4,total1,total2,total3,total4,base,iva,dto,total;
@@ -843,7 +843,7 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
 
 void Frmrecepcion_pedidos::on_BtnCancelar_clicked()
 {
-    QSqlQuery queryFactura(QSqlDatabase::database("Maya"));
+    QSqlQuery queryFactura(Configuracion_global->groupDB);
     queryFactura.exec("delete from fac_pro where id ="+QString::number(this->id_factura));
     ui->lblfactura->setVisible(false);
     ui->txtFactura->setText("");
@@ -862,7 +862,7 @@ void Frmrecepcion_pedidos::on_BtnCancelar_clicked()
 void Frmrecepcion_pedidos::on_btncancelar_alb_clicked()
 {
 
-    QSqlQuery queryAlbaran(QSqlDatabase::database("Maya"));
+    QSqlQuery queryAlbaran(Configuracion_global->groupDB);
     queryAlbaran.exec("delete from alb_pro where id ="+QString::number(this->id_albaran));
     ui->lblAlbaran->setVisible(false);
     ui->txtAlbaran->setText("");

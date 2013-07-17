@@ -123,12 +123,12 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
     bool ok_empresa,ok_Maya;
     ok_empresa = true;
     ok_Maya = true;
-    QSqlDatabase::database("empresa").transaction();
-    QSqlDatabase::database("Maya").transaction();
+    Configuracion_global->empresaDB.transaction();
+    Configuracion_global->groupDB.transaction();
     if (ld->idLinea == -1)
     {
         //qDebug()<< ld->idLinea;
-        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        QSqlQuery queryArticulos(Configuracion_global->groupDB);
         queryArticulos.prepare("select id from articulos where codigo =:codigo");
         queryArticulos.bindValue(":codigo",ld->codigo);
         if(queryArticulos.exec())
@@ -136,7 +136,7 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
         else
             ok_Maya = false;
 
-        QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
+        QSqlQuery query_lin_ped_pro(Configuracion_global->empresaDB);
         query_lin_ped_pro.prepare("INSERT INTO lin_ped_pro (id_cab,id_articulo,codigo,"
                                   "descripcion, cantidad, precio,subtotal,porc_dto,dto,porc_iva,"
                                   "iva,total,cantidad_pendiente) VALUES (:id_cab,:id_articulo,:codigo,"
@@ -171,12 +171,12 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
         queryArticulos.bindValue(":cant_recibir2",ld->cantidad);
         queryArticulos.bindValue(":codigo",ld->codigo);
         if(queryArticulos.exec() && ok_empresa){
-            QSqlDatabase::database("empresa").commit();
-            QSqlDatabase::database("Maya").commit();
+            Configuracion_global->empresaDB.commit();
+            Configuracion_global->groupDB.commit();
         } else
         {
-            QSqlDatabase::database("empresa").rollback();
-            QSqlDatabase::database("Maya").rollback();
+            Configuracion_global->empresaDB.rollback();
+            Configuracion_global->groupDB.rollback();
         }
 
         ld->idLinea = query_lin_ped_pro.lastInsertId().toInt();
@@ -186,7 +186,7 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
         // --------------------------
         // Descuento unidades pedidas
         //---------------------------
-        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        QSqlQuery queryArticulos(Configuracion_global->groupDB);
         queryArticulos.prepare("update articulos set cantidad_pendiente_recibir = cantidad_pendiente_recibir-:cant_recibir,"
                                "stock_real = stock_real - :cant_recibir2 where codigo=:codigo");
         queryArticulos.bindValue(":cant_recibir",ld->cantidad_old);
@@ -206,7 +206,7 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
             queryArticulos.next();
         else
             ok_Maya = false;
-        QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
+        QSqlQuery query_lin_ped_pro(Configuracion_global->empresaDB);
         query_lin_ped_pro.prepare("UPDATE lin_ped_pro SET "
                                   "id_articulo =:id_articulo,"
                                   "codigo=:codigo,"
@@ -252,12 +252,12 @@ void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
         queryArticulos.bindValue(":cant_recibir2",ld->cantidad);
         queryArticulos.bindValue(":codigo",ld->codigo);
         if(queryArticulos.exec() && ok_empresa && ok_Maya){
-            QSqlDatabase::database("empresa").commit();
-            QSqlDatabase::database("Maya").commit();
+            Configuracion_global->empresaDB.commit();
+            Configuracion_global->groupDB.commit();
         } else
         {
-            QSqlDatabase::database("empresa").rollback();
-            QSqlDatabase::database("Maya").rollback();
+            Configuracion_global->empresaDB.rollback();
+            Configuracion_global->groupDB.rollback();
         }
     }
     ld->cantidad_old = ld->cantidad;
@@ -270,14 +270,14 @@ void FrmPedidosProveedor::lineaDeleted(lineaDetalle * ld)
     bool ok_empresa,ok_Maya;
     ok_empresa = true;
     ok_Maya = true;
-    QSqlDatabase::database("empresa").transaction();
-    QSqlDatabase::database("Maya").transaction();
+    Configuracion_global->empresaDB.transaction();
+    Configuracion_global->groupDB.transaction();
     if(ld->idLinea >-1)
     {
         // --------------------------
         // Descuento unidades pedidas
         //---------------------------
-        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        QSqlQuery queryArticulos(Configuracion_global->groupDB);
         queryArticulos.prepare("update articulos set cantidad_pendiente_recibir = cantidad_pendiente_recibir-:cant_recibir,"
                                "stock_real = stock_real + :cant_recibir2 where codigo=:codigo");
         queryArticulos.bindValue(":cant_recibir",ld->cantidad_old);
@@ -293,17 +293,17 @@ void FrmPedidosProveedor::lineaDeleted(lineaDetalle * ld)
         //----------------------
         // Borrar línea pedido
         //----------------------
-        QSqlQuery querylin_ped_pro(QSqlDatabase::database("empresa"));
+        QSqlQuery querylin_ped_pro(Configuracion_global->empresaDB);
         querylin_ped_pro.prepare("delete from lin_ped_pro where id =:id");
         querylin_ped_pro.bindValue(":id",id);
         if(querylin_ped_pro.exec() && ok_Maya)
         {
-            QSqlDatabase::database("empresa").commit();
-            QSqlDatabase::database("Maya").commit();
+            Configuracion_global->empresaDB.commit();
+            Configuracion_global->groupDB.commit();
         } else
         {
-            QSqlDatabase::database("empresa").rollback();
-            QSqlDatabase::database("Maya").rollback();
+            Configuracion_global->empresaDB.rollback();
+            Configuracion_global->groupDB.rollback();
         }
     }
     //qDebug() << "borra" << id;
@@ -757,7 +757,7 @@ void FrmPedidosProveedor::cargar_tabla_entregas()
 {
     QSqlQueryModel *modelEntregas = new  QSqlQueryModel(this);
     modelEntregas->setQuery("select * from proveedor_a_cuenta where id_proveedor = "+
-                            QString::number(oPedido_proveedor->id_proveedor)+" and disponible >0",QSqlDatabase::database("Maya"));
+                            QString::number(oPedido_proveedor->id_proveedor)+" and disponible >0",Configuracion_global->groupDB);
     ui->tabla_entregas->setModel(modelEntregas);
 }
 

@@ -53,7 +53,7 @@ QSqlTableModel *AuxModule::model()
 
 void AuxModule::setModel()
 {
-    _model = new QSqlTableModel(0,QSqlDatabase::database("Maya"));
+    _model = new QSqlTableModel(0,Configuracion_global->groupDB);
     _model->setTable("nivelacceso");
     _model->select();
 }

@@ -23,7 +23,7 @@ void TiposTarifa::clear()
 
 int TiposTarifa::anadir()
 {
-    QSqlQuery query_tarifas(QSqlDatabase::database("Maya"));
+    QSqlQuery query_tarifas(Configuracion_global->groupDB);
     query_tarifas.prepare("INSERT INTO codigotarifa (margen,margen_min)"
                           " VALUES (:margen,:margen_min)");
     query_tarifas.bindValue(":margen",Configuracion_global->margen);
@@ -44,7 +44,7 @@ int TiposTarifa::anadir()
 
 bool TiposTarifa::guardar()
 {
-    QSqlQuery query_tarifas(QSqlDatabase::database("Maya"));
+    QSqlQuery query_tarifas(Configuracion_global->groupDB);
     query_tarifas.prepare("UPDATE codigotarifa SET "
 
                           "descripcion=:descripcion,"
@@ -73,7 +73,7 @@ bool TiposTarifa::guardar()
 
 void TiposTarifa::recuperar(QString cSql)
 {
-    QSqlQuery queryTarifas(QSqlDatabase::database("Maya"));
+    QSqlQuery queryTarifas(Configuracion_global->groupDB);
     if(queryTarifas.exec(cSql))
      {
         cargar_datos(queryTarifas);
@@ -82,7 +82,7 @@ void TiposTarifa::recuperar(QString cSql)
 
 void TiposTarifa::recuperar(int id)
 {
-    QSqlQuery queryTarifas(QSqlDatabase::database("Maya"));
+    QSqlQuery queryTarifas(Configuracion_global->groupDB);
     if(queryTarifas.exec("select * from codigotarifa where id ="+QString::number(id)))
     {
         cargar_datos(queryTarifas);

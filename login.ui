@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="maya.qrc">
-    <normaloff>:/Icons/PNG/clientes.png</normaloff>:/Icons/PNG/clientes.png</iconset>
+    <normaloff>:/Icons/PNG/maya_logo.png</normaloff>:/Icons/PNG/maya_logo.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">QFrame {

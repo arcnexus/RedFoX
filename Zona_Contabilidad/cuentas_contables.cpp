@@ -8,7 +8,7 @@ Cuentas_contables::Cuentas_contables(QObject *parent) :
 
 bool Cuentas_contables::anadir_cuenta()
 {
-    QSqlQuery query_cuentas(QSqlDatabase::database("dbconta"));
+    QSqlQuery query_cuentas(Configuracion_global->contaDB);
     query_cuentas.prepare("INSERT INTO plan_general "
                           "(codigo_cta,descripcion,activo,codigo_balance,desglose_balance,afecta_a, saldo) "
                           "VALUES (:codigo_cta,:descripcion,:activo,:codigo_balance,:desglose_balance,:afecta_a,"
@@ -34,7 +34,7 @@ bool Cuentas_contables::anadir_cuenta()
 
 void Cuentas_contables::guardar_cuenta()
 {
-    QSqlQuery query_cuentas(QSqlDatabase::database("dbconta"));
+    QSqlQuery query_cuentas(Configuracion_global->contaDB);
     query_cuentas.prepare("UPDATE plan_general SET "
                           "codigo_cta = :codigo_cta,"
                           "descripcion =:descripcion,"
@@ -59,7 +59,7 @@ void Cuentas_contables::guardar_cuenta()
 
 void Cuentas_contables::recuperar_cuenta(QString cuenta)
 {
-    QSqlQuery query_cuenta(QSqlDatabase::database("dbconta"));
+    QSqlQuery query_cuenta(Configuracion_global->contaDB);
     query_cuenta.prepare("select * from plan_general where codigo_cta = :cuenta ");
     query_cuenta.bindValue(":cuenta",cuenta);
     if(query_cuenta.exec()){
@@ -78,7 +78,7 @@ void Cuentas_contables::recuperar_cuenta(QString cuenta)
 
 void Cuentas_contables::recuperar_cuenta(int id)
 {
-    QSqlQuery query_cuenta(QSqlDatabase::database("dbconta"));
+    QSqlQuery query_cuenta(Configuracion_global->contaDB);
     query_cuenta.prepare("select * from plan_general where id = :id ");
     query_cuenta.bindValue(":id",id);
     if(query_cuenta.exec()){

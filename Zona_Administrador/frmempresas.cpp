@@ -22,14 +22,14 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     // LLeno divisas
     //------------------
     QSqlQueryModel *modelDivisas = new QSqlQueryModel(this);
-    modelDivisas->setQuery("select moneda from monedas",QSqlDatabase::database("Maya"));
+    modelDivisas->setQuery("select moneda from monedas",Configuracion_global->groupDB);
     ui->cboDivisas->setModel(modelDivisas);
 
     //----------------
     // LLeno Tarifas
     //----------------
     QSqlQueryModel *modelTarifas = new QSqlQueryModel(this);
-    modelTarifas->setQuery("select descripcion from codigotarifa",QSqlDatabase::database("Maya"));
+    modelTarifas->setQuery("select descripcion from codigotarifa",Configuracion_global->groupDB);
     ui->cboTarifa->setModel(modelTarifas);
 
     getEmpresas();
@@ -219,7 +219,7 @@ void FrmEmpresas::txtpoblacion_editingFinished()
          int nid = BuscarPoblacion.Devolverid();
          if(nid > 0)
          {
-             QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
+             QSqlQuery qPoblacion(Configuracion_global->groupDB);
              QString cid;
              cid = QString::number(nid);
              qPoblacion.prepare("select poblacion, CP, provincia from poblaciones where id = :cid");
@@ -254,7 +254,7 @@ void FrmEmpresas::txtcp_editingFinished()
             int nid = BuscarPoblacion.Devolverid();
             if(nid > 0)
             {
-                QSqlQuery qPoblacion(QSqlDatabase::database("Maya"));
+                QSqlQuery qPoblacion(Configuracion_global->groupDB);
                 QString cid;
                 cid = QString::number(nid);
                 qPoblacion.prepare("select poblacion, CP,provincia from poblaciones where id = :cid");
@@ -363,7 +363,7 @@ void FrmEmpresas::getEmpresas()
 {
     _empresas.clear();
     QScopedPointer<QSqlQuery>QryEmpresas(new QSqlQuery(QSqlDatabase::database("Global")));
-    //QSqlQuery *QryEmpresas = new QSqlQuery(QSqlDatabase::database("Maya"));
+    //QSqlQuery *QryEmpresas = new QSqlQuery(Configuracion_global->groupDB);
 
     QryEmpresas->prepare("Select * from grupos");
 

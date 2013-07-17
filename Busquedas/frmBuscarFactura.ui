@@ -16,9 +16,25 @@
   <property name="windowOpacity">
    <double>1.000000000000000</double>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(208, 208, 208);</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
@@ -28,6 +44,9 @@
      </item>
      <item>
       <widget class="QDateEdit" name="FechaInicio">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="displayFormat">
         <string>dd/MM/yyyy</string>
        </property>
@@ -45,6 +64,9 @@
      </item>
      <item>
       <widget class="QDateEdit" name="FechaFin">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="displayFormat">
         <string>dd/MM/yyyy</string>
        </property>
@@ -66,6 +88,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="Importeminimo">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>0,00</string>
        </property>
@@ -83,6 +108,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="ImporteMaximo">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>99.999.999,00</string>
        </property>
@@ -103,7 +131,11 @@
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLineEdit" name="txtBuscar"/>
+      <widget class="QLineEdit" name="txtBuscar">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="1">
       <widget class="QPushButton" name="pushButton">
@@ -111,13 +143,27 @@
         <string>Buscar</string>
        </property>
        <property name="icon">
-        <iconset resource="../Maya.qrc">
+        <iconset resource="../maya.qrc">
          <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
        </property>
       </widget>
      </item>
      <item row="2" column="0" colspan="2">
-      <widget class="QTableView" name="Grid"/>
+      <widget class="QTableView" name="Grid">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 251, 172);</string>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -126,22 +172,30 @@
      <item>
       <widget class="QPushButton" name="btnAceptar">
        <property name="styleSheet">
-        <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
+        <string notr="true">QPushButton:disabled{color: rgb(192,192,192); }
+QPushButton:enabled{color: rgb(0); }</string>
        </property>
        <property name="text">
         <string>&amp;Aceptar</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../maya.qrc">
+         <normaloff>:/Icons/PNG/OK.png</normaloff>:/Icons/PNG/OK.png</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="btnCancelar">
        <property name="styleSheet">
-        <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
+        <string notr="true">QPushButton:disabled{color: rgb(192,192,192); }
+QPushButton:enabled{color: rgb(0); }</string>
        </property>
        <property name="text">
         <string>&amp;Cancelar</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../maya.qrc">
+         <normaloff>:/Icons/PNG/Cancel.png</normaloff>:/Icons/PNG/Cancel.png</iconset>
        </property>
       </widget>
      </item>
@@ -181,7 +235,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
   <tabstop>Grid</tabstop>
  </tabstops>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections>
   <connection>

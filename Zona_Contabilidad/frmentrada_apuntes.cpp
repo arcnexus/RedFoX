@@ -61,7 +61,7 @@ void FrmEntrada_apuntes::llenar_tabla_apunte(int asiento)
     QString cSQL ="select id,pos_en_asiento,fecha_asiento,cuenta_d,descripcion_d,importe_d,cuenta_h,descripcion_h,importe_h "
             "from diario where asiento = "+QString::number(asiento)+"  order by pos_en_asiento";
  //   qDebug() << cSQL;
-    modelApunte->setQuery(cSQL,QSqlDatabase::database("dbconta"));
+    modelApunte->setQuery(cSQL,Configuracion_global->contaDB);
     ui->tabla_asientos->setModel(modelApunte);
     ui->tabla_asientos->setColumnHidden(0,true);
     ui->tabla_asientos->setColumnWidth(1,80);
@@ -90,7 +90,7 @@ void FrmEntrada_apuntes::llenar_tabla_apunte(int asiento)
 
 void FrmEntrada_apuntes::totales_asiento(int asiento)
 {
-    QSqlQuery queryAsiento(QSqlDatabase::database("dbconta"));
+    QSqlQuery queryAsiento(Configuracion_global->contaDB);
     queryAsiento.exec("select * from diario where asiento = "+QString::number(asiento)+"  order by pos_en_asiento");
     int lineas=0;
     double importe_debe,importe_haber,descuadre;

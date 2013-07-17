@@ -100,7 +100,7 @@ void Login::on_btnAcceder_clicked()
     }
 
 
-    QSqlQuery qEmpresa(QSqlDatabase::database("Maya"));
+    QSqlQuery qEmpresa(Configuracion_global->groupDB);
     qEmpresa.prepare("select * from empresas where nombre = :nombreemp");
     qEmpresa.bindValue(":nombreemp",ui->cboEmpresa->currentText());
 
@@ -117,7 +117,7 @@ void Login::on_btnAcceder_clicked()
             QMessageBox::warning(this,tr("ABRIR EMPRESA"),tr("No se encuentra la empresa"),tr("Aceptar"));
     }
 
-    QSqlQuery qryUsers(QSqlDatabase::database("Maya"));
+    QSqlQuery qryUsers(Configuracion_global->groupDB);
 
     qryUsers.prepare( "SELECT * FROM usuarios where nombre =:Nombre" );
     qryUsers.bindValue(":Nombre",ui->lineUsuario->text());

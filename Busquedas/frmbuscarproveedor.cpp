@@ -1,8 +1,6 @@
 #include "frmbuscarproveedor.h"
 #include "ui_frmbuscarproveedor.h"
-#include <QtSql>
-#include <QSqlDatabase>
-#include<QSqlQueryModel>
+
 
 FrmBuscarProveedor::FrmBuscarProveedor(QWidget *parent) :
     QDialog(parent),
@@ -22,7 +20,7 @@ void FrmBuscarProveedor::on_btnBuscar_clicked()
 {
     modelo = new QSqlQueryModel(this);
     modelo->setQuery("select id, proveedor, codigo,cif from proveedores where proveedor like'"+ui->txtcBuscar->text()+"%'",
-                     QSqlDatabase::database("Maya"));
+                     Configuracion_global->groupDB);
     ui->tableProv->setModel(modelo);
     ui->tableProv->setColumnHidden(0,true);
     modelo->setHeaderData(1,Qt::Horizontal,tr("Proveedor"));

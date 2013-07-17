@@ -435,6 +435,7 @@ void FrmPedidos::on_btnSiguiente_clicked()
         ui->btnEditar->setEnabled(true);
         ui->btn_convertir->setEnabled(true);
         ui->btnAnterior->setEnabled(true);
+        ui->btnImprimir->setEnabled(true);
     }
     else
     {
@@ -509,14 +510,14 @@ void FrmPedidos::on_btnEditar_clicked()
 void FrmPedidos::on_btnGuardar_clicked()
 {
     LLenarPedido();
-    QSqlDatabase::database("empresa").transaction();
+    Configuracion_global->empresaDB.transaction();
     bool succes = true;
 
     succes &= oPedido->GuardarPedido(oPedido->id);
 
     if(succes)
     {
-        succes = QSqlDatabase::database("empresa").commit();
+        succes = Configuracion_global->empresaDB.commit();
     }
     if(succes)
     {
@@ -527,9 +528,9 @@ void FrmPedidos::on_btnGuardar_clicked()
     else
     {
         QMessageBox::critical(this,tr("Error"),
-                              tr("Error al guardar el pedido.\n")+QSqlDatabase::database("empresa").lastError().text(),
+                              tr("Error al guardar el pedido.\n")+Configuracion_global->empresaDB.lastError().text(),
                               tr("&Aceptar"));
-        QSqlDatabase::database("empresa").rollback();
+        Configuracion_global->empresaDB.rollback();
     }
 }
 
@@ -576,16 +577,16 @@ void FrmPedidos::on_btn_borrar_clicked()
                                tr("&Continuar"))== QMessageBox::Accepted)
     {
         bool succes = true;
-        QSqlDatabase::database("empresa").transaction();
+        Configuracion_global->empresaDB.transaction();
 
-        QSqlQuery q(QSqlDatabase::database("empresa"));
+        QSqlQuery q(Configuracion_global->empresaDB);
         succes &= oPedido->BorrarLineas(oPedido->id);
         q.prepare("DELETE FROM ped_cli WHERE id = "+QString::number(oPedido->id));
         succes &= q.exec();
 
         //TODO control de stock
         if(succes)
-            succes &= QSqlDatabase::database("empresa").commit();
+            succes &= Configuracion_global->empresaDB.commit();
 
         if(succes)
         {
@@ -595,7 +596,7 @@ void FrmPedidos::on_btn_borrar_clicked()
             on_btnSiguiente_clicked();
         }
         else
-            QSqlDatabase::database("empresa").rollback();
+            Configuracion_global->empresaDB.rollback();
     }
 }
 
@@ -656,11 +657,11 @@ void FrmPedidos::lineaReady(lineaDetalle * ld)
     bool ok_empresa,ok_Maya;
     ok_empresa = true;
     ok_Maya = true;
-    QSqlDatabase::database("empresa").transaction();
-    QSqlDatabase::database("Maya").transaction();
+    Configuracion_global->empresaDB.transaction();
+    Configuracion_global->groupDB.transaction();
     if (ld->idLinea == -1)
     {
-        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        QSqlQuery queryArticulos(Configuracion_global->groupDB);
         queryArticulos.prepare("select id from articulos where codigo =:codigo");
         queryArticulos.bindValue(":codigo",ld->codigo);
         if(queryArticulos.exec())
@@ -668,7 +669,7 @@ void FrmPedidos::lineaReady(lineaDetalle * ld)
         else
             ok_Maya = false;
 
-        QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
+        QSqlQuery query_lin_ped_pro(Configuracion_global->empresaDB);
         query_lin_ped_pro.prepare("INSERT INTO lin_ped (id_Cab,id_articulo,codigo,"
                                   "descripcion, cantidad, precio,subtotal,porc_dto,dto,porc_iva,"
                                   "total,cantidad_a_servir) VALUES (:id_cab,:id_articulo,:codigo,"
@@ -699,14 +700,14 @@ void FrmPedidos::lineaReady(lineaDetalle * ld)
     } else
     {
         //TODO control stock en pedidos cli
-        QSqlQuery queryArticulos(QSqlDatabase::database("Maya"));
+        QSqlQuery queryArticulos(Configuracion_global->groupDB);
         queryArticulos.prepare("select id from articulos where codigo =:codigo");
         queryArticulos.bindValue(":codigo",ld->codigo);
         if(queryArticulos.exec())
             queryArticulos.next();
         else
             ok_Maya = false;
-        QSqlQuery query_lin_ped_pro(QSqlDatabase::database("empresa"));
+        QSqlQuery query_lin_ped_pro(Configuracion_global->empresaDB);
 
         query_lin_ped_pro.prepare("UPDATE lin_ped SET "
                                   "id_articulo =:id_articulo,"
@@ -744,12 +745,12 @@ void FrmPedidos::lineaReady(lineaDetalle * ld)
         }
         //TODO control stock en pedidos cli
         if(queryArticulos.exec() && ok_empresa && ok_Maya){
-            QSqlDatabase::database("empresa").commit();
-            QSqlDatabase::database("Maya").commit();
+            Configuracion_global->empresaDB.commit();
+            Configuracion_global->groupDB.commit();
         } else
         {
-            QSqlDatabase::database("empresa").rollback();
-            QSqlDatabase::database("Maya").rollback();
+            Configuracion_global->empresaDB.rollback();
+            Configuracion_global->groupDB.rollback();
         }
     }
     ld->cantidad_old = ld->cantidad;
@@ -762,22 +763,22 @@ void FrmPedidos::lineaDeleted(lineaDetalle * ld)
     bool ok_empresa,ok_Maya;
     ok_empresa = true;
     ok_Maya = true;
-    QSqlDatabase::database("empresa").transaction();
-    QSqlDatabase::database("Maya").transaction();
+    Configuracion_global->empresaDB.transaction();
+    Configuracion_global->groupDB.transaction();
     if(ld->idLinea >-1)
     {
         //TODO control de stock
-        QSqlQuery q(QSqlDatabase::database("empresa"));
+        QSqlQuery q(Configuracion_global->empresaDB);
         q.prepare("delete from lin_ped where id =:id");
         q.bindValue(":id",ld->idLinea);
         if(q.exec() && ok_Maya)
         {
-            QSqlDatabase::database("empresa").commit();
-            QSqlDatabase::database("Maya").commit();
+            Configuracion_global->empresaDB.commit();
+            Configuracion_global->groupDB.commit();
         } else
         {
-            QSqlDatabase::database("empresa").rollback();
-            QSqlDatabase::database("Maya").rollback();
+            Configuracion_global->empresaDB.rollback();
+            Configuracion_global->groupDB.rollback();
         }
     }
     delete ld;
@@ -796,7 +797,7 @@ void FrmPedidos::convertir_enFactura()
         {
             LLenarPedido();
             Factura oFactura(this);
-            QSqlDatabase::database("empresa").transaction();
+            Configuracion_global->empresaDB.transaction();
             bool transaccion = true;
             //-----------------------
             // LLeno objeto factura
@@ -863,8 +864,8 @@ void FrmPedidos::convertir_enFactura()
             //-------------------
             //  INSERTAR LÍNEAS
             //-------------------
-            QSqlQuery lineas_ped(QSqlDatabase::database("empresa"));
-            QSqlQuery lineas_fac(QSqlDatabase::database("empresa"));
+            QSqlQuery lineas_ped(Configuracion_global->empresaDB);
+            QSqlQuery lineas_fac(Configuracion_global->empresaDB);
 
             if(lineas_ped.exec("Select * from lin_ped where id_Cab ="+QString::number(oPedido->id)))
             {
@@ -914,10 +915,10 @@ void FrmPedidos::convertir_enFactura()
                 ui->txtcNumFra->setText(oPedido->factura);
                 ui->txtcNumFra->setVisible(true);
                 ui->lbfacturado->setVisible(true);
-                QSqlDatabase::database("empresa").commit();
+                Configuracion_global->empresaDB.commit();
             } else
             {
-                QSqlDatabase::database("empresa").rollback();
+                Configuracion_global->empresaDB.rollback();
                 QMessageBox::warning(this,tr("Pedidos de proveedor"),
                                      tr("No se ha podido crear la factura"),tr("Aceptar"));
             }
@@ -933,3 +934,47 @@ void FrmPedidos::on_tabWidget_2_currentChanged(int index)
     helper.resizeTable();
 }
 
+
+void FrmPedidos::on_txtcodigo_cliente_editingFinished()
+{
+    if(ui->txtcodigo_cliente->text() != oPedido->codigo_cliente){
+        oCliente3->Recuperar("select * from clientes where codigo_cliente='"+ui->txtcodigo_cliente->text()+"'");
+        LLenarCamposCliente();
+        helper.set_tarifa(oCliente3->tarifa_cliente);
+    }
+}
+
+void FrmPedidos::on_btnImprimir_clicked()
+{
+    FrmDialogoImprimir dlg_print(this);
+    dlg_print.set_email(oCliente3->email);
+    dlg_print.set_preview(false);
+    if(dlg_print.exec() == dlg_print.Accepted)
+    {
+        bool ok /*= oPedido->set_impreso(true)*/;
+        if(ok)
+        {
+            ui->lbimpreso->setVisible(true);
+            int valor = dlg_print.get_option();
+             QMap <QString,QVariant> parametros;
+
+            switch (valor) {
+            case 1: // Impresora
+                Configuracion_global->imprimir("pedido_"+QString::number(oCliente3->ididioma),false,false,parametros,this);
+                break;
+            case 2: // email
+                // TODO - enviar pdf por mail
+                break;
+            case 3: // PDF
+                Configuracion_global->imprimir("pedido_"+QString::number(oCliente3->ididioma),true,false,parametros,this);
+                break;
+            case 4: //preview
+                Configuracion_global->imprimir("pedido_"+QString::number(oCliente3->ididioma),false,true,parametros,this);
+                break;
+            default:
+                break;
+            }
+
+        }
+    }
+}

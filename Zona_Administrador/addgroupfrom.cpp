@@ -163,7 +163,7 @@ void addGroupFrom::_createTables(bool error, QSqlDatabase db)
 
 void addGroupFrom::_insertNewGroup(QString grupo)
 {
-    QSqlQuery q2(QSqlDatabase::database("Maya"));
+    QSqlQuery q2(Configuracion_global->groupDB);
     port = getPort() == 0 ? 3306 : getPort();
 
 

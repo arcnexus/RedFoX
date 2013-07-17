@@ -111,6 +111,9 @@ public slots:
                      int id_factura, int tipo, double importe_deuda, double pagado, double pendiente_cobro,
                      QString entidad, QString oficina,QString dc ,QString cuenta);
     void CobrarDeudaTotal(int id_deuda);
+
+    void anadir_entrega_cuenta(int id_cliente, QDate fecha, double importe_a_cuenta, QString concepto);
+
     void AnadirPersonaContacto(int id, QString Nombre, QString desc_telefono1, QString Telefono1, QString desc_telefono2,
                                QString Telefono2, QString desc_telefono3, QString Telefono3,
                                QString desc_movil1, QString Movil1, QString desc_movil2, QString Movil2, QString cargo,

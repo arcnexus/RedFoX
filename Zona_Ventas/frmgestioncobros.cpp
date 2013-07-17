@@ -13,7 +13,7 @@ frmGestionCobros::frmGestionCobros(QWidget *parent) :
     ui->txtbuscar_cliente->setText("a");
     QSqlQueryModel *modelo_clientes = new QSqlQueryModel(this);
     modelo_clientes->setQuery("select id,codigo_cliente, nombre_fiscal, cif_nif from clientes where nombre_fiscal like '%a' limit 0,150",
-                              QSqlDatabase::database("Maya"));
+                              Configuracion_global->groupDB);
 
     ui->tabla_clientes->setModel(modelo_clientes);
     ui->tabla_clientes->setColumnHidden(0,true);
@@ -47,11 +47,11 @@ void frmGestionCobros::on_txtbuscar_cliente_textChanged(const QString &arg1)
     {
         cSQL = "select id,codigo_cliente, nombre_fiscal, cif_nif from clientes where "+indice+
                 " like '"+arg1.trimmed()+"%'";
-        modelo_clientes->setQuery(cSQL,QSqlDatabase::database("Maya"));
+        modelo_clientes->setQuery(cSQL,Configuracion_global->groupDB);
     } else {
         cSQL= "select id,codigo_cliente, nombre_fiscal, cif_nif from clientes where "+indice+
                                           " like '%"+arg1.trimmed()+"%'";
-        modelo_clientes->setQuery(cSQL,QSqlDatabase::database("Maya"));
+        modelo_clientes->setQuery(cSQL,Configuracion_global->groupDB);
     }
 
     ui->tabla_clientes->setModel(modelo_clientes);

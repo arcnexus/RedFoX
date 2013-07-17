@@ -21,7 +21,7 @@ void frmPersonasContactoCliente::RefrescarTabla()
     QString cSQL = "select id, nombre, cargo_empresa, desc_telefono1,telefono1, desc_telefono2, "
             "telefono2, desc_movil1, movil,email"
             " from Personascontactocliente where  id_cliente= "+ QString::number(nid_cliente);
-    lista->setQuery(cSQL,QSqlDatabase::database("Maya"));
+    lista->setQuery(cSQL,Configuracion_global->groupDB);
 ;
 
     ui->tabla_PersonasContacto->setModel(lista);
@@ -83,7 +83,7 @@ void frmPersonasContactoCliente::on_btnEliminar_clicked()
 void frmPersonasContactoCliente::on_tabla_PersonasContacto_clicked(const QModelIndex &index)
 {
     int id = ui->tabla_PersonasContacto->model()->data(ui->tabla_PersonasContacto->model()->index(index.row(),0),Qt::EditRole).toInt();
-    QSqlQuery queryPersonas(QSqlDatabase::database("Maya"));
+    QSqlQuery queryPersonas(Configuracion_global->groupDB);
     if(queryPersonas.exec("select * from Personascontactocliente where id = "+QString::number(id)))
     {
         queryPersonas.next();

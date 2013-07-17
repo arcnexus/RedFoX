@@ -457,7 +457,7 @@ void Table_Helper::comprobarCantidad(int row)
     int stockMin = 0;
     bool controlarStock = true;
     QString codigo = helped_table->item(row,0)->text();
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     QString sql = QString("SELECT * FROM articulos WHERE codigo = '%1'").arg(codigo);
     query.prepare(sql);
     if(query.exec())
@@ -512,7 +512,7 @@ void Table_Helper::comprobarStock(int row)
     int stockMin = 0;
     bool controlarstock = true;
     QString codigo = helped_table->item(row,0)->text();
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     QString sql = QString("SELECT * FROM articulos WHERE codigo = '%1'").arg(codigo);
     query.prepare(sql);
     if(query.exec())
@@ -675,7 +675,7 @@ void Table_Helper::calcular_por_Base(QString sbase)
 void Table_Helper::rellenar_con_Articulo(int row)
 {
     QString codigo = helped_table->item(row,0)->text();
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     QString sql;
     if (this->comprando)
         sql = QString("SELECT * FROM vistaart_tarifa WHERE codigo_fabricante = '%1'").arg(codigo);

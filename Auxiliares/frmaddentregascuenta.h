@@ -18,6 +18,10 @@ public:
     double importe;
     QDate fecha;
     QString concepto;
+    int id_cliente;
+    void set_concepto(QString concepto);
+    double get_importe_entrega();
+    void set_id_cliente(int id);
     
 private slots:
     void on_txtImporte_editingFinished();

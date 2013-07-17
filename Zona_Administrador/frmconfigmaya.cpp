@@ -17,7 +17,7 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     //Configuracion_global->Cargar_paises();
     ui->setupUi(this);
     QSqlQueryModel *qUsers = new QSqlQueryModel(this);
-    qUsers->setQuery("select nombre from usuarios",QSqlDatabase::database("Maya"));
+    qUsers->setQuery("select nombre from usuarios",Configuracion_global->groupDB);
     ui->cboUsuarioActivo->setModel(qUsers);
 
 
@@ -182,8 +182,8 @@ void frmConfigmaya::configurar()
 
 void frmConfigmaya::on_btnAnadir_cuentas_clicked()
 {
-    QSqlQuery q_clientes(QSqlDatabase::database("Maya"));
-    QSqlQuery q_cuentas(QSqlDatabase::database("dbconta")) ;
+    QSqlQuery q_clientes(Configuracion_global->groupDB);
+    QSqlQuery q_cuentas(Configuracion_global->contaDB) ;
     bool registros = true;
     int id = 0;
    while (registros) {

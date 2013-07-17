@@ -7,8 +7,8 @@ EntregasCuenta::EntregasCuenta(QObject *parent) :
 
 bool EntregasCuenta::Anadir(int tipo, int id_pro_cli, double importe, QDate fecha,QString concepto)
 {
-    QSqlQuery queryEntregas(QSqlDatabase::database("Maya"));
-    QSqlDatabase::database("Maya").transaction();
+    QSqlQuery queryEntregas(Configuracion_global->groupDB);
+    Configuracion_global->groupDB.transaction();
     switch (tipo) {
     case 1: // Clientes
 
@@ -27,16 +27,16 @@ bool EntregasCuenta::Anadir(int tipo, int id_pro_cli, double importe, QDate fech
             queryEntregas.prepare("update clientes set importe_a_cuenta = importe_a_cuenta + :importe"
                                   " where id =:id_cli");
             if(queryEntregas.exec()){
-                QSqlDatabase::database("Maya").commit();
+                Configuracion_global->groupDB.commit();
                 return true;
             } else
             {
-                QSqlDatabase::database("Maya").rollback();
+                Configuracion_global->groupDB.rollback();
                 return false;
             }
         } else
         {
-            QSqlDatabase::database("Maya").rollback();
+            Configuracion_global->groupDB.rollback();
             return false;
         }
         break;
@@ -58,16 +58,16 @@ bool EntregasCuenta::Anadir(int tipo, int id_pro_cli, double importe, QDate fech
             queryEntregas.bindValue(":importe",importe);
             queryEntregas.bindValue(":id_pro",id_pro_cli);
             if(queryEntregas.exec()){
-                QSqlDatabase::database("Maya").commit();
+                Configuracion_global->groupDB.commit();
                 return true;
             } else
             {
-                QSqlDatabase::database("Maya").rollback();
+                Configuracion_global->groupDB.rollback();
                 return false;
             }
         } else
         {
-            QSqlDatabase::database("Maya").rollback();
+            Configuracion_global->groupDB.rollback();
             return false;
         }
         break;

@@ -8,7 +8,7 @@ ModuleExtension::ModuleExtension(QObject *parent) :
 
 void ModuleExtension::tryRegisterModule(MayaModule::module_zone zone, QString name, int &id)
 {
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     q.prepare("SELECT * FROM modulos where module_name = :name");
     q.bindValue(":name",name);
     if(q.exec())
@@ -27,8 +27,8 @@ MayaModule::accessLevel ModuleExtension::getUserLvl(int _id_modulo)
 
 void ModuleExtension::RegisterModule(MayaModule::module_zone zone, QString name, int &_id_modulo)
 {
-    QSqlQuery q(QSqlDatabase::database("Maya"));
-    QSqlQuery q2(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
+    QSqlQuery q2(Configuracion_global->groupDB);
 
     q.prepare("INSERT INTO modulos (module_zone, module_name) VALUES (:zone, :name);");
     q.bindValue(":zone",zone);
@@ -51,7 +51,7 @@ void ModuleExtension::RegisterModule(MayaModule::module_zone zone, QString name,
 
 bool ModuleExtension::userHaveAcess(int _id_modulo, int id_user)
 {
-    QSqlQuery q(QSqlDatabase::database("Maya"));
+    QSqlQuery q(Configuracion_global->groupDB);
     q.prepare("SELECT * FROM accesousuarios where id_modulo = :id and id_user=:id_user");
     q.bindValue(":id",_id_modulo);
     q.bindValue(":id_user",id_user);

@@ -9,11 +9,11 @@ Cliente::Cliente(QObject *parent) :
 }
 void Cliente::Guardar() {
     bool transaccion = true;
-    QSqlDatabase::database("Maya").transaction();
+    Configuracion_global->groupDB.transaction();
     if(Configuracion_global->contabilidad)
-        QSqlDatabase::database("dbconta").transaction();
+        Configuracion_global->contaDB.transaction();
 
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
     query.prepare( "UPDATE clientes set "
                    "codigo_cliente = :codigo_cliente,"
                    "apellido1 = :apellido1,"
@@ -181,15 +181,15 @@ void Cliente::Guardar() {
     }
     if(transaccion)
     {
-        QSqlDatabase::database("Maya").commit();
+        Configuracion_global->groupDB.commit();
         if(Configuracion_global->contabilidad)
-            QSqlDatabase::database("dbconta").commit();
+            Configuracion_global->contaDB.commit();
 
     } else
     {
-        QSqlDatabase::database("Maya").rollback();
+        Configuracion_global->groupDB.rollback();
         if(Configuracion_global->contabilidad)
-            QSqlDatabase::database("dbconta").rollback();
+            Configuracion_global->contaDB.rollback();
         QMessageBox::critical(qApp->activeWindow(),tr("error al guardar datos cliente. Descripción Error: "),
                               tr("No se pudo realizar la transacción, no se guardó la ficha"));
     }
@@ -199,7 +199,8 @@ void Cliente::Guardar() {
 void Cliente::GuardarWeb()
 {
    Configuracion_global->AbrirDbWeb();
-   QSqlQuery query(QSqlDatabase::database("dbweb"));
+  // QSqlQuery query(Configuracion_global->dbWeb));
+   QSqlQuery query(Configuracion_global->dbWeb);
    query.prepare( "UPDATE clientes set "
                   "codigo_cliente = :codigo_cliente,"
                   "apellido1 = :apellido1,"
@@ -348,7 +349,7 @@ void Cliente::GuardarWeb()
    Configuracion_global->CerrarDbWeb();
 }
 void Cliente::Anadir() {
-    QSqlQuery query(QSqlDatabase::database("Maya"));
+    QSqlQuery query(Configuracion_global->groupDB);
          query.prepare("INSERT INTO clientes (codigo_cliente,cuenta_contable,cuenta_iva_repercutido,"
                        "cuenta_deudas,cuenta_cobros,tarifa_cliente) "
                        "VALUES (:codigo_cliente,:cuenta_contable,:cuenta_iva_repercutido,"
@@ -392,7 +393,7 @@ void Cliente::anadirWeb()
 }
 
 void Cliente::Recuperar(QString cSQL) {
-    qryCliente = new QSqlQuery(QSqlDatabase::database("Maya"));
+    qryCliente = new QSqlQuery(Configuracion_global->groupDB);
     qryCliente->prepare(cSQL);
     if( !qryCliente->exec() ) {
         QMessageBox::critical(qApp->activeWindow(), "error:", qryCliente->lastError().text());
@@ -485,7 +486,7 @@ void Cliente::Recuperar(QString cSQL) {
 void Cliente::AnadirDeuda(int id_cliente, QDate fechaDeuda, QDate fechaVto, QString documento, int id_Tiquet,
                           int id_factura, int tipo, double importe_deuda, double pagado = 0, double pendiente_cobro = 0,
                           QString entidad = "", QString oficina = "", QString dc="", QString cuenta = "") {
-    QSqlQuery qCliente(QSqlDatabase::database("Maya"));
+    QSqlQuery qCliente(Configuracion_global->groupDB);
     double importe;
     importe = this->deuda_actual + importe_deuda;
     qCliente.prepare("Update clientes set  deuda_actual = :importe where id =:id_cliente");
@@ -495,7 +496,7 @@ void Cliente::AnadirDeuda(int id_cliente, QDate fechaDeuda, QDate fechaVto, QStr
         QMessageBox::critical(qApp->activeWindow(),tr("Añadir deuda cliente"),tr("Ha fallado la inserción de la deuda en la ficha del paciente"),tr("&Aceptar"));
     }
 
-    QSqlQuery qClientes_Deuda(QSqlDatabase::database("Maya"));
+    QSqlQuery qClientes_Deuda(Configuracion_global->groupDB);
     qClientes_Deuda.prepare("Insert into clientes_deuda (id_cliente,fecha,vencimiento,documento,id_ticket,id_factura,tipo,"
                             "importe,pagado,pendiente_cobro,entidad,oficina,dc,cuenta Values (:id_cliente,:fecha,:vencimiento,"
                             ":documento,:id_ticket,:id_factura,:tipo,:importe,:pagado,:pendiente_cobro,:entidad,:oficina,"
@@ -525,11 +526,41 @@ void Cliente::CobrarDeudaTotal(int id_deuda)
 
 }
 
+void Cliente::anadir_entrega_cuenta(int id_cliente, QDate fecha, double importe_a_cuenta, QString concepto)
+{
+    bool estado = true;
+    Configuracion_global->groupDB.transaction();
+    QSqlQuery q_entregas(Configuracion_global->groupDB);
+    q_entregas.prepare("insert into clientes_entregas (id_cliente,fecha_entrega,importe,concepto,disponible)"
+                       "VALUES(:id_cliente,:fecha_entrega,:importe_a_cuenta,:concepto,:disponible)");
+    q_entregas.bindValue(":id_cliente",id_cliente);
+    q_entregas.bindValue(":fecha_entrega",fecha);
+    q_entregas.bindValue(":importe_a_acuenta",importe_a_cuenta);
+    q_entregas.bindValue(":concepto",concepto);
+    q_entregas.bindValue(":disponible",importe_a_cuenta);
+    if(!q_entregas.exec())
+        estado = false;
+    QSqlQuery q_cliente(Configuracion_global->groupDB);
+
+    q_cliente.prepare("update clientes set importe_a_cuenta = importe_a_cuenta + :importe_a_cuenta where id = :id");
+    q_cliente.bindValue(":importe_a_cuenta",importe_a_cuenta);
+    q_cliente.bindValue(":id",id_cliente);
+    if(q_cliente.exec() && estado==true)
+    {
+        qDebug() << q_cliente.lastQuery();
+        Configuracion_global->groupDB.commit();
+    } else
+    {
+        Configuracion_global->groupDB.rollback();
+        QMessageBox::warning(qApp->activeWindow(),tr("Entregas a cuenta"),tr("No se pudo guardar la entrega"));
+    }
+}
+
 void Cliente::AnadirPersonaContacto(int id, QString Nombre, QString desc_telefono1, QString Telefono1,
                                     QString desc_telefono2, QString Telefono2, QString desc_telefono3, QString Telefono3,
                                     QString desc_movil1, QString Movil1, QString desc_movil2, QString Movil2, QString cargo, QString email)
 {
-    QSqlQuery qContactos(QSqlDatabase::database("Maya"));
+    QSqlQuery qContactos(Configuracion_global->groupDB);
     qContactos.prepare("INSERT INTO Personascontactocliente "
                        "(nombre,"
                        "telefono1,"
@@ -586,7 +617,7 @@ void Cliente::GuardarPersonaContacto(int id, QString Nombre, QString desc_telefo
                                      QString desc_movil1, QString Movil1, QString desc_movil2, QString Movil2,
                                      QString cargo, QString email,int id_cliente)
 {
-    QSqlQuery qContactos(QSqlDatabase::database("Maya"));
+    QSqlQuery qContactos(Configuracion_global->groupDB);
     qContactos.prepare("UPDATE Personascontactocliente set "
                        "nombre =:nombre,"
                        "telefono1 = :telefono1,"
@@ -624,7 +655,7 @@ void Cliente::GuardarPersonaContacto(int id, QString Nombre, QString desc_telefo
 
 bool Cliente::BorrarPersona_contacto(int id_persona)
 {
-    QSqlQuery queryPersona(QSqlDatabase::database("Maya"));
+    QSqlQuery queryPersona(Configuracion_global->groupDB);
     if(queryPersona.exec("delete from Personascontactocliente where id ="+QString::number(id_persona)))
         return true;
     else
@@ -639,7 +670,7 @@ bool Cliente::BorrarPersona_contacto(int id_persona)
 void Cliente::Guardardireccion(bool Anadir, QString Descripcion, QString direccion1, QString direccion2, QString CP, QString Poblacion,
                                QString Provincia, QString Pais,int id_cliente,int id)
 {
-    QSqlQuery qdirecciones(QSqlDatabase::database("Maya"));
+    QSqlQuery qdirecciones(Configuracion_global->groupDB);
     if(Anadir){
         qdirecciones.prepare("INSERT INTO cliente_direcciones (`descripcion,` `direccion1`, `direccion2`, `cp`, `poblacion`,"
                          "`provincia`, `id_pais`, `id_cliente`) "
@@ -676,7 +707,7 @@ void Cliente::Guardardireccion(bool Anadir, QString Descripcion, QString direcci
     }
 }
 void Cliente::DescontarDeuda(int id_deuda, double pagado){
-    QSqlQuery qClientes_deuda(QSqlDatabase::database("Maya"));
+    QSqlQuery qClientes_deuda(Configuracion_global->groupDB);
     qClientes_deuda.prepare("Select * from clientes_deuda where id =:id_deuda");
     qClientes_deuda.bindValue(":id_deuda",id_deuda);
     if (!qClientes_deuda.exec()) {
@@ -693,9 +724,9 @@ void Cliente::Borrar(int id_cliente)
                           tr("No"),tr("Si")) == QMessageBox::Accepted)
     {
         bool borrado_ok = true;
-        QSqlDatabase::database("Maya").transaction();
+        Configuracion_global->groupDB.transaction();
 
-        QSqlQuery qTipos(QSqlDatabase::database("Maya"));
+        QSqlQuery qTipos(Configuracion_global->groupDB);
         qTipos.prepare("delete from tipocliente where id_cliente =:id_cliente");
         qTipos.bindValue(":id_cliente",id_cliente);
         if (!qTipos.exec()) {
@@ -707,7 +738,7 @@ void Cliente::Borrar(int id_cliente)
             BorrarWeb(this->id_web);
 
 
-        QSqlQuery qdirecciones(QSqlDatabase::database("Maya"));
+        QSqlQuery qdirecciones(Configuracion_global->groupDB);
         qdirecciones.prepare("Delete from cliente_direcciones where id_cliente =:id_cliente");
         qdirecciones.bindValue(":id_cliente",id_cliente);
         if(!qdirecciones.exec()) {
@@ -717,7 +748,7 @@ void Cliente::Borrar(int id_cliente)
         }
 
 
-        QSqlQuery qryCliente(QSqlDatabase::database("Maya"));
+        QSqlQuery qryCliente(Configuracion_global->groupDB);
         qryCliente.prepare("Delete from clientes where id = :id_cliente");
         qryCliente.bindValue(":id_cliente",id_cliente);
         if(!qryCliente.exec()) {
@@ -726,10 +757,10 @@ void Cliente::Borrar(int id_cliente)
             borrado_ok = false;
         }
         if (borrado_ok ==true) {
-            QSqlDatabase::database("Maya").commit();
+            Configuracion_global->groupDB.commit();
             TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Borrado corectamente"));
         } else {
-            QSqlDatabase::database("Maya").rollback();
+            Configuracion_global->groupDB.rollback();
             QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),
                                   tr("Falló el borrado del cliente \ndeberá contactar con el administrador para su borrado manual"),tr("&Aceptar"));
         }
@@ -783,7 +814,7 @@ QString Cliente::Nuevocodigo_cliente()
     QString codigo;
     QString cNum;
     unsigned long nCodigo;
-    QSqlQuery *qClientes = new QSqlQuery(QSqlDatabase::database("Maya"));
+    QSqlQuery *qClientes = new QSqlQuery(Configuracion_global->groupDB);
     if(qClientes->exec("select codigo_cliente from clientes  order by codigo_cliente desc limit 1"))
     {
         if (qClientes->next())
@@ -817,7 +848,7 @@ QString Cliente::Nuevocodigo_cliente()
 
 int Cliente::Buscarid_pais(QString Pais)
 {
-    QSqlQuery qPais(QSqlDatabase::database("Maya"));
+    QSqlQuery qPais(Configuracion_global->groupDB);
     qPais.prepare("select id from paises where pais =:pais");
     qPais.bindValue(":pais",Pais);
     if(qPais.exec()) {
@@ -833,7 +864,7 @@ int Cliente::Buscarid_pais(QString Pais)
 
 QString Cliente::RecuperarPais(int nid)
 {
-    QSqlQuery qPais(QSqlDatabase::database("Maya"));
+    QSqlQuery qPais(Configuracion_global->groupDB);
     qPais.prepare("select pais from paises where id =:id");
     qPais.bindValue(":id",nid);
     if(qPais.exec()) {

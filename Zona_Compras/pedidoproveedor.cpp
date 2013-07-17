@@ -11,7 +11,7 @@ PedidoProveedor::PedidoProveedor(QObject *parent) :
 
 int PedidoProveedor::nuevo_pedido_proveedor()
 {
-    QSqlQuery queryPedido(QSqlDatabase::database("empresa"));
+    QSqlQuery queryPedido(Configuracion_global->empresaDB);
     queryPedido.prepare("INSERT INTO ped_pro (`fecha`,`ejercicio`,`porc_iva1`,`porc_iva2`,`porc_iva3`,`porc_iva4`) "
                         "VALUES(:fecha,:ejercicio,:porc_iva1,:porc_iva2,:porc_iva3,:porc_iva4);");
     queryPedido.bindValue(":fecha",QDate::currentDate());
@@ -37,7 +37,7 @@ void PedidoProveedor::guardar()
     //-------------------------------------------------------------
     QString cSql;
     int pedido =0;
-    QSqlQuery queryPedido(QSqlDatabase::database("empresa"));
+    QSqlQuery queryPedido(Configuracion_global->empresaDB);
 
     if(this->pedido == 0)
     {
@@ -51,7 +51,7 @@ void PedidoProveedor::guardar()
         }
 
     }
-    QSqlQuery queryGuardarPedido(QSqlDatabase::database("empresa"));
+    QSqlQuery queryGuardarPedido(Configuracion_global->empresaDB);
     queryGuardarPedido.prepare("UPDATE ped_pro SET pedido =  :pedido,"
     "ejercicio =:serie,"
     "fecha =:fecha,"
@@ -191,7 +191,7 @@ void PedidoProveedor::guardar()
 
 void PedidoProveedor::recuperar(int id)
 {
-    QSqlQuery *queryPedido = new QSqlQuery(QSqlDatabase::database("empresa"));
+    QSqlQuery *queryPedido = new QSqlQuery(Configuracion_global->empresaDB);
     queryPedido->prepare("select * from ped_pro where id = :id");
     queryPedido->bindValue(":id",id);
     if(queryPedido->exec())
@@ -210,7 +210,7 @@ void PedidoProveedor::recuperar(int id)
 
 void PedidoProveedor::recuperar(QString cadenaSQL)
 {
-    QSqlQuery *queryPedido = new QSqlQuery(QSqlDatabase::database("empresa"));
+    QSqlQuery *queryPedido = new QSqlQuery(Configuracion_global->empresaDB);
 
     if(queryPedido->exec(cadenaSQL))
     {
@@ -226,7 +226,7 @@ void PedidoProveedor::recuperar(QString cadenaSQL)
 
 void PedidoProveedor::recuperar(QString cadenaSQL, int accion)
 {
-    QSqlQuery *queryPedido = new QSqlQuery(QSqlDatabase::database("empresa"));
+    QSqlQuery *queryPedido = new QSqlQuery(Configuracion_global->empresaDB);
 
     if(queryPedido->exec(cadenaSQL))
     {
@@ -416,8 +416,8 @@ void PedidoProveedor::convertir_en_factura()
 
 bool PedidoProveedor::borrar(int id)
 {
-    QSqlQuery queryPedido(QSqlDatabase::database("empresa"));
-    QSqlDatabase::database("empresa").transaction();
+    QSqlQuery queryPedido(Configuracion_global->empresaDB);
+    Configuracion_global->empresaDB.transaction();
     bool error = false;
     queryPedido.prepare("delete from lin_ped_pro where id_cab = :id");
     queryPedido.bindValue(":id",id);
@@ -428,13 +428,13 @@ bool PedidoProveedor::borrar(int id)
     if(!queryPedido.exec())
         error = true;
     if(error == true) {
-        QSqlDatabase::database("empresa").rollback();
+        Configuracion_global->empresaDB.rollback();
         QMessageBox::warning(qApp->activeWindow(),tr("Gestión de pedidos a proveedores"),
                              tr("Ocurrió un error al borrar: %1").arg(queryPedido.lastError().text()),
                              tr("Aceptar"));
         return false;
     } else{
-        QSqlDatabase::database("empresa").commit();
+        Configuracion_global->empresaDB.commit();
         return true;
     }
 }
@@ -446,7 +446,7 @@ void PedidoProveedor::imprimir(int id)
     {
         QPrintDialog print;
         print.exec();
-//        QSqlQuery query_ped_pro(QSqlDatabase::database("empresa"));
+//        QSqlQuery query_ped_pro(Configuracion_global->empresaDB);
 //        query_ped_pro.prepare("update ped_pro set ");
     }
 
@@ -455,7 +455,7 @@ void PedidoProveedor::imprimir(int id)
 
 bool PedidoProveedor::get(int id)
 {
-    QSqlQuery q(QSqlDatabase::database("empresa"));
+    QSqlQuery q(Configuracion_global->empresaDB);
     q.prepare("SELECT * FROM ped_pro WHERE id = :id");
     q.bindValue(":id",id);
     if(q.exec())
@@ -471,7 +471,7 @@ bool PedidoProveedor::get(int id)
 
 bool PedidoProveedor::next()
 {
-    QSqlQuery q(QSqlDatabase::database("empresa"));
+    QSqlQuery q(Configuracion_global->empresaDB);
     q.prepare("SELECT * FROM ped_pro WHERE id = :id");
     int idplus = id+1;
     q.bindValue(":id",idplus);
@@ -488,7 +488,7 @@ bool PedidoProveedor::next()
 
 bool PedidoProveedor::prev()
 {
-    QSqlQuery q(QSqlDatabase::database("empresa"));
+    QSqlQuery q(Configuracion_global->empresaDB);
     q.prepare("SELECT * FROM ped_pro WHERE id = :id");
     int idminus = id-1;
     q.bindValue(":id",idminus);
@@ -505,7 +505,7 @@ bool PedidoProveedor::prev()
 
 long PedidoProveedor::save()
 {
-    QSqlQuery q(QSqlDatabase::database("empresa"));
+    QSqlQuery q(Configuracion_global->empresaDB);
     q.prepare("INSERT INTO ped_pro"
               "( pedido ,  serie ,  fecha ,  recepcion ,  id_proveedor ,  codigo_proveedor ,"
               " proveedor ,  direccion1 ,  direccion2 ,  cp ,  poblacion ,  provincia ,  id_pais ,"

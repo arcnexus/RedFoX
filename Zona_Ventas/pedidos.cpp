@@ -12,7 +12,7 @@ Pedidos::~Pedidos()
 
 bool Pedidos::BorrarLineas(int Iped)
 {
-    QSqlQuery query(QSqlDatabase::database("empresa"));
+    QSqlQuery query(Configuracion_global->empresaDB);
     QString sql = QString("DELETE FROM lin_ped WHERE id_Cab = %1").arg(Iped);
     query.prepare(sql);
     if(query.exec())
@@ -36,7 +36,7 @@ bool Pedidos::AnadirPedido()
     this->porc_rec1 = Configuracion_global->reList.at(3).toDouble();
     this->recargo_equivalencia = 0;
 
-    QSqlQuery ped_cli(QSqlDatabase::database("empresa"));
+    QSqlQuery ped_cli(Configuracion_global->empresaDB);
      ped_cli.prepare("INSERT INTO ped_cli (pedido,porc_iva1,porc_iva2,porc_iva3,porc_iva4,"
                      "porc_rec1,porc_rec2,porc_rec3,porc_rec4,id_cliente)"
                    " VALUES (:pedido,:porc_iva1,:porc_iva2,:porc_iva3,:porc_iva4,"
@@ -67,7 +67,7 @@ bool Pedidos::AnadirPedido()
 // Guardar el Pedido
 bool Pedidos::GuardarPedido(int nid_Pedido)
 {
-    QSqlQuery ped_cli(QSqlDatabase::database("empresa"));
+    QSqlQuery ped_cli(Configuracion_global->empresaDB);
 
     ped_cli.prepare( "UPDATE ped_cli SET "
                      "albaran =:albaran,pedido =:pedido, fecha =:fecha  , pedido =:pedido  , id_cliente =:id_cliente  ,"
@@ -181,7 +181,7 @@ bool Pedidos::GuardarPedido(int nid_Pedido)
 
 bool Pedidos::RecuperarPedido(QString cSQL)
 {
-    QSqlQuery ped_cli(QSqlDatabase::database("empresa"));
+    QSqlQuery ped_cli(Configuracion_global->empresaDB);
     ped_cli.prepare(cSQL);
     if( !ped_cli.exec() )
     {
@@ -260,12 +260,12 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             total_pedido = r.value("total_pedido").toDouble();
 
             this->id_pais = r.field("id_pais").value().toInt();
-            QSqlQuery q(QSqlDatabase::database("empresa"));
+            QSqlQuery q(Configuracion_global->empresaDB);
             if(q.exec("SELECT * FROM paises WHERE id="+QString::number(id_pais)))
                 if(q.next())
                     pais = q.record().value("pais").toString();
             // Tarifa
-            QSqlQuery queryCliente(QSqlDatabase::database("Maya"));
+            QSqlQuery queryCliente(Configuracion_global->groupDB);
             if(queryCliente.exec("select tarifa_cliente from clientes where id = "+QString::number(this->id_cliente)));
                 if (queryCliente.next())
                     tarifa_cliente = queryCliente.record().value("tarifa_cliente").toInt();
@@ -280,7 +280,7 @@ bool Pedidos::RecuperarPedido(QString cSQL)
 
 int Pedidos::NuevoNumeroPedido()
 {
-    QSqlQuery ped_cli(QSqlDatabase::database("empresa"));
+    QSqlQuery ped_cli(Configuracion_global->empresaDB);
     int pedido = 0;
     ped_cli.prepare("Select pedido from ped_cli order by pedido desc limit 1");
     if(ped_cli.exec())

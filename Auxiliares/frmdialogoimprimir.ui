@@ -18,20 +18,7 @@
     <normaloff>:/Icons/PNG/maya_logo.png</normaloff>:/Icons/PNG/maya_logo.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0" rowspan="2">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../maya.qrc">:/Icons/PNG/impresora2.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="3">
+   <item row="3" column="3">
     <widget class="QPushButton" name="pushButton_2">
      <property name="text">
       <string>Cancelar</string>
@@ -48,7 +35,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
+   <item row="3" column="2">
     <widget class="QPushButton" name="pushButton">
      <property name="text">
       <string>Imprimir</string>
@@ -65,7 +52,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1" colspan="3">
+   <item row="2" column="1" colspan="3">
     <widget class="QFrame" name="frame_pdf">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(218, 218, 218);</string>
@@ -86,6 +73,9 @@
       </item>
       <item>
        <widget class="QLineEdit" name="txtRutaPDF">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -93,6 +83,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="btn_carpeta">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -111,20 +104,62 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="0" colspan="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <item row="1" column="1" colspan="3">
+    <widget class="QFrame" name="frame_email">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(218, 218, 218);</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>258</width>
-       <height>20</height>
-      </size>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-    </spacer>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>email:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="txtEmail">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnEnviar">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Enviar</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
-   <item row="0" column="2" colspan="2">
+   <item row="1" column="0" rowspan="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../maya.qrc">:/Icons/PNG/impresora2.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="3">
     <widget class="QFrame" name="frame">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(218, 218, 218);</string>
@@ -153,8 +188,35 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QRadioButton" name="radEmail">
+        <property name="text">
+         <string>email</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rad_preview">
+        <property name="text">
+         <string>Vista previa</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
@@ -203,18 +265,82 @@
    </hints>
   </connection>
   <connection>
-   <sender>rad_PDF</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>frame_pdf</receiver>
-   <slot>setVisible(bool)</slot>
+   <sender>rad_Impresora</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>pushButton</receiver>
+   <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>434</x>
-     <y>34</y>
+     <x>186</x>
+     <y>30</y>
     </hint>
     <hint type="destinationlabel">
-     <x>437</x>
-     <y>70</y>
+     <x>338</x>
+     <y>198</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rad_PDF</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>txtRutaPDF</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>305</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>296</x>
+     <y>152</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rad_PDF</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>btn_carpeta</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>28</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>497</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radEmail</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>txtEmail</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>433</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>277</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radEmail</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>btnEnviar</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>506</x>
+     <y>28</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>507</x>
+     <y>81</y>
     </hint>
    </hints>
   </connection>

@@ -16,7 +16,7 @@ Albaran::~Albaran()
 bool Albaran::AnadirAlbaran()
 {
     int x = NuevoNumeroAlbaran();
-    QSqlQuery q(QSqlDatabase::database("empresa"));
+    QSqlQuery q(Configuracion_global->empresaDB);
     q.prepare("INSERT INTO cab_alb"
               "(albaran, fecha, pedido_cliente, id_cliente, codigo_cliente, cliente,"
               "direccion1, direccion2, poblacion, provincia, cp, id_pais, cif,"
@@ -112,7 +112,7 @@ bool Albaran::AnadirAlbaran()
 
 bool Albaran::GuardarAlbaran(int nid_Albaran)
 {
-    QSqlQuery q(QSqlDatabase::database("empresa"));
+    QSqlQuery q(Configuracion_global->empresaDB);
     q.prepare("UPDATE cab_alb SET "
               "fecha=:fecha, pedido_cliente=:pedido_cliente, id_cliente=:id_cliente,"
               "codigo_cliente=:codigo_cliente, cliente=:cliente,"
@@ -209,7 +209,7 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
 
 bool Albaran::RecuperarAlbaran(QString cSQL)
 {
-        QSqlQuery cab_alb(QSqlDatabase::database("empresa"));
+        QSqlQuery cab_alb(Configuracion_global->empresaDB);
         cab_alb.prepare(cSQL);
         if( !cab_alb.exec() )
         {
@@ -283,7 +283,7 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
 
 int Albaran::NuevoNumeroAlbaran()
 {
-    QSqlQuery cab_alb(QSqlDatabase::database("empresa"));
+    QSqlQuery cab_alb(Configuracion_global->empresaDB);
     int albaran = 1;
     cab_alb.prepare("Select albaran from cab_alb order by albaran desc limit 1");
     if(cab_alb.exec())

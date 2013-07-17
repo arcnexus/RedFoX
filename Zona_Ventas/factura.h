@@ -22,7 +22,7 @@ public:
     QString provincia;
     int id_pais;
     QString cif;
-    int recargo_equivalencia;
+    bool recargo_equivalencia;
     double subtotal;
     double dto;
     double dto_pp;
@@ -33,9 +33,9 @@ public:
     float porc_irpf;
     double iva;
     double total;
-    int impreso;
-    int cobrado;
-    int lContablilizada;
+    bool impreso;
+    bool cobrado;
+    bool contablilizada;
     int id_forma_pago;
     QString forma_pago;
     QString comentario;
@@ -72,6 +72,7 @@ public:
     QString cuenta_corriente;
     int pedido_cliente;
     int apunte;
+    bool set_impresa(bool state);
 
 signals:
 

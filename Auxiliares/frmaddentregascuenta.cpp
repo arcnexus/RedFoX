@@ -1,5 +1,6 @@
 #include "frmaddentregascuenta.h"
 #include "ui_frmaddentregascuenta.h"
+#include "../Zona_Pacientes/cliente.h"
 
 frmAddEntregasCuenta::frmAddEntregasCuenta(QWidget *parent) :
     QDialog(parent),
@@ -13,6 +14,21 @@ frmAddEntregasCuenta::frmAddEntregasCuenta(QWidget *parent) :
 frmAddEntregasCuenta::~frmAddEntregasCuenta()
 {
     delete ui;
+}
+
+void frmAddEntregasCuenta::set_concepto(QString concepto)
+{
+    ui->txtConcepto->setText(concepto);
+}
+
+double frmAddEntregasCuenta::get_importe_entrega()
+{
+    return ui->txtImporte->text().replace(",",".").toDouble();
+}
+
+void frmAddEntregasCuenta::set_id_cliente(int id)
+{
+    this->id_cliente = id;
 }
 
 void frmAddEntregasCuenta::on_txtImporte_editingFinished()
@@ -48,4 +64,7 @@ void frmAddEntregasCuenta::validar()
     }
     else
         accept();
+    Cliente oCliente(this);
+    oCliente.anadir_entrega_cuenta(this->id_cliente,ui->txtFecha->date(),ui->txtImporte->text().replace(",",".").toDouble(),
+                                   ui->txtConcepto->text());
 }

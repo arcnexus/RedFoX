@@ -2,8 +2,7 @@
 #define FRMBUSCARPROVEEDOR_H
 
 #include <QDialog>
-#include <QSqlQueryModel>
-
+#include "../Auxiliares/Globlal_Include.h"
 namespace Ui {
 class FrmBuscarProveedor;
 }

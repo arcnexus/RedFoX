@@ -75,7 +75,7 @@ void Ticket::add_linea(QString codigo, QString descripcion,  double pvp, double 
     newLinea->id = id;
     newLinea->id_Cab = this->id;
 
-    QSqlQuery q(QSqlDatabase::database("empresa"));
+    QSqlQuery q(Configuracion_global->empresaDB);
     if(q.exec(QString("SELECT id FROM articulos WHERE codigo = '%1'").arg(codigo)))
         if(q.next())
             newLinea->id_articulo = q.record().value("id").toInt();

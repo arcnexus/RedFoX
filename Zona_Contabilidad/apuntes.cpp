@@ -7,7 +7,7 @@ apuntes::apuntes(QObject *parent) :
 
 int apuntes::nuevo_numero_apunte()
 {
-    QSqlQuery queryApuntes(QSqlDatabase::database("dbconta"));
+    QSqlQuery queryApuntes(Configuracion_global->contaDB);
     if(queryApuntes.exec("select asiento from diario order by asiento desc limit 0,1"))
     {
         queryApuntes.next();
@@ -22,7 +22,7 @@ int apuntes::nuevo_numero_apunte()
 
 bool apuntes::nuevalinea()
 {
-    QSqlQuery query_apunte(QSqlDatabase::database("dbconta"));
+    QSqlQuery query_apunte(Configuracion_global->contaDB);
     query_apunte.prepare("INSERT INTO diario (id_cuenta, id_documento,cuenta_d,descripcion_d,"
                          "cuenta_h,descripcion_h,importe_d,importe_h,asiento,id_cuenta_d,id_cuenta_h,"
                          "fecha_asiento,pos_en_asiento,comentario_d,comentario_h) "

@@ -6,7 +6,7 @@ FacturasProveedor::FacturasProveedor(QObject *parent) :
 }
 int FacturasProveedor::anadir_factura()
 {
-    QSqlQuery queryFactura(QSqlDatabase::database("empresa"));
+    QSqlQuery queryFactura(Configuracion_global->empresaDB);
     queryFactura.prepare("insert into fac_pro (id_proveedor,porc_iva1,porc_iva2,porc_iva3,porc_iva4,porc_rec1,porc_rec2,porc_rec3,porc_rec4) "
                          " values (0,:iva1,:iva2,:iva3,:iva4,:porc_rec1,:porc_rec2,:porc_rec3,:porc_rec4)");
     queryFactura.bindValue(":porc_iva1",Configuracion_global->ivaList.at(0));
@@ -33,7 +33,7 @@ int FacturasProveedor::anadir_factura()
 
 void FacturasProveedor::guardar_factura()
 {
-    QSqlQuery queryFactura(QSqlDatabase::database("empresa"));
+    QSqlQuery queryFactura(Configuracion_global->empresaDB);
     queryFactura.prepare("UPDATE fac_pro SET "
                          "factura =:factura,"
                          "fecha =:fecha,"
@@ -156,7 +156,7 @@ void FacturasProveedor::guardar_factura()
 
 void FacturasProveedor::recuperar_factura(QString cSQL, int accion)
 {
-    QSqlQuery queryFactura(QSqlDatabase::database("empresa"));
+    QSqlQuery queryFactura(Configuracion_global->empresaDB);
     if(queryFactura.exec(cSQL))
         cargar_factura(queryFactura,accion);
     else
@@ -166,7 +166,7 @@ void FacturasProveedor::recuperar_factura(QString cSQL, int accion)
 
 void FacturasProveedor::recuperar_factura(int id_factura)
 {
-    QSqlQuery queryFactura(QSqlDatabase::database("empresa"));
+    QSqlQuery queryFactura(Configuracion_global->empresaDB);
     queryFactura.prepare("select * from fac_pro where id = :id");
     queryFactura.bindValue(":id",id_factura);
     if(queryFactura.exec())
