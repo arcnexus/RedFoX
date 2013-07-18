@@ -434,10 +434,9 @@ void frmFacturas::LLenarFactura() {
         oFactura->recargo_equivalencia = (0);
     }
     oFactura->subtotal = (ui->txtsubtotal->text().replace(".","").replace(",",".").replace(moneda,"").toDouble());
-    //oFactura->dto = (ui->txtdto->text().replace(".","").replace(",",".").toDouble());
-    //oFactura->dto_pp = (ui->txtdto_pp->text().replace(".","").replace(",",".").toDouble());
+    oFactura->porc_dto_pp = (ui->txt_porc_dto_pp->text().replace(".","").replace(",",".").toDouble());
     oFactura->dto = (ui->txtimporte_descuento->text().replace(".","").replace(moneda,"").replace(".","").replace(",",".").toDouble());
-    //oFactura->importe_descuento_pp = (ui->txtimporte_descuento_pp->text().replace(".","").replace(",",".").toDouble());
+    oFactura->dto_pp = (ui->txtimporte_dto_pp->text().replace(".","").replace(",",".").toDouble());
     oFactura->base = (ui->txtbase->text().replace(".","").replace(",",".").replace(moneda,"").toDouble());
     oFactura->iva = (ui->txtiva->text().replace(".","").replace(",",".").replace(moneda,"").toDouble());
     oFactura->total = (ui->txttotal->text().replace(".","").replace(",",".").replace(moneda,"").toDouble());
@@ -463,10 +462,10 @@ void frmFacturas::LLenarFactura() {
     oFactura->porc_rec2 = (ui->txtporc_rec2->text().replace(".","").replace(",",".").toDouble());
     oFactura->porc_rec3 = (ui->txtporc_rec3->text().replace(".","").replace(",",".").toDouble());
     oFactura->porc_rec4 = (ui->txtporc_rec4->text().replace(".","").replace(",",".").toDouble());
-    oFactura->porc_rec1 = (ui->txtporc_rec1->text().replace(".","").replace(",",".").toDouble());
-    oFactura->porc_rec2 = (ui->txtporc_rec2->text().replace(".","").replace(",",".").toDouble());
-    oFactura->porc_rec3 = (ui->txtporc_rec3->text().replace(".","").replace(",",".").toDouble());
-    oFactura->porc_rec4 = (ui->txtporc_rec4->text().replace(".","").replace(",",".").toDouble());
+    oFactura->rec1 = (ui->txtrec1->text().replace(".","").replace(",",".").toDouble());
+    oFactura->rec2 = (ui->txtrec2->text().replace(".","").replace(",",".").toDouble());
+    oFactura->rec3 = (ui->txtrec3->text().replace(".","").replace(",",".").toDouble());
+    oFactura->rec4 = (ui->txtrec4->text().replace(".","").replace(",",".").toDouble());
     oFactura->total_recargo = (ui->txttotal_recargo->text().replace(".","").replace(",",".").toDouble());
     oFactura->entregado_a_cuenta = (ui->txtentregado_a_cuenta->text().replace(".","").replace(",",".").toDouble());
     oFactura->importe_pendiente = (ui->txtimporte_pendiente->text().replace(".","").replace(",",".").toDouble());
@@ -656,6 +655,7 @@ void frmFacturas::on_btnImprimir_clicked()
 
              parametros["id_cliente"]= oCliente1->id;
              parametros["id_cab"] = oFactura->id;
+             parametros["id_empresa"] = 1;
 
             switch (valor) {
             case 1: // Impresora

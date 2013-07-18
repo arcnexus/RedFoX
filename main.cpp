@@ -71,6 +71,7 @@ bool cargarEmpresa(QString empresa)
             Configuracion_global->internacional = false;
 
         Configuracion_global->enlace_web = record.field("enlace_web").value().toBool();
+        Configuracion_global->CargarDatos(record.field("id").value().toInt());
 
         QApplication::processEvents();
 

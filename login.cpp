@@ -59,7 +59,7 @@ int Login::getid_user()
 void Login::on_btnAcceder_clicked()
 {
     QSqlRecord rEmpresa = _empresas.value(ui->comboGroup->currentIndex()).second;
-
+    Configuracion_global->idEmpresa = rEmpresa.value("id").toInt();
     QString bd_driver = rEmpresa.value("bd_driver").toString();    
     QString bd_name = rEmpresa.value("bd_name").toString();    
     QString bd_host = rEmpresa.value("bd_host").toString();
