@@ -368,38 +368,38 @@ void FrmPedidos::LLenarPedido()
 
     oPedido->cif=ui->txtcif->text();
     oPedido->recargo_equivalencia=ui->chklporc_rec->isChecked();
-    oPedido->subtotal=ui->txtsubtotal->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->dto=ui->txtdto->text().replace(_moneda,"").replace(",",".").toDouble();
+    oPedido->subtotal=ui->txtsubtotal->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->dto=ui->txtdto->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
     //oPedido->dto;
-    oPedido->base1=ui->txtbase1->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->base2=ui->txtbase2->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->base3=ui->txtbase3->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->base4=ui->txtbase4->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->porc_iva1=ui->txtporc_iva1->text().replace(_moneda,"").replace(",",".").toDouble();
+    oPedido->base1=ui->txtbase1->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->base2=ui->txtbase2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->base3=ui->txtbase3->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->base4=ui->txtbase4->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->porc_iva1=ui->txtporc_iva1->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
 
-    oPedido->porc_iva2=ui->txtporc_iva2->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->porc_iva3=ui->txtporc_iva3->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->porc_iva4=ui->txtporc_iva4->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->iva1=ui->txtiva1->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->iva2=ui->txtiva2->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->iva3=ui->txtiva3->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->iva4=ui->txtiva4->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->porc_rec1=ui->txtporc_rec1->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->porc_rec2=ui->txtporc_rec2->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->porc_rec3=ui->txtporc_rec3->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->porc_rec4=ui->txtporc_rec4->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->rec1=ui->txtporc_rec1->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->rec2=ui->txtporc_rec2->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->rec3=ui->txtporc_rec3->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->rec4=ui->txtporc_rec4->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->total1=ui->txttotal1->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->total2=ui->txttotal2->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->total3=ui->txttotal3->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->total4=ui->txttotal4->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->base_total=ui->txtbase_total_2->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->iva_total=ui->txttotal_iva_2->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->rec_total=ui->txttotal_recargo_2->text().replace(_moneda,"").replace(",",".").toDouble();
-    oPedido->total_albaran=ui->txttotal_2->text().replace(_moneda,"").replace(",",".").toDouble();
+    oPedido->porc_iva2=ui->txtporc_iva2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->porc_iva3=ui->txtporc_iva3->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->porc_iva4=ui->txtporc_iva4->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->iva1=ui->txtiva1->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->iva2=ui->txtiva2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->iva3=ui->txtiva3->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->iva4=ui->txtiva4->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->porc_rec1=ui->txtporc_rec1->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->porc_rec2=ui->txtporc_rec2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->porc_rec3=ui->txtporc_rec3->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->porc_rec4=ui->txtporc_rec4->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->rec1=ui->txtporc_rec1->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->rec2=ui->txtporc_rec2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->rec3=ui->txtporc_rec3->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->rec4=ui->txtporc_rec4->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->total1=ui->txttotal1->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->total2=ui->txttotal2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->total3=ui->txttotal3->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->total4=ui->txttotal4->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->base_total=ui->txtbase_total_2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->iva_total=ui->txttotal_iva_2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->rec_total=ui->txttotal_recargo_2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->total_albaran=ui->txttotal_2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
 
     oPedido->impreso = ui->lbimpreso->isVisible();
 
@@ -407,7 +407,7 @@ void FrmPedidos::LLenarPedido()
     oPedido->fecha_factura=ui->txtfecha_factura->date();
 
     oPedido->comentario=ui->txtcomentario->toPlainText();
-    oPedido->entregado_a_cuenta=ui->txtentregado_a_cuenta->text().replace(_moneda,"").replace(",",".").toDouble();
+    oPedido->entregado_a_cuenta=ui->txtentregado_a_cuenta->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
     //oPedido->traspasado_albaran;
     //oPedido->traspasado_factura;
     oPedido->direccion_entrega1=ui->txtdireccion_entrega1->text();
@@ -420,7 +420,7 @@ void FrmPedidos::LLenarPedido()
     oPedido->completo=ui->chkcompleto->isChecked();
     oPedido->entregado=ui->chkentregado->isChecked();
     oPedido->fecha_limite_entrega=ui->txtfecha_limite_entrega->date();
-    oPedido->total_pedido=ui->txttotal->text().replace(_moneda,"").replace(",",".").toDouble();;
+    oPedido->total_pedido=ui->txttotal->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();;
 }
 
 void FrmPedidos::on_btnSiguiente_clicked()

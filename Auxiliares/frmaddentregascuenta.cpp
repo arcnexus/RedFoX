@@ -23,7 +23,7 @@ void frmAddEntregasCuenta::set_concepto(QString concepto)
 
 double frmAddEntregasCuenta::get_importe_entrega()
 {
-    return ui->txtImporte->text().replace(",",".").toDouble();
+    return ui->txtImporte->text().replace(".","").replace(",",".").toDouble();
 }
 
 void frmAddEntregasCuenta::set_id_cliente(int id)
@@ -34,7 +34,7 @@ void frmAddEntregasCuenta::set_id_cliente(int id)
 void frmAddEntregasCuenta::on_txtImporte_editingFinished()
 {
     ui->txtImporte->setText(Configuracion_global->toFormatoMoneda(ui->txtImporte->text()));
-    this->importe = ui->txtImporte->text().replace(",",".").toDouble();
+    this->importe = ui->txtImporte->text().replace(".","").replace(",",".").toDouble();
 }
 
 void frmAddEntregasCuenta::on_txtFecha_editingFinished()
@@ -65,6 +65,6 @@ void frmAddEntregasCuenta::validar()
     else
         accept();
     Cliente oCliente(this);
-    oCliente.anadir_entrega_cuenta(this->id_cliente,ui->txtFecha->date(),ui->txtImporte->text().replace(",",".").toDouble(),
+    oCliente.anadir_entrega_cuenta(this->id_cliente,ui->txtFecha->date(),ui->txtImporte->text().replace(".","").replace(",",".").toDouble(),
                                    ui->txtConcepto->text());
 }

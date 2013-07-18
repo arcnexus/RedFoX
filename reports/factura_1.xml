@@ -3,7 +3,13 @@
  <title></title>
  <name></name>
  <description></description>
- <parameter name="id_cliente" default="" type="integer" active="true" listtype="static">
+ <parameter listtype="static" default="" type="integer" name="id" active="true">
+  <description></description>
+ </parameter>
+ <parameter listtype="static" default="" type="integer" name="id_cab" active="true">
+  <description></description>
+ </parameter>
+ <parameter listtype="static" default="" type="integer" name="id_cliente" active="true">
   <description></description>
   <item value="c">0</item>
  </parameter>
@@ -20,15 +26,15 @@
  <leftmargin>50</leftmargin>
  <querysource>
   <name>cliente</name>
-  <sql>SELECT * FROM mayageneral.clientes WHERE id = 5</sql>
+  <sql>SELECT * FROM `@grupo@`.clientes WHERE id = &lt;?value("id_cliente") ?></sql>
  </querysource>
  <querysource>
-  <name>cab_alb</name>
-  <sql>SELECT * FROM emp0999.cab_alb WHERE Id = 2</sql>
+  <name>cab_fac</name>
+  <sql>SELECT * FROM `@empresa@`.cab_fac WHERE id = &lt;?value("id") ?></sql>
  </querysource>
  <querysource>
-  <name>lin_alb</name>
-  <sql>SELECT * FROM emp0999.lin_alb WHERE Id_Cab = 2</sql>
+  <name>lin_fac</name>
+  <sql>SELECT * FROM `@empresa@`.lin_fac WHERE id_cab = &lt;?value("id_cab") ?></sql>
  </querysource>
  <section>
   <name>info propia</name>
@@ -44,6 +50,172 @@
     <height>100</height>
     <weight>1</weight>
    </rect>
+   <image>
+    <rect>
+     <x>10</x>
+     <y>5</y>
+     <width>200</width>
+     <height>85</height>
+     <weight>1</weight>
+    </rect>
+    <mode>clip</mode>
+    <map format="png">begin 420 internal
+MB5!.1PT*&amp;@H````-24A$4@```,````!&lt;"`8````X>+H_````!'-"250("`@(
+M?`ADB`````EP2%ES```.Q```#L0!E2L.&amp;P``&amp;CY)1$%4>)SMG7MT5=6][S]K
+MO_+&lt;@;QX*`$EHB@;E?AH)!P.%)!>J?9`HSV7>!05*\->M9>"H'`JWK:*%FU:
+MU!;KQ8,/-.J%.Z15AD!-O40$&amp;5'>$0R/!$A"LG>2_=[K->\?VVRS\\[>@42S
+M/F/,`7/NM7[KMV;F=\WW6I(0`@.#P8JIOQTP,.A/#`$8#&amp;H,`1@,:@P!&amp;`QJ
+M+/WMP&amp;!""\C"77&amp;$P.EJ@E75*&amp;X?Z"J2+0E;=@9)HT:3,G8TJ6,OE?K;U\&amp;"
+M9(P"G7^&lt;N_>*,V^]C7SF),F7CB5A6!(`)FL"`+H2`D`-:4BGG;@;ZLF8-H,Q
+M]]Z'.&lt;EFB.$\8@C@/-)\\*CX:O$O`$B[=BQ9!3=@OVX2%ELR`)+IVPI8Z"JJ
+M[$&lt;^YZ)A9QE-GWU!H+*&amp;C/\VE_&amp;K'C-$&lt;)XP!'">./SHHZ+FU?]BQ&amp;T%7/0?
+M_T["J,L0/C&lt;`EJ'#,*>/`$#29#1%1@2\:%XGBKL)4T(2YH0$7/_\F),OOXZN
+M)'%-R?]AB.-R0PA]C"&amp;`\\"GDZ&lt;)_[Z=7+GZ,5*OOP'-XT5*3,&amp;2FDS297E8
+MTC+;%60AA!!R`+6YGD#E/I2:&amp;DRI=@!._>4OG-W\_YCXYKN,GE]HB*`/,3K!
+M?8@.8N>$B&lt;@GC^#XRVI(3B9PZC2VC*$`F,P6)$O'62Y)DB0E)&amp;,;-@;+D&amp;SA
+M_FPK_J.'$98$&lt;NZ^"UMZ)@>*;@?_>C%ZX3V&amp;"/H(0P!]R&amp;>3IQ$Z?)`)+_\&amp;
+MU>/#%`QBLF&lt;@%`5K5C)22AI"5;NU8TI(EH;^ZSR$9!;NSW82/%/-T"F3N23H
+MY\#]]V(9GBTNNO7'A@CZ`&amp;,>H(\X_.BCHG'7/\E]XG^@-#:C>;WHB@:*'Y-]
+M*":S!>%SHS76HOF;!9HB0!&lt;`0I6%YF\62LW70CYW2LCGS@J`]*D_D;+G_3L`
+MH0/[2/[!38R\_C*^N.U6`O5.H^W:!QA]@#Z@Z&lt;`!47;UU>3&lt;FD_*C3=@\ON1
+MDNU8AZ22&lt;/&amp;H2%O>,C0=2TH*EM0AF-.&amp;04)X-(B0']7M0FTZA^KW@*JCNIM)
+M=5Q/PI@)DGSNK#A3_&amp;O\=4Z2&lt;D91^>0+I-QX`Y-W[S%J@3@Q:H`^X."\?R,U
+M4&lt;(V_FJ4V@:$JJ&amp;K*L)L05,TM"8G0E'0`P&amp;T4`@MX$=SGT-OKD=OKD=UN]`#
+M;G0MW#Q2W&lt;THY\Y2_^9?\.PM$[9A%TD7__)_@1(B4'V:B^;-H''/Y]1LVFP\
+MO>+$$$"&lt;U)5^(IJ_/D[&amp;E,F8F^LQ*T%D?PA)#@`@9#^:SXON&lt;Z-Y/6@>#XJ[
+M":7)A>(ZB^(Z^\V3WXON\Z%YO(A0$`T+4D(BYU[]0T0$HQ]>@7SL:QAJ)S51
+MXM22A_OY[K_[&amp;`*(DQ-/K,`&amp;F-/3\7HTY$`0F\V$E!QN]FCGZM"\WXI`;7*A
+M-C6B-#6BN%PH+E?XB=]0C^IN1FMRHC:[$`$_`%)"(G5_?@;%52_LUQ=(0WXX
+M#?G8UZ3=,`'GB=,X=^\U:H$X,`00![XS-&lt;+SR4[LEXY":`%L[D:P)D!:.@#R
+MN09D9R/(032O'Z6Y&amp;=7=%"[DSGH45T,XU->A-3E17/5H/F]8,%XOFMN-E)B(
+MO[Z>LZ\\"\"H!QY#!()8$H9@`TZL6=V/.?#=QQ@&amp;C0/_WEW(@"UK!(1D])".
+MV:,B-SBQV4QH/C_F(4.0G8U84Y-`3D0+AE#-%BQ)MBA;NJJA*QI2(-P$DD(R
+M:D!&amp;!(,DI6?0O',GRL)Z81MYD90Z\3KA^_QS;(D2P2^_Z)^;_YY@U`!Q4%_V
+M6;CY8[$@-86;+$(+8&amp;IL)-#@0E)51#"("`91O`$TMQOA:0H_W5VNJ"#&lt;S=#4
+M@.9VHW@#D&lt;*OA\(+Y;03YW"^^RX`&amp;3-_C'S.2V):-LJY.F-(-`X,`&lt;2!]YNG
+MKZ:J!#WA3J]U2!9*LP]&lt;7O2@@M[L1O/YT;T^5(\/N&lt;F+Y'.CN=L'Q1M`]?C0
+MO3Z$SX/P^1#>`+(WA$@TX=[]"0#)UUV'2+%A2DQ'=?L([ONRW_+@NX[1!(H1
+M'81\[@0)DH16Y\%^>2ZI/_XA[K)2I"8_EFP[^(-@M2!4':&amp;JZ!8+)HL))6A%
+MLIBC[`E5`TU!5_5PS:%J$)!!44'1D((ZJM&lt;'@"5M"#93,DI0`\!SLHKT"YX#
+MWP\,`&lt;2(KH.N)&amp;&amp;V)*&amp;XO)C2,TBY;!R-?]N,VMR(EI2(U20PF55(L"`4%6&amp;U
+MH%M,2!:9CMHL0M40J@Z*BE!4%$7#K&amp;A(LDK()Y/0ZEC%KP,@`VHH>"%N^7N)
+M(8`8,770>%15%=VG(0(63$U>]`0+NM6,2=._%0*`M>-L%TIX(DR$5'1-1Y)5
+M=$5#T:U(/AD+X45UH1/'H\Z3K$9+-E8,`&lt;2("21;UE`A'PE@20@W0!*SAV'Q
+M^)`5"=6:A-7OAV30%0W=:H:`C-EJ0I=,F,S1A5;7="2AHRGA)SM*N'DC0BH6
+M5#C7@#W_>@!\!_:CN5PD7#0:&amp;Y"8->R"W??W#4,`&lt;9"8.P[/)SM)2TI$KSN'
+M-.)BI(0TS`W'L&amp;9G(12!Y%&lt;`$&amp;85*2&amp;\-`)`![":PP6]Y=]O$*%P32!I`A2!
+M[M:PVD>0^=]O!\#]Y0&amp;LH2!JT(N4;";Y\@D7]+Z_3QAU9QP,R?\!`%JJ'=?N
+MO=#4R+#%BP`(?'D8$31_TR32(*B#7XD$$5(1WE#4OY'?@SIXOVE.!&lt;WXJRI(
+M_L&amp;UV$9>)"FN>J'^LQRS?2B:RT7J\)&amp;D7G59?V;#=QI#`'&amp;0?M-D`'0M@"HW
+MXMFV@[29/R3K@078QER,?/8LNE=%ER5TOT!XPF(0`0V\:J2@MP01T-!]&amp;KI?
+MH`&lt;%0A:HS1X`1C__-`#>7;L('#V&amp;R!J&amp;+^2"G$LPFTS&amp;JM`8,000!RGCQY-T
+MV5CDFFK2LL;B>N-UY-.UV&amp;^YF6&amp;_>A@14C`E)Z&amp;[PWN!=5F$"_&lt;W!5SW:N%_
+M@]^FBZ``50^WD4PF0O4G&amp;+7B"9(G7BWI(;]POO(6NA8BX9M1U.%%=_9?!GP/
+M,`00!U:K5;KHETOP*WYL69DX#QW$LVT')J%@&amp;S.&lt;$&lt;M_B908;MLK]2ZPF+[-
+M&lt;;U5:(L)))L-__'#I.5/Y>+?_EH":/YP.XW_]WT21U^"__0)+&amp;DIC%YX_P6Y
+MU^\KQH:8.-$"LMB>F89=3R$U,QO5XV',7]&lt;@/'[,EUR"22CXRP]P=L73Z%J(
+MQ+%CPY,(G6$R@:KCKZH@Y?(KN6+7QU@SLB4]Y!&lt;5DZ83.'J,I,O'&lt;>;('BY>
+MNI2KGGW6:/[$@5$#Q(DYR29=7OQ'&amp;D,N3,E)"'^`NB>+2;AV//+1XYA24AFY
+M;*ETY1>EV*=.P7_\,,&amp;3)]&amp;]WNA:0`&lt;A:P2/'\=?54'FO]W!5?OW8,W(E@"^
+M_N6O\!S92]+EX_`=.8AN3^:*U&lt;9*T'@Q:H`^8E?!34+9M9NL\3?@.W(0^\QI
+MC'KF-X2.?870-++FWRD!.-]Y1SC?VT+@XT^0&amp;QJB;)C,"21=>Q7#%B^*'`]P
+M;NU+XL3##Y$\>CQ:(,29^DHFO;\%8V-\_!@"Z","]4[QR9B+R0B82;G2@>_(
+M05*N=)#SVO.8[1FX2S_&amp;8DX@:^%]$H0WPGOW[$$]YT*7@YALB5A'CR(U+T\"
+M4-U.84G+E!I>^=^B\OZ?DY!]*;;45$Z&lt;V,>E1M.GSS`$T(&lt;T?K%/?)IW+&lt;-(
+M)N5*!X&amp;CQY`2K(S\S>,,F7,S2M4I=%E&amp;:W:3//%JDB=>W6DAUOS-XLS*IZCY
+MPYI(X3]S8A_IA3_E^G??,PI_'V$(H(]Q[MXK]L[Z5Y*\`;+&amp;WX#&lt;X"14?X*T
+M_*ED_,=\+%E#$*I,PB67D'CI"*24=(2O$=.0;`!"E:?PEN[$N?%=W)]]@GW,
+MU2@^%Z&lt;;JKCXGGNX=OUZH_#W(88`S@.^,S7BP/P[\'RRD\SD822.N83@Z=,H
+MGEHLYB&amp;D%-R`_5\*HL[1_#[D$U7X=GY*L.$TUN0L$H>/I.'D?CQ",.[Y-5S^
+M/W]E%/X^QA#`>>3H'YX3U4\]@]Y0SU"221Q]"6;)AM+4C-Q&lt;U^YXDSD!Z_!A
+MZ(J*N^$X(2$8,FLFXYY90_JD:XS"?QXP!'">"=0[1?4;_T7#NUOP[?HG``F2
+M1(*0,)$(@$Z0D!3^.X2$P)253>:M/V;8W'G&amp;2,]YQA#`!4('45_Z";Y#APB>
+M.H'_Q''4&lt;W4(5&lt;6&lt;DHIM5`ZI5XS%&lt;O%HLB;_B_&amp;5F`N$(0"#08TQ$VPPJ#$$
+M8#"H,01@,*@Q!&amp;`PJ#$$8#"HZ9--\34U-:*QL9&amp;KKKKJO`S=!0(!L77K5O;O
+MW\^V;=NHJ*C`X_%@M]L9/WX\TZ9-XZ&lt;__2F3)DTRA@X->D6?#(-.G#A1'#UZ
+ME%`HU*&lt;%T.5RB9=??IDU:];@=#HCZ7EY>:2GIQ,,!JFMK:6RLA*`&amp;3-F\.:;
+M;S)\^/!N_:BKJQ///OML))Z;F\N##SX8L_\OO_RRJ*JJ8MFR9=CM]G9V`H&amp;`
+M>/WUUU%5%4514!0%G\^'T^G$X_%@L5@8-6H4V=G9C!PYDIDS9W9HIS5;MFP1
+MI:6ED?B"!0N8.'%B3/=05U&lt;GUJY=2VYN+O?&lt;T_%'^*JKJT5Q&lt;3%)24G\]K>_
+MC>MOO7W[=O'AAQ^R:-$BQHT;%[&amp;U9LT:45-3@Z(H6*U6%$5I=Z[5:L5JM4;B
+M?K^_V^M-GSZ=N7/GMO=9"!%7&lt;+O=`A"`J*RL%/'::PD;-VX4F9F9$=N%A85B
+MV[9M'=J795F\^.*+D>,[.ZYU^/+++R.V`9&amp;9F1F7[RW7/GWZ=(=VJJJJHJ[7
+M7&lt;C,S!2+%R_N,D\7+%@0=&lt;[Z]>MCOH&lt;]>_9TFP^EI:61:\V9,R>N_%JT:)$`
+MQ*9-FZ+L]":/>A.*BHHZ]#?N)M"++[X8^?^2)4O8M&amp;E3O"99N7*E^-WO?@>`
+MS6;C[;??[EB]WV"U6J4''WR0!Q]\D/OOOU_,FC6+CS[Z2,R:-:O3&lt;Q(2$J+B
+MX\:-B\OG,6/&amp;X'0ZL73R&amp;52+Q8+-9D.690`R,S-YZ:67F#1I$B-&amp;C.#,F3/\
+MXQ__8-.F3>S8L0.GT\GSSS_/"R^\P-MOORTZNO_APX='Q8&lt;.'1JS_XF)X649
+MX\>/[_28I*2DR/___O>_LW+E2A%K33!B1/A#X7:[/2I]SYX]N%PN$A,3HY[R
+M%HL%L]F,R61BZ=*E[-BQ(_);24D)5UYY)6HG7^!4%(6&lt;G)R.'8GW26VSV:*4
+MYO?[XWHR+%Z\.,K>WKU[>VUOU:I5W=9(1XX&lt;B;I.?GY^7'[GY>4)0-36UG9H
+MY^S9LZ)U7G5UO67+EK5[@I66EK8[ONUQ;9^FO0G[]^\7@"@H*.C4QN[=N]OY
+M55)2$M,U6_Y&amp;/:FMVX:V-5]G>=Z3$-&lt;HT.;-FT7+$ZV%E2M7QFSOU5=?%&lt;\_
+M_WPDOG[]>JZ[[KI>/V&amp;>>.():>'"A>3FYB*$&amp;)!K/;Q>;Z>_K5Z]6IHQ8T94
+MVLTWWWR^78J)G_WL9QPX&lt;.""YG';O#M[]FS,MN(2P-*E2]NEO?#""S'9&lt;KE&lt;
+MXMY[[XW$N^J,]82__O6O4EY>'H\]]EBL)OJ5/__YSU%Q6999LV;-@!3S].G3
+M"00"`]*W[HA9`(&lt;/'Q:5E94X'`X&lt;#D&lt;D799E7GKII5YGQL*%"Z/B3SWU5*RN
+M1=CS^>?&lt;?OOM&lt;=OI#\;FYI*9F1F5]M9;;_63-]'DY>5%^>9T.IDR94H_>A0[
+M,0O@X8?#G^C\X(,/6+=N7=1OO_[UKWMEJ[JZ6FS>O#D2S\S,Y(X[[HA[2-5L
+M,DFQ-*'BH;..6&amp;\QFTQ2VPYI&lt;W-SG]B.E[ONNHL//O@@*JV\O)S[[[__.U&lt;+
+MQ"0`E\LE=NS8@&lt;UF(R&lt;G1YH\>7)4(7,ZG7SXX8&lt;]SHSUZ]='Q;L:B1BHG#IU
+M"IO-%C52$B\M(S,#C8J*"FZ\\49I\>+%4>FOO/)*3+5_?Q*3`%HFD!Y__/%(
+MVH(%"Z*.>?311WML;^W:M5'QO+R\6-SJ-U15%&lt;N7+Z>AH8&amp;,C(P.:QQ556D]
+M8&amp;"SV3HZ+(J3)T]&amp;Q8&lt;,&amp;1*?HWV$QQ-^8>]SSSW7KK/^BU_\@D\__?0[(X)>
+M"T#3=?',,\\`L/(__S.2WEH,``&lt;/'N3PX&lt;/=9L3QX\=%ZUE>@$F3)O76K7[%
+M;#:S9,D2R6ZW2W5U=1W>\X@1(R@N+J:EP)27EW=IT^/QB)89[A:F39O6-P['
+M2>OQ^>W;MTNYN;E1OT^?/IW.\F&amp;@T6L!O%-2`L#&lt;N7.C7LL];MPXJ75G&amp;+[M
+M)W1%;6UMN[1.)RT&amp;*)(D27OV[!%965FBH_N!\&amp;3=(X\\(FW?OEW:NG4K*U:L
+M0%753@M)RT.F-;VI52\D'W_\&lt;51&lt;EF4*"@HZ.7I@T>N9X(&lt;>>@B`/_[QC^U^
+M>^JII[CMMMLB\1T[=N!RN41GS0*`NKKV;T=H._K1'34U->+++SO_5.B4*5.Z
+M75&lt;3+_?==Q].I[-3\=;4U(@-&amp;S8P>_9L9L^>+&lt;V>/;M36Q45%9&amp;9\!:>?OKI
+M'JUQZ@]R&lt;G*DK5NWBA_]Z$>1M,K*2N;-FR&lt;V;=HT('UNH5&lt;UP!=??"&amp;&lt;3B&lt;.
+MAX.&lt;G)QV-W;+G#GMVK;+EBWKTF934U.[M+;+%+ICRY8MW'+++9V&amp;ZNKJ7MF+
+MAXX6;T&amp;X#_#88X^1EY?'G7?>*5Y[[35145'1K@;8MFV;:#NDN&amp;S9,I8O7SZ@
+M"]+LV;.EIY]^.BIM\^;-//GDDP.Z*=0K`;0\_5O/UK;&amp;;#));?L"K[WV6I&lt;V
+MS69SE[_WA-9MTOZBNTZMS6:+'//FFV]R]]UW,V7*%*9,F2+NO/-.,6_>/)&amp;5
+ME25NOOGFR,K7.7/F\/[[[[-Z]>H!7?A;6+Y\N5145!25MFK5*K9LV3)@1=!C
+M`=35U8FRLC(R,S/I:I%9ZXXQA-N#JU>O[C0#TM/;?^*YHUJA*W[RDY^P;=LV
+MBHN+R&lt;_/[]6Y%PJ]S3&lt;!\O+RV+5K%_/GS\=JM2++,E.G3F7QXL6L7[^>RLI*
+M_O:WOTFWWGKK=Z+PM_#&amp;&amp;V](;4?Q;KOM-HX=.S8@1=#C/D!+FW3Y\N4`*(K2
+MX0U9K5:IL+!0O/?>>Y&amp;T-6O61,YK2\NJP-:&lt;/GVZIVX!D)&amp;1(&lt;V&lt;.9.9,V?R
+MR"./D)65U6YD::`ARS+CQHV3XEV%.A`I+2WETDLOC=K#&lt;=---U%;6RLL%LN`
+M$G2/:@!%443+6/W2I4N1)$FT5.EM@R1)484?PA-C[[SS3H>"&amp;3UZ=+NT[H8(
+MNV/,F#'='M,73:_^IK.EU['04D/UQ>2;W6Z7MFW;%I7F=#JCAG$[ZRM=:'J4
+M@Z^^^BH`#H>#:ZZYAE`HU.7QJ:FI;-RX,6KBY_'''^>..^YH=^SPX&lt;.EO+P\
+MT;K0[]RYLT?.=T;;%:H=T=&lt;":%FFD)R&lt;W*=VNR(U-34J'@P&amp;8[;5EP(`F#1I
+MDK1APP9Q]]UW1]+*RLIX^.&amp;'Q9_^]">IK>_]18\$T-*Q_>BCCQ@Y&lt;F2/JK`)
+M$R:(UJM%*RLKV;-GC[CQQAO;G;]DR1+FSY\?B7_^^>&lt;((80D2>>MNFR[9*&amp;K
+MY&lt;D]H66D*3DE)2X[O2$M+2TJWMC8&amp;+.M0"``0'9V=EP^M>:NN^Z2]NW;%[7$
+M?>W:M=QSSSUBPH2!\7'O;IM`GW[Z:63HLZ>%'^"!!QYHE]9V[4@+A86%47%9
+MEGGNN>=Z>JF8&amp;#IT:-1\0TU-3&lt;RV7"Z7D&amp;69S,S,"_K-WK9S#A45%3';.G7J
+M%`!77'%%7#ZUI:/E$K-FS8JT*OJ;;@70W=!G9]CM=JEMP2XK*Z.ZNKI=7\!J
+MM4IM5Y2N6+&amp;B5]?K+4E)25+KOH+'XZ&amp;FIB:FD8J64:N>]#WZDE&amp;C1D7%#Q\^
+M'+.MEJVL4Z=.C&lt;NGCFB[7,+I=-)Z]6]_TJ4`JJNK17EY.3:;K&lt;NAS\[H:%ET
+M9QM4?O[SGTMM]Q7&lt;?OOM,17(MF/RG?596L]:R[(&lt;\Q_E]==?!\++A"\D;077
+MU6QX=[0,7+1=V=M7?/311^?#;/QTM5^R9>?^JE6K8MYSF9N;&amp;[5_TV:S"573
+M.K176UL;]28(0"Q>O+C7UVY]39O-)HX>/=JAC;9O:LC-S>WUM6IK:R/G=W9?
+M0K3?$^QP.&amp;+.T]:A[1[J#1LV]-INR_[&lt;A0L7=GENRY[@!0L6Q.3[IDV;VNTI
+MCF5/&lt;&amp;%A892-\O+RF/.RTQ_\?G_D`HJBQ'R!DI*2=C?=E:".'#G23@0S9LP0
+M^_?O[]:'TM)245!0$#FOL+!05%55=7E>VP+4&amp;[%75E9&amp;?%VW;EV7YYTO`?C]
+M_BB[-INM5YO$7WSQ1&lt;$WKT/I2L!"Q"\`(;X5VX`7P+IUZP0@YLZ=&amp;]&lt;?JK60
+M6D)W[^"IK:T5,V;,:'?>G#ES1$E)B=B_?[^HJJH2M;6UXM"A0V+=NG6B]5,_
+M/S]?E)65]=COMM=:MFR9&lt;#J=G9Y_]NQ945Q&lt;'#E^T:)%W5[K?`E`"$%965F[
+M_.VN8.W=NU?,F3.G5X6H+P0@A&amp;#NW+D#6P!.IS-BO"]>=E545-2K6J`EE)24
+MB);7C?0D%!04Q/QJD(4+%[:S5U14)-:M6R&lt;^^.`#L6G3)O'[W_^^G3![6F.T
+M;6[%^R*NMJ&amp;\O%PX'(YV3;H5*U:(DI(2L77K5K%APP;QT$,/1=6P#H=#'#IT
+MJ$>^M+P8*]Z78@GQ;3,U%@&amp;TKN6!7CWLVH8.$_?NW2L&lt;#D>G;]/J;3ARY(C(
+MS\\7^?GYHJ"@0.3GYXO"PL(>VZZLK!3%Q&lt;6BJ*A(Y.?G"X?#(1P.A\C+RQ,+
+M%BP0&amp;S=N%&amp;ZW.VY?R\O+15%1D6C;;^FH!BLJ*NJT;]%1&lt;#J=D7O/S\_OL[QM
+M&amp;]:M6R?R\_/;-2/;!H?#(8J+BWOEPZ%#AT1^?GY&lt;?&lt;*6T%(CQM)G6;%B120?
+M\_/S>_5W:!LZ?#>H$.=W$NJ[P/'CQ\577WU%=74U@4``J]5*3DX.$R9,8.S8
+ML0,^;P*!@#A\^#"5E94T-#2@*`KIZ>E&lt;=MEE3)PX\;SOC^@)9\Z&lt;$2:3J5?S
+M2WV-\8TP@T&amp;-\7T`@T&amp;-(0"#08TA`(-!C2$`@T&amp;-(0"#08TA`(-!C2$`@T&amp;-
+M(0"#08TA`(-!C2$`@T&amp;-(0"#08TA`(-!C2$`@T&amp;-(0"#08TA`(-!S?\'E$^]
+1B.6A+Z(`````245.1*Y"8(*#
+`
+end
+</map>
+   </image>
    <text>
     <rect>
      <x>380</x>
@@ -62,7 +234,7 @@
     <top/>
     <data>
      <query>cliente</query>
-     <column>cNombreFiscal</column>
+     <column>nombre_fiscal</column>
     </data>
    </text>
    <text>
@@ -83,7 +255,7 @@
     <top/>
     <data>
      <query>cliente</query>
-     <column>cDireccion1</column>
+     <column>direccion1</column>
     </data>
    </text>
    <text>
@@ -104,7 +276,7 @@
     <top/>
     <data>
      <query>cliente</query>
-     <column>cPoblacion</column>
+     <column>poblacion</column>
     </data>
    </text>
    <text>
@@ -125,7 +297,7 @@
     <top/>
     <data>
      <query>cliente</query>
-     <column>cCP</column>
+     <column>cp</column>
     </data>
    </text>
    <text>
@@ -146,7 +318,7 @@
     <top/>
     <data>
      <query>cliente</query>
-     <column>cProvincia</column>
+     <column>provincia</column>
     </data>
    </text>
    <label>
@@ -184,7 +356,7 @@
     <top/>
     <data>
      <query>cliente</query>
-     <column>cCifNif</column>
+     <column>cif_nif</column>
     </data>
    </text>
   </detail>
@@ -193,7 +365,7 @@
   <name>t_documento</name>
   <detail>
    <key>
-    <query>cliente</query>
+    <query>cab_fac</query>
    </key>
    <height>75</height>
    <rect>
@@ -272,7 +444,7 @@
     <top/>
     <data>
      <query>cliente</query>
-     <column>cCodigoCliente</column>
+     <column>codigo_cliente</column>
     </data>
    </field>
    <label>
@@ -290,7 +462,7 @@
     </font>
     <left/>
     <top/>
-    <string>Albarán</string>
+    <string>Factura</string>
    </label>
    <label>
     <rect>
@@ -325,8 +497,8 @@
     <hcenter/>
     <top/>
     <data>
-     <query>cab_alb</query>
-     <column>dFecha</column>
+     <query>cab_fac</query>
+     <column>fecha</column>
     </data>
    </field>
    <label>
@@ -472,7 +644,7 @@
   <name>linea_detalle</name>
   <detail>
    <key>
-    <query>lin_alb</query>
+    <query>lin_fac</query>
    </key>
    <height>25</height>
    <field>
@@ -491,8 +663,8 @@
     <hcenter/>
     <top/>
     <data>
-     <query>lin_alb</query>
-     <column>cCodigo</column>
+     <query>lin_fac</query>
+     <column>codigo</column>
     </data>
    </field>
    <field>
@@ -511,8 +683,8 @@
     <right/>
     <top/>
     <data>
-     <query>lin_alb</query>
-     <column>nCantidad</column>
+     <query>lin_fac</query>
+     <column>cantidad</column>
     </data>
    </field>
    <field>
@@ -531,8 +703,8 @@
     <left/>
     <top/>
     <data>
-     <query>lin_alb</query>
-     <column>cDescripcion</column>
+     <query>lin_fac</query>
+     <column>descripcion</column>
     </data>
    </field>
    <field>
@@ -551,9 +723,10 @@
     <right/>
     <top/>
     <data>
-     <query>lin_alb</query>
-     <column>rPVP</column>
+     <query>lin_fac</query>
+     <column>precio</column>
     </data>
+    <format>%0.2f</format>
    </field>
    <field>
     <rect>
@@ -571,8 +744,8 @@
     <hcenter/>
     <top/>
     <data>
-     <query>lin_alb</query>
-     <column>nPorcIva</column>
+     <query>Context Query</query>
+     <column>porc_iva</column>
     </data>
    </field>
    <field>
@@ -591,9 +764,10 @@
     <right/>
     <top/>
     <data>
-     <query>lin_alb</query>
-     <column>rTotal</column>
+     <query>Context Query</query>
+     <column>total</column>
     </data>
+    <format>%0.2f</format>
    </field>
   </detail>
  </section>
@@ -625,23 +799,24 @@
   </label>
   <field>
    <rect>
-    <x>570</x>
-    <y>35</y>
+    <x>545</x>
+    <y>40</y>
     <width>100</width>
     <height>25</height>
     <weight>1</weight>
    </rect>
    <font>
-    <face></face>
-    <size>8</size>
+    <face>Sans</face>
+    <size>20</size>
     <weight>normal</weight>
    </font>
    <right/>
    <top/>
    <data>
-    <query>cab_alb</query>
-    <column>rTotalAlbaran</column>
+    <query>Context Query</query>
+    <column>total</column>
    </data>
+   <format>%0.2f</format>
   </field>
   <label>
    <rect>
@@ -652,8 +827,8 @@
     <weight>1</weight>
    </rect>
    <font>
-    <face></face>
-    <size>8</size>
+    <face>Sans</face>
+    <size>20</size>
     <weight>normal</weight>
    </font>
    <left/>

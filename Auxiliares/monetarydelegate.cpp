@@ -14,8 +14,8 @@ void MonetaryDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
     lineedit->text();
     lineedit->setReadOnly(this->readonly);
     double valor_moneda = lineedit->text().toDouble();
-    QString valor_moneda_string = QString::number(valor_moneda,'f',2);
-    QString valor = Configuracion_global->toFormatoMoneda(valor_moneda_string);
+    QString valor = QString::number(valor_moneda,'f',2);
+
     model->setData(index,valor,Qt::EditRole);
     lineedit->setAlignment(Qt::AlignRight);
 }

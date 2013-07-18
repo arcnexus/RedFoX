@@ -145,11 +145,11 @@ void FrmTarifas::calcular_precio(double margen)
 
         blockSignals(true);
         //NOTE 70% /0.30 - 40 /0.60
-        double pvp = (ui->txtCosteLocal->text().replace(",",".").toDouble()*100)/(100-margen);
+        double pvp = (ui->txtCosteLocal->text().replace(".","").replace(",",".").toDouble()*100)/(100-margen);
         QString cPvp = Configuracion_global->toFormatoMoneda(QString::number(pvp,'f',2));
         this->pvpDivisa = cPvp.toDouble();
         ui->txtPVPLocal->setText(cPvp);
-        double valordivisa = ui->txtPVPLocal->text().replace(",",".").toDouble() * ui->txtValorDivisa->text().replace(",",".").toDouble();
+        double valordivisa = ui->txtPVPLocal->text().replace(".","").replace(",",".").toDouble() * ui->txtValorDivisa->text().replace(".","").replace(",",".").toDouble();
         ui->txtPVPDivisa->setText(Configuracion_global->toFormatoMoneda(QString::number(valordivisa,'f',2)));
         this->pvpDivisa = valordivisa;
         blockSignals(false);
@@ -168,7 +168,7 @@ void FrmTarifas::aceptar()
 void FrmTarifas::on_txtPVPLocal_editingFinished()
 {
     blockSignals(true);
-    double Margen=100-((ui->txtCosteLocal->text().replace(",",".").toDouble()*100)/ui->txtPVPLocal->text().replace(",",".").toDouble());
+    double Margen=100-((ui->txtCosteLocal->text().replace(".","").replace(",",".").toDouble()*100)/ui->txtPVPLocal->text().replace(".","").replace(",",".").toDouble());
     ui->spinMargen->setValue(Margen);
     calcular_precio(Margen);
     blockSignals(false);

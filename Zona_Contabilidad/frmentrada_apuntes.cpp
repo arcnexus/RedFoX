@@ -30,8 +30,8 @@ void FrmEntrada_apuntes::llenar_objeto()
     oApunte->descripcion_d = ui->txtdesc_cuenta_debe->text();
     oApunte->descripcion_h = ui->txtdesc_cuenta_haber->text();
     oApunte->fecha_asiento = ui->txtfecha_asiento->date();
-    oApunte->importe_d = ui->txtimporte_debe->text().replace(",",".").toDouble();
-    oApunte->importe_h = ui->txtimporte_haber->text().replace(",",".").toDouble();
+    oApunte->importe_d = ui->txtimporte_debe->text().replace(".","").replace(",",".").toDouble();
+    oApunte->importe_h = ui->txtimporte_haber->text().replace(".","").replace(",",".").toDouble();
     // TODO oApunte->pos_en_asiento =
 
 }

@@ -356,6 +356,7 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
             comprobarCantidad(row);
             //guardar cantidad al terminar de editar
             m_rows[row]->cantidad = previous->text().toDouble();
+            calculatotalLinea(row);
         }
         else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
         {
@@ -406,13 +407,13 @@ void Table_Helper::calculatotal()
 
 double Table_Helper::calculadtoLinea(int row)
 {
-    return helped_table->item(row,5)->text().replace(",",".").toDouble();
+    return helped_table->item(row,5)->text().toDouble();
 }
 
 double Table_Helper::calculabaseLinea(int row)
 {
     int cantidad = helped_table->item(row,1)->text().toInt();
-    double pvp = helped_table->item(row,3)->text().replace(",",".").toDouble();
+    double pvp = helped_table->item(row,3)->text().toDouble();
     double subtotal = cantidad * pvp;
 
     return subtotal;
@@ -422,8 +423,7 @@ double Table_Helper::calculaivaLinea(int row)
 {
     double base = calculabaseLinea(row);
     base -= calculadtoLinea(row);
-    //qDebug() << helped_table->item(row,7)->text();
-    //double porc_iva = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("iva").toDouble();
+
     double porc_iva = helped_table->item(row,7)->text().toDouble();
     double total_iva = (base * porc_iva)/100;
 
@@ -434,10 +434,8 @@ double Table_Helper::calcularRELinea(int row)
 {
     if(use_re)
     {
-        double base = helped_table->item(row,4)->text().replace(",",".").toDouble();
+        double base = helped_table->item(row,4)->text().toDouble();
         base -= calculadtoLinea(row);
-
-        //double re = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("recargo_equivalencia").toDouble();
         double re = helped_table->item(row,8)->text().toDouble();
         double total_re = (base * re)/100;
 
@@ -550,28 +548,25 @@ void Table_Helper::comprobadto(int row)
 double Table_Helper::calculatotalLinea(int row)
 {
     int cantidad = helped_table->item(row,1)->text().toInt();
-    double pvp = helped_table->item(row,3)->text().replace(",",".").toDouble();
+    double pvp = helped_table->item(row,3)->text().toDouble();
     double subtotal = cantidad * pvp;
     helped_table->item(row,4)->setText(QString::number(subtotal,'f',2));
 
     double dto = calculadtoLinea(row);
 
-//    double iva = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("iva").toDouble();
+//    double iva = helped_table->item(row,7)->text().toDouble();
 
-//    double re = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("recargo_equivalencia").toDouble();
-    double iva = helped_table->item(row,7)->text().toDouble();
-
-    double re = helped_table->item(row,8)->text().toDouble();
+//    double re = helped_table->item(row,8)->text().toDouble();
 
     double total = subtotal - dto;
+ // el total de lineas no debe llevar el iva incluido ni el re, eso se calcula en el pie del documento
+//    double add_re = (re / 100) * total;
 
-    double add_re = (re / 100) * total;
+//    double y = 1 + (iva/100);
+//    total = total * y;
 
-    double y = 1 + (iva/100);
-    total = total * y;
-
-    if(use_re)
-        total = total + add_re;
+//    if(use_re)
+//        total = total + add_re;
     helped_table->item(row,9)->setText(QString::number(total,'f',2));
     return total;
 }
@@ -592,36 +587,6 @@ void Table_Helper::calcular_por_Base(QString sbase)
     double total = 0;
     for(int i=0; i<helped_table->rowCount();i++)
     {
-//        QString name = helped_table->item(i,7)->text();
-//       // if(Configuracion_global->ivas[name].value("iva").toString() == sbase)
-
-//        {
-//            double row_base = calculabaseLinea(i);
-//            row_base-= calculadtoLinea(i);
-
-//            double iva_value = Configuracion_global->ivas[name].value("iva").toDouble();
-//            double aux_iva = (row_base * iva_value) /100;
-
-//            //Acumulo por linea
-//            base += row_base;
-//            iva += aux_iva;
-//            /*********************/
-
-//            if(use_re)
-//            {
-//                double re_value = Configuracion_global->ivas[name].value("recargo_equivalencia").toDouble();
-//                double aux_re = (row_base * re_value) /100;
-//                re += aux_re;
-//                total+=aux_re;
-//            }
-//            total += row_base;
-//            total += aux_iva;
-//        }
-
-//        base = calculabaseLinea(i);
-//        iva = calculaivaLinea(i);
-//        re = calcularRELinea(i);
-//        total = calculatotalLinea(i);
 
 
     if(sbase == "base1")
@@ -693,23 +658,20 @@ void Table_Helper::rellenar_con_Articulo(int row)
                 helped_table->item(row,2)->setText(r.value("descripcion_reducida").toString());
 
             if (this->comprando)
-                 helped_table->item(row,3)->setText(r.value("coste").toString());
+            {
+                double coste = r.value("coste").toDouble();
+                helped_table->item(row,3)->setText(QString::number(coste,'f',2));
+            }
             else
-                helped_table->item(row,3)->setText(r.value("pvp").toString());
-
- //           QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
-
-//            double iva = r.value("iva").toFloat();
-//            QString sIva = QString::number(iva);
-//            for (int i = 0;i<keys.size();i++)
-//            {
-//                if(Configuracion_global->ivas[keys.at(i)].value("iva").toDouble() == iva)
-//                    sIva = Configuracion_global->ivas[keys.at(i)].value("tipo").toString();
-//            }
-//            helped_table->item(row,7)->setText(iva);
+            {
+                double precio = r.value("pvp").toDouble();
+                helped_table->item(row,3)->setText(QString::number(precio,'f',2));
+            }
            helped_table->item(row,7)->setText(r.value("tipo_iva").toString());
            float rec = Configuracion_global->devolver_rec_iva(r.value("tipo_iva").toFloat());
            helped_table->item(row,8)->setText(QString::number(rec,'f',2));
+           double total = helped_table->item(row,3)->text().toDouble();
+           helped_table->item(row,9)->setText(QString::number(total,'f',2));
         }
         else if(helped_table->item(row,0)->text() !="" && helped_table->item(row,2)->text().isEmpty())
         {
@@ -802,27 +764,6 @@ void Table_Helper::searchArticulo()
         helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
         rellenar_con_Articulo(helped_table->currentRow());
    }
-//    Db_table_View searcher(qApp->activeWindow());
-//    searcher.set_db("Maya");
-//    searcher.set_table("vistaart_tarifa");
-
-//    searcher.setWindowTitle(tr("Articulos"));
-
-//    QStringList headers;
-//    headers << tr("Codigo")<< tr("Cod.Barras") << tr("Cod.Fabricante") << tr("Descripción");
-//    searcher.set_table_headers(headers);
-//    searcher.set_tarifa(this->tarifa);
-
-//    searcher.set_readOnly(true);
-//    searcher.set_selection("codigo");
-
-//    if(searcher.exec() == QDialog::Accepted)
-//    {
-//        helped_table->item(helped_table->currentRow(),0)->setText(searcher.selected_value);
-//        helped_table->setCurrentCell(helped_table->currentRow(),1);
-//        helped_table->editItem(helped_table->item(helped_table->currentRow(),helped_table->currentColumn()));
-//        rellenar_con_Articulo(helped_table->currentRow());
-//    }
 }
 
 void Table_Helper::updateLinea(int row)
@@ -830,38 +771,21 @@ void Table_Helper::updateLinea(int row)
     m_rows[row]->codigo = helped_table->item(row,0)->text();
     m_rows[row]->cantidad= helped_table->item(row,1)->text().toInt();
     m_rows[row]->descripcion= helped_table->item(row,2)->text();
-    m_rows[row]->precio= helped_table->item(row,3)->text().replace(",",".").toDouble();
-    m_rows[row]->subtotal= helped_table->item(row,4)->text().replace(",",".").toDouble();
-    m_rows[row]->dto= helped_table->item(row,5)->text().replace(",",".").toDouble();
+    m_rows[row]->precio= helped_table->item(row,3)->text().toDouble();
+    m_rows[row]->subtotal= helped_table->item(row,4)->text().toDouble();
+    m_rows[row]->dto= helped_table->item(row,5)->text().toDouble();
     m_rows[row]->dto_perc= helped_table->item(row,6)->text().toDouble();
-//    double iva = Configuracion_global->ivas[helped_table->item(row,7)->text()].value("iva").toDouble();
     m_rows[row]->iva_perc= helped_table->item(row,7)->text().toDouble();
     m_rows[row]->rec_perc= helped_table->item(row,8)->text().toDouble();
-    m_rows[row]->total= helped_table->item(row,9)->text().replace(",",".").toDouble();
+    m_rows[row]->total= helped_table->item(row,9)->text().toDouble();
 
-
-    //etc
-    /*
-    helped_table->item(row,index)->setText(r.value(4).toString()); index++;
-    m_rows[row]->cantidad = r.value(4).toDouble();
-    helped_table->item(row,index)->setText(r.value(5).toString()); index++;
-    m_rows[row]->descripcion = r.value(5).toString();
-    helped_table->item(row,index)->setText(r.value(6).toString()); index++;
-    m_rows[row]->importe = r.value(6).toDouble();
-    helped_table->item(row,index)->setText(r.value(7).toString());index++;
-    m_rows[row]->subtotal = r.value(7).toDouble();
-    helped_table->item(row,index)->setText(r.value(8).toString());index++;
-    m_rows[row]->dto = r.value(8).toDouble();
-    helped_table->item(row,index)->setText(r.value(9).toString());index++;
-    m_rows[row]->dto_perc = r.value(9).toDouble();
-    m_rows[row]->iva_perc = r.value(10).toDouble();*/
     emit lineaReady(m_rows[row]);
 }
 
 void Table_Helper::calcPercDescuento(int row)
 {
     double base = calculabaseLinea(row);
-    double dto = helped_table->item(row,5)->text().replace(",",".").toDouble();
+    double dto = helped_table->item(row,5)->text().toDouble();
     double perc = (dto * 100)/base;
     helped_table->item(row,6)->setText(QString::number(perc));
 }
@@ -869,7 +793,7 @@ void Table_Helper::calcPercDescuento(int row)
 void Table_Helper::calcNetoDescuento(int row)
 {
     double base = calculabaseLinea(row);
-    double perc_dto = helped_table->item(row,6)->text().replace(",",".").toDouble();
+    double perc_dto = helped_table->item(row,6)->text().toDouble();
     double dto = perc_dto * base / 100;
     helped_table->item(row,5)->setText(QString::number(dto));
 }

@@ -128,7 +128,7 @@ QString Configuracion::toFormatoMoneda(QString cTexto)
 
 double Configuracion::MonedatoDouble(QString moneda)
 {
-    moneda = moneda.replace(",",".");
+    moneda = moneda.replace(".","").replace(",",".");
     return moneda.toDouble();
 }
 
@@ -977,7 +977,8 @@ void Configuracion::imprimir(bool toPDF,bool preview, QWidget *parent)
             QString errMsg;
             int errLine, errCol;
             QString source = rptDiag.getSource();
-            source.replace("@empresa",Configuracion_global->nombre_bd_empresa);
+            source.replace("@empresa@",Configuracion_global->nombre_bd_empresa);
+            source.replace("@grupo@",Configuracion_global->group_DBName);
             if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
                 ORPreRender pre(db);
                 pre.setDom(doc);
@@ -1058,7 +1059,8 @@ void Configuracion::imprimir(bool toPDF,bool preview,QMap<QString,QVariant> para
             QString errMsg;
             int errLine, errCol;
             QString source = rptDiag.getSource();
-            source.replace("@empresa",Configuracion_global->nombre_bd_empresa);
+            source.replace("@empresa@",Configuracion_global->nombre_bd_empresa);
+            source.replace("@grupo@",Configuracion_global->group_DBName);
             if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
                 ORPreRender pre(db);
                 pre.setDom(doc);
@@ -1157,7 +1159,9 @@ void Configuracion::imprimir(QString repo, bool toPDF, bool preview, QMap<QStrin
             QString errMsg;
             int errLine, errCol;
 
-            source.replace("@empresa",Configuracion_global->nombre_bd_empresa);
+            source.replace("@empresa@",Configuracion_global->nombre_bd_empresa);
+            source.replace("@grupo@",Configuracion_global->group_DBName);
+            qDebug() <<source;
             if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
                 ORPreRender pre(db);
                 pre.setDom(doc);

@@ -53,7 +53,7 @@ void frmCuadro_cuentas::llenar_objeto()
     cuentas->codigo_cta = ui->txtcodigo_cuenta->text();
     cuentas->descripcion = ui->txtdescripcion_cuenta->text();
     cuentas->desglose_balance = ui->txtDesglose_balance->text();
-    cuentas->saldo = ui->txtsaldo_cta->text().replace(",",".").toDouble();
+    cuentas->saldo = ui->txtsaldo_cta->text().replace(".","").replace(",",".").toDouble();
 }
 
 void frmCuadro_cuentas::activar_controles(bool state)

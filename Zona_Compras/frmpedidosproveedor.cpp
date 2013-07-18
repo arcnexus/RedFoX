@@ -626,30 +626,30 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
     oPedido_proveedor->poblacion_entrega = ui->txtpoblacion_entrega->text();
     oPedido_proveedor->provincia_entrega = ui->txtprovincia_entrega->text();
     oPedido_proveedor->horario_activo = ui->txtHorarioEntrega->text();
-    oPedido_proveedor->base1 = ui->txtbase1->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->base2 = ui->txtbase2->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->base3 = ui->txtbase3->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->base4 = ui->txtbase4->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->base1 = ui->txtbase1->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->base2 = ui->txtbase2->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->base3 = ui->txtbase3->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->base4 = ui->txtbase4->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
     oPedido_proveedor->iva1 = ui->txtiva1->text().toInt();
     oPedido_proveedor->iva2 = ui->txtiva2->text().toInt();
     oPedido_proveedor->iva3 = ui->txtiva3->text().toInt();
     oPedido_proveedor->iva4 = ui->txtiva4->text().toInt();
-    oPedido_proveedor->iva1 = ui->txtiva1->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->iva2 = ui->txtiva2->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->iva3 = ui->txtiva3->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->iva4 = ui->txtiva4->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->iva1 = ui->txtiva1->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->iva2 = ui->txtiva2->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->iva3 = ui->txtiva3->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->iva4 = ui->txtiva4->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
     oPedido_proveedor->porc_rec1 = ui->txtporc_rec1->text().toInt();
     oPedido_proveedor->porc_rec2 = ui->txtporc_rec2->text().toInt();
     oPedido_proveedor->porc_rec3 = ui->txtporc_rec3->text().toInt();
     oPedido_proveedor->porc_rec4 = ui->txtporc_rec4->text().toInt();
-    oPedido_proveedor->rec1 = ui->txtporc_rec1->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->rec2 = ui->txtporc_rec2->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->rec3 = ui->txtporc_rec3->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->rec4 = ui->txtporc_rec4->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->total1 = ui->txttotal1->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->total2 = ui->txttotal2->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->total3 = ui->txttotal3->text().replace(",",".").replace(moneda,"").toDouble();
-    oPedido_proveedor->total4 = ui->txttotal4->text().replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rec1 = ui->txtporc_rec1->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rec2 = ui->txtporc_rec2->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rec3 = ui->txtporc_rec3->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->rec4 = ui->txtporc_rec4->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->total1 = ui->txttotal1->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->total2 = ui->txttotal2->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->total3 = ui->txttotal3->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
+    oPedido_proveedor->total4 = ui->txttotal4->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
 }
 
 

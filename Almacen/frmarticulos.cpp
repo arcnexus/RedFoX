@@ -366,13 +366,13 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->subfamilia=ui->txtsubfamilia->text();
     oArticulo->tipo_iva=Configuracion_global->ivas[ui->cboTipoIVA->currentText()].value("iva").toDouble();
     oArticulo->id_tipos_iva = Configuracion_global->getidIva(ui->cboTipoIVA->currentText());
-    oArticulo->coste=ui->txtcoste->text().replace(",",".").toDouble();
+    oArticulo->coste=ui->txtcoste->text().replace(".","").replace(",",".").toDouble();
     oArticulo->fecha_ultima_compra= ui->txtfecha_fecha_ultima_compra->date();
     oArticulo->fecha_ultima_venta= ui->txtfechaUltimaVenta->date();
     oArticulo->unidades_compradas= ui->txtunidades_compradas->text().toDouble();
     oArticulo->unidades_vendidas=ui->txtunidades_vendidas->text().toDouble();
-    oArticulo->importe_acumulado_compras= ui->txtimporte_acumulado_compras->text().replace(",",".").toDouble();
-    oArticulo->importe_acumulado_ventas= ui->txtimporte_acumulado_ventas->text().replace(",",".").toDouble();
+    oArticulo->importe_acumulado_compras= ui->txtimporte_acumulado_compras->text().replace(".","").replace(",",".").toDouble();
+    oArticulo->importe_acumulado_ventas= ui->txtimporte_acumulado_ventas->text().replace(".","").replace(",",".").toDouble();
     oArticulo->comentario=ui->txtcomentario->toPlainText();
     oArticulo->stock_maximo=ui->txtstock_maximo->text().toInt();
     oArticulo->stock_minimo=ui->txtstock_minimo->text().toInt();
@@ -417,10 +417,10 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->por_cada = ui->txtpor_cada->text().toInt();
     oArticulo->regalo_de = ui->txtregalo_de->text().toInt();
     oArticulo->porc_dto = ui->txtdto->text().toFloat();
-    oArticulo->porc_dto_web = ui->txt_dto_web->text().replace(",",".").toDouble();
-    oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().replace(",",".").toDouble();
+    oArticulo->porc_dto_web = ui->txt_dto_web->text().replace(".","").replace(",",".").toDouble();
+    oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().replace(".","").replace(",",".").toDouble();
     oArticulo->comentario_oferta = ui->txcomentarios_promocion->toPlainText();
-    oArticulo->coste_real = ui->txtCoste_real->text().replace(",",".").toDouble();
+    oArticulo->coste_real = ui->txtCoste_real->text().replace(".","").replace(",",".").toDouble();
    // oArticulo->margen = ui->txtMargen->value();
    // oArticulo->margen_min = ui->txtMargen_min->value();
 
@@ -720,7 +720,7 @@ void FrmArticulos::on_btnBuscarProveedor_clicked()
 void FrmArticulos::on_btnAnadirTarifa_clicked()
 {
     FrmTarifas addTarifa(this);
-    addTarifa.capturar_coste(ui->txtCoste_real->text().replace(",",".").toFloat());
+    addTarifa.capturar_coste(ui->txtCoste_real->text().replace(".","").replace(",",".").toFloat());
     if(addTarifa.exec() ==QDialog::Accepted)
     {
         QSqlQuery qTarifa(Configuracion_global->groupDB);
@@ -1891,7 +1891,7 @@ void FrmArticulos::on_txtcoste_editingFinished()
     // Doy valor a coste_real
     ui->txtCoste_real->setText(ui->txtcoste->text());
 
-    fin = ui->txtcoste->text().replace(",",".").toDouble();
+    fin = ui->txtcoste->text().replace(".","").replace(",",".").toDouble();
     if (inicio != fin)
     {
         blockSignals(true);

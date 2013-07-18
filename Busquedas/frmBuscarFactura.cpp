@@ -35,7 +35,7 @@ void FrmBuscarFactura::on_pushButton_clicked()
     cSQL ="Select id,factura,cliente,fecha,fecha_cobro,subtotal,dto,dto_pp,"
           "base,iva,total from cab_fac where cliente like '%"+ui->txtBuscar->text().trimmed()+"%' and "
           "fecha >= '"+cFecha1+"' and fecha <= '"+cFecha2+"' and total >= "+
-            QString::number(ui->Importeminimo->text().replace(",",".").toDouble(),'f',2)+
+            QString::number(ui->Importeminimo->text().replace(".","").replace(",",".").toDouble(),'f',2)+
           " and total <="+QString::number(cImporteMaximo.toDouble(),'f',2)+" order by factura";
 
     ModelFacturas = new QSqlQueryModel();

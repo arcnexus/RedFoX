@@ -237,21 +237,21 @@ int main(int argc, char *argv[])
            w.pass =l.getPass();
            w.showInfo();
            Configuracion_global->id_usuario_activo = l.getid_user();
-#ifdef Q_OS_WIN32
+//#ifdef Q_OS_WIN32
            //w.show();
            //w.setWindowState(Qt::WindowMinimized);
            w.showMaximized();
-#else
-           QRect dr= QApplication::desktop()->rect();
-           int ancho = dr.width();
-           int alto = dr.height();
-           w.setMaximumWidth(ancho);
-           w.setMaximumHeight(alto-60);
-           w.setWindowState(Qt::WindowMaximized);
-           w.setFixedWidth(ancho);
-           w.setFixedHeight(alto-60);
-           w.showMaximized();
-#endif
+//#else
+//           QRect dr= QApplication::desktop()->rect();
+//           int ancho = dr.width();
+//           int alto = dr.height();
+//           w.setMaximumWidth(ancho);
+//           w.setMaximumHeight(alto-60);
+//           w.setWindowState(Qt::WindowMaximized);
+//           w.setFixedWidth(ancho);
+//           w.setFixedHeight(alto-60);
+//           w.showMaximized();
+//#endif
            return a.exec();
        }
    }
