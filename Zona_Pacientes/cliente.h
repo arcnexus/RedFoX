@@ -58,7 +58,7 @@ public:
     int bloqueado;
     QString comentario_bloqueo;
     float porc_dto_cliente;
-    int recargo_equivalencia;
+    double recargo_equivalencia;
     QString cuenta_contable;
     QString cuenta_iva_repercutido;
     QString cuenta_deudas;

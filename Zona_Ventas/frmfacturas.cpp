@@ -267,14 +267,18 @@ void frmFacturas::LLenarCamposCliente()
     ui->txtprovincia->setText(oCliente1->provincia);
     //ui->txtpais->setText(oCliente1->getpais());
     ui->txtcif->setText(oCliente1->cif_nif);
-    int lEstado = 0;
-     lEstado = oCliente1->recargo_equivalencia;
-    if ((lEstado= 1)) {
-        ui->chkrecargo_equivalencia->setChecked(true);
-    } else {
-        ui->chkrecargo_equivalencia->setChecked(false);
+    ui->chkrecargo_equivalencia->setChecked(oCliente1->recargo_equivalencia);
+
+    if(oCliente1->recargo_equivalencia)
+    {
+        ui->txtporc_rec1->setText(QString::number(Configuracion_global->reList.at(0).toDouble(),'f',2));
+        ui->txtporc_rec2->setText(QString::number(Configuracion_global->reList.at(1).toDouble(),'f',2));
+        ui->txtporc_rec3->setText(QString::number(Configuracion_global->reList.at(2).toDouble(),'f',2));
+        ui->txtporc_rec4->setText(QString::number(Configuracion_global->reList.at(3).toDouble(),'f',2));
     }
-    if (oCliente1->lIRPF == true) {
+
+
+    if (Configuracion_global->irpf == true) {
         ui->lblIRPF_3->setVisible(true);
         ui->txtirpf->setText(QString::number(Configuracion_global->irpf));
         oFactura->irpf = (Configuracion_global->irpf);
@@ -290,6 +294,7 @@ void frmFacturas::LLenarCamposCliente()
     helper.porc_iva2 = ui->txtporc_iva2->text().toFloat();
     helper.porc_iva3 = ui->txtporc_iva3->text().toFloat();
     helper.porc_iva4 = ui->txtporc_iva4->text().toFloat();
+
     oFactura->id_cliente = oCliente1->id;
 }
 
@@ -556,6 +561,8 @@ void frmFacturas::Guardar_factura()
             QMessageBox::critical(this,tr("Error"),
                                   tr("Error al crear el asiento contable")+Configuracion_global->empresaDB.lastError().text(),
                                   tr("&Aceptar"));
+        else
+            ui->txtAsiento->setText(QString::number(oFactura->apunte));
     }
     if(succes)
     {
@@ -653,7 +660,7 @@ void frmFacturas::on_btnImprimir_clicked()
             int valor = dlg_print.get_option();
              QMap <QString,QVariant> parametros;
 
-             parametros["id_cliente"]= oCliente1->id;
+             parametros["id_cliente"]= oFactura->id_cliente;
              parametros["id_cab"] = oFactura->id;
              parametros["id_empresa"] = 1;
 
@@ -940,6 +947,8 @@ void frmFacturas::on_tabWidget_2_currentChanged(int index)
 
 bool frmFacturas::crear_asiento()
 {
+    oCliente1->Recuperar("select * from clientes where id = "+QString::number(oFactura->id_cliente));
+    //oCliente1->codigo_cliente = ui->txtcodigo_cliente->text();
     bool creado = oFactura->Apunte();
     return creado;
 }

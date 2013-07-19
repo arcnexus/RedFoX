@@ -384,7 +384,6 @@ bool Factura::RecuperarFactura(QString cSQL){
                 this->dto = registro.field("dto").value().toDouble();
                 this->dto_pp = registro.field("dto_pp").value().toDouble();
                 this->base = registro.field("base").value().toDouble();
-                this->iva = registro.field("iva").value().toInt();
                 this->iva = registro.field("iva").value().toDouble();
                 this->total = registro.field("total").value().toDouble();
                 this->impreso = registro.field("impreso").value().toBool();
@@ -402,7 +401,7 @@ bool Factura::RecuperarFactura(QString cSQL){
                 this->porc_iva3 = registro.field("porc_iva3").value().toInt();
                 this->porc_iva4 = registro.field("porc_iva4").value().toInt();
                 this->iva1 = registro.field("iva1").value().toDouble();
-                this->iva2 = registro.field("iva3").value().toDouble();
+                this->iva2 = registro.field("iva2").value().toDouble();
                 this->iva3 = registro.field("iva3").value().toDouble();
                 this->iva4 = registro.field("iva4").value().toDouble();
                 this->total1 = registro.field("total1").value().toDouble();
@@ -522,8 +521,13 @@ bool Factura::GuardarApunte(int nasiento, int nid)
                              tr("No se ha podido guardar el numero de apunte"),
                              tr("OK"));
         return false;
-    } else
+    }
+
+    else
+    {
+        this->apunte = nasiento;
         return true;
+    }
 }
 
 bool Factura::Apunte()

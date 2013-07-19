@@ -142,6 +142,7 @@ public:
     bool empresa_medica;
     bool empresa_internacional;
     bool enlace_web;
+    bool irpf;
     int consultas;
     QString primer_dia_laborable;
     QString ultimo_dia_laborable;

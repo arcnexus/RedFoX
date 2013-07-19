@@ -149,6 +149,7 @@ bool cargarEmpresa(QString empresa)
             //----------------------------
             // Abro empresa Contabilidad
             //----------------------------
+
             Configuracion_global->contaDB = QSqlDatabase::addDatabase(Configuracion_global->group_Driver,"dbconta");
             if (Configuracion_global->group_Driver =="QSQLITE")
             {

@@ -432,7 +432,7 @@ void Cliente::Recuperar(QString cSQL) {
             this->bloqueado = registro.field("bloqueado").value().toInt();
             this->comentario_bloqueo = registro.field("comentario_bloqueo").value().toString();
             this->porc_dto_cliente = registro.field("porc_dto_cliente").value().toDouble();
-            this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toInt();
+            this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toBool();
             this->cuenta_contable = registro.field("cuenta_contable").value().toString();
             this->cuenta_iva_repercutido = registro.field("cuenta_iva_repercutido").value().toString();
             this->cuenta_deudas = registro.field("cuenta_deudas").value().toString();

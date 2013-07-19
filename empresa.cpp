@@ -115,6 +115,7 @@ void Empresa::Recuperar(QString cSQL)
             this->cuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
             this->cuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
             this->enlace_web = registro.field("enlace_web").value().toBool();
+            this->irpf = registro.field("usar_irpf").value().toBool();
         }
 		else 
 		{
@@ -217,6 +218,7 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
             this->cuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
             this->cuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
             this->enlace_web = registro.field("enlace_web").value().toBool();
+            this->irpf = registro.field("usar_irpf").value().toBool();
         } else {
             if (nProcede == 1)
                 TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
@@ -294,6 +296,7 @@ void Empresa::Guardar()
                      "cuenta_iva_soportado3_re =:cuenta_iva_soportado3_re,"
                      "cuenta_iva_soportado4_re =:cuenta_iva_soportado4_re,"
                      "cuenta_pagos =:cuenta_pagos,"
+                     "usar_irpf =:usar_irpf,"
                      "enlace_web =:enlace_web"
                      " where id=:nid");
 
@@ -361,6 +364,7 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":cuenta_iva_soportado3_re",this->cuenta_iva_soportado_re3);
     qEmpresa.bindValue(":cuenta_iva_soportado4_re",this->cuenta_iva_soportado_re4);
     qEmpresa.bindValue(":enlace_web",this->enlace_web);
+    qEmpresa.bindValue(":usar_irpf",this->irpf);
 
     qEmpresa.bindValue(":nid",this->id);
 
@@ -452,6 +456,7 @@ void Empresa::Vaciar()
     this->cuenta_iva_soportado_re3 = "";
     this->cuenta_iva_soportado_re4 = "";
     this->enlace_web = false;
+    this->irpf = false;
 }
 
 bool Empresa::Borrar(int nid)

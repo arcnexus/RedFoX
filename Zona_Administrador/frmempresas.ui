@@ -530,7 +530,7 @@
               </size>
              </property>
              <property name="currentIndex">
-              <number>5</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab">
               <property name="styleSheet">
@@ -1328,6 +1328,13 @@ color: rgb(255, 255, 255);</string>
             <widget class="QComboBox" name="cboTarifa">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="4">
+            <widget class="QCheckBox" name="chkIRPF">
+             <property name="text">
+              <string>Autonomo / IRPF</string>
              </property>
             </widget>
            </item>
