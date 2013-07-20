@@ -133,16 +133,6 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="btnEnviar">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Enviar</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -223,6 +213,9 @@
  <tabstops>
   <tabstop>rad_Impresora</tabstop>
   <tabstop>rad_PDF</tabstop>
+  <tabstop>radEmail</tabstop>
+  <tabstop>rad_preview</tabstop>
+  <tabstop>txtEmail</tabstop>
   <tabstop>txtRutaPDF</tabstop>
   <tabstop>btn_carpeta</tabstop>
   <tabstop>pushButton</tabstop>
@@ -319,8 +312,8 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>433</x>
-     <y>37</y>
+     <x>407</x>
+     <y>39</y>
     </hint>
     <hint type="destinationlabel">
      <x>277</x>
@@ -330,17 +323,33 @@
   </connection>
   <connection>
    <sender>radEmail</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>btnEnviar</receiver>
-   <slot>setEnabled(bool)</slot>
+   <signal>toggled(bool)</signal>
+   <receiver>frame_email</receiver>
+   <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>506</x>
-     <y>28</y>
+     <x>363</x>
+     <y>30</y>
     </hint>
     <hint type="destinationlabel">
-     <x>507</x>
-     <y>81</y>
+     <x>353</x>
+     <y>60</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rad_PDF</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>frame_pdf</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>282</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>343</x>
+     <y>124</y>
     </hint>
    </hints>
   </connection>

@@ -214,6 +214,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_alb` (
   `imp_gasto2` DOUBLE NULL DEFAULT NULL ,
   `imp_gasto3` DOUBLE NULL DEFAULT NULL ,
   `gasto_to_coste` TINYINT(1) NULL DEFAULT NULL ,
+  `id_transportista` INT NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -296,6 +297,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_fac` (
   `imp_gasto3` DOUBLE NULL DEFAULT NULL ,
   `gasto_to_coste` TINYINT(1) NULL DEFAULT NULL ,
   `asiento` INT(11) NULL DEFAULT NULL ,
+  `id_transportista` INT NULL DEFAULT '0',
   PRIMARY KEY (`id`, `id_cliente`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1

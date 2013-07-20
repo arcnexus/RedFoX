@@ -7,6 +7,8 @@ FrmDialogoImprimir::FrmDialogoImprimir(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->rad_Impresora->setChecked(true);
+    ui->frame_email->setVisible(false);
+    ui->frame_pdf->setVisible(false);
 }
 
 FrmDialogoImprimir::~FrmDialogoImprimir()

@@ -72,6 +72,7 @@ public:
     QString cuenta_corriente;
     int pedido_cliente;
     int apunte;
+    int id_transportista;
     bool set_impresa(bool state);
 
 signals:

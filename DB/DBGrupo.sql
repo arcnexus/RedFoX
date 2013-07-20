@@ -35,6 +35,16 @@ AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
+
+CREATE  TABLE IF NOT EXISTS `@Grupo@`.`series` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `serie` CHAR(1) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
+
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`articulos` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `codigo` VARCHAR(200) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,

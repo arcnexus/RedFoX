@@ -46,13 +46,15 @@ bool Factura::AnadirFactura()
                    "base,iva,total,impreso,cobrado,contabilizado,id_forma_pago,forma_pago,comentario,"
                    "base1,base2,base3,base4,porc_iva1,porc_iva2,porc_iva3,porc_iva4,iva1,iva2,iva3,iva4,"
                    "total1,total2,total3,total4,porc_rec1,porc_rec2,porc_rec3,porc_rec4,rec1,rec2,rec3,rec4,"
-                   "total_recargo,entregado_a_cuenta,importe_pendiente,codigo_entidad,oficina_entidad,dc_cuenta,cuenta_corriente,pedido_cliente)"
+                   "total_recargo,entregado_a_cuenta,importe_pendiente,codigo_entidad,oficina_entidad,"
+                   "dc_cuenta,cuenta_corriente,pedido_cliente,id_transportista)"
                    " VALUES (:codigo_cliente,:factura,:fecha,:fecha_cobro,:id_cliente,:cliente,:direccion1,:direccion2,"
                    ":cp,:poblacion,:provincia,:pais,:cif,:recargo_equivalencia,:subtotal,:porc_dto,:porc_dto_pp,:dto,:dto_pp,"
                    ":base,:iva,:total,:impreso,:cobrado,:contabilizado,:id_forma_pago,:forma_pago,:comentario,"
                    ":base1,:base2,:base3,:base4,:porc_iva1,:porc_iva2,:porc_iva3,:porc_iva4,:iva1,:iva2,:iva3,:iva4,"
                    ":total1,:total2,:total3,:total4,:porc_rec1,:porc_rec2,:porc_rec3,:porc_rec4,:rec1,:rec2,:rec3,:rec4,"
-                   ":total_recargo,:entregado_a_cuenta,:importe_pendiente,:codigo_entidad,:oficina_entidad,:dc_cuenta,:cuenta_corriente,:pedido_cliente)");
+                   ":total_recargo,:entregado_a_cuenta,:importe_pendiente,:codigo_entidad,:oficina_entidad,"
+                   ":dc_cuenta,:cuenta_corriente,:pedido_cliente,:id_transportista)");
 
      cab_fac.bindValue(":codigo_cliente",this->codigo_cliente);
      cab_fac.bindValue(":factura","BORRADOR");
@@ -113,6 +115,7 @@ bool Factura::AnadirFactura()
      cab_fac.bindValue(":oficina_entidad",this->oficina_entidad);
      cab_fac.bindValue(":dc_cuenta",this->dc_cuenta);
      cab_fac.bindValue(":cuenta_corriente",this->cuenta_corriente);
+     cab_fac.bindValue(":id_transportista",this->id_transportista);
      cab_fac.bindValue(":pedido_cliente",0);
      if(!cab_fac.exec())
      {
@@ -194,6 +197,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
                      "dc_cuenta =:dc_cuenta,"
                      "cuenta_corriente =:cuenta_corriente,"
                      "pedido_cliente =:pedido_cliente,"
+                     "id_transportista =:id_transportista,"
                      "irpf =:irpf,"
                      "irpf =:irpf"
                      " where id=:id");
@@ -262,6 +266,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
     cab_fac.bindValue(":pedido_cliente",this->pedido_cliente);
     cab_fac.bindValue(":irpf",this->irpf);
     cab_fac.bindValue(":irpf",this->irpf);
+    cab_fac.bindValue(":id_transportista",this->id_transportista);
     if(!cab_fac.exec())
     {
         QMessageBox::critical(qApp->activeWindow(),tr("error al guardar datos Factura:"), cab_fac.lastError().text());
@@ -333,6 +338,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
                         Cliente.bindValue(":ventas_ejercicio",this->total);
                         Cliente.bindValue(":deuda_actual",this->total);
                         Cliente.bindValue(":id_cliente",record.field("id").value().toInt());
+
                         if (!Cliente.exec())
                         {
                             succes =  false;
@@ -427,6 +433,7 @@ bool Factura::RecuperarFactura(QString cSQL){
                 this->porc_irpf = registro.field("porc_irpf").value().toInt();
                 this->irpf = registro.field("irpf").value().toDouble();
                 this->apunte = registro.field("asiento").value().toInt();
+                this->id_transportista = registro.field("id_transportista").value().toInt();
                 return true;
                }
             else

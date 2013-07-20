@@ -42,13 +42,23 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->lbcontabilizada->setVisible(false);
     ui->lblFacturaCobrada->setVisible(false);
     ui->lblFacturaImpresa->setVisible(false);
+    //-------------------------
     // Rellenar formas de pago
-    QSqlQueryModel *  modelFP = new QSqlQueryModel();
+    //-------------------------
+    QSqlQueryModel *  modelFP = new QSqlQueryModel(this);
     modelFP->setQuery("Select forma_pago,id from formpago",Configuracion_global->groupDB);
     ui->txtforma_pago->setModel(modelFP);
     // valores edicion
     this->Altas = false;
     //ui->txtcodigoArticulo->setFocus();
+
+    //----------------
+    // Cargar Series
+    //----------------
+    QSqlQueryModel * model_series = new QSqlQueryModel(this);
+    model_series->setQuery("select serie from series",Configuracion_global->groupDB);
+    ui->cbo_serie->setModel(model_series);
+
     BloquearCampos(true);
     /* -----------------------------------------
      *CONEXIONES
@@ -648,6 +658,7 @@ void frmFacturas::on_btnBuscar_clicked()
 
 void frmFacturas::on_btnImprimir_clicked()
 {
+    oCliente1->Recuperar(oFactura->id_cliente);
     FrmDialogoImprimir dlg_print(this);
     dlg_print.set_email(oCliente1->email);
     dlg_print.set_preview(false);
@@ -663,6 +674,7 @@ void frmFacturas::on_btnImprimir_clicked()
              parametros["id_cliente"]= oFactura->id_cliente;
              parametros["id_cab"] = oFactura->id;
              parametros["id_empresa"] = 1;
+             parametros["id_transportista"] =1;
 
             switch (valor) {
             case 1: // Impresora

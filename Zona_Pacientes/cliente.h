@@ -103,6 +103,8 @@ signals:
 public slots:
     // Funciones de clase
     void Recuperar(QString cSQL);
+    void Recuperar(int id);
+    void cargar(QSqlQuery &query);
     void Guardar();
     void GuardarWeb();
     void Anadir();

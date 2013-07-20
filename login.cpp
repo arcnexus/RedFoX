@@ -222,7 +222,7 @@ void Login::init()
             if(!db.open())
                 continue;
 
-            QString query = QString("SELECT * FROM %1.empresas;").arg(bd_name);
+            QString query = QString("SELECT * FROM `%1`.empresas;").arg(bd_name);
             QStringList empresas;
 
             QSqlQuery q(db);

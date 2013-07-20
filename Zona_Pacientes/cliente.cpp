@@ -397,91 +397,114 @@ void Cliente::Recuperar(QString cSQL) {
     qryCliente->prepare(cSQL);
     if( !qryCliente->exec() ) {
         QMessageBox::critical(qApp->activeWindow(), "error:", qryCliente->lastError().text());
-    } else {
-        if (qryCliente->next()) {            
-            QSqlRecord registro = qryCliente->record();
-            this->id = registro.field("id").value().toInt();
-            this->codigo_cliente= registro.field("codigo_cliente").value().toString();
-            this->apellido1 = registro.field("apellido1").value().toString();
-            this->apellido2 = registro.field("apellido2").value().toString();
-            this->nombre = registro.field("nombre").value().toString();
-            this->nombre_fiscal = registro.field("nombre_fiscal").value().toString();
-            this->nombre_comercial = registro.field("nombre_comercial").value().toString();
-            this->persona_contacto = registro.field("persona_contacto").value().toString();
-            this->cif_nif = registro.field("cif_nif").value().toString();
-            this->direccion1 = registro.field("direccion1").value().toString();
-            this->direccion2 = registro.field("direccion2").value().toString();
-            this->cp = registro.field("cp").value().toString();
-            this->poblacion = registro.field("poblacion").value().toString();
-            this->provincia = registro.field("provincia").value().toString();
-            this->pais = registro.field("pais").value().toString();
-            this->id_pais = registro.field("id_pais").value().toInt();
-            this->telefono1 = registro.field("telefono1").value().toString();
-            this->telefono2 = registro.field("telefono2").value().toString();
-            this->fax =registro.field("fax").value().toString();
-            this->movil = registro.field("movil").value().toString();
-            this->email = registro.field("email").value().toString();
-            this->web = registro.field("web").value().toString();
-            this->fecha_alta = registro.field("fecha_alta").value().toDate();
-            this->fechaCompra = registro.field("fechaCompra").value().toDate();
-            this->acumulado_ventas = registro.field("acumulado_ventas").value().toDouble();
-            this->ventas_ejercicio = registro.field("ventas_ejercicio").value().toDouble();
-            this->riesgo_maximo = registro.field("riesgo_maximo").value().toDouble();
-            this->deuda_actual = registro.field("deuda_actual").value().toDouble();
-            this->comentarios = registro.field("comentarios").value().toString();
-            this->bloqueado = registro.field("bloqueado").value().toInt();
-            this->comentario_bloqueo = registro.field("comentario_bloqueo").value().toString();
-            this->porc_dto_cliente = registro.field("porc_dto_cliente").value().toDouble();
-            this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toBool();
-            this->cuenta_contable = registro.field("cuenta_contable").value().toString();
-            this->cuenta_iva_repercutido = registro.field("cuenta_iva_repercutido").value().toString();
-            this->cuenta_deudas = registro.field("cuenta_deudas").value().toString();
-            this->cuenta_cobros = registro.field("cuenta_cobros").value().toString();
-            this->forma_pago = registro.field("forma_pago").value().toString();
-            this->dia_pago1 = registro.field("dia_pago1").value().toInt();
-            this->dia_pago2 = registro.field("dia_pago2").value().toInt();
-            this->tarifa_cliente = registro.field("tarifa_cliente").value().toInt();
-            this->importe_a_cuenta = registro.field("importe_a_cuenta").value().toDouble();
-            this->vales = registro.field("vales").value().toDouble();
-            this->entidad_bancaria = registro.field("entidad_bancaria").value().toString();
-            this->oficina_bancaria = registro.field("oficina_bancaria").value().toString();
-            this->dc = registro.field("dc").value().toString();
-            this->cuenta_corriente = registro.field("cuenta_corriente").value().toString();
-            this->fecha_nacimiento = registro.field("fecha_nacimiento").value().toDate();
-            this->importe_pendiente = registro.field("importe_pendiente").value().toDouble();
-            this->acceso_web = registro.field("acceso_web").value().toString();
-            this->password_web = registro.field("password_web").value().toString();
-            this->ididioma = registro.field("id_idioma_documentos").value().toInt();
-            this->idioma = Configuracion_global->Devolver_idioma(this->ididioma);
-            this->cifVies = registro.field("cif_vies").value().toString();
-            this->id_web = registro.value("id_web").toInt();
-            this->idTarifa = registro.value("tarifa_cliente").toInt();
-            this->observaciones = registro.value("observaciones").toString();
-            this->visa1_caduca_mes =registro.field("visa1_caduca_mes").value().toInt();
-            this->visa2_caduca_mes = registro.field("visa2_caduca_mes").value().toInt();
-            this->visa1_caduca_ano = registro.field("visa1_caduca_ano").value().toInt();
-            this->visa2_caduca_ano = registro.field("visa2_caduca_ano").value().toInt();
-            this->visa1_cod_valid = registro.field("visa1_cod_valid").value().toInt();
-            this->visa2_cod_valid = registro.field("visa2_cod_valid").value().toInt();
-            this->visa_distancia1 = registro.field("visa_distancia1").value().toString();
-            this->visa_distancia2 = registro.field("visa_distancia2").value().toString();
-            this->id_agente = registro.field("id_agente").value().toInt();
-            this->id_transportista = registro.field("id_transportista").value().toInt();
-            int irpf =registro.field("irpf").value().toInt();
-            this->grupo_iva = registro.field("grupo_iva").value().toString();
-            if (irpf==1)
-                this->lIRPF = true;
-            else
-                this->lIRPF = false;
-
-            }
-            else
-            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Final de archivo"));
+    } else
+    {
+       cargar(*qryCliente);
+    }
     delete qryCliente;
 
+}
+
+
+void Cliente::Recuperar(int id)
+{
+    qryCliente = new QSqlQuery(Configuracion_global->groupDB);
+    qryCliente->prepare("select * from clientes where id ="+QString::number(id));
+    if( !qryCliente->exec() ) {
+        QMessageBox::critical(qApp->activeWindow(), "error:", qryCliente->lastError().text());
+    } else
+    {
+       cargar(*qryCliente);
     }
+    delete qryCliente;
 
 }
+
+
+void Cliente::cargar(QSqlQuery &query)
+{
+
+   if(query.next())
+   {
+        QSqlRecord registro = query.record();
+        this->id = registro.field("id").value().toInt();
+        this->codigo_cliente= registro.field("codigo_cliente").value().toString();
+        this->apellido1 = registro.field("apellido1").value().toString();
+        this->apellido2 = registro.field("apellido2").value().toString();
+        this->nombre = registro.field("nombre").value().toString();
+        this->nombre_fiscal = registro.field("nombre_fiscal").value().toString();
+        this->nombre_comercial = registro.field("nombre_comercial").value().toString();
+        this->persona_contacto = registro.field("persona_contacto").value().toString();
+        this->cif_nif = registro.field("cif_nif").value().toString();
+        this->direccion1 = registro.field("direccion1").value().toString();
+        this->direccion2 = registro.field("direccion2").value().toString();
+        this->cp = registro.field("cp").value().toString();
+        this->poblacion = registro.field("poblacion").value().toString();
+        this->provincia = registro.field("provincia").value().toString();
+        this->pais = registro.field("pais").value().toString();
+        this->id_pais = registro.field("id_pais").value().toInt();
+        this->telefono1 = registro.field("telefono1").value().toString();
+        this->telefono2 = registro.field("telefono2").value().toString();
+        this->fax =registro.field("fax").value().toString();
+        this->movil = registro.field("movil").value().toString();
+        this->email = registro.field("email").value().toString();
+        this->web = registro.field("web").value().toString();
+        this->fecha_alta = registro.field("fecha_alta").value().toDate();
+        this->fechaCompra = registro.field("fechaCompra").value().toDate();
+        this->acumulado_ventas = registro.field("acumulado_ventas").value().toDouble();
+        this->ventas_ejercicio = registro.field("ventas_ejercicio").value().toDouble();
+        this->riesgo_maximo = registro.field("riesgo_maximo").value().toDouble();
+        this->deuda_actual = registro.field("deuda_actual").value().toDouble();
+        this->comentarios = registro.field("comentarios").value().toString();
+        this->bloqueado = registro.field("bloqueado").value().toInt();
+        this->comentario_bloqueo = registro.field("comentario_bloqueo").value().toString();
+        this->porc_dto_cliente = registro.field("porc_dto_cliente").value().toDouble();
+        this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toBool();
+        this->cuenta_contable = registro.field("cuenta_contable").value().toString();
+        this->cuenta_iva_repercutido = registro.field("cuenta_iva_repercutido").value().toString();
+        this->cuenta_deudas = registro.field("cuenta_deudas").value().toString();
+        this->cuenta_cobros = registro.field("cuenta_cobros").value().toString();
+        this->forma_pago = registro.field("forma_pago").value().toString();
+        this->dia_pago1 = registro.field("dia_pago1").value().toInt();
+        this->dia_pago2 = registro.field("dia_pago2").value().toInt();
+        this->tarifa_cliente = registro.field("tarifa_cliente").value().toInt();
+        this->importe_a_cuenta = registro.field("importe_a_cuenta").value().toDouble();
+        this->vales = registro.field("vales").value().toDouble();
+        this->entidad_bancaria = registro.field("entidad_bancaria").value().toString();
+        this->oficina_bancaria = registro.field("oficina_bancaria").value().toString();
+        this->dc = registro.field("dc").value().toString();
+        this->cuenta_corriente = registro.field("cuenta_corriente").value().toString();
+        this->fecha_nacimiento = registro.field("fecha_nacimiento").value().toDate();
+        this->importe_pendiente = registro.field("importe_pendiente").value().toDouble();
+        this->acceso_web = registro.field("acceso_web").value().toString();
+        this->password_web = registro.field("password_web").value().toString();
+        this->ididioma = registro.field("id_idioma_documentos").value().toInt();
+        this->idioma = Configuracion_global->Devolver_idioma(this->ididioma);
+        this->cifVies = registro.field("cif_vies").value().toString();
+        this->id_web = registro.value("id_web").toInt();
+        this->idTarifa = registro.value("tarifa_cliente").toInt();
+        this->observaciones = registro.value("observaciones").toString();
+        this->visa1_caduca_mes =registro.field("visa1_caduca_mes").value().toInt();
+        this->visa2_caduca_mes = registro.field("visa2_caduca_mes").value().toInt();
+        this->visa1_caduca_ano = registro.field("visa1_caduca_ano").value().toInt();
+        this->visa2_caduca_ano = registro.field("visa2_caduca_ano").value().toInt();
+        this->visa1_cod_valid = registro.field("visa1_cod_valid").value().toInt();
+        this->visa2_cod_valid = registro.field("visa2_cod_valid").value().toInt();
+        this->visa_distancia1 = registro.field("visa_distancia1").value().toString();
+        this->visa_distancia2 = registro.field("visa_distancia2").value().toString();
+        this->id_agente = registro.field("id_agente").value().toInt();
+        this->id_transportista = registro.field("id_transportista").value().toInt();
+        int irpf =registro.field("irpf").value().toInt();
+        this->grupo_iva = registro.field("grupo_iva").value().toString();
+        if (irpf==1)
+            this->lIRPF = true;
+        else
+            this->lIRPF = false;
+
+    }
+}
+
+
 
 void Cliente::AnadirDeuda(int id_cliente, QDate fechaDeuda, QDate fechaVto, QString documento, int id_Tiquet,
                           int id_factura, int tipo, double importe_deuda, double pagado = 0, double pendiente_cobro = 0,
