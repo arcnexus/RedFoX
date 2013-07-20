@@ -43,9 +43,9 @@ FrmFichaPaciente::FrmFichaPaciente(QWidget *parent) :
 
     ui->setupUi(this);
     // Rellenar combos
-    SqlCalls llamada;
-    QStringList listaEstudios = llamada.queryList("Select nivel from nivel_estudios","dbmedica");
-    QStringList listaDoctores = llamada.queryList("Select nombre from doctores ","dbmedica");
+    QString error;
+    QStringList listaEstudios = SqlCalls::SelectList("nivel_estudios", "nivel", "" , Configuracion_global->medicaDB, error);//llamada.queryList("Select nivel from nivel_estudios","dbmedica");
+    QStringList listaDoctores = SqlCalls::SelectList("doctores", "nombre", "" , Configuracion_global->medicaDB, error);//llamada.queryList("Select nombre from doctores ","dbmedica");
 
     ui->cbonivel_estudios->addItems(listaEstudios);
     ui->cboDoctorEpisodio->addItems(listaDoctores);

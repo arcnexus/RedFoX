@@ -1,7 +1,15 @@
 #ifndef SQLCALLS_H
 #define SQLCALLS_H
 
-#include "../Auxiliares/Globlal_Include.h"
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QSqlRecord>
+#include <QObject>
+#include <QTextStream>
+#include <QStringList>
+#include <QList>
+#include <QMap>
 
 class SqlCalls : public QObject
 {
@@ -9,44 +17,59 @@ class SqlCalls : public QObject
 
 public:
     SqlCalls(QObject *parent = 0);
-
     ~SqlCalls();
 
-    bool addConnection(const QString &host,
-                       const QString &user,
-                       const QString &database,
-                       const QString &password,
-                       const QString &connectionName);
 
-    void setDefaultConnection(const QString &name);
+    static QStringList SelectList(QString table, QString column,QStringList clausulas, QSqlDatabase database, QString &error);
+    static QStringList SelectList(QString table, QString column,QString clausulas, QSqlDatabase database, QString &error);
 
-    QStringList connections() const;
 
-    // Generic Querys
-    QSqlQuery query(const QString &stament) const;
-    QSqlQuery query(const QString &stament,
-                    const QString &connection) const;
-    QSqlQuery query(const QString &stament,
-                    const QStringList &arguments,
-                    const QString &connection) const;
+    template <class Key, class T> static QMap<Key,T> SelectMap(QString table,QString KeyColumn,QString dataColumn,QStringList clausulas, QSqlDatabase database, QString &error)
+    {
+        QMap<Key,T> r;
+        QSqlQuery q(database);
+        QString query;
+        QTextStream s(&query);
 
-    // Generic QueryModels
- //   QSqlQueryModel queryModel(const QString statment,
- //                             const QString &connection) const;
+        s << "SELECT " << KeyColumn << "," << dataColumn << " FROM " << table;
+        if(!clausulas.isEmpty())
+        {
+            s << " WHERE ";
+            QStringListIterator it(clausulas);
+            while(it.hasNext())
+            {
+                s << it.next();
+                if(it.hasNext())
+                    s<<" AND ";
+            }
+        }
+        s<<";";
+        q.prepare(query);
+        if(q.exec())
+        {
+            while(q.next())
+            {
+                QSqlRecord rec = q.record();
+                r.insert(qvariant_cast<Key>(rec.value(KeyColumn)),qvariant_cast<T>(rec.value(dataColumn)));
+            }
+        }
+        error = q.lastError().databaseText();
+        return r;
+    }
+    template <class Key, class T> static QMap<Key,T> SelectMap(QString table,QString KeyColumn,QString dataColumn,QString clausulas, QSqlDatabase database, QString &error)
+    {
+        QStringList l;
+        l << clausulas;
+        return SelectMap<Key,T>(table, KeyColumn, dataColumn,l,database,error);
+    }
 
-    QStringList queryList(const QString statment,
-                              const QString &connection) const;
+    static int SqlInsert(QHash<QString,QVariant> values, QString table, QSqlDatabase database, QString& error);
 
-    // generic Inserts
-    int addRec(const QString &statment,const QString &connection);
-    int addRec(const QString &statment,const QStringList &parameters,const QString &connection);
-    QSqlQuery RecuperarPaciente(int id_cliente);
+    static bool SqlUpdate(QHash<QString,QVariant> values, QString table, QSqlDatabase database, QStringList clausulas, QString& error);
+    static bool SqlUpdate(QHash<QString,QVariant> values, QString table, QSqlDatabase database, QString clausula, QString& error);
 
-  //  int CrearPaciente(int id_cliente);
-private:
-    QStringList m_connections;
-    QString m_defaultConnection;
-
+    static bool SqlDelete(QString table, QSqlDatabase database, QStringList clausulas, QString& error);
+    static bool SqlDelete(QString table, QSqlDatabase database, QString clausula, QString& error);
 };
 
 #endif // SQLCALLS_H

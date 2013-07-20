@@ -210,7 +210,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
 bool Presupuesto::siguiente()
 {
     return RecuperarPresupuesto("Select * from cab_pre where id >'"+
-                                    QString::number(id)+"' order by id  limit 1 ");
+                                    QString::number(id)+"' order by id limit 1 ");
 }
 
 bool Presupuesto::anterior()

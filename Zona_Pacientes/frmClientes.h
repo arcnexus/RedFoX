@@ -113,7 +113,7 @@ private:
     FrmBuscarPoblacion BuscarPoblacion;
     QSqlQuery tbpaciente;
     Cliente* oCliente;
-    SqlCalls *llamadasSQL;
+    //SqlCalls *llamadasSQL;
     bool Anadirdireccion /*= false*/;
     int iddireccionAlternativa;
 

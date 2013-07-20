@@ -1,173 +1,214 @@
 #include "sqlcalls.h"
 
-static const QString queryPaciente = "SELECT * FROM pacientes WHERE id_cliente = :id_cliente";
-
-SqlCalls::SqlCalls(QObject *parent) :
-    QObject(parent)
+QStringList SqlCalls::SelectList(QString table, QString column, QString clausula, QSqlDatabase database, QString &error)
 {
-    m_connections.clear();
-    m_defaultConnection = QString();
+    QStringList l;
+    l << clausula;
+    return SelectList(table, column, l, database, error);
 }
-
-SqlCalls::~SqlCalls()
+QStringList SqlCalls::SelectList(QString table, QString column,QStringList clausulas, QSqlDatabase database, QString &error)
 {
-}
+    QString query;
+    QTextStream s(&query);
 
-bool SqlCalls::addConnection(const QString &host,
-                             const QString &user,
-                             const QString &database,
-                             const QString &password,
-                             const QString &connectionName)
-{
-    if (m_connections.contains(connectionName)) {
-        qDebug() << "Connection name" << connectionName << "already exist.";
-        return false;
+    s << "SELECT " << column << " FROM " << table;
+    if(!clausulas.isEmpty())
+    {
+        s << " WHERE ";
+        QStringListIterator i(clausulas);
+        while (i.hasNext())
+        {
+            QString aux = i.next();
+            s << aux;
+            if(i.hasNext())
+                s<< " AND ";
+        }
     }
-
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", connectionName.toLatin1());
-    db.setHostName(host);
-    db.setUserName(user);
-    db.setDatabaseName(database);
-    db.setPassword(password);
-
-    if (!db.open()) {
-        qDebug() << db.lastError().text();
-        return false;
-    } else {
-        //m_connections.append(connectionName);
-    }
-
-    return true;
-}
-
-void SqlCalls::setDefaultConnection(const QString &name)
-{
-    if (!m_connections.contains(name)) {
-        qDebug() << "Connection name" << name << "does not exist.";
-        return;
-    } else {
-        m_defaultConnection = name;
-    }
-
-}
-
-QStringList SqlCalls::connections() const
-{
-        return m_connections;
-}
-
-
-QSqlQuery SqlCalls::query(const QString &stament) const
-{
-     QSqlQuery query(stament);
-    return query;
-}
-
-QSqlQuery SqlCalls::query(const QString &stament,
-                          const QString &connection) const
-{
-    QSqlQuery query(stament, QSqlDatabase::database(connection));
-
-    if (!query.exec())
-        qDebug() << query.lastError().text();
-
-    return query;
-}
-
-QSqlQuery SqlCalls::query(const QString &stament,
-                          const QStringList &arguments,
-                          const QString &connection) const
-{
-    QSqlQuery query(stament, QSqlDatabase::database(connection));
-
-    for (int i = 0; i < arguments.count(); i++)
-        query.bindValue(i,arguments.at(i));
-
-    if(!query.exec())
-        qDebug() << query.lastError().text();
-
-    return query;
-}
-
-//QSqlQueryModel SqlCalls::queryModel(const QString statment, const QString &connection) const
-//{
-//    QString cSql = statment;
-//    QSqlQueryModel *qModel = new QSqlQueryModel();
-//    qModel->setQuery(cSql,QSqlDatabase::database(connection));
-    //    return &qModel;
-//}
-
-QStringList SqlCalls::queryList(const QString statment, const QString &connection) const
-{
-    QSqlQuery *query = new QSqlQuery(statment,QSqlDatabase::database(connection));
+    s<<";";
+    QSqlQuery q(database);
+    q.prepare(query);
     QStringList lista;
-    while (query->next())
-        lista.append(query->value(0).toString());
+
+    if(q.exec())
+    {
+        while (q.next())
+            lista.append(q.record().value(column).toString());
+    }
+    else
+        error = q.lastError().text();
     return lista;
 }
 
-
-int SqlCalls::addRec(const QString &statment, const QString &connection)
+int SqlCalls::SqlInsert(QHash<QString, QVariant> values, QString table, QSqlDatabase database, QString &error)
 {
-    //QString cSQL = statment;
-    QSqlQuery tInsert = QSqlQuery(QSqlDatabase::database(connection));
-    tInsert.prepare(statment);
-    if (tInsert.exec()) {
-        return tInsert.lastInsertId().toInt();
+    if(!database.isOpen())
+    {
+        error = QObject::tr("Base de datos cerrada");
+        return false;
     }
-    else {
-        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error"),QObject::tr("Ha ocurrido un fallo al insertar el registro"),
-                   QObject::tr("Aceptar"));
-
-        return NULL;
+/*    if(database.driverName() == "QMYSQL")
+    {
+        qDebug()<< "Mysql";
     }
-}
+    else if (database.driverName() == "QSQLITE")
+    {
 
-int SqlCalls::addRec(const QString &statment, const QStringList &parameters, const QString &connection)
-{
-    //QString cSQL = statment;
-    QSqlQuery tInsert = QSqlQuery(QSqlDatabase::database(connection));
-    tInsert.prepare(statment);
-    for (int i = 0; i < parameters.count(); i++)
-        tInsert.bindValue(i,parameters.at(i));
+    }
+TODO reactivar cuando haya soporte multi-driver
+*/
+    QString colums;
+    QTextStream s(&colums);
 
-    if(!tInsert.exec())
-        qDebug() << tInsert.lastError().text();
+    QString data;
+    QTextStream s1(&data);
 
+    //INSERT INTO `world`.`cab_fac` (`serie`) VALUES ('a');
+    s << "INSERT INTO `" << table << "` (";
+    s1 << "VALUES (";
+    QHashIterator<QString,QVariant> i(values);
+    while (i.hasNext()) {
+        i.next();
+        s << "`" << i.key() << "`";
+        s1 << ":" << i.key();
+        if(i.hasNext())
+        {
+            s  << ",";
+            s1 << ",";
+        }
+    }
+    s1 << ");";
+    s << ")" << data;
+
+    QSqlQuery q(database);
+    q.prepare(colums);
+
+    QHashIterator<QString,QVariant> it(values);
+    while (it.hasNext()) {
+        it.next();
+        QString aux = ":";
+        aux.append(it.key());
+        q.bindValue(aux,it.value());
+    }
+
+
+    bool b = q.exec();
+    int r = -1;
+    if (b)
+        r = q.lastInsertId().toInt();
     else
-        return tInsert.lastInsertId().toInt();
-
+        error = q.lastError().text();
+    return r;
 }
 
-
-
-QSqlQuery SqlCalls::RecuperarPaciente(int id_cliente)
+bool SqlCalls::SqlUpdate(QHash<QString, QVariant> values, QString table, QSqlDatabase database, QStringList clausulas, QString &error)
 {
-    QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-    paciente->prepare(queryPaciente);
+    //UPDATE `table` SET `column`=value WHERE `column`=value AND `otherColumn`=otherValue;
+    if(!database.isOpen())
+    {
+        error = QObject::tr("Base de datos cerrada");
+        return false;
+    }
+    /*
+    if(database.driverName() == "QMYSQL")
+    {
+        qDebug()<< "Mysql";
+    }
+    else if (database.driverName() == "QSQLITE")
+    {
 
-    paciente->bindValue(":id_cliente",id_cliente);
-    if (paciente->exec())
-        return *paciente;
-    else
-        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error Pacientes"),
-                             QObject::tr("No se puede recuperar el paciente"),
-                             QObject::tr("Aceptar"));
-    delete paciente;
+    }
+TODO reactivar cuando haya soporte multi-driver
+*/
+    QString colums;
+    QTextStream s(&colums);
+
+    s << "UPDATE `" << table << "` SET ";
+
+    QHashIterator<QString,QVariant> i(values);
+    while (i.hasNext()) {
+        i.next();
+        s << "`" << i.key() << "`=:" << i.key();
+        if(i.hasNext())
+            s  << ",";
+    }
+    s << " WHERE ";
+    QStringListIterator li(clausulas);
+    while (li.hasNext()) {
+        QString a = li.next();
+        s << a;
+        if(li.hasNext())
+            s<< " AND ";
+    }
+    s << ";";
+
+    QSqlQuery q(database);
+    q.prepare(colums);
+
+    QHashIterator<QString,QVariant> it(values);
+    while (it.hasNext()) {
+        it.next();
+        QString aux = ":";
+        aux.append(it.key());
+        q.bindValue(aux,it.value());
+    }
+
+    bool b = q.exec();
+    if (!b)
+        error = q.lastError().text();
+    return b;
 }
 
+bool SqlCalls::SqlUpdate(QHash<QString, QVariant> values, QString table, QSqlDatabase database, QString clausula, QString &error)
+{
+    QStringList l;
+    l << clausula;
+    return SqlUpdate(values, table, database,l, error);
+}
 
-//int SqlCalls::CrearPaciente(int id_cliente)
-//{
-//    QSqlQuery *paciente = new QSqlQuery(QSqlDatabase::database("dbmedica"));
-//    paciente->prepare("insert into pacientes (id_cliente,num_historia) values (:id_cliente,:num_historia)");
-//    paciente->bindValue(":id_cliente",id_cliente);
-//    paciente->bindValue(":num_historia",QString::number(id_cliente));
-//    if (!paciente->exec())
-//        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error Pacientes"),QObject::tr("No se ha podido insertar un nuevo paciente"),
-//                             QObject::tr("Aceptar"));
-//    else {
-//        return paciente->lastInsertId().toInt();
-//    }
-//    delete paciente;
-//}
+bool SqlCalls::SqlDelete(QString table, QSqlDatabase database, QStringList clausulas, QString &error)
+{
+    //DELETE FROM `table` WHERE `column`=value1 AND `column2`=otherValue;
+    if(!database.isOpen())
+    {
+        error = QObject::tr("Base de datos cerrada");
+        return false;
+    }
+    /*
+    if(database.driverName() == "QMYSQL")
+    {
+        qDebug()<< "Mysql";
+    }
+    else if (database.driverName() == "QSQLITE")
+    {
+
+    }
+    TODO reactivar cuando haya soporte multi-driver
+    */
+    QString colums;
+    QTextStream s(&colums);
+
+    s << "DELETE FROM `" << table << "` WHERE ";
+
+    QStringListIterator li(clausulas);
+    while (li.hasNext()) {
+        QString a = li.next();
+        s << a;
+        if(li.hasNext())
+            s<< " AND ";
+    }
+    s << ";";
+
+    QSqlQuery q(database);
+    q.prepare(colums);
+    bool b = q.exec();
+    if (!b)
+        error = q.lastError().text();
+    return b;
+}
+
+bool SqlCalls::SqlDelete(QString table, QSqlDatabase database, QString clausula, QString &error)
+{
+    QStringList l;
+    l<< clausula;
+    return SqlDelete(table, database, l, error);
+}
