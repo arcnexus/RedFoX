@@ -224,7 +224,7 @@ COLLATE = utf8_unicode_ci;
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_fac` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `codigo_cliente` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
-  `serie` CHAR(1) SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,  
+  `serie` CHAR(1) NULL DEFAULT NULL ,  
   `factura` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `fecha` DATE NULL DEFAULT NULL ,
   `fecha_cobro` DATE NULL DEFAULT NULL ,
