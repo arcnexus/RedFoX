@@ -762,6 +762,25 @@ MainWindow::MainWindow(QWidget *parent) :
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
 
+    QString error;
+//    QStringList w;
+//    w << "id < 10" << "id > 5";
+//    QMap<int,QString> idnombre = SqlCalls::SelectMap<int,QString>("clientes","idpatata","nombre_fiscal",w,Configuracion_global->groupDB,error);
+//    qDebug() <<  idnombre;
+//    qDebug() <<  idnombre.value(3);
+//    qDebug() <<  error;
+
+    QHash<QString,QVariant> v;
+    v["nombre_fiscal"]="Paco";
+    v["telefono1"]="555333222";
+    v["bloqueado"]=true;
+
+    int id = SqlCalls::SqlInsert(v,"clientes",Configuracion_global->groupDB,error);
+    if(id < 0)
+        qDebug() <<  error;
+    else
+        qDebug() <<  id;
+
     updateDivisas();
 }
 

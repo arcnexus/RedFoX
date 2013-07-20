@@ -259,6 +259,7 @@ void frmFacturas::LLenarCampos() {
     helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
     helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
     oFactura->id_cliente = oCliente1->id;
+    ui->txtTransportista->setText( Configuracion_global->devolver_transportista(oCliente1->id_transportista));
     ui->txtAsiento->setText(QString::number(oFactura->apunte));
 
     QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
@@ -306,6 +307,9 @@ void frmFacturas::LLenarCamposCliente()
     helper.porc_iva4 = ui->txtporc_iva4->text().toFloat();
 
     oFactura->id_cliente = oCliente1->id;
+    oFactura->id_transportista = oCliente1->id_transportista;
+    ui->txtTransportista->setText( Configuracion_global->devolver_transportista(oCliente1->id_transportista));
+
 }
 
 void frmFacturas::VaciarCampos()

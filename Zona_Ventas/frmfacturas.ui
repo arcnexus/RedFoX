@@ -703,7 +703,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_4">
             <item row="8" column="1">
-             <widget class="QTextEdit" name="textEdit">
+             <widget class="QTextEdit" name="txtTransportista">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -928,7 +928,7 @@ Transportista</string>
            <zorder>label_31</zorder>
            <zorder>txt_porc_dto_pp_2</zorder>
            <zorder>label_33</zorder>
-           <zorder>textEdit</zorder>
+           <zorder>txtTransportista</zorder>
            <zorder>btnAsignarTransportista</zorder>
           </widget>
          </item>

@@ -1,11 +1,23 @@
 #include "sqlcalls.h"
 
+SqlCalls::SqlCalls(QObject *parent)
+{
+
+}
+
+SqlCalls::~SqlCalls()
+{
+
+}
+
 QStringList SqlCalls::SelectList(QString table, QString column, QString clausula, QSqlDatabase database, QString &error)
 {
     QStringList l;
     l << clausula;
     return SelectList(table, column, l, database, error);
 }
+
+
 QStringList SqlCalls::SelectList(QString table, QString column,QStringList clausulas, QSqlDatabase database, QString &error)
 {
     QString query;
