@@ -63,6 +63,9 @@ public:
         return SelectMap<Key,T>(table, KeyColumn, dataColumn,l,database,error);
     }
 
+    static QMap<int,QSqlRecord> SelectRecord(QString table,QStringList clausulas, QSqlDatabase database, QString &error);
+    static QMap<int,QSqlRecord> SelectRecord(QString table,QString clausulas, QSqlDatabase database, QString &error);
+
     static int SqlInsert(QHash<QString,QVariant> values, QString table, QSqlDatabase database, QString& error);
 
     static bool SqlUpdate(QHash<QString,QVariant> values, QString table, QSqlDatabase database, QStringList clausulas, QString& error);
