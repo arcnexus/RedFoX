@@ -36,7 +36,7 @@ frmClientes::frmClientes(QWidget *parent) :
     ui->tabla_busquedas->setModel(m_clientes);
     formato_tabla_busquedas();
 
-     h_Buscar["Población"],"poblacion";
+     h_Buscar["Población"]="poblacion";
      h_Buscar["Código cliente"]="codigo_cliente";
      h_Buscar["cif / Nif"] = "cif_nif";
      h_Buscar["Nombre Fiscal"]="nombre_fiscal";
@@ -1033,16 +1033,7 @@ void frmClientes::on_btnBorrar_clicked()
 
 void frmClientes::on_btnBuscar_clicked()
 {
-    FrmBuscarCliente BuscarClientes;
-    if(BuscarClientes.exec() == QDialog::Accepted)
-    {
-        int nid = BuscarClientes.Devolverid();
-        qDebug() << nid;
-        QString cid = QString::number(nid);
-
-        oCliente->Recuperar("Select * from clientes where id ="+cid+" order by id limit 1 ");
-        LLenarCampos();
-    }
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void frmClientes::txtcp_editingFinished()
@@ -1626,8 +1617,8 @@ void frmClientes::on_txtBuscar_textEdited(const QString &arg1)
     qDebug() << ui->cboBuscar->currentText() << ":" << index;
     m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1, poblacion,telefono1,movil,email from clientes"
                          " where "+index+" like '%"+arg1.trimmed()+"%' order by "+index,Configuracion_global->groupDB);
-    ui->tabla_busquedas->setModel(m_clientes);
-    formato_tabla_busquedas();
+    //ui->tabla_busquedas->setModel(m_clientes);
+     formato_tabla_busquedas();
    // qDebug() << m_clientes->query().lastQuery();
 }
 
