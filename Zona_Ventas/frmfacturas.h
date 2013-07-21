@@ -74,6 +74,10 @@ private slots:
     void on_anadirEntrega_clicked();
 
 
+    void on_radBuscar_toggled(bool checked);
+
+    void on_radeditar_toggled(bool checked);
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;

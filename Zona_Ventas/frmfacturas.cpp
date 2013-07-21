@@ -1001,3 +1001,15 @@ void frmFacturas::on_anadirEntrega_clicked()
 }
 
 
+
+void frmFacturas::on_radBuscar_toggled(bool checked)
+{
+    if (checked)
+        ui->stackedWidget->setCurrentIndex(1);
+}
+
+void frmFacturas::on_radeditar_toggled(bool checked)
+{
+    if(checked)
+        ui->stackedWidget->setCurrentWidget(0);
+}
