@@ -103,12 +103,24 @@ private slots:
     void set_blink();
 
 
+
+    void on_radBuscar_toggled(bool checked);
+
+    void on_radEditar_toggled(bool checked);
+
+    void on_txtBuscar_textEdited(const QString &arg1);
+
+    void on_tabla_busquedas_doubleClicked(const QModelIndex &index);
+
+    void on_btnclear_clicked();
+
 private:
     Ui::frmClientes *ui;
     QSqlQueryModel *modelFP;
     QSqlQueryModel *modelFacturas;
     QSqlQueryModel *modelPoblaciones;
     QSqlQueryModel *qModeldireccion;
+    QSqlQueryModel * m_clientes;
     QSqlDatabase dbCliente;
     FrmBuscarPoblacion BuscarPoblacion;
     QSqlQuery tbpaciente;
@@ -116,9 +128,10 @@ private:
     //SqlCalls *llamadasSQL;
     bool Anadirdireccion /*= false*/;
     int iddireccionAlternativa;
-
+    void formato_tabla_busquedas();
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton * push;
+    QHash<QString,QString> h_Buscar;
 };
 #endif

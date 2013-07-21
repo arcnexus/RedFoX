@@ -26,6 +26,34 @@ frmClientes::frmClientes(QWidget *parent) :
     {
         toolButton.setText(tr("Pacientes"));
     }
+    //-----------------
+    // Modo busqueda
+    //-----------------
+    ui->stackedWidget->setCurrentIndex(1);
+    m_clientes = new  QSqlQueryModel(this);
+    m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1,poblacion,telefono1,movil,email from clientes",
+                         Configuracion_global->groupDB);
+    ui->tabla_busquedas->setModel(m_clientes);
+    formato_tabla_busquedas();
+
+     h_Buscar["Población"],"poblacion";
+     h_Buscar["Código cliente"]="codigo_cliente";
+     h_Buscar["cif / Nif"] = "cif_nif";
+     h_Buscar["Nombre Fiscal"]="nombre_fiscal";
+
+     QStringList buscadores;
+     QHashIterator<QString,QString> i(h_Buscar);
+     while (i.hasNext())
+     {
+         i.next();
+         buscadores << i.key();
+     }
+     ui->cboBuscar->addItems(buscadores);
+
+
+    // -----------------
+    // objeto cliente
+    //------------------
 
     oCliente = new Cliente(this);
     oCliente->id = 0;
@@ -44,7 +72,7 @@ frmClientes::frmClientes(QWidget *parent) :
     ValidarCC();
     //oCliente->Actualizar_de_web();
     // Rellenar formas de pago
-    modelFP = new QSqlQueryModel();
+    modelFP = new QSqlQueryModel(this);
     modelFP->setQuery("Select forma_pago,id from formpago",Configuracion_global->groupDB);
     // Rellenar transportistas
 
@@ -134,6 +162,10 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->txtprovincia,SIGNAL(editingFinished()),this,SLOT(set_blink()));
     ui->TablaDeudas->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->TablaDeudas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(menu_deudas(QPoint)));
+    ui->txtBuscar->setEnabled(true);
+    ui->txtBuscar->setReadOnly(false);
+    ui->cboBuscar->setEnabled(true);
+    ui->txtBuscar->setFocus();
 
 
 }
@@ -895,6 +927,7 @@ void frmClientes::bloquearCampos() {
     ui->btnAdd_TipoCliente->setEnabled(false);
     ui->btndel_TipoCliente->setEnabled(false);
     ui->btnVer_OtrosContactos->setEnabled(true);
+    ui->txtBuscar->setEnabled(true);
 
 }
 void frmClientes::desbloquearCampos()
@@ -971,6 +1004,7 @@ void frmClientes::desbloquearCampos()
     ui->txtpoblacionAlternativa->setEnabled(false);
     ui->txtprovinciaAlternativa->setEnabled(false);
     ui->cbopaisAlternativa->setEnabled(false);
+    ui->txtBuscar->setEnabled(true);
 
 }
 
@@ -1569,4 +1603,57 @@ void frmClientes::set_blink()
             ui->blinkink->setVisible(false);
         }
     }
+}
+
+
+
+void frmClientes::on_radBuscar_toggled(bool checked)
+{
+    if(checked)
+        ui->stackedWidget->setCurrentIndex(1);
+}
+
+void frmClientes::on_radEditar_toggled(bool checked)
+{
+    if (checked)
+        ui->stackedWidget->setCurrentIndex(0);
+}
+
+void frmClientes::on_txtBuscar_textEdited(const QString &arg1)
+{
+    QString index = h_Buscar.value(ui->cboBuscar->currentText());
+
+    qDebug() << ui->cboBuscar->currentText() << ":" << index;
+    m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1, poblacion,telefono1,movil,email from clientes"
+                         " where "+index+" like '%"+arg1.trimmed()+"%' order by "+index,Configuracion_global->groupDB);
+    ui->tabla_busquedas->setModel(m_clientes);
+    formato_tabla_busquedas();
+   // qDebug() << m_clientes->query().lastQuery();
+}
+
+void frmClientes::on_tabla_busquedas_doubleClicked(const QModelIndex &index)
+{
+    int id = ui->tabla_busquedas->model()->data(ui->tabla_busquedas->model()->index(index.row(),0),Qt::EditRole).toInt();
+    oCliente->Recuperar(id);
+    LLenarCampos();
+    ui->radEditar->setChecked(true);
+}
+
+void frmClientes::formato_tabla_busquedas()
+{
+    ui->tabla_busquedas->setColumnHidden(0,true);
+    QVariantList variant;
+    variant << 20 << 100 <<300 <<100 <<170 <<170 <<100 <<100 <<160;
+    for(int pos= 0; pos <variant.count();pos++)
+    {
+        ui->tabla_busquedas->setColumnWidth(pos,variant.at(pos).toInt());
+    }
+
+}
+
+void frmClientes::on_btnclear_clicked()
+{
+    ui->txtBuscar->setText("");
+    on_txtBuscar_textEdited("");
+    ui->txtBuscar->setFocus();
 }

@@ -770,17 +770,25 @@ MainWindow::MainWindow(QWidget *parent) :
 //    qDebug() <<  idnombre.value(3);
 //    qDebug() <<  error;
 
-    QHash<QString,QVariant> v;
-    v["nombre_fiscal"]="Paco";
-    v["telefono1"]="555333222";
-    v["bloqueado"]=true;
+    // Add record.
+//    QHash<QString,QVariant> v;
+//    v["nombre_fiscal"]="Paco";
+//    v["telefono1"]="555333222";
+//    v["bloqueado"]=true;
 
-    int id = SqlCalls::SqlInsert(v,"clientes",Configuracion_global->groupDB,error);
-    if(id < 0)
-        qDebug() <<  error;
-    else
-        qDebug() <<  id;
-
+//    int id = SqlCalls::SqlInsert(v,"clientes",Configuracion_global->groupDB,error);
+//    if(id < 0)
+//        qDebug() <<  error;
+//    else
+//        qDebug() <<  id;
+//    QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("clientes", "id<10",Configuracion_global->groupDB, error);
+//    QMapIterator<int, QSqlRecord> i(map);
+//    while (i.hasNext())
+//    {
+//        i.next();
+//        qDebug() << i.value();
+//    }
+//    qDebug() << map.value(7).value("nombre").toString();
     updateDivisas();
 }
 
