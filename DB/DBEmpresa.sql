@@ -145,6 +145,17 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`alb_pro` (
   `rec4` DOUBLE NULL DEFAULT NULL ,
   `importe_rec_total` DOUBLE NULL DEFAULT NULL ,
   `ejercicio` INT(5) NULL DEFAULT NULL ,
+  `subtotal` DOUBLE NULL  DEFAULT NULL ,
+  `direccion1` VARCHAR(100) NULL  DEFAULT NULL ,
+  `direccion2` VARCHAR(100) NULL  DEFAULT NULL ,
+  `cp` VARCHAR(8) NULL  DEFAULT NULL,
+  `poblacion` VARCHAR(100) NULL  DEFAULT NULL ,
+  `provincia` VARCHAR(45) NULL  DEFAULT NULL,
+  `id_pais` INT NULL DEFAULT NULL ,
+  `dto` FLOAT NULL  DEFAULT NULL ,
+  `telefono` VARCHAR(20) NULL DEFAULT NULL,
+  `fax` VARCHAR(20) NULL DEFAULT NULL ,
+  `movil` VARCHAR(45) NULL  DEFAULT NULL ;
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -217,11 +228,11 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_alb` (
   `gasto_to_coste` TINYINT(1) NULL DEFAULT NULL ,
   `id_transportista` INT NULL DEFAULT '0' ,
   `ejercicio` INT(5) NULL DEFAULT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+   PRIMARY KEY (`id`) )
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARACTER SET = utf8
+  COLLATE = utf8_unicode_ci;
 
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_fac` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
@@ -239,9 +250,9 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_fac` (
   `provincia` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `id_pais` INT(11) NULL DEFAULT NULL ,
   `cif` VARCHAR(30) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
-`telefono` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
-`fax` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
-`movil` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL , 
+  `telefono` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `fax` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `movil` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL , 
   `recargo_equivalencia` TINYINT(1) NULL DEFAULT '0' ,
   `subtotal` DOUBLE NULL DEFAULT '0' ,
   `porc_dto` FLOAT NULL DEFAULT '0' ,
