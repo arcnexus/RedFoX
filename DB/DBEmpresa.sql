@@ -151,11 +151,22 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`alb_pro` (
   `cp` VARCHAR(8) NULL  DEFAULT NULL,
   `poblacion` VARCHAR(100) NULL  DEFAULT NULL ,
   `provincia` VARCHAR(45) NULL  DEFAULT NULL,
-  `id_pais` INT NULL DEFAULT NULL ,
+  `id_pais` INT(11) NULL DEFAULT NULL ,
   `dto` FLOAT NULL  DEFAULT NULL ,
   `telefono` VARCHAR(20) NULL DEFAULT NULL,
   `fax` VARCHAR(20) NULL DEFAULT NULL ,
-  `movil` VARCHAR(45) NULL  DEFAULT NULL ;
+  `movil` VARCHAR(45) NULL  DEFAULT NULL ,
+  `codigo_proveedor ` VARCHAR(20) NULL DEFAULT NULL ,
+  `id_forma_pago` INT(11) NULL DEFAULT NULL ,
+  `impreso` TINYINT(1) NULL DEFAULT '0' ,
+  `desc_gasto1` VARCHAR(100) NULL DEFAULT NULL ,
+  `desc_gasto2` VARCHAR(100) NULL DEFAULT NULL ,
+  `desc_gasto3` VARCHAR(100) NULL DEFAULT NULL ,
+  `desc_gasto4` VARCHAR(100) NULL DEFAULT NULL ,
+  `imp_gasto1` DOUBLE NULL DEFAULT '0' ,
+  `imp_gasto2` DOUBLE NULL DEFAULT '0' ,
+  `imp_gasto3` DOUBLE NULL DEFAULT '0' ,
+  `imp_gasto4` DOUBLE NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -636,6 +647,11 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`fac_pro` (
   `gasto_to_coste` TINYINT(1) NULL DEFAULT NULL ,
   `total_dto` DOUBLE NULL DEFAULT NULL ,
   `ejercicio` INT(5) NULL DEFAULT NULL ,
+  `contabilizada` TINYINT(1) NULL DEFAULT '0' ,
+ `id_forma_pago` INT(11) NULL DEFAULT '0' ,
+ `subtotal ` DOUBLE NULL DEFAULT NULL,
+ `codigo_proveedor` VARCHAR(20) NULL DEFAULT NULL ,
+ `impreso` TINYINT(1) NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) ,
   INDEX `id_tipo_gasto` (`id_tipo_gasto` ASC) )
 ENGINE = InnoDB
