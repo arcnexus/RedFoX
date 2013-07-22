@@ -38,17 +38,13 @@ frmClientes::frmClientes(QWidget *parent) :
 
      h_Buscar["Población"]="poblacion";
      h_Buscar["Código cliente"]="codigo_cliente";
-     h_Buscar["cif / Nif"] = "cif_nif";
+     h_Buscar["Cif / Nif"] = "cif_nif";
      h_Buscar["Nombre Fiscal"]="nombre_fiscal";
 
-     QStringList buscadores;
-     QHashIterator<QString,QString> i(h_Buscar);
-     while (i.hasNext())
-     {
-         i.next();
-         buscadores << i.key();
-     }
-     ui->cboBuscar->addItems(buscadores);
+     ui->cboBuscar->addItem("Nombre Fiscal");
+     ui->cboBuscar->addItem("Cif / Nif");
+     ui->cboBuscar->addItem("Código cliente");
+     ui->cboBuscar->addItem("Población");
 
 
     // -----------------

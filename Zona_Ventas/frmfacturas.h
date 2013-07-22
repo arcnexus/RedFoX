@@ -78,6 +78,10 @@ private slots:
 
     void on_radeditar_toggled(bool checked);
 
+    void on_cboVer_currentTextChanged(const QString &arg1);
+
+    void on_txtBuscar_textEdited(const QString &arg1);
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;
@@ -91,6 +95,8 @@ private:
     QAction menuButton;
     QPushButton *push;
     QString moneda;
+    QHash<QString,QString> h_Buscar;
+    QSqlQueryModel *m_facturas;
 };
 
 #endif // FRMFACTURAS_H

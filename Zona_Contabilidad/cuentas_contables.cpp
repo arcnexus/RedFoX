@@ -10,15 +10,13 @@ bool Cuentas_contables::anadir_cuenta()
 {
     QSqlQuery query_cuentas(Configuracion_global->contaDB);
     query_cuentas.prepare("INSERT INTO plan_general "
-                          "(codigo_cta,descripcion,activo,codigo_balance,desglose_balance,afecta_a, saldo) "
-                          "VALUES (:codigo_cta,:descripcion,:activo,:codigo_balance,:desglose_balance,:afecta_a,"
-                          ":saldo);");
+                          "(codigo_cta,descripcion,activo,codigo_balance, saldo) "
+                          "VALUES (:codigo_cta,:descripcion,:activo,:codigo_balance,:saldo);");
     query_cuentas.bindValue(":codigo_cta",this->codigo_cta);
     query_cuentas.bindValue(":descripcion",this->descripcion);
     query_cuentas.bindValue(":activo",this->activo);
     query_cuentas.bindValue(":codigo_balance",this->codigo_balance);
     query_cuentas.bindValue(":desglose_balance",this->desglose_balance);
-    query_cuentas.bindValue(":afecta_a",this->afecta_a);
     query_cuentas.bindValue(":saldo",this->saldo);
     if(!query_cuentas.exec())
     {
@@ -40,16 +38,12 @@ void Cuentas_contables::guardar_cuenta()
                           "descripcion =:descripcion,"
                           "activo = :activo,"
                           "codigo_balance = :codigo_balance,"
-                          "desglose_balance = :desglose_balance,"
-                          "afecta_a =:afecta_a,"
                           "saldo = :saldo "
                           " WHERE id = :id;");
     query_cuentas.bindValue(":codigo_cta",this->codigo_cta);
     query_cuentas.bindValue(":descripcion",this->descripcion);
     query_cuentas.bindValue(":activo",this->activo);
     query_cuentas.bindValue(":codigo_balance",this->codigo_balance);
-    query_cuentas.bindValue(":desglose_balance",this->desglose_balance);
-    query_cuentas.bindValue(":afecta_a",this->afecta_a);
     query_cuentas.bindValue(":saldo",this->saldo);
     query_cuentas.bindValue(":id",this->id);
     if(!query_cuentas.exec())

@@ -52,6 +52,37 @@ frmFacturas::frmFacturas( QWidget *parent) :
     this->Altas = false;
     //ui->txtcodigoArticulo->setFocus();
 
+    // --------------------------
+    // Ver Facturas o Borradores
+    // --------------------------
+    ui->cboVer->addItem(tr("Facturas"));
+    ui->cboVer->addItem(tr("Borradores"));
+
+    // --------------------------
+    // campo busquedas
+    // --------------------------
+    h_Buscar["Factura"]="factura";
+    h_Buscar["Código cliente"] = "codigo_cliente";
+    h_Buscar["Cliente"] = "cliente";
+    h_Buscar["Fecha Factura"] = "fecha";
+    h_Buscar["CIF / NIF"] = "cif";
+    h_Buscar["Total"] = "total";
+
+    ui->cboBuscar->addItem("Factura");
+    ui->cboBuscar->addItem("Código cliente");
+    ui->cboBuscar->addItem("Cliente");
+    ui->cboBuscar->addItem("Fecha Factura");
+    ui->cboBuscar->addItem("CIF/NIF");
+    ui->cboBuscar->addItem("Total");
+
+    //-----------------
+    // tablafacturas
+    //-----------------
+    m_facturas = new QSqlQueryModel(this);
+    m_facturas->setQuery("select factura,fecha,fecha_cobro,cliente,cif,total from cab_fac "
+                         " where factura <> 'BORRADOR'  and ejercicio = "+Configuracion_global->cEjercicio+" order by factura desc limit 0,500",Configuracion_global->empresaDB);
+    ui->tabla_facturas->setModel(m_facturas);
+
     //----------------
     // Cargar Series
     //----------------
@@ -130,6 +161,10 @@ frmFacturas::frmFacturas( QWidget *parent) :
         ui->btnAnterior->setEnabled(false);
         ui->btnImprimir->setEnabled(false);
         ui->btnBuscar->setEnabled(true);
+        ui->cboVer->setEnabled(true);
+        ui->cboBuscar->setEnabled(true);
+        ui->txtBuscar->setEnabled(true);
+        ui->txtBuscar->setReadOnly(false);
         oFactura->id = -1;
    // }
 }
@@ -1006,10 +1041,54 @@ void frmFacturas::on_radBuscar_toggled(bool checked)
 {
     if (checked)
         ui->stackedWidget->setCurrentIndex(1);
+    else
+        ui->stackedWidget->setCurrentIndex(0);
 }
 
 void frmFacturas::on_radeditar_toggled(bool checked)
 {
     if(checked)
-        ui->stackedWidget->setCurrentWidget(0);
+        ui->stackedWidget->setCurrentIndex(0);
+    else
+        ui->stackedWidget->setCurrentIndex(1);
+}
+
+void frmFacturas::on_cboVer_currentTextChanged(const QString &arg1)
+{
+    m_facturas = new QSqlQueryModel(this);
+    QString indice_tabla = h_Buscar.value(arg1);
+    if(indice_tabla.isEmpty())
+        indice_tabla = "factura";
+    QString cSQL;
+    if(arg1 == "BORRADOR")
+        cSQL = "select factura,fecha,fecha_cobro,cliente,cif,total from cab_fac "
+                " where factura = 'BORRADOR' and  ejercicio = "+Configuracion_global->cEjercicio+
+                " order by factura desc";
+    else
+        cSQL = "select factura,fecha,fecha_cobro,cliente,cif,total from cab_fac "
+               " where factura <> 'BORRADOR' and ejercicio = "+Configuracion_global->cEjercicio+
+               " order by factura desc";
+
+    m_facturas->setQuery(cSQL,Configuracion_global->empresaDB);
+    ui->tabla_facturas->setModel(m_facturas);
+}
+
+void frmFacturas::on_txtBuscar_textEdited(const QString &arg1)
+{
+    QString indice_tabla = h_Buscar.value(ui->cboBuscar->currentText());
+    if(indice_tabla.isEmpty())
+        indice_tabla = "factura";
+    if (ui->cboVer->currentText() == "BORRADOR")
+        m_facturas->setQuery("select factura,fecha,fecha_cobro,cliente,cif,total from cab_fac "
+                             " where factura = 'BORRADOR' and "+indice_tabla+
+                             " like '%"+arg1+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
+                             " order by factura desc",Configuracion_global->empresaDB);
+    else
+        m_facturas->setQuery("select factura,fecha,fecha_cobro,cliente,cif,total from cab_fac "
+                             " where factura <> 'BORRADOR' and "+indice_tabla+
+                             " like '%"+arg1+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
+                             " order by factura desc",Configuracion_global->empresaDB);
+
+    ui->tabla_facturas->setModel(m_facturas);
+    qDebug() << m_facturas->query().lastQuery();
 }
