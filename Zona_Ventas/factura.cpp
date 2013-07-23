@@ -47,14 +47,16 @@ bool Factura::AnadirFactura()
                    "base1,base2,base3,base4,porc_iva1,porc_iva2,porc_iva3,porc_iva4,iva1,iva2,iva3,iva4,"
                    "total1,total2,total3,total4,porc_rec1,porc_rec2,porc_rec3,porc_rec4,rec1,rec2,rec3,rec4,"
                    "total_recargo,entregado_a_cuenta,importe_pendiente,codigo_entidad,oficina_entidad,"
-                   "dc_cuenta,cuenta_corriente,pedido_cliente,id_transportista)"
+                   "dc_cuenta,cuenta_corriente,pedido_cliente,id_transportista,desc_gasto1,desc_gasto2,"
+                   "desc_gasto3,imp_gasto1,imp_gasto2,imp_gasto3)"
                    " VALUES (:codigo_cliente,:factura,:fecha,:fecha_cobro,:id_cliente,:cliente,:direccion1,:direccion2,"
                    ":cp,:poblacion,:provincia,:pais,:cif,:recargo_equivalencia,:subtotal,:porc_dto,:porc_dto_pp,:dto,:dto_pp,"
                    ":base,:iva,:total,:impreso,:cobrado,:contabilizado,:id_forma_pago,:forma_pago,:comentario,"
                    ":base1,:base2,:base3,:base4,:porc_iva1,:porc_iva2,:porc_iva3,:porc_iva4,:iva1,:iva2,:iva3,:iva4,"
                    ":total1,:total2,:total3,:total4,:porc_rec1,:porc_rec2,:porc_rec3,:porc_rec4,:rec1,:rec2,:rec3,:rec4,"
                    ":total_recargo,:entregado_a_cuenta,:importe_pendiente,:codigo_entidad,:oficina_entidad,"
-                   ":dc_cuenta,:cuenta_corriente,:pedido_cliente,:id_transportista)");
+                   ":dc_cuenta,:cuenta_corriente,:pedido_cliente,:id_transportista,:desc_gasto1,desc_gasto2,"
+                   ":desc_gasto3,:imp_gasto1,:imp_gasto2,:imp_gasto3)");
 
      cab_fac.bindValue(":codigo_cliente",this->codigo_cliente);
      cab_fac.bindValue(":factura","BORRADOR");
@@ -117,6 +119,12 @@ bool Factura::AnadirFactura()
      cab_fac.bindValue(":cuenta_corriente",this->cuenta_corriente);
      cab_fac.bindValue(":id_transportista",this->id_transportista);
      cab_fac.bindValue(":pedido_cliente",0);
+     cab_fac.bindValue("desc_gasto1",this->desc_gasto1);
+     cab_fac.bindValue("desc_gasto2",this->desc_gasto2);
+     cab_fac.bindValue("desc_gasto3",this->desc_gasto3);
+     cab_fac.bindValue("imp_gasto1",this->imp_gasto1);
+     cab_fac.bindValue("imp_gasto2",this->imp_gasto2);
+     cab_fac.bindValue("imp_gasto3",this->imp_gasto3);
      if(!cab_fac.exec())
      {
          QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Factura:", cab_fac.lastError().text());
@@ -199,7 +207,13 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
                      "pedido_cliente =:pedido_cliente,"
                      "id_transportista =:id_transportista,"
                      "irpf =:irpf,"
-                     "irpf =:irpf"
+                     "irpf =:irpf,"
+                     "desc_gasto1 = :desc_gasto1,"
+                     "desc_gasto2 = :desc_gasto2,"
+                     "desc_gasto3 = :desc_gasto3,"
+                     "imp_gasto1 =:imp_gasto1,"
+                     "imp_gasto2 =:imp_gasto2,"
+                     "imp_gasto3 =:imp_gasto3,"
                      " where id=:id");
 
     // Pasamos valores reales a la Select
@@ -267,6 +281,12 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
     cab_fac.bindValue(":irpf",this->irpf);
     cab_fac.bindValue(":irpf",this->irpf);
     cab_fac.bindValue(":id_transportista",this->id_transportista);
+    cab_fac.bindValue("desc_gasto1",this->desc_gasto1);
+    cab_fac.bindValue("desc_gasto2",this->desc_gasto2);
+    cab_fac.bindValue("desc_gasto3",this->desc_gasto3);
+    cab_fac.bindValue("imp_gasto1",this->imp_gasto1);
+    cab_fac.bindValue("imp_gasto2",this->imp_gasto2);
+    cab_fac.bindValue("imp_gasto3",this->imp_gasto3);
     if(!cab_fac.exec())
     {
         QMessageBox::critical(qApp->activeWindow(),tr("error al guardar datos Factura:"), cab_fac.lastError().text());
@@ -369,71 +389,7 @@ bool Factura::RecuperarFactura(QString cSQL){
             if (cab_fac.next())
             {
                 QSqlRecord registro = cab_fac.record();
-                this->id = registro.field("id").value().toInt();
-                this->codigo_cliente= registro.field("codigo_cliente").value().toString();
-                this->factura = registro.field("factura").value().toString();
-                this->fecha = registro.field("fecha").value().toDate();
-                this->fecha_cobro = registro.field("fecha_cobro").value().toDate();
-                this->id_cliente = registro.field("id_cliente").value().toInt();
-                this->cliente = registro.field("cliente").value().toString();
-                this->direccion1 = registro.field("direccion1").value().toString();
-                this->direccion2 = registro.field("direccion2").value().toString();
-                this->cp = registro.field("cp").value().toString();
-                this->poblacion = registro.field("poblacion").value().toString();
-                this->provincia = registro.field("provincia").value().toString();
-                this->id_pais = registro.field("id_pais").value().toInt();
-                this->cif =registro.field("cif").value().toString();
-                this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toBool();
-                this->subtotal = registro.field("subtotal").value().toDouble();
-                this->porc_dto = registro.field("porc_dto").value().toFloat();
-                this->porc_dto_pp = registro.field("porc_dto_pp").value().toFloat();
-                this->dto = registro.field("dto").value().toDouble();
-                this->dto_pp = registro.field("dto_pp").value().toDouble();
-                this->base = registro.field("base").value().toDouble();
-                this->iva = registro.field("iva").value().toDouble();
-                this->total = registro.field("total").value().toDouble();
-                this->impreso = registro.field("impreso").value().toBool();
-                this->cobrado = registro.field("cobrado").value().toBool();
-                this->contablilizada = registro.field("contabilizado").value().toBool();
-                this->id_forma_pago = registro.field("id_forma_pago").value().toInt();
-                this->forma_pago = registro.field("forma_pago").value().toString();
-                this->comentario = registro.field("comentario").value().toString();
-                this->base1 = registro.field("base1").value().toDouble();
-                this->base2 = registro.field("base2").value().toDouble();
-                this->base3 = registro.field("base3").value().toDouble();
-                this->base4 = registro.field("base4").value().toDouble();
-                this->porc_iva1 = registro.field("porc_iva1").value().toInt();
-                this->porc_iva2 = registro.field("porc_iva2").value().toInt();
-                this->porc_iva3 = registro.field("porc_iva3").value().toInt();
-                this->porc_iva4 = registro.field("porc_iva4").value().toInt();
-                this->iva1 = registro.field("iva1").value().toDouble();
-                this->iva2 = registro.field("iva2").value().toDouble();
-                this->iva3 = registro.field("iva3").value().toDouble();
-                this->iva4 = registro.field("iva4").value().toDouble();
-                this->total1 = registro.field("total1").value().toDouble();
-                this->total2 = registro.field("total2").value().toDouble();
-                this->total3 = registro.field("total3").value().toDouble();
-                this->total4 = registro.field("total4").value().toDouble();
-                this->porc_rec1 = registro.field("porc_rec1").value().toDouble();
-                this->porc_rec2 = registro.field("porc_rec2").value().toDouble();
-                this->porc_rec3 = registro.field("porc_rec3").value().toDouble();
-                this->porc_rec4 = registro.field("porc_rec4").value().toDouble();
-                this->rec1 = registro.field("rec1").value().toDouble();
-                this->rec2 = registro.field("rec2").value().toDouble();
-                this->rec3 = registro.field("rec3").value().toDouble();
-                this->rec4 = registro.field("rec4").value().toDouble();
-                this->total_recargo = registro.field("total_recargo").value().toDouble();
-                this->entregado_a_cuenta = registro.field("entregado_a_cuenta").value().toDouble();
-                this->importe_pendiente = registro.field("importe_pendiente").value().toDouble();
-                this->codigo_entidad = registro.field("codigo_entidad").value().toString();
-                this->oficina_entidad = registro.field("oficina_entidad").value().toString();
-                this->dc_cuenta = registro.field("dc_cuenta").value().toString();
-                this->cuenta_corriente = registro.field("cuenta_corriente").value().toString();
-                this->pedido_cliente = registro.field("pedido_cliente").value().toInt();
-                this->porc_irpf = registro.field("porc_irpf").value().toInt();
-                this->irpf = registro.field("irpf").value().toDouble();
-                this->apunte = registro.field("asiento").value().toInt();
-                this->id_transportista = registro.field("id_transportista").value().toInt();
+                cargar(&registro);
                 return true;
                }
             else
@@ -441,6 +397,106 @@ bool Factura::RecuperarFactura(QString cSQL){
                 return false;
             }
         }
+}
+
+bool Factura::RecuperarFactura(int id)
+{
+    QSqlQuery cab_fac(Configuracion_global->empresaDB);
+    if( !cab_fac.exec("select * from cab_fac where id ="+QString::number(id)))
+    {
+        QMessageBox::critical(qApp->activeWindow(), "error:", cab_fac.lastError().text());
+        return false;
+    }
+    else
+    {
+        if (cab_fac.next())
+        {
+            QSqlRecord registro = cab_fac.record();
+            cargar(&registro);
+            return true;
+           }
+        else
+        {
+            return false;
+        }
+    }
+
+}
+
+void Factura::cargar(QSqlRecord *registro)
+{
+    this->id = registro->field("id").value().toInt();
+    this->codigo_cliente= registro->field("codigo_cliente").value().toString();
+    this->factura = registro->field("factura").value().toString();
+    this->fecha = registro->field("fecha").value().toDate();
+    this->fecha_cobro = registro->field("fecha_cobro").value().toDate();
+    this->id_cliente = registro->field("id_cliente").value().toInt();
+    this->cliente = registro->field("cliente").value().toString();
+    this->direccion1 = registro->field("direccion1").value().toString();
+    this->direccion2 = registro->field("direccion2").value().toString();
+    this->cp = registro->field("cp").value().toString();
+    this->poblacion = registro->field("poblacion").value().toString();
+    this->provincia = registro->field("provincia").value().toString();
+    this->id_pais = registro->field("id_pais").value().toInt();
+    this->cif =registro->field("cif").value().toString();
+    this->recargo_equivalencia = registro->field("recargo_equivalencia").value().toBool();
+    this->subtotal = registro->field("subtotal").value().toDouble();
+    this->porc_dto = registro->field("porc_dto").value().toFloat();
+    this->porc_dto_pp = registro->field("porc_dto_pp").value().toFloat();
+    this->dto = registro->field("dto").value().toDouble();
+    this->dto_pp = registro->field("dto_pp").value().toDouble();
+    this->base = registro->field("base").value().toDouble();
+    this->iva = registro->field("iva").value().toDouble();
+    this->total = registro->field("total").value().toDouble();
+    this->impreso = registro->field("impreso").value().toBool();
+    this->cobrado = registro->field("cobrado").value().toBool();
+    this->contablilizada = registro->field("contabilizado").value().toBool();
+    this->id_forma_pago = registro->field("id_forma_pago").value().toInt();
+    this->forma_pago = registro->field("forma_pago").value().toString();
+    this->comentario = registro->field("comentario").value().toString();
+    this->base1 = registro->field("base1").value().toDouble();
+    this->base2 = registro->field("base2").value().toDouble();
+    this->base3 = registro->field("base3").value().toDouble();
+    this->base4 = registro->field("base4").value().toDouble();
+    this->porc_iva1 = registro->field("porc_iva1").value().toInt();
+    this->porc_iva2 = registro->field("porc_iva2").value().toInt();
+    this->porc_iva3 = registro->field("porc_iva3").value().toInt();
+    this->porc_iva4 = registro->field("porc_iva4").value().toInt();
+    this->iva1 = registro->field("iva1").value().toDouble();
+    this->iva2 = registro->field("iva2").value().toDouble();
+    this->iva3 = registro->field("iva3").value().toDouble();
+    this->iva4 = registro->field("iva4").value().toDouble();
+    this->total1 = registro->field("total1").value().toDouble();
+    this->total2 = registro->field("total2").value().toDouble();
+    this->total3 = registro->field("total3").value().toDouble();
+    this->total4 = registro->field("total4").value().toDouble();
+    this->porc_rec1 = registro->field("porc_rec1").value().toDouble();
+    this->porc_rec2 = registro->field("porc_rec2").value().toDouble();
+    this->porc_rec3 = registro->field("porc_rec3").value().toDouble();
+    this->porc_rec4 = registro->field("porc_rec4").value().toDouble();
+    this->rec1 = registro->field("rec1").value().toDouble();
+    this->rec2 = registro->field("rec2").value().toDouble();
+    this->rec3 = registro->field("rec3").value().toDouble();
+    this->rec4 = registro->field("rec4").value().toDouble();
+    this->total_recargo = registro->field("total_recargo").value().toDouble();
+    this->entregado_a_cuenta = registro->field("entregado_a_cuenta").value().toDouble();
+    this->importe_pendiente = registro->field("importe_pendiente").value().toDouble();
+    this->codigo_entidad = registro->field("codigo_entidad").value().toString();
+    this->oficina_entidad = registro->field("oficina_entidad").value().toString();
+    this->dc_cuenta = registro->field("dc_cuenta").value().toString();
+    this->cuenta_corriente = registro->field("cuenta_corriente").value().toString();
+    this->pedido_cliente = registro->field("pedido_cliente").value().toInt();
+    this->porc_irpf = registro->field("porc_irpf").value().toInt();
+    this->irpf = registro->field("irpf").value().toDouble();
+    this->apunte = registro->field("asiento").value().toInt();
+    this->id_transportista = registro->field("id_transportista").value().toInt();
+    this->desc_gasto1 = registro->field("desc_gasto1").value().toString();
+    this->desc_gasto2 = registro->field("desc_gasto2").value().toString();
+    this->desc_gasto3 = registro->field("desc_gasto3").value().toString();
+
+    this->imp_gasto1 = registro->field("imp_gasto1").value().toDouble();
+    this->imp_gasto2 = registro->field("imp_gasto2").value().toDouble();
+    this->imp_gasto3 = registro->field("imp_gasto3").value().toDouble();
 }
 
 QString Factura::NuevoNumeroFactura() {
@@ -690,4 +746,23 @@ bool Factura::Apunte()
         ok = this->GuardarApunte(apunte,this->id);
         return ok;
     }
+}
+
+bool Factura::EditApunte(int num_apunte)
+{
+
+ // TODO: editar apunte al editar factura
+        Cliente oCliente;
+        oCliente.Recuperar("select * from clientes where id = " + QString::number(this->id_cliente));
+        QString error;
+        QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("diario", "asiento = "+QString::number(num_apunte),Configuracion_global->contaDB, error);
+        QMapIterator<int, QSqlRecord> i(map);
+        while (i.hasNext())
+        {
+            i.next();
+            if(i.value().value("cuenta_d").toString() == oCliente.codigo_cliente)
+            {
+            }
+
+        }
 }

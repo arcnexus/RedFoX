@@ -72,6 +72,15 @@ public:
     QString cuenta_corriente;
     int pedido_cliente;
     int apunte;
+    QString desc_gasto1;
+    QString desc_gasto2;
+    QString desc_gasto3;
+    double imp_gasto1;
+    double imp_gasto2;
+    double imp_gasto3;
+
+
+
     int id_transportista;
     bool set_impresa(bool state);
 
@@ -80,12 +89,15 @@ signals:
 public slots:
     bool AnadirFactura();
     bool RecuperarFactura(QString cSQL);
+    bool RecuperarFactura(int id);
+    void cargar(QSqlRecord *registro);
     bool GuardarFactura(int nid_factura, bool FacturaLegal);
     QString NuevoNumeroFactura();
     bool BorrarLineasFactura(int id_lin);
     bool CobrarFactura();
     bool GuardarApunte(int nasiento, int nid);
     bool Apunte();
+    bool EditApunte(int num_apunte);
 };
 
 #endif // FACTURA_H

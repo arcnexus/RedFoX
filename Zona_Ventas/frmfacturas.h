@@ -82,6 +82,12 @@ private slots:
 
     void on_txtBuscar_textEdited(const QString &arg1);
 
+    void on_btnAsignarTransportista_clicked();
+
+    void on_tabla_facturas_doubleClicked(const QModelIndex &index);
+
+    void on_tabla_facturas_clicked(const QModelIndex &index);
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;
@@ -97,6 +103,7 @@ private:
     QString moneda;
     QHash<QString,QString> h_Buscar;
     QSqlQueryModel *m_facturas;
+    void formato_tabla_facturas(QSqlQueryModel &modelo);
 };
 
 #endif // FRMFACTURAS_H

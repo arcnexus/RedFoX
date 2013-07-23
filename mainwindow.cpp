@@ -762,7 +762,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
 
-    QString error;
+//    QString error;
 //    QStringList w;
 //    w << "id < 10" << "id > 5";
 //    QMap<int,QString> idnombre = SqlCalls::SelectMap<int,QString>("clientes","idpatata","nombre_fiscal",w,Configuracion_global->groupDB,error);
@@ -781,6 +781,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //        qDebug() <<  error;
 //    else
 //        qDebug() <<  id;
+    // Recuperar valores registro
 //    QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("clientes", "id<10",Configuracion_global->groupDB, error);
 //    QMapIterator<int, QSqlRecord> i(map);
 //    while (i.hasNext())

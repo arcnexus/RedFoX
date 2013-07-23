@@ -660,9 +660,6 @@ int Configuracion::devolver_id_transportista(QString transportista)
 
 }
 
-
-
-
 void Configuracion::CargarClientes()
 {
     if(client_model == 0)

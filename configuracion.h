@@ -151,7 +151,6 @@ public:
     int devolver_id_agente(QString agente);
     QString devolver_transportista(int id);
     int devolver_id_transportista(QString transportista);
-
     QSqlTableModel* client_model;
     void CargarClientes();
 

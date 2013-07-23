@@ -30,7 +30,14 @@ void db_consulta_view::set_SQL(QString cSQL)
 {
     this->cSQL = cSQL;
     modelo = new QSqlQueryModel(this);
-    modelo->setQuery(cSQL,QSqlDatabase::database(db));
+    if (db =="Maya" || db == "Group")
+        modelo->setQuery(cSQL,Configuracion_global->groupDB);
+    else if(db=="empresa")
+        modelo->setQuery(cSQL,Configuracion_global->empresaDB);
+    else if(db=="conta")
+        modelo->setQuery(cSQL,Configuracion_global->contaDB);
+    else if(db=="medic")
+        modelo->setQuery(cSQL,Configuracion_global->medicaDB);
     ui->resultado_list->setModel(modelo);
 
 }
@@ -46,8 +53,14 @@ void db_consulta_view::set_filtro(QString filtro)
     cSQLFiltered.append("%'");
     cSQLFiltered.append(" order by ");
     cSQLFiltered.append(ui->cboCampoBusqueda->currentText().trimmed());
-
-    modelo->setQuery(cSQLFiltered,QSqlDatabase::database(db));
+    if (db =="Maya" || db == "Group")
+        modelo->setQuery(cSQLFiltered,Configuracion_global->groupDB);
+    else if(db=="empresa")
+        modelo->setQuery(cSQLFiltered,Configuracion_global->empresaDB);
+    else if(db=="conta")
+        modelo->setQuery(cSQLFiltered,Configuracion_global->contaDB);
+    else if(db=="medic")
+        modelo->setQuery(cSQLFiltered,Configuracion_global->medicaDB);
 }
 
 void db_consulta_view::set_titulo(QString titulo)

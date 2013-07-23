@@ -4,6 +4,8 @@
 #include "../Busquedas/frmBuscarFactura.h"
 #include "../Zona_Contabilidad/apuntes.h"
 #include "../Auxiliares/frmaddentregascuenta.h"
+#include "../Auxiliares/monetarydelegate.h"
+#include "../Auxiliares/datedelegate.h"
 
 #include "../Almacen/articulo.h"
 
@@ -79,9 +81,10 @@ frmFacturas::frmFacturas( QWidget *parent) :
     // tablafacturas
     //-----------------
     m_facturas = new QSqlQueryModel(this);
-    m_facturas->setQuery("select factura,fecha,fecha_cobro,cliente,cif,total from cab_fac "
+    m_facturas->setQuery("select id,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
                          " where factura <> 'BORRADOR'  and ejercicio = "+Configuracion_global->cEjercicio+" order by factura desc limit 0,500",Configuracion_global->empresaDB);
     ui->tabla_facturas->setModel(m_facturas);
+    formato_tabla_facturas(*m_facturas);
 
     //----------------
     // Cargar Series
@@ -294,7 +297,7 @@ void frmFacturas::LLenarCampos() {
     helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
     helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
     oFactura->id_cliente = oCliente1->id;
-    ui->txtTransportista->setText( Configuracion_global->devolver_transportista(oCliente1->id_transportista));
+    ui->txtTransportista->setText( Configuracion_global->devolver_transportista(oFactura->id_transportista));
     ui->txtAsiento->setText(QString::number(oFactura->apunte));
 
     QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
@@ -344,7 +347,12 @@ void frmFacturas::LLenarCamposCliente()
     oFactura->id_cliente = oCliente1->id;
     oFactura->id_transportista = oCliente1->id_transportista;
     ui->txtTransportista->setText( Configuracion_global->devolver_transportista(oCliente1->id_transportista));
-
+    ui->txtGastoDist1->setText(oFactura->desc_gasto1);
+    ui->txtGastoDist2->setText(oFactura->desc_gasto2);
+    ui->txtGastoDist3->setText(oFactura->desc_gasto3);
+    ui->SpinGastoDist1->setValue(oFactura->imp_gasto1);
+    ui->SpinGastoDist2->setValue(oFactura->imp_gasto2);
+    ui->SpinGastoDist3->setValue(oFactura->imp_gasto3);
 }
 
 void frmFacturas::VaciarCampos()
@@ -413,6 +421,12 @@ void frmFacturas::VaciarCampos()
     ui->txtnumero_cuenta->setText("");
     ui->txtpedido_cliente->setText("");
     ui->chkrecargo_equivalencia->setCheckState(Qt::Unchecked);
+    ui->txtGastoDist1->setText("");
+    ui->txtGastoDist2->setText("");
+    ui->txtGastoDist3->setText("");
+    ui->SpinGastoDist1->setValue(0);
+    ui->SpinGastoDist2->setValue(0);
+    ui->SpinGastoDist3->setValue(0);
 
     helper.fillTable("empresa","lin_fac","id_Cab = -1");
 }
@@ -464,6 +478,7 @@ void frmFacturas::BloquearCampos(bool state)
     ui->btn_borrarLinea->setEnabled(!state);
     helper.blockTable(state);
     ui->txtfactura->setReadOnly(true);
+    ui->btnAsignarTransportista->setEnabled(!state);
 }
 
 void frmFacturas::LLenarFactura() {
@@ -533,12 +548,32 @@ void frmFacturas::LLenarFactura() {
     oFactura->pedido_cliente = ok ? nPed : 0;
     oFactura->irpf = (ui->txtirpf->text().replace(".","").replace(",",".").toDouble());
     oFactura->irpf = (ui->txtimporte_irpf->text().replace(".","").replace(",",".").toDouble());
+    oFactura->desc_gasto1 = ui->txtGastoDist1->text();
+    oFactura->desc_gasto2 = ui->txtGastoDist2->text();
+    oFactura->desc_gasto3 = ui->txtGastoDist3->text();
+    oFactura->imp_gasto1 = ui->SpinGastoDist1->value();
+    oFactura->imp_gasto2 = ui->SpinGastoDist2->value();
+    oFactura->imp_gasto3 = ui->SpinGastoDist3->value();
 }
 
-void frmFacturas::on_btnSiguiente_clicked()
+void frmFacturas::
+
+
+
+on_btnSiguiente_clicked()
 {
-    QString factura = QString::number(oFactura->id);
-    if(oFactura->RecuperarFactura("Select * from cab_fac where id >'"+factura+"' order by factura  limit 1 "))
+    QString id = QString::number(oFactura->id);
+    QString cSQL;
+    if (ui->cboVer->currentText() == "Borradores")
+        cSQL ="select * from cab_fac "
+                " where factura = 'BORRADOR' and id > "+id+" and ejercicio = "+Configuracion_global->cEjercicio+
+                             " order by id limit 0,1";
+    else
+        cSQL ="select * from cab_fac "
+                " where factura <> 'BORRADOR' and factura > '"+oFactura->factura+"' and ejercicio = "+Configuracion_global->cEjercicio+
+                             " order by factura limit 0,1";
+
+    if(oFactura->RecuperarFactura(cSQL))
     {
         LLenarCampos();
         QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
@@ -562,8 +597,17 @@ void frmFacturas::on_btnSiguiente_clicked()
 }
 void frmFacturas::on_btnAnterior_clicked()
 {
-    QString factura = QString::number(oFactura->id);
-    if(oFactura->RecuperarFactura("Select * from cab_fac where id <'"+factura+"' order by factura desc limit 1 "))
+    QString id = QString::number(oFactura->id);
+    QString cSQL;
+    if (ui->cboVer->currentText() == "Borradores")
+        cSQL ="select * from cab_fac "
+                " where factura = 'BORRADOR' and id < "+id+" and ejercicio = "+Configuracion_global->cEjercicio+
+                             " order by id desc limit 0,1";
+    else
+        cSQL ="select * from cab_fac "
+                " where factura <> 'BORRADOR' and factura <'"+oFactura->factura+"' and ejercicio = "+Configuracion_global->cEjercicio+
+                             " order by factura desc limit 0,1";
+    if(oFactura->RecuperarFactura(cSQL))
     {
         LLenarCampos();
         QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
@@ -998,9 +1042,12 @@ void frmFacturas::on_tabWidget_2_currentChanged(int index)
 
 bool frmFacturas::crear_asiento()
 {
+    bool creado;
     oCliente1->Recuperar("select * from clientes where id = "+QString::number(oFactura->id_cliente));
-    //oCliente1->codigo_cliente = ui->txtcodigo_cliente->text();
-    bool creado = oFactura->Apunte();
+    if(oFactura->apunte == 0)
+        creado = oFactura->Apunte();
+    else
+        creado = oFactura->EditApunte(oFactura->apunte);
     return creado;
 }
 
@@ -1060,17 +1107,18 @@ void frmFacturas::on_cboVer_currentTextChanged(const QString &arg1)
     if(indice_tabla.isEmpty())
         indice_tabla = "factura";
     QString cSQL;
-    if(arg1 == "BORRADOR")
-        cSQL = "select factura,fecha,fecha_cobro,cliente,cif,total from cab_fac "
-                " where factura = 'BORRADOR' and  ejercicio = "+Configuracion_global->cEjercicio+
+    if(arg1 == "Borradores")
+        cSQL = "select factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+                " where trim(factura) = 'BORRADOR' and  ejercicio = "+Configuracion_global->cEjercicio+
                 " order by factura desc";
     else
-        cSQL = "select factura,fecha,fecha_cobro,cliente,cif,total from cab_fac "
-               " where factura <> 'BORRADOR' and ejercicio = "+Configuracion_global->cEjercicio+
+        cSQL = "select factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+               " where trim(factura) <> 'BORRADOR' and ejercicio = "+Configuracion_global->cEjercicio+
                " order by factura desc";
 
     m_facturas->setQuery(cSQL,Configuracion_global->empresaDB);
     ui->tabla_facturas->setModel(m_facturas);
+    formato_tabla_facturas(*m_facturas);
 }
 
 void frmFacturas::on_txtBuscar_textEdited(const QString &arg1)
@@ -1078,17 +1126,76 @@ void frmFacturas::on_txtBuscar_textEdited(const QString &arg1)
     QString indice_tabla = h_Buscar.value(ui->cboBuscar->currentText());
     if(indice_tabla.isEmpty())
         indice_tabla = "factura";
-    if (ui->cboVer->currentText() == "BORRADOR")
-        m_facturas->setQuery("select factura,fecha,fecha_cobro,cliente,cif,total from cab_fac "
+    if (ui->cboVer->currentText() == "Borradores")
+        m_facturas->setQuery("select id,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
                              " where factura = 'BORRADOR' and "+indice_tabla+
                              " like '%"+arg1+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
                              " order by factura desc",Configuracion_global->empresaDB);
     else
-        m_facturas->setQuery("select factura,fecha,fecha_cobro,cliente,cif,total from cab_fac "
+        m_facturas->setQuery("select id,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
                              " where factura <> 'BORRADOR' and "+indice_tabla+
                              " like '%"+arg1+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
                              " order by factura desc",Configuracion_global->empresaDB);
 
     ui->tabla_facturas->setModel(m_facturas);
-    qDebug() << m_facturas->query().lastQuery();
+    formato_tabla_facturas(*m_facturas);
+
+}
+
+void frmFacturas::formato_tabla_facturas(QSqlQueryModel &modelo)
+{
+    ui->tabla_facturas->setItemDelegateForColumn(5, new MonetaryDelegate);
+    ui->tabla_facturas->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tabla_facturas->setItemDelegateForColumn(3, new DateDelegate);
+    ui->tabla_facturas->setColumnHidden(0,true);
+    QVariantList lista;
+    QStringList  titulos;
+    lista << 0 << 120 <<120 <<120 <<120 <<120 <<300;
+    titulos <<tr("id") << tr("FACTURA") <<tr("FECHA") << tr("FECHA COBRO") << tr("CIF/NIF") << tr("TOTAL") << tr("CLIENTE");
+    for(int pos = 0;pos<lista.size();pos++)
+    {
+        ui->tabla_facturas->setColumnWidth(pos,lista.at(pos).toInt());
+        modelo.setHeaderData(pos,Qt::Horizontal,titulos.at(pos));
+    }
+}
+
+void frmFacturas::on_btnAsignarTransportista_clicked()
+{
+    db_consulta_view consulta;
+    QStringList campos;
+    campos <<"codigo" <<"transportista" << "telefono1" <<"movil" << "poblacion"<< "provincia" << "pais";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("transportistas");
+    consulta.set_db("Group");
+    consulta.set_SQL("select id,codigo,transportista,telefono1,movil,poblacion,provincia,pais from transportista");
+    QStringList cabecera;
+    QVariantList tamanos;
+    cabecera  << tr("Código") << tr("Transportista") << tr("Teléfono") << tr("Movil") << tr("Población") << tr("Provincia") << tr("Pais");
+
+    tamanos <<"0" << "100" << "250" << "120" << "120" <<"150" << "90" << "90";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de transportistas");
+    if(consulta.exec())
+    {
+        oFactura->id_transportista = consulta.get_id();
+        ui->txtTransportista->setText(Configuracion_global->devolver_transportista(oFactura->id_transportista));
+   }
+}
+
+void frmFacturas::on_tabla_facturas_doubleClicked(const QModelIndex &index)
+{
+     int id = ui->tabla_facturas->model()->data(ui->tabla_facturas->model()->index(index.row(),0),Qt::EditRole).toInt();
+     oFactura->RecuperarFactura(id);
+     LLenarCampos();
+     ui->stackedWidget->setCurrentIndex(0);
+     ui->radEditar->setChecked(true);
+}
+
+void frmFacturas::on_tabla_facturas_clicked(const QModelIndex &index)
+{
+    int id = ui->tabla_facturas->model()->data(ui->tabla_facturas->model()->index(index.row(),0),Qt::EditRole).toInt();
+    oFactura->RecuperarFactura(id);
+    LLenarCampos();
+
 }
