@@ -770,6 +770,16 @@ bool Factura::EditApunte(int num_apunte)
                 {
                     qDebug() << error;
                     b_error = true;
+                } if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_venta_mercaderias)
+                {
+                    QHash <QString,QVariant> update;
+                    update["importe_h"] = this->base;
+                    SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                    if(!error.isEmpty())
+                    {
+                        qDebug() << error;
+                        b_error = true;
+                    }
                 }
             } else if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_venta_mercaderias)
             {
