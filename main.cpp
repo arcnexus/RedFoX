@@ -126,23 +126,26 @@ bool cargarEmpresa(QString empresa)
         //----------------------
 
         //splash.showMessage(tr("Abriendo base de datos médica"),Qt::AlignBottom);
-        Configuracion_global->medicaDB = QSqlDatabase::addDatabase(Configuracion_global->group_Driver,"dbmedica");
-        if (Configuracion_global->group_Driver =="QSQLITE")
+        if(Configuracion_global->medic)
         {
-            Configuracion_global->medicaDB.setDatabaseName(Configuracion_global->ruta_bd_medica);
-            if(!Configuracion_global->medicaDB.open())
-                QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR DB"),QObject::tr("No se ha podido abrir la BD medica"),
-                QObject::tr("Aceptar"));
-        }
-        else
-        {
-            Configuracion_global->medicaDB.setDatabaseName(Configuracion_global->nombre_bd_medica);
-            Configuracion_global->medicaDB.setHostName(Configuracion_global->group_host);
-            Configuracion_global->medicaDB.open(Configuracion_global->group_user,Configuracion_global->group_pass);
-        }
-        if (Configuracion_global->medicaDB.lastError().isValid())
-        {
-            QMessageBox::critical(qApp->activeWindow(), "error:", Configuracion_global->medicaDB.lastError().text());
+            Configuracion_global->medicaDB = QSqlDatabase::addDatabase(Configuracion_global->group_Driver,"dbmedica");
+            if (Configuracion_global->group_Driver =="QSQLITE")
+            {
+                Configuracion_global->medicaDB.setDatabaseName(Configuracion_global->ruta_bd_medica);
+                if(!Configuracion_global->medicaDB.open())
+                    QMessageBox::warning(qApp->activeWindow(),QObject::tr("ERROR DB"),QObject::tr("No se ha podido abrir la BD medica"),
+                    QObject::tr("Aceptar"));
+            }
+            else
+            {
+                Configuracion_global->medicaDB.setDatabaseName(Configuracion_global->nombre_bd_medica);
+                Configuracion_global->medicaDB.setHostName(Configuracion_global->group_host);
+                Configuracion_global->medicaDB.open(Configuracion_global->group_user,Configuracion_global->group_pass);
+            }
+            if (Configuracion_global->medicaDB.lastError().isValid())
+            {
+                QMessageBox::critical(qApp->activeWindow(), "error:", Configuracion_global->medicaDB.lastError().text());
+            }
         }
         if(Configuracion_global->contabilidad)
         {

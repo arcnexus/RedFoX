@@ -213,7 +213,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
                      "desc_gasto3 = :desc_gasto3,"
                      "imp_gasto1 =:imp_gasto1,"
                      "imp_gasto2 =:imp_gasto2,"
-                     "imp_gasto3 =:imp_gasto3,"
+                     "imp_gasto3 =:imp_gasto3"
                      " where id=:id");
 
     // Pasamos valores reales a la Select
@@ -605,7 +605,7 @@ bool Factura::Apunte()
         oCliente.Recuperar("select * from clientes where id = " + QString::number(this->id_cliente));
 
         oApunte.cuenta_d = oCliente.codigo_cliente;
-        oApunte.cuenta_h = Configuracion_global->cuentaVentaMercaderias;
+        oApunte.cuenta_h = Configuracion_global->cuenta_venta_mercaderias;
         oApunte.descripcion_d = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_d);
         oApunte.id_cuenta_d = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_d);
         oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
@@ -627,7 +627,7 @@ bool Factura::Apunte()
         {
             oApunte.clear();
             oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportado1;
+            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado1;
             oApunte.importe_h = this->iva1;
             oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
             oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
@@ -642,7 +642,7 @@ bool Factura::Apunte()
         {
             oApunte.clear();
             oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportadoRe1;
+            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado_re1;
             oApunte.importe_h = this->porc_rec1;
             oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
             oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
@@ -657,7 +657,7 @@ bool Factura::Apunte()
         {
             oApunte.clear();
             oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportado2;
+            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado2;
             oApunte.importe_h = this->iva2;
             oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
             oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
@@ -672,7 +672,7 @@ bool Factura::Apunte()
         {
             oApunte.clear();
             oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportadoRe2;
+            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado_re2;
             oApunte.importe_h = this->porc_rec2;
             oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
             oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
@@ -687,7 +687,7 @@ bool Factura::Apunte()
         {
             oApunte.clear();
             oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportado3;
+            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado3;
             oApunte.importe_h = this->iva3;
             oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
             oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
@@ -702,7 +702,7 @@ bool Factura::Apunte()
         {
             oApunte.clear();
             oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportadoRe3;
+            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado_re3;
             oApunte.importe_h = this->porc_rec3;
             oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
             oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
@@ -717,7 +717,7 @@ bool Factura::Apunte()
         {
             oApunte.clear();
             oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportado4;
+            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado4;
             oApunte.importe_h = this->iva4;
             oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
             oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
@@ -732,7 +732,7 @@ bool Factura::Apunte()
         {
             oApunte.clear();
             oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuentaIvaSoportadoRe4;
+            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado_re4;
             oApunte.importe_h = this->porc_rec4;
             oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
             oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
@@ -755,6 +755,7 @@ bool Factura::EditApunte(int num_apunte)
         Cliente oCliente;
         oCliente.Recuperar("select * from clientes where id = " + QString::number(this->id_cliente));
         QString error;
+        bool b_error = false;
         QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("diario", "asiento = "+QString::number(num_apunte),Configuracion_global->contaDB, error);
         QMapIterator<int, QSqlRecord> i(map);
         while (i.hasNext())
@@ -762,7 +763,126 @@ bool Factura::EditApunte(int num_apunte)
             i.next();
             if(i.value().value("cuenta_d").toString() == oCliente.codigo_cliente)
             {
+                QHash <QString,QVariant> update;
+                update["importe_d"] = this->total;
+                SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                if(!error.isEmpty())
+                {
+                    qDebug() << error;
+                    b_error = true;
+                }
+            } else if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_venta_mercaderias)
+            {
+                QHash <QString,QVariant> update;
+                update["importe_h"] = this->base;
+                SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                if(!error.isEmpty())
+                {
+                    qDebug() << error;
+                    b_error = true;
+                }
+            } else if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_venta_servicios)
+            {
+                QHash <QString,QVariant> update;
+                update["importe_h"] = this->base;
+                SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                if(!error.isEmpty())
+                {
+                    qDebug() << error;
+                    b_error = true;
+                }
+            } else if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_venta_mercaderias)
+            {
+                QHash <QString,QVariant> update;
+                update["importe_h"] = this->base;
+                SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                if(!error.isEmpty())
+                {
+                    qDebug() << error;
+                    b_error = true;
+                }
+            } else if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_iva_soportado1)
+            {
+                QHash <QString,QVariant> update;
+                update["importe_h"] = this->iva1;
+                SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                if(!error.isEmpty())
+                {
+                    qDebug() << error;
+                    b_error = true;
+                }
+            } else if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_iva_soportado2)
+            {
+                QHash <QString,QVariant> update;
+                update["importe_h"] = this->iva2;
+                SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                if(!error.isEmpty())
+                {
+                    qDebug() << error;
+                    b_error = true;
+                }
+            } else if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_iva_soportado3)
+            {
+                QHash <QString,QVariant> update;
+                update["importe_h"] = this->iva3;
+                SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                if(!error.isEmpty())
+                {
+                    qDebug() << error;
+                    b_error = true;
+                }
+            } else if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_iva_soportado4)
+            {
+                QHash <QString,QVariant> update;
+                update["importe_h"] = this->iva4;
+                SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                if(!error.isEmpty())
+                {
+                    qDebug() << error;
+                    b_error = true;
+                }
+            } else if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_iva_soportado_re1)
+            {
+                QHash <QString,QVariant> update;
+                update["importe_h"] = this->rec1;
+                SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                if(!error.isEmpty())
+                {
+                    qDebug() << error;
+                    b_error = true;
+                }
+            } else if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_iva_soportado_re2)
+            {
+                QHash <QString,QVariant> update;
+                update["importe_h"] = this->rec2;
+                SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                if(!error.isEmpty())
+                {
+                    qDebug() << error;
+                    b_error = true;
+                }
+            } else if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_iva_soportado_re3)
+            {
+                QHash <QString,QVariant> update;
+                update["importe_h"] = this->rec3;
+                SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                if(!error.isEmpty())
+                {
+                    qDebug() << error;
+                    b_error = true;
+                }
+            } else if(i.value().value("cuenta_h").toString() == Configuracion_global->cuenta_iva_soportado_re4)
+            {
+                QHash <QString,QVariant> update;
+                update["importe_h"] = this->rec4;
+                SqlCalls::SqlUpdate(update,"diario",Configuracion_global->contaDB,"id="+QString::number(i.value().value("id").toInt()),error);
+                if(!error.isEmpty())
+                {
+                    qDebug() << error;
+                    b_error = true;
+                }
             }
 
         }
+        return !b_error;
 }

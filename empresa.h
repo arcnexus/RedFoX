@@ -11,6 +11,7 @@ public:
     void Anadir(QString id);
     void Recuperar(QString cSQL);
     void Recuperar(QString cSQL,int nProcede);
+    void cargar(QSqlRecord record);
     void Guardar();
     void Vaciar();
     bool Borrar(int nid);
@@ -150,6 +151,11 @@ public:
     QString horario_dia_normal;
     QString horario_ultimo_dia;
     bool actualizar_divisas;
+    bool seguimiento;
+    double margen;
+    double margen_min;
+    QString clave1;
+    QString clave2;
 
     // ConexiónBD
     QString ruta_bd_sqlite;

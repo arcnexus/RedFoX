@@ -29,93 +29,8 @@ void Empresa::Recuperar(QString cSQL)
         if(qEmpresa.next()) 
 		{
             QSqlRecord registro = qEmpresa.record();
-            this->id = registro.field("id").value().toInt();
-            this->id_divisa = registro.field("id_divisa").value().toInt();
-            this->codigo = registro.field("codigo").value().toString();
-            this->nombre = registro.field("nombre").value().toString();
-            this->ndigitos_factura = registro.field("digitos_factura").value().toInt();
-            this->serie = registro.field("serie").value().toString();
-            this->ruta_bd_sqlite = registro.field("ruta_bd_sqlite").value().toString();
-            this->cHost = registro.field("host").value().toString();
-            this->cUser = registro.field("user").value().toString();
-            this->cContrasena = registro.field("contrasena").value().toString();
-            this->cPuerto = registro.field("puerto").value().toString();
-            this->nombre_bd = registro.field("nombre_bd").value().toString();
-            this->cHostMed = registro.field("host_bd_medica").value().toString();
-            this->cUserMed = registro.field("user_bd_medica").value().toString();
-            this->cContrasenaMed = registro.field("contrasena_bd_medica").value().toString();
-            this->cPuertoMed = registro.field("puerto_bd_medica").value().toString();
-            this->nombre_bdMed = registro.field("nombre_bd_medica").value().toString();
-            this->cDriverBDMed = registro.field("driver_bd_medica").value().toString();
-            this->cHostMed = registro.field("host_bd_medica").value().toString();
-            this->cUserMed = registro.field("user_bd_medica").value().toString();
-            this->cContrasenaMed = registro.field("contrasena_bd_medica").value().toString();
-            this->cPuertoMed = registro.field("puerto_bd_medica").value().toString();
-            this->nombre_bdMed = registro.field("nombre_bd_medica").value().toString();
-            this->cDriverBDMed = registro.field("driver_bd_medica").value().toString();
-            this->direccion1 = registro.field("direccion").value().toString();
-            this->cp = registro.field("cp").value().toString();
-            this->poblacion = registro.field("poblacion").value().toString();
-            this->provincia = registro.field("provincia").value().toString();
-            this->pais = registro.field("pais").value().toString();
-            this->telefono1 = registro.field("telefono1").value().toString();
-            this->telefono2 = registro.field("telefono2").value().toString();
-            this->fax = registro.field("fax").value().toString();
-            this->cMail = registro.field("mail").value().toString();
-            this->web =registro.field("web").value().toString();
-            this->cif = registro.field("cif").value().toString();
-            this->cInscripcion = registro.field("inscripcion").value().toString();
-            this->ccomentario_albaran = registro.field("comentario_albaran").value().toString();
-            this->ccomentario_factura = registro.field("comentario_factura").value().toString();
-            this->ccomentario_ticket = registro.field("comentario_ticket").value().toString();
-            this->ejercicio = registro.field("ejercicio").value().toInt();
-            this->digitos_cuentas = registro.field("digitos_cuenta").value().toInt();
-            this->cuenta_clientes = registro.field("codigo_cuenta_clientes").value().toString();
-            this->cuentaAcreeedores = registro.field("codigo_cuenta_acreedores").value().toString();
-            this->cuenta_proveedores = registro.field("codigo_cuenta_proveedores").value().toString();
-            this->Autocodificar = registro.field("auto_codigo").value().toBool();
-            this->tamano_codigo = registro.field("tamano_codigo").value().toInt();
-            this->cuenta_cobros = registro.field("cuenta_cobros").value().toString();
-            this->cuenta_pagos = registro.field("cuenta_pagos").value().toString();
-            this->cuenta_venta_mercaderias = registro.field("cuenta_ventas_mercaderias").value().toString();
-            this->cuenta_venta_servicios = registro.field("cuenta_ventas_servicios").value().toString();
-            this->contabilidad = registro.field("contabilidad").value().toBool();
-            this->consultas = registro.field("consultas").value().toInt();
-            this->primer_dia_laborable = registro.field("primer_dia_laborable").value().toString();
-            this->ultimo_dia_laborable = registro.field("ultimo_dia_laborable").value().toString();
-            this->horario_primer_dia = registro.field("horario_primer_dia").value().toString();
-            this->horario_dia_normal = registro.field("horario_dia_normal").value().toString();
-            this->horario_ultimo_dia = registro.field("horario_ultimo_dia").value().toString();
-            this->HostBD_contabilidad = registro.field("host_bd_conta").value().toString();
-            this->nombre_bd_contabilidad = registro.field("nombre_bdConta").value().toString();
-            this->UsuarioBD_contabilidad = registro.field("user_bd_conta").value().toString();
-            this->ContrasenaBD_contabilidad = registro.field("password_bd_conta").value().toString();
-            this->puertoDB_contabilidad = registro.field("puerto_db_conta").value().toString();
-            this->RutaBD_Contabilidad_sqlite = registro.field("ruta_bd_conta").value().toString();
-            this->driver_db_contabilidad = registro.field("driver_db_conta").value().toString();
-            this->ticket_factura = registro.field("ticket_factura").value().toBool();
-            this->id_tarifa_predeterminada = registro.field("id_tarifa_predeterminada").value().toInt();
-            this->actualizar_divisas = registro.field("actualizar_divisas").value().toInt();
-            this->empresa_internacional = registro.field("medica").value().toBool();
-            this->empresa_medica = registro.field("internacional").value().toBool();
-            this->cuenta_iva_repercutido1 = registro.field("cuenta_iva_repercutido1").value().toString();
-            this->cuenta_iva_repercutido2 = registro.field("cuenta_iva_repercutido2").value().toString();
-            this->cuenta_iva_repercutido3 = registro.field("cuenta_iva_repercutido3").value().toString();
-            this->cuenta_iva_repercutido4 = registro.field("cuenta_iva_repercutido4").value().toString();
-            this->cuenta_iva_soportado1 = registro.field("cuenta_iva_soportado1").value().toString();
-            this->cuenta_iva_soportado2 = registro.field("cuenta_iva_soportado2").value().toString();
-            this->cuenta_iva_soportado3 = registro.field("cuenta_iva_soportado3").value().toString();
-            this->cuenta_iva_soportado4 = registro.field("cuenta_iva_soportado4").value().toString();
-            this->cuenta_iva_repercutido_re1 = registro.field("cuenta_iva_repercutido1_re").value().toString();
-            this->cuenta_iva_repercutido_re2 = registro.field("cuenta_iva_repercutido2_re").value().toString();
-            this->cuenta_iva_repercutido_re3 = registro.field("cuenta_iva_repercutido3_re").value().toString();
-            this->cuenta_iva_repercutido_re4 = registro.field("cuenta_iva_repercutido4_re").value().toString();
-            this->cuenta_iva_soportado_re1 = registro.field("cuenta_iva_soportado1_re").value().toString();
-            this->cuenta_iva_soportado_re2 = registro.field("cuenta_iva_soportado2_re").value().toString();
-            this->cuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
-            this->cuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
-            this->enlace_web = registro.field("enlace_web").value().toBool();
-            this->irpf = registro.field("usar_irpf").value().toBool();
+            cargar(registro);
+
         }
 		else 
 		{
@@ -135,90 +50,7 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
     else {
         if(qEmpresa.next()) {
             QSqlRecord registro = qEmpresa.record();
-            this->id = registro.field("id").value().toInt();
-            this->id_divisa = registro.field("id_divisa").value().toInt();
-            this->codigo = registro.field("codigo").value().toString();
-            this->nombre = registro.field("nombre").value().toString();
-            this->ndigitos_factura = registro.field("digitos_factura").value().toInt();
-            this->serie = registro.field("serie").value().toString();
-            this->ruta_bd_sqlite = registro.field("ruta_bd_sqlite").value().toString();
-            this->cHost = registro.field("host").value().toString();
-            this->cUser = registro.field("user").value().toString();
-            this->cContrasena = registro.field("contrasena").value().toString();
-            this->cPuerto = registro.field("puerto").value().toString();
-            this->nombre_bd = registro.field("nombre_bd").value().toString();
-            this->cDriverBD = registro.field("driverBD").value().toString();
-
-            this->cHostMed = registro.field("host_bd_medica").value().toString();
-            this->cUserMed = registro.field("user_bd_medica").value().toString();
-            this->cContrasenaMed = registro.field("contrasena_bd_medica").value().toString();
-            this->cPuertoMed = registro.field("puerto_bd_medica").value().toString();
-            this->nombre_bdMed = registro.field("nombre_bd_medica").value().toString();
-            this->cDriverBDMed = registro.field("driver_bd_medica").value().toString();
-
-            this->direccion1 = registro.field("direccion").value().toString();
-            this->cp = registro.field("cp").value().toString();
-            this->poblacion = registro.field("poblacion").value().toString();
-            this->provincia = registro.field("provincia").value().toString();
-            this->pais = registro.field("pais").value().toString();
-            this->telefono1 = registro.field("telefono1").value().toString();
-            this->telefono2 = registro.field("telefono2").value().toString();
-            this->fax = registro.field("fax").value().toString();
-            this->cMail = registro.field("mail").value().toString();
-            this->web =registro.field("web").value().toString();
-            this->cif = registro.field("cif").value().toString();
-            this->cInscripcion = registro.field("inscripcion").value().toString();
-            this->ccomentario_albaran = registro.field("comentario_albaran").value().toString();
-            this->ccomentario_factura = registro.field("comentario_factura").value().toString();
-            this->ccomentario_ticket = registro.field("comentario_ticket").value().toString();
-            this->ejercicio = registro.field("ejercicio").value().toInt();
-            this->digitos_cuentas = registro.field("digitos_cuenta").value().toInt();
-            this->cuenta_clientes = registro.field("codigo_cuenta_clientes").value().toString();
-            this->cuentaAcreeedores = registro.field("codigo_cuenta_acreedores").value().toString();
-            this->cuenta_proveedores = registro.field("codigo_cuenta_proveedores").value().toString();
-            this->Autocodificar = registro.field("auto_codigo").value().toBool();
-            this->tamano_codigo = registro.field("tamano_codigo").value().toInt();
-            this->cuenta_cobros = registro.field("cuenta_cobros").value().toString();
-            this->cuenta_pagos = registro.field("cuenta_pagos").value().toString();
-            this->cuenta_venta_mercaderias = registro.field("cuenta_ventas_mercaderias").value().toString();
-            this->cuenta_venta_servicios = registro.field("cuenta_ventas_servicios").value().toString();
-            this->contabilidad = registro.field("contabilidad").value().toBool();
-            this->consultas = registro.field("consultas").value().toInt();
-            this->primer_dia_laborable = registro.field("primer_dia_laborable").value().toString();
-            this->ultimo_dia_laborable = registro.field("ultimo_dia_laborable").value().toString();
-            this->horario_primer_dia = registro.field("horario_primer_dia").value().toString();
-            this->horario_dia_normal = registro.field("horario_dia_normal").value().toString();
-            this->horario_ultimo_dia = registro.field("horario_ultimo_dia").value().toString();
-            this->HostBD_contabilidad = registro.field("host_db_conta").value().toString();
-            this->nombre_bd_contabilidad = registro.field("nombre_db_conta").value().toString();
-            this->UsuarioBD_contabilidad = registro.field("user_db_conta").value().toString();
-            this->ContrasenaBD_contabilidad = registro.field("password_db_conta").value().toString();
-            this->puertoDB_contabilidad = registro.field("puerto_db_conta").value().toString();
-            this->RutaBD_Contabilidad_sqlite = registro.field("ruta_bd_conta").value().toString();
-            this->driver_db_contabilidad = registro.field("driver_db_conta").value().toString();
-            this->ticket_factura = registro.field("ticket_factura").value().toBool();
-            this->id_tarifa_predeterminada = registro.field("id_tarifa_predeterminada").value().toInt();
-            this->actualizar_divisas = registro.field("actualizar_divisas").value().toInt();
-            this->empresa_internacional = registro.field("medica").value().toBool();
-            this->empresa_medica = registro.field("internacional").value().toBool();
-            this->cuenta_iva_repercutido1 = registro.field("cuenta_iva_repercutido1").value().toString();
-            this->cuenta_iva_repercutido2 = registro.field("cuenta_iva_repercutido2").value().toString();
-            this->cuenta_iva_repercutido3 = registro.field("cuenta_iva_repercutido3").value().toString();
-            this->cuenta_iva_repercutido4 = registro.field("cuenta_iva_repercutido4").value().toString();
-            this->cuenta_iva_soportado1 = registro.field("cuenta_iva_soportado1").value().toString();
-            this->cuenta_iva_soportado2 = registro.field("cuenta_iva_soportado2").value().toString();
-            this->cuenta_iva_soportado3 = registro.field("cuenta_iva_soportado3").value().toString();
-            this->cuenta_iva_soportado4 = registro.field("cuenta_iva_soportado4").value().toString();
-            this->cuenta_iva_repercutido_re1 = registro.field("cuenta_iva_repercutido1_re").value().toString();
-            this->cuenta_iva_repercutido_re2 = registro.field("cuenta_iva_repercutido2_re").value().toString();
-            this->cuenta_iva_repercutido_re3 = registro.field("cuenta_iva_repercutido3_re").value().toString();
-            this->cuenta_iva_repercutido_re4 = registro.field("cuenta_iva_repercutido4_re").value().toString();
-            this->cuenta_iva_soportado_re1 = registro.field("cuenta_iva_soportado1_re").value().toString();
-            this->cuenta_iva_soportado_re2 = registro.field("cuenta_iva_soportado2_re").value().toString();
-            this->cuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
-            this->cuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
-            this->enlace_web = registro.field("enlace_web").value().toBool();
-            this->irpf = registro.field("usar_irpf").value().toBool();
+            cargar(registro);
         } else {
             if (nProcede == 1)
                 TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No hay más empresas: Se ha llegado al final del fichero"));
@@ -227,6 +59,105 @@ void Empresa::Recuperar(QString cSQL, int nProcede)
 
         }
     }
+}
+
+void Empresa::cargar(QSqlRecord registro)
+{
+    this->id = registro.field("id").value().toInt();
+    this->id_divisa = registro.field("id_divisa").value().toInt();
+    this->codigo = registro.field("codigo").value().toString();
+    this->nombre = registro.field("nombre").value().toString();
+    this->ndigitos_factura = registro.field("digitos_factura").value().toInt();
+    this->serie = registro.field("serie").value().toString();
+    this->ruta_bd_sqlite = registro.field("ruta_bd_sqlite").value().toString();
+    this->cHost = registro.field("host").value().toString();
+    this->cUser = registro.field("user").value().toString();
+    this->cContrasena = registro.field("contrasena").value().toString();
+    this->cPuerto = registro.field("puerto").value().toString();
+    this->nombre_bd = registro.field("nombre_bd").value().toString();
+    this->cHostMed = registro.field("host_bd_medica").value().toString();
+    this->cUserMed = registro.field("user_bd_medica").value().toString();
+    this->cContrasenaMed = registro.field("contrasena_bd_medica").value().toString();
+    this->cPuertoMed = registro.field("puerto_bd_medica").value().toString();
+    this->nombre_bdMed = registro.field("nombre_bd_medica").value().toString();
+    this->cDriverBDMed = registro.field("driver_bd_medica").value().toString();
+    this->cHostMed = registro.field("host_bd_medica").value().toString();
+    this->cUserMed = registro.field("user_bd_medica").value().toString();
+    this->cContrasenaMed = registro.field("contrasena_bd_medica").value().toString();
+    this->cPuertoMed = registro.field("puerto_bd_medica").value().toString();
+    this->nombre_bdMed = registro.field("nombre_bd_medica").value().toString();
+    this->cDriverBDMed = registro.field("driver_bd_medica").value().toString();
+    this->empresa_medica = registro.field("medica").value().toBool();
+    this->empresa_internacional = registro.field("internacional").value().toBool();
+    this->direccion1 = registro.field("direccion").value().toString();
+    this->cp = registro.field("cp").value().toString();
+    this->poblacion = registro.field("poblacion").value().toString();
+    this->provincia = registro.field("provincia").value().toString();
+    this->pais = registro.field("pais").value().toString();
+    this->telefono1 = registro.field("telefono1").value().toString();
+    this->telefono2 = registro.field("telefono2").value().toString();
+    this->fax = registro.field("fax").value().toString();
+    this->cMail = registro.field("mail").value().toString();
+    this->web =registro.field("web").value().toString();
+    this->cif = registro.field("cif").value().toString();
+    this->cInscripcion = registro.field("inscripcion").value().toString();
+    this->ccomentario_albaran = registro.field("comentario_albaran").value().toString();
+    this->ccomentario_factura = registro.field("comentario_factura").value().toString();
+    this->ccomentario_ticket = registro.field("comentario_ticket").value().toString();
+    this->ejercicio = registro.field("ejercicio").value().toInt();
+    this->digitos_cuentas = registro.field("digitos_cuenta").value().toInt();
+    this->cuenta_clientes = registro.field("codigo_cuenta_clientes").value().toString();
+    this->cuentaAcreeedores = registro.field("codigo_cuenta_acreedores").value().toString();
+    this->cuenta_proveedores = registro.field("codigo_cuenta_proveedores").value().toString();
+    this->Autocodificar = registro.field("auto_codigo").value().toBool();
+    this->tamano_codigo = registro.field("tamano_codigo").value().toInt();
+    this->cuenta_cobros = registro.field("cuenta_cobros").value().toString();
+    this->cuenta_pagos = registro.field("cuenta_pagos").value().toString();
+    this->cuenta_venta_mercaderias = registro.field("cuenta_ventas_mercaderias").value().toString();
+    this->cuenta_venta_servicios = registro.field("cuenta_ventas_servicios").value().toString();
+    this->contabilidad = registro.field("contabilidad").value().toBool();
+    this->consultas = registro.field("consultas").value().toInt();
+    this->primer_dia_laborable = registro.field("primer_dia_laborable").value().toString();
+    this->ultimo_dia_laborable = registro.field("ultimo_dia_laborable").value().toString();
+    this->horario_primer_dia = registro.field("horario_primer_dia").value().toString();
+    this->horario_dia_normal = registro.field("horario_dia_normal").value().toString();
+    this->horario_ultimo_dia = registro.field("horario_ultimo_dia").value().toString();
+    this->HostBD_contabilidad = registro.field("host_bd_conta").value().toString();
+    this->nombre_bd_contabilidad = registro.field("nombre_bdConta").value().toString();
+    this->UsuarioBD_contabilidad = registro.field("user_bd_conta").value().toString();
+    this->ContrasenaBD_contabilidad = registro.field("password_bd_conta").value().toString();
+    this->puertoDB_contabilidad = registro.field("puerto_db_conta").value().toString();
+    this->RutaBD_Contabilidad_sqlite = registro.field("ruta_bd_conta").value().toString();
+    this->driver_db_contabilidad = registro.field("driver_db_conta").value().toString();
+    this->ticket_factura = registro.field("ticket_factura").value().toBool();
+    this->id_tarifa_predeterminada = registro.field("id_tarifa_predeterminada").value().toInt();
+    this->actualizar_divisas = registro.field("actualizar_divisas").value().toInt();
+    this->empresa_internacional = registro.field("medica").value().toBool();
+    this->empresa_medica = registro.field("internacional").value().toBool();
+    this->cuenta_iva_repercutido1 = registro.field("cuenta_iva_repercutido1").value().toString();
+    this->cuenta_iva_repercutido2 = registro.field("cuenta_iva_repercutido2").value().toString();
+    this->cuenta_iva_repercutido3 = registro.field("cuenta_iva_repercutido3").value().toString();
+    this->cuenta_iva_repercutido4 = registro.field("cuenta_iva_repercutido4").value().toString();
+    this->cuenta_iva_soportado1 = registro.field("cuenta_iva_soportado1").value().toString();
+    this->cuenta_iva_soportado2 = registro.field("cuenta_iva_soportado2").value().toString();
+    this->cuenta_iva_soportado3 = registro.field("cuenta_iva_soportado3").value().toString();
+    this->cuenta_iva_soportado4 = registro.field("cuenta_iva_soportado4").value().toString();
+    this->cuenta_iva_repercutido_re1 = registro.field("cuenta_iva_repercutido1_re").value().toString();
+    this->cuenta_iva_repercutido_re2 = registro.field("cuenta_iva_repercutido2_re").value().toString();
+    this->cuenta_iva_repercutido_re3 = registro.field("cuenta_iva_repercutido3_re").value().toString();
+    this->cuenta_iva_repercutido_re4 = registro.field("cuenta_iva_repercutido4_re").value().toString();
+    this->cuenta_iva_soportado_re1 = registro.field("cuenta_iva_soportado1_re").value().toString();
+    this->cuenta_iva_soportado_re2 = registro.field("cuenta_iva_soportado2_re").value().toString();
+    this->cuenta_iva_soportado_re3 = registro.field("cuenta_iva_soportado3_re").value().toString();
+    this->cuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
+    this->enlace_web = registro.field("enlace_web").value().toBool();
+    this->irpf = registro.field("usar_irpf").value().toBool();
+    this->seguimiento = registro.field("seguimiento").value().toBool();
+    this->margen = registro.field("margen").value().toDouble();
+    this->margen_min = registro.field("margen_minimo").value().toDouble();
+    this->clave1 = registro.field("clave1").value().toString();
+    this->clave2 = registro.field("clave2").value().toString();
+    this->irpf = registro.field("usar_irpf").value().toBool();
 }
 
 void Empresa::Guardar()
@@ -297,7 +228,12 @@ void Empresa::Guardar()
                      "cuenta_iva_soportado4_re =:cuenta_iva_soportado4_re,"
                      "cuenta_pagos =:cuenta_pagos,"
                      "usar_irpf =:usar_irpf,"
-                     "enlace_web =:enlace_web"
+                     "enlace_web =:enlace_web,"
+                     "seguimiento =:seguimiento,"
+                     "margen = :margen,"
+                     "margen_minimo =:margen_minimo,"
+                     "clave1 = :clave1,"
+                     "clave2 =:clave2"
                      " where id=:nid");
 
     qEmpresa.bindValue(":id_divisa",this->id_divisa);
@@ -365,7 +301,11 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":cuenta_iva_soportado4_re",this->cuenta_iva_soportado_re4);
     qEmpresa.bindValue(":enlace_web",this->enlace_web);
     qEmpresa.bindValue(":usar_irpf",this->irpf);
-
+    qEmpresa.bindValue(":seguimiento",this->seguimiento);
+    qEmpresa.bindValue(":margen",this->margen);
+    qEmpresa.bindValue(":margen_minimo",this->margen_min);
+    qEmpresa.bindValue(":clave1",this->clave1);
+    qEmpresa.bindValue(":clave2",this->clave2);
     qEmpresa.bindValue(":nid",this->id);
 
 
@@ -457,6 +397,12 @@ void Empresa::Vaciar()
     this->cuenta_iva_soportado_re4 = "";
     this->enlace_web = false;
     this->irpf = false;
+    this->enlace_web = false;
+    this->seguimiento = false;
+    this->margen = 0;
+    this->margen_min = 0;
+    this->clave1 = "";
+    this->clave2 = "";
 }
 
 bool Empresa::Borrar(int nid)

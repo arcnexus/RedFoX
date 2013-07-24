@@ -1190,6 +1190,8 @@ void frmFacturas::on_tabla_facturas_doubleClicked(const QModelIndex &index)
      LLenarCampos();
      ui->stackedWidget->setCurrentIndex(0);
      ui->radEditar->setChecked(true);
+     ui->btnEditar->setEnabled(true);
+     ui->btnImprimir->setEnabled(true);
 }
 
 void frmFacturas::on_tabla_facturas_clicked(const QModelIndex &index)
