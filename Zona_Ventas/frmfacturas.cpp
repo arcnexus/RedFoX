@@ -676,7 +676,6 @@ void frmFacturas::Guardar_factura()
             Configuracion_global->contaDB.rollback();
     }
 
-
 }
 
 void frmFacturas::on_btnAnadir_clicked()
