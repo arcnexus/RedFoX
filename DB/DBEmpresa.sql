@@ -881,7 +881,7 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`moneda_caja` (
-  `id` INT(11) NOT NULL ,
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `nombre_moneda` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `valor_moneda` DOUBLE NULL DEFAULT NULL ,
   `id_moneda_base` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
@@ -889,6 +889,16 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`moneda_caja` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
+
+CREATE  TABLE IF NOT EXISTS `@emppresa@`.`series` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `serie` CHAR(2) NULL ,
+  `comentarios` TEXT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
+
 
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`ped_cli` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
@@ -993,6 +1003,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`ped_pro` (
   `base_total` DOUBLE NULL DEFAULT '0' ,
   `subtotal` DOUBLE NULL DEFAULT '0' ,
   `dto` DOUBLE NULL DEFAULT '0' ,
+  `iva_total` DOUBLE NULL DEFAULT '0' ,
   `rec_total` DOUBLE NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
   `enviado` TINYINT(1) NULL DEFAULT '0' ,

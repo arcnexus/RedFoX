@@ -330,7 +330,7 @@ void PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
         this->provincia = queryPedido->record().value("provincia").toString();
         this->id_pais = queryPedido->record().value("id_pais").toInt();
         this->cif_nif = queryPedido->record().value("cif_nif").toString();
-        this->base_total = queryPedido->record().value("base").toDouble();
+        this->base_total = queryPedido->record().value("base_total").toDouble();
         this->subtotal = queryPedido->record().value("subtotal").toDouble();
         this->dto = queryPedido->record().value("dto").toDouble();
         this->iva = queryPedido->record().value("iva").toInt();

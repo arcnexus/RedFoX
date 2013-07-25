@@ -312,6 +312,7 @@ void FrmPedidosProveedor::lineaDeleted(lineaDetalle * ld)
 
 void FrmPedidosProveedor::totalChanged(double base, double dto, double subtotal, double iva, double re, double total, QString moneda)
 {
+    total += iva;
     ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)+moneda));
     ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',2)+moneda));
     ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',2)+moneda));
@@ -587,6 +588,10 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total3,'f',2)));
     ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total4,'f',2)));
     QString filter = QString("id_cab = '%1'").arg(oPedido_proveedor->id);
+    helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
+    helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
+    helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
+    helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
     helper.fillTable("empresa","lin_ped_pro",filter);
     helper.resizeTable();
     cargar_tabla_entregas();

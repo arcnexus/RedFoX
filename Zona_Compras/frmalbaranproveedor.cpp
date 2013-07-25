@@ -336,6 +336,10 @@ void FrmAlbaranProveedor::llenar_campos()
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbPro->total,'f',2)));
     ui->txtcomentario->setText(oAlbPro->comentario);
     ui->txtpedido_cliente->setText(QString::number(oAlbPro->pedido));
+    helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
+    helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
+    helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
+    helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
     if(ui->txtcNumFra->text().isEmpty())
     {
         ui->btnFacturar->setEnabled(true);

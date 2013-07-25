@@ -54,6 +54,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
     this->Altas = false;
     //ui->txtcodigoArticulo->setFocus();
 
+
     // --------------------------
     // Ver Facturas o Borradores
     // --------------------------
@@ -81,8 +82,9 @@ frmFacturas::frmFacturas( QWidget *parent) :
     // tablafacturas
     //-----------------
     m_facturas = new QSqlQueryModel(this);
-    m_facturas->setQuery("select id,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
-                         " where factura <> 'BORRADOR'  and ejercicio = "+Configuracion_global->cEjercicio+" order by factura desc limit 0,500",Configuracion_global->empresaDB);
+    m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+                         " where factura <> 'BORRADOR'  and ejercicio = "+Configuracion_global->cEjercicio+
+                         " order by fecha+serie+factura desc limit 0,500",Configuracion_global->empresaDB);
     ui->tabla_facturas->setModel(m_facturas);
     formato_tabla_facturas(*m_facturas);
 
@@ -90,7 +92,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
     // Cargar Series
     //----------------
     QSqlQueryModel * model_series = new QSqlQueryModel(this);
-    model_series->setQuery("select serie from series",Configuracion_global->groupDB);
+    model_series->setQuery("select serie from series",Configuracion_global->empresaDB);
     ui->cbo_serie->setModel(model_series);
 
     BloquearCampos(true);
@@ -1107,13 +1109,13 @@ void frmFacturas::on_cboVer_currentTextChanged(const QString &arg1)
         indice_tabla = "factura";
     QString cSQL;
     if(arg1 == "Borradores")
-        cSQL = "select factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+        cSQL = "select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
                 " where trim(factura) = 'BORRADOR' and  ejercicio = "+Configuracion_global->cEjercicio+
-                " order by factura desc";
+                " order by fecha+serie+factura desc";
     else
-        cSQL = "select factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+        cSQL = "select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
                " where trim(factura) <> 'BORRADOR' and ejercicio = "+Configuracion_global->cEjercicio+
-               " order by factura desc";
+               " order by fecha+serie+factura desc";
 
     m_facturas->setQuery(cSQL,Configuracion_global->empresaDB);
     ui->tabla_facturas->setModel(m_facturas);
@@ -1126,15 +1128,15 @@ void frmFacturas::on_txtBuscar_textEdited(const QString &arg1)
     if(indice_tabla.isEmpty())
         indice_tabla = "factura";
     if (ui->cboVer->currentText() == "Borradores")
-        m_facturas->setQuery("select id,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+        m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
                              " where factura = 'BORRADOR' and "+indice_tabla+
                              " like '%"+arg1+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
-                             " order by factura desc",Configuracion_global->empresaDB);
+                             " order by fecha+serie+factura desc",Configuracion_global->empresaDB);
     else
-        m_facturas->setQuery("select id,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+        m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
                              " where factura <> 'BORRADOR' and "+indice_tabla+
                              " like '%"+arg1+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
-                             " order by factura desc",Configuracion_global->empresaDB);
+                             " order by fecha+serie+factura desc",Configuracion_global->empresaDB);
 
     ui->tabla_facturas->setModel(m_facturas);
     formato_tabla_facturas(*m_facturas);
@@ -1143,14 +1145,14 @@ void frmFacturas::on_txtBuscar_textEdited(const QString &arg1)
 
 void frmFacturas::formato_tabla_facturas(QSqlQueryModel &modelo)
 {
-    ui->tabla_facturas->setItemDelegateForColumn(5, new MonetaryDelegate);
-    ui->tabla_facturas->setItemDelegateForColumn(2,new DateDelegate);
-    ui->tabla_facturas->setItemDelegateForColumn(3, new DateDelegate);
+    ui->tabla_facturas->setItemDelegateForColumn(6, new MonetaryDelegate);
+    ui->tabla_facturas->setItemDelegateForColumn(3,new DateDelegate);
+    ui->tabla_facturas->setItemDelegateForColumn(4, new DateDelegate);
     ui->tabla_facturas->setColumnHidden(0,true);
     QVariantList lista;
     QStringList  titulos;
-    lista << 0 << 120 <<120 <<120 <<120 <<120 <<300;
-    titulos <<tr("id") << tr("FACTURA") <<tr("FECHA") << tr("FECHA COBRO") << tr("CIF/NIF") << tr("TOTAL") << tr("CLIENTE");
+    lista << 0 << 50<< 120 <<120 <<120 <<120 <<120 <<300;
+    titulos <<tr("id") <<tr("S") << tr("FACTURA") <<tr("FECHA") << tr("FECHA COBRO") << tr("CIF/NIF") << tr("TOTAL") << tr("CLIENTE");
     for(int pos = 0;pos<lista.size();pos++)
     {
         ui->tabla_facturas->setColumnWidth(pos,lista.at(pos).toInt());

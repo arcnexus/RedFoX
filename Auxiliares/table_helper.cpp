@@ -387,6 +387,7 @@ void Table_Helper::recalc()
 void Table_Helper::calculatotal()
 {
     helped_table->blockSignals(true);
+    double subtotal = 0;
     double base = 0;
     double dto = 0;
     double total = 0;
@@ -394,15 +395,25 @@ void Table_Helper::calculatotal()
     double re = 0;
     for(int i = 0; i< helped_table->rowCount() ; i++)
     {
-        base += calculabaseLinea(i);
+        subtotal +=calcularsubtotalLinea(i);
+        //        base += calculabaseLinea(i);
         dto += calculadtoLinea(i);
         iva += calculaivaLinea(i);
         re += calcularRELinea(i);
         total += calculatotalLinea(i);
     }
-    double subtotal = base - dto;
+    //double subtotal = base + dto;
+    base = subtotal -dto;
     helped_table->blockSignals(false);
     emit totalChanged( base , dto , subtotal ,  iva,  re,  total,  moneda);
+}
+
+double Table_Helper::calcularsubtotalLinea(int row)
+{
+    int cantidad = helped_table->item(row,1)->text().toInt();
+    double pvp = helped_table->item(row,3)->text().toDouble();
+    double subtotal = cantidad * pvp;
+    return subtotal;
 }
 
 double Table_Helper::calculadtoLinea(int row)
@@ -415,14 +426,15 @@ double Table_Helper::calculabaseLinea(int row)
     int cantidad = helped_table->item(row,1)->text().toInt();
     double pvp = helped_table->item(row,3)->text().toDouble();
     double subtotal = cantidad * pvp;
-
-    return subtotal;
+    double dto = calculadtoLinea(row);
+    double base = subtotal -dto;
+    return base;
 }
 
 double Table_Helper::calculaivaLinea(int row)
 {
     double base = calculabaseLinea(row);
-    base -= calculadtoLinea(row);
+    //base -= calculadtoLinea(row);
 
     double porc_iva = helped_table->item(row,7)->text().toDouble();
     double total_iva = (base * porc_iva)/100;

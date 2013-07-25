@@ -67,6 +67,7 @@ private:
     int tarifa;
 
     void calculatotal();
+    double calcularsubtotalLinea(int row);
     double calculadtoLinea(int row);
     double calculabaseLinea(int row);
     double calculaivaLinea(int row);

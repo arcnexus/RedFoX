@@ -430,9 +430,15 @@ void FrmFacturasProveedor::llenar_campos()
     ui->GastoDist_toLineas->setChecked(oFacPro->gasto_to_coste);
     ui->GastoDist_toTotal->setChecked(!oFacPro->gasto_to_coste);
 
+    helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
+    helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
+    helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
+    helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
+
     QString filter = QString("id_cab = '%1'").arg(oFacPro->id);
     helper.fillTable("empresa","lin_fac_pro",filter);
     helper.resizeTable();
+
 }
 
 void FrmFacturasProveedor::resizeTable(int x)
