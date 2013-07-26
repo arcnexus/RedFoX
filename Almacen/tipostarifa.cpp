@@ -19,6 +19,13 @@ void TiposTarifa::clear()
     id_monedas = 0;
     margen = 0;
     margen_min = 0;
+    porc_dto1 = 0;
+    porc_dto2 = 0;
+    porc_dto3 = 0;
+    porc_dto4 = 0;
+    porc_dto5 = 0;
+    porc_dto6 = 0;
+
 }
 
 int TiposTarifa::anadir()
@@ -52,7 +59,13 @@ bool TiposTarifa::guardar()
                           "id_pais=:id_pais,"
                           "id_monedas=:id_monedas,"
                           "margen=:margen,"
-                          "margen_min=:margen_min "
+                          "margen_min=:margen_min,"
+                          "porc_dto1 = :porc_dto1,"
+                          "porc_dto2 = :porc_dto2,"
+                          "porc_dto3 = :porc_dto3,"
+                          "porc_dto4 = :porc_dto4,"
+                          "porc_dto5 = :porc_dto5,"
+                          "porc_dto6 = :porc_dto6,"
                             " WHERE id=:id");
     query_tarifas.bindValue(":descripcion", this->descripcion);
     query_tarifas.bindValue(":codigo_tarifa",this->codigo_tarifa);
@@ -60,6 +73,12 @@ bool TiposTarifa::guardar()
     query_tarifas.bindValue(":id_monedas",this->id_monedas);
     query_tarifas.bindValue(":margen",this->margen);
     query_tarifas.bindValue(":margen_min",this->margen_min);
+    query_tarifas.bindValue(":porc_dto1",this->porc_dto1);
+    query_tarifas.bindValue(":porc_dto2",this->porc_dto2);
+    query_tarifas.bindValue(":porc_dto3",this->porc_dto3);
+    query_tarifas.bindValue(":porc_dto4",this->porc_dto4);
+    query_tarifas.bindValue(":porc_dto5",this->porc_dto5);
+    query_tarifas.bindValue(":porc_dto6",this->porc_dto6);
     query_tarifas.bindValue(":id",this->id);
     if(query_tarifas.exec())
         return true;
@@ -104,5 +123,11 @@ void TiposTarifa::cargar_datos(QSqlQuery queryTarifa)
     this->importe_dto = queryTarifa.record().value("importe_dto").toDouble();
     this->margen = queryTarifa.record().value("margen").toFloat();
     this->margen_min = queryTarifa.record().value("margen_min").toFloat();
+    this->porc_dto1 = queryTarifa.record().value("porc_dto1").toFloat();
+    this->porc_dto2 = queryTarifa.record().value("porc_dto2").toFloat();
+    this->porc_dto3 = queryTarifa.record().value("porc_dto3").toFloat();
+    this->porc_dto4 = queryTarifa.record().value("porc_dto4").toFloat();
+    this->porc_dto5 = queryTarifa.record().value("porc_dto5").toFloat();
+    this->porc_dto6 = queryTarifa.record().value("porc_dto6").toFloat();
 
 }

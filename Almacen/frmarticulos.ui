@@ -506,7 +506,7 @@ color: rgb(255, 255, 255);</string>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>40</height>
+           <height>46</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -518,44 +518,8 @@ color: rgb(255, 255, 255);</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Coste Real:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="txtCoste_real">
-            <property name="minimumSize">
-             <size>
-              <width>87</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 170, 255);</string>
-            </property>
-            <property name="text">
-             <string>0,00</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_12">
-            <property name="text">
-             <string>Margen:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="3">
            <widget class="QDoubleSpinBox" name="txtMargen">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -577,33 +541,21 @@ color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QLabel" name="label_13">
+          <item row="0" column="7">
+           <widget class="QLabel" name="label_20">
             <property name="text">
-             <string>Margen min:</string>
+             <string>%Descuento Promocional:</string>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="txtMargen_min">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="minimum">
-             <double>-1000.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>9999.000000000000000</double>
-            </property>
-            <property name="value">
-             <double>0.000000000000000</double>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Margen:</string>
             </property>
            </widget>
           </item>
-          <item>
+          <item row="0" column="6">
            <spacer name="horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -616,14 +568,21 @@ color: rgb(255, 255, 255);</string>
             </property>
            </spacer>
           </item>
-          <item>
-           <widget class="QLabel" name="label_20">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_5">
             <property name="text">
-             <string>%Descuento Promocional:</string>
+             <string>Coste Real:</string>
             </property>
            </widget>
           </item>
-          <item>
+          <item row="0" column="4">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Margen min:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="8">
            <widget class="QLineEdit" name="txtdto">
             <property name="minimumSize">
              <size>
@@ -645,6 +604,47 @@ color: rgb(255, 255, 255);</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QDoubleSpinBox" name="txtMargen_min">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="minimum">
+             <double>-1000.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9999.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>0.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="txtCoste_real">
+            <property name="minimumSize">
+             <size>
+              <width>87</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 170, 255);</string>
+            </property>
+            <property name="text">
+             <string>0,00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1725,7 +1725,7 @@ alternate-background-color: rgb(255, 255,210);</string>
         </layout>
        </item>
        <item>
-        <widget class="OpenChart" name="graf_prov">
+        <widget class="OpenChart" name="graf_prov" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -1738,7 +1738,7 @@ alternate-background-color: rgb(255, 255,210);</string>
            <height>232</height>
           </size>
          </property>
-         <property name="Title">
+         <property name="Title" stdset="0">
           <string>PVD Distribuidores</string>
          </property>
          <property name="Etiquetas" stdset="0">
@@ -1750,7 +1750,7 @@ alternate-background-color: rgb(255, 255,210);</string>
          <property name="Leyenda" stdset="0">
           <bool>false</bool>
          </property>
-         <property name="animationDuration">
+         <property name="animationDuration" stdset="0">
           <number>700</number>
          </property>
         </widget>
@@ -3096,11 +3096,11 @@ Imagen.</string>
            </widget>
           </item>
           <item>
-           <widget class="OpenChart" name="grafica">
+           <widget class="OpenChart" name="grafica" native="true">
             <property name="useTitle" stdset="0">
              <bool>true</bool>
             </property>
-            <property name="Title">
+            <property name="Title" stdset="0">
              <string>Compras/Ventas Ejercicio /unidades</string>
             </property>
             <property name="Etiquetas" stdset="0">
@@ -4374,11 +4374,11 @@ background-color: rgb(239, 239, 239);</string>
            </widget>
           </item>
           <item>
-           <widget class="OpenChart" name="Grafica_comparativa">
+           <widget class="OpenChart" name="Grafica_comparativa" native="true">
             <property name="useTitle" stdset="0">
              <bool>true</bool>
             </property>
-            <property name="Title">
+            <property name="Title" stdset="0">
              <string>Comparativa venta articulo entre empresas/ejercicios</string>
             </property>
             <property name="Etiquetas" stdset="0">
@@ -5787,7 +5787,6 @@ alternate-background-color: rgb(255, 255, 255);</string>
   <tabstop>chkcontrolar_stock</tabstop>
   <tabstop>txtMargen</tabstop>
   <tabstop>txtMargen_min</tabstop>
-  <tabstop>txtdto</tabstop>
   <tabstop>TablaTarifas</tabstop>
   <tabstop>btnAnadirTarifa</tabstop>
   <tabstop>btnEditartarifa</tabstop>

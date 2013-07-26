@@ -32,8 +32,8 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0" colspan="2">
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="maximumSize">
          <size>
@@ -46,7 +46,20 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="2">
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="txtCodigo">
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
        <widget class="QLabel" name="label_2">
         <property name="maximumSize">
          <size>
@@ -59,6 +72,13 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="txtDescripcion">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_6">
         <property name="text">
@@ -66,14 +86,21 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="4">
+      <item row="2" column="1">
+       <widget class="QComboBox" name="cboPais">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
        <widget class="QLabel" name="label_7">
         <property name="text">
          <string>Moneda:</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="5">
+      <item row="2" column="3">
        <widget class="QComboBox" name="cboMoneda">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -87,51 +114,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="5">
-       <widget class="QDoubleSpinBox" name="spnMargen_min">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="4">
-       <widget class="QLabel" name="label_14">
-        <property name="text">
-         <string>Margen mín:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLineEdit" name="txtCodigo">
-        <property name="maximumSize">
-         <size>
-          <width>150</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2" colspan="4">
-       <widget class="QLineEdit" name="txtDescripcion">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2" colspan="2">
-       <widget class="QComboBox" name="cboPais">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
+      <item row="3" column="1">
        <widget class="QDoubleSpinBox" name="spnMargen">
         <property name="maximumSize">
          <size>
@@ -146,6 +129,153 @@
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLabel" name="label_14">
+        <property name="text">
+         <string>Margen mín:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QDoubleSpinBox" name="spnMargen_min">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="4">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(25, 19, 71);
+color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>% Dto 1</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_4">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(25, 19, 71);
+color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>% Dto 2</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_5">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(25, 19, 71);
+color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>% Dto 3</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLabel" name="label_8">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(25, 19, 71);
+color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>% Dto 4</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QLabel" name="label_9">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(25, 19, 71);
+color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>%Dto 5</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="5">
+         <widget class="QLabel" name="label_10">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(25, 19, 71);
+color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="text">
+           <string>% Dto6 </string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="txtporc_dto1">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="txtporc_dto2">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLineEdit" name="txtporc_dto3">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QLineEdit" name="txtporc_dto4">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="4">
+         <widget class="QLineEdit" name="txtporc_dto5">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QLineEdit" name="txtporc_dto6">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -442,11 +572,7 @@ color: rgb(255,255,255);</string>
  </widget>
  <tabstops>
   <tabstop>listatarifas</tabstop>
-  <tabstop>txtCodigo</tabstop>
-  <tabstop>txtDescripcion</tabstop>
-  <tabstop>cboPais</tabstop>
   <tabstop>cboMoneda</tabstop>
-  <tabstop>spnMargen</tabstop>
   <tabstop>spnMargen_min</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnEditar</tabstop>

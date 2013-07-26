@@ -1,7 +1,7 @@
 #include "frmrecepcion_pedidos.h"
 #include "ui_frmrecepcion_pedidos.h"
 #include "../Auxiliares/monetarydelegate.h"
-#include "../Almacen/frmeditar_tarifas.h"
+#include "../Almacen/frmtarifas.h"
 #include "../Busquedas/frmbuscarcie.h"
 
 
@@ -437,8 +437,9 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                                                   tr("¿Desea modificar las tarifas del producto?"),
                                                   tr("No"),tr("Si"))==QMessageBox::Accepted)
                         {
-                            frmEditar_tarifas frmtarifas;
-                            frmtarifas.setFiltro(id);
+                            FrmTarifas frmtarifas;
+                            frmtarifas.capturar_datos(queryProducto.record().field("id").value().toInt(),
+                                                      QString::number(queryProducto.record().field("coste").value().toDouble(),'f',2));
                             frmtarifas.exec();
                         }
                     }

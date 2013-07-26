@@ -35,6 +35,12 @@ void FrmTiposTarifa::cargarDatos()
     ui->cboMoneda->setCurrentIndex(nindex);
     nindex = ui->cboPais->findText(Configuracion_global->Devolver_pais(oTipostarifa->id_pais));
     ui->cboPais->setCurrentIndex(nindex);
+    ui->txtporc_dto1->setText(QString::number(oTipostarifa->porc_dto1));
+    ui->txtporc_dto2->setText(QString::number(oTipostarifa->porc_dto2));
+    ui->txtporc_dto3->setText(QString::number(oTipostarifa->porc_dto3));
+    ui->txtporc_dto4->setText(QString::number(oTipostarifa->porc_dto4));
+    ui->txtporc_dto5->setText(QString::number(oTipostarifa->porc_dto5));
+    ui->txtporc_dto6->setText(QString::number(oTipostarifa->porc_dto6));
     //ui->txtImpDto->setText(Configuracion_global->toFormatoMoneda( QString::number(oTipostarifa->importe_dto,'f',2)));
     //ui->txtPromocion->setText(oTipostarifa->desc_promo);
 }
@@ -80,14 +86,22 @@ void FrmTiposTarifa::on_btnAgregarTarifa_clicked()
                                 ui->lblDescArt->setText(queryArticulo.record().value("descripcion").toString());
                                 QApplication::processEvents();
                                 querytarifa.prepare("INSERT INTO tarifas (id_articulo,id_pais,id_monedas,margen,"
-                                                    "margen_minimo,pvp,id_codigo_tarifa) VALUES (:id_articulo,:id_pais,"
-                                                    ":id_monedas,:margen,:margen_minimo,:pvp,:id_codigo_tarifa);");
+                                                    "margen_minimo,pvp,id_codigo_tarifa,porc_dto1,porc_dto2,"
+                                                    "porc_dto3,porc_dto4,porc_dto5,porc-dto6) VALUES (:id_articulo,:id_pais,"
+                                                    ":id_monedas,:margen,:margen_minimo,:pvp,:id_codigo_tarifa,"
+                                                    ":porc_dto1,:porc_dto2,:porc_dto3,:porc_dto4,:porc_dto5,:porc_dto6);");
                                 querytarifa.bindValue(":id_articulo",id);
                                 querytarifa.bindValue(":id_pais",oTipostarifa->id_pais);
                                 querytarifa.bindValue(":id_monedas",oTipostarifa->id_monedas);
                                 querytarifa.bindValue(":margen",oTipostarifa->margen);
                                 querytarifa.bindValue(":margen_minimo",oTipostarifa->margen_min);
                                 querytarifa.bindValue(":id_codigo_tarifa",oTipostarifa->id);
+                                querytarifa.bindValue(":porc_dto1", oTipostarifa->porc_dto1);
+                                querytarifa.bindValue(":porc_dto2", oTipostarifa->porc_dto2);
+                                querytarifa.bindValue(":porc_dto3", oTipostarifa->porc_dto3);
+                                querytarifa.bindValue(":porc_dto4", oTipostarifa->porc_dto4);
+                                querytarifa.bindValue(":porc_dto5", oTipostarifa->porc_dto5);
+                                querytarifa.bindValue(":porc_dto6", oTipostarifa->porc_dto6);
 
                                 double coste = queryArticulo.record().value("coste_real").toDouble();
                                 float margen = oTipostarifa->margen;
@@ -198,6 +212,12 @@ void FrmTiposTarifa::cargar_datos_en_objeto()
     oTipostarifa->margen_min = ui->spnMargen_min->value();
     oTipostarifa->id_monedas = Configuracion_global->Devolver_id_moneda(ui->cboMoneda->currentText());
     oTipostarifa->id_pais = Configuracion_global->Devolver_id_pais(ui->cboPais->currentText());
+    oTipostarifa->porc_dto1 = ui->txtporc_dto1->text().toFloat();
+    oTipostarifa->porc_dto2 = ui->txtporc_dto2->text().toFloat();
+    oTipostarifa->porc_dto3 = ui->txtporc_dto3->text().toFloat();
+    oTipostarifa->porc_dto4 = ui->txtporc_dto4->text().toFloat();
+    oTipostarifa->porc_dto5 = ui->txtporc_dto5->text().toFloat();
+    oTipostarifa->porc_dto6 = ui->txtporc_dto6->text().toFloat();
 }
 
 void FrmTiposTarifa::asignarcambiodivisa(float valor)

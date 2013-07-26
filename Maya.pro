@@ -123,7 +123,6 @@ SOURCES += main.cpp\
     Zona_Pacientes/frmanadirdiagnostico.cpp \
     Zona_Administrador/frmconfigmaya.cpp \
     Zona_Pacientes/frmanadirhierb.cpp \
-    Almacen/frmeditar_tarifas.cpp \
     Auxiliares/datedelegate.cpp \
     Zona_Pacientes/frmcobrardeuda.cpp \
     LibsGraficas/qchartpiece.cpp \
@@ -251,7 +250,6 @@ HEADERS  += mainwindow.h \
     Zona_Administrador/block_Maya_form.h \
     Zona_Administrador/auxmodule.h \
     Zona_Pacientes/frmanadirhierb.h \
-    Almacen/frmeditar_tarifas.h \
     Auxiliares/datedelegate.h \
     Zona_Pacientes/frmcobrardeuda.h \
     LibsGraficas/openchart.h \
@@ -348,7 +346,6 @@ FORMS    += mainwindow.ui \
     Zona_Pacientes/frmanadirdiagnostico.ui \
     Zona_Administrador/frmconfigmaya.ui \
     Zona_Pacientes/frmanadirhierb.ui \
-    Almacen/frmeditar_tarifas.ui \
     Zona_Pacientes/frmcobrardeuda.ui \
     Zona_Contabilidad/frmentrada_apuntes.ui \
     Auxiliares/frmdialogoimprimir.ui \
