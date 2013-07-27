@@ -205,7 +205,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`clientes` (
   `dia_pago1` INT(11) NULL DEFAULT '0' ,
   `dia_pago2` INT(11) NULL DEFAULT '0' ,
   `tarifa_cliente` INT(11) NULL DEFAULT '0' ,
-  `tipo_dto_tarifa` INT(2) NULL DEFAULT '0' ,
+  `tipo_dto_tarifa` DOUBLE NULL DEFAULT '0' ,
   `importe_a_cuenta` DOUBLE NULL DEFAULT '0' ,
   `vales` DOUBLE NULL DEFAULT '0' ,
   `entidad_bancaria` VARCHAR(4) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
@@ -341,12 +341,6 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`codigotarifa` (
   `id_monedas` INT(11) NULL DEFAULT NULL ,
   `margen` DOUBLE NULL DEFAULT NULL ,
   `margen_min` DOUBLE NULL DEFAULT NULL ,
-  `porc_dto1` DOUBLE NULL DEFAULT '0' ,
-  `porc_dto2` DOUBLE NULL DEFAULT '0' ,
-  `porc_dto3` DOUBLE NULL DEFAULT '0' ,
-  `porc_dto4` DOUBLE NULL DEFAULT '0' ,
-  `porc_dto5` DOUBLE NULL DEFAULT '0' ,
-  `porc_dto6` DOUBLE NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `descripcion_UNIQUE` (`descripcion` ASC) )
 ENGINE = InnoDB
