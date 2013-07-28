@@ -20,6 +20,7 @@ public:
     QString nombre_comercial;
     QString persona_contacto;
     QString cif_nif;
+    int tipo_dto_tarifa;
     QString cifVies;
     QString direccion1;
     QString direccion2;

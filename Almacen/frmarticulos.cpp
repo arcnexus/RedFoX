@@ -339,6 +339,7 @@ void FrmArticulos::LLenarCampos()
   else
       ui->lbl_en_promocion->setVisible(false);
   ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',2)));
+  //ui->spin_dto1->setValue(oArticulo->);
 
 
   // ------------------

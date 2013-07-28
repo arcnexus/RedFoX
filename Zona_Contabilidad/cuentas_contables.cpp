@@ -10,13 +10,11 @@ bool Cuentas_contables::anadir_cuenta()
 {
     QSqlQuery query_cuentas(Configuracion_global->contaDB);
     query_cuentas.prepare("INSERT INTO plan_general "
-                          "(codigo_cta,descripcion,activo,codigo_balance, saldo) "
-                          "VALUES (:codigo_cta,:descripcion,:activo,:codigo_balance,:saldo);");
+                          "(codigo_cta,descripcion,activo saldo) "
+                          "VALUES (:codigo_cta,:descripcion,:activo,:saldo);");
     query_cuentas.bindValue(":codigo_cta",this->codigo_cta);
     query_cuentas.bindValue(":descripcion",this->descripcion);
     query_cuentas.bindValue(":activo",this->activo);
-    query_cuentas.bindValue(":codigo_balance",this->codigo_balance);
-    query_cuentas.bindValue(":desglose_balance",this->desglose_balance);
     query_cuentas.bindValue(":saldo",this->saldo);
     if(!query_cuentas.exec())
     {
@@ -37,13 +35,11 @@ void Cuentas_contables::guardar_cuenta()
                           "codigo_cta = :codigo_cta,"
                           "descripcion =:descripcion,"
                           "activo = :activo,"
-                          "codigo_balance = :codigo_balance,"
                           "saldo = :saldo "
                           " WHERE id = :id;");
     query_cuentas.bindValue(":codigo_cta",this->codigo_cta);
     query_cuentas.bindValue(":descripcion",this->descripcion);
     query_cuentas.bindValue(":activo",this->activo);
-    query_cuentas.bindValue(":codigo_balance",this->codigo_balance);
     query_cuentas.bindValue(":saldo",this->saldo);
     query_cuentas.bindValue(":id",this->id);
     if(!query_cuentas.exec())
@@ -60,10 +56,7 @@ void Cuentas_contables::recuperar_cuenta(QString cuenta)
         query_cuenta.next();
         this->id = query_cuenta.record().value("id").toInt();
         this->activo = query_cuenta.record().value("activo").toBool();
-        this->afecta_a = query_cuenta.record().value("afecta_a").toString();
-        this->codigo_balance = query_cuenta.record().value("codigo_balance").toString();
         this->descripcion = query_cuenta.record().value("descripcion").toString();
-        this->desglose_balance = query_cuenta.record().value("desglose_balance").toString();
         this->saldo = query_cuenta.record().value("saldo").toDouble();
     } else
         QMessageBox::warning(qApp->activeWindow(),tr("Gestión de cuentas de PGC"),

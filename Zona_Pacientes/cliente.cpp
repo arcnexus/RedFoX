@@ -78,6 +78,7 @@ void Cliente::Guardar() {
                    "id_agente =:id_agente,"
                    "id_transportista =:id_transportista,"
                    "observaciones =:observaciones,"
+                   "tipo_dto_tarifa =:tipo_dto_tarifa,"
                    "grupo_iva =:grupo_iva"
                    " WHERE id =:id" );
 
@@ -153,6 +154,7 @@ void Cliente::Guardar() {
     query.bindValue(":id_agente",this->id_agente);
     query.bindValue(":id_transportista",this->id_transportista);
     query.bindValue(":grupo_iva",this->grupo_iva);
+    query.bindValue(":tipo_dto_tarifa",this->tipo_dto_tarifa);
 
 
     if(!query.exec()){
@@ -265,7 +267,8 @@ void Cliente::GuardarWeb()
                   "visa2_cod_valid =:visa2_cod_valid,"
                   "id_agente =:id_agente,"
                   "id_transportista =:id_transportista,"
-                  "grupo_iva =:grupo_iva"
+                  "grupo_iva =:grupo_iva,"
+                  "tipo_dto_tarifa =:tipo_dto_tarifa"
                   " WHERE id =:id_web" );
 
    query.bindValue(":codigo_cliente", this->codigo_cliente);
@@ -338,6 +341,7 @@ void Cliente::GuardarWeb()
    query.bindValue(":visa2_cod_valid",this->visa2_cod_valid);
    query.bindValue(":id_agente",this->id_agente);
    query.bindValue(":id_transportista",this->id_transportista);
+   query.bindValue(":tipo_dto_tarifa",this->tipo_dto_tarifa);
 
 
    if(!query.exec()){
@@ -494,6 +498,7 @@ void Cliente::cargar(QSqlQuery &query)
         this->visa_distancia2 = registro.field("visa_distancia2").value().toString();
         this->id_agente = registro.field("id_agente").value().toInt();
         this->id_transportista = registro.field("id_transportista").value().toInt();
+        this->tipo_dto_tarifa = registro.field("tipo_dto_tarifa").value().toInt();
         int irpf =registro.field("irpf").value().toInt();
         this->grupo_iva = registro.field("grupo_iva").value().toString();
         if (irpf==1)

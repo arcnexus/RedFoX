@@ -124,7 +124,10 @@ frmClientes::frmClientes(QWidget *parent) :
     ui->cboidiomaDocumentos->setModel(qmidiomas);
     //oCliente->Recuperar("Select * from clientes");
     //LLenarCampos();
-
+    //rellenar cbotipos_dto
+    QStringList tipos_dto;
+    tipos_dto <<"1" <<"2" << "3" << "4" << "5" << "6";
+    ui->cbotipo_dto->addItems(tipos_dto);
     bloquearCampos();
     this->Altas = false;
     ui->blinkink->setVisible(false);
@@ -271,6 +274,9 @@ void frmClientes::LLenarCampos()
     ui->cboagente->setCurrentIndex(indice);
     indice = ui->cboGrupo_Iva->findText(oCliente->grupo_iva);
     ui->cboGrupo_Iva->setCurrentIndex(indice);
+    indice = ui->cbotipo_dto->findText(QString::number(oCliente->tipo_dto_tarifa));
+    ui->cbotipo_dto->setCurrentIndex(indice);
+
 
     // --------------------------
     // Validaciones de seguridad
