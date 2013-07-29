@@ -172,6 +172,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
         ui->txtBuscar->setReadOnly(false);
         oFactura->id = -1;
    // }
+   helper.resizeTable();
 }
 
 frmFacturas::~frmFacturas()
@@ -704,6 +705,8 @@ void frmFacturas::on_btnAnadir_clicked()
     oFactura->AnadirFactura();
     helper.set_tarifa(Configuracion_global->id_tarifa_predeterminada);
     ui->stackedWidget->setCurrentIndex(0);
+    ui->radEditar->setChecked(true);
+    helper.resizeTable();
     emit block();
 }
 
@@ -722,7 +725,7 @@ void frmFacturas::on_botBuscarCliente_clicked()
     oCliente1->clear();
     db_consulta_view consulta;
     QStringList campos;
-    campos <<"codigo_cliente" <<"nombre_fiscal" << "cif_nif"<< "poblacion" << "telefono1";
+    campos <<"nombre_fiscal" <<"codigo_cliente" << "cif_nif"<< "poblacion" << "telefono1";
     consulta.set_campoBusqueda(campos);
     consulta.set_texto_tabla("clientes");
     consulta.set_db("Maya");
@@ -1114,7 +1117,10 @@ void frmFacturas::on_radBuscar_toggled(bool checked)
 void frmFacturas::on_radeditar_toggled(bool checked)
 {
     if(checked)
+    {
+        helper.resizeTable();
         ui->stackedWidget->setCurrentIndex(0);
+    }
     else
         ui->stackedWidget->setCurrentIndex(1);
 }

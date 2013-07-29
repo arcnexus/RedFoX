@@ -41,7 +41,7 @@ bool Factura::AnadirFactura()
 
     this->recargo_equivalencia = 0;
     QSqlQuery cab_fac(Configuracion_global->empresaDB);
-     cab_fac.prepare("INSERT INTO cab_fac (codigo_cliente,factura,fecha,fecha_cobro,id_cliente,cliente,direccion1,direccion2,"
+     cab_fac.prepare("INSERT INTO cab_fac (codigo_cliente,factura,fecha,fecha_cobro,ejercicio,id_cliente,cliente,direccion1,direccion2,"
                    "cp,poblacion,provincia,id_pais,cif,recargo_equivalencia,subtotal,porc_dto,porc_dto_pp,dto,dto_pp,"
                    "base,iva,total,impreso,cobrado,contabilizado,id_forma_pago,forma_pago,comentario,"
                    "base1,base2,base3,base4,porc_iva1,porc_iva2,porc_iva3,porc_iva4,iva1,iva2,iva3,iva4,"
@@ -49,7 +49,7 @@ bool Factura::AnadirFactura()
                    "total_recargo,entregado_a_cuenta,importe_pendiente,codigo_entidad,oficina_entidad,"
                    "dc_cuenta,cuenta_corriente,pedido_cliente,id_transportista,desc_gasto1,desc_gasto2,"
                    "desc_gasto3,imp_gasto1,imp_gasto2,imp_gasto3)"
-                   " VALUES (:codigo_cliente,:factura,:fecha,:fecha_cobro,:id_cliente,:cliente,:direccion1,:direccion2,"
+                   " VALUES (:codigo_cliente,:factura,:fecha,:fecha_cobro,:ejercicio,:id_cliente,:cliente,:direccion1,:direccion2,"
                    ":cp,:poblacion,:provincia,:pais,:cif,:recargo_equivalencia,:subtotal,:porc_dto,:porc_dto_pp,:dto,:dto_pp,"
                    ":base,:iva,:total,:impreso,:cobrado,:contabilizado,:id_forma_pago,:forma_pago,:comentario,"
                    ":base1,:base2,:base3,:base4,:porc_iva1,:porc_iva2,:porc_iva3,:porc_iva4,:iva1,:iva2,:iva3,:iva4,"
@@ -62,6 +62,7 @@ bool Factura::AnadirFactura()
      cab_fac.bindValue(":factura","BORRADOR");
      cab_fac.bindValue(":fecha",this->fecha);
      cab_fac.bindValue(":fecha_cobro",this->fecha_cobro);
+     cab_fac.bindValue(":ejercicio",Configuracion_global->cEjercicio.toInt());
      cab_fac.bindValue(":id_cliente", this->id_cliente);
      cab_fac.bindValue(":cliente",this->cliente);
      cab_fac.bindValue(":direccion1",this->direccion1);
@@ -433,6 +434,7 @@ void Factura::cargar(QSqlRecord *registro)
     this->serie = registro->field("serie").value().toString();
     this->fecha = registro->field("fecha").value().toDate();
     this->fecha_cobro = registro->field("fecha_cobro").value().toDate();
+    this->ejercicio = registro->field("ejercicio").value().toInt();
     this->id_cliente = registro->field("id_cliente").value().toInt();
     this->cliente = registro->field("cliente").value().toString();
     this->direccion1 = registro->field("direccion1").value().toString();

@@ -248,6 +248,7 @@ lineaDetalle * Table_Helper::getLineaDetalleFromRecord(QSqlRecord r)
 void Table_Helper::addRow(QSqlRecord r)
 {
     resizeTable();
+
     helped_table->setRowCount(helped_table->rowCount()+1);
     disconnect(helped_table,SIGNAL(currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)),this,SLOT(handle_currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)));
     int row = helped_table->rowCount()-1;
@@ -401,7 +402,7 @@ void Table_Helper::calculatotal()
     for(int i = 0; i< helped_table->rowCount() ; i++)
     {
         subtotal +=calcularsubtotalLinea(i);
-        //        base += calculabaseLinea(i);
+        base += calculabaseLinea(i);
         dto += calculadtoLinea(i);
         iva += calculaivaLinea(i);
         re += calcularRELinea(i);
@@ -610,10 +611,10 @@ void Table_Helper::calcular_por_Base(QString sbase)
     {
         if( helped_table->item(i,7)->text().toDouble() == this->porc_iva1)
         {
-            base = calculabaseLinea(i);
-            iva = calculaivaLinea(i);
-            re = calcularRELinea(i);
-            total = calculatotalLinea(i);
+            base += calculabaseLinea(i);
+            iva += calculaivaLinea(i);
+            re += calcularRELinea(i);
+            total += calculatotalLinea(i);
         }
         emit desglose1Changed(base, iva, re, total);
 
@@ -623,20 +624,20 @@ void Table_Helper::calcular_por_Base(QString sbase)
         if( helped_table->item(i,7)->text().toDouble() == this->porc_iva2)
         {
 
-            base = calculabaseLinea(i);
-            iva = calculaivaLinea(i);
-            re = calcularRELinea(i);
-            total = calculatotalLinea(i);
+            base += calculabaseLinea(i);
+            iva += calculaivaLinea(i);
+            re += calcularRELinea(i);
+            total += calculatotalLinea(i);
         }
         emit desglose2Changed(base, iva, re, total);
     }
     else if(sbase == "base3"){
         if( helped_table->item(i,7)->text().toDouble() == this->porc_iva3)
         {
-            base = calculabaseLinea(i);
-            iva = calculaivaLinea(i);
-            re = calcularRELinea(i);
-            total = calculatotalLinea(i);
+            base += calculabaseLinea(i);
+            iva += calculaivaLinea(i);
+            re += calcularRELinea(i);
+            total += calculatotalLinea(i);
         }
         emit desglose3Changed(base, iva, re, total);
     }
@@ -644,10 +645,10 @@ void Table_Helper::calcular_por_Base(QString sbase)
     {
         if( helped_table->item(i,7)->text().toDouble() == this->porc_iva4)
         {
-            base = calculabaseLinea(i);
-            iva = calculaivaLinea(i);
-            re = calcularRELinea(i);
-            total = calculatotalLinea(i);
+            base += calculabaseLinea(i);
+            iva += calculaivaLinea(i);
+            re += calcularRELinea(i);
+            total += calculatotalLinea(i);
         }
         emit desglose4Changed(base, iva, re, total);
     }
@@ -773,13 +774,33 @@ void Table_Helper::searchArticulo()
     consulta.set_campoBusqueda(campos);
     consulta.set_texto_tabla("articulos");
     consulta.set_db("Maya");
-    consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste from articulos");
+    consulta.setId_tarifa_cliente(this->tarifa);
+    consulta.setTipo_dto_tarifa(this->tipo_dto_tarifa);
+    if(this->tipo_dto_tarifa ==1)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                     "porc_dto1/100))) as pvp from vistaart_tarifa");
+    else if(this->tipo_dto_tarifa ==2)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                     "porc_dto2/100))) as pvp from vistaart_tarifa");
+    else if(this->tipo_dto_tarifa ==3)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                     "porc_dto3/100))) as pvp from vistaart_tarifa");
+    else if(this->tipo_dto_tarifa ==4)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                     "porc_dto4/100))) as pvp from vistaart_tarifa");
+    else if(this->tipo_dto_tarifa ==5)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                     "porc_dto5/100))) as pvp from vistaart_tarifa");
+    else if(this->tipo_dto_tarifa ==6)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                     "porc_dto6/100))) as pvp from vistaart_tarifa");
+    //consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste from articulos");
     QStringList cabecera;
     QVariantList tamanos;
     QVariantList moneda;
-    cabecera  << tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste");
-    tamanos <<"0" << "100" << "100" << "100" << "450" <<"130";
-    moneda <<"5";
+    cabecera  << tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste") <<tr("pvp");
+    tamanos <<"0" << "100" << "100" << "100" << "320" <<"130" <<"130";
+    moneda <<"5" <<"6";
     consulta.set_headers(cabecera);
     consulta.set_tamano_columnas(tamanos);
     consulta.set_delegate_monetary(moneda);

@@ -88,6 +88,7 @@ private slots:
 
     void on_tabla_facturas_clicked(const QModelIndex &index);
 
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;

@@ -27,6 +27,12 @@ public:
     void set_db(QString nombre_db);
     int get_id() {return this->id;}
     
+    int getId_tarifa_cliente() const;
+    void setId_tarifa_cliente(int value);
+
+    int getTipo_dto_tarifa() const;
+    void setTipo_dto_tarifa(int value);
+
 private:
     Ui::db_consulta_view *ui;
     QString cSQL;
@@ -38,6 +44,8 @@ private:
     QString tabla;
     int id;
     QSqlQueryModel *modelo;
+    int id_tarifa_cliente;
+    int tipo_dto_tarifa;
 
 private slots:
     bool eventFilter(QObject *target, QEvent *event);

@@ -109,6 +109,26 @@ void db_consulta_view::set_db(QString nombre_db)
 {
     db = nombre_db;
 }
+int db_consulta_view::getId_tarifa_cliente() const
+{
+    return id_tarifa_cliente;
+}
+
+void db_consulta_view::setId_tarifa_cliente(int value)
+{
+    id_tarifa_cliente = value;
+}
+int db_consulta_view::getTipo_dto_tarifa() const
+{
+    return tipo_dto_tarifa;
+}
+
+void db_consulta_view::setTipo_dto_tarifa(int value)
+{
+    tipo_dto_tarifa = value;
+}
+
+
 
 bool db_consulta_view::eventFilter(QObject *target, QEvent *event)
 {

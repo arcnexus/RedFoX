@@ -232,6 +232,7 @@ void FrmPedidos::LLenarCamposCliente()
     }
     oCliente3->Recuperar("Select * from clientes where id ="+QString::number(oPedido->id_cliente));
     helper.set_tarifa(oPedido->tarifa_cliente);
+    helper.set_tipo_dto_tarifa(oCliente3->tipo_dto_tarifa);
 }
 
 void FrmPedidos::VaciarCampos()
@@ -541,7 +542,7 @@ void FrmPedidos::on_botBuscarCliente_clicked()
 {
     db_consulta_view consulta;
     QStringList campos;
-    campos <<"codigo_cliente" <<"nombre_fiscal" << "cif_nif"<< "poblacion" << "telefono1";
+    campos <<"nombre_fiscal" <<"codigo_cliente" << "cif_nif"<< "poblacion" << "telefono1";
     consulta.set_campoBusqueda(campos);
     consulta.set_texto_tabla("clientes");
     consulta.set_db("Maya");

@@ -14,6 +14,7 @@ public:
     QString factura;
     QDate fecha;
     QDate fecha_cobro;
+    int ejercicio;
     int id_cliente;
     QString cliente;
     QString direccion1;

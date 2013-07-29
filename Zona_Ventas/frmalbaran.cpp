@@ -221,6 +221,7 @@ void FrmAlbaran::LLenarCamposCliente()
     helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
     helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
     oAlbaran->id_cliente = oCliente2->id;
+    helper.set_tipo_dto_tarifa(oCliente2->tipo_dto_tarifa);
 }
 
 void FrmAlbaran::VaciarCampos() {
@@ -463,7 +464,7 @@ void FrmAlbaran::on_botBuscarCliente_clicked()
 {
     db_consulta_view consulta;
     QStringList campos;
-    campos <<"codigo_cliente" <<"nombre_fiscal" << "cif_nif"<< "poblacion" << "telefono1";
+    campos  <<"nombre_fiscal" <<"codigo_cliente" << "cif_nif"<< "poblacion" << "telefono1";
     consulta.set_campoBusqueda(campos);
     consulta.set_texto_tabla("clientes");
     consulta.set_db("Maya");
