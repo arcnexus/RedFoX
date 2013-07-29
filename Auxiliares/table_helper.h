@@ -39,6 +39,7 @@ public:
     void set_moneda(QString moneda);
     void set2Divisas(bool b){use2divisas = b;}
     void set_tarifa(int tarifa);
+    void set_tipo_dto_tarifa(int tipo_dto_tarifa);
     void set_Tipo(bool is_compra);
     void blockTable(bool state);
     void resizeTable();
@@ -94,6 +95,7 @@ private:
     QString m_db_table;
     bool use2divisas;
     bool isActive;
+    int tipo_dto_tarifa;
     void updateLinea(int row);
     void calcPercDescuento(int row);
     void calcNetoDescuento(int row);

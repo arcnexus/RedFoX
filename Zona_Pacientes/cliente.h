@@ -106,6 +106,7 @@ public slots:
     void Recuperar(QString cSQL);
     void Recuperar(int id);
     void cargar(QSqlQuery &query);
+    void clear();
     void Guardar();
     void GuardarWeb();
     void Anadir();

@@ -191,6 +191,7 @@ void FrmAlbaran::LLenarCampos() {
 
     QString filter = QString("id_Cab = '%1'").arg(oAlbaran->id);
     helper.fillTable("empresa","lin_alb",filter);
+    helper.set_tipo_dto_tarifa(oCliente2->tipo_dto_tarifa);
 }
 void FrmAlbaran::LLenarCamposCliente()
 {

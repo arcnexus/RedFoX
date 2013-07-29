@@ -204,6 +204,9 @@ void FrmPedidos::LLenarCampos()
     helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
     helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
     helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
+    QString filter = QString("id_Cab = '%1'").arg(oPedido->id);
+    helper.fillTable("empresa","lin_ped",filter);
+    helper.set_tipo_dto_tarifa(oCliente3->tipo_dto_tarifa);
 }
 
 void FrmPedidos::LLenarCamposCliente()
@@ -858,8 +861,8 @@ void FrmPedidos::convertir_enFactura()
             // ----------------------------------
             // Creamos la cabecera de la factura
             //-----------------------------------
-
-            oFactura.factura = oFactura.NuevoNumeroFactura();
+            // TODO - pedir serie factura.
+            oFactura.factura = oFactura.NuevoNumeroFactura("A");
             oFactura.GuardarFactura(oFactura.id,true);
             //-------------------
             //  INSERTAR LÍNEAS

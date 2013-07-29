@@ -146,6 +146,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
     QSqlQuery cab_fac(Configuracion_global->empresaDB);
     cab_fac.prepare( "UPDATE cab_fac set "
                      "codigo_cliente = :codigo_cliente,"
+                     "serie =:serie,"
                      "factura = :factura,"
                      "fecha = :fecha,"
                      "fecha_cobro = :fecha_cobro,"
@@ -220,6 +221,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
     cab_fac.bindValue(":id",nid_factura);
     cab_fac.bindValue(":codigo_cliente",this->codigo_cliente);
     cab_fac.bindValue(":factura",this->factura);
+    cab_fac.bindValue(":serie",this->serie);
     cab_fac.bindValue(":fecha",this->fecha);
     cab_fac.bindValue(":fecha_cobro",this->fecha_cobro);
     cab_fac.bindValue(":id_cliente", this->id_cliente);
@@ -428,6 +430,7 @@ void Factura::cargar(QSqlRecord *registro)
     this->id = registro->field("id").value().toInt();
     this->codigo_cliente= registro->field("codigo_cliente").value().toString();
     this->factura = registro->field("factura").value().toString();
+    this->serie = registro->field("serie").value().toString();
     this->fecha = registro->field("fecha").value().toDate();
     this->fecha_cobro = registro->field("fecha_cobro").value().toDate();
     this->id_cliente = registro->field("id_cliente").value().toInt();
@@ -497,20 +500,22 @@ void Factura::cargar(QSqlRecord *registro)
     this->imp_gasto1 = registro->field("imp_gasto1").value().toDouble();
     this->imp_gasto2 = registro->field("imp_gasto2").value().toDouble();
     this->imp_gasto3 = registro->field("imp_gasto3").value().toDouble();
+
 }
 
-QString Factura::NuevoNumeroFactura() {
+QString Factura::NuevoNumeroFactura(QString serie) {
     QSqlQuery cab_fac(Configuracion_global->empresaDB);
-    QString cNum,serie;
+    QString cNum;
     QString cNumFac;
     int inum;
 
-    cab_fac.prepare("Select factura from cab_fac  where factura <> '"+QObject::tr("BORRADOR")+"' order by factura desc limit 1");
+    cab_fac.prepare("Select factura from cab_fac  where factura <> '"+QObject::tr("BORRADOR")+
+                    "' and serie ='"+serie+"' order by factura desc limit 1");
     if(cab_fac.exec()) {
         cab_fac.next();
         cNumFac = cab_fac.value(0).toString();
         cNum = cNumFac.right(Configuracion_global->ndigitos_factura);
-        serie = Configuracion_global->serie;
+
         inum = cNum.toInt();
         inum++;
         cNum = cNum.number(inum);
@@ -520,7 +525,7 @@ QString Factura::NuevoNumeroFactura() {
     } else {
          QMessageBox::critical(qApp->activeWindow(), "error:", cab_fac.lastError().text());
     }
-    cNumFac = serie + cNum;
+    cNumFac = cNum;
     return cNumFac;
 }
 

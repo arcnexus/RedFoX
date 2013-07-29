@@ -23,6 +23,15 @@ public:
     QString codigoTarifa;
     QString cod_divisa;
     float coste;
+    float porc_dto1;
+    float porc_dto2;
+    float porc_dto3;
+    float porc_dto4;
+    float porc_dto5;
+    float porc_dto6;
+
+
+
     void capturar_coste(float);
     void capturar_datos(int id,QString coste);
 

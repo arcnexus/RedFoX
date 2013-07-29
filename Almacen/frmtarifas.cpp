@@ -90,7 +90,15 @@ void FrmTarifas::capturar_datos(int id, QString costeLocal){
                 Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,this->cod_divisa);
             else
                 asignarcambiodivisa(1);
+            ui->dspin_porc_dto1->setValue(queryTarifas.record().field("porc_dto1").value().toDouble());
+            ui->dspin_porc_dto2->setValue(queryTarifas.record().field("porc_dto2").value().toDouble());
+            ui->dspin_porc_dto3->setValue(queryTarifas.record().field("porc_dto3").value().toDouble());
+            ui->dspin_porc_dto4->setValue(queryTarifas.record().field("porc_dto4").value().toDouble());
+            ui->dspin_porc_dto5->setValue(queryTarifas.record().field("porc_dto5").value().toDouble());
+            ui->dspin_porc_dto6->setValue(queryTarifas.record().field("porc_dto6").value().toDouble());
+
         }
+
 
    }
 }
@@ -121,8 +129,15 @@ void FrmTarifas::cargarDatosTarifa(QModelIndex indice)
             Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,this->cod_divisa);
         else
             asignarcambiodivisa(1);
+        ui->dspin_porc_dto1->setValue(qTarifa.record().field("porc_dto1").value().toDouble());
+        ui->dspin_porc_dto2->setValue(qTarifa.record().field("porc_dto2").value().toDouble());
+        ui->dspin_porc_dto3->setValue(qTarifa.record().field("porc_dto3").value().toDouble());
+        ui->dspin_porc_dto4->setValue(qTarifa.record().field("porc_dto4").value().toDouble());
+        ui->dspin_porc_dto5->setValue(qTarifa.record().field("porc_dto5").value().toDouble());
+        ui->dspin_porc_dto6->setValue(qTarifa.record().field("porc_dto6").value().toDouble());
     }
     calcular_precio(ui->spinMargen->value());
+
 }
 
 void FrmTarifas::asignarcambiodivisa(float valor)
@@ -149,7 +164,7 @@ void FrmTarifas::calcular_precio(double margen)
         QString cPvp = Configuracion_global->toFormatoMoneda(QString::number(pvp,'f',2));
         this->pvpDivisa = cPvp.toDouble();
         ui->txtPVPLocal->setText(cPvp);
-        double cambio_divisa =  ui->txtValorDivisa->text().replace(".","").replace(",",".").toDouble();
+        double cambio_divisa =  ui->txtValorDivisa->text().toDouble();
         double valordivisa = ui->txtPVPLocal->text().replace(".","").replace(",",".").toDouble() * cambio_divisa;
 
         ui->txtPVPDivisa->setText(Configuracion_global->toFormatoMoneda(QString::number(valordivisa,'f',2)));

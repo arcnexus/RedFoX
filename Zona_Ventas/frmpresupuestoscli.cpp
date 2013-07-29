@@ -203,6 +203,9 @@ void FrmPresupuestosCli::LLenarCampos()
     helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
     helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
     helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
+    QString filter = QString("id_Cab = '%1'").arg(oPres->id);
+    helper.fillTable("empresa","lin_pre",filter);
+        helper.set_tipo_dto_tarifa(oClientePres->tipo_dto_tarifa);
 }
 
 void FrmPresupuestosCli::LLenarCamposCliente()

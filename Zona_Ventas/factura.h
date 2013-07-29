@@ -10,6 +10,7 @@ public:
     explicit Factura(QObject *parent = 0);
     int id;
     QString codigo_cliente;
+    QString serie;
     QString factura;
     QDate fecha;
     QDate fecha_cobro;
@@ -79,8 +80,6 @@ public:
     double imp_gasto2;
     double imp_gasto3;
 
-
-
     int id_transportista;
     bool set_impresa(bool state);
 
@@ -92,7 +91,7 @@ public slots:
     bool RecuperarFactura(int id);
     void cargar(QSqlRecord *registro);
     bool GuardarFactura(int nid_factura, bool FacturaLegal);
-    QString NuevoNumeroFactura();
+    QString NuevoNumeroFactura(QString serie);
     bool BorrarLineasFactura(int id_lin);
     bool CobrarFactura();
     bool GuardarApunte(int nasiento, int nid);

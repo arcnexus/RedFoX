@@ -506,7 +506,95 @@ void Cliente::cargar(QSqlQuery &query)
         else
             this->lIRPF = false;
 
-    }
+   }
+}
+
+void Cliente::clear()
+{
+    this->id = 0;
+    this->id_web = 0;
+    this->codigo_cliente = "";
+    this->apellido1 = "";
+    this->apellido2= "";
+    this->nombre = "";
+    this->nombre_fiscal ="";
+    this->nombre_comercial="";
+    this->persona_contacto="";
+    this->cif_nif="";
+    this->tipo_dto_tarifa =0;
+    this->cifVies="";
+    this->direccion1="";
+    this->direccion2="";
+    this->cp="";
+    this->poblacion="";
+    this->provincia="";
+    this->id_pais=0;
+    this->pais ="";
+    this->telefono1="";
+    this->telefono2="";
+    this->fax="";
+    this->movil="";
+    this->email="";
+    this->web="";
+    this->direccion1Factura1="";
+    this->direccion1Factura2="";
+    this->cpFactura="";
+    this->poblacionFactura="";
+    this->provinciaFactura="";
+    this->id_paisFactura= 0;
+    this->paisFactura="";
+    this->direccion_almacen="";
+    this->direccion_almacen2="";
+    this->cp_almacen="";
+    this->poblacion_almacen="";
+    this->provincia_almacen="";
+    this->id_pais_almacen=0;
+    this->paisAlmacen="";
+    this->fecha_alta= QDate::currentDate();
+    this->fechaCompra = QDate::currentDate();
+    this->acumulado_ventas=0;
+    this->ventas_ejercicio=0;
+    this->riesgo_maximo=0;
+    this->deuda_actual=0;
+    this->comentarios ="";
+    this->bloqueado = 0;
+    this->comentario_bloqueo = "";
+    this->porc_dto_cliente= 0;
+    this->recargo_equivalencia= 0;
+    this->cuenta_contable = "";
+    this->cuenta_iva_repercutido="";
+    this->cuenta_deudas="";
+    this->cuenta_cobros="";
+    this->forma_pago = "";
+    this->dia_pago1 = 0;
+    this->dia_pago2 = 0;
+    this->tarifa_cliente = 0;
+    this->importe_a_cuenta=0;
+    this->vales = 0;
+    this->entidad_bancaria="";
+    this->oficina_bancaria="";
+    this->dc="";
+    this->cuenta_corriente="";
+    this->fecha_nacimiento = QDate::currentDate();
+    this->importe_pendiente = 0;
+    this->acceso_web = "";
+    this->password_web = "";
+    this->lIRPF= false;
+    this->idTarifa = 0;
+    this->ididioma =0;
+    this->idioma = "";
+    this->observaciones = "";
+    this->visa_distancia1 = "";
+    this->visa_distancia2= "";
+    this->visa1_caduca_mes = 0;
+    this->visa2_caduca_mes = 0;
+    this->visa1_caduca_ano = 0;
+    this->visa2_caduca_ano = 0;
+    this->visa1_cod_valid = 0;
+    this->visa2_cod_valid = 0;
+    this->id_agente = 0;
+    this->id_transportista = 0;
+    this->grupo_iva = "";
 }
 
 

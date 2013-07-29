@@ -69,6 +69,11 @@ void Table_Helper::set_tarifa(int tarifa)
     this->tarifa = tarifa;
 }
 
+void Table_Helper::set_tipo_dto_tarifa(int tipo_dto_tarifa)
+{
+    this->tipo_dto_tarifa = tipo_dto_tarifa;
+}
+
 void Table_Helper::set_Tipo(bool is_compra)
 {
     comprando = is_compra;
@@ -676,7 +681,22 @@ void Table_Helper::rellenar_con_Articulo(int row)
             }
             else
             {
-                double precio = r.value("pvp").toDouble();
+                double precio;
+                if(this->tipo_dto_tarifa == 1)
+                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto1").toDouble()/100));
+                else if (this->tipo_dto_tarifa == 2)
+                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto2").toDouble()/100));
+                else if (this->tipo_dto_tarifa == 3)
+                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto2").toDouble()/100));
+                else if (this->tipo_dto_tarifa == 4)
+                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto2").toDouble()/100));
+                else if (this->tipo_dto_tarifa == 5)
+                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto2").toDouble()/100));
+                else if (this->tipo_dto_tarifa == 6)
+                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto2").toDouble()/100));
+                else
+                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble());
+
                 helped_table->item(row,3)->setText(QString::number(precio,'f',2));
             }
            helped_table->item(row,7)->setText(r.value("tipo_iva").toString());

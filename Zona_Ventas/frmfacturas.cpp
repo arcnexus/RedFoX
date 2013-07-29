@@ -187,6 +187,8 @@ void frmFacturas::LLenarCampos() {
     ui->lblCliente->setText(oFactura->cliente);
     ui->txtcodigo_cliente->setText(oFactura->codigo_cliente);
     ui->txtfactura->setText(oFactura->factura);
+    int ser = ui->cbo_serie->findText(oFactura->serie);
+    ui->cbo_serie->setCurrentIndex(ser);
     ui->txtfecha->setDate(oFactura->fecha);
     ui->txtfecha_cobro->setDate(oFactura->fecha_cobro);
     ui->txtcliente->setText(oFactura->cliente);
@@ -301,13 +303,16 @@ void frmFacturas::LLenarCampos() {
     oFactura->id_cliente = oCliente1->id;
     ui->txtTransportista->setText( Configuracion_global->devolver_transportista(oFactura->id_transportista));
     ui->txtAsiento->setText(QString::number(oFactura->apunte));
+    ui->txt_tipo_dto_tarifa->setText(QString::number(oCliente1->tipo_dto_tarifa));
 
     QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
     helper.fillTable("empresa","lin_fac",filter);
+    helper.set_tipo_dto_tarifa(oCliente1->tipo_dto_tarifa);
 }
 
 void frmFacturas::LLenarCamposCliente()
 {
+    oCliente1->Recuperar("select * from clientes where id=" +QString::number(oFactura->id_cliente));
     ui->lblCliente->setText(oCliente1->nombre_fiscal);
     ui->txtcodigo_cliente->setText(oCliente1->codigo_cliente);
     ui->txtcliente->setText(oCliente1->nombre_fiscal);
@@ -355,6 +360,8 @@ void frmFacturas::LLenarCamposCliente()
     ui->SpinGastoDist1->setValue(oFactura->imp_gasto1);
     ui->SpinGastoDist2->setValue(oFactura->imp_gasto2);
     ui->SpinGastoDist3->setValue(oFactura->imp_gasto3);
+    ui->txt_tipo_dto_tarifa->setText(QString::number(oCliente1->tipo_dto_tarifa));
+    helper.set_tipo_dto_tarifa(oCliente1->tipo_dto_tarifa);
 }
 
 void frmFacturas::VaciarCampos()
@@ -481,11 +488,17 @@ void frmFacturas::BloquearCampos(bool state)
     helper.blockTable(state);
     ui->txtfactura->setReadOnly(true);
     ui->btnAsignarTransportista->setEnabled(!state);
+    ui->btnBuscar->setEnabled(state);
+    ui->cboVer->setEnabled(state);
+    ui->cboBuscar->setEnabled(state);
+    ui->txtBuscar->setEnabled(state);
+    ui->txtBuscar->setReadOnly(!state);
 }
 
 void frmFacturas::LLenarFactura() {
     oFactura->codigo_cliente = (ui->txtcodigo_cliente->text());
     oFactura->factura = (ui->txtfactura->text());
+    oFactura->serie = ui->cbo_serie->currentText();
     oFactura->fecha = (ui->txtfecha->date());
     oFactura->fecha_cobro = (ui->txtfecha_cobro->date());
     oFactura->cliente = (ui->txtcliente->text());
@@ -643,7 +656,7 @@ void frmFacturas::Guardar_factura()
         oFactura->factura = tr("BORRADOR");
     else
         if(oFactura->factura.isEmpty())
-        oFactura->factura = oFactura->NuevoNumeroFactura();
+        oFactura->factura = oFactura->NuevoNumeroFactura(ui->cbo_serie->currentText());
 
     succes = oFactura->GuardarFactura(oFactura->id,false);
     if(succes)
@@ -690,6 +703,7 @@ void frmFacturas::on_btnAnadir_clicked()
     ui->txtcodigo_cliente->setFocus();
     oFactura->AnadirFactura();
     helper.set_tarifa(Configuracion_global->id_tarifa_predeterminada);
+    ui->stackedWidget->setCurrentIndex(0);
     emit block();
 }
 
@@ -704,6 +718,8 @@ void frmFacturas::on_btnDeshacer_clicked()
 
 void frmFacturas::on_botBuscarCliente_clicked()
 {
+    blockSignals(true);
+    oCliente1->clear();
     db_consulta_view consulta;
     QStringList campos;
     campos <<"codigo_cliente" <<"nombre_fiscal" << "cif_nif"<< "poblacion" << "telefono1";
@@ -722,8 +738,10 @@ void frmFacturas::on_botBuscarCliente_clicked()
     {
         int id = consulta.get_id();
         oCliente1->Recuperar("select * from clientes where id="+QString::number(id));
+        oFactura->id_cliente = id;
         LLenarCamposCliente();
     }
+    blockSignals(false);
 
 }
 
