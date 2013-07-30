@@ -6,6 +6,7 @@
 #include "../Auxiliares/frmaddentregascuenta.h"
 #include "../Auxiliares/monetarydelegate.h"
 #include "../Auxiliares/datedelegate.h"
+#include "../Almacen/frmarticulos.h"
 
 #include "../Almacen/articulo.h"
 
@@ -172,7 +173,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
         ui->txtBuscar->setReadOnly(false);
         oFactura->id = -1;
    // }
-   helper.resizeTable();
+
 }
 
 frmFacturas::~frmFacturas()
@@ -1114,7 +1115,7 @@ void frmFacturas::on_radBuscar_toggled(bool checked)
         ui->stackedWidget->setCurrentIndex(0);
 }
 
-void frmFacturas::on_radeditar_toggled(bool checked)
+void frmFacturas::on_radEditar_toggled(bool checked)
 {
     if(checked)
     {
@@ -1225,4 +1226,11 @@ void frmFacturas::on_tabla_facturas_clicked(const QModelIndex &index)
     oFactura->RecuperarFactura(id);
     LLenarCampos();
 
+}
+
+
+void frmFacturas::on_btnArticulos_clicked()
+{
+    FrmArticulos artic;
+    artic.exec();
 }

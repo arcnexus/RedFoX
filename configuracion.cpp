@@ -1438,7 +1438,7 @@ void Configuracion::cambioReplyBlock(QNetworkReply *reply)
 void Configuracion::applyCambio(float f, QString target)
 {
     static int i= 1;
-    qDebug() << i << target;
+ //   //qDebug() << i << target;
     i++;
     QSqlQuery q(Configuracion_global->groupDB);
     QString sql = QString("UPDATE monedas SET cambio = '%1' WHERE nombre_corto ='%2';").arg(f).arg(target);
@@ -1461,8 +1461,8 @@ void Configuracion::readCambio(QString s)
     {
         emit cambioReady(f,to);//double, qString....
     }
-    else
-        qDebug()<<s;
+//    else
+//        qDebug()<<s;
 }
 
 float Configuracion::readCambioBlock(QString s)

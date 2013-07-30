@@ -13,6 +13,7 @@ Table_Helper::Table_Helper(QObject *parent) :
     m_cantidadArticulo=0;
     isActive = false;
     connect(this,SIGNAL(i_recalc()),this,SLOT(recalc()));
+
 }
 
 Table_Helper::~Table_Helper()
@@ -33,6 +34,7 @@ void Table_Helper::help_table(QTableWidget *table)
     helped_table->setItemDelegateForColumn(8,new ReadOnlyDelegate(helped_table)); // el tipo de re pertenece al artículo y solo se puede modificar en a ficha del artículo.
     helped_table->setItemDelegateForColumn(9,new MonetaryDelegate(helped_table,false));
     helped_table->setColumnWidth(2,220);
+    helped_table->verticalHeader()->setVisible(false);
 
 
 
@@ -47,7 +49,7 @@ void Table_Helper::help_table(QTableWidget *table)
     }
 
     helped_table->setHorizontalHeaderLabels(headers);
-    resizeTable();
+//    resizeTable();
 
     connect(helped_table,SIGNAL(currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)),this,SLOT(handle_currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)));
     helped_table->installEventFilter(this);
@@ -173,6 +175,7 @@ void Table_Helper::addRow()
 {
     if(helped_table)
     {
+
         if(helped_table->rowCount()>0)
             updateLinea(helped_table->rowCount()-1);
 

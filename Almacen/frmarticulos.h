@@ -100,6 +100,16 @@ private slots:
 
     void on_btnBuscar_clicked();
 
+    void on_cboOrden_busquedas_currentIndexChanged(const QString &arg1);
+
+    void on_txtBuscar_textEdited(const QString &arg1);
+
+    void on_tabla_clicked(const QModelIndex &index);
+
+    void on_tabla_doubleClicked(const QModelIndex &index);
+
+    void on_radBuscar_toggled(bool checked);
+
 public slots:
     void AnadirSeccion();
 
@@ -113,6 +123,7 @@ private:
     void CargarCamposEnArticulo();
     void VaciarCampos();
     void ChangeValues_TablaProveedores(int row, int column);
+    void formato_tabla(QSqlQueryModel* model);
 
     QListView *lista;
     QDialog *ventana;
@@ -125,6 +136,7 @@ private:
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* shortCut;
+    QSqlQueryModel *modelArt;
 };
 
 #endif // FRMARTICULOS_H

@@ -68,98 +68,16 @@ bool Articulo::Recuperar(QString cSQL)
 {
     QSqlQuery qryArticulo(Configuracion_global->groupDB);
     qryArticulo.prepare(cSQL);
-    if (qryArticulo.exec())
-    {
-           if (qryArticulo.next())
-           {
-               QSqlRecord registro =  qryArticulo.record();
-               this->id = registro.field("id").value().toInt();
-               this->codigo = registro.field("codigo").value().toString();
-               this->codigo_barras = registro.field("codigo_barras").value().toString();
-               this->codigo_fabricante = registro.field("codigo_fabricante").value().toString();
-               this->descripcion = registro.field("descripcion").value().toString();
-               this->descripcion_reducida = registro.field("descripcion_reducida").value().toString();
-               this->id_proveedor = registro.field("id_proveedor").value().toInt();
-               this->id_familia = registro.field("id_familia").value().toInt();
-              // this->familia = registro.field("familia").value().toString();
-               this->id_seccion = registro.field("id_seccion").value().toInt();
-              // this->seccion = registro.field("seccion").value().toString();
-               this->id_subfamilia = registro.field("id_subfamilia").value().toInt();
-               //this->subfamilia = registro.field("sub_familia").value().toString();
-               this->tipo_iva =registro.field("tipo_iva").value().toDouble();
-               this->codigo_iva = Configuracion_global->Devolver_descripcion_tipo_iva(this->tipo_iva);
-               this->coste = registro.field("coste").value().toDouble();
-
-               this->porc_dto = registro.field("dto").value().toFloat();
-               this->fecha_ultima_compra = registro.field("fecha_ultima_compra").value().toDate();
-               this->fecha_ultima_venta = registro.field("fecha_ultima_venta").value().toDate();
-
-               this->unidades_compradas = registro.field("unidades_compradas").value().toInt();
-               this->unidades_vendidas = registro.field("unidades_vendidas").value().toInt();
-               this->importe_acumulado_compras = registro.field("importe_acumulado_compras").value().toDouble();
-               this->importe_acumulado_ventas = registro.field("importe_acumulado_ventas").value().toDouble();
-               this->comentario = registro.field("comentario").value().toString();
-               this->stock_maximo = registro.field("stock_maximo").value().toInt();
-               this->stock_minimo = registro.field("stock_minimo").value().toInt();
-               this->stock_real = registro.field("stock_real").value().toInt();
-               this->nstock_fisico_almacen = registro.field("stock_fisico_almacen").value().toInt();
-               this->tipo_unidad = registro.field("tipo_unidad").value().toString();
-               this->controlar_stock = registro.field("controlar_stock").value().toInt();
-               this->modelo = registro.field("modelo").value().toString();
-               this->talla = registro.field("talla").value().toString();
-               this->color = registro.field("color").value().toString();
-               this->composicion = registro.field("composicion").value().toString();
-               this->pvp_incluye_iva = registro.field("pvp_incluye_iva").value().toInt();
-               this->fecha_prevista_recepcion = registro.field("fecha_prevista_recepcion").value().toDate();
-               this->cantidad_pendiente_recibir = registro.field("cantidad_pendiente_recibir").value().toInt();
-               this->unidades_reservadas = registro.field("unidades_reservadas").value().toInt();
-               this->mostrar_web = registro.field("mostrar_web").value().toInt();
-               this->etiquetas = registro.field("etiquetas").value().toInt();
-               this->paquetes = registro.field("paquetes").value().toInt();
-               this->localizacion_en_almacen = registro.field("localizacion_en_almacen").value().toString();
-               this->id_tipos_iva = registro.field("id_tipos_iva").value().toInt();
-               this->id_subsub_familia = registro.field("id_subsub_familia").value().toInt();
-               this->id_grupo_art = registro.field("id_grupo_art").value().toInt();
-               this->id_web = registro.field("id_web").value().toInt();
-               this->articulo_promocionado = registro.field("articulo_promocionado").value().toBool();
-               this->descripcion_promocion = registro.field("descripcion_promocion").value().toString();
-               this->tipo_oferta = registro.field("tipo_oferta").value().toInt();
-               this->por_cada = registro.field("por_cada").value().toInt();
-               this->regalo_de= registro.field("regalo_de").value().toInt();
-               this->porc_dto_web = registro.field("porc_dto_web").value().toDouble();
-               this->oferta_pvp_fijo = registro.field("oferta_pvp_fijo").value().toDouble();
-               this->comentario_oferta =registro.field("comentario_oferta").value().toString();
-               this->margen = registro.field("margen").value().toDouble();
-               this->margen_min = registro.field("margen_min").value().toDouble();
-               this->coste_real = registro.field("coste_real").value().toDouble();
-
-               // Recupero proveedor
-               QSqlQuery *qryProveedor = new QSqlQuery(Configuracion_global->groupDB);
-               qryProveedor->prepare("select id,codigo,proveedor from proveedores where id = :id");
-               qryProveedor->bindValue(":id",this->id_proveedor);
-               if (!qryProveedor->exec()) {
-                   QMessageBox::warning(qApp->activeWindow(),tr("Error Datos"),tr("No se encuentra el proveedor asociado \n Deberá comprovar ficha producto"),tr("OK"));
-
-               } else {
-                   qryProveedor->next();
-                   QSqlRecord record = qryProveedor->record();
-                   this->proveedor = record.field("proveedor").value().toString();
-                   this->cCodProveedor = record.field("codigo").value().toString();
-               }
-               delete qryProveedor;
-
-               return true;
-           }
-           else
-           {
-               QMessageBox::critical(qApp->activeWindow(),"Búsqueda de artículos", "No se encuentra el artículo");
-               return false;
-           }
-    }
-    else
+    if (qryArticulo.exec()) {
+        if(qryArticulo.next()){
+            QSqlRecord r = qryArticulo.record();
+            Cargar(r);
+        }  else {
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"No se encuentra el artículo");
+        }
+    } else
     {
         QMessageBox::critical(qApp->activeWindow(),"error al leer datos artículo:", qryArticulo.lastError().text());
-        return false;
     }
 }
 
@@ -168,90 +86,115 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
     QSqlQuery qryArticulo(Configuracion_global->groupDB);
     qryArticulo.prepare(cSQL);
     if (qryArticulo.exec()) {
-           if (qryArticulo.next()){
-               QSqlRecord registro =  qryArticulo.record();
-               this->id = registro.field("id").value().toInt();
-               this->codigo = registro.field("codigo").value().toString();
-               this->codigo_barras = registro.field("codigo_barras").value().toString();
-               this->codigo_fabricante = registro.field("codigo_fabricante").value().toString();
-               this->descripcion = registro.field("descripcion").value().toString();
-               this->descripcion_reducida = registro.field("descripcion_reducida").value().toString();
-               this->id_proveedor = registro.field("id_proveedor").value().toInt();
-               this->id_familia = registro.field("id_familia").value().toInt();
-               this->familia = registro.field("familia").value().toString();
-               this->id_seccion = registro.field("id_seccion").value().toInt();
-               this->seccion = registro.field("seccion").value().toString();
-               this->id_subfamilia = registro.field("id_subfamilia").value().toInt();
-               this->subfamilia = registro.field("subfamilia").value().toString();
-               this->tipo_iva =registro.field("tipo_iva").value().toDouble();
-               this->codigo_iva = Configuracion_global->Devolver_descripcion_tipo_iva(this->tipo_iva);
-               this->coste = registro.field("coste").value().toDouble();
-               this->porc_dto = registro.field("porc_dto").value().toFloat();
-               this->fecha_ultima_compra = registro.field("fecha_ultima_compra").value().toDate();
-               this->fecha_ultima_venta = registro.field("fecha_ultima_venta").value().toDate();
-               this->unidades_compradas = registro.field("unidades_compradas").value().toInt();
-               this->unidades_vendidas = registro.field("unidades_vendidas").value().toInt();
-               this->importe_acumulado_compras = registro.field("importe_acumulado_compras").value().toDouble();
-               this->importe_acumulado_ventas = registro.field("importe_acumulado_ventas").value().toDouble();
-               this->comentario = registro.field("comentario").value().toString();
-               this->stock_maximo = registro.field("stock_maximo").value().toInt();
-               this->stock_minimo = registro.field("stock_minimo").value().toInt();
-               this->stock_real = registro.field("stock_real").value().toInt();
-               this->nstock_fisico_almacen = registro.field("stock_fisico_almacen").value().toInt();
-               this->tipo_unidad = registro.field("tipo_unidad").value().toString();
-               this->controlar_stock = registro.field("controlar_stock").value().toInt();
-               this->modelo = registro.field("modelo").value().toString();
-               this->talla = registro.field("talla").value().toString();
-               this->color = registro.field("color").value().toString();
-               this->composicion = registro.field("composicion").value().toString();
-               this->pvp_incluye_iva = registro.field("pvp_incluye_iva").value().toInt();
-               this->fecha_prevista_recepcion = registro.field("fecha_prevista_recepcion").value().toDate();
-               this->cantidad_pendiente_recibir = registro.field("cantidad_pendiente_recibir").value().toInt();
-               this->unidades_reservadas = registro.field("unidades_reservadas").value().toInt();
-               this->mostrar_web = registro.field("mostrar_web").value().toInt();
-               this->etiquetas = registro.field("etiquetas").value().toInt();
-               this->paquetes = registro.field("paquetes").value().toInt();
-               this->localizacion_en_almacen = registro.field("localizacion_en_almacen").value().toString();
-               this->id_tipos_iva = registro.field("id_tipos_iva").value().toInt();
-               this->id_subsub_familia = registro.field("id_subsub_familia").value().toInt();
-               this->id_grupo_art = registro.field("id_grupo_art").value().toInt();
-               this->id_web = registro.field("id_web").value().toInt();
-               this->articulo_promocionado = registro.field("articulo_promocionado").value().toBool();
-               this->descripcion_promocion = registro.field("descripcion_promocion").value().toString();
-               this->tipo_oferta = registro.field("tipo_oferta").value().toInt();
-               this->por_cada = registro.field("por_cada").value().toInt();
-               this->regalo_de= registro.field("regalo_de").value().toInt();
-               this->porc_dto_web = registro.field("porc_dto_web").value().toDouble();
-               this->oferta_pvp_fijo = registro.field("oferta_pvp_fijo").value().toDouble();
-               this->comentario_oferta =registro.field("comentario_oferta").value().toString();
-               this->margen = registro.field("margen").value().toDouble();
-               this->margen_min = registro.field("margen_min").value().toDouble();
-               this->coste_real = registro.field("coste_real").value().toDouble();
-
-               // Recupero proveedor
-               QSqlQuery *qryProveedor = new QSqlQuery(Configuracion_global->groupDB);
-               qryProveedor->prepare("select id,codigo,proveedor from proveedores where id = :id");
-               qryProveedor->bindValue(":id",this->id_proveedor);
-               if (!qryProveedor->exec()) {
-                   QMessageBox::warning(qApp->activeWindow(),tr("Error Datos"),tr("No se encuentra el proveedor asociado \n Deberá comprovar ficha producto"),tr("OK"));
-
-               } else {
-                   qryProveedor->next();
-                   QSqlRecord record = qryProveedor->record();
-                   this->proveedor = record.field("proveedor").value().toString();
-                   this->cCodProveedor = record.field("codigo").value().toString();
-               }
-               delete qryProveedor;
-
-           } else {
-               if (nProcede ==1)
-                   TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Se ha llegado al final del fichero");
-               if (nProcede == 2)
-                   TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Se ha llegado al inicio del fichero");
-           }
-    } else {
+        if(qryArticulo.next()){
+            QSqlRecord r = qryArticulo.record();
+            Cargar(r);
+        }  else {
+            if (nProcede ==1)
+                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Se ha llegado al final del fichero");
+            if (nProcede == 2)
+                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Se ha llegado al inicio del fichero");
+        }
+    } else
+    {
         QMessageBox::critical(qApp->activeWindow(),"error al leer datos artículo:", qryArticulo.lastError().text());
     }
+
+}
+
+void Articulo::Recuperar(int id)
+{
+    QSqlQuery qryArticulo(Configuracion_global->groupDB);
+    qryArticulo.prepare("select * from articulos where id ="+QString::number(id));
+    if (qryArticulo.exec()) {
+        if(qryArticulo.next()){
+            QSqlRecord r = qryArticulo.record();
+            Cargar(r);
+        }  else {
+           TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"No se ha encontrado el artículo");
+
+        }
+    } else
+    {
+        QMessageBox::critical(qApp->activeWindow(),"error al leer datos artículo:", qryArticulo.lastError().text());
+    }
+}
+
+void Articulo::Cargar(QSqlRecord registro)
+{
+    this->id = registro.field("id").value().toInt();
+    this->codigo = registro.field("codigo").value().toString();
+    this->codigo_barras = registro.field("codigo_barras").value().toString();
+    this->codigo_fabricante = registro.field("codigo_fabricante").value().toString();
+    this->descripcion = registro.field("descripcion").value().toString();
+    this->descripcion_reducida = registro.field("descripcion_reducida").value().toString();
+    this->id_proveedor = registro.field("id_proveedor").value().toInt();
+    this->id_familia = registro.field("id_familia").value().toInt();
+    this->familia = registro.field("familia").value().toString();
+    this->id_seccion = registro.field("id_seccion").value().toInt();
+    this->seccion = registro.field("seccion").value().toString();
+    this->id_subfamilia = registro.field("id_subfamilia").value().toInt();
+    this->subfamilia = registro.field("subfamilia").value().toString();
+    this->tipo_iva =registro.field("tipo_iva").value().toDouble();
+    this->codigo_iva = Configuracion_global->Devolver_descripcion_tipo_iva(this->tipo_iva);
+    this->coste = registro.field("coste").value().toDouble();
+    this->porc_dto = registro.field("porc_dto").value().toFloat();
+    this->fecha_ultima_compra = registro.field("fecha_ultima_compra").value().toDate();
+    this->fecha_ultima_venta = registro.field("fecha_ultima_venta").value().toDate();
+    this->unidades_compradas = registro.field("unidades_compradas").value().toInt();
+    this->unidades_vendidas = registro.field("unidades_vendidas").value().toInt();
+    this->importe_acumulado_compras = registro.field("importe_acumulado_compras").value().toDouble();
+    this->importe_acumulado_ventas = registro.field("importe_acumulado_ventas").value().toDouble();
+    this->comentario = registro.field("comentario").value().toString();
+    this->stock_maximo = registro.field("stock_maximo").value().toInt();
+    this->stock_minimo = registro.field("stock_minimo").value().toInt();
+    this->stock_real = registro.field("stock_real").value().toInt();
+    this->nstock_fisico_almacen = registro.field("stock_fisico_almacen").value().toInt();
+    this->tipo_unidad = registro.field("tipo_unidad").value().toString();
+    this->controlar_stock = registro.field("controlar_stock").value().toInt();
+    this->modelo = registro.field("modelo").value().toString();
+    this->talla = registro.field("talla").value().toString();
+    this->color = registro.field("color").value().toString();
+    this->composicion = registro.field("composicion").value().toString();
+    this->pvp_incluye_iva = registro.field("pvp_incluye_iva").value().toInt();
+    this->fecha_prevista_recepcion = registro.field("fecha_prevista_recepcion").value().toDate();
+    this->cantidad_pendiente_recibir = registro.field("cantidad_pendiente_recibir").value().toInt();
+    this->unidades_reservadas = registro.field("unidades_reservadas").value().toInt();
+    this->mostrar_web = registro.field("mostrar_web").value().toInt();
+    this->etiquetas = registro.field("etiquetas").value().toInt();
+    this->paquetes = registro.field("paquetes").value().toInt();
+    this->localizacion_en_almacen = registro.field("localizacion_en_almacen").value().toString();
+    this->id_tipos_iva = registro.field("id_tipos_iva").value().toInt();
+    this->id_subsub_familia = registro.field("id_subsub_familia").value().toInt();
+    this->id_grupo_art = registro.field("id_grupo_art").value().toInt();
+    this->id_web = registro.field("id_web").value().toInt();
+    this->articulo_promocionado = registro.field("articulo_promocionado").value().toBool();
+    this->descripcion_promocion = registro.field("descripcion_promocion").value().toString();
+    this->tipo_oferta = registro.field("tipo_oferta").value().toInt();
+    this->por_cada = registro.field("por_cada").value().toInt();
+    this->regalo_de= registro.field("regalo_de").value().toInt();
+    this->porc_dto_web = registro.field("porc_dto_web").value().toDouble();
+    this->oferta_pvp_fijo = registro.field("oferta_pvp_fijo").value().toDouble();
+    this->comentario_oferta =registro.field("comentario_oferta").value().toString();
+    this->margen = registro.field("margen").value().toDouble();
+    this->margen_min = registro.field("margen_min").value().toDouble();
+    this->coste_real = registro.field("coste_real").value().toDouble();
+
+    // Recupero proveedor
+    QSqlQuery *qryProveedor = new QSqlQuery(Configuracion_global->groupDB);
+    qryProveedor->prepare("select id,codigo,proveedor from proveedores where id = :id");
+    qryProveedor->bindValue(":id",this->id_proveedor);
+    if (!qryProveedor->exec()) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Error Datos"),tr("No se encuentra el proveedor asociado \n Deberá comprovar ficha producto"),tr("OK"));
+
+    } else {
+        qryProveedor->next();
+        QSqlRecord record = qryProveedor->record();
+        this->proveedor = record.field("proveedor").value().toString();
+        this->cCodProveedor = record.field("codigo").value().toString();
+    }
+    delete qryProveedor;
+
 }
 
 void Articulo::Guardar()

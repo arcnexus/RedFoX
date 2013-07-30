@@ -63,7 +63,7 @@ private slots:
     void on_btnEditar_clicked();
     void lineaReady(lineaDetalle* ld);
     void lineaDeleted(lineaDetalle*);
-    void on_tabWidget_2_currentChanged(int index);
+                         void on_tabWidget_2_currentChanged(int index);
 
     bool crear_asiento();
     
@@ -76,7 +76,7 @@ private slots:
 
     void on_radBuscar_toggled(bool checked);
 
-    void on_radeditar_toggled(bool checked);
+    void on_radEditar_toggled(bool checked);
 
     void on_cboVer_currentTextChanged(const QString &arg1);
 
@@ -88,6 +88,8 @@ private slots:
 
     void on_tabla_facturas_clicked(const QModelIndex &index);
 
+
+    void on_btnArticulos_clicked();
 
 private:
     Ui::frmFacturas *ui;

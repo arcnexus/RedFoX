@@ -80,6 +80,8 @@ public:
     void Anadir();
     bool Recuperar(QString cSQL);
     void Recuperar(QString cSQL,int nProcede);
+    void Recuperar(int id);
+    void Cargar(QSqlRecord registro);
     void Guardar();
     void Vaciar();
     void Borrar(int nid);

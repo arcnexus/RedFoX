@@ -876,7 +876,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">
@@ -4213,9 +4213,8 @@ color: rgb(255, 255, 255);</string>
           <bool>true</bool>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 250, 219);
-color: rgb(0, 0, 0);
-alternate-background-color: rgb(255, 255, 255);</string>
+          <string notr="true">alternate-background-color: rgb(255, 255, 255);
+background-color: rgb(248, 245, 194);</string>
          </property>
          <property name="alternatingRowColors">
           <bool>true</bool>
@@ -4268,15 +4267,15 @@ alternate-background-color: rgb(255, 255, 255);</string>
  </widget>
  <customwidgets>
   <customwidget>
+   <class>OpenChart</class>
+   <extends>QWidget</extends>
+   <header>openchart.h</header>
+  </customwidget>
+  <customwidget>
    <class>Blinkink</class>
    <extends>QFrame</extends>
    <header>blinkink.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>OpenChart</class>
-   <extends>QWidget</extends>
-   <header>openchart.h</header>
   </customwidget>
  </customwidgets>
  <resources>

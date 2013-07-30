@@ -99,7 +99,7 @@ int SqlCalls::SqlInsert(QHash<QString, QVariant> values, QString table, QSqlData
     }
 /*    if(database.driverName() == "QMYSQL")
     {
-        qDebug()<< "Mysql";
+        //qDebug()<< "Mysql";
     }
     else if (database.driverName() == "QSQLITE")
     {
@@ -162,7 +162,7 @@ bool SqlCalls::SqlUpdate(QHash<QString, QVariant> values, QString table, QSqlDat
     /*
     if(database.driverName() == "QMYSQL")
     {
-        qDebug()<< "Mysql";
+        //qDebug()<< "Mysql";
     }
     else if (database.driverName() == "QSQLITE")
     {
@@ -227,7 +227,7 @@ bool SqlCalls::SqlDelete(QString table, QSqlDatabase database, QStringList claus
     /*
     if(database.driverName() == "QMYSQL")
     {
-        qDebug()<< "Mysql";
+        //qDebug()<< "Mysql";
     }
     else if (database.driverName() == "QSQLITE")
     {

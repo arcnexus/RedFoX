@@ -67,6 +67,22 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     ui->botBorrar->setEnabled(false);
 
     reformateado = false;
+    //--------------------------
+    // llenar tabla artículos
+    //--------------------------
+    modelArt = new QSqlQueryModel(this);
+    QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa ";
+    modelArt->setQuery(cSQL, Configuracion_global->groupDB);
+    ui->tabla->setModel(modelArt);
+    formato_tabla(modelArt);
+    //-------------------------
+    // Combo campos de búsqueda
+    //-------------------------
+    QStringList busquedas;
+
+    busquedas << tr("Descripción") <<tr("Código") <<tr("Código Barras") <<tr("Ref. Proveedor");
+    ui->cboOrden_busquedas->addItems(busquedas);
+
 
     //--------------------------------
     // CAMPOS MONEDA
@@ -238,6 +254,8 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->btnAnadirTarifa->setEnabled(!state);
     ui->btnEditartarifa->setEnabled(!state);
     ui->btnBorrarTarifa->setEnabled(!state);
+    ui->txtBuscar->setReadOnly(!state);
+    ui->cboOrden_busquedas->setEnabled(state);
     // activo controles que deben estar activos.
     ui->checkBox->setEnabled(true);
 
@@ -491,6 +509,25 @@ void FrmArticulos::ChangeValues_TablaProveedores(int row, int column)
 //        comprobarStock(row);
 
     rellenar_grafica_proveedores();
+}
+
+void FrmArticulos::formato_tabla(QSqlQueryModel *model)
+{
+    QStringList titulo;
+    titulo <<"id" << tr("Código") << tr("C. Barras") << tr("código fabricante") <<tr("%IVA") << tr("P.V.P.")
+          <<tr("PVP+IVA") << tr("descripción") ;
+    QVariantList col_size;
+    col_size << 0<<140<<140<<140<<80<<100<<100<<450;
+    for(int i =0;i<titulo.size();i++)
+    {
+        model->setHeaderData(i,Qt::Horizontal,titulo.at(i));
+        ui->tabla->setColumnWidth(i,col_size.at(i).toInt());
+    }
+    ui->tabla->setColumnHidden(0,true);
+    ui->tabla->setItemDelegateForColumn(4, new MonetaryDelegate);
+    ui->tabla->setItemDelegateForColumn(5, new MonetaryDelegate);
+    ui->tabla->setItemDelegateForColumn(6, new MonetaryDelegate);
+
 }
 
 void FrmArticulos::rellenar_grafica_proveedores()
@@ -1486,7 +1523,7 @@ void FrmArticulos::LlenarTablas()
     // Tarifas
     //---------------------
     QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
-    modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margen_minimo, pvp,simbolo "
+    modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margen_minimo, pvp,pvp_con_iva,simbolo "
                          "from viewtarifa where id_articulo = "+QString::number(oArticulo->id),
                          Configuracion_global->groupDB);
     if (modelTarifa->lastError().isValid())
@@ -1500,11 +1537,12 @@ void FrmArticulos::LlenarTablas()
     modelTarifa->setHeaderData(5,Qt::Horizontal,tr("%MARG."));
     modelTarifa->setHeaderData(6,Qt::Horizontal,tr("%M. MÍN."));
     modelTarifa->setHeaderData(7,Qt::Horizontal,tr("PVP"));
-    modelTarifa->setHeaderData(8,Qt::Horizontal,tr("S"));
+    modelTarifa->setHeaderData(8,Qt::Horizontal,tr("PVP+IVA"));
+    modelTarifa->setHeaderData(9,Qt::Horizontal,tr("S"));
     ui->TablaTarifas->setItemDelegateForColumn(5, new MonetaryDelegate);
     ui->TablaTarifas->setItemDelegateForColumn(6, new MonetaryDelegate);
     ui->TablaTarifas->setItemDelegateForColumn(7, new MonetaryDelegate);
-
+    ui->TablaTarifas->setItemDelegateForColumn(8, new MonetaryDelegate);
     ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(0,0);
 
@@ -1523,7 +1561,9 @@ void FrmArticulos::LlenarTablas()
     ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(7,QHeaderView::Fixed);
     ui->TablaTarifas->horizontalHeader()->resizeSection(7,85);
     ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(8,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(8,20);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(8,85);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(9,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(9,20);
 //    //-----------------------
 //    // Proveedores frecuentes
 //    //-----------------------
@@ -1903,26 +1943,83 @@ void FrmArticulos::on_txtcoste_editingFinished()
 
 void FrmArticulos::on_btnBuscar_clicked()
 {
-    db_consulta_view consulta;
-    QStringList campos;
-    campos <<"codigo" <<"codigo_barras" << "codigo_fabricante"<< "descripcion" << "coste";
-    consulta.set_campoBusqueda(campos);
-    consulta.set_texto_tabla("articulos");
-    consulta.set_db("Maya");
-    consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste from articulos");
-    QStringList cabecera;
-    QVariantList tamanos;
-    cabecera  << tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste");
-    tamanos <<"0" << "100" << "100" << "100" << "300" <<"130";
-    consulta.set_headers(cabecera);
-    consulta.set_tamano_columnas(tamanos);
-    consulta.set_titulo("Busqueda de Artículos");
-    if(consulta.exec())
+    ui->txtBuscar->setText("");
+    ui->stackedWidget->setCurrentIndex(1);
+    ui->txtBuscar->setFocus();
+}
+
+void FrmArticulos::on_cboOrden_busquedas_currentIndexChanged(const QString &arg1)
+{
+    // busquedas << tr("Descripción") <<tr("Código") <<tr("Código Barras") <<tr("Ref. Proveedor");
+    if(arg1 == tr("Descripción"))
     {
-        int id = consulta.get_id();
-        oArticulo->Recuperar("select * from articulos where id="+QString::number(id));
-        LLenarCampos();
-        ui->botAnterior->setEnabled(true);
-        ui->botEditar->setEnabled(true);
-   }
+        modelArt->setQuery("select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa "
+                           " order by descripcion", Configuracion_global->groupDB);
+        ui->tabla->setModel(modelArt);
+        formato_tabla(modelArt);
+    } else if(arg1 == tr("Código"))
+    {
+        modelArt->setQuery("select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa "
+                           " order by codigo", Configuracion_global->groupDB);
+        ui->tabla->setModel(modelArt);
+        formato_tabla(modelArt);
+    } else if(arg1 == tr("Código Barras"))
+    {
+        modelArt->setQuery("select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa "
+                           " order by codigo_barras", Configuracion_global->groupDB);
+        ui->tabla->setModel(modelArt);
+        formato_tabla(modelArt);
+    } else if(arg1 == tr("Ref. Proveedor"))
+    {
+        modelArt->setQuery("select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa "
+                           " order by codigo_fabricante", Configuracion_global->groupDB);
+        ui->tabla->setModel(modelArt);
+        formato_tabla(modelArt);
+    }
+
+}
+
+void FrmArticulos::on_txtBuscar_textEdited(const QString &arg1)
+{
+        // busquedas << tr("Descripción") <<tr("Código") <<tr("Código Barras") <<tr("Ref. Proveedor");
+    QHash <QString, QString> lista;
+    lista[tr("Descripción")] = "descripcion";
+    lista[tr("Código")] = "codigo";
+    lista[tr("Código Barras")] = "codigo_barras";
+    lista[tr("Ref. Proveedor")] = "codigo_proveedor";
+
+    QString campo = lista.value(ui->cboOrden_busquedas->currentText());
+    QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa where "+
+             campo+" like '%"+arg1.trimmed()+"%'  order by "+campo;
+
+    modelArt->setQuery(cSQL,Configuracion_global->groupDB);
+    ui->tabla->setModel(modelArt);
+    formato_tabla(modelArt);
+}
+
+void FrmArticulos::on_tabla_clicked(const QModelIndex &index)
+{
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
+    oArticulo->Recuperar(id);
+    LLenarCampos();
+}
+
+void FrmArticulos::on_tabla_doubleClicked(const QModelIndex &index)
+{
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
+    oArticulo->Recuperar(id);
+    LLenarCampos();
+    ui->stackedWidget->setCurrentIndex(0);
+    ui->radEditar->setChecked(true);
+    ui->botEditar->setEnabled(true);
+
+
+}
+
+void FrmArticulos::on_radBuscar_toggled(bool checked)
+{
+    if(checked)
+        ui->stackedWidget->setCurrentIndex(1);
+    else
+        ui->stackedWidget->setCurrentIndex(0);
 }
