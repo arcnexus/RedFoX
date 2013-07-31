@@ -23,8 +23,7 @@ public:
     void hideButton(){toolButton.hide();}
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
 public slots:
-    void DesbloquerCampos();
-    void BloquearCampos();
+    void BloquearCampos(bool state);
     void LLenarCampos();
     void CargarCamposEnProveedor();
     void cargar_forma_pago(QString);
@@ -101,11 +100,23 @@ private slots:
 
     void on_txtcif_editingFinished();
 
+    void on_cboOrdenar_por_currentIndexChanged(const QString &arg1);
+
+    void on_radModo_busqueda_toggled(bool checked);
+
+    void on_txtBusqueda_textEdited(const QString &arg1);
+
+    void on_tabla_clicked(const QModelIndex &index);
+
+    void on_tabla_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::frmProveedores *ui;
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton *push;
+    QSqlQueryModel *model;
+    void formato_tabla(QSqlQueryModel *modelo);
 };
 
 #endif // FRMPROVEEDORES_H

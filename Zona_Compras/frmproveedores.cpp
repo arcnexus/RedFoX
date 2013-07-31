@@ -29,7 +29,7 @@ frmProveedores::frmProveedores(QWidget *parent) :
 {
     ui->setupUi(this);
     oProveedor->id = 0;
-    BloquearCampos();
+    BloquearCampos(true);
     ui->txtfecha_alta->setDate(QDate::currentDate());
     ui->txtfecha_ultima_compra->setDate(QDate::currentDate());
     //---------------------------
@@ -70,6 +70,21 @@ frmProveedores::frmProveedores(QWidget *parent) :
     // -----------------------
     ui->btnGuardarContacto->setVisible(false);
 
+    //------------------------
+    // Combo ordenar por
+    //------------------------
+    QStringList orden;
+    orden <<tr("Proveedor")<<tr("código") << tr("CIF") <<tr("Teléfono") << tr("Persona contacto");
+    ui->cboOrdenar_por->addItems(orden);
+
+    //---------------------------
+    // TABLA PRINCIPAL BUSQUEDAS
+    //---------------------------
+    model = new QSqlQueryModel(this);
+    QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by proveedor";
+    model->setQuery(cSQL,Configuracion_global->groupDB);
+    ui->tabla->setModel(model);
+    formato_tabla(model);
     // -----------------------
     // CONEXIONES
     //------------------------
@@ -252,87 +267,28 @@ void frmProveedores::cargar_forma_pago(QString codigo)
     ui->txtforma_pago->setText(Configuracion_global->Devolver_forma_pago(id_forma_pago));
     oProveedor->idFormadePago = id_forma_pago;
 }
-void frmProveedores::DesbloquerCampos()
+
+
+void frmProveedores::BloquearCampos(bool state)
 {
-    // LineEdit
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
+        lineEdit->setReadOnly(state);
     }
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
     QComboBox *ComboBox;
     foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
+        ComboBox->setEnabled(!state);
     }
     // SpinBox
-    //    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-    //    QSpinBox *SpinBox;
-    //    foreach (SpinBox, SpinBoxList) {
-    //        SpinBox->setReadOnly(false);
-    //        //qDebug() << lineEdit->objectName();
-    //    }
-    // DoubleSpinBox
-    //    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-    //    QDoubleSpinBox *DSpinBox;
-    //    foreach (DSpinBox, DSpinBoxList) {
-    //        DSpinBox->setReadOnly(false);
-    //        //qDebug() << lineEdit->objectName();
-    //    }
-    // CheckBox
-    QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
-    QCheckBox *CheckBox;
-    foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    // QTextEdit
-    QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
-    QTextEdit *TextEdit;
-    foreach (TextEdit,TextEditList) {
-        TextEdit->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // QDateEdit
-    QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
-    QDateEdit *DateEdit;
-    foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    ui->btnAnadir->setEnabled(false);
-    ui->btnAnterior->setEnabled(false);
-    ui->btnBorrar->setEnabled(false);
-    ui->btnBuscar->setEnabled(false);
-    ui->btnDeshacer->setEnabled(true);
-    ui->btnEditar->setEnabled(false);
-    ui->btnGuardar->setEnabled(true);
-    ui->btnSiguiente->setEnabled(false);
-}
-
-void frmProveedores::BloquearCampos()
-{
-    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
-    QLineEdit *lineEdit;
-    foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(true);
-    }
-    // ComboBox
-    QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
-    QComboBox *ComboBox;
-    foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(false);
-    }
-    //    // SpinBox
-    //    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-    //    QSpinBox *SpinBox;
-    //    foreach (SpinBox, SpinBoxList) {
-    //        SpinBox->setReadOnly(true);
-    //    }
-    //    // DoubleSpinBox
+        QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
+        QSpinBox *SpinBox;
+        foreach (SpinBox, SpinBoxList) {
+            SpinBox->setReadOnly(state);
+        }
+        // DoubleSpinBox
     //    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
     //    QDoubleSpinBox *DSpinBox;
     //    foreach (DSpinBox, DSpinBoxList) {
@@ -342,30 +298,32 @@ void frmProveedores::BloquearCampos()
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
     foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(false);
+        CheckBox->setEnabled(!state);
 
     }
     // QTextEdit
     QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
     QTextEdit *TextEdit;
     foreach (TextEdit,TextEditList) {
-        TextEdit->setReadOnly(true);
+        TextEdit->setReadOnly(state);
     }
     // QDateEdit
     QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(false);
+        DateEdit->setEnabled(!state);
     }
 
-    ui->btnAnadir->setEnabled(true);
-    ui->btnAnterior->setEnabled(true);
-    ui->btnBorrar->setEnabled(true);
-    ui->btnBuscar->setEnabled(true);
-    ui->btnDeshacer->setEnabled(false);
-    ui->btnEditar->setEnabled(true);
-    ui->btnGuardar->setEnabled(false);
-    ui->btnSiguiente->setEnabled(true);
+    ui->btnAnadir->setEnabled(state);
+    ui->btnAnterior->setEnabled(state);
+    ui->btnBorrar->setEnabled(state);
+    ui->btnBuscar->setEnabled(state);
+    ui->btnDeshacer->setEnabled(!state);
+    ui->btnEditar->setEnabled(state);
+    ui->btnGuardar->setEnabled(!state);
+    ui->btnSiguiente->setEnabled(state);
+    ui->cboOrdenar_por->setEnabled(state);
+    ui->txtBusqueda->setReadOnly(!state);
 
 }
 
@@ -383,7 +341,7 @@ void frmProveedores::on_btnAnterior_clicked()
     LLenarCampos();
 }
 
-void frmProveedores::                          on_btnGuardar_clicked()
+void frmProveedores::on_btnGuardar_clicked()
 {
     bool lGuardar = true;
     QString cTexto;
@@ -403,7 +361,7 @@ void frmProveedores::                          on_btnGuardar_clicked()
     {
         CargarCamposEnProveedor();
         oProveedor->Guardar();
-        BloquearCampos();
+        BloquearCampos(true);
     } else
     {
         QMessageBox::warning(this,tr("No se puede guardar, falta especificar datos"),cTexto,tr("Aceptar"));
@@ -412,7 +370,7 @@ void frmProveedores::                          on_btnGuardar_clicked()
 
 void frmProveedores::on_btnEditar_clicked()
 {
-    DesbloquerCampos();
+    BloquearCampos(false);
     ui->txtcodigo->setFocus();
 }
 
@@ -421,7 +379,7 @@ void frmProveedores::on_btnAnadir_clicked()
     oProveedor->Vaciar();
     oProveedor->Anadir();
     LLenarCampos();
-    DesbloquerCampos();
+    BloquearCampos(false);
     ui->txtcodigo->setFocus();
 }
 
@@ -522,7 +480,7 @@ void frmProveedores::on_btnDeshacer_clicked()
     if(ndev==1) {
         oProveedor->Recuperar("Select * from proveedores where id = "+QString::number(oProveedor->id));
         LLenarCampos();
-        BloquearCampos();
+        BloquearCampos(true);
     }
 }
 
@@ -1144,13 +1102,7 @@ void frmProveedores::borrar_contacto()
 
 void frmProveedores::on_btnBuscar_clicked()
 {
-    FrmBuscarProveedor frmBuscar(this);
-    if(frmBuscar.exec() == QDialog::Accepted)
-    {
-        int id_pro = frmBuscar.nidProv;
-        oProveedor->Recuperar("select * from proveedores where id = "+QString::number(id_pro));
-        this->LLenarCampos();
-    }
+    ui->radModo_busqueda->setChecked(true);
 }
 
 void frmProveedores::on_btnAnadirEntrega_clicked()
@@ -1177,4 +1129,112 @@ void frmProveedores::on_txtcif_editingFinished()
         ui->txtcif->setText(cif.toUpper());
     }
     blockSignals(false);
+}
+
+void frmProveedores::on_cboOrdenar_por_currentIndexChanged(const QString &arg1)
+{
+    //orden <<tr("Proveedor")<<tr("código") << tr("CIF") <<tr("Teléfono");
+
+
+    if(arg1 =="Proveedor")
+    {
+        model = new QSqlQueryModel(this);
+        QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by proveedor";
+
+        model->setQuery(cSQL,Configuracion_global->groupDB);
+        ui->tabla->setModel(model);
+    } else if (arg1 =="código")
+    {
+        model = new QSqlQueryModel(this);
+        QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by codigo";
+
+        model->setQuery(cSQL,Configuracion_global->groupDB);
+        ui->tabla->setModel(model);
+     } else if (arg1 =="CIF")
+    {
+        model = new QSqlQueryModel(this);
+        QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by cif";
+
+        model->setQuery(cSQL,Configuracion_global->groupDB);
+        ui->tabla->setModel(model);
+     }
+    else if (arg1 =="Teléfono")
+    {
+        model = new QSqlQueryModel(this);
+        QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by telefono1";
+
+        model->setQuery(cSQL,Configuracion_global->groupDB);
+        ui->tabla->setModel(model);
+     }
+    else if (arg1 =="Persona contacto")
+    {
+        model = new QSqlQueryModel(this);
+        QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by persona_contacto";
+
+        model->setQuery(cSQL,Configuracion_global->groupDB);
+        ui->tabla->setModel(model);
+     }
+    formato_tabla(model);
+
+
+
+}
+
+void frmProveedores::on_radModo_busqueda_toggled(bool checked)
+{
+    if(checked)
+        ui->stackedWidget->setCurrentIndex(1);
+    else
+        ui->stackedWidget->setCurrentIndex(0);
+}
+
+void frmProveedores::on_txtBusqueda_textEdited(const QString &arg1)
+{
+    QHash <QString, QString> h;
+    h["Proveedor"] = "proveedor";
+    h["código"] = "codigo";
+    h["CIF"] = "cif";
+    h["Teléfono"] = "telefono1";
+    h["Persona contacto"] = "persona_contacto";
+    QString campo = h.value(ui->cboOrdenar_por->currentText());
+
+    model = new QSqlQueryModel(this);
+    QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores "
+            "where " +campo+" like '%"+arg1.trimmed()+"%' order by "+campo;
+
+    model->setQuery(cSQL,Configuracion_global->groupDB);
+    ui->tabla->setModel(model);
+
+
+}
+
+void frmProveedores::formato_tabla(QSqlQueryModel *modelo)
+{
+    // id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto
+   QStringList titulos;
+   QVariantList tamanos;
+   titulos << tr("id") << tr("código") << tr("proveedor") << tr("cif") << tr("telefono1") << tr("fax");
+   titulos <<tr("Movil") << tr("Contacto");
+   tamanos << 0 << 120 << 300 << 120 << 120 << 120 <<120 <<250;
+
+   for(int i = 0;i<titulos.size();i++ )
+   {
+       ui->tabla->setColumnWidth(i,tamanos.at(i).toInt());
+       modelo->setHeaderData(i,Qt::Horizontal,titulos.at(i));
+   }
+}
+
+void frmProveedores::on_tabla_clicked(const QModelIndex &index)
+{
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
+    oProveedor->Recuperar(id);
+    LLenarCampos();
+}
+
+void frmProveedores::on_tabla_doubleClicked(const QModelIndex &index)
+{
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
+    oProveedor->Recuperar(id);
+    LLenarCampos();
+    ui->rad_Modo_edicion->setChecked(true);
 }

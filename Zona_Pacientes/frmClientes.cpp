@@ -1650,3 +1650,10 @@ void frmClientes::on_btnclear_clicked()
     on_txtBuscar_textEdited("");
     ui->txtBuscar->setFocus();
 }
+
+void frmClientes::on_tabla_busquedas_clicked(const QModelIndex &index)
+{
+    int id = ui->tabla_busquedas->model()->data(ui->tabla_busquedas->model()->index(index.row(),0),Qt::EditRole).toInt();
+    oCliente->Recuperar(id);
+    LLenarCampos();
+}

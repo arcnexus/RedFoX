@@ -114,6 +114,8 @@ private slots:
 
     void on_btnclear_clicked();
 
+    void on_tabla_busquedas_clicked(const QModelIndex &index);
+
 private:
     Ui::frmClientes *ui;
     QSqlQueryModel *modelFP;

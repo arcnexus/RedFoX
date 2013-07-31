@@ -76,8 +76,10 @@ signals:
 public slots:
     // Funcionamiento Base
     void Anadir();
+    void Recuperar(int id);
     void Recuperar(QString cSQL);
     void Recuperar(QString cSQL,int nProcede);
+    void Cargar(QSqlRecord &rProveedor);
     void Guardar();
     void Vaciar();
     void Borrar(int nid);

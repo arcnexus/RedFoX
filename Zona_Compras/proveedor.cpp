@@ -152,132 +152,54 @@ void Proveedor::Anadir()
     }
 }
 
-void Proveedor::Recuperar(QString cSQL)
+void Proveedor::Recuperar(int id)
 {
-    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(Configuracion_global->groupDB));
-   // QSqlQuery *qProveedor = new QSqlQuery(Configuracion_global->groupDB);
-    if(qProveedor->exec(cSQL)) {
-        if(qProveedor->next()) {
-            QSqlRecord rProveedor = qProveedor->record();
-            this->id = rProveedor.field("id").value().toInt();
-            this->codigo = rProveedor.field("codigo").value().toString();
-            this->proveedor = rProveedor.field("proveedor").value().toString();
-            this->cif = rProveedor.field("cif").value().toString();
-            this->direccion1 = rProveedor.field("direccion1").value().toString();
-            this->direccion2 = rProveedor.field("direccion2").value().toString();
-            this->cp = rProveedor.field("cp").value().toString();
-            this->poblacion = rProveedor.field("poblacion").value().toString();
-            this->provincia = rProveedor.field("provincia").value().toString();
-            this->id_pais = rProveedor.field("id_pais").value().toInt();
-            this->pais =  Configuracion_global->Devolver_pais(this->id_pais);
-            this->telefono1 = rProveedor.field("telefono1").value().toString();
-            this->telefono2 = rProveedor.field("telefono2").value().toString();
-            this->telefono3 = rProveedor.field("telefono3").value().toString();
-            this->fax = rProveedor.field("fax").value().toString();
-            this->movil = rProveedor.field("movil").value().toString();
-            this->email = rProveedor.field("email").value().toString();
-            this->web = rProveedor.field("web").value().toString();
-            this->persona_contacto = rProveedor.field("persona_contacto").value().toString();
-            this->dia_cobro = rProveedor.field("dia_cobro").value().toInt();
-            this->direccion_almacen = rProveedor.field("direccion_almacen").value().toString();
-            this->cp_almacen = rProveedor.field("cp_almacen").value().toString();
-            this->poblacion_almacen = rProveedor.field("poblacion_almacen").value().toString();
-            this->provincia_almacen = rProveedor.field("provincia_almacen").value().toString();
-            this->id_pais_almacen = rProveedor.field("id_pais_almacen").value().toInt();
-            this->paisAlmacen = Configuracion_global->Devolver_pais(this->id_pais_almacen);
-            this->telefono_almacen = rProveedor.field("telefono_almacen").value().toString();
-            this->fax_almacen = rProveedor.field("fax_almacen").value().toString();
-            this->idFormadePago = rProveedor.field("id_forma_pago").value().toInt();
-            this->codigoFormaPago = Configuracion_global->Devolver_codigo_forma_pago(this->idFormadePago);
-            this->fecha_ultima_compra = rProveedor.field("fecha_ultima_compra").value().toDate();
-            this->importe_acumulado_compras = rProveedor.field("importe_acumulado_compras").value().toDouble();
-            this->entidad_bancaria_proveedor = rProveedor.field("entidad_bancaria_proveedor").value().toString();
-            this->oficina_bancaria_proveedor = rProveedor.field("oficina_bancaria_proveedor").value().toString();
-            this->dc_proveedor = rProveedor.field("dc_proveedor").value().toString();
-            this->cc_proveedor = rProveedor.field("cc_proveedor").value().toString();
-            this->entidad_pago_proveedor = rProveedor.field("entidad_pago_proveedor").value().toString();
-            this->oficina_pago_proveedor = rProveedor.field("oficina_pago_proveedor").value().toString();
-            this->dc_pago_proveedor = rProveedor.field("dc_pago_proveedor").value().toString();
-            this->retencion_irpf = rProveedor.field("retencion_irpf").value().toDouble();
-            this->tipo_retencion = rProveedor.field("tipo_retencion").value().toInt();
-            this->cuenta_aplicacion = rProveedor.field("cuenta_aplicacion").value().toString();
-            this->comentarios = rProveedor.field("comentarios").value().toString();
-            this->dto = rProveedor.field("dto").value().toDouble();
-            this->fecha_alta = rProveedor.field("fecha_alta").value().toDate();
-            this->deuda_maxima = rProveedor.field("deuda_maxima").value().toDouble();
-            this->deuda_actual = rProveedor.field("deuda_actual").value().toDouble();
-            this->recargo_equivalencia = rProveedor.field("recargo_equivalencia").value().toInt();
-            this->texto_para_pedidos = rProveedor.field("texto_para_pedidos").value().toString();
-            this->entregado_a_cuenta = rProveedor.field("entregado_a_cuenta").value().toDouble();
+    QSqlQuery qProveedor;
+    QString cSQL = "Select * from proveedores where id = "+QString::number(id);
+    if(qProveedor.exec(cSQL)) {
+        if(qProveedor.next()) {
+            QSqlRecord rProveedor = qProveedor.record();
+            Cargar(rProveedor);
+        } else
+        {
+            TimedMessageBox * t;
+            t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No se encuentra el proveedor"));
 
-        } else {
-            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No se encuentra el proveedor"));
 
-            }
-
+        }
     } else
      QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Problema en la BD no se puede recuperar el proveedor Error: ")+
-                                 qProveedor->lastError().text() ,QObject::tr("Ok"));
+                                 qProveedor.lastError().text() ,QObject::tr("Ok"));
+    cargaracumulados(this->id);
+}
+
+void Proveedor::Recuperar(QString cSQL)
+{
+    QSqlQuery qProveedor;
+    if(qProveedor.exec(cSQL)) {
+        if(qProveedor.next()) {
+            QSqlRecord rProveedor = qProveedor.record();
+            Cargar(rProveedor);
+        } else
+        {
+            TimedMessageBox * t;
+            t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No se encuentra el proveedor"));
+
+
+        }
+    } else
+     QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Problema en la BD no se puede recuperar el proveedor Error: ")+
+                                 qProveedor.lastError().text() ,QObject::tr("Ok"));
     cargaracumulados(this->id);
 }
 
 void Proveedor::Recuperar(QString cSQL, int nProcede)
 {
-    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(Configuracion_global->groupDB));
-    //QSqlQuery *qProveedor = new QSqlQuery(Configuracion_global->groupDB);
-    if(qProveedor->exec(cSQL)) {
-        if(qProveedor->next()) {
-            QSqlRecord rProveedor = qProveedor->record();
-            this->id = rProveedor.field("id").value().toInt();
-            this->codigo = rProveedor.field("codigo").value().toString();
-            this->proveedor = rProveedor.field("proveedor").value().toString();
-            this->cif = rProveedor.field("cif").value().toString();
-            this->direccion1 = rProveedor.field("direccion1").value().toString();
-            this->direccion2 = rProveedor.field("direccion2").value().toString();
-            this->cp = rProveedor.field("cp").value().toString();
-            this->poblacion = rProveedor.field("poblacion").value().toString();
-            this->provincia = rProveedor.field("provincia").value().toString();
-            this->id_pais = rProveedor.field("id_pais").value().toInt();
-            this->pais =  Configuracion_global->Devolver_pais(this->id_pais);
-            this->telefono1 = rProveedor.field("telefono1").value().toString();
-            this->telefono2 = rProveedor.field("telefono2").value().toString();
-            this->telefono3 = rProveedor.field("telefono3").value().toString();
-            this->fax = rProveedor.field("fax").value().toString();
-            this->movil = rProveedor.field("movil").value().toString();
-            this->email = rProveedor.field("email").value().toString();
-            this->web = rProveedor.field("web").value().toString();
-            this->persona_contacto = rProveedor.field("persona_contacto").value().toString();
-            this->dia_cobro = rProveedor.field("dia_cobro").value().toInt();
-            this->direccion_almacen = rProveedor.field("direccion_almacen").value().toString();
-            this->cp_almacen = rProveedor.field("cp_almacen").value().toString();
-            this->poblacion_almacen = rProveedor.field("poblacion_almacen").value().toString();
-            this->provincia_almacen = rProveedor.field("provincia_almacen").value().toString();
-            this->id_pais_almacen = rProveedor.field("id_pais_almacen").value().toInt();
-            this->paisAlmacen = Configuracion_global->Devolver_pais(this->id_pais_almacen);
-            this->telefono_almacen = rProveedor.field("telefono_almacen").value().toString();
-            this->fax_almacen = rProveedor.field("fax_almacen").value().toString();
-            this->idFormadePago = rProveedor.field("id_forma_pago").value().toInt();
-            this->codigoFormaPago = Configuracion_global->Devolver_codigo_forma_pago(this->idFormadePago);
-            this->fecha_ultima_compra = rProveedor.field("fecha_ultima_compra").value().toDate();
-            this->importe_acumulado_compras = rProveedor.field("importe_acumulado_compras").value().toDouble();
-            this->entidad_bancaria_proveedor = rProveedor.field("entidad_bancaria_proveedor").value().toString();
-            this->oficina_bancaria_proveedor = rProveedor.field("oficina_bancaria_proveedor").value().toString();
-            this->dc_proveedor = rProveedor.field("dc_proveedor").value().toString();
-            this->cc_proveedor = rProveedor.field("cc_proveedor").value().toString();
-            this->entidad_pago_proveedor = rProveedor.field("entidad_pago_proveedor").value().toString();
-            this->oficina_pago_proveedor = rProveedor.field("oficina_pago_proveedor").value().toString();
-            this->dc_pago_proveedor = rProveedor.field("dc_pago_proveedor").value().toString();
-            this->retencion_irpf = rProveedor.field("retencion_irpf").value().toDouble();
-            this->tipo_retencion = rProveedor.field("tipo_retencion").value().toInt();
-            this->cuenta_aplicacion = rProveedor.field("cuenta_aplicacion").value().toString();
-            this->comentarios = rProveedor.field("comentarios").value().toString();
-            this->dto = rProveedor.field("dto").value().toDouble();
-            this->fecha_alta = rProveedor.field("fecha_alta").value().toDate();
-            this->deuda_maxima = rProveedor.field("deuda_maxima").value().toDouble();
-            this->deuda_actual = rProveedor.field("deuda_actual").value().toDouble();
-            this->recargo_equivalencia = rProveedor.field("recargo_equivalencia").value().toInt();
-            this->texto_para_pedidos = rProveedor.field("texto_para_pedidos").value().toString();
-            this->entregado_a_cuenta = rProveedor.field("entregado_a_cuenta").value().toDouble();
+    QSqlQuery qProveedor;
+    if(qProveedor.exec(cSQL)) {
+        if(qProveedor.next()) {
+            QSqlRecord rProveedor = qProveedor.record();
+            Cargar(rProveedor);
         } else {
             TimedMessageBox * t;
             switch (nProcede) {
@@ -291,16 +213,65 @@ void Proveedor::Recuperar(QString cSQL, int nProcede)
                   t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No se encuentra el proveedor"));
                 break;
             }
-            if (nProcede ==1) {
-
-            } else {
-
-            }
         }
     } else
      QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Problema en la BD no se puede recuperar el proveedor Error: ")+
-                                 qProveedor->lastError().text() ,QObject::tr("Ok"));
+                                 qProveedor.lastError().text() ,QObject::tr("Ok"));
     cargaracumulados(this->id);
+}
+
+void Proveedor::Cargar(QSqlRecord &rProveedor)
+{
+    this->id = rProveedor.field("id").value().toInt();
+    this->codigo = rProveedor.field("codigo").value().toString();
+    this->proveedor = rProveedor.field("proveedor").value().toString();
+    this->cif = rProveedor.field("cif").value().toString();
+    this->direccion1 = rProveedor.field("direccion1").value().toString();
+    this->direccion2 = rProveedor.field("direccion2").value().toString();
+    this->cp = rProveedor.field("cp").value().toString();
+    this->poblacion = rProveedor.field("poblacion").value().toString();
+    this->provincia = rProveedor.field("provincia").value().toString();
+    this->id_pais = rProveedor.field("id_pais").value().toInt();
+    this->pais = Configuracion_global->Devolver_pais(this->id_pais);
+    this->telefono1 = rProveedor.field("telefono1").value().toString();
+    this->telefono2 = rProveedor.field("telefono2").value().toString();
+    this->telefono3 = rProveedor.field("telefono3").value().toString();
+    this->fax = rProveedor.field("fax").value().toString();
+    this->movil = rProveedor.field("movil").value().toString();
+    this->email = rProveedor.field("email").value().toString();
+    this->web = rProveedor.field("web").value().toString();
+    this->persona_contacto = rProveedor.field("persona_contacto").value().toString();
+    this->dia_cobro = rProveedor.field("dia_cobro").value().toInt();
+    this->direccion_almacen = rProveedor.field("direccion_almacen").value().toString();
+    this->cp_almacen = rProveedor.field("cp_almacen").value().toString();
+    this->poblacion_almacen = rProveedor.field("poblacion_almacen").value().toString();
+    this->provincia_almacen = rProveedor.field("provincia_almacen").value().toString();
+    this->id_pais_almacen = rProveedor.field("id_pais_almacen").value().toInt();
+    this->paisAlmacen = Configuracion_global->Devolver_pais(this->id_pais_almacen);
+    this->telefono_almacen = rProveedor.field("telefono_almacen").value().toString();
+    this->fax_almacen = rProveedor.field("fax_almacen").value().toString();
+    this->idFormadePago = rProveedor.field("id_forma_pago").value().toInt();
+    this->codigoFormaPago = Configuracion_global->Devolver_codigo_forma_pago(this->idFormadePago);
+    this->fecha_ultima_compra = rProveedor.field("fecha_ultima_compra").value().toDate();
+    this->importe_acumulado_compras = rProveedor.field("importe_acumulado_compras").value().toDouble();
+    this->entidad_bancaria_proveedor = rProveedor.field("entidad_bancaria_proveedor").value().toString();
+    this->oficina_bancaria_proveedor = rProveedor.field("oficina_bancaria_proveedor").value().toString();
+    this->dc_proveedor = rProveedor.field("dc_proveedor").value().toString();
+    this->cc_proveedor = rProveedor.field("cc_proveedor").value().toString();
+    this->entidad_pago_proveedor = rProveedor.field("entidad_pago_proveedor").value().toString();
+    this->oficina_pago_proveedor = rProveedor.field("oficina_pago_proveedor").value().toString();
+    this->dc_pago_proveedor = rProveedor.field("dc_pago_proveedor").value().toString();
+    this->retencion_irpf = rProveedor.field("retencion_irpf").value().toDouble();
+    this->tipo_retencion = rProveedor.field("tipo_retencion").value().toInt();
+    this->cuenta_aplicacion = rProveedor.field("cuenta_aplicacion").value().toString();
+    this->comentarios = rProveedor.field("comentarios").value().toString();
+    this->dto = rProveedor.field("dto").value().toDouble();
+    this->fecha_alta = rProveedor.field("fecha_alta").value().toDate();
+    this->deuda_maxima = rProveedor.field("deuda_maxima").value().toDouble();
+    this->deuda_actual = rProveedor.field("deuda_actual").value().toDouble();
+    this->recargo_equivalencia = rProveedor.field("recargo_equivalencia").value().toInt();
+    this->texto_para_pedidos = rProveedor.field("texto_para_pedidos").value().toString();
+    this->entregado_a_cuenta = rProveedor.field("entregado_a_cuenta").value().toDouble();
 }
 
 
