@@ -1035,7 +1035,7 @@ void frmClientes::on_btnBorrar_clicked()
 
 void frmClientes::on_btnBuscar_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->radBuscar->setChecked(true);
 }
 
 void frmClientes::txtcp_editingFinished()

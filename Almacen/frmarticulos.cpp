@@ -1944,7 +1944,7 @@ void FrmArticulos::on_txtcoste_editingFinished()
 void FrmArticulos::on_btnBuscar_clicked()
 {
     ui->txtBuscar->setText("");
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->radBuscar->setChecked(true);
     ui->txtBuscar->setFocus();
 }
 
