@@ -20,6 +20,7 @@ public:
     double saldo;
 
 
+
 signals:
     
 public slots:

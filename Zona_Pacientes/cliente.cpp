@@ -174,7 +174,6 @@ void Cliente::Guardar() {
         cuenta.activo = true;
         cuenta.codigo_cta = this->codigo_cliente;
         cuenta.descripcion = this->nombre_fiscal;
-        cuenta.codigo_balance = "ABIII1";
         cuenta.saldo = 0;
         bool succes = cuenta.anadir_cuenta();
         if(!succes)
