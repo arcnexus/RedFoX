@@ -18,6 +18,14 @@ public:
     QString desglose_balance;
     QString afecta_a;
     double saldo;
+    QString cif_nif;
+    double saldo_debe;
+    double saldo_haber;
+    QString direccion;
+    QString poblacion;
+    QString provincia;
+    QString pais;
+
 
 
 

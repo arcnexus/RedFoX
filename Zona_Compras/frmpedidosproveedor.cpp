@@ -82,8 +82,24 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
 
 
     ui->btn_cerrar->setVisible(showCerrar);
+    //----------------------------
+    // lleno combo orden busquedas
+    //----------------------------
+    QStringList lista;
+    lista << tr("pedido") <<tr("fecha") <<tr("recepción") <<tr("codigo_proveedor") <<tr("proveedor");
+    lista << tr("cif/nif");
+    ui->cboOrdenar_por->addItems(lista);
 
-    pedido.get(0);
+
+    //----------------------------
+    // lleno tabla
+    //----------------------------
+    model = new QSqlQueryModel(this);
+    model->setQuery("select pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
+                    Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
+    ui->tabla->setModel(model);
+
+    //pedido.get(0);
 
 }
 
@@ -531,7 +547,7 @@ void FrmPedidosProveedor::llenar_campos()
     this->id =oPedido_proveedor->id;
   //  helper.set_id_cabecera(oPedido_proveedor->id);
     ui->txtpedido->setText(QString::number(oPedido_proveedor->pedido));
-    ui->lblSerie->setText(QString::number(oPedido_proveedor->ejercicio));
+  //  ui->lblSerie->setText(QString::number(oPedido_proveedor->ejercicio));
     ui->lblnumero_pedido->setText(QString::number(oPedido_proveedor->pedido));
     ui->lblnombreProveedor->setText(oPedido_proveedor->proveedor);
     ui->txtfecha->setDate(oPedido_proveedor->fecha);
@@ -602,7 +618,7 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
 {
     oPedido_proveedor->id = this->id;
     oPedido_proveedor->pedido = ui->lblnumero_pedido->text().toInt();
-    oPedido_proveedor->ejercicio = ui->lblSerie->text().toInt();
+   // oPedido_proveedor->ejercicio = ui->lblSerie->text().toInt();
     oPedido_proveedor->proveedor = ui->txtproveedor->text();
     oPedido_proveedor->fecha = ui->txtfecha->date();
     oPedido_proveedor->recepcion =ui->txtfechaRecepcion->date();
@@ -662,7 +678,7 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
 void FrmPedidosProveedor::clear()
 {
     ui->txtpedido->clear();
-    ui->lblSerie->clear();
+   // ui->lblSerie->clear();
     ui->txtfecha->clear();
     ui->txtFechaLimite->clear();
     ui->txtcodigo_proveedor->clear();
@@ -717,7 +733,7 @@ void FrmPedidosProveedor::clear()
     ui->txttotal4->clear();
     ui->lblnombreProveedor->clear();
     ui->lblnumalb->clear();
-    ui->lblSerie->clear();
+  //  ui->lblSerie->clear();
     ui->lblnumero_pedido->clear();
 }
 
@@ -770,4 +786,17 @@ void FrmPedidosProveedor::cargar_tabla_entregas()
 void FrmPedidosProveedor::on_btnImprimir_clicked()
 {
     Configuracion_global->imprimir(false,true,this);
+}
+
+void FrmPedidosProveedor::on_radBusqueda_toggled(bool checked)
+{
+    if(checked)
+        ui->stackedWidget->setCurrentIndex(1);
+    else
+        ui->stackedWidget->setCurrentIndex(0);
+}
+
+void FrmPedidosProveedor::on_cboOrdenar_por_currentIndexChanged(const QString &arg1)
+{
+
 }

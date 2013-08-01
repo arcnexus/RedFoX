@@ -3,27 +3,46 @@
 Cuentas_contables::Cuentas_contables(QObject *parent) :
     QObject(parent)
 {
-
+    id =0;
+    activo = true;
+    saldo =0;
+    saldo_debe= 0;
+    saldo_haber=0;
 }
 
 bool Cuentas_contables::anadir_cuenta()
 {
-    QSqlQuery query_cuentas(Configuracion_global->contaDB);
-    query_cuentas.prepare("INSERT INTO plan_general "
-                          "(codigo_cta,descripcion,activo saldo) "
-                          "VALUES (:codigo_cta,:descripcion,:activo,:saldo);");
-    query_cuentas.bindValue(":codigo_cta",this->codigo_cta);
-    query_cuentas.bindValue(":descripcion",this->descripcion);
-    query_cuentas.bindValue(":activo",this->activo);
-    query_cuentas.bindValue(":saldo",this->saldo);
-    if(!query_cuentas.exec())
+//    QSqlQuery query_cuentas(Configuracion_global->contaDB);
+//    query_cuentas.prepare("INSERT INTO plan_general "
+//                          "(codigo_cta,descripcion,activo,saldo) "
+//                          "VALUES (:codigo_cta,:descripcion,:activo,:saldo);");
+//    query_cuentas.bindValue(":codigo_cta",this->codigo_cta);
+//    query_cuentas.bindValue(":descripcion",this->descripcion);
+//    query_cuentas.bindValue(":activo",this->activo);
+//    query_cuentas.bindValue(":saldo",this->saldo);
+    QString _error;
+    QHash <QString,QVariant> h;
+    h["codigo_cta"] = this->codigo_cta;
+    h["descripcion"] = this->descripcion;
+    h["activo"] = this->activo;
+    h["saldo"] = this->saldo;
+    h["cif_nif"] = this->cif_nif;
+    h["saldo_debe"]=this->saldo_debe;
+    h["saldo_haber"] = this->saldo_haber;
+    h["direccion"] = this->direccion;
+    h["poblacion"] = this->poblacion;
+    h["provincia"] = this->provincia;
+    h["pais"] = this->pais;
+
+    int id = SqlCalls::SqlInsert(h,"plan_general",Configuracion_global->contaDB,_error);
+    if(!id >0 )
     {
         QMessageBox::warning(qApp->activeWindow(),tr("Añadir cuentas contables"),
-                             tr("Falló la inserción de la cuenta contable: %1").arg(query_cuentas.lastError().text()));
+                             tr("Falló la inserción de la cuenta contable: %1").arg(_error));
         return false;
     } else
     {
-        this->id = query_cuentas.lastInsertId().toInt();
+        this->id = id;
         return true;
     }
 }

@@ -175,9 +175,22 @@ void Cliente::Guardar() {
         cuenta.codigo_cta = this->codigo_cliente;
         cuenta.descripcion = this->nombre_fiscal;
         cuenta.saldo = 0;
-        bool succes = cuenta.anadir_cuenta();
-        if(!succes)
-            transaccion = false;
+        //-----------------------------------------------------
+        // Busca la subcuenta y si no existe la crea como nueva
+        //-----------------------------------------------------
+        QVariant field;
+        QString _error;
+        QStringList clausulas;
+        clausulas.append("codigo_cta = "+this->codigo_cliente);
+
+        field = SqlCalls::SelectOneField("plan_general","codigo_cta",clausulas,
+                                         Configuracion_global->contaDB,_error);
+
+        if(field.toString().isEmpty()) {
+            bool succes = cuenta.anadir_cuenta();
+            if(!succes)
+                transaccion = false;
+        }
 
     }
     if(transaccion)

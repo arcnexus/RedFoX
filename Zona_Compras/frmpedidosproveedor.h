@@ -60,6 +60,10 @@ private slots:
     void cargar_tabla_entregas();
     void on_btnImprimir_clicked();
 
+    void on_radBusqueda_toggled(bool checked);
+
+    void on_cboOrdenar_por_currentIndexChanged(const QString &arg1);
+
 private:
 
 
@@ -80,6 +84,7 @@ private:
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* shortCut;
+    QSqlQueryModel *model;
 };
 
 #endif // FRMPEDidOSPROVEEDOR_H

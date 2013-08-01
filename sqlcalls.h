@@ -66,6 +66,8 @@ public:
     static QMap<int,QSqlRecord> SelectRecord(QString table,QStringList clausulas, QSqlDatabase database, QString &error);
     static QMap<int,QSqlRecord> SelectRecord(QString table,QString clausulas, QSqlDatabase database, QString &error);
 
+
+
     static int SqlInsert(QHash<QString,QVariant> values, QString table, QSqlDatabase database, QString& error);
 
     static bool SqlUpdate(QHash<QString,QVariant> values, QString table, QSqlDatabase database, QStringList clausulas, QString& error);
@@ -73,6 +75,7 @@ public:
 
     static bool SqlDelete(QString table, QSqlDatabase database, QStringList clausulas, QString& error);
     static bool SqlDelete(QString table, QSqlDatabase database, QString clausula, QString& error);
+    static QVariant SelectOneField(QString table, QString field, QStringList clausulas, QSqlDatabase database, QString &error);
 };
 
 #endif // SQLCALLS_H

@@ -56,6 +56,38 @@ QMap<int, QSqlRecord> SqlCalls::SelectRecord(QString table, QString clausulas, Q
     return SelectRecord(table,l,database,error);
 }
 
+QVariant SqlCalls::SelectOneField(QString table, QString field, QStringList clausulas, QSqlDatabase database, QString &error)
+{
+    QString query;
+    QTextStream s(&query);
+
+    s << "SELECT "<< field << " FROM " << table;
+    if(!clausulas.isEmpty())
+    {
+        s << " WHERE ";
+        QStringListIterator i(clausulas);
+        while (i.hasNext())
+        {
+            QString aux = i.next();
+            s << aux;
+            if(i.hasNext())
+                s<< " AND ";
+        }
+    }
+    s<<";";
+    QSqlQuery q(database);
+    q.prepare(query);
+    QVariant campo;
+    if(q.exec())
+    {
+        while (q.next())
+            campo = q.record().value(field);
+    }
+    else
+        error = q.lastError().text();
+    return campo;
+}
+
 
 QStringList SqlCalls::SelectList(QString table, QString column,QStringList clausulas, QSqlDatabase database, QString &error)
 {
