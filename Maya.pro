@@ -163,7 +163,8 @@ SOURCES += main.cpp\
     Zona_Contabilidad/frmcuadro_cuentas.cpp \
     Zona_Contabilidad/cuentas_contables.cpp \
     Almacen/tipostarifa.cpp \
-    Zona_Administrador/addgroupfrom.cpp
+    Zona_Administrador/addgroupfrom.cpp \
+    Almacen/frminventario.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -291,7 +292,8 @@ HEADERS  += mainwindow.h \
     Zona_Contabilidad/frmcuadro_cuentas.h \
     Zona_Contabilidad/cuentas_contables.h \
     Almacen/tipostarifa.h \
-    Zona_Administrador/addgroupfrom.h
+    Zona_Administrador/addgroupfrom.h \
+    Almacen/frminventario.h
 
 
 
@@ -356,7 +358,8 @@ FORMS    += mainwindow.ui \
     TPV/configmonedatpv.ui \
     Zona_Administrador/frmusuarios.ui \
     Zona_Contabilidad/frmcuadro_cuentas.ui \
-    Zona_Administrador/addgroupfrom.ui
+    Zona_Administrador/addgroupfrom.ui \
+    Almacen/frminventario.ui
 
 RESOURCES += \
     maya.qrc

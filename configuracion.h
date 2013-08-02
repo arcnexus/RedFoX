@@ -152,6 +152,7 @@ public:
     QString devolver_transportista(int id);
     int devolver_id_transportista(QString transportista);
     QSqlTableModel* client_model;
+    int devolver_id_tabla(QSqlQueryModel *model, QModelIndex index);
     void CargarClientes();
 
     QSqlTableModel* usuarios_model;

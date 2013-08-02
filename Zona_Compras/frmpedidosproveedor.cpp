@@ -95,10 +95,10 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     // lleno tabla
     //----------------------------
     model = new QSqlQueryModel(this);
-    model->setQuery("select pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
+    model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
                     Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
     ui->tabla->setModel(model);
-
+    formatotabla(model);
     //pedido.get(0);
 
 }
@@ -441,6 +441,8 @@ void FrmPedidosProveedor::bloquearcampos(bool estado)
     ui->botBuscarCliente->setEnabled(!estado);
     helper.blockTable(estado);
     // activo controles que deben estar activos.
+    ui->cboOrdenar_por->setEnabled(estado);
+    ui->txtBuscar->setReadOnly(!estado);
 
 
 }
@@ -799,4 +801,62 @@ void FrmPedidosProveedor::on_radBusqueda_toggled(bool checked)
 void FrmPedidosProveedor::on_cboOrdenar_por_currentIndexChanged(const QString &arg1)
 {
 
+}
+
+void FrmPedidosProveedor::on_txtBuscar_textEdited(const QString &arg1)
+{
+    QHash <QString,QString> h;
+    h[tr("pedido")] ="pedido";
+    h[tr("fecha")] = "fecha";
+    h[tr("recepción")] = "recepcion";
+    h[tr("codigo_proveedor")] ="codigo_proveedor";
+    h[tr("proveedor")] = "proveedor";
+
+    QString orden = h.value(ui->cboOrdenar_por->currentText());
+
+    model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
+                    Configuracion_global->cEjercicio+" and "+orden+ " like '%"+arg1+ "%' order by "+orden,Configuracion_global->empresaDB);
+    formatotabla(model);
+}
+
+void FrmPedidosProveedor::formatotabla(QSqlQueryModel *model)
+{
+    QStringList columnas;
+    QVariantList sizes;
+    columnas <<"id" << tr("Pedido") << tr("Fecha") <<tr("F.Recepción") <<tr("Cif/Nif") <<tr("Código") <<tr("Proveedor");
+    sizes <<0 << 120 << 100 <<100 << 120 <<120 <<300;
+    for(int cnt =0;cnt<columnas.length();cnt++)
+    {
+        model->setHeaderData(cnt,Qt::Horizontal,columnas.at(cnt));
+        ui->tabla->setColumnWidth(cnt,sizes.at(cnt).toInt());
+
+    }
+    ui->tabla->setColumnHidden(0,true);
+}
+
+
+void FrmPedidosProveedor::on_tabla_doubleClicked(const QModelIndex &index)
+{
+    QSqlQueryModel* mymodel = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+    int id = Configuracion_global->devolver_id_tabla(mymodel,index);
+    oPedido_proveedor->recuperar("select * from ped_pro where id =" +QString::number(id));
+    llenar_campos();
+    ui->radEdicion->setChecked(true);
+
+}
+
+void FrmPedidosProveedor::on_tabla_clicked(const QModelIndex &index)
+{
+    QSqlQueryModel *model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+    int id = Configuracion_global->devolver_id_tabla(model,index);
+    oPedido_proveedor->recuperar("select * from ped_pro where id =" +QString::number(id));
+    llenar_campos();
+
+}
+
+void FrmPedidosProveedor::on_btnBuscar_clicked()
+{
+    ui->txtBuscar->clear();
+    ui->radBusqueda->setChecked(true);
+    ui->txtBuscar->setFocus();
 }

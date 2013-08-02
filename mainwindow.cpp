@@ -486,6 +486,14 @@ void MainWindow::loadAlmacenModules(QSplashScreen* splash)
     else
         Articulos->deleteLater();
 
+    splash->showMessage(tr("Cargando modulos... Modulo de articulos") );
+    frmInventario* Inventario = new frmInventario(this);
+    if(Inventario->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _almacenModules.append(Inventario);
+    }
+    else
+        Inventario->deleteLater();
     DivisionAlmacenExt* x = new DivisionAlmacenExt(this);
     if(!x->Extensions().isEmpty())
         _almacenExtensions.append(x);

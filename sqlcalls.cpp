@@ -80,11 +80,11 @@ QVariant SqlCalls::SelectOneField(QString table, QString field, QStringList clau
     QVariant campo;
     if(q.exec())
     {
-        while (q.next())
+        if (q.next())
             campo = q.record().value(field);
     }
     else
-        error = q.lastError().text();
+        error = "No se encuentra";
     return campo;
 }
 

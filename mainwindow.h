@@ -21,6 +21,7 @@
 #include "../Almacen/frmarticulos.h"
 #include "../Almacen/frmtipostarifa.h"
 #include "../Almacen/divisionalmacenext.h"
+#include "../Almacen/frminventario.h"
 
 #include "../Zona_Compras/frmproveedores.h"
 #include "../Zona_Compras/frmpedidosproveedor.h"

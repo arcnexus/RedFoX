@@ -2494,7 +2494,6 @@ color: rgb(0, 64, 64);</string>
       </layout>
       <zorder>label_18</zorder>
       <zorder>lblnumero_pedido</zorder>
-      <zorder>lblnumero_pedido</zorder>
       <zorder>tabWidget_2</zorder>
       <zorder>label_21</zorder>
       <zorder>lblnombreProveedor</zorder>

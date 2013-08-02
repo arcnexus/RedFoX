@@ -660,6 +660,13 @@ int Configuracion::devolver_id_transportista(QString transportista)
 
 }
 
+int Configuracion::devolver_id_tabla(QSqlQueryModel *model, QModelIndex index)
+{
+    int id = model->data(model->index(index.row(),0),Qt::EditRole).toInt();
+    return id;
+
+}
+
 void Configuracion::CargarClientes()
 {
     if(client_model == 0)
