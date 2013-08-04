@@ -9,6 +9,11 @@ frmInventario::frmInventario(QWidget *parent) :
   shortCut(new QPushButton(QIcon(":/Icons/PNG/inventario.png"),"",this))
 {
     ui->setupUi(this);
+    QSqlTableModel * m = new QSqlTableModel(this,Configuracion_global->groupDB);
+    m->setTable("inventario");
+    m->select();
+    ui->tabla->setModel(m);
+
 }
 
 frmInventario::~frmInventario()
