@@ -2,6 +2,7 @@
 #define FRMINVENTARIO_H
 
 #include "../mayamodule.h"
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class frmInventario;
@@ -22,11 +23,16 @@ public:
     QString ModuleMenuPath(){return tr("");}
     void hideButton(){toolButton.hide();}
     QPushButton* wantShortCut(bool& ok){ok = true; return shortCut;}
+private slots:
+    void on_txtBuscar_textEdited(const QString &arg1);
+
 private:
     Ui::frmInventario *ui;
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* shortCut;
+    void formato_tabla(QSqlTableModel *modelo);
+    QSqlTableModel * m;
 };
 
 #endif // FRMINVENTARIO_H
