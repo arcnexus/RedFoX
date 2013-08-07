@@ -3,6 +3,7 @@
 #include "albaran.h"
 #include "../Zona_Pacientes/cliente.h"
 #include "../Busquedas/db_consulta_view.h"
+#include "../Auxiliares/datedelegate.h"
 //
 #include "../Almacen/articulo.h"
 
@@ -69,25 +70,31 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
 
     connect(ui->chklporc_rec,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
 
-//    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where albaran > -1 order by albaran  limit 1 "))
-//    {
-//        LLenarCampos();
-//        QString filter = QString("id_Cab = '%1'").arg(oAlbaran->id);
-//        helper.fillTable("empresa","lin_alb",filter);
-//    }
-//    else
-//    {
-        VaciarCampos();
-        ui->btn_borrar->setEnabled(false);
-        ui->btnEditar->setEnabled(false);
-        ui->btnFacturar->setEnabled(false);
-        ui->btnSiguiente->setEnabled(false);
-        ui->btnAnterior->setEnabled(false);
-        ui->btnImprimir->setEnabled(false);
-        ui->btnBuscar->setEnabled(true);
-        oAlbaran->id = -1;
-        ui->btnSiguiente->setEnabled(true);
-  //  }
+    VaciarCampos();
+    ui->btn_borrar->setEnabled(false);
+    ui->btnEditar->setEnabled(false);
+    ui->btnFacturar->setEnabled(false);
+    ui->btnSiguiente->setEnabled(false);
+    ui->btnAnterior->setEnabled(false);
+    ui->btnImprimir->setEnabled(false);
+    ui->btnBuscar->setEnabled(true);
+    oAlbaran->id = -1;
+    ui->btnSiguiente->setEnabled(true);
+    //--------------
+    // llenar tabla
+    //--------------
+    m = new QSqlQueryModel(this);
+    m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb order by albaran desc",Configuracion_global->empresaDB);
+    ui->tabla->setModel(m);
+    formato_tabla();
+
+    //--------------------
+    // llenar cboBusqueda
+    //--------------------
+    QStringList dbIndex;
+    dbIndex << tr("Albarán") <<tr("Fecha") <<tr("cif") <<tr("cliente");
+    ui->cboOrden->addItems(dbIndex);
+
 }
 
 FrmAlbaran::~FrmAlbaran()
@@ -334,6 +341,8 @@ void FrmAlbaran::BloquearCampos(bool state)
     ui->btnAnadirLinea->setEnabled(!state);
     ui->btn_borrarLinea->setEnabled(!state);
     ui->btn_borrar->setEnabled(state);
+    ui->cboOrden->setEnabled(state);
+    ui->txtBuscar->setReadOnly(!state);
 
     helper.blockTable(state);
 }
@@ -808,4 +817,32 @@ void FrmAlbaran::on_btnImprimir_clicked()
 
         }
     }
+}
+
+void FrmAlbaran::on_radBusqueda_toggled(bool checked)
+{
+    if(checked)
+        ui->stackedWidget->setCurrentIndex(1);
+    else
+        ui->stackedWidget->setCurrentIndex(0);
+}
+
+void FrmAlbaran::formato_tabla()
+{
+    // id,albaran,fecha,cif,cliente
+    QStringList headers;
+    QVariantList sizes;
+    headers << "id" << tr("Albarán") <<tr("fecha") <<tr("cif") <<tr("cliente");
+    sizes << 0 << 120 << 120 <<120 <<300;
+    for(int i = 0; i <headers.length();i++)
+    {
+        ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
+        m->setHeaderData(i,Qt::Horizontal,headers.at(i));
+    }
+    ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
+}
+
+void FrmAlbaran::on_cboOrden_currentIndexChanged(const QString &arg1)
+{
+
 }

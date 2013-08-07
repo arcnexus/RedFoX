@@ -24,9 +24,7 @@
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(165, 179, 255);
-
-</string>
+   <string notr="true">background-color: rgb(165, 179, 255);</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_14">
    <property name="leftMargin">

@@ -62,6 +62,10 @@ private slots:
 
     void on_btnImprimir_clicked();
 
+    void on_radBusqueda_toggled(bool checked);
+
+    void on_cboOrden_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;
@@ -72,6 +76,8 @@ private:
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* push;
+    QSqlQueryModel *m;
+    void formato_tabla();
 };
 
 #endif // FRMALBARAN_H

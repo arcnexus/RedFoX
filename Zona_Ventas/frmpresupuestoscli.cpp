@@ -108,6 +108,21 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
         ui->btnBuscar->setEnabled(true);
         ui->btnImprimir->setEnabled(false);
 //    }
+        //-----------------------
+        // tabla
+        //-----------------------
+        m = new QSqlQueryModel(this);
+        m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by presupuesto desc",
+                    Configuracion_global->empresaDB);
+        ui->tabla->setModel(m);
+        formato_tabla();
+
+        //------------------------
+        // orden
+        //------------------------
+        QStringList orden;
+        orden << tr("presupuesto") <<tr("cliente") << tr("teléfono");
+        ui->cboOrdenar_por->addItems(orden);
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
@@ -432,6 +447,8 @@ void FrmPresupuestosCli::BloquearCampos(bool state)
     ui->btn_borrarLinea->setEnabled(!state);
     ui->botBuscarCliente->setEnabled(!state);
     ui->txtpresupuesto->setReadOnly(true);
+    ui->txtBuscar->setReadOnly(!state);
+    ui->cboOrdenar_por->setEnabled(state);
 }
 
 void FrmPresupuestosCli::on_chklAprovado_stateChanged(int arg1)
@@ -902,4 +919,75 @@ void FrmPresupuestosCli::on_btnImprimir_clicked()
 
         }
     }
+}
+
+
+
+void FrmPresupuestosCli::on_radBusqueda_toggled(bool checked)
+{
+    if(checked)
+        ui->stackedWidget->setCurrentIndex(1);
+    else
+        ui->stackedWidget->setCurrentIndex(0);
+}
+
+void FrmPresupuestosCli::on_cboOrdenar_por_currentIndexChanged(const QString &arg1)
+{
+    //orden << tr("presupuesto") <<tr("cliente") << tr("teléfono")
+    QHash <QString,QString> h;
+    h[tr("presupuesto")] = "presupuesto";
+    h[tr("cliente")] = "cliente";
+    h[tr("teléfono")] = "telefono";
+    QString orden = h.value(ui->cboOrdenar_por->currentText());
+    if(orden == tr("presupuesto"))
+        m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by presupuesto desc",
+                Configuracion_global->empresaDB);
+    else
+        m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by "+orden,
+                    Configuracion_global->empresaDB);
+
+}
+
+void FrmPresupuestosCli::formato_tabla()
+{
+    QStringList headers;
+    QVariantList sizes;
+    headers << "id" << tr("presupuesto") << tr("fecha") <<tr("teléfono") <<tr("movil")  <<tr("cliente");
+    sizes << 0 << 120 << 120 << 120 << 120 << 550;
+    for(int i = 0; i < headers.length();i++)
+    {
+        ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
+        m->setHeaderData(i,Qt::Horizontal,headers.at(i));
+    }
+}
+
+void FrmPresupuestosCli::on_txtBuscar_textEdited(const QString &arg1)
+{
+    QHash <QString,QString> h;
+    h[tr("presupuesto")] = "presupuesto";
+    h[tr("cliente")] = "cliente";
+    h[tr("teléfono")] = "telefono";
+    QString orden = h.value(ui->cboOrdenar_por->currentText());
+    m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre where "+orden+
+                " like '%"+arg1+"%' order by "+orden+" desc",
+            Configuracion_global->empresaDB);
+}
+
+void FrmPresupuestosCli::on_tabla_clicked(const QModelIndex &index)
+{
+    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+    int id = Configuracion_global->devolver_id_tabla(model,index);
+    oPres->RecuperarPresupuesto("select * from cab_pre where id ="+QString::number(id));
+    LLenarCampos();
+
+}
+
+void FrmPresupuestosCli::on_tabla_doubleClicked(const QModelIndex &index)
+{
+    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+    int id = Configuracion_global->devolver_id_tabla(model,index);
+    oPres->RecuperarPresupuesto("select * from cab_pre where id ="+QString::number(id));
+    LLenarCampos();
+    ui->radEdicion->setChecked(true);
+    BloquearCampos(true);
 }

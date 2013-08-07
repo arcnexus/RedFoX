@@ -6,6 +6,7 @@
 
 #include "../Busquedas/db_consulta_view.h"
 #include "../Zona_Ventas/factura.h"
+#include"../Auxiliares/datedelegate.h"
 
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
@@ -86,24 +87,40 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
     ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
 
-    if(oPedido->RecuperarPedido("Select * from ped_cli where pedido > -1 order by pedido  limit 1 "))
-    {
-        LLenarCampos();
-        QString filter = QString("id_Cab = '%1'").arg(ui->txtpedido->text());
-        helper.fillTable("empresa","lin_ped",filter);
-    }
-    else
-    {
-        VaciarCampos();
-        ui->btn_borrar->setEnabled(false);
-        ui->btnEditar->setEnabled(false);
-        ui->btn_convertir->setEnabled(false);
-        ui->btnSiguiente->setEnabled(false);
-        ui->btnAnterior->setEnabled(false);
-        ui->btnImprimir->setEnabled(false);
-        ui->btnBuscar->setEnabled(false);
-        oPedido->id = -1;
-    }
+//    if(oPedido->RecuperarPedido("Select * from ped_cli where pedido > -1 order by pedido  limit 1 "))
+//    {
+//        LLenarCampos();
+//        QString filter = QString("id_Cab = '%1'").arg(ui->txtpedido->text());
+//        helper.fillTable("empresa","lin_ped",filter);
+//    }
+//    else
+//    {
+//        VaciarCampos();
+//        ui->btn_borrar->setEnabled(false);
+//        ui->btnEditar->setEnabled(false);
+//        ui->btn_convertir->setEnabled(false);
+//        ui->btnSiguiente->setEnabled(false);
+//        ui->btnAnterior->setEnabled(false);
+//        ui->btnImprimir->setEnabled(false);
+//        ui->btnBuscar->setEnabled(false);
+
+//        oPedido->id = -1;
+//    }
+
+    //--------------
+    // LLenar tabla
+    //--------------
+    m = new QSqlQueryModel(this);
+    m->setQuery("select id, pedido, fecha, cliente from ped_cli order by pedido desc",Configuracion_global->empresaDB);
+    ui->tabla->setModel(m);
+    formato_tabla();
+
+    //-------------
+    // ordenar por
+    //-------------
+    QStringList order;
+    order << tr("Pedido") <<tr("Cliente") <<tr("Fecha");
+    ui->cboordenar->addItems(order);
 }
 
 FrmPedidos::~FrmPedidos()
@@ -347,6 +364,9 @@ void FrmPedidos::BloquearCampos(bool state)
     ui->botBuscarCliente->setEnabled(!state);
     ui->txtpedido->setReadOnly(true);
     ui->btn_borrar->setEnabled(state);
+    ui->txtBuscar->setReadOnly(!state);
+    ui->cboordenar->setEnabled(state);
+    ui->txtBuscar->setFocus();
 }
 
 void FrmPedidos::LLenarPedido()
@@ -425,6 +445,21 @@ void FrmPedidos::LLenarPedido()
     oPedido->entregado=ui->chkentregado->isChecked();
     oPedido->fecha_limite_entrega=ui->txtfecha_limite_entrega->date();
     oPedido->total_pedido=ui->txttotal->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();;
+}
+
+void FrmPedidos::formato_tabla()
+{
+    // id, pedido, fecha, cliente
+    QStringList headers;
+    QVariantList size;
+    headers << "id" <<tr("Pedido") << tr("fecha") <<tr("cliente");
+    size <<0 <<120 <<120 <<300;
+    for(int i = 0;i<headers.length();i++)
+    {
+        ui->tabla->setColumnWidth(i,size.at(i).toInt());
+        m->setHeaderData(i,Qt::Horizontal,headers.at(i));
+    }
+    ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
 }
 
 void FrmPedidos::on_btnSiguiente_clicked()
@@ -981,4 +1016,63 @@ void FrmPedidos::on_btnImprimir_clicked()
 
         }
     }
+}
+
+void FrmPedidos::on_radBusqueda_toggled(bool checked)
+{
+    if(checked)
+        ui->stackedWidget->setCurrentIndex(1);
+    else
+        ui->stackedWidget->setCurrentIndex(0);
+
+}
+
+void FrmPedidos::on_cboordenar_currentIndexChanged(const QString &arg1)
+{
+    if(arg1 == tr("Clientes"))
+       m->setQuery("select id, pedido, fecha, cliente from ped_cli order by "+arg1,Configuracion_global->empresaDB);
+    else
+       m->setQuery("select id, pedido, fecha, cliente from ped_cli order by "+arg1+" desc",Configuracion_global->empresaDB);
+}
+
+void FrmPedidos::on_txtBuscar_textEdited(const QString &arg1)
+{
+    //  tr("Pedido") <<tr("Cliente") <<tr("Fecha")
+    QHash <QString,QString> h;
+    h[tr("Pedido")] = "pedido";
+    h[tr("Cliente")] = "cliente";
+    h[tr("Fecha")] = "fecha";
+    QString order = h.value(ui->cboordenar->currentText());
+    if(order == "pedido" || order == "fecha")
+        m->setQuery("select id, pedido, fecha, cliente from ped_cli "
+                    "where "+order+" like '%" + arg1.trimmed() + "%' order by "+order+" desc",Configuracion_global->empresaDB);
+    else
+        m->setQuery("select id, pedido, fecha, cliente from ped_cli "
+                    "where "+order+" like '%" + arg1.trimmed() + "%' order by "+order,Configuracion_global->empresaDB);
+
+
+}
+
+void FrmPedidos::on_tabla_clicked(const QModelIndex &index)
+{
+    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+    int id = Configuracion_global->devolver_id_tabla(model,index);
+    oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(id));
+    LLenarCampos();
+    BloquearCampos(true);
+}
+
+void FrmPedidos::on_tabla_doubleClicked(const QModelIndex &index)
+{
+    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+    int id = Configuracion_global->devolver_id_tabla(model,index);
+    oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(id));
+    LLenarCampos();
+    ui->radEdicion->setChecked(true);
+    BloquearCampos(true);
+}
+
+void FrmPedidos::on_btnBuscar_clicked()
+{
+    ui->radBusqueda->setChecked(true);
 }

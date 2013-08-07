@@ -64,6 +64,18 @@ private slots:
 
     void on_btnImprimir_clicked();
 
+    void on_radBusqueda_toggled(bool checked);
+
+    void on_cboordenar_currentIndexChanged(const QString &arg1);
+
+    void on_txtBuscar_textEdited(const QString &arg1);
+
+    void on_tabla_clicked(const QModelIndex &index);
+
+    void on_tabla_doubleClicked(const QModelIndex &index);
+
+    void on_btnBuscar_clicked();
+
 private:
     Ui::frmPedidos *ui;
 
@@ -72,6 +84,7 @@ private:
     void VaciarCampos();
     void BloquearCampos(bool state);
     void LLenarPedido();
+    void formato_tabla();
 
     Table_Helper helper;
     QAction * aAlbaran_action;
@@ -83,6 +96,7 @@ private:
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* push;
+    QSqlQueryModel *m;
 };
 
 #endif // FRMPEDidOS_H
