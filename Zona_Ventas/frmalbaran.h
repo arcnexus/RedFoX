@@ -66,6 +66,14 @@ private slots:
 
     void on_cboOrden_currentIndexChanged(const QString &arg1);
 
+    void on_tabla_clicked(const QModelIndex &index);
+
+    void on_tabla_doubleClicked(const QModelIndex &index);
+
+    void on_btnBuscar_clicked();
+
+    void on_txtBuscar_textEdited(const QString &arg1);
+
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;

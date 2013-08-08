@@ -94,6 +94,10 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     QStringList dbIndex;
     dbIndex << tr("Albarán") <<tr("Fecha") <<tr("cif") <<tr("cliente");
     ui->cboOrden->addItems(dbIndex);
+    ui->radBusqueda->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(1);
+
+    ui->txtBuscar->setFocus();
 
 }
 
@@ -844,5 +848,60 @@ void FrmAlbaran::formato_tabla()
 
 void FrmAlbaran::on_cboOrden_currentIndexChanged(const QString &arg1)
 {
+    //<< tr("Albarán") <<tr("Fecha") <<tr("cif") <<tr("cliente");
+    QHash <QString,QString> h;
+    h[tr("Albarán")] = "albaran";
+    h[tr("Fecha")] = "fecha";
+    h[tr("cif")] = "cif";
+    h[tr("cliente")] = "cliente";
+    QString order = h.value(arg1);
+    if(order =="cliente" || order =="cif")
+        m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb order by "+order,Configuracion_global->empresaDB);
+    else
+        m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb order by "+order +" desc",Configuracion_global->empresaDB);
+
+}
+
+void FrmAlbaran::on_tabla_clicked(const QModelIndex &index)
+{
+    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+    int id = Configuracion_global->devolver_id_tabla(model,index);
+    oAlbaran->RecuperarAlbaran("select * from cab_alb where id ="+QString::number(id));
+    LLenarCampos();
+    BloquearCampos(true);
+}
+
+void FrmAlbaran::on_tabla_doubleClicked(const QModelIndex &index)
+{
+    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+    int id = Configuracion_global->devolver_id_tabla(model,index);
+    oAlbaran->RecuperarAlbaran("select * from cab_alb where id ="+QString::number(id));
+    LLenarCampos();
+    BloquearCampos(true);
+    ui->radEdicion->setChecked(true);
+}
+
+void FrmAlbaran::on_btnBuscar_clicked()
+{
+    ui->radBusqueda->setChecked(true);
+}
+
+void FrmAlbaran::on_txtBuscar_textEdited(const QString &arg1)
+{
+    //<< tr("Albarán") <<tr("Fecha") <<tr("cif") <<tr("cliente");
+    QHash <QString,QString> h;
+    h[tr("Albarán")] = "albaran";
+    h[tr("Fecha")] = "fecha";
+    h[tr("cif")] = "cif";
+    h[tr("cliente")] = "cliente";
+    QString order = h.value(ui->cboOrden->currentText());
+
+
+    if(order =="cliente" || order =="cif")
+        m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb where "+order+" like '%"+arg1.trimmed()+
+                    "%' order by "+order,Configuracion_global->empresaDB);
+    else
+        m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb where "+order+"like '%"+arg1.trimmed()+
+                    "%' order by "+order +" desc",Configuracion_global->empresaDB);
 
 }

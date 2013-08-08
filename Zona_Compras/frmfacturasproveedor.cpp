@@ -68,6 +68,13 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     ui->lblFacturaPagada->setVisible(false);
     ui->lblIRPF_4->setVisible(false);
     ui->lblproveedor->setText("");
+    //-----------
+    //  tabla
+    //-----------
+    m = new QSqlQueryModel(this);
+    m->setQuery("select id,factura,fecha,cif_proveedor,proveedor from fac_pro order by factura desc",
+                Configuracion_global->empresaDB);
+    ui->tabla->setModel(m);
 }
 
 FrmFacturasProveedor::~FrmFacturasProveedor()
@@ -598,32 +605,14 @@ void FrmFacturasProveedor::on_btnListados_clicked()
 
 void FrmFacturasProveedor::on_btnBuscar_clicked()
 {
-    db_consulta_view busca_factura;
-    busca_factura.set_db("empresa");
-    QStringList cCampo,cCabecera;
-    QVariantList vTamanos;
-    cCampo << "factura" << "proveedor";
-    cCabecera <<"Albarán" << "Fecha" << "Proveedor" << "Total";
-    vTamanos << 0 << 120 << 130 << 250 <<120;
-    busca_factura.set_SQL("Select id, factura,fecha, proveedor,total from fac_pro");
-    busca_factura.set_campoBusqueda(cCampo);
-    busca_factura.set_headers(cCabecera);
-
-    busca_factura.set_tamano_columnas(vTamanos);
-    busca_factura.set_texto_tabla(tr("Busqueda de facturas de proveedor"));
-    busca_factura.set_titulo("Busquedas....");
-    if(busca_factura.exec() == QMessageBox::Accepted)
-    {
-        int id_alb = busca_factura.get_id();
-        oFacPro->recuperar_factura(id_alb);
-        llenar_campos();
-
-        ui->btnAnterior->setEnabled(true);
-        ui->btnImprimir->setEnabled(true);
-    } else
-    {
-        QMessageBox::warning(this,tr("Búsqueda de facturas"),
-                             tr("No se localizó o no se especifico ningún albarán "), tr("Aceptar"));
-    }
+    ui->radBusqueda->setChecked(true);
 }
 
+
+void FrmFacturasProveedor::on_radBusqueda_toggled(bool checked)
+{
+    if(checked)
+        ui->stackedWidget->setCurrentIndex(1);
+    else
+        ui->stackedWidget->setCurrentIndex(0);
+}

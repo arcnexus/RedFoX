@@ -60,6 +60,16 @@ private slots:
 
     void on_tabWidget_2_currentChanged(int index);
 
+    void on_radBusqueda_toggled(bool checked);
+
+    void on_cboOrdenar_por_currentIndexChanged(const QString &arg1);
+
+    void on_txtBuscar_textEdited(const QString &arg1);
+
+    void on_tabla_clicked(const QModelIndex &index);
+
+    void on_tabla_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::FrmAlbaranProveedor *ui;
     Table_Helper helper;
@@ -71,6 +81,8 @@ private:
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* push;
+    QSqlQueryModel *m;
+    void formato_tabla();
 signals:
 
 };

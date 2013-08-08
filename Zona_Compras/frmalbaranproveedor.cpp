@@ -83,6 +83,25 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     ui->lblNumFactura->setVisible(false);
     ui->txtfecha_factura->setVisible(false);
     ui->txtcNumFra->setVisible(false);
+
+    //----------------------
+    // Modelo Tabla
+    //----------------------
+    m = new QSqlQueryModel(this);
+    m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by albaran desc",Configuracion_global->empresaDB);
+    ui->tabla->setModel(m);
+    formato_tabla();
+
+    //-----------------------
+    // Combo indices
+    //-----------------------
+    QStringList order;
+    order << tr("albarán") << tr("fecha") <<tr("cif/nif") <<tr("Proveedor");
+    ui->cboOrdenar_por->addItems(order);
+
+
+
+
 }
 
 FrmAlbaranProveedor::~FrmAlbaranProveedor()
@@ -196,7 +215,25 @@ void FrmAlbaranProveedor::bloquearcampos(bool estado)
     ui->btnFacturar->setEnabled(!estado);
     helper.blockTable(estado);
     // activo controles que deben estar activos.
+    ui->txtBuscar->setReadOnly(!estado);
+    ui->cboOrdenar_por->setEnabled(estado);
 
+
+}
+
+void FrmAlbaranProveedor::formato_tabla()
+{
+    //albaran,fecha,cif_proveedor,proveedor
+    QStringList headers;
+    headers <<"id" <<tr("Albarán") <<tr("fecha") <<tr("CIF/NIF") <<tr("Proveedor");
+    QVariantList sizes;
+    sizes << 0 << 120 << 120 << 120 <<300;
+    for(int i = 0; i<headers.length();i++)
+    {
+        ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
+        m->setHeaderData(i,Qt::Horizontal,headers.at(i));
+    }
+    ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
 
 }
 
@@ -584,34 +621,9 @@ void FrmAlbaranProveedor::guardar_campos_en_objeto()
 
 void FrmAlbaranProveedor::on_btnBuscar_clicked()
 {
-    db_consulta_view busca_albaran;
-    busca_albaran.set_db("empresa");
-    QStringList cCampo,cCabecera;
-    QVariantList vTamanos;
-    cCampo << "albaran" << "proveedor";
-    cCabecera <<"Albarán" << "Fecha" << "Proveedor" << "Total";
-    vTamanos << 0 << 120 << 130 << 250 <<120;
-    busca_albaran.set_SQL("Select id, albaran,fecha, proveedor,total from alb_pro");
-    busca_albaran.set_campoBusqueda(cCampo);
-    busca_albaran.set_headers(cCabecera);
+    ui->radBusqueda->setChecked(true);
+    ui->txtBuscar->setFocus();
 
-    busca_albaran.set_tamano_columnas(vTamanos);
-    busca_albaran.set_texto_tabla(tr("Busqueda de Albaranes de proveedor"));
-    busca_albaran.set_titulo("Busquedas....");
-    if(busca_albaran.exec() == QMessageBox::Accepted)
-    {
-        int id_alb = busca_albaran.get_id();
-        oAlbPro->Recuperar(id_alb);
-        llenar_campos();
-
-        ui->btnAnterior->setEnabled(true);
-        ui->btnBorrar->setEnabled(true);
-        ui->btnImprimir->setEnabled(true);
-    } else
-    {
-        QMessageBox::warning(this,tr("Búsqueda de albaranes"),
-                             tr("No se localizó o no se especifico ningún albarán "), tr("Aceptar"));
-    }
     helper.resizeTable();
 }
 
@@ -677,4 +689,62 @@ void FrmAlbaranProveedor::on_btnAnadirEntrega_clicked()
 void FrmAlbaranProveedor::on_tabWidget_2_currentChanged(int)
 {
     helper.resizeTable();
+}
+
+void FrmAlbaranProveedor::on_radBusqueda_toggled(bool checked)
+{
+    if(checked)
+        ui->stackedWidget->setCurrentIndex(1);
+    else
+        ui->stackedWidget->setCurrentIndex(0);
+}
+
+void FrmAlbaranProveedor::on_cboOrdenar_por_currentIndexChanged(const QString &arg1)
+{
+    QHash <QString,QString> h;
+    h[tr("albarán")] = "albaran";
+    h[tr("fecha")] = "fecha";
+    h[tr("cif/nif")] = "cif_proveedor";
+    h[tr("Proveedor")] = "proveedor";
+    QString order = h.value(arg1);
+    if (order == "albaran" || order =="fecha")
+        m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by "+order+" desc",Configuracion_global->empresaDB);
+    else
+        m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by "+order,Configuracion_global->empresaDB);
+}
+
+void FrmAlbaranProveedor::on_txtBuscar_textEdited(const QString &arg1)
+{
+    QHash <QString,QString> h;
+    h[tr("albarán")] = "albaran";
+    h[tr("fecha")] = "fecha";
+    h[tr("cif/nif")] = "cif_proveedor";
+    h[tr("Proveedor")] = "proveedor";
+    QString order = h.value(ui->cboOrdenar_por->currentText());
+    if (order == "albaran" || order =="fecha")
+        m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro "
+                    "where "+order+" like '%"+arg1.trimmed()+"%' order by "+order+" desc",Configuracion_global->empresaDB);
+    else
+        m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro "
+                    "where "+order+" like '%"+arg1.trimmed()+"%' order by "+order,Configuracion_global->empresaDB);
+
+}
+
+void FrmAlbaranProveedor::on_tabla_clicked(const QModelIndex &index)
+{
+    QSqlQueryModel *model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+    int id = Configuracion_global->devolver_id_tabla(model,index);
+    oAlbPro->Recuperar(id);
+    llenar_campos();
+
+}
+
+void FrmAlbaranProveedor::on_tabla_doubleClicked(const QModelIndex &index)
+{
+    QSqlQueryModel *model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+    int id = Configuracion_global->devolver_id_tabla(model,index);
+    oAlbPro->Recuperar(id);
+    llenar_campos();
+    bloquearcampos(true);
+    ui->radEdicion->setChecked(true);
 }

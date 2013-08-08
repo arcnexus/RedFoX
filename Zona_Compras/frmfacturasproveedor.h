@@ -58,6 +58,8 @@ private slots:
     void on_btnBuscar_clicked();
     void resizeTable(int x);
 
+    void on_radBusqueda_toggled(bool checked);
+
 private:
     Ui::FrmFacturasProveedor *ui;
     Table_Helper helper;
@@ -66,6 +68,7 @@ private:
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* push;
+    QSqlQueryModel *m;
 signals:
 
 };
