@@ -11,6 +11,7 @@ public:
     int id;
     int presupuesto;
     QDate fecha;
+    int ejercicio;
     QDate valido_hasta;
     int id_cliente;
     QString codigo_cliente;

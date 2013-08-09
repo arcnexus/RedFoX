@@ -88,6 +88,8 @@ private slots:
 
     void on_tabla_doubleClicked(const QModelIndex &index);
 
+    void on_btn_convertir_clicked();
+
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;
@@ -102,6 +104,8 @@ private:
     QAction menuButton;
     QPushButton* push;
     QSqlQueryModel *m;
+    TimedMessageBox *t;
+
     void formato_tabla();
 };
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1063</width>
-    <height>627</height>
+    <height>656</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -98,7 +98,7 @@ background-color: rgb(0, 0, 58);</string>
    <item row="1" column="0" colspan="3">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_2">
@@ -2424,7 +2424,6 @@ background-color: rgb(248, 245, 194);</string>
   </layout>
   <zorder>label_67</zorder>
   <zorder>stackedWidget</zorder>
-  <zorder>label_38</zorder>
   <zorder>frame</zorder>
   <zorder>horizontalSpacer_7</zorder>
  </widget>

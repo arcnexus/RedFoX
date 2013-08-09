@@ -530,17 +530,21 @@ color: rgb(0, 0, 127);</string>
                </item>
                <item row="1" column="0" colspan="3">
                 <widget class="QTableWidget" name="Lineas">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(255, 255, 219);</string>
+                 </property>
                  <property name="horizontalScrollBarPolicy">
                   <enum>Qt::ScrollBarAsNeeded</enum>
                  </property>
                  <property name="alternatingRowColors">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="selectionMode">
                   <enum>QAbstractItemView::SingleSelection</enum>
                  </property>
                  <property name="selectionBehavior">
-                  <enum>QAbstractItemView::SelectItems</enum>
+                  <enum>QAbstractItemView::SelectRows</enum>
                  </property>
                  <property name="gridStyle">
                   <enum>Qt::DotLine</enum>

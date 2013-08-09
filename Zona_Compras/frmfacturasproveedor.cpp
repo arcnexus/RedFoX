@@ -1,6 +1,8 @@
 #include "frmfacturasproveedor.h"
 #include "ui_frmfacturasproveedor.h"
 #include "../Busquedas/db_consulta_view.h"
+#include "../Auxiliares/monetarydelegate.h"
+#include "../Auxiliares/datedelegate.h"
 
 FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     MayaModule(module_zone(),module_name(),parent),
@@ -72,9 +74,17 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     //  tabla
     //-----------
     m = new QSqlQueryModel(this);
-    m->setQuery("select id,factura,fecha,cif_proveedor,proveedor from fac_pro order by factura desc",
+    m->setQuery("select id,factura,fecha,pedido,cif_proveedor,telefono,proveedor,total from fac_pro order by factura desc",
                 Configuracion_global->empresaDB);
     ui->tabla->setModel(m);
+
+    formato_tabla();
+    //-------------------
+    // orden de busqueda
+    //-------------------
+    QStringList orders;
+    orders << tr("Factura") << tr("Fecha") << tr("Pedido") << tr("Proveedor") <<tr("Teléfono") << tr("Total");
+    ui->cboOrden->addItems(orders);
 }
 
 FrmFacturasProveedor::~FrmFacturasProveedor()
@@ -289,6 +299,8 @@ void FrmFacturasProveedor::bloquearcampos(bool state)
 
     ui->btn_borrarLinea->setEnabled(!state);
     ui->botBuscarCliente->setEnabled(!state);
+    ui->txtBuscar->setReadOnly(!state);
+    ui->cboOrden->setEnabled(state);
     helper.blockTable(state);
     // activo controles que deben estar activos.
 
@@ -615,4 +627,78 @@ void FrmFacturasProveedor::on_radBusqueda_toggled(bool checked)
         ui->stackedWidget->setCurrentIndex(1);
     else
         ui->stackedWidget->setCurrentIndex(0);
+}
+
+void FrmFacturasProveedor::on_cboOrden_currentIndexChanged(const QString &arg1)
+{
+    //<< tr("Factura") << tr("Fecha") << tr("Pedido") << tr("Proveedor") <<tr("Teléfono") << tr("Total");
+    QHash <QString,QString> h;
+    h[tr("Factura")] = "factura";
+    h[tr("Fecha")] ="fecha";
+    h[tr("Pedido")] = "pedido";
+    h[tr("Proveedor")] = "proveedor";
+    h[tr("Teléfono")] = "telefono";
+    h[tr("Total")] = "total";
+    QString order = h.value(arg1);
+    if(order =="factura" || order =="pedido" || order =="fecha")
+        m->setQuery("select id,factura,fecha,pedido,cif_proveedor,telefono,proveedor,total from fac_pro order by "+order+" desc",
+                Configuracion_global->empresaDB);
+    else
+        m->setQuery("select id,factura,fecha,pedido,cif_proveedor,telefono,proveedor,total from fac_pro order by "+order,
+                Configuracion_global->empresaDB);
+
+}
+
+void FrmFacturasProveedor::formato_tabla()
+{
+    // select id,factura,fecha,pedido,cif_proveedor,telefono,proveedor,total
+    QStringList headers;
+    headers << "id" << tr("Factura") <<tr("Fecha") <<tr("Pedido") << tr("Cif") <<tr("Teléfono") <<tr("Proveedor")<< tr("Total");
+    QVariantList sizes;
+    sizes << 0 << 120 << 120 << 120 << 120 << 120 << 350 << 120;
+    for(int i = 0; i< headers.length(); i++)
+    {
+        ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
+        m->setHeaderData(i,Qt::Horizontal,headers.at(i));
+    }
+    ui->tabla->setColumnHidden(0,true);
+    ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tabla->setItemDelegateForColumn(7, new MonetaryDelegate);
+}
+
+void FrmFacturasProveedor::on_txtBuscar_textEdited(const QString &arg1)
+{
+    //<< tr("Factura") << tr("Fecha") << tr("Pedido") << tr("Proveedor") <<tr("Teléfono") << tr("Total");
+    QHash <QString,QString> h;
+    h[tr("Factura")] = "factura";
+    h[tr("Fecha")] ="fecha";
+    h[tr("Pedido")] = "pedido";
+    h[tr("Proveedor")] = "proveedor";
+    h[tr("Teléfono")] = "telefono";
+    h[tr("Total")] = "total";
+    QString order = h.value(ui->cboOrden->currentText());
+    if (order == "factura" || order =="fecha")
+        m->setQuery("select id,factura,fecha,pedido,cif_proveedor,telefono,proveedor,total from fac_pro "
+                    "where "+order+" like '%"+arg1.trimmed()+"%' order by "+order+" desc",Configuracion_global->empresaDB);
+    else
+        m->setQuery("select id,factura,fecha,pedido,cif_proveedor,telefono,proveedor,total from fac_pro "
+                    "where "+order+" like '%"+arg1.trimmed()+"%' order by "+order,Configuracion_global->empresaDB);
+}
+
+void FrmFacturasProveedor::on_tabla_clicked(const QModelIndex &index)
+{
+    QSqlQueryModel *model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+    int id = Configuracion_global->devolver_id_tabla(model,index);
+    oFacPro->recuperar_factura(id);
+    llenar_campos();
+}
+
+void FrmFacturasProveedor::on_tabla_doubleClicked(const QModelIndex &index)
+{
+    QSqlQueryModel *model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+    int id = Configuracion_global->devolver_id_tabla(model,index);
+    oFacPro->recuperar_factura(id);
+    llenar_campos();
+    bloquearcampos(true);
+    ui->radEdicion->setChecked(true);
 }

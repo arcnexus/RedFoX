@@ -33,7 +33,7 @@ bool Presupuesto::AnadirPresupuesto()
                     "lugar_entrega, atencion_de, base1, base2, base3, base4, porc_iva1, porc_iva2, porc_iva3,"
                     "porc_iva4, iva1, iva2, iva3, iva4, porc_rec1, porc_rec2,"
                     "porc_rec3, porc_rec4, rec1, rec2, rec3, rec4, total1,"
-                    "total2, total3, total4, recargo_equivalencia, email, total_iva, total_recargo) "
+                    "total2, total3, total4, recargo_equivalencia, email, total_iva, total_recargo,ejercicio) "
                     "VALUES"
                     "(:presupuesto, :fecha, :valido_hasta,"
                     ":id_cliente, :codigo_cliente, :cliente, :cif, :direccion1, :direccion2, :cp,"
@@ -43,7 +43,7 @@ bool Presupuesto::AnadirPresupuesto()
                     ":lugar_entrega, :atencion_de, :base1, :base2, :base3, :base4, :porc_iva1, :porc_iva2, :porc_iva3,"
                     ":porc_iva4, :iva1, :iva2, :iva3, :iva4, :porc_rec1, :porc_rec2,"
                     ":porc_rec3, :porc_rec4, :rec1, :rec2, :rec3, :rec4, :total1,"
-                    ":total2, :total3, :total4, :recargo_equivalencia, :email, :total_iva, :total_recargo)");
+                    ":total2, :total3, :total4, :recargo_equivalencia, :email, :total_iva, :total_recargo,:ejercicio)");
 
     cab_pre.bindValue(":presupuesto",presupuesto);
     cab_pre.bindValue(":fecha",fecha);
@@ -134,6 +134,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->id = registro.field("id").value().toInt();
             this->presupuesto = registro.field("presupuesto").value().toInt();
             this->fecha = registro.field("fecha").value().toDate();
+            this->ejercicio = registro.field("ejercicio").value().toInt();
             this->valido_hasta = registro.field("valido_hasta").value().toDate();
             this->id_cliente = registro.field("id_cliente").value().toInt();
             this->codigo_cliente= registro.field("codigo_cliente").value().toString();

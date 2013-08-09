@@ -95,7 +95,7 @@ background-color: rgb(0, 0, 57);</string>
    <item row="1" column="0" colspan="8">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="paginaedicion">
       <layout class="QGridLayout" name="gridLayout_27">
