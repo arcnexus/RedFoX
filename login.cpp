@@ -21,7 +21,10 @@ Login::Login(QWidget *parent) :
     connect(ui->Crearconfiguracin,SIGNAL(clicked()),this,SLOT(Crearconfiguracion_clicked()));
 
     if (! QFile::exists(qApp->applicationDirPath()+"/MayaConfig.ini")){
-        Crearconfiguracion_clicked();
+        frmConfigmaya frmConf;
+        frmConf.hideButton();
+        if(frmConf.exec()==QDialog::Accepted)
+            TimedMessageBox * t = new TimedMessageBox(this,tr("Configuración inicial realizada con éxito"));
     }
 
     if(Configuracion_global->CargarDatosBD())

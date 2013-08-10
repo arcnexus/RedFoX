@@ -76,6 +76,7 @@ public:
     static bool SqlDelete(QString table, QSqlDatabase database, QStringList clausulas, QString& error);
     static bool SqlDelete(QString table, QSqlDatabase database, QString clausula, QString& error);
     static QVariant SelectOneField(QString table, QString field, QStringList clausulas, QSqlDatabase database, QString &error);
+    static QVariant SelectOneField(QString table, QString field, QString clausulas, QSqlDatabase database, QString &error);
 };
 
 #endif // SQLCALLS_H

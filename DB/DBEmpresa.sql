@@ -2,6 +2,17 @@ DROP SCHEMA IF EXISTS `@empresa@` ;
 
 CREATE SCHEMA IF NOT EXISTS `@empresa@` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 
+CREATE  TABLE IF NOT EXISTS `@empresa@`.`report` (
+  `report_id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `report_name` TEXT NOT NULL ,
+  `report_descrip` TEXT NULL DEFAULT NULL ,
+  `report_source` TEXT NOT NULL ,
+  `report_grade` INT(11) NOT NULL ,
+  PRIMARY KEY (`report_id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`acum_articulos` (
   `id_articulo` INT(11) NOT NULL ,
   `unid_comp_enero` INT(11) NULL DEFAULT NULL ,

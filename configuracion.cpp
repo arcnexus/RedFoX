@@ -1,11 +1,6 @@
 #include "../Auxiliares/Globlal_Include.h"
 
-#include "openrptLibs/include/orprerender.h"
-#include "openrptLibs/include/parameteredit.h"
-#include "openrptLibs/include/orprintrender.h"
-#include "openrptLibs/include/previewdialog.h"
-#include "openrptLibs/include/renderobjects.h"
-#include "openrptLibs/include/dbfiledialog.h"
+#include "../EditorReports/reportrenderer.h"
 
 //#include "SOAP/soapcheckVatBindingProxy.h"
 //#include "SOAP/checkVatBinding.nsmap"
@@ -969,282 +964,6 @@ QString Configuracion::letraDNI(QString Nif)
     }
 }
 
-void Configuracion::imprimir(bool toPDF,bool preview, QWidget *parent)
-{
-    QSqlDatabase db = QSqlDatabase::database("Reports");
-    if(db.isValid()) {
-        DBFileDialog rptDiag;
-        rptDiag.setWindowTitle(tr("Load Report from Database"));
-        rptDiag._name->setReadOnly(true);
-        rptDiag._grade->setEnabled(false);
-        if(rptDiag.exec() == QDialog::Accepted) {
-            QDomDocument doc;
-            QString errMsg;
-            int errLine, errCol;
-            QString source = rptDiag.getSource();
-            source.replace("@empresa@",Configuracion_global->nombre_bd_empresa);
-            source.replace("@grupo@",Configuracion_global->group_DBName);
-            if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
-                ORPreRender pre(db);
-                pre.setDom(doc);
-
-                ParameterEdit paramEdit(0);
-                ParameterList pl;
-                QDialog *dlgEdit = ParameterEdit::ParameterEditDialog(&paramEdit, parent);
-                if (paramEdit.setDocument(doc))
-                    if (dlgEdit->exec() != QDialog::Accepted)
-                        return;
-                   // pl = paramEdit.getParameterList();
-
-
-                pre.setParamList(paramEdit.getParameterList());
-                ORODocument * doc = pre.generate();
-
-                if(doc)
-                {
-                    QPrinter printer(QPrinter::HighResolution);
-                    if(preview)
-                    {
-                        PreviewDialog preview (doc, &printer, parent);
-                        if (preview.exec() == QDialog::Rejected)
-                            return;
-                    }
-                    ORPrintRender render;
-                    render.setupPrinter(doc, &printer);
-
-                    if(printer.printerName().isEmpty())
-                    {
-                        QPrintDialog pd(&printer);
-                        if(pd.exec() != QDialog::Accepted)
-                        {
-                            qDebug() << "no printer, can't preview";
-                            return; // no printer, can't preview
-                        }
-                    }
-
-                    if(toPDF)
-                    {
-                        QString output = QFileDialog::getSaveFileName(parent);
-
-                        if(output.isEmpty())
-                            return;
-
-                        if ( QFileInfo( output ).suffix().isEmpty() )
-                            output.append(".pdf");
-
-                        ORPrintRender::exportToPDF(doc, output );
-                    }
-                    else
-                    {
-                        QPrintDialog pd(&printer);
-                        pd.setMinMax(1, doc->pages());
-                        if(pd.exec() == QDialog::Accepted)
-                        {
-                            render.setPrinter(&printer);
-                            render.render(doc);
-                        }
-                    }
-                    delete doc;
-                }
-            }
-            qDebug()<<errMsg;
-        }
-    }
-}
-void Configuracion::imprimir(bool toPDF,bool preview,QMap<QString,QVariant> params, QWidget *parent)
-{
-    QSqlDatabase db = QSqlDatabase::database("Reports");
-    if(db.isValid()) {
-        DBFileDialog rptDiag;
-        rptDiag.setWindowTitle(tr("Load Report from Database"));
-        rptDiag._name->setReadOnly(true);
-        rptDiag._grade->setEnabled(false);
-        if(rptDiag.exec() == QDialog::Accepted) {
-            QDomDocument doc;
-            QString errMsg;
-            int errLine, errCol;
-            QString source = rptDiag.getSource();
-            source.replace("@empresa@",Configuracion_global->nombre_bd_empresa);
-            source.replace("@grupo@",Configuracion_global->group_DBName);
-            if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
-                ORPreRender pre(db);
-                pre.setDom(doc);
-
-                ParameterEdit paramEdit(0);
-                ParameterList pl;
-                QDialog *dlgEdit = ParameterEdit::ParameterEditDialog(&paramEdit, parent);
-                if (paramEdit.setDocument(doc))
-                  //  if (dlgEdit->exec() != QDialog::Accepted)
-                  //      return;
-                    pl = paramEdit.getParameterList();
-
-                ParameterList plist;
-
-                QString name;
-                QVariant value;
-
-                QMapIterator<QString, QVariant> i(params);
-                while (i.hasNext()) {
-                    i.next();
-                    name = i.key();
-                    value = i.value();
-                    plist.append(name, value);
-                }
-
-                pre.setParamList(/*paramEdit.getParameterList()*/plist);
-                ORODocument * doc = pre.generate();
-
-                if(doc)
-                {
-                    QPrinter printer(QPrinter::HighResolution);
-                    if(preview)
-                    {
-                        PreviewDialog preview (doc, &printer, parent);
-                        if (preview.exec() == QDialog::Rejected)
-                            return;
-                    }
-                    ORPrintRender render;
-                    render.setupPrinter(doc, &printer);
-
-                    if(printer.printerName().isEmpty())
-                    {
-                        QPrintDialog pd(&printer);
-                        if(pd.exec() != QDialog::Accepted)
-                        {
-                            qDebug() << "no printer, can't preview";
-                            return; // no printer, can't preview
-                        }
-                    }
-
-                    if(toPDF)
-                    {
-                        QString output = QFileDialog::getSaveFileName(parent);
-
-                        if(output.isEmpty())
-                            return;
-
-                        if ( QFileInfo( output ).suffix().isEmpty() )
-                            output.append(".pdf");
-
-                        ORPrintRender::exportToPDF(doc, output );
-                    }
-                    else
-                    {
-                        QPrintDialog pd(&printer);
-                        pd.setMinMax(1, doc->pages());
-                        if(pd.exec() == QDialog::Accepted)
-                        {
-                            render.setPrinter(&printer);
-                            render.render(doc);
-                        }
-                    }
-                    delete doc;
-                }
-            }
-            qDebug()<<errMsg;
-        }
-    }
-}
-
-void Configuracion::imprimir(QString repo, bool toPDF, bool preview, QMap<QString, QVariant> params, QWidget *parent)
-{
-    QSqlDatabase db = QSqlDatabase::database("Reports");
-    if(db.isValid()) {
-        QString source = "";
-        QSqlQuery q(Configuracion_global->groupDB);
-        q.prepare("SELECT report_source FROM report where report_name =:name  order by report_grade desc limit 1;");
-        q.bindValue(":name",repo);
-        if(q.exec())
-            if(q.first())
-                source = q.record().value(0).toString();
-        if(source == "")
-            return;
-
-            QDomDocument doc;
-            QString errMsg;
-            int errLine, errCol;
-
-            source.replace("@empresa@",Configuracion_global->nombre_bd_empresa);
-            source.replace("@grupo@",Configuracion_global->group_DBName);
-            qDebug() <<source;
-            if(doc.setContent(source,&errMsg,&errLine,&errCol)) {
-                ORPreRender pre(db);
-                pre.setDom(doc);
-
-                ParameterEdit paramEdit(0);
-                ParameterList pl;
-                QDialog *dlgEdit = ParameterEdit::ParameterEditDialog(&paramEdit, parent);
-                if (paramEdit.setDocument(doc))
-                  //  if (dlgEdit->exec() != QDialog::Accepted)
-                  //      return;
-                    pl = paramEdit.getParameterList();
-
-                ParameterList plist;
-
-                QString name;
-                QVariant value;
-
-                QMapIterator<QString, QVariant> i(params);
-                while (i.hasNext()) {
-                    i.next();
-                    name = i.key();
-                    value = i.value();
-                    plist.append(name, value);
-                }
-
-                pre.setParamList(/*paramEdit.getParameterList()*/plist);
-                ORODocument * doc = pre.generate();
-
-                if(doc)
-                {
-                    QPrinter printer(QPrinter::HighResolution);
-                    if(preview)
-                    {
-                        PreviewDialog preview (doc, &printer, parent);
-                        if (preview.exec() == QDialog::Rejected)
-                            return;
-                    }
-                    ORPrintRender render;
-                    render.setupPrinter(doc, &printer);
-
-                    if(printer.printerName().isEmpty())
-                    {
-                        QPrintDialog pd(&printer);
-                        if(pd.exec() != QDialog::Accepted)
-                        {
-                            qDebug() << "no printer, can't preview";
-                            return; // no printer, can't preview
-                        }
-                    }
-
-                    if(toPDF)
-                    {
-                        QString output = QFileDialog::getSaveFileName(parent);
-
-                        if(output.isEmpty())
-                            return;
-
-                        if ( QFileInfo( output ).suffix().isEmpty() )
-                            output.append(".pdf");
-
-                        ORPrintRender::exportToPDF(doc, output );
-                    }
-                    else
-                    {
-                        QPrintDialog pd(&printer);
-                        pd.setMinMax(1, doc->pages());
-                        if(pd.exec() == QDialog::Accepted)
-                        {
-                            render.setPrinter(&printer);
-                            render.render(doc);
-                        }
-                    }
-                    delete doc;
-                }
-            }
-            qDebug()<<errMsg;
-        }
-}
 bool Configuracion::comprobarNIF(QString country_code, QString nif)
 {
     return true;/*
@@ -1360,6 +1079,106 @@ void Configuracion::updateTablaDivisas(QString current)
     {
         while(q.next())
             getCambio(current,q.record().value("nombre_corto").toString());
+    }
+}
+
+void Configuracion::ImprimirDirecto(QString report, QMap<QString, QString> queryClausules)
+{
+    QString c = QString("report_name = '%1' ORDER BY report_grade DESC").arg(report);
+    QString error;
+    QString rep = SqlCalls::SelectOneField("report","report_source",c,Configuracion_global->empresaDB,error).toString();
+    if(error.isEmpty())
+    {
+        ReportRenderer r;
+        QPrinter printer;
+        QPrintDialog dlg(&printer);
+        r.setPrinter(&printer);
+        QString errorStr;
+        int errorLine;
+        int errorColumn;
+        QDomDocument doc;
+        if (!doc.setContent(rep, false, &errorStr, &errorLine,
+                            &errorColumn))
+        {
+            error = QString("Error: Parse error at line %1, column %2 : %3").arg(errorLine).arg(errorColumn).arg(errorStr);
+            TimedMessageBox* t = new TimedMessageBox(qApp->activeWindow(),error,TimedMessageBox::Critical);
+            return;
+        }
+        bool error;
+        r.render(doc ,queryClausules,error);
+        r.Print(&printer);
+    }
+}
+
+void Configuracion::ImprimirPDF(QString report, QMap<QString, QString> queryClausules)
+{
+    QString c = QString("report_name = '%1' ORDER BY report_grade DESC").arg(report);
+    QString error;
+    QString rep = SqlCalls::SelectOneField("report","report_source",c,Configuracion_global->empresaDB,error).toString();
+    if(error.isEmpty())
+    {
+        ReportRenderer r;
+
+        QPrinter printer(QPrinter::ScreenResolution);
+        printer.setResolution(300);
+
+#ifdef Q_WS_MAC
+        printer.setOutputFormat( QPrinter::NativeFormat );
+#else
+        printer.setOutputFormat( QPrinter::PdfFormat );
+#endif
+        QString output = QFileDialog::getSaveFileName(qApp->activeWindow(),QString(),QString(),"PDF (*.pdf)");
+        if(output.isEmpty())
+            return;
+        if(!output.endsWith(".pdf"))
+            output.append(".pdf");
+        printer.setOutputFileName( output );
+
+        r.setPrinter(&printer);
+        QString errorStr;
+        int errorLine;
+        int errorColumn;
+        QDomDocument doc;
+        if (!doc.setContent(rep, false, &errorStr, &errorLine,
+                            &errorColumn))
+        {
+            error = QString("Error: Parse error at line %1, column %2 : %3").arg(errorLine).arg(errorColumn).arg(errorStr);
+            TimedMessageBox* t = new TimedMessageBox(qApp->activeWindow(),error,TimedMessageBox::Critical);
+            return;
+        }
+        bool error;
+        r.render(doc ,queryClausules,error);
+        r.Print(&printer);
+    }
+}
+
+void Configuracion::ImprimirPreview(QString report, QMap<QString, QString> queryClausules)
+{
+    QString c = QString("report_name = '%1' ORDER BY report_grade DESC").arg(report);
+    QString error;
+    QString rep = SqlCalls::SelectOneField("report","report_source",c,Configuracion_global->empresaDB,error).toString();
+    if(error.isEmpty())
+    {
+        ReportRenderer r;
+        QPrinter printer;
+        QPrintDialog dlg(&printer);
+        r.setPrinter(&printer);
+        QString errorStr;
+        int errorLine;
+        int errorColumn;
+        QDomDocument doc;
+        if (!doc.setContent(rep, false, &errorStr, &errorLine,
+                            &errorColumn))
+        {
+            error = QString("Error: Parse error at line %1, column %2 : %3").arg(errorLine).arg(errorColumn).arg(errorStr);
+            TimedMessageBox* t = new TimedMessageBox(qApp->activeWindow(),error,TimedMessageBox::Critical);
+            return;
+        }
+        bool error;
+        r.render(doc ,queryClausules,error);
+        QPrintPreviewDialog predlg(&printer);
+        connect(&predlg,SIGNAL(paintRequested(QPrinter*)),&r,SLOT(Print(QPrinter*)));
+        predlg.exec();
     }
 }
 

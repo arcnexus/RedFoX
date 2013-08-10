@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>729</width>
+    <height>476</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>729</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuMenu">
+    <property name="title">
+     <string>Menu</string>
+    </property>
+    <addaction name="actionAbrir"/>
+    <addaction name="actionGuardar"/>
+    <addaction name="separator"/>
+    <addaction name="actionConfigurar_pagina"/>
+   </widget>
+   <addaction name="menuMenu"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionRectangulo_redondeado"/>
+   <addaction name="actionTexto"/>
+   <addaction name="actionCampo"/>
+   <addaction name="actionCampo_Relacional"/>
+   <addaction name="actionLinea"/>
+   <addaction name="actionCodeBars"/>
+   <addaction name="actionImagen"/>
+   <addaction name="separator"/>
+   <addaction name="actionBorrar"/>
+   <addaction name="separator"/>
+   <addaction name="actionGuardar"/>
+   <addaction name="actionAbrir"/>
+   <addaction name="actionVista_Previa"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionRectangulo_redondeado">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/shape_square.png</normaloff>:/icons/shape_square.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rectangulo redondeado</string>
+   </property>
+  </action>
+  <action name="actionGuardar">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/report_disk.png</normaloff>:/icons/report_disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Guardar</string>
+   </property>
+  </action>
+  <action name="actionTexto">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/font.png</normaloff>:/icons/font.png</iconset>
+   </property>
+   <property name="text">
+    <string>Texto</string>
+   </property>
+  </action>
+  <action name="actionAbrir">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/report_disk.png</normaloff>:/icons/report_disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Abrir</string>
+   </property>
+  </action>
+  <action name="actionLinea">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/font.png</normaloff>:/icons/font.png</iconset>
+   </property>
+   <property name="text">
+    <string>Linea</string>
+   </property>
+  </action>
+  <action name="actionCodeBars">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/shape_square.png</normaloff>:/icons/shape_square.png</iconset>
+   </property>
+   <property name="text">
+    <string>Codigo de Barras</string>
+   </property>
+  </action>
+  <action name="actionImagen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/shape_square.png</normaloff>:/icons/shape_square.png</iconset>
+   </property>
+   <property name="text">
+    <string>Imagen</string>
+   </property>
+  </action>
+  <action name="actionBorrar">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/cross.png</normaloff>:/icons/cross.png</iconset>
+   </property>
+   <property name="text">
+    <string>Borrar</string>
+   </property>
+  </action>
+  <action name="actionConfigurar_pagina">
+   <property name="text">
+    <string>Configurar pagina</string>
+   </property>
+  </action>
+  <action name="actionCampo">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/font.png</normaloff>:/icons/font.png</iconset>
+   </property>
+   <property name="text">
+    <string>Campo</string>
+   </property>
+  </action>
+  <action name="actionCampo_Relacional">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/font.png</normaloff>:/icons/font.png</iconset>
+   </property>
+   <property name="text">
+    <string>Campo Relacional</string>
+   </property>
+  </action>
+  <action name="actionVista_Previa">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/printer.png</normaloff>:/icons/printer.png</iconset>
+   </property>
+   <property name="text">
+    <string>Vista Previa</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
+ <connections/>
+</ui>

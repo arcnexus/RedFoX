@@ -72,6 +72,7 @@ bool Articulo::Recuperar(QString cSQL)
         if(qryArticulo.next()){
             QSqlRecord r = qryArticulo.record();
             Cargar(r);
+            return true;
         }  else {
             TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"No se encuentra el artículo");
         }
@@ -79,6 +80,7 @@ bool Articulo::Recuperar(QString cSQL)
     {
         QMessageBox::critical(qApp->activeWindow(),"error al leer datos artículo:", qryArticulo.lastError().text());
     }
+    return false;
 }
 
 void Articulo::Recuperar(QString cSQL, int nProcede)
@@ -89,6 +91,7 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
         if(qryArticulo.next()){
             QSqlRecord r = qryArticulo.record();
             Cargar(r);
+
         }  else {
             if (nProcede ==1)
                 TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Se ha llegado al final del fichero");

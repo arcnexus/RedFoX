@@ -711,17 +711,6 @@ AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
-CREATE  TABLE IF NOT EXISTS `@grupo@`.`report` (
-  `report_id` INT(11) NOT NULL AUTO_INCREMENT ,
-  `report_name` TEXT NOT NULL ,
-  `report_descrip` TEXT NULL DEFAULT NULL ,
-  `report_source` TEXT NOT NULL ,
-  `report_grade` INT(11) NOT NULL ,
-  PRIMARY KEY (`report_id`) )
-ENGINE = InnoDB
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`secciones` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `seccion` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,

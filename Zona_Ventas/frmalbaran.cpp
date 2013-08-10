@@ -804,16 +804,16 @@ void FrmAlbaran::on_btnImprimir_clicked()
 
             switch (valor) {
             case 1: // Impresora
-                Configuracion_global->imprimir("factura_"+QString::number(oCliente2->ididioma),false,false,parametros,this);
+                //Configuracion_global->imprimir("factura_"+QString::number(oCliente2->ididioma),false,false,parametros,this);
                 break;
             case 2: // email
                 // TODO - enviar pdf por mail
                 break;
             case 3: // PDF
-                Configuracion_global->imprimir("factura_"+QString::number(oCliente2->ididioma),true,false,parametros,this);
+                //Configuracion_global->imprimir("factura_"+QString::number(oCliente2->ididioma),true,false,parametros,this);
                 break;
             case 4: //preview
-                Configuracion_global->imprimir("factura_"+QString::number(oCliente2->ididioma),false,true,parametros,this);
+                //Configuracion_global->imprimir("factura_"+QString::number(oCliente2->ididioma),false,true,parametros,this);
                 break;
             default:
                 break;

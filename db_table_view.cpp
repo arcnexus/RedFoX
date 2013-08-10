@@ -203,10 +203,7 @@ void Db_table_View::on_btn_cancel_clicked()
 
 void Db_table_View::print_clicked()
 {
-    if(sender() == toPDF)
-        Configuracion::imprimir(true,true,this);
-    else
-        Configuracion::imprimir(false,true,this);
+//TODO imprimir
 }
 
 void Db_table_View::resizeEvent(QResizeEvent *)
