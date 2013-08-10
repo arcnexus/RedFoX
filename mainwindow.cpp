@@ -636,7 +636,7 @@ void MainWindow::loadUtilsModules(QSplashScreen *splash)
         agendaForm->deleteLater();
 
     splash->showMessage(tr("Cargando modulos... Editor de reportes") );
-    ReportModule* reportWindow = new ReportModule(this);
+    RepDesignModule * reportWindow = new RepDesignModule(this);
     if(reportWindow->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _utilsModules.append(reportWindow);

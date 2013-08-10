@@ -82,10 +82,19 @@ QVariant SqlCalls::SelectOneField(QString table, QString field, QStringList clau
     {
         if (q.next())
             campo = q.record().value(field);
+        else
+            error = "No se encuentra";
     }
     else
-        error = "No se encuentra";
+        error = q.lastError().text();
     return campo;
+}
+
+QVariant SqlCalls::SelectOneField(QString table, QString field, QString clausulas, QSqlDatabase database, QString &error)
+{
+    QStringList l;
+    l << clausulas;
+    return SelectOneField(table, field, l, database, error);
 }
 
 

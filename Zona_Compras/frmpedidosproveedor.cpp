@@ -787,7 +787,7 @@ void FrmPedidosProveedor::cargar_tabla_entregas()
 
 void FrmPedidosProveedor::on_btnImprimir_clicked()
 {
-    Configuracion_global->imprimir(false,true,this);
+    //TODO imprimir
 }
 
 void FrmPedidosProveedor::on_radBusqueda_toggled(bool checked)

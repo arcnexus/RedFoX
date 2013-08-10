@@ -999,16 +999,16 @@ void FrmPedidos::on_btnImprimir_clicked()
 
             switch (valor) {
             case 1: // Impresora
-                Configuracion_global->imprimir("pedido_"+QString::number(oCliente3->ididioma),false,false,parametros,this);
+                //Configuracion_global->imprimir("pedido_"+QString::number(oCliente3->ididioma),false,false,parametros,this);
                 break;
             case 2: // email
                 // TODO - enviar pdf por mail
                 break;
             case 3: // PDF
-                Configuracion_global->imprimir("pedido_"+QString::number(oCliente3->ididioma),true,false,parametros,this);
+                //Configuracion_global->imprimir("pedido_"+QString::number(oCliente3->ididioma),true,false,parametros,this);
                 break;
             case 4: //preview
-                Configuracion_global->imprimir("pedido_"+QString::number(oCliente3->ididioma),false,true,parametros,this);
+                //Configuracion_global->imprimir("pedido_"+QString::number(oCliente3->ididioma),false,true,parametros,this);
                 break;
             default:
                 break;

@@ -164,7 +164,35 @@ SOURCES += main.cpp\
     Zona_Contabilidad/cuentas_contables.cpp \
     Almacen/tipostarifa.cpp \
     Zona_Administrador/addgroupfrom.cpp \
-    Almacen/frminventario.cpp
+    Almacen/frminventario.cpp \
+    EditorReports/sectioneditordlg.cpp \
+    EditorReports/section.cpp \
+    EditorReports/roundedrect.cpp \
+    EditorReports/reportview.cpp \
+    EditorReports/reportrenderer.cpp \
+    EditorReports/reportline.cpp \
+    EditorReports/reportimage.cpp \
+    EditorReports/reportfield.cpp \
+    EditorReports/relationalfield.cpp \
+    EditorReports/paper.cpp \
+    EditorReports/pageheadersection.cpp \
+    EditorReports/edittextdlg.cpp \
+    EditorReports/editrelationalfield.cpp \
+    EditorReports/editrectdlg.cpp \
+    EditorReports/editpaperdlg.cpp \
+    EditorReports/editlinedlg.cpp \
+    EditorReports/editimagedlg.cpp \
+    EditorReports/editfielddlg.cpp \
+    EditorReports/editdinamycitemdlg.cpp \
+    EditorReports/editdetailsecdlg.cpp \
+    EditorReports/editcodebardlg.cpp \
+    EditorReports/detailsection.cpp \
+    EditorReports/customlabel.cpp \
+    EditorReports/container.cpp \
+    EditorReports/codebar.cpp \
+    EditorReports/reportdesigwin.cpp \
+    EditorReports/repdesignmodule.cpp \
+    EditorReports/savetobdfrm.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -293,7 +321,35 @@ HEADERS  += mainwindow.h \
     Zona_Contabilidad/cuentas_contables.h \
     Almacen/tipostarifa.h \
     Zona_Administrador/addgroupfrom.h \
-    Almacen/frminventario.h
+    Almacen/frminventario.h \
+    EditorReports/sectioneditordlg.h \
+    EditorReports/section.h \
+    EditorReports/roundedrect.h \
+    EditorReports/reportview.h \
+    EditorReports/reportrenderer.h \
+    EditorReports/reportline.h \
+    EditorReports/reportimage.h \
+    EditorReports/reportfield.h \
+    EditorReports/relationalfield.h \
+    EditorReports/paper.h \
+    EditorReports/pageheadersection.h \
+    EditorReports/edittextdlg.h \
+    EditorReports/editrelationalfield.h \
+    EditorReports/editrectdlg.h \
+    EditorReports/editpaperdlg.h \
+    EditorReports/editlinedlg.h \
+    EditorReports/editimagedlg.h \
+    EditorReports/editfielddlg.h \
+    EditorReports/editdinamycitemdlg.h \
+    EditorReports/editdetailsecdlg.h \
+    EditorReports/editcodebardlg.h \
+    EditorReports/detailsection.h \
+    EditorReports/customlabel.h \
+    EditorReports/container.h \
+    EditorReports/codebar.h \
+    EditorReports/reportdesigwin.h \
+    EditorReports/repdesignmodule.h \
+    EditorReports/savetobdfrm.h
 
 
 
@@ -359,14 +415,30 @@ FORMS    += mainwindow.ui \
     Zona_Administrador/frmusuarios.ui \
     Zona_Contabilidad/frmcuadro_cuentas.ui \
     Zona_Administrador/addgroupfrom.ui \
-    Almacen/frminventario.ui
+    Almacen/frminventario.ui \
+    EditorReports/sectioneditordlg.ui \
+    EditorReports/mainwindow.ui \
+    EditorReports/edittextdlg.ui \
+    EditorReports/editrelationalfield.ui \
+    EditorReports/editrectdlg.ui \
+    EditorReports/editpaperdlg.ui \
+    EditorReports/editlinedlg.ui \
+    EditorReports/editimagedlg.ui \
+    EditorReports/editfielddlg.ui \
+    EditorReports/editdetailsecdlg.ui \
+    EditorReports/editcodebardlg.ui \
+    EditorReports/reportdesigwin.ui \
+    EditorReports/savetobdfrm.ui
 
 RESOURCES += \
-    maya.qrc
+    maya.qrc \
+    EditorReports/resource.qrc \
+    EditorReports/resource.qrc
 
 OTHER_FILES += \
     TODO.txt \
-    windowsRc.rc
+    windowsRc.rc \
+    EditorReports/Graphics.pro.user
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lcommon
