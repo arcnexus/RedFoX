@@ -96,7 +96,6 @@ SOURCES += main.cpp\
     Zona_Ventas/frmfacturaralabaranes.cpp \
     Zona_Pacientes/frmaddtipocliente.cpp \
     Zona_Compras/frmorden_pedido_producto.cpp \
-    openrptLibs/Auxiliares/reportwriterwindow.cpp \
     Agenda/graphicstable.cpp \
     Agenda/graphicsevent.cpp \
     Agenda/editeventform.cpp \
@@ -152,7 +151,6 @@ SOURCES += main.cpp\
     TPV/configmonedatpv.cpp \
     TPV/monedaview.cpp \
     mayamodule.cpp \
-    openrptLibs/reportmodule.cpp \
     Zona_Administrador/frmusuarios.cpp \
     moduleextension.cpp \
     Almacen/divisionalmacenext.cpp \
@@ -250,7 +248,6 @@ HEADERS  += mainwindow.h \
     Zona_Ventas/frmfacturaralabaranes.h \
     Zona_Pacientes/frmaddtipocliente.h \
     Zona_Compras/frmorden_pedido_producto.h \
-    openrptLibs/Auxiliares/reportwriterwindow.h \
     Agenda/graphicstable.h \
     Agenda/graphicsevent.h \
     Agenda/editeventform.h \
@@ -309,7 +306,6 @@ HEADERS  += mainwindow.h \
     TPV/configmonedatpv.h \
     TPV/monedaview.h \
     mayamodule.h \
-    openrptLibs/reportmodule.h \
     Zona_Administrador/frmusuarios.h \
     moduleextension.h \
     Almacen/divisionalmacenext.h \
@@ -441,48 +437,6 @@ OTHER_FILES += \
     EditorReports/Graphics.pro.user
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lcommon
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/openrptLibs/win32/debug/ -lcommon
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/release/common.lib
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/debug/common.lib
-
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lMetaSQL
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/openrptLibs/win32/debug/ -lMetaSQL
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/release/MetaSQL.lib
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/debug/MetaSQL.lib
-
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lrenderer
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/openrptLibs/win32/debug/ -lrenderer
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/release/renderer.lib
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/debug/renderer.lib
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openrptLibs/win32/release/ -lwrtembed
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/openrptLibs/win32/debug/ -lwrtembed
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/release/wrtembed.lib
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/openrptLibs/win32/debug/wrtembed.lib
-
-
-
-
-
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/SQLlibs/ -lqsqlite
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/SQLlibs/ -lqsqlited
 
@@ -514,28 +468,6 @@ unix:!macx: LIBS += -L$$PWD/LibsGraficas/ -lopenchartplugin
 
 INCLUDEPATH += $$PWD/LibsGraficas
 DEPENDPATH += $$PWD/LibsGraficas
-
-unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lcommon
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lrenderer
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lMetaSQL
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-unix:!macx: LIBS += -L$$PWD/openrptLibs/linux/ -lwrtembed
-
-INCLUDEPATH += $$PWD/openrptLibs/include
-DEPENDPATH += $$PWD/openrptLibs/include
-
-
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/CryptoLIBS/release/ -lcryptlib

@@ -23,7 +23,6 @@
 #include "configuracion.h"
 
 #include <QStyleFactory>
-#include "openrptLibs/include/data.h"
 
 #ifdef staticSql
 #include <QtPlugin>
@@ -221,15 +220,6 @@ int main(int argc, char *argv[])
 
    if(file.open(QFile::ReadOnly))
         a.setStyleSheet(file.readAll());
-
-   QTranslator qtTranslator;
-   qtTranslator.load("qt_" + QLocale::system().name());
-   a.installTranslator(&qtTranslator);
-   OpenRPT::languages.addTranslationToDefault(":/openRPTLangs/openrptLibs/traduccion/common_es.qm");
-   OpenRPT::languages.addTranslationToDefault(":/openRPTLangs/openrptLibs/traduccion/wrtembed_es.qm");
-   OpenRPT::languages.addTranslationToDefault(":/openRPTLangs/openrptLibs/traduccion/renderer_es.qm");
-   OpenRPT::languages.addTranslationToDefault(":/openRPTLangs/openrptLibs/traduccion/writer_es.qm");
-   OpenRPT::languages.installSelected();
 
    Login l;
    if ( l.exec()==QDialog::Accepted)

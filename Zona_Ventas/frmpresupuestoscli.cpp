@@ -6,9 +6,9 @@
 #include "../Almacen/articulo.h"
 #include "../Busquedas/db_consulta_view.h"
 #include <QMessageBox>
-#include <Zona_Ventas/pedidos.h>
-#include <Zona_Ventas/albaran.h>
-#include <Zona_Ventas/factura.h>
+#include "pedidos.h"
+#include "albaran.h"
+#include "factura.h"
 
 
 FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
