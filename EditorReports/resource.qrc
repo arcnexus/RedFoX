@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/shape_square.png</file>
+        <file>icons/font.png</file>
+        <file>icons/printer.png</file>
+        <file>icons/report_disk.png</file>
+        <file>icons/shape_align_bottom.png</file>
+        <file>icons/shape_align_center.png</file>
+        <file>icons/shape_align_left.png</file>
+        <file>icons/shape_align_middle.png</file>
+        <file>icons/shape_align_right.png</file>
+        <file>icons/shape_align_top.png</file>
+        <file>icons/shape_move_back.png</file>
+        <file>icons/shape_move_backwards.png</file>
+        <file>icons/shape_move_forwards.png</file>
+        <file>icons/shape_move_front.png</file>
+        <file>icons/style.png</file>
+        <file>icons/text_align_center.png</file>
+        <file>icons/text_align_left.png</file>
+        <file>icons/text_align_right.png</file>
+        <file>icons/text_bold.png</file>
+        <file>icons/text_italic.png</file>
+        <file>icons/text_underline.png</file>
+        <file>icons/text_align_up.png</file>
+        <file>icons/cross.png</file>
+    </qresource>
+    <qresource prefix="/codeBar">
+        <file>codebar/FRE3OF9X.TTF</file>
+    </qresource>
+</RCC>

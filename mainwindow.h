@@ -41,7 +41,8 @@
 #include "TPV/frmcajaminuta.h"
 
 
-#include "openrptLibs/reportmodule.h"
+//#include "openrptLibs/reportmodule.h"
+#include "EditorReports/repdesignmodule.h"
 #include "Agenda/agendaform.h"
 #include "Agenda/permisosagendaform.h"
 

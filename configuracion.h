@@ -208,9 +208,7 @@ public:
     QDoubleValidator *validator_porciento;
 
     static QString letraDNI(QString Nif);
-    static void imprimir(bool toPDF , bool preview = true, QWidget* parent = 0);
-    static void imprimir(bool toPDF, bool preview, QMap<QString, QVariant> params, QWidget *parent);
-    static void imprimir(QString repo ,bool toPDF, bool preview, QMap<QString, QVariant> params, QWidget *parent);
+
     static bool comprobarNIF(QString country_code, QString nif);
     static QString Crypt(QString input);
     static QString DeCrypt(QString input);
@@ -220,6 +218,10 @@ public:
 
     void updateTablaDivisas(QString current);
 
+
+    static void ImprimirDirecto(QString report, QMap<QString,QString> queryClausules);
+    static void ImprimirPDF(QString report, QMap<QString,QString> queryClausules);
+    static void ImprimirPreview(QString report, QMap<QString,QString> queryClausules);
 public slots:
     void format_text();    
 private slots:

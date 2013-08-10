@@ -898,20 +898,22 @@ void FrmPresupuestosCli::on_btnImprimir_clicked()
         {
             ui->lbimpreso->setVisible(true);
             int valor = dlg_print.get_option();
-             QMap <QString,QVariant> parametros;
-
+            QMap <QString,QString> parametros;
+            parametros["Empresa.cab_pre"] = QString("id = %1").arg(oPres->id);
+            parametros["Empresa.lin_pre"] = QString("id_cab = %1").arg(oPres->id);
+            QString report = "presupuesto_"+QString::number(oClientePres->ididioma);
             switch (valor) {
             case 1: // Impresora
-                Configuracion_global->imprimir("presupuesto_"+QString::number(oClientePres->ididioma),false,false,parametros,this);
+                Configuracion::ImprimirDirecto(report,parametros);
                 break;
             case 2: // email
                 // TODO - enviar pdf por mail
                 break;
             case 3: // PDF
-                Configuracion_global->imprimir("presupuesto_"+QString::number(oClientePres->ididioma),true,false,parametros,this);
+                Configuracion::ImprimirPDF(report,parametros);
                 break;
             case 4: //preview
-                Configuracion_global->imprimir("presupuesto_"+QString::number(oClientePres->ididioma),false,true,parametros,this);
+                Configuracion::ImprimirPreview(report,parametros);
                 break;
             default:
                 break;
