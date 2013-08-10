@@ -952,7 +952,29 @@ void FrmPresupuestosCli::convertir_enFactura()
         h.remove("pedido");
         Factura oFactura;
         Configuracion_global->empresaDB.transaction();
-        QString num = Configuracion_global->serie+"/"+ oFactura.NuevoNumeroFactura(Configuracion_global->serie);
+
+        QDialog* dlg = new QDialog(this);
+        dlg->setWindowOpacity(0.5);
+        QComboBox* box = new QComboBox(dlg);
+        QPushButton*  btn = new QPushButton("Aceptar",dlg);
+        QVBoxLayout lay(dlg);
+
+        lay.addWidget(box);
+        lay.addWidget(btn);
+
+        dlg->setLayout(&lay);
+
+        QStringList l;
+        l << "a" << "b" << "c";
+        box->addItems(l);
+
+        connect(btn,SIGNAL(clicked()),dlg,SLOT(accept()));
+        dlg->exec();//aki se podria poner otro boton y cancelar todo?
+
+        QString serie = box->currentText();//no lo usas nunca...por eso
+        dlg->deleteLater();
+
+        QString num = serie+"/"+ oFactura.NuevoNumeroFactura(serie);
         h.insert("factura",num);
         h["fecha"] = QDate::currentDate();
 

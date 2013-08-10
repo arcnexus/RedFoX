@@ -91,6 +91,14 @@ private slots:
 
     void on_btnArticulos_clicked();
 
+    void on_cboseries_currentIndexChanged(const QString &arg1);
+
+    void on_btnClear_clicked();
+
+    void on_cboBuscar_currentIndexChanged(const QString &arg1);
+
+    void on_cboModo_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;
@@ -107,6 +115,7 @@ private:
     QHash<QString,QString> h_Buscar;
     QSqlQueryModel *m_facturas;
     void formato_tabla_facturas(QSqlQueryModel &modelo);
+    void filtro_tabla();
 };
 
 #endif // FRMFACTURAS_H

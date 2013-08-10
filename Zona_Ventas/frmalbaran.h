@@ -74,6 +74,8 @@ private slots:
 
     void on_txtBuscar_textEdited(const QString &arg1);
 
+    void on_btnLimpiar_clicked();
+
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;

@@ -905,3 +905,11 @@ void FrmAlbaran::on_txtBuscar_textEdited(const QString &arg1)
                     "%' order by "+order +" desc",Configuracion_global->empresaDB);
 
 }
+
+void FrmAlbaran::on_btnLimpiar_clicked()
+{
+    ui->txtBuscar->setText("");
+    ui->cboOrden->setCurrentIndex(0);
+    m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb order by albaran desc",Configuracion_global->empresaDB);
+    ui->txtBuscar->setFocus();
+}

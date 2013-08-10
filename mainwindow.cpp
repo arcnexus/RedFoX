@@ -818,7 +818,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::showInfo()
 {
-    this->setWindowTitle("Maya"+tr("Software para los profesionales de la salud.            (Empresa activa:")+empresa+
+    if(!Configuracion_global->medic)
+        this->setWindowTitle("RedFox SGC - "+tr("Software GNU de gestión empresarial.            (Empresa activa:")+empresa+
+                             tr("  -  Ejercicio activo: ")+Configuracion_global->cEjercicio+")");
+    else
+
+    this->setWindowTitle("RedFox SGC - "+tr("Software GNU para los profesionales de la salud.            (Empresa activa:")+empresa+
                          tr("  -  Ejercicio activo: ")+Configuracion_global->cEjercicio+")");
   //  ui->lineEmpresaActiva->setText(empresa);
     ui->lineUsuarioActivo->setText(user);

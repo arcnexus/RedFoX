@@ -1,21 +1,21 @@
-// Maya Software para profesionales de la Salud (Open Source GNU)
+// RedFox SGC -  Software para profesionales de la Salud (Open Source GNU)
 // Copyright (C) 2012-2013  Marc Miralles Biosca
 //
-// Maya Gestión empresarial open-source is free software: you can redistribute it and/or modify
+// RedFox SGC Gestión empresarial open-source is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Maya Gestión empresarial open-source is distributed in the hope that it will be useful,
+// RedFox SGC Gestión empresarial open-source is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Maya Gestión empresarial open-source.  If not, see <http://www.gnu.org/licenses/>.
+// along with RedFox SGC Gestión empresarial open-source.  If not, see <http://www.gnu.org/licenses/>.
 //
-// Email   : mmiralles +(simboloarroba)+ mayasoftware DOT es
-// Web-Site: http://www.mayasoftware.es
+// Email   : mmiralles +(simboloarroba)+ neuxsoftware DOT com
+// Web-Site: http://www.neuxsoftware.com
 
 
 #include "mainwindow.h"
@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
     {
         QMessageBox::critical(0,QObject::tr("Driver"),QObject::tr("No sql drivers.\n"
                                                                   "La aplicación va a cerrarse.\n"
-                                                                  "Por favor instala un driver Sql para usar Maya"));
+                                                                  "Por favor instala un driver Sql para usar RedFox SGC"));
         return 0;
     }
 

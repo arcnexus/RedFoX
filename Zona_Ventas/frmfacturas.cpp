@@ -80,6 +80,13 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->cboBuscar->addItem("Total");
 
     //-----------------
+    // MODO
+    //-----------------
+    QStringList modo;
+    modo << tr("A-Z") <<tr("Z-A");
+    ui->cboModo->addItems(modo);
+
+    //-----------------
     // tablafacturas
     //-----------------
     m_facturas = new QSqlQueryModel(this);
@@ -95,6 +102,13 @@ frmFacturas::frmFacturas( QWidget *parent) :
     QSqlQueryModel * model_series = new QSqlQueryModel(this);
     model_series->setQuery("select serie from series",Configuracion_global->empresaDB);
     ui->cbo_serie->setModel(model_series);
+    QSqlQuery series2(Configuracion_global->empresaDB);
+    series2.exec("select serie from series");
+    QStringList series2_l;
+    series2_l.append(tr("TODAS"));
+    while (series2.next())
+        series2_l.append(series2.record().value("serie").toString());
+    ui->cboseries->addItems(series2_l);
 
     BloquearCampos(true);
     /* -----------------------------------------
@@ -171,6 +185,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
         ui->cboBuscar->setEnabled(true);
         ui->txtBuscar->setEnabled(true);
         ui->txtBuscar->setReadOnly(false);
+        ui->cboseries->setEnabled(true);
         oFactura->id = -1;
    // }
 
@@ -495,6 +510,8 @@ void frmFacturas::BloquearCampos(bool state)
     ui->cboBuscar->setEnabled(state);
     ui->txtBuscar->setEnabled(state);
     ui->txtBuscar->setReadOnly(!state);
+    ui->cboseries->setEnabled(state);
+    ui->cboModo->setEnabled(state);
 }
 
 void frmFacturas::LLenarFactura() {
@@ -751,15 +768,7 @@ void frmFacturas::on_botBuscarCliente_clicked()
 
 void frmFacturas::on_btnBuscar_clicked()
 {
-    FrmBuscarFactura BuscarFactura;
-    BuscarFactura.exec();
-    int nid = BuscarFactura.Devolverid();
-    QString cid = QString::number(nid);
-    oFactura->RecuperarFactura("Select * from cab_fac where id ="+cid+" limit 1 ");
-    LLenarCampos();
-    BloquearCampos(true);
-//    ui->btnImprimir->setEnabled(true);
-//    ui->btnEditar->setEnabled(true);
+    ui->radBuscar->setChecked(true);
 }
 
 void frmFacturas::on_btnImprimir_clicked()
@@ -1133,14 +1142,43 @@ void frmFacturas::on_cboVer_currentTextChanged(const QString &arg1)
     if(indice_tabla.isEmpty())
         indice_tabla = "factura";
     QString cSQL;
-    if(arg1 == "Borradores")
-        cSQL = "select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
-                " where trim(factura) = 'BORRADOR' and  ejercicio = "+Configuracion_global->cEjercicio+
-                " order by fecha+serie+factura desc";
+    QString modo;
+    if (ui->cboModo->currentText() == tr("A-Z"))
+        modo = "";
     else
-        cSQL = "select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
-               " where trim(factura) <> 'BORRADOR' and ejercicio = "+Configuracion_global->cEjercicio+
-               " order by fecha+serie+factura desc";
+        modo = "DESC";
+    QString order;
+    if(indice_tabla == "factura")
+        order = "fecha+serie+factura";
+    else
+        order = indice_tabla;
+    if(ui->cboseries->currentText() == tr("TODAS"))
+    {
+        if (ui->cboVer->currentText() == "Borradores")
+            m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+                                 " where factura = 'BORRADOR' and "+indice_tabla+
+                                 " like '%"+ui->txtBuscar->text()+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
+                                 " order by "+order +" "+modo,Configuracion_global->empresaDB);
+        else
+            m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+                                 " where factura <> 'BORRADOR' and "+indice_tabla+
+                                 " like '%"+ui->txtBuscar->text()+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
+                                 " order by "+order +" "+modo,Configuracion_global->empresaDB);
+    } else
+    {
+        if (ui->cboVer->currentText() == "Borradores")
+            m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+                                 " where factura = 'BORRADOR' and "+indice_tabla+
+                                 " like '%"+ui->txtBuscar->text()+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
+                                 " and serie ='"+ui->cboseries->currentText() +"'"+
+                                 " order by "+order +" "+modo,Configuracion_global->empresaDB);
+        else
+            m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+                                 " where factura <> 'BORRADOR' and "+indice_tabla+
+                                 " like '%"+ui->txtBuscar->text()+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
+                                 " and serie ='"+ui->cboseries->currentText() +"'"+
+                                 " order by "+order +" "+modo,Configuracion_global->empresaDB);
+    }
 
     m_facturas->setQuery(cSQL,Configuracion_global->empresaDB);
     ui->tabla_facturas->setModel(m_facturas);
@@ -1149,23 +1187,8 @@ void frmFacturas::on_cboVer_currentTextChanged(const QString &arg1)
 
 void frmFacturas::on_txtBuscar_textEdited(const QString &arg1)
 {
-    QString indice_tabla = h_Buscar.value(ui->cboBuscar->currentText());
-    if(indice_tabla.isEmpty())
-        indice_tabla = "factura";
-    if (ui->cboVer->currentText() == "Borradores")
-        m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
-                             " where factura = 'BORRADOR' and "+indice_tabla+
-                             " like '%"+arg1+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
-                             " order by fecha+serie+factura desc",Configuracion_global->empresaDB);
-    else
-        m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
-                             " where factura <> 'BORRADOR' and "+indice_tabla+
-                             " like '%"+arg1+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
-                             " order by fecha+serie+factura desc",Configuracion_global->empresaDB);
-
-    ui->tabla_facturas->setModel(m_facturas);
-    formato_tabla_facturas(*m_facturas);
-
+    Q_UNUSED(arg1);
+    filtro_tabla();
 }
 
 void frmFacturas::formato_tabla_facturas(QSqlQueryModel &modelo)
@@ -1183,6 +1206,57 @@ void frmFacturas::formato_tabla_facturas(QSqlQueryModel &modelo)
         ui->tabla_facturas->setColumnWidth(pos,lista.at(pos).toInt());
         modelo.setHeaderData(pos,Qt::Horizontal,titulos.at(pos));
     }
+}
+
+void frmFacturas::filtro_tabla()
+{
+    QString indice_tabla = h_Buscar.value(ui->cboBuscar->currentText());
+    if(indice_tabla.isEmpty())
+        indice_tabla = "factura";
+    QString modo;
+    if (ui->cboModo->currentText() == tr("A-Z"))
+        modo = "";
+    else
+        modo = "DESC";
+    QString order;
+    if(indice_tabla == "factura")
+        order = "fecha+serie+factura";
+    else
+        order = indice_tabla;
+
+    if(ui->cboseries->currentText() == tr("TODAS"))
+    {
+        if (ui->cboVer->currentText() == "Borradores")
+            m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+                                 " where factura = 'BORRADOR' and "+indice_tabla+
+                                 " like '%"+ui->txtBuscar->text()+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
+                                 " order by "+order+" " +modo,Configuracion_global->empresaDB);
+        else
+            m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+                                 " where factura <> 'BORRADOR' and "+indice_tabla+
+                                 " like '%"+ui->txtBuscar->text()+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
+                                 " order by "+order +" "+modo,Configuracion_global->empresaDB);
+    } else
+    {
+        if (ui->cboVer->currentText() == "Borradores")
+            m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+                                 " where factura = 'BORRADOR' and "+indice_tabla+
+                                 " like '%"+ui->txtBuscar->text()+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
+                                 " and serie ='"+ui->cboseries->currentText() +"'"+
+                                 " order by "+order +" "+modo,Configuracion_global->empresaDB);
+        else
+            m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+                                 " where factura <> 'BORRADOR' and "+indice_tabla+
+                                 " like '%"+ui->txtBuscar->text()+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
+                                 " and serie ='"+ui->cboseries->currentText() +"'"
+                                 " order by "+order +" "+modo,Configuracion_global->empresaDB);
+
+    }
+    //qDebug() << m_facturas->query().lastQuery();
+
+    ui->tabla_facturas->setModel(m_facturas);
+    formato_tabla_facturas(*m_facturas);
+
 }
 
 void frmFacturas::on_btnAsignarTransportista_clicked()
@@ -1233,4 +1307,37 @@ void frmFacturas::on_btnArticulos_clicked()
 {
     FrmArticulos artic;
     artic.exec();
+}
+
+
+
+void frmFacturas::on_cboseries_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filtro_tabla();
+}
+
+void frmFacturas::on_btnClear_clicked()
+{
+    ui->cboseries->setCurrentIndex(0);
+    ui->cboBuscar->setCurrentIndex(0);
+    ui->txtBuscar->setText("");
+    m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+                         " where factura <> 'BORRADOR'  and ejercicio = "+Configuracion_global->cEjercicio+
+                         " order by fecha+serie+factura desc limit 0,500",Configuracion_global->empresaDB);
+    ui->txtBuscar->setFocus();
+
+}
+
+void frmFacturas::on_cboBuscar_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filtro_tabla();
+
+}
+
+void frmFacturas::on_cboModo_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filtro_tabla();
 }

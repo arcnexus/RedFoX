@@ -29,7 +29,7 @@
    <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>MAYA M-SALUD - El software de los profesionales de la Salud - Acceso Usuarios</string>
+   <string>RedFox SGC - El software GNU  de gestión empresarial - Acceso Usuarios</string>
   </property>
   <property name="windowIcon">
    <iconset resource="maya.qrc">
