@@ -80,8 +80,6 @@ private slots:
 
     void on_radBusqueda_toggled(bool checked);
 
-    void on_cboOrdenar_por_currentIndexChanged(const QString &arg1);
-
     void on_txtBuscar_textEdited(const QString &arg1);
 
     void on_tabla_clicked(const QModelIndex &index);
@@ -89,6 +87,10 @@ private slots:
     void on_tabla_doubleClicked(const QModelIndex &index);
 
     void on_btn_convertir_clicked();
+
+    void on_cboOrden_currentIndexChanged(const QString &arg1);
+
+    void on_cboModo_currentIndexChanged(const QString &arg1);
 
 private:
     Ui::FrmPresupuestosCli *ui;
@@ -107,6 +109,7 @@ private:
     TimedMessageBox *t;
 
     void formato_tabla();
+    void filter_table();
 };
 
 #endif // FRMPRESUPUESTOSCLI_H

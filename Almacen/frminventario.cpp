@@ -7,6 +7,7 @@ frmInventario::frmInventario(QWidget *parent) :
   toolButton(tr("Almacen"),":/Icons/PNG/inventario.png",this),
   menuButton(QIcon(":/Icons/PNG/inventario.png"),tr("Inventario"),this),
   shortCut(new QPushButton(QIcon(":/Icons/PNG/inventario.png"),"",this))
+
 {
     ui->setupUi(this);
     // ------------------------
@@ -24,6 +25,7 @@ frmInventario::frmInventario(QWidget *parent) :
     QStringList orders;
     orders << tr("código") <<tr("código Barras") <<tr("referencia proveedor") <<tr("descripción");
     ui->cboOrder->addItems(orders);
+    shortCut->setStyleSheet("background-color: rgb(133, 170, 142)");
 }
 
 frmInventario::~frmInventario()

@@ -110,6 +110,12 @@ private slots:
 
     void on_radBuscar_toggled(bool checked);
 
+    void on_btnLimpiar_clicked();
+
+    void on_cboOrden_currentIndexChanged(const QString &arg1);
+
+    void on_cboModo_currentIndexChanged(const QString &arg1);
+
 public slots:
     void AnadirSeccion();
 
@@ -123,7 +129,8 @@ private:
     void CargarCamposEnArticulo();
     void VaciarCampos();
     void ChangeValues_TablaProveedores(int row, int column);
-    void formato_tabla(QSqlQueryModel* model);
+    void formato_tabla();
+    void filter_table();
 
     QListView *lista;
     QDialog *ventana;
@@ -136,7 +143,7 @@ private:
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* shortCut;
-    QSqlQueryModel *modelArt;
+    QSqlQueryModel *m;
 };
 
 #endif // FRMARTICULOS_H

@@ -650,6 +650,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`fac_pro` (
   `forma_pago` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `importe_pagado_total` DOUBLE NULL DEFAULT '0' ,
   `id_tipo_gasto` INT(11) NULL DEFAULT '0' ,
+  `forma_pago` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `comentario` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `pagado` TINYINT(1) NULL DEFAULT '0' ,
   `importe_deuda_pendiente` DOUBLE NULL DEFAULT '0' ,

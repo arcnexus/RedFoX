@@ -94,15 +94,6 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
     ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
     BloquearCampos(true);
-//    if(oPres->siguiente())
-//    {
-//        LLenarCampos();
-//        QString filter = QString("id_Cab = '%1'").arg(oPres->id);
-//        helper.fillTable("empresa","lin_pre",filter);
-//        ui->btnAnterior->setEnabled(false);
-//    }
-//    else
-//    {
         ui->btnBorrar->setEnabled(false);
         ui->btnEditar->setEnabled(false);
         ui->btn_convertir->setEnabled(false);
@@ -125,7 +116,14 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
         //------------------------
         QStringList orden;
         orden << tr("presupuesto") <<tr("cliente") << tr("teléfono");
-        ui->cboOrdenar_por->addItems(orden);
+        ui->cboOrden->addItems(orden);
+
+        //--------------------
+        // modo
+        //--------------------
+        QStringList modo;
+        modo << tr("A-Z") <<tr("Z-A");
+        ui->cboModo->addItems(modo);
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
@@ -451,7 +449,8 @@ void FrmPresupuestosCli::BloquearCampos(bool state)
     ui->botBuscarCliente->setEnabled(!state);
     ui->txtpresupuesto->setReadOnly(true);
     ui->txtBuscar->setReadOnly(!state);
-    ui->cboOrdenar_por->setEnabled(state);
+    ui->cboOrden->setEnabled(state);
+    ui->cboModo->setEnabled(state);
 }
 
 void FrmPresupuestosCli::on_chklAprovado_stateChanged(int arg1)
@@ -1283,22 +1282,7 @@ void FrmPresupuestosCli::on_radBusqueda_toggled(bool checked)
         ui->stackedWidget->setCurrentIndex(0);
 }
 
-void FrmPresupuestosCli::on_cboOrdenar_por_currentIndexChanged(const QString &arg1)
-{
-    //orden << tr("presupuesto") <<tr("cliente") << tr("teléfono")
-    QHash <QString,QString> h;
-    h[tr("presupuesto")] = "presupuesto";
-    h[tr("cliente")] = "cliente";
-    h[tr("teléfono")] = "telefono";
-    QString orden = h.value(ui->cboOrdenar_por->currentText());
-    if(orden == tr("presupuesto"))
-        m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by presupuesto desc",
-                Configuracion_global->empresaDB);
-    else
-        m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by "+orden,
-                    Configuracion_global->empresaDB);
 
-}
 
 void FrmPresupuestosCli::formato_tabla()
 {
@@ -1313,16 +1297,28 @@ void FrmPresupuestosCli::formato_tabla()
     }
 }
 
-void FrmPresupuestosCli::on_txtBuscar_textEdited(const QString &arg1)
+void FrmPresupuestosCli::filter_table()
 {
+
     QHash <QString,QString> h;
     h[tr("presupuesto")] = "presupuesto";
     h[tr("cliente")] = "cliente";
     h[tr("teléfono")] = "telefono";
-    QString orden = h.value(ui->cboOrdenar_por->currentText());
+    QString arg1 = ui->txtBuscar->text();
+    QString orden = h.value(ui->cboOrden->currentText());
+    QString modo;
+    if(ui->cboModo->currentText() == tr("A-Z"))
+        modo = "";
+    else
+        modo = "Desc";
+
     m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre where "+orden+
-                " like '%"+arg1+"%' order by "+orden+" desc",
-            Configuracion_global->empresaDB);
+                " like '%"+arg1+"%' order by "+orden+" "+modo, Configuracion_global->empresaDB);
+}
+
+void FrmPresupuestosCli::on_txtBuscar_textEdited(const QString &arg1)
+{
+    filter_table();
 }
 
 void FrmPresupuestosCli::on_tabla_clicked(const QModelIndex &index)
@@ -1347,4 +1343,16 @@ void FrmPresupuestosCli::on_tabla_doubleClicked(const QModelIndex &index)
 void FrmPresupuestosCli::on_btn_convertir_clicked()
 {
 
+}
+
+void FrmPresupuestosCli::on_cboOrden_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
+}
+
+void FrmPresupuestosCli::on_cboModo_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
 }

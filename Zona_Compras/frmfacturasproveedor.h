@@ -68,6 +68,12 @@ private slots:
 
     void on_tabla_doubleClicked(const QModelIndex &index);
 
+    void on_cboBuscar_currentIndexChanged(const QString &arg1);
+
+    void on_cbogastos_currentIndexChanged(const QString &arg1);
+
+    void on_btnClear_clicked();
+
 private:
     Ui::FrmFacturasProveedor *ui;
     Table_Helper helper;
@@ -78,6 +84,7 @@ private:
     QPushButton* push;
     QSqlQueryModel *m;
     void formato_tabla();
+    void filter_table();
 signals:
 
 };

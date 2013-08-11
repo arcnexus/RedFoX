@@ -41,10 +41,10 @@ frmClientes::frmClientes(QWidget *parent) :
      h_Buscar["Cif / Nif"] = "cif_nif";
      h_Buscar["Nombre Fiscal"]="nombre_fiscal";
 
-     ui->cboBuscar->addItem("Nombre Fiscal");
-     ui->cboBuscar->addItem("Cif / Nif");
-     ui->cboBuscar->addItem("Código cliente");
-     ui->cboBuscar->addItem("Población");
+     ui->cboOrden->addItem("Nombre Fiscal");
+     ui->cboOrden->addItem("Cif / Nif");
+     ui->cboOrden->addItem("Código cliente");
+     ui->cboOrden->addItem("Población");
 
 
     // -----------------
@@ -85,6 +85,13 @@ frmClientes::frmClientes(QWidget *parent) :
     // Rellenar grupos de iva
     //------------------------
     ui->cboGrupo_Iva->addItems(Configuracion_global->grupo_iva);
+
+    //------------------------
+    // Combo Modo
+    //------------------------
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    ui->cboModo->addItems(modo);
 
 
     // Ocultar campos según configuración
@@ -128,7 +135,7 @@ frmClientes::frmClientes(QWidget *parent) :
     QStringList tipos_dto;
     tipos_dto <<"1" <<"2" << "3" << "4" << "5" << "6";
     ui->cbotipo_dto->addItems(tipos_dto);
-    bloquearCampos();
+    bloquearCampos(true);
     this->Altas = false;
     ui->blinkink->setVisible(false);
     //Connect signals /slots.
@@ -163,8 +170,9 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->TablaDeudas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(menu_deudas(QPoint)));
     ui->txtBuscar->setEnabled(true);
     ui->txtBuscar->setReadOnly(false);
-    ui->cboBuscar->setEnabled(true);
+    ui->cboOrden->setEnabled(true);
     ui->txtBuscar->setFocus();
+    filter_table();
 
 
 }
@@ -716,7 +724,7 @@ void frmClientes::on_btnGuardar_clicked()
     if(cVacios.isEmpty()){
         LLenarCliente();
         oCliente->Guardar();
-        bloquearCampos();
+        bloquearCampos(true);
       // NOTE ??? porqué?  Configuracion_global->CargarClientes();
         emit unblock();
     } else
@@ -731,7 +739,7 @@ void frmClientes::on_btnGuardar_clicked()
 void frmClientes::on_btnAnadir_clicked()
 {
     emit block();
-    desbloquearCampos();
+    bloquearCampos(false);
     VaciarCampos();
     set_blink();
     this->Altas = true;
@@ -857,158 +865,84 @@ void frmClientes::txtcif_nif_editingFinished()
 void frmClientes::on_btnEditar_clicked()
 {
     emit block();
-        desbloquearCampos();
+        bloquearCampos(false);
         ui->txtcodigo_cliente->setEnabled(false);
         set_blink();
         ui->txtcif_nif->setFocus();
 }
-void frmClientes::bloquearCampos() {
+void frmClientes::bloquearCampos(bool state) {
 
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(true);
+        lineEdit->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
     QComboBox *ComboBox;
     foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(false);
+        ComboBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
     // SpinBox
     QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
     QSpinBox *SpinBox;
     foreach (SpinBox, SpinBoxList) {
-        SpinBox->setReadOnly(true);
+        SpinBox->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // DoubleSpinBox
     QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
     QDoubleSpinBox *DSpinBox;
     foreach (DSpinBox, DSpinBoxList) {
-        DSpinBox->setReadOnly(true);
+        DSpinBox->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
     foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(false);
+        CheckBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
     // QTextEdit
     QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
     QTextEdit *TextEdit;
     foreach (TextEdit,TextEditList) {
-        TextEdit->setReadOnly(true);
+        TextEdit->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // QDateEdit
     QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(false);
+        DateEdit->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
 
-    ui->btnAnadir->setEnabled(true);
-    ui->btnAnterior->setEnabled(true);
-    ui->btnBorrar->setEnabled(true);
-    ui->btnBuscar->setEnabled(true);
-    ui->btnDeshacer->setEnabled(false);
-    ui->btnEditar->setEnabled(true);
-    ui->btnGuardar->setEnabled(false);
-    ui->btnSiguiente->setEnabled(true);
-    ui->btnAnadirdireccion->setEnabled(false);
-    ui->btnBorrardireccion->setEnabled(false);
-    ui->btnEditardireccionAlternativa->setEnabled(false);
-    ui->btnGuardardireccionAlternativa->setEnabled(false);
-    ui->btnDeshacerdireccionAlternativa->setEnabled(false);
-    ui->btnAdd_TipoCliente->setEnabled(false);
-    ui->btndel_TipoCliente->setEnabled(false);
-    ui->btnVer_OtrosContactos->setEnabled(true);
-    ui->txtBuscar->setEnabled(true);
-
-}
-void frmClientes::desbloquearCampos()
-{
-    // LineEdit
-    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
-    QLineEdit *lineEdit;
-    foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // ComboBox
-    QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
-    QComboBox *ComboBox;
-    foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    // SpinBox
-    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-    QSpinBox *SpinBox;
-    foreach (SpinBox, SpinBoxList) {
-        SpinBox->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // DoubleSpinBox
-    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-    QDoubleSpinBox *DSpinBox;
-    foreach (DSpinBox, DSpinBoxList) {
-        DSpinBox->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // CheckBox
-    QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
-    QCheckBox *CheckBox;
-    foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    // QTextEdit
-    QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
-    QTextEdit *TextEdit;
-    foreach (TextEdit,TextEditList) {
-        TextEdit->setReadOnly(false);
-        //qDebug() << lineEdit->objectName();
-    }
-    // QDateEdit
-    QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
-    QDateEdit *DateEdit;
-    foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(true);
-        //qDebug() << lineEdit->objectName();
-    }
-    ui->btnAnadir->setEnabled(false);
-    ui->btnAnterior->setEnabled(false);
-    ui->btnBorrar->setEnabled(false);
-    ui->btnBuscar->setEnabled(false);
-    ui->btnDeshacer->setEnabled(true);
-    ui->btnEditar->setEnabled(false);
-    ui->btnGuardar->setEnabled(true);
-    ui->btnSiguiente->setEnabled(false);
-    ui->txtdeuda_actual->setEnabled(false);
-    ui->txtimporteAcumulado->setEnabled(false);
-    ui->txtventas_ejercicio->setEnabled(false);
-    ui->btnAnadirdireccion->setEnabled(true);
-    ui->btnBorrardireccion->setEnabled(true);
-    ui->btnEditardireccionAlternativa->setEnabled(true);
-    ui->btnAdd_TipoCliente->setEnabled(true);
-    ui->btndel_TipoCliente->setEnabled(true);
-    ui->txtdescripcion_direccion->setEnabled(false);
-    ui->txtdireccion1Alternativa1->setEnabled(false);
-    ui->txtdireccion1Alternativa2->setEnabled(false);
-    ui->txtcpPoblacionAlternativa->setEnabled(false);
-    ui->txtpoblacionAlternativa->setEnabled(false);
-    ui->txtprovinciaAlternativa->setEnabled(false);
-    ui->cbopaisAlternativa->setEnabled(false);
-    ui->txtBuscar->setEnabled(true);
+    ui->btnAnadir->setEnabled(state);
+    ui->btnAnterior->setEnabled(state);
+    ui->btnBorrar->setEnabled(state);
+    ui->btnBuscar->setEnabled(state);
+    ui->btnDeshacer->setEnabled(!state);
+    ui->btnEditar->setEnabled(state);
+    ui->btnGuardar->setEnabled(!state);
+    ui->btnSiguiente->setEnabled(state);
+    ui->btnAnadirdireccion->setEnabled(!state);
+    ui->btnBorrardireccion->setEnabled(!state);
+    ui->btnEditardireccionAlternativa->setEnabled(!state);
+    ui->btnGuardardireccionAlternativa->setEnabled(!state);
+    ui->btnDeshacerdireccionAlternativa->setEnabled(!state);
+    ui->btnAdd_TipoCliente->setEnabled(!state);
+    ui->btndel_TipoCliente->setEnabled(!state);
+    ui->btnVer_OtrosContactos->setEnabled(state);
+    ui->txtBuscar->setReadOnly(!state);
+    ui->cboOrden->setEnabled(state);
+    ui->cboModo->setEnabled(state);
 
 }
+
 
 void frmClientes::on_btnDeshacer_clicked()
 {
@@ -1019,7 +953,7 @@ void frmClientes::on_btnDeshacer_clicked()
     QString cid = QString::number(oCliente->id);
     oCliente->Recuperar("Select * from clientes where id ="+cid+" order by id limit 1 ");
     LLenarCampos();
-    bloquearCampos();
+    bloquearCampos(true);
     set_blink();
     emit unblock();
 }
@@ -1614,14 +1548,8 @@ void frmClientes::on_radEditar_toggled(bool checked)
 
 void frmClientes::on_txtBuscar_textEdited(const QString &arg1)
 {
-    QString index = h_Buscar.value(ui->cboBuscar->currentText());
-
-    qDebug() << ui->cboBuscar->currentText() << ":" << index;
-    m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1, poblacion,telefono1,movil,email from clientes"
-                         " where "+index+" like '%"+arg1.trimmed()+"%' order by "+index,Configuracion_global->groupDB);
-    //ui->tabla_busquedas->setModel(m_clientes);
-     formato_tabla_busquedas();
-   // qDebug() << m_clientes->query().lastQuery();
+    Q_UNUSED(arg1);
+    filter_table();
 }
 
 void frmClientes::on_tabla_busquedas_doubleClicked(const QModelIndex &index)
@@ -1636,12 +1564,29 @@ void frmClientes::formato_tabla_busquedas()
 {
     ui->tabla_busquedas->setColumnHidden(0,true);
     QVariantList variant;
-    variant << 20 << 100 <<300 <<100 <<170 <<170 <<100 <<100 <<160;
+    variant << 20 << 80 <<230 <<100 <<140 <<140 <<90 <<90 <<120;
     for(int pos= 0; pos <variant.count();pos++)
     {
         ui->tabla_busquedas->setColumnWidth(pos,variant.at(pos).toInt());
     }
 
+}
+
+void frmClientes::filter_table()
+{
+    QString index = h_Buscar.value(ui->cboOrden->currentText());
+    QString arg1 = ui->txtBuscar->text();
+    QString modo;
+    if(ui->cboModo->currentText() == tr("A-Z"))
+        modo = "";
+    else
+        modo = "DESC";
+
+    m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1, poblacion,telefono1,movil,email from clientes"
+                         " where "+index+" like '%"+arg1.trimmed()+"%' order by "+index+" "+modo,Configuracion_global->groupDB);
+    //ui->tabla_busquedas->setModel(m_clientes);
+     formato_tabla_busquedas();
+   // qDebug() << m_clientes->query().lastQuery();
 }
 
 void frmClientes::on_btnclear_clicked()
@@ -1656,4 +1601,24 @@ void frmClientes::on_tabla_busquedas_clicked(const QModelIndex &index)
     int id = ui->tabla_busquedas->model()->data(ui->tabla_busquedas->model()->index(index.row(),0),Qt::EditRole).toInt();
     oCliente->Recuperar(id);
     LLenarCampos();
+}
+
+void frmClientes::on_btnLimpiar_clicked()
+{
+    ui->cboModo->setCurrentIndex(0);
+    ui->cboOrden->setCurrentIndex(0);
+    ui->txtBuscar->clear();
+    filter_table();
+}
+
+void frmClientes::on_cboOrden_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
+}
+
+void frmClientes::on_cboModo_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
 }

@@ -163,5 +163,8 @@
         <file>DB/poblaciones.sql</file>
         <file>PNG/inventario.png</file>
         <file>PNG/clean.png</file>
+        <file>PNG/Neux.png</file>
+        <file>PNG/NeuX.png</file>
+        <file>PNG/busca_filtra.png</file>
     </qresource>
 </RCC>

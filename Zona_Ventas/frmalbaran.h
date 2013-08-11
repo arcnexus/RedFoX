@@ -76,6 +76,8 @@ private slots:
 
     void on_btnLimpiar_clicked();
 
+    void on_cboModo_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;
@@ -88,6 +90,7 @@ private:
     QPushButton* push;
     QSqlQueryModel *m;
     void formato_tabla();
+    void filter_table();
 };
 
 #endif // FRMALBARAN_H

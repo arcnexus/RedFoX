@@ -100,15 +100,20 @@ private slots:
 
     void on_txtcif_editingFinished();
 
-    void on_cboOrdenar_por_currentIndexChanged(const QString &arg1);
-
     void on_radModo_busqueda_toggled(bool checked);
-
-    void on_txtBusqueda_textEdited(const QString &arg1);
 
     void on_tabla_clicked(const QModelIndex &index);
 
     void on_tabla_doubleClicked(const QModelIndex &index);
+
+
+    void on_btnLimpiar_clicked();
+
+    void on_cboOrden_currentIndexChanged(const QString &arg1);
+
+    void on_cboModo_currentIndexChanged(const QString &arg1);
+
+    void on_txtBuscar_textEdited(const QString &arg1);
 
 private:
     Ui::frmProveedores *ui;
@@ -117,6 +122,7 @@ private:
     QPushButton *push;
     QSqlQueryModel *model;
     void formato_tabla(QSqlQueryModel *modelo);
+    void filter_table();
 };
 
 #endif // FRMPROVEEDORES_H

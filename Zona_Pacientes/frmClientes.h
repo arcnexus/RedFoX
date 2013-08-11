@@ -64,8 +64,7 @@ private slots:
     void txtcif_nif_editingFinished();
 
     void on_btnEditar_clicked();
-    void bloquearCampos();
-    void desbloquearCampos();
+    void bloquearCampos(bool state);
 
     void on_btnDeshacer_clicked();
 
@@ -116,6 +115,12 @@ private slots:
 
     void on_tabla_busquedas_clicked(const QModelIndex &index);
 
+    void on_btnLimpiar_clicked();
+
+    void on_cboOrden_currentIndexChanged(const QString &arg1);
+
+    void on_cboModo_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::frmClientes *ui;
     QSqlQueryModel *modelFP;
@@ -131,6 +136,7 @@ private:
     bool Anadirdireccion /*= false*/;
     int iddireccionAlternativa;
     void formato_tabla_busquedas();
+    void filter_table();
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton * push;

@@ -8,7 +8,7 @@ FrmDialogoImprimir::FrmDialogoImprimir(QWidget *parent) :
     ui->setupUi(this);
     ui->rad_Impresora->setChecked(true);
     ui->frame_email->setVisible(false);
-    ui->frame_pdf->setVisible(false);
+    //ui->frame_pdf->setVisible(false);
 }
 
 FrmDialogoImprimir::~FrmDialogoImprimir()
@@ -23,7 +23,7 @@ void FrmDialogoImprimir::set_email(QString email)
 
 void FrmDialogoImprimir::set_ruta(QString ruta)
 {
-    ui->txtRutaPDF->setText(ruta);
+    //ui->txtRutaPDF->setText(ruta);
 }
 
 void FrmDialogoImprimir::set_preview(bool preview)
@@ -33,7 +33,7 @@ void FrmDialogoImprimir::set_preview(bool preview)
 
 QString FrmDialogoImprimir::get_ruta()
 {
-    return ui->txtRutaPDF->text();
+    //return ui->txtRutaPDF->text();
 }
 
 QString FrmDialogoImprimir::get_email()

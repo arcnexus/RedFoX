@@ -94,6 +94,9 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     QStringList dbIndex;
     dbIndex << tr("Albarán") <<tr("Fecha") <<tr("cif") <<tr("cliente");
     ui->cboOrden->addItems(dbIndex);
+    QStringList modo;
+    modo <<tr("A-Z") << tr("Z-A");
+    ui->cboModo->addItems(modo);
     ui->radBusqueda->setChecked(true);
     ui->stackedWidget->setCurrentIndex(1);
 
@@ -347,6 +350,7 @@ void FrmAlbaran::BloquearCampos(bool state)
     ui->btn_borrar->setEnabled(state);
     ui->cboOrden->setEnabled(state);
     ui->txtBuscar->setReadOnly(!state);
+    ui->cboModo->setEnabled(state);
 
     helper.blockTable(state);
 }
@@ -846,7 +850,7 @@ void FrmAlbaran::formato_tabla()
     ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
 }
 
-void FrmAlbaran::on_cboOrden_currentIndexChanged(const QString &arg1)
+void FrmAlbaran::filter_table()
 {
     //<< tr("Albarán") <<tr("Fecha") <<tr("cif") <<tr("cliente");
     QHash <QString,QString> h;
@@ -854,12 +858,23 @@ void FrmAlbaran::on_cboOrden_currentIndexChanged(const QString &arg1)
     h[tr("Fecha")] = "fecha";
     h[tr("cif")] = "cif";
     h[tr("cliente")] = "cliente";
-    QString order = h.value(arg1);
-    if(order =="cliente" || order =="cif")
-        m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb order by "+order,Configuracion_global->empresaDB);
+    QString order = h.value(ui->cboOrden->currentText());
+    QString arg1 = ui->txtBuscar->text();
+    QString modo;
+    if(ui->cboModo->currentText() == tr("A-Z"))
+        modo = "";
     else
-        m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb order by "+order +" desc",Configuracion_global->empresaDB);
+        modo = "DESC";
 
+    m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb where "+order+" like '%"+arg1.trimmed()+
+                    "%' order by "+order +" "+modo,Configuracion_global->empresaDB);
+    //qDebug() << m->query().lastQuery();
+}
+
+void FrmAlbaran::on_cboOrden_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
 }
 
 void FrmAlbaran::on_tabla_clicked(const QModelIndex &index)
@@ -888,28 +903,21 @@ void FrmAlbaran::on_btnBuscar_clicked()
 
 void FrmAlbaran::on_txtBuscar_textEdited(const QString &arg1)
 {
-    //<< tr("Albarán") <<tr("Fecha") <<tr("cif") <<tr("cliente");
-    QHash <QString,QString> h;
-    h[tr("Albarán")] = "albaran";
-    h[tr("Fecha")] = "fecha";
-    h[tr("cif")] = "cif";
-    h[tr("cliente")] = "cliente";
-    QString order = h.value(ui->cboOrden->currentText());
-
-
-    if(order =="cliente" || order =="cif")
-        m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb where "+order+" like '%"+arg1.trimmed()+
-                    "%' order by "+order,Configuracion_global->empresaDB);
-    else
-        m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb where "+order+"like '%"+arg1.trimmed()+
-                    "%' order by "+order +" desc",Configuracion_global->empresaDB);
+    Q_UNUSED(arg1);
+    filter_table();
 
 }
 
 void FrmAlbaran::on_btnLimpiar_clicked()
 {
-    ui->txtBuscar->setText("");
+    ui->txtBuscar->clear();
+    ui->cboModo->setCurrentIndex(0);
     ui->cboOrden->setCurrentIndex(0);
-    m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb order by albaran desc",Configuracion_global->empresaDB);
-    ui->txtBuscar->setFocus();
+    filter_table();
+}
+
+void FrmAlbaran::on_cboModo_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
 }

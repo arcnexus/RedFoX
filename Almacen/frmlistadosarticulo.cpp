@@ -1,6 +1,6 @@
 #include "frmlistadosarticulo.h"
 #include "ui_frmlistadosarticulo.h"
-#include <parameter.h>
+
 
 
 frmListadosArticulo::frmListadosArticulo(QWidget *parent) :

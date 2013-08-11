@@ -413,7 +413,6 @@ FORMS    += mainwindow.ui \
     Zona_Administrador/addgroupfrom.ui \
     Almacen/frminventario.ui \
     EditorReports/sectioneditordlg.ui \
-    EditorReports/mainwindow.ui \
     EditorReports/edittextdlg.ui \
     EditorReports/editrelationalfield.ui \
     EditorReports/editrectdlg.ui \

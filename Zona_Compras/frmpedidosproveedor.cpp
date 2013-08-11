@@ -82,24 +82,32 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
 
 
     ui->btn_cerrar->setVisible(showCerrar);
+
+    //--------------
+    // LLenar tabla
+    //--------------
+
+    model = new QSqlQueryModel(this);
+    model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
+                    Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
+    ui->tabla->setModel(model);
+    formatotabla();
+
     //----------------------------
     // lleno combo orden busquedas
     //----------------------------
     QStringList lista;
     lista << tr("pedido") <<tr("fecha") <<tr("recepción") <<tr("codigo_proveedor") <<tr("proveedor");
     lista << tr("cif/nif");
-    ui->cboOrdenar_por->addItems(lista);
-
+    ui->cboOrden->addItems(lista);
 
     //----------------------------
-    // lleno tabla
+    // Combo modo
     //----------------------------
-    model = new QSqlQueryModel(this);
-    model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
-                    Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
-    ui->tabla->setModel(model);
-    formatotabla(model);
-    //pedido.get(0);
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    ui->cboModo->addItems(modo);
+
 
 }
 
@@ -441,7 +449,8 @@ void FrmPedidosProveedor::bloquearcampos(bool estado)
     ui->botBuscarCliente->setEnabled(!estado);
     helper.blockTable(estado);
     // activo controles que deben estar activos.
-    ui->cboOrdenar_por->setEnabled(estado);
+    ui->cboOrden->setEnabled(estado);
+    ui->cboModo->setEnabled(estado);
     ui->txtBuscar->setReadOnly(!estado);
 
 
@@ -798,28 +807,13 @@ void FrmPedidosProveedor::on_radBusqueda_toggled(bool checked)
         ui->stackedWidget->setCurrentIndex(0);
 }
 
-void FrmPedidosProveedor::on_cboOrdenar_por_currentIndexChanged(const QString &arg1)
-{
-
-}
-
 void FrmPedidosProveedor::on_txtBuscar_textEdited(const QString &arg1)
 {
-    QHash <QString,QString> h;
-    h[tr("pedido")] ="pedido";
-    h[tr("fecha")] = "fecha";
-    h[tr("recepción")] = "recepcion";
-    h[tr("codigo_proveedor")] ="codigo_proveedor";
-    h[tr("proveedor")] = "proveedor";
-
-    QString orden = h.value(ui->cboOrdenar_por->currentText());
-
-    model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
-                    Configuracion_global->cEjercicio+" and "+orden+ " like '%"+arg1+ "%' order by "+orden,Configuracion_global->empresaDB);
-    formatotabla(model);
+    Q_UNUSED(arg1);
+    filter_table();
 }
 
-void FrmPedidosProveedor::formatotabla(QSqlQueryModel *model)
+void FrmPedidosProveedor::formatotabla()
 {
     QStringList columnas;
     QVariantList sizes;
@@ -832,6 +826,28 @@ void FrmPedidosProveedor::formatotabla(QSqlQueryModel *model)
 
     }
     ui->tabla->setColumnHidden(0,true);
+}
+
+void FrmPedidosProveedor::filter_table()
+{
+    QHash <QString,QString> h;
+    h[tr("pedido")] ="pedido";
+    h[tr("fecha")] = "fecha";
+    h[tr("recepción")] = "recepcion";
+    h[tr("codigo_proveedor")] ="codigo_proveedor";
+    h[tr("proveedor")] = "proveedor";
+
+    QString orden = h.value(ui->cboOrden->currentText());
+    QString arg1 = ui->txtBuscar->text();
+    QString modo;
+    if(ui->cboModo->currentText()==tr("A-Z"))
+        modo = "";
+    else
+        modo = "DESC";
+
+    model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
+                    Configuracion_global->cEjercicio+" and "+orden+ " like '%"+arg1+ "%' order by "+orden +" "+modo,
+                    Configuracion_global->empresaDB);
 }
 
 
@@ -859,4 +875,24 @@ void FrmPedidosProveedor::on_btnBuscar_clicked()
     ui->txtBuscar->clear();
     ui->radBusqueda->setChecked(true);
     ui->txtBuscar->setFocus();
+}
+
+void FrmPedidosProveedor::on_cboModo_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
+}
+
+void FrmPedidosProveedor::on_cboOrden_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
+}
+
+void FrmPedidosProveedor::on_btnLimpiar_clicked()
+{
+    ui->cboModo->setCurrentIndex(0);
+    ui->cboOrden->setCurrentIndex(0);
+    ui->txtBuscar->clear();
+    filter_table();
 }

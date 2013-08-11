@@ -87,26 +87,6 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
     ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
 
-//    if(oPedido->RecuperarPedido("Select * from ped_cli where pedido > -1 order by pedido  limit 1 "))
-//    {
-//        LLenarCampos();
-//        QString filter = QString("id_Cab = '%1'").arg(ui->txtpedido->text());
-//        helper.fillTable("empresa","lin_ped",filter);
-//    }
-//    else
-//    {
-//        VaciarCampos();
-//        ui->btn_borrar->setEnabled(false);
-//        ui->btnEditar->setEnabled(false);
-//        ui->btn_convertir->setEnabled(false);
-//        ui->btnSiguiente->setEnabled(false);
-//        ui->btnAnterior->setEnabled(false);
-//        ui->btnImprimir->setEnabled(false);
-//        ui->btnBuscar->setEnabled(false);
-
-//        oPedido->id = -1;
-//    }
-
     //--------------
     // LLenar tabla
     //--------------
@@ -120,7 +100,14 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     //-------------
     QStringList order;
     order << tr("Pedido") <<tr("Cliente") <<tr("Fecha");
-    ui->cboordenar->addItems(order);
+    ui->cboOrden->addItems(order);
+
+    //-------------
+    // MODO
+    //-------------
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    ui->cboModo->addItems(modo);
 }
 
 FrmPedidos::~FrmPedidos()
@@ -365,8 +352,9 @@ void FrmPedidos::BloquearCampos(bool state)
     ui->txtpedido->setReadOnly(true);
     ui->btn_borrar->setEnabled(state);
     ui->txtBuscar->setReadOnly(!state);
-    ui->cboordenar->setEnabled(state);
+    ui->cboOrden->setEnabled(state);
     ui->txtBuscar->setFocus();
+    ui->cboModo->setEnabled(state);
 }
 
 void FrmPedidos::LLenarPedido()
@@ -460,6 +448,26 @@ void FrmPedidos::formato_tabla()
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
     ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
+}
+
+void FrmPedidos::filter_table()
+{
+    //  tr("Pedido") <<tr("Cliente") <<tr("Fecha")
+    QHash <QString,QString> h;
+    h[tr("Pedido")] = "pedido";
+    h[tr("Cliente")] = "cliente";
+    h[tr("Fecha")] = "fecha";
+    QString order = h.value(ui->cboOrden->currentText());
+    QString arg1 = ui->txtBuscar->text();
+    QString modo;
+    if (ui->cboModo->currentText() == tr("A-Z"))
+        modo = "";
+    else
+        modo = "DESC";
+
+    m->setQuery("select id, pedido, fecha, cliente from ped_cli "
+                    "where "+order+" like '%" + arg1.trimmed() + "%' order by "+order+" "+modo,Configuracion_global->empresaDB);
+
 }
 
 void FrmPedidos::on_btnSiguiente_clicked()
@@ -1027,28 +1035,11 @@ void FrmPedidos::on_radBusqueda_toggled(bool checked)
 
 }
 
-void FrmPedidos::on_cboordenar_currentIndexChanged(const QString &arg1)
-{
-    if(arg1 == tr("Clientes"))
-       m->setQuery("select id, pedido, fecha, cliente from ped_cli order by "+arg1,Configuracion_global->empresaDB);
-    else
-       m->setQuery("select id, pedido, fecha, cliente from ped_cli order by "+arg1+" desc",Configuracion_global->empresaDB);
-}
 
 void FrmPedidos::on_txtBuscar_textEdited(const QString &arg1)
 {
-    //  tr("Pedido") <<tr("Cliente") <<tr("Fecha")
-    QHash <QString,QString> h;
-    h[tr("Pedido")] = "pedido";
-    h[tr("Cliente")] = "cliente";
-    h[tr("Fecha")] = "fecha";
-    QString order = h.value(ui->cboordenar->currentText());
-    if(order == "pedido" || order == "fecha")
-        m->setQuery("select id, pedido, fecha, cliente from ped_cli "
-                    "where "+order+" like '%" + arg1.trimmed() + "%' order by "+order+" desc",Configuracion_global->empresaDB);
-    else
-        m->setQuery("select id, pedido, fecha, cliente from ped_cli "
-                    "where "+order+" like '%" + arg1.trimmed() + "%' order by "+order,Configuracion_global->empresaDB);
+    Q_UNUSED(arg1);
+    filter_table();
 
 
 }
@@ -1075,4 +1066,24 @@ void FrmPedidos::on_tabla_doubleClicked(const QModelIndex &index)
 void FrmPedidos::on_btnBuscar_clicked()
 {
     ui->radBusqueda->setChecked(true);
+}
+
+void FrmPedidos::on_btnLimpiar_clicked()
+{
+    ui->txtBuscar->clear();
+    ui->cboModo->setCurrentIndex(0);
+    ui->cboOrden->setCurrentIndex(0);
+
+}
+
+void FrmPedidos::on_cboModo_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
+}
+
+void FrmPedidos::on_cboOrden_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
 }

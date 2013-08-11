@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "openrptLibs/include/data.h"
+//#include "openrptLibs/include/data.h"
 Configuracion * Configuracion_global = 0;
 
 void MainWindow::crear_barraMantenimiento()
@@ -733,7 +733,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     on_edit = false;
 
-    QPixmap pixmap(":/Icons/PNG/mayafondo_blanco.png");
+    QPixmap pixmap(":/Icons/PNG/Neux.png");
     QSplashScreen splash(pixmap);
     splash.show();
 

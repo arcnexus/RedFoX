@@ -75,7 +75,14 @@ frmProveedores::frmProveedores(QWidget *parent) :
     //------------------------
     QStringList orden;
     orden <<tr("Proveedor")<<tr("código") << tr("CIF") <<tr("Teléfono") << tr("Persona contacto");
-    ui->cboOrdenar_por->addItems(orden);
+    ui->cboOrden->addItems(orden);
+
+    //------------------------
+    // COMBO Modo
+    //------------------------
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    ui->cboModo->addItems(modo);
 
     //---------------------------
     // TABLA PRINCIPAL BUSQUEDAS
@@ -94,6 +101,7 @@ frmProveedores::frmProveedores(QWidget *parent) :
 
     connect(ui->tablaContactos, SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(menu_contactos(const QPoint&)));
     connect(ui->tablaPagos,SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(menu_deudas(const QPoint&)));
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
 }
 
 frmProveedores::~frmProveedores()
@@ -322,8 +330,9 @@ void frmProveedores::BloquearCampos(bool state)
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
-    ui->cboOrdenar_por->setEnabled(state);
-    ui->txtBusqueda->setReadOnly(!state);
+    ui->cboOrden->setEnabled(state);
+    ui->txtBuscar->setReadOnly(!state);
+    ui->cboModo->setEnabled(state);
 
 }
 
@@ -1131,81 +1140,12 @@ void frmProveedores::on_txtcif_editingFinished()
     blockSignals(false);
 }
 
-void frmProveedores::on_cboOrdenar_por_currentIndexChanged(const QString &arg1)
-{
-    //orden <<tr("Proveedor")<<tr("código") << tr("CIF") <<tr("Teléfono");
-
-
-    if(arg1 =="Proveedor")
-    {
-        model = new QSqlQueryModel(this);
-        QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by proveedor";
-
-        model->setQuery(cSQL,Configuracion_global->groupDB);
-        ui->tabla->setModel(model);
-    } else if (arg1 =="código")
-    {
-        model = new QSqlQueryModel(this);
-        QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by codigo";
-
-        model->setQuery(cSQL,Configuracion_global->groupDB);
-        ui->tabla->setModel(model);
-     } else if (arg1 =="CIF")
-    {
-        model = new QSqlQueryModel(this);
-        QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by cif";
-
-        model->setQuery(cSQL,Configuracion_global->groupDB);
-        ui->tabla->setModel(model);
-     }
-    else if (arg1 =="Teléfono")
-    {
-        model = new QSqlQueryModel(this);
-        QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by telefono1";
-
-        model->setQuery(cSQL,Configuracion_global->groupDB);
-        ui->tabla->setModel(model);
-     }
-    else if (arg1 =="Persona contacto")
-    {
-        model = new QSqlQueryModel(this);
-        QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by persona_contacto";
-
-        model->setQuery(cSQL,Configuracion_global->groupDB);
-        ui->tabla->setModel(model);
-     }
-    formato_tabla(model);
-
-
-
-}
-
 void frmProveedores::on_radModo_busqueda_toggled(bool checked)
 {
     if(checked)
         ui->stackedWidget->setCurrentIndex(1);
     else
         ui->stackedWidget->setCurrentIndex(0);
-}
-
-void frmProveedores::on_txtBusqueda_textEdited(const QString &arg1)
-{
-    QHash <QString, QString> h;
-    h["Proveedor"] = "proveedor";
-    h["código"] = "codigo";
-    h["CIF"] = "cif";
-    h["Teléfono"] = "telefono1";
-    h["Persona contacto"] = "persona_contacto";
-    QString campo = h.value(ui->cboOrdenar_por->currentText());
-
-    model = new QSqlQueryModel(this);
-    QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores "
-            "where " +campo+" like '%"+arg1.trimmed()+"%' order by "+campo;
-
-    model->setQuery(cSQL,Configuracion_global->groupDB);
-    ui->tabla->setModel(model);
-
-
 }
 
 void frmProveedores::formato_tabla(QSqlQueryModel *modelo)
@@ -1224,6 +1164,31 @@ void frmProveedores::formato_tabla(QSqlQueryModel *modelo)
    }
 }
 
+void frmProveedores::filter_table()
+{
+    QHash <QString, QString> h;
+    h["Proveedor"] = "proveedor";
+    h["código"] = "codigo";
+    h["CIF"] = "cif";
+    h["Teléfono"] = "telefono1";
+    h["Persona contacto"] = "persona_contacto";
+    QString campo = h.value(ui->cboOrden->currentText());
+    QString arg1 = ui->txtBuscar->text();
+    QString modo;
+    if(ui->cboModo->currentText() == tr("A-Z"))
+        modo = "";
+    else
+        modo = "DESC";
+
+
+    model = new QSqlQueryModel(this);
+    QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores "
+            "where " +campo+" like '%"+arg1.trimmed()+"%' order by "+campo+" "+modo;
+
+    model->setQuery(cSQL,Configuracion_global->groupDB);
+    ui->tabla->setModel(model);
+}
+
 void frmProveedores::on_tabla_clicked(const QModelIndex &index)
 {
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
@@ -1237,4 +1202,32 @@ void frmProveedores::on_tabla_doubleClicked(const QModelIndex &index)
     oProveedor->Recuperar(id);
     LLenarCampos();
     ui->rad_Modo_edicion->setChecked(true);
+}
+
+
+
+void frmProveedores::on_btnLimpiar_clicked()
+{
+    ui->cboModo->setCurrentIndex(0);
+    ui->cboModo->setCurrentIndex(0);
+    ui->txtBuscar->clear();
+    filter_table();
+}
+
+void frmProveedores::on_cboOrden_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
+}
+
+void frmProveedores::on_cboModo_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
+}
+
+void frmProveedores::on_txtBuscar_textEdited(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
 }

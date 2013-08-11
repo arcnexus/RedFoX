@@ -70,6 +70,10 @@ private slots:
 
     void on_tabla_doubleClicked(const QModelIndex &index);
 
+    void on_cboOrden_currentIndexChanged(const QString &arg1);
+
+    void on_cboModo_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::FrmAlbaranProveedor *ui;
     Table_Helper helper;
@@ -83,6 +87,7 @@ private:
     QPushButton* push;
     QSqlQueryModel *m;
     void formato_tabla();
+    void filter_table();
 signals:
 
 };

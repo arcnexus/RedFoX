@@ -62,8 +62,6 @@ private slots:
 
     void on_radBusqueda_toggled(bool checked);
 
-    void on_cboOrdenar_por_currentIndexChanged(const QString &arg1);
-
     void on_txtBuscar_textEdited(const QString &arg1);
 
     void on_tabla_doubleClicked(const QModelIndex &index);
@@ -72,9 +70,16 @@ private slots:
 
     void on_btnBuscar_clicked();
 
+    void on_cboModo_currentIndexChanged(const QString &arg1);
+
+    void on_cboOrden_currentIndexChanged(const QString &arg1);
+
+    void on_btnLimpiar_clicked();
+
 private:
 
-    void formatotabla(QSqlQueryModel *model);
+    void formatotabla();
+    void filter_table();
     void on_btnSiguiente_clicked();
 
     void on_btnAnterior_clicked();

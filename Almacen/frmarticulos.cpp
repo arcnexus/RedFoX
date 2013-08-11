@@ -70,25 +70,24 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     //--------------------------
     // llenar tabla artículos
     //--------------------------
-    modelArt = new QSqlQueryModel(this);
+    m = new QSqlQueryModel(this);
     QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa ";
-    modelArt->setQuery(cSQL, Configuracion_global->groupDB);
-    ui->tabla->setModel(modelArt);
-    formato_tabla(modelArt);
+    m->setQuery(cSQL, Configuracion_global->groupDB);
+    ui->tabla->setModel(m);
+    formato_tabla();
     //-------------------------
     // Combo campos de búsqueda
     //-------------------------
     QStringList busquedas;
 
     busquedas << tr("Descripción") <<tr("Código") <<tr("Código Barras") <<tr("Ref. Proveedor");
-    ui->cboOrden_busquedas->addItems(busquedas);
-
-
-    //--------------------------------
-    // CAMPOS MONEDA
-    //--------------------------------
-    //ui->txtcoste->setValidator(Configuracion_global->validator_cantidad);
-
+    ui->cboOrden->addItems(busquedas);
+    //--------------------
+    // combo modo
+    //--------------------
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    ui->cboModo->addItems(modo);
 
     //-----------------------------------------
     // CONEXIONES
@@ -255,7 +254,8 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->btnEditartarifa->setEnabled(!state);
     ui->btnBorrarTarifa->setEnabled(!state);
     ui->txtBuscar->setReadOnly(!state);
-    ui->cboOrden_busquedas->setEnabled(state);
+    ui->cboOrden->setEnabled(state);
+    ui->cboModo->setEnabled(state);
     // activo controles que deben estar activos.
     ui->checkBox->setEnabled(true);
 
@@ -511,16 +511,16 @@ void FrmArticulos::ChangeValues_TablaProveedores(int row, int column)
     rellenar_grafica_proveedores();
 }
 
-void FrmArticulos::formato_tabla(QSqlQueryModel *model)
+void FrmArticulos::formato_tabla()
 {
     QStringList titulo;
     titulo <<"id" << tr("Código") << tr("C. Barras") << tr("código fabricante") <<tr("%IVA") << tr("P.V.P.")
           <<tr("PVP+IVA") << tr("descripción") ;
     QVariantList col_size;
-    col_size << 0<<140<<140<<140<<80<<100<<100<<450;
+    col_size << 0<<100<<100<<100<<50<<70<<70<<400;
     for(int i =0;i<titulo.size();i++)
     {
-        model->setHeaderData(i,Qt::Horizontal,titulo.at(i));
+        m->setHeaderData(i,Qt::Horizontal,titulo.at(i));
         ui->tabla->setColumnWidth(i,col_size.at(i).toInt());
     }
     ui->tabla->setColumnHidden(0,true);
@@ -528,6 +528,31 @@ void FrmArticulos::formato_tabla(QSqlQueryModel *model)
     ui->tabla->setItemDelegateForColumn(5, new MonetaryDelegate);
     ui->tabla->setItemDelegateForColumn(6, new MonetaryDelegate);
 
+}
+
+void FrmArticulos::filter_table()
+{
+    // busquedas << tr("Descripción") <<tr("Código") <<tr("Código Barras") <<tr("Ref. Proveedor");
+QHash <QString, QString> lista;
+lista[tr("Descripción")] = "descripcion";
+lista[tr("Código")] = "codigo";
+lista[tr("Código Barras")] = "codigo_barras";
+lista[tr("Ref. Proveedor")] = "codigo_proveedor";
+
+QString campo = lista.value(ui->cboOrden->currentText());
+QString mode;
+if(ui->cboModo->currentText() == tr("A-Z"))
+    mode = "";
+else
+    mode ="DESC";
+QString arg1 = ui->txtBuscar->text();
+
+QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa where "+
+        campo+" like '%"+arg1.trimmed()+"%'  order by "+campo +" "+mode;
+
+m->setQuery(cSQL,Configuracion_global->groupDB);
+ui->tabla->setModel(m);
+formato_tabla();
 }
 
 void FrmArticulos::rellenar_grafica_proveedores()
@@ -1950,51 +1975,15 @@ void FrmArticulos::on_btnBuscar_clicked()
 
 void FrmArticulos::on_cboOrden_busquedas_currentIndexChanged(const QString &arg1)
 {
-    // busquedas << tr("Descripción") <<tr("Código") <<tr("Código Barras") <<tr("Ref. Proveedor");
-    if(arg1 == tr("Descripción"))
-    {
-        modelArt->setQuery("select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa "
-                           " order by descripcion", Configuracion_global->groupDB);
-        ui->tabla->setModel(modelArt);
-        formato_tabla(modelArt);
-    } else if(arg1 == tr("Código"))
-    {
-        modelArt->setQuery("select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa "
-                           " order by codigo", Configuracion_global->groupDB);
-        ui->tabla->setModel(modelArt);
-        formato_tabla(modelArt);
-    } else if(arg1 == tr("Código Barras"))
-    {
-        modelArt->setQuery("select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa "
-                           " order by codigo_barras", Configuracion_global->groupDB);
-        ui->tabla->setModel(modelArt);
-        formato_tabla(modelArt);
-    } else if(arg1 == tr("Ref. Proveedor"))
-    {
-        modelArt->setQuery("select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa "
-                           " order by codigo_fabricante", Configuracion_global->groupDB);
-        ui->tabla->setModel(modelArt);
-        formato_tabla(modelArt);
-    }
+    Q_UNUSED(arg1);
+    filter_table();
 
 }
 
 void FrmArticulos::on_txtBuscar_textEdited(const QString &arg1)
 {
-        // busquedas << tr("Descripción") <<tr("Código") <<tr("Código Barras") <<tr("Ref. Proveedor");
-    QHash <QString, QString> lista;
-    lista[tr("Descripción")] = "descripcion";
-    lista[tr("Código")] = "codigo";
-    lista[tr("Código Barras")] = "codigo_barras";
-    lista[tr("Ref. Proveedor")] = "codigo_proveedor";
-
-    QString campo = lista.value(ui->cboOrden_busquedas->currentText());
-    QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa where "+
-             campo+" like '%"+arg1.trimmed()+"%'  order by "+campo;
-
-    modelArt->setQuery(cSQL,Configuracion_global->groupDB);
-    ui->tabla->setModel(modelArt);
-    formato_tabla(modelArt);
+    Q_UNUSED(arg1);
+    filter_table();
 }
 
 void FrmArticulos::on_tabla_clicked(const QModelIndex &index)
@@ -2022,4 +2011,24 @@ void FrmArticulos::on_radBuscar_toggled(bool checked)
         ui->stackedWidget->setCurrentIndex(1);
     else
         ui->stackedWidget->setCurrentIndex(0);
+}
+
+void FrmArticulos::on_btnLimpiar_clicked()
+{
+    ui->cboModo->setCurrentIndex(0);
+    ui->cboOrden->setCurrentIndex(0);
+    ui->txtBuscar->clear();
+    filter_table();
+}
+
+void FrmArticulos::on_cboOrden_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
+}
+
+void FrmArticulos::on_cboModo_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
 }

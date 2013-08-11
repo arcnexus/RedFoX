@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1023</width>
-    <height>499</height>
+    <height>535</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -685,7 +685,7 @@ alternate-background-color: rgb(255, 220, 255);</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../maya.qrc">:/Icons/PNG/mayafondo_blanco.png</pixmap>
+      <pixmap resource="../maya.qrc">:/Icons/PNG/NeuX.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>

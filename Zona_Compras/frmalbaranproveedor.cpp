@@ -97,8 +97,14 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     //-----------------------
     QStringList order;
     order << tr("albarán") << tr("fecha") <<tr("cif/nif") <<tr("Proveedor");
-    ui->cboOrdenar_por->addItems(order);
+    ui->cboOrden->addItems(order);
 
+    //-----------------------
+    // combo mode
+    //-----------------------
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    ui->cboModo->addItems(modo);
 
 
 
@@ -216,8 +222,8 @@ void FrmAlbaranProveedor::bloquearcampos(bool estado)
     helper.blockTable(estado);
     // activo controles que deben estar activos.
     ui->txtBuscar->setReadOnly(!estado);
-    ui->cboOrdenar_por->setEnabled(estado);
-
+    ui->cboOrden->setEnabled(estado);
+    ui->cboModo->setEnabled(estado);
 
 }
 
@@ -234,6 +240,26 @@ void FrmAlbaranProveedor::formato_tabla()
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
     ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
+
+}
+
+void FrmAlbaranProveedor::filter_table()
+{
+    QHash <QString,QString> h;
+    h[tr("albarán")] = "albaran";
+    h[tr("fecha")] = "fecha";
+    h[tr("cif/nif")] = "cif_proveedor";
+    h[tr("Proveedor")] = "proveedor";
+    QString order = h.value(ui->cboOrden->currentText());
+    QString arg1 = ui->txtBuscar->text();
+    QString modo;
+    if (ui->cboModo->currentText() == tr("A-Z"))
+        modo = "";
+    else
+        modo = "DESC";
+
+    m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro "
+                    "where "+order+" like '%"+arg1.trimmed()+"%' order by "+order+" "+modo,Configuracion_global->empresaDB);
 
 }
 
@@ -715,19 +741,8 @@ void FrmAlbaranProveedor::on_cboOrdenar_por_currentIndexChanged(const QString &a
 
 void FrmAlbaranProveedor::on_txtBuscar_textEdited(const QString &arg1)
 {
-    QHash <QString,QString> h;
-    h[tr("albarán")] = "albaran";
-    h[tr("fecha")] = "fecha";
-    h[tr("cif/nif")] = "cif_proveedor";
-    h[tr("Proveedor")] = "proveedor";
-    QString order = h.value(ui->cboOrdenar_por->currentText());
-    if (order == "albaran" || order =="fecha")
-        m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro "
-                    "where "+order+" like '%"+arg1.trimmed()+"%' order by "+order+" desc",Configuracion_global->empresaDB);
-    else
-        m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro "
-                    "where "+order+" like '%"+arg1.trimmed()+"%' order by "+order,Configuracion_global->empresaDB);
-
+    Q_UNUSED(arg1);
+    filter_table();
 }
 
 void FrmAlbaranProveedor::on_tabla_clicked(const QModelIndex &index)
@@ -747,4 +762,16 @@ void FrmAlbaranProveedor::on_tabla_doubleClicked(const QModelIndex &index)
     llenar_campos();
     bloquearcampos(true);
     ui->radEdicion->setChecked(true);
+}
+
+void FrmAlbaranProveedor::on_cboOrden_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
+}
+
+void FrmAlbaranProveedor::on_cboModo_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    filter_table();
 }
