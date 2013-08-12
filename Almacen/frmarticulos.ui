@@ -1531,18 +1531,18 @@ color: rbg(0,0,0);</string>
                  <string notr="true">background-color: rgb(254, 255, 205);
 color: rbg(0,0,0);</string>
                 </property>
-                <property name="displayFormat">
-                 <string>dd/MM/yyyy</string>
-                </property>
-                <property name="calendarPopup">
-                 <bool>true</bool>
-                </property>
                 <property name="date">
                  <date>
                   <year>1752</year>
                   <month>9</month>
                   <day>14</day>
                  </date>
+                </property>
+                <property name="displayFormat">
+                 <string>dd/MM/yyyy</string>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -2779,16 +2779,7 @@ Imagen.</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -4057,16 +4048,7 @@ background-color: rgb(239, 239, 239);</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="layout_grafica_comparativas">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -5848,7 +5830,7 @@ background-color: rgb(248, 245, 194);</string>
         <widget class="QFrame" name="frame_27">
          <property name="maximumSize">
           <size>
-           <width>285</width>
+           <width>250</width>
            <height>16777215</height>
           </size>
          </property>

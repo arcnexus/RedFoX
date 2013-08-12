@@ -4242,7 +4242,7 @@ font: 8pt &quot;Sans&quot;;</string>
         <widget class="QFrame" name="frame_27">
          <property name="maximumSize">
           <size>
-           <width>285</width>
+           <width>250</width>
            <height>16777215</height>
           </size>
          </property>

@@ -102,6 +102,7 @@ private:
     QAction menuButton;
     QPushButton* push;
     QSqlQueryModel *m;
+    TimedMessageBox *t;
 };
 
 #endif // FRMPEDidOS_H

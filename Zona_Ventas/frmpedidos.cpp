@@ -3,10 +3,12 @@
 
 
 #include "../Almacen/articulo.h"
+#include "../Zona_Ventas/albaran.h"
 
 #include "../Busquedas/db_consulta_view.h"
 #include "../Zona_Ventas/factura.h"
 #include"../Auxiliares/datedelegate.h"
+#include"../Auxiliares/monetarydelegate.h"
 
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
@@ -91,7 +93,7 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     // LLenar tabla
     //--------------
     m = new QSqlQueryModel(this);
-    m->setQuery("select id, pedido, fecha, cliente from ped_cli order by pedido desc",Configuracion_global->empresaDB);
+    m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli order by pedido desc",Configuracion_global->empresaDB);
     ui->tabla->setModel(m);
     formato_tabla();
 
@@ -440,14 +442,15 @@ void FrmPedidos::formato_tabla()
     // id, pedido, fecha, cliente
     QStringList headers;
     QVariantList size;
-    headers << "id" <<tr("Pedido") << tr("fecha") <<tr("cliente");
-    size <<0 <<120 <<120 <<300;
+    headers << "id" <<tr("Pedido") << tr("fecha") <<tr("Total") <<tr("cliente");
+    size <<0 <<120 <<120 <<120 <<300;
     for(int i = 0;i<headers.length();i++)
     {
         ui->tabla->setColumnWidth(i,size.at(i).toInt());
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
     ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tabla->setItemDelegateForColumn(3, new MonetaryDelegate);
 }
 
 void FrmPedidos::filter_table()
@@ -457,6 +460,7 @@ void FrmPedidos::filter_table()
     h[tr("Pedido")] = "pedido";
     h[tr("Cliente")] = "cliente";
     h[tr("Fecha")] = "fecha";
+    h[tr("Total")] = "total_pedido";
     QString order = h.value(ui->cboOrden->currentText());
     QString arg1 = ui->txtBuscar->text();
     QString modo;
@@ -465,7 +469,7 @@ void FrmPedidos::filter_table()
     else
         modo = "DESC";
 
-    m->setQuery("select id, pedido, fecha, cliente from ped_cli "
+    m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli "
                     "where "+order+" like '%" + arg1.trimmed() + "%' order by "+order+" "+modo,Configuracion_global->empresaDB);
 
 }
@@ -650,6 +654,7 @@ void FrmPedidos::on_btn_borrar_clicked()
 void FrmPedidos::totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda)
 {
     _moneda = moneda;
+    total = base + iva + re;
     ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2))+moneda);
     ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',2))+moneda);
     ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',2))+moneda);
@@ -665,6 +670,7 @@ void FrmPedidos::totalChanged(double base , double dto ,double subtotal , double
 
 void FrmPedidos::desglose1Changed(double base, double iva, double re, double total)
 {
+    total = base + iva + re;
     ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
     ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
     ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
@@ -673,6 +679,7 @@ void FrmPedidos::desglose1Changed(double base, double iva, double re, double tot
 
 void FrmPedidos::desglose2Changed(double base, double iva, double re, double total)
 {
+    total = base + iva + re;
     ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
     ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
     ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
@@ -681,6 +688,7 @@ void FrmPedidos::desglose2Changed(double base, double iva, double re, double tot
 
 void FrmPedidos::desglose3Changed(double base, double iva, double re, double total)
 {
+    total = base + iva + re;
     ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
     ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
     ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
@@ -689,6 +697,7 @@ void FrmPedidos::desglose3Changed(double base, double iva, double re, double tot
 
 void FrmPedidos::desglose4Changed(double base, double iva, double re, double total)
 {
+    total = base + iva + re;
     ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
     ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
     ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
@@ -833,11 +842,124 @@ void FrmPedidos::lineaDeleted(lineaDetalle * ld)
 
 void FrmPedidos::convertir_ealbaran()
 {
+    if(oPedido->albaran ==0)
+    {
+        QString c = QString("id = %1").arg(oPedido->id);
+        QString error;
+        QHash <QString, QVariant> h;
+        QMap<int, QSqlRecord> records = SqlCalls::SelectRecord("ped_cli",c,Configuracion_global->empresaDB,error);
+        QSqlRecord r = records.value(oPedido->id);
+        for(int i= 0; i< r.count();i++)
+            h.insert(r.fieldName(i),r.value(i));
+        // ---------------------------------
+        // Ajustes campos antes de insertar
+        //----------------------------------
+        h.insert("imp_gasto1",h.value("importe_gasto1").toDouble());
+        h.remove("importe_gasto1");
+        h.insert("imp_gasto2",h.value("importe_gasto2").toDouble());
+        h.remove("importe_gasto2");
+        h.insert("imp_gasto3",h.value("importe_gasto3").toDouble());
+        h.remove("importe_gasto3");
+
+        h.insert("comentario",h.value("comentarios").toString());
+        h.remove("comentarios");
+        h.insert("rec_total",h.value("total_recargo").toDouble());
+        h.remove("total_recargo");
+        h.remove("aprobado");
+        h.remove("impreso");
+        h.remove("fecha_aprobacion");
+        h.insert("iva_total",h.value("total_iva").toDouble());
+        h.remove("total_iva");
+        h.remove("atencion_de");
+        h.remove("importe_pendiente");
+        h.insert("subtotal",h.value("importe").toDouble());
+        h.remove("importe");
+        h.insert("desc_gasto1",h.value("gastos_distribuidos1").toString());
+        h.remove("gastos_distribuidos1");
+        h.insert("desc_gasto2",h.value("gastos_distribuidos2").toString());
+        h.remove("gastos_distribuidos2");
+        h.insert("desc_gasto3",h.value("gastos_distribuidos3").toString());
+        h.remove("gastos_distribuidos3");
+        h.insert("base_total",h.value("base").toDouble());
+        h.remove("base");
+        h.remove("valido_hasta");
+        h.insert("total_albaran",h.value("total_pedido").toDouble());
+        h.remove("total_pedido");
+        h.remove("lugar_entrega");
+        h.remove("importe_factura");
+        h.remove("presupuesto");
+        h.remove("id");
+        h.insert("pedido_cliente",h.value("pedido").toInt());
+        h.remove("pedido");
+        h.remove("fecha_limite_entrega");
+        h.remove("traspasado_albaran");
+        h.remove("entregado");
+        h.remove("traspasado_factura");
+        h.insert("id_pais_entrega",h.value("pais_entrega"));
+        h.remove("pais_entrega");
+        h.remove("completo");
+        h.remove("enviado");
+        Albaran oAlbaran;
+        Configuracion_global->empresaDB.transaction();
+        int num = oAlbaran.NuevoNumeroAlbaran();
+        h.insert("albaran",num);
+        h["fecha"] = QDate::currentDate();
+
+        int added = SqlCalls::SqlInsert(h,"cab_alb",Configuracion_global->empresaDB,error);
+        // ----------------
+        // Lineas de albaran
+        // ----------------
+        int added_l;
+        QHash <QString, QVariant> h_l;
+        QString d = QString("id_cab = %1").arg(oPedido->id);
+        QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("lin_ped", d,Configuracion_global->empresaDB, error);
+          QMapIterator<int, QSqlRecord> i_l(map);
+          while (i_l.hasNext())
+          {
+              i_l.next();
+              QSqlRecord r_l = i_l.value();
+              for(int i= 0; i< r_l.count();i++)
+                  h_l.insert(r_l.fieldName(i),r_l.value(i));
+              h_l.remove("id");
+              h_l["id_cab"] = added;
+              h_l.remove("cantidad_a_servir");
+             added_l = SqlCalls::SqlInsert(h_l,"lin_alb",Configuracion_global->empresaDB,error);
+             if(added_l == -1)
+                 break;
+          }
+        if(added_l == -1 && added == -1)
+        {
+            Configuracion_global->empresaDB.rollback();
+            qDebug() <<added;
+            qDebug() <<error;
+        } else
+        {
+            QHash <QString, QVariant> p;
+            p["albaran"] = num;
+            c = "id="+QString::number(oPedido->id);
+            bool updated = SqlCalls::SqlUpdate(p,"ped_cli",Configuracion_global->empresaDB,c,error);
+
+            if(updated)
+            {
+                Configuracion_global->empresaDB.commit();
+                t = new TimedMessageBox(qApp->activeWindow(),
+                                                          QObject::tr("Se ha creado el albarán num:")+QString::number(num));
+                oPedido->RecuperarPedido("select * from cab_alb where id ="+QString::number(oPedido->id));
+                LLenarCampos();
+            } else
+            {
+                QMessageBox::warning(this,tr("Traspaso a albarán"),tr("No se pudo crear el albarán"),tr("Aceptar"));
+                Configuracion_global->empresaDB.rollback();
+            }
+        }
+    } else
+        QMessageBox::information(this,tr("Traspasar presupuesto"),tr("Este presupuesto ya ha sido traspasado\nNo puede traspasar dos veces el mismo presupuesto"),
+                                 tr("Aceptar"));
 }
 
 void FrmPedidos::convertir_enFactura()
 {
-    if(oPedido->factura.isEmpty())
+    if(oPedido->factura == "0" || oPedido->factura.isEmpty())
     {
         if(QMessageBox::question(this,tr("Pedidos a proveedores"),tr("¿Desea realmente facturar este pedido?"),
                                  tr("No"),tr("Sí"))==QMessageBox::Accepted)

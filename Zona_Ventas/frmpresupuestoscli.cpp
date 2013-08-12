@@ -186,10 +186,10 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->base4,'f',2)));
     ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->base,'f',2)+moneda));
 
-    ui->txtporc_iva1->setText(QString::number(oPres->iva1));
-    ui->txtporc_iva2->setText(QString::number(oPres->iva2));
-    ui->txtporc_iva3->setText(QString::number(oPres->iva3));
-    ui->txtporc_iva4->setText(QString::number(oPres->iva4));
+    ui->txtporc_iva1->setText(QString::number(oPres->porc_iva1));
+    ui->txtporc_iva2->setText(QString::number(oPres->porc_iva2));
+    ui->txtporc_iva3->setText(QString::number(oPres->porc_iva3));
+    ui->txtporc_iva4->setText(QString::number(oPres->porc_iva4));
     ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->iva1,'f',2)));
     ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->iva2,'f',2)));
     ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->iva3,'f',2)));
@@ -451,6 +451,8 @@ void FrmPresupuestosCli::BloquearCampos(bool state)
     ui->txtBuscar->setReadOnly(!state);
     ui->cboOrden->setEnabled(state);
     ui->cboModo->setEnabled(state);
+    ui->btnImprimir->setEnabled(true);
+    ui->btn_convertir->setEnabled(state);
 }
 
 void FrmPresupuestosCli::on_chklAprovado_stateChanged(int arg1)
@@ -586,7 +588,8 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
 
 void FrmPresupuestosCli::on_btnBuscar_clicked()
 {
-
+    ui->radBusqueda->setChecked(true);
+    ui->txtBuscar->setFocus();
 }
 
 void FrmPresupuestosCli::on_botBuscarCliente_clicked()
@@ -617,6 +620,8 @@ void FrmPresupuestosCli::on_botBuscarCliente_clicked()
 void FrmPresupuestosCli::totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda)
 {
     this->moneda = moneda;
+    double total1 = base +iva;
+    total = total1;
     ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2))+moneda);
     ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',2))+moneda);
     ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',2))+moneda);
@@ -632,33 +637,37 @@ void FrmPresupuestosCli::totalChanged(double base , double dto ,double subtotal 
 
 void FrmPresupuestosCli::desglose1Changed(double base, double iva, double re, double total)
 {
+    total = base +iva;
     ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
     ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
     ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
 void FrmPresupuestosCli::desglose2Changed(double base, double iva, double re, double total)
 {
+    total = base +iva;
     ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
     ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txtrec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
     ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
 void FrmPresupuestosCli::desglose3Changed(double base, double iva, double re, double total)
 {
+        total = base +iva;
     ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
     ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txtrec3->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
     ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
 void FrmPresupuestosCli::desglose4Changed(double base, double iva, double re, double total)
 {
+    total = base +iva;
     ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
     ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
+    ui->txtrec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
     ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
 }
 
@@ -900,7 +909,7 @@ void FrmPresupuestosCli::convertir_ealbaran()
 
 void FrmPresupuestosCli::convertir_enFactura()
 {
-    if(QString(oPres->factura).isEmpty())
+    if(QString(oPres->factura).isEmpty()|| oPres->factura == "0")
     {
         QString c = QString("id = %1").arg(oPres->id);
         QString error;
@@ -921,12 +930,10 @@ void FrmPresupuestosCli::convertir_enFactura()
 
         h.insert("comentario",h.value("comentarios").toString());
         h.remove("comentarios");
-        h.insert("rec_total",h.value("total_recargo").toDouble());
-        h.remove("total_recargo");
         h.remove("aprobado");
         h.remove("impreso");
         h.remove("fecha_aprobacion");
-        h.insert("iva_total",h.value("total_iva").toDouble());
+        h.insert("iva",h.value("total_iva").toDouble());
         h.remove("total_iva");
         h.remove("atencion_de");
         h.remove("importe_pendiente");
@@ -938,22 +945,21 @@ void FrmPresupuestosCli::convertir_enFactura()
         h.remove("gastos_distribuidos2");
         h.insert("desc_gasto3",h.value("gastos_distribuidos3").toString());
         h.remove("gastos_distribuidos3");
-        h.insert("base_total",h.value("base").toDouble());
-        h.remove("base");
         h.remove("valido_hasta");
-        h.insert("total_albaran",h.value("total").toDouble());
-        h.remove("total");
         h.remove("lugar_entrega");
         h.remove("importe_factura");
         h.remove("presupuesto");
         h.remove("id");
         h.insert("pedido_cliente",h.value("pedido").toInt());
         h.remove("pedido");
+        h.remove("albaran");
+       // h["total"] == ui->txttotal->text().replace(".","").replace(",",".").toDouble();
         Factura oFactura;
         Configuracion_global->empresaDB.transaction();
 
         QDialog* dlg = new QDialog(this);
-        dlg->setWindowOpacity(0.5);
+        dlg->setWindowTitle(tr("Seleccione serie factura"));
+        dlg->resize(270,150);
         QComboBox* box = new QComboBox(dlg);
         QPushButton*  btn = new QPushButton("Aceptar",dlg);
         QVBoxLayout lay(dlg);
@@ -963,72 +969,83 @@ void FrmPresupuestosCli::convertir_enFactura()
 
         dlg->setLayout(&lay);
 
-        QStringList l;
-        l << "a" << "b" << "c";
-        box->addItems(l);
+        QSqlQueryModel *l = new QSqlQueryModel(this);
+        l->setQuery("select serie from series",Configuracion_global->empresaDB);
+        box->setModel(l);
 
         connect(btn,SIGNAL(clicked()),dlg,SLOT(accept()));
         dlg->exec();//aki se podria poner otro boton y cancelar todo?
 
-        QString serie = box->currentText();//no lo usas nunca...por eso
+        QString serie = box->currentText();
         dlg->deleteLater();
-
-        QString num = serie+"/"+ oFactura.NuevoNumeroFactura(serie);
-        h.insert("factura",num);
+        QString fra =  oFactura.NuevoNumeroFactura(serie);
+        QString num = serie+"/"+ fra;
+        h.insert("factura",fra);
         h["fecha"] = QDate::currentDate();
+        h["serie"] = serie;
 
         int added = SqlCalls::SqlInsert(h,"cab_fac",Configuracion_global->empresaDB,error);
-        // -----------------
-        // Lineas de factura
-        // -----------------
-        int added_l;
-        QHash <QString, QVariant> h_l;
-        QString d = QString("id_cab = %1").arg(oPres->id);
-        QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("lin_pre", d,Configuracion_global->empresaDB, error);
-          QMapIterator<int, QSqlRecord> i_l(map);
-          while (i_l.hasNext())
-          {
-              i_l.next();
-              QSqlRecord r_l = i_l.value();
-              for(int i= 0; i< r_l.count();i++)
-                  h_l.insert(r_l.fieldName(i),r_l.value(i));
-              h_l.remove("id");
-              h_l["id_cab"] = added;
-             added_l = SqlCalls::SqlInsert(h_l,"lin_fac",Configuracion_global->empresaDB,error);
-             if(added_l == -1)
-                 break;
-          }
-        if(added_l == -1 && added == -1)
+        if(added>-1)
         {
-            Configuracion_global->empresaDB.rollback();
-            qDebug() <<added;
-            qDebug() <<error;
-        } else
-        {
-            QHash <QString, QVariant> p;
-            if(!oPres->aprobado)
+            // -----------------
+            // Lineas de factura
+            // -----------------
+            int added_l;
+            QHash <QString, QVariant> h_l;
+            QString d = QString("id_cab = %1").arg(oPres->id);
+            QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("lin_pre", d,Configuracion_global->empresaDB, error);
+              QMapIterator<int, QSqlRecord> i_l(map);
+              while (i_l.hasNext())
+              {
+                  i_l.next();
+                  QSqlRecord r_l = i_l.value();
+                  for(int i= 0; i< r_l.count();i++)
+                      h_l.insert(r_l.fieldName(i),r_l.value(i));
+                  h_l.remove("id");
+                  h_l["id_cab"] = added;
+                 added_l = SqlCalls::SqlInsert(h_l,"lin_fac",Configuracion_global->empresaDB,error);
+                 if(added_l == -1)
+                     break;
+              }
+            if(added_l == -1)
             {
-                p["aprobado"] = true;
-                p["fecha_aprobacion"] = QDate::currentDate();
-            }
-            p["factura"] = num;
-            c = "id="+QString::number(oPres->id);
-            bool updated = SqlCalls::SqlUpdate(p,"cab_pre",Configuracion_global->empresaDB,c,error);
-
-            if(updated)
-            {
-                Configuracion_global->empresaDB.commit();
-                t = new TimedMessageBox(qApp->activeWindow(),
-                                                          QObject::tr("Se ha creado la factura num:")+
-                                        Configuracion_global->serie+"/"+num);
-                oPres->RecuperarPresupuesto("select * from cab_pre where id ="+QString::number(oPres->id));
-                LLenarCampos();
+                Configuracion_global->empresaDB.rollback();
+                qDebug() <<added;
+                qDebug() <<error;
             } else
             {
-                QMessageBox::warning(this,tr("Traspaso a factura"),tr("No se pudo crear la factura"),tr("Aceptar"));
-                Configuracion_global->empresaDB.rollback();
+                QHash <QString, QVariant> p;
+                if(!oPres->aprobado)
+                {
+                    p["aprobado"] = true;
+                    p["fecha_aprobacion"] = QDate::currentDate();
+                }
+                p["factura"] = num;
+                p["importe_factura"] = h.value("total").toDouble();
+                c = "id="+QString::number(oPres->id);
+                bool updated = SqlCalls::SqlUpdate(p,"cab_pre",Configuracion_global->empresaDB,c,error);
+
+                if(updated)
+                {
+                    Configuracion_global->empresaDB.commit();
+                    t = new TimedMessageBox(qApp->activeWindow(),
+                                                              QObject::tr("Se ha creado la factura num:")+
+                                            Configuracion_global->serie+"/"+num);
+                    oPres->RecuperarPresupuesto("select * from cab_pre where id ="+QString::number(oPres->id));
+                    LLenarCampos();
+                } else
+                {
+                    QMessageBox::warning(this,tr("Traspaso a factura"),tr("No se pudo crear la factura"),tr("Aceptar"));
+                    Configuracion_global->empresaDB.rollback();
+                }
             }
+        } else
+        {
+            QMessageBox::warning(this,tr("Traspaso a factura"),
+                               QString(tr("No se pudo crear la factura: %1").arg(error)),tr("Aceptar"));
+            Configuracion_global->empresaDB.rollback();
         }
+
     } else
         QMessageBox::information(this,tr("Traspasar presupuesto"),tr("Este presupuesto ya ha sido traspasado\nNo puede traspasar dos veces el mismo presupuesto"),
                                  tr("Aceptar"));

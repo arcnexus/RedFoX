@@ -579,7 +579,7 @@ background-color: rgb(133, 170, 142);</string>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(147, 190, 218);</string>
+        <string notr="true">background-color: #0D2B2F;</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -588,16 +588,7 @@ background-color: rgb(133, 170, 142);</string>
         <enum>QFrame::Raised</enum>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
-        <property name="leftMargin">
-         <number>1</number>
-        </property>
-        <property name="topMargin">
-         <number>1</number>
-        </property>
-        <property name="rightMargin">
-         <number>1</number>
-        </property>
-        <property name="bottomMargin">
+        <property name="margin">
          <number>1</number>
         </property>
         <item>

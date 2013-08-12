@@ -2462,7 +2462,7 @@ color: rgb(23, 76, 7);</string>
         <widget class="QFrame" name="frame_3">
          <property name="maximumSize">
           <size>
-           <width>285</width>
+           <width>250</width>
            <height>16777215</height>
           </size>
          </property>

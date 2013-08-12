@@ -1137,7 +1137,7 @@ color: rgb(0, 64, 64);</string>
               </widget>
              </item>
              <item row="1" column="5">
-              <widget class="QLineEdit" name="txtporc_rec1">
+              <widget class="QLineEdit" name="txtrec1">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -1285,7 +1285,7 @@ color: rgb(0, 64, 64);</string>
               </widget>
              </item>
              <item row="2" column="5">
-              <widget class="QLineEdit" name="txtporc_rec2">
+              <widget class="QLineEdit" name="txtrec2">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -1433,7 +1433,7 @@ color: rgb(0, 64, 64);</string>
               </widget>
              </item>
              <item row="3" column="5">
-              <widget class="QLineEdit" name="txtporc_rec3">
+              <widget class="QLineEdit" name="txtrec3">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -1581,7 +1581,7 @@ color: rgb(0, 64, 64);</string>
               </widget>
              </item>
              <item row="4" column="5">
-              <widget class="QLineEdit" name="txtporc_rec4">
+              <widget class="QLineEdit" name="txtrec4">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2384,7 +2384,7 @@ background-color: rgb(248, 245, 194);</string>
         <widget class="QFrame" name="frame_3">
          <property name="maximumSize">
           <size>
-           <width>285</width>
+           <width>250</width>
            <height>16777215</height>
           </size>
          </property>
