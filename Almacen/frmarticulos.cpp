@@ -281,14 +281,14 @@ void FrmArticulos::LLenarCampos()
    int nIndex = ui->cboTipoIVA->findText(oArticulo->codigo_iva);
    if (nIndex !=-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
-   ui->txtdto->setText(QString::number(oArticulo->porc_dto,'f',2));
-   ui->txtcoste->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste,'f',2)));
+   ui->txtdto->setText(QString::number(oArticulo->porc_dto,'f',Configuracion_global->decimales));
+   ui->txtcoste->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste,'f',Configuracion_global->decimales)));
    ui->txtfecha_fecha_ultima_compra->setDate(oArticulo->fecha_ultima_compra);
    ui->txtfechaUltimaVenta->setDate(oArticulo->fecha_ultima_venta);
    ui->txtunidades_compradas->setText(QString::number(oArticulo->unidades_compradas));
    ui->txtunidades_vendidas->setText(QString::number(oArticulo->unidades_vendidas));
-   ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_compras,'f',2)));
-   ui->txtimporte_acumulado_ventas->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_ventas,'f',2)));
+   ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_compras,'f',Configuracion_global->decimales)));
+   ui->txtimporte_acumulado_ventas->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_ventas,'f',Configuracion_global->decimales)));
    ui->txtcomentario->setText(oArticulo->comentario);
    ui->txtstock_maximo->setText(QString::number(oArticulo->stock_maximo));
    ui->txtstock_minimo->setText(QString::number(oArticulo->stock_minimo));
@@ -349,14 +349,14 @@ void FrmArticulos::LLenarCampos()
 
   ui->txtpor_cada->setText(QString::number(oArticulo->por_cada));
   ui->txtregalo_de->setText(QString::number(oArticulo->regalo_de));
-  ui->txt_dto_web->setText(QString::number(oArticulo->porc_dto_web,'f',2));
-  ui->txtoferta_pvp_fijo->setText(QString::number(oArticulo->oferta_pvp_fijo,'f',2));
+  ui->txt_dto_web->setText(QString::number(oArticulo->porc_dto_web,'f',Configuracion_global->decimales));
+  ui->txtoferta_pvp_fijo->setText(QString::number(oArticulo->oferta_pvp_fijo,'f',Configuracion_global->decimales));
   ui->txcomentarios_promocion->setPlainText(oArticulo->comentario_oferta);
   if (oArticulo->articulo_promocionado)
       ui->lbl_en_promocion->setVisible(true);
   else
       ui->lbl_en_promocion->setVisible(false);
-  ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',2)));
+  ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',Configuracion_global->decimales)));
   //ui->spin_dto1->setValue(oArticulo->);
 
 

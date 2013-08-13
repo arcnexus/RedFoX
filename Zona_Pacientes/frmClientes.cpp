@@ -250,8 +250,8 @@ void frmClientes::LLenarCampos()
     ui->txtdia_pago2->setValue(oCliente->dia_pago2);
     indice = ui->cbotarifa_cliente->findText(Configuracion_global->Devolver_tarifa(oCliente->tarifa_cliente));
     ui->cbotarifa_cliente->setCurrentIndex( indice);
-    ui->txtimporte_a_cuenta->setText( Configuracion_global->toFormatoMoneda(QString::number(oCliente->importe_a_cuenta,'f',2)));
-    ui->txtvales->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->vales,'f',2)));
+    ui->txtimporte_a_cuenta->setText( Configuracion_global->toFormatoMoneda(QString::number(oCliente->importe_a_cuenta,'f',Configuracion_global->decimales)));
+    ui->txtvales->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->vales,'f',Configuracion_global->decimales)));
     ui->txtentidad_bancaria->setText(oCliente->entidad_bancaria);
     ui->txtoficina_bancaria->setText(oCliente->oficina_bancaria);
     ui->txtdc->setText(oCliente->dc);

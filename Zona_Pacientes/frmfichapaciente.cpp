@@ -132,8 +132,8 @@ void FrmFichaPaciente::cargarDatos(int id_cliente)
     ui->txtalergias_conocidas->setPlainText(oPaciente->getalergias_conocidas());
     ui->txtantecedentes_familiares->setPlainText(oPaciente->getantecedentes_familiares());
     ui->txtcirugias_previas->setPlainText(oPaciente->getcirugias_previas());
-    ui->txtDiastole->setText(QString::number(oPaciente->getdiastole(),'f',2));
-    ui->txtSistole->setText(QString::number(oPaciente->getsistole(),'f',2));
+    ui->txtDiastole->setText(QString::number(oPaciente->getdiastole(),'f',Configuracion_global->decimales));
+    ui->txtSistole->setText(QString::number(oPaciente->getsistole(),'f',Configuracion_global->decimales));
     ui->txtEnfermedadesConocidas->setPlainText(oPaciente->getenfermedadesConocidas());
     ui->txtFamiliaNuclear->setPlainText(oPaciente->getfamilia());
     ui->txtfecha_alta->setDate(oPaciente->getfecha_alta());
@@ -150,8 +150,8 @@ void FrmFichaPaciente::cargarDatos(int id_cliente)
 
     ui->txtNumeroSS->setText(oPaciente->getnum_ss());
     ui->txtotras_drogas->setPlainText(oPaciente->gethabitos_drogas());
-    ui->txtperimetro_craneal->setText(QString::number(oPaciente->getperimetro_craneal(),'f',2));
-    ui->txtPeso->setText(QString::number(oPaciente->getpeso(),'f',2));
+    ui->txtperimetro_craneal->setText(QString::number(oPaciente->getperimetro_craneal(),'f',Configuracion_global->decimales));
+    ui->txtPeso->setText(QString::number(oPaciente->getpeso(),'f',Configuracion_global->decimales));
     ui->txtProfesion->setText(oPaciente->getprofesion());
 
     ui->radHombre->setChecked(oPaciente->getsexo()=="H");
@@ -159,7 +159,7 @@ void FrmFichaPaciente::cargarDatos(int id_cliente)
 
     ui->chkTabaco->setChecked(oPaciente->gettabacobool());
     ui->chkotras_drogas->setChecked(oPaciente->getotras_drogasbool());
-    ui->txtTalla->setText(QString::number(oPaciente->gettalla(),'f',2));
+    ui->txtTalla->setText(QString::number(oPaciente->gettalla(),'f',Configuracion_global->decimales));
 
     ui->radTrabaja->setChecked(oPaciente->gettrabajabool());
     ui->radNoTrabaja->setChecked(!oPaciente->gettrabajabool());

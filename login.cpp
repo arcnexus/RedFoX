@@ -70,6 +70,7 @@ void Login::on_btnAcceder_clicked()
     QString bd_pass = rEmpresa.value("bd_pass").toString();
     int bd_port = rEmpresa.value("bd_port").toInt();
 
+
     Configuracion_global->group_host = bd_host;
     Configuracion_global->group_user = bd_user;
     Configuracion_global->group_pass = bd_pass;
@@ -115,6 +116,9 @@ void Login::on_btnAcceder_clicked()
             Configuracion_global->nombre_bd_conta = qEmpresa.record().value("nombre_db_conta").toString();
             //qDebug() << Configuracion_global->nombre_bd_conta;
             Configuracion_global->nombre_bd_medica = qEmpresa.record().value("nombre_bd_medica").toString();
+            Configuracion_global->decimales = qEmpresa.record().value("decimales").toInt();
+            Configuracion_global->decimales_calculo = qEmpresa.record().value("decimales_calculo").toInt();
+
         }
         else
             QMessageBox::warning(this,tr("ABRIR EMPRESA"),tr("No se encuentra la empresa"),tr("Aceptar"));

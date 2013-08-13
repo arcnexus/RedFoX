@@ -186,7 +186,7 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
             item_columna7->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             ui->tablaLineas->setItem(pos,7,item_columna7);
 
-            QTableWidgetItem *item_columna8 = new QTableWidgetItem(QString::number(query_lineas.record().value("coste_bruto").toDouble(),'f',2));
+            QTableWidgetItem *item_columna8 = new QTableWidgetItem(QString::number(query_lineas.record().value("coste_bruto").toDouble(),'f',Configuracion_global->decimales));
             item_columna8->setTextColor(Qt::black); // color de los items
             ui->tablaLineas->setItem(pos,8,item_columna8);
             ui->tablaLineas->setItemDelegateForColumn(8,new MonetaryDelegate);
@@ -439,7 +439,7 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                         {
                             FrmTarifas frmtarifas;
                             frmtarifas.capturar_datos(queryProducto.record().field("id").value().toInt(),
-                                                      QString::number(queryProducto.record().field("coste").value().toDouble(),'f',2));
+                                                      QString::number(queryProducto.record().field("coste").value().toDouble(),'f',Configuracion_global->decimales));
                             frmtarifas.exec();
                         }
                     }

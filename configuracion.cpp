@@ -63,9 +63,11 @@ Configuracion::Configuracion(QObject* parent) :
 }
 
 
-QString Configuracion::toFormatoMoneda(QString cTexto)
+QString Configuracion::
+toFormatoMoneda(QString cTexto)
 {
     QString aux = cTexto;
+    int decimals = Configuracion_global->decimales;
     aux.remove(",");
     aux.remove(".");
     aux.remove("-");
@@ -111,9 +113,17 @@ QString Configuracion::toFormatoMoneda(QString cTexto)
 
         if(!ret.contains(","))
             ret = cTexto+",00";
-        if(ret.right(2)==",1" || ret.right(2)==",2" || ret.right(2)==",3" || ret.right(2)==",4" || ret.right(2)==",5"
-                || ret.right(2)==",6" || ret.right(2)==",7" || ret.right(2)==",8" || ret.right(2)==",9")
+//        if(ret.right(2)==",1" || ret.right(2)==",2" || ret.right(2)==",3" || ret.right(2)==",4" || ret.right(2)==",5"
+//                || ret.right(2)==",6" || ret.right(2)==",7" || ret.right(2)==",8" || ret.right(2)==",9")
+//            ret = ret+"0";
+        if(ret.right(decimals)==",1" || ret.right(decimals)==",2" || ret.right(decimals)==",3" || ret.right(decimals)==",4"
+                || ret.right(decimals)==",5" || ret.right(decimals)==",6" || ret.right(decimals)==",7"
+                || ret.right(decimals)==",8" || ret.right(decimals)==",9")
             ret = ret+"0";
+        if(!mostrar_siempre){
+            if (ret.right(decimals-2) == "0" || ret.right(decimals-2) == "00" || ret.right(decimals-2) == "000")
+                ret = ret.left(ret.size()-(decimals -2));
+        }
         return ret;
     }
     else

@@ -14,7 +14,7 @@ void MonetaryDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
     lineedit->text();
     lineedit->setReadOnly(this->readonly);
     double valor_moneda = lineedit->text().toDouble();
-    QString valor = QString::number(valor_moneda,'f',2);
+    QString valor = QString::number(valor_moneda,'f',Configuracion_global->decimales);
 
     model->setData(index,valor,Qt::EditRole);
     lineedit->setAlignment(Qt::AlignRight);
@@ -24,7 +24,7 @@ void MonetaryDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 {
     QString texto = index.model()->data(index, Qt::DisplayRole).toString();
     double valor_moneda = texto.toDouble();
-    QString valor_moneda_string = QString::number(valor_moneda,'f',2);
+    QString valor_moneda_string = QString::number(valor_moneda,'f',Configuracion_global->decimales);
      texto = Configuracion_global->toFormatoMoneda(valor_moneda_string);
 
      QStyleOptionViewItem myOption = option;

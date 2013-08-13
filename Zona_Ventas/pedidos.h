@@ -75,6 +75,8 @@ public:
     QDate fecha_limite_entrega;
     double total_pedido;
     int tarifa_cliente;
+    QString gasto1,gasto2,gasto3;
+    double imp_gasto1, imp_gasto2, imp_gasto3;
 
 public slots:
     bool BorrarLineas(int Iped);

@@ -152,7 +152,7 @@ void frmProveedores::LLenarCampos()
     }
 
     ui->txtfecha_ultima_compra->setDate(oProveedor->fecha_ultima_compra);
-    ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->importe_acumulado_compras,'f',2)));
+    ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->importe_acumulado_compras,'f',Configuracion_global->decimales)));
     ui->txtentidad_bancaria_proveedor->setText(oProveedor->entidad_bancaria_proveedor);
     ui->txtoficina_bancaria_proveedor->setText(oProveedor->oficina_bancaria_proveedor);
     ui->txtdc_proveedor->setText(oProveedor->dc_proveedor);
@@ -160,15 +160,15 @@ void frmProveedores::LLenarCampos()
     ui->txtentidad_pago_proveedor->setText(oProveedor->entidad_pago_proveedor);
     ui->txtoficina_pago_proveedor->setText(oProveedor->oficina_pago_proveedor);
     ui->txtdc_pago_proveedor->setText(oProveedor->dc_pago_proveedor);
-    ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->entregado_a_cuenta,'f',2)));
-    ui->txtretencion_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->retencion_irpf,'f',2)));
+    ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->entregado_a_cuenta,'f',Configuracion_global->decimales)));
+    ui->txtretencion_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->retencion_irpf,'f',Configuracion_global->decimales)));
     ui->txttipo_retencioirpf->setText(QString::number(oProveedor->tipo_retencion));
     ui->txtcuenta_aplicacion->setText(oProveedor->cuenta_aplicacion);
     ui->txtcomentarios->setText(oProveedor->comentarios);
     ui->txtdto->setText(QString::number(oProveedor->dto));
     ui->txtfecha_alta->setDate(oProveedor->fecha_alta);
-    ui->txtdeuda_maxima->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->deuda_maxima,'f',2)));
-    ui->txtdeuda_actual->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->deuda_actual,'f',2)));
+    ui->txtdeuda_maxima->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->deuda_maxima,'f',Configuracion_global->decimales)));
+    ui->txtdeuda_actual->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->deuda_actual,'f',Configuracion_global->decimales)));
     if (oProveedor->recargo_equivalencia==1)
         ui->chkrecargo_equivalencia->setChecked(true);
     else
@@ -877,18 +877,18 @@ void frmProveedores::acumulados()
     //----------------------
     // Acumulados
     //----------------------
-    ui->txtEnero->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->enero,'f',2)));
-    ui->txtFebrero->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->febrero,'f',2)));
-    ui->txtMarzo->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->marzo,'f',2)));
-    ui->txtAbril->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->abril,'f',2)));
-    ui->txtMayo->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->mayo,'f',2)));
-    ui->txtJunio->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->junio,'f',2)));
-    ui->txtjulio->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->julio,'f',2)));
-    ui->txtAgosto->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->agosto,'f',2)));
-    ui->txtSeptiembre->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->septiembre,'f',2)));
-    ui->txtOctubre->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->octubre,'f',2)));
-    ui->txtNoviembre->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->noviembre,'f',2)));
-    ui->txtDiciembre->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->diciembre,'f',2)));
+    ui->txtEnero->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->enero,'f',Configuracion_global->decimales)));
+    ui->txtFebrero->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->febrero,'f',Configuracion_global->decimales)));
+    ui->txtMarzo->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->marzo,'f',Configuracion_global->decimales)));
+    ui->txtAbril->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->abril,'f',Configuracion_global->decimales)));
+    ui->txtMayo->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->mayo,'f',Configuracion_global->decimales)));
+    ui->txtJunio->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->junio,'f',Configuracion_global->decimales)));
+    ui->txtjulio->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->julio,'f',Configuracion_global->decimales)));
+    ui->txtAgosto->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->agosto,'f',Configuracion_global->decimales)));
+    ui->txtSeptiembre->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->septiembre,'f',Configuracion_global->decimales)));
+    ui->txtOctubre->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->octubre,'f',Configuracion_global->decimales)));
+    ui->txtNoviembre->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->noviembre,'f',Configuracion_global->decimales)));
+    ui->txtDiciembre->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->diciembre,'f',Configuracion_global->decimales)));
 
 }
 

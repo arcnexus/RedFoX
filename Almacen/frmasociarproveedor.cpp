@@ -53,9 +53,9 @@ void FrmAsociarProveedor::seteditar(QString id)
         if( queryProvAlt.next()){
             ui->txtCodigo->setText(queryProvAlt.record().value("codigo").toString());
             this->codigo = ui->txtCodigo->text();
-            ui->txtPVD->setText(QString::number(queryProvAlt.record().value("pvd").toDouble(),'f',2));
+            ui->txtPVD->setText(QString::number(queryProvAlt.record().value("pvd").toDouble(),'f',Configuracion_global->decimales));
             this->pvd = ui->txtPVD->text().toDouble();
-            ui->txtpvd_real->setText(QString::number(queryProvAlt.record().value("pvd_real").toDouble(),'f',2));
+            ui->txtpvd_real->setText(QString::number(queryProvAlt.record().value("pvd_real").toDouble(),'f',Configuracion_global->decimales));
             this->pvd_real = ui->txtpvd_real->text().toDouble();
             ui->txtDescoferta->setText(queryProvAlt.record().value("descoferta").toString());
             this->DescOferta = ui->txtDescoferta->text();

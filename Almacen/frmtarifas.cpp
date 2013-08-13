@@ -161,13 +161,13 @@ void FrmTarifas::calcular_precio(double margen)
         blockSignals(true);
         //NOTE 70% /0.30 - 40 /0.60
         double pvp = (ui->txtCosteLocal->text().replace(".","").replace(",",".").toDouble())/(margen/100);
-        QString cPvp = Configuracion_global->toFormatoMoneda(QString::number(pvp,'f',2));
+        QString cPvp = Configuracion_global->toFormatoMoneda(QString::number(pvp,'f',Configuracion_global->decimales));
         this->pvpDivisa = cPvp.toDouble();
         ui->txtPVPLocal->setText(cPvp);
         double cambio_divisa =  ui->txtValorDivisa->text().toDouble();
         double valordivisa = ui->txtPVPLocal->text().replace(".","").replace(",",".").toDouble() * cambio_divisa;
 
-        ui->txtPVPDivisa->setText(Configuracion_global->toFormatoMoneda(QString::number(valordivisa,'f',2)));
+        ui->txtPVPDivisa->setText(Configuracion_global->toFormatoMoneda(QString::number(valordivisa,'f',Configuracion_global->decimales)));
         this->pvpDivisa = valordivisa;
         blockSignals(false);
 }

@@ -93,12 +93,18 @@ bool Pedidos::GuardarPedido(int nid_Pedido)
                      "impreso  =:impreso  ,facturado  =:facturado  , "
                      "fecha_factura  =:fecha_factura  ,  comentario  =:comentario  ,"
                      "entregado_a_cuenta  =:entregado_a_cuenta  ,traspasado_albaran  =:traspasado_albaran  ,"
-                     "traspasado_factura  =:traspasado_factura  ,  direccion_entrega1  =:direccion_entrega1  ,"
-                     "direccion_entrega2  =:direccion_entrega2  ,cp_entrega  =:cp_entrega  ,"
+                     "traspasado_factura  =:traspasado_factura  ,  direccion1_entrega  =:direccion_entrega1  ,"
+                     "direccion2_entrega  =:direccion_entrega2  ,cp_entrega  =:cp_entrega  ,"
                      "poblacion_entrega  =:poblacion_entrega  ,  provincia_entrega  =:provincia_entrega  ,"
                      "pais_entrega  =:pais_entrega  ,enviado  =:enviado  ,  completo  =:completo  ,"
                      "entregado  =:entregado  ,  fecha_limite_entrega  =:fecha_limite_entrega  ,"
-                     "total_pedido  =:total_pedido"
+                     "total_pedido  =:total_pedido,"
+                     "desc_gasto1 = :desc_gasto1,"
+                     "desc_gasto2 = :desc_gasto2,"
+                     "desc_gasto3 = :desc_gasto3,"
+                     "imp_gasto1 = :imp_gasto1,"
+                     "imp_gasto2 = :imp_gasto2,"
+                     "imp_gasto3 = :imp_gasto3"
                      " WHERE id = :id");
 
     ped_cli.bindValue(":albaran",albaran);
@@ -166,6 +172,12 @@ bool Pedidos::GuardarPedido(int nid_Pedido)
     ped_cli.bindValue(":entregado",entregado);
     ped_cli.bindValue(":fecha_limite_entrega",fecha_limite_entrega);
     ped_cli.bindValue(":total_pedido",total_pedido);
+    ped_cli.bindValue(":desc_gasto1",gasto1);
+    ped_cli.bindValue(":desc_gasto2",gasto2);
+    ped_cli.bindValue(":desc_gasto3",gasto3);
+    ped_cli.bindValue(":imp_gasto1",imp_gasto1);
+    ped_cli.bindValue(":imp_gasto2",imp_gasto2);
+    ped_cli.bindValue(":imp_gasto3",imp_gasto3);
     ped_cli.bindValue(":id",nid_Pedido);
     if(!ped_cli.exec())
     {
@@ -258,7 +270,12 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             entregado = r.value("entregado").toInt();
             fecha_limite_entrega = r.value("fecha_limite_entrega").toDate();
             total_pedido = r.value("total_pedido").toDouble();
-
+            gasto1 = r.value("desc_gasto1").toString();
+            gasto2 = r.value("desc_gasto2").toString();
+            gasto3 = r.value("desc_gasto3").toString();
+            imp_gasto1 = r.value("imp_gasto1").toDouble();
+            imp_gasto2 = r.value("imp_gasto2").toDouble();
+            imp_gasto3 = r.value("imp_gasto3").toDouble();
             this->id_pais = r.field("id_pais").value().toInt();
             QSqlQuery q(Configuracion_global->empresaDB);
             if(q.exec("SELECT * FROM paises WHERE id="+QString::number(id_pais)))

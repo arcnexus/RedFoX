@@ -341,50 +341,50 @@ void FrmFacturasProveedor::llenarProveedor(int id)
 
 void FrmFacturasProveedor::totalChanged(double base, double dto, double subtotal, double iva, double re, double total, QString moneda)
 {
-    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2))+moneda);
-    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',2))+moneda);
-    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',2))+moneda);
-    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2))+moneda);
-    //ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2))+moneda);
-    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2))+moneda);
-    ui->lbl_total->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2))+moneda);
+    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales))+moneda);
+    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales))+moneda);
+    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',Configuracion_global->decimales))+moneda);
+    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales))+moneda);
+    //ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales))+moneda);
+    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales))+moneda);
+    ui->lbl_total->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales))+moneda);
 
-    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2))+moneda);
-    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2))+moneda);
-    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2))+moneda);
-    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2))+moneda);
+    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales))+moneda);
+    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales))+moneda);
+    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales))+moneda);
+    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales))+moneda);
 }
 
 void FrmFacturasProveedor::desglose1Changed(double base, double iva, double re, double total)
 {
-    ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
-    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
-    ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
+    ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
+    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
+    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
+    ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
 }
 
 void FrmFacturasProveedor::desglose2Changed(double base, double iva, double re, double total)
 {
-    ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
-    ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
-    ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
+    ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
+    ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
+    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
+    ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
 }
 
 void FrmFacturasProveedor::desglose3Changed(double base, double iva, double re, double total)
 {
-    ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
-    ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
-    ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
+    ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
+    ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
+    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
+    ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
 }
 
 void FrmFacturasProveedor::desglose4Changed(double base, double iva, double re, double total)
 {
-    ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
-    ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
-    ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
+    ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
+    ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
+    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
+    ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
 }
 
 
@@ -412,18 +412,18 @@ void FrmFacturasProveedor::llenar_campos()
     ui->txtcif->setText(oFacPro->cif_proveedor);
     ui->chkRetencioirpf->setChecked(oFacPro->retencion_irpf);
     ui->chklporc_rec->setChecked(oFacPro->recargo_equivalencia);
-    ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->base1,'f',2)));
-    ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->base2,'f',2)));
-    ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->base3,'f',2)));
-    ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->base4,'f',2)));
-    ui->txtporc_iva1->setText(QString::number(oFacPro->porc_iva1,'f',2));
-    ui->txtporc_iva2->setText(QString::number(oFacPro->porc_iva2,'f',2));
-    ui->txtporc_iva3->setText(QString::number(oFacPro->porc_iva3,'f',2));
-    ui->txtporc_iva4->setText(QString::number(oFacPro->porc_iva4,'f',2));
-    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->iva1,'f',2)));
-    ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->iva2,'f',2)));
-    ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->iva3,'f',2)));
-    ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->iva4,'f',2)));
+    ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->base1,'f',Configuracion_global->decimales)));
+    ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->base2,'f',Configuracion_global->decimales)));
+    ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->base3,'f',Configuracion_global->decimales)));
+    ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->base4,'f',Configuracion_global->decimales)));
+    ui->txtporc_iva1->setText(QString::number(oFacPro->porc_iva1,'f',Configuracion_global->decimales));
+    ui->txtporc_iva2->setText(QString::number(oFacPro->porc_iva2,'f',Configuracion_global->decimales));
+    ui->txtporc_iva3->setText(QString::number(oFacPro->porc_iva3,'f',Configuracion_global->decimales));
+    ui->txtporc_iva4->setText(QString::number(oFacPro->porc_iva4,'f',Configuracion_global->decimales));
+    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->iva1,'f',Configuracion_global->decimales)));
+    ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->iva2,'f',Configuracion_global->decimales)));
+    ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->iva3,'f',Configuracion_global->decimales)));
+    ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->iva4,'f',Configuracion_global->decimales)));
     ui->txtporc_rec1->setText(QString::number(oFacPro->porc_rec1));
     ui->txtporc_rec2->setText(QString::number(oFacPro->porc_rec2));
     ui->txtporc_rec3->setText(QString::number(oFacPro->porc_rec3));
@@ -436,14 +436,14 @@ void FrmFacturasProveedor::llenar_campos()
     ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total2)));
     ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total3)));
     ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total4)));
-    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total_base,'f',2)));
-    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total_iva,'f',2)));
-    ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total_retencion,'f',2)));
-    ui->txtimporteRE->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total_recargo,'f',2)));
+    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total_base,'f',Configuracion_global->decimales)));
+    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total_iva,'f',Configuracion_global->decimales)));
+    ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total_retencion,'f',Configuracion_global->decimales)));
+    ui->txtimporteRE->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total_recargo,'f',Configuracion_global->decimales)));
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total)));
     int index = ui->cboforma_pago->findText(oFacPro->forma_pago);
     ui->cboforma_pago->setCurrentIndex(index);
-    ui->txtImportePagadoFactura->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->importe_pagado_total,'f',2)));
+    ui->txtImportePagadoFactura->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->importe_pagado_total,'f',Configuracion_global->decimales)));
     QString cGasto = Configuracion_global->Devolver_tipo_gasto(oFacPro->id_tipo_gasto);
     index = ui->cbo_grupo_gasto->findText(cGasto);
     ui->cbo_grupo_gasto->setCurrentIndex(index);

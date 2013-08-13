@@ -41,7 +41,7 @@ void FrmTiposTarifa::cargarDatos()
     ui->txtporc_dto4->setText(QString::number(oTipostarifa->porc_dto4));
     ui->txtporc_dto5->setText(QString::number(oTipostarifa->porc_dto5));
     ui->txtporc_dto6->setText(QString::number(oTipostarifa->porc_dto6));
-    //ui->txtImpDto->setText(Configuracion_global->toFormatoMoneda( QString::number(oTipostarifa->importe_dto,'f',2)));
+    //ui->txtImpDto->setText(Configuracion_global->toFormatoMoneda( QString::number(oTipostarifa->importe_dto,'f',Configuracion_global->decimales)));
     //ui->txtPromocion->setText(oTipostarifa->desc_promo);
 }
 

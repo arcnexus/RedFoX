@@ -29,7 +29,7 @@ void frmCobrarDeuda::calcular()
     ui->txtimporte_tarjeta->setText(Configuracion_global->toFormatoMoneda(ui->txtimporte_tarjeta->text()));
     ui->txtImporteTransferencia->setText(Configuracion_global->toFormatoMoneda(ui->txtImporteTransferencia->text()));
 
-    ui->txtImporteTotal->setText(Configuracion_global->toFormatoMoneda(QString::number(importe,'f',2)));
+    ui->txtImporteTotal->setText(Configuracion_global->toFormatoMoneda(QString::number(importe,'f',Configuracion_global->decimales)));
 
 }
 

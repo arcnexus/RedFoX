@@ -299,10 +299,10 @@ void Table_Helper::addRow(QSqlRecord r)
     helped_table->item(row,0)->setText(r.value("codigo").toString());
     helped_table->item(row,1)->setText(r.value("cantidad").toString());
     helped_table->item(row,2)->setText(r.value("descripcion").toString());
-    helped_table->item(row,3)->setText(QString::number(r.value("precio").toDouble(),'f',2));
-    helped_table->item(row,4)->setText(QString::number(r.value("subtotal").toDouble(),'f',2));
+    helped_table->item(row,3)->setText(QString::number(r.value("precio").toDouble(),'f',Configuracion_global->decimales));
+    helped_table->item(row,4)->setText(QString::number(r.value("subtotal").toDouble(),'f',Configuracion_global->decimales));
     helped_table->item(row,6)->setText(r.value("porc_dto").toString());
-    helped_table->item(row,5)->setText(QString::number(r.value("dto").toDouble(),'f',2));
+    helped_table->item(row,5)->setText(QString::number(r.value("dto").toDouble(),'f',Configuracion_global->decimales));
     helped_table->item(row,7)->setText(r.value("porc_iva").toString());
     helped_table->item(row,8)->setText(r.value("porc_rec").toString());
     m_rows.append(lrow);
@@ -571,7 +571,7 @@ double Table_Helper::calculatotalLinea(int row)
     int cantidad = helped_table->item(row,1)->text().toInt();
     double pvp = helped_table->item(row,3)->text().toDouble();
     double subtotal = cantidad * pvp;
-    helped_table->item(row,4)->setText(QString::number(subtotal,'f',2));
+    helped_table->item(row,4)->setText(QString::number(subtotal,'f',Configuracion_global->decimales));
 
     double dto = calculadtoLinea(row);
 
@@ -588,7 +588,7 @@ double Table_Helper::calculatotalLinea(int row)
 
 //    if(use_re)
 //        total = total + add_re;
-    helped_table->item(row,9)->setText(QString::number(total,'f',2));
+    helped_table->item(row,9)->setText(QString::number(total,'f',Configuracion_global->decimales));
     return total;
 }
 
@@ -681,7 +681,7 @@ void Table_Helper::rellenar_con_Articulo(int row)
             if (this->comprando)
             {
                 double coste = r.value("coste").toDouble();
-                helped_table->item(row,3)->setText(QString::number(coste,'f',2));
+                helped_table->item(row,3)->setText(QString::number(coste,'f',Configuracion_global->decimales));
             }
             else
             {
@@ -701,13 +701,13 @@ void Table_Helper::rellenar_con_Articulo(int row)
                 else
                     precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble());
 
-                helped_table->item(row,3)->setText(QString::number(precio,'f',2));
+                helped_table->item(row,3)->setText(QString::number(precio,'f',Configuracion_global->decimales));
             }
            helped_table->item(row,7)->setText(r.value("tipo_iva").toString());
            float rec = Configuracion_global->devolver_rec_iva(r.value("tipo_iva").toFloat());
-           helped_table->item(row,8)->setText(QString::number(rec,'f',2));
+           helped_table->item(row,8)->setText(QString::number(rec,'f',Configuracion_global->decimales));
            double total = helped_table->item(row,3)->text().toDouble();
-           helped_table->item(row,9)->setText(QString::number(total,'f',2));
+           helped_table->item(row,9)->setText(QString::number(total,'f',Configuracion_global->decimales));
         }
         else if(helped_table->item(row,0)->text() !="" && helped_table->item(row,2)->text().isEmpty())
         {

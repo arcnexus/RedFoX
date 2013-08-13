@@ -337,51 +337,51 @@ void FrmPedidosProveedor::lineaDeleted(lineaDetalle * ld)
 void FrmPedidosProveedor::totalChanged(double base, double dto, double subtotal, double iva, double re, double total, QString moneda)
 {
     total += iva;
-    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)+moneda));
-    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',2)+moneda));
-    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',2)+moneda));
-    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)+moneda));
-    ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)+moneda));
-    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)+moneda));
-    ui->lbl_total->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)+moneda));
+    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)+moneda));
+    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales)+moneda));
+    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',Configuracion_global->decimales)+moneda));
+    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)+moneda));
+    ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)+moneda));
+    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)+moneda));
+    ui->lbl_total->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)+moneda));
 
-    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)+moneda));
-    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)+moneda));
-    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)+moneda));
-    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)+moneda));
+    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)+moneda));
+    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)+moneda));
+    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)+moneda));
+    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)+moneda));
     this->moneda = moneda;
 }
 
 void FrmPedidosProveedor::desglose1Changed(double base, double iva, double re, double total)
 {
-    ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
-    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
-    ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
+    ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
+    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
+    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
+    ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
 }
 
 void FrmPedidosProveedor::desglose2Changed(double base, double iva, double re, double total)
 {
-    ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
-    ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
-    ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
+    ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
+    ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
+    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
+    ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
 }
 
 void FrmPedidosProveedor::desglose3Changed(double base, double iva, double re, double total)
 {
-    ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
-    ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda( QString::number(re,'f',2)));
-    ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
+    ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
+    ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
+    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda( QString::number(re,'f',Configuracion_global->decimales)));
+    ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
 }
 
 void FrmPedidosProveedor::desglose4Changed(double base, double iva, double re, double total)
 {
-    ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',2)));
-    ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',2)));
-    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',2)));
-    ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',2)));
+    ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
+    ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
+    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
+    ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
 }
 
 
@@ -590,30 +590,30 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txtpoblacion_entrega->setText(oPedido_proveedor->poblacion_entrega);
     ui->txtprovincia_entrega->setText(oPedido_proveedor->provincia_entrega);
     ui->txtHorarioEntrega->setText(oPedido_proveedor->horario_activo);
-    ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base1,'f',2)));
-    ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base2,'f',2)));
-    ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base3,'f',2)));
-    ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base4,'f',2)));
+    ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base1,'f',Configuracion_global->decimales)));
+    ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base2,'f',Configuracion_global->decimales)));
+    ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base3,'f',Configuracion_global->decimales)));
+    ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base4,'f',Configuracion_global->decimales)));
     ui->txtporc_iva1->setText(QString::number(oPedido_proveedor->porc_iva1));
     ui->txtporc_iva2->setText(QString::number(oPedido_proveedor->porc_iva2));
     ui->txtporc_iva3->setText(QString::number(oPedido_proveedor->porc_iva3));
     ui->txtporc_iva4->setText(QString::number(oPedido_proveedor->porc_iva4));
-    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva1,'f',2)));
-    ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva2,'f',2)));
-    ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva3,'f',2)));
-    ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva4,'f',2)));
+    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva1,'f',Configuracion_global->decimales)));
+    ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva2,'f',Configuracion_global->decimales)));
+    ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva3,'f',Configuracion_global->decimales)));
+    ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva4,'f',Configuracion_global->decimales)));
     ui->txtporc_rec1->setText(QString::number(oPedido_proveedor->porc_rec1));
     ui->txtporc_rec2->setText(QString::number(oPedido_proveedor->porc_rec2));
     ui->txtporc_rec3->setText(QString::number(oPedido_proveedor->porc_rec3));
     ui->txtporc_rec4->setText(QString::number(oPedido_proveedor->porc_rec4));
-    ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rec1,'f',2)));
-    ui->txtrec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rec2,'f',2)));
-    ui->txtrec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rec3,'f',2)));
-    ui->txtrec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rec4,'f',2)));
-    ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total1,'f',2)));
-    ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total2,'f',2)));
-    ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total3,'f',2)));
-    ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total4,'f',2)));
+    ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rec1,'f',Configuracion_global->decimales)));
+    ui->txtrec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rec2,'f',Configuracion_global->decimales)));
+    ui->txtrec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rec3,'f',Configuracion_global->decimales)));
+    ui->txtrec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rec4,'f',Configuracion_global->decimales)));
+    ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total1,'f',Configuracion_global->decimales)));
+    ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total2,'f',Configuracion_global->decimales)));
+    ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total3,'f',Configuracion_global->decimales)));
+    ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total4,'f',Configuracion_global->decimales)));
     QString filter = QString("id_cab = '%1'").arg(oPedido_proveedor->id);
     helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
     helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
