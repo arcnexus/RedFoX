@@ -4,6 +4,9 @@
 Pedidos::Pedidos()
 {
     this->id =0;
+    iva_gasto1 = 0;
+    iva_gasto2 = 0;
+    iva_gasto3 = 0;
 }
 
 Pedidos::~Pedidos()
@@ -104,7 +107,13 @@ bool Pedidos::GuardarPedido(int nid_Pedido)
                      "desc_gasto3 = :desc_gasto3,"
                      "imp_gasto1 = :imp_gasto1,"
                      "imp_gasto2 = :imp_gasto2,"
-                     "imp_gasto3 = :imp_gasto3"
+                     "imp_gasto3 = :imp_gasto3,"
+                     "porc_iva_gasto1 = :porc_iva_gasto1,"
+                     "porc_iva_gasto2 = :porc_iva_gasto2,"
+                     "porc_iva_gasto3 = :porc_iva_gasto3,"
+                     "iva_gasto1 =:iva_gasto1,"
+                     "iva_gasto2 =:iva_gasto2,"
+                     "iva_gasto3 =:iva_gasto3"
                      " WHERE id = :id");
 
     ped_cli.bindValue(":albaran",albaran);
@@ -178,6 +187,12 @@ bool Pedidos::GuardarPedido(int nid_Pedido)
     ped_cli.bindValue(":imp_gasto1",imp_gasto1);
     ped_cli.bindValue(":imp_gasto2",imp_gasto2);
     ped_cli.bindValue(":imp_gasto3",imp_gasto3);
+    ped_cli.bindValue(":porc_iva_gasto1",porc_iva_gasto1);
+    ped_cli.bindValue(":porc_iva_gasto2",porc_iva_gasto2);
+    ped_cli.bindValue(":porc_iva_gasto3",porc_iva_gasto3);
+    ped_cli.bindValue(":iva_gasto1",iva_gasto1);
+    ped_cli.bindValue(":iva_gasto2",iva_gasto2);
+    ped_cli.bindValue(":iva_gasto3",iva_gasto3);
     ped_cli.bindValue(":id",nid_Pedido);
     if(!ped_cli.exec())
     {
@@ -276,6 +291,12 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             imp_gasto1 = r.value("imp_gasto1").toDouble();
             imp_gasto2 = r.value("imp_gasto2").toDouble();
             imp_gasto3 = r.value("imp_gasto3").toDouble();
+            porc_iva_gasto1 = r.value("porc_iva_gasto1").toFloat();
+            porc_iva_gasto2 = r.value("porc_iva_gasto2").toFloat();
+            porc_iva_gasto3 = r.value("porc_iva_gasto3").toFloat();
+            iva_gasto1 = r.value("iva_gasto1").toDouble();
+            iva_gasto2 = r.value("iva_gasto2").toDouble();
+            iva_gasto3 = r.value("iva_gasto3").toDouble();
             this->id_pais = r.field("id_pais").value().toInt();
             QSqlQuery q(Configuracion_global->empresaDB);
             if(q.exec("SELECT * FROM paises WHERE id="+QString::number(id_pais)))

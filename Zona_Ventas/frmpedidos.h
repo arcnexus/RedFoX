@@ -90,6 +90,7 @@ private:
     void LLenarPedido();
     void formato_tabla();
     void filter_table();
+    void calcular_iva_gastos();
 
     Table_Helper helper;
     QAction * aAlbaran_action;

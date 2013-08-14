@@ -63,6 +63,11 @@ public:
     QDate fecha_factura;
     QString comentario;
     double entregado_a_cuenta;
+    QString desc_gasto1,desc_gasto2,desc_gasto3;
+    double imp_gasto1,imp_gasto2,imp_gasto3;
+    float porc_iva_gasto1,porc_iva_gasto2,porc_iva_gasto3;
+    double iva_gasto1,iva_gasto2,iva_gasto3;
+
 signals:
 
 public slots:

@@ -91,6 +91,7 @@ private:
     QSqlQueryModel *m;
     void formato_tabla();
     void filter_table();
+    void calcular_iva_gastos();
 };
 
 #endif // FRMALBARAN_H

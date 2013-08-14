@@ -40,6 +40,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`articulos` (
   `codigo` VARCHAR(200) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `codigo_barras` VARCHAR(30) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `codigo_fabricante` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `kit` TINYINT(1) NULL DEFAULT '0' ,
   `descripcion` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `descripcion_reducida` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `id_proveedor` INT(11) NULL DEFAULT NULL ,
@@ -378,6 +379,9 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`empresas` ( `id` INT(11) NOT NULL AUTO_IN
   `nombre` VARCHAR(75) NULL DEFAULT NULL ,
   `digitos_factura` INT(11) NULL DEFAULT NULL , 
   `serie` INT(11) NULL DEFAULT NULL , 
+  `decimales_campos_totales` INT(2) NULL DEFAULT '2' ,
+  `decimales` INT(2) NULL DEFAULT '2' ,
+  `mostrarsiempre` TINYINT(1) NULL DEFAULT '0' ,
   `ruta_bd_sqlite` TEXT NULL DEFAULT NULL , 
   `ruta_db_conta` TEXT NULL DEFAULT NULL , 
   `ruta_bd_medica_sqlite` TEXT NULL DEFAULT NULL , 
@@ -520,6 +524,17 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`idiomas` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `@grupo@`.`kits` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `codigo_kit` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `codigo_componente` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cantidad` double NOT NULL DEFAULT '0',
+  `precio` double NOT NULL DEFAULT '0',
+  `descripcion` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
 
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`maestro_familia_cliente` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
@@ -751,15 +766,15 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`tarifas` (
   `id_articulo` INT(11) NULL DEFAULT NULL ,
   `id_pais` INT(11) NULL DEFAULT NULL ,
   `id_monedas` INT(11) NULL DEFAULT NULL ,
-  `margen` DECIMAL(9,2) NULL DEFAULT NULL ,
-  `margen_minimo` DECIMAL(9,2) NULL DEFAULT NULL ,
+  `margen` FLOAT NULL DEFAULT NULL ,
+  `margen_minimo` FLOAT NULL DEFAULT NULL ,
   `porc_dto1` DOUBLE NULL DEFAULT '0',
   `porc_dto2` DOUBLE NULL DEFAULT '0',
   `porc_dto3` DOUBLE NULL DEFAULT '0', 
   `porc_dto4` DOUBLE NULL DEFAULT '0',
   `porc_dto5` DOUBLE NULL DEFAULT '0',
   `porc_dto6` DOUBLE NULL DEFAULT '0',
-  `pvp` DECIMAL(9,2) NULL DEFAULT NULL ,
+  `pvp` DOUBLE NULL DEFAULT NULL ,
   `id_codigo_tarifa` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB

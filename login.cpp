@@ -117,7 +117,7 @@ void Login::on_btnAcceder_clicked()
             //qDebug() << Configuracion_global->nombre_bd_conta;
             Configuracion_global->nombre_bd_medica = qEmpresa.record().value("nombre_bd_medica").toString();
             Configuracion_global->decimales = qEmpresa.record().value("decimales").toInt();
-            Configuracion_global->decimales_calculo = qEmpresa.record().value("decimales_calculo").toInt();
+            Configuracion_global->decimales_campos_totales = qEmpresa.record().value("decimales_campos_totales").toInt();
 
         }
         else

@@ -102,7 +102,7 @@ public:
     QFileDialog dialogo;
     bool auto_codigoart;
     int tamano_codigo;
-    int decimales_calculo;
+    int decimales_campos_totales;
     int decimales;
     bool mostrar_siempre; // si está activo mostrará los 0 en decimales a partir de estandar (2) hasta valor decimales
     bool medic;

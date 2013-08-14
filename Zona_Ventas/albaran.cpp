@@ -132,7 +132,20 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
               "base_total=:base_total, iva_total=:iva_total, rec_total=:rec_total,"
               "total_albaran=:total_albaran, impreso=:impreso, facturado=:facturado,"
               "factura=:factura, fecha_factura=:fecha_factura, comentario=:comentario,"
+              "desc_gasto1 =:desc_gasto1,"
+              "desc_gasto2 =:desc_gasto2,"
+              "desc_gasto3 =:desc_gasto3,"
+              "imp_gasto1 =:imp_gasto1,"
+              "imp_gasto2 =:imp_gasto2,"
+              "imp_gasto3 =:imp_gasto3,"
+              "porc_iva_gasto1 =:porc_iva_gasto1,"
+              "porc_iva_gasto2 =:porc_iva_gasto2,"
+              "porc_iva_gasto3 =:porc_iva_gasto3,"
+              "iva_gasto1 =:iva_gasto1,"
+              "iva_gasto2 =:iva_gasto2,"
+              "iva_gasto3 =:iva_gasto3,"
               "entregado_a_cuenta=:entregado_a_cuenta"
+
               " WHERE id = :albaran");
 
     q.bindValue(":albaran",nid_Albaran);
@@ -191,6 +204,22 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
     q.bindValue(":factura",factura);
     q.bindValue(":fecha_factura",fecha_factura);
     q.bindValue(":comentario",comentario);
+
+    q.bindValue(":desc_gasto1",desc_gasto1);
+    q.bindValue(":desc_gasto2",desc_gasto2);
+    q.bindValue(":desc_gasto3",desc_gasto3);
+
+    q.bindValue("imp_gasto1",imp_gasto1);
+    q.bindValue("imp_gasto2",imp_gasto2);
+    q.bindValue("imp_gasto3",imp_gasto3);
+
+    q.bindValue(":porc_iva_gasto1",porc_iva_gasto1);
+    q.bindValue(":porc_iva_gasto2",porc_iva_gasto2);
+    q.bindValue(":porc_iva_gasto3",porc_iva_gasto3);
+
+    q.bindValue(":iva_gasto1",iva_gasto1);
+    q.bindValue(":iva_gasto2",iva_gasto2);
+    q.bindValue(":iva_gasto3",iva_gasto3);
 
     q.bindValue(":entregado_a_cuenta",entregado_a_cuenta);
 
@@ -274,6 +303,19 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 fecha_factura= r.value("fecha_factura").toDate();
                 comentario= r.value("comentario").toString();
                 entregado_a_cuenta= r.value("entregado_a_cuenta").toDouble();
+                desc_gasto1 = r.value("desc_gasto1").toString();
+                desc_gasto2 = r.value("desc_gasto2").toString();
+                desc_gasto3 = r.value("desc_gasto3").toString();
+                imp_gasto1 = r.value("imp_gasto1").toDouble();
+                imp_gasto2 = r.value("imp_gasto2").toDouble();
+                imp_gasto3 = r.value("imp_gasto3").toDouble();
+                porc_iva_gasto1 = r.value("porc_iva_gasto1").toFloat();
+                porc_iva_gasto2 = r.value("porc_iva_gasto2").toFloat();
+                porc_iva_gasto3 = r.value("porc_iva_gasto3").toFloat();
+                iva_gasto1 = r.value("iva_gasto1").toDouble();
+                iva_gasto2 = r.value("iva_gasto2").toDouble();
+                iva_gasto3 = r.value("iva_gasto3").toDouble();
+
                 return true;
                }
             else //if not next

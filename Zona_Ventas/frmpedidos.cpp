@@ -110,6 +110,23 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     QStringList modo;
     modo << tr("A-Z") << tr("Z-A");
     ui->cboModo->addItems(modo);
+
+    //--------------------
+    // %Iva combos gastos
+    //--------------------
+    QSqlQueryModel *iva = new QSqlQueryModel(this);
+    iva->setQuery("select iva from tiposiva",Configuracion_global->groupDB);
+    ui->cboporc_iva_gasto1->setModel(iva);
+    int index = ui->cboporc_iva_gasto1->findText(Configuracion_global->ivaList.at(0));
+    ui->cboporc_iva_gasto1->setCurrentIndex(index);
+    ui->cboporc_iva_gasto2->setModel(iva);
+    ui->cboporc_iva_gasto3->setModel(iva);
+
+    //-------------------
+    // Modo Busqueda
+    //-------------------
+    ui->radBusqueda->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 FrmPedidos::~FrmPedidos()
@@ -491,6 +508,13 @@ void FrmPedidos::filter_table()
 
 }
 
+void FrmPedidos::calcular_iva_gastos()
+{
+    ui->spiniva_gasto1->setValue((ui->SpinGastoDist1->value()*(ui->cboporc_iva_gasto1->currentText().toDouble()/100)));
+    ui->spiniva_gasto2->setValue((ui->SpinGastoDist2->value()*(ui->cboporc_iva_gasto2->currentText().toDouble()/100)));
+    ui->spiniva_gasto3->setValue((ui->SpinGastoDist3->value()*(ui->cboporc_iva_gasto3->currentText().toDouble()/100)));
+}
+
 void FrmPedidos::on_btnSiguiente_clicked()
 {
     int pedido = oPedido->id;
@@ -671,26 +695,32 @@ void FrmPedidos::on_btn_borrar_clicked()
 void FrmPedidos::totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda)
 {
     _moneda = moneda;
-        base +=ui->SpinGastoDist1->value();
-        iva = base * 0.21;
+    base +=(ui->SpinGastoDist1->value() + ui->SpinGastoDist2->value() + ui->SpinGastoDist3->value());
+    calcular_iva_gastos();
+    iva += (ui->spiniva_gasto1->value() + ui->spiniva_gasto2->value() + ui->spiniva_gasto3->value());
     total = base + iva + re;
 
-    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales))+moneda);
-    ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales))+moneda);
-    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',Configuracion_global->decimales))+moneda);
-    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales))+moneda);
-    ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales))+moneda);
-    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales))+moneda);
+    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales_campos_totales))+moneda);
 
-    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales))+moneda);
-    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales))+moneda);
-    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales))+moneda);
-    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales))+moneda);
+    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales_campos_totales))+moneda);
 }
 
 void FrmPedidos::desglose1Changed(double base, double iva, double re, double total)
 {
-    base +=ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto1->currentText() == QString::number(oPedido->porc_iva1))
+        base +=ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto2->currentText() == QString::number(oPedido->porc_iva1))
+        base +=ui->SpinGastoDist2->value();
+    if(ui->cboporc_iva_gasto3->currentText() == QString::number(oPedido->porc_iva1))
+        base +=ui->SpinGastoDist3->value();
     total = base + iva + re;
     ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
     ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
@@ -700,6 +730,12 @@ void FrmPedidos::desglose1Changed(double base, double iva, double re, double tot
 
 void FrmPedidos::desglose2Changed(double base, double iva, double re, double total)
 {
+    if(ui->cboporc_iva_gasto1->currentText() == QString::number(oPedido->porc_iva2))
+        base +=ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto2->currentText() == QString::number(oPedido->porc_iva2))
+        base +=ui->SpinGastoDist2->value();
+    if(ui->cboporc_iva_gasto3->currentText() == QString::number(oPedido->porc_iva2))
+        base +=ui->SpinGastoDist3->value();
     total = base + iva + re;
     ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
     ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
@@ -709,6 +745,12 @@ void FrmPedidos::desglose2Changed(double base, double iva, double re, double tot
 
 void FrmPedidos::desglose3Changed(double base, double iva, double re, double total)
 {
+    if(ui->cboporc_iva_gasto1->currentText() == QString::number(oPedido->porc_iva3))
+        base +=ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto2->currentText() == QString::number(oPedido->porc_iva3))
+        base +=ui->SpinGastoDist2->value();
+    if(ui->cboporc_iva_gasto3->currentText() == QString::number(oPedido->porc_iva3))
+        base +=ui->SpinGastoDist3->value();
     total = base + iva + re;
     ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
     ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
@@ -718,6 +760,12 @@ void FrmPedidos::desglose3Changed(double base, double iva, double re, double tot
 
 void FrmPedidos::desglose4Changed(double base, double iva, double re, double total)
 {
+    if(ui->cboporc_iva_gasto1->currentText() == QString::number(oPedido->porc_iva4))
+        base +=ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto2->currentText() == QString::number(oPedido->porc_iva4))
+        base +=ui->SpinGastoDist2->value();
+    if(ui->cboporc_iva_gasto3->currentText() == QString::number(oPedido->porc_iva4))
+        base +=ui->SpinGastoDist3->value();
     total = base + iva + re;
     ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
     ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));

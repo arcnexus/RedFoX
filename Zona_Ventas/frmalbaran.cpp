@@ -4,6 +4,7 @@
 #include "../Zona_Pacientes/cliente.h"
 #include "../Busquedas/db_consulta_view.h"
 #include "../Auxiliares/datedelegate.h"
+#include "../Auxiliares/monetarydelegate.h"
 //
 #include "../Almacen/articulo.h"
 
@@ -84,7 +85,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     // llenar tabla
     //--------------
     m = new QSqlQueryModel(this);
-    m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb order by albaran desc",Configuracion_global->empresaDB);
+    m->setQuery("select id,albaran,fecha,cif,total_albaran,cliente from cab_alb order by albaran desc",Configuracion_global->empresaDB);
     ui->tabla->setModel(m);
     formato_tabla();
 
@@ -99,6 +100,14 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->cboModo->addItems(modo);
     ui->radBusqueda->setChecked(true);
     ui->stackedWidget->setCurrentIndex(1);
+    //---------------------
+    // Llenar combos ivas
+    //---------------------
+    QSqlQueryModel *iva = new QSqlQueryModel(this);
+    iva->setQuery("select iva from tiposiva",Configuracion_global->groupDB);
+    ui->cboporc_iva_gasto1->setModel(iva);
+    ui->cboporc_iva_gasto2->setModel(iva);
+    ui->cboporc_iva_gasto3->setModel(iva);
 
     ui->txtBuscar->setFocus();
 
@@ -190,7 +199,23 @@ void FrmAlbaran::LLenarCampos() {
     ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec_total,'f',Configuracion_global->decimales)));
     ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->iva_total,'f',Configuracion_global->decimales)));
     ui->txtpedido_cliente->setText(oAlbaran->pedido_cliente);
-    if(oAlbaran->recargo_equivalencia==true)
+    ui->txtGastoDist1->setText(oAlbaran->desc_gasto1);
+    ui->txtGastoDist2->setText(oAlbaran->desc_gasto2);
+    ui->txtGastoDist3->setText(oAlbaran->desc_gasto3);
+    ui->SpinGastoDist1->setValue(oAlbaran->imp_gasto1);
+    ui->SpinGastoDist2->setValue(oAlbaran->imp_gasto2);
+    ui->SpinGastoDist3->setValue(oAlbaran->imp_gasto3);
+    int index = ui->cboporc_iva_gasto1->findText(QString::number(oAlbaran->porc_iva_gasto1));
+    ui->cboporc_iva_gasto1->setCurrentIndex(index);
+    index = ui->cboporc_iva_gasto2->findText(QString::number(oAlbaran->porc_iva_gasto2));
+        ui->cboporc_iva_gasto2->setCurrentIndex(index);
+    index = ui->cboporc_iva_gasto3->findText(QString::number(oAlbaran->porc_iva_gasto3));
+        ui->cboporc_iva_gasto3->setCurrentIndex(index);
+    ui->spiniva_gasto1->setValue(oAlbaran->iva_gasto1);
+    ui->spiniva_gasto2->setValue(oAlbaran->iva_gasto2);
+    ui->spiniva_gasto3->setValue(oAlbaran->iva_gasto3);
+
+        if(oAlbaran->recargo_equivalencia==true)
         ui->chklporc_rec->setChecked(true);
     else
         ui->chklporc_rec->setChecked(false);
@@ -409,6 +434,18 @@ void FrmAlbaran::LLenarAlbaran()
 
     oAlbaran->pedido_cliente= (ui->txtpedido_cliente->text());
     oAlbaran->entregado_a_cuenta = ui->txtentregado_a_cuenta->text().replace(".","").toDouble();
+    oAlbaran->desc_gasto1 = ui->txtGastoDist1->text();
+    oAlbaran->desc_gasto2 = ui->txtGastoDist2->text();
+    oAlbaran->desc_gasto3 = ui->txtGastoDist3->text();
+    oAlbaran->imp_gasto1 = ui->SpinGastoDist1->value();
+    oAlbaran->imp_gasto2 = ui->SpinGastoDist2->value();
+    oAlbaran->imp_gasto3 = ui->SpinGastoDist3->value();
+    oAlbaran->porc_iva_gasto1 = ui->cboporc_iva_gasto1->currentText().toDouble();
+    oAlbaran->porc_iva_gasto1 = ui->cboporc_iva_gasto1->currentText().toDouble();
+    oAlbaran->porc_iva_gasto1 = ui->cboporc_iva_gasto1->currentText().toDouble();
+    oAlbaran->iva_gasto1 = ui->spiniva_gasto1->value();
+    oAlbaran->iva_gasto2 = ui->spiniva_gasto2->value();
+    oAlbaran->iva_gasto3 = ui->spiniva_gasto3->value();
 }
 
 void FrmAlbaran::on_btnSiguiente_clicked()
@@ -584,21 +621,32 @@ void FrmAlbaran::on_btn_borrar_clicked()
 
 void FrmAlbaran::totalChanged(double base, double dto, double subtotal, double iva, double re, double total, QString moneda)
 {
-    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales))+moneda);
-    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales))+moneda);
-    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',Configuracion_global->decimales))+moneda);
-    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales))+moneda);
-    ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales))+moneda);
-    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales))+moneda);
+    base +=(ui->SpinGastoDist1->value() + ui->SpinGastoDist2->value() + ui->SpinGastoDist3->value());
+    calcular_iva_gastos();
+    iva += (ui->spiniva_gasto1->value() + ui->spiniva_gasto2->value() + ui->spiniva_gasto3->value());
+    total = base + iva + re;
+    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales_campos_totales))+moneda);
 
-    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales))+moneda);
-    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales))+moneda);
-    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales))+moneda);
-    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales))+moneda);
+    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales_campos_totales))+moneda);
 }
 
 void FrmAlbaran::desglose1Changed(double base, double iva, double re, double total)
 {
+    if(ui->cboporc_iva_gasto1->currentText() == QString::number(oAlbaran->porc_iva1))
+        base +=ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto2->currentText() == QString::number(oAlbaran->porc_iva1))
+        base +=ui->SpinGastoDist2->value();
+    if(ui->cboporc_iva_gasto3->currentText() == QString::number(oAlbaran->porc_iva1))
+        base +=ui->SpinGastoDist3->value();
+    total = base + iva + re;
     ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
     ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
     ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
@@ -607,6 +655,13 @@ void FrmAlbaran::desglose1Changed(double base, double iva, double re, double tot
 
 void FrmAlbaran::desglose2Changed(double base, double iva, double re, double total)
 {
+    if(ui->cboporc_iva_gasto1->currentText() == QString::number(oAlbaran->porc_iva1))
+        base +=ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto2->currentText() == QString::number(oAlbaran->porc_iva1))
+        base +=ui->SpinGastoDist2->value();
+    if(ui->cboporc_iva_gasto3->currentText() == QString::number(oAlbaran->porc_iva1))
+        base +=ui->SpinGastoDist3->value();
+    total = base + iva + re;
     ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
     ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
     ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
@@ -615,6 +670,13 @@ void FrmAlbaran::desglose2Changed(double base, double iva, double re, double tot
 
 void FrmAlbaran::desglose3Changed(double base, double iva, double re, double total)
 {
+    if(ui->cboporc_iva_gasto1->currentText() == QString::number(oAlbaran->porc_iva1))
+        base +=ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto2->currentText() == QString::number(oAlbaran->porc_iva1))
+        base +=ui->SpinGastoDist2->value();
+    if(ui->cboporc_iva_gasto3->currentText() == QString::number(oAlbaran->porc_iva1))
+        base +=ui->SpinGastoDist3->value();
+    total = base + iva + re;
     ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
     ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
     ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
@@ -623,6 +685,13 @@ void FrmAlbaran::desglose3Changed(double base, double iva, double re, double tot
 
 void FrmAlbaran::desglose4Changed(double base, double iva, double re, double total)
 {
+    if(ui->cboporc_iva_gasto1->currentText() == QString::number(oAlbaran->porc_iva1))
+        base +=ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto2->currentText() == QString::number(oAlbaran->porc_iva1))
+        base +=ui->SpinGastoDist2->value();
+    if(ui->cboporc_iva_gasto3->currentText() == QString::number(oAlbaran->porc_iva1))
+        base +=ui->SpinGastoDist3->value();
+    total = base + iva + re;
     ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
     ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
     ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
@@ -840,14 +909,15 @@ void FrmAlbaran::formato_tabla()
     // id,albaran,fecha,cif,cliente
     QStringList headers;
     QVariantList sizes;
-    headers << "id" << tr("Albarán") <<tr("fecha") <<tr("cif") <<tr("cliente");
-    sizes << 0 << 120 << 120 <<120 <<300;
+    headers << "id" << tr("Albarán") <<tr("fecha") <<tr("cif") <<tr("Total") <<tr("cliente");
+    sizes << 0 << 120 << 120 <<120 <<120 <<300;
     for(int i = 0; i <headers.length();i++)
     {
         ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
     ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tabla->setItemDelegateForColumn(4,new MonetaryDelegate);
 }
 
 void FrmAlbaran::filter_table()
@@ -866,9 +936,16 @@ void FrmAlbaran::filter_table()
     else
         modo = "DESC";
 
-    m->setQuery("select id,albaran,fecha,cif,cliente from cab_alb where "+order+" like '%"+arg1.trimmed()+
+    m->setQuery("select id,albaran,fecha,cif,total_albaran,cliente from cab_alb where "+order+" like '%"+arg1.trimmed()+
                     "%' order by "+order +" "+modo,Configuracion_global->empresaDB);
     //qDebug() << m->query().lastQuery();
+}
+
+void FrmAlbaran::calcular_iva_gastos()
+{
+    ui->spiniva_gasto1->setValue((ui->SpinGastoDist1->value()*(ui->cboporc_iva_gasto1->currentText().toDouble()/100)));
+    ui->spiniva_gasto2->setValue((ui->SpinGastoDist2->value()*(ui->cboporc_iva_gasto2->currentText().toDouble()/100)));
+    ui->spiniva_gasto3->setValue((ui->SpinGastoDist3->value()*(ui->cboporc_iva_gasto3->currentText().toDouble()/100)));
 }
 
 void FrmAlbaran::on_cboOrden_currentIndexChanged(const QString &arg1)
