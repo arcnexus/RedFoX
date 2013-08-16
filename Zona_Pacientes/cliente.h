@@ -93,7 +93,7 @@ public:
     int visa2_cod_valid;
     int id_agente;
     int id_transportista;
-    QString grupo_iva;
+    int grupo_iva;
     QSqlQuery queryClienteWeb;
     QSqlDatabase db;
     QSqlQuery *qryCliente;

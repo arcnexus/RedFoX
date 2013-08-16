@@ -81,10 +81,6 @@ frmClientes::frmClientes(QWidget *parent) :
     queryAgentes->setQuery("Select nombre from agentes",Configuracion_global->groupDB);
     ui->cboagente->setModel(queryAgentes);
 
-    //------------------------
-    // Rellenar grupos de iva
-    //------------------------
-    ui->cboGrupo_Iva->addItems(Configuracion_global->grupo_iva);
 
     //------------------------
     // Combo Modo
@@ -280,8 +276,23 @@ void frmClientes::LLenarCampos()
 
     indice = ui->cboagente->findText(Configuracion_global->devolver_agente(oCliente->id_agente));
     ui->cboagente->setCurrentIndex(indice);
-    indice = ui->cboGrupo_Iva->findText(oCliente->grupo_iva);
-    ui->cboGrupo_Iva->setCurrentIndex(indice);
+    switch (oCliente->grupo_iva) {
+    case 1:
+       ui->radGeneral->setChecked(true);
+        break;
+    case 2:
+        ui->radUE->setChecked(true);
+        break;
+    case 3:
+        ui->radExcento->setChecked(true);
+        break;
+    case 4:
+        ui->radExportacion->setChecked(true);
+        break;
+    default:
+        QMessageBox::warning(this,tr("Gestión Clientes"),tr("Debe seleccionar un grupo de iva"),tr("Aceptar"));
+        break;
+    }
     indice = ui->cbotipo_dto->findText(QString::number(oCliente->tipo_dto_tarifa));
     ui->cbotipo_dto->setCurrentIndex(indice);
 
@@ -685,7 +696,15 @@ void frmClientes::LLenarCliente()
     oCliente->visa_distancia2 = ui->txtvisa_distancia2->text();
     oCliente->id_transportista = Configuracion_global->devolver_id_transportista(ui->cbotransportista->currentText());
     oCliente->id_agente = Configuracion_global->devolver_id_agente(ui->cboagente->currentText());
-    oCliente->grupo_iva = ui->cboGrupo_Iva->currentText();
+    if (ui->radGeneral->isChecked())
+        oCliente->grupo_iva = 1;
+    if(ui->radUE->isChecked())
+        oCliente->grupo_iva = 2;
+    if (ui->radExcento->isChecked())
+        oCliente->grupo_iva = 3;
+    if(ui->radExportacion->isChecked())
+        oCliente->grupo_iva = 4;
+
 }
 
 

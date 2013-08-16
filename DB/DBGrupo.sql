@@ -235,7 +235,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`clientes` (
   `visa2_cod_valid` INT(3) NULL ,
   `id_agente` INT(11) NULL ,
   `id_transportista` INT(11) NULL ,
-  `grupo_iva` VARCHAR(45) NULL ,
+  `grupo_iva` INT(1) NULL DEFAULT '1' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1

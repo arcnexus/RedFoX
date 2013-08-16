@@ -512,7 +512,7 @@ void Cliente::cargar(QSqlQuery &query)
         this->id_transportista = registro.field("id_transportista").value().toInt();
         this->tipo_dto_tarifa = registro.field("tipo_dto_tarifa").value().toInt();
         int irpf =registro.field("irpf").value().toInt();
-        this->grupo_iva = registro.field("grupo_iva").value().toString();
+        this->grupo_iva = registro.field("grupo_iva").value().toInt();
         if (irpf==1)
             this->lIRPF = true;
         else
@@ -606,7 +606,7 @@ void Cliente::clear()
     this->visa2_cod_valid = 0;
     this->id_agente = 0;
     this->id_transportista = 0;
-    this->grupo_iva = "";
+    this->grupo_iva = 1;
 }
 
 

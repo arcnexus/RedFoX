@@ -123,6 +123,10 @@ toFormatoMoneda(QString cTexto)
         if(!mostrar_siempre){
             if (ret.right(decimals-2) == "0" || ret.right(decimals-2) == "00" || ret.right(decimals-2) == "000")
                 ret = ret.left(ret.size()-(decimals -2));
+            if (ret == "0,")
+                ret = "0,00";
+            if (ret.right(1) == ",")
+                ret.append("00");
         }
         return ret;
     }
@@ -134,7 +138,12 @@ toFormatoMoneda(QString cTexto)
 double Configuracion::MonedatoDouble(QString moneda)
 {
     moneda = moneda.replace(".","").replace(",",".");
-    return moneda.toDouble();
+    double dblMoneda;
+    int d;
+    d= Configuracion_global->decimales_campos_totales;
+    dblMoneda  = floor(moneda.toDouble() * pow(10., d) + .5) / pow(10., d);
+
+    return dblMoneda;
 }
 
 bool Configuracion::EsNumero(QString texto)
@@ -604,6 +613,34 @@ float Configuracion::devolver_rec_iva(float porc_iva)
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar R.E."),
                              tr("Fallo al recuperar el R.E")+query.lastError().text(),
                              tr("Aceptar"));
+}
+
+QString Configuracion::toRound(double dnumber, int decimals)
+{
+    QString StrNumber = QString::number(dnumber,'f',decimals);
+    QString StrNumber_ = QString:: number(dnumber,'f',decimals+1);
+    if(StrNumber_.right(1) == "5")
+    {
+        double dblNumber = StrNumber_.toDouble();
+        switch (decimals) {
+        case 1:
+            dblNumber += 0.1;
+            break;
+        case 2:
+            dblNumber += 0.01;
+            break;
+        case 3:
+            dblNumber += 0.001;
+            break;
+        case 4:
+            dblNumber += 0,0001;
+        default:
+            break;
+        }
+         StrNumber = QString::number(dblNumber,'f',decimals);
+    }
+
+    return toFormatoMoneda(StrNumber);
 }
 
 QString Configuracion::devolver_agente(int id)

@@ -20,7 +20,7 @@ bool Albaran::AnadirAlbaran()
     q.prepare("INSERT INTO cab_alb"
               "(albaran, fecha, pedido_cliente, id_cliente, codigo_cliente, cliente,"
               "direccion1, direccion2, poblacion, provincia, cp, id_pais, cif,"
-              "recargo_equivalencia, subtotal, porc_dto, dto, base1, base2, base3,"
+              "recargo_equivalencia, subtotal, porc_dto, dto,porc_dto_pp, dto_pp, base1, base2, base3,"
               "base4, porc_iva1, porc_iva2, porc_iva3, porc_iva4,"
               "iva1, iva2, iva3, iva4, porc_rec1,"
               "porc_rec2, porc_rec3, porc_rec4,"
@@ -31,7 +31,7 @@ bool Albaran::AnadirAlbaran()
               "VALUES"
               "(:albaran, :fecha, :pedido_cliente, :id_cliente, :codigo_cliente, :cliente,"
               ":direccion1, :direccion2, :poblacion, :provincia, :cp, :id_pais, :cif,"
-              ":recargo_equivalencia, :subtotal, :porc_dto, :dto, :base1, :base2, :base3,"
+              ":recargo_equivalencia, :subtotal, :porc_dto, :dto, :porc_dto_pp,:dto_pp, :base1, :base2, :base3,"
               ":base4, :porc_iva1, :porc_iva2, :porc_iva3, :porc_iva4,"
               ":iva1, :iva2, :iva3, :iva4, :porc_rec1,"
               ":porc_rec2, :porc_rec3, :porc_rec4,"
@@ -119,7 +119,7 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
               "direccion1=:direccion1,direccion2=:direccion2, poblacion=:poblacion,"
               "provincia=:provincia, cp=:cp, id_pais=:id_pais, cif=:cif,"
               "recargo_equivalencia=:recargo_equivalencia, subtotal=:subtotal,"
-              "dto=:dto, dto=:dto, base1=:base1, base2=:base2, base3=:base3,"
+              "porc_dto=:porc_dto, dto=:dto,porc_dto_pp=:porc_dto_pp,dto_pp =:dto_pp, base1=:base1, base2=:base2, base3=:base3,"
               "base4=:base4, porc_iva1=:porc_iva1, porc_iva2=:porc_iva2,"
               "porc_iva3=:porc_iva3, porc_iva4=:porc_iva4,"
               "iva1=:iva1, iva2=:iva2, iva3=:iva3,"
@@ -165,8 +165,10 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
 
     q.bindValue(":recargo_equivalencia",recargo_equivalencia);
     q.bindValue(":subtotal",subtotal);
+    q.bindValue(":porc_dto",porc_dto);
     q.bindValue(":dto",dto);
-    q.bindValue(":dto",dto);
+    q.bindValue(":porc_dto_pp",porc_dto_pp);
+    q.bindValue(":dto_pp",dto_pp);
     q.bindValue(":base1",base1);
     q.bindValue(":base2",base2);
     q.bindValue(":base3",base3);
@@ -267,8 +269,10 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 cif= r.value("cif").toString();
                 recargo_equivalencia= r.value("recargo_equivalencia").toBool();
                 subtotal= r.value("subtotal").toDouble();
+                porc_dto= r.value("porc_dto").toFloat();
                 dto= r.value("dto").toDouble();
-                dto= r.value("dto").toDouble();
+                porc_dto_pp = r.value("porc_dto_pp").toFloat();
+                dto_pp = r.value("dto_pp").toDouble();
                 base1= r.value("base1").toDouble();
                 base2= r.value("base2").toDouble();
                 base3= r.value("base3").toDouble();

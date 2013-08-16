@@ -101,7 +101,7 @@ background-color: rgb(0, 0, 57);</string>
    <item row="1" column="0" colspan="8">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="paginaedicion">
       <layout class="QGridLayout" name="gridLayout_27">
@@ -850,7 +850,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">
@@ -2012,6 +2012,49 @@ color: rgb(255,255,255);</string>
               </layout>
              </item>
              <item>
+              <widget class="QGroupBox" name="groupBox">
+               <property name="minimumSize">
+                <size>
+                 <width>182</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="title">
+                <string>Iva Cliente</string>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_29">
+                <item row="0" column="1">
+                 <widget class="QRadioButton" name="radUE">
+                  <property name="text">
+                   <string>U.E.</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QRadioButton" name="radGeneral">
+                  <property name="text">
+                   <string>General</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QRadioButton" name="radExcento">
+                  <property name="text">
+                   <string>Exento</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QRadioButton" name="radExportacion">
+                  <property name="text">
+                   <string>Exportación</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
               <widget class="QCheckBox" name="chkrecargo_equivalencia">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);</string>
@@ -2020,16 +2063,6 @@ color: rgb(255,255,255);</string>
                 <string>Recargo Equivalencia</string>
                </property>
               </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_64">
-               <property name="text">
-                <string>Grupo_iva:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="cboGrupo_Iva"/>
              </item>
              <item>
               <widget class="QLabel" name="label_33">

@@ -29,6 +29,8 @@ public:
     double subtotal;
     double dto;
     float porc_dto;
+    float porc_dto_pp;
+    double dto_pp;
     double base1;
     double base2;
     double base3;
