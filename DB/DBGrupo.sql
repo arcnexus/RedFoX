@@ -159,6 +159,8 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`cliente_direcciones` (
   `poblacion` VARCHAR(45) NULL DEFAULT NULL ,
   `provincia` VARCHAR(45) NULL DEFAULT NULL ,
   `id_pais` INT(11) NULL DEFAULT NULL ,
+  `email` VARCHAR(100) NULL DEFAULT NULL ,
+  `comentarios` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `id_cliente` INT(11) NULL DEFAULT NULL ,
   `direccion_envio` TINYINT(1) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
