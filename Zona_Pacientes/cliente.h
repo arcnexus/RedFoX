@@ -98,6 +98,18 @@ public:
     QSqlDatabase db;
     QSqlQuery *qryCliente;
 
+    //-----------------------------
+    // Direcciones alternativas
+    //-----------------------------
+    QString descripcion_direccion_alternativa;
+    QString direccion1_alternativa;
+    QString direccion2_alernativa;
+    QString cp_alternativa;
+    QString poblacion_alternativa;
+    QString provincia_alternativa;
+    int id_pais_alternativa;
+    bool direccion_envio_alternativa;
+
 
 signals:
     

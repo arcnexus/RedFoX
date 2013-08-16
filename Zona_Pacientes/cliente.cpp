@@ -799,38 +799,28 @@ void Cliente::Guardardireccion(bool Anadir, QString Descripcion, QString direcci
                                QString Provincia, QString Pais,int id_cliente,int id)
 {
     QSqlQuery qdirecciones(Configuracion_global->groupDB);
+    QHash <QString, QVariant> d;
+    QString error;
+    int id_alternativa;
+    d["descripcion"] = descripcion_direccion_alternativa;
+    d["direccion1"] = direccion1_alternativa;
+    d["direccion2"] =direccion2_alernativa;
+    d["cp"] = cp_alternativa;
+    d["poblacion"] = poblacion_alternativa;
+    d["provincia"] =provincia_alternativa;
+    d["id_pais"] = id_pais_alternativa;
+
     if(Anadir){
-        qdirecciones.prepare("INSERT INTO cliente_direcciones (`descripcion,` `direccion1`, `direccion2`, `cp`, `poblacion`,"
-                         "`provincia`, `id_pais`, `id_cliente`) "
-                         "VALUES (:descripcion,:direccion1,:direccion2,:cp, :poblacion,:provincia,:id_pais,:id_cliente)");
+        id_alternativa = SqlCalls::SqlInsert(d,"cliente_direcciones",Configuracion_global->groupDB,error);
 
     } else {
-        qdirecciones.prepare("UPDATE cliente_direcciones SET "
-                             "descripcion = :descripcion,"
-                             "direccion1 = :direccion1,"
-                             "direccion2 = :direccion2,"
-                             "cp = :cp,"
-                             "poblacion = :poblacion,"
-                             "provincia = :provincia,"
-                             "id_pais = :id_pais,"
-                             "id_cliente =:id_cliente "
-                             "WHERE id =:id");
-    }
-    qdirecciones.bindValue(":descripcion",Descripcion);
-    qdirecciones.bindValue(":direccion1",direccion1);
-    qdirecciones.bindValue(":direccion2",direccion2);
-    qdirecciones.bindValue(":cp",CP);
-    qdirecciones.bindValue(":poblacion",Poblacion);
-    qdirecciones.bindValue(":provincia",Provincia);
-    qdirecciones.bindValue(":id_pais",Buscarid_pais(Pais));
-    qdirecciones.bindValue(":id_cliente",id_cliente);
-    if(!Anadir)
-        qdirecciones.bindValue(":id",id);
+    if(!Anadir) // Guardar
+        id_alternativa = SqlCalls::SqlUpdate(d,"cliente_direcciones",Configuracion_global->groupDB,
+                                             QString("id=").append(QString::number(id)),error);
 
-    if(!qdirecciones.exec()){
-        qDebug() << qdirecciones.lastQuery();
+    if(id_alternativa == -1)
         QMessageBox::warning(qApp->activeWindow(),tr("Añadir/Guardar dirección"),
-                             tr("Ocurrió un error al guardar los datos de dirección: %1").arg(qdirecciones.lastError().text()),
+                             tr("Ocurrió un error al guardar los datos de dirección: %1").arg(error),
                              tr("Aceptar"));
     }
 }
