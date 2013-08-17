@@ -965,6 +965,7 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
 QString Configuracion::letraDNI(QString Nif)
 {
     int nSuma, nSumaPar, nSumaNon;
+    Nif = Nif.toUpper();
 
     if (Nif.isEmpty())
         return ("");
@@ -976,7 +977,9 @@ QString Configuracion::letraDNI(QString Nif)
             Nif = Nif.mid(1,1) == "Z" ? "2" : Nif.mid(1,1) == "Y" ? "1" : "0";
         else if (Nif.mid(1,1).contains("[KLM]"))
             Nif = Nif.mid(2);
-
+        QString Strlast = Nif.right(1);
+        if (Strlast[0].isLetter())
+            return Nif;
         QString x1 = "TRWAGMYFPDXBNJZSQVHLCKE";
         return (Nif +x1.mid(Nif.trimmed().toInt() % 23,1));
     }
@@ -984,7 +987,8 @@ QString Configuracion::letraDNI(QString Nif)
     {
         if (Nif.mid(1,1).contains("[ABCDEFGHJNPQRSUVW]"))
             return (Nif);
-
+        if (Nif.right(1).contains("[ABCDEFGHJNPQRSUVW]"))
+            return (Nif);
         nSumaPar = 0;
         nSumaNon = 0;
         for (int nLetra = 2; nLetra < 9; nLetra += 2)

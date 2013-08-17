@@ -54,6 +54,8 @@ frmFacturas::frmFacturas( QWidget *parent) :
     // valores edicion
     this->Altas = false;
     //ui->txtcodigoArticulo->setFocus();
+    ui->radBuscar->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(1);
 
 
     // --------------------------

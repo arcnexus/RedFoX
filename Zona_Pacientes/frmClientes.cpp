@@ -144,8 +144,6 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->txtcif_nif,SIGNAL(editingFinished()),this,SLOT(txtcif_nif_editingFinished()));
     connect(ui->txtcp,SIGNAL(editingFinished()),this,SLOT(txtcp_editingFinished()));
     connect(ui->txtrRiesgoPermitido,SIGNAL(editingFinished()),this,SLOT(txtrRiesgoPermitido_editingFinished()));
-    connect(ui->btnGuardardireccionAlternativa,SIGNAL(clicked()),this,SLOT(GuardardireccionAlternativa()));
-    connect(ui->btnDeshacerdireccionAlternativa,SIGNAL(clicked()),this,SLOT(DeshacerdireccionAlternativa()));
     connect(ui->lista_direccionesAlternativas,SIGNAL(clicked(QModelIndex)),this,SLOT(CargardireccionAlternativa(QModelIndex)));
     connect(ui->btnVer_OtrosContactos,SIGNAL(clicked()),this,SLOT(Contactos()));
     connect(ui->txtcpPoblacionAlternativa,SIGNAL(editingFinished()),this,SLOT(txtcpAlternativa_editingFinished()));
@@ -162,13 +160,15 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->txtcp,SIGNAL(editingFinished()),this,SLOT(set_blink()));
     connect(ui->txtpoblacion,SIGNAL(editingFinished()),this,SLOT(set_blink()));
     connect(ui->txtprovincia,SIGNAL(editingFinished()),this,SLOT(set_blink()));
+    connect(ui->btnAdd_TipoCliente,SIGNAL(clicked()),this,SLOT(AddCustomerType()));
+    connect(ui->btndel_TipoCliente,SIGNAL(clicked()),this,SLOT(BorrardireccionAlternativa()));
     ui->TablaDeudas->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->TablaDeudas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(menu_deudas(QPoint)));
     ui->txtBuscar->setEnabled(true);
     ui->txtBuscar->setReadOnly(false);
     ui->cboOrden->setEnabled(true);
-    ui->txtBuscar->setFocus();
     filter_table();
+    ui->txtBuscar->setFocus();
 
 
 }
@@ -524,7 +524,7 @@ void frmClientes::LLenarCampos()
     // Tipos de clientes
     //------------------
     QSqlQueryModel *qModelTipos = new QSqlQueryModel(this);
-    qModelTipos->setQuery("select tipocliente from tipocliente where id_cliente = "+QString::number(oCliente->id),
+    qModelTipos->setQuery("select tipo_cliente from tipocliente where id_cliente = "+QString::number(oCliente->id),
                           Configuracion_global->groupDB);
     ui->lista_tipos->setModel(qModelTipos);
 
@@ -767,7 +767,57 @@ void frmClientes::on_btnAnadir_clicked()
     ui->txtcodigo_cliente->setFocus();
     LLenarCliente();
     ui->cboidiomaDocumentos->setCurrentIndex(1);
-    oCliente->Anadir();
+    // -----------------------------
+    // Forzamos entrada DNI
+    // Comprobamos que no exista ya
+    //------------------------------
+    QDialog* dlg = new QDialog(this);
+    dlg->setWindowTitle(tr("NIF/CIF/NIE"));
+    dlg->resize(200,130);
+    QLineEdit* linea = new QLineEdit(dlg);
+    linea->setStyleSheet("background-color: rgb(255,255,255)");
+    QPushButton*  btn = new QPushButton(tr("Aceptar"),dlg);
+    QVBoxLayout lay(dlg);
+
+    lay.addWidget(linea);
+    lay.addWidget(btn);
+
+    dlg->setLayout(&lay);
+    connect(btn,SIGNAL(clicked()),dlg,SLOT(accept()));
+    dlg->exec();
+    linea->setText(Configuracion_global->letraDNI(linea->text()));
+    //---------------
+    // Buscamos DNI
+    //---------------
+    QMap <int, QSqlRecord> h;
+    QString error;
+    h= SqlCalls::SelectRecord("clientes",QString("cif_nif ='%1'").arg(linea->text()),Configuracion_global->groupDB,error);
+    QString cif;
+    int id;
+    QMapIterator<int, QSqlRecord> i(h);
+        while (i.hasNext())
+        {
+            i.next();
+            cif = i.value().value("cif_nif").toString();
+            id = i.value().value("id").toInt();
+        }
+    if( cif == linea->text())
+    {
+        QMessageBox::information(this,tr("Altas de clientes"),tr("Ya existe un cliente con ese numero de identificación"),
+                                 tr("Aceptar"));
+        oCliente->Recuperar(id);
+        LLenarCampos();
+        bloquearCampos(true);
+        emit unblock();
+
+    } else
+    {
+        oCliente->Anadir();
+        ui->txtcif_nif->setText(linea->text());
+    }
+
+    dlg->deleteLater();
+
 
 }
 
@@ -950,12 +1000,10 @@ void frmClientes::bloquearCampos(bool state) {
     ui->btnSiguiente->setEnabled(state);
     ui->btnAnadirdireccion->setEnabled(!state);
     ui->btnBorrardireccion->setEnabled(!state);
-    ui->btnEditardireccionAlternativa->setEnabled(!state);
-    ui->btnGuardardireccionAlternativa->setEnabled(!state);
-    ui->btnDeshacerdireccionAlternativa->setEnabled(!state);
     ui->btnAdd_TipoCliente->setEnabled(!state);
     ui->btndel_TipoCliente->setEnabled(!state);
     ui->btnVer_OtrosContactos->setEnabled(state);
+    ui->btnEditardireccionAlternativa->setEnabled(!state);
     ui->txtBuscar->setReadOnly(!state);
     ui->cboOrden->setEnabled(state);
     ui->cboModo->setEnabled(state);
@@ -989,6 +1037,7 @@ void frmClientes::on_btnBorrar_clicked()
 void frmClientes::on_btnBuscar_clicked()
 {
     ui->radBuscar->setChecked(true);
+    ui->txtBuscar->setFocus();
 }
 
 void frmClientes::txtcp_editingFinished()
@@ -1171,7 +1220,7 @@ void frmClientes::AddCustomerType()
    if(AddTipoCliente.exec() == QDialog::Accepted){
        QString valor = AddTipoCliente.familiaRetorno;
        QSqlQuery qTipo(Configuracion_global->groupDB);
-       qTipo.prepare("INSERT INTO tipocliente (tipocliente,id_cliente) VALUES (:tipo,:id_cliente)");
+       qTipo.prepare("INSERT INTO tipocliente (tipo_cliente,id_cliente) VALUES (:tipo,:id_cliente)");
        qTipo.bindValue(":tipo",valor);
        qTipo.bindValue(":id_cliente",oCliente->id);
        if (!qTipo.exec())
@@ -1185,76 +1234,7 @@ void frmClientes::AddCustomerType()
    }
 }
 
-void frmClientes::AnadirdireccionAlternativa()
-{
- Anadirdireccion = true;
- ui->txtdescripcion_direccion->setEnabled(true);
- ui->txtdescripcion_direccion->setText("");
- ui->txtdireccion1Alternativa1->setEnabled(true);
- ui->txtdireccion1Alternativa1->setText("");
- ui->txtdireccion1Alternativa2->setEnabled(true);
- ui->txtdireccion1Alternativa2->setText("");
- ui->txtcpPoblacionAlternativa->setEnabled(true);
- ui->txtcpPoblacionAlternativa->setText("");
- ui->txtpoblacionAlternativa->setText("");
- ui->txtpoblacionAlternativa->setEnabled(true);
- ui->txtprovinciaAlternativa->setText("");
- ui->txtprovinciaAlternativa->setEnabled(true);
- ui->cbopaisAlternativa->setEnabled(true);
- ui->btnGuardardireccionAlternativa->setEnabled(true);
- ui->btnDeshacerdireccionAlternativa->setEnabled(true);
- ui->btnAnadirdireccion->setEnabled(false);
- ui->btnBorrardireccion->setEnabled(false);
- ui->txtdescripcion_direccion->setFocus();
- ui->btnGuardardireccionAlternativa->setEnabled(true);
- ui->btnDeshacerdireccionAlternativa->setEnabled(true);
- ui->btnAnadirdireccion->setEnabled(false);
- ui->btnBorrardireccion->setEnabled(false);
- ui->btnGuardar->setEnabled(false);
- ui->btnDeshacer->setEnabled(false);
- ui->btnEditardireccionAlternativa->setEnabled(false);
-}
 
-void frmClientes::GuardardireccionAlternativa()
-{
-    if(ui->cbopaisAlternativa->currentText().isEmpty()){
-        TimedMessageBox * t = new TimedMessageBox(this,tr("Debe rellenar el campo pais para poder guardar"));
-    } else {
-        ui->txtdescripcion_direccion->setEnabled(false);
-        ui->txtdireccion1Alternativa1->setEnabled(false);
-        ui->txtdireccion1Alternativa2->setEnabled(false);
-        ui->txtcpPoblacionAlternativa->setEnabled(false);
-        ui->txtpoblacionAlternativa->setEnabled(false);
-        ui->txtprovinciaAlternativa->setEnabled(false);
-        ui->cbopaisAlternativa->setEnabled(false);
-
-        if (Anadirdireccion)
-            oCliente->Guardardireccion(true,ui->txtdescripcion_direccion->text(),ui->txtdireccion1Alternativa1->text(),
-                                   ui->txtdireccion1Alternativa2->text(),ui->txtcpPoblacionAlternativa->text(),
-                                   ui->txtpoblacionAlternativa->text(),ui->txtprovinciaAlternativa->text(),
-                                   ui->cbopaisAlternativa->currentText(),oCliente->id,NULL);
-        else
-            oCliente->Guardardireccion(false,ui->txtdescripcion_direccion->text(),ui->txtdireccion1Alternativa1->text(),
-                                   ui->txtdireccion1Alternativa2->text(),ui->txtcpPoblacionAlternativa->text(),
-                                   ui->txtpoblacionAlternativa->text(),ui->txtprovinciaAlternativa->text(),
-                                   ui->cbopaisAlternativa->currentText(),oCliente->id,iddireccionAlternativa);
-        Anadirdireccion = false;
-        //-----------------
-        // direcciones
-        //-----------------
-        QSqlQueryModel *qModeldireccion = new QSqlQueryModel(this);
-        qModeldireccion->setQuery("select descripcion,id from cliente_direcciones where id_cliente = "+QString::number(oCliente->id),
-                                  Configuracion_global->groupDB);
-        ui->lista_direccionesAlternativas->setModel(qModeldireccion);
-        ui->btnGuardar->setEnabled(true);
-        ui->btnDeshacer->setEnabled(true);
-        ui->btnGuardardireccionAlternativa->setEnabled(false);
-        ui->btnDeshacerdireccionAlternativa->setEnabled(false);
-        ui->btnAnadirdireccion->setEnabled(true);
-        ui->btnBorrardireccion->setEnabled(true);
-        ui->btnEditardireccionAlternativa->setEnabled(true);
-    }
-}
 
 void frmClientes::DeshacerdireccionAlternativa()
 {
@@ -1285,6 +1265,9 @@ void frmClientes::DeshacerdireccionAlternativa()
         int indice;
         indice = ui->cbopaisAlternativa->findText(diralt.record().value("pais").toString());
         ui->cbopaisAlternativa->setCurrentIndex(indice);
+        ui->txtemail_alternativa->setText(diralt.record().value("email").toString());
+        ui->txtcomentarios->setText(diralt.record().value("comentarios").toString());
+
 
     }
 
@@ -1313,6 +1296,8 @@ void frmClientes::BorrardireccionAlternativa()
     ui->txtcpPoblacionAlternativa->setText("");
     ui->txtpoblacionAlternativa->setText("");
     ui->txtprovinciaAlternativa->setText("");
+    ui->txtemail_alternativa->clear();
+    ui->txtcomentarios_alternativa->clear();
     ui->cbopaisAlternativa->setCurrentIndex(-1);
 }
 
@@ -1353,6 +1338,10 @@ void frmClientes::CargardireccionAlternativa(QModelIndex index)
         int nIndex = ui->cbopaisAlternativa->findText(pais);
         if (nIndex <-1)
             ui->cbopaisAlternativa->setCurrentIndex(nIndex);
+        ui->txtemail_alternativa->setText(qdirecciones.record().field("email").value().toString());
+        ui->txtcomentarios_alternativa->setText((qdirecciones.record().value("comentarios").toString()));
+        if(ui->btnEditar->isEnabled())
+            ui->btnEditardireccionAlternativa->setEnabled(true);
 
     }
 }
@@ -1628,6 +1617,7 @@ void frmClientes::on_btnLimpiar_clicked()
     ui->cboOrden->setCurrentIndex(0);
     ui->txtBuscar->clear();
     filter_table();
+    ui->txtBuscar->setFocus();
 }
 
 void frmClientes::on_cboOrden_currentIndexChanged(const QString &arg1)
@@ -1640,4 +1630,95 @@ void frmClientes::on_cboModo_currentIndexChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);
     filter_table();
+}
+
+void frmClientes::on_btnGuardardireccionAlternativa_clicked()
+{
+    if(ui->cbopaisAlternativa->currentText().isEmpty()){
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Debe rellenar el campo pais para poder guardar"));
+    } else {
+        ui->txtdescripcion_direccion->setEnabled(false);
+        ui->txtdireccion1Alternativa1->setEnabled(false);
+        ui->txtdireccion1Alternativa2->setEnabled(false);
+        ui->txtcpPoblacionAlternativa->setEnabled(false);
+        ui->txtpoblacionAlternativa->setEnabled(false);
+        ui->txtprovinciaAlternativa->setEnabled(false);
+        ui->cbopaisAlternativa->setEnabled(false);
+        ui->txtemail_alternativa->setEnabled(false);
+        ui->txtcomentarios_alternativa->setEnabled(false);
+
+        if (Anadirdireccion)
+            oCliente->Guardardireccion(true,ui->txtdescripcion_direccion->text(),ui->txtdireccion1Alternativa1->text(),
+                                   ui->txtdireccion1Alternativa2->text(),ui->txtcpPoblacionAlternativa->text(),
+                                   ui->txtpoblacionAlternativa->text(),ui->txtprovinciaAlternativa->text(),
+                                   ui->cbopaisAlternativa->currentText(),oCliente->id,ui->txtemail_alternativa->text(),
+                                   ui->txtcomentarios_alternativa->toPlainText(),NULL);
+        else
+            oCliente->Guardardireccion(false,ui->txtdescripcion_direccion->text(),ui->txtdireccion1Alternativa1->text(),
+                                   ui->txtdireccion1Alternativa2->text(),ui->txtcpPoblacionAlternativa->text(),
+                                   ui->txtpoblacionAlternativa->text(),ui->txtprovinciaAlternativa->text(),
+                                   ui->cbopaisAlternativa->currentText(),oCliente->id,ui->txtemail->text(),
+                                   ui->txtcomentarios_alternativa->toPlainText(),iddireccionAlternativa);
+        Anadirdireccion = false;
+        //-----------------
+        // direcciones
+        //-----------------
+        QSqlQueryModel *qModeldireccion = new QSqlQueryModel(this);
+        qModeldireccion->setQuery("select descripcion,id from cliente_direcciones where id_cliente = "+QString::number(oCliente->id),
+                                  Configuracion_global->groupDB);
+        ui->lista_direccionesAlternativas->setModel(qModeldireccion);
+        ui->btnGuardar->setEnabled(true);
+        ui->btnDeshacer->setEnabled(true);
+        ui->btnGuardardireccionAlternativa->setEnabled(false);
+        ui->btnDeshacerdireccionAlternativa->setEnabled(false);
+        ui->btnAnadirdireccion->setEnabled(true);
+        ui->btnBorrardireccion->setEnabled(true);
+        ui->btnEditardireccionAlternativa->setEnabled(true);
+    }
+}
+
+void frmClientes::on_btnAnadirdireccion_clicked()
+{
+    Anadirdireccion = true;
+    ui->txtdescripcion_direccion->setEnabled(true);
+    ui->txtdescripcion_direccion->setText("");
+    ui->txtdireccion1Alternativa1->setEnabled(true);
+    ui->txtdireccion1Alternativa1->setText("");
+    ui->txtdireccion1Alternativa2->setEnabled(true);
+    ui->txtdireccion1Alternativa2->setText("");
+    ui->txtcpPoblacionAlternativa->setEnabled(true);
+    ui->txtcpPoblacionAlternativa->setText("");
+    ui->txtpoblacionAlternativa->setText("");
+    ui->txtpoblacionAlternativa->setEnabled(true);
+    ui->txtprovinciaAlternativa->setText("");
+    ui->txtprovinciaAlternativa->setEnabled(true);
+    ui->txtemail_alternativa->clear();
+    ui->txtcomentarios_alternativa->clear();
+    ui->cbopaisAlternativa->setEnabled(true);
+    ui->btnGuardardireccionAlternativa->setEnabled(true);
+    ui->btnDeshacerdireccionAlternativa->setEnabled(true);
+    ui->btnAnadirdireccion->setEnabled(false);
+    ui->btnBorrardireccion->setEnabled(false);
+    ui->txtdescripcion_direccion->setFocus();
+    ui->btnGuardardireccionAlternativa->setEnabled(true);
+    ui->btnDeshacerdireccionAlternativa->setEnabled(true);
+    ui->btnAnadirdireccion->setEnabled(false);
+    ui->btnBorrardireccion->setEnabled(false);
+    ui->btnGuardar->setEnabled(false);
+    ui->btnDeshacer->setEnabled(false);
+    ui->btnEditardireccionAlternativa->setEnabled(false);
+    ui->txtemail_alternativa->setEnabled(true);
+    ui->txtcomentarios_alternativa->setEnabled(true);
+    ui->btnAnadirdireccion->setEnabled(false);
+    ui->btnBorrardireccion->setEnabled(false);
+    ui->btnEditardireccionAlternativa->setEnabled(false);
+    ui->btnGuardardireccionAlternativa->setEnabled(true);
+    ui->btnDeshacerdireccionAlternativa->setEnabled(true);
+    ui->txtdescripcion_direccion->setFocus();
+}
+
+void frmClientes::on_btnAdd_customer_clicked()
+{
+    ui->radEditar->setChecked(true);
+    on_btnAnadir_clicked();
 }

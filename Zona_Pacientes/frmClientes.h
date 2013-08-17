@@ -84,8 +84,6 @@ private slots:
 
     void on_btnFichaPaciente_clicked();
     void AddCustomerType();
-    void AnadirdireccionAlternativa();
-    void GuardardireccionAlternativa();
     void DeshacerdireccionAlternativa();
     void BorrardireccionAlternativa();
     void EditardireccionAlternativa();
@@ -120,6 +118,12 @@ private slots:
     void on_cboOrden_currentIndexChanged(const QString &arg1);
 
     void on_cboModo_currentIndexChanged(const QString &arg1);
+
+    void on_btnGuardardireccionAlternativa_clicked();
+
+    void on_btnAnadirdireccion_clicked();
+
+    void on_btnAdd_customer_clicked();
 
 private:
     Ui::frmClientes *ui;

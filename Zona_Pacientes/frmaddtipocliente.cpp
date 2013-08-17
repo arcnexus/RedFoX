@@ -75,14 +75,13 @@ void FrmAddTipoCliente::LLenarTablaSubfamilias(QModelIndex index)
     }
 }
 
-void FrmAddTipoCliente::validar()
+void FrmAddTipoCliente::on_btnAceptar_clicked()
 {
+    QAbstractItemModel* model = ui->table_Subfamilia->model() ;
+    QString valorSubfamilia =  model->index( ui->table_Subfamilia->currentRow(), 1 ).data( Qt::DisplayRole ).toString();
     if(ui->table_Subfamilia->currentRow()>-1){
-        QAbstractItemModel* model = ui->table_Subfamilia->model() ;
-        QString valorSubfamilia =  model->index( ui->table_Subfamilia->currentRow(), 1 ).data( Qt::DisplayRole ).toString();
-        familiaRetorno = familiaRetorno + " - "+ valorSubfamilia;
-      accept();
-    } else {
-        QMessageBox::warning(this,tr("Tipo Cliente"),tr("Debe tener seleccionada una subfamilia"),tr("Aceptar"));
+        familiaRetorno += " - "+ valorSubfamilia;
+
     }
+    accept();
 }

@@ -14,7 +14,7 @@
    <string>Añadir tipología a cliente</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Maya.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -58,14 +58,14 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="btnAceptar">
         <property name="text">
          <string>Aceptar</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="btnCancelar">
         <property name="text">
          <string>Cancelar</string>
         </property>
@@ -76,12 +76,10 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../Maya.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>btnCancelar</sender>
    <signal>clicked()</signal>
    <receiver>FrmAddTipoCliente</receiver>
    <slot>close()</slot>
@@ -93,22 +91,6 @@
     <hint type="destinationlabel">
      <x>179</x>
      <y>247</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>FrmAddTipoCliente</receiver>
-   <slot>validar()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>456</x>
-     <y>255</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>305</x>
-     <y>253</y>
     </hint>
    </hints>
   </connection>

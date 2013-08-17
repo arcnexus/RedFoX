@@ -796,19 +796,24 @@ bool Cliente::BorrarPersona_contacto(int id_persona)
 }
 
 void Cliente::Guardardireccion(bool Anadir, QString Descripcion, QString direccion1, QString direccion2, QString CP, QString Poblacion,
-                               QString Provincia, QString Pais,int id_cliente,int id)
+                               QString Provincia, QString Pais,int id_cliente, QString email, QString comentarios,int id)
 {
     QSqlQuery qdirecciones(Configuracion_global->groupDB);
     QHash <QString, QVariant> d;
     QString error;
     int id_alternativa;
-    d["descripcion"] = descripcion_direccion_alternativa;
-    d["direccion1"] = direccion1_alternativa;
-    d["direccion2"] =direccion2_alernativa;
-    d["cp"] = cp_alternativa;
-    d["poblacion"] = poblacion_alternativa;
-    d["provincia"] =provincia_alternativa;
-    d["id_pais"] = id_pais_alternativa;
+    d["descripcion"] = Descripcion;
+    d["direccion1"] = direccion1;
+    d["direccion2"] =direccion2;
+    d["cp"] = CP;
+    d["poblacion"] = Poblacion;
+    d["provincia"] =Provincia;
+    int id_pais = SqlCalls::SelectOneField("paises","id",QString("pais ='%1'").arg(Pais),Configuracion_global->groupDB,error).toInt();
+    if (id_pais >0)
+    d["id_pais"] =id_pais;
+    d["email"] = email;
+    d["comentarios"] = comentarios;
+    d["id_cliente"] = id_cliente;
 
     if(Anadir){
         id_alternativa = SqlCalls::SqlInsert(d,"cliente_direcciones",Configuracion_global->groupDB,error);

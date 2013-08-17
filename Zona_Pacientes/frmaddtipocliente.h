@@ -21,7 +21,7 @@ private:
     Ui::FrmAddTipoCliente *ui;
 private slots:
     void LLenarTablaSubfamilias(QModelIndex);
-    void validar();
+    void on_btnAceptar_clicked();
 };
 
 #endif // FRMADDTIPOCLIENTE_H
