@@ -190,7 +190,8 @@ SOURCES += main.cpp\
     EditorReports/codebar.cpp \
     EditorReports/reportdesigwin.cpp \
     EditorReports/repdesignmodule.cpp \
-    EditorReports/savetobdfrm.cpp
+    EditorReports/savetobdfrm.cpp \
+    Almacen/frmexcepciones.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -345,7 +346,8 @@ HEADERS  += mainwindow.h \
     EditorReports/codebar.h \
     EditorReports/reportdesigwin.h \
     EditorReports/repdesignmodule.h \
-    EditorReports/savetobdfrm.h
+    EditorReports/savetobdfrm.h \
+    Almacen/frmexcepciones.h
 
 
 
@@ -423,7 +425,8 @@ FORMS    += mainwindow.ui \
     EditorReports/editdetailsecdlg.ui \
     EditorReports/editcodebardlg.ui \
     EditorReports/reportdesigwin.ui \
-    EditorReports/savetobdfrm.ui
+    EditorReports/savetobdfrm.ui \
+    Almacen/frmexcepciones.ui
 
 RESOURCES += \
     maya.qrc \

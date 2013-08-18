@@ -95,6 +95,7 @@ public:
     QString cUsuarioActivo;
     int id_usuario_activo;
     QString cNivelUsuarioActivo;
+    int nivel;
     QSqlDatabase dbConfiguracion;
     QSqlDatabase dbWeb;
     QSqlDatabase db_meditec;

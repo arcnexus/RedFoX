@@ -24,8 +24,6 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     // Pongo valores por defecto
     ui->lbfacturado->setVisible(false);
     ui->lbimpreso->setVisible(false);
-    ui->lblNumFactura->setVisible(false);
-    ui->txtcNumFra->setVisible(false);
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de albaranes a clientes"));
 
@@ -82,6 +80,8 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->btnBuscar->setEnabled(true);
     oAlbaran->id = -1;
     ui->btnSiguiente->setEnabled(true);
+    ui->lblfacturado->setVisible(false);
+    ui->lblimpreso->setVisible(false);
     //--------------
     // llenar tabla
     //--------------
@@ -109,7 +109,10 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->cboporc_iva_gasto1->setModel(iva);
     ui->cboporc_iva_gasto2->setModel(iva);
     ui->cboporc_iva_gasto3->setModel(iva);
-
+    if(Configuracion_global->nivel == 7)
+        ui->btnForzar_edicion->setVisible(true);
+    else
+        ui->btnForzar_edicion->setVisible(false);
     ui->txtBuscar->setFocus();
 
 }
@@ -161,17 +164,15 @@ void FrmAlbaran::LLenarCampos() {
     } else {
         ui->lbimpreso->setVisible(false);
     }
+    ui->lblimpreso->setVisible(lEstado);
     lEstado = oAlbaran->facturado;
     if ((lEstado == true)) {
         ui->lbfacturado->setVisible(true);
-        ui->txtfecha_factura->setVisible(true);
-        ui->txtcNumFra->setVisible(true);
     } else {
         ui->lbfacturado->setVisible(false);
-        ui->txtfecha_factura->setVisible(false);
-        ui->txtcNumFra->setVisible(false);
 
     }
+    ui->lblfacturado->setVisible(lEstado);
     ui->txtcomentario->setText(oAlbaran->comentario);
     ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->base1,'f',Configuracion_global->decimales)));
     ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->base2,'f',Configuracion_global->decimales)));
@@ -291,7 +292,6 @@ void FrmAlbaran::VaciarCampos() {
     ui->txttotal->setText("0,00");
     ui->lbimpreso->setVisible(false);
     ui->lbfacturado->setVisible(false);
-    ui->lblNumFactura->setVisible(false);
     ui->txtcNumFra->setVisible(false);
     ui->txtcomentario->setText("");
     ui->txtbase1->setText(0);
@@ -556,7 +556,7 @@ void FrmAlbaran::on_botBuscarCliente_clicked()
 void FrmAlbaran::on_btnEditar_clicked()
 {
     in_edit = true;
-    if (!oAlbaran->facturado == true)
+    if (oAlbaran->editable == true)
     {
             BloquearCampos(false);
             emit block();
@@ -1076,3 +1076,25 @@ void FrmAlbaran::on_cboModo_currentIndexChanged(const QString &arg1)
     Q_UNUSED(arg1);
     filter_table();
 }
+
+void FrmAlbaran::on_btnForzar_edicion_clicked()
+{
+    if(QMessageBox::question(this,tr("Edición de albaranes"),tr("¿Está seguro/a de quitar la marca de bloqueo?"),
+                             tr("No"),tr("Desbloquear"))==QMessageBox::Accepted)
+    {
+        QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
+        QModelIndex index = ui->tabla->currentIndex();
+        int id = Configuracion_global->devolver_id_tabla(model,index);
+        QHash <QString, QVariant> h;
+        QString error;
+        h["editable"] = 1;
+
+        bool updated = SqlCalls::SqlUpdate(h,"cab_alb",Configuracion_global->empresaDB,QString("id= %1").arg(id),error);
+        if(updated)
+            QMessageBox::information(this,tr("Editar albarán"),tr("Ahora puede editar el albarán"),tr("OK"));
+        else
+            QMessageBox::warning(this,tr("Editar albarán"),tr("Ocurrió un error : ")+error,tr("OK"));
+    }
+}
+
+

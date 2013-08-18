@@ -216,7 +216,7 @@ color: rgb(255, 255, 255);</string>
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>46</height>
+               <height>80</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -355,6 +355,17 @@ color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="readOnly">
                  <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="4">
+               <widget class="QPushButton" name="btnExcepciones_2">
+                <property name="text">
+                 <string>Excepciones</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/excepciones.png</normaloff>:/Icons/PNG/excepciones.png</iconset>
                 </property>
                </widget>
               </item>
@@ -1531,18 +1542,18 @@ color: rbg(0,0,0);</string>
                  <string notr="true">background-color: rgb(254, 255, 205);
 color: rbg(0,0,0);</string>
                 </property>
+                <property name="displayFormat">
+                 <string>dd/MM/yyyy</string>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
                 <property name="date">
                  <date>
                   <year>1752</year>
                   <month>9</month>
                   <day>14</day>
                  </date>
-                </property>
-                <property name="displayFormat">
-                 <string>dd/MM/yyyy</string>
-                </property>
-                <property name="calendarPopup">
-                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -2779,7 +2790,16 @@ Imagen.</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -4048,7 +4068,16 @@ background-color: rgb(239, 239, 239);</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="layout_grafica_comparativas">
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -5867,7 +5896,7 @@ background-color: rgb(248, 245, 194);</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
+          <item row="2" column="1">
            <widget class="QComboBox" name="cboOrden">
             <property name="minimumSize">
              <size>
@@ -5877,14 +5906,14 @@ background-color: rgb(248, 245, 194);</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="2">
+          <item row="4" column="1">
            <widget class="QLineEdit" name="txtBuscar">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
+          <item row="3" column="1">
            <widget class="QComboBox" name="cboModo"/>
           </item>
           <item row="3" column="0">
@@ -5907,7 +5936,7 @@ background-color: rgb(248, 245, 194);</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
+          <item row="1" column="1">
            <widget class="QPushButton" name="btnLimpiar">
             <property name="text">
              <string>Limpiar</string>
@@ -5918,13 +5947,24 @@ background-color: rgb(248, 245, 194);</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
+          <item row="0" column="1">
            <widget class="QLabel" name="label">
             <property name="text">
              <string/>
             </property>
             <property name="pixmap">
              <pixmap resource="../maya.qrc">:/Icons/PNG/busca_filtra.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <widget class="QPushButton" name="btnExcepciones">
+            <property name="text">
+             <string>Excepciones</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/excepciones.png</normaloff>:/Icons/PNG/excepciones.png</iconset>
             </property>
            </widget>
           </item>
@@ -6138,8 +6178,8 @@ background-color: rgb(248, 245, 194);</string>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>132</x>
-     <y>116</y>
+     <x>142</x>
+     <y>661</y>
     </hint>
     <hint type="destinationlabel">
      <x>141</x>
@@ -6154,12 +6194,12 @@ background-color: rgb(248, 245, 194);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>86</x>
-     <y>79</y>
+     <x>201</x>
+     <y>184</y>
     </hint>
     <hint type="destinationlabel">
-     <x>108</x>
-     <y>73</y>
+     <x>213</x>
+     <y>330</y>
     </hint>
    </hints>
   </connection>
@@ -6170,12 +6210,12 @@ background-color: rgb(248, 245, 194);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>86</x>
-     <y>78</y>
+     <x>201</x>
+     <y>211</y>
     </hint>
     <hint type="destinationlabel">
-     <x>108</x>
-     <y>77</y>
+     <x>213</x>
+     <y>449</y>
     </hint>
    </hints>
   </connection>
@@ -6186,12 +6226,12 @@ background-color: rgb(248, 245, 194);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>76</y>
+     <x>213</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel">
-     <x>152</x>
-     <y>70</y>
+     <x>684</x>
+     <y>171</y>
     </hint>
    </hints>
   </connection>
@@ -6202,12 +6242,12 @@ background-color: rgb(248, 245, 194);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>108</x>
-     <y>66</y>
+     <x>213</x>
+     <y>116</y>
     </hint>
     <hint type="destinationlabel">
-     <x>108</x>
-     <y>70</y>
+     <x>213</x>
+     <y>171</y>
     </hint>
    </hints>
   </connection>
@@ -6218,12 +6258,12 @@ background-color: rgb(248, 245, 194);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>75</y>
+     <x>213</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
-     <x>108</x>
-     <y>129</y>
+     <x>213</x>
+     <y>535</y>
     </hint>
    </hints>
   </connection>
@@ -6234,12 +6274,12 @@ background-color: rgb(248, 245, 194);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>86</x>
-     <y>79</y>
+     <x>201</x>
+     <y>184</y>
     </hint>
     <hint type="destinationlabel">
-     <x>92</x>
-     <y>109</y>
+     <x>540</x>
+     <y>351</y>
     </hint>
    </hints>
   </connection>
@@ -6250,12 +6290,12 @@ background-color: rgb(248, 245, 194);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>86</x>
-     <y>78</y>
+     <x>201</x>
+     <y>211</y>
     </hint>
     <hint type="destinationlabel">
-     <x>98</x>
-     <y>112</y>
+     <x>608</x>
+     <y>470</y>
     </hint>
    </hints>
   </connection>
@@ -6266,12 +6306,12 @@ background-color: rgb(248, 245, 194);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>76</y>
+     <x>213</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel">
-     <x>142</x>
-     <y>105</y>
+     <x>1018</x>
+     <y>240</y>
     </hint>
    </hints>
   </connection>
@@ -6282,12 +6322,12 @@ background-color: rgb(248, 245, 194);</string>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>75</y>
+     <x>213</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
-     <x>98</x>
-     <y>118</y>
+     <x>608</x>
+     <y>524</y>
     </hint>
    </hints>
   </connection>
@@ -6298,12 +6338,12 @@ background-color: rgb(248, 245, 194);</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>108</x>
-     <y>66</y>
+     <x>213</x>
+     <y>116</y>
     </hint>
     <hint type="destinationlabel">
-     <x>152</x>
-     <y>81</y>
+     <x>684</x>
+     <y>338</y>
     </hint>
    </hints>
   </connection>
@@ -6314,8 +6354,8 @@ background-color: rgb(248, 245, 194);</string>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>108</x>
-     <y>66</y>
+     <x>213</x>
+     <y>116</y>
     </hint>
     <hint type="destinationlabel">
      <x>1121</x>

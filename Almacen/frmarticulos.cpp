@@ -11,6 +11,7 @@
 #include "../Auxiliares/readonlydelegate.h"
 #include "frmlistadosarticulo.h"
 #include "../Busquedas/db_consulta_view.h"
+#include "../Almacen/frmexcepciones.h"
 
 
 FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
@@ -2031,4 +2032,19 @@ void FrmArticulos::on_cboModo_currentIndexChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);
     filter_table();
+}
+
+void FrmArticulos::on_btnExcepciones_2_clicked()
+{
+    on_btnExcepciones_clicked();
+}
+
+void FrmArticulos::on_btnExcepciones_clicked()
+{
+    QModelIndex index = ui->tabla->currentIndex();
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
+    oArticulo->Recuperar(id);
+    FrmExcepciones excepciones(this);
+    excepciones.cargar_articulo(id);
+    excepciones.exec();
 }

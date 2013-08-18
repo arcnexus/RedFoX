@@ -116,6 +116,10 @@ private slots:
 
     void on_cboModo_currentIndexChanged(const QString &arg1);
 
+    void on_btnExcepciones_2_clicked();
+
+    void on_btnExcepciones_clicked();
+
 public slots:
     void AnadirSeccion();
 

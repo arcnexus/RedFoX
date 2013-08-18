@@ -78,6 +78,9 @@ private slots:
 
     void on_cboModo_currentIndexChanged(const QString &arg1);
 
+    void on_btnForzar_edicion_clicked();
+
+
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;

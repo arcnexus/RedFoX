@@ -69,6 +69,7 @@ public:
     double imp_gasto1,imp_gasto2,imp_gasto3;
     float porc_iva_gasto1,porc_iva_gasto2,porc_iva_gasto3;
     double iva_gasto1,iva_gasto2,iva_gasto3;
+    bool editable;
 
 signals:
 

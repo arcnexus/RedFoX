@@ -24,6 +24,7 @@ bool MayaModule::userHaveAcces(int id_user)
         if(q.next())
         {
             _user_level = static_cast<accessLevel>(q.record().value(3).toInt());
+            Configuracion_global->nivel = _user_level;
         }
     }
     return (_user_level != SinAcceso);

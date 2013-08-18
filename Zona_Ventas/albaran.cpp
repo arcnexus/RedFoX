@@ -319,6 +319,7 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 iva_gasto1 = r.value("iva_gasto1").toDouble();
                 iva_gasto2 = r.value("iva_gasto2").toDouble();
                 iva_gasto3 = r.value("iva_gasto3").toDouble();
+                editable = r.value("editable").toBool();
 
                 return true;
                }
