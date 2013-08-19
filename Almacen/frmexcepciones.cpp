@@ -1,11 +1,16 @@
 #include "frmexcepciones.h"
 #include "ui_frmexcepciones.h"
+#include "../Busquedas/db_consulta_view.h"
 
 FrmExcepciones::FrmExcepciones(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmExcepciones)
 {
     ui->setupUi(this);
+    m = new QSqlQueryModel(this);
+    m->setQuery("select id,");
+    ui->txt_codigo_articulo->installEventFilter(this);
+    ui->txt_codigo_cliente->installEventFilter(this);
 }
 
 FrmExcepciones::~FrmExcepciones()
@@ -17,14 +22,144 @@ void FrmExcepciones::cargar_articulo(int id_art)
 {
     QMap <int,QSqlRecord>  r;
     QString error;
-    r = SqlCalls::SelectRecord("articulos",QString("id =%1").arg(id_art),Configuracion_global->groupDB,error);
+    QStringList filter;
+    filter << QString("id =%1").arg(id_art) << "tarifa = 1";
+    r = SqlCalls::SelectRecord("vistaart_tarifa",filter,Configuracion_global->groupDB,error);
     QMapIterator<int, QSqlRecord> i(r);
         while (i.hasNext())
         {
             i.next();
             ui->txt_codigo_articulo->setText(i.value().value("codigo").toString());
             ui->txt_descripcion_articulo->setText(i.value().value("descripcion").toString());
+            ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp_con_iva").toDouble(),
+                                                                                      'f',Configuracion_global->decimales)));
 
         }
 
 }
+
+void FrmExcepciones::cargar_cliente(int id_cliente)
+{
+    int tarifa;
+    QMap <int,QSqlRecord>  rc;
+    QString error;
+    QStringList filter;
+    filter << QString("id =%1").arg(id_cliente);
+    rc = SqlCalls::SelectRecord("clientes",filter,Configuracion_global->groupDB,error);
+    QMapIterator<int, QSqlRecord> ic(rc);
+        while (ic.hasNext())
+        {
+            ic.next();
+            ui->txt_codigo_cliente->setText(ic.value().value("codigo_cliente").toString());
+            ui->txt_nombre_cliente->setText(ic.value().value("nombre_fiscal").toString());
+            tarifa = ic.value().value("tarifa_cliente").toInt();
+        }
+
+    QMap <int,QSqlRecord>  ra;
+    filter << QString("codigo =%1").arg(ui->txt_codigo_articulo->text()) << QString("tarifa = %1").arg(tarifa);
+    ra = SqlCalls::SelectRecord("vistaart_tarifa",filter,Configuracion_global->groupDB,error);
+    QMapIterator<int, QSqlRecord> ia(ra);
+        while (ia.hasNext())
+        {
+            ia.next();
+            ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(
+                                    QString::number(ia.value().value("pvp_con_iva").toDouble(),'f',Configuracion_global->decimales)));
+
+        }
+}
+
+void FrmExcepciones::buscar_id_cliente(QString cod_cli)
+{
+    QString error;
+    int id_cliente = SqlCalls::SelectOneField("clientes","id",QString("codigo_cliente = %1").arg(cod_cli),
+                                              Configuracion_global->groupDB,error).toInt();
+    cargar_cliente(id_cliente);
+}
+
+void FrmExcepciones::buscar_id_articulo(QString cod_art)
+{
+    QString error;
+    int id_art = SqlCalls::SelectOneField("articulos","id",QString("codigo = %1").arg(cod_art),
+                                          Configuracion_global->groupDB,error).toInt();
+    cargar_articulo(id_art);
+}
+
+bool FrmExcepciones::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if(obj == ui->txt_codigo_articulo)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                consultar_articulo();
+        }
+        if(obj == ui->txt_codigo_cliente)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                consultar_cliente();
+        }
+        return false;
+    }
+}
+
+int FrmExcepciones::consultar_articulo()
+{
+    db_consulta_view consulta;
+    QStringList campos;
+    campos << "descripcion" << "codigo" <<"codigo_barras" <<"codigo_fabricante"  << "pvp_con_iva";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Artículos");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id, codigo,codigo_barras,codigo_fabricante,descripcion,pvp_con_iva from vistaart_tarifa");
+    QStringList cabecera;
+    QVariantList tamanos;
+    QVariantList moneda;
+    moneda << 5;
+    cabecera  << tr("Código") <<tr("Barras") << tr("Ref. Fabric.") << tr("Descripcion") << tr("PVP+IVA");
+    tamanos <<"0" << "100"  <<"100" << "100" << "300" <<"120";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_delegate_monetary(moneda);
+    consulta.set_titulo("Busqueda de Artículos");
+    if(consulta.exec())
+    {
+        int id_articulo = consulta.get_id();
+
+        cargar_articulo(id_articulo);
+    }
+}
+
+int FrmExcepciones::consultar_cliente()
+{
+    db_consulta_view consulta;
+    QStringList campos;
+    campos << "nombre_fiscal" <<"codigo_cliente" << "cif_nif" <<"telefono1" <<"direccion1"  << "poblacion";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Clientes");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo_cliente,nombre_fiscal,telefono1,poblacion from clientes");
+    QStringList cabecera;
+    QVariantList tamanos;
+
+    cabecera  << tr("Código") <<tr("Cliente") << tr("CIF/NIF/NIE") << tr("telefono1") << tr("Poblacion");
+    tamanos <<"0" << "100"  <<"300" << "100" << "100" <<"100";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+
+    consulta.set_titulo("Busqueda de Clientes");
+    if(consulta.exec())
+    {
+        int id_cliente = consulta.get_id();
+
+        cargar_cliente(id_cliente);
+    }
+}
+
+void FrmExcepciones::on_txt_codigo_articulo_editingFinished()
+{
+    blockSignals(true);
+    buscar_id_articulo(ui->txt_codigo_articulo->text());
+    blockSignals(false);
+}
+
+

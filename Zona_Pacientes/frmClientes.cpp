@@ -12,6 +12,7 @@
 #include "../Auxiliares/monetarydelegate.h"
 #include "../Auxiliares/datedelegate.h"
 #include "frmcobrardeuda.h"
+#include "../Almacen/frmexcepciones.h"
 
 frmClientes::frmClientes(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -1721,4 +1722,14 @@ void frmClientes::on_btnAdd_customer_clicked()
 {
     ui->radEditar->setChecked(true);
     on_btnAnadir_clicked();
+}
+
+void frmClientes::on_btnExcepciones_clicked()
+{
+    QModelIndex index = ui->tabla_busquedas->currentIndex();
+    int id = ui->tabla_busquedas->model()->data(ui->tabla_busquedas->model()->index(index.row(),0),Qt::EditRole).toInt();
+    oCliente->Recuperar(id);
+    FrmExcepciones excepciones(this);
+    excepciones.cargar_articulo(id);
+    excepciones.exec();
 }

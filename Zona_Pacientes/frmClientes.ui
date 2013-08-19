@@ -4412,6 +4412,17 @@ font: 8pt &quot;Sans&quot;;</string>
             </property>
            </widget>
           </item>
+          <item row="8" column="2">
+           <widget class="QPushButton" name="btnExcepciones">
+            <property name="text">
+             <string>Excepciones</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/excepciones.png</normaloff>:/Icons/PNG/excepciones.png</iconset>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

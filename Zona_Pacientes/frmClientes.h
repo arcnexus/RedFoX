@@ -125,6 +125,8 @@ private slots:
 
     void on_btnAdd_customer_clicked();
 
+    void on_btnExcepciones_clicked();
+
 private:
     Ui::frmClientes *ui;
     QSqlQueryModel *modelFP;

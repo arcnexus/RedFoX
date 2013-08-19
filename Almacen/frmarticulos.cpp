@@ -12,6 +12,7 @@
 #include "frmlistadosarticulo.h"
 #include "../Busquedas/db_consulta_view.h"
 #include "../Almacen/frmexcepciones.h"
+#include "../Almacen/frmkit.h"
 
 
 FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
@@ -2047,4 +2048,15 @@ void FrmArticulos::on_btnExcepciones_clicked()
     FrmExcepciones excepciones(this);
     excepciones.cargar_articulo(id);
     excepciones.exec();
+}
+
+void FrmArticulos::on_pushButton_clicked()
+{
+    QModelIndex index = ui->tabla->currentIndex();
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
+    oArticulo->Recuperar(id);
+
+    FrmKit kit(this);
+    kit.set_articulo(oArticulo->codigo);
+    kit.exec();
 }

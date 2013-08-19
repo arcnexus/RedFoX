@@ -120,6 +120,8 @@ private slots:
 
     void on_btnExcepciones_clicked();
 
+    void on_pushButton_clicked();
+
 public slots:
     void AnadirSeccion();
 

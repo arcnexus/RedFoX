@@ -11,6 +11,9 @@ db_consulta_view::db_consulta_view(QWidget *parent) :
     ui->resultado_list->installEventFilter(this);
     this->setWindowTitle(tr("Buscar...."));
     ui->lbltabla->setText(tr("tabla"));
+    QStringList sentido;
+    sentido << tr("A-Z") << tr("Z-A");
+    ui->cboSentido->addItems(sentido);
     this->id = 0;
     this->cSQL = "";
 }
@@ -44,6 +47,9 @@ void db_consulta_view::set_SQL(QString cSQL)
 
 void db_consulta_view::set_filtro(QString filtro)
 {
+    QString sentido = "";
+    if(ui->cboSentido->currentText() ==tr("Z-A"))
+        sentido = "DESC";
     cSQLFiltered = "";
     cSQLFiltered.append(cSQL);
     cSQLFiltered.append(" where ");
@@ -53,6 +59,7 @@ void db_consulta_view::set_filtro(QString filtro)
     cSQLFiltered.append("%'");
     cSQLFiltered.append(" order by ");
     cSQLFiltered.append(ui->cboCampoBusqueda->currentText().trimmed());
+    cSQLFiltered.append(" %1").arg(sentido);
     if (db =="Maya" || db == "Group")
         modelo->setQuery(cSQLFiltered,Configuracion_global->groupDB);
     else if(db=="empresa")

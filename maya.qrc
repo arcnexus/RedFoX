@@ -167,5 +167,6 @@
         <file>PNG/NeuX.png</file>
         <file>PNG/busca_filtra.png</file>
         <file>PNG/excepciones.png</file>
+        <file>PNG/kits.png</file>
     </qresource>
 </RCC>

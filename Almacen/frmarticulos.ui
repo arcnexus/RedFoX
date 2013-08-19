@@ -5896,26 +5896,6 @@ background-color: rgb(248, 245, 194);</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="cboOrden">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>0</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="txtBuscar">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QComboBox" name="cboModo"/>
-          </item>
           <item row="3" column="0">
            <widget class="QLabel" name="label_71">
             <property name="styleSheet">
@@ -5936,7 +5916,28 @@ background-color: rgb(248, 245, 194);</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="6" column="0" colspan="3">
+           <widget class="QPushButton" name="btnExcepciones">
+            <property name="text">
+             <string>Excepciones</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/excepciones.png</normaloff>:/Icons/PNG/excepciones.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="2">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../maya.qrc">:/Icons/PNG/busca_filtra.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="2">
            <widget class="QPushButton" name="btnLimpiar">
             <property name="text">
              <string>Limpiar</string>
@@ -5947,24 +5948,45 @@ background-color: rgb(248, 245, 194);</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="pixmap">
-             <pixmap resource="../maya.qrc">:/Icons/PNG/busca_filtra.png</pixmap>
+          <item row="4" column="1" colspan="2">
+           <widget class="QLineEdit" name="txtBuscar">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="0" colspan="2">
-           <widget class="QPushButton" name="btnExcepciones">
+          <item row="2" column="1" colspan="2">
+           <widget class="QComboBox" name="cboOrden">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="2">
+           <widget class="QComboBox" name="cboModo"/>
+          </item>
+          <item row="7" column="0" colspan="3">
+           <widget class="QPushButton" name="pushButton">
             <property name="text">
-             <string>Excepciones</string>
+             <string>Crear / Editar kit</string>
             </property>
             <property name="icon">
              <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/excepciones.png</normaloff>:/Icons/PNG/excepciones.png</iconset>
+              <normaloff>:/Icons/PNG/kits.png</normaloff>:/Icons/PNG/kits.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="3">
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="text">
+             <string>Borrar Kit</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
             </property>
            </widget>
           </item>
