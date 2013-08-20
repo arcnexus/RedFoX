@@ -118,6 +118,10 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
               "codigo_cliente=:codigo_cliente, cliente=:cliente,"
               "direccion1=:direccion1,direccion2=:direccion2, poblacion=:poblacion,"
               "provincia=:provincia, cp=:cp, id_pais=:id_pais, cif=:cif,"
+              "direccion1_entrega=:direccion1_entrega,direccion2_entrega =:direccion2_entrega,"
+              "cp_entrega =:cp_entrega,poblacion_entrega =:poblacion_entrega,"
+              "provincia_entrega =:provincia_entrega,id_pais_entrega :=id_pais_entrega,"
+              "email_entrega =:email_entrega, comentarios_entrega =:comentarios_entrega,"
               "recargo_equivalencia=:recargo_equivalencia, subtotal=:subtotal,"
               "porc_dto=:porc_dto, dto=:dto,porc_dto_pp=:porc_dto_pp,dto_pp =:dto_pp, base1=:base1, base2=:base2, base3=:base3,"
               "base4=:base4, porc_iva1=:porc_iva1, porc_iva2=:porc_iva2,"
@@ -161,6 +165,16 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
     q.bindValue(":provincia",provincia);
     q.bindValue(":cp",cp);
     q.bindValue(":id_pais",id_pais);
+
+    q.bindValue(":direccion1_entrega",direccion1_entrega);
+    q.bindValue(":direccion2_entrega",direccion2_entrega);
+    q.bindValue(":poblacion_entrega",poblacion_entrega);
+    q.bindValue(":provincia_entrega",provincia_entrega);
+    q.bindValue(":cp_entrega",cp_entrega);
+    q.bindValue(":id_pais_entrega",id_pais_entrega);
+    q.bindValue(":email_entrega",email_entrega);
+    q.bindValue(":comentarios_entrega",comentarios_entrega);
+
     q.bindValue(":cif",cif);
 
     q.bindValue(":recargo_equivalencia",recargo_equivalencia);
@@ -265,7 +279,15 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 provincia= r.value("provincia").toString();
                 cp= r.value("cp").toString();
                 id_pais= r.value("id_pais").toInt();
-                //pais= r.value("");
+                direccion1_entrega = r.value("direccion1_entrega").toString();
+                direccion2_entrega = r.value("direccion2_entrega").toString();
+                cp_entrega = r.value("cp_entrega").toString();
+                poblacion_entrega = r.value("poblacion_entrega").toString();
+                provincia_entrega = r.value("provincia_entrega").toString();
+                id_pais_entrega = r.value("id_pais_entrega").toInt();
+                email_entrega = r.value("email_entrega").toString();
+                comentarios_entrega = r.value("comentarios_entrega").toString();
+                //pais= Configuracion_global->Devolver_pais(id_pais);
                 cif= r.value("cif").toString();
                 recargo_equivalencia= r.value("recargo_equivalencia").toBool();
                 subtotal= r.value("subtotal").toDouble();

@@ -19,7 +19,8 @@ FrmCajaMinuta::FrmCajaMinuta(QWidget *parent) :
     ui(new Ui::FrmCajaMinuta),
     ticket(this),
     toolButton(tr("TPV"),":/Icons/PNG/tpv.png",this),
-    menuButton(QIcon(":/Icons/PNG/tpv.png"),tr("TPV"),this)
+    menuButton(QIcon(":/Icons/PNG/tpv.png"),tr("TPV"),this),
+    push(new QPushButton(QIcon(":/Icons/PNG/tpv.png"),"",this))
 {
     linea_row = 0;
     linea_column  =0;
@@ -41,6 +42,9 @@ FrmCajaMinuta::FrmCajaMinuta(QWidget *parent) :
     ui->txtPorcIVAArticulo->setModelColumn(Configuracion_global->iva_model->fieldIndex("tipo"));
     ticket.set_table(ui->lineas);
     ui->txtcodigoArticulo->setFocus();
+
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión Caja TPV"));
 
     bloquearCaja(true);
 }

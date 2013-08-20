@@ -29,6 +29,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
 
     ui->comboPais->setModel(Configuracion_global->paises_model);
     ui->comboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+    ui->cboPais_entrega->setModel(Configuracion_global->paises_model);
 
     ui->txtporc_iva1->setText(Configuracion_global->ivaList.at(0));
     ui->txtporc_iva2->setText(Configuracion_global->ivaList.at(1));
@@ -87,7 +88,8 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     //--------------
     m = new QSqlQueryModel(this);
     m->setQuery("select id,albaran,fecha,cif,total_albaran,cliente from cab_alb order by albaran desc",Configuracion_global->empresaDB);
-    ui->tabla->setModel(m);
+   // ui->tabla->setModel(m);
+    ui->table2->setModel(m);
     formato_tabla();
 
     //--------------------
@@ -97,7 +99,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     dbIndex << tr("Albarán") <<tr("Fecha") <<tr("cif") <<tr("cliente");
     ui->cboOrden->addItems(dbIndex);
     QStringList modo;
-    modo <<tr("A-Z") << tr("Z-A");
+    modo <<tr("Z-A") << tr("A-Z");
     ui->cboModo->addItems(modo);
     ui->radBusqueda->setChecked(true);
     ui->stackedWidget->setCurrentIndex(1);
@@ -113,7 +115,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
         ui->btnForzar_edicion->setVisible(true);
     else
         ui->btnForzar_edicion->setVisible(false);
-    ui->txtBuscar->setFocus();
+  //  ui->txtBuscar->setFocus();
 
 }
 
@@ -148,6 +150,18 @@ void FrmAlbaran::LLenarCampos() {
         }
     }
 
+    ui->txtDireccion1_entrega->setText(oAlbaran->direccion1_entrega);
+    ui->txtDireccion2_entrega->setText(oAlbaran->direccion2_entrega);
+    ui->txtCp_entrega->setText(oAlbaran->cp_entrega);
+    ui->txtPoblacion_entrega->setText(oAlbaran->poblacion_entrega);
+    ui->txtProvincia_entrega->setText(oAlbaran->provincia_entrega);
+
+    int index = ui->cboPais_entrega->findText(Configuracion_global->Devolver_pais(oAlbaran->id_pais_entrega));
+    ui->cboPais_entrega->setCurrentIndex(index);
+    ui->txtemail_alternativa->setText(oAlbaran->email_entrega);
+    ui->txtcomentarios_alternativa->setPlainText(oAlbaran->comentarios_entrega);
+
+
     ui->txtcif->setText(oAlbaran->cif);
     ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda( QString::number(oAlbaran->subtotal,'f',Configuracion_global->decimales)));
     ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->dto,'f',Configuracion_global->decimales)));
@@ -172,7 +186,7 @@ void FrmAlbaran::LLenarCampos() {
         ui->lbfacturado->setVisible(false);
 
     }
-    ui->lblfacturado->setVisible(lEstado);
+    //ui->lblfacturado->setVisible(lEstado);
     ui->txtcomentario->setText(oAlbaran->comentario);
     ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->base1,'f',Configuracion_global->decimales)));
     ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->base2,'f',Configuracion_global->decimales)));
@@ -201,13 +215,14 @@ void FrmAlbaran::LLenarCampos() {
     ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec_total,'f',Configuracion_global->decimales)));
     ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->iva_total,'f',Configuracion_global->decimales)));
     ui->txtpedido_cliente->setText(oAlbaran->pedido_cliente);
+    ui->txtcNumFra->setText(oAlbaran->factura);
     ui->txtGastoDist1->setText(oAlbaran->desc_gasto1);
     ui->txtGastoDist2->setText(oAlbaran->desc_gasto2);
     ui->txtGastoDist3->setText(oAlbaran->desc_gasto3);
     ui->SpinGastoDist1->setValue(oAlbaran->imp_gasto1);
     ui->SpinGastoDist2->setValue(oAlbaran->imp_gasto2);
     ui->SpinGastoDist3->setValue(oAlbaran->imp_gasto3);
-    int index = ui->cboporc_iva_gasto1->findText(QString::number(oAlbaran->porc_iva_gasto1));
+    index = ui->cboporc_iva_gasto1->findText(QString::number(oAlbaran->porc_iva_gasto1));
     ui->cboporc_iva_gasto1->setCurrentIndex(index);
     index = ui->cboporc_iva_gasto2->findText(QString::number(oAlbaran->porc_iva_gasto2));
         ui->cboporc_iva_gasto2->setCurrentIndex(index);
@@ -243,6 +258,9 @@ void FrmAlbaran::LLenarCamposCliente()
     ui->lblCliente->setText(oCliente2->nombre_fiscal);
     ui->txtcodigo_cliente->setText(oCliente2->codigo_cliente);
     ui->txtcliente->setText(oCliente2->nombre_fiscal);
+    //---------------------------------
+    // dirección
+    //---------------------------------
     ui->txtdireccion1->setText(oCliente2->direccion1);
     ui->txtdireccion2->setText(oCliente2->direccion2);
     ui->txtcp->setText(oCliente2->cp);
@@ -250,6 +268,33 @@ void FrmAlbaran::LLenarCamposCliente()
     ui->txtprovincia->setText(oCliente2->provincia);
     int index = ui->comboPais->findText(oAlbaran->pais);
     ui->comboPais->setCurrentIndex(index);
+    //---------------------------------
+    // Comprobar direccion alternativa
+    //---------------------------------
+    QMap <int,QSqlRecord> rec;
+    QString error;
+    QStringList condiciones;
+    condiciones << QString("id_cliente = %1").arg(oCliente2->id) << "direccion_envio = 1";
+    rec = SqlCalls::SelectRecord("cliente_direcciones",condiciones,Configuracion_global->groupDB,error);
+
+    QMapIterator <int,QSqlRecord> i(rec);
+    while(i.hasNext())
+    {
+        i.next();
+        ui->txtDireccion1_entrega->setText(i.value().value("direccion1").toString());
+        ui->txtDireccion2_entrega->setText(i.value().value("direccion2").toString());
+        ui->txtCp_entrega->setText(i.value().value("cp").toString());
+        ui->txtPoblacion_entrega->setText(i.value().value("poblacion").toString());
+        ui->txtProvincia_entrega->setText(i.value().value("provincia").toString());
+        int index = ui->cboPais_entrega->findText(Configuracion_global->Devolver_pais(i.value().value("pais").toInt()));
+        ui->cboPais_entrega->setCurrentIndex(index);
+        ui->txtemail_alternativa->setText(i.value().value("email").toString());
+        ui->txtcomentarios_alternativa->setPlainText(i.value().value("comentarios").toString());
+
+    }
+    //----------------------
+    // Datos fiscales
+    //----------------------
     ui->txtcif->setText(oCliente2->cif_nif);
     helper.set_tarifa(oCliente2->tarifa_cliente);
     if (oCliente2->lIRPF==1) {
@@ -259,6 +304,7 @@ void FrmAlbaran::LLenarCamposCliente()
         ui->chklporc_rec->setChecked(false);
         oAlbaran->recargo_equivalencia = (0);
     }
+
     oCliente2->Recuperar("Select * from clientes where id ="+QString::number(oAlbaran->id_cliente));
     helper.set_tarifa(oCliente2->tarifa_cliente);
     helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
@@ -292,7 +338,7 @@ void FrmAlbaran::VaciarCampos() {
     ui->txttotal->setText("0,00");
     ui->lbimpreso->setVisible(false);
     ui->lbfacturado->setVisible(false);
-    ui->txtcNumFra->setVisible(false);
+
     ui->txtcomentario->setText("");
     ui->txtbase1->setText(0);
     ui->txtbase2->setText(0);
@@ -406,6 +452,14 @@ void FrmAlbaran::LLenarAlbaran()
     oAlbaran->provincia= (ui->txtprovincia->text());
     oAlbaran->pais= (ui->comboPais->currentText());
     oAlbaran->id_pais = Configuracion_global->paises[ui->comboPais->currentText()].value("id").toInt();
+    oAlbaran->direccion1_entrega= (ui->txtDireccion1_entrega->text());
+    oAlbaran->direccion2_entrega= (ui->txtDireccion2_entrega->text());
+    oAlbaran->cp_entrega = (ui->txtCp_entrega->text());
+    oAlbaran->poblacion_entrega= (ui->txtPoblacion_entrega->text());
+    oAlbaran->provincia_entrega= (ui->txtProvincia_entrega->text());
+    oAlbaran->id_pais_entrega = Configuracion_global->paises[ui->cboPais_entrega->currentText()].value("id").toInt();
+    oAlbaran->email_entrega = ui->txtemail_alternativa->text();
+    oAlbaran->comentarios_entrega = ui->txtcomentarios_alternativa->toPlainText();
     oAlbaran->cif= (ui->txtcif->text());
     oAlbaran->subtotal= (ui->txtsubtotal->text().replace(".","").toDouble());
     oAlbaran->dto= (ui->txtimporte_descuento->text().replace(".","").toDouble());
@@ -462,8 +516,8 @@ void FrmAlbaran::LLenarAlbaran()
 
 void FrmAlbaran::on_btnSiguiente_clicked()
 {
-    int albaran = oAlbaran->id;
-    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where id >'"+QString::number(albaran)+"' order by albaran  limit 1 "))
+    int albaran = oAlbaran->albaran;
+    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where albaran >'"+QString::number(albaran)+"' order by albaran  limit 1 "))
     {
         LLenarCampos();
         QString filter = QString("id_Cab = '%1'").arg(oAlbaran->id);
@@ -490,8 +544,8 @@ void FrmAlbaran::on_btnSiguiente_clicked()
 
 void FrmAlbaran::on_btnAnterior_clicked()
 {
-    int albaran = oAlbaran->id;
-    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where id <'"+QString::number(albaran)+"' order by albaran desc limit 1 "))
+    int albaran = oAlbaran->albaran;
+    if(oAlbaran->RecuperarAlbaran("Select * from cab_alb where albaran <'"+QString::number(albaran)+"' order by albaran desc limit 1 "))
     {
         LLenarCampos();
         QString filter = QString("id_Cab = '%1'").arg(oAlbaran->id);
@@ -522,7 +576,7 @@ void FrmAlbaran::on_btnAnadir_clicked()
     oAlbaran->AnadirAlbaran();
     ui->txtalbaran->setText(QString::number(oAlbaran->albaran));
     BloquearCampos(false);
-    ui->txtcodigo_cliente->setFocus();    
+   // ui->txtcodigo_cliente->setFocus();
     emit block();
 }
 
@@ -593,6 +647,7 @@ void FrmAlbaran::on_btnGuardar_clicked()
                               tr("&Aceptar"));
         Configuracion_global->empresaDB.rollback();
     }
+    ui->btnFacturar->setEnabled(true);
 }
 
 void FrmAlbaran::on_btn_borrar_clicked()
@@ -991,11 +1046,11 @@ void FrmAlbaran::formato_tabla()
     sizes << 0 << 120 << 120 <<120 <<120 <<300;
     for(int i = 0; i <headers.length();i++)
     {
-        ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
+        ui->table2->setColumnWidth(i,sizes.at(i).toInt());
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
-    ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
-    ui->tabla->setItemDelegateForColumn(4,new MonetaryDelegate);
+    ui->table2->setItemDelegateForColumn(2,new DateDelegate);
+    ui->table2->setItemDelegateForColumn(4,new MonetaryDelegate);
 }
 
 void FrmAlbaran::filter_table()
@@ -1032,23 +1087,22 @@ void FrmAlbaran::on_cboOrden_currentIndexChanged(const QString &arg1)
     filter_table();
 }
 
-void FrmAlbaran::on_tabla_clicked(const QModelIndex &index)
+void FrmAlbaran::on_table2_clicked(const QModelIndex &index)
 {
-    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
-    int id = Configuracion_global->devolver_id_tabla(model,index);
+    int id = ui->table2->model()->data(ui->table2->model()->index(index.row(),0),Qt::EditRole).toInt();
     oAlbaran->RecuperarAlbaran("select * from cab_alb where id ="+QString::number(id));
-    LLenarCampos();
+   // LLenarCampos();
     BloquearCampos(true);
 }
 
-void FrmAlbaran::on_tabla_doubleClicked(const QModelIndex &index)
+void FrmAlbaran::on_table2_doubleClicked(const QModelIndex &index)
 {
-    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
-    int id = Configuracion_global->devolver_id_tabla(model,index);
+    int id = ui->table2->model()->data(ui->table2->model()->index(index.row(),0),Qt::EditRole).toInt();
     oAlbaran->RecuperarAlbaran("select * from cab_alb where id ="+QString::number(id));
     LLenarCampos();
-    BloquearCampos(true);
+    ui->stackedWidget->setCurrentIndex(0);
     ui->radEdicion->setChecked(true);
+    ui->btnEditar->setEnabled(true);
 }
 
 void FrmAlbaran::on_btnBuscar_clicked()
@@ -1082,8 +1136,8 @@ void FrmAlbaran::on_btnForzar_edicion_clicked()
     if(QMessageBox::question(this,tr("Edición de albaranes"),tr("¿Está seguro/a de quitar la marca de bloqueo?"),
                              tr("No"),tr("Desbloquear"))==QMessageBox::Accepted)
     {
-        QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
-        QModelIndex index = ui->tabla->currentIndex();
+        QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->table2->model());
+        QModelIndex index = ui->table2->currentIndex();
         int id = Configuracion_global->devolver_id_tabla(model,index);
         QHash <QString, QVariant> h;
         QString error;
@@ -1098,3 +1152,9 @@ void FrmAlbaran::on_btnForzar_edicion_clicked()
 }
 
 
+
+void FrmAlbaran::on_btnAnadir_2_clicked()
+{
+    ui->radEdicion->setChecked(true);
+    on_btnAnadir_clicked();
+}

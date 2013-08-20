@@ -183,7 +183,6 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`alb_pro` (
   `iva_gasto2` FLOAT NULL DEFAULT '0' ,
   `iva_gasto3` FLOAT NULL DEFAULT '0' ,
   `gasto_to_coste` TINYINT(1) NULL DEFAULT '0' ,
-  `editable` TINYINT(1) NULL DEFAULT '1' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -211,6 +210,8 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_alb` (
   `provincia_entrega` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `cp_entrega` VARCHAR(8) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `id_pais_entrega` INT(11) NULL DEFAULT NULL ,
+  `email_entrega` VARCHAR(150) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `comentarios_entrega` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `cif` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `telefono` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `fax` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
@@ -271,7 +272,6 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_alb` (
   `iva_gasto3` FLOAT NULL DEFAULT '0' ,
   `id_transportista` INT NULL DEFAULT '0' ,
   `ejercicio` INT(5) NULL DEFAULT NULL ,
-  `editable` TINYINT(1) NULL DEFAULT '1' ,
    PRIMARY KEY (`id`) )
   ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -299,6 +299,8 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_fac` (
   `provincia_entrega` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `cp_entrega` VARCHAR(8) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `id_pais_entrega` INT(11) NULL DEFAULT NULL ,
+  `email_entrega` VARCHAR(150) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `comentarios_entrega` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `cif` VARCHAR(30) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `telefono` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `fax` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
@@ -368,7 +370,6 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_fac` (
   `asiento` INT(11) NULL DEFAULT NULL ,
   `id_transportista` INT NULL DEFAULT '0',
   `ejercicio` INT(5) NULL DEFAULT NULL ,
-  `editable` TINYINT(1) NULL DEFAULT '1' ,
   PRIMARY KEY (`id`, `id_cliente`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -396,6 +397,8 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_pre` (
   `provincia_entrega` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `cp_entrega` VARCHAR(8) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `id_pais_entrega` INT(11) NULL DEFAULT NULL ,
+  `email_entrega` VARCHAR(150) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `comentarios_entrega` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `telefono` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `movil` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `fax` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
@@ -459,7 +462,6 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_pre` (
   `iva_gasto2` FLOAT NULL DEFAULT '0' ,
   `iva_gasto3` FLOAT NULL DEFAULT '0' ,
   `ejercicio` INT(5) NULL DEFAULT NULL ,
-  `editable` TINYINT(1) NULL DEFAULT '1' ,
    PRIMARY KEY (`id`) ) 
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -525,7 +527,6 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_tpv` (
   `numero_factura` INT(11) NULL DEFAULT '0' ,
   `id_cierre` INT(11) NULL DEFAULT NULL ,
   `ejercicio` INT(5) NULL DEFAULT NULL ,
-  `editable` TINYINT(1) NULL DEFAULT '1' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -718,7 +719,6 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`fac_pro` (
  `subtotal` DOUBLE NULL DEFAULT NULL,
  `codigo_proveedor` VARCHAR(20) NULL DEFAULT NULL ,
  `impreso` TINYINT(1) NULL DEFAULT '0' ,
-  `editable` TINYINT(1) NULL DEFAULT '1' ,
   PRIMARY KEY (`id`) ,
   INDEX `id_tipo_gasto` (`id_tipo_gasto` ASC) )
 ENGINE = InnoDB
@@ -1025,6 +1025,8 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`ped_cli` (
   `poblacion_entrega` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `provincia_entrega` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `pais_entrega` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `email_entrega` VARCHAR(150) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `comentarios_entrega` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `enviado` TINYINT(1) NULL DEFAULT '0' ,
   `completo` TINYINT(1) NULL DEFAULT '0' ,
   `entregado` TINYINT(1) NULL DEFAULT '0' ,
@@ -1045,7 +1047,6 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`ped_cli` (
   `iva_gasto2` FLOAT NULL DEFAULT '0' ,
   `iva_gasto3` FLOAT NULL DEFAULT '0' ,
   `ejercicio` INT(5) NULL DEFAULT NULL ,
-  `editable` TINYINT(1) NULL DEFAULT '1' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -1132,7 +1133,6 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`ped_pro` (
   `iva_gasto2` FLOAT NULL DEFAULT '0' ,
   `iva_gasto3` FLOAT NULL DEFAULT '0' ,
   `recargo_equivalencia` TINYINT(1) NULL DEFAULT NULL ,
-  `editable` TINYINT(1) NULL DEFAULT '1' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1

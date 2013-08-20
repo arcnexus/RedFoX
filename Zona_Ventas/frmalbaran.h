@@ -66,9 +66,9 @@ private slots:
 
     void on_cboOrden_currentIndexChanged(const QString &arg1);
 
-    void on_tabla_clicked(const QModelIndex &index);
+    void on_table2_clicked(const QModelIndex &index);
 
-    void on_tabla_doubleClicked(const QModelIndex &index);
+    void on_table2_doubleClicked(const QModelIndex &index);
 
     void on_btnBuscar_clicked();
 
@@ -80,6 +80,8 @@ private slots:
 
     void on_btnForzar_edicion_clicked();
 
+
+    void on_btnAnadir_2_clicked();
 
 private:
     Ui::FrmAlbaran *ui;

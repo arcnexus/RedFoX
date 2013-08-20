@@ -23,7 +23,9 @@ public:
     ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+    void hideButton(){toolButton.hide();}
+    QPushButton* wantShortCut(bool& ok){ok = true; return push;}
+
 private slots:
     void on_btnBuscarArt_clicked();
     void linea_itemSelectionChanged();
@@ -47,6 +49,7 @@ private:
     int _currentTarifa;
     ToolBarButton toolButton;
     QAction menuButton;
+    QPushButton* push;
 };
 
 #endif // FRMCAJAMINUTA_H
