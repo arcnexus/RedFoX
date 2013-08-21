@@ -799,6 +799,8 @@ MainWindow::MainWindow(QWidget *parent) :
 //    }
 //    qDebug() << map.value(7).value("nombre").toString();
     updateDivisas();
+
+
 }
 
 void MainWindow::block_main()

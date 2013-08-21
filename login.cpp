@@ -29,6 +29,12 @@ Login::Login(QWidget *parent) :
 
     if(Configuracion_global->CargarDatosBD())
         init();
+    QString a = "RedFoX";
+    QString b = Configuracion::Crypt(a);
+    QString c = Configuracion::DeCrypt(b);
+
+    qDebug() << b;
+    qDebug() << c;
 }
 
 Login::~Login()

@@ -242,6 +242,7 @@ private:
     static byte iv[ CryptoPP::AES::BLOCKSIZE ];
     bool _block;
     float _cambio;
+    static void setUpKeys();
 };
 
 #endif // CONFIGURACION_H

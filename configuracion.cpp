@@ -1048,12 +1048,52 @@ bool Configuracion::comprobarNIF(QString country_code, QString nif)
     return false;*/
 }
 
+void Configuracion::setUpKeys()
+{
+    key[0] = 0x10;
+    key[1] = 0x14;
+    key[2] = 0x12;
+    key[3] = 0x8;
+    key[4] = 0x10;
+    key[5] = 0x19;
+    key[6] = 0x10;
+    key[7] = 0x3;
+    key[8] = 0x10;
+    key[9] = 0x10;
+    key[10] = 0x7;
+    key[11] = 0x55;
+    key[12] = 0x10;
+    key[13] = 0x43;
+    key[14] = 0x10;
+    key[15] = 0x17;
+
+    iv[0] = 0x10;
+    iv[1] = 0x23;
+    iv[2] = 0x10;
+    iv[3] = 0x10;
+    iv[4] = 0x67;
+    iv[5] = 0xee;
+    iv[6] = 0x10;
+    iv[7] = 0xf5;
+    iv[8] = 0x10;
+    iv[9] = 0x89;
+    iv[10] = 0x10;
+    iv[11] = 0xdd;
+    iv[12] = 0x10;
+    iv[13] = 0x67;
+    iv[14] = 0x10;
+    iv[15] = 0xa3;
+}
 QString Configuracion::Crypt(QString input)
 {
-    return input;
-    std::string ciphertext;
+    setUpKeys();
     std::string plaintext = input.toStdString();
+    std::string ciphertext;
+    std::string decryptedtext;
 
+    //
+    // Create Cipher Text
+    //
     CryptoPP::AES::Encryption aesEncryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
     CryptoPP::CBC_Mode_ExternalCipher::Encryption cbcEncryption( aesEncryption, iv );
 
@@ -1061,21 +1101,57 @@ QString Configuracion::Crypt(QString input)
     stfEncryptor.Put( reinterpret_cast<const unsigned char*>( plaintext.c_str() ), plaintext.length() + 1 );
     stfEncryptor.MessageEnd();
 
-    return QString::fromStdString(ciphertext);
+    //
+    // Dump Cipher Text
+    //
+
+    QString output;
+    for( int i = 0; i < ciphertext.size(); i++ )
+    {
+        QString aux;
+        aux.sprintf("%02X",static_cast<byte>(ciphertext[i]));
+        output.append(aux);
+    }
+
+    return output;
 }
 
 QString Configuracion::DeCrypt(QString input)
 {
-    return input;
-    std::string ciphertext = input.toStdString();
-    std::string decryptedtext;
-    CryptoPP::AES::Decryption aesDecryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
-    CryptoPP::CBC_Mode_ExternalCipher::Decryption cbcDecryption( aesDecryption, iv );
+    setUpKeys();
+    if(input.isEmpty())
+        return input;
+    int c = 0;
+        char dd[input.size()/2];
 
-    CryptoPP::StreamTransformationFilter stfDecryptor(cbcDecryption, new CryptoPP::StringSink( decryptedtext ) );
-    stfDecryptor.Put( reinterpret_cast<const unsigned char*>( ciphertext.c_str() ), ciphertext.size() );
-    stfDecryptor.MessageEnd();
-    return QString::fromStdString(decryptedtext);
+        for(int a = 0; a< input.size() ; a+=2)
+        {
+            bool ok;
+            int z =  input.mid(a,2).toInt(&ok,16);
+            dd[c] = QChar(z).toLatin1();
+            c++;
+        }
+
+        std::string ciphertext(dd);
+        int x = ciphertext.size();
+        std::string decryptedtext;
+        if(x<c)
+            return "";
+        ciphertext.erase(c);
+
+        //
+        // Decrypt
+        //
+        CryptoPP::AES::Decryption aesDecryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
+        CryptoPP::CBC_Mode_ExternalCipher::Decryption cbcDecryption( aesDecryption, iv );
+
+        CryptoPP::StreamTransformationFilter stfDecryptor(cbcDecryption, new CryptoPP::StringSink( decryptedtext ) );
+        stfDecryptor.Put( reinterpret_cast<const unsigned char*>( ciphertext.c_str() ), ciphertext.size() );
+        stfDecryptor.MessageEnd();
+
+        QString ss = QString::fromStdString(decryptedtext);
+        ss.remove(QRegExp("\\000"));
+        return ss;
 }
 
 QString Configuracion::SHA256HashString(QString input)

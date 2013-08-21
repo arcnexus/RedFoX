@@ -1679,8 +1679,9 @@ QString ReportRenderer::applyFormato(QString in, int formato)
      *1 = 999.999.999,99
      *2 = 999,999,999.99
      *3 = 99999999999,99
-     *4 = 99999999999.99*/
-    if(formato == 0 || formato > 4)
+     *4 = 99999999999.99*
+     */
+    if(formato == 0 || formato > 5 /*5 es el maximo ahora, si metes mas, aumenta esto*/)
         return in;
 
     bool ok;
@@ -1688,7 +1689,8 @@ QString ReportRenderer::applyFormato(QString in, int formato)
     if(!ok)
         return in;
 
-    QString aux = QString::number(d, 'f' , 2); //9999999999.99
+    QString aux = QString::number(d, 'f' , 2); //9999999999.99 ,2 porque solo queriamos dos decimales
+    QString aux2 = QString::number(d, 'f' , 3);
     if(formato == 4)
         return aux;
     else if(formato == 3)
@@ -1710,7 +1712,7 @@ QString ReportRenderer::applyFormato(QString in, int formato)
         final.append(aux.split(".").at(1));
         return final;
     }
-    else
+    else if(formato == 1)
     {
         aux.replace(".",",");//9999999999,99
         QString entero = aux.split(",").at(0);
@@ -1727,7 +1729,27 @@ QString ReportRenderer::applyFormato(QString in, int formato)
         final.append(",");
         final.append(aux.split(",").at(1));
         return final;
+    }    
+    else if(formato == 5 /*6 , 7 , 8 etc*/)//5 = 999.999.999,999
+    {
+        //haces el formato y lo devuelves
+        aux2.replace(".",",");//9999999999,999
+        QString entero = aux2.split(",").at(0);
+        QString final;
+        int count = 0;
+        for(int i = entero.size()-1 ; i>= 0 ; i--)
+        {
+            final.prepend(entero.at(i));
+            count++;
+            if(count%3 == 0 && i != 0)
+                final.prepend(".");
+
+        }
+        final.append(",");
+        final.append(aux2.split(",").at(1));
+        return final;
     }
+
 }
 
 
