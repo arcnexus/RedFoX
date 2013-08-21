@@ -33,6 +33,8 @@ signals:
 public slots:
     void Print(QPrinter *printer);
     void PreRender();
+protected:
+    QString applyFormato(QString in, int formato);
 private:
     QPrinter* printer;
     QPrintPreviewDialog* dlg;

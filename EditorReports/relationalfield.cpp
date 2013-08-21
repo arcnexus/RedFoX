@@ -12,6 +12,7 @@ RelationalField::RelationalField(QGraphicsItem *parent) :
     m_underlined = false;
     m_Alineacion = Left;
     m_fontColor = Qt::black;
+    m_formato = 0;
 }
 
 QDomElement RelationalField::xml(QDomDocument doc, QPointF relPos)
@@ -54,6 +55,10 @@ QDomElement RelationalField::xml(QDomDocument doc, QPointF relPos)
     QDomElement colorFont = doc.createElement("color");
     colorFont.setAttribute("value",ColorString(m_fontColor));
 
+    QDomElement formato = doc.createElement("formato");
+    formato.setAttribute("value",m_formato);
+
+    node.appendChild(formato);
     node.appendChild(Sql);
     node.appendChild(Expandable);
     node.appendChild(Alineacion);
@@ -103,6 +108,8 @@ void RelationalField::parseXml(QDomElement element, QPointF origin)
             this->setunderlined(el.attribute("value").toInt());
          else if(tag== "color")
             this->setfontColor(ColorFromString(el.attribute("value")));
+        else if(tag== "formato")
+           this->setformato(el.attribute("value").toInt());
     }
 }
 
@@ -240,5 +247,16 @@ void RelationalField::setfontColor(QColor arg) {
     if (m_fontColor != arg) {
         m_fontColor = arg;
         emit fontColorChanged(arg);
+    }
+}
+
+int RelationalField::formato() const {
+    return m_formato;
+}
+
+void RelationalField::setformato(int arg) {
+    if (m_formato != arg) {
+        m_formato = arg;
+        emit formatoChanged(arg);
     }
 }

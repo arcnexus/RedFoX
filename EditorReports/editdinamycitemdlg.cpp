@@ -16,6 +16,8 @@ EditDinamycItemDlg::EditDinamycItemDlg(QWidget *parent) :
     {
         _zonas << "General" << "Empresa";
 
+        //TODO cambiar dentro de Maya
+
         QStringList groupTables;
         QSqlQuery q(QSqlDatabase::database("grupo"));
         q.exec("show tables");

@@ -14,39 +14,6 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Zona</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" colspan="6">
-    <widget class="QComboBox" name="comboZona"/>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Tabla</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1" colspan="6">
-    <widget class="QComboBox" name="comboTabla"/>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Campo</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" colspan="6">
-    <widget class="QComboBox" name="comboCampo"/>
-   </item>
-   <item row="3" column="3">
-    <widget class="QSpinBox" name="sizeSpin"/>
-   </item>
    <item row="3" column="4">
     <widget class="QPushButton" name="btnBold">
      <property name="maximumSize">
@@ -199,10 +166,57 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0" colspan="7">
-    <widget class="QGraphicsView" name="graphicsView"/>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Fuente:</string>
+     </property>
+    </widget>
    </item>
-   <item row="6" column="0" colspan="7">
+   <item row="3" column="1" colspan="2">
+    <widget class="QFontComboBox" name="fontComboBox"/>
+   </item>
+   <item row="4" column="1" colspan="2">
+    <widget class="QCheckBox" name="checkBox">
+     <property name="text">
+      <string>Permitir expansion vertical</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <widget class="QSpinBox" name="sizeSpin"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Zona</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="6">
+    <widget class="QComboBox" name="comboZona"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Tabla</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="6">
+    <widget class="QComboBox" name="comboTabla"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Campo</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="6">
+    <widget class="QComboBox" name="comboCampo"/>
+   </item>
+   <item row="7" column="0" colspan="7">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
@@ -233,21 +247,41 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_4">
+   <item row="6" column="0" colspan="7">
+    <widget class="QGraphicsView" name="graphicsView"/>
+   </item>
+   <item row="5" column="1">
+    <widget class="QCheckBox" name="checkBox_2">
      <property name="text">
-      <string>Fuente:</string>
+      <string>Formato</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1" colspan="2">
-    <widget class="QFontComboBox" name="fontComboBox"/>
-   </item>
-   <item row="4" column="1" colspan="2">
-    <widget class="QCheckBox" name="checkBox">
-     <property name="text">
-      <string>Permitir expansion vertical</string>
+   <item row="5" column="2" colspan="2">
+    <widget class="QComboBox" name="comobFormato">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
+     <item>
+      <property name="text">
+       <string>999.999.999,99</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>999,999,999.99</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>999999999,99</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>999999999.99</string>
+      </property>
+     </item>
     </widget>
    </item>
   </layout>

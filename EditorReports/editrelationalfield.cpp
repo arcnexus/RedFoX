@@ -18,6 +18,11 @@ editRelationalField::editRelationalField(RelationalField *fld, QWidget *parent) 
     ui->fontComboBox->setCurrentText(fld->fontFamily());
     ui->sizeSpin->setValue(fld->fontSize());
 
+    if(fld->formato() > 0)
+    {
+        ui->checkBox_2->setChecked(true);
+        ui->comobFormato->setCurrentIndex(fld->formato()-1);
+    }
     QStringList l1 = fld->sql().split("=");
     if(l1.size()==2)
     {
@@ -107,6 +112,13 @@ void editRelationalField::on_btnAceptar_clicked()
     field->setfontFamily(pre->fontFamily());
     field->setfontSize(pre->fontSize());
     field->setAlineacion(pre->Alineacion());
+    if(ui->checkBox_2->isChecked())
+    {
+        int c = ui->comobFormato->currentIndex();
+        field->setformato(c+1);
+    }
+    else
+        field->setformato(0);
     this->accept();
 }
 
@@ -169,4 +181,9 @@ void editRelationalField::on_btnRigth_clicked()
 {
     pre->setAlineacion(CustomLabel::Rigth);
     scene.update();
+}
+
+void editRelationalField::on_checkBox_2_toggled(bool checked)
+{
+    ui->comobFormato->setEnabled(checked);
 }

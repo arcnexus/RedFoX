@@ -16,6 +16,7 @@ class RelationalField : public Container
     Q_PROPERTY(bool underlined READ underlined WRITE setunderlined NOTIFY underlinedChanged)
     Q_PROPERTY(QFont Font READ Font WRITE setFont NOTIFY FontChanged)
     Q_PROPERTY(QColor fontColor READ fontColor WRITE setfontColor NOTIFY fontColorChanged)
+    Q_PROPERTY(int formato READ formato WRITE setformato NOTIFY formatoChanged)
 public:
     explicit RelationalField(QGraphicsItem *parent = 0);
     QDomElement xml(QDomDocument doc, QPointF relPos);
@@ -47,6 +48,8 @@ public:
 
     QColor fontColor() const;
 
+    int formato() const;
+
 signals:
     
     void sqlChanged(QString arg);
@@ -68,6 +71,8 @@ signals:
     void FontChanged(QFont arg);
 
     void fontColorChanged(QColor arg);
+
+    void formatoChanged(int arg);
 
 public slots:
 
@@ -91,6 +96,8 @@ public slots:
 
     void setfontColor(QColor arg);
 
+    void setformato(int arg);
+
 private:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
@@ -104,6 +111,7 @@ private:
     bool m_underlined;
     QFont m_Font;
     QColor m_fontColor;
+    int m_formato;
 };
 
 #endif // RELATIONALFIELD_H

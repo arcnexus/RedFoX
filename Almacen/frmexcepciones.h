@@ -29,8 +29,8 @@ private:
     void buscar_id_cliente(QString cod_cli);
     void buscar_id_articulo(QString cod_art);
     bool eventFilter(QObject *obj, QEvent *event);
-    int consultar_articulo();
-    int consultar_cliente();
+    void consultar_articulo();
+    void consultar_cliente();
 };
 
 #endif // FRMEXCEPCIONES_H

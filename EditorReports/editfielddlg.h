@@ -44,6 +44,8 @@ private slots:
 
     void on_btnAceptar_clicked();
 
+    void on_checkBox_2_toggled(bool checked);
+
 private:
     Ui::editFieldDlg *ui;
     QGraphicsScene scene;

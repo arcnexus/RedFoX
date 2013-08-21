@@ -46,6 +46,8 @@ private slots:
 
     void on_btnRigth_clicked();
 
+    void on_checkBox_2_toggled(bool checked);
+
 private:
     Ui::editRelationalField *ui;
     QGraphicsScene scene;

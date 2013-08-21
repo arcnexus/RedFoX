@@ -34,6 +34,7 @@ void FrmDialogoImprimir::set_preview(bool preview)
 QString FrmDialogoImprimir::get_ruta()
 {
     //return ui->txtRutaPDF->text();
+    return QString();
 }
 
 QString FrmDialogoImprimir::get_email()

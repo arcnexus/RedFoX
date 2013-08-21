@@ -16,6 +16,7 @@ class ReportField : public Container
     Q_PROPERTY(bool underlined READ underlined WRITE setunderlined NOTIFY underlinedChanged)
     Q_PROPERTY(QFont Font READ Font WRITE setFont NOTIFY FontChanged)
     Q_PROPERTY(QColor fontColor READ fontColor WRITE setfontColor NOTIFY fontColorChanged)
+    Q_PROPERTY(int formato READ formato WRITE setformato NOTIFY formatoChanged)
 
 public:
     explicit ReportField(QGraphicsItem  *parent = 0);
@@ -40,6 +41,7 @@ public:
     bool underlined() const;
     QFont Font() const;
     QColor fontColor() const;
+    int formato() const;
 
 signals:
 
@@ -52,7 +54,8 @@ signals:
     void italicFontChanged(bool arg);
     void underlinedChanged(bool arg);
     void FontChanged(QFont arg);
-    void fontColorChanged(QColor arg);
+    void fontColorChanged(QColor arg);        
+    void formatoChanged(int arg);
 
 public slots:
 
@@ -65,7 +68,8 @@ public slots:
     void setitalicFont(bool arg);
     void setunderlined(bool arg);
     void setFont(QFont arg);
-    void setfontColor(QColor arg);
+    void setfontColor(QColor arg);        
+    void setformato(int arg);
 
 private:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -80,6 +84,7 @@ private:
     bool m_underlined;
     QFont m_Font;
     QColor m_fontColor;
+    int m_formato;
 };
 
 #endif // REPORTFIELD_H

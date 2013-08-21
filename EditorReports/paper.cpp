@@ -644,13 +644,13 @@ QDomDocument Paper::preview()
 
 
 
-  /*  QFile f("/home/arcnexus/pre.xml");
+    QFile f("/home/arcnexus/pre.xml");
     if(f.open(QFile::WriteOnly))
     {
         QTextStream t(&f);
         doc.save(t,4);
     }
-    f.close();*/
+    f.close();
 
     return doc;
 }

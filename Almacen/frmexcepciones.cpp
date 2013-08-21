@@ -102,7 +102,7 @@ bool FrmExcepciones::eventFilter(QObject *obj, QEvent *event)
     }
 }
 
-int FrmExcepciones::consultar_articulo()
+void FrmExcepciones::consultar_articulo()
 {
     db_consulta_view consulta;
     QStringList campos;
@@ -129,7 +129,7 @@ int FrmExcepciones::consultar_articulo()
     }
 }
 
-int FrmExcepciones::consultar_cliente()
+void FrmExcepciones::consultar_cliente()
 {
     db_consulta_view consulta;
     QStringList campos;

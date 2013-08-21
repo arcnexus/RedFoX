@@ -12,6 +12,7 @@ ReportField::ReportField(QGraphicsItem *parent) :
     m_underlined = false;
     m_Alineacion = Left;
     m_fontColor = Qt::black;
+    m_formato = 0;
 }
 
 QDomElement ReportField::xml(QDomDocument doc, QPointF relPos)
@@ -54,6 +55,10 @@ QDomElement ReportField::xml(QDomDocument doc, QPointF relPos)
     QDomElement colorFont = doc.createElement("color");
     colorFont.setAttribute("value",ColorString(m_fontColor));
 
+    QDomElement formato = doc.createElement("formato");
+    formato.setAttribute("value",m_formato);
+
+    node.appendChild(formato);
     node.appendChild(Sql);
     node.appendChild(Expandable);
     node.appendChild(Alineacion);
@@ -103,6 +108,8 @@ void ReportField::parseXml(QDomElement element, QPointF origin)
             this->setunderlined(el.attribute("value").toInt());
          else if(tag== "color")
             this->setfontColor(ColorFromString(el.attribute("value")));
+        else if(tag== "formato")
+           this->setformato(el.attribute("value").toInt());
     }
 }
 
@@ -248,4 +255,22 @@ QString ReportField::query() {
     }
     else
         return "";
+}
+
+int ReportField::formato() const {
+    return m_formato;
+}
+
+void ReportField::setformato(int arg) {
+    if (m_formato != arg) {
+        m_formato = arg;
+        emit formatoChanged(arg);
+    }
+
+    /*0 = sin formato
+     *1 = 999.999.999,99
+     *2 = 999,999,999.99
+     *3 = 99999999999,99
+     *4 = 99999999999.99*/
+
 }

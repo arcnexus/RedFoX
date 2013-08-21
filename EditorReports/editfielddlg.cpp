@@ -16,6 +16,12 @@ editFieldDlg::editFieldDlg(ReportField *fld, QWidget *parent) :
     ui->fontComboBox->setCurrentText(fld->fontFamily());
     ui->sizeSpin->setValue(fld->fontSize());
 
+    if(fld->formato() > 0)
+    {
+        ui->checkBox_2->setChecked(true);
+        ui->comobFormato->setCurrentIndex(fld->formato()-1);
+    }
+
     QStringList l = fld->sql().split(".");
     if(l.size()==3)
     {
@@ -133,6 +139,18 @@ void editFieldDlg::on_btnAceptar_clicked()
     field->setfontColor(pre->fontColor());
     field->setfontFamily(pre->fontFamily());
     field->setfontSize(pre->fontSize());
-    field->setAlineacion(pre->Alineacion());
+    field->setAlineacion(pre->Alineacion());    
+    if(ui->checkBox_2->isChecked())
+    {
+        int c = ui->comobFormato->currentIndex();
+        field->setformato(c+1);
+    }
+    else
+        field->setformato(0);
     this->accept();
+}
+
+void editFieldDlg::on_checkBox_2_toggled(bool checked)
+{
+    ui->comobFormato->setEnabled(checked);
 }
