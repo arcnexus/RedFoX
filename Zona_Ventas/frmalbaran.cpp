@@ -1190,7 +1190,7 @@ void FrmAlbaran::on_btnFacturar_clicked()
         h.remove("aprobado");
         h.remove("impreso");
         h.remove("fecha_aprobacion");
-        h.insert("iva_total",h.value("total_iva").toDouble());
+        h.insert("iva",h.value("total_iva").toDouble());
         h.remove("total_iva");
         h.remove("atencion_de");
         h.remove("importe_pendiente");
@@ -1217,6 +1217,7 @@ void FrmAlbaran::on_btnFacturar_clicked()
         h.remove("total_albaran");
         h.insert("recargo_equivalencia",h.value("rec_total"));
         h.remove("rec_total");
+        h.remove("fecha_factura");
        // h["total"] == ui->txttotal->text().replace(".","").replace(",",".").toDouble();
         Factura oFactura;
         Configuracion_global->empresaDB.transaction();
