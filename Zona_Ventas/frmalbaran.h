@@ -6,6 +6,7 @@
 //
 #include "../Auxiliares/table_helper.h"
 #include "../mayamodule.h"
+#include "../Auxiliares/timedmessagebox.h"
 namespace Ui {
 class FrmAlbaran;
 }
@@ -83,6 +84,8 @@ private slots:
 
     void on_btnAnadir_2_clicked();
 
+    void on_btnFacturar_clicked();
+
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;
@@ -97,6 +100,7 @@ private:
     void formato_tabla();
     void filter_table();
     void calcular_iva_gastos();
+    TimedMessageBox *t;
 };
 
 #endif // FRMALBARAN_H

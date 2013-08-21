@@ -268,7 +268,7 @@ void Configuracion::Cargar_paises()
 {
     paises.clear();
     QSqlQuery query(groupDB);
-    if(query.exec("SELECT * FROM paises"))
+    if(query.exec("SELECT * FROM paises order by pais"))
     {
         while(query.next())
         {
