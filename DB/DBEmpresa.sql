@@ -191,7 +191,8 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_alb` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `id` INT(11) NOT NULL AUTO_INCREMENT , 
+  `serie` CHAR(1) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `albaran` INT(11) NULL DEFAULT '0' ,
   `fecha` DATE NULL DEFAULT NULL ,
   `pedido_cliente` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
@@ -960,6 +961,7 @@ COLLATE = utf8_unicode_ci;
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`ped_cli` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `albaran` INT(11) NULL DEFAULT '0' ,
+  `serie` CHAR(1) NULL DEFAULT NULL , 
   `pedido` INT(11) NULL DEFAULT '0' ,
   `fecha` DATE NULL DEFAULT NULL ,
   `pedido_cliente` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,

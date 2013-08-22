@@ -101,6 +101,7 @@ private:
     void filter_table();
     void calcular_iva_gastos();
     TimedMessageBox *t;
+    QSqlQueryModel *series;
 };
 
 #endif // FRMALBARAN_H

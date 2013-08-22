@@ -100,16 +100,11 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `@grupo@`.`articulos_circumstancias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo_articulo` varchar(20) NOT NULL,
-  `articulo` varchar(100) DEFAULT NULL,
+  `id_articulo` int(11) DEFAULT NULL,
   `id_familia` int(11) DEFAULT NULL,
-  `familia` varchar(100) DEFAULT NULL,
   `id_cliente` int(11) DEFAULT NULL,
-  `cliente` varchar(100) DEFAULT NULL,
   `id_proveedor` int(11) DEFAULT NULL,
-  `proveedor` varchar(100) DEFAULT NULL,
   `id_agente` int(11) DEFAULT NULL,
-  `agente` varchar(100) DEFAULT NULL,
   `importe_porc_aumento` double DEFAULT '0',
   `importe_moneda_aumento` double DEFAULT '0',
   `importe_fijo` double DEFAULT '0',

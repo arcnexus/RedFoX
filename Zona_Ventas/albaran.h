@@ -78,15 +78,16 @@ public:
     float porc_iva_gasto1,porc_iva_gasto2,porc_iva_gasto3;
     double iva_gasto1,iva_gasto2,iva_gasto3;
     bool editable;
+    QString serie;
 
 signals:
 
 public slots:
     // Metodos de trabajo Clase Albaran
-    bool AnadirAlbaran();
+    bool AnadirAlbaran(QString serie);
     bool RecuperarAlbaran(QString cSQL);
     bool GuardarAlbaran(int nid_Albaran);
-    int NuevoNumeroAlbaran();
+    int NuevoNumeroAlbaran(QString serie);
 
     void FacturarAlbaran();
 };

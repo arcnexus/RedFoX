@@ -13,9 +13,9 @@ Albaran::~Albaran()
 
 }
 // Metodos utilidad Clase
-bool Albaran::AnadirAlbaran()
+bool Albaran::AnadirAlbaran(QString serie)
 {
-    int x = NuevoNumeroAlbaran();
+    int x = NuevoNumeroAlbaran(serie);
     QSqlQuery q(Configuracion_global->empresaDB);
     q.prepare("INSERT INTO cab_alb"
               "(albaran, fecha, pedido_cliente, id_cliente, codigo_cliente, cliente,"
@@ -27,7 +27,7 @@ bool Albaran::AnadirAlbaran()
               "rec1, rec2, rec3, rec4,"
               "total1, total2, total3, total4, base_total, iva_total, rec_total,"
               "total_albaran, impreso, facturado, factura, fecha_factura, comentario,"
-              "entregado_a_cuenta) "
+              "entregado_a_cuenta,ejercicio,serie) "
               "VALUES"
               "(:albaran, :fecha, :pedido_cliente, :id_cliente, :codigo_cliente, :cliente,"
               ":direccion1, :direccion2, :poblacion, :provincia, :cp, :id_pais, :cif,"
@@ -38,7 +38,7 @@ bool Albaran::AnadirAlbaran()
               ":rec1, :rec2, :rec3, :rec4,"
               ":total1, :total2, :total3, :total4, :base_total, :iva_total, :rec_total,"
               ":total_albaran, :impreso, :facturado, :factura, :fecha_factura, :comentario,"
-              ":entregado_a_cuenta) ");
+              ":entregado_a_cuenta,:ejercicio,:serie) ");
     q.bindValue(":albaran",x);
     q.bindValue(":fecha",fecha);
     q.bindValue(":pedido_cliente",pedido_cliente);
@@ -97,6 +97,8 @@ bool Albaran::AnadirAlbaran()
     q.bindValue(":comentario",comentario);
 
     q.bindValue(":entregado_a_cuenta",0);
+    q.bindValue(":ejercicio", Configuracion_global->cEjercicio.toInt());
+    q.bindValue(":serie",serie);
 
     if(!q.exec())
     {
@@ -148,7 +150,8 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
               "iva_gasto1 =:iva_gasto1,"
               "iva_gasto2 =:iva_gasto2,"
               "iva_gasto3 =:iva_gasto3,"
-              "entregado_a_cuenta=:entregado_a_cuenta"
+              "entregado_a_cuenta=:entregado_a_cuenta,"
+              "serie = :serie"
 
               " WHERE id = :albaran");
 
@@ -238,6 +241,7 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
     q.bindValue(":iva_gasto3",iva_gasto3);
 
     q.bindValue(":entregado_a_cuenta",entregado_a_cuenta);
+    q.bindValue(":serie",serie);
 
     if(!q.exec())
     {
@@ -266,7 +270,8 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
             if (cab_alb.next())
             {
                 QSqlRecord r = cab_alb.record();
-                id = r.value("id").toInt();;
+                id = r.value("id").toInt();
+                serie = r.value("serie").toInt();
                 albaran= r.value("albaran").toInt();
                 fecha= r.value("fecha").toDate();
                 pedido_cliente= r.value("pedido_cliente").toString();
@@ -350,16 +355,19 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
         }
 }
 
-int Albaran::NuevoNumeroAlbaran()
+int Albaran::NuevoNumeroAlbaran(QString serie)
 {
     QSqlQuery cab_alb(Configuracion_global->empresaDB);
     int albaran = 1;
-    cab_alb.prepare("Select albaran from cab_alb order by albaran desc limit 1");
+    QString cSQL = QString("Select albaran from cab_alb  where serie = '%1' order by albaran desc limit 1").arg(serie);
+    cab_alb.prepare(cSQL);
     if(cab_alb.exec())
     {
-        cab_alb.next();
-        albaran= cab_alb.value(0).toInt();
-        albaran ++;
+        if(cab_alb.next()) {
+            albaran= cab_alb.value(0).toInt();
+            albaran ++;
+        } else
+            albaran = 1;
     }
     else
     {

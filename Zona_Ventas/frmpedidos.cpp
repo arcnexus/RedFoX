@@ -970,7 +970,32 @@ void FrmPedidos::convertir_ealbaran()
         h.remove("enviado");
         Albaran oAlbaran;
         Configuracion_global->empresaDB.transaction();
-        int num = oAlbaran.NuevoNumeroAlbaran();
+        //-----------------------
+        // Elección de serie
+        //-----------------------
+        QDialog* dlg = new QDialog(this);
+        dlg->setWindowTitle(tr("Seleccione serie albarán"));
+        dlg->resize(170,150);
+        QComboBox* box = new QComboBox(dlg);
+        QPushButton*  btn = new QPushButton("Aceptar",dlg);
+        QVBoxLayout lay(dlg);
+
+        lay.addWidget(box);
+        lay.addWidget(btn);
+
+        dlg->setLayout(&lay);
+
+        QSqlQueryModel *l = new QSqlQueryModel(this);
+        l->setQuery("select serie from series",Configuracion_global->empresaDB);
+        box->setModel(l);
+
+        connect(btn,SIGNAL(clicked()),dlg,SLOT(accept()));
+        dlg->exec();//aki se podria poner otro boton y cancelar todo?
+
+        QString serie = box->currentText();
+        dlg->deleteLater();
+
+        int num = oAlbaran.NuevoNumeroAlbaran(serie);
         h.insert("albaran",num);
         h["fecha"] = QDate::currentDate();
 

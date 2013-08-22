@@ -90,7 +90,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     // llenar tabla
     //--------------
     m = new QSqlQueryModel(this);
-    m->setQuery("select id,albaran,fecha,cif,total_albaran,cliente from cab_alb order by albaran desc",Configuracion_global->empresaDB);
+    m->setQuery("select id,serie,albaran,fecha,cif,total_albaran,cliente from cab_alb order by albaran desc",Configuracion_global->empresaDB);
    // ui->tabla->setModel(m);
     ui->table2->setModel(m);
     formato_tabla();
@@ -118,7 +118,14 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
         ui->btnForzar_edicion->setVisible(true);
     else
         ui->btnForzar_edicion->setVisible(false);
-  //  ui->txtBuscar->setFocus();
+    //-------------
+    // Series
+    //-------------
+    series = new QSqlQueryModel(this);
+    series->setQuery("select serie from series", Configuracion_global->empresaDB);
+    ui->cboSerie->setModel(series);
+    ui->txtBuscar->setFocus();
+
 
 }
 
@@ -129,6 +136,8 @@ FrmAlbaran::~FrmAlbaran()
 
 
 void FrmAlbaran::LLenarCampos() {
+    int index = ui->cboSerie->findText(oAlbaran->serie);
+    ui->cboSerie->setCurrentIndex(index);
     ui->lblCliente->setText(oAlbaran->cliente);
     ui->lblAlbaran->setText(QString::number(oAlbaran->albaran));
     int lEstado;
@@ -159,7 +168,7 @@ void FrmAlbaran::LLenarCampos() {
     ui->txtPoblacion_entrega->setText(oAlbaran->poblacion_entrega);
     ui->txtProvincia_entrega->setText(oAlbaran->provincia_entrega);
 
-    int index = ui->cboPais_entrega->findText(Configuracion_global->Devolver_pais(oAlbaran->id_pais_entrega));
+    index = ui->cboPais_entrega->findText(Configuracion_global->Devolver_pais(oAlbaran->id_pais_entrega));
     ui->cboPais_entrega->setCurrentIndex(index);
     ui->txtemail_alternativa->setText(oAlbaran->email_entrega);
     ui->txtcomentarios_alternativa->setPlainText(oAlbaran->comentarios_entrega);
@@ -445,6 +454,7 @@ void FrmAlbaran::BloquearCampos(bool state)
 void FrmAlbaran::LLenarAlbaran()
 {
     oAlbaran->codigo_cliente= (ui->txtcodigo_cliente->text());
+    oAlbaran->serie = (ui->cboSerie->currentText());
     oAlbaran->albaran= (ui->txtalbaran->text().toInt());
     oAlbaran->fecha= (ui->txtfecha->date());
     oAlbaran->fecha_factura= (ui->txtfecha_factura->date());
@@ -577,7 +587,34 @@ void FrmAlbaran::on_btnAnadir_clicked()
     in_edit = false;
     VaciarCampos();    
     LLenarAlbaran();
-    oAlbaran->AnadirAlbaran();
+    //-----------------------
+    // Elección de serie
+    //-----------------------
+    QDialog* dlg = new QDialog(this);
+    dlg->setWindowTitle(tr("Seleccione serie factura"));
+    dlg->resize(170,150);
+    QComboBox* box = new QComboBox(dlg);
+    QPushButton*  btn = new QPushButton("Aceptar",dlg);
+    QVBoxLayout lay(dlg);
+
+    lay.addWidget(box);
+    lay.addWidget(btn);
+
+    dlg->setLayout(&lay);
+
+    QSqlQueryModel *l = new QSqlQueryModel(this);
+    l->setQuery("select serie from series",Configuracion_global->empresaDB);
+    box->setModel(l);
+
+    connect(btn,SIGNAL(clicked()),dlg,SLOT(accept()));
+    dlg->exec();//aki se podria poner otro boton y cancelar todo?
+
+    QString serie = box->currentText();
+    dlg->deleteLater();
+
+
+
+    oAlbaran->AnadirAlbaran(serie);
     ui->txtalbaran->setText(QString::number(oAlbaran->albaran));
     BloquearCampos(false);
    // ui->txtcodigo_cliente->setFocus();
@@ -1046,15 +1083,15 @@ void FrmAlbaran::formato_tabla()
     // id,albaran,fecha,cif,cliente
     QStringList headers;
     QVariantList sizes;
-    headers << "id" << tr("Albarán") <<tr("fecha") <<tr("cif") <<tr("Total") <<tr("cliente");
-    sizes << 0 << 120 << 120 <<120 <<120 <<300;
+    headers << "id" <<tr("Ser.") << tr("Albarán") <<tr("fecha") <<tr("cif") <<tr("Total") <<tr("cliente");
+    sizes << 0 <<40 << 120 << 120 <<120 <<120 <<300;
     for(int i = 0; i <headers.length();i++)
     {
         ui->table2->setColumnWidth(i,sizes.at(i).toInt());
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
-    ui->table2->setItemDelegateForColumn(2,new DateDelegate);
-    ui->table2->setItemDelegateForColumn(4,new MonetaryDelegate);
+    ui->table2->setItemDelegateForColumn(3,new DateDelegate);
+    ui->table2->setItemDelegateForColumn(5,new MonetaryDelegate);
 }
 
 void FrmAlbaran::filter_table()
@@ -1073,7 +1110,7 @@ void FrmAlbaran::filter_table()
     else
         modo = "DESC";
 
-    m->setQuery("select id,albaran,fecha,cif,total_albaran,cliente from cab_alb where "+order+" like '%"+arg1.trimmed()+
+    m->setQuery("select id, serie, albaran,fecha,cif,total_albaran,cliente from cab_alb where "+order+" like '%"+arg1.trimmed()+
                     "%' order by "+order +" "+modo,Configuracion_global->empresaDB);
     //qDebug() << m->query().lastQuery();
 }
@@ -1190,8 +1227,8 @@ void FrmAlbaran::on_btnFacturar_clicked()
         h.remove("aprobado");
         h.remove("impreso");
         h.remove("fecha_aprobacion");
-        h.insert("iva",h.value("total_iva").toDouble());
-        h.remove("total_iva");
+        h.insert("iva",h.value("iva_total").toDouble());
+        h.remove("iva_total");
         h.remove("atencion_de");
         h.remove("importe_pendiente");
         h.insert("subtotal",h.value("importe").toDouble());
@@ -1218,6 +1255,7 @@ void FrmAlbaran::on_btnFacturar_clicked()
         h.insert("recargo_equivalencia",h.value("rec_total"));
         h.remove("rec_total");
         h.remove("fecha_factura");
+
        // h["total"] == ui->txttotal->text().replace(".","").replace(",",".").toDouble();
         Factura oFactura;
         Configuracion_global->empresaDB.transaction();
@@ -1282,7 +1320,8 @@ void FrmAlbaran::on_btnFacturar_clicked()
                 QHash <QString, QVariant> p;
 
                 p["factura"] = num;
-                p["importe_factura"] = h.value("total").toDouble();
+                p["facturado"] = 1;
+                p["fecha_factura"] = QDate::currentDate();
                 c = "id="+QString::number(oAlbaran->id);
                 bool updated = SqlCalls::SqlUpdate(p,"cab_alb",Configuracion_global->empresaDB,c,error);
 
@@ -1296,18 +1335,19 @@ void FrmAlbaran::on_btnFacturar_clicked()
                     LLenarCampos();
                 } else
                 {
-                    QMessageBox::warning(this,tr("Traspaso a factura"),tr("No se pudo crear la factura"),tr("Aceptar"));
+                    QMessageBox::warning(this,tr("Traspaso a factura"),QString(tr("No se pudo crear la factura error: ")+"%1").arg(error),tr("Aceptar"));
+
                     Configuracion_global->empresaDB.rollback();
                 }
             }
         } else
         {
             QMessageBox::warning(this,tr("Traspaso a factura"),
-                               QString(tr("No se pudo crear la factura: %1").arg(error)),tr("Aceptar"));
+                               QString(tr("No se pudo crear la factura: Error BD: %1").arg(error)),tr("Aceptar"));
             Configuracion_global->empresaDB.rollback();
         }
 
     } else
-        QMessageBox::information(this,tr("Traspasar presupuesto"),tr("Este presupuesto ya ha sido traspasado\nNo puede traspasar dos veces el mismo presupuesto"),
+        QMessageBox::information(this,tr("Traspasar albarán"),tr("Este albarán ya ha sido traspasado\nNo puede traspasar dos veces el mismo albarán"),
                                  tr("Aceptar"));
 }
