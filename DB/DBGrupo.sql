@@ -327,6 +327,13 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`agentes` (
   `comentarios` TEXT NULL ,
   `facturado` DOUBLE NULL ,
   `pendiente` DOUBLE NULL ,
+  `com1` DOUBLE NULL DEFAULT '0' ,
+  `com2` DOUBLE NULL DEFAULT '0' ,
+  `com3` DOUBLE NULL DEFAULT '0' ,
+  `com4` DOUBLE NULL DEFAULT '0' ,
+  `com5` DOUBLE NULL DEFAULT '0' ,
+  `com6` DOUBLE NULL DEFAULT '0' ,
+  `com_clientes_contado` DOUBLE NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
