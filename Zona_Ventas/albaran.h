@@ -84,7 +84,7 @@ signals:
 
 public slots:
     // Metodos de trabajo Clase Albaran
-    bool AnadirAlbaran(QString serie);
+    int AnadirAlbaran(QString serie);
     bool RecuperarAlbaran(QString cSQL);
     bool GuardarAlbaran(int nid_Albaran);
     int NuevoNumeroAlbaran(QString serie);

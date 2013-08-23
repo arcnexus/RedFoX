@@ -280,6 +280,25 @@ void FrmAlbaran::LLenarCamposCliente()
     ui->txtprovincia->setText(oCliente2->provincia);
     int index = ui->comboPais->findText(oAlbaran->pais);
     ui->comboPais->setCurrentIndex(index);
+
+    //---------------------------------
+    // Recargo de equivalencia
+    //---------------------------------
+    if(oCliente2->recargo_equivalencia == true)
+    {
+        ui->txtporc_rec1->setText(Configuracion_global->reList.at(0));
+        ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
+        ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
+        ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
+
+    } else
+    {
+        ui->txtporc_rec1->setText("0,00");
+        ui->txtporc_rec2->setText("0,00");
+        ui->txtporc_rec3->setText("0,00");
+        ui->txtporc_rec4->setText("0,00");
+    }
+
     //---------------------------------
     // Comprobar direccion alternativa
     //---------------------------------
@@ -591,7 +610,7 @@ void FrmAlbaran::on_btnAnadir_clicked()
     // Elección de serie
     //-----------------------
     QDialog* dlg = new QDialog(this);
-    dlg->setWindowTitle(tr("Seleccione serie factura"));
+    dlg->setWindowTitle(tr("Seleccione serie"));
     dlg->resize(170,150);
     QComboBox* box = new QComboBox(dlg);
     QPushButton*  btn = new QPushButton("Aceptar",dlg);
@@ -614,7 +633,9 @@ void FrmAlbaran::on_btnAnadir_clicked()
 
 
 
-    oAlbaran->AnadirAlbaran(serie);
+    int id =oAlbaran->AnadirAlbaran(serie);
+    oAlbaran->RecuperarAlbaran(QString("select * from cab_alb where id = %1").arg(id));
+    LLenarCampos();
     ui->txtalbaran->setText(QString::number(oAlbaran->albaran));
     BloquearCampos(false);
    // ui->txtcodigo_cliente->setFocus();

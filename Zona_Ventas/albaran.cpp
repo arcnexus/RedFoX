@@ -13,7 +13,7 @@ Albaran::~Albaran()
 
 }
 // Metodos utilidad Clase
-bool Albaran::AnadirAlbaran(QString serie)
+int Albaran::AnadirAlbaran(QString serie)
 {
     int x = NuevoNumeroAlbaran(serie);
     QSqlQuery q(Configuracion_global->empresaDB);
@@ -62,10 +62,10 @@ bool Albaran::AnadirAlbaran(QString serie)
     q.bindValue(":base2",0);
     q.bindValue(":base3",0);
     q.bindValue(":base4",0);
-    q.bindValue(":porc_iva1",0);
-    q.bindValue(":porc_iva2",0);
-    q.bindValue(":porc_iva3",0);
-    q.bindValue(":porc_iva4",0);
+    q.bindValue(":porc_iva1",Configuracion_global->ivaList.at(0).toDouble());
+    q.bindValue(":porc_iva2",Configuracion_global->ivaList.at(1).toDouble());
+    q.bindValue(":porc_iva3",Configuracion_global->ivaList.at(2).toDouble());
+    q.bindValue(":porc_iva4",Configuracion_global->ivaList.at(3).toDouble());
 
     q.bindValue(":iva1",0);
     q.bindValue(":iva2",0);
@@ -108,7 +108,7 @@ bool Albaran::AnadirAlbaran(QString serie)
     else
     {
         this->id = q.lastInsertId().toInt();
-        return true;
+        return id;
     }
 }
 
@@ -271,7 +271,7 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
             {
                 QSqlRecord r = cab_alb.record();
                 id = r.value("id").toInt();
-                serie = r.value("serie").toInt();
+                serie = r.value("serie").toString();
                 albaran= r.value("albaran").toInt();
                 fecha= r.value("fecha").toDate();
                 pedido_cliente= r.value("pedido_cliente").toString();
