@@ -167,6 +167,8 @@ void FrmPedidos::LLenarCampos()
     ui->chklporc_rec->setChecked(oPedido->recargo_equivalencia==1);
         helper.set_tarifa(oCliente3->tarifa_cliente);
     ui->txtsubtotal->setText(QString::number(oPedido->subtotal));
+    ui->spin_porc_dto_especial->setValue(oPedido->porc_dto);
+    ui->spin_porc_dto_pp->setValue(oPedido->porc_dto_pp);
     ui->txtdto->setText(QString::number(oPedido->dto));
     //oPedido->dto;
     ui->txtbase1->setText(QString::number(oPedido->base1));
@@ -412,7 +414,8 @@ void FrmPedidos::LLenarPedido()
     oPedido->recargo_equivalencia=ui->chklporc_rec->isChecked();
     oPedido->subtotal=ui->txtsubtotal->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
     oPedido->dto=ui->txtdto->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
-    //oPedido->dto;
+    oPedido->porc_dto = ui->spin_porc_dto_especial->value();
+    oPedido->porc_dto_pp = ui->spin_porc_dto_pp->value();
     oPedido->base1=ui->txtbase1->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
     oPedido->base2=ui->txtbase2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
     oPedido->base3=ui->txtbase3->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
@@ -694,23 +697,30 @@ void FrmPedidos::on_btn_borrar_clicked()
 
 void FrmPedidos::totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda)
 {
-    _moneda = moneda;
+    Q_UNUSED(moneda);
+    subtotal +=(ui->SpinGastoDist1->value() + ui->SpinGastoDist2->value() + ui->SpinGastoDist3->value());
+    if(dto == 0)
+        dto = subtotal *(ui->spin_porc_dto_especial->value()/100.0);
+    double dtopp = subtotal *(ui->spin_porc_dto_pp->value()/100.0);
+    ui->txtDto_pp->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(dtopp,Configuracion_global->decimales_campos_totales)));
+    base = subtotal -(dto+dtopp);
+
     base +=(ui->SpinGastoDist1->value() + ui->SpinGastoDist2->value() + ui->SpinGastoDist3->value());
     calcular_iva_gastos();
     iva += (ui->spiniva_gasto1->value() + ui->spiniva_gasto2->value() + ui->spiniva_gasto3->value());
     total = base + iva + re;
 
-    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales))+moneda);
-    ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales))+moneda);
-    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',Configuracion_global->decimales_campos_totales))+moneda);
-    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales))+moneda);
-    ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales))+moneda);
-    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales_campos_totales)));
 
-    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales))+moneda);
-    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales))+moneda);
-    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales))+moneda);
-    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales_campos_totales))+moneda);
+    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales_campos_totales)));
 }
 
 void FrmPedidos::desglose1Changed(double base, double iva, double re, double total)
@@ -1302,4 +1312,56 @@ void FrmPedidos::on_cboOrden_currentIndexChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);
     filter_table();
+}
+
+void FrmPedidos::on_btnAnadir_2_clicked()
+{
+    ui->radEdicion->setChecked(true);
+    on_btnAnadir_clicked();
+}
+
+void FrmPedidos::on_btnEditar_2_clicked()
+{
+    ui->radEdicion->setChecked(true);
+    on_btnEditar_clicked();
+}
+
+void FrmPedidos::on_btnImprimir_2_clicked()
+{
+    on_btnImprimir_clicked();
+}
+
+void FrmPedidos::on_btnBorrar_2_clicked()
+{
+    on_btn_borrar_clicked();
+    on_txtBuscar_textEdited(ui->txtBuscar->text());
+}
+
+void FrmPedidos::on_spin_porc_dto_pp_editingFinished()
+{
+    float dto_pp;
+    dto_pp = (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())*(ui->spin_porc_dto_pp->value()/100.0));
+    ui->txtDto_pp->setText(Configuracion_global->toFormatoMoneda(QString::number(dto_pp,'f',Configuracion_global->decimales_campos_totales)));
+    oPedido->dto_pp = dto_pp;
+}
+
+void FrmPedidos::on_spin_porc_dto_especial_editingFinished()
+{
+    //--------------------------------------------
+    // Cambio dto en líneas
+    //--------------------------------------------
+    QHash <QString,QVariant> f;
+    QString error;
+    QStringList clauses;
+    clauses << QString("id_cab = %1").arg(oPedido->id) << QString("porc_dto = %1 or porc_dto = %2").arg(oPedido->porc_dto).arg("0");
+    f["porc_dto"] = ui->spin_porc_dto_especial->value();
+    bool upd = SqlCalls::SqlUpdate(f,"lin_ped",Configuracion_global->empresaDB,clauses,error);
+
+    //--------------------------
+    // Calculo dto total
+    //--------------------------
+    double dto = (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())*(ui->spin_porc_dto_especial->value()/100.0));
+    ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales)));
+    oPedido->dto = dto;
+
 }

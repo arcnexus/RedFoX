@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1162</width>
-    <height>596</height>
+    <height>668</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -93,7 +93,7 @@ background-color: rgb(0, 0, 58);</string>
    <item row="1" column="0" colspan="3">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_4">
@@ -176,6 +176,27 @@ color: rgb(0, 64, 64);</string>
              <height>16777215</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 192);
+color: rgb(0, 64, 64);</string>
+           </property>
+           <property name="text">
+            <string>0,00</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_54">
+           <property name="text">
+            <string>Dto pp:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="txtDto_pp">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 192);
 color: rgb(0, 64, 64);</string>
@@ -835,6 +856,13 @@ color: rgb(0, 64, 64);</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout">
+              <item row="9" column="0">
+               <widget class="QLabel" name="label_15">
+                <property name="text">
+                 <string>Cif/Nif/Nie:</string>
+                </property>
+               </widget>
+              </item>
               <item row="2" column="0">
                <widget class="QLabel" name="label_4">
                 <property name="text">
@@ -849,6 +877,26 @@ color: rgb(0, 64, 64);</string>
                 </property>
                </widget>
               </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>Dirección:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="2">
+               <spacer name="verticalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
               <item row="5" column="0">
                <widget class="QLabel" name="label_7">
                 <property name="text">
@@ -856,29 +904,10 @@ color: rgb(0, 64, 64);</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="1" colspan="3">
-               <widget class="QLineEdit" name="txtdireccion1">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1" colspan="3">
-               <widget class="QLineEdit" name="txtcliente">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+              <item row="11" column="2">
+               <widget class="QCheckBox" name="chklporc_rec">
+                <property name="text">
+                 <string>Recargo de equivalencia</string>
                 </property>
                </widget>
               </item>
@@ -896,29 +925,17 @@ color: rgb(0, 64, 64);</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
-               <widget class="QLineEdit" name="txtcp">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+              <item row="8" column="0">
+               <widget class="QLabel" name="label_14">
+                <property name="text">
+                 <string>Pais:</string>
                 </property>
                </widget>
               </item>
-              <item row="9" column="0">
-               <widget class="QLabel" name="label_15">
+              <item row="7" column="0">
+               <widget class="QLabel" name="label_13">
                 <property name="text">
-                 <string>Cif/Nif/Nie:</string>
+                 <string>Provincia:</string>
                 </property>
                </widget>
               </item>
@@ -941,51 +958,67 @@ color: rgb(0, 64, 64);</string>
                 </property>
                </widget>
               </item>
-              <item row="10" column="1">
-               <widget class="QCheckBox" name="chklporc_rec">
-                <property name="text">
-                 <string>Recargo de equivalencia</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_5">
-                <property name="text">
-                 <string>Dirección:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="0">
-               <widget class="QLabel" name="label_13">
-                <property name="text">
-                 <string>Provincia:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="0">
-               <widget class="QLabel" name="label_14">
-                <property name="text">
-                 <string>Pais:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="1">
-               <spacer name="verticalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="8" column="1">
+              <item row="8" column="1" colspan="2">
                <widget class="QComboBox" name="combo_pais"/>
               </item>
-              <item row="4" column="1" colspan="3">
+              <item row="7" column="1" colspan="4">
+               <widget class="QLineEdit" name="txtprovincia">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="txtcp">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1" colspan="4">
+               <widget class="QLineEdit" name="txtpoblacion">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1" colspan="4">
                <widget class="QLineEdit" name="txtdireccion2">
                 <property name="minimumSize">
                  <size>
@@ -998,7 +1031,33 @@ color: rgb(0, 64, 64);</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
+              <item row="3" column="1" colspan="4">
+               <widget class="QLineEdit" name="txtdireccion1">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1" colspan="4">
+               <widget class="QLineEdit" name="txtcliente">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" colspan="2">
                <layout class="QHBoxLayout" name="horizontalLayout_8">
                 <property name="spacing">
                  <number>0</number>
@@ -1048,41 +1107,59 @@ color: rgb(0, 64, 64);</string>
                 </item>
                </layout>
               </item>
-              <item row="5" column="1" colspan="3">
-               <widget class="QLineEdit" name="txtpoblacion">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
+              <item row="11" column="0">
+               <widget class="QLabel" name="label_48">
+                <property name="text">
+                 <string>Dto PP %</string>
                 </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
-                </property>
+               </widget>
+              </item>
+              <item row="11" column="1">
+               <widget class="QDoubleSpinBox" name="spin_porc_dto_pp">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="7" column="1" colspan="3">
-               <widget class="QLineEdit" name="txtprovincia">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
+              <item row="10" column="0" colspan="2">
+               <widget class="QLabel" name="label_47">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(12, 0, 67);
+color: rgb(255, 255, 255);</string>
                 </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>16777215</height>
-                 </size>
+                <property name="text">
+                 <string>Datos especificos de calculo</string>
                 </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="0">
+               <widget class="QLabel" name="label_50">
+                <property name="text">
+                 <string>Dto especial:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="1">
+               <widget class="QDoubleSpinBox" name="spin_porc_dto_especial">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="2" colspan="3">
+               <widget class="QLabel" name="label_49">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(12, 0, 67);
+color: rgb(255, 255, 255);</string>
+                </property>
+                <property name="text">
+                 <string>Datos Fiscales</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -1104,19 +1181,6 @@ color: rgb(0, 64, 64);</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_3">
-              <item row="3" column="2">
-               <widget class="QDateEdit" name="txtfecha_limite_entrega">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
-                <property name="displayFormat">
-                 <string>dd/MM/yyyy</string>
-                </property>
-                <property name="calendarPopup">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
               <item row="4" column="0" colspan="3">
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <item>
@@ -1147,16 +1211,30 @@ color: rgb(0, 64, 64);</string>
                 </item>
                </layout>
               </item>
+              <item row="2" column="1">
+               <widget class="QLabel" name="label_22">
+                <property name="text">
+                 <string>Pedido Cliente:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLabel" name="label_42">
+                <property name="text">
+                 <string>F.Límite Entrega:</string>
+                </property>
+               </widget>
+              </item>
               <item row="5" column="0" colspan="3">
                <layout class="QGridLayout" name="gridLayout_7">
-                <item row="0" column="0">
+                <item row="1" column="0">
                  <widget class="QLabel" name="label_38">
                   <property name="text">
                    <string>Dirección:</string>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="1" colspan="3">
+                <item row="1" column="1" colspan="3">
                  <widget class="QLineEdit" name="txtdireccion_entrega1">
                   <property name="minimumSize">
                    <size>
@@ -1169,14 +1247,7 @@ color: rgb(0, 64, 64);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_41">
-                  <property name="text">
-                   <string>Dirección 2:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1" colspan="3">
+                <item row="2" column="1" colspan="3">
                  <widget class="QLineEdit" name="txtdireccion_entrega1_2">
                   <property name="minimumSize">
                    <size>
@@ -1189,25 +1260,26 @@ color: rgb(0, 64, 64);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_40">
+                <item row="5" column="0">
+                 <widget class="QLabel" name="label_51">
                   <property name="text">
-                   <string>Población:</string>
+                   <string>email</string>
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="1">
-                 <widget class="QLineEdit" name="txtcp_entrega">
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_41">
+                  <property name="text">
+                   <string>Dirección 2:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="3">
+                 <widget class="QLineEdit" name="txtpais_entrega">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
                     <height>25</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -1215,7 +1287,7 @@ color: rgb(0, 64, 64);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="2" colspan="2">
+                <item row="3" column="2" colspan="2">
                  <widget class="QLineEdit" name="txtpoblacion_entrega">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -1235,13 +1307,39 @@ color: rgb(0, 64, 64);</string>
                  </widget>
                 </item>
                 <item row="3" column="0">
+                 <widget class="QLabel" name="label_40">
+                  <property name="text">
+                   <string>Población:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QLineEdit" name="txtcp_entrega">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
                  <widget class="QLabel" name="label_39">
                   <property name="text">
                    <string>Provincia:</string>
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="1">
+                <item row="4" column="1">
                  <widget class="QLineEdit" name="txtprovincia_entrega">
                   <property name="minimumSize">
                    <size>
@@ -1260,27 +1358,63 @@ color: rgb(0, 64, 64);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="2">
+                <item row="4" column="2">
                  <widget class="QLabel" name="label_37">
                   <property name="text">
                    <string>Pais:</string>
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="3">
-                 <widget class="QLineEdit" name="txtpais_entrega">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
+                <item row="6" column="0">
+                 <widget class="QLabel" name="label_52">
+                  <property name="text">
+                   <string>comentarios
+ envio:</string>
                   </property>
+                 </widget>
+                </item>
+                <item row="5" column="1" colspan="3">
+                 <widget class="QLineEdit" name="txtmail_alternativo">
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
                  </widget>
                 </item>
+                <item row="6" column="1" colspan="3">
+                 <widget class="QTextEdit" name="txtComentarios_alternativo">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0" colspan="4">
+                 <widget class="QLabel" name="label_53">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(12, 0, 67);
+color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Datos Envio</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
                </layout>
+              </item>
+              <item row="2" column="2">
+               <widget class="QLineEdit" name="txtpedido">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+               </widget>
               </item>
               <item row="0" column="0" rowspan="2" colspan="3">
                <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -1327,45 +1461,18 @@ color: rgb(0, 64, 64);</string>
                 </item>
                </layout>
               </item>
-              <item row="2" column="2">
-               <widget class="QLineEdit" name="txtpedido">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
+              <item row="3" column="2">
+               <widget class="QDateEdit" name="txtfecha_limite_entrega">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QLabel" name="label_22">
-                <property name="text">
-                 <string>Pedido Cliente:</string>
+                <property name="displayFormat">
+                 <string>dd/MM/yyyy</string>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
                 </property>
                </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QLabel" name="label_42">
-                <property name="text">
-                 <string>F.Límite Entrega:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <spacer name="verticalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
               </item>
              </layout>
             </widget>
@@ -2604,6 +2711,17 @@ color: rgb(255, 255, 255);</string>
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_8">
+          <item row="9" column="0" colspan="3">
+           <widget class="QPushButton" name="btnBorrar_2">
+            <property name="text">
+             <string>Borrar</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+            </property>
+           </widget>
+          </item>
           <item row="4" column="0">
            <widget class="QLabel" name="label_23">
             <property name="styleSheet">
@@ -2635,7 +2753,7 @@ color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
+          <item row="8" column="0">
            <spacer name="verticalSpacer_3">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -2685,6 +2803,50 @@ color: rgb(255, 255, 255);</string>
             </property>
             <property name="pixmap">
              <pixmap resource="../maya.qrc">:/Icons/PNG/busca_filtra.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0" colspan="3">
+           <widget class="QPushButton" name="btn_desbloquear">
+            <property name="text">
+             <string>Desbloquear</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/abrecaja.png</normaloff>:/Icons/PNG/abrecaja.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="3">
+           <widget class="QPushButton" name="btnAnadir_2">
+            <property name="text">
+             <string>Añadir pedido</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="3">
+           <widget class="QPushButton" name="btnEditar_2">
+            <property name="text">
+             <string>Editar pedido</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="3">
+           <widget class="QPushButton" name="btnImprimir_2">
+            <property name="text">
+             <string>Imprimir pedido</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/print2.png</normaloff>:/Icons/PNG/print2.png</iconset>
             </property>
            </widget>
           </item>

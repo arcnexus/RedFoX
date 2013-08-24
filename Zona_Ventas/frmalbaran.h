@@ -86,6 +86,12 @@ private slots:
 
     void on_btnFacturar_clicked();
 
+    void on_btnImprimir_2_clicked();
+
+    void on_btnborrar_2_clicked();
+
+    void on_btnEditar_2_clicked();
+
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;

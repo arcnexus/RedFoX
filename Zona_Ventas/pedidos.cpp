@@ -70,134 +70,95 @@ bool Pedidos::AnadirPedido()
 // Guardar el Pedido
 bool Pedidos::GuardarPedido(int nid_Pedido)
 {
-    QSqlQuery ped_cli(Configuracion_global->empresaDB);
+    QHash <QString,QVariant> ped_cli;
 
-    ped_cli.prepare( "UPDATE ped_cli SET "
-                     "albaran =:albaran,pedido =:pedido, fecha =:fecha  , pedido =:pedido  , id_cliente =:id_cliente  ,"
-                     "codigo_cliente  =:codigo_cliente  ,  cliente =:cliente  , direccion1 =:direccion1,"
-                     "direccion2 =:direccion2  , poblacion =:poblacion  ,provincia  =:provincia  ,"
-                     "cp  =:cp  ,  id_pais  =:id_pais  ,  cif  =:cif  ,"
-                     "recargo_equivalencia  =:recargo_equivalencia  ,  subtotal  =:subtotal ,"
-                     "dto  =:dto  ,  base1  =:base1  ,  base2  =:base2  ,"
-                     "base3  =:base3  ,  base4  =:base4  ,  porc_iva1  =:porc_iva1  ,"
-                     "porc_iva2  =:porc_iva2  ,  porc_iva3  =:porc_iva3  ,"
-                     "porc_iva4  =:porc_iva4  ,  iva1  =:iva1  ,"
-                     "iva2  =:iva2  ,  iva3  =:iva3  ,"
-                     "iva4  =:iva4  ,  porc_rec1  =:porc_rec1  ,"
-                     "porc_rec2  =:porc_rec2  ,  porc_rec3  =:porc_rec3  ,"
-                     "porc_rec4  =:porc_rec4  ,"
-                     "rec1  =:rec1  ,"
-                     "rec2  =:rec2  ,"
-                     "rec3  =:rec3  ,"
-                     "rec4  =:rec4  ,"
-                     "total1  =:total1  ,  total2  =:total2  ,  total3  =:total3  ,"
-                     "total4  =:total4  ,base_total  =:base_total  ,  iva_total  =:iva_total  ,"
-                     "rec_total  =:rec_total  ,  total_albaran  =:total_albaran  ,"
-                     "impreso  =:impreso  ,facturado  =:facturado  , "
-                     "fecha_factura  =:fecha_factura  ,  comentario  =:comentario  ,"
-                     "entregado_a_cuenta  =:entregado_a_cuenta  ,traspasado_albaran  =:traspasado_albaran  ,"
-                     "traspasado_factura  =:traspasado_factura  ,  direccion1_entrega  =:direccion_entrega1  ,"
-                     "direccion2_entrega  =:direccion_entrega2  ,cp_entrega  =:cp_entrega  ,"
-                     "poblacion_entrega  =:poblacion_entrega  ,  provincia_entrega  =:provincia_entrega  ,"
-                     "pais_entrega  =:pais_entrega  ,enviado  =:enviado  ,  completo  =:completo  ,"
-                     "entregado  =:entregado  ,  fecha_limite_entrega  =:fecha_limite_entrega  ,"
-                     "total_pedido  =:total_pedido,"
-                     "desc_gasto1 = :desc_gasto1,"
-                     "desc_gasto2 = :desc_gasto2,"
-                     "desc_gasto3 = :desc_gasto3,"
-                     "imp_gasto1 = :imp_gasto1,"
-                     "imp_gasto2 = :imp_gasto2,"
-                     "imp_gasto3 = :imp_gasto3,"
-                     "porc_iva_gasto1 = :porc_iva_gasto1,"
-                     "porc_iva_gasto2 = :porc_iva_gasto2,"
-                     "porc_iva_gasto3 = :porc_iva_gasto3,"
-                     "iva_gasto1 =:iva_gasto1,"
-                     "iva_gasto2 =:iva_gasto2,"
-                     "iva_gasto3 =:iva_gasto3"
-                     " WHERE id = :id");
+    ped_cli["albaran"]= albaran;
+    ped_cli["pedido"] = pedido;
+    ped_cli["fecha"] = fecha;
+    ped_cli["pedido"] = pedido;
+    ped_cli["id_cliente"] = id_cliente;
+    ped_cli["codigo_cliente"] = codigo_cliente;
+    ped_cli["cliente"] = cliente;
+    ped_cli["direccion1"] = direccion1;
+    ped_cli["direccion2"] = direccion2;
+    ped_cli["poblacion"] = poblacion;
+    ped_cli["provincia"] = provincia;
+    ped_cli["cp"] = cp;
+    ped_cli["id_pais"] = id_pais;
+    ped_cli["cif"] = cif;
+    ped_cli["recargo_equivalencia"] = recargo_equivalencia;
+    ped_cli["subtotal"] = subtotal;
+    ped_cli["dto"] = dto;
+    ped_cli["dto_pp"] = dto_pp;
+    ped_cli["porc_dto"] = porc_dto;
+    ped_cli["porc_dto_pp"] = porc_dto_pp;
+    ped_cli["base1"] = base1;
+    ped_cli["base2"] = base2;
+    ped_cli["base3"] = base3;
+    ped_cli["base4"] = base4;
+    ped_cli["porc_iva1"] = porc_iva1;
+    ped_cli["porc_iva2"] = porc_iva2;
+    ped_cli["porc_iva3"] = porc_iva3;
+    ped_cli["porc_iva4"] = porc_iva4;
+    ped_cli["iva1"] = iva1;
+    ped_cli["iva2"] = iva2;
+    ped_cli["iva3"] = iva3;
+    ped_cli["iva4"] = iva4;
+    ped_cli["porc_rec1"] = porc_rec1;
+    ped_cli["porc_rec2"] = porc_rec2;
+    ped_cli["porc_rec3"] = porc_rec3;
+    ped_cli["porc_rec4"] = porc_rec4;
+    ped_cli["rec1"] = rec1;
+    ped_cli["rec2"] = rec2;
+    ped_cli["rec3"] = rec3;
+    ped_cli["rec4"] = rec4;
+    ped_cli["total1"] = total1;
+    ped_cli["total2"] = total2;
+    ped_cli["total3"] = total3;
+    ped_cli["total4"] = total4;
+    ped_cli["base_total"] = base_total;
+    ped_cli["iva_total"] = iva_total;
+    ped_cli["rec_total"] = rec_total;
+    ped_cli["total_albaran"] = total_albaran;
+    ped_cli["impreso"] = impreso;
+    ped_cli["facturado"] = facturado;
+   // ped_cli["factura"] = factura;
+    ped_cli["fecha_factura"] = fecha_factura;
+    ped_cli["comentario"] = comentario;
+    ped_cli["entregado_a_cuenta"] = entregado_a_cuenta;
+    ped_cli["traspasado_albaran"] = traspasado_albaran;
+    ped_cli["traspasado_factura"] = traspasado_factura;
+    ped_cli["direccion_entrega1"] = direccion_entrega1;
+    ped_cli["direccion_entrega2"] = direccion_entrega2;
+    ped_cli["cp_entrega"] = cp_entrega;
+    ped_cli["poblacion_entrega"] = poblacion_entrega;
+    ped_cli["provincia_entrega"] = provincia_entrega;
+    ped_cli["id_pais_entrega"] = id_pais_entrega;
+    ped_cli["enviado"] = enviado;
+    ped_cli["completo"] = completo;
+    ped_cli["entregado"] = entregado;
+    ped_cli["fecha_limite_entrega"] = fecha_limite_entrega;
+    ped_cli["total_pedido"] = total_pedido;
+    ped_cli["desc_gasto1"] = gasto1;
+    ped_cli["desc_gasto2"] = gasto2;
+    ped_cli["desc_gasto3"] = gasto3;
+    ped_cli["imp_gasto1"] = imp_gasto1;
+    ped_cli["imp_gasto2"] = imp_gasto2;
+    ped_cli["imp_gasto3"] = imp_gasto3;
+    ped_cli["porc_iva_gasto1"] = porc_iva_gasto1;
+    ped_cli["porc_iva_gasto2"] = porc_iva_gasto2;
+    ped_cli["porc_iva_gasto3"] = porc_iva_gasto3;
+    ped_cli["iva_gasto1"] = iva_gasto1;
+    ped_cli["iva_gasto2"] = iva_gasto2;
+    ped_cli["iva_gasto3"] = iva_gasto3;
+    ped_cli["id"] = nid_Pedido;
 
-    ped_cli.bindValue(":albaran",albaran);
-    ped_cli.bindValue(":pedido",pedido);
-    ped_cli.bindValue(":fecha",fecha);
-    ped_cli.bindValue(":pedido",pedido);
-    ped_cli.bindValue(":id_cliente",id_cliente);
-    ped_cli.bindValue(":codigo_cliente",codigo_cliente);
-    ped_cli.bindValue(":cliente",cliente);
-    ped_cli.bindValue(":direccion1",direccion1);
-    ped_cli.bindValue(":direccion2",direccion2);
-    ped_cli.bindValue(":poblacion",poblacion);
-    ped_cli.bindValue(":provincia",provincia);
-    ped_cli.bindValue(":cp",cp);
-    ped_cli.bindValue(":id_pais",id_pais);
-    ped_cli.bindValue(":cif",cif);
-    ped_cli.bindValue(":recargo_equivalencia",recargo_equivalencia);
-    ped_cli.bindValue(":subtotal",subtotal);
-    ped_cli.bindValue(":dto",dto);
-  //  ped_cli.bindValue(":dto",dto);
-    ped_cli.bindValue(":base1",base1);
-    ped_cli.bindValue(":base2",base2);
-    ped_cli.bindValue(":base3",base3);
-    ped_cli.bindValue(":base4",base4);
-    ped_cli.bindValue(":porc_iva1",porc_iva1);
-    ped_cli.bindValue(":porc_iva2",porc_iva2);
-    ped_cli.bindValue(":porc_iva3",porc_iva3);
-    ped_cli.bindValue(":porc_iva4",porc_iva4);
-    ped_cli.bindValue(":iva1",iva1);
-    ped_cli.bindValue(":iva2",iva2);
-    ped_cli.bindValue(":iva3",iva3);
-    ped_cli.bindValue(":iva4",iva4);
-    ped_cli.bindValue(":porc_rec1",porc_rec1);
-    ped_cli.bindValue(":porc_rec2",porc_rec2);
-    ped_cli.bindValue(":porc_rec3",porc_rec3);
-    ped_cli.bindValue(":porc_rec4",porc_rec4);
-    ped_cli.bindValue(":rec1",rec1);
-    ped_cli.bindValue(":rec2",rec2);
-    ped_cli.bindValue(":rec3",rec3);
-    ped_cli.bindValue(":rec4",rec4);
-    ped_cli.bindValue(":total1",total1);
-    ped_cli.bindValue(":total2",total2);
-    ped_cli.bindValue(":total3",total3);
-    ped_cli.bindValue(":total4",total4);
-    ped_cli.bindValue(":base_total",base_total);
-    ped_cli.bindValue(":iva_total",iva_total);
-    ped_cli.bindValue(":rec_total",rec_total);
-    ped_cli.bindValue(":total_albaran",total_albaran);
-    ped_cli.bindValue(":impreso",impreso);
-    ped_cli.bindValue(":facturado",facturado);
-   // ped_cli.bindValue(":factura",factura);
-    ped_cli.bindValue(":fecha_factura",fecha_factura);
-    ped_cli.bindValue(":comentario",comentario);
-    ped_cli.bindValue(":entregado_a_cuenta",entregado_a_cuenta);
-    ped_cli.bindValue(":traspasado_albaran",traspasado_albaran);
-    ped_cli.bindValue(":traspasado_factura",traspasado_factura);
-    ped_cli.bindValue(":direccion_entrega1",direccion_entrega1);
-    ped_cli.bindValue(":direccion_entrega2",direccion_entrega2);
-    ped_cli.bindValue(":cp_entrega",cp_entrega);
-    ped_cli.bindValue(":poblacion_entrega",poblacion_entrega);
-    ped_cli.bindValue(":provincia_entrega",provincia_entrega);
-    ped_cli.bindValue(":pais_entrega",pais_entrega);
-    ped_cli.bindValue(":enviado",enviado);
-    ped_cli.bindValue(":completo",completo);
-    ped_cli.bindValue(":entregado",entregado);
-    ped_cli.bindValue(":fecha_limite_entrega",fecha_limite_entrega);
-    ped_cli.bindValue(":total_pedido",total_pedido);
-    ped_cli.bindValue(":desc_gasto1",gasto1);
-    ped_cli.bindValue(":desc_gasto2",gasto2);
-    ped_cli.bindValue(":desc_gasto3",gasto3);
-    ped_cli.bindValue(":imp_gasto1",imp_gasto1);
-    ped_cli.bindValue(":imp_gasto2",imp_gasto2);
-    ped_cli.bindValue(":imp_gasto3",imp_gasto3);
-    ped_cli.bindValue(":porc_iva_gasto1",porc_iva_gasto1);
-    ped_cli.bindValue(":porc_iva_gasto2",porc_iva_gasto2);
-    ped_cli.bindValue(":porc_iva_gasto3",porc_iva_gasto3);
-    ped_cli.bindValue(":iva_gasto1",iva_gasto1);
-    ped_cli.bindValue(":iva_gasto2",iva_gasto2);
-    ped_cli.bindValue(":iva_gasto3",iva_gasto3);
-    ped_cli.bindValue(":id",nid_Pedido);
-    if(!ped_cli.exec())
+    QString error;
+    bool succes = SqlCalls::SqlUpdate(ped_cli,"ped_cli",Configuracion_global->empresaDB,QString("id = %1").arg(id),error);
+
+    if(!succes)
     {
-        QMessageBox::critical(qApp->activeWindow(),QObject::tr("error al guardar datos Pedido:"), ped_cli.lastError().text());
-        qDebug() << ped_cli.lastQuery();
+        QMessageBox::critical(qApp->activeWindow(),QObject::tr("error al guardar datos Pedido:"), error);
         return false;
     }
     else
@@ -233,11 +194,22 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             poblacion = r.value("poblacion").toString();
             provincia = r.value("provincia").toString();
             cp = r.value("cp").toString();
+            id_pais = r.value("id_pais").toInt();
+            pais = Configuracion_global->Devolver_pais(id_pais);
+            direccion_entrega1 = r.value("direccion_entrega1").toString();
+            direccion_entrega2 = r.value("direccion_entrega2").toString();
+            cp_entrega = r.value("cp_entrega").toString();
+            poblacion_entrega = r.value("poblacion_entrega").toString();
+            provincia_entrega = r.value("provincia_entrega").toString();
+            id_pais_entrega = r.value("pais_entrega").toInt();
+            pais_entrega = Configuracion_global->Devolver_pais(id_pais_entrega);
             cif = r.value("cif").toString();
             recargo_equivalencia = r.value("recargo_equivalencia").toInt();
             subtotal = r.value("subtotal").toDouble();
-            porc_dto = r.value("porc_dto").toDouble();
+            porc_dto = r.value("porc_dto").toFloat();
+            porc_dto_pp = r.value("porc_dto_pp").toFloat();
             dto = r.value("dto").toDouble();
+            dto_pp = r.value("dto_pp").toDouble();
             base1 = r.value("base1").toDouble();
             base2 = r.value("base2").toDouble();
             base3 = r.value("base3").toDouble();
@@ -274,12 +246,6 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             entregado_a_cuenta = r.value("entregado_a_cuenta").toDouble();
             traspasado_albaran = r.value("traspasado_albaran").toInt();
             traspasado_factura = r.value("traspasado_factura").toInt();
-            direccion_entrega1 = r.value("direccion_entrega1").toString();
-            direccion_entrega2 = r.value("direccion_entrega2").toString();
-            cp_entrega = r.value("cp_entrega").toString();
-            poblacion_entrega = r.value("poblacion_entrega").toString();
-            provincia_entrega = r.value("provincia_entrega").toString();
-            pais_entrega = r.value("pais_entrega").toString();
             enviado = r.value("enviado").toInt();
             completo = r.value("completo").toInt();
             entregado = r.value("entregado").toInt();
@@ -298,11 +264,7 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             iva_gasto2 = r.value("iva_gasto2").toDouble();
             iva_gasto3 = r.value("iva_gasto3").toDouble();
             this->id_pais = r.field("id_pais").value().toInt();
-            QSqlQuery q(Configuracion_global->empresaDB);
-            if(q.exec("SELECT * FROM paises WHERE id="+QString::number(id_pais)))
-                if(q.next())
-                    pais = q.record().value("pais").toString();
-            // Tarifa
+            pais = Configuracion_global->Devolver_pais(id_pais);
             QSqlQuery queryCliente(Configuracion_global->groupDB);
             if(queryCliente.exec("select tarifa_cliente from clientes where id = "+QString::number(this->id_cliente)));
                 if (queryCliente.next())

@@ -103,6 +103,8 @@ CREATE TABLE IF NOT EXISTS `@grupo@`.`articulos_circumstancias` (
   `id_articulo` int(11) DEFAULT NULL,
   `id_familia` int(11) DEFAULT NULL,
   `id_cliente` int(11) DEFAULT NULL,
+  `id_familia_cliente` int(11) DEFAULT NULL,
+  `id_subfamilia_cliente` int(11) DEFAULT NULL,
   `id_proveedor` int(11) DEFAULT NULL,
   `id_agente` int(11) DEFAULT NULL,
   `importe_porc_aumento` double DEFAULT '0',

@@ -494,45 +494,45 @@ void FrmAlbaran::LLenarAlbaran()
     oAlbaran->email_entrega = ui->txtemail_alternativa->text();
     oAlbaran->comentarios_entrega = ui->txtcomentarios_alternativa->toPlainText();
     oAlbaran->cif= (ui->txtcif->text());
-    oAlbaran->subtotal= (ui->txtsubtotal->text().replace(".","").toDouble());
-    oAlbaran->dto= (ui->txtimporte_descuento->text().replace(".","").toDouble());
-    oAlbaran->base_total= (ui->txtbase->text().replace(".","").toDouble());
-    oAlbaran->iva_total= (ui->txtiva->text().replace(".","").toDouble());
-    oAlbaran->total_albaran= (ui->txttotal->text().replace(".","").toDouble());
+    oAlbaran->subtotal= (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text()));
+    oAlbaran->dto= (Configuracion_global->MonedatoDouble(ui->txtimporte_descuento->text()));
+    oAlbaran->base_total= (Configuracion_global->MonedatoDouble(ui->txtbase->text()));
+    oAlbaran->iva_total= (Configuracion_global->MonedatoDouble(ui->txtiva->text()));
+    oAlbaran->total_albaran= (Configuracion_global->MonedatoDouble(ui->txttotal->text()));
     oAlbaran->comentario= (ui->txtcomentario->toPlainText());
-    oAlbaran->base1= (ui->txtbase1->text().replace(".","").toDouble());
-    oAlbaran->base2= (ui->txtbase2->text().replace(".","").toDouble());
-    oAlbaran->base3= (ui->txtbase3->text().replace(".","").toDouble());
-    oAlbaran->base4= (ui->txtbase4->text().replace(".","").toDouble());
-    oAlbaran->porc_iva1= (ui->txtporc_iva1->text().replace(".","").toDouble());
-    oAlbaran->porc_iva2= (ui->txtporc_iva2->text().replace(".","").toDouble());
-    oAlbaran->porc_iva3= (ui->txtporc_iva3->text().replace(".","").toDouble());
-    oAlbaran->porc_iva4= (ui->txtporc_iva4->text().replace(".","").toDouble());
-    oAlbaran->iva1= (ui->txtiva1->text().replace(".","").toDouble());
-    oAlbaran->iva2= (ui->txtiva2->text().replace(".","").toDouble());
-    oAlbaran->iva3= (ui->txtiva3->text().replace(".","").toDouble());
-    oAlbaran->iva4= (ui->txtiva4->text().replace(".","").toDouble());
-    oAlbaran->total1= (ui->txttotal1->text().replace(".","").toDouble());
-    oAlbaran->total2= (ui->txttotal2->text().replace(".","").toDouble());
-    oAlbaran->total3= (ui->txttotal3->text().replace(".","").toDouble());
-    oAlbaran->total4= (ui->txttotal4->text().replace(".","").toDouble());
-    oAlbaran->porc_rec1= (ui->txtporc_rec1->text().replace(".","").toDouble());
-    oAlbaran->porc_rec2= (ui->txtporc_rec2->text().replace(".","").toDouble());
-    oAlbaran->porc_rec3= (ui->txtporc_rec3->text().replace(".","").toDouble());
-    oAlbaran->porc_rec4= (ui->txtporc_rec4->text().replace(".","").toDouble());
-    oAlbaran->rec1= (ui->txtporc_rec1->text().replace(".","").toDouble());
-    oAlbaran->rec2= (ui->txtporc_rec2->text().replace(".","").toDouble());
-    oAlbaran->rec3= (ui->txtporc_rec3->text().replace(".","").toDouble());
-    oAlbaran->rec4= (ui->txtporc_rec4->text().replace(".","").toDouble());
-    oAlbaran->rec_total= (ui->txttotal_recargo->text().replace(".","").toDouble());
-    oAlbaran->dto = ui->txtimporte_descuento->text().replace(".","").toDouble();
+    oAlbaran->base1= Configuracion_global->MonedatoDouble(ui->txtbase1->text());
+    oAlbaran->base2= (Configuracion_global->MonedatoDouble(ui->txtbase2->text()));
+    oAlbaran->base3= (Configuracion_global->MonedatoDouble(ui->txtbase3->text()));
+    oAlbaran->base4= (Configuracion_global->MonedatoDouble(ui->txtbase4->text()));
+    oAlbaran->porc_iva1= (Configuracion_global->MonedatoDouble(ui->txtporc_iva1->text()));
+    oAlbaran->porc_iva2= (Configuracion_global->MonedatoDouble(ui->txtporc_iva2->text()));
+    oAlbaran->porc_iva3= (Configuracion_global->MonedatoDouble(ui->txtporc_iva3->text()));
+    oAlbaran->porc_iva4= (Configuracion_global->MonedatoDouble(ui->txtporc_iva4->text()));
+    oAlbaran->iva1= (Configuracion_global->MonedatoDouble(ui->txtiva1->text()));
+    oAlbaran->iva2= (Configuracion_global->MonedatoDouble(ui->txtiva2->text()));
+    oAlbaran->iva3= (Configuracion_global->MonedatoDouble(ui->txtiva3->text()));
+    oAlbaran->iva4= (Configuracion_global->MonedatoDouble(ui->txtiva4->text()));
+    oAlbaran->total1= (Configuracion_global->MonedatoDouble(ui->txttotal1->text()));
+    oAlbaran->total2= (Configuracion_global->MonedatoDouble(ui->txttotal2->text()));
+    oAlbaran->total3= (Configuracion_global->MonedatoDouble(ui->txttotal3->text()));
+    oAlbaran->total4= (Configuracion_global->MonedatoDouble(ui->txttotal4->text()));
+    oAlbaran->porc_rec1= (Configuracion_global->MonedatoDouble(ui->txtporc_rec1->text()));
+    oAlbaran->porc_rec2= (Configuracion_global->MonedatoDouble(ui->txtporc_rec2->text()));
+    oAlbaran->porc_rec3= (Configuracion_global->MonedatoDouble(ui->txtporc_rec3->text()));
+    oAlbaran->porc_rec4= (Configuracion_global->MonedatoDouble(ui->txtporc_rec4->text()));
+    oAlbaran->rec1= (Configuracion_global->MonedatoDouble(ui->txtporc_rec1->text()));
+    oAlbaran->rec2= (Configuracion_global->MonedatoDouble(ui->txtporc_rec2->text()));
+    oAlbaran->rec3= (Configuracion_global->MonedatoDouble(ui->txtporc_rec3->text()));
+    oAlbaran->rec4= (Configuracion_global->MonedatoDouble(ui->txtporc_rec4->text()));
+    oAlbaran->rec_total= (Configuracion_global->MonedatoDouble(ui->txttotal_recargo->text()));
+    oAlbaran->dto = Configuracion_global->MonedatoDouble(ui->txtimporte_descuento->text());
     if (ui->chklporc_rec->isChecked())
         oAlbaran->recargo_equivalencia = (1);
     else
         oAlbaran->recargo_equivalencia = (0);
 
     oAlbaran->pedido_cliente= (ui->txtpedido_cliente->text());
-    oAlbaran->entregado_a_cuenta = ui->txtentregado_a_cuenta->text().replace(".","").toDouble();
+    oAlbaran->entregado_a_cuenta = Configuracion_global->MonedatoDouble(ui->txtentregado_a_cuenta->text());
     oAlbaran->desc_gasto1 = ui->txtGastoDist1->text();
     oAlbaran->desc_gasto2 = ui->txtGastoDist2->text();
     oAlbaran->desc_gasto3 = ui->txtGastoDist3->text();
@@ -750,6 +750,7 @@ void FrmAlbaran::on_btn_borrar_clicked()
 
 void FrmAlbaran::totalChanged(double base, double dto, double subtotal, double iva, double re, double total, QString moneda)
 {
+
     subtotal +=(ui->SpinGastoDist1->value() + ui->SpinGastoDist2->value() + ui->SpinGastoDist3->value());
     if(dto == 0)
         dto = subtotal *(ui->spinporc_Dto->value()/100.0);
@@ -1171,6 +1172,7 @@ void FrmAlbaran::on_table2_doubleClicked(const QModelIndex &index)
 void FrmAlbaran::on_btnBuscar_clicked()
 {
     ui->radBusqueda->setChecked(true);
+    on_txtBuscar_textEdited(ui->txtBuscar->text());
 }
 
 void FrmAlbaran::on_txtBuscar_textEdited(const QString &arg1)
@@ -1371,4 +1373,21 @@ void FrmAlbaran::on_btnFacturar_clicked()
     } else
         QMessageBox::information(this,tr("Traspasar albarán"),tr("Este albarán ya ha sido traspasado\nNo puede traspasar dos veces el mismo albarán"),
                                  tr("Aceptar"));
+}
+
+void FrmAlbaran::on_btnImprimir_2_clicked()
+{
+    on_btnImprimir_clicked();
+}
+
+void FrmAlbaran::on_btnborrar_2_clicked()
+{
+    on_btn_borrar_clicked();
+    on_txtBuscar_textEdited(ui->txtBuscar->text());
+}
+
+void FrmAlbaran::on_btnEditar_2_clicked()
+{
+    ui->radEdicion->setChecked(true);
+    on_btnEditar_clicked();
 }

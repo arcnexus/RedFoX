@@ -80,6 +80,18 @@ private slots:
 
     void on_cboOrden_currentIndexChanged(const QString &arg1);
 
+    void on_btnAnadir_2_clicked();
+
+    void on_btnEditar_2_clicked();
+
+    void on_btnImprimir_2_clicked();
+
+    void on_btnBorrar_2_clicked();
+
+    void on_spin_porc_dto_pp_editingFinished();
+
+    void on_spin_porc_dto_especial_editingFinished();
+
 private:
     Ui::frmPedidos *ui;
 
