@@ -105,6 +105,7 @@ public:
     bool cambiarProveedorPrincipal(int id,int id_proveedor);
     bool cambiar_pvp();
     static bool agregarStock(int id, int value);
+    float asigna_dto_linea(int id_art, int id_cliente, float dto_esp, float dto_lin);
 
     QString auto_codigo();
 private:

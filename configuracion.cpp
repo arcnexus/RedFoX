@@ -717,6 +717,8 @@ void Configuracion::CargarClientes()
     client_model->select();
 }
 
+
+
 void Configuracion::CargarUsuarios()
 {
     if(usuarios_model == 0)

@@ -185,7 +185,7 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             albaran = r.value("albaran").toInt();
             pedido = r.value("pedido").toInt();
             fecha = r.value("fecha").toDate();
-            //pedido = r.value("pedido").toString();
+            editable = r.value("editable").toBool();
             id_cliente = r.value("id_cliente").toInt();
             codigo_cliente = r.value("codigo_cliente").toString();
             cliente = r.value("cliente").toString();

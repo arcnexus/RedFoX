@@ -160,6 +160,7 @@ public:
     int devolver_id_tabla(QSqlQueryModel *model, QModelIndex index);
     void CargarClientes();
 
+
     QSqlTableModel* usuarios_model;
     void CargarUsuarios();
 

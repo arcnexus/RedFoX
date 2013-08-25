@@ -805,3 +805,270 @@ QString Articulo::auto_codigo()
 
 }
 
+float Articulo::asigna_dto_linea(int id_art, int id_cliente, float dto_esp,float dto_lin)
+{
+    float dto = 0,dto_cliente = 0,dto_articulo =0,dto_cliente_articulo = 0,dto_cliente_familia =0;
+    float dto_grupo_cli_art = 0,dto_grupocli_familia =0;
+    int dto_tarifa =0,tarifa_cliente =0;
+    //---------------------
+    // Busco dto cliente
+    //---------------------
+    QMap <int,QSqlRecord> map;
+    QString error;
+    map = SqlCalls::SelectRecord("clientes",QString("id = %1").arg(id_cliente),Configuracion_global->groupDB,error);
+    if(error.isEmpty())
+    {
+        QMapIterator <int,QSqlRecord> i(map);
+        while(i.hasNext())
+        {
+            i.next();
+            dto_cliente = i.value().value("porc_dto_cliente").toFloat();
+            dto_tarifa = i.value().value("tipo_dto_tarifa").toInt();
+            tarifa_cliente = i.value().value("tarifa_cliente").toInt();
+        }
+     } else
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Asignación de descuentos"),
+                             tr("No se pudo recuperar los valores de descuento en ficha cliente: Error %1 ").arg(error),
+                             tr("Aceptar"));
+    }
+    QStringList conditions;
+
+    // Desactivado porque el precio ya es devuelto con ese descuento aplicado por el helped_table
+//    //----------------------
+//    // Busco dto artículo
+//    //----------------------
+
+//    conditions <<QString("id = %1").arg(id_art) << QString("tarifa = %1").arg(tarifa_cliente);
+//    map = SqlCalls::SelectRecord("vistaart_tarifa",conditions,Configuracion_global->groupDB,error);
+//    if(error.isEmpty())
+//    {
+//        QMapIterator <int,QSqlRecord> i(map);
+//        while(i.hasNext())
+//        {
+//            i.next();
+//            switch (dto_tarifa) {
+//            case 1:
+//                dto_articulo = i.value().value("porc_dto1").toFloat();
+//                break;
+//            case 2:
+//                dto_articulo = i.value().value("porc_dto2").toFloat();
+//                break;
+//            case 3:
+//                dto_articulo = i.value().value("porc_dto3").toFloat();
+//                break;
+//            case 4:
+//                dto_articulo = i.value().value("porc_dto4").toFloat();
+//                break;
+//            case 5:
+//                dto_articulo = i.value().value("porc_dto5").toFloat();
+//                break;
+//            case 6:
+//                dto_articulo = i.value().value("porc_dto6").toFloat();
+//                break;
+
+//            default:
+//                break;
+//            }
+//        }
+//     } else
+//    {
+//        QMessageBox::warning(qApp->activeWindow(),tr("Asignación de descuentos"),
+//                             tr("No se pudo recuperar los valores de descuento en ficha cliente: Error %1 ").arg(error),
+//                             tr("Aceptar"));
+//    }
+
+    //--------------------------------------------
+    // Compruebo excepciones por cliente-articulo
+    //--------------------------------------------
+    conditions.clear();
+    conditions <<QString("id_articulo = %1").arg(id_art) << QString("id_cliente = %1").arg(id_cliente);
+    map = SqlCalls::SelectRecord("articulos_circumstancias",conditions,Configuracion_global->groupDB,error);
+    float dto_fijo,dto_aumento_porc,dto_aumento_fijo;
+    if(error.isEmpty())
+    {
+        QMapIterator <int,QSqlRecord> i(map);
+        while(i.hasNext())
+        {
+            i.next();
+            dto_fijo = i.value().value("dto_fijo").toFloat();
+            dto_aumento_porc = i.value().value("dto_aumento_porc").toFloat();
+            dto_aumento_fijo = i.value().value("dto_aumento_porc").toFloat();
+        }
+        if(dto_fijo >0)
+            dto_cliente_articulo = dto_fijo;
+        if(dto_aumento_porc >0)
+        {
+            if(dto_articulo > dto_cliente)
+                dto_cliente_articulo = dto_articulo + dto_articulo *(dto_aumento_porc/100.0);
+            else
+                dto_cliente_articulo = dto_cliente + dto_cliente *(dto_aumento_porc/100.0);
+        }
+        if (dto_aumento_fijo >0)
+        {
+            if(dto_articulo > dto_cliente)
+                dto_cliente_articulo += dto_aumento_fijo;
+            else
+                dto_cliente_articulo += dto_aumento_fijo;
+        }
+
+    }
+
+
+    //----------------------------------------------------
+    // Compruebo excepciones por cliente-familia_articulo
+    //----------------------------------------------------
+    int id_familia = SqlCalls::SelectOneField("articulos","id_familia",QString("id = %1").arg(id_art),
+                                              Configuracion_global->groupDB,error).toInt();
+    conditions.clear();
+    conditions <<QString("id_familia = %1").arg(id_familia) << QString("id_cliente = %1").arg(id_cliente);
+    map = SqlCalls::SelectRecord("articulos_circumstancias",conditions,Configuracion_global->groupDB,error);
+    if(error.isEmpty())
+    {
+        QMapIterator <int,QSqlRecord> i(map);
+        while(i.hasNext())
+        {
+            i.next();
+            dto_fijo = i.value().value("dto_fijo").toFloat();
+            dto_aumento_porc = i.value().value("dto_aumento_porc").toFloat();
+            dto_aumento_fijo = i.value().value("dto_aumento_porc").toFloat();
+        }
+        if(dto_fijo >0)
+            dto_cliente_articulo = dto_fijo;
+        if(dto_aumento_porc >0)
+        {
+            if(dto_articulo > dto_cliente)
+                dto_cliente_familia = dto_articulo + dto_articulo *(dto_aumento_porc/100.0);
+            else
+                dto_cliente_familia = dto_cliente + dto_cliente *(dto_aumento_porc/100.0);
+        }
+        if (dto_aumento_fijo >0)
+        {
+            if(dto_articulo > dto_cliente)
+                dto_cliente_familia += dto_aumento_fijo;
+            else
+                dto_cliente_familia += dto_aumento_fijo;
+        }
+
+    }
+
+    //----------------------------------------------------
+    // Compruebo excepciones por grupo_cliente-articulo
+    //----------------------------------------------------
+    QMap <int,QSqlRecord> map_grupos;
+    map_grupos = SqlCalls::SelectRecord("tipocliente",QString("id_cliente = %1").arg(id_cliente),
+                                        Configuracion_global->groupDB,error);
+
+    QMapIterator <int, QSqlRecord> i_grupos(map_grupos);
+    int id_grupo,id_subgrupo;
+    while (i_grupos.hasNext())
+    {
+        i_grupos.next();
+        id_grupo = i_grupos.value().value("id_tipo_cliente").toInt();
+        id_subgrupo = i_grupos.value().value("id_subtipo_cliente").toInt();
+
+        conditions <<QString("id_articulo = %1").arg(id_art) << QString("id_familia_cliente = %1").arg(id_grupo);
+        conditions << QString("id_subfamilia_cliente = %1").arg(id_subgrupo);
+
+        map = SqlCalls::SelectRecord("articulos_circumstancias",conditions,Configuracion_global->groupDB,error);
+        if(error.isEmpty())
+        {
+            QMapIterator <int,QSqlRecord> i(map);
+            while(i.hasNext())
+            {
+                i.next();
+                dto_fijo = i.value().value("dto_fijo").toFloat();
+                dto_aumento_porc = i.value().value("dto_aumento_porc").toFloat();
+                dto_aumento_fijo = i.value().value("dto_aumento_porc").toFloat();
+            }
+            if(dto_fijo >0)
+                dto_grupo_cli_art = dto_fijo;
+            if(dto_aumento_porc >0)
+            {
+                if(dto_articulo > dto_cliente)
+                    dto_grupo_cli_art = dto_articulo + dto_articulo *(dto_aumento_porc/100.0);
+                else
+                    dto_grupo_cli_art = dto_cliente + dto_cliente *(dto_aumento_porc/100.0);
+            }
+            if (dto_aumento_fijo >0)
+            {
+                if(dto_articulo > dto_cliente)
+                    dto_grupo_cli_art += dto_aumento_fijo;
+                else
+                    dto_grupo_cli_art += dto_aumento_fijo;
+            }
+
+        }
+    }
+
+    //----------------------------------------------------
+    // Compruebo excepciones por grupo_cliente-familia_articulo
+    //----------------------------------------------------
+    map_grupos.clear();
+    map_grupos = SqlCalls::SelectRecord("tipocliente",QString("id_cliente = %1").arg(id_cliente),
+                                        Configuracion_global->groupDB,error);
+
+    QMapIterator <int, QSqlRecord> i_grupos2(map_grupos);
+    id_grupo = 0;
+    id_subgrupo = 0;
+    while (i_grupos2.hasNext())
+    {
+        i_grupos2.next();
+        id_grupo = i_grupos2.value().value("id_tipo_cliente").toInt();
+        id_subgrupo = i_grupos2.value().value("id_subtipo_cliente").toInt();
+
+        conditions <<QString("id_familia = %1").arg(id_familia) << QString("id_familia_cliente = %1").arg(id_grupo);
+        conditions << QString("id_subfamilia_cliente = %1").arg(id_subgrupo);
+
+        map = SqlCalls::SelectRecord("articulos_circumstancias",conditions,Configuracion_global->groupDB,error);
+        if(error.isEmpty())
+        {
+            QMapIterator <int,QSqlRecord> i(map);
+            while(i.hasNext())
+            {
+                i.next();
+                dto_fijo = i.value().value("dto_fijo").toFloat();
+                dto_aumento_porc = i.value().value("dto_aumento_porc").toFloat();
+                dto_aumento_fijo = i.value().value("dto_aumento_porc").toFloat();
+            }
+            if(dto_fijo >0)
+                dto_grupocli_familia = dto_fijo;
+            if(dto_aumento_porc >0)
+            {
+                if(dto_articulo > dto_cliente)
+                    dto_grupocli_familia = dto_articulo + dto_articulo *(dto_aumento_porc/100.0);
+                else
+                    dto_grupocli_familia = dto_cliente + dto_cliente *(dto_aumento_porc/100.0);
+            }
+            if (dto_aumento_fijo >0)
+            {
+                if(dto_articulo > dto_cliente)
+                    dto_grupocli_familia += dto_aumento_fijo;
+                else
+                    dto_grupocli_familia+= dto_aumento_fijo;
+            }
+
+        }
+    }
+
+
+    //--------------------------
+    // Asigno Dto mayor posible
+    //--------------------------
+    dto = dto_esp;
+    if(dto < dto_cliente)
+        dto = dto_cliente;
+    if(dto_esp < dto_articulo)
+        dto = dto_articulo;
+    if(dto < dto_cliente_articulo)
+        dto = dto_cliente_articulo;
+    if(dto < dto_cliente_familia)
+        dto = dto_cliente_familia;
+    if(dto < dto_grupo_cli_art)
+        dto = dto_grupo_cli_art;
+    if(dto < dto_grupocli_familia)
+        dto = dto_grupocli_familia;
+    if (dto_lin > dto)
+        dto = dto_lin;
+    return dto;
+}

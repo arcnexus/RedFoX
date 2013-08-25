@@ -28,7 +28,7 @@ void Table_Helper::help_table(QTableWidget *table)
     helped_table->setItemDelegateForColumn(1,new SpinBoxDelegate(helped_table));
     helped_table->setItemDelegateForColumn(3,new MonetaryDelegate(helped_table,true));
     helped_table->setItemDelegateForColumn(4,new MonetaryDelegate(helped_table,false));
-    helped_table->setItemDelegateForColumn(6,new MonetaryDelegate(helped_table,false));
+    helped_table->setItemDelegateForColumn(6,new MonetaryDelegate(helped_table,true));
     helped_table->setItemDelegateForColumn(5,new SpinBoxDelegate(helped_table,true,0,100));
     helped_table->setItemDelegateForColumn(7,new ReadOnlyDelegate(helped_table)); // el tipo de iva pertenece al artículo y solo se puede modificar en a ficha del artículo.
     helped_table->setItemDelegateForColumn(8,new ReadOnlyDelegate(helped_table)); // el tipo de re pertenece al artículo y solo se puede modificar en a ficha del artículo.
@@ -219,6 +219,19 @@ void Table_Helper::addRow()
         helped_table->item(row,7)->setText("0");
         helped_table->item(row,8)->setText("0");
         helped_table->item(row,9)->setText("0");
+
+        //-----------------
+        // Alineación
+        //-----------------
+        helped_table->item(row,1)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        helped_table->item(row,3)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        helped_table->item(row,4)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        helped_table->item(row,5)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        helped_table->item(row,6)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        helped_table->item(row,7)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        helped_table->item(row,8)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        helped_table->item(row,9)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
         helped_table->blockSignals(false);
         helped_table->setFocus();
         helped_table->setCurrentCell(helped_table->rowCount()-1,0);
@@ -349,10 +362,12 @@ void Table_Helper::removeRow()
 void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
 {
     //guardar cantidad al entrar a editar
-    if(current)
+    if(current){
         if(current->column() == 1)
             m_rows[current->row()]->cantidad_old = current->text().toDouble();
-
+        if(current->column() == 0)
+            codigo_art = current->text();
+    }
     if(previous)
     {
         int column = previous->column();
@@ -367,15 +382,16 @@ void Table_Helper::handle_currentItemChanged(QTableWidgetItem *current, QTableWi
             m_rows[row]->cantidad = previous->text().toDouble();
             calculatotalLinea(row);
         }
-        else if(column == 6 && !helped_table->item(row,4)->text().isEmpty())
-        {
-            calcPercDescuento(row);
-            comprobadto(row);
-        }
+//        else if(column == 6 && !helped_table->item(row,4)->text().isEmpty())
+//        {
+//            calcPercDescuento(row);
+//            comprobadto(row);
+//        }
         else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
         {
             calcNetoDescuento(row);
             comprobadto(row);
+
         }
         else if(column == 10)
             comprobarStock(row);
@@ -430,11 +446,11 @@ double Table_Helper::calcularsubtotalLinea(int row)
 
 double Table_Helper::calculadtoLinea(int row)
 {
-//    double Dto = helped_table->item(row,5)->text().toDouble();
-//    QString StrDto = Configuracion_global->toRound(Dto,Configuracion_global->decimales_campos_totales);
-//    double dblDto_ = Configuracion_global->MonedatoDouble(StrDto);
-//    return dblDto_;
-    return helped_table->item(row,6)->text().toDouble();
+    double subtotal = helped_table->item(row,4)->text().toDouble();
+    double porc_dto = helped_table->item(row,5)->text().toDouble();
+    double dto = subtotal *(porc_dto/100.0);
+    return dto;
+
 }
 
 double Table_Helper::calculabaseLinea(int row)
@@ -462,12 +478,15 @@ double Table_Helper::calcularRELinea(int row)
 {
     if(use_re)
     {
-        double base = helped_table->item(row,4)->text().toDouble();
-        base -= calculadtoLinea(row);
-        double re = helped_table->item(row,8)->text().toDouble();
-        double total_re = base * (re/100);
+        int cantidad = helped_table->item(row,1)->text().toInt();
+        double pvp = helped_table->item(row,3)->text().toDouble();
+        double subtotal = cantidad * pvp;
+        double dto = calculadtoLinea(row);
+        double base = subtotal -dto;
+        float porc_rec = helped_table->item(row,8)->text().toFloat();
+        double rec = base * (porc_rec/100.1);
+        return rec;
 
-        return total_re;
     }
     else
         return 0;
@@ -581,20 +600,10 @@ double Table_Helper::calculatotalLinea(int row)
     helped_table->item(row,4)->setText(QString::number(subtotal,'f',Configuracion_global->decimales_campos_totales));
 
     double dto = calculadtoLinea(row);
-
-//    double iva = helped_table->item(row,7)->text().toDouble();
-
-//    double re = helped_table->item(row,8)->text().toDouble();
+    helped_table->item(row,6)->setText(QString::number(dto,'f',Configuracion_global->decimales_campos_totales));
 
     double total = subtotal - dto;
- // el total de lineas no debe llevar el iva incluido ni el re, eso se calcula en el pie del documento
-//    double add_re = (re / 100) * total;
 
-//    double y = 1 + (iva/100);
-//    total = total * y;
-
-//    if(use_re)
-//        total = total + add_re;
     helped_table->item(row,9)->setText(QString::number(total,'f',Configuracion_global->decimales_campos_totales));
     return total;
 }
@@ -677,9 +686,11 @@ void Table_Helper::rellenar_con_Articulo(int row)
     query.prepare(sql);
     if(query.exec())
     {
-        if(query.next())
+        if(query.next() && codigo !=codigo_art)
         {
             QSqlRecord r = query.record();
+
+
             if(r.value("descripcion_reducida").toString().isEmpty())
                 helped_table->item(row,2)->setText(r.value("descripcion").toString());
             else
@@ -688,10 +699,12 @@ void Table_Helper::rellenar_con_Articulo(int row)
             if (this->comprando)
             {
                 double coste = r.value("coste").toDouble();
+                helped_table->item(row,0)->setText(r.value("codigo_fabricante").toString().toUpper());
                 helped_table->item(row,3)->setText(QString::number(coste,'f',Configuracion_global->decimales));
             }
             else
             {
+                helped_table->item(row,0)->setText(r.value("codigo").toString().toUpper());
                 double precio;
                 if(this->tipo_dto_tarifa == 1)
                     precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto1").toDouble()/100));
@@ -709,12 +722,36 @@ void Table_Helper::rellenar_con_Articulo(int row)
                     precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble());
 
                 helped_table->item(row,3)->setText(QString::number(precio,'f',Configuracion_global->decimales));
+                helped_table->item(row,4)->setText(QString::number(precio,'f',Configuracion_global->decimales));
             }
-           helped_table->item(row,7)->setText(r.value("tipo_iva").toString());
-           float rec = Configuracion_global->devolver_rec_iva(r.value("tipo_iva").toFloat());
-           helped_table->item(row,8)->setText(QString::number(rec,'f',Configuracion_global->decimales));
-           double total = helped_table->item(row,3)->text().toDouble();
+            helped_table->item(row,7)->setText(QString::number(r.value("tipo_iva").toFloat(),'f',
+                                                               Configuracion_global->decimales_campos_totales));
+            if(use_re)
+            {
+               float rec = Configuracion_global->devolver_rec_iva(r.value("tipo_iva").toFloat());
+               helped_table->item(row,8)->setText(QString::number(rec,'f',Configuracion_global->decimales_campos_totales));
+            }
+           Articulo oArt(this);
+           float porc_dto = oArt.asigna_dto_linea(r.value("id").toInt(),id_cliente,0,0);
+           helped_table->item(row,5)->setText(QString::number(porc_dto,'f',Configuracion_global->decimales_campos_totales));
+           float dto = helped_table->item(row,4)->text().toDouble()*(porc_dto/100.0);
+           helped_table->item(row,6)->setText(QString::number(dto,'f',Configuracion_global->decimales_campos_totales));
+           double total = helped_table->item(row,4)->text().toDouble() - dto;
            helped_table->item(row,9)->setText(QString::number(total,'f',Configuracion_global->decimales));
+           //-----------------
+           // Alineación
+           //-----------------
+           helped_table->item(row,1)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+           helped_table->item(row,3)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+           helped_table->item(row,4)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+           helped_table->item(row,5)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+           helped_table->item(row,6)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+           helped_table->item(row,7)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+           helped_table->item(row,8)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+           helped_table->item(row,9)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
+
+
         }
         else if(helped_table->item(row,0)->text() !="" && helped_table->item(row,2)->text().isEmpty())
         {
@@ -828,6 +865,16 @@ void Table_Helper::searchArticulo()
         rellenar_con_Articulo(helped_table->currentRow());
    }
 }
+int Table_Helper::getId_cliente() const
+{
+    return id_cliente;
+}
+
+void Table_Helper::setId_cliente(int value)
+{
+    id_cliente = value;
+}
+
 
 void Table_Helper::updateLinea(int row)
 {
@@ -836,10 +883,13 @@ void Table_Helper::updateLinea(int row)
     m_rows[row]->descripcion= helped_table->item(row,2)->text();
     m_rows[row]->precio= helped_table->item(row,3)->text().toDouble();
     m_rows[row]->subtotal= helped_table->item(row,4)->text().toDouble();
-    m_rows[row]->dto= helped_table->item(row,6)->text().toDouble();
     m_rows[row]->dto_perc= helped_table->item(row,5)->text().toDouble();
+    m_rows[row]->dto= helped_table->item(row,6)->text().toDouble();
     m_rows[row]->iva_perc= helped_table->item(row,7)->text().toDouble();
+    double base = m_rows[row]->subtotal - m_rows[row]->dto;
+    m_rows[row]->iva = base *(m_rows[row]->iva_perc/100.0);
     m_rows[row]->rec_perc= helped_table->item(row,8)->text().toDouble();
+    m_rows[row]->rec = base *(m_rows[row]->rec_perc/100.0);
     m_rows[row]->total= helped_table->item(row,9)->text().toDouble();
 
     emit lineaReady(m_rows[row]);
@@ -847,19 +897,22 @@ void Table_Helper::updateLinea(int row)
 
 void Table_Helper::calcPercDescuento(int row)
 {
-    double base = calculabaseLinea(row);
-    double dto = helped_table->item(row,5)->text().toDouble();
-    double perc = (dto * 100)/base;
-    helped_table->item(row,6)->setText(QString::number(perc,'f',2));
-    updateLinea(row);
+//    double base = calculabaseLinea(row);
+//    double dto = helped_table->item(row,6)->text().toDouble();
+//    double perc = (dto * 100)/base;
+//    helped_table->item(row,5)->setText(QString::number(perc,'f',2));
+//    updateLinea(row);
+//
 }
 
 void Table_Helper::calcNetoDescuento(int row)
 {
-    double base = calculabaseLinea(row);
-    double perc_dto = helped_table->item(row,6)->text().toDouble();
-    double dto = base * (perc_dto / 100);
-
-    helped_table->item(row,5)->setText(QString::number(dto,'f',Configuracion_global->decimales_campos_totales));
+    blockSignals(true);
+    double subtotal = helped_table->item(row,4)->text().toDouble();
+    double perc_dto = helped_table->item(row,5)->text().toDouble();
+    double dto = subtotal * (perc_dto / 100.0);
+    helped_table->item(row,5)->setText(QString::number(perc_dto,'f',Configuracion_global->decimales_campos_totales));
+    helped_table->item(row,6)->setText(QString::number(dto,'f',Configuracion_global->decimales_campos_totales));
     updateLinea(row);
+    blockSignals(false);
 }

@@ -20,7 +20,9 @@ struct lineaDetalle
     double dto;
     double dto_perc;
     double iva_perc;
+    double iva;
     double rec_perc;
+    double rec;
     double total;
     double importe_moneda_extrangera;
     int cantidad_pendiente;
@@ -44,8 +46,12 @@ public:
     void blockTable(bool state);
     void resizeTable();
     void fillTable(QString db , QString table , QString filter);
+    void calculatotal();
     lineaDetalle * getLineaDetalleFromRecord(QSqlRecord r);
     double porc_iva1,porc_iva2,porc_iva3,porc_iva4;
+    int getId_cliente() const;
+    void setId_cliente(int value);
+
 signals:
     void lineaReady(lineaDetalle*);
     void lineaDeleted(lineaDetalle*);
@@ -67,7 +73,6 @@ private:
     QString moneda;
     int tarifa;
 
-    void calculatotal();
     double calcularsubtotalLinea(int row);
     double calculadtoLinea(int row);
     double calculabaseLinea(int row);
@@ -93,9 +98,11 @@ private:
     int m_idCab;
     QString m_db;
     QString m_db_table;
+    QString codigo_art;
     bool use2divisas;
     bool isActive;
     int tipo_dto_tarifa;
+    int id_cliente;
     void updateLinea(int row);
     void calcPercDescuento(int row);
     void calcNetoDescuento(int row);
