@@ -865,10 +865,24 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                                     sec.appendChild(sectionFoot);
                                     pageUsable -= footSiz;
                                 }
-                             /*   if(havePFooter)
-                                    pageNode.appendChild(PFootElement.cloneNode(true));
-                                if(haveRFooter)
-                                    pageNode.appendChild(RFootElement);*/
+                                QDomNode x = bEle.cloneNode(false);
+                                QDomNode x2 = bEle.firstChild();
+                                while(!x2.isNull())
+                                {
+                                    QDomElement xEle = x2.toElement();
+                                    if(xEle.attribute("id") == "Line")
+                                    {
+                                        QDomNode l = xEle.namedItem("Orientacion");
+                                        if(l.toElement().attribute("value") == "V")
+                                            x.appendChild(x2.cloneNode(true));
+                                    }
+                                    x2 = x2.nextSibling();
+                                }
+                                while((pageUsable > x.toElement().attribute("size").toInt() + footSiz + PFooterSiz + RFooterSiz))
+                                {
+                                    sec.appendChild(x.cloneNode(true));
+                                    pageUsable -= bEle.attribute("size").toInt();
+                                }
                             }
                         }
                         else
@@ -899,6 +913,24 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                                 {
                                     sec.appendChild(sectionFoot);
                                     pageUsable -= footSiz;
+                                }
+                                QDomNode x = bEle.cloneNode(false);
+                                QDomNode x2 = bEle.firstChild();
+                                while(!x2.isNull())
+                                {
+                                    QDomElement xEle = x2.toElement();
+                                    if(xEle.attribute("id") == "Line")
+                                    {
+                                        QDomNode l = xEle.namedItem("Orientacion");
+                                        if(l.toElement().attribute("value") == "V")
+                                            x.appendChild(x2.cloneNode(true));
+                                    }
+                                    x2 = x2.nextSibling();
+                                }
+                                while((pageUsable > x.toElement().attribute("size").toInt() + footSiz + PFooterSiz + RFooterSiz))
+                                {
+                                    sec.appendChild(x.cloneNode(true));
+                                    pageUsable -= bEle.attribute("size").toInt();
                                 }
                             }
                         }

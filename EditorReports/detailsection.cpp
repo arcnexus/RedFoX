@@ -226,13 +226,13 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
     node.setAttribute("alternative",m_use2Colors);
     node.setAttribute("color2",ColorString(m_color2));
 
-    QPointF br(rect().bottomRight().x()-1,rect().bottomRight().y()-1);
-    QPointF tl(rect().topLeft().x()+1,rect().topLeft().y()+1);
+    QPointF br(rect().bottomRight().x(),rect().bottomRight().y());
+    QPointF tl(rect().topLeft().x(),rect().topLeft().y());
     if(m_header)
     {
         QDomElement headerNode = doc.createElement("Header");
         headerNode.setAttribute("size",m_headerSize);
-        QRectF aux(tl,QPointF(br.x(),tl.y()+m_headerSize-2));
+        QRectF aux(tl,QPointF(br.x(),tl.y()+m_headerSize));
         QRectF headerRect(mapRectToScene(aux));
 
         QList<QGraphicsItem*>items =this->scene()->items(headerRect);
@@ -275,7 +275,7 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
     {
         QDomElement footNode = doc.createElement("Foot");
         footNode.setAttribute("size",m_footSize);
-        QRectF footRect(mapToScene(QPointF(tl.x(),br.y()-m_footSize+1)),mapToScene(QPointF(br)));
+        QRectF footRect(mapToScene(QPointF(tl.x(),br.y()-m_footSize)),mapToScene(QPointF(br)));
         QList<QGraphicsItem*>items =this->scene()->items(footRect);
         QListIterator<QGraphicsItem*> it(items);
         while (it.hasNext())

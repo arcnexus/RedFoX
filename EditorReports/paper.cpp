@@ -186,7 +186,7 @@ void Paper::insertCodeBar()
 void Paper::insertImagen()
 {
     ReportImage * img = new ReportImage(this);
-    img->setruta("C:/Maya/maya/PNG/albaran_pro.png");
+    img->setruta(":/Icons/PNG/NeuX.png");
     img->setMargins(this->margin());
     img->setPos(_insertingPoint.x()-50,_insertingPoint.y()-7);
     itemPool.append(img);
