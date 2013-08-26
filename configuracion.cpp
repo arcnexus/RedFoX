@@ -137,6 +137,8 @@ toFormatoMoneda(QString cTexto)
 
 double Configuracion::MonedatoDouble(QString moneda)
 {
+    if(moneda.isEmpty() || moneda == "0,00")
+        return 0.00;
     moneda = moneda.replace(".","").replace(",",".");
     double dblMoneda;
     int d;

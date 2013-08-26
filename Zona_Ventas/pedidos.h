@@ -29,6 +29,8 @@ public:
     QString provincia_entrega;
     int id_pais_entrega;
     QString pais_entrega;
+    QString email_entrega;
+    QString comentarios_entrega;
     QString cif;
     int recargo_equivalencia;
     double subtotal;

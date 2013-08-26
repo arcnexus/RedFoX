@@ -49,6 +49,16 @@
        <string>999.999.999,9999</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>dd/mm/aa</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>dd/mm/aaaa</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="4" column="4">

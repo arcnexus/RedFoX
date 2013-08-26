@@ -1682,8 +1682,11 @@ QString ReportRenderer::applyFormato(QString in, int formato)
      *4 = 99999999999.99*
      *5 = 999.999.999,999
      *6 = 999.999.999,9999
+     *7 = dd/mm/aa
+     *8 = dd/mm/aaaa
      */
-    if(formato == 0 || formato > 6 /*5 es el maximo ahora, si metes mas, aumenta esto*/)
+    // TODO - TERMINAR FORMATO FECHA
+    if(formato == 0 || formato > 6 /*8 es el maximo ahora, si metes mas, aumenta esto*/)
         return in;
 
     bool ok;
@@ -1694,6 +1697,9 @@ QString ReportRenderer::applyFormato(QString in, int formato)
     QString aux = QString::number(d, 'f' , 2); //9999999999.99 ,2 porque solo queriamos dos decimales
     QString aux2 = QString::number(d, 'f' , 3);
     QString aux3 = QString::number(d, 'f' , 4);
+
+
+
     if(formato == 4)
         return aux;
     else if(formato == 3)
@@ -1771,7 +1777,20 @@ QString ReportRenderer::applyFormato(QString in, int formato)
         final.append(aux3.split(",").at(1));
         return final;
     }
-
+//    else if(formato == 7) //5 = dd/mm/aa
+//    {
+//        QDate fecha_formateada;
+//        //haces el formato y lo devuelves
+//        //aux3 = fecha
+//        return fecha_formateada;
+//    }
+//    else if(formato == 8) //5 = dd/mm/aaaa
+//    {
+//        QDate fecha_formateada;
+//        //haces el formato y lo devuelves
+//        //aux3 = fecha
+//        return fecha_formateada;
+//    }
 }
 
 

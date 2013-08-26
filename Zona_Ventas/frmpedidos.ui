@@ -893,7 +893,7 @@ color: rgb(0, 64, 64);</string>
                </widget>
               </item>
               <item row="8" column="1" colspan="2">
-               <widget class="QComboBox" name="combo_pais"/>
+               <widget class="QComboBox" name="cboPais"/>
               </item>
               <item row="7" column="1" colspan="4">
                <widget class="QLineEdit" name="txtprovincia">
@@ -1169,7 +1169,7 @@ color: rgb(255, 255, 255);</string>
                  </widget>
                 </item>
                 <item row="1" column="1" colspan="3">
-                 <widget class="QLineEdit" name="txtdireccion_entrega1">
+                 <widget class="QLineEdit" name="txtdireccion1_entrega">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -1182,7 +1182,7 @@ color: rgb(255, 255, 255);</string>
                  </widget>
                 </item>
                 <item row="2" column="1" colspan="3">
-                 <widget class="QLineEdit" name="txtdireccion_entrega1_2">
+                 <widget class="QLineEdit" name="txtdireccion2_entrega">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -1205,19 +1205,6 @@ color: rgb(255, 255, 255);</string>
                  <widget class="QLabel" name="label_41">
                   <property name="text">
                    <string>Dirección 2:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="3">
-                 <widget class="QLineEdit" name="txtpais_entrega">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
                  </widget>
                 </item>
@@ -1308,14 +1295,14 @@ color: rgb(255, 255, 255);</string>
                  </widget>
                 </item>
                 <item row="5" column="1" colspan="3">
-                 <widget class="QLineEdit" name="txtmail_alternativo">
+                 <widget class="QLineEdit" name="txtemail_alternativo">
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
                  </widget>
                 </item>
                 <item row="6" column="1" colspan="3">
-                 <widget class="QTextEdit" name="txtComentarios_alternativo">
+                 <widget class="QTextEdit" name="txtcomentarios_alternativo">
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
@@ -1332,6 +1319,16 @@ color: rgb(255, 255, 255);</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="3">
+                 <widget class="QComboBox" name="cbopais_entrega">
+                  <property name="minimumSize">
+                   <size>
+                    <width>150</width>
+                    <height>0</height>
+                   </size>
                   </property>
                  </widget>
                 </item>
@@ -2870,4 +2867,7 @@ background-color: rgb(0, 0, 58);</string>
   <include location="../maya.qrc"/>
  </resources>
  <connections/>
+ <slots>
+  <slot>calcular_iva_gastos()</slot>
+ </slots>
 </ui>

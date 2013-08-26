@@ -68,7 +68,8 @@ bool Pedidos::AnadirPedido()
      }
 }
 // Guardar el Pedido
-bool Pedidos::GuardarPedido(int nid_Pedido)
+bool Pedidos::
+GuardarPedido(int nid_Pedido)
 {
     QHash <QString,QVariant> ped_cli;
 
@@ -134,6 +135,8 @@ bool Pedidos::GuardarPedido(int nid_Pedido)
     ped_cli["poblacion_entrega"] = poblacion_entrega;
     ped_cli["provincia_entrega"] = provincia_entrega;
     ped_cli["id_pais_entrega"] = id_pais_entrega;
+    ped_cli["email_entrega"] = email_entrega;
+    ped_cli["comentarios_entrega"] = comentarios_entrega;
     ped_cli["enviado"] = enviado;
     ped_cli["completo"] = completo;
     ped_cli["entregado"] = entregado;
@@ -203,6 +206,8 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             provincia_entrega = r.value("provincia_entrega").toString();
             id_pais_entrega = r.value("pais_entrega").toInt();
             pais_entrega = Configuracion_global->Devolver_pais(id_pais_entrega);
+            email_entrega = r.value("email_entrega").toString();
+            comentarios_entrega = r.value("comentarios_entrega").toString();
             cif = r.value("cif").toString();
             recargo_equivalencia = r.value("recargo_equivalencia").toInt();
             subtotal = r.value("subtotal").toDouble();

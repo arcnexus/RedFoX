@@ -92,6 +92,15 @@ private slots:
 
     void on_spin_porc_dto_especial_editingFinished();
 
+    void cboporc_iva_gasto1_currentIndexChanged(int index);
+
+    void cboporc_iva_gasto2_currentIndexChanged(int index);
+
+    void cboporc_iva_gasto3_currentIndexChanged(int index);
+
+    void SpinGastoDist1_valueChanged(double arg1);
+    void SpinGastoDist2_valueChanged(double arg1);
+    void SpinGastoDist3_valueChanged(double arg1);
 private:
     Ui::frmPedidos *ui;
 
