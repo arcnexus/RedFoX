@@ -468,6 +468,16 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     else
         Proveedores->deleteLater();
 
+
+    splash->showMessage(tr("Cargando modulos... Modulo de Transportistas") );
+    FrmTransportistas * Transportistas = new FrmTransportistas(this);
+    if(Transportistas->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _mantenModules.append(Transportistas);
+    }
+    else
+        Transportistas->deleteLater();
+
     ArchivosGeneralesExt* e = new ArchivosGeneralesExt(this);
     if(!e->Extensions().isEmpty())
         _mantenExtensions.append(e);

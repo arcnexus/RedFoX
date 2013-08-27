@@ -192,7 +192,8 @@ SOURCES += main.cpp\
     EditorReports/repdesignmodule.cpp \
     EditorReports/savetobdfrm.cpp \
     Almacen/frmexcepciones.cpp \
-    Almacen/frmkit.cpp
+    Almacen/frmkit.cpp \
+    Zona_Maestros/frmtransportistas.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -349,7 +350,8 @@ HEADERS  += mainwindow.h \
     EditorReports/repdesignmodule.h \
     EditorReports/savetobdfrm.h \
     Almacen/frmexcepciones.h \
-    Almacen/frmkit.h
+    Almacen/frmkit.h \
+    Zona_Maestros/frmtransportistas.h
 
 
 
@@ -429,7 +431,8 @@ FORMS    += mainwindow.ui \
     EditorReports/reportdesigwin.ui \
     EditorReports/savetobdfrm.ui \
     Almacen/frmexcepciones.ui \
-    Almacen/frmkit.ui
+    Almacen/frmkit.ui \
+    Zona_Maestros/frmtransportistas.ui
 
 RESOURCES += \
     maya.qrc \

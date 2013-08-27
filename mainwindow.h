@@ -49,6 +49,8 @@
 #include "../Zona_Contabilidad/frmentrada_apuntes.h"
 #include "../Zona_Contabilidad/frmcuadro_cuentas.h"
 
+#include "../Zona_Maestros/frmtransportistas.h"
+
 
 namespace Ui {
 class MainWindow;

@@ -86,7 +86,7 @@ background-color: rgb(0, 0, 57);</string>
    <item row="1" column="0" colspan="3">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_5">
       <layout class="QGridLayout" name="gridLayout_20">
@@ -373,7 +373,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
        <item row="1" column="1" rowspan="2" colspan="2">
         <widget class="QTabWidget" name="tabWidget_5">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">

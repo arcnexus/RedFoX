@@ -1049,6 +1049,8 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`ped_cli` (
   `iva_gasto2` FLOAT NULL DEFAULT '0' ,
   `iva_gasto3` FLOAT NULL DEFAULT '0' ,
   `ejercicio` INT(5) NULL DEFAULT NULL ,
+  `editable` TINYINT(1) NULL DEFAULT '1' ,
+  `id_transportista` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1

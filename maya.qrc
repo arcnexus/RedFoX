@@ -168,5 +168,6 @@
         <file>PNG/busca_filtra.png</file>
         <file>PNG/excepciones.png</file>
         <file>PNG/kits.png</file>
+        <file>PNG/transport.png</file>
     </qresource>
 </RCC>

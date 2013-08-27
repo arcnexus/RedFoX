@@ -124,6 +124,8 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     series = new QSqlQueryModel(this);
     series->setQuery("select serie from series", Configuracion_global->empresaDB);
     ui->cboSerie->setModel(series);
+
+    ui->frameRad->setVisible(false);
     ui->txtBuscar->setFocus();
 
 
