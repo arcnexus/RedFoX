@@ -46,7 +46,6 @@ private:
     QDomDocument m_doc;
     QDomDocument DocIn;
     QMap<QString,QString> queryClausules;
-    int headersize,footsize,phsize,pfsize,pagesize;
 
     void drawRect(QDomElement e , QPainter * painter , double dpiX , double dpiY, int printResolution);
     void drawLabel(QDomElement e , QPainter * painter , double dpiX , double dpiY);

@@ -20,8 +20,10 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     push(new QPushButton(QIcon(":/Icons/PNG/pedidos_cli.png"),"",this))
 {
     ui->setupUi(this);
-    ui->cboPais->setModel(Configuracion_global->paises_model);
-    ui->cboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+    QSqlQueryModel *pais = new QSqlQueryModel(this);
+    pais->setQuery("select pais from paises order by pais",Configuracion_global->groupDB);
+
+    ui->cboPais->setModel(pais);
     // Pongo valores por defecto
     ui->lbfacturado->setVisible(false);
     ui->lbimpreso->setVisible(false);
