@@ -112,6 +112,7 @@ private:
     void formato_tabla();
     void filter_table();
     void calcular_iva_gastos();
+    void buscar_transportista();
 
     Table_Helper helper;
     QAction * aAlbaran_action;
@@ -125,6 +126,7 @@ private:
     QPushButton* push;
     QSqlQueryModel *m;
     TimedMessageBox *t;
+    bool eventFilter(QObject *obj, QEvent *event);
 };
 
 #endif // FRMPEDidOS_H

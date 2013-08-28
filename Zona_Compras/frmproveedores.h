@@ -115,6 +115,8 @@ private slots:
 
     void on_txtBuscar_textEdited(const QString &arg1);
 
+    void on_tablaContactos_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::frmProveedores *ui;
     ToolBarButton toolButton;

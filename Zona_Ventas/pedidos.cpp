@@ -78,6 +78,7 @@ GuardarPedido(int nid_Pedido)
     ped_cli["fecha"] = fecha;
     ped_cli["pedido"] = pedido;
     ped_cli["id_cliente"] = id_cliente;
+    ped_cli["id_transportista"] = id_transportista;
     ped_cli["codigo_cliente"] = codigo_cliente;
     ped_cli["cliente"] = cliente;
     ped_cli["direccion1"] = direccion1;
@@ -190,6 +191,7 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             fecha = r.value("fecha").toDate();
             editable = r.value("editable").toBool();
             id_cliente = r.value("id_cliente").toInt();
+            id_transportista = r.value("id_transportista").toInt();
             codigo_cliente = r.value("codigo_cliente").toString();
             cliente = r.value("cliente").toString();
             direccion1 = r.value("direccion1").toString();

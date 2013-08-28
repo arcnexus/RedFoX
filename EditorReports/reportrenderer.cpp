@@ -166,7 +166,9 @@ void ReportRenderer::Print(QPrinter *printer)
     }
 }
 
-void ReportRenderer::PreRender()
+void ReportRenderer::
+
+PreRender()
 {
     bool error;
     render(DocIn , queryClausules, error);
@@ -197,6 +199,11 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
     int PHeaderSiz = 0;
     int PFooterSiz = 0;
     int RFooterSiz = 0;
+    headersize = 0;
+    footsize = 0;
+    phsize = 0;
+    pfsize = 0;
+
 
     QDomNode RHeaderElement;
     QDomNode PHeaderElement;
@@ -237,11 +244,13 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                 case Section::ReportHeader:
                     haveRHeader = true;
                     RHeaderSiz = secEle.attribute("size").toInt();
+                    headersize = RHeaderSiz;
                     RHeaderElement = sections.cloneNode(true);
                     break;
                 case Section::PageHeader:
                     havePHeader = true;
                     PHeaderSiz = secEle.attribute("size").toInt();
+                    phsize = PHeaderSiz;
                     PHeaderOnAll = secEle.attribute("OnFistPage").toInt();
                     PHeaderElement = sections.cloneNode(true);
                     break;
@@ -251,11 +260,13 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                 case Section::PageFooter:
                     havePFooter = true;
                     PFooterSiz = secEle.attribute("size").toInt();
+                    footsize = PFooterSiz;
                     PFootElement = sections.cloneNode(true);
                     break;
                 case Section::ReportFooter:
                     haveRFooter = true;
                     RFooterSiz = secEle.attribute("size").toInt();
+                    pfsize = RFooterSiz;
                     RFootElement = sections.cloneNode(true);
                     break;
                 }
@@ -723,6 +734,7 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
         pageUsable -= PHeaderSiz;
     if(haveRHeader)
         pageUsable -= RHeaderSiz;
+    pagesize = pageUsable;
 
     QListIterator<QDomNode> parsedIt(parsedSections);
     while(parsedIt.hasNext())
@@ -1158,6 +1170,7 @@ void ReportRenderer::drawLine(QDomElement e, QPainter *painter, double dpiX, dou
         {
             siz.setWidth(el.attribute("w").toInt()* dpiX +10);
             siz.setHeight(el.attribute("h").toInt()* dpiY);
+
         }
 
         //Specific tags
@@ -1168,8 +1181,15 @@ void ReportRenderer::drawLine(QDomElement e, QPainter *painter, double dpiX, dou
         else if(tag== "penStyle")
             m_penStyle = static_cast<Qt::PenStyle>(el.attribute("value").toInt());
         else if(tag== "Orientacion")
+        {
             el.attribute("value") == "V" ? m_Orientacion = Vertical
                                          : m_Orientacion = Horizontal;
+            if(el.attribute("value") =="V")
+            {
+                int size = pagesize - ((headersize *dpiY) + (footsize *dpiY) + (pfsize *dpiY) + (phsize *dpiY));
+                siz.setHeight(size+77);
+            }
+        }
     }
 
     painter->save();

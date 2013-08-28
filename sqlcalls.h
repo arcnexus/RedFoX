@@ -65,6 +65,7 @@ public:
 
     static QMap<int,QSqlRecord> SelectRecord(QString table,QStringList clausulas, QSqlDatabase database, QString &error);
     static QMap<int,QSqlRecord> SelectRecord(QString table,QString clausulas, QSqlDatabase database, QString &error);
+    static QMap<int,QSqlRecord> SelectRecord(QString table, QStringList clausulas,QStringList extras, QSqlDatabase database, QString &error);
 
 
 

@@ -102,6 +102,7 @@ frmProveedores::frmProveedores(QWidget *parent) :
     connect(ui->tablaContactos, SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(menu_contactos(const QPoint&)));
     connect(ui->tablaPagos,SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(menu_deudas(const QPoint&)));
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    BloquearCampos(true);
 }
 
 frmProveedores::~frmProveedores()
@@ -333,6 +334,10 @@ void frmProveedores::BloquearCampos(bool state)
     ui->cboOrden->setEnabled(state);
     ui->txtBuscar->setReadOnly(!state);
     ui->cboModo->setEnabled(state);
+    ui->btnAnadir_persona_contacto->setEnabled(!state);
+
+
+
 
 }
 
@@ -1071,22 +1076,24 @@ void frmProveedores::editar_contacto()
         ui->txtMovil2->setText(queryContactos.record().value("movil2").toString());
         ui->txtCargo->setText(queryContactos.record().value("cargo_empresa").toString());
         ui->txtemail_contacto->setText(queryContactos.record().value("email").toString());
-
-        ui->btnGuardarContacto->setVisible("true");
-        ui->txtDescripcionM1->setReadOnly(false);
-        ui->txtDescripcionM2->setReadOnly(false);
-        ui->txtDescripcionT1->setReadOnly(false);
-        ui->txtDescripcionT2->setReadOnly(false);
-        ui->txtDescripcionT3->setReadOnly(false);
-        ui->txtMovil1->setReadOnly(false);
-        ui->txtMovil2->setReadOnly(false);
-        ui->txtNombre->setReadOnly(false);
-        ui->txtTelefono1->setReadOnly(false);
-        ui->txtTelefono2->setReadOnly(false);
-        ui->txtTelefono3->setReadOnly(false);
-        ui->txtCargo->setReadOnly(false);
-        ui->txtemail_contacto->setReadOnly(false);
-        ui->txtNombre->setFocus();
+        if(ui->btnGuardar->isEnabled())
+        {
+            ui->btnGuardarContacto->setVisible("true");
+            ui->txtDescripcionM1->setReadOnly(false);
+            ui->txtDescripcionM2->setReadOnly(false);
+            ui->txtDescripcionT1->setReadOnly(false);
+            ui->txtDescripcionT2->setReadOnly(false);
+            ui->txtDescripcionT3->setReadOnly(false);
+            ui->txtMovil1->setReadOnly(false);
+            ui->txtMovil2->setReadOnly(false);
+            ui->txtNombre->setReadOnly(false);
+            ui->txtTelefono1->setReadOnly(false);
+            ui->txtTelefono2->setReadOnly(false);
+            ui->txtTelefono3->setReadOnly(false);
+            ui->txtCargo->setReadOnly(false);
+            ui->txtemail_contacto->setReadOnly(false);
+            ui->txtNombre->setFocus();
+        }
     }
 }
 
@@ -1230,4 +1237,10 @@ void frmProveedores::on_txtBuscar_textEdited(const QString &arg1)
 {
     Q_UNUSED(arg1);
     filter_table();
+}
+
+void frmProveedores::on_tablaContactos_doubleClicked(const QModelIndex &index)
+{
+
+        editar_contacto();
 }

@@ -9,7 +9,7 @@
 #include "../Zona_Ventas/factura.h"
 #include"../Auxiliares/datedelegate.h"
 #include"../Auxiliares/monetarydelegate.h"
-
+#include"../Zona_Maestros/transportistas.h"
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -145,6 +145,12 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
             this,SLOT(SpinGastoDist2_valueChanged(double)));
     connect(ui->SpinGastoDist3,SIGNAL(valueChanged(double)),
             this,SLOT(SpinGastoDist3_valueChanged(double)));
+
+    //----------------------
+    // Control de eventos
+    //----------------------
+    ui->txtcodigo_cliente->installEventFilter(this);
+    ui->txtcodigo_transportista->installEventFilter(this);
 }
 
 FrmPedidos::~FrmPedidos()
@@ -259,6 +265,17 @@ void FrmPedidos::LLenarCampos()
     helper.fillTable("empresa","lin_ped",filter);
     helper.set_tipo_dto_tarifa(oCliente3->tipo_dto_tarifa);
     helper.setId_cliente(oCliente3->id);
+    //----------------
+    // Transportista
+    //----------------
+    transportistas oTrans(this);
+    QStringList condiciones,extras;
+    condiciones << QString("id=%1").arg(oPedido->id_transportista);
+    extras << "";
+    oTrans.recuperar(condiciones,extras);
+    ui->txtcodigo_transportista->setText(oTrans.h_transportista.value("codigo").toString());
+    ui->txtTransportista->setText(oTrans.h_transportista.value("transportista").toString());
+
 }
 
 void FrmPedidos::LLenarCamposCliente()
@@ -605,7 +622,56 @@ void FrmPedidos::calcular_iva_gastos()
 //                 Configuracion_global->MonedatoDouble(ui->txtiva->text()) - ui->spiniva_gasto1->value(),
 //                 Configuracion_global->MonedatoDouble(ui->txtrec->text()),
 //                 Configuracion_global->MonedatoDouble(ui->txttotal->text()),
-//                 "");
+    //                 "");
+}
+
+void FrmPedidos::buscar_transportista()
+{
+    db_consulta_view consulta;
+    QStringList campos;
+    campos <<"codigo" <<"transportista";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("transportista");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo,transportista from transportista");
+    QStringList cabecera;
+    QVariantList tamanos;
+    cabecera  << tr("Código") << tr("Nombre");
+    tamanos <<"0" << "100" << "300";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Transportistas");
+    if(consulta.exec())
+    {
+        int id = consulta.get_id();
+        transportistas oTrans(this);
+        QStringList condiciones,extras;
+        condiciones <<QString("id=%1").arg(id);
+        extras << "";
+        oTrans.recuperar(condiciones,extras);
+        ui->txtcodigo_transportista->setText(oTrans.h_transportista.value("codigo").toString());
+        ui->txtTransportista->setText(oTrans.h_transportista.value("transportista").toString());
+        oPedido->id_transportista = oTrans.h_transportista.value("id").toInt();
+    }
+}
+
+bool FrmPedidos::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if(obj == ui->txtcodigo_transportista)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                buscar_transportista();
+        }
+        if(obj == ui->txtcodigo_cliente)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                on_botBuscarCliente_clicked();
+        }
+        return false;
+    }
+
 }
 
 void FrmPedidos::on_btnSiguiente_clicked()

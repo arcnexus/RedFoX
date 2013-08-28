@@ -49,6 +49,50 @@ QMap<int, QSqlRecord> SqlCalls::SelectRecord(QString table, QStringList clausula
     return lista;
 }
 
+QMap<int, QSqlRecord> SqlCalls::SelectRecord(QString table, QStringList clausulas,QStringList extras, QSqlDatabase database, QString &error)
+{
+    QString query;
+    QTextStream s(&query);
+
+    s << "SELECT * FROM " << table;
+    if(!clausulas.isEmpty())
+    {
+        s << " WHERE ";
+        QStringListIterator i(clausulas);
+        while (i.hasNext())
+        {
+            QString aux = i.next();
+            s << aux;
+            if(i.hasNext())
+                s<< " AND ";
+        }
+    }
+    if(!extras.isEmpty())
+    {
+        s << " ";
+        QStringListIterator i(extras);
+        while (i.hasNext())
+        {
+            QString aux = i.next();
+            s << aux;
+            if(i.hasNext())
+                s<< " ";
+        }
+    }
+    s<<";";
+    QSqlQuery q(database);
+    q.prepare(query);
+    QMap<int, QSqlRecord> lista;
+    if(q.exec())
+    {
+        while (q.next())
+            lista.insert(q.record().value("id").toInt(),q.record());
+    }
+    else
+        error = q.lastError().text();
+    return lista;
+}
+
 QMap<int, QSqlRecord> SqlCalls::SelectRecord(QString table, QString clausulas, QSqlDatabase database, QString &error)
 {
     QStringList l;

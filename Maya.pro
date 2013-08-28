@@ -193,7 +193,8 @@ SOURCES += main.cpp\
     EditorReports/savetobdfrm.cpp \
     Almacen/frmexcepciones.cpp \
     Almacen/frmkit.cpp \
-    Zona_Maestros/frmtransportistas.cpp
+    Zona_Maestros/frmtransportistas.cpp \
+    Zona_Maestros/transportistas.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -351,7 +352,8 @@ HEADERS  += mainwindow.h \
     EditorReports/savetobdfrm.h \
     Almacen/frmexcepciones.h \
     Almacen/frmkit.h \
-    Zona_Maestros/frmtransportistas.h
+    Zona_Maestros/frmtransportistas.h \
+    Zona_Maestros/transportistas.h
 
 
 
