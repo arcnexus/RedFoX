@@ -23,7 +23,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->setupUi(this);
 
     ui->combo_Pais->setModel(Configuracion_global->paises_model);
-    ui->combo_Pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+   // ui->combo_Pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de presupuestos a clientes"));
 

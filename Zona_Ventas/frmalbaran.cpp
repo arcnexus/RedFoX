@@ -29,9 +29,9 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     push->setToolTip(tr("Gestión de albaranes a clientes"));
 
     ui->comboPais->setModel(Configuracion_global->paises_model);
-    ui->comboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+  //  ui->comboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
     ui->cboPais_entrega->setModel(Configuracion_global->paises_model);
-    ui->cboPais_entrega->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+    //ui->cboPais_entrega->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
 
     ui->txtporc_iva1->setText(Configuracion_global->ivaList.at(0));

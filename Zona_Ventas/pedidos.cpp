@@ -206,7 +206,7 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             cp_entrega = r.value("cp_entrega").toString();
             poblacion_entrega = r.value("poblacion_entrega").toString();
             provincia_entrega = r.value("provincia_entrega").toString();
-            id_pais_entrega = r.value("pais_entrega").toInt();
+            id_pais_entrega = r.value("id_pais_entrega").toInt();
             pais_entrega = Configuracion_global->Devolver_pais(id_pais_entrega);
             email_entrega = r.value("email_entrega").toString();
             comentarios_entrega = r.value("comentarios_entrega").toString();

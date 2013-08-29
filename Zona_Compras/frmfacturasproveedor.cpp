@@ -19,7 +19,7 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     bloquearcampos(true);
 
     ui->combo_pais->setModel(Configuracion_global->paises_model);
-    ui->combo_pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+    //ui->combo_pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de facturas de proveedores/acreeedores"));
 

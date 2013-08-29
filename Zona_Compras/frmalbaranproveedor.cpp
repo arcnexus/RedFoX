@@ -21,7 +21,7 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de albaranes de proveedor"));
     ui->cbo_pais->setModel(Configuracion_global->paises_model);
-    ui->cbo_pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+    //ui->cbo_pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
     helper.set_Tipo(true);
     helper.help_table(ui->Lineas);

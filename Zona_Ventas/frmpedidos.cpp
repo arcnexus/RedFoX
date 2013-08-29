@@ -20,18 +20,16 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     push(new QPushButton(QIcon(":/Icons/PNG/pedidos_cli.png"),"",this))
 {
     ui->setupUi(this);
-    QSqlQueryModel *pais = new QSqlQueryModel(this);
-    pais->setQuery("select pais from paises order by pais",Configuracion_global->groupDB);
+//    QSqlQueryModel *pais = new QSqlQueryModel(this);
+//    pais->setQuery("select pais from paises order by pais",Configuracion_global->groupDB);
 
-    ui->cboPais->setModel(pais);
+    ui->cboPais->setModel(Configuracion_global->paises_model);
+    ui->cbopais_entrega->setModel(Configuracion_global->paises_model);
+    ui->cboPais->setCurrentIndex(-1);
+    ui->cbopais_entrega->setCurrentIndex(-1);
     // Pongo valores por defecto
     ui->lbfacturado->setVisible(false);
     ui->lbimpreso->setVisible(false);
-    ui->lblNumFactura->setVisible(false);
-    ui->txtcNumFra->setVisible(false);
-    ui->lblAlbaran->setVisible(false);
-    ui->txtalbaran->setVisible(false);
-    ui->txtfecha_factura->setVisible(false);
 
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de pedidos de clientes"));
@@ -179,15 +177,8 @@ void FrmPedidos::LLenarCampos()
     ui->txtprovincia->setText(oPedido->provincia);
     ui->txtcp->setText(oPedido->cp);
 
-    QList<QString> keys = Configuracion_global->paises.uniqueKeys();
-    for (int i = 0;i<keys.size();i++)
-    {
-        if(Configuracion_global->paises[keys.at(i)].value("id").toInt() == oPedido->id_pais)
-        {
-            int index = ui->cboPais->findText(keys.at(i));
-            ui->cboPais->setCurrentIndex(index);
-        }
-    }
+    int index = ui->cboPais->findText(Configuracion_global->Devolver_pais(oPedido->id_pais));
+    ui->cboPais->setCurrentIndex(index);
 
     ui->txtcif->setText(oPedido->cif);
     ui->chklporc_rec->setChecked(oPedido->recargo_equivalencia==1);
@@ -234,8 +225,6 @@ void FrmPedidos::LLenarCampos()
     ui->lbimpreso->setVisible(oPedido->impreso == 1);
 
     ui->lbfacturado->setVisible(oPedido->facturado == 1);
-    ui->txtfecha_factura->setVisible(oPedido->facturado == 1);
-    ui->txtcNumFra->setVisible(oPedido->facturado == 1);
     ui->txtcNumFra->setText(oPedido->factura);
     ui->txtfecha_factura->setDate(oPedido->fecha_factura);
 
@@ -248,7 +237,7 @@ void FrmPedidos::LLenarCampos()
     ui->txtcp_entrega->setText(oPedido->cp_entrega);
     ui->txtpoblacion_entrega->setText(oPedido->poblacion_entrega);
     ui->txtprovincia_entrega->setText(oPedido->provincia_entrega);
-    int index = ui->cbopais_entrega->findText(Configuracion_global->Devolver_pais(oPedido->id_pais_entrega));
+    index = ui->cbopais_entrega->findText(Configuracion_global->Devolver_pais(oPedido->id_pais_entrega));
     ui->cbopais_entrega->setCurrentIndex(index);
     ui->txtemail_alternativo->setText(oPedido->email_entrega);
     ui->txtcomentarios_alternativo->setText(oPedido->comentarios_entrega);
@@ -502,13 +491,7 @@ void FrmPedidos::LLenarPedido()
     oPedido->poblacion=ui->txtpoblacion->text();
     oPedido->provincia=ui->txtprovincia->text();
     oPedido->cp=ui->txtcp->text();
-
-
-    oPedido->id_pais = Configuracion_global->paises[ui->cboPais->currentText()].value("id").toInt();
-
-    int i = ui->cboPais->findText(oPedido->pais);
-    ui->cboPais->setCurrentIndex(i);
-
+    oPedido->id_pais = Configuracion_global->Devolver_id_pais(ui->cboPais->currentText());
     oPedido->cif=ui->txtcif->text();
     oPedido->recargo_equivalencia=ui->chklporc_rec->isChecked();
     oPedido->subtotal=ui->txtsubtotal->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
@@ -1229,6 +1212,7 @@ void FrmPedidos::convertir_enFactura()
         if(QMessageBox::question(this,tr("Pedidos a proveedores"),tr("¿Desea realmente facturar este pedido?"),
                                  tr("No"),tr("Sí"))==QMessageBox::Accepted)
         {
+            convertir_ealbaran();
             LLenarPedido();
             Factura oFactura(this);
             Configuracion_global->empresaDB.transaction();

@@ -1355,9 +1355,9 @@ QString ReportRenderer::getRelationField(QString s , QSqlRecord r)
         }
         //TODO others db
         QSqlDatabase db;
-        if(s.startsWith("Gen"))
+        if(key.startsWith("Gen"))
             db = QSqlDatabase::database("grupo");
-        else if(s.startsWith("Emp"))
+        else if(key.startsWith("Emp"))
             db = QSqlDatabase::database("empresa");
 
         QSqlQuery q(db);

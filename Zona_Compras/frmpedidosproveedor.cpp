@@ -28,7 +28,7 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
 
     //oProveedor = new Proveedor(this);
     ui->combo_pais->setModel(Configuracion_global->paises_model);
-    ui->combo_pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+    //ui->combo_pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
     helper.set_Tipo(true);
     helper.help_table(ui->Lineas);

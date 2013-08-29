@@ -38,7 +38,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
     }
 
     ui->comboPais->setModel(Configuracion_global->paises_model);
-    ui->comboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+    //ui->comboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de facturas a clientes"));
     // Pongo valores por defecto

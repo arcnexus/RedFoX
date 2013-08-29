@@ -117,10 +117,10 @@ frmClientes::frmClientes(QWidget *parent) :
 
     // Rellenar Paises:
     ui->cboPais->setModel(Configuracion_global->paises_model);
-    ui->cboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+  //  ui->cboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
     ui->cbopaisAlternativa->setModel(Configuracion_global->paises_model);
-    ui->cbopaisAlternativa->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+ //   ui->cbopaisAlternativa->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
     // rellenar combo idiomas
     QSqlQueryModel *qmidiomas = new QSqlQueryModel(this);

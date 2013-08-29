@@ -125,7 +125,8 @@ public:
     QString setTipoIva(int idIva);
 
     QHash <QString,QSqlRecord> paises;
-    QSqlTableModel* paises_model;
+    //QSqlTableModel* paises_model;
+    QSqlQueryModel *paises_model;
     void Cargar_paises();
 
     int Devolver_id_pais(QString pais);
