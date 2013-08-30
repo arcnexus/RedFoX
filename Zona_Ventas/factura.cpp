@@ -144,155 +144,94 @@ bool Factura::AnadirFactura()
 bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
 {
     bool succes = true;
-    QSqlQuery cab_fac(Configuracion_global->empresaDB);
-    cab_fac.prepare( "UPDATE cab_fac set "
-                     "codigo_cliente = :codigo_cliente,"
-                     "serie =:serie,"
-                     "factura = :factura,"
-                     "fecha = :fecha,"
-                     "fecha_cobro = :fecha_cobro,"
-                     "id_cliente = :id_cliente,"
-                     "cliente = :cliente,"
-                     "direccion1 = :direccion1,"
-                     "direccion2 = :direccion2,"
-                     "cp=:cp,"
-                     "poblacion =:poblacion,"
-                     "provincia =:provincia,"
-                     "id_pais = :pais,"
-                     "cif = :cif,"
-                     "recargo_equivalencia = :recargo_equivalencia,"
-                     "subtotal =:subtotal,"
-                     "dto =:dto,"
-                     "dto_pp =:dto_pp,"
-                     "porc_dto =:porc_dto,"
-                     "porc_dto_pp =:porc_dto_pp,"
-                     "base =:base,"
-                     "iva = :iva,"
-                     "total = :total,"
-                     "impreso =:impreso,"
-                     "cobrado =:cobrado,"
-                     "contabilizado =:contabilizado,"
-                     "id_forma_pago =:id_forma_pago,"
-                     "forma_pago = :forma_pago,"
-                     "comentario =:comentario,"
-                     "base1 =:base1,"
-                     "base2 =:base2,"
-                     "base3 =:base3,"
-                     "base4 =:base4,"
-                     "porc_iva1 =:porc_iva1,"
-                     "porc_iva2 =:porc_iva2,"
-                     "porc_iva3 =:porc_iva3,"
-                     "porc_iva4 =:porc_iva4,"
-                     "iva1 =:iva1,"
-                     "iva2 =:iva2,"
-                     "iva3 =:iva3,"
-                     "iva4 =:iva4,"
-                     "total1=:total1,"
-                     "total2=:total2,"
-                     "total3=:total3,"
-                     "total4=:total4,"
-                     "porc_rec1 =:porc_rec1,"
-                     "porc_rec2 =:porc_rec2,"
-                     "porc_rec3 =:porc_rec3,"
-                     "porc_rec4 =:porc_rec4,"
-                     "rec1 =:rec1,"
-                     "rec2 =:rec2,"
-                     "rec3 =:rec3,"
-                     "rec4 =:rec4,"
-                     "total_recargo =:total_recargo,"
-                     "entregado_a_cuenta =:entregado_a_cuenta,"
-                     "importe_pendiente =:importe_pendiente,"
-                     "codigo_entidad =:codigo_entidad,"
-                     "oficina_entidad =:oficina_entidad,"
-                     "dc_cuenta =:dc_cuenta,"
-                     "cuenta_corriente =:cuenta_corriente,"
-                     "pedido_cliente =:pedido_cliente,"
-                     "id_transportista =:id_transportista,"
-                     "irpf =:irpf,"
-                     "irpf =:irpf,"
-                     "desc_gasto1 = :desc_gasto1,"
-                     "desc_gasto2 = :desc_gasto2,"
-                     "desc_gasto3 = :desc_gasto3,"
-                     "imp_gasto1 =:imp_gasto1,"
-                     "imp_gasto2 =:imp_gasto2,"
-                     "imp_gasto3 =:imp_gasto3"
-                     " where id=:id");
+    QHash <QString,QVariant> cab_fac;
+    QString error;
+    QString clausula = QString("id= %1").arg(nid_factura);
+    //---------------------------------
+    // Pasamos valores reales al QHash
+    //---------------------------------
+    cab_fac["codigo_cliente"] = this->codigo_cliente;
+    cab_fac["factura"] = this->factura;
+    cab_fac["serie"] = this->serie;
+    cab_fac["fecha"] = this->fecha;
+    cab_fac["fecha_cobro"] = this->fecha_cobro;
+    cab_fac["id_cliente"], this->id_cliente;
+    cab_fac["cliente"] = this->cliente;
+    cab_fac["direccion1"] = this->direccion1;
+    cab_fac["direccion2"] = this->direccion2;
+    cab_fac["cp"] = this->cp;
+    cab_fac["poblacion"] = this->poblacion;
+    cab_fac["provincia"] = this->provincia;
+    cab_fac["id_pais"] = this->id_pais;
+    cab_fac["direccion1_entrega"] = this->direccion1_entrega;
+    cab_fac["direccion2_entrega"] = this->direccion2_entrega;
+    cab_fac["cp_entrega"] = this->cp_entrega;
+    cab_fac["poblacion_entrega"] = this->poblacion_entrega;
+    cab_fac["provincia_entrega"] = this->provincia_entrega;
+    cab_fac["id_pais_entrega"] = this->id_pais_entrega;
+    cab_fac["cif"] = this->cif;
+    cab_fac["recargo_equivalencia"] = this->recargo_equivalencia;
+    cab_fac["subtotal"] = this->subtotal;
+    cab_fac["porc_dto"] = this->porc_dto;
+    cab_fac["porc_dto_pp"] = this->porc_dto_pp;
+    cab_fac["dto"] = this->dto;
+    cab_fac["dto_pp"] = this->dto_pp;
+    cab_fac["base"] = this->base;
+    cab_fac["iva"] = this->iva;
+    cab_fac["total"] = this->total;
+    cab_fac["impreso"] = this->impreso;
+    cab_fac["cobrado"] = this->cobrado;
+    cab_fac["contabilizado"] = this->contablilizada;
+    cab_fac["id_forma_pago"] = this->id_forma_pago;
+    cab_fac["forma_pago"] = this->forma_pago;
+    cab_fac["comentario"] = this->comentario;
+    cab_fac["base1"] = this->base1;
+    cab_fac["base2"] = this->base2;
+    cab_fac["base3"] = this->base3;
+    cab_fac["base4"] = this->base4;
+    cab_fac["porc_iva1"] = this->porc_iva1;
+    cab_fac["porc_iva2"] = this->porc_iva2;
+    cab_fac["porc_iva3"] = this->porc_iva3;
+    cab_fac["porc_iva4"] = this->porc_iva4;
+    cab_fac["iva1"] = this->iva1;
+    cab_fac["iva2"] = this->iva2;
+    cab_fac["iva3"] = this->iva3;
+    cab_fac["iva4"] = this->iva4;
+    cab_fac["total1"] = this->total1;
+    cab_fac["total2"] = this->total2;
+    cab_fac["total3"] = this->total3;
+    cab_fac["total4"] = this->total4;
+    cab_fac["porc_rec1"] = this->porc_rec1;
+    cab_fac["porc_rec2"] = this->porc_rec2;
+    cab_fac["porc_rec3"] = this->porc_rec3;
+    cab_fac["porc_rec4"] = this->porc_rec4;
+    cab_fac["rec1"] = this->rec1;
+    cab_fac["rec2"] = this->rec2;
+    cab_fac["rec3"] = this->rec3;
+    cab_fac["rec4"] = this->rec4;
+    cab_fac["total_recargo"] = this->total_recargo;
+    cab_fac["entregado_a_cuenta"] = this->entregado_a_cuenta;
+    cab_fac["importe_pendiente"] = this->importe_pendiente;
+    cab_fac["codigo_entidad"] = this->codigo_entidad;
+    cab_fac["oficina_entidad"] = this->oficina_entidad;
+    cab_fac["dc_cuenta"] = this->dc_cuenta;
+    cab_fac["cuenta_corriente"] = this->cuenta_corriente;
+    cab_fac["pedido_cliente"] = this->pedido_cliente;
+    cab_fac["irpf"] = this->irpf;
+    cab_fac["irpf"] = this->irpf;
+    cab_fac["id_transportista"] = this->id_transportista;
+    cab_fac["desc_gasto1"] = this->desc_gasto1;
+    cab_fac["desc_gasto2"] = this->desc_gasto2;
+    cab_fac["desc_gasto3"] = this->desc_gasto3;
+    cab_fac["imp_gasto1"] = this->imp_gasto1;
+    cab_fac["imp_gasto2"] = this->imp_gasto2;
+    cab_fac["imp_gasto3"] = this->imp_gasto3;
 
-    // Pasamos valores reales a la Select
-    cab_fac.bindValue(":id",nid_factura);
-    cab_fac.bindValue(":codigo_cliente",this->codigo_cliente);
-    cab_fac.bindValue(":factura",this->factura);
-    cab_fac.bindValue(":serie",this->serie);
-    cab_fac.bindValue(":fecha",this->fecha);
-    cab_fac.bindValue(":fecha_cobro",this->fecha_cobro);
-    cab_fac.bindValue(":id_cliente", this->id_cliente);
-    cab_fac.bindValue(":cliente",this->cliente);
-    cab_fac.bindValue(":direccion1",this->direccion1);
-    cab_fac.bindValue(":direccion2",this->direccion2);
-    cab_fac.bindValue(":cp",this->cp);
-    cab_fac.bindValue(":poblacion",this->poblacion);
-    cab_fac.bindValue(":provincia",this->provincia);
-    cab_fac.bindValue(":pais",this->id_pais);
-    cab_fac.bindValue(":cif",this->cif);
-    cab_fac.bindValue(":recargo_equivalencia",this->recargo_equivalencia);
-    cab_fac.bindValue(":subtotal",this->subtotal);
-    cab_fac.bindValue(":porc_dto",this->porc_dto);
-    cab_fac.bindValue(":porc_dto_pp",this->porc_dto_pp);
-    cab_fac.bindValue(":dto",this->dto);
-    cab_fac.bindValue(":dto_pp",this->dto_pp);
-    cab_fac.bindValue(":base",this->base);
-    cab_fac.bindValue(":iva",this->iva);
-    cab_fac.bindValue(":total",this->total);
-    cab_fac.bindValue(":impreso",this->impreso);
-    cab_fac.bindValue(":cobrado",this->cobrado);
-    cab_fac.bindValue(":contabilizado",this->contablilizada);
-    cab_fac.bindValue(":id_forma_pago",this->id_forma_pago);
-    cab_fac.bindValue(":forma_pago",this->forma_pago);
-    cab_fac.bindValue(":comentario",this->comentario);
-    cab_fac.bindValue(":base1",this->base1);
-    cab_fac.bindValue(":base2",this->base2);
-    cab_fac.bindValue(":base3",this->base3);
-    cab_fac.bindValue(":base4",this->base4);
-    cab_fac.bindValue(":porc_iva1",this->porc_iva1);
-    cab_fac.bindValue(":porc_iva2",this->porc_iva2);
-    cab_fac.bindValue(":porc_iva3",this->porc_iva3);
-    cab_fac.bindValue(":porc_iva4",this->porc_iva4);
-    cab_fac.bindValue(":iva1",this->iva1);
-    cab_fac.bindValue(":iva2",this->iva2);
-    cab_fac.bindValue(":iva3",this->iva3);
-    cab_fac.bindValue(":iva4",this->iva4);
-    cab_fac.bindValue(":total1",this->total1);
-    cab_fac.bindValue(":total2",this->total2);
-    cab_fac.bindValue(":total3",this->total3);
-    cab_fac.bindValue(":total4",this->total4);
-    cab_fac.bindValue(":porc_rec1",this->porc_rec1);
-    cab_fac.bindValue(":porc_rec2",this->porc_rec2);
-    cab_fac.bindValue(":porc_rec3",this->porc_rec3);
-    cab_fac.bindValue(":porc_rec4",this->porc_rec4);
-    cab_fac.bindValue(":rec1",this->rec1);
-    cab_fac.bindValue(":rec2",this->rec2);
-    cab_fac.bindValue(":rec3",this->rec3);
-    cab_fac.bindValue(":rec4",this->rec4);
-    cab_fac.bindValue(":total_recargo",this->total_recargo);
-    cab_fac.bindValue(":entregado_a_cuenta",this->entregado_a_cuenta);
-    cab_fac.bindValue(":importe_pendiente",this->importe_pendiente);
-    cab_fac.bindValue(":codigo_entidad",this->codigo_entidad);
-    cab_fac.bindValue(":oficina_entidad",this->oficina_entidad);
-    cab_fac.bindValue(":dc_cuenta",this->dc_cuenta);
-    cab_fac.bindValue(":cuenta_corriente",this->cuenta_corriente);
-    cab_fac.bindValue(":pedido_cliente",this->pedido_cliente);
-    cab_fac.bindValue(":irpf",this->irpf);
-    cab_fac.bindValue(":irpf",this->irpf);
-    cab_fac.bindValue(":id_transportista",this->id_transportista);
-    cab_fac.bindValue("desc_gasto1",this->desc_gasto1);
-    cab_fac.bindValue("desc_gasto2",this->desc_gasto2);
-    cab_fac.bindValue("desc_gasto3",this->desc_gasto3);
-    cab_fac.bindValue("imp_gasto1",this->imp_gasto1);
-    cab_fac.bindValue("imp_gasto2",this->imp_gasto2);
-    cab_fac.bindValue("imp_gasto3",this->imp_gasto3);
-    if(!cab_fac.exec())
+    bool updated = SqlCalls::SqlUpdate(cab_fac,"cab_fac",Configuracion_global->empresaDB,clausula,error);
+
+    if(!updated)
     {
-        QMessageBox::critical(qApp->activeWindow(),tr("error al guardar datos Factura:"), cab_fac.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(),tr("error al guardar datos Factura:"), error);
         succes =  false;
     }
     else
@@ -443,6 +382,12 @@ void Factura::cargar(QSqlRecord *registro)
     this->poblacion = registro->field("poblacion").value().toString();
     this->provincia = registro->field("provincia").value().toString();
     this->id_pais = registro->field("id_pais").value().toInt();
+    this->direccion1_entrega = registro->field("direccion1_entrega").value().toString();
+    this->direccion2_entrega = registro->field("direccion2_entrega").value().toString();
+    this->cp_entrega = registro->field("cp_entrega").value().toString();
+    this->poblacion_entrega = registro->field("poblacion_entrega").value().toString();
+    this->provincia_entrega = registro->field("provincia_entrega").value().toString();
+    this->id_pais_entrega = registro->field("id_pais_entrega").value().toInt();
     this->cif =registro->field("cif").value().toString();
     this->recargo_equivalencia = registro->field("recargo_equivalencia").value().toBool();
     this->subtotal = registro->field("subtotal").value().toDouble();
@@ -547,6 +492,7 @@ bool Factura::BorrarLineasFactura(int id_lin)
 
 bool Factura::CobrarFactura()
 {
+
     // marcar factura como cobrada
     this->cobrado = true;
     QSqlQuery Cliente(Configuracion_global->groupDB);

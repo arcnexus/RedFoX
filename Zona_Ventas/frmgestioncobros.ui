@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>683</width>
-    <height>338</height>
+    <width>746</width>
+    <height>492</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -193,17 +193,10 @@ font: 7pt &quot;Cantarell&quot;;</string>
      </layout>
     </widget>
    </item>
-   <item row="1" column="3">
-    <widget class="QPushButton" name="btncobro_parcial">
-     <property name="text">
-      <string>Cobro parcial</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="2">
     <widget class="QPushButton" name="btncobro_total">
      <property name="text">
-      <string>Cobro total</string>
+      <string>Efectuar cobro</string>
      </property>
     </widget>
    </item>

@@ -23,6 +23,12 @@ public:
     QString poblacion;
     QString provincia;
     int id_pais;
+    QString direccion1_entrega;
+    QString direccion2_entrega;
+    QString cp_entrega;
+    QString poblacion_entrega;
+    QString provincia_entrega;
+    int id_pais_entrega;
     QString cif;
     bool recargo_equivalencia;
     double subtotal;

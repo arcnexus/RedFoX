@@ -1,5 +1,6 @@
 #include "frmgestioncobros.h"
 #include "ui_frmgestioncobros.h"
+#include "../Zona_Ventas/frmgestioncobros2.h"
 
 frmGestionCobros::frmGestionCobros(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -63,5 +64,13 @@ void frmGestionCobros::on_txtbuscar_cliente_textChanged(const QString &arg1)
     modelo_clientes->setHeaderData(2,Qt::Horizontal,tr("Denominación"));
     modelo_clientes->setHeaderData(3,Qt::Horizontal,tr("Cif/Nif"));
 
+
+}
+
+void frmGestionCobros::on_btncobro_total_clicked()
+{
+    FrmGestionCobros2 g2(this);
+   // g2.valores.pendiente = 123.34;
+    g2.exec();
 
 }

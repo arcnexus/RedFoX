@@ -30,7 +30,7 @@
    <item row="1" column="0" colspan="2">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_5">
@@ -1391,6 +1391,12 @@ color: rgb(255, 255, 255);</string>
                  <height>27</height>
                 </size>
                </property>
+               <property name="maximumSize">
+                <size>
+                 <width>120</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -1408,6 +1414,12 @@ color: rgb(255, 255, 255);</string>
                 <size>
                  <width>0</width>
                  <height>27</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>120</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -1502,9 +1514,15 @@ color: rgb(255, 255, 255);</string>
               </item>
               <item row="3" column="1">
                <widget class="QLineEdit" name="txtCp_entrega">
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
-                  <width>71</width>
+                  <width>100</width>
                   <height>16777215</height>
                  </size>
                 </property>

@@ -27,6 +27,7 @@ private:
     QAction menuButton;
 private slots:
     void on_txtbuscar_cliente_textChanged(const QString &arg1);
+    void on_btncobro_total_clicked();
 };
 
 #endif // FRMGESTIONCOBROS_H

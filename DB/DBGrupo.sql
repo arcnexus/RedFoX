@@ -508,12 +508,9 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`formpago` (
   `dia_pago2` INT(11) NULL DEFAULT '0' ,
   `dia_pago3` INT(11) NULL DEFAULT '0' ,
   `dia_pago4` INT(11) NULL DEFAULT '0' ,
-  `dias1` INT(11) NULL DEFAULT '0' ,
-  `dias2` INT(11) NULL DEFAULT '0' ,
-  `dias3` INT(11) NULL DEFAULT '0' ,
-  `dias4` INT(11) NULL DEFAULT '0' ,
+  `dias_entre_plazos` INT(11) NULL DEFAULT '0' ,
   `cuenta_cont_pago` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
-  `numero_plazos` INT(11) NULL DEFAULT NULL ,
+  `numero_plazos` INT(11) NULL DEFAULT '1' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1

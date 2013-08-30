@@ -1207,13 +1207,37 @@ void FrmPedidos::convertir_ealbaran()
 
 void FrmPedidos::convertir_enFactura()
 {
-    if(oPedido->factura == "0" || oPedido->factura.isEmpty())
+    if(oPedido->editable)
     {
         if(QMessageBox::question(this,tr("Pedidos a proveedores"),tr("¿Desea realmente facturar este pedido?"),
                                  tr("No"),tr("Sí"))==QMessageBox::Accepted)
         {
             convertir_ealbaran();
             LLenarPedido();
+            //--------------------
+            // Preguntamos serie
+            //--------------------
+            QDialog* dlg = new QDialog(this);
+            dlg->setWindowTitle(tr("Seleccione serie factura"));
+            dlg->resize(270,150);
+            QComboBox* box = new QComboBox(dlg);
+            QPushButton*  btn = new QPushButton("Aceptar",dlg);
+            QVBoxLayout lay(dlg);
+
+            lay.addWidget(box);
+            lay.addWidget(btn);
+
+            dlg->setLayout(&lay);
+
+            QSqlQueryModel *l = new QSqlQueryModel(this);
+            l->setQuery("select serie from series",Configuracion_global->empresaDB);
+            box->setModel(l);
+
+            connect(btn,SIGNAL(clicked()),dlg,SLOT(accept()));
+            dlg->exec();//aki se podria poner otro boton y cancelar todo?
+
+            QString serie = box->currentText();
+            dlg->deleteLater();
             Factura oFactura(this);
             Configuracion_global->empresaDB.transaction();
             bool transaccion = true;
@@ -1222,24 +1246,39 @@ void FrmPedidos::convertir_enFactura()
             //-----------------------
             oFactura.AnadirFactura();
             oCliente3->Recuperar("select * from clientes where codigo_cliente ='"+ui->txtcodigo_cliente->text()+"'");
-            oFactura.cif = oCliente3->cif_nif;
-            oFactura.cliente = oCliente3->nombre_fiscal;
-            oFactura.codigo_cliente = oCliente3->codigo_cliente;
+            oFactura.serie = serie;
+            oFactura.cif = oPedido->cif;
+            oFactura.cliente = oPedido->cliente;
+            oFactura.codigo_cliente = oPedido->codigo_cliente;
             oFactura.codigo_entidad = oCliente3->entidad_bancaria;
-            oFactura.cp = oCliente3->cp;
-            oFactura.dc_cuenta = oCliente3->dc;
-            oFactura.direccion1 = oCliente3->direccion1;
-            oFactura.direccion2 = oCliente3->direccion2;
-            oFactura.forma_pago = oCliente3->forma_pago;
             oFactura.cuenta_corriente = oCliente3->cuenta_corriente;
             oFactura.oficina_entidad = oCliente3->oficina_bancaria;
+            oFactura.dc_cuenta = oCliente3->dc;
+            oFactura.cp = oPedido->cp;
+            oFactura.direccion1 = oPedido->direccion1;
+            oFactura.direccion2 = oPedido->direccion2;
+            // TODO FORMA PAGO PEDIDOS.
+            //oFactura.forma_pago = oPedido->forma_pago;
+
             oFactura.pedido_cliente = ui->txtpedido->text().toInt();
-            oFactura.poblacion =oCliente3->poblacion;
-            oFactura.provincia = oCliente3->provincia;
+            oFactura.poblacion =oPedido->poblacion;
+            oFactura.provincia = oPedido->provincia;
             oFactura.fecha = QDate::currentDate();
-            oFactura.id_pais = oCliente3->id_pais;
+            oFactura.id_pais = oPedido->id_pais;
+            oFactura.direccion1 = oPedido->direccion1;
+            oFactura.direccion2 = oPedido->direccion2;
+            oFactura.poblacion =oPedido->poblacion;
+            oFactura.provincia = oPedido->provincia;
+            oFactura.id_pais = oPedido->id_pais;
+
+            oFactura.direccion1_entrega = oPedido->direccion_entrega1;
+            oFactura.direccion2_entrega = oPedido->direccion_entrega2;
+            oFactura.poblacion_entrega =oPedido->poblacion_entrega;
+            oFactura.provincia_entrega = oPedido->provincia_entrega;
+            oFactura.id_pais_entrega = oPedido->id_pais_entrega;
+
             oFactura.id_forma_pago = Configuracion_global->Devolver_id_forma_pago(oCliente3->forma_pago);
-            oFactura.id_cliente = oCliente3->id;
+            oFactura.id_cliente = oPedido->id_cliente;
             oFactura.recargo_equivalencia = oCliente3->recargo_equivalencia;
             oFactura.dto = oCliente3->porc_dto_cliente;
             oFactura.porc_iva1 = Configuracion_global->ivaList.at(0).toInt();
@@ -1276,7 +1315,6 @@ void FrmPedidos::convertir_enFactura()
             // ----------------------------------
             // Creamos la cabecera de la factura
             //-----------------------------------
-            // TODO - pedir serie factura.
             oFactura.factura = oFactura.NuevoNumeroFactura("A");
             oFactura.GuardarFactura(oFactura.id,true);
             //-------------------
@@ -1287,25 +1325,24 @@ void FrmPedidos::convertir_enFactura()
 
             if(lineas_ped.exec("Select * from lin_ped where id_Cab ="+QString::number(oPedido->id)))
             {
+                QHash <QString, QVariant> h_lineas_fac;
+                QString error;
                 while (lineas_ped.next()) {
-                    lineas_fac.prepare("INSERT INTO lin_fac(id_Cab, id_articulo, codigo, cantidad,"
-                                       "descripcion, pvp, subtotal, porc_dto, dto, porc_iva, total)"
-                                       " VALUES (:id_Cab, :id_articulo,:codigo,:cantidad,"
-                                       ":descripcion,:pvp,:subtotal,:porc_dto,:dto,:porc_iva,"
-                                       ":total);");
-                    lineas_fac.bindValue(":id_Cab", oFactura.id);
-                    lineas_fac.bindValue(":id_articulo",lineas_ped.record().value("id_articulo").toInt());
-                    lineas_fac.bindValue(":codigo",lineas_ped.record().value("codigo").toString());
-                    lineas_fac.bindValue(":cantidad", lineas_ped.record().value("cantidad").toInt());
-                    lineas_fac.bindValue(":descripcion",lineas_ped.record().value("descripcion").toString());
-                    lineas_fac.bindValue(":pvp",lineas_ped.record().value("pvp").toDouble());
-                    lineas_fac.bindValue(":subtotal",lineas_ped.record().value("subtotal").toDouble());
-                    lineas_fac.bindValue(":porc_dto",lineas_ped.record().value("porc_dto").toDouble());
-                    lineas_fac.bindValue(":dto",lineas_ped.record().value("dto").toDouble());
-                    lineas_fac.bindValue(":porc_iva",lineas_ped.record().value("porc_iva").toDouble());
-                    lineas_fac.bindValue(":total",lineas_ped.record().value("total").toDouble());
 
-                    if(!lineas_fac.exec())
+                    h_lineas_fac["id_cab"] = oFactura.id;
+                    h_lineas_fac["id_articulo"] = lineas_ped.record().value("id_articulo").toInt();
+                    h_lineas_fac["codigo"] = lineas_ped.record().value("codigo").toString();
+                    h_lineas_fac["cantidad"] =  lineas_ped.record().value("cantidad").toInt();
+                    h_lineas_fac["descripcion"] = lineas_ped.record().value("descripcion").toString();
+                    h_lineas_fac["pvp"] = lineas_ped.record().value("precio").toDouble();
+                    h_lineas_fac["subtotal"] = lineas_ped.record().value("subtotal").toDouble();
+                    h_lineas_fac["porc_dto"] = lineas_ped.record().value("porc_dto").toDouble();
+                    h_lineas_fac["dto"] = lineas_ped.record().value("dto").toDouble();
+                    h_lineas_fac["porc_iva"] = lineas_ped.record().value("porc_iva").toDouble();
+                    h_lineas_fac["total"] = lineas_ped.record().value("total").toDouble();
+                    int new_id = SqlCalls::SqlInsert(h_lineas_fac,"lin_fac",Configuracion_global->empresaDB,error);
+
+                    if(new_id = -1)
                     {
                         QMessageBox::warning(this,tr("Pedidos cliente"),
                                              tr("Ocurrió un error al crear las líneas de factura: %1").arg(lineas_fac.lastError().text()));
@@ -1329,6 +1366,7 @@ void FrmPedidos::convertir_enFactura()
                 //-------------------------------------
                 oPedido->factura =oFactura.factura;
                 oPedido->facturado = true;
+                oPedido->editable = false;
                 oPedido->GuardarPedido(oPedido->id);
                 ui->txtcNumFra->setText(oPedido->factura);
                 ui->txtcNumFra->setVisible(true);

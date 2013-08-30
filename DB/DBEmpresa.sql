@@ -371,6 +371,13 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_fac` (
   `asiento` INT(11) NULL DEFAULT NULL ,
   `id_transportista` INT NULL DEFAULT '0',
   `ejercicio` INT(5) NULL DEFAULT NULL ,
+  `efectivo` DOUBLE NULL DEFAULT '0' ,
+  `tarjeta` DOUBLE NULL DEFAULT '0' ,
+  `transferencia` DOUBLE NULL DEFAULT '0' ,
+  `cheque` DOUBLE NULL DEFAULT '0' ,
+  `internet` DOUBLE NULL DEFAULT '0' ,
+  `pagado` DOUBLE NULL DEFAULT '0' ,
+  `pendiente` DOUBLE NULL DEFAULT '0' ,
   PRIMARY KEY (`id`, `id_cliente`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1

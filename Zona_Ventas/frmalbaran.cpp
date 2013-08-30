@@ -5,7 +5,8 @@
 #include "../Busquedas/db_consulta_view.h"
 #include "../Auxiliares/datedelegate.h"
 #include "../Auxiliares/monetarydelegate.h"
-#include"../Zona_Ventas/factura.h"
+#include "../Zona_Ventas/factura.h"
+#include "vencimientos.h"
 //
 #include "../Almacen/articulo.h"
 #include<math.h>
@@ -153,17 +154,8 @@ void FrmAlbaran::LLenarCampos() {
     ui->txtcp->setText(oAlbaran->cp);
     ui->txtpoblacion->setText(oAlbaran->poblacion);
     ui->txtprovincia->setText(oAlbaran->provincia);
-
-    QList<QString> keys = Configuracion_global->paises.uniqueKeys();
-    for (int i = 0;i<keys.size();i++)
-    {
-        if(Configuracion_global->paises[keys.at(i)].value("id").toInt() == oAlbaran->id_pais)
-        {
-            int index = ui->comboPais->findText(keys.at(i));
-            ui->comboPais->setCurrentIndex(index);
-        }
-    }
-
+    index = ui->comboPais->findText(Configuracion_global->Devolver_pais(oAlbaran->id_pais));
+    ui->comboPais->setCurrentIndex(index);
     ui->txtDireccion1_entrega->setText(oAlbaran->direccion1_entrega);
     ui->txtDireccion2_entrega->setText(oAlbaran->direccion2_entrega);
     ui->txtCp_entrega->setText(oAlbaran->cp_entrega);
@@ -1228,153 +1220,195 @@ void FrmAlbaran::on_btnAnadir_2_clicked()
 
 void FrmAlbaran::on_btnFacturar_clicked()
 {
-    if(QString(oAlbaran->factura).isEmpty()|| oAlbaran->factura == "0")
+    if(QMessageBox::question(this,tr("Gestión de Albaranes"),
+                             tr("¿Desea facturar este albarán?"),tr("No"),tr("Sí"))==QMessageBox::Accepted)
     {
-        QString c = QString("id = %1").arg(oAlbaran->id);
-        QString error;
-        QHash <QString, QVariant> h;
-        QMap<int, QSqlRecord> records = SqlCalls::SelectRecord("cab_alb",c,Configuracion_global->empresaDB,error);
-        QSqlRecord r = records.value(oAlbaran->id);
-        for(int i= 0; i< r.count();i++)
-            h.insert(r.fieldName(i),r.value(i));
-        // ---------------------------------
-        // Ajustes campos antes de insertar
-        //----------------------------------
-        h.insert("imp_gasto1",h.value("importe_gasto1").toDouble());
-        h.remove("importe_gasto1");
-        h.insert("imp_gasto2",h.value("importe_gasto2").toDouble());
-        h.remove("importe_gasto2");
-        h.insert("imp_gasto3",h.value("importe_gasto3").toDouble());
-        h.remove("importe_gasto3");
-
-        h.insert("comentario",h.value("comentarios").toString());
-        h.remove("comentarios");
-        h.remove("aprobado");
-        h.remove("impreso");
-        h.remove("fecha_aprobacion");
-        h.insert("iva",h.value("iva_total").toDouble());
-        h.remove("iva_total");
-        h.remove("atencion_de");
-        h.remove("importe_pendiente");
-        h.insert("subtotal",h.value("importe").toDouble());
-        h.remove("importe");
-        h.insert("desc_gasto1",h.value("gastos_distribuidos1").toString());
-        h.remove("gastos_distribuidos1");
-        h.insert("desc_gasto2",h.value("gastos_distribuidos2").toString());
-        h.remove("gastos_distribuidos2");
-        h.insert("desc_gasto3",h.value("gastos_distribuidos3").toString());
-        h.remove("gastos_distribuidos3");
-        h.remove("valido_hasta");
-        h.remove("lugar_entrega");
-        h.remove("importe_factura");
-        h.remove("presupuesto");
-        h.remove("id");
-        h.insert("pedido_cliente",h.value("pedido").toInt());
-        h.remove("pedido");
-        h.remove("albaran");
-        h.insert("base",h.value("base_total").toDouble());
-        h.remove("base_total");
-        h.remove("facturado");
-        h.insert("total",h.value("total_albaran"));
-        h.remove("total_albaran");
-        h.insert("recargo_equivalencia",h.value("rec_total"));
-        h.remove("rec_total");
-        h.remove("fecha_factura");
-
-       // h["total"] == ui->txttotal->text().replace(".","").replace(",",".").toDouble();
-        Factura oFactura;
         Configuracion_global->empresaDB.transaction();
 
-        QDialog* dlg = new QDialog(this);
-        dlg->setWindowTitle(tr("Seleccione serie factura"));
-        dlg->resize(270,150);
-        QComboBox* box = new QComboBox(dlg);
-        QPushButton*  btn = new QPushButton("Aceptar",dlg);
-        QVBoxLayout lay(dlg);
-
-        lay.addWidget(box);
-        lay.addWidget(btn);
-
-        dlg->setLayout(&lay);
-
-        QSqlQueryModel *l = new QSqlQueryModel(this);
-        l->setQuery("select serie from series",Configuracion_global->empresaDB);
-        box->setModel(l);
-
-        connect(btn,SIGNAL(clicked()),dlg,SLOT(accept()));
-        dlg->exec();//aki se podria poner otro boton y cancelar todo?
-
-        QString serie = box->currentText();
-        dlg->deleteLater();
-        QString fra =  oFactura.NuevoNumeroFactura(serie);
-        QString num = serie+"/"+ fra;
-        h.insert("factura",fra);
-        h["fecha"] = QDate::currentDate();
-        h["serie"] = serie;
-
-        int added = SqlCalls::SqlInsert(h,"cab_fac",Configuracion_global->empresaDB,error);
-        if(added>-1)
+        if(QString(oAlbaran->factura).isEmpty()|| oAlbaran->factura == "0")
         {
-            // -----------------
-            // Lineas de factura
-            // -----------------
-            int added_l;
-            QHash <QString, QVariant> h_l;
-            QString d = QString("id_cab = %1").arg(oAlbaran->id);
-            QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("lin_alb", d,Configuracion_global->empresaDB, error);
-              QMapIterator<int, QSqlRecord> i_l(map);
-              while (i_l.hasNext())
-              {
-                  i_l.next();
-                  QSqlRecord r_l = i_l.value();
-                  for(int i= 0; i< r_l.count();i++)
-                      h_l.insert(r_l.fieldName(i),r_l.value(i));
-                  h_l.remove("id");
-                  h_l["id_cab"] = added;
-                 added_l = SqlCalls::SqlInsert(h_l,"lin_fac",Configuracion_global->empresaDB,error);
-                 if(added_l == -1)
-                     break;
-              }
-            if(added_l == -1)
-            {
-                Configuracion_global->empresaDB.rollback();
-                qDebug() <<added;
-                qDebug() <<error;
-            } else
-            {
-                QHash <QString, QVariant> p;
+            QHash <QString,QVariant> cab_fac;
+            QString error;
+            //---------------------------------
+            // Pasamos valores reales al QHash
+            //---------------------------------
+            cab_fac["codigo_cliente"] = oAlbaran->codigo_cliente;
+            cab_fac["factura"] = oAlbaran->factura;
+            cab_fac["ejercicio"] = oAlbaran->ejercicio;
+            cab_fac["serie"] = oAlbaran->serie;
+            cab_fac["fecha"] = oAlbaran->fecha;
+            //TODO - vencimientos;
+            // cab_fac["fecha_cobro"] = oAlbaran->fecha_cobro;
+            cab_fac["id_cliente"] = oAlbaran->id_cliente;
+            cab_fac["cliente"] = oAlbaran->cliente;
+            cab_fac["direccion1"] = oAlbaran->direccion1;
+            cab_fac["direccion2"] = oAlbaran->direccion2;
+            cab_fac["cp"] = oAlbaran->cp;
+            cab_fac["poblacion"] = oAlbaran->poblacion;
+            cab_fac["provincia"] = oAlbaran->provincia;
+            cab_fac["id_pais"] = oAlbaran->id_pais;
+            cab_fac["direccion1_entrega"] = oAlbaran->direccion1_entrega;
+            cab_fac["direccion2_entrega"] = oAlbaran->direccion2_entrega;
+            cab_fac["cp_entrega"] = oAlbaran->cp_entrega;
+            cab_fac["poblacion_entrega"] = oAlbaran->poblacion_entrega;
+            cab_fac["provincia_entrega"] = oAlbaran->provincia_entrega;
+            cab_fac["id_pais_entrega"] = oAlbaran->id_pais_entrega;
+            cab_fac["cif"] = oAlbaran->cif;
+            cab_fac["recargo_equivalencia"] = oAlbaran->recargo_equivalencia;
+            cab_fac["subtotal"] = oAlbaran->subtotal;
+            cab_fac["porc_dto"] = oAlbaran->porc_dto;
+            cab_fac["porc_dto_pp"] = oAlbaran->porc_dto_pp;
+            cab_fac["dto"] = oAlbaran->dto;
+            cab_fac["dto_pp"] = oAlbaran->dto_pp;
+            cab_fac["base"] = oAlbaran->base_total;
+            cab_fac["iva"] = oAlbaran->iva_total;
+            cab_fac["total"] = oAlbaran->total_albaran;
+            cab_fac["impreso"] = oAlbaran->impreso;
+            //TODO - formapago
+    //        cab_fac["id_forma_pago"] = oAlbaran->id_forma_pago;
+    //        cab_fac["forma_pago"] = oAlbaran->forma_pago;
+            cab_fac["comentario"] = oAlbaran->comentario;
+            cab_fac["base1"] = oAlbaran->base1;
+            cab_fac["base2"] = oAlbaran->base2;
+            cab_fac["base3"] = oAlbaran->base3;
+            cab_fac["base4"] = oAlbaran->base4;
+            cab_fac["porc_iva1"] = oAlbaran->porc_iva1;
+            cab_fac["porc_iva2"] = oAlbaran->porc_iva2;
+            cab_fac["porc_iva3"] = oAlbaran->porc_iva3;
+            cab_fac["porc_iva4"] = oAlbaran->porc_iva4;
+            cab_fac["iva1"] = oAlbaran->iva1;
+            cab_fac["iva2"] = oAlbaran->iva2;
+            cab_fac["iva3"] = oAlbaran->iva3;
+            cab_fac["iva4"] = oAlbaran->iva4;
+            cab_fac["total1"] = oAlbaran->total1;
+            cab_fac["total2"] = oAlbaran->total2;
+            cab_fac["total3"] = oAlbaran->total3;
+            cab_fac["total4"] = oAlbaran->total4;
+            cab_fac["porc_rec1"] = oAlbaran->porc_rec1;
+            cab_fac["porc_rec2"] = oAlbaran->porc_rec2;
+            cab_fac["porc_rec3"] = oAlbaran->porc_rec3;
+            cab_fac["porc_rec4"] = oAlbaran->porc_rec4;
+            cab_fac["rec1"] = oAlbaran->rec1;
+            cab_fac["rec2"] = oAlbaran->rec2;
+            cab_fac["rec3"] = oAlbaran->rec3;
+            cab_fac["rec4"] = oAlbaran->rec4;
+            cab_fac["total_recargo"] = oAlbaran->rec_total;
+            cab_fac["entregado_a_cuenta"] = oAlbaran->entregado_a_cuenta;
+            cab_fac["importe_pendiente"] = oAlbaran->total_albaran;
+            cab_fac["codigo_entidad"] = oCliente2->entidad_bancaria;
+            cab_fac["oficina_entidad"] = oCliente2->oficina_bancaria;
+            cab_fac["dc_cuenta"] =oCliente2->dc;
+            cab_fac["cuenta_corriente"] = oCliente2->cuenta_corriente;
+            cab_fac["pedido_cliente"] = oAlbaran->pedido_cliente;
+            // TODO IRPF
+            //cab_fac["irpf"] = oAlbaran->;
+            //cab_fac["irpf"] = oAlbaran->irpf;
+            cab_fac["id_transportista"] = oAlbaran->id_transportista;
+            cab_fac["desc_gasto1"] = oAlbaran->desc_gasto1;
+            cab_fac["desc_gasto2"] = oAlbaran->desc_gasto2;
+            cab_fac["desc_gasto3"] = oAlbaran->desc_gasto3;
+            cab_fac["imp_gasto1"] = oAlbaran->imp_gasto1;
+            cab_fac["imp_gasto2"] = oAlbaran->imp_gasto2;
+            cab_fac["imp_gasto3"] = oAlbaran->imp_gasto3;
+            // h["total"] == ui->txttotal->text().replace(".","").replace(",",".").toDouble();
+           Factura oFactura;
+    //        QDialog* dlg = new QDialog(this);
+    //        dlg->setWindowTitle(tr("Seleccione serie factura"));
+    //        dlg->resize(270,150);
+    //        QComboBox* box = new QComboBox(dlg);
+    //        QPushButton*  btn = new QPushButton("Aceptar",dlg);
+    //        QVBoxLayout lay(dlg);
 
-                p["factura"] = num;
-                p["facturado"] = 1;
-                p["fecha_factura"] = QDate::currentDate();
-                c = "id="+QString::number(oAlbaran->id);
-                bool updated = SqlCalls::SqlUpdate(p,"cab_alb",Configuracion_global->empresaDB,c,error);
+    //        lay.addWidget(box);
+    //        lay.addWidget(btn);
 
-                if(updated)
+    //        dlg->setLayout(&lay);
+
+    //        QSqlQueryModel *l = new QSqlQueryModel(this);
+    //        l->setQuery("select serie from series",Configuracion_global->empresaDB);
+    //        box->setModel(l);
+
+    //        connect(btn,SIGNAL(clicked()),dlg,SLOT(accept()));
+    //        dlg->exec();//aki se podria poner otro boton y cancelar todo?
+
+    //        QString serie = box->currentText();
+    //        dlg->deleteLater();
+            QString fra =  oFactura.NuevoNumeroFactura(oAlbaran->serie);
+            QString num = oAlbaran->serie+"/"+ fra;
+
+            cab_fac["factura"] = fra;
+            cab_fac["fecha"] = QDate::currentDate();
+            cab_fac["serie"] = oAlbaran->serie;
+
+            int added = SqlCalls::SqlInsert(cab_fac,"cab_fac",Configuracion_global->empresaDB,error);
+            if(added>-1)
+            {
+                // -----------------
+                // Lineas de factura
+                // -----------------
+                int added_l;
+                QHash <QString, QVariant> h_l;
+                QString d = QString("id_cab = %1").arg(oAlbaran->id);
+                QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("lin_alb", d,Configuracion_global->empresaDB, error);
+                  QMapIterator<int, QSqlRecord> i_l(map);
+                  while (i_l.hasNext())
+                  {
+                      i_l.next();
+                      QSqlRecord r_l = i_l.value();
+                      for(int i= 0; i< r_l.count();i++)
+                          h_l.insert(r_l.fieldName(i),r_l.value(i));
+                      h_l.remove("id");
+                      h_l["id_cab"] = added;
+                     added_l = SqlCalls::SqlInsert(h_l,"lin_fac",Configuracion_global->empresaDB,error);
+                     if(added_l == -1)
+                         break;
+                  }
+                if(added_l == -1)
                 {
-                    Configuracion_global->empresaDB.commit();
-                    t = new TimedMessageBox(qApp->activeWindow(),
-                                                              QObject::tr("Se ha creado la factura num:")+
-                                            Configuracion_global->serie+"/"+num);
-                    oAlbaran->RecuperarAlbaran("select * from cab_alb where id ="+QString::number(oAlbaran->id));
-                    LLenarCampos();
+                    Configuracion_global->empresaDB.rollback();
+                    qDebug() <<added;
+                    qDebug() <<error;
                 } else
                 {
-                    QMessageBox::warning(this,tr("Traspaso a factura"),QString(tr("No se pudo crear la factura error: ")+"%1").arg(error),tr("Aceptar"));
+                    QHash <QString, QVariant> p;
+                    QString c;
 
-                    Configuracion_global->empresaDB.rollback();
+                    p["factura"] = num;
+                    p["facturado"] = 1;
+                    p["fecha_factura"] = QDate::currentDate();
+                    c = "id="+QString::number(oAlbaran->id);
+                    bool updated = SqlCalls::SqlUpdate(p,"cab_alb",Configuracion_global->empresaDB,c,error);
+
+                    if(updated)
+                    {
+                        Configuracion_global->empresaDB.commit();
+                        oFactura.RecuperarFactura(added);
+                        t = new TimedMessageBox(qApp->activeWindow(),
+                                                                  QObject::tr("Se ha creado la factura num:")+
+                                                Configuracion_global->serie+"/"+num);
+                        vencimientos vto(this);
+                        vto.calcular_vencimiento(oFactura.fecha,oFactura.id_cliente,0,oFactura.id,(oFactura.serie+"/"+oFactura.factura),1,
+                                                 "V",oFactura.total);
+                        oAlbaran->RecuperarAlbaran("select * from cab_alb where id ="+QString::number(oAlbaran->id));
+                        LLenarCampos();
+                    } else
+                    {
+                        QMessageBox::warning(this,tr("Traspaso a factura"),QString(tr("No se pudo crear la factura error: ")+"%1").arg(error),tr("Aceptar"));
+
+                        Configuracion_global->empresaDB.rollback();
+                    }
                 }
+            } else
+            {
+                QMessageBox::warning(this,tr("Traspaso a factura"),
+                                   QString(tr("No se pudo crear la factura: Error BD: %1").arg(error)),tr("Aceptar"));
+                Configuracion_global->empresaDB.rollback();
             }
-        } else
-        {
-            QMessageBox::warning(this,tr("Traspaso a factura"),
-                               QString(tr("No se pudo crear la factura: Error BD: %1").arg(error)),tr("Aceptar"));
-            Configuracion_global->empresaDB.rollback();
-        }
 
-    } else
-        QMessageBox::information(this,tr("Traspasar albarán"),tr("Este albarán ya ha sido traspasado\nNo puede traspasar dos veces el mismo albarán"),
-                                 tr("Aceptar"));
+        } else
+            QMessageBox::information(this,tr("Traspasar albarán"),tr("Este albarán ya ha sido traspasado\nNo puede traspasar dos veces el mismo albarán"),
+                                         tr("Aceptar"));
+    }
 }
 
 void FrmAlbaran::on_btnImprimir_2_clicked()

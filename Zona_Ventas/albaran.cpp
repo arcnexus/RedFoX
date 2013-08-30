@@ -16,238 +16,189 @@ Albaran::~Albaran()
 int Albaran::AnadirAlbaran(QString serie)
 {
     int x = NuevoNumeroAlbaran(serie);
-    QSqlQuery q(Configuracion_global->empresaDB);
-    q.prepare("INSERT INTO cab_alb"
-              "(albaran, fecha, pedido_cliente, id_cliente, codigo_cliente, cliente,"
-              "direccion1, direccion2, poblacion, provincia, cp, id_pais, cif,"
-              "recargo_equivalencia, subtotal, porc_dto, dto,porc_dto_pp, dto_pp, base1, base2, base3,"
-              "base4, porc_iva1, porc_iva2, porc_iva3, porc_iva4,"
-              "iva1, iva2, iva3, iva4, porc_rec1,"
-              "porc_rec2, porc_rec3, porc_rec4,"
-              "rec1, rec2, rec3, rec4,"
-              "total1, total2, total3, total4, base_total, iva_total, rec_total,"
-              "total_albaran, impreso, facturado, factura, fecha_factura, comentario,"
-              "entregado_a_cuenta,ejercicio,serie) "
-              "VALUES"
-              "(:albaran, :fecha, :pedido_cliente, :id_cliente, :codigo_cliente, :cliente,"
-              ":direccion1, :direccion2, :poblacion, :provincia, :cp, :id_pais, :cif,"
-              ":recargo_equivalencia, :subtotal, :porc_dto, :dto, :porc_dto_pp,:dto_pp, :base1, :base2, :base3,"
-              ":base4, :porc_iva1, :porc_iva2, :porc_iva3, :porc_iva4,"
-              ":iva1, :iva2, :iva3, :iva4, :porc_rec1,"
-              ":porc_rec2, :porc_rec3, :porc_rec4,"
-              ":rec1, :rec2, :rec3, :rec4,"
-              ":total1, :total2, :total3, :total4, :base_total, :iva_total, :rec_total,"
-              ":total_albaran, :impreso, :facturado, :factura, :fecha_factura, :comentario,"
-              ":entregado_a_cuenta,:ejercicio,:serie) ");
-    q.bindValue(":albaran",x);
-    q.bindValue(":fecha",fecha);
-    q.bindValue(":pedido_cliente",pedido_cliente);
-    q.bindValue(":id_cliente",id_cliente);
-    q.bindValue(":codigo_cliente",codigo_cliente);
-    q.bindValue(":cliente",cliente);
+    QHash <QString,QVariant> h_cab_alb;
+    QString error;
 
-    q.bindValue(":direccion1",direccion1);
-    q.bindValue(":direccion2",direccion2);
-    q.bindValue(":poblacion",poblacion);
-    q.bindValue(":provincia",provincia);
-    q.bindValue(":cp",cp);
-    q.bindValue(":id_pais",id_pais);
-    q.bindValue(":cif",cif);
+    h_cab_alb["albaran"] = x;
+    h_cab_alb["fecha"] = fecha;
+    h_cab_alb["ejercicio"] = Configuracion_global->cEjercicio;
+    h_cab_alb["pedido_cliente"] = pedido_cliente;
+    h_cab_alb["id_cliente"] = id_cliente;
+    h_cab_alb["codigo_cliente"] = codigo_cliente;
+    h_cab_alb["cliente"] = cliente;
 
-    q.bindValue(":recargo_equivalencia",recargo_equivalencia);
-    q.bindValue(":subtotal",0);
-    q.bindValue(":dto",0);
-    q.bindValue(":porc_dto",0);
-    q.bindValue(":base1",0);
-    q.bindValue(":base2",0);
-    q.bindValue(":base3",0);
-    q.bindValue(":base4",0);
-    q.bindValue(":porc_iva1",Configuracion_global->ivaList.at(0).toDouble());
-    q.bindValue(":porc_iva2",Configuracion_global->ivaList.at(1).toDouble());
-    q.bindValue(":porc_iva3",Configuracion_global->ivaList.at(2).toDouble());
-    q.bindValue(":porc_iva4",Configuracion_global->ivaList.at(3).toDouble());
+    h_cab_alb["direccion1"] = direccion1;
+    h_cab_alb["direccion2"] = direccion2;
+    h_cab_alb["poblacion"] = poblacion;
+    h_cab_alb["provincia"] = provincia;
+    h_cab_alb["cp"] = cp;
+    h_cab_alb["id_pais"] = id_pais;
+    h_cab_alb["cif"] = cif;
 
-    q.bindValue(":iva1",0);
-    q.bindValue(":iva2",0);
-    q.bindValue(":iva3",0);
-    q.bindValue(":iva4",0);
-    q.bindValue(":porc_rec1",0);
-    q.bindValue(":porc_rec2",0);
-    q.bindValue(":porc_rec3",0);
-    q.bindValue(":porc_rec4",0);
+    h_cab_alb["recargo_equivalencia"] = recargo_equivalencia;
+    h_cab_alb["subtotal"] = 0;
+    h_cab_alb["dto"] = 0;
+    h_cab_alb["porc_dto"] = 0;
+    h_cab_alb["base1"] = 0;
+    h_cab_alb["base2"] = 0;
+    h_cab_alb["base3"] = 0;
+    h_cab_alb["base4"] = 0;
+    h_cab_alb["porc_iva1"] = Configuracion_global->ivaList.at(0).toDouble();
+    h_cab_alb["porc_iva2"] = Configuracion_global->ivaList.at(1).toDouble();
+    h_cab_alb["porc_iva3"] = Configuracion_global->ivaList.at(2).toDouble();
+    h_cab_alb["porc_iva4"] = Configuracion_global->ivaList.at(3).toDouble();
 
-    q.bindValue(":rec1",0);
-    q.bindValue(":rec2",0);
-    q.bindValue(":rec3",0);
-    q.bindValue(":rec4",0);
+    h_cab_alb["iva1"] = 0;
+    h_cab_alb["iva2"] = 0;
+    h_cab_alb["iva3"] = 0;
+    h_cab_alb["iva4"] = 0;
+    h_cab_alb["porc_rec1"] = 0;
+    h_cab_alb["porc_rec2"] = 0;
+    h_cab_alb["porc_rec3"] = 0;
+    h_cab_alb["porc_rec4"] = 0;
 
-    q.bindValue(":total1",0);
-    q.bindValue(":total2",0);
-    q.bindValue(":total3",0);
-    q.bindValue(":total4",0);
-    q.bindValue(":base_total",0);
-    q.bindValue(":iva_total",0);
-    q.bindValue(":rec_total",0);
+    h_cab_alb["rec1"] = 0;
+    h_cab_alb["rec2"] = 0;
+    h_cab_alb["rec3"] = 0;
+    h_cab_alb["rec4"] = 0;
 
-    q.bindValue(":total_albaran",0);
-    q.bindValue(":impreso",0);
-    q.bindValue(":facturado",0);
-    q.bindValue(":factura",factura);
-    q.bindValue(":fecha_factura",fecha_factura);
-    q.bindValue(":comentario",comentario);
+    h_cab_alb["total1"] = 0;
+    h_cab_alb["total2"] = 0;
+    h_cab_alb["total3"] = 0;
+    h_cab_alb["total4"] = 0;
+    h_cab_alb["base_total"] = 0;
+    h_cab_alb["iva_total"] = 0;
+    h_cab_alb["rec_total"] = 0;
 
-    q.bindValue(":entregado_a_cuenta",0);
-    q.bindValue(":ejercicio", Configuracion_global->cEjercicio.toInt());
-    q.bindValue(":serie",serie);
+    h_cab_alb["total_albaran"] = 0;
+    h_cab_alb["impreso"] = 0;
+    h_cab_alb["facturado"] = 0;
+    h_cab_alb["factura"] = factura;
+    h_cab_alb["fecha_factura"] = fecha_factura;
+    h_cab_alb["comentario"] = comentario;
 
-    if(!q.exec())
+    h_cab_alb["entregado_a_cuenta"] = 0;
+    h_cab_alb["ejercicio"] =  Configuracion_global->cEjercicio.toInt();
+    h_cab_alb["serie"] = serie;
+
+    int new_id = SqlCalls::SqlInsert(h_cab_alb,"cab_alb",Configuracion_global->empresaDB,error);
+
+    if(new_id = -1)
     {
-        QMessageBox::critical(qApp->activeWindow(),"Error al guardar datos Albaran:", q.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(),"Error al guardar datos Albaran:",
+                              QString(tr("Ocurrió un error al insertar :")+"%1").arg(error));
         return false;
     }
     else
     {
-        this->id = q.lastInsertId().toInt();
+        this->id = new_id;
         return id;
     }
 }
 
 bool Albaran::GuardarAlbaran(int nid_Albaran)
 {
-    QSqlQuery q(Configuracion_global->empresaDB);
-    q.prepare("UPDATE cab_alb SET "
-              "fecha=:fecha, pedido_cliente=:pedido_cliente, id_cliente=:id_cliente,"
-              "codigo_cliente=:codigo_cliente, cliente=:cliente,"
-              "direccion1=:direccion1,direccion2=:direccion2, poblacion=:poblacion,"
-              "provincia=:provincia, cp=:cp, id_pais=:id_pais, cif=:cif,"
-              "direccion1_entrega=:direccion1_entrega,direccion2_entrega =:direccion2_entrega,"
-              "cp_entrega =:cp_entrega,poblacion_entrega =:poblacion_entrega,"
-              "provincia_entrega =:provincia_entrega,id_pais_entrega :=id_pais_entrega,"
-              "email_entrega =:email_entrega, comentarios_entrega =:comentarios_entrega,"
-              "recargo_equivalencia=:recargo_equivalencia, subtotal=:subtotal,"
-              "porc_dto=:porc_dto, dto=:dto,porc_dto_pp=:porc_dto_pp,dto_pp =:dto_pp, base1=:base1, base2=:base2, base3=:base3,"
-              "base4=:base4, porc_iva1=:porc_iva1, porc_iva2=:porc_iva2,"
-              "porc_iva3=:porc_iva3, porc_iva4=:porc_iva4,"
-              "iva1=:iva1, iva2=:iva2, iva3=:iva3,"
-              "iva4=:iva4, porc_rec1=:porc_rec1,"
-              "porc_rec2=:porc_rec2, porc_rec3=:porc_rec3,"
-              "porc_rec4=:porc_rec4,"
-              "rec1=:rec1, rec2=:rec2,"
-              "rec3=:rec3, rec4=:rec4,"
-              "total1=:total1, total2=:total2, total3=:total3, total4=:total4,"
-              "base_total=:base_total, iva_total=:iva_total, rec_total=:rec_total,"
-              "total_albaran=:total_albaran, impreso=:impreso, facturado=:facturado,"
-              "factura=:factura, fecha_factura=:fecha_factura, comentario=:comentario,"
-              "desc_gasto1 =:desc_gasto1,"
-              "desc_gasto2 =:desc_gasto2,"
-              "desc_gasto3 =:desc_gasto3,"
-              "imp_gasto1 =:imp_gasto1,"
-              "imp_gasto2 =:imp_gasto2,"
-              "imp_gasto3 =:imp_gasto3,"
-              "porc_iva_gasto1 =:porc_iva_gasto1,"
-              "porc_iva_gasto2 =:porc_iva_gasto2,"
-              "porc_iva_gasto3 =:porc_iva_gasto3,"
-              "iva_gasto1 =:iva_gasto1,"
-              "iva_gasto2 =:iva_gasto2,"
-              "iva_gasto3 =:iva_gasto3,"
-              "entregado_a_cuenta=:entregado_a_cuenta,"
-              "serie = :serie"
 
-              " WHERE id = :albaran");
+    QHash <QString,QVariant> h_cab_alb;
+    QString condiciones =QString("id =%1").arg(nid_Albaran);
+    QString error;
 
-    q.bindValue(":albaran",nid_Albaran);
-    q.bindValue(":fecha",fecha);
-    q.bindValue(":pedido_cliente",pedido_cliente);
-    q.bindValue(":id_cliente",id_cliente);
-    q.bindValue(":codigo_cliente",codigo_cliente);
-    q.bindValue(":cliente",cliente);
+    h_cab_alb["albaran"] = albaran;
+    h_cab_alb["fecha"] = fecha;
+    h_cab_alb["ejercicio"] = ejercicio;
+    h_cab_alb["pedido_cliente"] = pedido_cliente;
+    h_cab_alb["id_cliente"] = id_cliente;
+    h_cab_alb["codigo_cliente"] = codigo_cliente;
+    h_cab_alb["cliente"] = cliente;
 
-    q.bindValue(":direccion1",direccion1);
-    q.bindValue(":direccion2",direccion2);
-    q.bindValue(":poblacion",poblacion);
-    q.bindValue(":provincia",provincia);
-    q.bindValue(":cp",cp);
-    q.bindValue(":id_pais",id_pais);
+    h_cab_alb["direccion1"] = direccion1;
+    h_cab_alb["direccion2"] = direccion2;
+    h_cab_alb["poblacion"] = poblacion;
+    h_cab_alb["provincia"] = provincia;
+    h_cab_alb["cp"] = cp;
+    h_cab_alb["id_pais"] = id_pais;
 
-    q.bindValue(":direccion1_entrega",direccion1_entrega);
-    q.bindValue(":direccion2_entrega",direccion2_entrega);
-    q.bindValue(":poblacion_entrega",poblacion_entrega);
-    q.bindValue(":provincia_entrega",provincia_entrega);
-    q.bindValue(":cp_entrega",cp_entrega);
-    q.bindValue(":id_pais_entrega",id_pais_entrega);
-    q.bindValue(":email_entrega",email_entrega);
-    q.bindValue(":comentarios_entrega",comentarios_entrega);
+    h_cab_alb["direccion1_entrega"] = direccion1_entrega;
+    h_cab_alb["direccion2_entrega"] = direccion2_entrega;
+    h_cab_alb["poblacion_entrega"] = poblacion_entrega;
+    h_cab_alb["provincia_entrega"] = provincia_entrega;
+    h_cab_alb["cp_entrega"] = cp_entrega;
+    h_cab_alb["id_pais_entrega"] = id_pais_entrega;
+    h_cab_alb["email_entrega"] = email_entrega;
+    h_cab_alb["comentarios_entrega"] = comentarios_entrega;
 
-    q.bindValue(":cif",cif);
+    h_cab_alb["id_transportista"] = id_transportista;
 
-    q.bindValue(":recargo_equivalencia",recargo_equivalencia);
-    q.bindValue(":subtotal",subtotal);
-    q.bindValue(":porc_dto",porc_dto);
-    q.bindValue(":dto",dto);
-    q.bindValue(":porc_dto_pp",porc_dto_pp);
-    q.bindValue(":dto_pp",dto_pp);
-    q.bindValue(":base1",base1);
-    q.bindValue(":base2",base2);
-    q.bindValue(":base3",base3);
-    q.bindValue(":base4",base4);
-    q.bindValue(":porc_iva1",porc_iva1);
-    q.bindValue(":porc_iva2",porc_iva2);
-    q.bindValue(":porc_iva3",porc_iva3);
-    q.bindValue(":porc_iva4",porc_iva4);
+    h_cab_alb["cif"] = cif;
 
-    q.bindValue(":iva1",iva1);
-    q.bindValue(":iva2",iva2);
-    q.bindValue(":iva3",iva3);
-    q.bindValue(":iva4",iva4);
-    q.bindValue(":porc_rec1",porc_rec1);
-    q.bindValue(":porc_rec2",porc_rec2);
-    q.bindValue(":porc_rec3",porc_rec3);
-    q.bindValue(":porc_rec4",porc_rec4);
+    h_cab_alb["recargo_equivalencia"] = recargo_equivalencia;
+    h_cab_alb["subtotal"] = subtotal;
+    h_cab_alb["porc_dto"] = porc_dto;
+    h_cab_alb["dto"] = dto;
+    h_cab_alb["porc_dto_pp"] = porc_dto_pp;
+    h_cab_alb["dto_pp"] = dto_pp;
+    h_cab_alb["base1"] = base1;
+    h_cab_alb["base2"] = base2;
+    h_cab_alb["base3"] = base3;
+    h_cab_alb["base4"] = base4;
+    h_cab_alb["porc_iva1"] = porc_iva1;
+    h_cab_alb["porc_iva2"] = porc_iva2;
+    h_cab_alb["porc_iva3"] = porc_iva3;
+    h_cab_alb["porc_iva4"] = porc_iva4;
 
-    q.bindValue(":rec1",rec1);
-    q.bindValue(":rec2",rec2);
-    q.bindValue(":rec3",rec3);
-    q.bindValue(":rec4",rec4);
+    h_cab_alb["iva1"] = iva1;
+    h_cab_alb["iva2"] = iva2;
+    h_cab_alb["iva3"] = iva3;
+    h_cab_alb["iva4"] = iva4;
+    h_cab_alb["porc_rec1"] = porc_rec1;
+    h_cab_alb["porc_rec2"] = porc_rec2;
+    h_cab_alb["porc_rec3"] = porc_rec3;
+    h_cab_alb["porc_rec4"] = porc_rec4;
 
-    q.bindValue(":total1",total1);
-    q.bindValue(":total2",total2);
-    q.bindValue(":total3",total3);
-    q.bindValue(":total4",total4);
-    q.bindValue(":base_total",base_total);
-    q.bindValue(":iva_total",iva_total);
-    q.bindValue(":rec_total",rec_total);
+    h_cab_alb["rec1"] = rec1;
+    h_cab_alb["rec2"] = rec2;
+    h_cab_alb["rec3"] = rec3;
+    h_cab_alb["rec4"] = rec4;
 
-    q.bindValue(":total_albaran",total_albaran);
-    q.bindValue(":impreso",impreso);
-    q.bindValue(":facturado",facturado);
-    q.bindValue(":factura",factura);
-    q.bindValue(":fecha_factura",fecha_factura);
-    q.bindValue(":comentario",comentario);
+    h_cab_alb["total1"] = total1;
+    h_cab_alb["total2"] = total2;
+    h_cab_alb["total3"] = total3;
+    h_cab_alb["total4"] = total4;
+    h_cab_alb["base_total"] = base_total;
+    h_cab_alb["iva_total"] = iva_total;
+    h_cab_alb["rec_total"] = rec_total;
 
-    q.bindValue(":desc_gasto1",desc_gasto1);
-    q.bindValue(":desc_gasto2",desc_gasto2);
-    q.bindValue(":desc_gasto3",desc_gasto3);
+    h_cab_alb["total_albaran"] = total_albaran;
+    h_cab_alb["impreso"] = impreso;
+    h_cab_alb["facturado"] = facturado;
+    h_cab_alb["factura"] = factura;
+    h_cab_alb["fecha_factura"] = fecha_factura;
+    h_cab_alb["comentario"] = comentario;
 
-    q.bindValue("imp_gasto1",imp_gasto1);
-    q.bindValue("imp_gasto2",imp_gasto2);
-    q.bindValue("imp_gasto3",imp_gasto3);
+    h_cab_alb["desc_gasto1"] = desc_gasto1;
+    h_cab_alb["desc_gasto2"] = desc_gasto2;
+    h_cab_alb["desc_gasto3"] = desc_gasto3;
 
-    q.bindValue(":porc_iva_gasto1",porc_iva_gasto1);
-    q.bindValue(":porc_iva_gasto2",porc_iva_gasto2);
-    q.bindValue(":porc_iva_gasto3",porc_iva_gasto3);
+    h_cab_alb["imp_gasto1"] = imp_gasto1;
+    h_cab_alb["imp_gasto2"] = imp_gasto2;
+    h_cab_alb["imp_gasto3"] = imp_gasto3;
 
-    q.bindValue(":iva_gasto1",iva_gasto1);
-    q.bindValue(":iva_gasto2",iva_gasto2);
-    q.bindValue(":iva_gasto3",iva_gasto3);
+    h_cab_alb["porc_iva_gasto1"] = porc_iva_gasto1;
+    h_cab_alb["porc_iva_gasto2"] = porc_iva_gasto2;
+    h_cab_alb["porc_iva_gasto3"] = porc_iva_gasto3;
 
-    q.bindValue(":entregado_a_cuenta",entregado_a_cuenta);
-    q.bindValue(":serie",serie);
+    h_cab_alb["iva_gasto1"] = iva_gasto1;
+    h_cab_alb["iva_gasto2"] = iva_gasto2;
+    h_cab_alb["iva_gasto3"] = iva_gasto3;
 
-    if(!q.exec())
+    h_cab_alb["entregado_a_cuenta"] = entregado_a_cuenta;
+    h_cab_alb["serie"] = serie;
+
+    bool updated = SqlCalls::SqlUpdate(h_cab_alb,"cab_alb",Configuracion_global->empresaDB,condiciones,error);
+
+    if(!updated)
     {
-        QMessageBox::critical(qApp->activeWindow(),"Error al guardar datos Albaran:", q.lastError().text());
-        qDebug() << q.lastError();
-        qDebug() << q.executedQuery();
+        QMessageBox::critical(qApp->activeWindow(),"Error al guardar datos Albaran:", error);
         return false;
     }
     else
@@ -273,6 +224,7 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 id = r.value("id").toInt();
                 serie = r.value("serie").toString();
                 albaran= r.value("albaran").toInt();
+                ejercicio = r.value("ejercicio").toInt();
                 fecha= r.value("fecha").toDate();
                 pedido_cliente= r.value("pedido_cliente").toString();
                 id_cliente= r.value("id_cliente").toInt();
@@ -292,6 +244,7 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 id_pais_entrega = r.value("id_pais_entrega").toInt();
                 email_entrega = r.value("email_entrega").toString();
                 comentarios_entrega = r.value("comentarios_entrega").toString();
+                id_transportista = r.value("id_transportista").toInt();
                 //pais= Configuracion_global->Devolver_pais(id_pais);
                 cif= r.value("cif").toString();
                 recargo_equivalencia= r.value("recargo_equivalencia").toBool();
@@ -376,7 +329,4 @@ int Albaran::NuevoNumeroAlbaran(QString serie)
     return albaran;
 }
 
-void Albaran::FacturarAlbaran()
-{
-    //TODO Albaran::FacturarAlbaran()
-}
+

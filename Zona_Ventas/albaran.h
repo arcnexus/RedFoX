@@ -79,6 +79,8 @@ public:
     double iva_gasto1,iva_gasto2,iva_gasto3;
     bool editable;
     QString serie;
+    int ejercicio;
+    int id_transportista;
 
 signals:
 
@@ -88,8 +90,6 @@ public slots:
     bool RecuperarAlbaran(QString cSQL);
     bool GuardarAlbaran(int nid_Albaran);
     int NuevoNumeroAlbaran(QString serie);
-
-    void FacturarAlbaran();
 };
 
 #endif // ALBARAN_H
