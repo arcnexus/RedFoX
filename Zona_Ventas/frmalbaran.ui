@@ -1090,7 +1090,10 @@
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  <string notr="true">background-color: rgb(255, 255,255);</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>F1 -Buscar</string>
                  </property>
                 </widget>
                </item>
@@ -1287,18 +1290,21 @@
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
+                <string notr="true">background-color: rgb(255, 255,255);</string>
+               </property>
+               <property name="placeholderText">
+                <string>F1 -Buscar</string>
                </property>
               </widget>
              </item>
-             <item row="9" column="0">
+             <item row="10" column="0">
               <widget class="QLabel" name="label_41">
                <property name="text">
                 <string>Dto Especial:</string>
                </property>
               </widget>
              </item>
-             <item row="9" column="1">
+             <item row="10" column="1">
               <widget class="QDoubleSpinBox" name="spinporc_Dto">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -1314,7 +1320,7 @@
                </property>
               </widget>
              </item>
-             <item row="10" column="1">
+             <item row="11" column="1">
               <widget class="QDoubleSpinBox" name="spinPorc_dto_pp">
                <property name="maximumSize">
                 <size>
@@ -1336,14 +1342,14 @@
                </property>
               </widget>
              </item>
-             <item row="10" column="0">
+             <item row="11" column="0">
               <widget class="QLabel" name="label_42">
                <property name="text">
                 <string>Dto P.P.:</string>
                </property>
               </widget>
              </item>
-             <item row="11" column="0" colspan="2">
+             <item row="12" column="0" colspan="2">
               <widget class="QCheckBox" name="chklporc_rec">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1377,7 +1383,14 @@ color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="4">
+             <item row="11" column="3">
+              <widget class="QLabel" name="label_51">
+               <property name="text">
+                <string>Factura Num:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="4">
               <widget class="QLineEdit" name="txtcNumFra">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1402,7 +1415,7 @@ color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="11" column="4">
+             <item row="12" column="4">
               <widget class="QDateEdit" name="txtfecha_factura">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1433,21 +1446,14 @@ color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="3">
-              <widget class="QLabel" name="label_51">
-               <property name="text">
-                <string>Factura Num:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="11" column="3">
+             <item row="12" column="3">
               <widget class="QLabel" name="label_52">
                <property name="text">
                 <string>Fecha Factura:</string>
                </property>
               </widget>
              </item>
-             <item row="9" column="3" colspan="2">
+             <item row="8" column="3" colspan="2">
               <widget class="QLabel" name="label_50">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(0, 0, 67);
@@ -1460,6 +1466,16 @@ color: rgb(255, 255, 255);</string>
                 <set>Qt::AlignCenter</set>
                </property>
               </widget>
+             </item>
+             <item row="10" column="3">
+              <widget class="QLabel" name="label_61">
+               <property name="text">
+                <string>Forma  Pago</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="4">
+              <widget class="QComboBox" name="cbo_forma_pago"/>
              </item>
             </layout>
            </item>
@@ -1527,7 +1543,10 @@ color: rgb(255, 255, 255);</string>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 <string notr="true">background-color: rgb(255, 255,255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>F1 -Buscar</string>
                 </property>
                </widget>
               </item>

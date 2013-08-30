@@ -478,6 +478,16 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     else
         Transportistas->deleteLater();
 
+    splash->showMessage(tr("Cargando modulos... Modulo de Formas de Pago") );
+    FrmFormas_pago * fpagos = new FrmFormas_pago(this);
+    if(fpagos->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _mantenModules.append(fpagos);
+    }
+    else
+        fpagos->deleteLater();
+
+
     ArchivosGeneralesExt* e = new ArchivosGeneralesExt(this);
     if(!e->Extensions().isEmpty())
         _mantenExtensions.append(e);

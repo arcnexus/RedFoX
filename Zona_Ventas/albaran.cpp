@@ -169,6 +169,7 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
     h_cab_alb["rec_total"] = rec_total;
 
     h_cab_alb["total_albaran"] = total_albaran;
+    h_cab_alb["id_forma_pago"] = id_forma_pago;
     h_cab_alb["impreso"] = impreso;
     h_cab_alb["facturado"] = facturado;
     h_cab_alb["factura"] = factura;
@@ -281,6 +282,7 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 iva_total= r.value("iva_total").toDouble();
                 rec_total= r.value("rec_total").toDouble();
                 total_albaran= r.value("total_albaran").toDouble();
+                id_forma_pago = r.value("id_forma_pago").toInt();
                 impreso= r.value("impreso").toBool();
                 facturado= r.value("facturado").toBool();
                 factura= r.value("factura").toString();

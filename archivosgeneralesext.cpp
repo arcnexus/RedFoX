@@ -6,7 +6,6 @@ ArchivosGeneralesExt::ArchivosGeneralesExt(QObject *parent) :
     tarifa("Tipos de tarifa",this),
     moneda("Monedas",this),
     paises("Paises",this),
-    fPago("Formas de pago",this),
     iva("Tipos de iva",this),
     bancos("Bancos",this),
     avisos("Avisos",this)
@@ -42,15 +41,15 @@ ArchivosGeneralesExt::ArchivosGeneralesExt(QObject *parent) :
         _actions.append(p);
     }
 
-    tryRegisterModule(MayaModule::Mantenimiento,"Formas de pago",id);
-    if(userHaveAcess(id,Configuracion_global->id_usuario_activo))
-    {
-        connect(&fPago,SIGNAL(triggered()),this,SLOT(handle_fomasPago()));
-        QPair<QAction *, MayaModule::accessLevel> p;
-        p.first = &fPago;
-        p.second = getUserLvl(id);
-        _actions.append(p);
-    }
+//    tryRegisterModule(MayaModule::Mantenimiento,"Formas de pago",id);
+//    if(userHaveAcess(id,Configuracion_global->id_usuario_activo))
+//    {
+//        connect(&fPago,SIGNAL(triggered()),this,SLOT(handle_fomasPago()));
+//        QPair<QAction *, MayaModule::accessLevel> p;
+//        p.first = &fPago;
+//        p.second = getUserLvl(id);
+//        _actions.append(p);
+//    }
 
     tryRegisterModule(MayaModule::Mantenimiento,"Tipos de iva",id);
     if(userHaveAcess(id,Configuracion_global->id_usuario_activo))
@@ -134,22 +133,22 @@ void ArchivosGeneralesExt::handle_paises()
     Configuracion_global->Cargar_paises();
 }
 
-void ArchivosGeneralesExt::handle_fomasPago()
-{
-    Db_table_View form(qApp->activeWindow());
-    form.set_db("Maya");
-    form.set_table("formpago");
+//void ArchivosGeneralesExt::handle_fomasPago()
+//{
+//    Db_table_View form(qApp->activeWindow());
+//    form.set_db("Maya");
+//    form.set_table("formpago");
 
-    form.setWindowTitle(tr("Formas de pago"));
+//    form.setWindowTitle(tr("Formas de pago"));
 
-    QStringList headers;
-    headers << tr("Codigo") << tr("Forma de pago") << tr("Dia de pago 1") << tr("Dia de pago 2");
-    headers << tr("Dia de pago 3") << tr("Dia de pago 4") << tr("Dia 1") << tr("Dia 2") << tr("Dia 3")<< tr("Dia 4");
-    form.set_table_headers(headers);
+//    QStringList headers;
+//    headers << tr("Codigo") << tr("Forma de pago") << tr("Dia de pago 1") << tr("Dia de pago 2");
+//    headers << tr("Dia de pago 3") << tr("Dia de pago 4") << tr("Dias entre plazos");
+//    form.set_table_headers(headers);
 
-    form.set_columnHide(0);
-    form.exec();
-}
+//    form.set_columnHide(0);
+//    form.exec();
+//}
 void ArchivosGeneralesExt::handle_tiposIVA()
 {
     Db_table_View form(qApp->activeWindow());

@@ -39,6 +39,7 @@
 #include "Zona_Ventas/frmpresupuestoscli.h"
 #include "Zona_Ventas/frmfacturas.h"
 #include "TPV/frmcajaminuta.h"
+#include "../Zona_Maestros/frmformas_pago.h"
 
 
 //#include "openrptLibs/reportmodule.h"

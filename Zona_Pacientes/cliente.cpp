@@ -13,157 +13,93 @@ void Cliente::Guardar() {
     if(Configuracion_global->contabilidad)
         Configuracion_global->contaDB.transaction();
 
-    QSqlQuery query(Configuracion_global->groupDB);
-    query.prepare( "UPDATE clientes set "
-                   "codigo_cliente = :codigo_cliente,"
-                   "apellido1 = :apellido1,"
-                   "apellido2 = :apellido2,"
-                   "nombre= :nombre,"
-                   "nombre_fiscal= :nombre_fiscal,"
-                   "nombre_comercial= :nombre_comercial,"
-                   "persona_contacto= :persona_contacto,"
-                   "cif_nif =:cif_nif,"
-                   "direccion1= :direccion1,"
-                   "direccion2= :direccion2,"
-                   "cp= :cp,"
-                   "poblacion= :poblacion,"
-                   "provincia= :provincia,"
-                   "id_pais= :id_pais,"
-                   "telefono1 = :telefono1,"
-                   "telefono2 = :telefono2,"
-                   "fax=:fax,"
-                   "movil=:movil,"
-                   "email=:email,"
-                   "web=:web,"
-                   "fecha_alta=:fecha_alta,"
-                   "fecha_ultima_compra=:fecha_ultima_compra,"
-                   "acumulado_ventas=:acumulado_ventas,"
-                   "ventas_ejercicio=:ventas_ejercicio,"
-                   "riesgo_maximo=:riesgo_maximo,"
-                   "deuda_actual=:deuda_actual,"
-                   "comentarios=:comentarios,"
-                   "bloqueado=:bloqueado,"
-                   "comentario_bloqueo =:comentario_bloqueo,"
-                   "porc_dto_cliente=:porc_dto_cliente,"
-                   "recargo_equivalencia=:recargo_equivalencia,"
-                   "cuenta_contable=:cuenta_contable,"
-                   "cuenta_iva_repercutido=:cuenta_iva_repercutido,"
-                   "cuenta_deudas=:cuenta_deudas,"
-                   "cuenta_cobros=:cuenta_cobros,"
-                   "dia_pago1=:dia_pago1,"
-                   "dia_pago2=:dia_pago2,"
-                   "tarifa_cliente=:tarifa_cliente,"
-                   "importe_a_cuenta=:importe_a_cuenta,"
-                   "vales=:vales,"
-                   "entidad_bancaria=:entidad_bancaria,"
-                   "oficina_bancaria=:oficina_bancaria,"
-                   "dc=:dc,"
-                   "cuenta_corriente=:cuenta_corriente,"
-                   "fecha_nacimiento=:fecha_nacimiento,"
-                   "importe_pendiente=:importe_pendiente,"
-                   "acceso_web =:acceso_web,"
-                   "password_web=:password_web,"
-                   "id_idioma_documentos=:id_idioma,"
-                   "cif_vies=:cif_vies,"
-                   "id_web =:id_web,"
-                   "irpf =:irpf,"
-                   "visa_distancia1 =:visa_distancia1,"
-                   "visa_distancia2 =:visa_distancia2,"
-                   "visa1_caduca_mes =:visa1_caduca_mes,"
-                   "visa2_caduca_mes =:visa2_caduca_mes,"
-                   "visa1_caduca_ano =:visa1_caduca_ano,"
-                   "visa2_caduca_ano =:visa2_caduca_ano,"
-                   "visa1_cod_valid =:visa1_cod_valid,"
-                   "visa2_cod_valid =:visa2_cod_valid,"
-                   "id_agente =:id_agente,"
-                   "id_transportista =:id_transportista,"
-                   "observaciones =:observaciones,"
-                   "tipo_dto_tarifa =:tipo_dto_tarifa,"
-                   "grupo_iva =:grupo_iva"
-                   " WHERE id =:id" );
+    QHash <QString,QVariant> h_cliente;
+    QString error;
+    QString condiciones = QString("id=%1").arg(this->id);
 
-    query.bindValue(":codigo_cliente", this->codigo_cliente);
-    query.bindValue(":apellido1", this->apellido1);
-    query.bindValue(":apellido2",this->apellido2);
-    query.bindValue(":nombre",this->nombre);
-    query.bindValue(":nombre_fiscal",this->nombre_fiscal);
-    query.bindValue(":nombre_comercial",this->nombre_comercial);
-    query.bindValue(":persona_contacto",this->persona_contacto);
-    query.bindValue(":cif_nif",this->cif_nif);
-    query.bindValue(":direccion1",this->direccion1);
-    query.bindValue(":direccion2",this->direccion2);
-    query.bindValue(":cp",this->cp);
-    query.bindValue(":poblacion",this->poblacion);
-    query.bindValue(":provincia", this->provincia);
-    query.bindValue(":id_pais",this->id_pais);
-    query.bindValue(":telefono1", this->telefono1);
-    query.bindValue(":telefono2",this->telefono2);
-    query.bindValue(":fax",this->fax);
-    query.bindValue(":movil",this->movil);
-    query.bindValue(":email",this->email);
-    query.bindValue(":web",this->web);
-    query.bindValue(":fecha_alta",this->fecha_alta);
-    query.bindValue(":fecha_ultima_compra",this->fechaCompra);
-    query.bindValue(":acumulado_ventas",this->acumulado_ventas);
-    query.bindValue(":ventas_ejercicio",this->ventas_ejercicio);
-    query.bindValue(":riesgo_maximo",this->riesgo_maximo);
-    query.bindValue(":deuda_actual",this->deuda_actual);
-    query.bindValue(":comentarios",this->comentarios);
-    query.bindValue(":bloqueado",this->bloqueado);
-    query.bindValue(":comentario_bloqueo",this->comentario_bloqueo);
-    query.bindValue(":porc_dto_cliente", this->porc_dto_cliente);
-    query.bindValue(":recargo_equivalencia",this->recargo_equivalencia);
-    query.bindValue(":cuenta_contable",this->cuenta_contable);
-    query.bindValue(":cuenta_iva_repercutido",this->cuenta_iva_repercutido);
-    query.bindValue(":cuenta_deudas", this->cuenta_deudas);
-    query.bindValue(":cuenta_cobros", this->cuenta_cobros);
-    query.bindValue(":dia_pago1",this->dia_pago1);
-    query.bindValue(":dia_pago2",this->dia_pago2);
-    query.bindValue(":tarifa_cliente",this->tarifa_cliente);
+    h_cliente["codigo_cliente"] =  this->codigo_cliente;
+    h_cliente["apellido1"] =  this->apellido1;
+    h_cliente["apellido2"] = this->apellido2;
+    h_cliente["nombre"] = this->nombre;
+    h_cliente["nombre_fiscal"] = this->nombre_fiscal;
+    h_cliente["nombre_comercial"] = this->nombre_comercial;
+    h_cliente["persona_contacto"] = this->persona_contacto;
+    h_cliente["cif_nif"] = this->cif_nif;
+    h_cliente["direccion1"] = this->direccion1;
+    h_cliente["direccion2"] = this->direccion2;
+    h_cliente["cp"] = this->cp;
+    h_cliente["poblacion"] = this->poblacion;
+    h_cliente["provincia"] =  this->provincia;
+    h_cliente["id_pais"] = this->id_pais;
+    h_cliente["telefono1"] =  this->telefono1;
+    h_cliente["telefono2"] = this->telefono2;
+    h_cliente["fax"] = this->fax;
+    h_cliente["movil"] = this->movil;
+    h_cliente["email"] = this->email;
+    h_cliente["web"] = this->web;
+    h_cliente["fecha_alta"] = this->fecha_alta;
+    h_cliente["fecha_ultima_compra"] = this->fechaCompra;
+    h_cliente["acumulado_ventas"] = this->acumulado_ventas;
+    h_cliente["ventas_ejercicio"] = this->ventas_ejercicio;
+    h_cliente["riesgo_maximo"] = this->riesgo_maximo;
+    h_cliente["deuda_actual"] = this->deuda_actual;
+    h_cliente["comentarios"] = this->comentarios;
+    h_cliente["bloqueado"] = this->bloqueado;
+    h_cliente["comentario_bloqueo"] = this->comentario_bloqueo;
+    h_cliente["porc_dto_cliente"] =  this->porc_dto_cliente;
+    h_cliente["recargo_equivalencia"] = this->recargo_equivalencia;
+    h_cliente["cuenta_contable"] = this->cuenta_contable;
+    h_cliente["cuenta_iva_repercutido"] = this->cuenta_iva_repercutido;
+    h_cliente["cuenta_deudas"] =  this->cuenta_deudas;
+    h_cliente["cuenta_cobros"] =  this->cuenta_cobros;
+    h_cliente["id_forma_pago"] = this->id_forma_pago;
+    h_cliente["dia_pago1"] = this->dia_pago1;
+    h_cliente["dia_pago2"] = this->dia_pago2;
+    h_cliente["tarifa_cliente"] = this->tarifa_cliente;
     QString importe_a_cuenta;
     importe_a_cuenta = QString::number(this->importe_a_cuenta);
-    importe_a_cuenta = importe_a_cuenta.replace(".","");
+    importe_a_cuenta = Configuracion_global->MonedatoDouble(importe_a_cuenta);
     this->importe_a_cuenta = importe_a_cuenta.toDouble();
-    query.bindValue(":importe_a_cuenta",this->importe_a_cuenta);
-    query.bindValue(":vales",this->vales);
-    query.bindValue(":entidad_bancaria", this->entidad_bancaria);
-    query.bindValue(":oficina_bancaria",this->oficina_bancaria);
-    query.bindValue(":dc",this->dc);
-    query.bindValue(":cuenta_corriente",this->cuenta_corriente);
-    query.bindValue(":fecha_nacimiento",this->fecha_nacimiento);
-    query.bindValue(":importe_pendiente",this->importe_pendiente);
-    query.bindValue(":acceso_web",this->acceso_web);
-    query.bindValue(":id_idioma",this->ididioma);
-    query.bindValue(":cif_vies",this->cifVies);
-    query.bindValue(":password_web",this->password_web);
-    query.bindValue("id_web",this->id_web);
+    h_cliente["importe_a_cuenta"] = this->importe_a_cuenta;
+    h_cliente["vales"] = this->vales;
+    h_cliente["entidad_bancaria"] =  this->entidad_bancaria;
+    h_cliente["oficina_bancaria"] = this->oficina_bancaria;
+    h_cliente["dc"] = this->dc;
+    h_cliente["cuenta_corriente"] = this->cuenta_corriente;
+    h_cliente["fecha_nacimiento"] = this->fecha_nacimiento;
+    h_cliente["importe_pendiente"] = this->importe_pendiente;
+    h_cliente["acceso_web"] = this->acceso_web;
+    h_cliente["id_idioma"] = this->ididioma;
+    h_cliente["cif_vies"] = this->cifVies;
+    h_cliente["password_web"] = this->password_web;
+    h_cliente["id_web"] = this->id_web;
     if (this->lIRPF)
-        query.bindValue(":irpf",1);
+        h_cliente["irpf"] = 1;
     else
-        query.bindValue(":irpf",0);
-    query.bindValue(":observaciones",this->observaciones);
-    query.bindValue(":visa_distancia1",this->visa_distancia1);
-    query.bindValue(":visa_distancia2",this->visa_distancia2);
-    query.bindValue(":id",this->id);
-    query.bindValue(":visa1_caduca_mes",this->visa1_caduca_mes);
-    query.bindValue(":visa2_caduca_mes",this->visa2_caduca_mes);
-    query.bindValue(":visa1_caduca_ano",this->visa1_caduca_ano);
-    query.bindValue(":visa2_caduca_ano",this->visa2_caduca_ano);
-    query.bindValue(":visa1_cod_valid",this->visa1_cod_valid);
-    query.bindValue(":visa2_cod_valid",this->visa2_cod_valid);
-    query.bindValue(":id_agente",this->id_agente);
-    query.bindValue(":id_transportista",this->id_transportista);
-    query.bindValue(":grupo_iva",this->grupo_iva);
-    query.bindValue(":tipo_dto_tarifa",this->tipo_dto_tarifa);
+        h_cliente["irpf"] = 0;
+    h_cliente["observaciones"] = this->observaciones;
+    h_cliente["visa_distancia1"] = this->visa_distancia1;
+    h_cliente["visa_distancia2"] = this->visa_distancia2;
+    h_cliente["id"] = this->id;
+    h_cliente["visa1_caduca_mes"] = this->visa1_caduca_mes;
+    h_cliente["visa2_caduca_mes"] = this->visa2_caduca_mes;
+    h_cliente["visa1_caduca_ano"] = this->visa1_caduca_ano;
+    h_cliente["visa2_caduca_ano"] = this->visa2_caduca_ano;
+    h_cliente["visa1_cod_valid"] = this->visa1_cod_valid;
+    h_cliente["visa2_cod_valid"] = this->visa2_cod_valid;
+    h_cliente["id_agente"] = this->id_agente;
+    h_cliente["id_transportista"] = this->id_transportista;
+    h_cliente["grupo_iva"] = this->grupo_iva;
+    h_cliente["tipo_dto_tarifa"] = this->tipo_dto_tarifa;
 
-
-    if(!query.exec()){
+    bool updated = SqlCalls::SqlUpdate(h_cliente,"clientes",Configuracion_global->groupDB,condiciones,error);
+    if(!updated){
         transaccion :false;
-        QMessageBox::critical(qApp->activeWindow(),"error al guardar datos cliente. Descripción Error: ", query.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(),"error al guardar datos cliente. Descripción Error: ",error);
     } else {
         if (Configuracion_global->enlace_web ==true)
             GuardarWeb();
-       // QMessageBox::information(qApp->activeWindow(),"Guardar datos","Los datos se han guardado corectamente:","Ok");
+       t = new TimedMessageBox(qApp->activeWindow(),tr("Los datos se han guardado corectamente"));
     }
     // --------------------------
     // Cuenta contable
@@ -213,153 +149,88 @@ void Cliente::Guardar() {
 void Cliente::GuardarWeb()
 {
    Configuracion_global->AbrirDbWeb();
-  // QSqlQuery query(Configuracion_global->dbWeb));
-   QSqlQuery query(Configuracion_global->dbWeb);
-   query.prepare( "UPDATE clientes set "
-                  "codigo_cliente = :codigo_cliente,"
-                  "apellido1 = :apellido1,"
-                  "apellido2 = :apellido2,"
-                  "nombre= :nombre,"
-                  "nombre_fiscal= :nombre_fiscal,"
-                  "nombre_comercial= :nombre_comercial,"
-                  "persona_contacto= :persona_contacto,"
-                  "cif_nif =:cif_nif,"
-                  "direccion1= :direccion1,"
-                  "direccion2= :direccion2,"
-                  "cp= :cp,"
-                  "poblacion= :poblacion,"
-                  "provincia= :provincia,"
-                  "id_pais= :id_pais,"
-                  "telefono1 = :telefono1,"
-                  "telefono2 = :telefono2,"
-                  "fax=:fax,"
-                  "movil=:movil,"
-                  "email=:email,"
-                  "web=:web,"
-                  "fecha_alta=:fecha_alta,"
-                  "fecha_ultima_compra=:fecha_ultima_compra,"
-                  "acumulado_ventas=:acumulado_ventas,"
-                  "ventas_ejercicio=:ventas_ejercicio,"
-                  "riesgo_maximo=:riesgo_maximo,"
-                  "deuda_actual=:deuda_actual,"
-                  "comentarios=:comentarios,"
-                  "bloqueado=:bloqueado,"
-                  "comentario_bloqueo =:comentario_bloqueo,"
-                  "porc_dto_cliente=:porc_dto_cliente,"
-                  "recargo_equivalencia=:recargo_equivalencia,"
-                  "cuenta_contable=:cuenta_contable,"
-                  "cuenta_iva_repercutido=:cuenta_iva_repercutido,"
-                  "cuenta_deudas=:cuenta_deudas,"
-                  "cuenta_cobros=:cuenta_cobros,"
-                  "dia_pago1=:dia_pago1,"
-                  "dia_pago2=:dia_pago2,"
-                  "tarifa_cliente=:tarifa_cliente,"
-                  "importe_a_cuenta=:importe_a_cuenta,"
-                  "vales=:vales,"
-                  "entidad_bancaria=:entidad_bancaria,"
-                  "oficina_bancaria=:oficina_bancaria,"
-                  "dc=:dc,"
-                  "cuenta_corriente=:cuenta_corriente,"
-                  "fecha_nacimiento=:fecha_nacimiento,"
-                  "importe_pendiente=:importe_pendiente,"
-                  "acceso_web =:acceso_web,"
-                  "password_web=:password_web,"
-                  "id_idioma_documentos=:id_idioma,"
-                  "cif_vies=:cif_vies,"
-                  "id_local =:id_local,"
-                  "irpf =:irpf,"
-                  "observaciones = :observaciones,"
-                  "visa_distancia1 =:visa_distancia1,"
-                  "visa_distancia2 =:visa_distancia2,"
-                  "visa1_caduca_mes =:visa1_caduca_mes,"
-                  "visa2_caduca_mes =:visa2_caduca_mes,"
-                  "visa1_caduca_ano =:visa1_caduca_ano,"
-                  "visa2_caduca_ano =:visa2_caduca_ano,"
-                  "visa1_cod_valid =:visa1_cod_valid,"
-                  "visa2_cod_valid =:visa2_cod_valid,"
-                  "id_agente =:id_agente,"
-                  "id_transportista =:id_transportista,"
-                  "grupo_iva =:grupo_iva,"
-                  "tipo_dto_tarifa =:tipo_dto_tarifa"
-                  " WHERE id =:id_web" );
+    QHash <QString,QVariant> h_web;
+    QString error;
+    QString condicion = QString("id = %1").arg(this->id);
 
-   query.bindValue(":codigo_cliente", this->codigo_cliente);
-   query.bindValue(":apellido1", this->apellido1);
-   query.bindValue(":apellido2",this->apellido2);
-   query.bindValue(":nombre",this->nombre);
-   query.bindValue(":nombre_fiscal",this->nombre_fiscal);
-   query.bindValue(":nombre_comercial",this->nombre_comercial);
-   query.bindValue(":persona_contacto",this->persona_contacto);
-   query.bindValue(":cif_nif",this->cif_nif);
-   query.bindValue(":direccion1",this->direccion1);
-   query.bindValue(":direccion2",this->direccion2);
-   query.bindValue(":cp",this->cp);
-   query.bindValue(":poblacion",this->poblacion);
-   query.bindValue(":provincia", this->provincia);
-   query.bindValue(":id_pais",this->id_pais);
-   query.bindValue(":telefono1", this->telefono1);
-   query.bindValue(":telefono2",this->telefono2);
-   query.bindValue(":fax",this->fax);
-   query.bindValue(":movil",this->movil);
-   query.bindValue(":email",this->email);
-   query.bindValue(":web",this->web);
-   query.bindValue(":fecha_alta",this->fecha_alta);
-   query.bindValue(":fecha_ultima_compra",this->fechaCompra);
-   query.bindValue(":acumulado_ventas",this->acumulado_ventas);
-   query.bindValue(":ventas_ejercicio",this->ventas_ejercicio);
-   query.bindValue(":riesgo_maximo",this->riesgo_maximo);
-   query.bindValue(":deuda_actual",this->deuda_actual);
-   query.bindValue(":comentarios",this->comentarios);
-   query.bindValue(":bloqueado",this->bloqueado);
-   query.bindValue(":comentario_bloqueo",this->comentario_bloqueo);
-   query.bindValue(":porc_dto_cliente", this->porc_dto_cliente);
-   query.bindValue(":recargo_equivalencia",this->recargo_equivalencia);
-   query.bindValue(":cuenta_contable",this->cuenta_contable);
-   query.bindValue(":cuenta_iva_repercutido",this->cuenta_iva_repercutido);
-   query.bindValue(":cuenta_deudas", this->cuenta_deudas);
-   query.bindValue(":cuenta_cobros", this->cuenta_cobros);
-   query.bindValue(":dia_pago1",this->dia_pago1);
-   query.bindValue(":dia_pago2",this->dia_pago2);
-   query.bindValue(":tarifa_cliente",this->tarifa_cliente);
+   h_web["codigo_cliente"] =  this->codigo_cliente;
+   h_web["apellido1"] =  this->apellido1;
+   h_web["apellido2"] = this->apellido2;
+   h_web["nombre"] = this->nombre;
+   h_web["nombre_fiscal"] = this->nombre_fiscal;
+   h_web["nombre_comercial"] = this->nombre_comercial;
+   h_web["persona_contacto"] = this->persona_contacto;
+   h_web["cif_nif"] = this->cif_nif;
+   h_web["direccion1"] = this->direccion1;
+   h_web["direccion2"] = this->direccion2;
+   h_web["cp"] = this->cp;
+   h_web["poblacion"] = this->poblacion;
+   h_web["provincia"] =  this->provincia;
+   h_web["id_pais"] = this->id_pais;
+   h_web["telefono1"] =  this->telefono1;
+   h_web["telefono2"] = this->telefono2;
+   h_web["fax"] = this->fax;
+   h_web["movil"] = this->movil;
+   h_web["email"] = this->email;
+   h_web["web"] = this->web;
+   h_web["fecha_alta"] = this->fecha_alta;
+   h_web["fecha_ultima_compra"] = this->fechaCompra;
+   h_web["acumulado_ventas"] = this->acumulado_ventas;
+   h_web["ventas_ejercicio"] = this->ventas_ejercicio;
+   h_web["riesgo_maximo"] = this->riesgo_maximo;
+   h_web["deuda_actual"] = this->deuda_actual;
+   h_web["comentarios"] = this->comentarios;
+   h_web["bloqueado"] = this->bloqueado;
+   h_web["comentario_bloqueo"] = this->comentario_bloqueo;
+   h_web["porc_dto_cliente"] =  this->porc_dto_cliente;
+   h_web["recargo_equivalencia"] = this->recargo_equivalencia;
+   h_web["cuenta_contable"] = this->cuenta_contable;
+   h_web["cuenta_iva_repercutido"] = this->cuenta_iva_repercutido;
+   h_web["cuenta_deudas"] =  this->cuenta_deudas;
+   h_web["cuenta_cobros"] =  this->cuenta_cobros;
+   h_web["dia_pago1"] = this->dia_pago1;
+   h_web["dia_pago2"] = this->dia_pago2;
+   h_web["tarifa_cliente"] = this->tarifa_cliente;
    QString importe_a_cuenta;
    importe_a_cuenta = QString::number(this->importe_a_cuenta);
    importe_a_cuenta = importe_a_cuenta.replace(".","");
    this->importe_a_cuenta = importe_a_cuenta.toDouble();
-   query.bindValue(":importe_a_cuenta",this->importe_a_cuenta);
-   query.bindValue(":vales",this->vales);
-   query.bindValue(":entidad_bancaria", this->entidad_bancaria);
-   query.bindValue(":oficina_bancaria",this->oficina_bancaria);
-   query.bindValue(":dc",this->dc);
-   query.bindValue(":cuenta_corriente",this->cuenta_corriente);
-   query.bindValue(":fecha_nacimiento",this->fecha_nacimiento);
-   query.bindValue(":importe_pendiente",this->importe_pendiente);
-   query.bindValue(":acceso_web",this->acceso_web);
-   query.bindValue(":id_idioma",this->ididioma);
-   query.bindValue(":cif_vies",this->cifVies);
-   query.bindValue(":password_web",this->password_web);
-   query.bindValue(":grupo_iva",this->grupo_iva);
+   h_web["importe_a_cuenta"] = this->importe_a_cuenta;
+   h_web["vales"] = this->vales;
+   h_web["entidad_bancaria"] =  this->entidad_bancaria;
+   h_web["oficina_bancaria"] = this->oficina_bancaria;
+   h_web["dc"] = this->dc;
+   h_web["cuenta_corriente"] = this->cuenta_corriente;
+   h_web["fecha_nacimiento"] = this->fecha_nacimiento;
+   h_web["importe_pendiente"] = this->importe_pendiente;
+   h_web["acceso_web"] = this->acceso_web;
+   h_web["id_idioma"] = this->ididioma;
+   h_web["cif_vies"] = this->cifVies;
+   h_web["password_web"] = this->password_web;
+   h_web["id_forma_pago"] = this->id_forma_pago;
+   h_web["grupo_iva"] = this->grupo_iva;
    if (this->lIRPF)
-       query.bindValue(":irpf",1);
+       h_web["irpf"] = 1;
    else
-       query.bindValue(":irpf",0);
-   query.bindValue(":id_web",this->id_web);
-   query.bindValue(":observaciones",this->observaciones);
-   query.bindValue(":id_local",this->id);
-   query.bindValue(":visa1_caduca_mes",this->visa1_caduca_mes);
-   query.bindValue(":visa2_caduca_mes",this->visa2_caduca_mes);
-   query.bindValue(":visa1_caduca_ano",this->visa1_caduca_ano);
-   query.bindValue(":visa2_caduca_ano",this->visa2_caduca_ano);
-   query.bindValue(":visa1_cod_valid",this->visa1_cod_valid);
-   query.bindValue(":visa2_cod_valid",this->visa2_cod_valid);
-   query.bindValue(":id_agente",this->id_agente);
-   query.bindValue(":id_transportista",this->id_transportista);
-   query.bindValue(":tipo_dto_tarifa",this->tipo_dto_tarifa);
+       h_web["irpf"] = 0;
+   h_web["id_web"] = this->id_web;
+   h_web["observaciones"] = this->observaciones;
+   h_web["id_local"] = this->id;
+   h_web["visa1_caduca_mes"] = this->visa1_caduca_mes;
+   h_web["visa2_caduca_mes"] = this->visa2_caduca_mes;
+   h_web["visa1_caduca_ano"] = this->visa1_caduca_ano;
+   h_web["visa2_caduca_ano"] = this->visa2_caduca_ano;
+   h_web["visa1_cod_valid"] = this->visa1_cod_valid;
+   h_web["visa2_cod_valid"] = this->visa2_cod_valid;
+   h_web["id_agente"] = this->id_agente;
+   h_web["id_transportista"] = this->id_transportista;
+   h_web["tipo_dto_tarifa"] = this->tipo_dto_tarifa;
+   bool updated = SqlCalls::SqlUpdate(h_web,"clientes",Configuracion_global->groupDB,condicion,error);
 
-
-   if(!query.exec()){
-       QMessageBox::critical(qApp->activeWindow(),"error al guardar datos cliente en la web. Descripción Error: ", query.executedQuery());
+   if(!updated){
+       QMessageBox::critical(qApp->activeWindow(),"error al guardar datos cliente en la web. Descripción Error: ",error);
    } else {
-      // QMessageBox::information(qApp->activeWindow(),"Guardar datos","Los datos se han guardado corectamente:","Ok");
+       t = new TimedMessageBox(qApp->activeWindow(),tr("Los datos se han guardado corectamente:"));
    }
        ;
    Configuracion_global->CerrarDbWeb();
@@ -480,6 +351,7 @@ void Cliente::cargar(QSqlQuery &query)
         this->cuenta_iva_repercutido = registro.field("cuenta_iva_repercutido").value().toString();
         this->cuenta_deudas = registro.field("cuenta_deudas").value().toString();
         this->cuenta_cobros = registro.field("cuenta_cobros").value().toString();
+        this->id_forma_pago = registro.field("id_forma_pago").value().toInt();
         this->forma_pago = registro.field("forma_pago").value().toString();
         this->dia_pago1 = registro.field("dia_pago1").value().toInt();
         this->dia_pago2 = registro.field("dia_pago2").value().toInt();

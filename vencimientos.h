@@ -8,7 +8,23 @@ class vencimientos : public QObject
 {
     Q_OBJECT
 public:
+
+    int id;
+    QString codigo,codigo_cuenta_contable;
+    QString forma_pago;
+    int dia_pago1, dia_pago2, dia_pago3, dia_pago4, dias_entre_plazos;
+    QString desc_cuenta_cont;
+    int numero_plazos;
+
+
+
     explicit vencimientos(QObject *parent = 0);
+
+    void recuperar(QString condiciones);
+    void anadir();
+    void guardar();
+    void borrar();
+
 
     // Fecha = fecha_calculo,
     //codigo_fp = codigo forma de pago,

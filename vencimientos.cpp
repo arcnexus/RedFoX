@@ -5,6 +5,75 @@ vencimientos::vencimientos(QObject *parent) :
 {
 }
 
+void vencimientos::recuperar(QString condiciones)
+{
+    QMap <int,QSqlRecord> m;
+    QString error;
+    m = SqlCalls::SelectRecord("formpago",condiciones,Configuracion_global->groupDB,error);
+    if(!error.isEmpty())
+    {
+        QMapIterator <int,QSqlRecord> rec(m);
+        this->id = rec.value().value("id").toInt();
+        this->codigo = rec.value().value("codigo").toString();
+        this->forma_pago = rec.value().value("forma_pago").toString();
+        this->codigo_cuenta_contable = rec.value().value("cuenta_cont_pago").toString();
+        this->desc_cuenta_cont = Configuracion_global->Devolver_descripcion_cuenta_contable(this->codigo_cuenta_contable);
+        this->dia_pago1 = rec.value().value("dia_pago1").toInt();
+        this->dia_pago2 = rec.value().value("dia_pago2").toInt();
+        this->dia_pago3 = rec.value().value("dia_pago3").toInt();
+        this->dia_pago4 = rec.value().value("dia_pago4").toInt();
+        this->dias_entre_plazos = rec.value().value("dias_entre_plazos").toInt();
+        this->numero_plazos = rec.value().value("numero_plazos").toInt();
+    }
+    else
+        QMessageBox::warning(qApp->activeWindow(),tr("Formas de Pago"),tr("Ocurrió un error al recuperar: ")+error,
+                             tr("Aceptar"));
+
+}
+
+void vencimientos::anadir()
+{
+    QHash <QString, QVariant> h;
+    QString error;
+    h["codigo"] = this->codigo;
+    h["forma_pago"] = this->forma_pago;
+    h["dia_pago1"] = this->dia_pago1;
+    h["dia_pago2"] = this->dia_pago2;
+    h["dia_pago3"] = this->dia_pago3;
+    h["dia_pago4"] = this->dia_pago4;
+    h["dias_entre_plazos"] = this->dias_entre_plazos;
+    h["cuenta_cont_pago"] =this->numero_plazos;
+
+    int new_id = SqlCalls::SqlInsert(h,"formpago",Configuracion_global->groupDB,error);
+    if(new_id > -1)
+        t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha insertado la forma de pago"));
+    else
+        QMessageBox::warning(qApp->activeWindow(),tr("Formas de Pago"),
+                             tr("Ocurrió un error al insertar: ")+error,tr("Aceptar"));
+}
+
+void vencimientos::guardar()
+{
+    QHash <QString, QVariant> h;
+    QString error;
+    QString condicion =QString("id = %1").arg(this->id);
+    h["codigo"] = this->codigo;
+    h["forma_pago"] = this->forma_pago;
+    h["dia_pago1"] = this->dia_pago1;
+    h["dia_pago2"] = this->dia_pago2;
+    h["dia_pago3"] = this->dia_pago3;
+    h["dia_pago4"] = this->dia_pago4;
+    h["dias_entre_plazos"] = this->dias_entre_plazos;
+    h["cuenta_cont_pago"] =this->numero_plazos;
+
+    int new_id = SqlCalls::SqlUpdate(h,"formpago",Configuracion_global->groupDB,condicion,error);
+    if(new_id > -1)
+        t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha actualizado la forma de pago"));
+    else
+        QMessageBox::warning(qApp->activeWindow(),tr("Formas de Pago"),
+                             tr("Ocurrió un error al guardar: ")+error,tr("Aceptar"));
+}
+
 void vencimientos::calcular_vencimiento(QDate fecha, int id_cliente,int id_ticket,int id_factura, QString documento,
                                         int tipo,QString compra_venta,double importe)
 {

@@ -169,5 +169,6 @@
         <file>PNG/excepciones.png</file>
         <file>PNG/kits.png</file>
         <file>PNG/transport.png</file>
+        <file>PNG/fpagos.png</file>
     </qresource>
 </RCC>

@@ -7,6 +7,8 @@ class Cliente : public QObject
 {
     Q_OBJECT
 
+private:
+     TimedMessageBox * t;
 public:
     explicit Cliente(QObject *parent = 0);
         QSqlQueryModel *model;
@@ -64,6 +66,7 @@ public:
     QString cuenta_iva_repercutido;
     QString cuenta_deudas;
     QString cuenta_cobros;
+    int id_forma_pago;
     QString forma_pago;
     int dia_pago1;
     int dia_pago2;

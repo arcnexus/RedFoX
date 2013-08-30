@@ -34,6 +34,10 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->cboPais_entrega->setModel(Configuracion_global->paises_model);
     //ui->cboPais_entrega->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
+    QSqlQueryModel *formas_pago = new QSqlQueryModel(this);
+    formas_pago->setQuery("select forma_pago from formpago",Configuracion_global->groupDB);
+    ui->cbo_forma_pago->setModel(formas_pago);
+
 
     ui->txtporc_iva1->setText(Configuracion_global->ivaList.at(0));
     ui->txtporc_iva2->setText(Configuracion_global->ivaList.at(1));
@@ -257,6 +261,17 @@ void FrmAlbaran::LLenarCampos() {
     QString filter = QString("id_Cab = '%1'").arg(oAlbaran->id);
     helper.fillTable("empresa","lin_alb",filter);
     helper.set_tipo_dto_tarifa(oCliente2->tipo_dto_tarifa);
+    //-------------------
+    // combo forma pago
+    //-------------------
+    QString error;
+    QString fp = SqlCalls::SelectOneField("formpago","forma_pago",QString("id=%1").arg(oCliente2->id_forma_pago),
+                                          Configuracion_global->groupDB,error).toString();
+    if(error.isEmpty())
+    {
+        int index = ui->cbo_forma_pago->findText(fp);
+        ui->cbo_forma_pago->setCurrentIndex(index);
+    }
 
 }
 void FrmAlbaran::LLenarCamposCliente()
@@ -274,7 +289,18 @@ void FrmAlbaran::LLenarCamposCliente()
     ui->txtprovincia->setText(oCliente2->provincia);
     int index = ui->comboPais->findText(oAlbaran->pais);
     ui->comboPais->setCurrentIndex(index);
-
+    //---------------------------------
+    // Forma de Pago
+    //---------------------------------
+    QString error;
+    QString clausulas = QString("id =%1").arg(oCliente2->id_forma_pago);
+    QString fp = SqlCalls::SelectOneField("formpago","forma_pago",clausulas,
+                                          Configuracion_global->groupDB,error).toString();
+    if(error.isEmpty())
+    {
+        int index = ui->cbo_forma_pago->findText(fp);
+        ui->cbo_forma_pago->setCurrentIndex(index);
+    }
     //---------------------------------
     // Recargo de equivalencia
     //---------------------------------
@@ -297,7 +323,6 @@ void FrmAlbaran::LLenarCamposCliente()
     // Comprobar direccion alternativa
     //---------------------------------
     QMap <int,QSqlRecord> rec;
-    QString error;
     QStringList condiciones;
     condiciones << QString("id_cliente = %1").arg(oCliente2->id) << "direccion_envio = 1";
     rec = SqlCalls::SelectRecord("cliente_direcciones",condiciones,Configuracion_global->groupDB,error);
@@ -338,6 +363,7 @@ void FrmAlbaran::LLenarCamposCliente()
     helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
     oAlbaran->id_cliente = oCliente2->id;
     helper.set_tipo_dto_tarifa(oCliente2->tipo_dto_tarifa);
+
 }
 
 void FrmAlbaran::VaciarCampos() {
@@ -539,6 +565,14 @@ void FrmAlbaran::LLenarAlbaran()
     oAlbaran->iva_gasto1 = ui->spiniva_gasto1->value();
     oAlbaran->iva_gasto2 = ui->spiniva_gasto2->value();
     oAlbaran->iva_gasto3 = ui->spiniva_gasto3->value();
+    //---------------
+    // forma pago
+    //---------------
+    QString error;
+    oAlbaran->id_forma_pago = SqlCalls::SelectOneField("formpago","id",
+                                                       QString("forma_pago ='%1'").arg(ui->cbo_forma_pago->currentText()),
+                                                       Configuracion_global->groupDB,error).toInt();
+
 }
 
 void FrmAlbaran::on_btnSiguiente_clicked()

@@ -196,7 +196,8 @@ SOURCES += main.cpp\
     Zona_Maestros/frmtransportistas.cpp \
     Zona_Maestros/transportistas.cpp \
     Zona_Ventas/frmgestioncobros2.cpp \
-    vencimientos.cpp
+    vencimientos.cpp \
+    Zona_Maestros/frmformas_pago.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -357,7 +358,8 @@ HEADERS  += mainwindow.h \
     Zona_Maestros/frmtransportistas.h \
     Zona_Maestros/transportistas.h \
     Zona_Ventas/frmgestioncobros2.h \
-    vencimientos.h
+    vencimientos.h \
+    Zona_Maestros/frmformas_pago.h
 
 
 
@@ -439,7 +441,8 @@ FORMS    += mainwindow.ui \
     Almacen/frmexcepciones.ui \
     Almacen/frmkit.ui \
     Zona_Maestros/frmtransportistas.ui \
-    Zona_Ventas/frmgestioncobros2.ui
+    Zona_Ventas/frmgestioncobros2.ui \
+    Zona_Maestros/frmformas_pago.ui
 
 RESOURCES += \
     maya.qrc \

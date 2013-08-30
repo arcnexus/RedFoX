@@ -81,6 +81,7 @@ public:
     QString serie;
     int ejercicio;
     int id_transportista;
+    int id_forma_pago;
 
 signals:
 

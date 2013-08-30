@@ -20,7 +20,7 @@ private slots:
     void tipostarifa();
     void handle_monedas();
     void handle_paises();
-    void handle_fomasPago();
+   // void handle_fomasPago();
     void handle_tiposIVA();
     void handle_bancos();
     void handle_avisos();
@@ -28,7 +28,7 @@ private:
     QAction tarifa;
     QAction moneda;
     QAction paises;
-    QAction fPago;
+//    QAction fPago;
     QAction iva;
     QAction bancos;
     QAction avisos;
