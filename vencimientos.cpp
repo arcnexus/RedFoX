@@ -5,25 +5,30 @@ vencimientos::vencimientos(QObject *parent) :
 {
 }
 
-void vencimientos::recuperar(QString condiciones)
+void vencimientos::recuperar(QStringList condiciones,QStringList extras)
 {
     QMap <int,QSqlRecord> m;
     QString error;
-    m = SqlCalls::SelectRecord("formpago",condiciones,Configuracion_global->groupDB,error);
-    if(!error.isEmpty())
+    m = SqlCalls::SelectRecord("formpago",condiciones,extras,Configuracion_global->groupDB,error);
+    if(error.isEmpty())
     {
         QMapIterator <int,QSqlRecord> rec(m);
-        this->id = rec.value().value("id").toInt();
-        this->codigo = rec.value().value("codigo").toString();
-        this->forma_pago = rec.value().value("forma_pago").toString();
-        this->codigo_cuenta_contable = rec.value().value("cuenta_cont_pago").toString();
-        this->desc_cuenta_cont = Configuracion_global->Devolver_descripcion_cuenta_contable(this->codigo_cuenta_contable);
-        this->dia_pago1 = rec.value().value("dia_pago1").toInt();
-        this->dia_pago2 = rec.value().value("dia_pago2").toInt();
-        this->dia_pago3 = rec.value().value("dia_pago3").toInt();
-        this->dia_pago4 = rec.value().value("dia_pago4").toInt();
-        this->dias_entre_plazos = rec.value().value("dias_entre_plazos").toInt();
-        this->numero_plazos = rec.value().value("numero_plazos").toInt();
+        while(rec.hasNext())
+        {
+            rec.next();
+
+            this->id = rec.value().value("id").toInt();
+            this->codigo = rec.value().value("codigo").toString();
+            this->forma_pago = rec.value().value("forma_pago").toString();
+            this->codigo_cuenta_contable = rec.value().value("cuenta_cont_pago").toString();
+            this->desc_cuenta_cont = Configuracion_global->Devolver_descripcion_cuenta_contable(this->codigo_cuenta_contable);
+            this->dia_pago1 = rec.value().value("dia_pago1").toInt();
+            this->dia_pago2 = rec.value().value("dia_pago2").toInt();
+            this->dia_pago3 = rec.value().value("dia_pago3").toInt();
+            this->dia_pago4 = rec.value().value("dia_pago4").toInt();
+            this->dias_entre_plazos = rec.value().value("dias_entre_plazos").toInt();
+            this->numero_plazos = rec.value().value("numero_plazos").toInt();
+        }
     }
     else
         QMessageBox::warning(qApp->activeWindow(),tr("Formas de Pago"),tr("Ocurrió un error al recuperar: ")+error,
@@ -72,6 +77,31 @@ void vencimientos::guardar()
     else
         QMessageBox::warning(qApp->activeWindow(),tr("Formas de Pago"),
                              tr("Ocurrió un error al guardar: ")+error,tr("Aceptar"));
+}
+
+void vencimientos::borrar()
+{
+    QString error;
+    bool deleted =SqlCalls::SqlDelete("formpago",Configuracion_global->groupDB,QString("id=%1").arg(id),error);
+    if(deleted)
+        t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha borrado la forma de pago"));
+    else
+        QMessageBox::warning(qApp->activeWindow(),tr("Formas de Pago"),
+                             tr("Ocurrió un error al borrar: ")+error,tr("Aceptar"));
+}
+
+void vencimientos::clear()
+{
+    this->codigo.clear();
+    this->forma_pago.clear();
+    this->codigo_cuenta_contable.clear();
+    this->dia_pago1 = 0;
+    this->dia_pago2 = 0;
+    this->dia_pago3 = 0;
+    this->dia_pago4 = 0;
+    this->dias_entre_plazos =0;
+    this->numero_plazos = 0;
+
 }
 
 void vencimientos::calcular_vencimiento(QDate fecha, int id_cliente,int id_ticket,int id_factura, QString documento,

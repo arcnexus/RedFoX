@@ -148,6 +148,9 @@ font: 8pt &quot;Sans&quot;;</string>
      <attribute name="horizontalHeaderStretchLastSection">
       <bool>true</bool>
      </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
     </widget>
    </item>
    <item row="2" column="0" colspan="2">

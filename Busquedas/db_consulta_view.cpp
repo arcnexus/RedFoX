@@ -37,7 +37,7 @@ void db_consulta_view::set_SQL(QString cSQL)
         modelo->setQuery(cSQL,Configuracion_global->groupDB);
     else if(db=="empresa")
         modelo->setQuery(cSQL,Configuracion_global->empresaDB);
-    else if(db=="conta")
+    else if(db=="conta" || db =="Conta")
         modelo->setQuery(cSQL,Configuracion_global->contaDB);
     else if(db=="medic")
         modelo->setQuery(cSQL,Configuracion_global->medicaDB);

@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "../mayamodule.h"
 #include "../Auxiliares/Globlal_Include.h"
+#include "vencimientos.h"
 
 namespace Ui {
 class FrmFormas_pago;
@@ -24,12 +25,55 @@ public:
     void hideButton(){toolButton.hide();}
     QPushButton* wantShortCut(bool& ok) {ok = true; return push;}
 
+private slots:
+    void on_tabla_buscar_doubleClicked(const QModelIndex &index);
+
+    void on_tabla_buscar_clicked(const QModelIndex &index);
+
+    void on_btnSiguiente_2_clicked();
+
+    void on_btnAnterior_2_clicked();
+
+    void on_btnBuscar_2_clicked();
+
+    void on_btnAnadir_3_clicked();
+
+    void on_btnEditar_3_clicked();
+
+    void on_btnGuardar_2_clicked();
+
+    void on_btndeshacer_2_clicked();
+
+    void on_stackedWidget_currentChanged(int arg1);
+
+    void on_btnAnadir_2_clicked();
+
+    void on_btnEditar_2_clicked();
+
+    void on_btnLimpiar_clicked();
+
+    void on_cboOrden_currentIndexChanged(const QString &arg1);
+
+    void on_cboModo_currentIndexChanged(const QString &arg1);
+
+    void on_btn_borrar_clicked();
+
+    void on_btnborrar_2_clicked();
+
 private:
     Ui::FrmFormas_pago *ui;
     QSqlQueryModel *m;
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton * push;
+    vencimientos * oVtos;
+    bool anadiendo;
+    void bloquear_campos(bool state);
+    void llenar_campos();
+    void llenar_objeto();
+    void refrescar_tabla();
+    bool eventFilter(QObject *obj, QEvent *event);
+    void consultar_cuenta();
 };
 
 #endif // FRMFORMAS_PAGO_H

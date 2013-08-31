@@ -20,10 +20,11 @@ public:
 
     explicit vencimientos(QObject *parent = 0);
 
-    void recuperar(QString condiciones);
+    void recuperar(QStringList condiciones, QStringList extras);
     void anadir();
     void guardar();
     void borrar();
+    void clear();
 
 
     // Fecha = fecha_calculo,
