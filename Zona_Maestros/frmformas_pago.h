@@ -60,6 +60,8 @@ private slots:
 
     void on_btnborrar_2_clicked();
 
+    void on_txtcod_cuenta_contable_editingFinished();
+
 private:
     Ui::FrmFormas_pago *ui;
     QSqlQueryModel *m;
@@ -67,7 +69,7 @@ private:
     QAction menuButton;
     QPushButton * push;
     vencimientos * oVtos;
-    bool anadiendo;
+    bool anadiendo,buscando;
     void bloquear_campos(bool state);
     void llenar_campos();
     void llenar_objeto();

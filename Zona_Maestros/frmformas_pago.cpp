@@ -130,7 +130,10 @@ bool FrmFormas_pago::eventFilter(QObject *obj, QEvent *event)
         if(obj == ui->txtcod_cuenta_contable)
         {
             if(keyEvent->key() == Qt::Key_F1)
+            {
+                buscando = true;
                 consultar_cuenta();
+            }
         }
         return false;
     }
@@ -174,6 +177,7 @@ void FrmFormas_pago::consultar_cuenta()
 
         }
     }
+    buscando = false;
 }
 
 void FrmFormas_pago::on_btnSiguiente_2_clicked()
@@ -348,4 +352,17 @@ void FrmFormas_pago::on_btnborrar_2_clicked()
     llenar_campos();
     on_btn_borrar_clicked();
 
+}
+
+void FrmFormas_pago::on_txtcod_cuenta_contable_editingFinished()
+{
+    QLineEdit* edit = qobject_cast<QLineEdit*>(sender());
+    if(edit->isReadOnly() || buscando)
+        return;
+    QString error;
+    ui->txtCuenta_contable->setText(SqlCalls::SelectOneField("plan_general","descripcion",
+                                                      QString("codigo_cta ='%1'").arg(ui->txtcod_cuenta_contable->text()),
+                                                      Configuracion_global->contaDB,error).toString());
+    if(!error.isEmpty())
+        QMessageBox::warning(this,tr("Formas de pago"),tr("Error al asociar cuenta contable: %1").arg(error),tr("Aceptar"));
 }

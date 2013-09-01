@@ -25,10 +25,10 @@ bool apuntes::nuevalinea()
     QSqlQuery query_apunte(Configuracion_global->contaDB);
     query_apunte.prepare("INSERT INTO diario ( id_documento,cuenta_d,descripcion_d,"
                          "cuenta_h,descripcion_h,importe_d,importe_h,asiento,id_cuenta_d,id_cuenta_h,"
-                         "fecha_asiento,pos_en_asiento,comentario_d,comentario_h) "
+                         "fecha_asiento,pos_en_asiento,comentario_d,comentario_h,cuenta_relacion) "
                          "VALUES (:id_documento,:cuenta_d,:descripcion_d,:cuenta_h,"
                          ":descripcion_h,:importe_d,:importe_h,:asiento,:id_cuenta_d,:id_cuenta_h,"
-                         ":fecha_asiento,:pos_en_asiento,:comentario_d,:comentario_h);");
+                         ":fecha_asiento,:pos_en_asiento,:comentario_d,:comentario_h,:cuenta_relacion);");
     query_apunte.bindValue(":id_documento",this->id_documento);
     query_apunte.bindValue(":cuenta_d",this->cuenta_d);
     query_apunte.bindValue(":descripcion_d",this->descripcion_d);
@@ -43,6 +43,7 @@ bool apuntes::nuevalinea()
     query_apunte.bindValue(":pos_en_asiento",this->pos_en_asiento);
     query_apunte.bindValue(":comentario_d",this->comentario_d);
     query_apunte.bindValue(":comentario_h",this->comentario_h);
+    query_apunte.bindValue(":cuenta_relacion",this->cuenta_relacion);
 
     if(!query_apunte.exec())
     {

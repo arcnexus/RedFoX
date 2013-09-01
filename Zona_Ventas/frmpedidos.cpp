@@ -147,6 +147,13 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
             this,SLOT(SpinGastoDist3_valueChanged(double)));
 
     //----------------------
+    // Forma de pago
+    //----------------------
+    QSqlQueryModel *formas_pago = new QSqlQueryModel(this);
+    formas_pago->setQuery("select forma_pago from formpago",Configuracion_global->groupDB);
+    ui->cboFormapago->setModel(formas_pago);
+
+    //----------------------
     // Control de eventos
     //----------------------
     ui->txtcodigo_cliente->installEventFilter(this);
@@ -227,6 +234,8 @@ void FrmPedidos::LLenarCampos()
     ui->lbfacturado->setVisible(oPedido->facturado == 1);
     ui->txtcNumFra->setText(oPedido->factura);
     ui->txtfecha_factura->setDate(oPedido->fecha_factura);
+    index = ui->cboFormapago->findText(Configuracion_global->Devolver_forma_pago(oPedido->id_forma_pago));
+    ui->cboFormapago->setCurrentIndex(index);
 
     ui->txtcomentario->setText(oPedido->comentario);
     ui->txtentregado_a_cuenta->setText(QString::number(oPedido->entregado_a_cuenta));
@@ -283,9 +292,6 @@ void FrmPedidos::LLenarCamposCliente()
     int index = ui->cboPais->findText(oCliente3->pais);
     ui->cboPais->setCurrentIndex(index);
 
-
-
-
     ui->txtcif->setText(oCliente3->cif_nif);
     helper.set_tarifa(oCliente3->tarifa_cliente);
     if (oCliente3->lIRPF==1) {
@@ -310,6 +316,7 @@ void FrmPedidos::LLenarCamposCliente()
         oPedido->porc_rec2 = 0;
         oPedido->porc_rec3 = 0;
         oPedido->porc_rec4 = 0;
+
     }
     oCliente3->Recuperar("Select * from clientes where id ="+QString::number(oPedido->id_cliente));
     helper.set_tarifa(oPedido->tarifa_cliente);
@@ -341,6 +348,8 @@ void FrmPedidos::LLenarCamposCliente()
         ui->txtcomentarios_alternativo->setPlainText(i.value().value("comentarios").toString());
 
     }
+    index = ui->cboFormapago->findText(Configuracion_global->Devolver_forma_pago(oCliente3->id_forma_pago));
+    ui->cboFormapago->setCurrentIndex(index);
 }
 
 void FrmPedidos::VaciarCampos()
@@ -556,6 +565,7 @@ void FrmPedidos::LLenarPedido()
     oPedido->imp_gasto1 = ui->SpinGastoDist1->value();
     oPedido->imp_gasto2 = ui->SpinGastoDist2->value();
     oPedido->imp_gasto3 = ui->SpinGastoDist3->value();
+    oPedido->id_forma_pago = Configuracion_global->Devolver_id_forma_pago(ui->cboFormapago->currentText());
 }
 
 void FrmPedidos::formato_tabla()

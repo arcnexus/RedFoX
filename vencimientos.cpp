@@ -161,6 +161,14 @@ void vencimientos::calcular_vencimiento(QDate fecha, int id_cliente,int id_ticke
                     dia = vencimiento.day();
                     mes = vencimiento.month();
                     ano = vencimiento.year();
+                    if(dia_pago1 ==0)
+                    {
+                        dia_pago1 = SqlCalls::SelectOneField("clientes","dia_pago1",QString("id=%1").arg(id_cliente),
+                                                             Configuracion_global->groupDB,error).toInt();
+
+                        dia_pago2 = SqlCalls::SelectOneField("clientes","dia_pago2",QString("id=%1").arg(id_cliente),
+                                                             Configuracion_global->groupDB,error).toInt();
+                    }
                     if(dia < dia_pago1)
                         dia = dia_pago1;
                     else if(dia < dia_pago2)
@@ -204,6 +212,7 @@ void vencimientos::calcular_vencimiento(QDate fecha, int id_cliente,int id_ticke
                    h["oficina"] = oficina;
                    h["dc"] = dc;
                    h["cuenta"] = cuenta;
+                   h["id_cliente"] = id_cliente;
 
                    int new_id = SqlCalls::SqlInsert(h,"clientes_deuda",Configuracion_global->groupDB,error);
 

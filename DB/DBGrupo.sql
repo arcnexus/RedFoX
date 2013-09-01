@@ -483,6 +483,12 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`empresas` ( `id` INT(11) NOT NULL AUTO_IN
   `cuenta_iva_soportado2_re` VARCHAR(45) NULL DEFAULT NULL , 
   `cuenta_iva_soportado3_re` VARCHAR(45) NULL DEFAULT NULL , 
   `cuenta_iva_soportado4_re` VARCHAR(45) NULL DEFAULT NULL , 
+  `password_cuenta`  VARCHAR(50) NULL DEFAULT NULL ,
+  `nombre_mail`  VARCHAR(100) NULL DEFAULT NULL ,
+  `cuenta_imap` VARCHAR(150) NULL DEFAULT NULL ,
+  `cuenta_pop` VARCHAR(150) NULL DEFAULT NULL ,
+  `cuenta_smtp` VARCHAR(150) NULL DEFAULT NULL ,
+  `cuenta_mail` VARCHAR(150) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
  ENGINE = InnoDB AUTO_INCREMENT = 1 
 DEFAULT CHARACTER SET = utf8;

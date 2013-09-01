@@ -158,6 +158,7 @@ void Empresa::cargar(QSqlRecord registro)
     this->clave1 = registro.field("clave1").value().toString();
     this->clave2 = registro.field("clave2").value().toString();
     this->irpf = registro.field("usar_irpf").value().toBool();
+
 }
 
 void Empresa::Guardar()

@@ -22,17 +22,11 @@
        <height>24</height>
       </size>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>438</width>
-       <height>25</height>
-      </size>
-     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(0, 0, 57);</string>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600; color:#ff5500;&quot;&gt;CONTABILidAD - ENTRADA DE APUNTES.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600; color:#ff5500;&quot;&gt;CONTABILIDAD - ENTRADA DE APUNTES.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -72,6 +66,9 @@
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(255, 0, 0);</string>
+          </property>
+          <property name="maximum">
+           <number>999999999</number>
           </property>
          </widget>
         </item>

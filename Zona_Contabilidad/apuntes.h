@@ -28,7 +28,7 @@ public:
     QString cta_principal;
     QString comentario_d;
     QString comentario_h;
-
+    QString cuenta_relacion;
     
 signals:
     

@@ -124,6 +124,7 @@ GuardarPedido(int nid_Pedido)
     ped_cli["total_albaran"] = total_albaran;
     ped_cli["impreso"] = impreso;
     ped_cli["facturado"] = facturado;
+    ped_cli["id_forma_pago"] = id_forma_pago;
    // ped_cli["factura"] = factura;
     ped_cli["fecha_factura"] = fecha_factura;
     ped_cli["comentario"] = comentario;
@@ -248,6 +249,7 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             impreso = r.value("impreso").toInt();
             facturado = r.value("facturado").toInt();
             factura = r.value("factura").toString();
+            id_forma_pago = r.value("id_forma_pago").toInt();
             fecha_factura = r.value("fecha_factura").toDate();
             comentario = r.value("comentario").toString();
             entregado_a_cuenta = r.value("entregado_a_cuenta").toDouble();

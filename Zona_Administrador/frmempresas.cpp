@@ -202,6 +202,11 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.cuenta_iva_soportado_re2 = ui->ivasoportadore2->text();
     oEmpresa.cuenta_iva_soportado_re3 = ui->ivasoportadore3->text();
     oEmpresa.cuenta_iva_soportado_re4 = ui->ivasoportadore4->text();
+    oEmpresa.Email_contrasena  = ui->txtEmail_contrasena->text();
+    oEmpresa.Email_imap = ui->txtEmail_imap->text();
+    oEmpresa.Email_pop = ui->txtEmail_pop->text();
+    oEmpresa.Email_smtp= ui->txtEmail_smtp->text();
+    oEmpresa.Email_usuario = ui->txtEmail_usuario->text();
 }
 
 void FrmEmpresas::txtpoblacion_editingFinished()
@@ -693,6 +698,12 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->ivasoportadore2->setText(r.value("cuenta_iva_soportado2_re").toString());
     ui->ivasoportadore3->setText(r.value("cuenta_iva_soportado3_re").toString());
     ui->ivasoportadore4->setText(r.value("cuenta_iva_soportado4_re").toString());
+    ui->txtEmail_contrasena->setText(r.value("password_cuenta").toString());
+    ui->txtEmail_imap->setText(r.value("cuenta_imap").toString());
+    ui->txtEmail_pop->setText(r.value("cuenta_pop").toString());
+    ui->txtEmail_smtp->setText(r.value("cuenta_smtp").toString());
+    ui->txtEmail_usuario->setText(r.value("cuenta_mail").toString());
+
 }
 
 void FrmEmpresas::blockGUI(bool block, bool limpia)

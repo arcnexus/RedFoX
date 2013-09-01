@@ -79,6 +79,7 @@ public:
     int completo;
     int entregado;
     bool editable;
+    int id_forma_pago;
     QDate fecha_limite_entrega;
     double total_pedido;
     int tarifa_cliente;

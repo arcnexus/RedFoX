@@ -1421,6 +1421,24 @@ void FrmAlbaran::on_btnFacturar_clicked()
                                                                   QObject::tr("Se ha creado la factura num:")+
                                                 Configuracion_global->serie+"/"+num);
                         vencimientos vto(this);
+                        //-----------------
+                        // Asiento contable
+                        //-----------------
+                        if(Configuracion_global->contabilidad)
+                        {
+
+                            bool creado;
+                            oCliente2->Recuperar("select * from clientes where id = "+QString::number(oFactura.id_cliente));
+                            if(oFactura.apunte == 0)
+                                creado = oFactura.Apunte();
+                            else
+                                creado = oFactura.EditApunte(oFactura.apunte);
+                            if(!creado)
+                                Configuracion_global->empresaDB.rollback();
+                        }
+                        //------------------
+                        // Vencimiento
+                        //------------------
                         vto.calcular_vencimiento(oFactura.fecha,oFactura.id_cliente,0,oFactura.id,(oFactura.serie+"/"+oFactura.factura),1,
                                                  "V",oFactura.total);
                         oAlbaran->RecuperarAlbaran("select * from cab_alb where id ="+QString::number(oAlbaran->id));

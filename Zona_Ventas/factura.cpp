@@ -558,6 +558,7 @@ bool Factura::Apunte()
         oCliente.Recuperar("select * from clientes where id = " + QString::number(this->id_cliente));
 
         oApunte.cuenta_d = oCliente.codigo_cliente;
+        oApunte.cuenta_relacion = oCliente.codigo_cliente;
         oApunte.cuenta_h = Configuracion_global->cuenta_venta_mercaderias;
         oApunte.descripcion_d = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_d);
         oApunte.id_cuenta_d = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_d);
@@ -591,7 +592,7 @@ bool Factura::Apunte()
             if(!nuevo)
                 ok = false;
         }
-        if(this->porc_rec1 !=0)
+        if(this->rec1 !=0)
         {
             oApunte.clear();
             oApunte.asiento = apunte;
@@ -621,7 +622,7 @@ bool Factura::Apunte()
             if(!nuevo)
                 ok = false;
         }
-        if(this->porc_rec2 !=0)
+        if(this->rec2 !=0)
         {
             oApunte.clear();
             oApunte.asiento = apunte;
@@ -651,7 +652,7 @@ bool Factura::Apunte()
             if(!nuevo)
                 ok = false;
         }
-        if(this->porc_rec3 !=0)
+        if(this->rec3 !=0)
         {
             oApunte.clear();
             oApunte.asiento = apunte;
@@ -681,7 +682,7 @@ bool Factura::Apunte()
             if(!nuevo)
                 ok = false;
         }
-        if(this->porc_rec4 !=0)
+        if(this->rec4 !=0)
         {
             oApunte.clear();
             oApunte.asiento = apunte;
