@@ -23,10 +23,21 @@ public:
     QString poblacion;
     QString provincia;
     int id_pais;
+    QString direccion1_entrega;
+    QString direccion2_entrega;
+    QString cp_entrega;
+    QString poblacion_entrega;
+    QString provincia_entrega;
+    int id_pais_entrega;
+    QString email_entrega;
+    QString comentarios_entrega;
     QString telefono;
     QString movil;
     QString fax;
     double dto;
+    double dto_pp;
+    float porc_dto;
+    float porc_dto_pp;
     QString comentarios;
     double subtotal;
 //    double subtotal1;
@@ -34,7 +45,6 @@ public:
 //    double subtotal3;
 //    double subtotal4;
     double base;
-    float porc_dto;
     double total;
     bool impreso;
     bool aprobado;
@@ -77,6 +87,19 @@ public:
     QString email;
     double total_iva;
     double total_recargo;
+    QString desc_gasto1;
+    QString desc_gasto2;
+    QString desc_gasto3;
+    double importe_gasto1;
+    double importe_gasto2;
+    double importe_gasto3;
+    double porc_iva_gasto1;
+    double porc_iva_gasto2;
+    double porc_iva_gasto3;
+    double iva_gasto1;
+    double iva_gasto2;
+    double iva_gasto3;
+    int id_transportista;
 
 public slots:
     // Metodos de trabajo Clase Presupuesto
@@ -87,9 +110,6 @@ public slots:
     bool GuardarPres(int nid_Presupuesto);
     bool BorrarLineas(int nid_Presupuesto);
     int NuevoNumeroPresupuesto();
-    void PresupuestoToPedido();
-    void PresupuestoToAlbaran();
-    void PresupuestoToFactura();
 };
 
 #endif // PRESUPUESTO_H

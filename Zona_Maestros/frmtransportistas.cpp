@@ -13,6 +13,7 @@ FrmTransportistas::FrmTransportistas(QWidget *parent) :
 
 {
     ui->setupUi(this);
+
     transportistas oTransportista(this);
     anadiendo = false;
     ui->txtCodigo_proveedor->installEventFilter(this);
@@ -31,6 +32,9 @@ FrmTransportistas::FrmTransportistas(QWidget *parent) :
     paises->setQuery("select pais from paises order by pais",Configuracion_global->groupDB);
     ui->cbopais->setModel(paises);
     Bloquear_campos(true);
+
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión de transportistas"));
 }
 
 FrmTransportistas::~FrmTransportistas()

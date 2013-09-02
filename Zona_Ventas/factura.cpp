@@ -155,7 +155,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
     cab_fac["serie"] = this->serie;
     cab_fac["fecha"] = this->fecha;
     cab_fac["fecha_cobro"] = this->fecha_cobro;
-    cab_fac["id_cliente"], this->id_cliente;
+    cab_fac["id_cliente"] = this->id_cliente;
     cab_fac["cliente"] = this->cliente;
     cab_fac["direccion1"] = this->direccion1;
     cab_fac["direccion2"] = this->direccion2;

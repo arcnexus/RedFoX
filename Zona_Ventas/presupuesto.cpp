@@ -12,112 +12,96 @@ Presupuesto::~Presupuesto()
 
 bool Presupuesto::AnadirPresupuesto()
 {
-    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
-
     this->iva1 = Configuracion_global->ivaList.at(0).toDouble();
     this->iva2 = Configuracion_global->ivaList.at(1).toDouble();
     this->iva3 = Configuracion_global->ivaList.at(2).toDouble();
     this->iva4 = Configuracion_global->ivaList.at(3).toDouble();
 
-    this->porc_rec1 = Configuracion_global->reList.at(0).toDouble();
-    this->porc_rec2 = Configuracion_global->reList.at(1).toDouble();
-    this->porc_rec3 = Configuracion_global->reList.at(2).toDouble();
-    this->porc_rec4 = Configuracion_global->reList.at(3).toDouble();
+    this->porc_rec1 = 0;
+    this->porc_rec2 = 0;
+    this->porc_rec3 = 0;
+    this->porc_rec4 = 0;
 
-    QSqlQuery cab_pre(Configuracion_global->empresaDB);
-    cab_pre.prepare("INSERT INTO cab_pre (presupuesto, fecha, valido_hasta,"
-                    "id_cliente, codigo_cliente, cliente, cif, direccion1, direccion2, cp,"
-                    "poblacion, provincia, id_pais, telefono, movil, fax, porc_dto, comentarios,"
-                    "base, dto, total, impreso, aprobado, fecha_aprobacion,"
-                    "importe_factura, importe_pendiente, factura, albaran, pedido, id_forma_pago,"
-                    "lugar_entrega, atencion_de, base1, base2, base3, base4, porc_iva1, porc_iva2, porc_iva3,"
-                    "porc_iva4, iva1, iva2, iva3, iva4, porc_rec1, porc_rec2,"
-                    "porc_rec3, porc_rec4, rec1, rec2, rec3, rec4, total1,"
-                    "total2, total3, total4, recargo_equivalencia, email, total_iva, total_recargo,ejercicio) "
-                    "VALUES"
-                    "(:presupuesto, :fecha, :valido_hasta,"
-                    ":id_cliente, :codigo_cliente, :cliente, :cif, :direccion1, :direccion2, :cp,"
-                    ":poblacion, :provincia, :id_pais, :telefono, :movil, :fax, :porc_dto, :comentarios,"
-                    ":base, :dto, :total, :impreso, :aprobado, :fecha_aprobacion,"
-                    ":importe_factura, :importe_pendiente, :factura, :albaran, :pedido, :id_forma_pago,"
-                    ":lugar_entrega, :atencion_de, :base1, :base2, :base3, :base4, :porc_iva1, :porc_iva2, :porc_iva3,"
-                    ":porc_iva4, :iva1, :iva2, :iva3, :iva4, :porc_rec1, :porc_rec2,"
-                    ":porc_rec3, :porc_rec4, :rec1, :rec2, :rec3, :rec4, :total1,"
-                    ":total2, :total3, :total4, :recargo_equivalencia, :email, :total_iva, :total_recargo,:ejercicio)");
+    QHash <QString, QVariant> cab_pre;
+    cab_pre["presupuesto"] = presupuesto;
+    cab_pre["fecha"] = fecha;
+    cab_pre["valido_hasta"] = valido_hasta;
+    cab_pre["id_cliente"] = id_cliente;
+    cab_pre["codigo_cliente"] = codigo_cliente;
+    cab_pre["cliente"] = cliente;
+    cab_pre["cif"] = cif;
+    cab_pre["direccion1"] = direccion1;
+    cab_pre["direccion2"] = direccion2;
+    cab_pre["cp"] = cp;
+    cab_pre["poblacion"] = poblacion;
+    cab_pre["provincia"] = provincia;
+    cab_pre["id_pais"] = id_pais;
+    cab_pre["direccion1_entrega"] = direccion1;
+    cab_pre["direccion2_entrega"] = direccion2;
+    cab_pre["cp_entrega"] = cp;
+    cab_pre["poblacion_entrega"] = poblacion;
+    cab_pre["provincia_entrega"] = provincia;
+    cab_pre["id_pais_entrega"] = id_pais;
+    cab_pre["email_entrega"] = email_entrega;
+    cab_pre["comentarios_entrega"] = comentarios_entrega;
+    cab_pre["telefono"] = telefono;
+    cab_pre["movil"] = movil;
+    cab_pre["fax"] = fax;
+    cab_pre["porc_dto"] = 0;
+    cab_pre["comentarios"] = comentarios;
+    cab_pre["base"] = 0;
+    cab_pre["dto"] = 0;
+    cab_pre["total"] = 0;
+    cab_pre["impreso"] = impreso;
+    cab_pre["aprobado"] = aprobado;
+    cab_pre["fecha_aprobacion"] = fecha_aprobacion;
+    cab_pre["importe_factura"] = 0;
+    cab_pre["importe_pendiente"] = 0;
+    cab_pre["factura"] = factura;
+    cab_pre["albaran"] = albaran;
+    cab_pre["pedido"] = pedido;
+    cab_pre["id_forma_pago"] = id_forma_pago;
+    cab_pre["lugar_entrega"] = lugar_entrega;
+    cab_pre["atencion_de"] = atencion_de;
+    cab_pre["base1"] = 0;
+    cab_pre["base2"] = 0;
+    cab_pre["base3"] = 0;
+    cab_pre["base4"] = 0;
+    cab_pre["porc_iva1"] = iva1;
+    cab_pre["porc_iva2"] = iva2;
+    cab_pre["porc_iva3"] = iva3;
+    cab_pre["porc_iva4"] = iva4;
+    cab_pre["iva1"] = 0;
+    cab_pre["iva2"] = 0;
+    cab_pre["iva3"] = 0;
+    cab_pre["iva4"] = 0;
+    cab_pre["porc_rec1"] = porc_rec1;
+    cab_pre["porc_rec2"] = porc_rec2;
+    cab_pre["porc_rec3"] = porc_rec3;
+    cab_pre["porc_rec4"] = porc_rec4;
+    cab_pre["rec1"] = 0;
+    cab_pre["rec2"] = 0;
+    cab_pre["rec3"] = 0;
+    cab_pre["rec4"] = 0;
+    cab_pre["total1"] = 0;
+    cab_pre["total2"] = 0;
+    cab_pre["total3"] = 0;
+    cab_pre["total4"] = 0;
+    cab_pre["recargo_equivalencia"] = recargo_equivalencia;
+    cab_pre["email"] = email;
+    cab_pre["total_iva"] = 0;
+    cab_pre["total_recargo"] = 0;
+    QString error;
+    int new_id = SqlCalls::SqlInsert(cab_pre,"cab_pre",Configuracion_global->empresaDB,error);
 
-    cab_pre.bindValue(":presupuesto",presupuesto);
-    cab_pre.bindValue(":fecha",fecha);
-    cab_pre.bindValue(":valido_hasta",valido_hasta);
-    cab_pre.bindValue(":id_cliente",id_cliente);
-    cab_pre.bindValue(":codigo_cliente",codigo_cliente);
-    cab_pre.bindValue(":cliente",cliente);
-    cab_pre.bindValue(":cif",cif);
-    cab_pre.bindValue(":direccion1",direccion1);
-    cab_pre.bindValue(":direccion2",direccion2);
-    cab_pre.bindValue(":cp",cp);
-    cab_pre.bindValue(":poblacion",poblacion);
-    cab_pre.bindValue(":provincia",provincia);
-    cab_pre.bindValue(":id_pais",id_pais);
-    cab_pre.bindValue(":telefono",telefono);
-    cab_pre.bindValue(":movil",movil);
-    cab_pre.bindValue(":fax",fax);
-    cab_pre.bindValue(":porc_dto",0);
-    cab_pre.bindValue(":comentarios",comentarios);
-    cab_pre.bindValue(":base",0);
-    cab_pre.bindValue(":dto",0);
-    cab_pre.bindValue(":total",0);
-    cab_pre.bindValue(":impreso",impreso);
-    cab_pre.bindValue(":aprobado",aprobado);
-    cab_pre.bindValue(":fecha_aprobacion",fecha_aprobacion);
-    cab_pre.bindValue(":importe_factura",0);
-    cab_pre.bindValue(":importe_pendiente",0);
-    cab_pre.bindValue(":factura",factura);
-    cab_pre.bindValue(":albaran",albaran);
-    cab_pre.bindValue(":pedido",pedido);
-    cab_pre.bindValue(":id_forma_pago",id_forma_pago);
-    cab_pre.bindValue(":lugar_entrega",lugar_entrega);
-    cab_pre.bindValue(":atencion_de",atencion_de);
-    cab_pre.bindValue(":base1",0);
-    cab_pre.bindValue(":base2",0);
-    cab_pre.bindValue(":base3",0);
-    cab_pre.bindValue(":base4",0);
-    cab_pre.bindValue(":iva1",iva1);
-    cab_pre.bindValue(":iva2",iva2);
-    cab_pre.bindValue(":iva3",iva3);
-    cab_pre.bindValue(":iva4",iva4);
-    cab_pre.bindValue(":iva1",0);
-    cab_pre.bindValue(":iva2",0);
-    cab_pre.bindValue(":iva3",0);
-    cab_pre.bindValue(":iva4",0);
-    cab_pre.bindValue(":porc_rec1",porc_rec1);
-    cab_pre.bindValue(":porc_rec2",porc_rec2);
-    cab_pre.bindValue(":porc_rec3",porc_rec3);
-    cab_pre.bindValue(":porc_rec4",porc_rec4);
-    cab_pre.bindValue(":rec1",0);
-    cab_pre.bindValue(":rec2",0);
-    cab_pre.bindValue(":rec3",0);
-    cab_pre.bindValue(":rec4",0);
-    cab_pre.bindValue(":total1",0);
-    cab_pre.bindValue(":total2",0);
-    cab_pre.bindValue(":total3",0);
-    cab_pre.bindValue(":total4",0);
-    cab_pre.bindValue(":recargo_equivalencia",recargo_equivalencia);
-    cab_pre.bindValue(":email",email);
-    cab_pre.bindValue(":total_iva",0);
-    cab_pre.bindValue(":total_recargo",0);
-    cab_pre.bindValue(":importe1",0);
-    cab_pre.bindValue(":importe2",0);
-    cab_pre.bindValue(":importe3",0);
-    cab_pre.bindValue(":importe4",0);
-
-     if(!cab_pre.exec())
+     if(new_id == -1)
      {
-         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Presupuesto:", cab_pre.lastError().text());
+         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Presupuesto:", error);
          return false;
      }
      else
      {         
-         this->id = cab_pre.lastInsertId().toInt();
+         this->id = new_id;
          return true;
      }
 }
@@ -146,15 +130,25 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->poblacion = registro.field("poblacion").value().toString();
             this->provincia = registro.field("provincia").value().toString();
             this->id_pais = registro.field("id_pais").value().toInt();
+            this->direccion1_entrega = registro.field("direccion1").value().toString();
+            this->direccion2_entrega = registro.field("direccion2").value().toString();
+            this->cp_entrega = registro.field("cp").value().toString();
+            this->poblacion_entrega = registro.field("poblacion").value().toString();
+            this->provincia_entrega = registro.field("provincia").value().toString();
+            this->id_pais_entrega = registro.field("id_pais").value().toInt();
+            this->email_entrega = registro.field("email_entrega").value().toString();
+            this->comentarios_entrega = registro.field("comentarios_entrega").value().toString();
             this->telefono = registro.field("telefono").value().toString();
             this->movil = registro.field("movil").value().toString();
             this->fax = registro.field("fax").value().toString();
             this->email = registro.field("email").value().toString();
-            this->porc_dto = registro.field("porc_dto").value().toDouble();
             this->comentarios = registro.field("comentarios").value().toString();
             this->subtotal = registro.field("subtotal").value().toDouble();
             this->base = registro.field("base").value().toDouble();
+            this->porc_dto = registro.field("porc_dto").value().toFloat();
+            this->porc_dto_pp = registro.field("porc_dto_pp").value().toFloat();
             this->dto = registro.field("dto").value().toDouble();
+            this->dto_pp = registro.field("dto_pp").value().toDouble();
             this->total = registro.field("total").value().toDouble();
             this->impreso = registro.field("impreso").value().toBool();
             this->aprobado = registro.field("aprobado").value().toBool();
@@ -163,6 +157,19 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->factura = registro.field("factura").value().toString();
             this->albaran = registro.field("albaran").value().toInt();
             this->pedido = registro.field("pedido").value().toInt();
+            this->desc_gasto1 = registro.field("gastos_distribuidos1").value().toString();
+            this->desc_gasto2 = registro.field("gastos_distribuidos2").value().toString();
+            this->desc_gasto3 = registro.field("gastos_distribuidos3").value().toString();
+            this->importe_gasto1 = registro.field("importe_gasto1").value().toDouble();
+            this->importe_gasto2 = registro.field("importe_gasto2").value().toDouble();
+            this->importe_gasto3 = registro.field("importe_gasto3").value().toDouble();
+            this->porc_iva_gasto1 = registro.field("porc_iva_gasto1").value().toFloat();
+            this->porc_iva_gasto2 = registro.field("porc_iva_gasto2").value().toFloat();
+            this->porc_iva_gasto3 = registro.field("porc_iva_gasto3").value().toFloat();
+            this->iva_gasto1 = registro.field("iva_gasto1").value().toDouble();
+            this->iva_gasto2 = registro.field("iva_gasto2").value().toDouble();
+            this->iva_gasto3 = registro.field("iva_gasto3").value().toDouble();
+
 
             this->id_forma_pago = registro.field("id_forma_pago").value().toInt();
             QSqlQuery q(Configuracion_global->empresaDB);
@@ -225,100 +232,103 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
 
     if (this->presupuesto == 0)
         this->presupuesto = NuevoNumeroPresupuesto();
+    QHash <QString,QVariant> cab_pre;
+    QString error;
 
-    QSqlQuery cab_pre(Configuracion_global->empresaDB);
-    cab_pre.prepare("UPDATE cab_pre SET "
-                    "fecha = :fecha, valido_hasta = :valido_hasta, id_cliente = :id_cliente,"
-                    "codigo_cliente =  :codigo_cliente, cliente = :cliente, cif = :cif,"
-                    "direccion1 = :direccion1, direccion2 = :direccion2, cp = :cp,"
-                    "poblacion = :poblacion, provincia = :provincia, id_pais = :id_pais,"
-                    "telefono = :telefono, movil = :movil, fax = :fax,"
-                    "comentarios = :comentarios, base =:subtotal,"
-                    "dto = :dto,porc_dto =:porc_dto, total = :total, impreso = :impreso,"
-                    "aprobado = :aprobado, fecha_aprobacion = :fecha_aprobacion,"
-                    "importe_factura =:importe_factura, importe_pendiente = :importe_pendiente,"
-                    "factura = :factura, albaran = :albaran, pedido=:pedido,"
-                    "id_forma_pago =:id_forma_pago, lugar_entrega=:lugar_entrega,"
-                    "atencion_de=:atencion_de, base1=:base1, base2=:base2, base3=:base3,"
-                    "base4=:base4, porc_iva1=:porc_iva1, porc_iva2=:porc_iva2, porc_iva3=:porc_iva3,"
-                    "porc_iva4=:porc_iva4, iva1=:iva1, iva2=:iva2, iva3=:iva3, iva4=:iva4,"
-                    "porc_rec1=:porc_rec1,"
-                    "porc_rec2=:porc_rec2,"
-                    "porc_rec3=:porc_rec3,"
-                    "porc_rec4=:porc_rec4,"
-                    "rec1=:rec1, rec2=:rec2, rec3=:rec3, rec4=:rec4, total1=:total1,"
-                    "total2=:total2, total3=:total3, total4=:total4,"
-                    "recargo_equivalencia=:recargo_equivalencia, email=:email,"
-                    "total_iva=:total_iva, total_recargo=:total_recargo "
-                    "WHERE id = :npresupuesto");
 
-    cab_pre.bindValue(":fecha",fecha);
-    cab_pre.bindValue(":valido_hasta",valido_hasta);
-    cab_pre.bindValue(":id_cliente",id_cliente);
-    cab_pre.bindValue(":codigo_cliente",codigo_cliente);
-    cab_pre.bindValue(":cliente",cliente);
-    cab_pre.bindValue(":cif",cif);
-    cab_pre.bindValue(":direccion1",direccion1);
-    cab_pre.bindValue(":direccion2",direccion2);
-    cab_pre.bindValue(":cp",cp);
-    cab_pre.bindValue(":poblacion",poblacion);
-    cab_pre.bindValue(":provincia",provincia);
-    cab_pre.bindValue(":id_pais",id_pais);
-    cab_pre.bindValue(":telefono",telefono);
-    cab_pre.bindValue(":movil",movil);
-    cab_pre.bindValue(":fax",fax);
-    cab_pre.bindValue(":comentarios",comentarios);
-    cab_pre.bindValue(":subtotal",base);
-    cab_pre.bindValue(":dto",dto);
-    cab_pre.bindValue(":porc_dto",porc_dto);
-    cab_pre.bindValue(":total",total);
-    cab_pre.bindValue(":impreso",impreso);
-    cab_pre.bindValue(":aprobado",aprobado);
-    cab_pre.bindValue(":fecha_aprobacion",fecha_aprobacion);
-    cab_pre.bindValue(":importe_factura",importe_factura);
-    cab_pre.bindValue(":importe_pendiente",0);//TODO preguntar a Marc
-    cab_pre.bindValue(":factura",factura);
-    cab_pre.bindValue(":albaran",albaran);
-    cab_pre.bindValue(":pedido",pedido);
-    cab_pre.bindValue(":id_forma_pago",id_forma_pago);
-    cab_pre.bindValue(":lugar_entrega",lugar_entrega);
-    cab_pre.bindValue(":atencion_de",atencion_de);
-    cab_pre.bindValue(":base1",base1);
-    cab_pre.bindValue(":base2",base2);
-    cab_pre.bindValue(":base3",base3);
-    cab_pre.bindValue(":base4",base4);
-    cab_pre.bindValue(":porc_iva1",porc_iva1);
-    cab_pre.bindValue(":porc_iva2",porc_iva2);
-    cab_pre.bindValue(":porc_iva3",porc_iva3);
-    cab_pre.bindValue(":porc_iva4",porc_iva4);
-    cab_pre.bindValue(":iva1",iva1);
-    cab_pre.bindValue(":iva2",iva2);
-    cab_pre.bindValue(":iva3",iva3);
-    cab_pre.bindValue(":iva4",iva4);
-    cab_pre.bindValue(":porc_rec1",porc_rec1);
-    cab_pre.bindValue(":porc_rec2",porc_rec2);
-    cab_pre.bindValue(":porc_rec3",porc_rec3);
-    cab_pre.bindValue(":porc_rec4",porc_rec4);
-    cab_pre.bindValue(":rec1",rec1);
-    cab_pre.bindValue(":rec2",rec2);
-    cab_pre.bindValue(":rec3",rec3);
-    cab_pre.bindValue(":rec4",rec4);
-    cab_pre.bindValue(":total1",total1);
-    cab_pre.bindValue(":total2",total2);
-    cab_pre.bindValue(":total3",total3);
-    cab_pre.bindValue(":total4",total4);
-    cab_pre.bindValue(":recargo_equivalencia",recargo_equivalencia);
-    cab_pre.bindValue(":email",email);
-    cab_pre.bindValue(":total_iva",total_iva);
-    cab_pre.bindValue(":total_recargo",total_recargo);
-    cab_pre.bindValue(":npresupuesto",nid_Presupuesto);
+    cab_pre["fecha"] = fecha;
+    cab_pre["valido_hasta"] = valido_hasta;
+    cab_pre["id_cliente"] = id_cliente;
+    cab_pre["codigo_cliente"] = codigo_cliente;
+    cab_pre["cliente"] = cliente;
+    cab_pre["cif"] = cif;
+    cab_pre["direccion1"] = direccion1;
+    cab_pre["direccion2"] = direccion2;
+    cab_pre["cp"] = cp;
+    cab_pre["poblacion"] = poblacion;
+    cab_pre["provincia"] = provincia;
+    cab_pre["id_pais"] = id_pais;
+    cab_pre["direccion1_entrega"] = direccion1_entrega;
+    cab_pre["direccion2_entrega"] = direccion2_entrega;
+    cab_pre["cp_entrega"] = cp_entrega;
+    cab_pre["poblacion_entrega"] = poblacion_entrega;
+    cab_pre["provincia_entrega"] = provincia_entrega;
+    cab_pre["id_pais_entrega"] = id_pais_entrega;
+    cab_pre["email_entrega"] = email_entrega;
+    cab_pre["comentarios_entrega"] = comentarios_entrega;
 
-    if(!cab_pre.exec())
+    cab_pre["telefono"] = telefono;
+    cab_pre["movil"] = movil;
+    cab_pre["fax"] = fax;
+    cab_pre["comentarios"] = comentarios;
+    cab_pre["subtotal"] = base;
+    cab_pre["dto"] = dto;
+    cab_pre["dto_pp"] = dto_pp;
+    cab_pre["porc_dto"] = porc_dto;
+    cab_pre["porc_dto_pp"] = porc_dto_pp;
+    cab_pre["total"] = total;
+    cab_pre["impreso"] = impreso;
+    cab_pre["aprobado"] = aprobado;
+    cab_pre["fecha_aprobacion"] = fecha_aprobacion;
+    cab_pre["importe_factura"] = importe_factura;
+    cab_pre["importe_pendiente"] = 0;//TODO preguntar a Marc
+    cab_pre["factura"] = factura;
+    cab_pre["albaran"] = albaran;
+    cab_pre["pedido"] = pedido;
+    cab_pre["id_forma_pago"] = id_forma_pago;
+    cab_pre["lugar_entrega"] = lugar_entrega;
+    cab_pre["atencion_de"] = atencion_de;
+    cab_pre["base1"] = base1;
+    cab_pre["base2"] = base2;
+    cab_pre["base3"] = base3;
+    cab_pre["base4"] = base4;
+    cab_pre["porc_iva1"] = porc_iva1;
+    cab_pre["porc_iva2"] = porc_iva2;
+    cab_pre["porc_iva3"] = porc_iva3;
+    cab_pre["porc_iva4"] = porc_iva4;
+    cab_pre["iva1"] = iva1;
+    cab_pre["iva2"] = iva2;
+    cab_pre["iva3"] = iva3;
+    cab_pre["iva4"] = iva4;
+    cab_pre["porc_rec1"] = porc_rec1;
+    cab_pre["porc_rec2"] = porc_rec2;
+    cab_pre["porc_rec3"] = porc_rec3;
+    cab_pre["porc_rec4"] = porc_rec4;
+    cab_pre["rec1"] = rec1;
+    cab_pre["rec2"] = rec2;
+    cab_pre["rec3"] = rec3;
+    cab_pre["rec4"] = rec4;
+    cab_pre["total1"] = total1;
+    cab_pre["total2"] = total2;
+    cab_pre["total3"] = total3;
+    cab_pre["total4"] = total4;
+    cab_pre["recargo_equivalencia"] = recargo_equivalencia;
+    cab_pre["email"] = email;
+    cab_pre["total_iva"] = total_iva;
+    cab_pre["total_recargo"] = total_recargo;
+    cab_pre["gastos_distribuidos1"] = desc_gasto1;
+    cab_pre["gastos_distribuidos2"] = desc_gasto2;
+    cab_pre["gastos_distribuidos3"] = desc_gasto3;
+    cab_pre["importe_gasto1"] = importe_gasto1;
+    cab_pre["importe_gasto2"] = importe_gasto2;
+    cab_pre["importe_gasto3"] = importe_gasto3;
+    cab_pre["porc_iva_gasto1"] = porc_iva_gasto1;
+    cab_pre["porc_iva_gasto2"] = porc_iva_gasto2;
+    cab_pre["porc_iva_gasto3"] = porc_iva_gasto3;
+    cab_pre["iva_gasto1"] = iva_gasto1;
+    cab_pre["iva_gasto2"] = iva_gasto2;
+    cab_pre["iva_gasto3"] = iva_gasto3;
+
+    cab_pre["npresupuesto"] = nid_Presupuesto;
+
+    bool updated = SqlCalls::SqlUpdate(cab_pre,"cab_pre",Configuracion_global->empresaDB,QString("id=%1").arg(nid_Presupuesto),error);
+
+    if(!updated)
     {
-        QMessageBox::critical(qApp->activeWindow(),"Error al guardar datos Presupuesto:", cab_pre.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(),"Error al guardar datos Presupuesto:", error);
         return false;
-    }
-    return true;
+    }else
+        return true;
 }
 
 bool Presupuesto::BorrarLineas(int nid_Presupuesto)
@@ -350,14 +360,3 @@ int Presupuesto::NuevoNumeroPresupuesto()
     return presupuesto;
 }
 
-void Presupuesto::PresupuestoToPedido()
-{
-}
-
-void Presupuesto::PresupuestoToAlbaran()
-{
-}
-
-void Presupuesto::PresupuestoToFactura()
-{
-}

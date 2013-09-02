@@ -411,7 +411,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`empresas` ( `id` INT(11) NOT NULL AUTO_IN
   `codigo` VARCHAR(10) NULL DEFAULT NULL , 
   `nombre` VARCHAR(75) NULL DEFAULT NULL ,
   `digitos_factura` INT(11) NULL DEFAULT NULL , 
-  `serie` INT(11) NULL DEFAULT NULL , 
+  `serie` VARCHAR(11) NULL DEFAULT NULL , 
   `decimales_campos_totales` INT(2) NULL DEFAULT '2' ,
   `decimales` INT(2) NULL DEFAULT '2' ,
   `mostrarsiempre` TINYINT(1) NULL DEFAULT '0' ,
