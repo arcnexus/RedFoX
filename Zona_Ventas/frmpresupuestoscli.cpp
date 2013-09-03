@@ -1695,3 +1695,43 @@ void FrmPresupuestosCli::on_btnDesbloquear_clicked()
     ui->stackedWidget->setCurrentIndex(0);
     BloquearCampos(true);
 }
+
+void FrmPresupuestosCli::on_btnLimpiar_clicked()
+{
+    ui->cboModo->setCurrentIndex(-1);
+    ui->cboOrden->setCurrentIndex(-1);
+    ui->txtBuscar->clear();
+    filter_table();
+    ui->txtBuscar->setFocus();
+}
+
+void FrmPresupuestosCli::on_cboOrden_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    filter_table();
+    ui->txtBuscar->setFocus();
+}
+
+void FrmPresupuestosCli::on_cboModo_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    filter_table();
+    ui->txtBuscar->setFocus();
+}
+
+void FrmPresupuestosCli::on_btnAnadir_2_clicked()
+{
+    on_btnAnadir_clicked();
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void FrmPresupuestosCli::on_btnEditar_2_clicked()
+{
+    on_tabla_doubleClicked(ui->tabla->currentIndex());
+    on_btnEditar_clicked();
+}
+
+void FrmPresupuestosCli::on_btnImprimir_2_clicked()
+{
+    // TODO -  Imprimir
+}

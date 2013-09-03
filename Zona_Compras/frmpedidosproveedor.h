@@ -60,8 +60,6 @@ private slots:
     void cargar_tabla_entregas();
     void on_btnImprimir_clicked();
 
-    void on_radBusqueda_toggled(bool checked);
-
     void on_txtBuscar_textEdited(const QString &arg1);
 
     void on_tabla_doubleClicked(const QModelIndex &index);

@@ -95,6 +95,18 @@ private slots:
 
     void on_btnDesbloquear_clicked();
 
+    void on_btnLimpiar_clicked();
+
+    void on_cboOrden_currentIndexChanged(int index);
+
+    void on_cboModo_currentIndexChanged(int index);
+
+    void on_btnAnadir_2_clicked();
+
+    void on_btnEditar_2_clicked();
+
+    void on_btnImprimir_2_clicked();
+
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;

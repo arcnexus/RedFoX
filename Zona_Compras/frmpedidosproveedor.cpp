@@ -799,13 +799,6 @@ void FrmPedidosProveedor::on_btnImprimir_clicked()
     //TODO imprimir
 }
 
-void FrmPedidosProveedor::on_radBusqueda_toggled(bool checked)
-{
-    if(checked)
-        ui->stackedWidget->setCurrentIndex(1);
-    else
-        ui->stackedWidget->setCurrentIndex(0);
-}
 
 void FrmPedidosProveedor::on_txtBuscar_textEdited(const QString &arg1)
 {
@@ -857,7 +850,7 @@ void FrmPedidosProveedor::on_tabla_doubleClicked(const QModelIndex &index)
     int id = Configuracion_global->devolver_id_tabla(mymodel,index);
     oPedido_proveedor->recuperar("select * from ped_pro where id =" +QString::number(id));
     llenar_campos();
-    ui->radEdicion->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(0);
 
 }
 
@@ -873,7 +866,7 @@ void FrmPedidosProveedor::on_tabla_clicked(const QModelIndex &index)
 void FrmPedidosProveedor::on_btnBuscar_clicked()
 {
     ui->txtBuscar->clear();
-    ui->radBusqueda->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(1);
     ui->txtBuscar->setFocus();
 }
 
