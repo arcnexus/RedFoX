@@ -1123,7 +1123,7 @@ void FrmPresupuestosCli::convertir_ealbaran()
 
 void FrmPresupuestosCli::convertir_enFactura()
 {
-    if(oPres->editable && ui->txtfactura->text() == "0")
+    if(oPres->editable && (ui->txtfactura->text() == "0" || ui->txtfactura->text().isEmpty()))
     {
         if(QMessageBox::question(this,tr("Presupuestos a clientes"),tr("¿Desea realmente facturar este presupuesto?"),
                                  tr("No"),tr("Sí"))==QMessageBox::Accepted)
@@ -1645,17 +1645,15 @@ void FrmPresupuestosCli::on_txtBuscar_textEdited(const QString &arg1)
 
 void FrmPresupuestosCli::on_tabla_clicked(const QModelIndex &index)
 {
-    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
-    int id = Configuracion_global->devolver_id_tabla(model,index);
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPres->RecuperarPresupuesto("select * from cab_pre where id ="+QString::number(id));
-    LLenarCampos();
+    //LLenarCampos();
 
 }
 
 void FrmPresupuestosCli::on_tabla_doubleClicked(const QModelIndex &index)
 {
-    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
-    int id = Configuracion_global->devolver_id_tabla(model,index);
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPres->RecuperarPresupuesto("select * from cab_pre where id ="+QString::number(id));
     LLenarCampos();
     ui->stackedWidget->setCurrentIndex(0);
@@ -1684,8 +1682,7 @@ void FrmPresupuestosCli::on_cboModo_currentIndexChanged(const QString &arg1)
 void FrmPresupuestosCli::on_btnDesbloquear_clicked()
 {
     QModelIndex index = ui->tabla->currentIndex();
-    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
-    int id = Configuracion_global->devolver_id_tabla(model,index);
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     QHash <QString, QVariant> h;
     h["editable"] = true;
     QString error;

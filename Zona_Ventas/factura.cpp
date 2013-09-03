@@ -241,79 +241,71 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
         RecuperarFactura(cSQL);
         if (FacturaLegal)
         {
-            if(QMessageBox::question(qApp->activeWindow(),tr("Guardar Factura"),
-                                     tr("¿Desea cobrar la factura ahora o generar una deuda al cliente?"),
-                                     tr("Cobrar"),tr("Generar deuda")) == QMessageBox::Accepted)
+            // Busco ficha cliente
+            QSqlQuery Cliente(Configuracion_global->empresaDB);
+            Cliente.prepare("Select * from clientes where codigo_cliente = :codigo_cliente");
+            Cliente.bindValue(":codigo_cliente",this->codigo_cliente);
+            if (Cliente.exec())
             {
-                succes = CobrarFactura();
-            }
-            else
-            {
-                // Busco ficha cliente
-                QSqlQuery Cliente(Configuracion_global->empresaDB);
-                Cliente.prepare("Select * from clientes where codigo_cliente = :codigo_cliente");
-                Cliente.bindValue(":codigo_cliente",this->codigo_cliente);
-                if (Cliente.exec())
+                Cliente.next();
+                QSqlRecord record = Cliente.record();
+
+                // Genero deuda cliente
+
+                QSqlQuery Deudacliente(Configuracion_global->empresaDB);
+                Deudacliente.prepare("Insert into clientes_deuda (id_cliente,fecha,vencimiento,documento,id_ticket,id_factura,tipo,"
+                                     "importe,pagado,pendiente_cobro,entidad,oficina,dc,cuenta)"
+                                     " values (:id_cliente,:fecha,:vencimiento,:documento,:id_tiquet,:id_factura,:tipo,"
+                                     ":importe,:pagado,:pendiente_cobro,:entidad,:oficina,:dc,:cuenta)");
+                Deudacliente.bindValue(":id_cliente",record.field("id").value().toInt());
+                Deudacliente.bindValue(":fecha",QDate::currentDate());
+                Deudacliente.bindValue(":vencimiento",QDate::currentDate());
+                // TODO Deudacliente->bindValue(":vencimiento",Configuracion_global->CalcularVencimiento());
+                Deudacliente.bindValue(":documento",this->factura);
+                Deudacliente.bindValue(":id_tiquet",0);
+                Deudacliente.bindValue(":id_factura",nid_factura);
+                Deudacliente.bindValue("tipo",1);
+                Deudacliente.bindValue(":importe",this->total);
+                Deudacliente.bindValue(":pagado",0);
+                Deudacliente.bindValue(":pendiente_cobro",this->total);
+                Deudacliente.bindValue(":entidad",record.field("entidad_bancaria").value().toString());
+                Deudacliente.bindValue(":oficina",record.field("oficina_bancaria").value().toString());
+                Deudacliente.bindValue(":dc",record.field("dc").value().toString());
+                Deudacliente.bindValue(":cuenta",record.field("cuenta_corriente").value().toString());
+                if(!Deudacliente.exec())
                 {
-                    Cliente.next();
-                    QSqlRecord record = Cliente.record();
+                    qDebug() << Deudacliente.lastQuery();
+                    QMessageBox::warning(qApp->activeWindow(),tr("Añadir deuda"),tr("No se ha podido añadir la deuda ")+Deudacliente.lastError().text() ,tr("OK"));
+                    succes = false;
+                }
+                else
+                {
+                    TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Deuda añadida corectamente:"));
+                    // Añadimos acumulados ficha cliente.
+                    Cliente.prepare("Update clientes set fecha_ultima_compra = :fecha_ultima_compra, "
+                                    "acumulado_ventas = acumulado_ventas + :acumulado_ventas,"
+                                    "ventas_ejercicio = ventas_ejercicio + :ventas_ejercicio,"
+                                    "deuda_actual = deuda_actual + :deuda_actual "
+                                    " where id = :id_cliente");
+                    Cliente.bindValue(":fecha_ultima_compra",QDate::currentDate());
+                    Cliente.bindValue(":acumulado_ventas",this->total);
+                    Cliente.bindValue(":ventas_ejercicio",this->total);
+                    Cliente.bindValue(":deuda_actual",this->total);
+                    Cliente.bindValue(":id_cliente",record.field("id").value().toInt());
 
-                    // Genero deuda cliente
-
-                    QSqlQuery Deudacliente(Configuracion_global->empresaDB);
-                    Deudacliente.prepare("Insert into clientes_deuda (id_cliente,fecha,vencimiento,documento,id_ticket,id_factura,tipo,"
-                                         "importe,pagado,pendiente_cobro,entidad,oficina,dc,cuenta)"
-                                         " values (:id_cliente,:fecha,:vencimiento,:documento,:id_tiquet,:id_factura,:tipo,"
-                                         ":importe,:pagado,:pendiente_cobro,:entidad,:oficina,:dc,:cuenta)");
-                    Deudacliente.bindValue(":id_cliente",record.field("id").value().toInt());
-                    Deudacliente.bindValue(":fecha",QDate::currentDate());
-                    Deudacliente.bindValue(":vencimiento",QDate::currentDate());
-                    // TODO Deudacliente->bindValue(":vencimiento",Configuracion_global->CalcularVencimiento());
-                    Deudacliente.bindValue(":documento",this->factura);
-                    Deudacliente.bindValue(":id_tiquet",0);
-                    Deudacliente.bindValue(":id_factura",nid_factura);
-                    Deudacliente.bindValue("tipo",1);
-                    Deudacliente.bindValue(":importe",this->total);
-                    Deudacliente.bindValue(":pagado",0);
-                    Deudacliente.bindValue(":pendiente_cobro",this->total);
-                    Deudacliente.bindValue(":entidad",record.field("entidad_bancaria").value().toString());
-                    Deudacliente.bindValue(":oficina",record.field("oficina_bancaria").value().toString());
-                    Deudacliente.bindValue(":dc",record.field("dc").value().toString());
-                    Deudacliente.bindValue(":cuenta",record.field("cuenta_corriente").value().toString());
-                    if(!Deudacliente.exec())
+                    if (!Cliente.exec())
                     {
-                        qDebug() << Deudacliente.lastQuery();
-                        QMessageBox::warning(qApp->activeWindow(),tr("Añadir deuda"),tr("No se ha podido añadir la deuda ")+Deudacliente.lastError().text() ,tr("OK"));
-                        succes = false;
-                    }
-                    else
-                    {
-                        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Deuda añadida corectamente:"));
-                        // Añadimos acumulados ficha cliente.
-                        Cliente.prepare("Update clientes set fecha_ultima_compra = :fecha_ultima_compra, "
-                                        "acumulado_ventas = acumulado_ventas + :acumulado_ventas,"
-                                        "ventas_ejercicio = ventas_ejercicio + :ventas_ejercicio,"
-                                        "deuda_actual = deuda_actual + :deuda_actual "
-                                        " where id = :id_cliente");
-                        Cliente.bindValue(":fecha_ultima_compra",QDate::currentDate());
-                        Cliente.bindValue(":acumulado_ventas",this->total);
-                        Cliente.bindValue(":ventas_ejercicio",this->total);
-                        Cliente.bindValue(":deuda_actual",this->total);
-                        Cliente.bindValue(":id_cliente",record.field("id").value().toInt());
-
-                        if (!Cliente.exec())
-                        {
-                            succes =  false;
-                            QMessageBox::warning(qApp->activeWindow(),tr("Añadir Acumulados"),
-                                                 tr("No se ha podido añadir los correspondientes acumulados a la ficha del cliente"),
-                                                 tr("OK"));
-                        }
+                        succes =  false;
+                        QMessageBox::warning(qApp->activeWindow(),tr("Añadir Acumulados"),
+                                             tr("No se ha podido añadir los correspondientes acumulados a la ficha del cliente"),
+                                             tr("OK"));
                     }
                 }
+            }
                 else
                     succes = false;
             }
-        }
+
     }
     return succes;
 }

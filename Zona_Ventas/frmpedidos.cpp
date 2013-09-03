@@ -1575,8 +1575,7 @@ void FrmPedidos::on_txtBuscar_textEdited(const QString &arg1)
 
 void FrmPedidos::on_tabla_clicked(const QModelIndex &index)
 {
-    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
-    int id = Configuracion_global->devolver_id_tabla(model,index);
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(id));
     LLenarCampos();
     BloquearCampos(true);
@@ -1584,8 +1583,7 @@ void FrmPedidos::on_tabla_clicked(const QModelIndex &index)
 
 void FrmPedidos::on_tabla_doubleClicked(const QModelIndex &index)
 {
-    QSqlQueryModel* model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
-    int id = Configuracion_global->devolver_id_tabla(model,index);
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(id));
     LLenarCampos();
     ui->radEdicion->setChecked(true);
