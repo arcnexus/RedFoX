@@ -466,29 +466,40 @@ double Table_Helper::calculabaseLinea(int row)
 double Table_Helper::calculaivaLinea(int row)
 {
     double base = calculabaseLinea(row);
+    double porc_iva,total_iva;
     //base -= calculadtoLinea(row);
-
-    double porc_iva = helped_table->item(row,7)->text().toDouble();
-    double total_iva = base * (porc_iva/100);
+    QString error;
+    float grupo_iva = SqlCalls::SelectOneField("clientes","grupo_iva",
+                                QString("id=%1").arg(id_cliente),Configuracion_global->groupDB,error).toFloat();
+    if(grupo_iva ==1){
+        porc_iva = helped_table->item(row,7)->text().toDouble();
+        total_iva = base * (porc_iva/100);
+    } else
+        total_iva =0;
 
     return total_iva;
 }
 
 double Table_Helper::calcularRELinea(int row)
 {
-    if(use_re)
-    {
-        int cantidad = helped_table->item(row,1)->text().toInt();
-        double pvp = helped_table->item(row,3)->text().toDouble();
-        double subtotal = cantidad * pvp;
-        double dto = calculadtoLinea(row);
-        double base = subtotal -dto;
-        float porc_rec = helped_table->item(row,8)->text().toFloat();
-        double rec = base * (porc_rec/100.1);
-        return rec;
+    QString error;
+    float grupo_iva = SqlCalls::SelectOneField("clientes","grupo_iva",
+                                QString("id=%1").arg(id_cliente),Configuracion_global->groupDB,error).toFloat();
+    if(grupo_iva ==1){
+        if(use_re)
+        {
+            int cantidad = helped_table->item(row,1)->text().toInt();
+            double pvp = helped_table->item(row,3)->text().toDouble();
+            double subtotal = cantidad * pvp;
+            double dto = calculadtoLinea(row);
+            double base = subtotal -dto;
+            float porc_rec = helped_table->item(row,8)->text().toFloat();
+            double rec = base * (porc_rec/100.1);
+            return rec;
 
-    }
-    else
+        } else
+            return 0;
+    } else
         return 0;
 }
 
@@ -724,13 +735,24 @@ void Table_Helper::rellenar_con_Articulo(int row)
                 helped_table->item(row,3)->setText(QString::number(precio,'f',Configuracion_global->decimales));
                 helped_table->item(row,4)->setText(QString::number(precio,'f',Configuracion_global->decimales));
             }
-            helped_table->item(row,7)->setText(QString::number(r.value("tipo_iva").toFloat(),'f',
-                                                               Configuracion_global->decimales_campos_totales));
-            if(use_re)
-            {
-               float rec = Configuracion_global->devolver_rec_iva(r.value("tipo_iva").toFloat());
-               helped_table->item(row,8)->setText(QString::number(rec,'f',Configuracion_global->decimales_campos_totales));
-            }
+//            QString error;
+//            float grupo_iva = SqlCalls::SelectOneField("clientes","grupo_iva",
+//                                        QString("id=%1").arg(id_cliente),Configuracion_global->empresaDB,error).toFloat();
+//            if(grupo_iva ==1)
+ //           {
+                helped_table->item(row,7)->setText(QString::number(r.value("tipo_iva").toFloat(),'f',
+                                                                   Configuracion_global->decimales_campos_totales));
+                if(use_re)
+                {
+                   float rec = Configuracion_global->devolver_rec_iva(r.value("tipo_iva").toFloat());
+                   helped_table->item(row,8)->setText(QString::number(rec,'f',Configuracion_global->decimales_campos_totales));
+                }
+//            } else
+//            {
+//                helped_table->item(row,7)->setText("0.00");
+//                helped_table->item(row,8)->setText("0.00");
+//            }
+
            Articulo oArt(this);
            float porc_dto = oArt.asigna_dto_linea(r.value("id").toInt(),id_cliente,0,0);
            helped_table->item(row,5)->setText(QString::number(porc_dto,'f',Configuracion_global->decimales_campos_totales));

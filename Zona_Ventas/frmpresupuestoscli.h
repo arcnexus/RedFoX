@@ -92,6 +92,9 @@ private slots:
 
     void on_cboModo_currentIndexChanged(const QString &arg1);
 
+
+    void on_btnDesbloquear_clicked();
+
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;

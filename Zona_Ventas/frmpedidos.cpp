@@ -295,7 +295,13 @@ void FrmPedidos::LLenarCamposCliente()
 
     ui->txtcif->setText(oCliente3->cif_nif);
     helper.set_tarifa(oCliente3->tarifa_cliente);
-    if (oCliente3->lIRPF==1) {
+
+    helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
+    helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
+    helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
+    helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
+
+    if (oCliente3->recargo_equivalencia==1) {
         ui->chklporc_rec->setChecked(true);
         oPedido->recargo_equivalencia = (1);
         ui->txtporc_rec1->setText(Configuracion_global->reList.at(0));
@@ -1259,7 +1265,7 @@ void FrmPedidos::convertir_enFactura()
 {
     if(oPedido->editable)
     {
-        if(QMessageBox::question(this,tr("Pedidos a proveedores"),tr("¿Desea realmente facturar este pedido?"),
+        if(QMessageBox::question(this,tr("Gestión de pedidos"),tr("¿Desea realmente facturar este pedido?"),
                                  tr("No"),tr("Sí"))==QMessageBox::Accepted)
         {
             LLenarPedido();
@@ -1484,12 +1490,12 @@ void FrmPedidos::convertir_enFactura()
             } else
             {
                 Configuracion_global->empresaDB.rollback();
-                QMessageBox::warning(this,tr("Pedidos de proveedor"),
+                QMessageBox::warning(this,tr("Gestión de pedidos"),
                                      tr("No se ha podido crear la factura"),tr("Aceptar"));
             }
 
     } else
-        QMessageBox::warning(this,tr("Pedidos a Proveedor"),tr("Este pedido ya ha sido traspasado"),tr("Aceptar"));
+        QMessageBox::warning(this,tr("Gestión de pedidos"),tr("Este pedido ya ha sido traspasado"),tr("Aceptar"));
 
 }
 

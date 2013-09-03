@@ -124,6 +124,7 @@ void Login::on_btnAcceder_clicked()
             Configuracion_global->nombre_bd_medica = qEmpresa.record().value("nombre_bd_medica").toString();
             Configuracion_global->decimales = qEmpresa.record().value("decimales").toInt();
             Configuracion_global->decimales_campos_totales = qEmpresa.record().value("decimales_campos_totales").toInt();
+            Configuracion_global->importado_sp = qEmpresa.record().value("importada_sp").toBool();
 
         }
         else

@@ -4,6 +4,7 @@
 Presupuesto::Presupuesto()
 {
     this->id = 0;
+    this->editable = true;
 }
 
 Presupuesto::~Presupuesto()
@@ -91,6 +92,7 @@ bool Presupuesto::AnadirPresupuesto()
     cab_pre["email"] = email;
     cab_pre["total_iva"] = 0;
     cab_pre["total_recargo"] = 0;
+    cab_pre["editable"] = true;
     QString error;
     int new_id = SqlCalls::SqlInsert(cab_pre,"cab_pre",Configuracion_global->empresaDB,error);
 
@@ -150,7 +152,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->dto = registro.field("dto").value().toDouble();
             this->dto_pp = registro.field("dto_pp").value().toDouble();
             this->total = registro.field("total").value().toDouble();
-            this->impreso = registro.field("impreso").value().toBool();
+            this->impreso = registro.value("impreso").toBool();
             this->aprobado = registro.field("aprobado").value().toBool();
             this->fecha_aprobacion = registro.field("fecha_aprobacion").value().toDate();
             this->importe_factura = registro.field("importe_factura").value().toDouble();
@@ -172,7 +174,8 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
 
 
             this->id_forma_pago = registro.field("id_forma_pago").value().toInt();
-            QSqlQuery q(Configuracion_global->empresaDB);
+
+            QSqlQuery q(Configuracion_global->groupDB);
             if(q.exec("SELECT * FROM formpago WHERE id = "+QString::number(id_forma_pago)))
                 if(q.next())
                 {
@@ -209,6 +212,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->total3 = registro.field("total3").value().toDouble();
             this->total4 = registro.field("total4").value().toDouble();
             this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toBool();
+            this->editable = registro.field("editable").value().toBool();
             return true;
         }
      }
@@ -261,7 +265,7 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
     cab_pre["movil"] = movil;
     cab_pre["fax"] = fax;
     cab_pre["comentarios"] = comentarios;
-    cab_pre["subtotal"] = base;
+    cab_pre["importe"] = subtotal;
     cab_pre["dto"] = dto;
     cab_pre["dto_pp"] = dto_pp;
     cab_pre["porc_dto"] = porc_dto;
@@ -319,7 +323,8 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
     cab_pre["iva_gasto2"] = iva_gasto2;
     cab_pre["iva_gasto3"] = iva_gasto3;
 
-    cab_pre["npresupuesto"] = nid_Presupuesto;
+    cab_pre["presupuesto"] = this->presupuesto;
+    cab_pre["editable"] = editable;
 
     bool updated = SqlCalls::SqlUpdate(cab_pre,"cab_pre",Configuracion_global->empresaDB,QString("id=%1").arg(nid_Presupuesto),error);
 

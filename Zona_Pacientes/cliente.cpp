@@ -69,7 +69,7 @@ void Cliente::Guardar() {
     h_cliente["fecha_nacimiento"] = this->fecha_nacimiento;
     h_cliente["importe_pendiente"] = this->importe_pendiente;
     h_cliente["acceso_web"] = this->acceso_web;
-    h_cliente["id_idioma"] = this->ididioma;
+    h_cliente["id_idioma_documentos"] = this->ididioma;
     h_cliente["cif_vies"] = this->cifVies;
     h_cliente["password_web"] = this->password_web;
     h_cliente["id_web"] = this->id_web;

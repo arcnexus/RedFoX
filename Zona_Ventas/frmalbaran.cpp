@@ -260,6 +260,7 @@ void FrmAlbaran::LLenarCampos() {
 
     QString filter = QString("id_Cab = '%1'").arg(oAlbaran->id);
     helper.fillTable("empresa","lin_alb",filter);
+    helper.setId_cliente(oCliente2->id);
     helper.set_tipo_dto_tarifa(oCliente2->tipo_dto_tarifa);
     //-------------------
     // combo forma pago
@@ -319,6 +320,7 @@ void FrmAlbaran::LLenarCamposCliente()
         ui->txtporc_rec4->setText("0,00");
     }
 
+
     //---------------------------------
     // Comprobar direccion alternativa
     //---------------------------------
@@ -357,11 +359,13 @@ void FrmAlbaran::LLenarCamposCliente()
 
     oCliente2->Recuperar("Select * from clientes where id ="+QString::number(oAlbaran->id_cliente));
     helper.set_tarifa(oCliente2->tarifa_cliente);
+
     helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
     helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
     helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
     helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
     oAlbaran->id_cliente = oCliente2->id;
+    helper.setId_cliente(oCliente2->id);
     helper.set_tipo_dto_tarifa(oCliente2->tipo_dto_tarifa);
 
 }

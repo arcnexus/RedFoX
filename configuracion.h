@@ -35,6 +35,7 @@ class Configuracion: public QObject
     Q_OBJECT
 public:
     Configuracion(QObject * parent = 0);
+    bool importado_sp;
 
     QSqlDatabase globalDB;
     QString global_driver;

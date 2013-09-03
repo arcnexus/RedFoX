@@ -100,6 +100,7 @@ public:
     double iva_gasto2;
     double iva_gasto3;
     int id_transportista;
+    bool editable;
 
 public slots:
     // Metodos de trabajo Clase Presupuesto

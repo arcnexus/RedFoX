@@ -30,6 +30,11 @@ FrmTarifas::FrmTarifas(QWidget *parent) :
     ui->spinMargen->setValue(Configuracion_global->margen);
     ui->spinmargen_minimo->setValue(Configuracion_global->margen_minimo);
 
+    //---------------------
+    //  Importados SP
+    //---------------------
+    ui->frame_dtos_sp->setVisible(Configuracion_global->importado_sp);
+
 
 }
 

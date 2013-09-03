@@ -623,7 +623,7 @@ color: rgb(115, 115, 115);</string>
        </widget>
       </item>
       <item row="3" column="3" colspan="2">
-       <widget class="QFrame" name="frame_7">
+       <widget class="QFrame" name="frame_dtos_sp">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(139, 170, 255);</string>
         </property>
