@@ -92,6 +92,10 @@ private slots:
 
     void on_btnEditar_2_clicked();
 
+    void on_spinporc_Dto_editingFinished();
+
+    void on_spinPorc_dto_pp_editingFinished();
+
 private:
     Ui::FrmAlbaran *ui;
     FrmBuscarCliente *BuscarClientes;

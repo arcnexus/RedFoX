@@ -1483,3 +1483,63 @@ void FrmAlbaran::on_btnEditar_2_clicked()
     ui->radEdicion->setChecked(true);
     on_btnEditar_clicked();
 }
+
+void FrmAlbaran::on_spinporc_Dto_editingFinished()
+{
+    //--------------------------------------------
+    // Cambio dto en líneas
+    //--------------------------------------------
+    QMap <int,QSqlRecord> rec;
+    QString error;
+    QStringList clauses;
+    Articulo oArt(this);
+    int id_art,id_lin;
+    float porc_dto_esp, porc_dto_lin;
+    double subtotal;
+
+    clauses << QString("id_cab = %1").arg(oAlbaran->id);
+
+    rec = SqlCalls::SelectRecord("lin_alb",clauses,Configuracion_global->empresaDB,error);
+    QMapIterator <int, QSqlRecord> i(rec);
+    while (i.hasNext())
+    {
+        i.next();
+        id_lin = i.value().value("id").toInt();
+        id_art = i.value().value("id_articulo").toInt();
+        subtotal = i.value().value("subtotal").toDouble();
+        porc_dto_lin = i.value().value("porc_dto").toFloat();
+
+        porc_dto_esp = oArt.asigna_dto_linea(id_art,oCliente2->id,ui->spinporc_Dto->value(),porc_dto_lin);
+        QHash <QString,QVariant> f;
+        clauses.clear();
+        clauses << QString("id = %1").arg(id_lin);
+        f["porc_dto"] = porc_dto_esp;
+        f["dto"] = subtotal *(porc_dto_esp/100.0);
+
+        bool upd = SqlCalls::SqlUpdate(f,"lin_alb",Configuracion_global->empresaDB,clauses,error);
+        if(!upd)
+            QMessageBox::warning(this,tr("Cambio DTO"),tr("No se pudo realizar el cambio en las líneas, error:%1").arg(error),
+                                 tr("Aceptar"));
+        else
+            helper.calculatotal();
+    }
+    //--------------------------
+    // Calculo dto total
+    //--------------------------
+    double dto = (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())*(ui->spinporc_Dto->value()/100.0));
+    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales)));
+    oAlbaran->dto = dto;
+    QString filter = QString("id_cab = '%1'").arg(oAlbaran->id);
+    helper.fillTable("empresa","lin_alb",filter);
+
+}
+
+void FrmAlbaran::on_spinPorc_dto_pp_editingFinished()
+{
+    float dto_pp;
+    dto_pp = (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())*(ui->spinPorc_dto_pp->value()/100.0));
+    ui->txtDtoPP->setText(Configuracion_global->toFormatoMoneda(QString::number(dto_pp,'f',Configuracion_global->decimales_campos_totales)));
+    oAlbaran->dto_pp = dto_pp;
+    QString filter = QString("id_cab = '%1'").arg(oAlbaran->id);
+    helper.fillTable("empresa","lin_alb",filter);
+}

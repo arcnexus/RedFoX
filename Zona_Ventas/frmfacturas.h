@@ -116,6 +116,8 @@ private:
     QSqlQueryModel *m_facturas;
     void formato_tabla_facturas(QSqlQueryModel &modelo);
     void filtro_tabla();
+    bool eventFilter(QObject *obj, QEvent *event);
+    void buscar_poblacion(int tipo);
 };
 
 #endif // FRMFACTURAS_H

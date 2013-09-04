@@ -40,105 +40,26 @@ bool Factura::AnadirFactura()
     this->porc_rec4 = Configuracion_global->reList.at(3).toFloat();
 
     this->recargo_equivalencia = 0;
-    QSqlQuery cab_fac(Configuracion_global->empresaDB);
-     cab_fac.prepare("INSERT INTO cab_fac (codigo_cliente,factura,fecha,fecha_cobro,ejercicio,id_cliente,cliente,direccion1,direccion2,"
-                   "cp,poblacion,provincia,id_pais,cif,recargo_equivalencia,subtotal,porc_dto,porc_dto_pp,dto,dto_pp,"
-                   "base,iva,total,impreso,cobrado,contabilizado,id_forma_pago,forma_pago,comentario,"
-                   "base1,base2,base3,base4,porc_iva1,porc_iva2,porc_iva3,porc_iva4,iva1,iva2,iva3,iva4,"
-                   "total1,total2,total3,total4,porc_rec1,porc_rec2,porc_rec3,porc_rec4,rec1,rec2,rec3,rec4,"
-                   "total_recargo,entregado_a_cuenta,importe_pendiente,codigo_entidad,oficina_entidad,"
-                   "dc_cuenta,cuenta_corriente,pedido_cliente,id_transportista,desc_gasto1,desc_gasto2,"
-                   "desc_gasto3,imp_gasto1,imp_gasto2,imp_gasto3)"
-                   " VALUES (:codigo_cliente,:factura,:fecha,:fecha_cobro,:ejercicio,:id_cliente,:cliente,:direccion1,:direccion2,"
-                   ":cp,:poblacion,:provincia,:pais,:cif,:recargo_equivalencia,:subtotal,:porc_dto,:porc_dto_pp,:dto,:dto_pp,"
-                   ":base,:iva,:total,:impreso,:cobrado,:contabilizado,:id_forma_pago,:forma_pago,:comentario,"
-                   ":base1,:base2,:base3,:base4,:porc_iva1,:porc_iva2,:porc_iva3,:porc_iva4,:iva1,:iva2,:iva3,:iva4,"
-                   ":total1,:total2,:total3,:total4,:porc_rec1,:porc_rec2,:porc_rec3,:porc_rec4,:rec1,:rec2,:rec3,:rec4,"
-                   ":total_recargo,:entregado_a_cuenta,:importe_pendiente,:codigo_entidad,:oficina_entidad,"
-                   ":dc_cuenta,:cuenta_corriente,:pedido_cliente,:id_transportista,:desc_gasto1,desc_gasto2,"
-                   ":desc_gasto3,:imp_gasto1,:imp_gasto2,:imp_gasto3)");
+    QHash <QString, QVariant> cab_fac;
+    QString error;
+    cab_fac["factura"] = "BORRADOR";
+    cab_fac["fecha"] = this->fecha;
+    cab_fac["ejercicio"] = Configuracion_global->cEjercicio.toInt();
+    cab_fac["editable"] = true;
+    int new_id = SqlCalls::SqlInsert(cab_fac,"cab_fac",Configuracion_global->empresaDB,error);
 
-     cab_fac.bindValue(":codigo_cliente",this->codigo_cliente);
-     cab_fac.bindValue(":factura","BORRADOR");
-     cab_fac.bindValue(":fecha",this->fecha);
-     cab_fac.bindValue(":fecha_cobro",this->fecha_cobro);
-     cab_fac.bindValue(":ejercicio",Configuracion_global->cEjercicio.toInt());
-     cab_fac.bindValue(":id_cliente", this->id_cliente);
-     cab_fac.bindValue(":cliente",this->cliente);
-     cab_fac.bindValue(":direccion1",this->direccion1);
-     cab_fac.bindValue(":direccion2",this->direccion2);
-     cab_fac.bindValue(":cp",this->cp);
-     cab_fac.bindValue(":poblacion",this->poblacion);
-     cab_fac.bindValue(":provincia",this->provincia);
-     cab_fac.bindValue(":pais",this->id_pais);
-     cab_fac.bindValue(":cif",this->cif);
-     cab_fac.bindValue(":recargo_equivalencia",this->recargo_equivalencia);
-     cab_fac.bindValue(":subtotal",0);
-     cab_fac.bindValue(":dto",0);
-     cab_fac.bindValue(":dto_pp",0);
-     cab_fac.bindValue(":dto",0);
-     cab_fac.bindValue(":dto_pp",0);
-     cab_fac.bindValue(":base",0);
-     cab_fac.bindValue(":iva",0);
-     cab_fac.bindValue(":total",0);
-     cab_fac.bindValue(":impreso",false);
-     cab_fac.bindValue(":cobrado",false);
-     cab_fac.bindValue(":contabilizado",false);
-     cab_fac.bindValue(":id_forma_pago",this->id_forma_pago);
-     cab_fac.bindValue(":forma_pago",this->forma_pago);
-     cab_fac.bindValue(":comentario",this->comentario);
-     cab_fac.bindValue(":base1",0);
-     cab_fac.bindValue(":base2",0);
-     cab_fac.bindValue(":base3",0);
-     cab_fac.bindValue(":base4",0);
-     cab_fac.bindValue(":porc_iva1",this->porc_iva1);
-     cab_fac.bindValue(":porc_iva2",this->porc_iva2);
-     cab_fac.bindValue(":porc_iva3",this->porc_iva3);
-     cab_fac.bindValue(":porc_iva4",this->porc_iva4);
-     cab_fac.bindValue(":iva1",0);
-     cab_fac.bindValue(":iva2",0);
-     cab_fac.bindValue(":iva3",0);
-     cab_fac.bindValue(":iva4",0);
-     cab_fac.bindValue(":total1",0);
-     cab_fac.bindValue(":total2",0);
-     cab_fac.bindValue(":total3",0);
-     cab_fac.bindValue(":total4",0);
-     cab_fac.bindValue(":porc_rec1",this->porc_rec1);
-     cab_fac.bindValue(":porc_rec2",this->porc_rec2);
-     cab_fac.bindValue(":porc_rec3",this->porc_rec3);
-     cab_fac.bindValue(":porc_rec4",this->porc_rec4);
-     cab_fac.bindValue(":rec1",0);
-     cab_fac.bindValue(":rec2",0);
-     cab_fac.bindValue(":rec3",0);
-     cab_fac.bindValue(":rec4",0);
-     cab_fac.bindValue(":total_recargo",0);
-     cab_fac.bindValue(":entregado_a_cuenta",0);
-     cab_fac.bindValue(":importe_pendiente",0);
-     cab_fac.bindValue(":codigo_entidad",this->codigo_entidad);
-     cab_fac.bindValue(":oficina_entidad",this->oficina_entidad);
-     cab_fac.bindValue(":dc_cuenta",this->dc_cuenta);
-     cab_fac.bindValue(":cuenta_corriente",this->cuenta_corriente);
-     cab_fac.bindValue(":id_transportista",this->id_transportista);
-     cab_fac.bindValue(":pedido_cliente",0);
-     cab_fac.bindValue("desc_gasto1",this->desc_gasto1);
-     cab_fac.bindValue("desc_gasto2",this->desc_gasto2);
-     cab_fac.bindValue("desc_gasto3",this->desc_gasto3);
-     cab_fac.bindValue("imp_gasto1",this->imp_gasto1);
-     cab_fac.bindValue("imp_gasto2",this->imp_gasto2);
-     cab_fac.bindValue("imp_gasto3",this->imp_gasto3);
-     if(!cab_fac.exec())
-     {
-         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Factura:", cab_fac.lastError().text());
-         return false;
-     }
-     else
-     {
-         this->id = cab_fac.lastInsertId().toInt();
-         QString cSQL = "Select * from cab_fac where id ="+QString::number(this->id);
-         RecuperarFactura(cSQL);
-         return true;
-     }
-
+    if(new_id > -1)
+    {
+        QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Factura:", error);
+        return false;
+    }
+    else
+    {
+        this->id = new_id;
+        QString cSQL = "Select * from cab_fac where id ="+QString::number(this->id);
+        RecuperarFactura(cSQL);
+        return true;
+    }
 }
 // Guardar la factura
 bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
@@ -226,6 +147,13 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
     cab_fac["imp_gasto1"] = this->imp_gasto1;
     cab_fac["imp_gasto2"] = this->imp_gasto2;
     cab_fac["imp_gasto3"] = this->imp_gasto3;
+    cab_fac["porc_iva_gasto1"] = this->porc_iva_gasto1;
+    cab_fac["porc_iva_gasto2"] = this->porc_iva_gasto2;
+    cab_fac["porc_iva_gasto3"] = this->porc_iva_gasto3;
+    cab_fac["iva_gasto1"] = this->iva_gasto1;
+    cab_fac["iva_gasto2"] = this->iva_gasto2;
+    cab_fac["iva_gasto3"] = this->iva_gasto3;
+    cab_fac["editable"] = this->editable;
 
     bool updated = SqlCalls::SqlUpdate(cab_fac,"cab_fac",Configuracion_global->empresaDB,clausula,error);
 
@@ -439,6 +367,13 @@ void Factura::cargar(QSqlRecord *registro)
     this->imp_gasto1 = registro->field("imp_gasto1").value().toDouble();
     this->imp_gasto2 = registro->field("imp_gasto2").value().toDouble();
     this->imp_gasto3 = registro->field("imp_gasto3").value().toDouble();
+    this->porc_iva_gasto1 = registro->field("porc_iva_gasto1").value().toDouble();
+    this->porc_iva_gasto2 = registro->field("porc_iva_gasto2").value().toDouble();
+    this->porc_iva_gasto3 = registro->field("porc_iva_gasto3").value().toDouble();
+    this->iva_gasto1 = registro->field("iva_gasto1").value().toDouble();
+    this->iva_gasto2 = registro->field("iva_gasto2").value().toDouble();
+    this->iva_gasto3 = registro->field("iva_gasto3").value().toDouble();
+    this->editable = registro->field("editable").value().toBool();
 
 }
 

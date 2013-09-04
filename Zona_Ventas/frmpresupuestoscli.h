@@ -107,6 +107,10 @@ private slots:
 
     void on_btnImprimir_2_clicked();
 
+    void on_spin_porc_dto_editingFinished();
+
+    void on_spin_porc_dto_pp_editingFinished();
+
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;
@@ -122,9 +126,11 @@ private:
     QPushButton* push;
     QSqlQueryModel *m;
     TimedMessageBox *t;
+    bool eventFilter(QObject *obj, QEvent *event);
 
     void formato_tabla();
     void filter_table();
+    void buscar_poblacion(int tipo);
 };
 
 #endif // FRMPRESUPUESTOSCLI_H

@@ -86,8 +86,14 @@ public:
     double imp_gasto1;
     double imp_gasto2;
     double imp_gasto3;
-
+    float porc_iva_gasto1;
+    float porc_iva_gasto2;
+    float porc_iva_gasto3;
+    double iva_gasto1;
+    double iva_gasto2;
+    double iva_gasto3;
     int id_transportista;
+    bool editable;
     bool set_impresa(bool state);
 
 signals:

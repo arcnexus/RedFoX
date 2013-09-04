@@ -1577,7 +1577,7 @@ void FrmPedidos::on_tabla_clicked(const QModelIndex &index)
 {
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(id));
-    LLenarCampos();
+    //LLenarCampos();
     BloquearCampos(true);
 }
 
@@ -1644,6 +1644,7 @@ void FrmPedidos::on_spin_porc_dto_pp_editingFinished()
     dto_pp = (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())*(ui->spin_porc_dto_pp->value()/100.0));
     ui->txtDto_pp->setText(Configuracion_global->toFormatoMoneda(QString::number(dto_pp,'f',Configuracion_global->decimales_campos_totales)));
     oPedido->dto_pp = dto_pp;
+    helper.fillTable("empresa","lin_ped",QString("id_cab =%1").arg(oPedido->id));
 }
 
 void FrmPedidos::on_spin_porc_dto_especial_editingFinished()
@@ -1692,7 +1693,7 @@ void FrmPedidos::on_spin_porc_dto_especial_editingFinished()
     double dto = (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())*(ui->spin_porc_dto_especial->value()/100.0));
     ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales)));
     oPedido->dto = dto;
-    QString filter = QString("id_Cab = '%1'").arg(oPedido->id);
+    QString filter = QString("id_cab = '%1'").arg(oPedido->id);
     helper.fillTable("empresa","lin_ped",filter);
 
 }

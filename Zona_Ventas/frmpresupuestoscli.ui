@@ -57,7 +57,7 @@ background-color: rgb(0, 0, 58);</string>
    <item row="1" column="0" colspan="2">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_2">
@@ -398,6 +398,9 @@ color: rgb(255, 255, 255);</string>
                </item>
                <item>
                 <widget class="QLineEdit" name="txtentregado_a_cuenta">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="maximumSize">
                   <size>
                    <width>120</width>
@@ -405,13 +408,25 @@ color: rgb(255, 255, 255);</string>
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 85, 0);</string>
                  </property>
                  <property name="text">
                   <string>0,00</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnAnadirEntrega">
+                 <property name="text">
+                  <string>Añadir entrega</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../maya.qrc">
+                   <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -584,7 +599,10 @@ color: rgb(255, 255, 255);</string>
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  <string notr="true">background-color: rgb(255, 235, 206);</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>F1 - Buscar</string>
                  </property>
                 </widget>
                </item>
@@ -849,7 +867,10 @@ color: rgb(255, 255, 255);</string>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
+                <string notr="true">background-color: rgb(255, 235, 206);</string>
+               </property>
+               <property name="placeholderText">
+                <string>F1 - Buscar</string>
                </property>
               </widget>
              </item>
@@ -960,7 +981,10 @@ color: rgb(255, 255, 255);</string>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
+                <string notr="true">background-color: rgb(255, 235, 206);</string>
+               </property>
+               <property name="placeholderText">
+                <string>F1 - Buscar</string>
                </property>
               </widget>
              </item>

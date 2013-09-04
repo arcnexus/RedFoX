@@ -102,42 +102,50 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
     ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
     BloquearCampos(true);
-        ui->btnBorrar->setEnabled(false);
-        ui->btnEditar->setEnabled(false);
-        ui->btn_convertir->setEnabled(false);
-        ui->btnAnterior->setEnabled(false);
-        ui->btnSiguiente->setEnabled(true);
-        ui->btnBuscar->setEnabled(true);
-        ui->btnImprimir->setEnabled(false);
-//    }
-        //-----------------------
-        // tabla
-        //-----------------------
-        m = new QSqlQueryModel(this);
-        m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by presupuesto desc",
-                    Configuracion_global->empresaDB);
-        ui->tabla->setModel(m);
-        formato_tabla();
+    ui->btnBorrar->setEnabled(false);
+    ui->btnEditar->setEnabled(false);
+    ui->btn_convertir->setEnabled(false);
+    ui->btnAnterior->setEnabled(false);
+    ui->btnSiguiente->setEnabled(true);
+    ui->btnBuscar->setEnabled(true);
+    ui->btnImprimir->setEnabled(false);
+    //-----------------------
+    // tabla
+    //-----------------------
+    m = new QSqlQueryModel(this);
+    m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by presupuesto desc",
+                Configuracion_global->empresaDB);
+    ui->tabla->setModel(m);
+    formato_tabla();
 
-        //------------------------
-        // orden
-        //------------------------
-        QStringList orden;
-        orden << tr("presupuesto") <<tr("cliente") << tr("teléfono");
-        ui->cboOrden->addItems(orden);
+    //------------------------
+    // orden
+    //------------------------
+    QStringList orden;
+    orden << tr("presupuesto") <<tr("cliente") << tr("teléfono");
+    ui->cboOrden->addItems(orden);
 
-        //--------------------
-        // modo
-        //--------------------
-        QStringList modo;
-        modo <<tr("Z-A") << tr("A-Z");
-        ui->cboModo->addItems(modo);
+    //--------------------
+    // modo
+    //--------------------
+    QStringList modo;
+    modo <<tr("Z-A") << tr("A-Z");
+    ui->cboModo->addItems(modo);
 
-        //----------------------
-        // Busqueda
-        //----------------------
-        ui->stackedWidget->setCurrentIndex(1);
-        ui->txtBuscar->setFocus();
+    //----------------------
+    // Busqueda
+    //----------------------
+    ui->stackedWidget->setCurrentIndex(1);
+    ui->txtBuscar->setFocus();
+
+    //---------------------
+    // Eventos
+    //---------------------
+    ui->txtcodigo_cliente->installEventFilter(this);
+    ui->txtcp->installEventFilter(this);
+    ui->txtCP_entrega->installEventFilter(this);
+
+
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
@@ -541,6 +549,12 @@ void FrmPresupuestosCli::BloquearCampos(bool state)
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
         DateEdit->setEnabled(!state);
+    }
+    // QDblSpinbox
+    QList<QDoubleSpinBox *> DSpinEditList = this->findChildren<QDoubleSpinBox *>();
+    QDoubleSpinBox  *DblSpin;
+    foreach (DblSpin, DSpinEditList) {
+        DblSpin->setEnabled(!state);
     }
 
     ui->btnAnadir->setEnabled(state);
@@ -1638,6 +1652,56 @@ void FrmPresupuestosCli::filter_table()
                 " like '%"+arg1+"%' order by "+orden+" "+modo, Configuracion_global->empresaDB);
 }
 
+void FrmPresupuestosCli::buscar_poblacion(int tipo)
+{
+    // 1 general // 2 Entrega
+    db_consulta_view consulta;
+    QStringList campos;
+    campos  <<"poblacion" <<"cp" << "provinca";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("poblaciones");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,poblacion,cp,provincia from poblaciones");
+    QStringList cabecera;
+    QVariantList tamanos;
+    cabecera  << tr("Población") << tr("C.P.") << tr("Provincia");
+    tamanos <<"0" << "300" << "70" << "150";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Poblaciones");
+    if(consulta.exec())
+    {
+        int id = consulta.get_id();
+        QMap <int,QSqlRecord> m;
+        QString error;
+        int index;
+        m = SqlCalls::SelectRecord("poblaciones",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
+        if(error.isEmpty())
+            if(tipo == 1)
+            {
+                ui->txtcp->setText(m.value(id).value("cp").toString());
+                ui->txtpoblacion->setText(m.value(id).value("poblacion").toString());
+                ui->txtprovincia->setText(m.value(id).value("provincia").toString());
+                index = ui->cbo_Pais->findText(Configuracion_global->Devolver_pais(m.value(id).value("id_pais").toInt()));
+                ui->cbo_Pais->setCurrentIndex(index);
+
+            } else
+            {
+                ui->txtCP_entrega->setText(m.value(id).value("cp").toString());
+                ui->txtPoblacion_entrega->setText(m.value(id).value("poblacion").toString());
+                ui->txtProvincia_entrega->setText(m.value(id).value("provincia").toString());
+                index = ui->cboPais_entrega->findText(Configuracion_global->Devolver_pais(m.value(id).value("id_pais").toInt()));
+                ui->cboPais_entrega->setCurrentIndex(index);
+
+            }
+        else
+            QMessageBox::warning(this,tr("Gestión presupuestos"),tr("Falló la recuperación de la población : %1").arg(error),
+                                 tr("Aceptar"));
+    }
+
+
+}
+
 void FrmPresupuestosCli::on_txtBuscar_textEdited(const QString &arg1)
 {
     filter_table();
@@ -1734,4 +1798,87 @@ void FrmPresupuestosCli::on_btnEditar_2_clicked()
 void FrmPresupuestosCli::on_btnImprimir_2_clicked()
 {
     // TODO -  Imprimir
+}
+
+void FrmPresupuestosCli::on_spin_porc_dto_editingFinished()
+{
+    //--------------------------------------------
+    // Cambio dto en líneas
+    //--------------------------------------------
+    QMap <int,QSqlRecord> rec;
+    QString error;
+    QStringList clauses;
+    Articulo oArt(this);
+    int id_art,id_lin;
+    float porc_dto_esp, porc_dto_lin;
+    double subtotal;
+
+    clauses << QString("id_cab = %1").arg(oPres->id);
+
+    rec = SqlCalls::SelectRecord("lin_pre",clauses,Configuracion_global->empresaDB,error);
+    QMapIterator <int, QSqlRecord> i(rec);
+    while (i.hasNext())
+    {
+        i.next();
+        id_lin = i.value().value("id").toInt();
+        id_art = i.value().value("id_articulo").toInt();
+        subtotal = i.value().value("subtotal").toDouble();
+        porc_dto_lin = i.value().value("porc_dto").toFloat();
+
+        porc_dto_esp = oArt.asigna_dto_linea(id_art,oClientePres->id,ui->spin_porc_dto->value(),porc_dto_lin);
+        QHash <QString,QVariant> f;
+        clauses.clear();
+        clauses << QString("id = %1").arg(id_lin);
+        f["porc_dto"] = porc_dto_esp;
+        f["dto"] = subtotal *(porc_dto_esp/100.0);
+
+        bool upd = SqlCalls::SqlUpdate(f,"lin_pre",Configuracion_global->empresaDB,clauses,error);
+        if(!upd)
+            QMessageBox::warning(this,tr("Cambio DTO"),tr("No se pudo realizar el cambio en las líneas, error:%1").arg(error),
+                                 tr("Aceptar"));
+        else
+            helper.calculatotal();
+    }
+    //--------------------------
+    // Calculo dto total
+    //--------------------------
+    double dto = (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())*(ui->spin_porc_dto->value()/100.0));
+    ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales)));
+    oPres->dto = dto;
+    QString filter = QString("id_cab = '%1'").arg(oPres->id);
+    helper.fillTable("empresa","lin_pre",filter);
+}
+
+void FrmPresupuestosCli::on_spin_porc_dto_pp_editingFinished()
+{
+    float dto_pp;
+    dto_pp = (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())*(ui->spin_porc_dto_pp->value()/100.0));
+    ui->txtDto_pp->setText(Configuracion_global->toFormatoMoneda(QString::number(dto_pp,'f',Configuracion_global->decimales_campos_totales)));
+    oPres->dto_pp = dto_pp;
+    QString filter = QString("id_cab = '%1'").arg(oPres->id);
+    helper.fillTable("empresa","lin_pre",filter);
+}
+
+bool FrmPresupuestosCli::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if(obj == ui->txtcodigo_cliente)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                on_botBuscarCliente_clicked();
+        }
+        if(obj == ui->txtcp)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                buscar_poblacion(1);
+        }
+        if(obj == ui->txtCP_entrega)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                buscar_poblacion(2);
+        }
+        return false;
+    }
+
 }
