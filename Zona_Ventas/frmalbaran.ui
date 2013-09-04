@@ -1779,9 +1779,8 @@ color: rgb(255, 255, 255);</string>
               </sizepolicy>
              </property>
              <property name="styleSheet">
-              <string notr="true">alternate-background-color: rgb(255, 255, 255);
-font: 8pt &quot;Sans&quot;;
-background-color: rgb(248, 245, 194);</string>
+              <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(252, 255, 187);</string>
              </property>
              <property name="horizontalScrollBarPolicy">
               <enum>Qt::ScrollBarAsNeeded</enum>

@@ -521,7 +521,7 @@ background-color: rgb(0, 0, 58);</string>
 </string>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <property name="styleSheet">
@@ -1639,9 +1639,8 @@ color: rgb(255, 255, 255);</string>
            <item row="1" column="0" colspan="3">
             <widget class="QTableWidget" name="Lineas">
              <property name="styleSheet">
-              <string notr="true">alternate-background-color: rgb(255, 255, 255);
-font: 8pt &quot;Sans&quot;;
-background-color: rgb(248, 245, 194);</string>
+              <string notr="true">background-color: rgb(255, 255, 255);
+alternate-background-color: rgb(252, 255, 187);</string>
              </property>
              <property name="horizontalScrollBarPolicy">
               <enum>Qt::ScrollBarAsNeeded</enum>
