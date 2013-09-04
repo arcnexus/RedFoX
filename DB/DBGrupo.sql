@@ -438,6 +438,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`empresas` ( `id` INT(11) NOT NULL AUTO_IN
   `comentario_ticket` TEXT NULL DEFAULT NULL , 
   `ejercicio` INT(11) NULL DEFAULT NULL , 
   `usar_irpf` INT(11) NULL DEFAULT NULL , 
+  `porc_irpf` DOUBLE NULL DEFAULT 0 ,
   `codigo_cuenta_clientes` VARCHAR(25) NULL DEFAULT NULL , 
   `codigo_cuenta_proveedores` VARCHAR(25) NULL DEFAULT NULL , 
   `codigo_cuenta_acreedores` VARCHAR(25) NULL DEFAULT NULL , 

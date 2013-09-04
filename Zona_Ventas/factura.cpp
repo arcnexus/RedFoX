@@ -26,6 +26,113 @@ bool Factura::set_impresa(bool state)
     }
 }
 
+void Factura::clear()
+{
+    codigo_cliente.clear();
+    serie.clear();
+    factura.clear();
+    fecha.currentDate();
+    fecha_cobro.currentDate();
+    ejercicio = Configuracion_global->cEjercicio.toInt();
+    id_cliente = 0;
+    cliente.clear();
+    direccion1.clear();
+    direccion2.clear();
+    cp.clear();
+    poblacion.clear();
+    provincia.clear();
+    id_pais = -1;
+    direccion1_entrega.clear();
+    direccion2_entrega.clear();
+    cp_entrega.clear();
+    poblacion_entrega.clear();
+    provincia_entrega.clear();
+    id_pais_entrega = -1;
+    cif.clear();
+    recargo_equivalencia = false;
+    subtotal = 0;
+    dto = 0;
+    dto_pp = 0;
+    porc_dto = 0;
+    porc_dto_pp = 0;
+    base = 0;
+    irpf = 0;
+    porc_irpf = 0;
+    iva = 0;
+    total = 0;
+    impreso = false;
+    cobrado = false;
+    contablilizada = false;
+    id_forma_pago = -1;
+    forma_pago.clear();
+    comentario.clear();
+    base1= 0;
+    base2= 0;
+    base3= 0;
+    base4= 0;
+    porc_iva1= 0;
+    porc_iva2= 0;
+    porc_iva3= 0;
+    porc_iva4= 0;
+    iva1= 0;
+    iva2= 0;
+    iva3= 0;
+    iva4= 0;
+    total1= 0;
+    total2= 0;
+    total3= 0;
+    total4= 0;
+    porc_rec1= 0;
+    porc_rec2= 0;
+    porc_rec3= 0;
+    porc_rec4= 0;
+    rec1= 0;
+    rec2= 0;
+    rec3= 0;
+    rec4= 0;
+    total_recargo= 0;
+    entregado_a_cuenta= 0;
+    importe_pendiente= 0;
+    codigo_entidad.clear();
+    oficina_entidad.clear();
+    dc_cuenta.clear();
+    cuenta_corriente.clear();
+    pedido_cliente= 0;
+    apunte= 0;
+    desc_gasto1.clear();
+    desc_gasto2.clear();
+    desc_gasto3.clear();
+    imp_gasto1 = 0;
+    imp_gasto2= 0;
+    imp_gasto3= 0;
+    porc_iva_gasto1= 0;
+    porc_iva_gasto2= 0;
+    porc_iva_gasto3= 0;
+    iva_gasto1= 0;
+    iva_gasto2= 0;
+    iva_gasto3= 0;
+    id_transportista = -1;
+    editable = false;
+}
+
+bool Factura::borrar(int id)
+{
+    QString error;
+    // TODO - REPONER -  STOCKS
+    if(QMessageBox::question(qApp->activeWindow(),tr("Gestión de Facturas"),
+                   tr("¿Reponer stock producto?"),tr("Sí"),tr("No"))== QMessageBox::Accepted)
+    {
+
+    }
+    bool deleted = SqlCalls::SqlDelete("lin_fac",Configuracion_global->empresaDB,QString("id_cab =%1").arg(id),error);
+    if(deleted)
+        deleted = SqlCalls::SqlDelete("cab_fac",Configuracion_global->empresaDB,QString("id=%1").arg(id),error);
+    if(!deleted)
+        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Facturas"),
+                             tr("Ocurrió un error al borrar: %1").arg(error),tr("Aceptar"));
+    return deleted;
+}
+
 // Metodos utilidad Clase
 bool Factura::AnadirFactura()
 {
@@ -46,9 +153,13 @@ bool Factura::AnadirFactura()
     cab_fac["fecha"] = this->fecha;
     cab_fac["ejercicio"] = Configuracion_global->cEjercicio.toInt();
     cab_fac["editable"] = true;
+
+    if (Configuracion_global->irpf == true)
+        cab_fac["porc_irpf"] = Configuracion_global->porc_irpf;
+
     int new_id = SqlCalls::SqlInsert(cab_fac,"cab_fac",Configuracion_global->empresaDB,error);
 
-    if(new_id > -1)
+    if(new_id == -1)
     {
         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Factura:", error);
         return false;
@@ -356,7 +467,7 @@ void Factura::cargar(QSqlRecord *registro)
     this->dc_cuenta = registro->field("dc_cuenta").value().toString();
     this->cuenta_corriente = registro->field("cuenta_corriente").value().toString();
     this->pedido_cliente = registro->field("pedido_cliente").value().toInt();
-    this->porc_irpf = registro->field("porc_irpf").value().toInt();
+    this->porc_irpf = registro->field("porc_irpf").value().toFloat();
     this->irpf = registro->field("irpf").value().toDouble();
     this->apunte = registro->field("asiento").value().toInt();
     this->id_transportista = registro->field("id_transportista").value().toInt();

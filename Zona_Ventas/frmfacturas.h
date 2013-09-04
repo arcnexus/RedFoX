@@ -99,6 +99,8 @@ private slots:
 
     void on_cboModo_currentIndexChanged(const QString &arg1);
 
+    void on_btnBorrar_clicked();
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;

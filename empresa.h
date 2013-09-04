@@ -144,6 +144,7 @@ public:
     bool empresa_internacional;
     bool enlace_web;
     bool irpf;
+    float porc_irpf;
     int consultas;
     QString primer_dia_laborable;
     QString ultimo_dia_laborable;

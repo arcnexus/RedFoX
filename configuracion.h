@@ -168,6 +168,7 @@ public:
 
     bool lProfesional;
     int irpf;
+    float porc_irpf;
     int digitos_cuentas_contables;
     QString cuenta_clientes;
     QString cuenta_proveedores;

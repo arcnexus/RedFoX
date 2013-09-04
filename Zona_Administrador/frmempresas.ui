@@ -32,7 +32,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; color:#ffff00;&quot;&gt;Gestión de Maya.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; color:#ffff00;&quot;&gt;Gestión de RedFoX.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
@@ -97,21 +97,7 @@
        <property name="bottomMargin">
         <number>14</number>
        </property>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="btnAddEmpresa">
-         <property name="text">
-          <string>Añadir Empresa</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="btnBorrar">
-         <property name="text">
-          <string>Borrar Empresa</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="4">
+       <item row="2" column="0" colspan="4">
         <widget class="QTreeWidget" name="treeEmpresas">
          <attribute name="headerVisible">
           <bool>false</bool>
@@ -128,12 +114,48 @@
          <property name="text">
           <string>Añadir grupo</string>
          </property>
+         <property name="icon">
+          <iconset resource="../maya.qrc">
+           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+         </property>
         </widget>
        </item>
-       <item row="2" column="2">
+       <item row="3" column="1" colspan="2">
         <widget class="QPushButton" name="btnEditar">
          <property name="text">
-          <string>Editar</string>
+          <string>Editar empresa</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../maya.qrc">
+           <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>22</width>
+           <height>23</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="3">
+        <widget class="QPushButton" name="btnAddEmpresa">
+         <property name="text">
+          <string>Añadir Empresa</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../maya.qrc">
+           <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="3">
+        <widget class="QPushButton" name="btnBorrar">
+         <property name="text">
+          <string>Borrar Empresa</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../maya.qrc">
+           <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
          </property>
         </widget>
        </item>
@@ -237,7 +259,7 @@
        <item row="1" column="0">
         <widget class="QTabWidget" name="tabWidget">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(229, 229, 229);</string>
+          <string notr="true"/>
          </property>
          <property name="currentIndex">
           <number>0</number>
@@ -251,194 +273,44 @@
            <string>Datos Fiscales y de Gestión</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_12">
-           <item row="3" column="5">
-            <widget class="QComboBox" name="cboDivisas"/>
-           </item>
-           <item row="2" column="4">
-            <widget class="QCheckBox" name="chkIRPF">
+           <item row="2" column="2" colspan="2">
+            <widget class="QSpinBox" name="txttamano_codigoart">
              <property name="maximumSize">
               <size>
-               <width>135</width>
+               <width>60</width>
                <height>16777215</height>
               </size>
              </property>
-             <property name="text">
-              <string>Autonomo / IRPF</string>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="value">
+              <number>15</number>
              </property>
             </widget>
            </item>
-           <item row="1" column="0" colspan="10">
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QLabel" name="label_22">
-               <property name="minimumSize">
-                <size>
-                 <width>66</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Cif:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtcif">
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_23">
-               <property name="text">
-                <string>Inscripción:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtcInscripcion">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_25">
-               <property name="text">
-                <string>Digitos Factura:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtndigitos_factura">
-               <property name="maximumSize">
-                <size>
-                 <width>30</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_26">
-               <property name="text">
-                <string>Serie Factura:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtserieFactura">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="label_41">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+           <item row="3" column="3">
+            <widget class="QCheckBox" name="chkSeguimiento">
              <property name="text">
-              <string>Tamaño del código en caracteres:</string>
+              <string>Activar Seguimiento movimientos</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="5">
-            <widget class="QCheckBox" name="chkEnlace_web">
+           <item row="3" column="1">
+            <widget class="QCheckBox" name="chk_upate_divisas">
              <property name="text">
-              <string>enlace Web.</string>
+              <string>Actualizar divisas al entrar</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="0" colspan="10">
-            <layout class="QGridLayout" name="gridLayout_8">
-             <item row="1" column="2" colspan="3">
-              <widget class="QLineEdit" name="txtpoblacion">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="3">
-              <widget class="QLabel" name="label_16">
-               <property name="text">
-                <string>Pais:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtdireccion1">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="txtcp">
-               <property name="maximumSize">
-                <size>
-                 <width>100</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_13">
-               <property name="text">
-                <string>Dirección:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="4">
-              <widget class="QLineEdit" name="txtpais">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_15">
-               <property name="text">
-                <string>Provincia:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_14">
-               <property name="text">
-                <string>Población:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="2">
-              <widget class="QLineEdit" name="txtprovincia">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+           <item row="3" column="4">
+            <widget class="QLabel" name="label_42">
+             <property name="text">
+              <string>Divisa: </string>
+             </property>
+            </widget>
            </item>
-           <item row="5" column="2" colspan="8">
+           <item row="5" column="2" colspan="10">
             <widget class="QTabWidget" name="tabWidget_2">
              <property name="minimumSize">
               <size>
@@ -1426,33 +1298,78 @@ color: rgb(255, 255, 255);</string>
              </widget>
             </widget>
            </item>
-           <item row="2" column="2" colspan="2">
-            <widget class="QSpinBox" name="txttamano_codigoart">
-             <property name="value">
-              <number>15</number>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="4">
-            <widget class="QLabel" name="label_42">
-             <property name="text">
-              <string>Divisa: </string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="3">
-            <widget class="QCheckBox" name="chkSeguimiento">
-             <property name="text">
-              <string>Activar Seguimiento movimientos</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QCheckBox" name="chk_upate_divisas">
-             <property name="text">
-              <string>Actualizar divisas al entrar</string>
-             </property>
-            </widget>
+           <item row="0" column="0" colspan="12">
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="1" column="2" colspan="3">
+              <widget class="QLineEdit" name="txtpoblacion">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLabel" name="label_16">
+               <property name="text">
+                <string>Pais:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" colspan="4">
+              <widget class="QLineEdit" name="txtdireccion1">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="txtcp">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_13">
+               <property name="text">
+                <string>Dirección:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QLineEdit" name="txtpais">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_15">
+               <property name="text">
+                <string>Provincia:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_14">
+               <property name="text">
+                <string>Población:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="2">
+              <widget class="QLineEdit" name="txtprovincia">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item row="5" column="0" colspan="2">
             <layout class="QGridLayout" name="gridLayout_7">
@@ -1607,6 +1524,143 @@ color: rgb(255, 255, 255);</string>
               </widget>
              </item>
             </layout>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_41">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Tamaño del código en caracteres:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="7">
+            <widget class="QCheckBox" name="chkEnlace_web">
+             <property name="text">
+              <string>enlace Web.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="12">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLabel" name="label_22">
+               <property name="minimumSize">
+                <size>
+                 <width>66</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Cif:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcif">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>Inscripción:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcInscripcion">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_25">
+               <property name="text">
+                <string>Digitos Factura:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtndigitos_factura">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>Serie Factura:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtserieFactura">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="3" column="7">
+            <widget class="QComboBox" name="cboDivisas"/>
+           </item>
+           <item row="2" column="5">
+            <widget class="QLabel" name="label_71">
+             <property name="text">
+              <string>%IRPF:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="4">
+            <widget class="QCheckBox" name="chkIRPF">
+             <property name="maximumSize">
+              <size>
+               <width>135</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Autonomo / IRPF</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="6">
+            <widget class="QDoubleSpinBox" name="spinPorc_irpf">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="minimum">
+              <double>-999999.000000000000000</double>
+             </property>
+             <property name="maximum">
+              <double>9999999.000000000000000</double>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -1913,6 +1967,9 @@ color: rgb(255, 255, 255);</string>
           </layout>
          </widget>
          <widget class="QWidget" name="tab_9">
+          <property name="styleSheet">
+           <string notr="true">background-color: #ecefed;</string>
+          </property>
           <attribute name="title">
            <string>Datos conexión email</string>
           </attribute>
@@ -2147,6 +2204,8 @@ color: rgb(255, 255, 255);</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../maya.qrc"/>
+ </resources>
  <connections/>
 </ui>

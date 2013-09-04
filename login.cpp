@@ -125,6 +125,7 @@ void Login::on_btnAcceder_clicked()
             Configuracion_global->decimales = qEmpresa.record().value("decimales").toInt();
             Configuracion_global->decimales_campos_totales = qEmpresa.record().value("decimales_campos_totales").toInt();
             Configuracion_global->importado_sp = qEmpresa.record().value("importada_sp").toBool();
+            Configuracion_global->porc_irpf = qEmpresa.record().value("porc_irpf").toFloat();
 
         }
         else

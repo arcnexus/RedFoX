@@ -152,6 +152,7 @@ void Empresa::cargar(QSqlRecord registro)
     this->cuenta_iva_soportado_re4 = registro.field("cuenta_iva_soportado4_re").value().toString();
     this->enlace_web = registro.field("enlace_web").value().toBool();
     this->irpf = registro.field("usar_irpf").value().toBool();
+    this->porc_irpf = registro.field("porc_irpf").value().toFloat();
     this->seguimiento = registro.field("seguimiento").value().toBool();
     this->margen = registro.field("margen").value().toDouble();
     this->margen_min = registro.field("margen_minimo").value().toDouble();

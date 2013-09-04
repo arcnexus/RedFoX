@@ -180,8 +180,13 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->cboseries->setEnabled(true);
     oFactura->id = -1;
 
-    //-----------------------
-    //
+    //-------------
+    // Eventos
+    //-------------
+    ui->txtcodigo_cliente->installEventFilter(this);
+    ui->txtcp->installEventFilter(this);
+    ui->txtCp_entrega->installEventFilter(this);
+    ui->tabla_facturas->installEventFilter(this);
 
 }
 
@@ -195,6 +200,10 @@ frmFacturas::~frmFacturas()
 void frmFacturas::LLenarCampos() {
     int lEstado;
     ui->lblFactura->setText(oFactura->factura);
+    if(ui->lblFactura->text() == tr("BORRADOR"))
+        ui->btnBorrar->setVisible(true);
+    else
+        ui->btnBorrar->setVisible(false);
     ui->lblCliente->setText(oFactura->cliente);
     ui->txtcodigo_cliente->setText(oFactura->codigo_cliente);
     ui->txtfactura->setText(oFactura->factura);
@@ -218,6 +227,7 @@ void frmFacturas::LLenarCampos() {
     } else {
         ui->chkrecargo_equivalencia->setChecked(false);
     }
+    ui->spinporc_irpf->setValue(oFactura->porc_irpf);
     ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda( QString::number(oFactura->subtotal,'f',Configuracion_global->decimales)));
     //ui->txtdto->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto,'f',Configuracion_global->decimales)));
     //ui->txtdto_pp->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto_pp,'f',Configuracion_global->decimales)));
@@ -280,15 +290,17 @@ void frmFacturas::LLenarCampos() {
     ui->txtdc_cuenta->setText(oFactura->dc_cuenta);
     ui->txtnumero_cuenta->setText(oFactura->cuenta_corriente);
     ui->txtpedido_cliente->setText(QString::number(oFactura->pedido_cliente));
-    if(!oFactura->irpf)
+    if (oFactura->porc_irpf != 0)
+    {
         ui->lblIRPF_3->setVisible(true);
-    else
-        ui->lblIRPF_3->setVisible(false);
-    if(oFactura->cobrado){
-        ui->lblFacturaCobrada->setVisible(true);
+        ui->lblIrpf->setVisible(true);
+        ui->spinporc_irpf->setVisible(true);
     } else {
-        ui->lblFacturaCobrada->setVisible(false);
+        ui->lblIrpf->setVisible(false);
+        ui->lblIRPF_3->setVisible(false);
+        ui->spinporc_irpf->setVisible(false);
     }
+    ui->lblFacturaCobrada->setVisible(oFactura->cobrado);
     ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->irpf,'f',Configuracion_global->decimales)));
     ui->txtimporte_irpf_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->irpf,'f',Configuracion_global->decimales)));
     oCliente1->Recuperar("Select * from clientes where id ="+QString::number(oFactura->id_cliente));
@@ -345,13 +357,7 @@ void frmFacturas::LLenarCamposCliente()
     }
 
 
-    if (Configuracion_global->irpf == true) {
-        ui->lblIRPF_3->setVisible(true);
-        oFactura->irpf = (Configuracion_global->irpf);
-    } else {
-        ui->lblIRPF_3->setVisible(false);
-        oFactura->irpf = (Configuracion_global->irpf);
-    }
+
     oCliente1->Recuperar("Select * from clientes where id ="+QString::number(oFactura->id_cliente));
     ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente1->importe_a_cuenta,'f',Configuracion_global->decimales)));
     helper.set_tarifa(oCliente1->tarifa_cliente);
@@ -718,11 +724,13 @@ void frmFacturas::on_btnAnadir_clicked()
     in_edit = false;
     VaciarCampos();    
     ui->chkrecargo_equivalencia->setCheckState(Qt::Unchecked);
+
     ui->txtcodigo_cliente->setFocus();
     oFactura->AnadirFactura();
     helper.set_tarifa(Configuracion_global->id_tarifa_predeterminada);
     ui->stackedWidget->setCurrentIndex(0);
     helper.resizeTable();
+    ui->spinporc_irpf->setValue(oFactura->porc_irpf);
     emit block();
 }
 
@@ -814,20 +822,28 @@ void frmFacturas::totalChanged(double base, double dto, double subtotal, double 
 {
     if(!ui->chkrecargo_equivalencia->isChecked())
         re = 0;
+    subtotal +=(ui->SpinGastoDist1->value() + ui->SpinGastoDist2->value() + ui->SpinGastoDist3->value());
+    if(dto == 0)
+        dto = subtotal *(ui->spinPorc_dto->value()/100.0);
+    double dtopp = subtotal *(ui->spinPorc_dto_pp->value()/100.0);
+    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(dtopp,Configuracion_global->decimales_campos_totales)));
+    base = subtotal -(dto+dtopp);
+    double irpf = base * (ui->spinporc_irpf->value()/100.0);
+    ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(irpf,'f',2)));
+    ui->txtimporte_irpf_2->setText(Configuracion_global->toFormatoMoneda(QString::number(irpf,'f',2)));
     this->moneda = moneda;
     ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales)));
     ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales)));
     ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',Configuracion_global->decimales_campos_totales)));
     ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales)));
     ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
-    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total+iva+re,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
     ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
 
     ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales)));
     ui->txtiva_total->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales)));
     ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
-    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total+iva+re,'f',Configuracion_global->decimales_campos_totales)));
-
+    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
 }
 
 void frmFacturas::desglose1Changed(double base, double iva, double re, double total)
@@ -1244,19 +1260,22 @@ bool frmFacturas::eventFilter(QObject *obj, QEvent *event)
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if(obj == ui->txtcodigo_cliente)
         {
-            if(keyEvent->key() == Qt::Key_F1)
+            if(keyEvent->key() == Qt::Key_F1 && ui->btnEditar->isEnabled())
                 on_botBuscarCliente_clicked();
         }
         if(obj == ui->txtcp)
         {
-            if(keyEvent->key() == Qt::Key_F1)
+            if(keyEvent->key() == Qt::Key_F1 && ui->btnEditar->isEnabled())
                 buscar_poblacion(1);
         }
         if(obj == ui->txtCp_entrega)
         {
-            if(keyEvent->key() == Qt::Key_F1)
+            if(keyEvent->key() == Qt::Key_F1 && ui->btnEditar->isEnabled())
                 buscar_poblacion(2);
         }
+        if (obj == ui->tabla_facturas)
+            if(keyEvent->key() == Qt::Key_Return)
+                on_tabla_facturas_doubleClicked(ui->tabla_facturas->currentIndex());
         return false;
     }
 }
@@ -1390,4 +1409,15 @@ void frmFacturas::on_cboModo_currentIndexChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);
     filtro_tabla();
+}
+
+void frmFacturas::on_btnBorrar_clicked()
+{
+    if(QMessageBox::question(this,tr("Gestión de Facturas"),
+                   tr("¿Desea Eliminar este borrador?"),tr("No"),tr("Sí")) == QMessageBox::Accepted)
+    {
+        oFactura->borrar(oFactura->id);
+        oFactura->clear();
+        LLenarCampos();
+    }
 }

@@ -44,88 +44,91 @@ FrmEmpresas::~FrmEmpresas()
 
 void FrmEmpresas::LLenarCampos()
 {
-    ui->txtcodigo->setText(oEmpresa.getcodigo());
-    ui->txtEmpresa->setText(oEmpresa.getnombre());
-    ui->txtRutaBd->setText(oEmpresa.getruta_bd_sqlite());   
-    ui->txtnombre_bd->setText(oEmpresa.getnombre_bd());
+    // cambiado a _llenarCampos()
 
-    int indice=ui->txtcDriver->findText(oEmpresa.getcDriverBD());
-    if(indice!=-1)
-       ui->txtcDriver->setCurrentIndex(indice);
+//    ui->txtcodigo->setText(oEmpresa.getcodigo());
+//    ui->txtEmpresa->setText(oEmpresa.getnombre());
+//    ui->txtRutaBd->setText(oEmpresa.getruta_bd_sqlite());
+//    ui->txtnombre_bd->setText(oEmpresa.getnombre_bd());
 
-    ui->txtRutaBd->setText(oEmpresa.getruta_bd_sqlite());
-    ui->txtnombre_bdMedic->setText(oEmpresa.getnombre_bdMed());
+//    int indice=ui->txtcDriver->findText(oEmpresa.getcDriverBD());
+//    if(indice!=-1)
+//       ui->txtcDriver->setCurrentIndex(indice);
 
-
-    //indice=ui->txtcDriverMedica->findText(oEmpresa.getcDriverBDMed());
-    //if(indice!=-1)
-    //ui->txtcDriverMedica->setCurrentIndex(indice);
+//    ui->txtRutaBd->setText(oEmpresa.getruta_bd_sqlite());
+//    ui->txtnombre_bdMedic->setText(oEmpresa.getnombre_bdMed());
 
 
-    ui->txtdireccion1->setText(oEmpresa.getdireccion1());
-    ui->txtcp->setText(oEmpresa.getcp());
-    ui->txtpoblacion->setText(oEmpresa.getpoblacion());
-    ui->txtprovincia->setText(oEmpresa.getprovincia());
-    ui->txtpais->setText(oEmpresa.getpais());
-    ui->txttelefono1->setText(oEmpresa.gettelefono1());
-    ui->txttelefono2->setText(oEmpresa.gettelefono2());
-    ui->txtfax->setText(oEmpresa.getfax());
-    ui->txtcMail->setText(oEmpresa.getcMail());
-    ui->txtweb->setText(oEmpresa.getweb());
-    ui->txtcif->setText(oEmpresa.getcif());
-    ui->txtcInscripcion->setText(oEmpresa.getcInscripcion());
-    ui->txtcCometarioAlbaran->setText(oEmpresa.getccomentario_albaran());
-    ui->txtccomentario_factura->setText(oEmpresa.getccomentario_factura());
-    ui->txtccomentario_ticket->setText(oEmpresa.getccomentario_ticket());
-    ui->txtejercicio->setValue(oEmpresa.getejercicio());
-    ui->txtndigitos_factura->setText(QString::number(oEmpresa.getndigitos_factura()));
-    ui->txtserieFactura->setText(oEmpresa.getserie());
-    ui->txtdigitos_cuentas->setValue(oEmpresa.getdigitos_cuentas());
-    ui->txtcuentaCliente->setText(oEmpresa.getcuenta_clientes());
-    ui->txtcuenta_proveedores->setText(oEmpresa.getcuenta_proveedores());
-    ui->txtcuenta_acreedores->setText(oEmpresa.getcuenta_acreedores());
-    QString cDivisa = Configuracion_global->Devolver_moneda(oEmpresa.id_divisa);
-    int nIndex = ui->cboDivisas->findText(cDivisa);
-    ui->cboDivisas->setCurrentIndex(nIndex);
-    ui->chkContabilidad->setChecked(oEmpresa.contabilidad);
-    ui->txtConsultas->setValue( oEmpresa.consultas);
-    int index =ui->cboPrimer_dia_laborable->findText(oEmpresa.primer_dia_laborable);
-    ui->cboPrimer_dia_laborable->setCurrentIndex(index);
-    index = ui->cbo_ultimo_dia_semana->findText(oEmpresa.ultimo_dia_laborable);
-    ui->cbo_ultimo_dia_semana->setCurrentIndex(index);
-    ui->txt_horario_primer_dia->setText(oEmpresa.horario_primer_dia);
-    ui->txt_horario_dia_normal->setText(oEmpresa.horario_dia_normal);
-    ui->txt_horario_ultimo_dia->setText(oEmpresa.horario_ultimo_dia);
+//    //indice=ui->txtcDriverMedica->findText(oEmpresa.getcDriverBDMed());
+//    //if(indice!=-1)
+//    //ui->txtcDriverMedica->setCurrentIndex(indice);
 
 
-    ui->txtNombre_BDConta->setText(oEmpresa.nombre_bd_contabilidad);
+//    ui->txtdireccion1->setText(oEmpresa.getdireccion1());
+//    ui->txtcp->setText(oEmpresa.getcp());
+//    ui->txtpoblacion->setText(oEmpresa.getpoblacion());
+//    ui->txtprovincia->setText(oEmpresa.getprovincia());
+//    ui->txtpais->setText(oEmpresa.getpais());
+//    ui->txttelefono1->setText(oEmpresa.gettelefono1());
+//    ui->txttelefono2->setText(oEmpresa.gettelefono2());
+//    ui->txtfax->setText(oEmpresa.getfax());
+//    ui->txtcMail->setText(oEmpresa.getcMail());
+//    ui->txtweb->setText(oEmpresa.getweb());
+//    ui->txtcif->setText(oEmpresa.getcif());
+//    ui->txtcInscripcion->setText(oEmpresa.getcInscripcion());
+//    ui->txtcCometarioAlbaran->setText(oEmpresa.getccomentario_albaran());
+//    ui->txtccomentario_factura->setText(oEmpresa.getccomentario_factura());
+//    ui->txtccomentario_ticket->setText(oEmpresa.getccomentario_ticket());
+//    ui->txtejercicio->setValue(oEmpresa.getejercicio());
+//    ui->txtndigitos_factura->setText(QString::number(oEmpresa.getndigitos_factura()));
+//    ui->txtserieFactura->setText(oEmpresa.getserie());
+//    ui->txtdigitos_cuentas->setValue(oEmpresa.getdigitos_cuentas());
+//    ui->txtcuentaCliente->setText(oEmpresa.getcuenta_clientes());
+//    ui->txtcuenta_proveedores->setText(oEmpresa.getcuenta_proveedores());
+//    ui->txtcuenta_acreedores->setText(oEmpresa.getcuenta_acreedores());
+//    QString cDivisa = Configuracion_global->Devolver_moneda(oEmpresa.id_divisa);
+//    int nIndex = ui->cboDivisas->findText(cDivisa);
+//    ui->cboDivisas->setCurrentIndex(nIndex);
+//    ui->chkContabilidad->setChecked(oEmpresa.contabilidad);
+//    ui->txtConsultas->setValue( oEmpresa.consultas);
+//    int index =ui->cboPrimer_dia_laborable->findText(oEmpresa.primer_dia_laborable);
+//    ui->cboPrimer_dia_laborable->setCurrentIndex(index);
+//    index = ui->cbo_ultimo_dia_semana->findText(oEmpresa.ultimo_dia_laborable);
+//    ui->cbo_ultimo_dia_semana->setCurrentIndex(index);
+//    ui->txt_horario_primer_dia->setText(oEmpresa.horario_primer_dia);
+//    ui->txt_horario_dia_normal->setText(oEmpresa.horario_dia_normal);
+//    ui->txt_horario_ultimo_dia->setText(oEmpresa.horario_ultimo_dia);
 
 
-    ui->txtruta_bd_conta->setText(oEmpresa.RutaBD_Contabilidad_sqlite);
-    ui->chk_ticket_factura->setChecked(oEmpresa.ticket_factura);
-    index = ui->cboTarifa->findText(Configuracion_global->Devolver_tarifa(oEmpresa.id_tarifa_predeterminada));
-    ui->cboTarifa->setCurrentIndex(index);
-    ui->chk_upate_divisas->setChecked(oEmpresa.actualizar_divisas);
-    ui->chkMedica->setChecked(oEmpresa.empresa_medica);
+//    ui->txtNombre_BDConta->setText(oEmpresa.nombre_bd_contabilidad);
 
-    ui->txtCuenta_venta_mercaderias->setText(oEmpresa.cuenta_venta_mercaderias);
-    ui->txtCuenta_venta_servicios->setText(oEmpresa.cuenta_venta_servicios);
-    ui->ivarepercutido1->setText(oEmpresa.cuenta_iva_repercutido1);
-    ui->ivarepercutido2->setText(oEmpresa.cuenta_iva_repercutido2);
-    ui->ivarepercutido3->setText(oEmpresa.cuenta_iva_repercutido3);
-    ui->ivarepercutido4->setText(oEmpresa.cuenta_iva_repercutido4);
-    ui->ivarepercutidore1->setText(oEmpresa.cuenta_iva_repercutido_re1);
-    ui->ivarepercutidore2->setText(oEmpresa.cuenta_iva_repercutido_re2);
-    ui->ivarepercutidore3->setText(oEmpresa.cuenta_iva_repercutido_re3);
-    ui->ivarepercutidore4->setText(oEmpresa.cuenta_iva_repercutido_re4);
-    ui->ivasoportado1->setText(oEmpresa.cuenta_iva_soportado1);
-    ui->ivasoportado2->setText(oEmpresa.cuenta_iva_soportado2);
-    ui->ivasoportado3->setText(oEmpresa.cuenta_iva_soportado3);
-    ui->ivasoportado4->setText(oEmpresa.cuenta_iva_soportado4);
-    ui->ivasoportadore1->setText(oEmpresa.cuenta_iva_soportado_re1);
-    ui->ivasoportadore2->setText(oEmpresa.cuenta_iva_soportado_re2);
-    ui->ivasoportadore3->setText(oEmpresa.cuenta_iva_soportado_re3);
-    ui->ivasoportadore4->setText(oEmpresa.cuenta_iva_soportado_re4);
+
+//    ui->txtruta_bd_conta->setText(oEmpresa.RutaBD_Contabilidad_sqlite);
+//    ui->chk_ticket_factura->setChecked(oEmpresa.ticket_factura);
+//    index = ui->cboTarifa->findText(Configuracion_global->Devolver_tarifa(oEmpresa.id_tarifa_predeterminada));
+//    ui->cboTarifa->setCurrentIndex(index);
+//    ui->chk_upate_divisas->setChecked(oEmpresa.actualizar_divisas);
+//    ui->chkMedica->setChecked(oEmpresa.empresa_medica);
+//    ui->chkIRPF->setChecked(oEmpresa.irpf);
+//    ui->spinPorc_irpf->setValue(oEmpresa.porc_irpf);
+//    ui->txtCuenta_venta_mercaderias->setText(oEmpresa.cuenta_venta_mercaderias);
+//    ui->txtCuenta_venta_servicios->setText(oEmpresa.cuenta_venta_servicios);
+//    ui->ivarepercutido1->setText(oEmpresa.cuenta_iva_repercutido1);
+//    ui->ivarepercutido2->setText(oEmpresa.cuenta_iva_repercutido2);
+//    ui->ivarepercutido3->setText(oEmpresa.cuenta_iva_repercutido3);
+//    ui->ivarepercutido4->setText(oEmpresa.cuenta_iva_repercutido4);
+//    ui->ivarepercutidore1->setText(oEmpresa.cuenta_iva_repercutido_re1);
+//    ui->ivarepercutidore2->setText(oEmpresa.cuenta_iva_repercutido_re2);
+//    ui->ivarepercutidore3->setText(oEmpresa.cuenta_iva_repercutido_re3);
+//    ui->ivarepercutidore4->setText(oEmpresa.cuenta_iva_repercutido_re4);
+//    ui->ivasoportado1->setText(oEmpresa.cuenta_iva_soportado1);
+//    ui->ivasoportado2->setText(oEmpresa.cuenta_iva_soportado2);
+//    ui->ivasoportado3->setText(oEmpresa.cuenta_iva_soportado3);
+//    ui->ivasoportado4->setText(oEmpresa.cuenta_iva_soportado4);
+//    ui->ivasoportadore1->setText(oEmpresa.cuenta_iva_soportado_re1);
+//    ui->ivasoportadore2->setText(oEmpresa.cuenta_iva_soportado_re2);
+//    ui->ivasoportadore3->setText(oEmpresa.cuenta_iva_soportado_re3);
+//    ui->ivasoportadore4->setText(oEmpresa.cuenta_iva_soportado_re4);
 
 }
 
@@ -207,6 +210,8 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.Email_pop = ui->txtEmail_pop->text();
     oEmpresa.Email_smtp= ui->txtEmail_smtp->text();
     oEmpresa.Email_usuario = ui->txtEmail_usuario->text();
+    oEmpresa.irpf = ui->chkIRPF->isChecked();
+    oEmpresa.porc_irpf = ui->spinPorc_irpf->value();
 }
 
 void FrmEmpresas::txtpoblacion_editingFinished()
@@ -651,6 +656,7 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->txtccomentario_ticket->setText(r.value("comentario_ticket").toString());
     ui->txtejercicio->setValue(r.value("ejercicio").toInt());
     ui->chkIRPF->setChecked(r.value("usar_irpf").toBool());
+    ui->spinPorc_irpf->setValue(r.value("porc_irpf").toFloat());
     ui->txtcuentaCliente->setText(r.value("codigo_cuenta_clientes").toString());
     ui->txtcuenta_proveedores->setText(r.value("codigo_cuenta_proveedores").toString());
     ui->txtcuenta_acreedores->setText(r.value("codigo_cuenta_acreedores").toString());

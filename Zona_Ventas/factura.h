@@ -95,6 +95,8 @@ public:
     int id_transportista;
     bool editable;
     bool set_impresa(bool state);
+    void clear();
+    bool borrar(int id);
 
 signals:
 
