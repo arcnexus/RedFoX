@@ -33,6 +33,14 @@ frmGestionCobros::~frmGestionCobros()
     delete ui;
 }
 
+void frmGestionCobros::buscar_deuda(int id_cliente)
+{
+    QSqlQueryModel *deudas = new QSqlQueryModel(this);
+    QString cSQL = QString("select fecha, vencimiento,documento,importe,pagado,pendiente_cobro from clientes_deuda where id_cliente = %1").arg(id_cliente);
+    deudas->setQuery(cSQL,Configuracion_global->groupDB);
+    ui->tabla_deuda->setModel(deudas);
+}
+
 
 void frmGestionCobros::on_txtbuscar_cliente_textChanged(const QString &arg1)
 {
@@ -70,7 +78,12 @@ void frmGestionCobros::on_txtbuscar_cliente_textChanged(const QString &arg1)
 void frmGestionCobros::on_btncobro_total_clicked()
 {
     FrmGestionCobros2 g2(this);
-   // g2.valores.pendiente = 123.34;
+   //g2.valores.pendiente = 123.34;
     g2.exec();
 
+}
+
+void frmGestionCobros::on_btnCerrar_clicked()
+{
+    accept();
 }

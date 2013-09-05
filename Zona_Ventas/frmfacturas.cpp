@@ -7,6 +7,8 @@
 #include "../Auxiliares/monetarydelegate.h"
 #include "../Auxiliares/datedelegate.h"
 #include "../Almacen/frmarticulos.h"
+#include "../Zona_Ventas/frmgestioncobros.h"
+
 
 #include "../Almacen/articulo.h"
 
@@ -325,6 +327,7 @@ void frmFacturas::LLenarCampos() {
     QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
     helper.fillTable("empresa","lin_fac",filter);
     helper.set_tipo_dto_tarifa(oCliente1->tipo_dto_tarifa);
+    helper.setId_cliente(oCliente1->id);
 }
 
 void frmFacturas::LLenarCamposCliente()
@@ -377,6 +380,10 @@ void frmFacturas::LLenarCamposCliente()
     ui->SpinGastoDist2->setValue(oFactura->imp_gasto2);
     ui->SpinGastoDist3->setValue(oFactura->imp_gasto3);
     ui->txt_tipo_dto_tarifa->setText(QString::number(oCliente1->tipo_dto_tarifa));
+    ui->spinPorc_dto->setValue(oFactura->porc_dto);
+    ui->spinPorc_dto_pp->setValue(oFactura->porc_dto_pp);
+    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtDtoPP->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto_pp,'f',Configuracion_global->decimales_campos_totales)));
     helper.set_tipo_dto_tarifa(oCliente1->tipo_dto_tarifa);
 }
 
@@ -543,9 +550,11 @@ void frmFacturas::LLenarFactura() {
         oFactura->recargo_equivalencia = (0);
     }
     oFactura->subtotal = (ui->txtsubtotal->text().replace(".","").replace(",",".").replace(moneda,"").toDouble());
-    oFactura->porc_dto_pp = (ui->spinPorc_dto->text().replace(".","").replace(",",".").toDouble());
+    oFactura->porc_dto = (ui->spinPorc_dto->value());
     oFactura->dto = (ui->txtimporte_descuento->text().replace(".","").replace(moneda,"").replace(".","").replace(",",".").toDouble());
-    oFactura->dto_pp = (ui->spinPorc_dto_pp->text().replace(".","").replace(",",".").toDouble());
+    oFactura->porc_dto_pp = (ui->spinPorc_dto_pp->value());
+    oFactura->dto = Configuracion_global->MonedatoDouble(ui->txtimporte_descuento->text());
+    oFactura->dto_pp = Configuracion_global->MonedatoDouble(ui->txtDtoPP->text());
     oFactura->base = (ui->txtbase->text().replace(".","").replace(",",".").replace(moneda,"").toDouble());
     oFactura->iva = (ui->txtiva->text().replace(".","").replace(",",".").replace(moneda,"").toDouble());
     oFactura->total = (ui->txttotal->text().replace(".","").replace(",",".").replace(moneda,"").toDouble());
@@ -582,10 +591,7 @@ void frmFacturas::LLenarFactura() {
     oFactura->oficina_entidad = (ui->txtoficina_entidad->text());
     oFactura->dc_cuenta = (ui->txtdc_cuenta->text());
     oFactura->cuenta_corriente = (ui->txtnumero_cuenta->text());
-    bool ok;
-    int nPed = ui->txtpedido_cliente->text().toInt(&ok);
-
-    oFactura->pedido_cliente = ok ? nPed : 0;
+    oFactura->pedido_cliente = ui->txtpedido_cliente->text().toInt();
     oFactura->irpf = (ui->txtimporte_irpf->text().replace(".","").replace(",",".").toDouble());
     oFactura->desc_gasto1 = ui->txtGastoDist1->text();
     oFactura->desc_gasto2 = ui->txtGastoDist2->text();
@@ -593,13 +599,17 @@ void frmFacturas::LLenarFactura() {
     oFactura->imp_gasto1 = ui->SpinGastoDist1->value();
     oFactura->imp_gasto2 = ui->SpinGastoDist2->value();
     oFactura->imp_gasto3 = ui->SpinGastoDist3->value();
+    oFactura->porc_iva_gasto1 = ui->spin_porc_iva_gasto1->value();
+    oFactura->porc_iva_gasto2 = ui->spin_porc_iva_gasto2->value();
+    oFactura->porc_iva_gasto3 = ui->spin_porc_iva_gasto3->value();
+    oFactura->iva_gasto1 = ui->spin_iva_gasto1->value();
+    oFactura->iva_gasto2 = ui->spin_iva_gasto2->value();
+    oFactura->iva_gasto3 = ui->spin_iva_gasto3->value();
+
+
 }
 
-void frmFacturas::
-
-
-
-on_btnSiguiente_clicked()
+void frmFacturas::on_btnSiguiente_clicked()
 {
     QString id = QString::number(oFactura->id);
     QString cSQL;
@@ -677,10 +687,13 @@ void frmFacturas::Guardar_factura()
     LLenarFactura();
 
     if(sender()==actionGuardaBorrador)
+    {
         oFactura->factura = tr("BORRADOR");
+        oFactura->serie = ui->cbo_serie->currentText();
+    }
     else
         if(oFactura->factura.isEmpty())
-        oFactura->factura = oFactura->NuevoNumeroFactura(ui->cbo_serie->currentText());
+            oFactura->factura = oFactura->NuevoNumeroFactura(ui->cbo_serie->currentText());
 
     succes = oFactura->GuardarFactura(oFactura->id,false);
     if(succes)
@@ -1420,4 +1433,70 @@ void frmFacturas::on_btnBorrar_clicked()
         oFactura->clear();
         LLenarCampos();
     }
+}
+
+void frmFacturas::on_spinPorc_dto_editingFinished()
+{
+    //--------------------------------------------
+    // Cambio dto en líneas
+    //--------------------------------------------
+    QMap <int,QSqlRecord> rec;
+    QString error;
+    QStringList clauses;
+    Articulo oArt(this);
+    int id_art,id_lin;
+    float porc_dto_esp, porc_dto_lin;
+    double subtotal;
+
+    clauses << QString("id_cab = %1").arg(oFactura->id);
+
+    rec = SqlCalls::SelectRecord("lin_fac",clauses,Configuracion_global->empresaDB,error);
+    QMapIterator <int, QSqlRecord> i(rec);
+    while (i.hasNext())
+    {
+        i.next();
+        id_lin = i.value().value("id").toInt();
+        id_art = i.value().value("id_articulo").toInt();
+        subtotal = i.value().value("subtotal").toDouble();
+        porc_dto_lin = i.value().value("porc_dto").toFloat();
+
+        porc_dto_esp = oArt.asigna_dto_linea(id_art,oCliente1->id,ui->spinPorc_dto->value(),porc_dto_lin);
+        QHash <QString,QVariant> f;
+        clauses.clear();
+        clauses << QString("id = %1").arg(id_lin);
+        f["porc_dto"] = porc_dto_esp;
+        f["dto"] = subtotal *(porc_dto_esp/100.0);
+
+        bool upd = SqlCalls::SqlUpdate(f,"lin_fac",Configuracion_global->empresaDB,clauses,error);
+        if(!upd)
+            QMessageBox::warning(this,tr("Cambio DTO"),tr("No se pudo realizar el cambio en las líneas, error:%1").arg(error),
+                                 tr("Aceptar"));
+        else
+            helper.calculatotal();
+    }
+    //--------------------------
+    // Calculo dto total
+    //--------------------------
+    double dto = (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())*(ui->spinPorc_dto->value()/100.0));
+    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales)));
+    oFactura->dto = dto;
+    QString filter = QString("id_cab = '%1'").arg(oFactura->id);
+    helper.fillTable("empresa","lin_fac",filter);
+}
+
+void frmFacturas::on_spinPorc_dto_pp_editingFinished()
+{
+    float dto_pp;
+    dto_pp = (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())*(ui->spinPorc_dto_pp->value()/100.0));
+    ui->txtDtoPP->setText(Configuracion_global->toFormatoMoneda(QString::number(dto_pp,'f',Configuracion_global->decimales_campos_totales)));
+    oFactura->dto_pp = dto_pp;
+    QString filter = QString("id_cab = '%1'").arg(oFactura->id);
+    helper.fillTable("empresa","lin_fac",filter);
+}
+
+void frmFacturas::on_btnCobrar_clicked()
+{
+    frmGestionCobros gc(this);
+    gc.buscar_deuda(oCliente1->id);
+    gc.exec();
 }

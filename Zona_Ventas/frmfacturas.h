@@ -101,6 +101,12 @@ private slots:
 
     void on_btnBorrar_clicked();
 
+    void on_spinPorc_dto_editingFinished();
+
+    void on_spinPorc_dto_pp_editingFinished();
+
+    void on_btnCobrar_clicked();
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;
