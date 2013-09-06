@@ -491,10 +491,10 @@ void FrmPresupuestosCli::VaciarCampos()
     ui->txtbase2->setText("0,00");
     ui->txtbase3->setText("0,00");
     ui->txtbase4->setText("0,00");
-    ui->txtporc_iva1->setText("0");
-    ui->txtporc_iva2->setText("0");
-    ui->txtporc_iva3->setText("0");
-    ui->txtporc_iva4->setText("0");
+    ui->txtporc_iva1->setText("1");
+    ui->txtporc_iva2->setText("1");
+    ui->txtporc_iva3->setText("1");
+    ui->txtporc_iva4->setText("1 casa");
     ui->txtiva1->setText("0,00");
     ui->txtiva2->setText("0,00");
     ui->txtiva3->setText("0,00");
@@ -646,11 +646,8 @@ void FrmPresupuestosCli::on_btnAnadir_clicked()
     helper.fillTable("empresa","lin_pre",filter);
     helper.set_tarifa(Configuracion_global->id_tarifa_predeterminada);
     BloquearCampos(false);
-    int next = oPres->NuevoNumeroPresupuesto();
-    ui->txtpresupuesto->setText(QString::number(next));
-    ui->lblTopNpres->setText(QString::number(next));
-    LLenarPresupuesto();
     oPres->AnadirPresupuesto();
+    LLenarCampos();
     ui->txtcodigo_cliente->setFocus();
     editando = false;
     emit block();
@@ -764,7 +761,7 @@ void FrmPresupuestosCli::desglose1Changed(double base, double iva, double re, do
 {
 
     ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
-    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
+   // ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
     ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
     ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
 }
@@ -1181,191 +1178,211 @@ void FrmPresupuestosCli::convertir_enFactura()
             Configuracion_global->empresaDB.transaction();
             bool transaccion = true;
             //-----------------------
-            // LLeno objeto factura
+            // LLENAR CABECERA
             //-----------------------
-            oFactura.AnadirFactura();
-            oClientePres->Recuperar("select * from clientes where codigo_cliente ='"+ui->txtcodigo_cliente->text()+"'");
-            oFactura.serie = serie;
-            oFactura.cif = oPres->cif;
-            oFactura.cliente = oPres->cliente;
-            oFactura.codigo_cliente = oPres->codigo_cliente;
-            oFactura.id_cliente = oPres->id_cliente;
-            oFactura.codigo_entidad = oClientePres->entidad_bancaria;
-            oFactura.cuenta_corriente = oClientePres->cuenta_corriente;
-            oFactura.oficina_entidad = oClientePres->oficina_bancaria;
-            oFactura.dc_cuenta = oClientePres->dc;
-            oFactura.cp = oPres->cp;
-            oFactura.direccion1 = oPres->direccion1;
-            oFactura.direccion2 = oPres->direccion2;
-            oFactura.id_forma_pago = oPres->id_forma_pago;
+            QHash <QString, QVariant > cab_fac;
 
-            oFactura.pedido_cliente = ui->txtpedido->text().toInt();
-            oFactura.poblacion =oPres->poblacion;
-            oFactura.provincia = oPres->provincia;
-            oFactura.fecha = QDate::currentDate();
-            oFactura.id_pais = oPres->id_pais;
-            oFactura.direccion1 = oPres->direccion1;
-            oFactura.direccion2 = oPres->direccion2;
-            oFactura.poblacion =oPres->poblacion;
-            oFactura.provincia = oPres->provincia;
-            oFactura.id_pais = oPres->id_pais;
+            cab_fac["codigo_cliente"] = oPres->codigo_cliente;
+            cab_fac["serie"] = serie;
+            cab_fac["factura"] = oFactura.NuevoNumeroFactura(serie);
+            cab_fac["fecha"] = QDate::currentDate();
+            cab_fac["id_cliente"] = oPres->id_cliente;
+            cab_fac["cliente"] = oPres->cliente;
+            cab_fac["direccion1"] = oPres->direccion1;
+            cab_fac["direccion2"] = oPres->direccion2;
+            cab_fac["cp"] = oPres->cp;
+            cab_fac["poblacion"] = oPres->poblacion;
+            cab_fac["provincia"] = oPres->provincia;
+            cab_fac["id_pais"] = oPres->id_pais;
+            cab_fac["direccion1_entrega"] = oPres->direccion1_entrega;
+            cab_fac["direccion2_entrega"] = oPres->direccion2_entrega;
+            cab_fac["poblacion_entrega"] = oPres->poblacion_entrega;
+            cab_fac["provincia_entrega"] = oPres->provincia_entrega;
+            cab_fac["cp_entrega"] = oPres->cp_entrega;
+            cab_fac["id_pais_entrega"] = oPres->id_pais_entrega;
+            cab_fac["email_entrega"] = oPres->email_entrega;
+            cab_fac["comentarios_entrega"] = oPres->comentarios_entrega;
+            cab_fac["cif"] = oPres->cif;
+            cab_fac["telefono"] = oPres->telefono;
+            cab_fac["fax"] = oPres->fax;
+            cab_fac["movil"] = oPres->movil;
+            cab_fac["email"] = oPres->email;
+            cab_fac["recargo_equivalencia"] = oPres->recargo_equivalencia;
+            cab_fac["subtotal"] = oPres->subtotal;
+            cab_fac["porc_dto"] = oPres->porc_dto;
+            cab_fac["porc_dto_pp"] = oPres->porc_dto_pp;
+            cab_fac["dto"] = oPres->dto;
+            cab_fac["dto_pp"] = oPres->dto_pp;
+            cab_fac["base"] = oPres->base;
+            //cab_fac["porc_irpf"] = oPres->porc_irpf;
+            //cab_fac["irpf"] = oPres->irpf;
+            cab_fac["iva"] = oPres->total_iva;
+            cab_fac["total"] = oPres->total;
+            cab_fac["impreso"]= oPres->impreso;
+            cab_fac["cobrado"] = false;
+            cab_fac["contabilizado"] = false;
+            cab_fac["id_forma_pago"] = oPres->id_forma_pago;
+            cab_fac["forma_pago"] = Configuracion_global->Devolver_forma_pago(oPres->id_forma_pago);
+            cab_fac["comentario"] = oPres->comentarios;
+            cab_fac["base1"] = oPres->base1;
+            cab_fac["base2"] = oPres->base2;
+            cab_fac["base3"] = oPres->base3;
+            cab_fac["base4"] = oPres->base4;
+            cab_fac["porc_iva1"] = oPres->porc_iva1;
+            cab_fac["porc_iva2"] = oPres->porc_iva2;
+            cab_fac["porc_iva3"] = oPres->porc_iva3;
+            cab_fac["porc_iva4"] = oPres->porc_iva4;
+            cab_fac["iva1"] = oPres->iva1;
+            cab_fac["iva2"] = oPres->iva2;
+            cab_fac["iva3"] = oPres->iva3;
+            cab_fac["iva4"] = oPres->iva4;
+            cab_fac["total1"] = oPres->total1;
+            cab_fac["total2"] = oPres->total2;
+            cab_fac["total3"] = oPres->total3;
+            cab_fac["total4"] = oPres->total4;
+            cab_fac["porc_rec1"] = oPres->porc_rec1;
+            cab_fac["porc_rec2"] = oPres->porc_rec2;
+            cab_fac["porc_rec3"] = oPres->porc_rec3;
+            cab_fac["porc_rec4"] = oPres->porc_rec4;
+            cab_fac["rec1"] = oPres->rec1;
+            cab_fac["rec2"] = oPres->rec2;
+            cab_fac["rec3"] = oPres->rec3;
+            cab_fac["rec4"] = oPres->rec4;
+            cab_fac["total_recargo"] = oPres->total_recargo;
+            cab_fac["importe_pendiente"] = oPres->importe_pendiente;
+            cab_fac["codigo_entidad"] = oClientePres->entidad_bancaria;
+            cab_fac["oficina_entidad"] = oClientePres->oficina_bancaria;
+            cab_fac["dc_cuenta"] = oClientePres->dc;
+            cab_fac["cuenta_corriente"] = oClientePres->cuenta_corriente;
+            cab_fac["desc_gasto1"] = oPres->desc_gasto1;
+            cab_fac["desc_gasto2"] = oPres->desc_gasto2;
+            cab_fac["desc_gasto3"] = oPres->desc_gasto3;
+            cab_fac["imp_gasto1"] = oPres->importe_gasto1;
+            cab_fac["imp_gasto2"] = oPres->importe_gasto2;
+            cab_fac["imp_gasto3"] = oPres->importe_gasto3;
+            cab_fac["porc_iva_gasto1"] = oPres->porc_iva_gasto1;
+            cab_fac["iva_gasto1"] = oPres->iva_gasto1;
+            cab_fac["iva_gasto2"] = oPres->iva_gasto2;
+            cab_fac["iva_gasto3"] = oPres->iva_gasto3;
+            cab_fac["id_transportista"] = oPres->id_transportista;
+            cab_fac["ejercicio"] = Configuracion_global->cEjercicio.toInt();
+            cab_fac["editable"] = true;
+            cab_fac["pendiente"] = oPres->total;
+            QString error;
+            int new_id = SqlCalls::SqlInsert(cab_fac,"cab_fac",Configuracion_global->empresaDB,error);
 
-            oFactura.direccion1_entrega = oPres->direccion1_entrega;
-            oFactura.direccion2_entrega = oPres->direccion1_entrega;
-            oFactura.poblacion_entrega =oPres->poblacion_entrega;
-            oFactura.provincia_entrega = oPres->provincia_entrega;
-            oFactura.id_pais_entrega = oPres->id_pais_entrega;
-
-            oFactura.id_forma_pago = oPres->id_forma_pago;
-
-            oFactura.recargo_equivalencia = oPres->recargo_equivalencia;
-            oFactura.porc_dto = oPres->porc_dto;
-            oFactura.porc_iva1 = oPres->porc_iva1;
-            oFactura.porc_iva2 = oPres->porc_iva2;
-            oFactura.porc_iva3 = oPres->porc_iva3;
-            oFactura.porc_iva4 = oPres->porc_iva4;
-            oFactura.porc_rec1 = oPres->porc_rec1;
-            oFactura.porc_rec2 = oPres->porc_rec2;
-            oFactura.porc_rec3 = oPres->porc_rec3;
-            oFactura.porc_rec4 = oPres->porc_rec4;
-            oFactura.base = oPres->base;
-            oFactura.base1 = oPres->base1;
-            oFactura.base2 = oPres->base2;
-            oFactura.base3 = oPres->base3;
-            oFactura.base4 = oPres->base4;
-            oFactura.dto = oPres->dto;
-            oFactura.iva = oPres->total_iva;
-            oFactura.iva1 = oPres->iva1;
-            oFactura.iva2 = oPres->iva2;
-            oFactura.iva3 = oPres->iva3;
-            oFactura.iva4 = oPres->iva4;
-            oFactura.porc_rec1 = oPres->rec1;
-            oFactura.porc_rec2 = oPres->rec2;
-            oFactura.porc_rec3 = oPres->rec3;
-            oFactura.porc_rec4 = oPres->rec4;
-            oFactura.subtotal = oPres->subtotal;
-            oFactura.total = oPres->total;
-            oFactura.total1 = oPres->total1;
-            oFactura.total2 = oPres->total2;
-            oFactura.total3 = oPres->total3;
-            oFactura.total4 = oPres->total4;
-            oFactura.total_recargo = oPres->total_recargo;
-
-            // ----------------------------------
-            // Creamos la cabecera de la factura
-            //-----------------------------------
-            oFactura.factura = oFactura.NuevoNumeroFactura(serie);
-            oFactura.GuardarFactura(oFactura.id,true);
-            //-------------------
-            //  INSERTAR LÍNEAS
-            //-------------------
-            QSqlQuery lineas_pre(Configuracion_global->empresaDB);
-
-            if(lineas_pre.exec("Select * from lin_pre where id_cab ="+QString::number(oPres->id)))
+            if(new_id > -1)
             {
-                QHash <QString, QVariant> h_lineas_fac;
-                QString error;
-                while (lineas_pre.next()) {
 
-                    h_lineas_fac["id_cab"] = oFactura.id;
-                    h_lineas_fac["id_articulo"] = lineas_pre.record().value("id_articulo").toInt();
-                    h_lineas_fac["codigo"] = lineas_pre.record().value("codigo").toString();
-                    h_lineas_fac["cantidad"] =  lineas_pre.record().value("cantidad").toInt();
-                    h_lineas_fac["descripcion"] = lineas_pre.record().value("descripcion").toString();
-                    h_lineas_fac["precio"] = lineas_pre.record().value("precio").toDouble();
-                    h_lineas_fac["subtotal"] = lineas_pre.record().value("subtotal").toDouble();
-                    h_lineas_fac["porc_dto"] = lineas_pre.record().value("porc_dto").toDouble();
-                    h_lineas_fac["dto"] = lineas_pre.record().value("dto").toDouble();
-                    h_lineas_fac["porc_iva"] = lineas_pre.record().value("porc_iva").toDouble();
-                    h_lineas_fac["total"] = lineas_pre.record().value("total").toDouble();
-                    int new_id = SqlCalls::SqlInsert(h_lineas_fac,"lin_fac",Configuracion_global->empresaDB,error);
+                //-------------------
+                //  INSERTAR LÍNEAS
+                //-------------------
+                QSqlQuery lineas_pre(Configuracion_global->empresaDB);
 
-                    if(new_id == -1)
-                    {
-                        QMessageBox::warning(this,tr("Pedidos cliente"),
-                                             tr("Ocurrió un error al crear las líneas de factura: %1").arg(error));
+                if(lineas_pre.exec("Select * from lin_pre where id_cab ="+QString::number(oPres->id)))
+                {
+                    QHash <QString, QVariant> h_lineas_fac;
+                    while (lineas_pre.next()) {
 
-                        transaccion = false;
+                        h_lineas_fac["id_cab"] = new_id;
+                        h_lineas_fac["id_articulo"] = lineas_pre.record().value("id_articulo").toInt();
+                        h_lineas_fac["codigo"] = lineas_pre.record().value("codigo").toString();
+                        h_lineas_fac["cantidad"] =  lineas_pre.record().value("cantidad").toInt();
+                        h_lineas_fac["descripcion"] = lineas_pre.record().value("descripcion").toString();
+                        h_lineas_fac["precio"] = lineas_pre.record().value("precio").toDouble();
+                        h_lineas_fac["subtotal"] = lineas_pre.record().value("subtotal").toDouble();
+                        h_lineas_fac["porc_dto"] = lineas_pre.record().value("porc_dto").toDouble();
+                        h_lineas_fac["dto"] = lineas_pre.record().value("dto").toDouble();
+                        h_lineas_fac["porc_iva"] = lineas_pre.record().value("porc_iva").toDouble();
+                        h_lineas_fac["total"] = lineas_pre.record().value("total").toDouble();
+                        int new_id = SqlCalls::SqlInsert(h_lineas_fac,"lin_fac",Configuracion_global->empresaDB,error);
+
+                        if(new_id == -1)
+                        {
+                            QMessageBox::warning(this,tr("Pedidos cliente"),
+                                                 tr("Ocurrió un error al crear las líneas de factura: %1").arg(error));
+
+                            transaccion = false;
+                        }
                     }
                 }
-            }
 
-            if(transaccion) {
-                ui->btn_convertir->setEnabled(false);
-                QString texto;
-                texto = tr("Se ha creado una nueva factura.\ncon el número ")+ oFactura.factura+
-                           tr("\n y de importe: ")+QString::number(oFactura.total,'f',Configuracion_global->decimales);
-                TimedMessageBox * t = new TimedMessageBox(this,texto);
-                //-----------------------------------------
-                // Insertamos datos factura en presupuesto
-                //-----------------------------------------
-                oPres->factura =oFactura.factura;
-                oPres->editable = false;
-                oPres->GuardarPres(oPres->id);
-                ui->txtfactura->setText(oPres->factura);
-                Configuracion_global->empresaDB.commit();
-                //------------------------------------
-                // Actualizamos factura en albarán
-                //------------------------------------
-                QString error;
-                int albaran = SqlCalls::SelectOneField("cab_pre","albaran",QString("albaran=%1").arg(oPres->albaran),
-                                                        Configuracion_global->empresaDB,error).toInt();
-                if(albaran >0)
+                if(transaccion) {
+                    ui->btn_convertir->setEnabled(false);
+                    QString texto;
+                    texto = tr("Se ha creado una nueva factura.\ncon el número ")+ oFactura.factura+
+                               tr("\n y de importe: ")+QString::number(oFactura.total,'f',Configuracion_global->decimales);
+                    TimedMessageBox * t = new TimedMessageBox(this,texto);
+                    //-----------------------------------------
+                    // Insertamos datos factura en presupuesto
+                    //-----------------------------------------
+                    oPres->factura =oFactura.factura;
+                    oPres->editable = false;
+                    oPres->GuardarPres(oPres->id);
+                    ui->txtfactura->setText(oPres->factura);
+                    Configuracion_global->empresaDB.commit();
+                    //------------------------------------
+                    // Actualizamos factura en albarán
+                    //------------------------------------
+                    QString error;
+                    int albaran = SqlCalls::SelectOneField("cab_pre","albaran",QString("albaran=%1").arg(oPres->albaran),
+                                                            Configuracion_global->empresaDB,error).toInt();
+                    if(albaran >0)
+                    {
+                        QHash <QString, QVariant> a;
+                        a["factura"] = oFactura.factura;
+                        bool updated = SqlCalls::SqlUpdate(a,"cab_alb",Configuracion_global->empresaDB,
+                                                           QString("albaran =%1").arg(oPres->albaran),
+                                                           error);
+                        if(!updated)
+                            TimedMessageBox *t = new TimedMessageBox(this,tr("No se pudo guardar el numero de factura en el albarán: %1").arg(error));
+                    }
+
+
+
+                    vencimientos vto(this);
+                    //-----------------
+                    // Asiento contable
+                    //-----------------
+                    if(Configuracion_global->contabilidad)
+                    {
+
+                        bool creado;
+                        oClientePres->Recuperar("select * from clientes where id = "+QString::number(oFactura.id_cliente));
+                        if(oFactura.apunte == 0)
+                            creado = oFactura.Apunte();
+                        else
+                            creado = oFactura.EditApunte(oFactura.apunte);
+                        if(!creado)
+                            Configuracion_global->empresaDB.rollback();
+                    }
+                    //------------------
+                    // Vencimiento
+                    //------------------
+                    vto.calcular_vencimiento(oFactura.fecha,oFactura.id_cliente,0,oFactura.id,(oFactura.serie+"/"+oFactura.factura),1,
+                                             "V",oFactura.total);
+                    oPres->RecuperarPresupuesto("select * from cab_pre where id ="+QString::number(oPres->id));
+                    LLenarCampos();
+
+                } else
                 {
-                    QHash <QString, QVariant> a;
-                    a["factura"] = oFactura.factura;
-                    bool updated = SqlCalls::SqlUpdate(a,"cab_alb",Configuracion_global->empresaDB,
-                                                       QString("albaran =%1").arg(oPres->albaran),
-                                                       error);
-                    if(!updated)
-                        TimedMessageBox *t = new TimedMessageBox(this,tr("No se pudo guardar el numero de factura en el albarán: %1").arg(error));
+
+                    QMessageBox::warning(this,tr("Traspaso a factura"),tr("No se pudo crear la factura "),tr("Aceptar"));
+
+                    Configuracion_global->empresaDB.rollback();
                 }
 
 
 
-                vencimientos vto(this);
-                //-----------------
-                // Asiento contable
-                //-----------------
-                if(Configuracion_global->contabilidad)
+
+
+                } else
                 {
-
-                    bool creado;
-                    oClientePres->Recuperar("select * from clientes where id = "+QString::number(oFactura.id_cliente));
-                    if(oFactura.apunte == 0)
-                        creado = oFactura.Apunte();
-                    else
-                        creado = oFactura.EditApunte(oFactura.apunte);
-                    if(!creado)
-                        Configuracion_global->empresaDB.rollback();
+                    Configuracion_global->empresaDB.rollback();
+                    QMessageBox::warning(this,tr("Presupuestos"),
+                                         tr("No se ha podido crear la factura"),tr("Aceptar"));
                 }
-                //------------------
-                // Vencimiento
-                //------------------
-                vto.calcular_vencimiento(oFactura.fecha,oFactura.id_cliente,0,oFactura.id,(oFactura.serie+"/"+oFactura.factura),1,
-                                         "V",oFactura.total);
-                oPres->RecuperarPresupuesto("select * from cab_pre where id ="+QString::number(oPres->id));
-                LLenarCampos();
-
-            } else
-            {
-
-                QMessageBox::warning(this,tr("Traspaso a factura"),tr("No se pudo crear la factura "),tr("Aceptar"));
-
-                Configuracion_global->empresaDB.rollback();
-            }
-
-
-
-
-
-            } else
-            {
-                Configuracion_global->empresaDB.rollback();
-                QMessageBox::warning(this,tr("Presupuestos"),
-                                     tr("No se ha podido crear la factura"),tr("Aceptar"));
-            }
-
+        }
     } else
         QMessageBox::warning(this,tr("Presupuestos"),tr("Este presupuesto ya ha sido facturado"),tr("Aceptar"));
 }
@@ -1422,28 +1439,49 @@ void FrmPresupuestosCli::lineaReady(lineaDetalle * ld)
             queryArticulos.next();
         else
             ok_Maya = false;
-        QSqlQuery lin_pre(Configuracion_global->empresaDB);
-        lin_pre.prepare("INSERT INTO lin_pre (id_cab, id_articulo, codigo, cantidad,"
-                                  "descripcion, precio, subtotal, porc_dto,"
-                                  " dto, porc_iva, iva, total)"
-                                  "VALUES (:id_cab,:id_articulo,:codigo,:cantidad,"
-                                  ":descripcion,:precio,:subtotal,:porc_dto,"
-                                  ":dto,:porc_iva,:iva,:total);");
-        lin_pre.bindValue(":id_cab", oPres->id);
-        lin_pre.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        lin_pre.bindValue(":codigo",ld->codigo);
-        lin_pre.bindValue(":descripcion",ld->descripcion);
-        lin_pre.bindValue(":cantidad",ld->cantidad);
-        lin_pre.bindValue(":precio",ld->precio);
-        lin_pre.bindValue(":subtotal",ld->subtotal);
-        lin_pre.bindValue(":porc_dto",ld->dto_perc);
-        lin_pre.bindValue(":dto",ld->dto);
-        lin_pre.bindValue(":iva",(ld->subtotal * ld->iva_perc)/100);
-        lin_pre.bindValue(":total",ld->total);
-        if (!lin_pre.exec()){
+
+        QHash <QString,QVariant> lin_pre;
+        QString error;
+        lin_pre["id_cab"] = oPres->id;
+        lin_pre["id_articulo"] = queryArticulos.record().value("id").toInt();
+        lin_pre["codigo"] = ld->codigo;
+        lin_pre["cantidad"] = ld->cantidad;
+        lin_pre["descripcion"] = ld->descripcion;
+        lin_pre["precio"] = ld->precio;
+        lin_pre["subtotal"] = ld->subtotal;
+        lin_pre["porc_dto"] = ld->dto_perc;
+        lin_pre["dto"] = ld->dto;
+        lin_pre["porc_iva"]= ld->iva_perc;
+        lin_pre["iva"] = ld->iva;
+        lin_pre["porc_rec"] = ld->rec_perc;
+        lin_pre["rec"] = ld->rec;
+        lin_pre["total"] = ld->total;
+        int new_id = SqlCalls::SqlInsert(lin_pre,"lin_pre",Configuracion_global->empresaDB,error);
+
+//        QSqlQuery lin_pre(Configuracion_global->empresaDB);
+//        lin_pre.prepare("INSERT INTO lin_pre (id_cab, id_articulo, codigo, cantidad,"
+//                                  "descripcion, precio, subtotal, porc_dto,"
+//                                  " dto, porc_iva, iva, total)"
+//                                  "VALUES (:id_cab,:id_articulo,:codigo,:cantidad,"
+//                                  ":descripcion,:precio,:subtotal,:porc_dto,"
+//                                  ":dto,:porc_iva,:iva,:total);");
+//        id, id_cab, id_articulo, codigo, cantidad, descripcion, precio, subtotal, porc_dto, dto, porc_iva, iva, porc_rec, rec, total
+//        lin_pre.bindValue(":id_cab", oPres->id);
+//        lin_pre.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
+//        lin_pre.bindValue(":codigo",ld->codigo);
+//        lin_pre.bindValue(":descripcion",ld->descripcion);
+//        lin_pre.bindValue(":cantidad",ld->cantidad);
+//        lin_pre.bindValue(":precio",ld->precio);
+//        lin_pre.bindValue(":subtotal",ld->subtotal);
+//        lin_pre.bindValue(":porc_dto",ld->dto_perc);
+//        lin_pre.bindValue(":dto",ld->dto);
+//        ld->po
+//        lin_pre.bindValue(":iva",(ld->subtotal * ld->iva_perc)/100);
+//        lin_pre.bindValue(":total",ld->total);
+        if (new_id == -1){
             ok_empresa = false;
             QMessageBox::warning(this,tr("Gestión de albaranes"),
-                                 tr("Ocurrió un error al insertar la nueva línea: %1").arg(lin_pre.lastError().text()),
+                                 tr("Ocurrió un error al insertar la nueva línea: %1").arg(error),
                                  tr("Aceptar"));
         }
         //TODO control de stock pres clientes
@@ -1457,7 +1495,7 @@ void FrmPresupuestosCli::lineaReady(lineaDetalle * ld)
             Configuracion_global->groupDB.rollback();
         }
 
-        ld->idLinea = lin_pre.lastInsertId().toInt();
+        ld->idLinea = new_id;
 
     } else // Editando linea
     {

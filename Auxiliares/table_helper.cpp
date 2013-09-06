@@ -735,24 +735,13 @@ void Table_Helper::rellenar_con_Articulo(int row)
                 helped_table->item(row,3)->setText(QString::number(precio,'f',Configuracion_global->decimales));
                 helped_table->item(row,4)->setText(QString::number(precio,'f',Configuracion_global->decimales));
             }
-//            QString error;
-//            float grupo_iva = SqlCalls::SelectOneField("clientes","grupo_iva",
-//                                        QString("id=%1").arg(id_cliente),Configuracion_global->empresaDB,error).toFloat();
-//            if(grupo_iva ==1)
- //           {
-                helped_table->item(row,7)->setText(QString::number(r.value("tipo_iva").toFloat(),'f',
-                                                                   Configuracion_global->decimales_campos_totales));
-                if(use_re)
-                {
-                   float rec = Configuracion_global->devolver_rec_iva(r.value("tipo_iva").toFloat());
-                   helped_table->item(row,8)->setText(QString::number(rec,'f',Configuracion_global->decimales_campos_totales));
-                }
-//            } else
-//            {
-//                helped_table->item(row,7)->setText("0.00");
-//                helped_table->item(row,8)->setText("0.00");
-//            }
-
+            helped_table->item(row,7)->setText(QString::number(r.value("tipo_iva").toFloat(),'f',
+                                                               Configuracion_global->decimales_campos_totales));
+            if(use_re)
+            {
+               float rec = Configuracion_global->devolver_rec_iva(r.value("tipo_iva").toFloat());
+               helped_table->item(row,8)->setText(QString::number(rec,'f',Configuracion_global->decimales_campos_totales));
+            }
            Articulo oArt(this);
            float porc_dto = oArt.asigna_dto_linea(r.value("id").toInt(),id_cliente,0,0);
            helped_table->item(row,5)->setText(QString::number(porc_dto,'f',Configuracion_global->decimales_campos_totales));
@@ -874,6 +863,7 @@ void Table_Helper::searchArticulo()
     consulta.set_tamano_columnas(tamanos);
     consulta.set_delegate_monetary(moneda);
     consulta.set_titulo("Busqueda de Artículos");
+    consulta.set_filtro("");
     if(consulta.exec())
     {
 

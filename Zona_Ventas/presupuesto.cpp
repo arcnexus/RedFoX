@@ -13,65 +13,31 @@ Presupuesto::~Presupuesto()
 
 bool Presupuesto::AnadirPresupuesto()
 {
-    this->iva1 = Configuracion_global->ivaList.at(0).toDouble();
-    this->iva2 = Configuracion_global->ivaList.at(1).toDouble();
-    this->iva3 = Configuracion_global->ivaList.at(2).toDouble();
-    this->iva4 = Configuracion_global->ivaList.at(3).toDouble();
+    this->porc_iva1 = Configuracion_global->ivaList.at(0).toDouble();
+    this->porc_iva2 = Configuracion_global->ivaList.at(1).toDouble();
+    this->porc_iva3 = Configuracion_global->ivaList.at(2).toDouble();
+    this->porc_iva4 = Configuracion_global->ivaList.at(3).toDouble();
 
     this->porc_rec1 = 0;
     this->porc_rec2 = 0;
     this->porc_rec3 = 0;
     this->porc_rec4 = 0;
+    this->presupuesto = NuevoNumeroPresupuesto();
+    this->fecha = QDate::currentDate();
+    this->valido_hasta = QDate::currentDate();
 
     QHash <QString, QVariant> cab_pre;
     cab_pre["presupuesto"] = presupuesto;
     cab_pre["fecha"] = fecha;
     cab_pre["valido_hasta"] = valido_hasta;
-    cab_pre["id_cliente"] = id_cliente;
-    cab_pre["codigo_cliente"] = codigo_cliente;
-    cab_pre["cliente"] = cliente;
-    cab_pre["cif"] = cif;
-    cab_pre["direccion1"] = direccion1;
-    cab_pre["direccion2"] = direccion2;
-    cab_pre["cp"] = cp;
-    cab_pre["poblacion"] = poblacion;
-    cab_pre["provincia"] = provincia;
-    cab_pre["id_pais"] = id_pais;
-    cab_pre["direccion1_entrega"] = direccion1;
-    cab_pre["direccion2_entrega"] = direccion2;
-    cab_pre["cp_entrega"] = cp;
-    cab_pre["poblacion_entrega"] = poblacion;
-    cab_pre["provincia_entrega"] = provincia;
-    cab_pre["id_pais_entrega"] = id_pais;
-    cab_pre["email_entrega"] = email_entrega;
-    cab_pre["comentarios_entrega"] = comentarios_entrega;
-    cab_pre["telefono"] = telefono;
-    cab_pre["movil"] = movil;
-    cab_pre["fax"] = fax;
-    cab_pre["porc_dto"] = 0;
-    cab_pre["comentarios"] = comentarios;
-    cab_pre["base"] = 0;
-    cab_pre["dto"] = 0;
-    cab_pre["total"] = 0;
-    cab_pre["impreso"] = impreso;
-    cab_pre["aprobado"] = aprobado;
-    cab_pre["fecha_aprobacion"] = fecha_aprobacion;
-    cab_pre["importe_factura"] = 0;
-    cab_pre["importe_pendiente"] = 0;
-    cab_pre["factura"] = factura;
-    cab_pre["albaran"] = albaran;
-    cab_pre["pedido"] = pedido;
-    cab_pre["id_forma_pago"] = id_forma_pago;
-    cab_pre["lugar_entrega"] = lugar_entrega;
-    cab_pre["atencion_de"] = atencion_de;
     cab_pre["base1"] = 0;
     cab_pre["base2"] = 0;
     cab_pre["base3"] = 0;
     cab_pre["base4"] = 0;
-    cab_pre["porc_iva1"] = iva1;
-    cab_pre["porc_iva2"] = iva2;
-    cab_pre["porc_iva3"] = iva3;
-    cab_pre["porc_iva4"] = iva4;
+    cab_pre["porc_iva1"] = porc_iva1;
+    cab_pre["porc_iva2"] = porc_iva2;
+    cab_pre["porc_iva3"] = porc_iva3;
+    cab_pre["porc_iva4"] = porc_iva4;
     cab_pre["iva1"] = 0;
     cab_pre["iva2"] = 0;
     cab_pre["iva3"] = 0;
@@ -88,8 +54,6 @@ bool Presupuesto::AnadirPresupuesto()
     cab_pre["total2"] = 0;
     cab_pre["total3"] = 0;
     cab_pre["total4"] = 0;
-    cab_pre["recargo_equivalencia"] = recargo_equivalencia;
-    cab_pre["email"] = email;
     cab_pre["total_iva"] = 0;
     cab_pre["total_recargo"] = 0;
     cab_pre["editable"] = true;
@@ -189,6 +153,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->base2 = registro.field("base2").value().toDouble();
             this->base3 = registro.field("base3").value().toDouble();
             this->base4 = registro.field("base4").value().toDouble();
+            qDebug() << registro.field("porc_iva1").value();
             this->porc_iva1 = registro.field("porc_iva1").value().toDouble();
             this->porc_iva2 = registro.field("porc_iva2").value().toDouble();
             this->porc_iva3 = registro.field("porc_iva3").value().toDouble();
@@ -275,7 +240,7 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
     cab_pre["aprobado"] = aprobado;
     cab_pre["fecha_aprobacion"] = fecha_aprobacion;
     cab_pre["importe_factura"] = importe_factura;
-    cab_pre["importe_pendiente"] = 0;//TODO preguntar a Marc
+    cab_pre["importe_pendiente"] = total;
     cab_pre["factura"] = factura;
     cab_pre["albaran"] = albaran;
     cab_pre["pedido"] = pedido;
