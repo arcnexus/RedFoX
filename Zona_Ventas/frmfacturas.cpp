@@ -1498,5 +1498,6 @@ void frmFacturas::on_btnCobrar_clicked()
 {
     frmGestionCobros gc(this);
     gc.buscar_deuda(oCliente1->id);
+    gc.titulo(QString("Pagos pendientes de: %1").arg(oFactura->cliente));
     gc.exec();
 }

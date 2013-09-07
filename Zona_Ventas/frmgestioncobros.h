@@ -21,16 +21,24 @@ public:
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
     void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
-    void buscar_deuda(int id_cliente);
-    void buscar_deuda(int id_cliente, int id_documento);
+    void buscar_deuda(int id_cli);
+    void buscar_deuda(int id_cli, int id_doc);
+    void titulo(QString titulo);
 private:
     Ui::frmGestionCobros *ui;
     ToolBarButton toolButton;
     QAction menuButton;
+    QSqlQueryModel *deudas;
+
+    int id_cliente;
+    int id_documento;
+
+
 private slots:
     void on_txtbuscar_cliente_textChanged(const QString &arg1);
     void on_btncobro_total_clicked();
     void on_btnCerrar_clicked();
+    void seleccionar();
 };
 
 #endif // FRMGESTIONCOBROS_H

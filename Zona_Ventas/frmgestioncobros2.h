@@ -17,16 +17,8 @@ public:
     ~FrmGestionCobros2();
 
     double getImporte() const;
-    void setImporte(double value);
-    struct valores
-    {
-        double efectivo;
-        double transferencia;
-        double tarjeta;
-        double cheque;
-        double internet;
-        double pendiente;
-    };
+    void setImporte(double value, int id_);
+
 
 private slots:
     void on_btnAceptar_clicked();
@@ -46,6 +38,16 @@ private slots:
 private:
     Ui::FrmGestionCobros2 *ui;
     double importe;
+    int id;
+    struct valores
+    {
+        double efectivo;
+        double transferencia;
+        double tarjeta;
+        double cheque;
+        double internet;
+        double pendiente;
+    };
 
 
 };

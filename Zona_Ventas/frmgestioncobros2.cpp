@@ -25,11 +25,21 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
     val->internet = Configuracion_global->MonedatoDouble(ui->txtInternet->text());
     val->tarjeta = Configuracion_global->MonedatoDouble(ui->txtTarjeta->text());
     val->transferencia = Configuracion_global->MonedatoDouble(ui->txtTransferencia->text());
-    vencimientos vto(this);
 
-    // TODO Pasar valores reales segun registro seleccionado
+    QHash <QString,QVariant> e;
+    e["importe_efectivo"] = val->efectivo;
+    e["importe_cheque"] = val->cheque;
+    e["importe_internet"] = val->internet;
+    e["importe_tarjeta"] = val->tarjeta;
+    e["importe_transferencia"] = val->transferencia;
+    e["pagado"] = Configuracion_global->MonedatoDouble(ui->txtEntrega->text());
+    e["pendiente_cobro"] = Configuracion_global->MonedatoDouble(ui->txtPendiente->text());
 
-   // vto.calcular_vencimiento(QDate(2013,4,12),"RD",0,121,"20132222",1,"v",1235.65);
+    QString error;
+    bool updated = SqlCalls::SqlUpdate(e,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1").arg(this->id),error);
+    if(!updated)
+        QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar los datos: %1").arg(error));
+
     accept();
 }
 double FrmGestionCobros2::getImporte() const
@@ -37,9 +47,12 @@ double FrmGestionCobros2::getImporte() const
     return importe;
 }
 
-void FrmGestionCobros2::setImporte(double value)
+void FrmGestionCobros2::setImporte(double value,int id_)
 {
     importe = value;
+    this->id = id_;
+    ui->txtImporte_pendiente->setText(Configuracion_global->toFormatoMoneda(QString::number(importe,
+                                                                'f',Configuracion_global->decimales_campos_totales)));
 }
 
 
@@ -96,8 +109,17 @@ void FrmGestionCobros2::calcular()
     pagado = efectivo + transferencia + tarjeta + cheque + internet;
     ui->txtEntrega->setText(Configuracion_global->toFormatoMoneda(QString::number(pagado,'f',2)));
     nuevo_pendiente = pendiente - pagado;
-    ui->txtPendiente->setText(Configuracion_global->toFormatoMoneda(QString::number(nuevo_pendiente,'f',
+    if(nuevo_pendiente >0)
+    {
+        ui->txtPendiente->setText(Configuracion_global->toFormatoMoneda(QString::number(nuevo_pendiente,'f',
                                                                                Configuracion_global->decimales_campos_totales)));
+        ui->txtCambio->setText("0,00");
+    }
+    else{
+        ui->txtCambio->setText(Configuracion_global->toFormatoMoneda(QString::number(nuevo_pendiente,'f',
+                                                                                     Configuracion_global->decimales_campos_totales)));
+        ui->txtPendiente->setText("0,00");
+    }
 
 }
 

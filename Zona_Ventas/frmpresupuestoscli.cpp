@@ -1273,7 +1273,10 @@ void FrmPresupuestosCli::convertir_enFactura()
 
             if(new_id > -1)
             {
-
+                //------------------
+                // CARGAR FACTURA
+                //------------------
+                oFactura.RecuperarFactura(new_id);
                 //-------------------
                 //  INSERTAR LÍNEAS
                 //-------------------
@@ -1310,8 +1313,8 @@ void FrmPresupuestosCli::convertir_enFactura()
                 if(transaccion) {
                     ui->btn_convertir->setEnabled(false);
                     QString texto;
-                    texto = tr("Se ha creado una nueva factura.\ncon el número ")+ oFactura.factura+
-                               tr("\n y de importe: ")+QString::number(oFactura.total,'f',Configuracion_global->decimales);
+                    texto = tr("Se ha creado una nueva factura.\ncon el número ")+ cab_fac.value("factura").toString()+
+                               tr("\n y de importe: ")+QString::number(cab_fac.value("total").toDouble(),'f',Configuracion_global->decimales);
                     TimedMessageBox * t = new TimedMessageBox(this,texto);
                     //-----------------------------------------
                     // Insertamos datos factura en presupuesto
