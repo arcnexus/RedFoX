@@ -42,63 +42,7 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
-   <item row="0" column="5">
-    <widget class="QRadioButton" name="radBuscar">
-     <property name="maximumSize">
-      <size>
-       <width>155</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Modo Búsqueda</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="6">
-    <widget class="QRadioButton" name="radEditar">
-     <property name="maximumSize">
-      <size>
-       <width>130</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Modo Edición</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="textoTitulo">
-     <property name="minimumSize">
-      <size>
-       <width>464</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>455</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 85, 0);
-font: 75 16pt &quot;Nimbus Sans L&quot;;
-background-color: rgb(0, 0, 57);</string>
-     </property>
-     <property name="text">
-      <string>Gestión de Pacientes - Datos administrativos</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="8">
+   <item row="1" column="0" colspan="5">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
       <number>1</number>
@@ -4430,18 +4374,26 @@ font: 8pt &quot;Sans&quot;;</string>
      </widget>
     </widget>
    </item>
-   <item row="0" column="3">
-    <spacer name="horizontalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
+   <item row="0" column="0" colspan="5">
+    <widget class="QLabel" name="textoTitulo">
+     <property name="minimumSize">
       <size>
-       <width>40</width>
-       <height>20</height>
+       <width>464</width>
+       <height>0</height>
       </size>
      </property>
-    </spacer>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 85, 0);
+font: 75 16pt &quot;Nimbus Sans L&quot;;
+background-color: rgb(0, 0, 57);</string>
+     </property>
+     <property name="text">
+      <string>Gestión de Pacientes - Datos administrativos</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -4558,7 +4510,6 @@ font: 8pt &quot;Sans&quot;;</string>
   <tabstop>tablaAsientos</tabstop>
   <tabstop>txtcuenta_cobros</tabstop>
   <tabstop>cbotarifa_cliente</tabstop>
-  <tabstop>radBuscar</tabstop>
   <tabstop>txtNoviembre</tabstop>
   <tabstop>txtFebrero</tabstop>
   <tabstop>txtEnero</tabstop>
@@ -4585,7 +4536,6 @@ font: 8pt &quot;Sans&quot;;</string>
   <tabstop>txtBuscar</tabstop>
   <tabstop>btnLimpiar</tabstop>
   <tabstop>btnBorrardireccion</tabstop>
-  <tabstop>radEditar</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>

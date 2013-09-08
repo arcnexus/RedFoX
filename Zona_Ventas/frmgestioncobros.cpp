@@ -133,6 +133,18 @@ void frmGestionCobros::seleccionar()
 
 }
 
+void frmGestionCobros::seleccionar_varios()
+{
+    QString cSQL;
+    if(ui->chkCliente->isChecked())
+    {
+        cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
+                           "pendiente_cobro from clientes_deuda "
+                       "where id_cliente = %1 and pendiente_cobro =0").arg(this->id_cliente);
+        deudas->setQuery(cSQL,Configuracion_global->groupDB);
+    }
+}
+
 
 void frmGestionCobros::on_txtbuscar_cliente_textChanged(const QString &arg1)
 {
@@ -186,4 +198,14 @@ void frmGestionCobros::on_btncobro_total_clicked()
 void frmGestionCobros::on_btnCerrar_clicked()
 {
     accept();
+}
+
+void frmGestionCobros::on_txtfecha_fin_editingFinished()
+{
+    seleccionar_varios();
+}
+
+void frmGestionCobros::on_chkCliente_clicked(bool checked)
+{
+    ui->frame_pagados->setVisible(!checked);
 }

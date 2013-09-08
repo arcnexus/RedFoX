@@ -41,11 +41,7 @@ public:
 private slots:
     void on_btnSiguiente_clicked();
 
-    void Guardar_factura();
-
     void on_btnAnadir_clicked();
-
-    void on_btnDeshacer_clicked();
 
     void on_btnAnterior_clicked();
 
@@ -106,6 +102,8 @@ private slots:
     void on_spinPorc_dto_pp_editingFinished();
 
     void on_btnCobrar_clicked();
+
+    void on_btnGuardar_clicked();
 
 private:
     Ui::frmFacturas *ui;

@@ -1,6 +1,8 @@
 #include "frmgestioncobros2.h"
 #include "ui_frmgestioncobros2.h"
 #include "vencimientos.h"
+#include "../Zona_Contabilidad/apuntes.h"
+#include"../Zona_Pacientes/cliente.h"
 
 FrmGestionCobros2::FrmGestionCobros2(QWidget *parent) :
     QDialog(parent),
@@ -39,6 +41,38 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
     bool updated = SqlCalls::SqlUpdate(e,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1").arg(this->id),error);
     if(!updated)
         QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar los datos: %1").arg(error));
+    if(Configuracion_global->contabilidad)
+    {
+        // TODO - Asiento contable cobro
+        //----------------------------
+        // Asiento cobro
+        //----------------------------
+//        apuntes oApunte;
+//        Cliente oCliente;
+//        int apunte;
+//        bool ok = true;
+//        bool nuevo;
+//        int pos = 1;
+//        oCliente.Recuperar("select * from clientes where id = " + QString::number(this->id_cliente));
+
+//        oApunte.cuenta_d = oCliente.codigo_cliente;
+//        oApunte.cuenta_relacion = oCliente.codigo_cliente;
+//        oApunte.cuenta_h = Configuracion_global->cuenta_venta_mercaderias;
+//        oApunte.descripcion_d = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_d);
+//        oApunte.id_cuenta_d = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_d);
+//        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
+//        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
+//        oApunte.comentario_d = tr("Nuestra factura num: ")+this->factura;
+//        oApunte.comentario_h = tr("Ventas mercaderias factura num: ")+this->factura;
+//        oApunte.fecha_asiento = this->fecha;
+//        oApunte.id_documento = this->id;
+//        oApunte.importe_d = this->total;
+//        oApunte.importe_h = this->base;
+//        oApunte.pos_en_asiento = pos;
+//        oApunte.asiento = oApunte.nuevo_numero_apunte();
+//        apunte = oApunte.asiento;
+//        nuevo = oApunte.nuevalinea();
+    }
 
     accept();
 }
@@ -53,6 +87,9 @@ void FrmGestionCobros2::setImporte(double value,int id_)
     this->id = id_;
     ui->txtImporte_pendiente->setText(Configuracion_global->toFormatoMoneda(QString::number(importe,
                                                                 'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtPendiente->setText(Configuracion_global->toFormatoMoneda(QString::number(importe,
+                                                                     'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtEfectivo->setFocus();
 }
 
 

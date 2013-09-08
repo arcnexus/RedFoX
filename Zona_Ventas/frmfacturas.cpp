@@ -8,6 +8,7 @@
 #include "../Auxiliares/datedelegate.h"
 #include "../Almacen/frmarticulos.h"
 #include "../Zona_Ventas/frmgestioncobros.h"
+#include "vencimientos.h"
 
 
 #include "../Almacen/articulo.h"
@@ -157,17 +158,17 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
 
 
-    actionGuardaBorrador = new QAction("Guardar borrador",this);
-    actionGuardaFactura = new QAction("Guardar factura",this);
-    menu_guardar = new QMenu(this);
+//    actionGuardaBorrador = new QAction("Guardar borrador",this);
+//    actionGuardaFactura = new QAction("Guardar factura",this);
+//    menu_guardar = new QMenu(this);
 
-    connect(actionGuardaBorrador,SIGNAL(triggered()),this,SLOT(Guardar_factura()));
-    connect(actionGuardaFactura,SIGNAL(triggered()),this,SLOT(Guardar_factura()));
+//    connect(actionGuardaBorrador,SIGNAL(triggered()),this,SLOT(Guardar_factura()));
+//    connect(actionGuardaFactura,SIGNAL(triggered()),this,SLOT(Guardar_factura()));
 
-    menu_guardar->addAction(actionGuardaFactura);
-    menu_guardar->addAction(actionGuardaBorrador);
+//    menu_guardar->addAction(actionGuardaFactura);
+//    menu_guardar->addAction(actionGuardaBorrador);
 
-    ui->btnGuardar->setMenu(menu_guardar);
+//    ui->btnGuardar->setMenu(menu_guardar);
 
     VaciarCampos();
     ui->btnEditar->setEnabled(false);
@@ -677,62 +678,9 @@ void frmFacturas::on_btnAnterior_clicked()
     }
 }
 
-
-void frmFacturas::Guardar_factura()
-{
-
-    Configuracion_global->empresaDB.transaction();
-    Configuracion_global->contaDB.transaction();
-    bool succes = true;
-    LLenarFactura();
-
-    if(sender()==actionGuardaBorrador)
-    {
-        oFactura->factura = tr("BORRADOR");
-        oFactura->serie = ui->cbo_serie->currentText();
-    }
-    else
-        if(oFactura->factura.isEmpty())
-            oFactura->factura = oFactura->NuevoNumeroFactura(ui->cbo_serie->currentText());
-
-    succes = oFactura->GuardarFactura(oFactura->id,false);
-    if(succes)
-    {
-        LLenarCampos();
-        if(Configuracion_global->contabilidad && oFactura->factura !=tr("BORRADOR"))
-            succes = crear_asiento();
-        if(!succes)
-
-            QMessageBox::critical(this,tr("Error"),
-                                  tr("Error al crear el asiento contable")+Configuracion_global->empresaDB.lastError().text(),
-                                  tr("&Aceptar"));
-        else
-            ui->txtAsiento->setText(QString::number(oFactura->apunte));
-    }
-    if(succes)
-    {
-        if(Configuracion_global->contabilidad)
-            Configuracion_global->contaDB.commit();
-        Configuracion_global->empresaDB.commit();
-        TimedMessageBox * t = new TimedMessageBox(this,tr("Factura guardada con éxito"));
-        BloquearCampos(true);
-        emit unblock();
-    }
-    else
-    {
-        QMessageBox::critical(this,tr("Error"),
-                              tr("Error al guardar la factura.\n")+Configuracion_global->empresaDB.lastError().text(),
-                              tr("&Aceptar"));
-        Configuracion_global->empresaDB.rollback();
-        if(Configuracion_global->contabilidad)
-            Configuracion_global->contaDB.rollback();
-    }
-
-}
-
 void frmFacturas::on_btnAnadir_clicked()
 {
-    ui->btnGuardar->setMenu(menu_guardar);
+    //ui->btnGuardar->setMenu(menu_guardar);
     BloquearCampos(false);
     in_edit = false;
     VaciarCampos();    
@@ -747,14 +695,6 @@ void frmFacturas::on_btnAnadir_clicked()
     emit block();
 }
 
-void frmFacturas::on_btnDeshacer_clicked()
-{
-    BloquearCampos(true);
-    QString cid = QString::number(oFactura->id);
-    oFactura->RecuperarFactura("Select * from cab_fac where id ="+cid+" order by id limit 1 ");
-    LLenarCampos();
-    emit unblock();
-}
 
 void frmFacturas::on_botBuscarCliente_clicked()
 {
@@ -1097,6 +1037,7 @@ void frmFacturas::on_btndeshacer_clicked()
     Configuracion_global->empresaDB.rollback();
     LLenarCampos();
     BloquearCampos(true);
+    emit unblock();
 }
 
 void frmFacturas::on_txtcodigo_cliente_editingFinished()
@@ -1350,12 +1291,12 @@ void frmFacturas::on_btnAsignarTransportista_clicked()
     consulta.set_campoBusqueda(campos);
     consulta.set_texto_tabla("transportistas");
     consulta.set_db("Group");
-    consulta.set_SQL("select id,codigo,transportista,telefono1,movil,poblacion,provincia,pais from transportista");
+    consulta.set_SQL("select id,codigo,transportista from transportista");
     QStringList cabecera;
     QVariantList tamanos;
-    cabecera  << tr("Código") << tr("Transportista") << tr("Teléfono") << tr("Movil") << tr("Población") << tr("Provincia") << tr("Pais");
+    cabecera  << tr("Código") << tr("Transportista");
 
-    tamanos <<"0" << "100" << "250" << "120" << "120" <<"150" << "90" << "90";
+    tamanos <<"0" << "100" << "250" ;
     consulta.set_headers(cabecera);
     consulta.set_tamano_columnas(tamanos);
     consulta.set_titulo("Busqueda de transportistas");
@@ -1500,4 +1441,73 @@ void frmFacturas::on_btnCobrar_clicked()
     gc.buscar_deuda(oCliente1->id);
     gc.titulo(QString("Pagos pendientes de: %1").arg(oFactura->cliente));
     gc.exec();
+}
+
+void frmFacturas::on_btnGuardar_clicked()
+{
+
+    Configuracion_global->empresaDB.transaction();
+    Configuracion_global->contaDB.transaction();
+    bool succes = true;
+    LLenarFactura();
+    int tipo = 0; // 1 = Borrador - 2 = Factura
+    if(oFactura->factura.isEmpty()){
+        if(QMessageBox::question(this,tr("Gestión de facturas"),
+                                 tr("En que formato desea guardar el documento: "),
+                                 tr("Borrador"),tr("Factura")) == QMessageBox::Accepted)
+            tipo = 2;
+        else
+            tipo = 1;
+    } else if(oFactura->factura == tr("BORRADOR"))
+    {
+        tipo = 1;
+        if(QMessageBox::question(this,tr("Gestión de facturas"),
+                                 tr("En que formato desea guardar el documento: "),
+                                 tr("Borrador"),tr("Factura")) == QMessageBox::Accepted)
+            tipo = 2;
+    }
+    if(tipo == 1 && oFactura->factura.isEmpty())
+        oFactura->factura = tr("BORRADOR");
+    if(tipo == 2 && oFactura->factura.isEmpty())
+        oFactura->factura = oFactura->NuevoNumeroFactura(ui->cbo_serie->currentText());
+
+    succes = oFactura->GuardarFactura(oFactura->id,false);
+    if(succes)
+    {
+        LLenarCampos();
+        if(Configuracion_global->contabilidad && oFactura->factura !=tr("BORRADOR"))
+            succes = crear_asiento();
+        if(!succes)
+
+            QMessageBox::critical(this,tr("Error"),
+                                  tr("Error al crear el asiento contable")+Configuracion_global->empresaDB.lastError().text(),
+                                  tr("&Aceptar"));
+        else
+            ui->txtAsiento->setText(QString::number(oFactura->apunte));
+    }
+    if(succes)
+    {
+        if(Configuracion_global->contabilidad)
+            Configuracion_global->contaDB.commit();
+        Configuracion_global->empresaDB.commit();
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Factura guardada con éxito"));
+        //----------------------
+        // Crear vencimientos
+        //----------------------
+        vencimientos oVto(this);
+        oVto.calcular_vencimiento(oFactura->fecha,oFactura->id_cliente,0,oFactura->id,oFactura->serie+"/"+oFactura->factura,1,
+                                  "c",oFactura->total);
+        BloquearCampos(true);
+        emit unblock();
+    }
+    else
+    {
+        QMessageBox::critical(this,tr("Error"),
+                              tr("Error al guardar la factura.\n")+Configuracion_global->empresaDB.lastError().text(),
+                              tr("&Aceptar"));
+        Configuracion_global->empresaDB.rollback();
+        if(Configuracion_global->contabilidad)
+            Configuracion_global->contaDB.rollback();
+    }
+
 }

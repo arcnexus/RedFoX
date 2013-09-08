@@ -39,6 +39,9 @@ private slots:
     void on_btncobro_total_clicked();
     void on_btnCerrar_clicked();
     void seleccionar();
+    void seleccionar_varios();
+    void on_txtfecha_fin_editingFinished();
+    void on_chkCliente_clicked(bool checked);
 };
 
 #endif // FRMGESTIONCOBROS_H

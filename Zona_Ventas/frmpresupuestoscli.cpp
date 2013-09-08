@@ -706,6 +706,7 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
 
 void FrmPresupuestosCli::on_btnBuscar_clicked()
 {
+    filter_table();
     ui->stackedWidget->setCurrentIndex(1);
     ui->txtBuscar->setFocus();
 }

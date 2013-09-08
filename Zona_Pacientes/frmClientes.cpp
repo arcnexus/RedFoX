@@ -67,16 +67,23 @@ frmClientes::frmClientes(QWidget *parent) :
     }
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     ValidarCC();
-    //oCliente->Actualizar_de_web();
+
+    //-------------------------
     // Rellenar formas de pago
+    //-------------------------
     modelFP = new QSqlQueryModel(this);
-    modelFP->setQuery("Select forma_pago,id from formpago",Configuracion_global->groupDB);
+    modelFP->setQuery("Select forma_pago from formpago",Configuracion_global->groupDB);
+    ui->cboforma_pago->setModel(modelFP);
+    //--------------------------
     // Rellenar transportistas
+    //--------------------------
 
     QSqlQueryModel *queryTransportistas = new QSqlQueryModel(this);
     queryTransportistas->setQuery("Select transportista from transportista",Configuracion_global->groupDB);
     ui->cbotransportista->setModel(queryTransportistas);
+    //--------------------
     // Rellenar agentes
+    //--------------------
 
     QSqlQueryModel *queryAgentes = new QSqlQueryModel(this);
     queryAgentes->setQuery("Select nombre from agentes",Configuracion_global->groupDB);
@@ -106,8 +113,7 @@ frmClientes::frmClientes(QWidget *parent) :
     else
         ui->chkClienteEmpresa->setVisible(false);
 
-    //FP
-    ui->cboforma_pago->setModel(modelFP);
+
     //ui->tableView_5->setModel(model);
 
     // Rellenar Tarifas:
@@ -168,8 +174,8 @@ frmClientes::frmClientes(QWidget *parent) :
     ui->txtBuscar->setEnabled(true);
     ui->txtBuscar->setReadOnly(false);
     ui->cboOrden->setEnabled(true);
-    filter_table();
-    ui->txtBuscar->setFocus();
+
+    on_btnBuscar_clicked();
 
 
 }
@@ -239,7 +245,7 @@ void frmClientes::LLenarCampos()
     ui->txtcuenta_iva_repercutido->setText(oCliente->cuenta_iva_repercutido);
     ui->txtcuenta_deudas->setText(oCliente->cuenta_deudas);
     ui->txtcuenta_cobros->setText(oCliente->cuenta_cobros);
-    int indice=ui->cboforma_pago->findText(oCliente->forma_pago);
+    int indice=ui->cboforma_pago->findText(Configuracion_global->Devolver_forma_pago(oCliente->id_forma_pago));
     ui->cboforma_pago->setCurrentIndex(indice);
 
     //ui->cboforma_pago->setItemText);
@@ -1037,7 +1043,8 @@ void frmClientes::on_btnBorrar_clicked()
 
 void frmClientes::on_btnBuscar_clicked()
 {
-    ui->radBuscar->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(1);
+    filter_table();
     ui->txtBuscar->setFocus();
 }
 
@@ -1566,7 +1573,7 @@ void frmClientes::on_tabla_busquedas_doubleClicked(const QModelIndex &index)
     int id = ui->tabla_busquedas->model()->data(ui->tabla_busquedas->model()->index(index.row(),0),Qt::EditRole).toInt();
     oCliente->Recuperar(id);
     LLenarCampos();
-    ui->radEditar->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void frmClientes::formato_tabla_busquedas()
@@ -1720,7 +1727,7 @@ void frmClientes::on_btnAnadirdireccion_clicked()
 
 void frmClientes::on_btnAdd_customer_clicked()
 {
-    ui->radEditar->setChecked(true);
+   ui->stackedWidget->setCurrentIndex(1);
     on_btnAnadir_clicked();
 }
 
@@ -1733,3 +1740,5 @@ void frmClientes::on_btnExcepciones_clicked()
     excepciones.cargar_articulo(id);
     excepciones.exec();
 }
+
+
