@@ -48,7 +48,7 @@ background-color: rgb(0, 0, 58);</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="2">
+   <item row="0" column="6">
     <widget class="QComboBox" name="cboVer">
      <property name="minimumSize">
       <size>
@@ -64,7 +64,7 @@ background-color: rgb(0, 0, 58);</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item row="0" column="5">
     <widget class="QLabel" name="label_34">
      <property name="maximumSize">
       <size>
@@ -80,7 +80,7 @@ background-color: rgb(0, 0, 58);</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="3">
+   <item row="1" column="0" colspan="7">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -877,82 +877,6 @@ Transportista</string>
                </property>
                <property name="calendarPopup">
                 <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="lblFacturaImpresa">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 0, 0);
-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="text">
-                <string>FACTURA IMPRESA</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lblFacturaCobrada">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 128, 0);
-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="text">
-                <string>FACT. COBRADA</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lbcontabilizada">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 128, 0);
-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="text">
-                <string>FACT. CONTABILIZADA</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-               <property name="textInteractionFlags">
-                <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lblIRPF_3">
-               <property name="minimumSize">
-                <size>
-                 <width>50</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 0, 0);
-color: rgb(255, 255, 255);
-font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
-               </property>
-               <property name="text">
-                <string>IRPF</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -3019,6 +2943,96 @@ background-color: rgb(248, 245, 194);</string>
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLabel" name="lblFacturaCobrada">
+     <property name="maximumSize">
+      <size>
+       <width>195</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 128, 0);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>FACT. COBRADA</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLabel" name="lbcontabilizada">
+     <property name="maximumSize">
+      <size>
+       <width>195</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 128, 0);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>FACT. CONTABILIZADA</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="lblFacturaImpresa">
+     <property name="maximumSize">
+      <size>
+       <width>195</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 0, 0);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>FACTURA IMPRESA</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLabel" name="lblIRPF_3">
+     <property name="minimumSize">
+      <size>
+       <width>50</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>195</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 0, 0);
+color: rgb(255, 255, 255);
+font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+     </property>
+     <property name="text">
+      <string>IRPF</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
   </layout>

@@ -133,6 +133,12 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->frameRad->setVisible(false);
     ui->txtBuscar->setFocus();
 
+    //-----------------
+    // EVENTS
+    //-----------------
+    ui->txtcodigo_cliente->installEventFilter(this);
+    ui->txtcp->installEventFilter(this);
+    ui->txtCp_entrega->installEventFilter(this);
 
 }
 
@@ -1174,6 +1180,24 @@ void FrmAlbaran::calcular_iva_gastos()
     ui->spiniva_gasto1->setValue((ui->SpinGastoDist1->value()*(ui->cboporc_iva_gasto1->currentText().toDouble()/100)));
     ui->spiniva_gasto2->setValue((ui->SpinGastoDist2->value()*(ui->cboporc_iva_gasto2->currentText().toDouble()/100)));
     ui->spiniva_gasto3->setValue((ui->SpinGastoDist3->value()*(ui->cboporc_iva_gasto3->currentText().toDouble()/100)));
+}
+
+bool FrmAlbaran::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+//        if(obj == ui->txtcodigo_transportista)
+//        {
+//            if(keyEvent->key() == Qt::Key_F1)
+//                buscar_transportista();
+//        }
+        if(obj == ui->txtcodigo_cliente)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                on_botBuscarCliente_clicked();
+        }
+        return false;
+    }
 }
 
 void FrmAlbaran::on_cboOrden_currentIndexChanged(const QString &arg1)

@@ -20,6 +20,12 @@ public:
     void setImporte(double value, int id_);
 
 
+    int getId_factura() const;
+    void setId_factura(int value);
+
+    int getId_ticket() const;
+    void setId_ticket(int value);
+
 private slots:
     void on_btnAceptar_clicked();
 
@@ -39,6 +45,8 @@ private:
     Ui::FrmGestionCobros2 *ui;
     double importe;
     int id;
+    int id_factura;
+    int id_ticket;
     struct valores
     {
         double efectivo;

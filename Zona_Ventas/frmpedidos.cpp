@@ -669,6 +669,7 @@ bool FrmPedidos::eventFilter(QObject *obj, QEvent *event)
             if(keyEvent->key() == Qt::Key_F1)
                 on_botBuscarCliente_clicked();
         }
+
         return false;
     }
 

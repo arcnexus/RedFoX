@@ -242,21 +242,10 @@ void frmFacturas::LLenarCampos() {
     ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->iva,'f',Configuracion_global->decimales)));
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->total,'f',Configuracion_global->decimales)));
 
-    if((oFactura->impreso)) {
-        ui->lblFacturaImpresa->setVisible(true);
-    } else {
-        ui->lblFacturaImpresa->setVisible(false);
-    }
-    if ((oFactura->cobrado )) {
-        ui->lblFacturaCobrada->setVisible(true);
-    } else {
-        ui->lblFacturaCobrada->setVisible(false);
-    }
-    if((oFactura->contablilizada)) {
-        ui->lbcontabilizada->setVisible(true);
-    } else {
-        ui->lbcontabilizada->setVisible(false);
-    }
+    ui->lblFacturaImpresa->setVisible(oFactura->impreso);
+    ui->lblFacturaCobrada->setVisible(oFactura->cobrado);
+    ui->btnCobrar->setVisible(!oFactura->cobrado);
+    ui->lbcontabilizada->setVisible(oFactura->contablilizada);
     int indice=ui->txtforma_pago->findText(oFactura->forma_pago);
     if(indice!=-1)
      ui->txtforma_pago->setCurrentIndex(indice);
@@ -685,7 +674,7 @@ void frmFacturas::on_btnAnadir_clicked()
     in_edit = false;
     VaciarCampos();    
     ui->chkrecargo_equivalencia->setCheckState(Qt::Unchecked);
-
+    ui->btnCobrar->setVisible(true);
     ui->txtcodigo_cliente->setFocus();
     oFactura->AnadirFactura();
     helper.set_tarifa(Configuracion_global->id_tarifa_predeterminada);
@@ -1214,17 +1203,17 @@ bool frmFacturas::eventFilter(QObject *obj, QEvent *event)
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if(obj == ui->txtcodigo_cliente)
         {
-            if(keyEvent->key() == Qt::Key_F1 && ui->btnEditar->isEnabled())
+            if(keyEvent->key() == Qt::Key_F1 && ui->btnGuardar->isEnabled())
                 on_botBuscarCliente_clicked();
         }
         if(obj == ui->txtcp)
         {
-            if(keyEvent->key() == Qt::Key_F1 && ui->btnEditar->isEnabled())
+            if(keyEvent->key() == Qt::Key_F1 && ui->btnGuardar->isEnabled())
                 buscar_poblacion(1);
         }
         if(obj == ui->txtCp_entrega)
         {
-            if(keyEvent->key() == Qt::Key_F1 && ui->btnEditar->isEnabled())
+            if(keyEvent->key() == Qt::Key_F1 && ui->btnGuardar->isEnabled())
                 buscar_poblacion(2);
         }
         if (obj == ui->tabla_facturas)
@@ -1439,8 +1428,15 @@ void frmFacturas::on_btnCobrar_clicked()
 {
     frmGestionCobros gc(this);
     gc.buscar_deuda(oCliente1->id);
+    gc.setId_factura(oFactura->id);
+
     gc.titulo(QString("Pagos pendientes de: %1").arg(oFactura->cliente));
     gc.exec();
+    QString error;
+    oFactura->cobrado = SqlCalls::SelectOneField("cab_fac","cobrado",QString("id=%1").arg(oFactura->id),
+                                                 Configuracion_global->empresaDB,error).toBool();
+    ui->btnCobrar->setVisible(!oFactura->cobrado);
+    ui->lblFacturaCobrada->setVisible(oFactura->cobrado);
 }
 
 void frmFacturas::on_btnGuardar_clicked()

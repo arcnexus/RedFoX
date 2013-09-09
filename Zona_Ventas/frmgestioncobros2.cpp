@@ -41,6 +41,23 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
     bool updated = SqlCalls::SqlUpdate(e,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1").arg(this->id),error);
     if(!updated)
         QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar los datos: %1").arg(error));
+    else if(e.value("pendiente_cobro").toDouble() == 0){
+        QHash <QString,QVariant> c;
+        c["cobrado"] = true;
+        bool updated;
+        QString clausula;
+        if(this->id_factura > -1)
+        {
+            clausula = QString("id = %1").arg(this->id_factura);
+            updated =SqlCalls::SqlUpdate(c,"cab_fac",Configuracion_global->empresaDB,clausula,error);
+        } else if(id_ticket > -1)
+            clausula = QString("id = %1").arg(this->id_ticket);
+            updated =SqlCalls::SqlUpdate(c,"cab_tpv",Configuracion_global->empresaDB,clausula,error);
+        if(!updated)
+            QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar: %1").arg(error),
+                                 tr("Aceptar"));
+
+    }
     if(Configuracion_global->contabilidad)
     {
         // TODO - Asiento contable cobro
@@ -159,5 +176,25 @@ void FrmGestionCobros2::calcular()
     }
 
 }
+int FrmGestionCobros2::getId_ticket() const
+{
+    return id_ticket;
+}
+
+void FrmGestionCobros2::setId_ticket(int value)
+{
+    id_ticket = value;
+}
+
+int FrmGestionCobros2::getId_factura() const
+{
+    return id_factura;
+}
+
+void FrmGestionCobros2::setId_factura(int value)
+{
+    id_factura = value;
+}
+
 
 

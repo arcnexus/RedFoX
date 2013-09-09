@@ -112,6 +112,8 @@ private:
     void calcular_iva_gastos();
     TimedMessageBox *t;
     QSqlQueryModel *series;
+    bool eventFilter(QObject *obj, QEvent *event);
+
 };
 
 #endif // FRMALBARAN_H

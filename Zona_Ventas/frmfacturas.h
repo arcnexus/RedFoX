@@ -23,6 +23,7 @@ public slots:
     void BloquearCampos(bool state);
 
 
+
 signals:
 
 public:
