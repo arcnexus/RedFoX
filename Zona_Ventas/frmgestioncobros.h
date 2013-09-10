@@ -29,6 +29,7 @@ public:
 
     int getId_ticket() const;
     void setId_ticket(int value);
+    void setOcultarBoton_cerrar(bool state);
 
 private:
     Ui::frmGestionCobros *ui;
@@ -40,6 +41,7 @@ private:
     int id_cliente;
     int id_factura;
     int id_ticket;
+    bool varios;
 
 
 private slots:

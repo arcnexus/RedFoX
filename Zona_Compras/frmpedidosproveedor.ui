@@ -18,7 +18,7 @@
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(165, 179, 255);</string>
+   <string notr="true"/>
   </property>
   <layout class="QGridLayout" name="gridLayout_12">
    <item row="1" column="0" colspan="3">

@@ -197,7 +197,9 @@ SOURCES += main.cpp\
     Zona_Maestros/transportistas.cpp \
     Zona_Ventas/frmgestioncobros2.cpp \
     vencimientos.cpp \
-    Zona_Maestros/frmformas_pago.cpp
+    Zona_Maestros/frmformas_pago.cpp \
+    Auxiliares/monetarydelegate_totals.cpp \
+    TPV/frmabrircaja.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -359,7 +361,9 @@ HEADERS  += mainwindow.h \
     Zona_Maestros/transportistas.h \
     Zona_Ventas/frmgestioncobros2.h \
     vencimientos.h \
-    Zona_Maestros/frmformas_pago.h
+    Zona_Maestros/frmformas_pago.h \
+    Auxiliares/monetarydelegate_totals.h \
+    TPV/frmabrircaja.h
 
 
 
@@ -442,7 +446,8 @@ FORMS    += mainwindow.ui \
     Almacen/frmkit.ui \
     Zona_Maestros/frmtransportistas.ui \
     Zona_Ventas/frmgestioncobros2.ui \
-    Zona_Maestros/frmformas_pago.ui
+    Zona_Maestros/frmformas_pago.ui \
+    TPV/frmabrircaja.ui
 
 RESOURCES += \
     maya.qrc \

@@ -103,7 +103,7 @@ frmClientes::frmClientes(QWidget *parent) :
     int nNivel = settings.value("nNivelAcceso").toInt();
     //QString cCategoria = settings.value("cCategoria").toString();
 
-    if (nNivel >7 && Configuracion_global->medic == true)
+    if ( Configuracion_global->medic == true)
         ui->btnFichaPaciente->setVisible(true);
     else
         ui->btnFichaPaciente->setVisible(false);

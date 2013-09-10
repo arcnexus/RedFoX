@@ -2,9 +2,16 @@
 QLineEdit[echoMode="2"] {
     lineedit-password-character: 9679;
 }
-QLabel, QAbstractButton , QStatusBar{
+QLabel, QAbstractButton , QStatusBar, QLineEdit, QDateEdit, QTextEdit,QTableWidget,QTableView,QSpinBox,
+QDoubleSpinBox, QComboBox, QHeaderView,QGroupBox{
     font: normal;
+    color: black;
 }
+
+QTableView::header{
+    color: #363b31;
+}
+
 /* Mark mandatory fields with a brownish color. */
 .mandatory {
     color: brown;
@@ -279,16 +286,17 @@ QMenuBar {
      spacing: 3px; /* spacing between menu bar items */
      padding: 1px 4px;
      background: transparent;
+     color: black;
      border-radius: 4px;
  }
 
  QMenuBar::item:selected { /* when selected using mouse or keyboard */
-     background: #a8a8a8;
-     color:rgb(200,0,0);
+     background-color: rgb(170, 170, 127);
+     color: white;
  }
 
  QMenuBar::item:pressed {
-     background: #888888;
+     background: #2d2f23;
  }
  QMenu {
       background-color: #ABABAB; /* sets background of the menu */
@@ -299,33 +307,23 @@ QMenuBar {
       /* sets background of menu item. set this to something non-transparent
           if you want menu color and menu item color to be different */
       background-color: transparent;
+      color: black;
   }
 
   QMenu::item:selected { /* when user selects item using mouse or keyboard */
-      background-color: #001563;
+      background-color: rgb(170, 170, 127);
+      color: white;
   }
 
  QComboBox:editable {
-     background: #001563;
+     background: rgb(248, 245, 194);
  }
 
- QComboBox:!editable, QComboBox::drop-down:editable {
-      background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                  stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
-                                  stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
- }
 
- /* QComboBox gets the "on" state when the popup is open */
- QComboBox:!editable:on, QComboBox::drop-down:editable:on {
-     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                 stop: 0 #D3D3D3, stop: 0.4 #D8D8D8,
-                                 stop: 0.5 #DDDDDD, stop: 1.0 #E1E1E1);
- }
-
- QComboBox:on { /* shift the text when the popup opens */
+ /*QComboBox:on {  shift the text when the popup opens
      padding-top: 3px;
      padding-left: 4px;
- }
+ }*/
 
  QComboBox::drop-down {
      subcontrol-origin: padding;
@@ -341,13 +339,21 @@ QMenuBar {
  }
 
  QComboBox::item:selected { /* when user selects item using mouse or keyboard */
-     background-color: #001563;
+     background-color: rgb(170, 170, 127);
  }
- QComboBox::down-arrow{
+
+QComboBox::item{
+    background-color :white;
+    }
+QComboBox::down-arrow{
      image: url(:/Icons/images/down_arrow.png) 2;
 }
 QComboBox::down-arrow::disabled{
     image: url(:/Icons/images/down_arrow_disabled.png) 2;
+}
+QComboBox QAbstractItemView {
+    border: 2px solid darkgray;
+    selection-background-color: lightgray;
 }
 QToolTip {
     border: 2px solid darkkhaki;

@@ -83,7 +83,7 @@ background-color: rgb(0, 0, 58);</string>
    <item row="1" column="0" colspan="7">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_5">
       <layout class="QGridLayout" name="gridLayout_8">
@@ -842,6 +842,12 @@ Transportista</string>
              </item>
              <item>
               <widget class="QLineEdit" name="txtfactura">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -3058,12 +3064,12 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>903</x>
-     <y>33</y>
+     <x>89</x>
+     <y>66</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>100</y>
+     <x>39</x>
+     <y>659</y>
     </hint>
    </hints>
   </connection>

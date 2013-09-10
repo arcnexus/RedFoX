@@ -35,9 +35,6 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(165, 179, 255);</string>
-  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
@@ -45,7 +42,7 @@
    <item row="1" column="0" colspan="5">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="paginaedicion">
       <layout class="QGridLayout" name="gridLayout_27">
@@ -90,7 +87,7 @@
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: #304163;
+          <string notr="true">background-color: rgb(188, 188, 188);
 </string>
          </property>
          <property name="frameShape">
@@ -107,10 +104,6 @@
               <width>0</width>
               <height>45</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
             </property>
             <property name="text">
              <string>&amp;Nuevo</string>
@@ -135,10 +128,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <height>45</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-            </property>
             <property name="text">
              <string>&amp;Siguiente</string>
             </property>
@@ -161,10 +150,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <width>0</width>
               <height>45</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
             </property>
             <property name="text">
              <string>&amp;Anterior</string>
@@ -189,10 +174,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <height>45</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-            </property>
             <property name="text">
              <string>&amp;Buscar</string>
             </property>
@@ -215,10 +196,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <width>0</width>
               <height>45</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
             </property>
             <property name="text">
              <string>&amp;Editar</string>
@@ -246,10 +223,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <height>45</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-            </property>
             <property name="text">
              <string>&amp;Guardar</string>
             </property>
@@ -275,10 +248,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <width>0</width>
               <height>45</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
             </property>
             <property name="text">
              <string>&amp;Deshacer</string>
@@ -309,10 +278,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <height>16777215</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-            </property>
             <property name="text">
              <string>Listados</string>
             </property>
@@ -335,10 +300,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <width>0</width>
               <height>45</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
             </property>
             <property name="text">
              <string>B&amp;orrar</string>

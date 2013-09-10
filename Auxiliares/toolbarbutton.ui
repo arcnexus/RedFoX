@@ -31,7 +31,7 @@ border-style:solid;
 border-radius: 10px;
 padding: 2px;
 border-color: rgb(0, 0, 127);
-background-color:#AFC3E1;
+background-color:#98b59f;
 </string>
   </property>
   <property name="frameShape">
@@ -44,7 +44,16 @@ background-color:#AFC3E1;
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -81,7 +90,7 @@ background-color:#AFC3E1;
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../Maya.qrc">:/Icons/PNG/Factura.png</pixmap>
+        <pixmap resource="../maya.qrc">:/Icons/PNG/Factura.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -123,8 +132,8 @@ background-color:#AFC3E1;
     <widget class="QLabel" name="lbl_text">
      <property name="styleSheet">
       <string notr="true">color: rgb(255, 255, 255);
-background-color: #304163;
-border-color: #4C6088;
+background-color: rgb(170, 170, 127);
+border-color: rgb(93, 93, 69);
 border-top-left-radius:0px;
  border-top-right-radius:0px;
  border-bottom-right-radius:8px;
@@ -142,7 +151,7 @@ margin: 0px;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections/>
 </ui>

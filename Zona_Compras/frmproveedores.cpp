@@ -1118,7 +1118,7 @@ void frmProveedores::borrar_contacto()
 
 void frmProveedores::on_btnBuscar_clicked()
 {
-    ui->radModo_busqueda->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void frmProveedores::on_btnAnadirEntrega_clicked()
@@ -1208,7 +1208,7 @@ void frmProveedores::on_tabla_doubleClicked(const QModelIndex &index)
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oProveedor->Recuperar(id);
     LLenarCampos();
-    ui->rad_Modo_edicion->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 
@@ -1216,7 +1216,7 @@ void frmProveedores::on_tabla_doubleClicked(const QModelIndex &index)
 void frmProveedores::on_btnLimpiar_clicked()
 {
     ui->cboModo->setCurrentIndex(0);
-    ui->cboModo->setCurrentIndex(0);
+    ui->cboOrden->setCurrentIndex(0);
     ui->txtBuscar->clear();
     filter_table();
 }

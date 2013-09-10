@@ -1,7 +1,7 @@
 #include "frmgestioncobros.h"
 #include "ui_frmgestioncobros.h"
 #include "../Zona_Ventas/frmgestioncobros2.h"
-#include "../Auxiliares/monetarydelegate.h"
+#include "../Auxiliares/monetarydelegate_totals.h"
 #include "../Auxiliares/datedelegate.h"
 
 frmGestionCobros::frmGestionCobros(QWidget *parent) :
@@ -11,13 +11,18 @@ frmGestionCobros::frmGestionCobros(QWidget *parent) :
     menuButton(QIcon(":/Icons/PNG/Cobros.png"),tr("Gest. Cobros"),this)
 {
     ui->setupUi(this);
+    //----------------------
+    // local variables
+    //----------------------
     this->id_cliente = -1;
     this->id_factura = -1;
     this->id_ticket = -1;
+    this->varios = false;
 
     ui->txtfecha_ini->setDate(QDate::currentDate());
     ui->txtfecha_fin->setDate(QDate::currentDate().addDays(7));
     ui->lblNombre->setText(tr("DEUDAS ENTRE FECHAS"));
+    ui->btnCerrar->setVisible(false);
     // -----------------
     // deudas
     // -----------------
@@ -26,8 +31,8 @@ frmGestionCobros::frmGestionCobros(QWidget *parent) :
     ui->tabla_deuda->setModel(deudas);
     QStringList headers;
     QVariantList sizes;
-    headers <<"id" <<tr("fecha") <<tr("vencimiento") <<tr("documento") <<tr("importe") << tr("pagado") <<tr("pendiente");
-    sizes << 0 << 100 << 100 << 120 << 120 << 120 << 120;
+    headers  <<"id" <<tr("fecha") <<tr("vencimiento") <<tr("documento") <<tr("importe") << tr("pagado") <<tr("pendiente");
+    sizes <<0 << 100 << 100 << 120 << 120 << 120 << 120;
 
     for(int x=1;x<sizes.size();x++)
     {
@@ -35,6 +40,11 @@ frmGestionCobros::frmGestionCobros(QWidget *parent) :
          deudas->setHeaderData(x,Qt::Horizontal,headers.at(x));
     }
     ui->tabla_deuda->setColumnHidden(0,true);
+    ui->tabla_deuda->setItemDelegateForColumn(1,new DateDelegate);
+    ui->tabla_deuda->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tabla_deuda->setItemDelegateForColumn(4, new MonetaryDelegate_totals(this,true));
+    ui->tabla_deuda->setItemDelegateForColumn(5, new MonetaryDelegate_totals(this,true));
+    ui->tabla_deuda->setItemDelegateForColumn(6, new MonetaryDelegate_totals(this,true));
     seleccionar_varios();
 
     //--------------------
@@ -71,6 +81,7 @@ frmGestionCobros::~frmGestionCobros()
 void frmGestionCobros::buscar_deuda(int id_cli)
 {
     this->id_cliente = id_cli;
+    this->varios = false;
     deudas = new QSqlQueryModel(this);
     seleccionar_factura();
     ui->tabla_deuda->setModel(deudas);
@@ -87,14 +98,15 @@ void frmGestionCobros::buscar_deuda(int id_cli)
     ui->tabla_deuda->setColumnHidden(0,true);
     ui->tabla_deuda->setItemDelegateForColumn(1, new DateDelegate);
     ui->tabla_deuda->setItemDelegateForColumn(2, new DateDelegate);
-    ui->tabla_deuda->setItemDelegateForColumn(4, new MonetaryDelegate);
-    ui->tabla_deuda->setItemDelegateForColumn(5, new MonetaryDelegate);
-    ui->tabla_deuda->setItemDelegateForColumn(6, new MonetaryDelegate);
+    ui->tabla_deuda->setItemDelegateForColumn(4, new MonetaryDelegate_totals);
+    ui->tabla_deuda->setItemDelegateForColumn(5, new MonetaryDelegate_totals);
+    ui->tabla_deuda->setItemDelegateForColumn(6, new MonetaryDelegate_totals);
 }
 
 void frmGestionCobros::buscar_deuda(int id_cli, int id_doc)
 {
     this->id_cliente = id_cli;
+    this->varios = false;
     deudas = new QSqlQueryModel(this);
     if(this->id_factura > -1)
         seleccionar_factura();
@@ -114,9 +126,9 @@ void frmGestionCobros::buscar_deuda(int id_cli, int id_doc)
     ui->tabla_deuda->setColumnHidden(0,true);
     ui->tabla_deuda->setItemDelegateForColumn(1, new DateDelegate);
     ui->tabla_deuda->setItemDelegateForColumn(2, new DateDelegate);
-    ui->tabla_deuda->setItemDelegateForColumn(4, new MonetaryDelegate);
-    ui->tabla_deuda->setItemDelegateForColumn(5, new MonetaryDelegate);
-    ui->tabla_deuda->setItemDelegateForColumn(6, new MonetaryDelegate);
+    ui->tabla_deuda->setItemDelegateForColumn(4, new MonetaryDelegate_totals);
+    ui->tabla_deuda->setItemDelegateForColumn(5, new MonetaryDelegate_totals);
+    ui->tabla_deuda->setItemDelegateForColumn(6, new MonetaryDelegate_totals);
 }
 
 void frmGestionCobros::titulo(QString titulo)
@@ -140,6 +152,11 @@ int frmGestionCobros::getId_ticket() const
 void frmGestionCobros::setId_ticket(int value)
 {
     id_ticket = value;
+}
+
+void frmGestionCobros::setOcultarBoton_cerrar(bool state)
+{
+    ui->btnCerrar->setVisible(!state);
 }
 
 
@@ -187,22 +204,79 @@ void frmGestionCobros::seleccionar_ticket()
 void frmGestionCobros::seleccionar_varios()
 {
     QString cSQL;
-    if(ui->chkCliente->isChecked())
+    if(ui->radTodos->isChecked())
     {
-        cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
+        if(ui->chkCliente->isChecked())
+        {
+            cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
+                               "pendiente_cobro from clientes_deuda "
+                           "where id_cliente = %1  and vencimiento between %2 and %3").arg(QString::number(this->id_cliente),
+                                                                                     ui->txtfecha_ini->date().toString("yyyyMMdd"),
+                                                                                     ui->txtfecha_fin->date().toString("yyyyMMdd"));
+        } else
+        {
+            cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                            "pendiente_cobro from clientes_deuda "
-                       "where id_cliente = %1  and vencimiento between %2 and %3").arg(QString::number(this->id_cliente),
-                                                                                 ui->txtfecha_ini->date().toString("yyyyMMdd"),
-                                                                                 ui->txtfecha_fin->date().toString("yyyyMMdd"));
-    } else
+                           "where vencimiento between %1 and %3").arg(ui->txtfecha_ini->date().toString("yyyyMMdd"),
+                                                                ui->txtfecha_fin->date().toString("yyyyMMdd"));
+        }
+    } else if(ui->radPendientes->isChecked())
     {
-        cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
-                       "pendiente_cobro from clientes_deuda "
-                       "where vencimiento between %1 and %3").arg(ui->txtfecha_ini->date().toString("yyyyMMdd"),
-                                                            ui->txtfecha_fin->date().toString("yyyyMMdd"));
+        if(ui->chkCliente->isChecked())
+        {
+            cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
+                               "pendiente_cobro from clientes_deuda "
+                           "where id_cliente = %1  and vencimiento between %2 and %3"
+                           "and pendiente_cobro >0").arg(QString::number(this->id_cliente),
+                                                                                     ui->txtfecha_ini->date().toString("yyyyMMdd"),
+                                                                                     ui->txtfecha_fin->date().toString("yyyyMMdd"));
+        } else
+        {
+            cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
+                           "pendiente_cobro from clientes_deuda "
+                           "where vencimiento between %1 and %3"
+                           "and pendiente_cobro >0").arg(ui->txtfecha_ini->date().toString("yyyyMMdd"),
+                                                                ui->txtfecha_fin->date().toString("yyyyMMdd"));
+        }
+    } else if(ui->radPagados->isChecked())
+    {
+        if(ui->chkCliente->isChecked())
+        {
+            cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
+                               "pendiente_cobro from clientes_deuda "
+                           "where id_cliente = %1  and vencimiento between %2 and %3"
+                           "and pendiente_cobro =0").arg(QString::number(this->id_cliente),
+                                                                                     ui->txtfecha_ini->date().toString("yyyyMMdd"),
+                                                                                     ui->txtfecha_fin->date().toString("yyyyMMdd"));
+        } else
+        {
+            cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
+                           "pendiente_cobro from clientes_deuda "
+                           "where vencimiento between %1 and %3"
+                           "and pendiente_cobro =0").arg(ui->txtfecha_ini->date().toString("yyyyMMdd"),
+                                                                ui->txtfecha_fin->date().toString("yyyyMMdd"));
+        }
+
     }
     deudas->setQuery(cSQL,Configuracion_global->groupDB);
-    ui->tabla_deuda->setModel(deudas);
+    QStringList headers;
+    QVariantList sizes;
+    headers  <<"id"<<tr("fecha") <<tr("vencimiento") <<tr("documento") <<tr("importe") << tr("pagado") <<tr("pendiente");
+    sizes  <<0 << 100 << 100 << 120 << 120 << 120 << 120;
+
+    for(int x=1;x<sizes.size();x++)
+    {
+         ui->tabla_deuda->setColumnWidth(x,sizes.at(x).toInt());
+         deudas->setHeaderData(x,Qt::Horizontal,headers.at(x));
+    }
+    ui->tabla_deuda->setColumnHidden(0,true);
+    ui->tabla_deuda->setItemDelegateForColumn(1,new DateDelegate);
+    ui->tabla_deuda->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tabla_deuda->setItemDelegateForColumn(4, new MonetaryDelegate_totals);
+    ui->tabla_deuda->setItemDelegateForColumn(5, new MonetaryDelegate_totals);
+    ui->tabla_deuda->setItemDelegateForColumn(6, new MonetaryDelegate_totals);
+    this->varios = true;
+
 }
 
 
@@ -247,10 +321,17 @@ void frmGestionCobros::on_btncobro_total_clicked()
     double imp = ui->tabla_deuda->model()->data(ui->tabla_deuda->model()->index(index.row(),4)).toDouble();
     int id = ui->tabla_deuda->model()->data(ui->tabla_deuda->model()->index(index.row(),0)).toDouble();
     g2.setImporte(imp,id);
+    QMap <int,QSqlRecord> m;
+    this->id_factura = m.value(id).value("id_factura").toInt();
+    this->id_ticket = m.value(id).value("id_ticket").toInt();
     g2.setId_factura(this->id_factura);
+    g2.setId_ticket(this->id_ticket);
     if(g2.exec() == QDialog::Accepted)
     {
-        buscar_deuda(this->id_cliente);
+        if(this->varios)
+            seleccionar_varios();
+        else
+            buscar_deuda(this->id_cliente);
     }
 
 

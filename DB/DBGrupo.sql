@@ -272,7 +272,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`clientes_deuda` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `fecha` DATE NULL DEFAULT NULL ,
   `vencimiento` DATE NULL DEFAULT NULL ,
-  `documento` INT(11) NULL DEFAULT '0' ,
+  `documento` VARCHAR(50) NULL DEFAULT '0' ,
   `id_ticket` INT(11) NULL DEFAULT '0' ,
   `id_factura` INT(11) NULL DEFAULT '0' ,
   `tipo` INT(11) NULL DEFAULT '0' ,
