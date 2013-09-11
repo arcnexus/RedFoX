@@ -1971,7 +1971,7 @@ void FrmArticulos::on_txtcoste_editingFinished()
 void FrmArticulos::on_btnBuscar_clicked()
 {
     ui->txtBuscar->setText("");
-    ui->radBuscar->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(1);
     ui->txtBuscar->setFocus();
 }
 
@@ -2001,18 +2001,10 @@ void FrmArticulos::on_tabla_doubleClicked(const QModelIndex &index)
     oArticulo->Recuperar(id);
     LLenarCampos();
     ui->stackedWidget->setCurrentIndex(0);
-    ui->radEditar->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(0);
     ui->botEditar->setEnabled(true);
 
 
-}
-
-void FrmArticulos::on_radBuscar_toggled(bool checked)
-{
-    if(checked)
-        ui->stackedWidget->setCurrentIndex(1);
-    else
-        ui->stackedWidget->setCurrentIndex(0);
 }
 
 void FrmArticulos::on_btnLimpiar_clicked()

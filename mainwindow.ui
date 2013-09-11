@@ -29,10 +29,6 @@
    <iconset resource="maya.qrc">
     <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">
-background-color: rgb(218, 218, 218);</string>
-  </property>
   <property name="iconSize">
    <size>
     <width>36</width>
@@ -489,7 +485,7 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
             <bool>false</bool>
            </property>
            <property name="styleSheet">
-            <string notr="true">
+            <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(133, 170, 142);</string>
            </property>
            <property name="text">
@@ -531,7 +527,7 @@ background-color: rgb(133, 170, 142);</string>
             <bool>false</bool>
            </property>
            <property name="styleSheet">
-            <string notr="true">
+            <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(133, 170, 142);</string>
            </property>
            <property name="text">
@@ -579,7 +575,7 @@ background-color: rgb(133, 170, 142);</string>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: #0D2B2F;</string>
+        <string notr="true">background-color: rgb(170, 170, 127);</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>

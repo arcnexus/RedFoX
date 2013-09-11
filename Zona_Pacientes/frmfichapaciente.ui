@@ -23,9 +23,6 @@
    <iconset>
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(219, 228, 255);</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
     <widget class="QSplitter" name="splitter">
@@ -211,9 +208,6 @@ background-color: rgb(255, 255, 255);</string>
        </item>
        <item>
         <widget class="QFrame" name="frame_3">
-         <property name="styleSheet">
-          <string notr="true">background: #4c6088</string>
-         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -229,14 +223,11 @@ background-color: rgb(255, 255, 255);</string>
               <height>16777215</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">background: #4c6088</string>
-            </property>
             <property name="tabPosition">
              <enum>QTabWidget::North</enum>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_7">
              <property name="styleSheet">
@@ -2730,7 +2721,7 @@ color: rgb(255,255,255);</string>
               <item row="1" column="0">
                <widget class="QFrame" name="frame_5">
                 <property name="styleSheet">
-                 <string notr="true">background: #4c6088</string>
+                 <string notr="true">background-color: rgb(170, 170, 255);</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>

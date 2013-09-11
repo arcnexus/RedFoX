@@ -11,16 +11,13 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(165, 179, 255);</string>
+   <string>Gestión de Transportistas</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="1" column="0">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout">
@@ -57,7 +54,8 @@ background-color: rgb(248, 245, 194);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(170, 170, 127);</string>
+          <string notr="true">background-color: rgb(170, 170, 127);
+color: rgb(0, 0, 0);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -78,6 +76,9 @@ background-color: rgb(248, 245, 194);</string>
           </item>
           <item row="5" column="0" colspan="3">
            <widget class="QPushButton" name="btnAnadir_2">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);</string>
+            </property>
             <property name="text">
              <string>Añadir Transportista</string>
             </property>
@@ -89,6 +90,9 @@ background-color: rgb(248, 245, 194);</string>
           </item>
           <item row="6" column="0" colspan="3">
            <widget class="QPushButton" name="btnEditar_2">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);</string>
+            </property>
             <property name="text">
              <string>Editar Transportista</string>
             </property>
@@ -123,6 +127,9 @@ background-color: rgb(248, 245, 194);</string>
           </item>
           <item row="1" column="1" colspan="2">
            <widget class="QPushButton" name="btnLimpiar">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);</string>
+            </property>
             <property name="text">
              <string>Limpiar</string>
             </property>
@@ -165,6 +172,9 @@ background-color: rgb(248, 245, 194);</string>
           </item>
           <item row="7" column="0" colspan="3">
            <widget class="QPushButton" name="btnImprimir_2">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);</string>
+            </property>
             <property name="text">
              <string>Imprimir ficha</string>
             </property>
@@ -204,7 +214,8 @@ background-color: rgb(248, 245, 194);</string>
        <item row="1" column="0" colspan="3">
         <widget class="QFrame" name="frame">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(236, 239, 237);</string>
+          <string notr="true">background-color: rgb(236, 239, 237);
+background-color: rgb(165, 201, 255);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -252,9 +263,6 @@ background-color: rgb(248, 245, 194);</string>
        </item>
        <item row="2" column="0" colspan="3">
         <widget class="QFrame" name="frame_3">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(236, 239, 237);</string>
-         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -302,9 +310,6 @@ background-color: rgb(248, 245, 194);</string>
            <width>461</width>
            <height>16777215</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(236, 239, 237);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -867,9 +872,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
            <width>278</width>
            <height>0</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(236, 239, 237);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>

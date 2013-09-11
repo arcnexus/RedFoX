@@ -2,8 +2,8 @@
 QLineEdit[echoMode="2"] {
     lineedit-password-character: 9679;
 }
-QLabel, QAbstractButton , QStatusBar, QLineEdit, QDateEdit, QTextEdit,QTableWidget,QTableView,QSpinBox,
-QDoubleSpinBox, QComboBox, QHeaderView,QGroupBox{
+QLabel , QStatusBar, QLineEdit, QDateEdit, QTextEdit,QTableWidget,QTableView,QSpinBox,
+QDoubleSpinBox, QComboBox, QHeaderView,QGroupBox,QListView{
     font: normal;
     color: black;
 }
@@ -27,7 +27,7 @@ QStatusBar::item {
     border-radius: 2;
 }
 
-QPushButton::QWidget { color: black;}
+/*QPushButton::QWidget { color: black;}*/
 
 tab {
     border-radius:5px;
@@ -94,7 +94,8 @@ QListView::item:hover {
 }
 QFrame {
     border-radius: 5px;
-    background-color: rgb(175,195,225);
+    color= rgb(0,0,0);
+    background-color: rgb(225, 225, 225);
 }
 
 QLineEdit:focus, QFrame:focus {
@@ -278,7 +279,7 @@ QTableView, QTableWidet {
 
 
 QMenuBar {
-     background-color: red;
+    background-color: rgb(170, 170, 127);
      color: rgb(0,0,0);
  }
 
@@ -291,7 +292,8 @@ QMenuBar {
  }
 
  QMenuBar::item:selected { /* when selected using mouse or keyboard */
-     background-color: rgb(170, 170, 127);
+     /*background-color: rgb(170, 170, 127);*/
+     background-color: #ABABAB;
      color: white;
  }
 
@@ -299,7 +301,8 @@ QMenuBar {
      background: #2d2f23;
  }
  QMenu {
-      background-color: #ABABAB; /* sets background of the menu */
+      background-color: rgb(170, 170, 127)
+       /* sets background of the menu */
       border: 1px solid black;
   }
 

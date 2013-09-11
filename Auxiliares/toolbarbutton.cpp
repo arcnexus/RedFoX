@@ -36,7 +36,7 @@ void ToolBarButton::mousePressEvent(QMouseEvent *e)
                         "border-radius: 10px;"
                         "padding: 2px;"
                         "border-color: rgb(50,50,50);"
-                        "background-color:#87A5D1;"
+                        "background-color:#b7b65d;"
                          "}");
 }
 
@@ -48,7 +48,7 @@ void ToolBarButton::mouseReleaseEvent(QMouseEvent *e)
                         "border-radius: 10px;"
                         "padding: 2px;"
                         "border-color: rgb(93, 93, 69);"
-                        "background-color:#98b59f;"
+                        "background-color:rgb(248, 245, 194);"
                          "}");
     if(this->rect().contains(e->pos()))
         emit clicked();

@@ -108,8 +108,6 @@ private slots:
 
     void on_tabla_doubleClicked(const QModelIndex &index);
 
-    void on_radBuscar_toggled(bool checked);
-
     void on_btnLimpiar_clicked();
 
     void on_cboOrden_currentIndexChanged(const QString &arg1);

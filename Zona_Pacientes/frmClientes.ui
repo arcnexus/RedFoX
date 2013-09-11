@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
+    <width>1073</width>
     <height>563</height>
    </rect>
   </property>
@@ -48,9 +48,6 @@
       <layout class="QGridLayout" name="gridLayout_27">
        <item row="0" column="0">
         <widget class="QLabel" name="label_40">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
-         </property>
          <property name="text">
           <string>Cliente:</string>
          </property>
@@ -85,10 +82,6 @@
            <width>110</width>
            <height>16777215</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(188, 188, 188);
-</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -755,7 +748,7 @@
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>5</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">
@@ -1154,69 +1147,6 @@
              </item>
             </layout>
            </item>
-           <item row="0" column="0" colspan="7">
-            <widget class="QPushButton" name="btnFichaPaciente">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>29</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255,255,255);
-font: 75 oblique 9pt &quot;Bitstream Vera Sans&quot;;
-background-color: rgb(255, 85, 0);</string>
-             </property>
-             <property name="text">
-              <string>Historial Clínico del Paciente</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/medic.png</normaloff>:/Icons/PNG/medic.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>21</width>
-               <height>21</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="7">
-            <widget class="Blinkink" name="blinkink">
-             <property name="maximumSize">
-              <size>
-               <width>600</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(244, 106, 106);</string>
-             </property>
-             <property name="color" stdset="0">
-              <color>
-               <red>255</red>
-               <green>96</green>
-               <blue>43</blue>
-              </color>
-             </property>
-             <property name="blink" stdset="0">
-              <bool>true</bool>
-             </property>
-             <property name="blinkDuration" stdset="0">
-              <number>1500</number>
-             </property>
-             <property name="icon" stdset="0">
-              <pixmap resource="../maya.qrc">:/Icons/PNG/avisos.png</pixmap>
-             </property>
-             <property name="topTex" stdset="0">
-              <string>Tiene campos pendientes de rellenar</string>
-             </property>
-             <property name="bottomTex" stdset="0">
-              <string>nombre, cif, ....</string>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="0" colspan="8">
             <widget class="QWidget" name="widget" native="true">
              <property name="minimumSize">
@@ -1232,7 +1162,7 @@ background-color: rgb(255, 85, 0);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(170, 209, 255);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
               <property name="topMargin">
@@ -1358,12 +1288,6 @@ background-color: rgb(255, 85, 0);</string>
                <height>0</height>
               </size>
              </property>
-             <property name="maximumSize">
-              <size>
-               <width>202</width>
-               <height>16777215</height>
-              </size>
-             </property>
              <property name="toolTip">
               <string>Otras personas de contacto</string>
              </property>
@@ -1403,26 +1327,6 @@ background-color: rgb(255, 85, 0);</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_5">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_46">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background: #304163;
-color: rgb(255,255,255);</string>
-                </property>
-                <property name="text">
-                 <string>TIPO CLIENTE</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
               <item row="1" column="0" rowspan="2">
                <widget class="QListView" name="lista_tipos">
                 <property name="maximumSize">
@@ -1473,6 +1377,26 @@ color: rgb(255,255,255);</string>
                 </property>
                </widget>
               </item>
+              <item row="0" column="0" colspan="2">
+               <widget class="QLabel" name="label_46">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+                </property>
+                <property name="text">
+                 <string>TIPO CLIENTE</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -1512,6 +1436,69 @@ color: rgb(255,255,255);</string>
              </property>
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="8">
+            <widget class="QPushButton" name="btnFichaPaciente">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>29</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255,255,255);
+font: 75 oblique 9pt &quot;Bitstream Vera Sans&quot;;
+background-color: rgb(255, 85, 0);</string>
+             </property>
+             <property name="text">
+              <string>Historial Clínico del Paciente</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/medic.png</normaloff>:/Icons/PNG/medic.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>21</width>
+               <height>21</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="4" colspan="4">
+            <widget class="Blinkink" name="blinkink">
+             <property name="maximumSize">
+              <size>
+               <width>600</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(244, 106, 106);</string>
+             </property>
+             <property name="color" stdset="0">
+              <color>
+               <red>255</red>
+               <green>96</green>
+               <blue>43</blue>
+              </color>
+             </property>
+             <property name="blink" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="blinkDuration" stdset="0">
+              <number>1500</number>
+             </property>
+             <property name="icon" stdset="0">
+              <pixmap resource="../maya.qrc">:/Icons/PNG/avisos.png</pixmap>
+             </property>
+             <property name="topTex" stdset="0">
+              <string>Tiene campos pendientes de rellenar</string>
+             </property>
+             <property name="bottomTex" stdset="0">
+              <string>nombre, cif, ....</string>
              </property>
             </widget>
            </item>
@@ -2073,7 +2060,7 @@ color: rgb(255,255,255);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(197, 205, 255);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -2487,7 +2474,7 @@ color: rgb(255, 255, 255);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(197, 205, 255);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -3318,7 +3305,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(197, 205, 255);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -3464,7 +3451,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -3496,9 +3483,9 @@ alternate-background-color: rgb(255, 255, 255);</string>
                    <colorrole role="Button">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>175</red>
-                      <green>195</green>
-                      <blue>225</blue>
+                      <red>214</red>
+                      <green>208</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -3568,18 +3555,18 @@ alternate-background-color: rgb(255, 255, 255);</string>
                    <colorrole role="Base">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>175</red>
-                      <green>195</green>
-                      <blue>225</blue>
+                      <red>214</red>
+                      <green>208</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
                    <colorrole role="Window">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>175</red>
-                      <green>195</green>
-                      <blue>225</blue>
+                      <red>214</red>
+                      <green>208</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -3633,9 +3620,9 @@ alternate-background-color: rgb(255, 255, 255);</string>
                    <colorrole role="Button">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>175</red>
-                      <green>195</green>
-                      <blue>225</blue>
+                      <red>214</red>
+                      <green>208</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -3705,18 +3692,18 @@ alternate-background-color: rgb(255, 255, 255);</string>
                    <colorrole role="Base">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>175</red>
-                      <green>195</green>
-                      <blue>225</blue>
+                      <red>214</red>
+                      <green>208</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
                    <colorrole role="Window">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>175</red>
-                      <green>195</green>
-                      <blue>225</blue>
+                      <red>214</red>
+                      <green>208</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -3770,9 +3757,9 @@ alternate-background-color: rgb(255, 255, 255);</string>
                    <colorrole role="Button">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>175</red>
-                      <green>195</green>
-                      <blue>225</blue>
+                      <red>214</red>
+                      <green>208</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -3842,18 +3829,18 @@ alternate-background-color: rgb(255, 255, 255);</string>
                    <colorrole role="Base">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>175</red>
-                      <green>195</green>
-                      <blue>225</blue>
+                      <red>214</red>
+                      <green>208</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
                    <colorrole role="Window">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>175</red>
-                      <green>195</green>
-                      <blue>225</blue>
+                      <red>214</red>
+                      <green>208</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -4053,7 +4040,7 @@ alternate-background-color: rgb(255, 255, 175);</string>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(168, 168, 0);</string>
+                 <string notr="true">background-color: rgb(170, 170, 127);</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
@@ -4074,7 +4061,7 @@ alternate-background-color: rgb(255, 250, 178);</string>
                  <item row="0" column="0">
                   <widget class="QLabel" name="label_10">
                    <property name="styleSheet">
-                    <string notr="true">background-color: rgb(255, 255, 0);</string>
+                    <string notr="true">background-color: rgb(248, 255, 183);</string>
                    </property>
                    <property name="text">
                     <string>Asientos Contables</string>
@@ -4213,7 +4200,8 @@ font: 8pt &quot;Sans&quot;;</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(170, 170, 127);</string>
+          <string notr="true">background-color: rgb(170, 170, 127);
+color: rgb(0, 0, 0);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>

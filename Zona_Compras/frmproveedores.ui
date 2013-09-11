@@ -27,7 +27,7 @@
    <item row="1" column="0" colspan="2">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_5">
       <layout class="QGridLayout" name="gridLayout_20">
@@ -77,9 +77,6 @@
          </property>
          <property name="autoFillBackground">
           <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(188, 188, 188);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -287,7 +284,7 @@
        <item row="1" column="1" rowspan="2" colspan="2">
         <widget class="QTabWidget" name="tabWidget_5">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">
@@ -618,7 +615,7 @@
            <item row="1" column="0">
             <widget class="QFrame" name="frame_3">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -1319,9 +1316,6 @@ color: rgb(255, 255, 255);</string>
           <number>0</number>
          </property>
          <widget class="QWidget" name="tab_13">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 217, 133);</string>
-          </property>
           <attribute name="title">
            <string>Contabilidad</string>
           </attribute>
@@ -1353,7 +1347,7 @@ color: rgb(255, 255, 255);</string>
            <item row="1" column="0">
             <widget class="QFrame" name="frame">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(168, 168, 0);</string>
+              <string notr="true">background-color: rgb(170, 170, 127);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -1399,10 +1393,6 @@ alternate-background-color: rgb(255, 250, 178);</string>
           </layout>
          </widget>
          <widget class="QWidget" name="tab_6">
-          <property name="styleSheet">
-           <string notr="true">
-background-color: rgb(172, 176, 255);</string>
-          </property>
           <attribute name="title">
            <string>Historial</string>
           </attribute>
@@ -1413,7 +1403,7 @@ background-color: rgb(172, 176, 255);</string>
               <enum>QTabWidget::North</enum>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="tab_8">
               <property name="styleSheet">
@@ -2327,6 +2317,9 @@ background-color: rgb(248, 245, 194);</string>
           </item>
           <item row="1" column="2">
            <widget class="QPushButton" name="btnLimpiar">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);</string>
+            </property>
             <property name="text">
              <string>Limpiar</string>
             </property>
@@ -2367,6 +2360,9 @@ background-color: rgb(248, 245, 194);</string>
               <height>0</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);</string>
+            </property>
            </widget>
           </item>
           <item row="4" column="2">
@@ -2387,7 +2383,11 @@ background-color: rgb(248, 245, 194);</string>
            </widget>
           </item>
           <item row="3" column="2">
-           <widget class="QComboBox" name="cboModo"/>
+           <widget class="QComboBox" name="cboModo">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);</string>
+            </property>
+           </widget>
           </item>
           <item row="0" column="2">
            <widget class="QLabel" name="label_66">

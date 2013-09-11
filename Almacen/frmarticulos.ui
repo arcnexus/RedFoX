@@ -23,58 +23,7 @@
    <iconset>
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(165, 179, 255);</string>
-  </property>
   <layout class="QGridLayout" name="gridLayout_10">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_70">
-     <property name="minimumSize">
-      <size>
-       <width>266</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>239</width>
-       <height>24</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 0, 57);</string>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ARTÍCULOS&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="lblCodigo">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>130</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 0, 127);
-font: 12pt &quot;Sans Serif&quot;;</string>
-     </property>
-     <property name="text">
-      <string>código</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="2">
     <widget class="QLabel" name="lblDescripcion">
      <property name="sizePolicy">
@@ -104,42 +53,32 @@ font: 12pt &quot;Sans Serif&quot;;</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="3">
-    <widget class="QFrame" name="frame_26">
-     <property name="maximumSize">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_70">
+     <property name="minimumSize">
       <size>
-       <width>16777215</width>
-       <height>34</height>
+       <width>340</width>
+       <height>0</height>
       </size>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+     <property name="maximumSize">
+      <size>
+       <width>239</width>
+       <height>24</height>
+      </size>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 57);</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QRadioButton" name="radBuscar">
-        <property name="text">
-         <string>Modo Busqueda</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="radEditar">
-        <property name="text">
-         <string>Modo Edición</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff8000;&quot;&gt;GESTIÓN DE ARTÍCULOS&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
-   <item row="0" column="4">
+   <item row="0" column="3">
     <widget class="QLabel" name="lbl_en_promocion">
      <property name="maximumSize">
       <size>
@@ -159,7 +98,7 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="5">
+   <item row="1" column="0" colspan="4">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -220,7 +159,8 @@ color: rgb(255, 255, 255);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);
+</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -381,7 +321,7 @@ color: rgb(255, 255, 255);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);
+              <string notr="true">background-color: rgb(214, 208, 255);
 </string>
              </property>
              <property name="frameShape">
@@ -423,7 +363,7 @@ color: rgb(255, 255, 255);</string>
            <item row="0" column="7" rowspan="6">
             <widget class="QFrame" name="frame">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);
+              <string notr="true">background-color: rgb(214, 208, 255);
 </string>
              </property>
              <property name="frameShape">
@@ -465,7 +405,8 @@ color: rgb(255, 255, 255);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);
+</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -512,7 +453,7 @@ color: rgb(255, 255, 255);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);
+              <string notr="true">background-color: rgb(214, 208, 255);
 </string>
              </property>
              <property name="frameShape">
@@ -562,7 +503,8 @@ color: rgb(255, 255, 255);</string>
               </sizepolicy>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);
+</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -672,7 +614,7 @@ alternate-background-color: rgb(255, 255, 202);</string>
            <item row="4" column="3" colspan="2">
             <widget class="QFrame" name="frame_10">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);
+              <string notr="true">background-color: rgb(214, 208, 255);
 </string>
              </property>
              <property name="frameShape">
@@ -710,7 +652,8 @@ alternate-background-color: rgb(255, 255, 202);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);
+</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -947,7 +890,7 @@ background-color: rgb(255, 255, 127);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);
+              <string notr="true">background-color: rgb(214, 208, 255);
 </string>
              </property>
              <property name="frameShape">
@@ -1489,7 +1432,7 @@ alternate-background-color: rgb(255, 255,210);</string>
            <item row="1" column="1">
             <widget class="QFrame" name="frame_25">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -1590,7 +1533,7 @@ color: rbg(0,0,0);</string>
            <item row="1" column="0">
             <widget class="QFrame" name="frame_6">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -1900,7 +1843,7 @@ color: rbg(0,0,0);</string>
            <item row="0" column="0">
             <widget class="QFrame" name="frame">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_12">
               <item row="0" column="0">
@@ -2083,7 +2026,7 @@ color: rbg(0,0,0);</string>
               <bool>false</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -2164,7 +2107,7 @@ color: rbg(0,0,0);</string>
               <bool>false</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -2247,7 +2190,7 @@ color: rgb(255, 255, 255);</string>
               <bool>false</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -2382,7 +2325,7 @@ color: rgb(255, 255, 255);</string>
               <bool>false</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -2433,7 +2376,7 @@ color: rgb(255, 255, 255);</string>
               <bool>true</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -2528,7 +2471,7 @@ color: rgb(255, 255, 255);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -2877,7 +2820,7 @@ Imagen.</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -4122,7 +4065,7 @@ background-color: rgb(239, 239, 239);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(175,195,225);</string>
+              <string notr="true">background-color: rgb(214, 208, 255);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -5498,8 +5441,8 @@ alternate-background-color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: #304163;
-color: #ffffff</string>
+          <string notr="true">background-color: rgb(188, 188, 188);
+</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -5521,10 +5464,6 @@ color: #ffffff</string>
               <width>118</width>
               <height>16777215</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
             </property>
             <property name="text">
              <string>Añadir</string>
@@ -5555,10 +5494,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <height>16777215</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-            </property>
             <property name="text">
              <string>Siguiente</string>
             </property>
@@ -5587,10 +5522,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <width>118</width>
               <height>16777215</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
             </property>
             <property name="text">
              <string>Anterior</string>
@@ -5644,10 +5575,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <height>16777215</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-            </property>
             <property name="text">
              <string>Editar</string>
             </property>
@@ -5679,10 +5606,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <width>118</width>
               <height>16777215</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
             </property>
             <property name="text">
              <string>Guardar</string>
@@ -5716,10 +5639,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <height>16777215</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-            </property>
             <property name="text">
              <string>Deshacer</string>
             </property>
@@ -5749,10 +5668,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <height>16777215</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-            </property>
             <property name="text">
              <string>Borrar</string>
             </property>
@@ -5781,10 +5696,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
               <width>118</width>
               <height>16777215</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
             </property>
             <property name="text">
              <string>Listados</string>
@@ -5995,6 +5906,29 @@ background-color: rgb(248, 245, 194);</string>
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="lblCodigo">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>130</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 0, 127);
+font: 12pt &quot;Sans Serif&quot;;</string>
+     </property>
+     <property name="text">
+      <string>código</string>
+     </property>
     </widget>
    </item>
   </layout>

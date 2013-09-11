@@ -29,9 +29,6 @@
    <iconset>
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(165, 179, 255);</string>
-  </property>
   <layout class="QGridLayout" name="gridLayout_5">
    <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="label_67">
@@ -124,7 +121,7 @@ color: rgb(0, 0, 127);</string>
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">
@@ -239,8 +236,8 @@ color: rgb(255, 255, 255);</string>
              <item row="6" column="0">
               <widget class="QLabel" name="label_54">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
+                <string notr="true">background-color: #304163;
+color: rgb(255,255,255);</string>
                </property>
                <property name="text">
                 <string>Datos proceso facturación</string>
@@ -482,8 +479,8 @@ color: rgb(85, 85, 0);</string>
                  <item>
                   <widget class="QLabel" name="label_40">
                    <property name="styleSheet">
-                    <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
+                    <string notr="true">background-color: #304163;
+color: rgb(255,255,255);</string>
                    </property>
                    <property name="text">
                     <string>Comentarios sobre lugar  y modo de entrega</string>
@@ -540,8 +537,8 @@ color: rgb(255, 255, 255);</string>
              <item row="1" column="0">
               <widget class="QLabel" name="label_55">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
+                <string notr="true">background-color: #304163;
+color: rgb(255,255,255);</string>
                </property>
                <property name="text">
                 <string>Estado presupuesto</string>
@@ -561,8 +558,8 @@ color: rgb(255, 255, 255);</string>
              <item row="0" column="0" colspan="2">
               <widget class="QLabel" name="label_50">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
+                <string notr="true">background-color: #304163;
+color: rgb(255,255,255);</string>
                </property>
                <property name="text">
                 <string>Datos cliente</string>
@@ -2501,9 +2498,6 @@ color: rgb(0, 64, 64);</string>
            <height>35</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 235, 167);</string>
-         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -2770,7 +2764,8 @@ background-color: rgb(248, 245, 194);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(170, 170, 127);</string>
+          <string notr="true">background-color: rgb(170, 170, 127);
+color: rgb(0, 0, 0);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>

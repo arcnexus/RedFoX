@@ -30,8 +30,8 @@
 border-style:solid;
 border-radius: 10px;
 padding: 2px;
-border-color: rgb(0, 0, 127);
-background-color:#98b59f;
+border-color: rgb(180, 180, 89);
+background-color: rgb(248, 245, 194);
 </string>
   </property>
   <property name="frameShape">
@@ -132,7 +132,7 @@ background-color:#98b59f;
     <widget class="QLabel" name="lbl_text">
      <property name="styleSheet">
       <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(170, 170, 127);
+background-color: rgb(0, 0, 0);
 border-color: rgb(93, 93, 69);
 border-top-left-radius:0px;
  border-top-right-radius:0px;

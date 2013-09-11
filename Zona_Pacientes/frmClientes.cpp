@@ -798,7 +798,7 @@ void frmClientes::on_btnAnadir_clicked()
     //---------------
     QMap <int, QSqlRecord> h;
     QString error;
-    h= SqlCalls::SelectRecord("clientes",QString("cif_nif ='%1'").arg(linea->text()),Configuracion_global->groupDB,error);
+    h= SqlCalls::SelectRecord("clientes",QString("cif_nif ='%1'").arg(linea->text().trimmed()),Configuracion_global->groupDB,error);
     QString cif;
     int id;
     QMapIterator<int, QSqlRecord> i(h);

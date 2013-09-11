@@ -23,9 +23,6 @@
    <iconset resource="../maya.qrc">
     <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(165, 179, 255);</string>
-  </property>
   <layout class="QGridLayout" name="gridLayout_12">
    <item row="0" column="0">
     <widget class="QLabel" name="label_36">
@@ -83,7 +80,7 @@ background-color: rgb(0, 0, 58);</string>
    <item row="1" column="0" colspan="7">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_5">
       <layout class="QGridLayout" name="gridLayout_8">
@@ -552,12 +549,8 @@ background-color: rgb(0, 0, 58);</string>
        </item>
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
-         <property name="styleSheet">
-          <string notr="true">QLineEdit { background-color: yellow }
-</string>
-         </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <property name="styleSheet">
