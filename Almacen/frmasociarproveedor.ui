@@ -14,18 +14,12 @@
    <string>Asociar proveedor-Artículo</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Maya.qrc">
-    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background: #4c6088</string>
+   <iconset resource="../maya.qrc">
+    <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0" rowspan="2">
     <widget class="QFrame" name="frame">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(175,195,225);</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -46,7 +40,7 @@
          <string>Filtrar</string>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/filtrar.png</normaloff>:/Icons/PNG/filtrar.png</iconset>
         </property>
         <property name="iconSize">
@@ -72,9 +66,6 @@
    </item>
    <item row="0" column="1" colspan="2">
     <widget class="QFrame" name="frame_2">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(175,195,225);</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -208,7 +199,7 @@
       <string>Añadir</string>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
      </property>
      <property name="iconSize">
@@ -228,7 +219,7 @@
       <string>Cancelar</string>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
      </property>
      <property name="iconSize">
@@ -254,7 +245,7 @@
   <tabstop>BtnCancelar</tabstop>
  </tabstops>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -58,7 +58,6 @@ private slots:
     void on_btnBuscar_clicked();
     void resizeTable(int x);
 
-    void on_radBusqueda_toggled(bool checked);
 
     void on_cboOrden_currentIndexChanged(const QString &arg1);
 

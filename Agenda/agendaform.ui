@@ -28,10 +28,14 @@
      </property>
      <property name="styleSheet">
       <string notr="true">QFrame#frame{
-background-color: #4C6088;}
+background-color: rgb(170, 170, 127);
+}
 QGroupBox{
 background-color: #4C6088;}
-QLabel{background-color: #4C6088;}</string>
+QLabel{background-color: black;
+			color:white}
+
+</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>

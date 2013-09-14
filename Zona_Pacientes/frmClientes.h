@@ -4,7 +4,6 @@
 
 #include "../Auxiliares/Globlal_Include.h"
 
-#include "../Busquedas/frmbuscarpoblacion.h"
 //
 #include "frmfichapaciente.h"
 #include "cliente.h"
@@ -74,10 +73,6 @@ private slots:
 
     void txtcp_editingFinished();
 
-    void txtcpAlternativa_editingFinished();
-
-    void txtpoblacionAlternativa_editingFinished();
-
     void TablaDeudas_clicked(const QModelIndex &index);
 
     void txtrRiesgoPermitido_editingFinished();
@@ -135,7 +130,6 @@ private:
     QSqlQueryModel *qModeldireccion;
     QSqlQueryModel * m_clientes;
     QSqlDatabase dbCliente;
-    FrmBuscarPoblacion BuscarPoblacion;
     QSqlQuery tbpaciente;
     Cliente* oCliente;
     //SqlCalls *llamadasSQL;

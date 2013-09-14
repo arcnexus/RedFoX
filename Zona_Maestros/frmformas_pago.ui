@@ -25,16 +25,16 @@
      <property name="minimumSize">
       <size>
        <width>300</width>
-       <height>30</height>
+       <height>23</height>
       </size>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255, 85, 0);
-background-color: rgb(0, 0, 58);</string>
+color: rgb(255, 255, 255);
+background-color: #304163;</string>
      </property>
      <property name="text">
-      <string>FORMAS DE PAGO</string>
+      <string>Formas de Pago</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -44,7 +44,7 @@ background-color: rgb(0, 0, 58);</string>
    <item row="1" column="0">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout">
@@ -81,7 +81,8 @@ background-color: rgb(248, 245, 194);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(170, 170, 127);</string>
+          <string notr="true">background-color: rgb(170, 170, 127);
+color: rgb(0, 0, 0);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -308,7 +309,7 @@ background-color: rgb(248, 245, 194);</string>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 0, 127);
+                <string notr="true">background-color: #304163;
 color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
@@ -415,7 +416,7 @@ color: rgb(255, 255, 255);</string>
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background-color: rgb(0, 0, 127);
+               <string notr="true">background-color: #304163;
 color: rgb(255, 255, 255);</string>
               </property>
               <property name="text">
@@ -480,9 +481,6 @@ color: rgb(255, 255, 255);</string>
               <width>16777215</width>
               <height>35</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 235, 167);</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -785,7 +783,7 @@ p, li { white-space: pre-wrap; }
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(0, 0, 127);
+             <string notr="true">background-color: #304163;
 color: rgb(255, 255, 255);</string>
             </property>
             <property name="text">

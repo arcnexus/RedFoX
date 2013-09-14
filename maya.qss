@@ -1,24 +1,34 @@
-/* Nice Windows-XP-style password character. */
+/* Nice Windows-XP-style password character.*/
 QLineEdit[echoMode="2"] {
     lineedit-password-character: 9679;
 }
-QLabel , QStatusBar, QLineEdit, QDateEdit, QTextEdit,QTableWidget,QTableView,QSpinBox,
-QDoubleSpinBox, QComboBox, QHeaderView,QGroupBox,QListView{
+
+QLabel , QStatusBar, QLineEdit, QDateEdit, QTextEdit,QTableWidget,QTableView, QSpinBox,
+QDoubleSpinBox, QComboBox, QHeaderView, QGroupBox, QListView, QRadioButton
+{
     font: normal;
     color: black;
 }
 
-QTableView::header{
+.QStackedWidget
+{
+    background-color: rgb(243, 243, 243);
+}
+
+QTableView::header
+{
     color: #363b31;
 }
 
-/* Mark mandatory fields with a brownish color. */
-.mandatory {
-    color: brown;
+
+*[mandatoryField="true"]
+
+{ background-color: yellow }
+
+
+QTextEdit{
+    border:1px solid grey;
 }
-
-
-QTextEdit{border:1px solid grey}
 
 QStatusBar::item {
     border-width: 1;
@@ -33,9 +43,6 @@ tab {
     border-radius:5px;
 
 }
-QTabWidget::pane { /* The tab widget frame */
-    border-radius:5px;
-}
 
 QTabWidget::tab-bar {
     left: 5px;
@@ -45,7 +52,8 @@ QTabWidget::tab-bar {
 
 /* Style the tab using the tab sub-control. Note that it reads QTabBar _not_ QTabWidget */
 
-QTabBar::tab {
+QTabBar::tab
+{
     background: #304163;
     color: #FFFFFF;
     /* same as the pane color */
@@ -57,85 +65,114 @@ QTabBar::tab {
 
 }
 
-QTabBar::tab:selected, QTabBar::tab:hover {
+QTabBar::tab:selected, QTabBar::tab:hover
+{
 
-    background:#ecf1f0;
-    color:#000000
+    /*background:#ecf1f0;*/
+    background-color: rgb(214, 208, 255);
+    color:#000000;
+}
+QTabWidget::tab
+{
+    background-color : #000000;
 }
 
-QTabBar::tab:selected {
-    border-color: #4c6088;
-    border-bottom-color: #4c6088;
+QTabBar::tab:selected
+{
+   /* border-color: #4c6088;
+    border-bottom-color: #4c6088;*/
+
     }
 
-QTabBar::tab:!selected {
+QTabBar::tab:!selected
+{
     margin-top: 1px;
     /* make non-selected tabs look smaller */
 }
 
-QTabBar::scroller {
+QTabBar::scroller
+{
     /* the width of the scroll buttons */
     width: 15px;
-    border-image: url(:Icons/images/spinup.png) 2;
+    border-image: url(:Icons/images/spinup.png) ;
 }
 
-QTabBar QButton {
+QTabBar QButton
+{
     /* the scroll buttons are tool buttons */
-    border-image: url(:Icons/images/spinup.png) 2;
+    border-image: url(:Icons/images/spinup.png) ;
         border-width: 0px;
     }
-QListView {
+QListView
+{
        show-decoration-selected: 1;
 }
 
-QListView::item:hover {
+QListView::item:hover
+{
     background-color: Yellow;
     color:blue;
 }
-QFrame {
+.QFrame
+{
     border-radius: 5px;
     color= rgb(0,0,0);
-    background-color: rgb(225, 225, 225);
+    background-color: rgb(225,225,225);
+
 }
 
-QLineEdit:focus, QFrame:focus {
+QLineEdit:focus, QFrame:focus
+{
     border-width: 1.5px;
     padding: 0px;
 }
 
-QTabWidget::up-button {
+QTabWidget::up-button
+{
     subcontrol-origin: border;
     subcontrol-position: top right;
     width: 16px; /* 16 + 2*1px border-width = 15px padding + 3px parent border */
-    border-image: url(:Icons/images/spinup.png) 1;
+    border-image: url(:Icons/images/spinup.png) ;
     border-width: 1px;
 }
 
-QTabWidget::up-button:hover {
-    border-image: url(:Icons/images/spinup_hover.png) 1;
+QTabWidget::up-button:hover
+{
+    border-image: url(:Icons/images/spinup_hover.png) ;
 }
 
-QTabWidget::up-button:pressed {
-    border-image: url(:Icons/images/spinup_pressed.png) 1;
+QTabWidget::up-button:pressed
+{
+    border-image: url(:Icons/images/spinup_pressed.png) ;
 }
 
-QtabWidget::down-button {
+QTabWidget::down-button
+{
     subcontrol-origin: border;
     subcontrol-position: bottom right;
 
     width: 16px;
-    border-image: url(:Icons/images/pushbutton.png) 1;
+    border-image: url(:Icons/images/pushbutton.png) ;
     border-width: 1px;
     border-top-width: 0;
 }
 
+ QTabWidget::pane
+ { /* The tab widget frame */
+     border: 1px dotted #000000;
+     border-radius:5px;
+
+
+ }
 
 /* Customize check boxes. */
-QCheckBox {
+QCheckBox
+{
     spacing: 5px;
 }
 
-QCheckBox::indicator,QGroupBox::indicator {
+QCheckBox::indicator,QGroupBox::indicator
+{
     width: 13px;
     height: 13px;
 }
@@ -211,14 +248,14 @@ QDialogButtonBox {
       height: 10px;
       background: white;
       width: 10px;
-      image: url(:/Icons/images/scroll_up.png) 2;
+      image: url(:/Icons/images/scroll_up.png) ;
   }
   QScrollBar::down-arrow:vertical{
         border: 2px solid grey;
         height: 10px;
         background: white;
         width: 10px;
-        image: url(:/Icons/images/scroll_down.png) 2;
+        image: url(:/Icons/images/scroll_down.png) ;
     }
 
   QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
@@ -260,14 +297,14 @@ QScrollBar::sub-line:horizontal {
      height: 10px;
      background: white;
      width: 10px;
-     image: url(:/Icons/images/left_arrow.png) 2;
+     image: url(:/Icons/images/left_arrow.png) ;
  }
   QScrollBar::right-arrow:horizontal {
       border: none solid grey;
       width: 10px;
       height: 10px;
       background: white;
-      image: url(:/Icons/images/right_arrow.png) 2;
+      image: url(:/Icons/images/right_arrow.png) ;
   }
 
 QTableView, QTableWidet {
@@ -297,14 +334,28 @@ QMenuBar {
      color: white;
  }
 
+
+
+
+
  QMenuBar::item:pressed {
      background: #2d2f23;
  }
- QMenu {
-      background-color: rgb(170, 170, 127)
-       /* sets background of the menu */
-      border: 1px solid black;
-  }
+
+
+//QFrame#FrameRF{
+   // background-color:#9ec5c9;
+ //   }
+
+
+///////////////////////////////
+QMenu {
+     background-color: rgb(170, 170, 127);
+      /* sets background of the menu */
+     border: 1px solid black;
+ }
+////////////////////////////////////
+
 
   QMenu::item {
       /* sets background of menu item. set this to something non-transparent
@@ -318,15 +369,15 @@ QMenuBar {
       color: white;
   }
 
+
+ QComboBox::item:selected { /* when user selects item using mouse or keyboard */
+     background-color: rgb(170, 170, 127);
+ }
+
  QComboBox:editable {
      background: rgb(248, 245, 194);
  }
 
-
- /*QComboBox:on {  shift the text when the popup opens
-     padding-top: 3px;
-     padding-left: 4px;
- }*/
 
  QComboBox::drop-down {
      subcontrol-origin: padding;
@@ -341,18 +392,16 @@ QMenuBar {
      color:#2E9AFE;
  }
 
- QComboBox::item:selected { /* when user selects item using mouse or keyboard */
-     background-color: rgb(170, 170, 127);
- }
+
 
 QComboBox::item{
     background-color :white;
     }
 QComboBox::down-arrow{
-     image: url(:/Icons/images/down_arrow.png) 2;
+     image: url(:/Icons/images/down_arrow.png) ;
 }
 QComboBox::down-arrow::disabled{
-    image: url(:/Icons/images/down_arrow_disabled.png) 2;
+    image: url(:/Icons/images/down_arrow_disabled.png) ;
 }
 QComboBox QAbstractItemView {
     border: 2px solid darkgray;
@@ -366,3 +415,5 @@ QToolTip {
     border-radius: 3px;
     opacity: 200;
 }
+
+

@@ -212,7 +212,6 @@ int main(int argc, char *argv[])
         QTextCodec::setCodecForCStrings(linuxCodec);
    #endif
    QTextCodec::setCodecForLocale(linuxCodec);
-
    a.setStyle("fusion");
 
    QFile file(":Icons/maya.qss");

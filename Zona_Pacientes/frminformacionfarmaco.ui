@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>999</width>
+    <width>1023</width>
     <height>550</height>
    </rect>
   </property>
@@ -159,7 +159,8 @@ background-color: rgb(255, 255, 255);</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(170, 170, 255)</string>
+      <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Imagenes Medicamento</string>
@@ -362,7 +363,8 @@ background-color: rgb(255, 255, 255);</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(170, 170, 255)</string>
+      <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Indicaciones</string>
@@ -381,7 +383,8 @@ background-color: rgb(255, 255, 255);</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(170, 170, 255)</string>
+      <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Posibles Interacciones</string>
@@ -403,7 +406,7 @@ background-color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item row="2" column="10" rowspan="4" colspan="3">
-    <widget class="QWebView" name="webLogoLaboratorio" native="true">
+    <widget class="QWebView" name="webLogoLaboratorio">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -413,7 +416,7 @@ background-color: rgb(255, 255, 255);</string>
        <height>16777215</height>
       </size>
      </property>
-     <property name="url" stdset="0">
+     <property name="url">
       <url>
        <string>about:blank</string>
       </url>
@@ -438,8 +441,8 @@ background-color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item row="11" column="5" rowspan="2">
-    <widget class="QWebView" name="webimagen1" native="true">
-     <property name="url" stdset="0">
+    <widget class="QWebView" name="webimagen1">
+     <property name="url">
       <url>
        <string>about:blank</string>
       </url>
@@ -447,14 +450,14 @@ background-color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item row="11" column="6" rowspan="2" colspan="2">
-    <widget class="QWebView" name="webimagen2" native="true">
+    <widget class="QWebView" name="webimagen2">
      <property name="minimumSize">
       <size>
        <width>164</width>
        <height>0</height>
       </size>
      </property>
-     <property name="url" stdset="0">
+     <property name="url">
       <url>
        <string>about:blank</string>
       </url>
@@ -462,14 +465,14 @@ background-color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item row="11" column="8" rowspan="2" colspan="2">
-    <widget class="QWebView" name="webimagen3" native="true">
+    <widget class="QWebView" name="webimagen3">
      <property name="minimumSize">
       <size>
        <width>110</width>
        <height>0</height>
       </size>
      </property>
-     <property name="url" stdset="0">
+     <property name="url">
       <url>
        <string>about:blank</string>
       </url>
@@ -502,7 +505,7 @@ color: rgb(255, 255, 255);</string>
   <customwidget>
    <class>QWebView</class>
    <extends>QWidget</extends>
-   <header>QtWebKit/QWebView</header>
+   <header>QtWebKitWidgets/QWebView</header>
   </customwidget>
  </customwidgets>
  <resources>

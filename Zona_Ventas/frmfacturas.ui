@@ -34,8 +34,8 @@
      </property>
      <property name="styleSheet">
       <string notr="true">font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255, 85, 0);
-background-color: rgb(0, 0, 58);</string>
+color: rgb(255, 255, 255);
+background-color: #304163;</string>
      </property>
      <property name="text">
       <string>FACTURAS A CLIENTES</string>
@@ -288,9 +288,6 @@ background-color: rgb(0, 0, 58);</string>
            <width>16777215</width>
            <height>35</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 235, 167);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -550,7 +547,7 @@ background-color: rgb(0, 0, 58);</string>
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <property name="styleSheet">
@@ -951,7 +948,7 @@ Transportista</string>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 0, 127);
+                 <string notr="true">background-color: #304163;
 color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="text">
@@ -1053,7 +1050,7 @@ color: rgb(255, 255, 255);</string>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 0, 127);
+                 <string notr="true">background-color: #304163;
 color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="text">
@@ -1332,7 +1329,7 @@ color: rgb(255, 255, 255);</string>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 0, 127);
+                 <string notr="true">background-color: #304163;
 color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="text">
@@ -1525,7 +1522,7 @@ color: rgb(255, 255, 255);</string>
               <item row="0" column="0" colspan="3">
                <widget class="QLabel" name="label_46">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 0, 94);
+                 <string notr="true">background-color: #304163;
 color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="text">
@@ -2603,7 +2600,7 @@ color: rgb(170, 170, 0);</string>
               <item row="0" column="0">
                <widget class="QLabel" name="label_32">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 0, 127);
+                 <string notr="true">background-color: #304163;
 color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="text">
@@ -2617,7 +2614,7 @@ color: rgb(255, 255, 255);</string>
               <item row="0" column="1">
                <widget class="QLabel" name="label_50">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 0, 127);
+                 <string notr="true">background-color: #304163;
 color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="text">
@@ -2631,7 +2628,7 @@ color: rgb(255, 255, 255);</string>
               <item row="0" column="2">
                <widget class="QLabel" name="label_51">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 0, 127);
+                 <string notr="true">background-color: #304163;
 color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="text">
@@ -2645,7 +2642,7 @@ color: rgb(255, 255, 255);</string>
               <item row="0" column="3">
                <widget class="QLabel" name="label_52">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 0, 127);
+                 <string notr="true">background-color: #304163;
 color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="text">
@@ -2767,7 +2764,8 @@ color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(170, 170, 127);</string>
+          <string notr="true">background-color: rgb(170, 170, 127);
+color: rgb(0, 0, 0);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>

@@ -46,11 +46,8 @@ SOURCES += main.cpp\
     Zona_Compras/frmproveedores.cpp \
     Zona_Pacientes/cliente.cpp \
     Zona_Compras/proveedor.cpp \
-    Busquedas/frmbuscarcliente.cpp \
-    Busquedas/frmbuscarpoblacion.cpp \
     configuracion.cpp \
     empresa.cpp \
-    Busquedas/frmBuscarFactura.cpp \
     columnafecha.cpp \
     Zona_Administrador/frmempresas.cpp \
     Zona_Pacientes/frmfichapaciente.cpp \
@@ -110,10 +107,8 @@ SOURCES += main.cpp\
     Zona_Ventas/frmalbaran.cpp \
     Zona_Ventas/factura.cpp \
     Zona_Ventas/albaran.cpp \
-    Busquedas/frmbuscarproveedor.cpp \
     Zona_Compras/pedidoproveedor.cpp \ 
     Almacen/frmtipostarifa.cpp \
-    Zona_Ventas/frmcajaabierta.cpp \
     Almacen/frmasociarproveedor.cpp \
     Auxiliares/monetarydelegate.cpp \
     Almacen/frmlistadosarticulo.cpp \
@@ -123,7 +118,6 @@ SOURCES += main.cpp\
     Zona_Administrador/frmconfigmaya.cpp \
     Zona_Pacientes/frmanadirhierb.cpp \
     Auxiliares/datedelegate.cpp \
-    Zona_Pacientes/frmcobrardeuda.cpp \
     LibsGraficas/qchartpiece.cpp \
     LibsGraficas/openchart.cpp \
     Zona_Contabilidad/frmentrada_apuntes.cpp \
@@ -209,11 +203,8 @@ HEADERS  += mainwindow.h \
     Zona_Compras/frmproveedores.h \
     Zona_Pacientes/cliente.h \
     Zona_Compras/proveedor.h \
-    Busquedas/frmbuscarcliente.h \
-    Busquedas/frmbuscarpoblacion.h \
     configuracion.h \
     empresa.h \
-    Busquedas/frmBuscarFactura.h \
     columnafecha.h \
     Zona_Administrador/frmempresas.h \
     Zona_Pacientes/frmfichapaciente.h \
@@ -271,10 +262,8 @@ HEADERS  += mainwindow.h \
     Zona_Ventas/frmalbaran.h \
     Zona_Ventas/factura.h \
     Zona_Ventas/albaran.h \
-    Busquedas/frmbuscarproveedor.h \
     Zona_Compras/pedidoproveedor.h \
     Almacen/frmtipostarifa.h \
-    Zona_Ventas/frmcajaabierta.h \
     Almacen/frmasociarproveedor.h \
     Auxiliares/monetarydelegate.h \
     Almacen/frmlistadosarticulo.h \
@@ -286,7 +275,6 @@ HEADERS  += mainwindow.h \
     Zona_Administrador/auxmodule.h \
     Zona_Pacientes/frmanadirhierb.h \
     Auxiliares/datedelegate.h \
-    Zona_Pacientes/frmcobrardeuda.h \
     LibsGraficas/openchart.h \
     LibsGraficas/qchartpiece.h \
     Zona_Contabilidad/frmentrada_apuntes.h \
@@ -371,9 +359,6 @@ FORMS    += mainwindow.ui \
     Zona_Pacientes/frmClientes.ui \
     login.ui \
     Zona_Compras/frmproveedores.ui \
-    Busquedas/frmbuscarcliente.ui \
-    Busquedas/frmbuscarpoblacion.ui \
-    Busquedas/frmBuscarFactura.ui \
     Zona_Administrador/frmempresas.ui \
     Zona_Pacientes/frmfichapaciente.ui \
     Zona_Pacientes/frmanadirmedicamento.ui \
@@ -408,9 +393,7 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmpedidos.ui \
     Zona_Ventas/frmfacturas.ui \
     Zona_Ventas/frmalbaran.ui \
-    Busquedas/frmbuscarproveedor.ui \
     Almacen/frmtipostarifa.ui \
-    Zona_Ventas/frmcajaabierta.ui \
     Almacen/frmasociarproveedor.ui \
     Almacen/frmlistadosarticulo.ui \
     Zona_Compras/frmrecepcion_pedidos.ui \
@@ -418,7 +401,6 @@ FORMS    += mainwindow.ui \
     Zona_Pacientes/frmanadirdiagnostico.ui \
     Zona_Administrador/frmconfigmaya.ui \
     Zona_Pacientes/frmanadirhierb.ui \
-    Zona_Pacientes/frmcobrardeuda.ui \
     Zona_Contabilidad/frmentrada_apuntes.ui \
     Auxiliares/frmdialogoimprimir.ui \
     Busquedas/db_consulta_view.ui \

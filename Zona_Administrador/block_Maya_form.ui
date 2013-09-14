@@ -75,7 +75,7 @@
       <string>Desbloquear</string>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/abrecaja.png</normaloff>:/Icons/PNG/abrecaja.png</iconset>
      </property>
      <property name="iconSize">
@@ -92,7 +92,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../Maya.qrc">:/Icons/PNG/logo-blocked.png</pixmap>
+      <pixmap resource="../maya.qrc">:/Icons/PNG/Neux.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -102,7 +102,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections/>
 </ui>

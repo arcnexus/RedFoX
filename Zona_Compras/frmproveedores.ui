@@ -27,7 +27,7 @@
    <item row="1" column="0" colspan="2">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_5">
       <layout class="QGridLayout" name="gridLayout_20">
@@ -2421,9 +2421,9 @@ background-color: rgb(248, 245, 194);</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 85, 0);
-font: 75 16pt &quot;Nimbus Sans L&quot;;
-background-color: rgb(0, 0, 57);</string>
+      <string notr="true">color: rgb(255, 255, 255);
+font: 75 14pt &quot;Nimbus Sans L&quot;;
+background-color: #304163;</string>
      </property>
      <property name="text">
       <string>Gestión de Proveedores</string>

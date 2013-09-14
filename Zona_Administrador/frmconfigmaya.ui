@@ -14,18 +14,12 @@
    <string>Configuración de maya</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/Icons/PNG/terra.png</normaloff>:/Icons/PNG/terra.png</iconset>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background-color:#4c6088</string>
+   <iconset resource="../maya.qrc">
+    <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="1" column="1" colspan="3">
     <widget class="QFrame" name="frame_2">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(175,195,225);</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -127,9 +121,6 @@ QPushButton:enabled{color: rgb(255,255,255); }
    </item>
    <item row="1" column="0" rowspan="2">
     <widget class="QFrame" name="frame">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(175,195,225);</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -153,7 +144,7 @@ QPushButton:enabled{color: rgb(255,255,255); }
       <item row="2" column="0" colspan="2">
        <widget class="QCheckBox" name="chkconta">
         <property name="text">
-         <string>Modulo Contabilidad (mayaConta)</string>
+         <string>Modulo Contabilidad (Conta)</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -163,7 +154,7 @@ QPushButton:enabled{color: rgb(255,255,255); }
       <item row="1" column="0" colspan="2">
        <widget class="QCheckBox" name="chkmedicum">
         <property name="text">
-         <string>Modulo Medicina(maya Medicum)</string>
+         <string>Modulo Medicina(Medic)</string>
         </property>
        </widget>
       </item>
@@ -174,7 +165,7 @@ QPushButton:enabled{color: rgb(255,255,255); }
 color: rgb(255,255,255);</string>
         </property>
         <property name="text">
-         <string>Módulos maya</string>
+         <string>Módulos RedFoX</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -199,7 +190,7 @@ color: rgb(255,255,255);</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="Pagina_general">
       <property name="styleSheet">
@@ -894,9 +885,6 @@ color: rgb(255,255,255);</string>
        <height>187</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(175,195,225);</string>
-     </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="1" colspan="4">
        <widget class="QLabel" name="label_33">
@@ -1072,7 +1060,9 @@ color: rgb(255,255,255);</string>
   <tabstop>pushButton_2</tabstop>
   <tabstop>pushButton</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../maya.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButton_2</sender>

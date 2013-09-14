@@ -111,11 +111,11 @@
     <widget class="QLabel" name="label_4">
      <property name="styleSheet">
       <string notr="true">font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255, 85, 0);
+color: rgb(255, 255, 255);
 background-color: rgb(0, 0, 58);</string>
      </property>
      <property name="text">
-      <string>ABERTURA CAJA</string>
+      <string>Abertura de Caja</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

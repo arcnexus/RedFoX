@@ -1,6 +1,5 @@
 #include "editeventform.h"
 #include "ui_editeventform.h"
-#include "../Busquedas/frmbuscarcliente.h"
 #include "../Zona_Pacientes/cliente.h"
 #include <QColorDialog>
 EditEventForm::EditEventForm(QWidget *parent) :
@@ -116,18 +115,19 @@ void EditEventForm::on_btn_guardar_clicked()
 
 void EditEventForm::on_pushButton_clicked()
 {
-    FrmBuscarCliente BuscarClientes(this);
-    if(BuscarClientes.exec() == QDialog::Accepted)
-    {
-        int nid = BuscarClientes.Devolverid();
-        QString cid = QString::number(nid);
+    //TODO - BUSCAR CLIENTES
+//    FrmBuscarCliente BuscarClientes(this);
+//    if(BuscarClientes.exec() == QDialog::Accepted)
+//    {
+//        int nid = BuscarClientes.Devolverid();
+//        QString cid = QString::number(nid);
 
-        Cliente oCliente;
-        oCliente.Recuperar("Select * from clientes where id ="+cid+" order by id limit 1 ");
-        QString name = oCliente.nombre_fiscal;
-        int i = ui->combo_cliente->findText(name);
-        ui->combo_cliente->setCurrentIndex(i);
-    }
+//        Cliente oCliente;
+//        oCliente.Recuperar("Select * from clientes where id ="+cid+" order by id limit 1 ");
+//        QString name = oCliente.nombre_fiscal;
+//        int i = ui->combo_cliente->findText(name);
+//        ui->combo_cliente->setCurrentIndex(i);
+//    }
 }
 
 void EditEventForm::timeChanged(const QTime &time)

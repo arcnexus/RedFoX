@@ -14,11 +14,8 @@
    <string>Busqueda de Medicamentos</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Maya.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(219, 228, 255);</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
@@ -43,9 +40,6 @@
    </item>
    <item row="0" column="0" colspan="3">
     <widget class="QFrame" name="frame">
-     <property name="styleSheet">
-      <string notr="true">background: #4c6088</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -97,7 +91,7 @@
              <string>Consultar Vademécum</string>
             </property>
             <property name="icon">
-             <iconset resource="../Maya.qrc">
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
             </property>
            </widget>
@@ -114,7 +108,7 @@
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../Maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+             <pixmap resource="../maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -140,7 +134,7 @@
              <string>Aceptar</string>
             </property>
             <property name="icon">
-             <iconset resource="../Maya.qrc">
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
             </property>
            </widget>
@@ -155,7 +149,7 @@
           <item row="1" column="0" colspan="3">
            <widget class="QFrame" name="frame_2">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(197, 205, 255);</string>
+             <string notr="true">background-color: rgb(221, 229, 255);</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -285,7 +279,7 @@ color: #FFFFFF;</string>
                  <string/>
                 </property>
                 <property name="pixmap">
-                 <pixmap resource="../Maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+                 <pixmap resource="../maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>true</bool>
@@ -359,7 +353,7 @@ color: #FFFFFF;</string>
                  <string>Buscar Patología</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../Maya.qrc">
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -389,7 +383,7 @@ color: #FFFFFF;</string>
                  <string>ver prospeco</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../Maya.qrc">
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/DefineControls.png</normaloff>:/Icons/PNG/DefineControls.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -406,7 +400,7 @@ color: #FFFFFF;</string>
                  <string>Aceptar</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../Maya.qrc">
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                 </property>
                </widget>
@@ -423,7 +417,7 @@ color: #FFFFFF;</string>
                  <string>Consultar medicamentos patologia señalada</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../Maya.qrc">
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                 </property>
                </widget>
@@ -491,7 +485,7 @@ color: #FFFFFF;</string>
              <string>Buscar Moléculas</string>
             </property>
             <property name="icon">
-             <iconset resource="../Maya.qrc">
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
             </property>
             <property name="iconSize">
@@ -508,7 +502,7 @@ color: #FFFFFF;</string>
              <string>Aceptar</string>
             </property>
             <property name="icon">
-             <iconset resource="../Maya.qrc">
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
             </property>
             <property name="iconSize">
@@ -537,7 +531,7 @@ color: #FFFFFF;</string>
              <string>Consultar medicamentos molécula señalada</string>
             </property>
             <property name="icon">
-             <iconset resource="../Maya.qrc">
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
             </property>
            </widget>
@@ -659,7 +653,7 @@ color: #FFFFFF;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../Maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+             <pixmap resource="../maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -717,7 +711,7 @@ color: #FFFFFF;</string>
              <string>C. medicamentos Principio Activo señalado</string>
             </property>
             <property name="icon">
-             <iconset resource="../Maya.qrc">
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
             </property>
            </widget>
@@ -777,7 +771,7 @@ color: #FFFFFF;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../Maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
+             <pixmap resource="../maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -790,7 +784,7 @@ color: #FFFFFF;</string>
              <string>Aceptar</string>
             </property>
             <property name="icon">
-             <iconset resource="../Maya.qrc">
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
             </property>
             <property name="iconSize">
@@ -875,7 +869,7 @@ color: #FFFFFF;</string>
              <string>Buscar Principios Activos.</string>
             </property>
             <property name="icon">
-             <iconset resource="../Maya.qrc">
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
             </property>
             <property name="iconSize">
@@ -922,11 +916,11 @@ color: #FFFFFF;</string>
   <customwidget>
    <class>QWebView</class>
    <extends>QWidget</extends>
-   <header>QtWebKit/QWebView</header>
+   <header>QtWebKitWidgets/QWebView</header>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -11,10 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(165, 179, 255);</string>
+   <string>Recepción de pedidos</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="3" column="6">
@@ -120,11 +117,11 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 0, 128);
+         <string notr="true">background-color: #304163;
 color: rgb(255, 255, 255);</string>
         </property>
         <property name="text">
-         <string>FILTRAR PEDidOS</string>
+         <string>Filtrar Pedidos</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -233,27 +230,6 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_36">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>27</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255, 85, 0);
-background-color: rgb(0,0,58);</string>
-     </property>
-     <property name="text">
-      <string>RECEPCIÓN DE PEDidOS</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="1" rowspan="2" colspan="8">
     <widget class="QFrame" name="frame_2">
      <property name="styleSheet">
@@ -267,6 +243,46 @@ background-color: rgb(0,0,58);</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
+       <widget class="QLabel" name="lblRegistrarAlbaran">
+        <property name="minimumSize">
+         <size>
+          <width>144</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 170, 0);
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Registrando Albarán</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="lblRegistrarFactura">
+        <property name="minimumSize">
+         <size>
+          <width>144</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 170, 0);
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Registrando Factura</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
        <widget class="QTableWidget" name="tablaLineas">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);
@@ -283,7 +299,7 @@ alternate-background-color: rgb(255, 253, 219);</string>
         </attribute>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="2" column="0" colspan="2">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QLabel" name="lblAlbaran">
@@ -371,26 +387,6 @@ alternate-background-color: rgb(255, 253, 219);</string>
      </layout>
     </widget>
    </item>
-   <item row="0" column="4">
-    <widget class="QLabel" name="lblRegistrarFactura">
-     <property name="minimumSize">
-      <size>
-       <width>144</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 170, 0);
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>Registrando Factura</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
    <item row="3" column="7">
     <widget class="QPushButton" name="btnImprimir">
      <property name="enabled">
@@ -424,38 +420,26 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="3">
-    <widget class="QLabel" name="lblRegistrarAlbaran">
-     <property name="minimumSize">
+   <item row="0" column="0" colspan="5">
+    <widget class="QLabel" name="label_36">
+     <property name="maximumSize">
       <size>
-       <width>144</width>
-       <height>0</height>
+       <width>16777215</width>
+       <height>27</height>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 170, 0);
-color: rgb(255, 255, 255);</string>
+      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255, 255, 255);
+background-color: #304163;</string>
      </property>
      <property name="text">
-      <string>Registrando Albarán</string>
+      <string>Recepción de Pedidos</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-   </item>
-   <item row="0" column="1" colspan="2">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

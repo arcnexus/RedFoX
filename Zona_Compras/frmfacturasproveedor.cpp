@@ -96,6 +96,8 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     while (modo.next())
         l_modo.append(modo.record().value("descripcion").toString());
     ui->cbogastos->addItems(l_modo);
+
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 FrmFacturasProveedor::~FrmFacturasProveedor()
@@ -458,8 +460,6 @@ void FrmFacturasProveedor::llenar_campos()
     ui->SpinGastoDist1->setValue(oFacPro->imp_gasto1);
     ui->SpinGastoDist2->setValue(oFacPro->imp_gasto2);
     ui->SpinGastoDist3->setValue(oFacPro->imp_gasto3);
-    ui->GastoDist_toLineas->setChecked(oFacPro->gasto_to_coste);
-    ui->GastoDist_toTotal->setChecked(!oFacPro->gasto_to_coste);
 
     helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
     helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
@@ -530,7 +530,6 @@ void FrmFacturasProveedor::llenar_fac_pro()
     oFacPro->imp_gasto1 = ui->SpinGastoDist1->value();
     oFacPro->imp_gasto2 = ui->SpinGastoDist2->value();
     oFacPro->imp_gasto3 = ui->SpinGastoDist3->value();
-    oFacPro->gasto_to_coste = ui->GastoDist_toLineas->isChecked();
 }
 
 void FrmFacturasProveedor::llenar_campos_iva()
@@ -629,17 +628,9 @@ void FrmFacturasProveedor::on_btnListados_clicked()
 
 void FrmFacturasProveedor::on_btnBuscar_clicked()
 {
-    ui->radBusqueda->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
-
-void FrmFacturasProveedor::on_radBusqueda_toggled(bool checked)
-{
-    if(checked)
-        ui->stackedWidget->setCurrentIndex(1);
-    else
-        ui->stackedWidget->setCurrentIndex(0);
-}
 
 void FrmFacturasProveedor::on_cboOrden_currentIndexChanged(const QString &arg1)
 {
@@ -719,7 +710,7 @@ void FrmFacturasProveedor::on_tabla_doubleClicked(const QModelIndex &index)
     oFacPro->recuperar_factura(id);
     llenar_campos();
     bloquearcampos(true);
-    ui->radEdicion->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void FrmFacturasProveedor::on_cboBuscar_currentIndexChanged(const QString &arg1)

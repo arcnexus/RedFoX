@@ -2,8 +2,6 @@
 #define FRMALBARAN_H
 
 #include "../Auxiliares/Globlal_Include.h"
-#include "../Busquedas/frmbuscarcliente.h"
-//
 #include "../Auxiliares/table_helper.h"
 #include "../mayamodule.h"
 #include "../Auxiliares/timedmessagebox.h"
@@ -98,7 +96,6 @@ private slots:
 
 private:
     Ui::FrmAlbaran *ui;
-    FrmBuscarCliente *BuscarClientes;
     QSqlQueryModel *ModelLin_alb;
     Table_Helper helper;
     bool in_edit;

@@ -106,6 +106,8 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     modo << tr("A-Z") << tr("Z-A");
     ui->cboModo->addItems(modo);
 
+    ui->stackedWidget->setCurrentIndex(1);
+
 
 
 }
@@ -647,7 +649,7 @@ void FrmAlbaranProveedor::guardar_campos_en_objeto()
 
 void FrmAlbaranProveedor::on_btnBuscar_clicked()
 {
-    ui->radBusqueda->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(1);
     ui->txtBuscar->setFocus();
 
     helper.resizeTable();
@@ -761,7 +763,7 @@ void FrmAlbaranProveedor::on_tabla_doubleClicked(const QModelIndex &index)
     oAlbPro->Recuperar(id);
     llenar_campos();
     bloquearcampos(true);
-    ui->radEdicion->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void FrmAlbaranProveedor::on_cboOrden_currentIndexChanged(const QString &arg1)

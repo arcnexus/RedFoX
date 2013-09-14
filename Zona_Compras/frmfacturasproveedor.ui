@@ -14,82 +14,16 @@
    <string>Gestión de Facturas de proveedor</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(165, 179, 255);</string>
+   <iconset resource="../maya.qrc">
+    <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_36">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>30</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255, 85, 0);
-background-color: rgb(0, 0, 58);</string>
-     </property>
-     <property name="text">
-      <string>GESTIÓN DE FACTURAS DE PROVEEDORES/ACREEEDORES</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>293</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="0" column="2">
-    <widget class="QFrame" name="frame">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_10">
-      <item>
-       <widget class="QRadioButton" name="radBusqueda">
-        <property name="text">
-         <string>Modo Búsqueda</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="radEdicion">
-        <property name="text">
-         <string>Modo Edición</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="4">
     <widget class="QLabel" name="label_30">
-     <property name="minimumSize">
+     <property name="maximumSize">
       <size>
-       <width>250</width>
-       <height>0</height>
+       <width>150</width>
+       <height>16777215</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -104,10 +38,10 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="5">
+   <item row="1" column="0" colspan="3">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -922,7 +856,7 @@ alternate-background-color: rgb(255, 253, 225);</string>
            <item row="1" column="1">
             <widget class="QGroupBox" name="groupBox_3">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 127);</string>
+              <string notr="true">background-color: rgb(170, 170, 127);</string>
              </property>
              <property name="title">
               <string>Entregas a cuenta:</string>
@@ -1806,28 +1740,10 @@ color: rgb(23, 76, 7);</string>
               <string>Gastos distribuidos</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_11">
-              <item row="2" column="3">
-               <widget class="QRadioButton" name="GastoDist_toTotal">
-                <property name="text">
-                 <string>Sumar al total</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLineEdit" name="txtGastoDist3">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(23, 76, 7);</string>
-                </property>
-                <property name="placeholderText">
-                 <string>Descripcion...</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="4">
+              <item row="2" column="2">
                <widget class="QPushButton" name="btn_AplyGastoDist">
                 <property name="text">
-                 <string>Aplicar</string>
+                 <string>Aplicar a Coste</string>
                 </property>
                </widget>
               </item>
@@ -1842,17 +1758,6 @@ color: rgb(23, 76, 7);</string>
                 </property>
                 <property name="maximum">
                  <double>999999999.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLineEdit" name="txtGastoDist1">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(23, 76, 7);</string>
-                </property>
-                <property name="placeholderText">
-                 <string>Descripcion...</string>
                 </property>
                </widget>
               </item>
@@ -1894,13 +1799,25 @@ color: rgb(23, 76, 7);</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="2">
-               <widget class="QRadioButton" name="GastoDist_toLineas">
-                <property name="text">
-                 <string>Aplicar a líneas</string>
+              <item row="0" column="0">
+               <widget class="QLineEdit" name="txtGastoDist1">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(23, 76, 7);</string>
                 </property>
-                <property name="checked">
-                 <bool>true</bool>
+                <property name="placeholderText">
+                 <string>Descripcion...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLineEdit" name="txtGastoDist3">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(23, 76, 7);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Descripcion...</string>
                 </property>
                </widget>
               </item>
@@ -2116,9 +2033,6 @@ color: rgb(23, 76, 7);</string>
            <width>16777215</width>
            <height>35</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 235, 167);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -2418,7 +2332,8 @@ background-color: rgb(248, 245, 194);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(170, 170, 127);</string>
+          <string notr="true">background-color: rgb(170, 170, 127);
+color: rgb(0, 0, 0);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -2570,6 +2485,27 @@ background-color: rgb(248, 245, 194);</string>
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="label_36">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255, 255, 255);
+background-color: #304163;</string>
+     </property>
+     <property name="text">
+      <string>Gestión de Facturas de proveedores / acreedores</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
   </layout>

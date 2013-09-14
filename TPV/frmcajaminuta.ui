@@ -14,14 +14,11 @@
    <string>Gestión de Caja diaria</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
+   <iconset resource="../maya.qrc">
+    <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(165, 179, 255);</string>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
-   <item>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -98,6 +95,10 @@ color: rgb(0, 0, 192);</string>
            </property>
            <property name="text">
             <string>c.Usuario</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../maya.qrc">
+             <normaloff>:/Icons/PNG/usuario.png</normaloff>:/Icons/PNG/usuario.png</iconset>
            </property>
           </widget>
          </item>
@@ -231,11 +232,12 @@ font: 28pt &quot;Sans Serif&quot;;</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 180, 50);
-font: 75 9pt &quot;Sans Serif&quot;;</string>
+          <string notr="true">background-color: rgb(0, 0, 57);
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255, 255, 255);</string>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;GESTIÓN DE CAJA / MINUTACIÓN SERVICIOS PRESTADOS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>Gestión de caja / Minutación de servicios</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -681,60 +683,84 @@ font: 75 9pt &quot;Sans Serif&quot;;</string>
            <item row="0" column="1">
             <widget class="QLabel" name="label_28">
              <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 192);</string>
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: #304163;</string>
              </property>
              <property name="text">
               <string>BASE</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
            <item row="0" column="2">
             <widget class="QLabel" name="label_55">
              <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 192);</string>
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: #304163;</string>
              </property>
              <property name="text">
               <string>%IVA</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
            <item row="0" column="3">
             <widget class="QLabel" name="label_56">
              <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 192);</string>
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: #304163;</string>
              </property>
              <property name="text">
               <string>IVA</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
            <item row="0" column="4">
             <widget class="QLabel" name="label_57">
              <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 192);</string>
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: #304163;</string>
              </property>
              <property name="text">
               <string>%R.E.</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
            <item row="0" column="5">
             <widget class="QLabel" name="label_58">
              <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 192);</string>
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: #304163;</string>
              </property>
              <property name="text">
               <string>R.E.</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
            <item row="0" column="6">
             <widget class="QLabel" name="label_59">
              <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 192);</string>
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: #304163;</string>
              </property>
              <property name="text">
               <string>TOTAL</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
@@ -1713,7 +1739,8 @@ color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 220, 168);</string>
+          <string notr="true">background-color: rgb(170, 170, 127);
+color: rgb(0, 0, 0);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -1947,7 +1974,7 @@ color: rgb(255, 255, 255);</string>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_7">
-         <item row="1" column="1">
+         <item row="1" column="2">
           <widget class="QPushButton" name="btnPonerEspera">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -1962,11 +1989,90 @@ color: rgb(255, 255, 255);</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
+            <string notr="true">background-color: rgb(255, 218, 144);</string>
            </property>
            <property name="text">
-            <string>Poner en Espera</string>
+            <string>Poner en
+ Espera
+(F8)</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../maya.qrc">
+             <normaloff>:/Icons/PNG/wait.png</normaloff>:/Icons/PNG/wait.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>60</width>
+             <height>60</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QPushButton" name="btporc_recuperarEspera">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(220, 216, 255);</string>
+           </property>
+           <property name="text">
+            <string>Recuperar 
+en Espera
+(F9)</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../maya.qrc">
+             <normaloff>:/Icons/PNG/wait2.png</normaloff>:/Icons/PNG/wait2.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>60</width>
+             <height>60</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="3">
+          <widget class="QPushButton" name="btnImprimirInforme">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(231, 255, 224);</string>
+           </property>
+           <property name="text">
+            <string>Imprimir 
+Informe
+(F12)</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../maya.qrc">
+             <normaloff>:/Icons/PNG/impresora2.png</normaloff>:/Icons/PNG/impresora2.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>60</width>
+             <height>60</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -1985,41 +2091,25 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
+            <string notr="true">background-color: rgb(240, 255, 162);</string>
            </property>
            <property name="text">
-            <string>Ver Agenda</string>
+            <string>Ver Agenda
+(F10)</string>
            </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="btnCobrarTicket">
-           <property name="enabled">
-            <bool>false</bool>
+           <property name="icon">
+            <iconset resource="../maya.qrc">
+             <normaloff>:/Icons/PNG/Calender.png</normaloff>:/Icons/PNG/Calender.png</iconset>
            </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
+           <property name="iconSize">
             <size>
-             <width>0</width>
-             <height>0</height>
+             <width>60</width>
+             <height>60</height>
             </size>
            </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
-           </property>
-           <property name="text">
-            <string>Cobrar Ticket</string>
-           </property>
           </widget>
          </item>
-         <item row="5" column="1">
+         <item row="5" column="2">
           <widget class="QPushButton" name="btnNuevaVisita">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -2034,16 +2124,29 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
+            <string notr="true">background-color: rgb(202, 205, 255);</string>
            </property>
            <property name="text">
-            <string>Nueva Visita</string>
+            <string>Nueva Visita
+(F11)</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../maya.qrc">
+             <normaloff>:/Icons/PNG/newvisita.png</normaloff>:/Icons/PNG/newvisita.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>60</width>
+             <height>60</height>
+            </size>
            </property>
           </widget>
          </item>
-         <item row="5" column="2">
-          <widget class="QPushButton" name="btnImprimirInforme">
+         <item row="1" column="0" colspan="2">
+          <widget class="QPushButton" name="btnCobrarTicket">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -2057,16 +2160,25 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
+            <string notr="true">background-color: rgb(214, 255, 192);</string>
            </property>
            <property name="text">
-            <string>Imprimir Informe</string>
+            <string>Cobrar Ticket (F7)</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../maya.qrc">
+             <normaloff>:/Icons/PNG/tpv.png</normaloff>:/Icons/PNG/tpv.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>60</width>
+             <height>66</height>
+            </size>
            </property>
           </widget>
          </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="btporc_recuperarEspera">
+         <item row="5" column="1">
+          <widget class="QPushButton" name="btnVerAgenda_2">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -2080,11 +2192,21 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
+            <string notr="true">background-color: rgb(240, 255, 162);</string>
            </property>
            <property name="text">
-            <string>Recuperar en Espera</string>
+            <string>Alternar modo 
+Visual</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../maya.qrc">
+             <normaloff>:/Icons/PNG/refrescar.png</normaloff>:/Icons/PNG/refrescar.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>60</width>
+             <height>60</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -2094,7 +2216,7 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
      </item>
     </layout>
    </item>
-   <item>
+   <item row="1" column="0">
     <widget class="QFrame" name="frame_4">
      <property name="minimumSize">
       <size>
@@ -2107,9 +2229,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
        <width>16777215</width>
        <height>35</height>
       </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 235, 167);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -2248,20 +2367,17 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          </size>
         </property>
         <property name="text">
-         <string>P. Factura</string>
+         <string>Traspasar</string>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnPasarAlbaran">
-        <property name="minimumSize">
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
+        </property>
+        <property name="iconSize">
          <size>
-          <width>0</width>
-          <height>33</height>
+          <width>25</width>
+          <height>25</height>
          </size>
-        </property>
-        <property name="text">
-         <string>P. Albarán</string>
         </property>
        </widget>
       </item>
@@ -2277,8 +2393,8 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
          <string>Borrar</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>:/Icons/PNG/delete.png</normaloff>:/Icons/PNG/delete.png</iconset>
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2314,7 +2430,6 @@ QPushButton:enabled{color: rgb(255,255,255); }</string>
   <tabstop>btnBuscar</tabstop>
   <tabstop>btnImprimir</tabstop>
   <tabstop>btnPasarFactura</tabstop>
-  <tabstop>btnPasarAlbaran</tabstop>
   <tabstop>btnBorrar</tabstop>
   <tabstop>txtticket</tabstop>
   <tabstop>txtcodigo_cliente</tabstop>

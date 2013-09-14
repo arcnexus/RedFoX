@@ -15,10 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="maya.qrc">
-    <normaloff>:/Icons/PNG/maya_logo2.png</normaloff>:/Icons/PNG/maya_logo2.png</iconset>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(165, 179, 255);</string>
+    <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="0" colspan="5">

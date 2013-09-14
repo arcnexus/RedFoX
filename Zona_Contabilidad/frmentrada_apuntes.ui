@@ -23,10 +23,12 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 0, 57);</string>
+      <string notr="true">color: rgb(255, 255, 255);
+font: 14pt &quot;Sans Serif&quot;;
+background-color: #304163;</string>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600; color:#ff5500;&quot;&gt;CONTABILIDAD - ENTRADA DE APUNTES.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>Contabilidad - Gestión de apuntes del diario</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -226,8 +228,9 @@ color: rgb(255, 0, 0);</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color:  #304163;
+color: rgb(255, 255, 255);
+</string>
         </property>
         <property name="text">
          <string>DEBE</string>
@@ -328,8 +331,9 @@ color: rgb(255, 255, 255);</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color:  #304163;
+color: rgb(255, 255, 255);
+</string>
         </property>
         <property name="text">
          <string>HABER</string>

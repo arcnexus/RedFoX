@@ -24,7 +24,7 @@
    <item row="1" column="0" colspan="3">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_5">
@@ -936,6 +936,9 @@ color: rgb(0, 64, 64);</string>
            </item>
            <item row="2" column="1" rowspan="3">
             <widget class="QGroupBox" name="groupBox_3">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(170, 170, 127);</string>
+             </property>
              <property name="title">
               <string>Entregas a cuenta:</string>
              </property>
@@ -2169,9 +2172,6 @@ color: rgb(0, 64, 64);</string>
            <height>35</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 235, 167);</string>
-         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -2569,10 +2569,10 @@ background-color: rgb(248, 245, 194);</string>
    </item>
    <item row="0" column="2">
     <widget class="QLabel" name="label_22">
-     <property name="minimumSize">
+     <property name="maximumSize">
       <size>
-       <width>250</width>
-       <height>0</height>
+       <width>150</width>
+       <height>16777215</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -2590,9 +2590,10 @@ color: rgb(255, 255, 255);</string>
    <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="label_36">
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 85, 0);
-font: 75 16pt &quot;Nimbus Sans L&quot;;
-background-color: rgb(0, 0, 57);</string>
+      <string notr="true">color: rgb(255, 255, 255);
+font: 75 14pt &quot;Nimbus Sans L&quot;;
+background-color: #304163;
+</string>
      </property>
      <property name="text">
       <string>Gestión de pedidos a proveedores</string>

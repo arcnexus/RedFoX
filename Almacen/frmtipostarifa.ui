@@ -7,25 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>767</width>
-    <height>490</height>
+    <height>492</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Tipos de Tarifa</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background: #4c6088</string>
+   <iconset resource="../maya.qrc">
+    <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_5">
    <item row="0" column="4">
     <widget class="QFrame" name="frame">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(175,195,225);</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -159,7 +153,7 @@ color: rgb(255, 255, 255);</string>
            <string>% Dto 1</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -173,7 +167,7 @@ color: rgb(255, 255, 255);</string>
            <string>% Dto 2</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -187,7 +181,7 @@ color: rgb(255, 255, 255);</string>
            <string>% Dto 3</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -201,7 +195,7 @@ color: rgb(255, 255, 255);</string>
            <string>% Dto 4</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -215,7 +209,7 @@ color: rgb(255, 255, 255);</string>
            <string>%Dto 5</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -229,7 +223,7 @@ color: rgb(255, 255, 255);</string>
            <string>% Dto6 </string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -329,7 +323,7 @@ color: rgb(255, 255, 255);</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(175,195,225);</string>
+      <string notr="true">background-color: rgb(170, 170, 127);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -441,9 +435,6 @@ color: rgb(255, 255, 255);</string>
    </item>
    <item row="2" column="4" rowspan="2">
     <widget class="QFrame" name="frame_4">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 195, 174);</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -560,6 +551,9 @@ color: rgb(255,255,255);</string>
       </item>
       <item row="7" column="0" colspan="2">
        <widget class="QLabel" name="lblDescArt">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 127);</string>
+        </property>
         <property name="text">
          <string>desc- articulo</string>
         </property>

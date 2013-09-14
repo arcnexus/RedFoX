@@ -748,7 +748,7 @@
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>5</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">
@@ -3304,9 +3304,6 @@ alternate-background-color: rgb(255, 255, 255);</string>
                <height>100</height>
               </size>
              </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(214, 208, 255);</string>
-             </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -4332,9 +4329,9 @@ color: rgb(0, 0, 0);</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 85, 0);
+      <string notr="true">color: rgb(255, 255, 255);
 font: 75 16pt &quot;Nimbus Sans L&quot;;
-background-color: rgb(0, 0, 57);</string>
+background-color: #304163;</string>
      </property>
      <property name="text">
       <string>Gestión de Pacientes - Datos administrativos</string>

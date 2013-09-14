@@ -170,5 +170,8 @@
         <file>PNG/kits.png</file>
         <file>PNG/transport.png</file>
         <file>PNG/fpagos.png</file>
+        <file>PNG/wait.png</file>
+        <file>PNG/wait2.png</file>
+        <file>PNG/newvisita.png</file>
     </qresource>
 </RCC>

@@ -1,7 +1,6 @@
 #include "frmfacturas.h"
 #include "ui_frmfacturas.h"
 #include "../Busquedas/db_consulta_view.h"
-#include "../Busquedas/frmBuscarFactura.h"
 #include "../Zona_Contabilidad/apuntes.h"
 #include "../Auxiliares/frmaddentregascuenta.h"
 #include "../Auxiliares/monetarydelegate.h"
@@ -39,7 +38,9 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->comboPais->setModel(Configuracion_global->paises_model);
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de facturas a clientes"));
+    //--------------------------
     // Pongo valores por defecto
+    //--------------------------
     ui->lbcontabilizada->setVisible(false);
     ui->lblFacturaCobrada->setVisible(false);
     ui->lblFacturaImpresa->setVisible(false);

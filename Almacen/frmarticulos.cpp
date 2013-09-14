@@ -1,7 +1,6 @@
 #include "frmarticulos.h"
 #include "ui_frmarticulos.h"
 #include "../Almacen/frmtarifas.h"
-#include "../Busquedas/frmbuscarproveedor.h"
 #include "../Almacen/frmasociarproveedor.h"
 #include "../Auxiliares/spinboxdelegate.h"
 #include "../db_table_view.h"
@@ -766,19 +765,14 @@ void FrmArticulos::on_botBuscarSubSubFamilia_clicked()
 
 void FrmArticulos::on_btnBuscarProveedor_clicked()
 {
-    FrmBuscarProveedor buscar(this);
-    if(buscar.exec()==QDialog::Accepted)
-    {
-        QSqlQuery qProv(Configuracion_global->groupDB);
-        qProv.prepare("Select * from proveedores where id =:nid");
-        qProv.bindValue(":nid",buscar.nidProv);
-        if(qProv.exec()){
-            qProv.next();
-            ui->txtcodigo_proveedor->setText(qProv.record().field("codigo").value().toString());
-            ui->txtproveedor->setText(qProv.record().field("proveedor").value().toString());
-            oArticulo->id_proveedor = buscar.nidProv;
-        }
-    }
+  // TODO BUSCAR PROVEEDORES
+//        if(qProv.exec()){
+//            qProv.next();
+//            ui->txtcodigo_proveedor->setText(qProv.record().field("codigo").value().toString());
+//            ui->txtproveedor->setText(qProv.record().field("proveedor").value().toString());
+//            oArticulo->id_proveedor = buscar.nidProv;
+//        }
+  //  }
 
 }
 

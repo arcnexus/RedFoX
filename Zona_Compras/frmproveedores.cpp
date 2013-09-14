@@ -1,14 +1,11 @@
 #include "frmproveedores.h"
 #include "ui_frmproveedores.h"
 #include "proveedor.h"
-
-#include "../Busquedas/frmbuscarpoblacion.h"
 #include "frmfacturasproveedor.h"
 #include "frmpedidosproveedor.h"
 #include "frmalbaranproveedor.h"
 #include "../Auxiliares/monetarydelegate.h"
 #include "../Auxiliares/datedelegate.h"
-#include "../Busquedas/frmbuscarproveedor.h"
 #include "../Auxiliares/frmaddentregascuenta.h"
 #include "../Auxiliares/entregascuenta.h"
 
@@ -400,70 +397,72 @@ void frmProveedores::on_btnAnadir_clicked()
 
 void frmProveedores::on_txtpoblacion_editingFinished()
 {
-    ui->txtpoblacion->setText(ui->txtpoblacion->text().toUpper());
-    if (ui->txtcp->text().isEmpty() && !ui->txtpoblacion->text().isEmpty() && !ui->txtcp->isReadOnly()) {
-        FrmBuscarPoblacion BuscarPoblacion;
+    // TODO BUSCAR POBLACIÓN.
+//    ui->txtpoblacion->setText(ui->txtpoblacion->text().toUpper());
+//    if (ui->txtcp->text().isEmpty() && !ui->txtpoblacion->text().isEmpty() && !ui->txtcp->isReadOnly()) {
+//        FrmBuscarPoblacion BuscarPoblacion;
 
-        //Configuracion_global->CargarDatos();
-        BuscarPoblacion.setpoblacion(ui->txtpoblacion->text(),1);
-        if(BuscarPoblacion.exec()) {
-            //  BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
-            int nid = BuscarPoblacion.Devolverid();
+//        //Configuracion_global->CargarDatos();
+//        BuscarPoblacion.setpoblacion(ui->txtpoblacion->text(),1);
+//        if(BuscarPoblacion.exec()) {
+//            //  BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
+//            int nid = BuscarPoblacion.Devolverid();
 
-            if(nid > 0) {
-                QSqlQuery qPoblacion(Configuracion_global->groupDB);
-                QString cid;
-                cid = QString::number(nid);
-                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cid");
-                qPoblacion.bindValue(":id",cid);
-                if(!qPoblacion.exec()) {
-                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-                } else {
-                    if (qPoblacion.next()) {
-                        ui->txtpoblacion->setText(qPoblacion.value(0).toString());
-                        ui->txtcp->setText(qPoblacion.value(1).toString());
-                        ui->txtprovincia->setText(qPoblacion.value(2).toString());
-                        int index = ui->txtpais->findText(Configuracion_global->pais);
-                        ui->txtpais->setCurrentIndex(index);
-                    }
-                }
+//            if(nid > 0) {
+//                QSqlQuery qPoblacion(Configuracion_global->groupDB);
+//                QString cid;
+//                cid = QString::number(nid);
+//                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cid");
+//                qPoblacion.bindValue(":id",cid);
+//                if(!qPoblacion.exec()) {
+//                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+//                } else {
+//                    if (qPoblacion.next()) {
+//                        ui->txtpoblacion->setText(qPoblacion.value(0).toString());
+//                        ui->txtcp->setText(qPoblacion.value(1).toString());
+//                        ui->txtprovincia->setText(qPoblacion.value(2).toString());
+//                        int index = ui->txtpais->findText(Configuracion_global->pais);
+//                        ui->txtpais->setCurrentIndex(index);
+//                    }
+//                }
 
-            }
-        }
-    }
-    ui->txttelefono1->setFocus();
+//            }
+//        }
+//    }
+//    ui->txttelefono1->setFocus();
 
 }
 
 void frmProveedores::on_txtcp_editingFinished()
 {
-    if (!ui->txtcp->text().isEmpty() && ui->txtpoblacion->text().isEmpty() && !ui->txtcp->isReadOnly()){
-        FrmBuscarPoblacion BuscarPoblacion;
+    // TODO - BUSCAR POBLACION
+//    if (!ui->txtcp->text().isEmpty() && ui->txtpoblacion->text().isEmpty() && !ui->txtcp->isReadOnly()){
+//        FrmBuscarPoblacion BuscarPoblacion;
 
-        BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
-        if(BuscarPoblacion.exec()) {
-            int nid = BuscarPoblacion.Devolverid();
-            if(nid > 0) {
-                QSqlQuery qPoblacion(Configuracion_global->groupDB);
-                QString cid;
-                cid = QString::number(nid);
-                qPoblacion.prepare("select  poblacion,  cp, provincia from poblaciones where id = :cid");
-                qPoblacion.bindValue(":id",cid);
-                if(!qPoblacion.exec()) {
-                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-                } else {
-                    if (qPoblacion.next()) {
-                        ui->txtpoblacion->setText(qPoblacion.record().value("poblacion").toString());
-                        ui->txtprovincia->setText(qPoblacion.record().value("provincia").toString());
-                        int index = ui->txtpais->findText(Configuracion_global->pais);
-                        ui->txtpais->setCurrentIndex(index);
-                        ui->txttelefono1->setFocus();
-                    }
-                }
+//        BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
+//        if(BuscarPoblacion.exec()) {
+//            int nid = BuscarPoblacion.Devolverid();
+//            if(nid > 0) {
+//                QSqlQuery qPoblacion(Configuracion_global->groupDB);
+//                QString cid;
+//                cid = QString::number(nid);
+//                qPoblacion.prepare("select  poblacion,  cp, provincia from poblaciones where id = :cid");
+//                qPoblacion.bindValue(":id",cid);
+//                if(!qPoblacion.exec()) {
+//                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+//                } else {
+//                    if (qPoblacion.next()) {
+//                        ui->txtpoblacion->setText(qPoblacion.record().value("poblacion").toString());
+//                        ui->txtprovincia->setText(qPoblacion.record().value("provincia").toString());
+//                        int index = ui->txtpais->findText(Configuracion_global->pais);
+//                        ui->txtpais->setCurrentIndex(index);
+//                        ui->txttelefono1->setFocus();
+//                    }
+//                }
 
-            }
-        }
-    }
+//            }
+//        }
+//    }
 
 }
 
@@ -616,36 +615,37 @@ void frmProveedores::on_txtcuentaPagoProveedor_editingFinished()
 
 void frmProveedores::on_txtcp_almacen_editingFinished()
 {
-    if (!ui->txtcp_almacen->isReadOnly()) {
-        if (!ui->txtcp_almacen->text().isEmpty() && ui->txtpoblacion_almacen->text().isEmpty()) {
-            FrmBuscarPoblacion BuscarPoblacion;
+    // TODO - BUSCAR POBLACION
+//    if (!ui->txtcp_almacen->isReadOnly()) {
+//        if (!ui->txtcp_almacen->text().isEmpty() && ui->txtpoblacion_almacen->text().isEmpty()) {
+//            FrmBuscarPoblacion BuscarPoblacion;
 
-            //Configuracion_global->CargarDatos();
-            BuscarPoblacion.setpoblacion(ui->txtcp_almacen->text(),0);
-            if(BuscarPoblacion.exec()) {
-                int nid = BuscarPoblacion.Devolverid();
-                if(nid > 0) {
-                    QSqlQuery qPoblacion(Configuracion_global->groupDB);
-                    QString cid;
-                    cid = QString::number(nid);
-                    qPoblacion.prepare("select poblacion, cp, provincia from poblaciones where id = :cid");
-                    qPoblacion.bindValue(":id",cid);
-                    if(!qPoblacion.exec()) {
-                        QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-                    } else {
-                        if (qPoblacion.next()) {
-                            ui->txtpoblacion_almacen->setText(qPoblacion.value(0).toString());
-                            ui->txtprovinciaAmacen->setText(qPoblacion.value(2).toString());
-                            int index = ui->txtpaisAlmacen->findText(Configuracion_global->pais);
-                            ui->txtpaisAlmacen->setCurrentIndex(index);
-                        }
-                    }
+//            //Configuracion_global->CargarDatos();
+//            BuscarPoblacion.setpoblacion(ui->txtcp_almacen->text(),0);
+//            if(BuscarPoblacion.exec()) {
+//                int nid = BuscarPoblacion.Devolverid();
+//                if(nid > 0) {
+//                    QSqlQuery qPoblacion(Configuracion_global->groupDB);
+//                    QString cid;
+//                    cid = QString::number(nid);
+//                    qPoblacion.prepare("select poblacion, cp, provincia from poblaciones where id = :cid");
+//                    qPoblacion.bindValue(":id",cid);
+//                    if(!qPoblacion.exec()) {
+//                        QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
+//                    } else {
+//                        if (qPoblacion.next()) {
+//                            ui->txtpoblacion_almacen->setText(qPoblacion.value(0).toString());
+//                            ui->txtprovinciaAmacen->setText(qPoblacion.value(2).toString());
+//                            int index = ui->txtpaisAlmacen->findText(Configuracion_global->pais);
+//                            ui->txtpaisAlmacen->setCurrentIndex(index);
+//                        }
+//                    }
 
-                }
-            }
-        }
-        ui->txttelefono_almacen->setFocus();
-    }
+//                }
+//            }
+//        }
+//        ui->txttelefono_almacen->setFocus();
+//    }
 }
 
 void frmProveedores::on_txtpais_currentIndexChanged(const QString &arg1)

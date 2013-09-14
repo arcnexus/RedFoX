@@ -14,7 +14,7 @@
    <string>Lístados de artículos</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Maya.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -28,7 +28,8 @@
    <item row="0" column="1" colspan="3">
     <widget class="QFrame" name="frame">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(175,195,225);</string>
+      <string notr="true">background-color: rgb(170, 170, 127);
+color: rgb(0, 0, 0);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -57,7 +58,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
         </property>
        </widget>
@@ -82,7 +83,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Maya.qrc">
+         <iconset resource="../maya.qrc">
           <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
         </property>
        </widget>
@@ -227,14 +228,11 @@
    </item>
    <item row="1" column="1">
     <widget class="QPushButton" name="btnPrevison">
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
-     </property>
      <property name="text">
       <string>Previsión</string>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
      </property>
      <property name="iconSize">
@@ -247,14 +245,11 @@
    </item>
    <item row="1" column="2">
     <widget class="QPushButton" name="btnImprimir">
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
-     </property>
      <property name="text">
       <string>Impresión</string>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/reports.png</normaloff>:/Icons/PNG/reports.png</iconset>
      </property>
      <property name="iconSize">
@@ -267,15 +262,12 @@
    </item>
    <item row="1" column="3">
     <widget class="QPushButton" name="btnCancelar">
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
-     </property>
      <property name="text">
       <string>Cancelar</string>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
-       <normaloff>:/Icons/PNG/Cancel.png</normaloff>:/Icons/PNG/Cancel.png</iconset>
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -308,7 +300,7 @@
   <tabstop>listaReports</tabstop>
  </tabstops>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -14,15 +14,12 @@
    <string>Buscar productos complementarios</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../maya.qrc">
     <normaloff>:/Icons/PNG/mayafondo_blanco.png</normaloff>:/Icons/PNG/mayafondo_blanco.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0" colspan="4">
     <widget class="QFrame" name="frame">
-     <property name="styleSheet">
-      <string notr="true">background: #4c6088</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -63,7 +60,7 @@
              <string>Buscar</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
             </property>
            </widget>
@@ -110,7 +107,7 @@ alternate-background-color: rgb(219, 255, 207);</string>
                <string>Buscar</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="../maya.qrc">
                 <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
               </property>
              </widget>
@@ -128,7 +125,7 @@ alternate-background-color: rgb(219, 255, 207);</string>
                <string>Mostrar productos</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="../maya.qrc">
                 <normaloff>:/Icons/PNG/pedidos.png</normaloff>:/Icons/PNG/pedidos.png</iconset>
               </property>
              </widget>
@@ -313,7 +310,7 @@ alternate-background-color: rgb(219, 255, 207);</string>
       <string>Ver en vademécum</string>
      </property>
      <property name="icon">
-      <iconset>
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/magnifier_zoom_out.png</normaloff>:/Icons/PNG/magnifier_zoom_out.png</iconset>
      </property>
     </widget>
@@ -324,7 +321,7 @@ alternate-background-color: rgb(219, 255, 207);</string>
       <string>Añadir</string>
      </property>
      <property name="icon">
-      <iconset>
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
      </property>
     </widget>
@@ -335,14 +332,16 @@ alternate-background-color: rgb(219, 255, 207);</string>
       <string>Cerrar</string>
      </property>
      <property name="icon">
-      <iconset>
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../maya.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>btn_cerrar</sender>

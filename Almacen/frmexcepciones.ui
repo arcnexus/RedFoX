@@ -60,9 +60,6 @@ background-color: rgb(248, 245, 194);</string>
    </item>
    <item row="0" column="0" colspan="4">
     <widget class="QFrame" name="frame">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(254, 238, 137);</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -72,9 +69,6 @@ background-color: rgb(248, 245, 194);</string>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0" colspan="7">
        <widget class="QFrame" name="frame_2">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(252, 237, 213);</string>
-        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -199,9 +193,6 @@ background-color: rgb(248, 245, 194);</string>
       </item>
       <item row="1" column="0" colspan="7">
        <widget class="QFrame" name="frame_3">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(249, 225, 196);</string>
-        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
