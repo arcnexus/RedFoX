@@ -31,6 +31,10 @@ private slots:
     void linea_itemSelectionChanged();
     void on_btn_abrirCerrarCaja_clicked();
 
+    void on_pushButton_2_clicked();
+
+    void on_clientes2_currentChanged(int index);
+
 private:
     Ui::FrmCajaMinuta *ui;
     void bloquearCaja(bool state);

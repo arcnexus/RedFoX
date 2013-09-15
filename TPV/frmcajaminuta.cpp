@@ -4,6 +4,7 @@
 
 #include "../Almacen/articulo.h"
 #include "../Auxiliares/spinboxdelegate.h"
+#include <QGraphicsOpacityEffect>
 
 /*Pendiente de cobro:
 background-color: rgb(192, 0, 0);
@@ -27,6 +28,7 @@ FrmCajaMinuta::FrmCajaMinuta(QWidget *parent) :
     this->setFocusPolicy(Qt::ClickFocus);
 
    ui->setupUi(this);
+
     connect(ui->lineas,SIGNAL(itemSelectionChanged()),this,SLOT(linea_itemSelectionChanged()));
     //ui->txtPVPArticulo->setValidator(Configuracion_global->validator_cantidad);
     connect(ui->txtPVPArticulo,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
@@ -45,8 +47,10 @@ FrmCajaMinuta::FrmCajaMinuta(QWidget *parent) :
 
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión Caja TPV"));
+  //  ui->clientes2->setHidden(true);
 
     bloquearCaja(true);
+
 }
 
 FrmCajaMinuta::~FrmCajaMinuta()
@@ -301,11 +305,11 @@ void FrmCajaMinuta::bloquearCaja(bool state)
     ui->btnImprimirInforme->setEnabled(!state);
     ui->botBuscarCliente->setEnabled(!state);
 
-    ui->frame_3->setEnabled(!state);
+    ui->producto->setEnabled(!state);
 
     ui->chklporc_rec->setEnabled(!state);
 
-    QList<QLineEdit *> lineEditList = ui->tabWidget->findChildren<QLineEdit *>();
+    QList<QLineEdit *> lineEditList = ui->clientes->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
         lineEdit->setReadOnly(state);
@@ -317,5 +321,33 @@ void FrmCajaMinuta::bloquearCaja(bool state)
     lineEditList = ui->tab_detalle->findChildren<QLineEdit *>();
     foreach (lineEdit, lineEditList) {
         lineEdit->setReadOnly(true);
+    }
+}
+
+
+void FrmCajaMinuta::on_pushButton_2_clicked()
+{
+
+}
+
+void FrmCajaMinuta::on_clientes2_currentChanged(int index)
+{
+    switch (index) {
+    case 0:
+    {
+        QGraphicsOpacityEffect* fade_effect = new QGraphicsOpacityEffect(this);
+        ui->producto->setGraphicsEffect(fade_effect);
+        QPropertyAnimation *animationOp = new QPropertyAnimation(fade_effect, "opacity");
+        animationOp->setEasingCurve(QEasingCurve::Linear);
+        animationOp->setDuration(3000);
+        animationOp->setStartValue(0.0);
+        animationOp->setEndValue(1.0);
+
+
+        animationOp->start();
+        break;
+    }
+    default:
+        break;
     }
 }
