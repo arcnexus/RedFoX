@@ -955,6 +955,18 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
+
+CREATE TABLE IF NOT EXISTS `@empresa@`.`lin_tpv_2` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_cab` INT NULL,
+  `descripcion` VARCHAR(100) NULL,
+  `tipo` VARCHAR(1) NULL,
+  `valor` DOUBLE NULL,
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8
+  COLLATE = utf8_unicode_ci;
+
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`moneda_caja` (
   `id` INT(11) NOT NULL ,
   `nombre_moneda` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,

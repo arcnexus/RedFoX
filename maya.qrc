@@ -173,5 +173,8 @@
         <file>PNG/wait.png</file>
         <file>PNG/wait2.png</file>
         <file>PNG/newvisita.png</file>
+        <file>PNG/scan.png</file>
+        <file>PNG/teclado.png</file>
+        <file>PNG/menu.png</file>
     </qresource>
 </RCC>

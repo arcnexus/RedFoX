@@ -79,7 +79,6 @@ SOURCES += main.cpp\
     Auxiliares/searchdelegate.cpp \
     Zona_Pacientes/visitas.cpp \
     Auxiliares/comboboxdelegate.cpp \
-    TPV/frmcajaminuta.cpp \
     TPV/ticket.cpp \
     TPV/lineaticket.cpp \
     Almacen/frmtarifas.cpp \
@@ -193,7 +192,8 @@ SOURCES += main.cpp\
     vencimientos.cpp \
     Zona_Maestros/frmformas_pago.cpp \
     Auxiliares/monetarydelegate_totals.cpp \
-    TPV/frmabrircaja.cpp
+    TPV/frmabrircaja.cpp \
+    TPV/frmtpv.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -234,7 +234,6 @@ HEADERS  += mainwindow.h \
     Auxiliares/Globlal_Include.h\
     Zona_Pacientes/visitas.h \
     Auxiliares/comboboxdelegate.h \
-    TPV/frmcajaminuta.h \
     TPV/ticket.h \
     TPV/lineaticket.h \
     Almacen/frmtarifas.h \
@@ -351,7 +350,8 @@ HEADERS  += mainwindow.h \
     vencimientos.h \
     Zona_Maestros/frmformas_pago.h \
     Auxiliares/monetarydelegate_totals.h \
-    TPV/frmabrircaja.h
+    TPV/frmabrircaja.h \
+    TPV/frmtpv.h
 
 
 
@@ -374,7 +374,6 @@ FORMS    += mainwindow.ui \
     Zona_Administrador/copy_db_progressfrm.ui \
     db_table_view.ui \
     Auxiliares/search_lineedit.ui \
-    TPV/frmcajaminuta.ui \
     Almacen/frmtarifas.ui \
     Almacen/frmarticulos.ui \
     Auxiliares/init_form.ui \
@@ -429,7 +428,8 @@ FORMS    += mainwindow.ui \
     Zona_Maestros/frmtransportistas.ui \
     Zona_Ventas/frmgestioncobros2.ui \
     Zona_Maestros/frmformas_pago.ui \
-    TPV/frmabrircaja.ui
+    TPV/frmabrircaja.ui \
+    TPV/frmtpv.ui
 
 RESOURCES += \
     maya.qrc \
