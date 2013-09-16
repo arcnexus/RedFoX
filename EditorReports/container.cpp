@@ -4,7 +4,7 @@ Container::Container(QGraphicsItem *parent) :
     QGraphicsRectItem(parent)
 {
     this->_onResize = false;
-
+    this->m_active = true;
     this->setAcceptHoverEvents(true);
     this->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
     this->setFlag(QGraphicsItem::ItemIsSelectable);
@@ -142,16 +142,11 @@ void Container::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void Container::apendXML(QDomElement &element, QDomDocument doc , QPointF relPos)
 {
-    QDomElement pos = doc.createElement("Pos");
-    pos.setAttribute("x",(int)this->pos().x() - (int)relPos.x());
-    pos.setAttribute("y",(int)this->pos().y() - (int)relPos.y());
+    element.setAttribute("x",(int)this->pos().x() - (int)relPos.x());
+    element.setAttribute("y",(int)this->pos().y() - (int)relPos.y());
 
-    QDomElement siz = doc.createElement("Size");
-    siz.setAttribute("w",(int)this->rect().width());
-    siz.setAttribute("h",(int)this->rect().height());
-
-    element.appendChild(pos);
-    element.appendChild(siz);
+    element.setAttribute("w",(int)this->rect().width());
+    element.setAttribute("h",(int)this->rect().height());
 }
 
 QString Container::ColorString(QColor c)
@@ -163,10 +158,10 @@ QColor Container::ColorFromString(QString s)
 {
     QStringList l= s.split(",");
     QColor c;
-    c.setRed(l.at(0).toInt());
-    c.setGreen(l.at(1).toInt());
-    c.setBlue(l.at(2).toInt());
-    c.setAlpha(l.at(3).toInt());
+    c.setRed(l.at(0).toDouble());
+    c.setGreen(l.at(1).toDouble());
+    c.setBlue(l.at(2).toDouble());
+    c.setAlpha(l.at(3).toDouble());
     return c;
 }
 
@@ -182,10 +177,11 @@ QVariant Container::itemChange(QGraphicsItem::GraphicsItemChange change, const Q
                 if(!margins.contains(rigthBottom))
                 {
                     newPos.setX(qMax(margins.left(), qMin(newPos.x(),margins.right()-this->rect().width())));
-                    newPos.setY(qMax(margins.top(), qMin(newPos.y(),margins.bottom()-this->rect().height())));
-                }
+                    newPos.setY(qMax(margins.top(), qMin(newPos.y(),margins.bottom()-this->rect().height())));                    
+                }                
                 return newPos;
             }
+            emit moved(this);
         }
     return QGraphicsItem::itemChange(change, value);
 }
@@ -194,6 +190,21 @@ QRectF Container::boundingRect() const
 {
     return this->rect();
 }
+bool Container::isActive() const
+{
+    return m_active;
+}
+
+void Container::setActive(bool active)
+{
+    m_active = active;
+
+    this->setAcceptHoverEvents(m_active);
+    this->setFlag(QGraphicsItem::ItemSendsGeometryChanges,m_active);
+    this->setFlag(QGraphicsItem::ItemIsSelectable,m_active);
+    this->setFlag(QGraphicsItem::ItemIsMovable,m_active);
+}
+
 
 QRectF Container::getMargins() const
 {

@@ -12,7 +12,7 @@ class CodeBar : public Container
 public:
     explicit CodeBar(QGraphicsItem *parent = 0);
 
-    QDomElement xml(QDomDocument doc, QPointF relPos);
+    QDomElement xml(QDomDocument doc, QPointF relPos,QList<Section*> sectionPool);
     void parseXml(QDomElement element, QPointF origin);
     int type() const
     {

@@ -1,6 +1,6 @@
 #include "frmgestioncobros2.h"
 #include "ui_frmgestioncobros2.h"
-#include "vencimientos.h"
+#include "../vencimientos.h"
 #include "../Zona_Contabilidad/apuntes.h"
 #include"../Zona_Pacientes/cliente.h"
 

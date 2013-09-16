@@ -21,7 +21,7 @@ class ReportField : public Container
 public:
     explicit ReportField(QGraphicsItem  *parent = 0);
 
-    QDomElement xml(QDomDocument doc, QPointF relPos);
+    QDomElement xml(QDomDocument doc, QPointF relPos,QList<Section*> sectionPool);
     void parseXml(QDomElement, QPointF origin);
     void editMe();
     QString query();

@@ -4,7 +4,7 @@
 #include <QDialog>
 #include "../mayamodule.h"
 #include "../Auxiliares/Globlal_Include.h"
-#include "vencimientos.h"
+#include "../vencimientos.h"
 
 namespace Ui {
 class FrmFormas_pago;

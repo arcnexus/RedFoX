@@ -48,8 +48,10 @@ public:
     bool onMaxsize() const;
     void setOnMaxsize(bool onMaxsize);
 
-    virtual QDomElement xml(QDomDocument, QList<Container*>& usedItems, QMap<QString, bool> &querys);
+    virtual QDomElement xml(QDomDocument, QList<Container*>& usedItems, QMap<QString, bool> &querys , QList<Section*> sectionPool);
     virtual void parseXml(QDomNode elements, QList<Container*>& itemPool);
+
+    QList<Container*> _items;
 signals:
     
     void SectionNameChanged(QString arg);

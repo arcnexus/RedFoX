@@ -13,6 +13,7 @@
 #include <QDomElement>
 #include <QDomDocument>
 
+class Section;
 class Container : public QObject , public QGraphicsRectItem
 {
     Q_OBJECT
@@ -25,7 +26,7 @@ public:
     enum _Orientacion { Vertical , Horizontal };
     enum _Aling { Left , Center , Rigth };
 
-    virtual QDomElement xml(QDomDocument,QPointF)=0;
+    virtual QDomElement xml(QDomDocument,QPointF,QList<Section*> sectionPool)=0;
     virtual void parseXml(QDomElement,QPointF)=0;
     virtual void editMe()=0;
     virtual QString query(){return "";}
@@ -39,12 +40,15 @@ public:
     QRectF getMargins() const;
     void setMargins(const QRectF &value);
 
-signals:
+    bool isActive() const;
+    void setActive(bool isActive);
 
+signals:
+    void moved(Container *);
 public slots:
 
 protected:
-       void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
 
@@ -64,6 +68,7 @@ protected:
     int _resizeType;
     QRectF boundingRect() const;
     QRectF margins;
+    bool m_active;
 };
 
 #endif // CONTAINER_H

@@ -176,10 +176,10 @@ QColor DetailSection::ColorFromString(QString s)
 {
     QStringList l= s.split(",");
     QColor c;
-    c.setRed(l.at(0).toInt());
-    c.setGreen(l.at(1).toInt());
-    c.setBlue(l.at(2).toInt());
-    c.setAlpha(l.at(3).toInt());
+    c.setRed(l.at(0).toDouble());
+    c.setGreen(l.at(1).toDouble());
+    c.setBlue(l.at(2).toDouble());
+    c.setAlpha(l.at(3).toDouble());
     return c;
 }
 
@@ -211,7 +211,7 @@ void DetailSection::setFoot(bool foot)
     m_foot = foot;
 }
 
-QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, QMap<QString, bool> &querys)
+QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, QMap<QString, bool> &querys, QList<Section*> sectionPool)
 {
     QDomElement node = doc.createElement("Section");
     node.setAttribute("id",sectionType());
@@ -226,13 +226,13 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
     node.setAttribute("alternative",m_use2Colors);
     node.setAttribute("color2",ColorString(m_color2));
 
-    QPointF br(rect().bottomRight().x(),rect().bottomRight().y());
-    QPointF tl(rect().topLeft().x(),rect().topLeft().y());
+    QPointF br(rect().bottomRight().x()-1,rect().bottomRight().y()-1);
+    QPointF tl(rect().topLeft().x()+1,rect().topLeft().y()+1);
     if(m_header)
     {
         QDomElement headerNode = doc.createElement("Header");
         headerNode.setAttribute("size",m_headerSize);
-        QRectF aux(tl,QPointF(br.x(),tl.y()+m_headerSize));
+        QRectF aux(tl,QPointF(br.x(),tl.y()+m_headerSize-2));
         QRectF headerRect(mapRectToScene(aux));
 
         QList<QGraphicsItem*>items =this->scene()->items(headerRect);
@@ -245,7 +245,7 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
             {
                 if(!usedItems.contains(cont))
                 {
-                    headerNode.appendChild(cont->xml(doc,marginPoint()));
+                    headerNode.appendChild(cont->xml(doc,marginPoint(),sectionPool));
                     usedItems.append(cont);
                 }
             }
@@ -265,7 +265,7 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
         {
             if(!usedItems.contains(cont))
             {
-                bodyNode.appendChild(cont->xml(doc,mapToScene(QPointF(tl.x(),tl.y()+m_headerSize))));
+                bodyNode.appendChild(cont->xml(doc,mapToScene(QPointF(tl.x(),tl.y()+m_headerSize)),sectionPool));
                 usedItems.append(cont);
             }
         }
@@ -275,7 +275,7 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
     {
         QDomElement footNode = doc.createElement("Foot");
         footNode.setAttribute("size",m_footSize);
-        QRectF footRect(mapToScene(QPointF(tl.x(),br.y()-m_footSize)),mapToScene(QPointF(br)));
+        QRectF footRect(mapToScene(QPointF(tl.x(),br.y()-m_footSize+1)),mapToScene(QPointF(br)));
         QList<QGraphicsItem*>items =this->scene()->items(footRect);
         QListIterator<QGraphicsItem*> it(items);
         while (it.hasNext())
@@ -286,7 +286,7 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
             {
                 if(!usedItems.contains(cont))
                 {
-                    footNode.appendChild(cont->xml(doc,mapToScene(QPointF(tl.x(),br.y()-m_footSize))));
+                    footNode.appendChild(cont->xml(doc,mapToScene(QPointF(tl.x(),br.y()-m_footSize)),sectionPool));
                     usedItems.append(cont);
                 }
             }
@@ -306,7 +306,7 @@ void DetailSection::parseXml(QDomNode elements, QList<Container *> &itemPool)
         if(block.tagName() == "Header")
         {
             m_header = true;
-            m_headerSize = block.attribute("size").toInt();
+            m_headerSize = block.attribute("size").toDouble();
             body_start += m_headerSize;
 
             QDomNode eleNode = block.firstChild();
@@ -315,7 +315,7 @@ void DetailSection::parseXml(QDomNode elements, QList<Container *> &itemPool)
 
         else if(block.tagName() == "Body")
         {
-            body_siz  = block.attribute("size").toInt();
+            body_siz  = block.attribute("size").toDouble();
             QDomNode eleNode = block.firstChild();
             _parseElementsBlock(eleNode, mapToScene(0,body_start),itemPool);
         }
@@ -323,7 +323,7 @@ void DetailSection::parseXml(QDomNode elements, QList<Container *> &itemPool)
         else if(block.tagName() == "Foot")
         {
             m_foot = true;
-            m_footSize = block.attribute("size").toInt();
+            m_footSize = block.attribute("size").toDouble();
             int foot_start = body_start + body_siz;
             QDomNode eleNode = block.firstChild();
             _parseElementsBlock(eleNode, mapToScene(0,foot_start),itemPool);

@@ -13,49 +13,22 @@ CustomLabel::CustomLabel(QGraphicsItem *parent) :
     m_fontColor = Qt::black;
 }
 
-QDomElement CustomLabel::xml(QDomDocument doc , QPointF relPos)
+QDomElement CustomLabel::xml(QDomDocument doc , QPointF relPos, QList<Section *> sectionPool)
 {
     QDomElement node = doc.createElement("Element");
     node.setAttribute("id","Label");
 
     Container::apendXML(node,doc, relPos);
 
-    QDomElement Text = doc.createElement("Text");
-    Text.setAttribute("value",m_Text);
-
-    QDomElement Orientacion = doc.createElement("Orientacion");
-    Orientacion.setAttribute("value",m_Orientacion == Vertical ? "V" : "H");
-
-    QDomElement Alineacion = doc.createElement("Alineacion");
-    Alineacion.setAttribute("value",m_Alineacion == Left ? "L" : m_Alineacion == Rigth ? "R" : "C");
-
-    QDomElement fontFamily = doc.createElement("fontFamily");
-    fontFamily.setAttribute("value",m_fontFamily);
-
-    QDomElement fontSize = doc.createElement("fontSize");
-    fontSize.setAttribute("value",m_fontSize);
-
-    QDomElement fontWeigth = doc.createElement("fontWeigth");
-    fontWeigth.setAttribute("value",m_fontWeigth);
-
-    QDomElement italicFont = doc.createElement("italicFont");
-    italicFont.setAttribute("value",m_italicFont);
-
-    QDomElement underlinedFont = doc.createElement("underlined");
-    underlinedFont.setAttribute("value",m_underlined);
-
-    QDomElement colorFont = doc.createElement("color");
-    colorFont.setAttribute("value",ColorString(m_fontColor));
-
-    node.appendChild(Text);
-    node.appendChild(Orientacion);
-    node.appendChild(Alineacion);
-    node.appendChild(fontFamily);
-    node.appendChild(fontSize);
-    node.appendChild(fontWeigth);
-    node.appendChild(italicFont);
-    node.appendChild(underlinedFont);
-    node.appendChild(colorFont);
+    node.setAttribute("Text",m_Text);
+    node.setAttribute("Orientacion",m_Orientacion == Vertical ? "V" : "H");
+    node.setAttribute("Alineacion",m_Alineacion == Left ? "L" : m_Alineacion == Rigth ? "R" : "C");
+    node.setAttribute("fontFamily",m_fontFamily);
+    node.setAttribute("fontSize",m_fontSize);
+    node.setAttribute("fontWeigth",m_fontWeigth);
+    node.setAttribute("italicFont",m_italicFont);
+    node.setAttribute("underlined",m_underlined);
+    node.setAttribute("color",ColorString(m_fontColor));
 
     return node;
 }
@@ -150,41 +123,23 @@ void CustomLabel::setAlineacion(CustomLabel::_Aling arg) {
 
 void CustomLabel::parseXml(QDomElement element,QPointF origin)
 {
-    QDomNodeList list = element.childNodes();
-    for(int i=0;i<list.size();i++)
-    {
-        QDomElement el = list.at(i).toElement();
-        QString tag = el.tagName();
-        //Common tag for every container subclass
-        if(tag == "Pos")
-            this->setPos(el.attribute("x").toInt() + origin.x(),el.attribute("y").toInt()+origin.y());
-        else if(tag=="Size")
-            this->setSize(el.attribute("w").toInt(),el.attribute("h").toInt());
+    this->setPos(element.attribute("x").toDouble() + origin.x(),element.attribute("y").toDouble()+origin.y());
+    this->setSize(element.attribute("w").toDouble(),element.attribute("h").toDouble());
+    this->setText(element.attribute("Text"));
 
-        //Specific tags
-        //"Text""Orientacion""Alineacion""fontFamily""fontSize""fontWeigth""italicFont"
-        else if(tag== "Text")
-            this->setText(el.attribute("value"));
-        else if(tag== "Orientacion")
-            el.attribute("value") == "V" ? setOrientacion(Vertical)
-                                         : setOrientacion(Horizontal);
-        else if(tag== "Alineacion")
-            el.attribute("value") == "L" ? setAlineacion(Left) :
-            el.attribute("value") == "R" ? setAlineacion(Rigth):
-                                           setAlineacion(Center);
-        else if(tag== "fontFamily")
-            this->setfontFamily(el.attribute("value"));
-        else if(tag== "fontSize")
-            this->setfontSize(el.attribute("value").toInt());
-        else if(tag== "fontWeigth")
-            this->setfontWeigth(el.attribute("value").toInt());
-        else if(tag== "italicFont")
-            this->setitalicFont(el.attribute("value").toInt());
-        else if(tag== "underlined")
-            this->setunderlined(el.attribute("value").toInt());
-         else if(tag== "color")
-            this->setfontColor(ColorFromString(el.attribute("value")));
-    }
+    element.attribute("Orientacion") == "V" ? setOrientacion(Vertical)
+                                            : setOrientacion(Horizontal);
+
+    element.attribute("Alineacion") == "L" ? setAlineacion(Left) :
+    element.attribute("Alineacion") == "R" ? setAlineacion(Rigth):
+                                   setAlineacion(Center);
+
+    this->setfontFamily(element.attribute("fontFamily"));
+    this->setfontSize(element.attribute("fontSize").toDouble());
+    this->setfontWeigth(element.attribute("fontWeigth").toDouble());
+    this->setitalicFont(element.attribute("italicFont").toDouble());
+    this->setunderlined(element.attribute("underlined").toDouble());
+    this->setfontColor(ColorFromString(element.attribute("color")));
 }
 
 void CustomLabel::setfontFamily(QString arg) {

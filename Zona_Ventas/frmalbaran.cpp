@@ -6,7 +6,7 @@
 #include "../Auxiliares/datedelegate.h"
 #include "../Auxiliares/monetarydelegate.h"
 #include "../Zona_Ventas/factura.h"
-#include "vencimientos.h"
+#include "../vencimientos.h"
 //
 #include "../Almacen/articulo.h"
 #include<math.h>

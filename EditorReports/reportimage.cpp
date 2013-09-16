@@ -8,51 +8,28 @@ ReportImage::ReportImage(QGraphicsItem *parent) :
     m_dinamica = false;
 }
 
-QDomElement ReportImage::xml(QDomDocument doc, QPointF relPos)
+QDomElement ReportImage::xml(QDomDocument doc, QPointF relPos, QList<Section *> sectionPool)
 {
     QDomElement node = doc.createElement("Element");
     node.setAttribute("id","Image");
 
     Container::apendXML(node,doc, relPos);
 
-    QDomElement Path = doc.createElement("Path");
-    Path.setAttribute("value",m_ruta);
-
-    QDomElement fromBD = doc.createElement("fromBD");
-    fromBD.setAttribute("value",m_fromDB);
-
-    QDomElement d= doc.createElement("Dinamic");
-    d.setAttribute("value",m_dinamica);
-
-    node.appendChild(Path);
-    node.appendChild(fromBD);
-    node.appendChild(d);
+    node.setAttribute("Path",m_ruta);
+    node.setAttribute("fromBD",m_fromDB);
+    node.setAttribute("Dinamic",m_dinamica);
 
     return node;
 }
 
 void ReportImage::parseXml(QDomElement element, QPointF origin)
 {
-    QDomNodeList list = element.childNodes();
-    for(int i=0;i<list.size();i++)
-    {
-        QDomElement el = list.at(i).toElement();
-        QString tag = el.tagName();
-        //Common tag for every container subclass
-        if(tag == "Pos")
-            this->setPos(el.attribute("x").toInt() + origin.x(),el.attribute("y").toInt()+origin.y());
-        else if(tag=="Size")
-            this->setSize(el.attribute("w").toInt(),el.attribute("h").toInt());
+    this->setPos(element.attribute("x").toDouble() + origin.x(),element.attribute("y").toDouble()+origin.y());
+    this->setSize(element.attribute("w").toDouble(),element.attribute("h").toDouble());
 
-        //Specific tags
-        //"Text""Orientacion""Alineacion""fontFamily""fontSize""fontWeigth""italicFont"
-        else if(tag== "Path")
-            this->setruta(el.attribute("value"));
-        else if(tag== "fromBD")
-            this->setfromDB(el.attribute("value").toInt());
-        else if(tag== "Dinamic")
-            this->setdinamica(el.attribute("value").toInt());
-    }
+    this->setruta(element.attribute("Path"));
+    this->setfromDB(element.attribute("fromBD").toDouble());
+    this->setdinamica(element.attribute("Dinamic").toDouble());
 }
 
 

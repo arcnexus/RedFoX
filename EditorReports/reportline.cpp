@@ -1,5 +1,6 @@
 #include "reportline.h"
 #include "editlinedlg.h"
+#include "section.h"
 ReportLine::ReportLine(QGraphicsItem *parent):
     Container(parent)
 {
@@ -9,57 +10,69 @@ ReportLine::ReportLine(QGraphicsItem *parent):
     m_penStyle = Qt::SolidLine;
 }
 
-QDomElement ReportLine::xml(QDomDocument doc, QPointF relPos)
+QDomElement ReportLine::xml(QDomDocument doc, QPointF relPos,QList<Section*> sectionPool)
 {
     QDomElement node = doc.createElement("Element");
     node.setAttribute("id","Line");
 
     Container::apendXML(node,doc, relPos);
 
-    QDomElement penWidth = doc.createElement("penWidth");
-    penWidth.setAttribute("value",m_penWidth);
+    QString endSec;
+    QString sPoint;
+    Section* start;
+    Section* end;
+    if(m_Orientacion == Vertical)
+    {
+        QPointF top = mapRectToScene(this->rect()).topLeft();
+        QPointF bt = mapRectToScene(this->rect()).bottomLeft();
+        for(int i = 0; i< sectionPool.size();i++)
+        {
+            QRectF seCrec = QRectF(sectionPool.at(i)->pos(),sectionPool.at(i)->rect().size());
+            if(seCrec.contains(top))
+                start = sectionPool.at(i);
+            if(seCrec.contains(bt))
+            {
+                endSec = sectionPool.at(i)->SectionName();
+                if(endSec!= "Pie de pagina" && endSec != "Pie de report")
+                {
+                    end = start;
+                    break;
+                }
+                QPointF endPoint = bt - seCrec.topRight();
+                sPoint = QString("%1").arg(endPoint.y());
+                end = sectionPool.at(i);
+                break;
+            }
+        }
+    }
+    else
+        endSec = "Self";
 
-    QDomElement penColor = doc.createElement("penColor");
-    penColor.setAttribute("value",ColorString(m_penColor));
+    if(start == end)
+        endSec = "Self";
 
-    QDomElement penStyle = doc.createElement("penStyle");
-    penStyle.setAttribute("value",m_penStyle);
-
-    QDomElement Orientacion = doc.createElement("Orientacion");
-    Orientacion.setAttribute("value",m_Orientacion == Vertical ? "V" : "H");
-
-    node.appendChild(penWidth);
-    node.appendChild(penColor);
-    node.appendChild(penStyle);
-    node.appendChild(Orientacion);
+    node.setAttribute("penWidth",m_penWidth);
+    node.setAttribute("endPointName",endSec);
+    node.setAttribute("endPointPoint",sPoint);
+    node.setAttribute("penColor",ColorString(m_penColor));
+    node.setAttribute("penStyle",m_penStyle);
+    node.setAttribute("Orientacion",m_Orientacion == Vertical ? "V" : "H");
 
     return node;
 }
 
 void ReportLine::parseXml(QDomElement element , QPointF origin)
 {
-    QDomNodeList list = element.childNodes();
-    for(int i=0;i<list.size();i++)
-    {
-        QDomElement el = list.at(i).toElement();
-        QString tag = el.tagName();
-        //Common tag for every container subclass
-        if(tag == "Pos")
-            this->setPos(el.attribute("x").toInt() + origin.x(),el.attribute("y").toInt()+origin.y());
-        else if(tag=="Size")
-            this->setSize(el.attribute("w").toInt(),el.attribute("h").toInt());
+    this->setPos(element.attribute("x").toDouble() + origin.x(),element.attribute("y").toDouble()+origin.y());
+    this->setSize(element.attribute("w").toDouble(),element.attribute("h").toDouble());
 
-        //Specific tags
-        else if(tag== "penWidth")
-            this->setpenWidth(el.attribute("value").toInt());
-        else if(tag== "penColor")
-            this->setpenColor(ColorFromString(el.attribute("value")));
-        else if(tag== "penStyle")
-            this->setpenStyle(static_cast<Qt::PenStyle>(el.attribute("value").toInt()));
-        else if(tag== "Orientacion")
-            el.attribute("value") == "V" ? setOrientacion(Vertical)
-                                         : setOrientacion(Horizontal);
-    }
+    this->setpenWidth(element.attribute("penWidth").toDouble());
+    this->setpenColor(ColorFromString(element.attribute("penColor")));
+    this->setpenStyle(static_cast<Qt::PenStyle>(element.attribute("penStyle").toDouble()));
+
+    element.attribute("Orientacion") == "V" ? setOrientacion(Vertical)
+                                 : setOrientacion(Horizontal);
+
 }
 
 void ReportLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

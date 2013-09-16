@@ -9,9 +9,18 @@ ReportRenderer::ReportRenderer(QObject *parent) :
 {
 }
 
-QDomDocument ReportRenderer::render(QDomDocument in ,QMap<QString,QString> queryClausules, bool& error)
+QDomDocument ReportRenderer::render(QPrinter* printer ,QDomDocument in ,QMap<QString,QString> queryClausules, bool& error)
 {
-    m_doc = preRender(in,queryClausules,error);
+    QPainter p(printer);
+    m_doc = preRender(&p,in,queryClausules,error);
+
+    QFile f("/home/arcnexus/rep.xml");
+    if(f.open(QFile::WriteOnly))
+    {
+        QTextStream t(&f);
+        m_doc.save(t,4);
+    }
+    f.close();
     return m_doc;
 }
 
@@ -44,7 +53,7 @@ void ReportRenderer::Print(QPrinter *printer)
         for(int s = 0;s<sections.size();s++)
         {
             QDomElement cSec = sections.at(s).toElement();
-            int id = cSec.attribute("id").toInt();
+            int id = cSec.attribute("id").toDouble();
             if(id < 2)// Report | Page Headers
             {
                 QDomNodeList elements = cSec.childNodes();
@@ -63,7 +72,7 @@ void ReportRenderer::Print(QPrinter *printer)
                     else if(element.attribute("id")== "Image")
                         drawImage(element, &painter,dpix,dpiy);
                 }
-                int siz = cSec.attribute("size").toInt();
+                int siz = cSec.attribute("size").toDouble();
                 painter.translate(0,siz* dpiy);
             }
             else if(id == 2) // Detail Section
@@ -72,12 +81,12 @@ void ReportRenderer::Print(QPrinter *printer)
                 for(int p=0;p<parts.size();p++)
                 {
                     QDomElement cPart = parts.at(p).toElement();
-                    if(cPart.attribute("colored").toInt())
+                    if(cPart.attribute("colored").toDouble())
                     {
                         painter.save();
                         painter.setPen(Qt::NoPen);
                         painter.setBrush(ColorFromString(cPart.attribute("color")));
-                        painter.drawRect(0,0,width * dpix ,cPart.attribute("size").toInt() * dpiy);
+                        painter.drawRect(0,0,width * dpix ,cPart.attribute("size").toDouble() * dpiy);
                         painter.restore();
                     }
                     QDomNodeList elements = cPart.childNodes();
@@ -96,7 +105,7 @@ void ReportRenderer::Print(QPrinter *printer)
                         else if(element.attribute("id")== "Image")
                             drawImage(element, &painter,dpix,dpiy);
                     }
-                    int siz = cPart.attribute("size").toInt();
+                    int siz = cPart.attribute("size").toDouble();
                     painter.translate(0,siz* dpiy);
                 }
             }
@@ -104,7 +113,7 @@ void ReportRenderer::Print(QPrinter *printer)
             {
                 if(s==sections.size()-1) //last section on page
                 {
-                    int siz = cSec.attribute("size").toInt();
+                    int siz = cSec.attribute("size").toDouble();
                     painter.save();
                     painter.resetTransform();
                     painter.translate(margins.width(),margins.height());
@@ -131,8 +140,8 @@ void ReportRenderer::Print(QPrinter *printer)
                 }
                 else
                 {
-                    int siz = cSec.attribute("size").toInt();
-                    int sizNext = sections.at(s+1).toElement().attribute("size").toInt();
+                    int siz = cSec.attribute("size").toDouble();
+                    int sizNext = sections.at(s+1).toElement().attribute("size").toDouble();
                     painter.save();
                     painter.resetTransform();
                     painter.translate(margins.width(),margins.height());
@@ -166,16 +175,14 @@ void ReportRenderer::Print(QPrinter *printer)
     }
 }
 
-void ReportRenderer::
-
-PreRender()
+void ReportRenderer::PreRender()
 {
     bool error;
-    render(DocIn , queryClausules, error);
+    render( printer ,DocIn , queryClausules, error);
     emit end();
 }
 
-QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> queryClausules, bool &error)
+QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<QString,QString> queryClausules, bool &error)
 {
     QTime t;
     t.start();
@@ -192,6 +199,7 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
     bool haveRHeader = false;
     bool havePHeader = false;
     bool PHeaderOnAll = false;
+    bool PFooterOnAll = false;
     bool havePFooter = false;
     bool haveRFooter = false;
 
@@ -238,13 +246,13 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                 switch (t) {
                 case Section::ReportHeader:
                     haveRHeader = true;
-                    RHeaderSiz = secEle.attribute("size").toInt();
+                    RHeaderSiz = secEle.attribute("size").toDouble();
                     RHeaderElement = sections.cloneNode(true);
                     break;
                 case Section::PageHeader:
                     havePHeader = true;
-                    PHeaderSiz = secEle.attribute("size").toInt();
-                    PHeaderOnAll = secEle.attribute("OnFistPage").toInt();
+                    PHeaderSiz = secEle.attribute("size").toDouble();
+                    PHeaderOnAll = secEle.attribute("OnFistPage").toDouble();
                     PHeaderElement = sections.cloneNode(true);
                     break;
                 case Section::Detail:
@@ -252,12 +260,13 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                     break;
                 case Section::PageFooter:
                     havePFooter = true;
-                    PFooterSiz = secEle.attribute("size").toInt();
+                    PFooterSiz = secEle.attribute("size").toDouble();
+                    PFooterOnAll= secEle.attribute("OnFistPage").toDouble();
                     PFootElement = sections.cloneNode(true);
                     break;
                 case Section::ReportFooter:
                     haveRFooter = true;
-                    RFooterSiz = secEle.attribute("size").toInt();
+                    RFooterSiz = secEle.attribute("size").toDouble();
                     RFootElement = sections.cloneNode(true);
                     break;
                 }
@@ -305,7 +314,7 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
         QDomNode n = sectionIt.next();
         QDomElement ele = n.toElement();
 
-        bool iSql = ele.attribute("haveSqlInterno").toInt();
+        bool iSql = ele.attribute("haveSqlInterno").toDouble();
         QString cla = ele.attribute("ClausulaInterna");
         QStringList lCla = cla.split("=");
         QString columna = "";
@@ -335,7 +344,6 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                 QDomNode exit = doc.createElement("section");
                 bool appenExit = true;
                 QDomNode copy = n.cloneNode(true);
-                //qDebug() << copy.childNodes().size();
                 QDomNode sectionPart = copy.firstChild();
                 while(!sectionPart.isNull())
                 {
@@ -351,74 +359,32 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                             {
                                 ele.setAttribute("id","Label");
                                 QString text = "";
-                                int formato = 0;
-                                QDomNode fieldChild = ele.firstChild();
-                                while (!fieldChild.isNull())
-                                {
-                                    QDomElement cEle = fieldChild.toElement();
-                                    if(cEle.tagName() == "formato")
-                                    {
-                                        formato = cEle.attribute("value").toInt();
-                                    }
-                                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                                    {
-                                        QStringList value = cEle.attribute("value").split(".");
-                                        if(value.size()== 3)
-                                        {
-                                                text = applyFormato(record.value(value.at(2)).toString(),formato);
-                                        }
-                                    }
-                                    if(cEle.tagName()== "Text")// value=""/>)
-                                        cEle.setAttribute("value",text);
-                                    fieldChild = fieldChild.nextSibling();
-                                }
+                                int formato = ele.attribute("formato").toDouble();
+                                QStringList value = ele.attribute("Sql").split(".");
+                                if(value.size()== 3)
+                                        text = applyFormato(record.value(value.at(2)).toString(),formato);
+                                ele.setAttribute("Text",text);
                             }
                             else if(ele.attribute("id")=="RelationalField")
                             {
                                 ele.setAttribute("id","Label");
                                 QString text = "";
-                                 int formato = 0;
-                                QDomNode fieldChild = ele.firstChild();
-                                while (!fieldChild.isNull())
+                                int formato = ele.attribute("formato").toDouble();
+                                QStringList value = ele.attribute("value").split(".");
+                                if(value.size()>1)
                                 {
-                                    QDomElement cEle = fieldChild.toElement();
-                                    if(cEle.tagName() == "formato")
-                                    {
-                                        formato = cEle.attribute("value").toInt();
-                                    }
-                                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                                    {
-                                        QStringList value = cEle.attribute("value").split(".");
-                                        if(value.size()>1)
-                                        {
-                                            QString key = value.at(0) + "." + value.at(1);
-                                            text = applyFormato(getRelationField(cEle.attribute("value"),selects.value(key)),formato);
-                                        }
-                                    }
-                                    if(cEle.tagName()== "Text")// value=""/>)
-                                        cEle.setAttribute("value",text);
-                                    fieldChild = fieldChild.nextSibling();
+                                    QString key = value.at(0) + "." + value.at(1);
+                                    text = applyFormato(getRelationField(ele.attribute("Sql"),selects.value(key)),formato);
                                 }
+                                ele.setAttribute("Text",text);
                             }
                             else if(ele.attribute("id")=="CodeBar")
                             {
                                 QString text = "";
-                                QDomNode fieldChild = ele.firstChild();
-                                while (!fieldChild.isNull())
-                                {
-                                    QDomElement cEle = fieldChild.toElement();
-                                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                                    {
-                                        QStringList value = cEle.attribute("value").split(".");
-                                        if(value.size()== 3)
-                                        {
-                                            text = record.value(value.at(2)).toString();
-                                        }
-                                    }
-                                    if(cEle.tagName()== "Code")// value=""/>)
-                                        cEle.setAttribute("value",text);
-                                    fieldChild = fieldChild.nextSibling();
-                                }
+                                QStringList value = ele.attribute("Sql").split(".");
+                                if(value.size()== 3)
+                                    text = record.value(value.at(2)).toString();
+                                ele.setAttribute("Code",text);
                             }
                             child = child.nextSibling();
                         }
@@ -430,8 +396,8 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                         {
                             QString c1 = ele.attribute("color1");
                             QString c2 = ele.attribute("color2");
-                            bool colored = ele.attribute("colored").toInt();
-                            bool altern = ele.attribute("alternative").toInt();
+                            bool colored = ele.attribute("colored").toDouble();
+                            bool altern = ele.attribute("alternative").toDouble();
                             bool toogle = true;
                             QString iSql = ele.attribute("SqlInterno");
                             QSqlDatabase db;
@@ -448,7 +414,7 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                                 if(iQuery.next())
                                 {
                                     do
-                                    {
+                                    {                                        
                                         QSqlRecord iRecord = iQuery.record();
                                         QDomNode iCopy = sectionPart.cloneNode(true);
                                         QDomElement iCopyEle = iCopy.toElement();
@@ -472,69 +438,37 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                                             {
                                                 ele.setAttribute("id","Label");
                                                 QString text = "";
-                                                int formato = 0;
-                                                QDomNode fieldChild = ele.firstChild();
-                                                while (!fieldChild.isNull())
+                                                int formato = ele.attribute("formato").toDouble();
+                                                QStringList value = ele.attribute("Sql").split(".");
+                                                if(value.size()== 3)
+                                                        text = applyFormato(iRecord.value(value.at(2)).toString(),formato);
+                                                ele.setAttribute("Text",text);
+                                                if(ele.attribute("Expandable") == "1")
                                                 {
-                                                    QDomElement cEle = fieldChild.toElement();
-                                                    if(cEle.tagName() == "formato")
-                                                    {
-                                                        formato = cEle.attribute("value").toInt();
-                                                    }
-                                                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                                                    {
-                                                        QStringList value = cEle.attribute("value").split(".");
-                                                        if(value.size()== 3)
-                                                        {
-                                                                text = applyFormato(iRecord.value(value.at(2)).toString(),formato);
-                                                        }
-                                                    }
-                                                    if(cEle.tagName()== "Text")// value=""/>)
-                                                        cEle.setAttribute("value",text);
-                                                    fieldChild = fieldChild.nextSibling();
+                                                    double h = ele.attribute("h").toDouble();
+                                                    double siz = iCopy.toElement().attribute("size").toDouble();
+                                                    QRectF r(0,0,ele.attribute("w").toDouble(),h);
+                                                    QRectF r2(painter->fontMetrics().boundingRect(r.toRect(),Qt::TextWordWrap,text));
+                                                    double diff = r2.height() - h;
+                                                    iCopy.toElement().setAttribute("size",siz+diff+10);
+                                                    ele.setAttribute("h",r2.height()+10);
                                                 }
                                             }
                                             else if(ele.attribute("id")=="RelationalField")
                                             {
                                                 ele.setAttribute("id","Label");
                                                 QString text = "";
-                                                 int formato = 0;
-                                                QDomNode fieldChild = ele.firstChild();
-                                                while (!fieldChild.isNull())
-                                                {
-                                                    QDomElement cEle = fieldChild.toElement();
-                                                    if(cEle.tagName() == "formato")
-                                                    {
-                                                        formato = cEle.attribute("value").toInt();
-                                                    }
-                                                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                                                    {
-                                                       text = applyFormato(getRelationField(cEle.attribute("value"),record),formato);
-                                                    }
-                                                    if(cEle.tagName()== "Text")// value=""/>)
-                                                        cEle.setAttribute("value",text);
-                                                    fieldChild = fieldChild.nextSibling();
-                                                }
+                                                int formato = ele.attribute("formato").toDouble();
+                                                text = applyFormato(getRelationField(ele.attribute("Sql"),record),formato);
+                                                ele.setAttribute("Text",text);
                                             }
                                             else if(ele.attribute("id")=="CodeBar")
                                             {
                                                 QString text = "";
-                                                QDomNode fieldChild = ele.firstChild();
-                                                while (!fieldChild.isNull())
-                                                {
-                                                    QDomElement cEle = fieldChild.toElement();
-                                                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                                                    {
-                                                        QStringList value = cEle.attribute("value").split(".");
-                                                        if(value.size()== 3)
-                                                        {
-                                                            text = record.value(value.at(2)).toString();
-                                                        }
-                                                    }
-                                                    if(cEle.tagName()== "Code")// value=""/>)
-                                                        cEle.setAttribute("value",text);
-                                                    fieldChild = fieldChild.nextSibling();
-                                                }
+                                                QStringList value = ele.attribute("Sql").split(".");
+                                                if(value.size()== 3)
+                                                    text = record.value(value.at(2)).toString();
+                                                ele.setAttribute("value",text);
                                             }
                                             child = child.nextSibling();
                                         }
@@ -557,69 +491,38 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                                 {
                                     ele.setAttribute("id","Label");
                                     QString text = "";
-                                    int formato = 0;
-                                    QDomNode fieldChild = ele.firstChild();
-                                    while (!fieldChild.isNull())
+                                    int formato = ele.attribute("formato").toDouble();
+                                    QStringList value = ele.attribute("Sql").split(".");
+                                    if(value.size()== 3)
+                                            text = applyFormato(record.value(value.at(2)).toString(),formato);
+                                    ele.setAttribute("Text",text);
+                                    if(ele.attribute("Expandable") == "1")
                                     {
-                                        QDomElement cEle = fieldChild.toElement();
-                                        if(cEle.tagName() == "formato")
-                                        {
-                                            formato = cEle.attribute("value").toInt();
-                                        }
-                                        if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                                        {
-                                            QStringList value = cEle.attribute("value").split(".");
-                                            if(value.size()== 3)
-                                            {
-                                                    text = applyFormato(record.value(value.at(2)).toString(),formato);
-                                            }
-                                        }
-                                        if(cEle.tagName()== "Text")// value=""/>)
-                                            cEle.setAttribute("value",text);
-                                        fieldChild = fieldChild.nextSibling();
+                                        double h = ele.attribute("h").toDouble();
+                                        double siz = sectionPart.toElement().attribute("size").toDouble();
+                                        QRectF r(0,0,ele.attribute("w").toDouble()-10,h);
+                                        QRectF r2(painter->fontMetrics().boundingRect(r.toRect(),Qt::TextWordWrap,text));
+                                        double diff = r2.height() - h;
+                                        sectionPart.toElement().setAttribute("size",siz+diff+painter->fontMetrics().height());
+                                        ele.setAttribute("h",r2.height()+painter->fontMetrics().height());
+                                       // ele.setAttribute("w",r2.width()+10);
                                     }
                                 }
                                 else if(ele.attribute("id")=="RelationalField")
                                 {
                                     ele.setAttribute("id","Label");
                                     QString text = "";
-                                     int formato = 0;
-                                    QDomNode fieldChild = ele.firstChild();
-                                    while (!fieldChild.isNull())
-                                    {
-                                        QDomElement cEle = fieldChild.toElement();
-                                        if(cEle.tagName() == "formato")
-                                        {
-                                            formato = cEle.attribute("value").toInt();
-                                        }
-                                        if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                                        {
-                                            text = applyFormato(getRelationField(cEle.attribute("value"),record),formato);
-                                        }
-                                        if(cEle.tagName()== "Text")// value=""/>)
-                                            cEle.setAttribute("value",text);
-                                        fieldChild = fieldChild.nextSibling();
-                                    }
+                                    int formato = ele.attribute("formato").toDouble();
+                                    text = applyFormato(getRelationField(ele.attribute("Sql"),record),formato);
+                                    ele.setAttribute("Text",text);
                                 }
                                 else if(ele.attribute("id")=="CodeBar")
                                 {
                                     QString text = "";
-                                    QDomNode fieldChild = ele.firstChild();
-                                    while (!fieldChild.isNull())
-                                    {
-                                        QDomElement cEle = fieldChild.toElement();
-                                        if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                                        {
-                                            QStringList value = cEle.attribute("value").split(".");
-                                            if(value.size()== 3)
-                                            {
-                                                text = record.value(value.at(2)).toString();
-                                            }
-                                        }
-                                        if(cEle.tagName()== "Code")// value=""/>)
-                                            cEle.setAttribute("value",text);
-                                        fieldChild = fieldChild.nextSibling();
-                                    }
+                                    QStringList value = ele.attribute("Sql").split(".");
+                                    if(value.size()== 3)
+                                        text = record.value(value.at(2)).toString();
+                                    ele.setAttribute("Code",text);
                                 }
                                 child = child.nextSibling();
                             }
@@ -636,69 +539,27 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                             {
                                 ele.setAttribute("id","Label");
                                 QString text = "";
-                                int formato = 0;
-                                QDomNode fieldChild = ele.firstChild();
-                                while (!fieldChild.isNull())
-                                {
-                                    QDomElement cEle = fieldChild.toElement();
-                                    if(cEle.tagName() == "formato")
-                                    {
-                                        formato = cEle.attribute("value").toInt();
-                                    }
-                                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                                    {
-                                        QStringList value = cEle.attribute("value").split(".");
-                                        if(value.size()== 3)
-                                        {
-                                                text = applyFormato(record.value(value.at(2)).toString(),formato);
-                                        }
-                                    }
-                                    if(cEle.tagName()== "Text")// value=""/>)
-                                        cEle.setAttribute("value",text);
-                                    fieldChild = fieldChild.nextSibling();
-                                }
+                                int formato = ele.attribute("formato").toDouble();
+                                QStringList value = ele.attribute("Sql").split(".");
+                                if(value.size()== 3)
+                                        text = applyFormato(record.value(value.at(2)).toString(),formato);
+                                ele.setAttribute("Text",text);
                             }
                             else if(ele.attribute("id")=="RelationalField")
                             {
                                 ele.setAttribute("id","Label");
                                 QString text = "";
-                                 int formato = 0;
-                                QDomNode fieldChild = ele.firstChild();
-                                while (!fieldChild.isNull())
-                                {
-                                    QDomElement cEle = fieldChild.toElement();
-                                    if(cEle.tagName() == "formato")
-                                    {
-                                        formato = cEle.attribute("value").toInt();
-                                    }
-                                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                                    {
-                                        text = applyFormato(getRelationField(cEle.attribute("value"),record),formato);
-                                    }
-                                    if(cEle.tagName()== "Text")// value=""/>)
-                                        cEle.setAttribute("value",text);
-                                    fieldChild = fieldChild.nextSibling();
-                                }
+                                int formato = ele.attribute("formato").toDouble();
+                                text = applyFormato(getRelationField(ele.attribute("Sql"),record),formato);
+                                ele.setAttribute("Text",text);
                             }
                             else if(ele.attribute("id")=="CodeBar")
                             {
                                 QString text = "";
-                                QDomNode fieldChild = ele.firstChild();
-                                while (!fieldChild.isNull())
-                                {
-                                    QDomElement cEle = fieldChild.toElement();
-                                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                                    {
-                                        QStringList value = cEle.attribute("value").split(".");
-                                        if(value.size()== 3)
-                                        {
-                                            text = record.value(value.at(2)).toString();
-                                        }
-                                    }
-                                    if(cEle.tagName()== "Code")// value=""/>)
-                                        cEle.setAttribute("value",text);
-                                    fieldChild = fieldChild.nextSibling();
-                                }
+                                QStringList value = ele.attribute("Sql").split(".");
+                                if(value.size()== 3)
+                                    text = record.value(value.at(2)).toString();
+                                ele.setAttribute("Code",text);
                             }
                             child = child.nextSibling();
                         }
@@ -714,7 +575,7 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
 
 
 
-    QDomNode pageNode = startPage(doc,havePHeader&&PHeaderOnAll,PHeaderElement,selects,haveRHeader,RHeaderElement);
+    QDomNode pageNode = startPage(usable,PFooterSiz, RHeaderSiz ,RFooterSiz,doc,havePHeader&&PHeaderOnAll,PHeaderElement,selects,haveRHeader,RHeaderElement);
     parseFooters(RFootElement , haveRFooter , PFootElement , havePFooter , selects);
     root.appendChild(pageNode);
 
@@ -725,7 +586,6 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
         pageUsable -= PHeaderSiz;
     if(haveRHeader)
         pageUsable -= RHeaderSiz;
-
 
     QListIterator<QDomNode> parsedIt(parsedSections);
     while(parsedIt.hasNext())
@@ -747,14 +607,14 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
         {
             haveHead = true;
             sectionHeader = child;
-            headSiz = child.toElement().attribute("size").toInt();
+            headSiz = child.toElement().attribute("size").toDouble();
             sec.appendChild(sectionHeader.cloneNode(true));
             pageUsable -= headSiz;
         }
         if(lastChild.toElement().tagName() == "Foot")
         {
             haveFoot = true;
-            footSiz = lastChild.toElement().attribute("size").toInt();
+            footSiz = lastChild.toElement().attribute("size").toDouble();
             sectionFoot = lastChild;
         }
 
@@ -777,9 +637,9 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
             {
                 if(parsedIt.hasNext())//no report Foot yet
                 {
-                    if(pageUsable > bEle.attribute("size").toInt() + footSiz + PFooterSiz)
+                    if(pageUsable > bEle.attribute("size").toDouble() + footSiz + PFooterSiz)
                     {
-                        pageUsable -= bEle.attribute("size").toInt();
+                        pageUsable -= bEle.attribute("size").toDouble();
                         sec.appendChild(body);
                         if(!bodyIt.hasNext())//last body of section
                         {
@@ -794,7 +654,7 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                     {
                         if(havePFooter)
                             pageNode.appendChild(PFootElement.cloneNode(true));
-                        pageNode = startPage(doc,havePHeader,PHeaderElement,selects);
+                        pageNode = startPage(usable,PFooterSiz, RHeaderSiz,RFooterSiz,doc,havePHeader,PHeaderElement,selects);
                         ipageCount++;
                         root.appendChild(pageNode);
                         pageUsable = usable;
@@ -810,7 +670,7 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                             sec.appendChild(sectionHeader.cloneNode(true));
                             pageUsable -= headSiz;
                         }
-                        pageUsable -= bEle.attribute("size").toInt();
+                        pageUsable -= bEle.attribute("size").toDouble();
                         sec.appendChild(body);
                         if(!bodyIt.hasNext())//last body
                         {
@@ -826,16 +686,16 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                 {
                     if(bodyIt.hasNext()) //No need report footer yet
                     {
-                        if(pageUsable > bEle.attribute("size").toInt() + footSiz + PFooterSiz)
+                        if(pageUsable > bEle.attribute("size").toDouble() + footSiz + PFooterSiz)
                         {
-                            pageUsable -= bEle.attribute("size").toInt();
+                            pageUsable -= bEle.attribute("size").toDouble();
                             sec.appendChild(body);
                         }
                         else
                         {
                             if(havePFooter)
                                 pageNode.appendChild(PFootElement.cloneNode(true));
-                            pageNode = startPage(doc,havePHeader,PHeaderElement,selects);
+                            pageNode = startPage(usable,PFooterSiz, RHeaderSiz,RFooterSiz,doc,havePHeader,PHeaderElement,selects);
                             ipageCount++;
                             root.appendChild(pageNode);
                             pageUsable = usable;
@@ -851,15 +711,18 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                                 sec.appendChild(sectionHeader.cloneNode(true));
                                 pageUsable -= headSiz;
                             }
-                            pageUsable -= bEle.attribute("size").toInt();
+                            pageUsable -= bEle.attribute("size").toDouble();
                             sec.appendChild(body);
                         }
                     }
                     else
                     {
-                        if(pageUsable > bEle.attribute("size").toInt() + footSiz + PFooterSiz + RFooterSiz)
+                        int needed = bEle.attribute("size").toDouble() + footSiz + RFooterSiz;
+                        if(PFooterOnAll)
+                            needed += PFooterSiz;
+                        if(pageUsable > needed)
                         {
-                            pageUsable -= bEle.attribute("size").toInt();
+                            pageUsable -= bEle.attribute("size").toDouble();
                             sec.appendChild(body);
                             if(!bodyIt.hasNext())//last body of section & report
                             {
@@ -868,31 +731,13 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                                     sec.appendChild(sectionFoot);
                                     pageUsable -= footSiz;
                                 }
-                                QDomNode x = bEle.cloneNode(false);
-                                QDomNode x2 = bEle.firstChild();
-                                while(!x2.isNull())
-                                {
-                                    QDomElement xEle = x2.toElement();
-                                    if(xEle.attribute("id") == "Line")
-                                    {
-                                        QDomNode l = xEle.namedItem("Orientacion");
-                                        if(l.toElement().attribute("value") == "V")
-                                            x.appendChild(x2.cloneNode(true));
-                                    }
-                                    x2 = x2.nextSibling();
-                                }
-                                while((pageUsable > x.toElement().attribute("size").toInt() + footSiz + PFooterSiz + RFooterSiz))
-                                {
-                                    sec.appendChild(x.cloneNode(true));
-                                    pageUsable -= bEle.attribute("size").toInt();
-                                }
                             }
                         }
                         else
                         {
                             if(havePFooter)
                                 pageNode.appendChild(PFootElement.cloneNode(true));
-                            pageNode = startPage(doc,havePHeader,PHeaderElement,selects);
+                            pageNode = startPage(usable,PFooterSiz, RHeaderSiz,RFooterSiz,doc,havePHeader,PHeaderElement,selects);
                             ipageCount++;
                             root.appendChild(pageNode);
                             pageUsable = usable;
@@ -908,7 +753,7 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                                 sec.appendChild(sectionHeader.cloneNode(true));
                                 pageUsable -= headSiz;
                             }
-                            pageUsable -= bEle.attribute("size").toInt();
+                            pageUsable -= bEle.attribute("size").toDouble();
                             sec.appendChild(body);
                             if(!bodyIt.hasNext())//last body
                             {
@@ -916,25 +761,7 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
                                 {
                                     sec.appendChild(sectionFoot);
                                     pageUsable -= footSiz;
-                                }
-                                QDomNode x = bEle.cloneNode(false);
-                                QDomNode x2 = bEle.firstChild();
-                                while(!x2.isNull())
-                                {
-                                    QDomElement xEle = x2.toElement();
-                                    if(xEle.attribute("id") == "Line")
-                                    {
-                                        QDomNode l = xEle.namedItem("Orientacion");
-                                        if(l.toElement().attribute("value") == "V")
-                                            x.appendChild(x2.cloneNode(true));
-                                    }
-                                    x2 = x2.nextSibling();
-                                }
-                                while((pageUsable > x.toElement().attribute("size").toInt() + footSiz + PFooterSiz + RFooterSiz))
-                                {
-                                    sec.appendChild(x.cloneNode(true));
-                                    pageUsable -= bEle.attribute("size").toInt();
-                                }
+                                }                               
                             }
                         }
                     }
@@ -943,10 +770,33 @@ QDomDocument ReportRenderer::preRender(QDomDocument in,QMap<QString,QString> que
         }
     }
 
-    if(havePFooter)
+    if(havePFooter && PFooterOnAll)
         pageNode.appendChild(PFootElement.cloneNode(true));
     if(haveRFooter)
+    {
         pageNode.appendChild(RFootElement);
+        QDomNode sec = pageNode.firstChild();
+        for(int i= 0; i<2; i++)
+        {
+            if(sec.toElement().attribute("id").toDouble() == 0 || sec.toElement().attribute("id").toDouble() == 1)//"Cabecera de report" || "Cabecera de pagina"
+            {
+                QDomNode ele = sec.firstChild();
+                while(!ele.isNull())
+                {
+                    if(ele.toElement().attribute("id") == "Line")
+                        if(ele.toElement().attribute("endPointName")!= "Self")
+                            if(ele.toElement().attribute("endPointName")!= "Pie de report")
+                                ele.toElement().setAttribute("h",ele.toElement().attribute("h").toDouble()-RFooterSiz);
+                    if(ele.toElement().attribute("id") == "RoundRect")
+                        if(ele.toElement().attribute("endPointName")!= "Self")
+                            if(ele.toElement().attribute("endPointName")!= "Pie de report")
+                                ele.toElement().setAttribute("h",ele.toElement().attribute("h").toDouble()-RFooterSiz);
+                    ele = ele.nextSibling();
+                }
+            }
+            sec = sec.nextSibling();
+        }
+    }
 
     root.setAttribute("pages",ipageCount);
     qDebug() << "elapsed:" << t.elapsed();
@@ -958,48 +808,27 @@ void ReportRenderer::drawRect(QDomElement e, QPainter *painter, double dpiX, dou
 {
     painter->save();
     QPointF pos;
+    pos.setX(e.attribute("x").toDouble() * dpiX);
+    pos.setY(e.attribute("y").toDouble() * dpiY);
+
     QSize siz;
-    QColor penColor;
-    int penW;
+    siz.setWidth(e.attribute("w").toDouble()* dpiX);
+    siz.setHeight(e.attribute("h").toDouble()* dpiY);
+
+    QColor penColor = ColorFromString(e.attribute("PenColor"));
+    int penW = e.attribute("PenWidth").toDouble();
+
     QColor color1 , color2;
+    color1 = ColorFromString(e.attribute("Color1"));
+    color2 = ColorFromString(e.attribute("Color2"));
+
     double r1, r2;
+    r1 = e.attribute("RadiousX").toDouble();
+    r2 = e.attribute("RadiousY").toDouble();
+
     bool vGrad , gUsed;
-    QDomNodeList list = e.childNodes();
-    for(int i=0;i<list.size();i++)
-    {
-        QDomElement el = list.at(i).toElement();
-        QString tag = el.tagName();//"Pos"Size"Pen""Color""Gradient""Radious"
-        if(tag == "Pos")
-        {
-            pos.setX(el.attribute("x").toInt() * dpiX);
-            pos.setY(el.attribute("y").toInt() * dpiY);
-        }
-        else if(tag=="Size")
-        {
-            siz.setWidth(el.attribute("w").toInt()* dpiX);
-            siz.setHeight(el.attribute("h").toInt()* dpiY);
-        }
-        else if(tag== "Pen")
-        {
-            penColor = ColorFromString(el.attribute("color"));
-            penW = el.attribute("width").toInt();
-        }
-        else if(tag== "Color")
-        {
-            color1 = ColorFromString(el.attribute("c1"));
-            color2 = ColorFromString(el.attribute("c2"));
-        }
-        else if(tag== "Gradient")
-        {
-            gUsed = el.attribute("used").toInt();
-            vGrad = el.attribute("direction") == "V";
-        }
-        else if(tag== "Radious")
-        {
-            r1 = el.attribute("x").toDouble();
-            r2 = el.attribute("y").toDouble();
-        }
-    }
+    gUsed = e.attribute("GradientUsed").toDouble();
+    vGrad = e.attribute("GradientDirection") == "V";
 
     painter->setRenderHints(QPainter::Antialiasing);
     QPen pen(painter->pen());
@@ -1040,58 +869,28 @@ void ReportRenderer::drawRect(QDomElement e, QPainter *painter, double dpiX, dou
 
 void ReportRenderer::drawLabel(QDomElement e, QPainter *painter, double dpiX, double dpiY)
 {
-    QString m_Text;
-    _Orientacion m_Orientacion;
-    _Aling m_Alineacion;
-    QString m_fontFamily;
-    int m_fontSize;
-    int m_fontWeigth;
-    bool m_italicFont;
+    QString m_Text = e.attribute("Text");
+    _Orientacion m_Orientacion = e.attribute("Orientacion") == "V" ? Vertical : Horizontal;
 
-    QColor m_fontColor;
-    bool m_underlined;
+    _Aling m_Alineacion =  e.attribute("Alineacion") == "L" ?  Left :
+                           e.attribute("Alineacion") == "R" ?  Rigth:
+                                                               Center;
+    QString m_fontFamily = e.attribute("fontFamily");
+    int m_fontSize = e.attribute("fontSize").toDouble();
+    int m_fontWeigth = e.attribute("fontWeigth").toDouble();
+    bool m_italicFont = e.attribute("italicFont").toDouble();
+
+    QColor m_fontColor = ColorFromString(e.attribute("color"));
+    bool m_underlined = e.attribute("underlined").toDouble();
 
     QPointF pos;
+    pos.setX(e.attribute("x").toDouble() * dpiX);
+    pos.setY(e.attribute("y").toDouble() * dpiY);
+
     QSize siz;
+    siz.setWidth(e.attribute("w").toDouble()* dpiX +10);
+    siz.setHeight(e.attribute("h").toDouble()* dpiY+10);
 
-    QDomNodeList list = e.childNodes();
-    for(int i=0;i<list.size();i++)
-    {
-        QDomElement el = list.at(i).toElement();
-        QString tag = el.tagName();
-
-        if(tag == "Pos")
-        {
-            pos.setX(el.attribute("x").toInt() * dpiX);
-            pos.setY(el.attribute("y").toInt() * dpiY);
-        }
-        else if(tag=="Size")
-        {
-            siz.setWidth(el.attribute("w").toInt()* dpiX +10);
-            siz.setHeight(el.attribute("h").toInt()* dpiY);
-        }
-        else if(tag== "Text")
-            m_Text = el.attribute("value");
-        else if(tag== "Orientacion")
-            el.attribute("value") == "V" ? m_Orientacion = Vertical
-                                         : m_Orientacion = Horizontal;
-        else if(tag== "Alineacion")
-            el.attribute("value") == "L" ? m_Alineacion = Left :
-            el.attribute("value") == "R" ? m_Alineacion = Rigth:
-                                           m_Alineacion = Center;
-        else if(tag== "fontFamily")
-            m_fontFamily = el.attribute("value");
-        else if(tag== "fontSize")
-            m_fontSize = el.attribute("value").toInt();
-        else if(tag== "fontWeigth")
-            m_fontWeigth = el.attribute("value").toInt();
-        else if(tag== "italicFont")
-            m_italicFont = el.attribute("value").toInt();
-        else if(tag== "underlined")
-            m_underlined = el.attribute("value").toInt();
-         else if(tag== "color")
-            m_fontColor = ColorFromString(el.attribute("value"));
-    }
     painter->save();
 
     painter->translate(pos);
@@ -1138,45 +937,18 @@ void ReportRenderer::drawLabel(QDomElement e, QPainter *painter, double dpiX, do
 
 void ReportRenderer::drawLine(QDomElement e, QPainter *painter, double dpiX, double dpiY, int printResolution)
 {
-    int m_penWidth;
-    QColor m_penColor;
-    _Orientacion m_Orientacion;
-    Qt::PenStyle m_penStyle;
+    int  m_penWidth = e.attribute("penWidth").toDouble();
+    QColor m_penColor = ColorFromString(e.attribute("penColor"));
+    _Orientacion m_Orientacion = e.attribute("Orientacion") == "V" ? Vertical : Horizontal;
+    Qt::PenStyle m_penStyle = static_cast<Qt::PenStyle>(e.attribute("penStyle").toInt());
 
     QPointF pos;
+    pos.setX(e.attribute("x").toDouble() * dpiX);
+    pos.setY(e.attribute("y").toDouble() * dpiY);
+
     QSize siz;
-
-    QDomNodeList list = e.childNodes();
-    for(int i=0;i<list.size();i++)
-    {
-        QDomElement el = list.at(i).toElement();
-        QString tag = el.tagName();
-
-        if(tag == "Pos")
-        {
-            pos.setX(el.attribute("x").toInt() * dpiX);
-            pos.setY(el.attribute("y").toInt() * dpiY);
-        }
-        else if(tag=="Size")
-        {
-            siz.setWidth(el.attribute("w").toInt()* dpiX +10);
-            siz.setHeight(el.attribute("h").toInt()* dpiY);
-
-        }
-
-        //Specific tags
-        else if(tag== "penWidth")
-            m_penWidth = el.attribute("value").toInt();
-        else if(tag== "penColor")
-            m_penColor = ColorFromString(el.attribute("value"));
-        else if(tag== "penStyle")
-            m_penStyle = static_cast<Qt::PenStyle>(el.attribute("value").toInt());
-        else if(tag== "Orientacion")
-        {
-            el.attribute("value") == "V" ? m_Orientacion = Vertical
-                                         : m_Orientacion = Horizontal;
-        }
-    }
+    siz.setWidth(e.attribute("w").toDouble()* dpiX);
+    siz.setHeight(e.attribute("h").toDouble()* dpiY);
 
     painter->save();
 
@@ -1197,37 +969,18 @@ void ReportRenderer::drawLine(QDomElement e, QPainter *painter, double dpiX, dou
 
 void ReportRenderer::drawImage(QDomElement e, QPainter *painter, double dpiX, double dpiY)
 {
-    QString m_ruta;
-    bool m_fromDB;
+    QString m_ruta = e.attribute("Path");
+    bool m_fromDB = e.attribute("fromBD").toDouble();
     QImage m_image;
-    bool m_dinamica;
+    bool m_dinamica = e.attribute("Dinamic").toDouble();
 
     QPointF pos;
+    pos.setX(e.attribute("x").toDouble() * dpiX);
+    pos.setY(e.attribute("y").toDouble() * dpiY);
+
     QSize siz;
-
-    QDomNodeList list = e.childNodes();
-    for(int i=0;i<list.size();i++)
-    {
-        QDomElement el = list.at(i).toElement();
-        QString tag = el.tagName();
-        if(tag == "Pos")
-        {
-            pos.setX(el.attribute("x").toInt() * dpiX);
-            pos.setY(el.attribute("y").toInt() * dpiY);
-        }
-        else if(tag=="Size")
-        {
-            siz.setWidth(el.attribute("w").toInt()* dpiX +10);
-            siz.setHeight(el.attribute("h").toInt()* dpiY);
-        }
-
-        else if(tag== "Path")
-            m_ruta = el.attribute("value");
-        else if(tag== "fromBD")
-            m_fromDB = el.attribute("value").toInt();
-        else if(tag== "Dinamic")
-            m_dinamica = el.attribute("value").toInt();
-    }
+    siz.setWidth(e.attribute("w").toDouble()* dpiX +10);
+    siz.setHeight(e.attribute("h").toDouble()* dpiY);
 
     if(m_fromDB)
     {
@@ -1252,34 +1005,16 @@ void ReportRenderer::drawImage(QDomElement e, QPainter *painter, double dpiX, do
 
 void ReportRenderer::drawCodeBar(QDomElement e, QPainter *painter, double dpiX, double dpiY)
 {
-    QString m_code;
-    bool m_visibleCode;
+    QString m_code = e.attribute("Code");
+    bool m_visibleCode = e.attribute("visibleCode").toDouble();
 
     QPointF pos;
+    pos.setX(e.attribute("x").toDouble() * dpiX);
+    pos.setY(e.attribute("y").toDouble() * dpiY);
+
     QSize siz;
-
-    QDomNodeList list = e.childNodes();
-    for(int i=0;i<list.size();i++)
-    {
-        QDomElement el = list.at(i).toElement();
-        QString tag = el.tagName();
-        if(tag == "Pos")
-        {
-            pos.setX(el.attribute("x").toInt() * dpiX);
-            pos.setY(el.attribute("y").toInt() * dpiY);
-        }
-        else if(tag=="Size")
-        {
-            siz.setWidth(el.attribute("w").toInt()* dpiX +10);
-            siz.setHeight(el.attribute("h").toInt()* dpiY);
-        }
-
-        //Specific tags
-        else if(tag== "Code")
-            m_code = el.attribute("value");
-        else if(tag== "visibleCode")
-            m_visibleCode=el.attribute("value").toInt();
-    }
+    siz.setWidth(e.attribute("w").toDouble()* dpiX +10);
+    siz.setHeight(e.attribute("h").toDouble()* dpiY);
 
     painter->save();
 
@@ -1368,11 +1103,11 @@ QString ReportRenderer::getRelationField(QString s , QSqlRecord r)
     return "";
 }
 
-QDomNode ReportRenderer::startPage(QDomDocument doc, bool pageHeader, QDomNode pHeaderNode, QMap<QString, QSqlRecord> selects, bool reporHeader, QDomNode rHeaderNode)
+QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSiz,int RFootSiz, QDomDocument doc, bool pageHeader, QDomNode pHeaderNode, QMap<QString, QSqlRecord> selects, bool reporHeader, QDomNode rHeaderNode)
 {
     QDomNode toRet = doc.createElement("Page");
     if(reporHeader)
-    {      
+    {
         QDomNode child = rHeaderNode.firstChild();
         while(!child.isNull())
         {
@@ -1381,70 +1116,69 @@ QDomNode ReportRenderer::startPage(QDomDocument doc, bool pageHeader, QDomNode p
             {
                 ele.setAttribute("id","Label");
                 QString text = "";
-                int formato = 0;
-                QDomNode fieldChild = ele.firstChild();
-                while (!fieldChild.isNull())
+                int formato = ele.attribute("formato").toDouble();
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()== 3)
                 {
-                    QDomElement cEle = fieldChild.toElement();                    
-                    if(cEle.tagName() == "formato")
-                    {
-                        formato = cEle.attribute("value").toInt();
-                    }
-                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                    {
-                        QStringList value = cEle.attribute("value").split(".");
-                        if(value.size()== 3)
-                        {
-                            QString key = value.at(0) + "." + value.at(1);
-                            text = applyFormato(selects.value(key).value(value.at(2)).toString(),formato);
-                        }
-                    }
-                    if(cEle.tagName()== "Text")// value=""/>)
-                        cEle.setAttribute("value",text);
-                    fieldChild = fieldChild.nextSibling();
+                    QString key = value.at(0) + "." + value.at(1);
+                    text = applyFormato(selects.value(key).value(value.at(2)).toString(),formato);
                 }
+                ele.setAttribute("Text",text);
             }
             else if(ele.attribute("id")=="RelationalField")
             {
                 ele.setAttribute("id","Label");
                 QString text = "";
-                QDomNode fieldChild = ele.firstChild();
-                while (!fieldChild.isNull())
+                int formato = ele.attribute("formato").toDouble();
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()>1)
                 {
-                    QDomElement cEle = fieldChild.toElement();
-                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                    {
-                        QStringList value = cEle.attribute("value").split(".");
-                        if(value.size()>1)
-                        {
-                            QString key = value.at(0) + "." + value.at(1);
-                            text = getRelationField(cEle.attribute("value"),selects.value(key));
-                        }
-                    }
-                    if(cEle.tagName()== "Text")// value=""/>)
-                        cEle.setAttribute("value",text);
-                    fieldChild = fieldChild.nextSibling();
+                    QString key = value.at(0) + "." + value.at(1);
+                    text = applyFormato(getRelationField(ele.attribute("value"),selects.value(key)),formato);
                 }
+                ele.setAttribute("Text",text);
             }
             else if(ele.attribute("id")=="CodeBar")
             {
                 QString text = "";
-                QDomNode fieldChild = ele.firstChild();
-                while (!fieldChild.isNull())
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()== 3)
                 {
-                    QDomElement cEle = fieldChild.toElement();
-                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                    {
-                        QStringList value = cEle.attribute("value").split(".");
-                        if(value.size()== 3)
-                        {
-                            QString key = value.at(0) + "." + value.at(1);
-                            text = selects.value(key).value(value.at(2)).toString();
-                        }
-                    }
-                    if(cEle.tagName()== "Code")// value=""/>)
-                        cEle.setAttribute("value",text);
-                    fieldChild = fieldChild.nextSibling();
+                    QString key = value.at(0) + "." + value.at(1);
+                    text = selects.value(key).value(value.at(2)).toString();
+                }
+                ele.setAttribute("Code",text);
+            }
+            else if(ele.attribute("id")=="Line")
+            {
+                bool globlaLine = ele.attribute("endPointName") != "Self";
+                if(globlaLine)
+                {
+                    double footStart = pageUsable;
+                    if(ele.attribute("endPointName") == "Pie de pagina")
+                        footStart-= PFooterSiz;
+                    else if(ele.attribute("endPointName") == "Pie de report")
+                        footStart-= RFootSiz;
+
+                    double LineEnd = footStart + ele.attribute("endPointPoint").toDouble();
+                    double LineStart = ele.attribute("y").toDouble();
+                    ele.setAttribute("h",QString::number(LineEnd - LineStart,'f',2));
+                }
+            }
+            else if(ele.attribute("id")=="RoundRect")
+            {
+                bool globlaLine = ele.attribute("endPointName") != "Self";
+                if(globlaLine)
+                {
+                    double footStart = pageUsable;
+                    if(ele.attribute("endPointName") == "Pie de pagina")
+                        footStart-= PFooterSiz;
+                    else if(ele.attribute("endPointName") == "Pie de report")
+                        footStart-= RFootSiz;
+
+                    double LineEnd = footStart + ele.attribute("endPointPoint").toDouble();
+                    double LineStart = ele.attribute("y").toDouble();
+                    ele.setAttribute("h",QString::number(LineEnd - LineStart,'f',2));
                 }
             }
             child = child.nextSibling();
@@ -1462,70 +1196,61 @@ QDomNode ReportRenderer::startPage(QDomDocument doc, bool pageHeader, QDomNode p
             {
                 ele.setAttribute("id","Label");
                 QString text = "";
-                int formato = 0;
-                QDomNode fieldChild = ele.firstChild();
-                while (!fieldChild.isNull())
+                int formato = ele.attribute("formato").toDouble();
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()== 3)
                 {
-                    QDomElement cEle = fieldChild.toElement();
-                    if(cEle.tagName() == "formato")
-                    {
-                        formato = cEle.attribute("value").toInt();
-                    }
-                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                    {
-                        QStringList value = cEle.attribute("value").split(".");
-                        if(value.size()== 3)
-                        {
-                            QString key = value.at(0) + "." + value.at(1);
-                            text = applyFormato(selects.value(key).value(value.at(2)).toString(),formato);
-                        }
-                    }
-                    if(cEle.tagName()== "Text")// value=""/>)
-                        cEle.setAttribute("value",text);
-                    fieldChild = fieldChild.nextSibling();
+                    QString key = value.at(0) + "." + value.at(1);
+                    text = applyFormato(selects.value(key).value(value.at(2)).toString(),formato);
                 }
+                ele.setAttribute("Text",text);
             }
             else if(ele.attribute("id")=="RelationalField")
             {
                 ele.setAttribute("id","Label");
                 QString text = "";
-                QDomNode fieldChild = ele.firstChild();
-                while (!fieldChild.isNull())
+                int formato = ele.attribute("formato").toDouble();
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()>1)
                 {
-                    QDomElement cEle = fieldChild.toElement();
-                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                    {
-                        QStringList value = cEle.attribute("value").split(".");
-                        if(value.size()>1)
-                        {
-                            QString key = value.at(0) + "." + value.at(1);
-                            text = getRelationField(cEle.attribute("value"),selects.value(key));
-                        }
-                    }
-                    if(cEle.tagName()== "Text")// value=""/>)
-                        cEle.setAttribute("value",text);
-                    fieldChild = fieldChild.nextSibling();
+                    QString key = value.at(0) + "." + value.at(1);
+                    text = applyFormato(getRelationField(ele.attribute("value"),selects.value(key)),formato);
                 }
+                ele.setAttribute("Text",text);
             }
             else if(ele.attribute("id")=="CodeBar")
             {
                 QString text = "";
-                QDomNode fieldChild = ele.firstChild();
-                while (!fieldChild.isNull())
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()== 3)
                 {
-                    QDomElement cEle = fieldChild.toElement();
-                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                    {
-                        QStringList value = cEle.attribute("value").split(".");
-                        if(value.size()== 3)
-                        {
-                            QString key = value.at(0) + "." + value.at(1);
-                            text = selects.value(key).value(value.at(2)).toString();
-                        }
-                    }
-                    if(cEle.tagName()== "Code")// value=""/>)
-                        cEle.setAttribute("value",text);
-                    fieldChild = fieldChild.nextSibling();
+                    QString key = value.at(0) + "." + value.at(1);
+                    text = selects.value(key).value(value.at(2)).toString();
+                }
+                ele.setAttribute("Code",text);
+            }
+            else if(ele.attribute("id")=="Line")
+            {
+                bool globlaLine = ele.attribute("endPointName") != "Self";
+                if(globlaLine)
+                {
+                    double footStart = pageUsable - PFooterSiz;
+                    double LineEnd = footStart + ele.attribute("endPointPoint").toDouble();
+                    double LineStart = ele.attribute("y").toDouble();
+                    if(reporHeader)
+                        LineStart+= RHSiz;
+                    ele.setAttribute("h",QString::number(LineEnd - LineStart,'f',2));
+                }
+            }
+            else if(ele.attribute("id")=="RoundRect")
+            {
+                bool globlaLine = ele.attribute("endPointName") != "Self";
+                if(globlaLine)
+                {
+                    double footStart = pageUsable - PFooterSiz;
+                    double LineEnd = footStart + ele.attribute("endPointPoint").toDouble();
+                    double LineStart = ele.attribute("y").toDouble();
+                    ele.setAttribute("h",QString::number(LineEnd - LineStart,'f',2));
                 }
             }
             child = child.nextSibling();
@@ -1548,71 +1273,38 @@ void ReportRenderer::parseFooters(QDomNode RFooter, bool haveRfooter, QDomNode P
             {
                 ele.setAttribute("id","Label");
                 QString text = "";
-                int formato = 0;
-                QDomNode fieldChild = ele.firstChild();
-                while (!fieldChild.isNull())
+                int formato = ele.attribute("formato").toDouble();
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()== 3)
                 {
-                    QDomElement cEle = fieldChild.toElement();
-                    if(cEle.tagName() == "formato")
-                    {
-                        formato = cEle.attribute("value").toInt();
-                    }
-                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                    {
-                        QStringList value = cEle.attribute("value").split(".");
-                        if(value.size()== 3)
-                        {
-                            QString key = value.at(0) + "." + value.at(1);
-                            text = applyFormato(selects.value(key).value(value.at(2)).toString(),formato);
-                        }
-                    }
-                    if(cEle.tagName()== "Text")// value=""/>)
-                        cEle.setAttribute("value",text);
-                    fieldChild = fieldChild.nextSibling();
+                    QString key = value.at(0) + "." + value.at(1);
+                    text = applyFormato(selects.value(key).value(value.at(2)).toString(),formato);
                 }
+                ele.setAttribute("Text",text);
             }
             else if(ele.attribute("id")=="RelationalField")
             {
                 ele.setAttribute("id","Label");
                 QString text = "";
-                QDomNode fieldChild = ele.firstChild();
-                while (!fieldChild.isNull())
+                int formato = ele.attribute("formato").toDouble();
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()>1)
                 {
-                    QDomElement cEle = fieldChild.toElement();
-                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                    {
-                        QStringList value = cEle.attribute("value").split(".");
-                        if(value.size()>1)
-                        {
-                            QString key = value.at(0) + "." + value.at(1);
-                            text = getRelationField(cEle.attribute("value"),selects.value(key));
-                        }
-                    }
-                    if(cEle.tagName()== "Text")// value=""/>)
-                        cEle.setAttribute("value",text);
-                    fieldChild = fieldChild.nextSibling();
+                    QString key = value.at(0) + "." + value.at(1);
+                    text = applyFormato(getRelationField(ele.attribute("value"),selects.value(key)),formato);
                 }
+                ele.setAttribute("Text",text);
             }
             else if(ele.attribute("id")=="CodeBar")
             {
                 QString text = "";
-                QDomNode fieldChild = ele.firstChild();
-                while (!fieldChild.isNull())
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()== 3)
                 {
-                    QDomElement cEle = fieldChild.toElement();
-                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                    {
-                        QStringList value = cEle.attribute("value").split(".");
-                        if(value.size()== 3)
-                        {
-                            QString key = value.at(0) + "." + value.at(1);
-                            text = selects.value(key).value(value.at(2)).toString();
-                        }
-                    }
-                    if(cEle.tagName()== "Code")// value=""/>)
-                        cEle.setAttribute("value",text);
-                    fieldChild = fieldChild.nextSibling();
+                    QString key = value.at(0) + "." + value.at(1);
+                    text = selects.value(key).value(value.at(2)).toString();
                 }
+                ele.setAttribute("Code",text);
             }
             child = child.nextSibling();
         }
@@ -1628,71 +1320,38 @@ void ReportRenderer::parseFooters(QDomNode RFooter, bool haveRfooter, QDomNode P
             {
                 ele.setAttribute("id","Label");
                 QString text = "";
-                int formato = 0;
-                QDomNode fieldChild = ele.firstChild();
-                while (!fieldChild.isNull())
+                int formato = ele.attribute("formato").toDouble();
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()== 3)
                 {
-                    QDomElement cEle = fieldChild.toElement();
-                    if(cEle.tagName() == "formato")
-                    {
-                        formato = cEle.attribute("value").toInt();
-                    }
-                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                    {
-                        QStringList value = cEle.attribute("value").split(".");
-                        if(value.size()== 3)
-                        {
-                            QString key = value.at(0) + "." + value.at(1);
-                            text = applyFormato(selects.value(key).value(value.at(2)).toString(),formato);
-                        }
-                    }
-                    if(cEle.tagName()== "Text")// value=""/>)
-                        cEle.setAttribute("value",text);
-                    fieldChild = fieldChild.nextSibling();
+                    QString key = value.at(0) + "." + value.at(1);
+                    text = applyFormato(selects.value(key).value(value.at(2)).toString(),formato);
                 }
+                ele.setAttribute("Text",text);
             }
             else if(ele.attribute("id")=="RelationalField")
             {
                 ele.setAttribute("id","Label");
                 QString text = "";
-                QDomNode fieldChild = ele.firstChild();
-                while (!fieldChild.isNull())
+                int formato = ele.attribute("formato").toDouble();
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()>1)
                 {
-                    QDomElement cEle = fieldChild.toElement();
-                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                    {
-                        QStringList value = cEle.attribute("value").split(".");
-                        if(value.size()>1)
-                        {
-                            QString key = value.at(0) + "." + value.at(1);
-                            text = getRelationField(cEle.attribute("value"),selects.value(key));
-                        }
-                    }
-                    if(cEle.tagName()== "Text")// value=""/>)
-                        cEle.setAttribute("value",text);
-                    fieldChild = fieldChild.nextSibling();
+                    QString key = value.at(0) + "." + value.at(1);
+                    text = applyFormato(getRelationField(ele.attribute("value"),selects.value(key)),formato);
                 }
+                ele.setAttribute("Text",text);
             }
             else if(ele.attribute("id")=="CodeBar")
             {
                 QString text = "";
-                QDomNode fieldChild = ele.firstChild();
-                while (!fieldChild.isNull())
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()== 3)
                 {
-                    QDomElement cEle = fieldChild.toElement();
-                    if(cEle.tagName() == "Sql")// value="General.empresas.nombre"/>)
-                    {
-                        QStringList value = cEle.attribute("value").split(".");
-                        if(value.size()== 3)
-                        {
-                            QString key = value.at(0) + "." + value.at(1);
-                            text = selects.value(key).value(value.at(2)).toString();
-                        }
-                    }
-                    if(cEle.tagName()== "Code")// value=""/>)
-                        cEle.setAttribute("value",text);
-                    fieldChild = fieldChild.nextSibling();
+                    QString key = value.at(0) + "." + value.at(1);
+                    text = selects.value(key).value(value.at(2)).toString();
                 }
+                ele.setAttribute("Code",text);
             }
             child = child.nextSibling();
         }
@@ -1704,133 +1363,132 @@ QColor ReportRenderer::ColorFromString(QString s)
 {
     QStringList l= s.split(",");
     QColor c;
-    c.setRed  (l.at(0).toInt());
-    c.setGreen(l.at(1).toInt());
-    c.setBlue (l.at(2).toInt());
-    c.setAlpha(l.at(3).toInt());
+    c.setRed  (l.at(0).toDouble());
+    c.setGreen(l.at(1).toDouble());
+    c.setBlue (l.at(2).toDouble());
+    c.setAlpha(l.at(3).toDouble());
     return c;
 }
 
 QString ReportRenderer::applyFormato(QString in, int formato)
 {
     /*0 = sin formato
-     *1 = 999.999.999,99
-     *2 = 999,999,999.99
-     *3 = 99999999999,99
-     *4 = 99999999999.99*
-     *5 = 999.999.999,999
-     *6 = 999.999.999,9999
-     *7 = dd/mm/aa
-     *8 = dd/mm/aaaa
-     */
-    // TODO - TERMINAR FORMATO FECHA
-    if(formato == 0 || formato > 6 /*8 es el maximo ahora, si metes mas, aumenta esto*/)
-        return in;
+    *1 = 999.999.999,99
+    *2 = 999,999,999.99
+    *3 = 99999999999,99
+    *4 = 99999999999.99*
+    *5 = 999.999.999,999
+    *6 = 999.999.999,9999
+    *7 = dd/mm/aa
+    *8 = dd/mm/aaaa
+    */
+        // TODO - TERMINAR FORMATO FECHA
+        if(formato == 0 || formato > 6 /*8 es el maximo ahora, si metes mas, aumenta esto*/)
+            return in;
 
-    bool ok;
-    double d = in.toDouble(&ok);
-    if(!ok)
-        return in;
+        bool ok;
+        double d = in.toDouble(&ok);
+        if(!ok)
+            return in;
 
-    QString aux = QString::number(d, 'f' , 2); //9999999999.99 ,2 porque solo queriamos dos decimales
-    QString aux2 = QString::number(d, 'f' , 3);
-    QString aux3 = QString::number(d, 'f' , 4);
+        QString aux = QString::number(d, 'f' , 2); //9999999999.99 ,2 porque solo queriamos dos decimales
+        QString aux2 = QString::number(d, 'f' , 3);
+        QString aux3 = QString::number(d, 'f' , 4);
 
 
 
-    if(formato == 4)
-        return aux;
-    else if(formato == 3)
-        return aux.replace(".",",");
-    else if(formato == 2)
-    {
-        QString entero = aux.split(".").at(0);
-        QString final;
-        int count = 0;
-        for(int i = entero.size()-1 ; i>= 0 ; i--)
+        if(formato == 4)
+            return aux;
+        else if(formato == 3)
+            return aux.replace(".",",");
+        else if(formato == 2)
         {
-            final.prepend(entero.at(i));
-            count++;
-            if(count%3 == 0 && i != 0)
-                final.prepend(",");
+            QString entero = aux.split(".").at(0);
+            QString final;
+            int count = 0;
+            for(int i = entero.size()-1 ; i>= 0 ; i--)
+            {
+                final.prepend(entero.at(i));
+                count++;
+                if(count%3 == 0 && i != 0)
+                    final.prepend(",");
 
+            }
+            final.append(".");
+            final.append(aux.split(".").at(1));
+            return final;
         }
-        final.append(".");
-        final.append(aux.split(".").at(1));
-        return final;
-    }
-    else if(formato == 1)
-    {
-        aux.replace(".",",");//9999999999,99
-        QString entero = aux.split(",").at(0);
-        QString final;
-        int count = 0;
-        for(int i = entero.size()-1 ; i>= 0 ; i--)
+        else if(formato == 1)
         {
-            final.prepend(entero.at(i));
-            count++;
-            if(count%3 == 0 && i != 0)
-                final.prepend(".");
+            aux.replace(".",",");//9999999999,99
+            QString entero = aux.split(",").at(0);
+            QString final;
+            int count = 0;
+            for(int i = entero.size()-1 ; i>= 0 ; i--)
+            {
+                final.prepend(entero.at(i));
+                count++;
+                if(count%3 == 0 && i != 0)
+                    final.prepend(".");
 
+            }
+            final.append(",");
+            final.append(aux.split(",").at(1));
+            return final;
         }
-        final.append(",");
-        final.append(aux.split(",").at(1));
-        return final;
-    }    
-    else if(formato == 5 /*6 , 7 , 8 etc*/)//5 = 999.999.999,999
-    {
-        //haces el formato y lo devuelves
-        aux2.replace(".",",");//9999999999,999
-        QString entero = aux2.split(",").at(0);
-        QString final;
-        int count = 0;
-        for(int i = entero.size()-1 ; i>= 0 ; i--)
+        else if(formato == 5 /*6 , 7 , 8 etc*/)//5 = 999.999.999,999
         {
-            final.prepend(entero.at(i));
-            count++;
-            if(count%3 == 0 && i != 0)
-                final.prepend(".");
+            //haces el formato y lo devuelves
+            aux2.replace(".",",");//9999999999,999
+            QString entero = aux2.split(",").at(0);
+            QString final;
+            int count = 0;
+            for(int i = entero.size()-1 ; i>= 0 ; i--)
+            {
+                final.prepend(entero.at(i));
+                count++;
+                if(count%3 == 0 && i != 0)
+                    final.prepend(".");
 
+            }
+            final.append(",");
+            final.append(aux2.split(",").at(1));
+            return final;
         }
-        final.append(",");
-        final.append(aux2.split(",").at(1));
-        return final;
-    }
-    else if(formato == 6 /*6 , 7 , 8 etc*/)//5 = 999.999.999,9999
-    {
-        //haces el formato y lo devuelves
-        aux3.replace(".",",");//9999999999,999
-        QString entero = aux3.split(",").at(0);
-        QString final;
-        int count = 0;
-        for(int i = entero.size()-1 ; i>= 0 ; i--)
+        else if(formato == 6 /*6 , 7 , 8 etc*/)//5 = 999.999.999,9999
         {
-            final.prepend(entero.at(i));
-            count++;
-            if(count%3 == 0 && i != 0)
-                final.prepend(".");
+            //haces el formato y lo devuelves
+            aux3.replace(".",",");//9999999999,999
+            QString entero = aux3.split(",").at(0);
+            QString final;
+            int count = 0;
+            for(int i = entero.size()-1 ; i>= 0 ; i--)
+            {
+                final.prepend(entero.at(i));
+                count++;
+                if(count%3 == 0 && i != 0)
+                    final.prepend(".");
 
+            }
+            final.append(",");
+            final.append(aux3.split(",").at(1));
+            return final;
         }
-        final.append(",");
-        final.append(aux3.split(",").at(1));
-        return final;
-    }
-//    else if(formato == 7) //5 = dd/mm/aa
-//    {
-//        QDate fecha_formateada;
-//        //haces el formato y lo devuelves
-//        //aux3 = fecha
-//        return fecha_formateada;
-//    }
-//    else if(formato == 8) //5 = dd/mm/aaaa
-//    {
-//        QDate fecha_formateada;
-//        //haces el formato y lo devuelves
-//        //aux3 = fecha
-//        return fecha_formateada;
-//    }
+    // else if(formato == 7) //5 = dd/mm/aa
+    // {
+    // QDate fecha_formateada;
+    // //haces el formato y lo devuelves
+    // //aux3 = fecha
+    // return fecha_formateada;
+    // }
+    // else if(formato == 8) //5 = dd/mm/aaaa
+    // {
+    // QDate fecha_formateada;
+    // //haces el formato y lo devuelves
+    // //aux3 = fecha
+    // return fecha_formateada;
+    // }
 }
-
 
 QString ReportRenderer::ColorString(QColor c)
 {

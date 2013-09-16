@@ -1,5 +1,6 @@
 #include "roundedrect.h"
 #include "editrectdlg.h"
+#include "section.h"
 RoundedRect::RoundedRect(QGraphicsItem *parent) :
     Container(parent)
 {
@@ -10,68 +11,70 @@ RoundedRect::RoundedRect(QGraphicsItem *parent) :
     m_color1 = m_color2 = Qt::transparent;
     m_GradientDirection = Vertical;
 }
-QDomElement RoundedRect::xml(QDomDocument doc, QPointF relPos)
+QDomElement RoundedRect::xml(QDomDocument doc, QPointF relPos, QList<Section *> sectionPool)
 {
     QDomElement mainNode = doc.createElement("Element");
     mainNode.setAttribute("id","RoundRect");
 
     Container::apendXML(mainNode , doc, relPos);
 
-    QDomElement pen = doc.createElement("Pen");
-    pen.setAttribute("width",m_penWidth);
-    pen.setAttribute("color",ColorString(m_penColor));
+    QString endSec;
+    QString sPoint;
+    Section* start;
+    Section* end;
 
-    QDomElement color = doc.createElement("Color");
-    color.setAttribute("c1",ColorString(m_color1));
-    color.setAttribute("c2",ColorString(m_color2));
+    QPointF top = mapRectToScene(this->rect()).topLeft();
+    QPointF bt = mapRectToScene(this->rect()).bottomLeft();
+    for(int i = 0; i< sectionPool.size();i++)
+    {
+        QRectF seCrec = QRectF(sectionPool.at(i)->pos(),sectionPool.at(i)->rect().size());
+        if(seCrec.contains(top))
+            start = sectionPool.at(i);
+        if(seCrec.contains(bt))
+        {
+            endSec = sectionPool.at(i)->SectionName();
+            if(endSec!= "Pie de pagina" && endSec != "Pie de report")
+            {
+                end = start;
+                break;
+            }
+            QPointF endPoint = bt - seCrec.topRight();
+            sPoint = QString("%1").arg(endPoint.y());
+            end = sectionPool.at(i);
+            break;
+        }
+    }
 
-    QDomElement gradient = doc.createElement("Gradient");
-    gradient.setAttribute("used",m_useGradient);
-    gradient.setAttribute("direction",m_GradientDirection == Vertical ? "V" : "H");
+    if(start == end)
+        endSec = "Self";
 
-    QDomElement radious = doc.createElement("Radious");
-    radious.setAttribute("x",m_RadiousX);
-    radious.setAttribute("y",m_RadiousY);
+    mainNode.setAttribute("endPointName",endSec);
+    mainNode.setAttribute("endPointPoint",sPoint);
+    mainNode.setAttribute("PenWidth",m_penWidth);
+    mainNode.setAttribute("PenColor",ColorString(m_penColor));
+    mainNode.setAttribute("Color1",ColorString(m_color1));
+    mainNode.setAttribute("Color2",ColorString(m_color2));
+    mainNode.setAttribute("GradientUsed",m_useGradient);
+    mainNode.setAttribute("GradientDirection",m_GradientDirection == Vertical ? "V" : "H");
+    mainNode.setAttribute("RadiousX",m_RadiousX);
+    mainNode.setAttribute("RadiousY",m_RadiousY);
 
-    mainNode.appendChild(radious);
-    mainNode.appendChild(pen);
-    mainNode.appendChild(color);
-    mainNode.appendChild(gradient);
     return mainNode;
 }
 
 void RoundedRect::parseXml(QDomElement element , QPointF origin)
 {
-    QDomNodeList list = element.childNodes();
-    for(int i=0;i<list.size();i++)
-    {
-        QDomElement el = list.at(i).toElement();
-        QString tag = el.tagName();//"Pos"Size"Pen""Color""Gradient""Radious"
-        if(tag == "Pos")
-            this->setPos(el.attribute("x").toInt() + origin.x(),el.attribute("y").toInt()+origin.y());
-        else if(tag=="Size")
-            this->setSize(el.attribute("w").toInt(),el.attribute("h").toInt());
-        else if(tag== "Pen")
-        {
-            this->setpenColor(ColorFromString(el.attribute("color")));
-            this->setpenWidth(el.attribute("width").toInt());
-        }
-        else if(tag== "Color")
-        {
-            this->setcolor1(ColorFromString(el.attribute("c1")));
-            this->setcolor2(ColorFromString(el.attribute("c2")));
-        }
-        else if(tag== "Gradient")
-        {
-            this->setuseGradient(el.attribute("used").toInt());
-            this->setGradientDirection(el.attribute("direction") == "V" ? Vertical : Horizontal);
-        }
-        else if(tag== "Radious")
-        {
-            this->setRadiousX(el.attribute("x").toDouble());
-            this->setRadiousY(el.attribute("y").toDouble());
-        }
-    }
+    this->setPos(element.attribute("x").toDouble() + origin.x(),element.attribute("y").toDouble()+origin.y());
+    this->setSize(element.attribute("w").toDouble(),element.attribute("h").toDouble());
+
+    this->setpenWidth(element.attribute("PenWidth").toDouble());
+    this->setpenColor(ColorFromString(element.attribute("PenColor")));
+    this->setcolor1(ColorFromString(element.attribute("Color1")));
+    this->setcolor2(ColorFromString(element.attribute("Color2")));
+    this->setuseGradient( element.attribute("GradientUsed").toDouble());
+    this->setGradientDirection(element.attribute("GradientDirection")== "V" ? Vertical : Horizontal);
+    this->setRadiousX(element.attribute("RadiousX").toDouble());
+    this->setRadiousY(element.attribute("RadiousY").toDouble());
 }
 
 void RoundedRect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

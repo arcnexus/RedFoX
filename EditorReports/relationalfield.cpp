@@ -15,102 +15,47 @@ RelationalField::RelationalField(QGraphicsItem *parent) :
     m_formato = 0;
 }
 
-QDomElement RelationalField::xml(QDomDocument doc, QPointF relPos)
+QDomElement RelationalField::xml(QDomDocument doc, QPointF relPos, QList<Section *> sectionPool)
 {
     QDomElement node = doc.createElement("Element");
     node.setAttribute("id","RelationalField");
 
     Container::apendXML(node,doc, relPos);
 
-    QDomElement Text = doc.createElement("Text");
-    Text.setAttribute("value","");
+    node.setAttribute("Text","");
+    node.setAttribute("Orientacion","H");
+    node.setAttribute("Sql",m_sql);
+    node.setAttribute("Expandable",m_expandable);
+    node.setAttribute("Alineacion",m_Alineacion == Left ? "L" : m_Alineacion == Rigth ? "R" : "C");
+    node.setAttribute("fontFamily",m_fontFamily);
+    node.setAttribute("fontSize",m_fontSize);
+    node.setAttribute("fontWeigth",m_fontWeigth);
+    node.setAttribute("italicFont",m_italicFont);
+    node.setAttribute("underlined",m_underlined);
+    node.setAttribute("color",ColorString(m_fontColor));
+    node.setAttribute("formato",m_formato);
 
-    QDomElement Orientacion = doc.createElement("Orientacion");
-    Orientacion.setAttribute("value","H");
-
-    QDomElement Sql = doc.createElement("Sql");
-    Sql.setAttribute("value",m_sql);
-
-    QDomElement Expandable = doc.createElement("Expandable");
-    Expandable.setAttribute("value",m_expandable);
-
-    QDomElement Alineacion = doc.createElement("Alineacion");
-    Alineacion.setAttribute("value",m_Alineacion == Left ? "L" : m_Alineacion == Rigth ? "R" : "C");
-
-    QDomElement fontFamily = doc.createElement("fontFamily");
-    fontFamily.setAttribute("value",m_fontFamily);
-
-    QDomElement fontSize = doc.createElement("fontSize");
-    fontSize.setAttribute("value",m_fontSize);
-
-    QDomElement fontWeigth = doc.createElement("fontWeigth");
-    fontWeigth.setAttribute("value",m_fontWeigth);
-
-    QDomElement italicFont = doc.createElement("italicFont");
-    italicFont.setAttribute("value",m_italicFont);
-
-    QDomElement underlinedFont = doc.createElement("underlined");
-    underlinedFont.setAttribute("value",m_underlined);
-
-    QDomElement colorFont = doc.createElement("color");
-    colorFont.setAttribute("value",ColorString(m_fontColor));
-
-    QDomElement formato = doc.createElement("formato");
-    formato.setAttribute("value",m_formato);
-
-    node.appendChild(formato);
-    node.appendChild(Sql);
-    node.appendChild(Expandable);
-    node.appendChild(Alineacion);
-    node.appendChild(fontFamily);
-    node.appendChild(fontSize);
-    node.appendChild(fontWeigth);
-    node.appendChild(italicFont);
-    node.appendChild(underlinedFont);
-    node.appendChild(colorFont);
-    node.appendChild(Text);
-    node.appendChild(Orientacion);
     return node;
 }
 
 void RelationalField::parseXml(QDomElement element, QPointF origin)
 {
-    QDomNodeList list = element.childNodes();
-    for(int i=0;i<list.size();i++)
-    {
-        QDomElement el = list.at(i).toElement();
-        QString tag = el.tagName();
-        //Common tag for every container subclass
-        if(tag == "Pos")
-            this->setPos(el.attribute("x").toInt() + origin.x(),el.attribute("y").toInt()+origin.y());
-        else if(tag=="Size")
-            this->setSize(el.attribute("w").toInt(),el.attribute("h").toInt());
+    this->setPos(element.attribute("x").toDouble() + origin.x(),element.attribute("y").toDouble()+origin.y());
+    this->setSize(element.attribute("w").toDouble(),element.attribute("h").toDouble());
+    this->setsql(element.attribute("Sql"));
+    this->setexpandable(element.attribute("Expandable").toDouble());
 
-        //Specific tags
-        //"Text""Orientacion""Alineacion""fontFamily""fontSize""fontWeigth""italicFont"
-        else if(tag== "Sql")
-            this->setsql(el.attribute("value"));
-        else if(tag== "Expandable")
-            this->setexpandable(el.attribute("value").toInt());
-        else if(tag== "Alineacion")
-            el.attribute("value") == "L" ? setAlineacion(Left) :
-            el.attribute("value") == "R" ? setAlineacion(Rigth):
-                                           setAlineacion(Center);
-        else if(tag== "fontFamily")
-            this->setfontFamily(el.attribute("value"));
-        else if(tag== "fontSize")
-            this->setfontSize(el.attribute("value").toInt());
-        else if(tag== "fontWeigth")
-            this->setfontWeigth(el.attribute("value").toInt());
-        else if(tag== "italicFont")
-            this->setitalicFont(el.attribute("value").toInt());
-        else if(tag== "underlined")
-            this->setunderlined(el.attribute("value").toInt());
-         else if(tag== "color")
-            this->setfontColor(ColorFromString(el.attribute("value")));
-        else if(tag== "formato")
-           this->setformato(el.attribute("value").toInt());
-    }
+    element.attribute("Alineacion") == "L" ? setAlineacion(Left) :
+    element.attribute("Alineacion") == "R" ? setAlineacion(Rigth):
+                                   setAlineacion(Center);
+
+    this->setfontFamily(element.attribute("fontFamily"));
+    this->setfontSize(element.attribute("fontSize").toDouble());
+    this->setfontWeigth(element.attribute("fontWeigth").toDouble());
+    this->setitalicFont(element.attribute("italicFont").toDouble());
+    this->setunderlined(element.attribute("underlined").toDouble());
+    this->setfontColor(ColorFromString(element.attribute("color")));
+    this->setformato(element.attribute("formato").toDouble());
 }
 
 void RelationalField::editMe()

@@ -14,7 +14,7 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" colspan="2">
+   <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QCheckBox" name="cabRepChk">
@@ -31,26 +31,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item row="5" column="1">
-    <widget class="QPushButton" name="btnAdd">
-     <property name="text">
-      <string>Añadir</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item row="1" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -77,13 +57,38 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="footPageChk">
-       <property name="text">
-        <string>Pie de pagina</string>
+      <widget class="QGroupBox" name="footPageChk">
+       <property name="title">
+        <string>Pie de Página</string>
        </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QCheckBox" name="footPageLastChk">
+          <property name="text">
+           <string>En ultima pagina</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="2" column="0" rowspan="6">
+    <widget class="QListWidget" name="listWidget"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="btnUp">
+     <property name="text">
+      <string>Subir</string>
+     </property>
+    </widget>
    </item>
    <item row="3" column="1">
     <widget class="QPushButton" name="btnEdit">
@@ -92,9 +97,6 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" rowspan="6">
-    <widget class="QListWidget" name="listWidget"/>
-   </item>
    <item row="4" column="1">
     <widget class="QPushButton" name="btnDown">
      <property name="text">
@@ -102,10 +104,10 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="btnUp">
+   <item row="5" column="1">
+    <widget class="QPushButton" name="btnAdd">
      <property name="text">
-      <string>Subir</string>
+      <string>Añadir</string>
      </property>
     </widget>
    </item>
@@ -115,6 +117,19 @@
       <string>Borrar</string>
      </property>
     </widget>
+   </item>
+   <item row="7" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

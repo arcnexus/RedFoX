@@ -10,7 +10,7 @@
 #include"../Auxiliares/datedelegate.h"
 #include"../Auxiliares/monetarydelegate.h"
 #include"../Zona_Maestros/transportistas.h"
-#include "vencimientos.h"
+#include "../vencimientos.h"
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
