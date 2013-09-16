@@ -584,13 +584,13 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
 
     splash->showMessage(tr("Cargando modulos... Modulo de TPV") );
 
-    FrmCajaMinuta * frmCajaMinuta = new FrmCajaMinuta(this);
-    if(frmCajaMinuta->userHaveAcces(Configuracion_global->id_usuario_activo))
+    FrmTPV * frm_tpv = new FrmTPV(this);
+    if(frm_tpv->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
-        _ventasModules.append(frmCajaMinuta);
+        _ventasModules.append(frm_tpv);
     }
     else
-        frmCajaMinuta->deleteLater();
+        frm_tpv->deleteLater();
 }
 
 void MainWindow::loadComprasModules(QSplashScreen *splash)

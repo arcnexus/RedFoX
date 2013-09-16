@@ -38,7 +38,7 @@
 #include "Zona_Ventas/frmpedidos.h"
 #include "Zona_Ventas/frmpresupuestoscli.h"
 #include "Zona_Ventas/frmfacturas.h"
-#include "TPV/frmcajaminuta.h"
+#include "TPV/frmtpv.h"
 #include "../Zona_Maestros/frmformas_pago.h"
 
 
