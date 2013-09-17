@@ -8,7 +8,7 @@
 #include "pedidos.h"
 #include "albaran.h"
 #include "factura.h"
-#include "vencimientos.h"
+#include "../vencimientos.h"
 
 
 FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :

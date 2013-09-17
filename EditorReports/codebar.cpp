@@ -33,51 +33,27 @@ void CodeBar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
         Container::paint(painter,option,widget);
 }
 
-QDomElement CodeBar::xml(QDomDocument doc, QPointF relPos)
+QDomElement CodeBar::xml(QDomDocument doc, QPointF relPos, QList<Section *> sectionPool)
 {
     QDomElement node = doc.createElement("Element");
     node.setAttribute("id","CodeBar");
 
     Container::apendXML(node,doc, relPos);
 
-    QDomElement Text = doc.createElement("Code");
-    Text.setAttribute("value",m_code);
+    node.setAttribute("Code",m_code);
+    node.setAttribute("visibleCodee",m_visibleCode);
 
-    QDomElement visibleCode = doc.createElement("visibleCode");
-    visibleCode.setAttribute("value",m_visibleCode);
-
-    QDomElement sqlCode = doc.createElement("Sql");
-    sqlCode.setAttribute("value",m_sql);
-
-    node.appendChild(visibleCode);
-    node.appendChild(sqlCode);
-    node.appendChild(Text);
-
+    node.setAttribute("Sql",m_sql);
     return node;
 }
 
 void CodeBar::parseXml(QDomElement element, QPointF origin)
 {
-    QDomNodeList list = element.childNodes();
-    for(int i=0;i<list.size();i++)
-    {
-        QDomElement el = list.at(i).toElement();
-        QString tag = el.tagName();
-        //Common tag for every container subclass
-        if(tag == "Pos")
-            this->setPos(el.attribute("x").toInt() + origin.x(),el.attribute("y").toInt()+origin.y());
-        else if(tag=="Size")
-            this->setSize(el.attribute("w").toInt(),el.attribute("h").toInt());
-
-        //Specific tags
-        else if(tag== "Code")
-            this->setcode(el.attribute("value"));
-        else if(tag== "visibleCode")
-            this->setvisibleCode(el.attribute("value").toInt());
-        else if(tag== "Sql")
-            this->setsql(el.attribute("value"));
-
-    }
+    this->setPos(element.attribute("x").toDouble() + origin.x(),element.attribute("y").toDouble()+origin.y());
+    this->setSize(element.attribute("w").toDouble(),element.attribute("h").toDouble());
+    this->setcode(element.attribute("Code"));
+    this->setvisibleCode(element.attribute("visibleCode").toDouble());
+    this->setsql(element.attribute("Sql"));
 }
 
 QString CodeBar::code() const {

@@ -152,6 +152,7 @@ void Section::_insertRect(QDomElement ele, QPointF point, QList<Container *> &it
     rect->setMargins(this->margin);
     rect->parseXml(ele,point);
     itemPool.append(rect);
+    this->_items.append(rect);
 }
 
 void Section::_insertLabel(QDomElement ele, QPointF point, QList<Container *> &itemPool)
@@ -160,6 +161,7 @@ void Section::_insertLabel(QDomElement ele, QPointF point, QList<Container *> &i
     rect->setMargins(this->margin);
     rect->parseXml(ele,point);
     itemPool.append(rect);
+    this->_items.append(rect);
 }
 
 void Section::_insertLine(QDomElement ele, QPointF point, QList<Container *> &itemPool)
@@ -168,6 +170,7 @@ void Section::_insertLine(QDomElement ele, QPointF point, QList<Container *> &it
     line->setMargins(this->margin);
     line->parseXml(ele,point);
     itemPool.append(line);
+    this->_items.append(line);
 }
 
 void Section::_insertCodeBar(QDomElement ele, QPointF point, QList<Container *> &itemPool)
@@ -176,6 +179,7 @@ void Section::_insertCodeBar(QDomElement ele, QPointF point, QList<Container *> 
     code->setMargins(this->margin);
     code->parseXml(ele,point);
     itemPool.append(code);
+    this->_items.append(code);
 }
 
 void Section::_insertImage(QDomElement ele, QPointF point, QList<Container *> &itemPool)
@@ -184,6 +188,7 @@ void Section::_insertImage(QDomElement ele, QPointF point, QList<Container *> &i
     img->setMargins(this->margin);
     img->parseXml(ele,point);
     itemPool.append(img);
+    this->_items.append(img);
 }
 
 void Section::_insertField(QDomElement ele, QPointF point, QList<Container *> &itemPool)
@@ -192,6 +197,7 @@ void Section::_insertField(QDomElement ele, QPointF point, QList<Container *> &i
     fld->setMargins(this->margin);
     fld->parseXml(ele,point);
     itemPool.append(fld );
+    this->_items.append(fld);
 }
 
 void Section::_insertRelField(QDomElement ele, QPointF point, QList<Container *> &itemPool)
@@ -200,6 +206,7 @@ void Section::_insertRelField(QDomElement ele, QPointF point, QList<Container *>
     fld->setMargins(this->margin);
     fld->parseXml(ele,point);
     itemPool.append(fld );
+    this->_items.append(fld);
 }
 
 QRectF Section::getMargin() const
@@ -298,7 +305,7 @@ void Section::setOnMaxsize(bool onMaxsize)
     m_onMaxsize = onMaxsize;
 }
 
-QDomElement Section::xml(QDomDocument doc, QList<Container *> &usedItems , QMap<QString,bool> &querys)
+QDomElement Section::xml(QDomDocument doc, QList<Container *> &usedItems , QMap<QString,bool> &querys, QList<Section*> sectionPool)
 {    
     QDomElement node = doc.createElement("Section");
     node.setAttribute("id",sectionType());
@@ -317,7 +324,7 @@ QDomElement Section::xml(QDomDocument doc, QList<Container *> &usedItems , QMap<
             if(!usedItems.contains(cont))
             {
                 querys[cont->query()] = true;
-                node.appendChild(cont->xml(doc,marginPoint()));
+                node.appendChild(cont->xml(doc,marginPoint(),sectionPool));
                 usedItems.append(cont);
             }
         }

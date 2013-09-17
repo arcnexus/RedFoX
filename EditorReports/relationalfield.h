@@ -19,7 +19,7 @@ class RelationalField : public Container
     Q_PROPERTY(int formato READ formato WRITE setformato NOTIFY formatoChanged)
 public:
     explicit RelationalField(QGraphicsItem *parent = 0);
-    QDomElement xml(QDomDocument doc, QPointF relPos);
+    QDomElement xml(QDomDocument doc, QPointF relPos,QList<Section*> sectionPool);
     void parseXml(QDomElement element, QPointF origin);
     void editMe();
     QString query();

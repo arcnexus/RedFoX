@@ -11,7 +11,7 @@ class ReportImage : public Container
 public:
     explicit ReportImage(QGraphicsItem *parent = 0);
     
-    QDomElement xml(QDomDocument doc, QPointF relPos);
+    QDomElement xml(QDomDocument doc, QPointF relPos,QList<Section*> sectionPool);
     void parseXml(QDomElement element, QPointF origin);
     void editMe();
     int type() const

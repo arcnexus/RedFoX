@@ -7,7 +7,7 @@ class PageHeaderSection : public Section
 public:
     explicit PageHeaderSection(QGraphicsItem *parent = 0);
     
-    QDomElement xml(QDomDocument doc, QList<Container*>& usedItems,QMap<QString,bool> &querys);
+    QDomElement xml(QDomDocument doc, QList<Container*>& usedItems,QMap<QString,bool> &querys, QList<Section*> sectionPool);
     bool onFisrtPage() const;
 
 signals:

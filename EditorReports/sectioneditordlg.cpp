@@ -30,6 +30,9 @@ SectionEditorDlg::SectionEditorDlg(Paper *paper, QWidget *parent) :
             break;
         case Section::PageFooter:
             ui->footPageChk->setChecked(true);
+            ui->footPageLastChk->setChecked(qgraphicsitem_cast<PageHeaderSection*>(sec)->onFisrtPage());
+            connect(ui->footPageLastChk,SIGNAL(toggled(bool)),
+                    qgraphicsitem_cast<PageHeaderSection*>(sec),SLOT(setOnFisrtPage(bool)));
             break;
         case Section::ReportFooter:
             ui->footRepChk->setChecked(true);
@@ -64,6 +67,18 @@ void SectionEditorDlg::footPageChk_toggled(bool checked)
         paper->addSection("Pie de pagina",Section::PageFooter);
     else
         paper->removeSection("Pie de pagina");
+    QListIterator<Section*> it(paper->getSeccionPool());
+    while(it.hasNext())
+    {
+        Section * sec = it.next();
+        Section::SectionType t = sec->sectionType();
+        if (t == Section::PageFooter)
+        {
+            connect(ui->footPageLastChk,SIGNAL(toggled(bool)),
+            qgraphicsitem_cast<PageHeaderSection*>(sec),SLOT(setOnFisrtPage(bool)));
+            break;
+        }
+    }
 }
 
 void SectionEditorDlg::footRepChk_toggled(bool checked)

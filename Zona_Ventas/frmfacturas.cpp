@@ -7,7 +7,7 @@
 #include "../Auxiliares/datedelegate.h"
 #include "../Almacen/frmarticulos.h"
 #include "../Zona_Ventas/frmgestioncobros.h"
-#include "vencimientos.h"
+#include "../vencimientos.h"
 
 
 #include "../Almacen/articulo.h"

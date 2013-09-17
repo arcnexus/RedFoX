@@ -86,29 +86,44 @@ void Paper::mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
         if(margin().contains(event->pos()))
         {
+            if(seccionPool.isEmpty())
+            {
+                QMessageBox::warning(qApp->activeWindow(),tr("Sin secciones"),tr("Inserte un seccion primero por favor"));
+                emit itemInserted();
+                return;
+            }
             _insertingPoint = event->pos();
+            QList<Section*>::Iterator it;
+            Section * target;
+            for(it = seccionPool.begin();it!= seccionPool.end();++it)
+            {
+                target = (*it);
+                if( mapRectToItem(this,QRectF(target->pos(),target->rect().size())).contains( mapToItem(this,_insertingPoint) ))
+                    break;
+            }
+
             switch (_insertingType)
             {
             case Paper::CampoRelacional:
-                insertCampoRelacional();
+                insertCampoRelacional(target);
                 break;
             case Paper::Campo:
-                insertCampo();
+                insertCampo(target);
                 break;
             case Paper::Imagen:
-                insertImagen();
+                insertImagen(target);
                 break;
             case Paper::CodeBarIt:
-                insertCodeBar();
+                insertCodeBar(target);
                 break;
             case Paper::Linea:
-                insertLinea();
+                insertLinea(target);
                 break;
             case Paper::Label:
-                insertLabel();
+                insertLabel(target);
                 break;
             case RoundRectIt:
-                insertRoundRect();
+                insertRoundRect(target);
                 break;
             default:
                 break;
@@ -143,16 +158,18 @@ qreal Paper::pxTocm(int px)
     return inch/0.3937008;
 }
 
-void Paper::insertRoundRect()
+void Paper::insertRoundRect(Section * sec)
 {
     RoundedRect * rect = new RoundedRect(this);
     rect->setMargins(this->margin());
     rect->setSize(100,100);
     rect->setPos(_insertingPoint.x()-50,_insertingPoint.y()-50);
+    connect(rect,SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
+    sec->_items.append(rect);
     itemPool.append(rect);
 }
 
-void Paper::insertLabel()
+void Paper::insertLabel(Section * sec)
 {
     CustomLabel * rect = new CustomLabel(this);
     rect->setMargins(this->margin());
@@ -161,52 +178,64 @@ void Paper::insertLabel()
     rect->setText("Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos.");
     //rect->setfontSize(40);
     rect->setfontSize(10);
+    connect(rect,SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
+    sec->_items.append(rect);
     itemPool.append(rect);
 }
 
-void Paper::insertLinea()
+void Paper::insertLinea(Section * sec)
 {
     ReportLine * line = new ReportLine (this);
     line->setMargins(this->margin());
     line->setSize(200,15);
     line->setPos(_insertingPoint.x()-100,_insertingPoint.y()-7);
+    connect(line,SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
+    sec->_items.append(line);
     itemPool.append(line);
 }
 
-void Paper::insertCodeBar()
+void Paper::insertCodeBar(Section * sec)
 {
     CodeBar* code = new CodeBar(this);
     code->setMargins(this->margin());
     code->setcode("*123456789*");
     code->setvisibleCode(true);
     code->setPos(_insertingPoint.x()-100,_insertingPoint.y()-7);
+    connect(code,SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
+    sec->_items.append(code);
     itemPool.append(code);
 }
 
-void Paper::insertImagen()
+void Paper::insertImagen(Section * sec )
 {
     ReportImage * img = new ReportImage(this);
-    img->setruta(":/Icons/PNG/NeuX.png");
+    img->setruta(":/Icons/PNG/Box.png");
     img->setMargins(this->margin());
     img->setPos(_insertingPoint.x()-50,_insertingPoint.y()-7);
+    connect(img,SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
+    sec->_items.append(img);
     itemPool.append(img);
 }
 
-void Paper::insertCampo()
+void Paper::insertCampo(Section * sec)
 {
     ReportField * fld = new ReportField(this)   ;
     fld->setMargins(this->margin());
     fld->setSize(100,20);
     fld->setPos(_insertingPoint.x()-50,_insertingPoint.y()-7);
+    connect(fld,SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
+    sec->_items.append(fld);
     itemPool.append(fld );
 }
 
-void Paper::insertCampoRelacional()
+void Paper::insertCampoRelacional(Section * sec)
 {
     RelationalField * fld = new RelationalField(this)   ;
     fld->setMargins(this->margin());
     fld->setSize(150,20);
     fld->setPos(_insertingPoint.x()-50,_insertingPoint.y()-7);
+    connect(fld,SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
+    sec->_items.append(fld);
     itemPool.append(fld );
 }
 
@@ -251,8 +280,14 @@ void Paper::reCalculateSeccion(Section * secSender)
     while(it.hasNext())
     {
         Section* sec = it.next();
+        qreal oldP = sec->pos().ry();
+        qreal diff = position-oldP;
         sec->setvPos(position);
         position += sec->Height()+1;
+
+        QList<Container *>::Iterator itemIt;
+        for(itemIt = sec->_items.begin();itemIt != sec->_items.end();++itemIt)
+            (*itemIt)->setPos((*itemIt)->pos().rx(),(*itemIt)->pos().ry()+diff);
 
         if(sec->Height() > maxHeigth.second)
         {
@@ -293,6 +328,28 @@ void Paper::reCalculateSeccion(Section * secSender)
     }
 }
 
+void Paper::itemMoved(Container * cont)
+{
+    QPointF pos = cont->pos();
+    QList<Section *>::Iterator it;
+    Section * oldSection = 0;
+    Section * newSection = 0;
+    for(it = seccionPool.begin();it != seccionPool.end(); ++it)
+    {
+        Section * aux = *it;
+        if(aux->_items.contains(cont))
+            oldSection = aux;
+        if(mapRectToItem(this,QRectF(aux->pos(),aux->rect().size())).contains(pos))
+            newSection = aux;
+    }
+    if(oldSection == newSection)
+        return;
+    if(oldSection)
+        oldSection->_items.removeOne(cont);
+    if(newSection)
+        newSection->_items.append(cont);
+}
+
 void Paper::setSize(_Sizes siz, double w, double h, _Orientacion o)
 {
     mySize = siz;
@@ -320,7 +377,7 @@ bool Paper::addSection(QString nombre, Section::SectionType type)
     if(!valid)
         return false;
 
-    if(type != Section::Detail && type!= Section::PageHeader)
+    if(type != Section::Detail && type!= Section::PageHeader && type!=Section::PageFooter)
     {
         Section * seccion = new Section(this);
         seccion->setType(type);
@@ -352,6 +409,24 @@ bool Paper::addSection(QString nombre, Section::SectionType type)
     else if(type==Section::Detail)
     {
         DetailSection * seccion = new DetailSection(this);
+        seccion->setType(type);
+        seccion->setSectionName(nombre);
+        seccion->setMargin(margin());
+        if(seccionPool.isEmpty())
+        {
+            seccionPool.append(seccion);
+            seccion->setvPos(margin().top());
+        }
+        else
+        {
+            _insertSection(seccion);
+            reCalculateSeccion(seccion);
+        }
+        connect(seccion,SIGNAL(resized(Section*)),this,SLOT(reCalculateSeccion(Section*)));
+    }
+    else if(type==Section::PageFooter)
+    {
+        PageHeaderSection * seccion = new PageHeaderSection(this);
         seccion->setType(type);
         seccion->setSectionName(nombre);
         seccion->setMargin(margin());
@@ -468,12 +543,12 @@ bool Paper::parseXML(QString xml, QString & error)
                     }
                     else if(secEle.tagName() == "Section")
                     {
-                        int typeOfSection = secEle.attribute("id").toInt();
+                        int typeOfSection = secEle.attribute("id").toDouble();
                         Section::SectionType type = static_cast<Section::SectionType>(typeOfSection);
-                        if(type != Section::Detail && type != Section::PageHeader)
+                        if(type != Section::Detail && type != Section::PageHeader && type != Section::PageFooter)
                         {
                             Section * sec = new Section(this);
-                            sec->setHeight(secEle.attribute("size").toInt());
+                            sec->setHeight(secEle.attribute("size").toDouble());
                             sec->setSectionName(secEle.attribute("name"));
                             sec->setMargin(margin());
                             sec->setType(type);
@@ -485,16 +560,16 @@ bool Paper::parseXML(QString xml, QString & error)
                         else if(type == Section::Detail)
                         {
                             DetailSection* sec = new DetailSection(this);
-                            sec->setHeight(secEle.attribute("size").toInt());
+                            sec->setHeight(secEle.attribute("size").toDouble());
                             sec->setSectionName(secEle.attribute("name"));
                             sec->setType(type);
                             sec->setMargin(margin());                            
                             sec->setSqlGlobal(secEle.attribute("SqlGlobal"));
                             sec->setSqlInterno(secEle.attribute("SqlInterno"));
                             sec->setClausulaInterna(secEle.attribute("ClausulaInterna"));
-                            sec->setcolorear(secEle.attribute("colored").toInt());
+                            sec->setcolorear(secEle.attribute("colored").toDouble());
                             sec->setcolor1(sec->ColorFromString(secEle.attribute("color1")));
-                            sec->setuse2Colors(secEle.attribute("alternative").toInt());
+                            sec->setuse2Colors(secEle.attribute("alternative").toDouble());
                             sec->setcolor2(sec->ColorFromString(secEle.attribute("color2")));
                             _insertSection(sec);
                             reCalculateSeccion(sec);
@@ -504,8 +579,8 @@ bool Paper::parseXML(QString xml, QString & error)
                         else
                         {
                             PageHeaderSection * sec = new PageHeaderSection(this);
-                            sec->setOnFisrtPage(secEle.attribute("OnFistPage").toInt());
-                            sec->setHeight(secEle.attribute("size").toInt());
+                            sec->setOnFisrtPage(secEle.attribute("OnFistPage").toDouble());
+                            sec->setHeight(secEle.attribute("size").toDouble());
                             sec->setSectionName(secEle.attribute("name"));
                             sec->setMargin(margin());
                             sec->setType(type);
@@ -521,6 +596,8 @@ bool Paper::parseXML(QString xml, QString & error)
             }
         }
     }
+    for(int i= 0;i < itemPool.size();i++)
+        connect(itemPool.at(i),SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
     return true;
 }
 
@@ -563,7 +640,7 @@ int Paper::save(QString file)
         QList<Container*> usedItems;
         QMap<QString,bool> querys;
         for(it=seccionPool.begin();it!=seccionPool.end();++it)
-            paperNode.appendChild((*it)->xml(doc,usedItems,querys));
+            paperNode.appendChild((*it)->xml(doc,usedItems,querys,seccionPool));
 
         QMapIterator<QString,bool> mIt(querys);
         while(mIt.hasNext())
@@ -625,7 +702,7 @@ QDomDocument Paper::preview()
     QList<Container*> usedItems;
     QMap<QString,bool> querys;
     for(it=seccionPool.begin();it!=seccionPool.end();++it)
-        paperNode.appendChild((*it)->xml(doc,usedItems,querys));
+        paperNode.appendChild((*it)->xml(doc,usedItems,querys,seccionPool));
 
     QMapIterator<QString,bool> mIt(querys);
     while(mIt.hasNext())
@@ -702,10 +779,20 @@ QList<Section *> Paper::getSeccionPool() const
 
 void Paper::removeItems(QList<QGraphicsItem *> items)
 {
-    QListIterator<Container*> it(itemPool);
+    QListIterator<Container*> it(itemPool);    
     while(it.hasNext())
     {
         Container * cont = it.next();
+        QList<Section *>::Iterator it;
+        for(it = seccionPool.begin();it != seccionPool.end(); ++it)
+        {
+            Section * aux = *it;
+            if(aux->_items.contains(cont))
+            {
+                aux->_items.removeOne(cont);
+                break;
+            }
+        }
         if(items.contains(cont))
         {
             itemPool.removeOne(cont);

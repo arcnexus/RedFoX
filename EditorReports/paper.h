@@ -105,8 +105,7 @@ public slots:
 
     void reCalculateSeccion(Section * = 0);
 private slots:
-
-
+    void itemMoved(Container *);
 private:
     _Orientacion m_orientacion;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -126,13 +125,13 @@ private:
     void _insertSection(Section* sec);
 
     QList<Container*> itemPool;
-    void insertRoundRect();
-    void insertLabel();
-    void insertLinea();
-    void insertCodeBar();
-    void insertImagen();
-    void insertCampo();
-    void insertCampoRelacional();
+    void insertRoundRect(Section *);
+    void insertLabel(Section *sec);
+    void insertLinea(Section *);
+    void insertCodeBar(Section *);
+    void insertImagen(Section *);
+    void insertCampo(Section *sec);
+    void insertCampoRelacional(Section *sec);
 
     double m_margenInferiro;
     double m_margenIzquierdo;

@@ -18,7 +18,7 @@ public:
     bool header() const;
     bool foot() const;    
 
-    QDomElement xml(QDomDocument doc, QList<Container*>& usedItems,QMap<QString, bool> &querys);
+    QDomElement xml(QDomDocument doc, QList<Container*>& usedItems,QMap<QString, bool> &querys, QList<Section*> sectionPool);
     void parseXml(QDomNode , QList<Container*>& itemPool);
 
     QString SqlGlobal() const;

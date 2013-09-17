@@ -18,7 +18,7 @@ class ReportRenderer : public QObject
     Q_OBJECT
 public:
     explicit ReportRenderer(QObject *parent = 0);
-    QDomDocument render(QDomDocument in ,QMap<QString,QString> queryClausules, bool& error);
+    QDomDocument render(QPrinter* printer ,QDomDocument in ,QMap<QString,QString> queryClausules, bool& error);
     QPrinter *getPrinter() const;
     void setPrinter(QPrinter *value);
 
@@ -33,16 +33,14 @@ signals:
 public slots:
     void Print(QPrinter *printer);
     void PreRender();
-protected:
-    QString applyFormato(QString in, int formato);
 private:
     QPrinter* printer;
     QPrintPreviewDialog* dlg;
     QPair<QString, QString> getSql(QString,QMap<QString,QString> queryClausules);
     QString getRelationField(QString s , QSqlRecord r);
-    QDomNode startPage(QDomDocument doc , bool pageHeader , QDomNode pHeaderNode, QMap<QString,QSqlRecord> selects,bool reporHeader = false, QDomNode rHeaderNode = QDomNode());
+    QDomNode startPage(double pageUsable, int RFooterSiz, int RHSiz, int RFootSiz, QDomDocument doc , bool pageHeader , QDomNode pHeaderNode, QMap<QString,QSqlRecord> selects, bool reporHeader = false, QDomNode rHeaderNode = QDomNode());
     void parseFooters(QDomNode RFooter , bool haveRfooter , QDomNode PFooter , bool havePFooter ,QMap<QString,QSqlRecord> selects );
-    QDomDocument preRender(QDomDocument in ,QMap<QString,QString> queryClausules, bool& error);
+    QDomDocument preRender(QPainter *painter, QDomDocument in , QMap<QString,QString> queryClausules, bool& error);
     QDomDocument m_doc;
     QDomDocument DocIn;
     QMap<QString,QString> queryClausules;
@@ -55,6 +53,7 @@ private:
 
     QString ColorString(QColor c);
     QColor  ColorFromString(QString s );
+    QString applyFormato(QString in , int formato);
 
     enum _Orientacion { Vertical , Horizontal };
     enum _Aling { Left , Center , Rigth };
