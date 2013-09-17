@@ -2,10 +2,6 @@
 QLineEdit[echoMode="2"] {
     lineedit-password-character: 9679;
 }
-QPushButton:checked
-{
-    background-color:red;
-}
 
 QLabel , QStatusBar, QLineEdit, QDateEdit, QTextEdit,QTableWidget,QTableView, QSpinBox,
 QDoubleSpinBox, QComboBox, QHeaderView, QGroupBox, QListView, QRadioButton

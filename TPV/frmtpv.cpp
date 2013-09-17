@@ -30,9 +30,6 @@ void FrmTPV::on_btnClientes_clicked()
 void FrmTPV::on_btnBuscar_clicked()
 {
 
-
-
-
 }
 
 
@@ -43,4 +40,9 @@ void FrmTPV::on_btnCambioModo_clicked()
         ui->frmcontrol->setCurrentIndex(0);
     else
         ui->frmcontrol->setCurrentIndex(1);
+}
+
+void FrmTPV::on_txtCodigo_editingFinished()
+{
+
 }

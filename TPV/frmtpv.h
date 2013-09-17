@@ -32,6 +32,8 @@ private slots:
 
     void on_btnCambioModo_clicked();
 
+    void on_txtCodigo_editingFinished();
+
 private:
     Ui::FrmTPV *ui;
     ToolBarButton toolButton;
