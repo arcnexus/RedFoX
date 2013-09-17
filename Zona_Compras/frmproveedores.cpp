@@ -100,6 +100,7 @@ frmProveedores::frmProveedores(QWidget *parent) :
     connect(ui->tablaPagos,SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(menu_deudas(const QPoint&)));
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     BloquearCampos(true);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 frmProveedores::~frmProveedores()

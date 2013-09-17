@@ -70,7 +70,7 @@ void MainWindow::crear_barraMantenimiento()
 void MainWindow::crear_barraAlmacen()
 {
     bool addSpacer = false;
-    QMenu* menu  =0;
+    QMenu* menu =0;
     if(!_almacenModules.isEmpty())
     {
         menu = new QMenu(tr("Almacen"),this);
@@ -242,7 +242,7 @@ void MainWindow::crear_barraUtils()
         scroll->setWidgetResizable(true);
         QVBoxLayout * box = new QVBoxLayout(container);
         QVector<MayaModule*>::Iterator utilIter;
-        for(utilIter =  _utilsModules.begin(); utilIter!= _utilsModules.end();++utilIter)
+        for(utilIter = _utilsModules.begin(); utilIter!= _utilsModules.end();++utilIter)
         {
             MayaModule * mm = *utilIter;
             ui->stackedWidget->addWidget(mm);
@@ -289,7 +289,7 @@ void MainWindow::crear_barraAdmin()
         scroll->setWidgetResizable(true);
         QVBoxLayout * box = new QVBoxLayout(container);
         QVector<MayaModule*>::Iterator Iter;
-        for(Iter =  _adminModules.begin(); Iter!=_adminModules.end();++Iter)
+        for(Iter = _adminModules.begin(); Iter!=_adminModules.end();++Iter)
         {
             MayaModule * mm = *Iter;
             ui->stackedWidget->addWidget(mm);
@@ -337,7 +337,7 @@ void MainWindow::crear_barraContabilidad()
         scroll->setWidgetResizable(true);
         QVBoxLayout * box = new QVBoxLayout(container);
         QVector<MayaModule*>::Iterator Iter;
-        for(Iter =  _contaModules.begin(); Iter!=_contaModules.end();++Iter)
+        for(Iter = _contaModules.begin(); Iter!=_contaModules.end();++Iter)
         {
             MayaModule * mm = *Iter;
             ui->stackedWidget->addWidget(mm);
@@ -790,34 +790,34 @@ MainWindow::MainWindow(QWidget *parent) :
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
     ui->txtcCategoria->setText(settings.value("cCategoria").toString());
 
-//    QString error;
-//    QStringList w;
-//    w << "id < 10" << "id > 5";
-//    QMap<int,QString> idnombre = SqlCalls::SelectMap<int,QString>("clientes","idpatata","nombre_fiscal",w,Configuracion_global->groupDB,error);
-//    qDebug() <<  idnombre;
-//    qDebug() <<  idnombre.value(3);
-//    qDebug() <<  error;
+// QString error;
+// QStringList w;
+// w << "id < 10" << "id > 5";
+// QMap<int,QString> idnombre = SqlCalls::SelectMap<int,QString>("clientes","idpatata","nombre_fiscal",w,Configuracion_global->groupDB,error);
+// qDebug() << idnombre;
+// qDebug() << idnombre.value(3);
+// qDebug() << error;
 
     // Add record.
-//    QHash<QString,QVariant> v;
-//    v["nombre_fiscal"]="Paco";
-//    v["telefono1"]="555333222";
-//    v["bloqueado"]=true;
+// QHash<QString,QVariant> v;
+// v["nombre_fiscal"]="Paco";
+// v["telefono1"]="555333222";
+// v["bloqueado"]=true;
 
-//    int id = SqlCalls::SqlInsert(v,"clientes",Configuracion_global->groupDB,error);
-//    if(id < 0)
-//        qDebug() <<  error;
-//    else
-//        qDebug() <<  id;
+// int id = SqlCalls::SqlInsert(v,"clientes",Configuracion_global->groupDB,error);
+// if(id < 0)
+// qDebug() << error;
+// else
+// qDebug() << id;
     // Recuperar valores registro
-//    QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("clientes", "id<10",Configuracion_global->groupDB, error);
-//    QMapIterator<int, QSqlRecord> i(map);
-//    while (i.hasNext())
-//    {
-//        i.next();
-//        qDebug() << i.value();
-//    }
-//    qDebug() << map.value(7).value("nombre").toString();
+// QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("clientes", "id<10",Configuracion_global->groupDB, error);
+// QMapIterator<int, QSqlRecord> i(map);
+// while (i.hasNext())
+// {
+// i.next();
+// qDebug() << i.value();
+// }
+// qDebug() << map.value(7).value("nombre").toString();
     updateDivisas();
 
 
@@ -841,13 +841,13 @@ MainWindow::~MainWindow()
 void MainWindow::showInfo()
 {
     if(!Configuracion_global->medic)
-        this->setWindowTitle("RedFox SGC - "+tr("Software GNU de gestión empresarial.            (Empresa activa:")+empresa+
-                             tr("  -  Ejercicio activo: ")+Configuracion_global->cEjercicio+")");
+        this->setWindowTitle("RedFox SGC - "+tr("Software GNU de gestión empresarial. (Empresa activa:")+empresa+
+                             tr(" - Ejercicio activo: ")+Configuracion_global->cEjercicio+")");
     else
 
-    this->setWindowTitle("RedFox SGC - "+tr("Software GNU para los profesionales de la salud.            (Empresa activa:")+empresa+
-                         tr("  -  Ejercicio activo: ")+Configuracion_global->cEjercicio+")");
-  //  ui->lineEmpresaActiva->setText(empresa);
+    this->setWindowTitle("RedFox SGC - "+tr("Software GNU para los profesionales de la salud. (Empresa activa:")+empresa+
+                         tr(" - Ejercicio activo: ")+Configuracion_global->cEjercicio+")");
+  // ui->lineEmpresaActiva->setText(empresa);
     ui->lineUsuarioActivo->setText(user);
     Configuracion_global->cUsuarioActivo = user;
 }
@@ -895,7 +895,7 @@ void MainWindow::closeEvent(QCloseEvent * e)
                                  tr("Cerrando"),
                                  tr("Existen cambios sin guardar.\n"
                                     "Si continua se perderan dichos cambios.\n"
-                                    "¿Desea continuar?"),                                 
+                                    "¿Desea continuar?"),
                                  tr("Cancelar"),
                                   tr("&Continuar"))== QMessageBox::Accepted)
         {
@@ -933,6 +933,5 @@ void MainWindow::handle_permisosAgenda()
 
 //void MainWindow::btn_cuentas_clicked()
 //{
-//    ui->stackedWidget->setCurrentWidget(frmcuentas);
+// ui->stackedWidget->setCurrentWidget(frmcuentas);
 //}
-

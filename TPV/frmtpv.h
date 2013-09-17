@@ -26,14 +26,18 @@ public:
 
 private slots:
     void on_btnClientes_clicked();
-    void tamano_grande();
-    void tamano_pequeno();
+    void on_btnBuscar_clicked();
+
+
+
+    void on_btnCambioModo_clicked();
 
 private:
     Ui::FrmTPV *ui;
     ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* push;
+    QTableView *tablabuscar;
 };
 
 #endif // FRMTPV_H

@@ -562,15 +562,9 @@ background-color: rgb(133, 170, 142);</string>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
        <property name="maximumSize">
         <size>
-         <width>135</width>
+         <width>132</width>
          <height>620</height>
         </size>
        </property>
@@ -603,7 +597,7 @@ background-color: rgb(133, 170, 142);</string>
          <widget class="QStackedWidget" name="modulesStack">
           <property name="minimumSize">
            <size>
-            <width>131</width>
+            <width>129</width>
             <height>0</height>
            </size>
           </property>

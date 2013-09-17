@@ -1826,6 +1826,7 @@ void FrmArticulos::on_chkmostrarvalores_comparativa_toggled(bool checked)
         connect(group,SIGNAL(finished()),group,SLOT(deleteLater()));
         connect(group,SIGNAL(finished()),this,SLOT(togglechkmostrarvalores_comparativa()));
         group->start();
+
     }
     else
     {
