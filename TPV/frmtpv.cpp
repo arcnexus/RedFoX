@@ -12,7 +12,8 @@ FrmTPV::FrmTPV(QWidget *parent) :
     ui->setupUi(this);
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de Caja"));
-  //  ui->frameBuscar->setVisible(false);
+    //ui->btnScanear->setChecked(true);
+
 }
 
 FrmTPV::~FrmTPV()
@@ -45,4 +46,18 @@ void FrmTPV::on_btnCambioModo_clicked()
 void FrmTPV::on_txtCodigo_editingFinished()
 {
 
+}
+
+void FrmTPV::on_btnScanear_clicked(bool checked)
+{
+    if(checked)
+        ui->txtCodigo->setFocus();
+}
+
+void FrmTPV::on_btnBotonesExtras_clicked()
+{
+    if(ui->stackedWidgetticket->currentIndex() == 0)
+        ui->stackedWidgetticket->setCurrentIndex(1);
+    else
+        ui->stackedWidgetticket->setCurrentIndex(0);
 }

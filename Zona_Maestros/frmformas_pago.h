@@ -23,7 +23,7 @@ public:
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
     void hideButton(){toolButton.hide();}
-    QPushButton* wantShortCut(bool& ok) {ok = true; return push;}
+    QPushButton* wantShortCut(bool& ok) {ok = false; return push;}
 
 private slots:
     void on_tabla_buscar_doubleClicked(const QModelIndex &index);

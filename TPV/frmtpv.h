@@ -34,6 +34,10 @@ private slots:
 
     void on_txtCodigo_editingFinished();
 
+    void on_btnScanear_clicked(bool checked);
+
+    void on_btnBotonesExtras_clicked();
+
 private:
     Ui::FrmTPV *ui;
     ToolBarButton toolButton;

@@ -178,5 +178,7 @@
         <file>PNG/menu.png</file>
         <file>PNG/dto.png</file>
         <file>PNG/codbarras.png</file>
+        <file>PNG/Neux_red_fox.png</file>
+        <file>PNG/undo2.png</file>
     </qresource>
 </RCC>

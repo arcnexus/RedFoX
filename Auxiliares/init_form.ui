@@ -20,7 +20,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../maya.qrc">:/Icons/PNG/Neux.png</pixmap>
+      <pixmap resource="../maya.qrc">:/Icons/PNG/Neux_red_fox.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
