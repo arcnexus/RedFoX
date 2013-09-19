@@ -180,5 +180,7 @@
         <file>PNG/codbarras.png</file>
         <file>PNG/Neux_red_fox.png</file>
         <file>PNG/undo2.png</file>
+        <file>PNG/botones.png</file>
+        <file>PNG/back.png</file>
     </qresource>
 </RCC>

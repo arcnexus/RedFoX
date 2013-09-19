@@ -26,17 +26,58 @@ public:
 
 private slots:
     void on_btnClientes_clicked();
+
     void on_btnBuscar_clicked();
-
-
-
-    void on_btnCambioModo_clicked();
 
     void on_txtCodigo_editingFinished();
 
     void on_btnScanear_clicked(bool checked);
 
-    void on_btnBotonesExtras_clicked();
+    void on_btnbotones_clicked();
+
+    void on_btnticket_clicked();
+    void fin_fade_ticket();
+
+    void fin_fade_buttons();
+    void on_btnlista_clicked();
+
+    void fin_fade_lista();
+    void on_btn1_clicked();
+
+    void on_btnBack_clicked();
+
+    void on_btn2_clicked();
+
+    void on_btn3_clicked();
+
+    void on_btn4_clicked();
+
+    void on_btn5_clicked();
+
+    void on_btn6_clicked();
+
+    void on_btn7_clicked();
+
+    void on_btn8_clicked();
+
+    void on_btn9_clicked();
+
+    void on_btnIntro_clicked();
+
+    void on_btnSumar_clicked();
+
+    void on_btnRestar_clicked();
+
+    void on_btnMultiplicar_clicked();
+
+    void on_btnDividir_clicked();
+
+    void on_btnPorc_clicked();
+
+    void on_btnCalculadora_clicked(bool checked);
+
+    void on_btn0_clicked();
+
 
 private:
     Ui::FrmTPV *ui;
@@ -44,6 +85,10 @@ private:
     QAction menuButton;
     QPushButton* push;
     QTableView *tablabuscar;
+    qreal valor1;
+    qreal valor2;
+    QString symbol;
+
 };
 
 #endif // FRMTPV_H
