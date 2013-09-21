@@ -152,6 +152,7 @@ public:
     QString devolver_codigo_articulo(int id);
     QString devolver_codigo_barras(int id);
     QString devolver_referencia_articulo(int id);
+    float Devolver_iva(int id);
     float devolver_rec_iva(float porc_iva);
     QString toRound(double number, int decimals);
     QString devolver_agente(int id);

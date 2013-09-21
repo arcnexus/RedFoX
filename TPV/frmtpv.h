@@ -23,6 +23,8 @@ public:
     QString ModuleMenuPath(){return tr("");}
     void hideButton(){toolButton.hide();}
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
+    void cargar_ticket(int id);
+    void cargar_lineas(int id_cab);
 
 private slots:
     void on_btnClientes_clicked();
@@ -78,6 +80,9 @@ private slots:
 
     void on_btn0_clicked();
 
+    void on_btnScanear_clicked();
+
+    void on_lblDependiente_linkActivated(const QString &link);
 
 private:
     Ui::FrmTPV *ui;
@@ -88,6 +93,8 @@ private:
     qreal valor1;
     qreal valor2;
     QString symbol;
+    int tipo_dto_tarifa;
+    bool eventFilter(QObject *obj, QEvent *event);
 
 };
 

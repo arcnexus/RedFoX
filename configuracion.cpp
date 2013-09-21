@@ -605,6 +605,20 @@ QString Configuracion::devolver_referencia_articulo(int id)
                              tr("Aceptar"));
 }
 
+float Configuracion::Devolver_iva(int id)
+{
+    QSqlQuery query(Configuracion_global->groupDB);
+    if(query.exec("select iva from tiposiva where id = "+QString::number(id)))
+    {
+        query.next();
+        return query.record().value("iva").toFloat();
+
+    } else
+        QMessageBox::warning(qApp->activeWindow(),tr("Buscar IVA"),
+                             tr("Fallo al recuperar el IVA")+query.lastError().text(),
+                             tr("Aceptar"));
+}
+
 float Configuracion::devolver_rec_iva(float porc_iva)
 {
     QSqlQuery query(Configuracion_global->groupDB);

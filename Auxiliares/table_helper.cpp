@@ -725,9 +725,9 @@ void Table_Helper::rellenar_con_Articulo(int row)
                     precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto3").toDouble()/100));
                 else if (this->tipo_dto_tarifa == 4)
                     precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto4").toDouble()/100));
-                else if (this->tipo_dto_tarifa == 6)
-                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto5").toDouble()/100));
                 else if (this->tipo_dto_tarifa == 5)
+                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto5").toDouble()/100));
+                else if (this->tipo_dto_tarifa == 6)
                     precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto6").toDouble()/100));
                 else
                     precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble());
