@@ -567,6 +567,9 @@ font: 75 10pt &quot;Garuda&quot;;</string>
                 <property name="rowCount">
                  <number>5</number>
                 </property>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
                 <attribute name="verticalHeaderVisible">
                  <bool>false</bool>
                 </attribute>
@@ -632,7 +635,7 @@ font: 75 12pt &quot;Garuda&quot;;</string>
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QLabel" name="label_19">
+              <widget class="QLabel" name="lbl_total_ticket">
                <property name="styleSheet">
                 <string notr="true">color: rgb(134, 134, 134);
 font: 75 16pt &quot;Garuda&quot;;</string>
@@ -1470,6 +1473,9 @@ color: rgb(255, 255, 255);</string>
             <property name="text">
              <string>Cant.</string>
             </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item row="2" column="3">
@@ -1497,10 +1503,13 @@ color: rgb(255, 255, 255);</string>
               <height>48</height>
              </size>
             </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item row="3" column="4">
-           <widget class="QPushButton" name="pushButton_9">
+           <widget class="QPushButton" name="btnBorrar_linea">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -1509,6 +1518,10 @@ color: rgb(255, 255, 255);</string>
             </property>
             <property name="text">
              <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
             </property>
            </widget>
           </item>

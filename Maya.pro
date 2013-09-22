@@ -79,8 +79,6 @@ SOURCES += main.cpp\
     Auxiliares/searchdelegate.cpp \
     Zona_Pacientes/visitas.cpp \
     Auxiliares/comboboxdelegate.cpp \
-    TPV/ticket.cpp \
-    TPV/lineaticket.cpp \
     Almacen/frmtarifas.cpp \
     Almacen/frmarticulos.cpp \
     Almacen/articulo.cpp \
@@ -140,9 +138,6 @@ SOURCES += main.cpp\
     Auxiliares/SMPT/mimecontentformatter.cpp \
     Auxiliares/SMPT/mimeattachment.cpp \
     Auxiliares/SMPT/emailaddress.cpp \
-    TPV/efectivocaja.cpp \
-    TPV/configmonedatpv.cpp \
-    TPV/monedaview.cpp \
     mayamodule.cpp \
     Zona_Administrador/frmusuarios.cpp \
     moduleextension.cpp \
@@ -193,7 +188,8 @@ SOURCES += main.cpp\
     Zona_Maestros/frmformas_pago.cpp \
     Auxiliares/monetarydelegate_totals.cpp \
     TPV/frmabrircaja.cpp \
-    TPV/frmtpv.cpp
+    TPV/frmtpv.cpp \
+    TPV/tpv.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -234,8 +230,6 @@ HEADERS  += mainwindow.h \
     Auxiliares/Globlal_Include.h\
     Zona_Pacientes/visitas.h \
     Auxiliares/comboboxdelegate.h \
-    TPV/ticket.h \
-    TPV/lineaticket.h \
     Almacen/frmtarifas.h \
     Almacen/frmarticulos.h \
     Almacen/articulo.h \
@@ -298,9 +292,6 @@ HEADERS  += mainwindow.h \
     Auxiliares/SMPT/mimecontentformatter.h \
     Auxiliares/SMPT/mimeattachment.h \
     Auxiliares/SMPT/emailaddress.h \
-    TPV/efectivocaja.h \
-    TPV/configmonedatpv.h \
-    TPV/monedaview.h \
     mayamodule.h \
     Zona_Administrador/frmusuarios.h \
     moduleextension.h \
@@ -351,7 +342,8 @@ HEADERS  += mainwindow.h \
     Zona_Maestros/frmformas_pago.h \
     Auxiliares/monetarydelegate_totals.h \
     TPV/frmabrircaja.h \
-    TPV/frmtpv.h
+    TPV/frmtpv.h \
+    TPV/tpv.h
 
 
 
@@ -405,8 +397,6 @@ FORMS    += mainwindow.ui \
     Busquedas/db_consulta_view.ui \
     Auxiliares/frmaddentregascuenta.ui \
     Zona_Ventas/frmgestioncobros.ui \
-    TPV/efectivocaja.ui \
-    TPV/configmonedatpv.ui \
     Zona_Administrador/frmusuarios.ui \
     Zona_Contabilidad/frmcuadro_cuentas.ui \
     Zona_Administrador/addgroupfrom.ui \

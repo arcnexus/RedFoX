@@ -84,6 +84,12 @@ private slots:
 
     void on_lblDependiente_linkActivated(const QString &link);
 
+    void on_btnDto_clicked(bool checked);
+
+    void on_btnCantidad_clicked(bool checked);
+
+    void on_btnBorrar_linea_clicked();
+
 private:
     Ui::FrmTPV *ui;
     ToolBarButton toolButton;
@@ -94,6 +100,7 @@ private:
     qreal valor2;
     QString symbol;
     int tipo_dto_tarifa;
+    int id;
     bool eventFilter(QObject *obj, QEvent *event);
 
 };
