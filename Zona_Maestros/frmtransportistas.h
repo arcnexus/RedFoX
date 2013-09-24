@@ -19,10 +19,9 @@ public:
     ~FrmTransportistas();
     module_zone module_zone(){return Mantenimiento;}
     QString module_name(){return "Transportistas";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}
+    
     QPushButton* wantShortCut(bool& ok){ok = false; return push;}
     
 private slots:
@@ -45,7 +44,6 @@ private slots:
 private:
     Ui::FrmTransportistas *ui;
     transportistas oTransportista;
-    ToolBarButton toolButton;
     QAction menuButton;
     QPushButton *push;
     QSqlQueryModel *model;

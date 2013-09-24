@@ -12,7 +12,7 @@
 
 #include "../Auxiliares/Globlal_Include.h"
 #include "../Auxiliares/init_form.h"
-#include "../Auxiliares/toolbarbutton.h"
+
 #include "db_table_view.h"
 
 #include "Zona_Pacientes/frmClientes.h"
@@ -81,7 +81,6 @@ private slots:
 
     void handle_toolBar();
 
-    void on_comboBox_currentIndexChanged(int index);
     void handle_permisosAgenda();
 private:
     Ui::MainWindow *ui;

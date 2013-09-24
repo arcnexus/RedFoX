@@ -20,10 +20,9 @@ public:
 
     module_zone module_zone(){return Utilidades;}
     QString module_name(){return "Agenda";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+    QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
 private slots:
     void on_pushButton_clicked();
 
@@ -44,7 +43,6 @@ private:
     void resizeEvent(QResizeEvent * e );
     GraphicsTable * table;
     QColor event_color;
-    ToolBarButton toolButton;
     QAction menuButton;
 };
 

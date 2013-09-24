@@ -25,10 +25,9 @@ public:
     int id;
     module_zone module_zone(){return Compras;}
     QString module_name(){return "Pedidos provedor";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}
+    
     QPushButton* wantShortCut(bool& ok){ok = true; return shortCut;}
 signals:
 
@@ -92,7 +91,6 @@ private:
     QMenu * convertir_menu;
     Proveedor prov;
     QString moneda;
-    ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* shortCut;
     QSqlQueryModel *model;

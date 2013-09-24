@@ -23,10 +23,9 @@ public:
     bool Altas;
     module_zone module_zone(){return Mantenimiento;}
     QString module_name(){return "Clientes";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}
+    
     QPushButton* wantShortCut(bool& ok) {ok = true; return push;}
 
 signals:
@@ -137,7 +136,6 @@ private:
     int iddireccionAlternativa;
     void formato_tabla_busquedas();
     void filter_table();
-    ToolBarButton toolButton;
     QAction menuButton;
     QPushButton * push;
     QHash<QString,QString> h_Buscar;

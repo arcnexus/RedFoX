@@ -17,7 +17,6 @@
 FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmArticulos),
-    toolButton(tr("Almacen"),":/Icons/PNG/Box.png",this),
     menuButton(QIcon(":/Icons/PNG/Box.png"),tr("Almacen"),this),
     shortCut(new QPushButton(QIcon(":/Icons/PNG/Box.png"),"",this))
 

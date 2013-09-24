@@ -10,7 +10,6 @@
 frmConfigmaya::frmConfigmaya(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::frmConfigmaya),
-    toolButton(tr("Configuracion\nGeneral"),":/Icons/PNG/Config.png",this),
     menuButton(QIcon(":/Icons/PNG/Config.png"),tr("Configuracion General"),this)
 {
     Configuracion_global->Cargar_iva();

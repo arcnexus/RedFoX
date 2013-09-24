@@ -19,7 +19,6 @@ Proveedor *oProveedor = new Proveedor();
 frmProveedores::frmProveedores(QWidget *parent) :
   MayaModule(module_zone(),module_name(),parent),
   ui(new Ui::frmProveedores),
-  toolButton(tr("Proveedores"),":/Icons/PNG/proveedores_2.png",this),
   menuButton(QIcon(":/Icons/PNG/proveedores_2.png"),tr("Proveedores"),this),
   push(new QPushButton(QIcon(":/Icons/PNG/proveedores_2.png"),"",this))
 

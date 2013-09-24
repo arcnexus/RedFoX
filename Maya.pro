@@ -83,7 +83,6 @@ SOURCES += main.cpp\
     Almacen/frmarticulos.cpp \
     Almacen/articulo.cpp \
     Auxiliares/init_form.cpp \
-    Auxiliares/toolbarbutton.cpp \
     Zona_Compras/frmpedidosproveedor.cpp \
     Zona_Compras/frmalbaranproveedor.cpp \
     Zona_Compras/frmfacturasproveedor.cpp \
@@ -234,7 +233,6 @@ HEADERS  += mainwindow.h \
     Almacen/frmarticulos.h \
     Almacen/articulo.h \
     Auxiliares/init_form.h \
-    Auxiliares/toolbarbutton.h \
     Zona_Compras/frmpedidosproveedor.h \
     Zona_Compras/frmalbaranproveedor.h \
     Zona_Compras/frmfacturasproveedor.h \

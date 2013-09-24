@@ -25,10 +25,9 @@ public:
 
     module_zone module_zone(){return AdminZone;}
     QString module_name(){return "Control de empresas";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+    QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
 
 
 private slots:
@@ -63,7 +62,6 @@ private:
     bool crear_empresa_mysql(copy_db_progressFrm * form);
     bool crear_medica_mysql(copy_db_progressFrm * form);
 
-    ToolBarButton toolButton;
     QAction menuButton;
 
     struct empresa

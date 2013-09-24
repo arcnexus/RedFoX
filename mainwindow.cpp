@@ -8,18 +8,11 @@ void MainWindow::crear_barraMantenimiento()
     bool addSpacer = false;
     if(!_mantenModules.isEmpty())
     {
-        QWidget* container = new QWidget(this);
-        QScrollArea * scroll = new QScrollArea(this);
-        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        scroll->setWidgetResizable(true);
-        QVBoxLayout * box = new QVBoxLayout(container);
         QVector<MayaModule*>::Iterator mantenIter;
         for(mantenIter = _mantenModules.begin(); mantenIter!=_mantenModules.end();++mantenIter)
         {
             MayaModule * mm = *mantenIter;
             ui->stackedWidget->addWidget(mm);
-            box->addWidget(mm->ModuleToolBarButton());
-            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
             connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
             if(mm->ModuleMenuPath().isEmpty())
                 ui->menuArchivos->addAction(mm->ModuleMenuBarButton());
@@ -38,11 +31,6 @@ void MainWindow::crear_barraMantenimiento()
                 addSpacer = true;
             }
         }
-        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
-        container->setLayout(box);
-        scroll->setWidget(container);
-        ui->modulesStack->addWidget(scroll);
-        ui->comboBox->addItem(tr("Mantenimiento"));
     }
     if(!_mantenExtensions.isEmpty())
     {
@@ -74,18 +62,11 @@ void MainWindow::crear_barraAlmacen()
     if(!_almacenModules.isEmpty())
     {
         menu = new QMenu(tr("Almacen"),this);
-        QWidget* container = new QWidget(this);
-        QScrollArea * scroll = new QScrollArea(this);
-        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        scroll->setWidgetResizable(true);
-        QVBoxLayout * box = new QVBoxLayout(container);
         QVector<MayaModule*>::Iterator almacenIter;
         for(almacenIter = _almacenModules.begin(); almacenIter!=_almacenModules.end();++almacenIter)
         {
             MayaModule * mm = *almacenIter;
             ui->stackedWidget->addWidget(mm);
-            box->addWidget(mm->ModuleToolBarButton());
-            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
             connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
             if(mm->ModuleMenuPath().isEmpty())
                 menu->addAction(mm->ModuleMenuBarButton());
@@ -104,11 +85,6 @@ void MainWindow::crear_barraAlmacen()
             addSpacer = true;
         }
         }
-        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
-        container->setLayout(box);
-        scroll->setWidget(container);
-        ui->modulesStack->addWidget(scroll);
-        ui->comboBox->addItem(tr("Almacen"));
     }
     if(!_almacenExtensions.isEmpty())
     {
@@ -139,19 +115,11 @@ void MainWindow::crear_barraVentas()
     if(!_ventasModules.isEmpty())
     {
         QMenu* menu = new QMenu(tr("Ventas"),this);
-        QWidget* container = new QWidget(this);
-        QScrollArea * scroll = new QScrollArea(this);
-        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        scroll->setWidgetResizable(true);
-        QVBoxLayout * box = new QVBoxLayout(container);
-
         QVector<MayaModule*>::Iterator ventasIter;
         for(ventasIter = _ventasModules.begin(); ventasIter!=_ventasModules.end();++ventasIter)
         {
             MayaModule * mm = *ventasIter;
             ui->stackedWidget->addWidget(mm);
-            box->addWidget(mm->ModuleToolBarButton());
-            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
             connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
             if(mm->ModuleMenuPath().isEmpty())
                 menu->addAction(mm->ModuleMenuBarButton());
@@ -170,11 +138,6 @@ void MainWindow::crear_barraVentas()
                 addSpacer = true;
             }
         }
-        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
-        container->setLayout(box);
-        scroll->setWidget(container);
-        ui->modulesStack->addWidget(scroll);
-        ui->comboBox->addItem(tr("Ventas"));
         ui->menubar->addMenu(menu);
     }
     if(addSpacer)
@@ -189,18 +152,12 @@ void MainWindow::crear_barraCompras()
     if(!_comprasModules.isEmpty())
     {
         QMenu* menu = new QMenu(tr("Compras"),this);
-        QWidget* container = new QWidget(this);
-        QScrollArea * scroll = new QScrollArea(this);
-        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        scroll->setWidgetResizable(true);
-        QVBoxLayout * box = new QVBoxLayout(container);
+
         QVector<MayaModule*>::Iterator comprasIter;
         for(comprasIter = _comprasModules.begin(); comprasIter!=_comprasModules.end();++comprasIter)
         {
             MayaModule * mm = *comprasIter;
             ui->stackedWidget->addWidget(mm);
-            box->addWidget(mm->ModuleToolBarButton());
-            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
             connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
             if(mm->ModuleMenuPath().isEmpty())
                 menu->addAction(mm->ModuleMenuBarButton());
@@ -219,11 +176,7 @@ void MainWindow::crear_barraCompras()
                 addSpacer = true;
             }
         }
-        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
-        container->setLayout(box);
-        scroll->setWidget(container);
-        ui->modulesStack->addWidget(scroll);
-        ui->comboBox->addItem(tr("Compras"));
+
         ui->menubar->addMenu(menu);
     }
     if(addSpacer)
@@ -236,18 +189,12 @@ void MainWindow::crear_barraUtils()
     if(!_utilsModules.isEmpty())
     {
         QMenu* menu = new QMenu(tr("Utilidades"),this);
-        QWidget* container = new QWidget(this);
-        QScrollArea * scroll = new QScrollArea(this);
-        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        scroll->setWidgetResizable(true);
-        QVBoxLayout * box = new QVBoxLayout(container);
+
         QVector<MayaModule*>::Iterator utilIter;
         for(utilIter = _utilsModules.begin(); utilIter!= _utilsModules.end();++utilIter)
         {
             MayaModule * mm = *utilIter;
             ui->stackedWidget->addWidget(mm);
-            box->addWidget(mm->ModuleToolBarButton());
-            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
             connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
             if(mm->ModuleMenuPath().isEmpty())
                 menu->addAction(mm->ModuleMenuBarButton());
@@ -266,11 +213,7 @@ void MainWindow::crear_barraUtils()
                 addSpacer = true;
             }
         }
-        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
-        container->setLayout(box);
-        scroll->setWidget(container);
-        ui->modulesStack->addWidget(scroll);
-        ui->comboBox->addItem(tr("Utilidades"));
+
         ui->menubar->addMenu(menu);
     }
     if(addSpacer)
@@ -283,18 +226,12 @@ void MainWindow::crear_barraAdmin()
     if(!_adminModules.isEmpty())
     {
         QMenu* menu = new QMenu(tr("Administrador"),this);
-        QWidget* container = new QWidget(this);
-        QScrollArea * scroll = new QScrollArea(this);
-        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        scroll->setWidgetResizable(true);
-        QVBoxLayout * box = new QVBoxLayout(container);
+
         QVector<MayaModule*>::Iterator Iter;
         for(Iter = _adminModules.begin(); Iter!=_adminModules.end();++Iter)
         {
             MayaModule * mm = *Iter;
             ui->stackedWidget->addWidget(mm);
-            box->addWidget(mm->ModuleToolBarButton());
-            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
             connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
             if(mm->ModuleMenuPath().isEmpty())
                 menu->addAction(mm->ModuleMenuBarButton());
@@ -313,11 +250,7 @@ void MainWindow::crear_barraAdmin()
                 addSpacer = true;
             }
         }
-        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
-        container->setLayout(box);
-        scroll->setWidget(container);
-        ui->modulesStack->addWidget(scroll);
-        ui->comboBox->addItem(tr("Administrador"));
+
         ui->menubar->addMenu(menu);
     }
     if(addSpacer)
@@ -327,22 +260,15 @@ void MainWindow::crear_barraAdmin()
 void MainWindow::crear_barraContabilidad()
 {
     bool addSpacer = false;
-    //btn_cuentas = new ToolBarButton(tr("Cuentas"),":/Icons/PNG/asientos.png",this);
     if(!_contaModules.isEmpty())
     {
         QMenu* menu = new QMenu(tr("Contabilidad"),this);
-        QWidget* container = new QWidget(this);
-        QScrollArea * scroll = new QScrollArea(this);
-        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        scroll->setWidgetResizable(true);
-        QVBoxLayout * box = new QVBoxLayout(container);
+
         QVector<MayaModule*>::Iterator Iter;
         for(Iter = _contaModules.begin(); Iter!=_contaModules.end();++Iter)
         {
             MayaModule * mm = *Iter;
             ui->stackedWidget->addWidget(mm);
-            box->addWidget(mm->ModuleToolBarButton());
-            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
             connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
             if(mm->ModuleMenuPath().isEmpty())
                 menu->addAction(mm->ModuleMenuBarButton());
@@ -361,11 +287,7 @@ void MainWindow::crear_barraContabilidad()
                 addSpacer = true;
             }
         }
-        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
-        container->setLayout(box);
-        scroll->setWidget(container);
-        ui->modulesStack->addWidget(scroll);
-        ui->comboBox->addItem(tr("Contabilidad"));
+
         ui->menubar->addMenu(menu);
     }
     if(addSpacer)
@@ -379,18 +301,12 @@ void MainWindow::crear_barraClinica()
     if(!_clinicaModules.isEmpty())
     {
         menu = new QMenu(tr("Clinica"),this);
-        QWidget* container = new QWidget(this);
-        QScrollArea * scroll = new QScrollArea(this);
-        scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        scroll->setWidgetResizable(true);
-        QVBoxLayout * box = new QVBoxLayout(container);
+
         QVector<MayaModule*>::Iterator almacenIter;
         for(almacenIter = _clinicaModules.begin(); almacenIter!=_clinicaModules.end();++almacenIter)
         {
             MayaModule * mm = *almacenIter;
             ui->stackedWidget->addWidget(mm);
-            box->addWidget(mm->ModuleToolBarButton());
-            connect(mm->ModuleToolBarButton(),SIGNAL(clicked()),this,SLOT(handle_toolBar()));
             connect(mm->ModuleMenuBarButton(),SIGNAL(triggered()),this,SLOT(handle_toolBar()));
             if(mm->ModuleMenuPath().isEmpty())
                 menu->addAction(mm->ModuleMenuBarButton());
@@ -409,11 +325,6 @@ void MainWindow::crear_barraClinica()
                 addSpacer = true;
             }
         }
-        box->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Preferred,QSizePolicy::Expanding));
-        container->setLayout(box);
-        scroll->setWidget(container);
-        ui->modulesStack->addWidget(scroll);
-        ui->comboBox->addItem(tr("Almacen"));
     }
     if(!_clinicaExtensions.isEmpty())
     {
@@ -438,6 +349,7 @@ void MainWindow::crear_barraClinica()
 
 void MainWindow::addShortCut(QPushButton *button)
 {
+
     _shortCuts.insert(button,(QWidget*)button->parent());
     ui->shortCutContainer->addWidget(button);
     button->setMinimumWidth(34);
@@ -781,9 +693,9 @@ MainWindow::MainWindow(QWidget *parent) :
     loadAminModules(&splash);
     crear_barraAdmin();
 
-    MayaForm = new init_form(this);
-    ui->stackedWidget->addWidget(MayaForm);
-    ui->stackedWidget->setCurrentWidget(MayaForm);
+   // MayaForm = new init_form(this);
+   // ui->stackedWidget->addWidget(MayaForm);
+   // ui->stackedWidget->setCurrentWidget(MayaForm);
 
     QApplication::processEvents();
 
@@ -874,10 +786,6 @@ void MainWindow::on_btn_bloquear_clicked()
 
 void MainWindow::handle_toolBar()
 {
-    ToolBarButton * t = qobject_cast<ToolBarButton *>(sender());
-    if(t)
-        ui->stackedWidget->setCurrentWidget(t->linkedWidget());
-
     QAction * a = qobject_cast<QAction *>(sender());
     if(a)
        ui->stackedWidget->setCurrentWidget((QWidget*)a->parent());
@@ -907,8 +815,6 @@ void MainWindow::closeEvent(QCloseEvent * e)
 
 void MainWindow::blockMe(bool state)
 {
-    ui->modulesStack->setEnabled(!state);
-    ui->comboBox->setEnabled(!state);
     ui->menubar->setEnabled(!state);
     QList<QPushButton*> buttons = ui->frameusuario->findChildren<QPushButton*>();
     QPushButton* b;
@@ -920,10 +826,6 @@ void MainWindow::blockMe(bool state)
     on_edit = state;
 }
 
-void MainWindow::on_comboBox_currentIndexChanged(int index)
-{
-    ui->modulesStack->setCurrentIndex(index);
-}
 
 void MainWindow::handle_permisosAgenda()
 {

@@ -16,7 +16,6 @@ frmFacturas::frmFacturas( QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::frmFacturas),
     helper(this),
-    toolButton(tr("Facturas"),":/Icons/PNG/Factura.png",this),
     menuButton(QIcon(":/Icons/PNG/Factura.png"),tr("Facturas"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/Factura.png"),"",this))
 

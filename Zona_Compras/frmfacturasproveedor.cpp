@@ -9,7 +9,6 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     ui(new Ui::FrmFacturasProveedor),
     helper(this),
     prov(this),
-    toolButton(tr("Facturas \nProv."),":/Icons/PNG/Factura_pro.png",this),
     menuButton(QIcon(":/Icons/PNG/Factura_pro.png"),tr("Facturas Prov."),this),
     push(new QPushButton(QIcon(":/Icons/PNG/Factura_pro.png"),"",this))
 {

@@ -5,7 +5,6 @@
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmEmpresas),
-    toolButton(tr("Empresas"),":/Icons/PNG/empresa.png",this),
     menuButton(QIcon(":/Icons/PNG/empresa.png"),tr("Empresa"),this)
 {
     ui->setupUi(this);

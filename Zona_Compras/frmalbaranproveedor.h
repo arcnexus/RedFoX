@@ -27,10 +27,9 @@ public:
 
     module_zone module_zone(){return Compras;}
     QString module_name(){return "Albaranes Proveedor";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}
+    
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
     void resizeTable(int x);
 private slots:
@@ -82,7 +81,6 @@ private:
     QString moneda;
     void llenar_campos();
     void bloquearcampos(bool estado);
-    ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* push;
     QSqlQueryModel *m;

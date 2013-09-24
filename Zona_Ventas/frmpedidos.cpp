@@ -16,7 +16,6 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::frmPedidos),
     helper(this),
-    toolButton(tr("Pedidos"),":/Icons/PNG/pedidos_cli.png",this),
     menuButton(QIcon(":/Icons/PNG/pedidos_cli.png"),tr("Pedidos"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/pedidos_cli.png"),"",this))
 {

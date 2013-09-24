@@ -7,7 +7,6 @@
 frmGestionCobros::frmGestionCobros(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::frmGestionCobros),
-    toolButton(tr("Gest. Cobros"),":/Icons/PNG/Cobros.png",this),
     menuButton(QIcon(":/Icons/PNG/Cobros.png"),tr("Gest. Cobros"),this)
 {
     ui->setupUi(this);

@@ -12,7 +12,6 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     ui(new Ui::FrmAlbaranProveedor),
     helper(this),
     prov(this),
-    toolButton(tr("Albaranes \nProv."),":/Icons/PNG/albaran_pro.png",this),
     menuButton(QIcon(":/Icons/PNG/albaran_pro.png"),tr("Albaranes Prov."),this),
     push(new QPushButton(QIcon(":/Icons/PNG/albaran_pro.png"),"",this))
 {

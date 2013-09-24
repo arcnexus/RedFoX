@@ -6,7 +6,6 @@
 FrmFormas_pago::FrmFormas_pago(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmFormas_pago),
-  toolButton(tr("Formas de\n Pago"),":/Icons/PNG/fpagos.png",this),
   menuButton(QIcon(":/Icons/PNG/fpagos.png"),tr("Formas de Pago"),this),
   push(new QPushButton(QIcon(":/Icons/PNG/transport.png"),"",this))
 

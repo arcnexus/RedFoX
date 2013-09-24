@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QPushButton>
 #include "Auxiliares/Globlal_Include.h"
-#include "Auxiliares/toolbarbutton.h"
+
 class MayaModule : public QDialog
 {
     Q_OBJECT
@@ -28,7 +28,6 @@ public:
     ~MayaModule();
     virtual module_zone moduleZone(){return NoZone;}
     virtual QString module_name(){return "";}
-    virtual ToolBarButton * ModuleToolBarButton() = 0;
     virtual QAction * ModuleMenuBarButton() = 0;
     virtual QString ModuleMenuPath() = 0; // Use '|' to subPaths
     virtual QPushButton* wantShortCut(bool& ok) = 0;
@@ -36,7 +35,6 @@ public:
     bool userHaveAcces(int id_user);
     accessLevel userLevelInModule(){return _user_level;}
 
-    virtual void hideButton() =0; //Used for showing the Dialog as stand alone window
 signals:
     void block();
     void unblock();

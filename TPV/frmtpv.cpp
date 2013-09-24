@@ -7,7 +7,6 @@
 FrmTPV::FrmTPV(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmTPV),
-    toolButton(tr("TPV"),":/Icons/PNG/tpv.png",this),
     menuButton(QIcon(":/Icons/PNG/tpv.png"),tr("TPV"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/tpv.png"),"",this))
 {

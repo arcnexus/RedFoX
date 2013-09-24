@@ -7,7 +7,6 @@
 FrmEntrada_apuntes::FrmEntrada_apuntes(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmEntrada_apuntes),
-    toolButton(tr("Diario"),":/Icons/PNG/asientos.png",this),
     menuButton(QIcon(":/Icons/PNG/asientos.png"),tr("Diario"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/asientos.png"),"",this))
 {

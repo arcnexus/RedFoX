@@ -23,10 +23,9 @@ public:
 
     module_zone module_zone(){return Compras;}
     QString module_name(){return "Facturas Proveedor";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}
+    
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
 private slots:
     void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
@@ -78,7 +77,6 @@ private:
     Table_Helper helper;
     Proveedor prov;
     FacturasProveedor *oFacPro;
-    ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* push;
     QSqlQueryModel *m;

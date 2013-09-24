@@ -18,7 +18,6 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmAlbaran),
     helper(this),
-    toolButton(tr("Albaranes"),":/Icons/PNG/albaran.png",this),
     menuButton(QIcon(":/Icons/PNG/albaran.png"),tr("Albaranes"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/albaran.png"),"",this))
 {

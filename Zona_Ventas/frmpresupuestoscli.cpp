@@ -15,7 +15,6 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmPresupuestosCli),
     helper(this),
-    toolButton(tr("Presupuestos"),":/Icons/PNG/presupuestos.png",this),
     menuButton(QIcon(":/Icons/PNG/presupuestos.png"),tr("Presupuestos"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/presupuestos.png"),"",this))
 

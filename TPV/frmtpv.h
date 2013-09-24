@@ -18,10 +18,8 @@ public:
 
     module_zone module_zone(){return Ventas;}
     QString module_name(){return "FormTPV";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
     void cargar_ticket(int id);
     void cargar_lineas(int id_cab);
@@ -92,7 +90,6 @@ private slots:
 
 private:
     Ui::FrmTPV *ui;
-    ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* push;
     QTableView *tablabuscar;

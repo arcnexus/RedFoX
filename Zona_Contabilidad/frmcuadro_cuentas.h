@@ -19,10 +19,9 @@ public:
     
     module_zone module_zone(){return Contabilidad;}
     QString module_name(){return "Cuadro de cuentas";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}
+    
     QPushButton* wantShortCut(bool& ok) {ok = true; return push;}
 private slots:
     void on_btnAnadir_clicked();
@@ -36,7 +35,6 @@ private slots:
 private:
     Ui::frmCuadro_cuentas *ui;
     bool anadir;
-    ToolBarButton toolButton;
     QAction menuButton;
     QPushButton * push;
 };

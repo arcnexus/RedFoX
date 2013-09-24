@@ -8,7 +8,6 @@
 Frmrecepcion_pedidos::Frmrecepcion_pedidos(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::Frmrecepcion_pedidos),
-    toolButton(tr("Recepción \pedidos"),":Icons/PNG/recepcion_ped.png",this),
     menuButton(QIcon(":Icons/PNG/recepcion_ped.png"),tr("Recepción de pedidos"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/recepcion_ped.png"),"",this))
 {

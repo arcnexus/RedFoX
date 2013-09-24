@@ -17,10 +17,9 @@ public:
     ~frmProveedores();
     module_zone module_zone(){return Mantenimiento;}
     QString module_name(){return "Proveedores";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}
+    
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
 public slots:
     void BloquearCampos(bool state);
@@ -119,7 +118,6 @@ private slots:
 
 private:
     Ui::frmProveedores *ui;
-    ToolBarButton toolButton;
     QAction menuButton;
     QPushButton *push;
     QSqlQueryModel *model;

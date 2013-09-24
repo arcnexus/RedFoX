@@ -22,7 +22,6 @@ Login::Login(QWidget *parent) :
 
     if (! QFile::exists(qApp->applicationDirPath()+"/MayaConfig.ini")){
         frmConfigmaya frmConf;
-        frmConf.hideButton();
         if(frmConf.exec()==QDialog::Accepted)
             TimedMessageBox * t = new TimedMessageBox(this,tr("Configuración inicial realizada con éxito"));
     }
@@ -178,7 +177,6 @@ void Login::Crearconfiguracion_clicked()
     check.exec();
     if(check.es_valido())    {
         frmConfigmaya frmConf;
-        frmConf.hideButton();
         if(frmConf.exec()==QDialog::Accepted)
             TimedMessageBox * t = new TimedMessageBox(this,tr("Configuración inicial realizada con éxito"));
     }
@@ -191,7 +189,6 @@ void Login::btnEmpresa_clicked()
     if(check.es_valido())
     {
         FrmEmpresas formEmpresa(this);
-        formEmpresa.hideButton();
         formEmpresa.setWindowState(Qt::WindowMaximized);        
         formEmpresa.exec();
         init();
@@ -269,7 +266,6 @@ void Login::on_pushButton_2_clicked()
     if(check.es_valido())
     {
         FrmUsuarios formUsers(this);
-        formUsers.hideButton();
         formUsers.setWindowState(Qt::WindowMaximized);
         formUsers.exec();
     }

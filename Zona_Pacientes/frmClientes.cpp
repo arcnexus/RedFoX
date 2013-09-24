@@ -14,16 +14,11 @@
 frmClientes::frmClientes(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::frmClientes),
-    toolButton(tr("Clientes"),":/Icons/PNG/clientes_2.png",this),
     menuButton(QIcon(":/Icons/PNG/clientes_2.png"),tr("Clientes"),this),
       push(new QPushButton(QIcon(":/Icons/PNG/clientes_2.png"),"",this))
 {
     ui->setupUi(this);
 
-    if (Configuracion_global->medic)
-    {
-        toolButton.setText(tr("Pacientes"));
-    }
     //-----------------
     // Modo busqueda
     //-----------------

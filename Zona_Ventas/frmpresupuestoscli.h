@@ -31,10 +31,9 @@ public:
 
     module_zone module_zone(){return Ventas;}
     QString module_name(){return "Presupestos Ventas";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}
+    
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
 private slots:
     void on_chklAprovado_stateChanged(int arg1);
@@ -121,7 +120,6 @@ private:
     bool editando;
     QString moneda;
 
-    ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* push;
     QSqlQueryModel *m;

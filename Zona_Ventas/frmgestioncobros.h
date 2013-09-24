@@ -17,10 +17,9 @@ public:
     ~frmGestionCobros();
     module_zone module_zone(){return Ventas;}
     QString module_name(){return "Gestion Cobros";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+    QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
     void buscar_deuda(int id_cli);
     void buscar_deuda(int id_cli, int id_doc);
     void titulo(QString titulo);
@@ -33,7 +32,6 @@ public:
 
 private:
     Ui::frmGestionCobros *ui;
-    ToolBarButton toolButton;
     QAction menuButton;
     QSqlQueryModel *deudas;
 

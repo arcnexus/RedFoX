@@ -27,10 +27,9 @@ public:
 
     module_zone module_zone(){return Almacen;}
     QString module_name(){return "Articulos";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}    
-    void hideButton(){toolButton.hide();}
+
     QPushButton* wantShortCut(bool& ok){ok = true; return shortCut;}
 private slots:
     void on_botSiguiente_clicked();
@@ -144,7 +143,6 @@ private:
     bool reformateado;
     void rellenar_grafica_proveedores();
     MonetaryDelegate *Delegado;
-    ToolBarButton toolButton;
     QAction menuButton;
     QPushButton* shortCut;
     QSqlQueryModel *m;

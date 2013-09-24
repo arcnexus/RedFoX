@@ -69,7 +69,7 @@ void FrmUsuarios::getModulesFromDB()
 FrmUsuarios::FrmUsuarios(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmUsuarios),
-    toolButton(tr("Usuarios"),":/Icons/PNG/users.png",this),
+
     menuButton(QIcon(":/Icons/PNG/users.png"),tr("Usuarios"),this)
 {
     ui->setupUi(this);

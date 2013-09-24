@@ -17,14 +17,12 @@ public:
     
     module_zone module_zone(){return Ventas;}
     QString module_name(){return "Facturar Albaranes Ventas";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+    QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
 private:
     Ui::FrmFacturarAlabaranes *ui;
 
-    ToolBarButton toolButton;
     QAction menuButton;
 };
 

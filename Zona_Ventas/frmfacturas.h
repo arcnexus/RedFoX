@@ -33,10 +33,9 @@ public:
     Cliente *oCliente1;
     module_zone module_zone(){return Ventas;}
     QString module_name(){return "Facturas Ventas";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}
+    
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
 
 private slots:
@@ -115,7 +114,6 @@ private:
     Table_Helper helper;
     bool in_edit;
 
-    ToolBarButton toolButton;
     QAction menuButton;
     QPushButton *push;
     QString moneda;

@@ -17,13 +17,11 @@ public:
     ~frmConfigmaya();
     module_zone module_zone(){return AdminZone;}
     QString module_name(){return "Configuracion general";}
-    ToolBarButton * ModuleToolBarButton(){return &toolButton;}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
-    void hideButton(){toolButton.hide();}QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
+    QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
 private:
     Ui::frmConfigmaya *ui;
-    ToolBarButton toolButton;
     QAction menuButton;
 private slots:
     void configurar();

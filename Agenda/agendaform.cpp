@@ -5,7 +5,6 @@
 AgendaForm::AgendaForm(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::AgendaForm),
-    toolButton(tr("Agenda"),":/Icons/PNG/Calender.png",this),
     menuButton(QIcon(":/Icons/PNG/Calender.png"),tr("Agenda"),this)
 {
     table = new GraphicsTable;
