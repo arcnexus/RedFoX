@@ -159,17 +159,19 @@ void FrmTPV::cargar_lineas(int id_cab)
         {
             QString descripcion_2,tipo;
             double  valor_esp;
+            int id_lin;
 
             while(lineas_e.hasNext())
             {
                 lineas_e.next();
+                id_lin = lineas_e.value().value("id").toInt();
                 descripcion_2 = lineas_e.value().value("descripcion").toString();
                 tipo = lineas_e.value().value("tipo").toString();
                 valor_esp = lineas_e.value().value("valor").toDouble();
 
                 pos++;
                 ui->tablaLineas_tiquet_actual->setRowCount(pos+1);
-                QTableWidgetItem *item_s_col0 = new QTableWidgetItem(QString::number(id));
+                QTableWidgetItem *item_s_col0 = new QTableWidgetItem(QString::number(id_lin));
                 item_s_col0->setFlags(item_col0->flags() & (~Qt::ItemIsEditable));
                 item_s_col0->setBackgroundColor(rowcolor);
 
@@ -236,6 +238,8 @@ void FrmTPV::cargar_lineas(int id_cab)
                                  tr("Falló la recuperación de sub-lineas de ticket: %1").arg(error));
 
     }
+    this->row_tabla = pos;
+    ui->tablaLineas_tiquet_actual->selectRow(pos);
     ui->lbl_total_ticket->setText(Configuracion_global->toFormatoMoneda(QString::number(total_ticket,'f',
                                                         Configuracion_global->decimales_campos_totales)));
 
@@ -263,7 +267,7 @@ void FrmTPV::on_txtCodigo_editingFinished()
         QMap <int,QSqlRecord> art;
         QString error,clausula;
         clausula = QString("codigo ='%1'").arg(ui->txtCodigo->text());
-        art = SqlCalls::SelectRecord("articulos",clausula,Configuracion_global->groupDB,error);
+        art = SqlCalls::SelectRecord("vistaart_tarifa",clausula,Configuracion_global->groupDB,error);
         int id_articulo = 0;
         QMapIterator <int,QSqlRecord> iter(art);
         while(iter.hasNext()){
@@ -303,7 +307,7 @@ void FrmTPV::on_txtCodigo_editingFinished()
                 precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
                                                                          *(art.value(id_articulo).value("porc_dto6").toDouble()/100));
             else
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble());
+                precio = art.value(id_articulo).value("pvp").toDouble();
 
             //--------------
             // IVA
@@ -330,12 +334,37 @@ void FrmTPV::on_txtCodigo_editingFinished()
             else
             {
                 cargar_lineas(this->id);
+                ui->tablaLineas_tiquet_actual->selectRow(this->row_tabla);
                 ui->txtCodigo->clear();
             }
 
+        } else{
+            if(!ui->txtCodigo->text().isEmpty()) {
+                QMessageBox::warning(this,tr("Gestión de artículos"),tr("No se encuentra el artículo"),tr("Aceptar"));
+                ui->txtCodigo->clear();
+            }
         }
+    } else if(ui->btnDto->isChecked())
+    {
+       ui->btnDto->setChecked(false);
+       int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
+       QHash <QString,QVariant> h;
+       QString error;
+       h["id_cab"]= id;
+       h["descripcion"] = tr("Descuento manual:").arg(ui->txtCodigo->text());
+       h["tipo"] = "p";
+       h["valor"] = ui->txtCodigo->text().toDouble();
+       int new_id = SqlCalls::SqlInsert(h,"lin_tpv_2",Configuracion_global->empresaDB,error);
+       if(new_id == -1)
+           QMessageBox::warning(this,tr("Gestión de TPV"),tr("Ocurrió un error al insertar linea descuento"),tr("Aceptar"));
+       ui->txtCodigo->clear();
+       cargar_lineas(this->id);
+       ui->btnScanear->setChecked(true);
+       on_btnScanear_clicked(true);
+
     }
     ui->txtCodigo->blockSignals(false);
+
 }
 
 void FrmTPV::on_btnScanear_clicked(bool checked)
@@ -654,6 +683,9 @@ void FrmTPV::on_lblDependiente_linkActivated(const QString &link)
 
 void FrmTPV::on_btnDto_clicked(bool checked)
 {
+    ui->btnScanear->setChecked(false);
+    ui->btnCalculadora->setChecked(false);
+    ui->btnCantidad->setChecked(false);
     if(checked)
    {
         ui->txtCodigo->setFocus();
@@ -664,6 +696,10 @@ void FrmTPV::on_btnDto_clicked(bool checked)
 
 void FrmTPV::on_btnCantidad_clicked(bool checked)
 {
+    ui->btnScanear->setChecked(false);
+    ui->btnCalculadora->setChecked(false);
+    ui->btnCantidad->setChecked(false);
+    ui->btnDto->setChecked(false);
     if(checked)
    {
         ui->txtCodigo->setFocus();
@@ -697,3 +733,4 @@ void FrmTPV::on_btnBorrar_linea_clicked()
         cargar_lineas(this->id);
     }
 }
+
