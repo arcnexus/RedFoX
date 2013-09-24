@@ -97,7 +97,7 @@ private:
     qreal valor2;
     QString symbol;
     int tipo_dto_tarifa;
-    int id;
+    int id,row_tabla;
     bool eventFilter(QObject *obj, QEvent *event);
 
 };
