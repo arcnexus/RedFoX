@@ -361,6 +361,31 @@ void FrmTPV::on_txtCodigo_editingFinished()
        ui->btnScanear->setChecked(true);
        on_btnScanear_clicked(true);
 
+    } else if(ui->btnCantidad->isChecked())
+    {
+        int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
+        double importe = Configuracion_global->MonedatoDouble(
+                    ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),3)->text());
+        QHash <QString,QVariant> h;
+        h["cantidad"] = ui->txtCodigo->text().toDouble();
+        h["importe"] = ui->txtCodigo->text().toDouble() * importe;
+        QString error;
+        bool updated = SqlCalls::SqlUpdate(h,"lin_tpv",Configuracion_global->empresaDB,QString("id=%1").arg(id),error);
+        if(!updated)
+            QMessageBox::warning(this,tr("Gestión TPV"),tr("Ocurrió un error al actualizar: %1").arg(error));
+        else
+        {
+//            QMap <int,QSqlRecord> m;
+//            m = SqlCalls::SelectRecord("lin_ptv_2",QString("id_cab=%1").arg(id),Configuracion_global->empresaDB,error);
+//            QMapIterator <int,QSqlRecord> i(m);
+//            while (i.hasNext()) {
+//                i.next();
+
+
+//            }
+
+        }
+        cargar_lineas(this->id);
     }
     ui->txtCodigo->blockSignals(false);
 
@@ -537,7 +562,8 @@ void FrmTPV::on_btnIntro_clicked()
             ui->txtCodigo->setText(Configuracion_global->toFormatoMoneda(QString::number(resultado,'f',
                                                                   Configuracion_global->decimales_campos_totales)));
 
-    }
+    } else
+        on_txtCodigo_editingFinished();
 
 }
 
@@ -697,12 +723,11 @@ void FrmTPV::on_btnCantidad_clicked(bool checked)
 {
     ui->btnScanear->setChecked(false);
     ui->btnCalculadora->setChecked(false);
-    ui->btnCantidad->setChecked(false);
     ui->btnDto->setChecked(false);
     if(checked)
    {
         ui->txtCodigo->setFocus();
-        ui->txtCodigo->setStyleSheet("color:rgb(255,255,255);background-color: rgb(0,0,200); font: 12pt 'Sans Serif';");
+        ui->txtCodigo->setStyleSheet("color:rgb(255,255,255);background-color: rgb(0,200,0); font: 12pt 'Sans Serif';");
     } else
         ui->txtCodigo->setStyleSheet("color:rgb(0,0,0);background-color:rgb(255, 255, 191); font: 12pt 'Sans Serif';");
 }
