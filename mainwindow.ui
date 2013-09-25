@@ -640,6 +640,12 @@ background-color: rgb(133, 170, 142);</string>
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
+                 <attribute name="horizontalHeaderStretchLastSection">
+                  <bool>true</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderVisible">
+                  <bool>false</bool>
+                 </attribute>
                 </widget>
                </item>
               </layout>

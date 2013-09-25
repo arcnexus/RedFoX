@@ -845,6 +845,7 @@ void MainWindow::handle_permisosAgenda()
 void MainWindow::on_pushButton_clicked()
 {
     if(this->reducido){
+        ui->frame_toolbar->setStyleSheet("background-color: rgb(240,0, 0);");
         QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_toolbar, "size",this);
         animation->setDuration(1500);
         animation->setStartValue(QSize(130,ui->frame_toolbar->height()));
@@ -870,6 +871,7 @@ void MainWindow::on_pushButton_clicked()
         this->reducido = true;
         ui->pushButton->setText(">");
         ui->btnMinimizarTool->setVisible(true);
+        ui->frame_toolbar->setStyleSheet("background-color: rgb(254, 255, 225);");
     }
 }
 
@@ -895,8 +897,13 @@ void MainWindow::llenaravisos()
     QString error;
     clausulas << QString("id_usuario = %1").arg(Configuracion_global->id_usuario_activo);
     map = SqlCalls::SelectRecord("avisos",clausulas,Configuracion_global->groupDB,error);
-    ui->tabla_avisos->setColumnCount(3);
+    ui->tabla_avisos->setColumnCount(4);
     headers <<"id" <<tr("ORIGEN") << tr("AVISO") <<tr("FECHA/HORA");
+    ui->tabla_avisos->setHorizontalHeaderLabels(headers);
+    QVariantList  sizes;
+    sizes <<0 << 150 <<250 << 110;
+    for(int i = 0; i< sizes.size();i++ )
+        ui->tabla_avisos->setColumnWidth(i,sizes.at(i).toInt());
     QMapIterator <int,QSqlRecord> it(map);
     int pos = 0;
     QColor rowcolor;
