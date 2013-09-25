@@ -139,6 +139,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`avisos` (
   `id` INT(11) NOT NULL ,
   `id_tipoaviso` INT(11) NULL DEFAULT NULL ,
+  `id_origen` INT(11) NULL DEFAULT NULL ,
   `id_usuario` INT(11) NULL DEFAULT NULL ,
   `aviso` TEXT NULL DEFAULT NULL ,
   `fecha_hora_aviso` DATETIME NULL DEFAULT NULL ,
@@ -825,6 +826,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`tipocliente` (
   `id_cliente` VARCHAR(45) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`tiposaviso` (
@@ -832,6 +834,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`tiposaviso` (
   `tipoaviso` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 

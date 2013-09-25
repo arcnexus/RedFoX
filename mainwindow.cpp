@@ -664,6 +664,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     on_edit = false;
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(llenaravisos()));
+    timer->start(300000);
+    llenaravisos();
 
     QPixmap pixmap(":/Icons/PNG/Neux.png");
     QSplashScreen splash(pixmap);
@@ -693,9 +697,9 @@ MainWindow::MainWindow(QWidget *parent) :
     loadAminModules(&splash);
     crear_barraAdmin();
 
-   // MayaForm = new init_form(this);
-   // ui->stackedWidget->addWidget(MayaForm);
-   // ui->stackedWidget->setCurrentWidget(MayaForm);
+    MayaForm = new init_form(this);
+    ui->stackedWidget->addWidget(MayaForm);
+    ui->stackedWidget->setCurrentWidget(MayaForm);
 
     QApplication::processEvents();
 
@@ -731,8 +735,8 @@ MainWindow::MainWindow(QWidget *parent) :
 // }
 // qDebug() << map.value(7).value("nombre").toString();
     updateDivisas();
-
-
+    ui->frame_toolbar->setMaximumWidth(130);
+    this->reducido = true;
 }
 
 void MainWindow::block_main()
@@ -837,3 +841,97 @@ void MainWindow::handle_permisosAgenda()
 //{
 // ui->stackedWidget->setCurrentWidget(frmcuentas);
 //}
+
+void MainWindow::on_pushButton_clicked()
+{
+    if(this->reducido){
+        QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_toolbar, "size",this);
+        animation->setDuration(1500);
+        animation->setStartValue(QSize(130,ui->frame_toolbar->height()));
+        animation->setEndValue(QSize(600,ui->frame_toolbar->height()));
+
+        animation->setEasingCurve(QEasingCurve::OutBounce);
+
+        animation->start();
+        ui->frame_toolbar->setMaximumWidth(600);
+        this->reducido = false;
+        ui->pushButton->setText("<");
+        ui->btnMinimizarTool->setVisible(false);
+    } else
+    {
+        QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_toolbar, "size",this);
+        animation->setDuration(1500);
+        animation->setStartValue(QSize(600,ui->frame_toolbar->height()));
+        animation->setEndValue(QSize(130,ui->frame_toolbar->height()));
+
+        animation->setEasingCurve(QEasingCurve::OutBounce);
+
+        animation->start();
+        this->reducido = true;
+        ui->pushButton->setText(">");
+        ui->btnMinimizarTool->setVisible(true);
+    }
+}
+
+void MainWindow::on_btnMinimizarTool_clicked()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_toolbar, "size",this);
+    animation->setDuration(1000);
+    animation->setStartValue(QSize(130,ui->frame_toolbar->height()));
+    animation->setEndValue(QSize(50,ui->frame_toolbar->height()));
+
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    ui->btnMinimizarTool->setVisible(false);
+    animation->start();
+    this->reducido = true;
+    ui->pushButton->setText(">");
+
+}
+
+void MainWindow::llenaravisos()
+{
+    QMap <int,QSqlRecord> map;
+    QStringList clausulas,headers;
+    QString error;
+    clausulas << QString("id_usuario = %1").arg(Configuracion_global->id_usuario_activo);
+    map = SqlCalls::SelectRecord("avisos",clausulas,Configuracion_global->groupDB,error);
+    ui->tabla_avisos->setColumnCount(3);
+    headers <<"id" <<tr("ORIGEN") << tr("AVISO") <<tr("FECHA/HORA");
+    QMapIterator <int,QSqlRecord> it(map);
+    int pos = 0;
+    QColor rowcolor;
+    while (it.hasNext())
+    {
+        it.next();
+        if(pos%2==0)
+            rowcolor.setRgb(240,240,255);
+        else
+            rowcolor.setRgb(255,255,255);
+        ui->tabla_avisos->setRowCount(pos+1);
+        QTableWidgetItem *item_col0 = new QTableWidgetItem(QString::number(it.value().value("id").toInt()));
+        item_col0->setFlags(item_col0->flags() & (~Qt::ItemIsEditable));
+        item_col0->setBackgroundColor(rowcolor);
+
+        ui->tabla_avisos->setItem(pos,0,item_col0);
+        ui->tabla_avisos->setColumnHidden(0,true);
+
+        QTableWidgetItem *item_col1 = new QTableWidgetItem("User Origen");
+        item_col1->setFlags(item_col1->flags() & (~Qt::ItemIsEditable));
+        item_col1->setBackgroundColor(rowcolor);
+
+        ui->tabla_avisos->setItem(pos,1,item_col1);
+
+        QTableWidgetItem *item_col2 = new QTableWidgetItem(it.value().value("aviso").toString());
+        item_col2->setFlags(item_col2->flags() & (~Qt::ItemIsEditable));
+        item_col2->setBackgroundColor(rowcolor);
+
+        ui->tabla_avisos->setItem(pos,2,item_col2);
+
+        QTableWidgetItem *item_col3 = new QTableWidgetItem(it.value().value("fecha_hora_aviso").toDateTime().toString("dd/MM/yyyy-hh:mm"));
+        item_col3->setFlags(item_col3->flags() & (~Qt::ItemIsEditable));
+        item_col3->setBackgroundColor(rowcolor);
+
+        ui->tabla_avisos->setItem(pos,3,item_col3);
+        pos ++;
+    }
+}

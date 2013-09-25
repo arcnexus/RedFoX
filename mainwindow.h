@@ -82,6 +82,11 @@ private slots:
     void handle_toolBar();
 
     void handle_permisosAgenda();
+    void on_pushButton_clicked();
+
+    void on_btnMinimizarTool_clicked();
+    void llenaravisos();
+
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);
@@ -123,6 +128,7 @@ private:
     QVector<ModuleExtension* > _clinicaExtensions;
 
     QHash<QPushButton*,QWidget*> _shortCuts;
+    bool reducido;
 };
 
 #endif // MAINWINDOW_H
