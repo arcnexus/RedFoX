@@ -563,8 +563,10 @@ void FrmTPV::on_btnIntro_clicked()
                                                                   Configuracion_global->decimales_campos_totales)));
 
     } else
+    {
         on_txtCodigo_editingFinished();
-
+        ui->txtCodigo->clear();
+    }
 }
 
 void FrmTPV::on_btnSumar_clicked()
