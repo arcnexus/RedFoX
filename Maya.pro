@@ -188,7 +188,8 @@ SOURCES += main.cpp\
     Auxiliares/monetarydelegate_totals.cpp \
     TPV/frmabrircaja.cpp \
     TPV/frmtpv.cpp \
-    TPV/tpv.cpp
+    TPV/tpv.cpp \
+    barraavisos.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -341,7 +342,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/monetarydelegate_totals.h \
     TPV/frmabrircaja.h \
     TPV/frmtpv.h \
-    TPV/tpv.h
+    TPV/tpv.h \
+    barraavisos.h
 
 
 
@@ -417,7 +419,8 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmgestioncobros2.ui \
     Zona_Maestros/frmformas_pago.ui \
     TPV/frmabrircaja.ui \
-    TPV/frmtpv.ui
+    TPV/frmtpv.ui \
+    barraavisos.ui
 
 RESOURCES += \
     maya.qrc \

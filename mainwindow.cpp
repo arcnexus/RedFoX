@@ -661,9 +661,15 @@ void MainWindow::updateDivisas()
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
-{
+{    
     ui->setupUi(this);
+
+    this->installEventFilter(this);
+    this->setMouseTracking(true);
+
     on_edit = false;
+    avisos_reducido = true;
+
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(llenaravisos()));
     timer->start(300000);
@@ -735,8 +741,9 @@ MainWindow::MainWindow(QWidget *parent) :
 // }
 // qDebug() << map.value(7).value("nombre").toString();
     updateDivisas();
-    ui->frame_toolbar->setMaximumWidth(130);
-    this->reducido = true;
+    m_avisos = new BarraAvisos(this);
+    connect(m_avisos,SIGNAL(closeMe()),this,SLOT(hideAvisos()));
+    m_avisos->hide();
 }
 
 void MainWindow::block_main()
@@ -830,6 +837,24 @@ void MainWindow::blockMe(bool state)
     on_edit = state;
 }
 
+void MainWindow::showAvisos()
+{
+    avisos_reducido = false;
+    m_avisos->setGeometry(0,70,0,this->height()-80);
+    m_avisos->show();
+    QPropertyAnimation* animation0 = new QPropertyAnimation(m_avisos, "size",this);
+
+    connect(animation0,SIGNAL(finished()),animation0,SLOT(deleteLater()));
+
+    animation0->setDuration(1000);
+    animation0->setEasingCurve(QEasingCurve::OutElastic);
+
+    animation0->setStartValue(QSize(0,m_avisos->height()));
+    animation0->setEndValue(QSize(400,m_avisos->height()));
+
+    animation0->start();
+}
+
 
 void MainWindow::handle_permisosAgenda()
 {
@@ -842,56 +867,10 @@ void MainWindow::handle_permisosAgenda()
 // ui->stackedWidget->setCurrentWidget(frmcuentas);
 //}
 
-void MainWindow::on_pushButton_clicked()
-{
-    if(this->reducido){
-        ui->frame_toolbar->setStyleSheet("background-color: rgb(240,0, 0);");
-        QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_toolbar, "size",this);
-        animation->setDuration(1500);
-        animation->setStartValue(QSize(130,ui->frame_toolbar->height()));
-        animation->setEndValue(QSize(600,ui->frame_toolbar->height()));
-
-        animation->setEasingCurve(QEasingCurve::OutBounce);
-
-        animation->start();
-        ui->frame_toolbar->setMaximumWidth(600);
-        this->reducido = false;
-        ui->pushButton->setText("<");
-        ui->btnMinimizarTool->setVisible(false);
-    } else
-    {
-        QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_toolbar, "size",this);
-        animation->setDuration(1500);
-        animation->setStartValue(QSize(600,ui->frame_toolbar->height()));
-        animation->setEndValue(QSize(130,ui->frame_toolbar->height()));
-
-        animation->setEasingCurve(QEasingCurve::OutBounce);
-
-        animation->start();
-        this->reducido = true;
-        ui->pushButton->setText(">");
-        ui->btnMinimizarTool->setVisible(true);
-        ui->frame_toolbar->setStyleSheet("background-color: rgb(254, 255, 225);");
-    }
-}
-
-void MainWindow::on_btnMinimizarTool_clicked()
-{
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_toolbar, "size",this);
-    animation->setDuration(1000);
-    animation->setStartValue(QSize(130,ui->frame_toolbar->height()));
-    animation->setEndValue(QSize(50,ui->frame_toolbar->height()));
-
-    animation->setEasingCurve(QEasingCurve::OutBounce);
-    ui->btnMinimizarTool->setVisible(false);
-    animation->start();
-    this->reducido = true;
-    ui->pushButton->setText(">");
-
-}
 
 void MainWindow::llenaravisos()
 {
+    /*
     QMap <int,QSqlRecord> map;
     QStringList clausulas,headers;
     QString error;
@@ -940,5 +919,35 @@ void MainWindow::llenaravisos()
 
         ui->tabla_avisos->setItem(pos,3,item_col3);
         pos ++;
+    }*/
+}
+
+void MainWindow::hideAvisos()
+{
+    QPropertyAnimation* animation0 = new QPropertyAnimation(m_avisos, "size",this);
+
+    connect(animation0,SIGNAL(finished()),animation0,SLOT(deleteLater()));
+    connect(animation0,SIGNAL(finished()),m_avisos,SLOT(hide()));
+    connect(animation0,SIGNAL(finished()),this,SLOT(update()));
+
+    animation0->setDuration(100);
+    animation0->setEasingCurve(QEasingCurve::Linear);
+
+    animation0->setStartValue(QSize(m_avisos->width(),m_avisos->height()));
+    animation0->setEndValue(QSize(0,m_avisos->height()));
+
+    animation0->start();
+    avisos_reducido = true;
+}
+
+bool MainWindow::eventFilter(QObject * t, QEvent * e)
+{
+    if(e->type() == QEvent::HoverMove)
+    {
+        QHoverEvent * mouse = static_cast<QHoverEvent *>(e);
+        int x = mouse->pos().x();
+        if(x < 6 && avisos_reducido)
+            showAvisos();
     }
+    return false;
 }

@@ -52,7 +52,7 @@
 
 #include "../Zona_Maestros/frmtransportistas.h"
 
-
+#include "barraavisos.h"
 namespace Ui {
 class MainWindow;
 }
@@ -72,6 +72,8 @@ public:
     void showInfo();
 
     void updateDivisas();
+protected:
+    bool eventFilter(QObject *t, QEvent *e);
 private slots:
     void actualizar_divisas(float valor_divisa, QString divisaDest);
 
@@ -82,15 +84,14 @@ private slots:
     void handle_toolBar();
 
     void handle_permisosAgenda();
-    void on_pushButton_clicked();
 
-    void on_btnMinimizarTool_clicked();
     void llenaravisos();
-
+    void hideAvisos();
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);
     void blockMe(bool state);
+    void showAvisos();
 
     void loadVentasModules(QSplashScreen *splash);
     void loadComprasModules(QSplashScreen *splash);
@@ -128,7 +129,9 @@ private:
     QVector<ModuleExtension* > _clinicaExtensions;
 
     QHash<QPushButton*,QWidget*> _shortCuts;
-    bool reducido;
+
+    bool avisos_reducido;
+    BarraAvisos * m_avisos;
 };
 
 #endif // MAINWINDOW_H
