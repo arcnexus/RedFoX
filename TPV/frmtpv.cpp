@@ -373,18 +373,22 @@ void FrmTPV::on_txtCodigo_editingFinished()
         bool updated = SqlCalls::SqlUpdate(h,"lin_tpv",Configuracion_global->empresaDB,QString("id=%1").arg(id),error);
         if(!updated)
             QMessageBox::warning(this,tr("Gestión TPV"),tr("Ocurrió un error al actualizar: %1").arg(error));
-        else
-        {
-//            QMap <int,QSqlRecord> m;
-//            m = SqlCalls::SelectRecord("lin_ptv_2",QString("id_cab=%1").arg(id),Configuracion_global->empresaDB,error);
-//            QMapIterator <int,QSqlRecord> i(m);
-//            while (i.hasNext()) {
-//                i.next();
 
 
-//            }
+        cargar_lineas(this->id);
+    } else if(ui->btnPrecio->isChecked())
+    {
+        int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
+        double cantidad = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),2)->text().toDouble();
+        QHash <QString,QVariant> h;
+        h["precio"] = ui->txtCodigo->text().toDouble();
+        h["importe"] = ui->txtCodigo->text().toDouble() * cantidad;
+        QString error;
+        bool updated = SqlCalls::SqlUpdate(h,"lin_tpv",Configuracion_global->empresaDB,QString("id=%1").arg(id),error);
+        if(!updated)
+            QMessageBox::warning(this,tr("Gestión TPV"),tr("Ocurrió un error al actualizar: %1").arg(error));
 
-        }
+
         cargar_lineas(this->id);
     }
     ui->txtCodigo->blockSignals(false);
@@ -642,6 +646,7 @@ void FrmTPV::on_btnCalculadora_clicked(bool checked)
     ui->btnPorc->setEnabled(checked);
     ui->btnMultiplicar->setEnabled(checked);
     ui->btnDividir->setEnabled(checked);
+    ui->btnPrecio->setChecked(!checked);
     ui->txtCodigo->clear();
     ui->txtCodigo->setFocus();
 }
@@ -713,6 +718,7 @@ void FrmTPV::on_btnDto_clicked(bool checked)
     ui->btnScanear->setChecked(false);
     ui->btnCalculadora->setChecked(false);
     ui->btnCantidad->setChecked(false);
+    ui->btnPrecio->setChecked(false);
     if(checked)
    {
         ui->txtCodigo->setFocus();
@@ -726,6 +732,7 @@ void FrmTPV::on_btnCantidad_clicked(bool checked)
     ui->btnScanear->setChecked(false);
     ui->btnCalculadora->setChecked(false);
     ui->btnDto->setChecked(false);
+    ui->btnPrecio->setChecked(false);
     if(checked)
    {
         ui->txtCodigo->setFocus();
@@ -760,3 +767,143 @@ void FrmTPV::on_btnBorrar_linea_clicked()
     }
 }
 
+
+void FrmTPV::on_btnPrecio_clicked(bool checked)
+{
+    ui->btnScanear->setChecked(false);
+    ui->btnCalculadora->setChecked(false);
+    ui->btnCantidad->setChecked(false);
+    ui->btnDto->setChecked(false);
+    if(checked)
+   {
+        ui->txtCodigo->setFocus();
+        ui->txtCodigo->setStyleSheet("color:rgb(255,255,255);background-color: rgb(0,200,200); font: 12pt 'Sans Serif';");
+    } else
+        ui->txtCodigo->setStyleSheet("color:rgb(0,0,0);background-color:rgb(255, 255, 191); font: 12pt 'Sans Serif';");
+}
+
+void FrmTPV::on_btnCobrar_clicked()
+{
+    this->teclado_height = ui->frameTeclado->height();
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
+    animation->setDuration(1000);
+    animation->setStartValue(QSize(ui->frameTeclado->width(),ui->frameTeclado->height()));
+    animation->setEndValue(QSize(ui->frameTeclado->width(),0));
+
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_teclado()));
+    animation->start();
+}
+
+void FrmTPV::final_anim_teclado()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
+    animation->setDuration(1000);
+    animation->setStartValue(QSize(ui->frameTeclado->width(),0));
+    animation->setEndValue(QSize(ui->frameTeclado->width(),this->teclado_height));
+
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    ui->frameTeclado->setCurrentIndex(1);
+    animation->start();
+    calcularcambio();
+    ui->txtEfectivo->setSelection(0,100);
+    ui->txtEfectivo->setFocus();
+}
+
+void FrmTPV::on_btnTeclado_clicked()
+{
+    this->teclado_height = ui->frameTeclado->height();
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
+    animation->setDuration(1000);
+    animation->setStartValue(QSize(ui->frameTeclado->width(),ui->frameTeclado->height()));
+    animation->setEndValue(QSize(ui->frameTeclado->width(),0));
+
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_cobro()));
+    animation->start();
+}
+
+void FrmTPV::final_anim_cobro()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
+    animation->setDuration(1000);
+    animation->setStartValue(QSize(ui->frameTeclado->width(),0));
+    animation->setEndValue(QSize(ui->frameTeclado->width(),this->teclado_height));
+
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    ui->frameTeclado->setCurrentIndex(0);
+    animation->start();
+}
+
+void FrmTPV::on_txtEfectivo_editingFinished()
+{
+    ui->txtEfectivo->blockSignals(true);
+    ui->txtEfectivo->setText(Configuracion_global->toFormatoMoneda(ui->txtEfectivo->text()));
+    ui->txtEfectivo->blockSignals(false);
+    calcularcambio();
+}
+
+void FrmTPV::on_txtTarjeta_editingFinished()
+{
+    ui->txtTarjeta->blockSignals(true);
+    ui->txtTarjeta->setText(Configuracion_global->toFormatoMoneda(ui->txtTarjeta->text()));
+    ui->txtTarjeta->blockSignals(false);
+    calcularcambio();
+}
+
+void FrmTPV::calcularcambio()
+{
+    double efectivo,tarjeta,cheque,credito,internet,vales,pagado, pendiente,cambio;
+    efectivo = Configuracion_global->MonedatoDouble(ui->txtEfectivo->text());
+    tarjeta = Configuracion_global->MonedatoDouble(ui->txtTarjeta->text());
+    cheque = Configuracion_global->MonedatoDouble(ui->txtCheque->text());
+    credito = Configuracion_global->MonedatoDouble(ui->txtCredito->text());
+    internet = Configuracion_global->MonedatoDouble(ui->txtInternet->text());
+    vales = Configuracion_global->MonedatoDouble(ui->txtVales->text());
+    pagado = efectivo + tarjeta + cheque + credito + internet + vales;
+    pendiente = Configuracion_global->MonedatoDouble(ui->lbl_total_ticket->text()) - pagado;
+    if(pendiente <0)
+        pendiente = 0;
+    ui->txtPendiente->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(pendiente,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtPagado->setText(Configuracion_global->toFormatoMoneda(
+                               QString::number(pagado,'f',Configuracion_global->decimales_campos_totales)));
+    cambio = Configuracion_global->MonedatoDouble(ui->lbl_total_ticket->text()) - pagado;
+    cambio = cambio-(cambio*2);
+    if(cambio <0)
+        cambio = 0;
+    ui->txtCambio->setText(Configuracion_global->toFormatoMoneda(QString::number(cambio,'f',
+                                                                                 Configuracion_global->decimales_campos_totales)));
+}
+
+void FrmTPV::on_txtCheque_editingFinished()
+{
+    ui->txtCheque->blockSignals(true);
+    ui->txtCheque->setText(Configuracion_global->toFormatoMoneda(ui->txtCheque->text()));
+    ui->txtCheque->blockSignals(false);
+    calcularcambio();
+}
+
+void FrmTPV::on_txtCredito_editingFinished()
+{
+    ui->txtCredito->blockSignals(true);
+    ui->txtCredito->setText(Configuracion_global->toFormatoMoneda(ui->txtCredito->text()));
+    ui->txtCredito->blockSignals(false);
+    calcularcambio();
+}
+
+void FrmTPV::on_txtVales_editingFinished()
+{
+    ui->txtVales->blockSignals(true);
+    ui->txtVales->setText(Configuracion_global->toFormatoMoneda(ui->txtVales->text()));
+    ui->txtVales->blockSignals(false);
+    calcularcambio();
+}
+
+void FrmTPV::on_txtInternet_editingFinished()
+{
+    ui->txtInternet->blockSignals(true);
+    ui->txtInternet->setText(Configuracion_global->toFormatoMoneda(ui->txtInternet->text()));
+    ui->txtInternet->blockSignals(false);
+    calcularcambio();
+}

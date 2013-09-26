@@ -88,6 +88,28 @@ private slots:
 
     void on_btnBorrar_linea_clicked();
 
+    void on_btnPrecio_clicked(bool checked);
+
+    void on_btnCobrar_clicked();
+    void final_anim_teclado();
+
+    void on_btnTeclado_clicked();
+    void final_anim_cobro();
+
+    void on_txtEfectivo_editingFinished();
+
+    void on_txtTarjeta_editingFinished();
+
+    void calcularcambio();
+
+    void on_txtCheque_editingFinished();
+
+    void on_txtCredito_editingFinished();
+
+    void on_txtVales_editingFinished();
+
+    void on_txtInternet_editingFinished();
+
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;
@@ -99,6 +121,7 @@ private:
     int tipo_dto_tarifa;
     int id,row_tabla;
     bool eventFilter(QObject *obj, QEvent *event);
+    int teclado_height;
 
 };
 
