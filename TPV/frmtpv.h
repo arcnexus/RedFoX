@@ -3,6 +3,7 @@
 
 #include "../Auxiliares/Globlal_Include.h"
 #include "../mayamodule.h"
+#include "../TPV/tpv.h"
 
 namespace Ui {
 class FrmTPV;
@@ -23,6 +24,7 @@ public:
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
     void cargar_ticket(int id);
     void cargar_lineas(int id_cab);
+    tpv *oTpv;
 
 private slots:
     void on_btnClientes_clicked();
@@ -110,6 +112,8 @@ private slots:
 
     void on_txtInternet_editingFinished();
 
+    void on_btnAnadir_ticket_clicked();
+
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;
@@ -122,6 +126,7 @@ private:
     int id,row_tabla;
     bool eventFilter(QObject *obj, QEvent *event);
     int teclado_height;
+
 
 };
 

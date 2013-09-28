@@ -19,6 +19,8 @@ FrmTPV::FrmTPV(QWidget *parent) :
     ui->btnDividir->setEnabled(false);
     this->tipo_dto_tarifa = 0;
 
+    oTpv = new tpv(this);
+
     //---------------
     // Eventos
     //---------------
@@ -906,4 +908,10 @@ void FrmTPV::on_txtInternet_editingFinished()
     ui->txtInternet->setText(Configuracion_global->toFormatoMoneda(ui->txtInternet->text()));
     ui->txtInternet->blockSignals(false);
     calcularcambio();
+}
+
+void FrmTPV::on_btnAnadir_ticket_clicked()
+{
+
+
 }
