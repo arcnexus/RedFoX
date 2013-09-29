@@ -80,6 +80,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`articulos` (
   `articulo_promocionado` TINYINT(1) NULL DEFAULT NULL ,
   `descripcion_promocion` VARCHAR(45) NULL DEFAULT NULL ,
   `tipo_oferta` INT(1) NULL DEFAULT NULL ,
+  `mostrar_en_cuadro` TINYINT(1) NULL DEFAULT '0' ,
   `por_cada` INT(11) NULL DEFAULT NULL ,
   `regalo_de` INT(11) NULL DEFAULT NULL ,
   `porc_dto_web` DOUBLE NULL DEFAULT NULL ,

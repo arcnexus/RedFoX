@@ -174,6 +174,7 @@ void Articulo::Cargar(QSqlRecord registro)
     this->articulo_promocionado = registro.field("articulo_promocionado").value().toBool();
     this->descripcion_promocion = registro.field("descripcion_promocion").value().toString();
     this->tipo_oferta = registro.field("tipo_oferta").value().toInt();
+    this->mostrar_en_cuadro = registro.field("mostrar_en_cuadro").value().toBool();
     this->por_cada = registro.field("por_cada").value().toInt();
     this->regalo_de= registro.field("regalo_de").value().toInt();
     this->porc_dto_web = registro.field("porc_dto_web").value().toDouble();
@@ -306,6 +307,7 @@ void Articulo::Guardar()
                    "`articulo_promocionado` =:articulo_promocionado,"
                    "`descripcion_promocion` =:descripcion_promocion,"
                    "`tipo_oferta` =:tipo_oferta,"
+                   "`mostrar_en_cuadro` =:mostrar_en_cuadro,"
                    "`por_cada` =:por_cada,"
                    "`regalo_de` =:regalo_de,"
                    "`porc_dto_web` =:porc_dto_web,"
@@ -361,6 +363,7 @@ void Articulo::Guardar()
     query.bindValue(":articulo_promocionado",this->articulo_promocionado);
     query.bindValue(":descripcion_promocion",this->descripcion_promocion);
     query.bindValue(":tipo_oferta",this->tipo_oferta);
+    query.bindValue(":mostrar_en_cuadro",this->mostrar_en_cuadro);
     query.bindValue(":por_cada",this->por_cada);
     query.bindValue(":regalo_de",this->regalo_de);
     query.bindValue(":porc_dto_web",this->porc_dto_web);
@@ -436,6 +439,7 @@ void Articulo::Vaciar()
     this->margen_min = 0;
     this->nstock_fisico_almacen =0;
     this->coste_real = 0;
+    this->mostrar_en_cuadro = false;
 
 }
 

@@ -1,8 +1,12 @@
 #include "frmtpv.h"
 #include "ui_frmtpv.h"
 #include <QGraphicsOpacityEffect>
-#include"../Almacen/articulo.h"
+#include "../Almacen/articulo.h"
 #include <QColor>
+#include "../Auxiliares/datedelegate.h"
+#include "../Auxiliares/monetarydelegate_totals.h"
+
+
 
 FrmTPV::FrmTPV(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -21,12 +25,32 @@ FrmTPV::FrmTPV(QWidget *parent) :
 
     oTpv = new tpv(this);
 
+
     //---------------
     // Eventos
     //---------------
     ui->txtCodigo->installEventFilter(this);
 
     cargar_ticket(1);
+
+    //-----------------
+    // Lineas tickets
+    //-----------------
+    model_lista_tpv = new QSqlQueryModel(this);
+    model_lista_tpv->setQuery(QString("select id,serie, ticket, caja, fecha,hora,nombre_cliente,importe "
+                                      "from cab_tpv where ejercicio = %1 order by ticket desc").arg(
+                           Configuracion_global->cEjercicio),Configuracion_global->empresaDB);
+    ui->lista_tickets->setModel(model_lista_tpv);
+    estructura_lista();
+
+    //----------------
+    // Ofertas
+    //----------------
+    model_ofertas = new QSqlQueryModel(this);
+    model_ofertas->setQuery("select id,descripcion from articulos where mostrar_en_cuadro = 1",Configuracion_global->groupDB);
+    ui->tabla_ofertas->setModel(model_ofertas);
+    ui->tabla_ofertas->setColumnHidden(0,true);
+    model_ofertas->setHeaderData(1,Qt::Horizontal,tr("Artículo"));
 
 
 }
@@ -51,6 +75,10 @@ void FrmTPV::cargar_ticket(int id)
                                               QString("id=%1").arg(tpv.value(id).value("id_dependiente").toInt()),
                                               Configuracion_global->globalDB,error).toString();
     ui->lblDependiente->setText(usuario);
+    oTpv->porc_iva1 = tpv.value(id).value("porc_iva1").toFloat();
+    oTpv->porc_iva2 = tpv.value(id).value("porc_iva2").toFloat();
+    oTpv->porc_iva3 = tpv.value(id).value("porc_iva3").toFloat();
+    oTpv->porc_iva4 = tpv.value(id).value("porc_iva4").toFloat();
 
 
 
@@ -74,7 +102,14 @@ void FrmTPV::cargar_lineas(int id_cab)
     QString codigo,descripcion;
     int id;
     float cantidad;
+    float porc_iva;
     double precio,importe,total_ticket;
+    double subtotal1,subtotal2,subtotal3,subtotal4;
+    double base1,base2,base3,base4;
+    double dto1,dto2,dto3,dto4;
+    double iva1,iva2,iva3,iva4;
+    double total1,total2,total3,total4;
+
     int pos = -1;
     int lin =0;
     //-----------------
@@ -100,7 +135,50 @@ void FrmTPV::cargar_lineas(int id_cab)
         descripcion = rec_lin.value().value("descripcion").toString();
         precio = rec_lin.value().value("precio").toDouble();
         importe = rec_lin.value().value("importe").toDouble();
+        porc_iva = rec_lin.value().value("porc_iva").toFloat();
+        //---------------------
+        // totales
+        //---------------------
         total_ticket += importe;
+        if(porc_iva == oTpv->porc_iva1)
+        {
+            subtotal1 += importe;
+            base1 += importe;
+            iva1 += (base1 *(porc_iva/100));
+            total1 += importe;
+        }
+        if(porc_iva == oTpv->porc_iva2)
+        {
+            subtotal2 += importe;
+            base2 += importe;
+            iva2 += (base2 *(porc_iva/100));
+            total2 += importe;
+        }
+        if(porc_iva == oTpv->porc_iva3)
+        {
+            subtotal3 += importe;
+            base3 += importe;
+            iva3 += (base3 *(porc_iva/100));
+            total3 += importe;
+        }
+        if(porc_iva == oTpv->porc_iva4)
+        {
+            subtotal4 += importe;
+            base4 += importe;
+            iva4 += (base4 *(porc_iva/100));
+            total4 += importe;
+        }
+
+        oTpv->base1 = base1;
+        oTpv->base2 = base2;
+        oTpv->base3 = base3;
+        oTpv->base4 = base4;
+
+        oTpv->iva1 = iva1;
+        oTpv->iva2 = iva2;
+        oTpv->iva3 = iva3;
+        oTpv->iva4 = iva4;
+
 
         //--------------------------------
         // Creo línea base en tablewidget
@@ -247,6 +325,12 @@ void FrmTPV::cargar_lineas(int id_cab)
 
 }
 
+void FrmTPV::cargar_ofertas()
+{
+    model_ofertas->setQuery("select id,descripcion from articulos where mostrar_en_cuadro = 1",Configuracion_global->empresaDB);
+
+}
+
 void FrmTPV::on_btnClientes_clicked()
 {
 
@@ -313,7 +397,7 @@ void FrmTPV::on_txtCodigo_editingFinished()
             //--------------
             // IVA
             //--------------
-            double iva_art = Configuracion_global->Devolver_iva(art.value(id_articulo).value("id_tipos_iva").toInt());
+            double iva_art = art.value(id_articulo).value("tipo_iva").toDouble();
 
             //--------------------
             // INSERCIÓN DE DATOS
@@ -324,7 +408,7 @@ void FrmTPV::on_txtCodigo_editingFinished()
             h["codigo"] = codigo;
             h["descripcion"] = descripcion;
             h["precio"] = precio;
-            h["iva"] = iva_art;
+            h["porc_iva"] = iva_art;
             h["cantidad"] = 1;
             h["importe"] = precio;
             h["total"] = precio;
@@ -453,6 +537,20 @@ void FrmTPV::fin_fade_ticket()
     animationOp2->setEndValue(1.0);
     animationOp2->start();
 
+}
+
+void FrmTPV::fin_fade_ticket2()
+{
+    ui->frame_ticket->setCurrentIndex(1);
+    QGraphicsOpacityEffect* fade_effect = new QGraphicsOpacityEffect(this);
+    //this->setGraphicsEffect(fade_effect);
+    ui->frame_ticket->setGraphicsEffect(fade_effect);
+    QPropertyAnimation *animationOp2 = new QPropertyAnimation(fade_effect, "opacity");
+    animationOp2->setEasingCurve(QEasingCurve::Linear);
+    animationOp2->setDuration(500);
+    animationOp2->setStartValue(0.0);
+    animationOp2->setEndValue(1.0);
+    animationOp2->start();
 }
 void FrmTPV::fin_fade_buttons()
 {
@@ -698,6 +796,27 @@ bool FrmTPV::eventFilter(QObject *obj, QEvent *event)
     }
 }
 
+void FrmTPV::estructura_lista()
+{
+    // id,serie, ticket, caja, fecha,hora,nombre_cliente,total
+    QStringList headers;
+    QVariantList Sizes;
+    headers << tr("id") <<tr("Serie") <<tr("Ticket") <<tr("Caja") << tr("Fecha") <<tr("hora") << tr("Cliente") << tr("Total");
+    Sizes << 0 << 45 << 50 << 45 <<80 <<50 << 180 << 120;
+    for(int i = 0; i<headers.size();i++)
+    {
+        ui->lista_tickets->setColumnWidth(i,Sizes.at(i).toInt());
+        model_lista_tpv->setHeaderData(i,Qt::Horizontal,headers.at(i));
+    }
+    ui->lista_tickets->setItemDelegateForColumn(4,new DateDelegate);
+    ui->lista_tickets->setItemDelegateForColumn(7, new MonetaryDelegate_totals);
+}
+
+void FrmTPV::llenar_campos()
+{
+
+}
+
 void FrmTPV::on_btn0_clicked()
 {
     ui->txtCodigo->setText(ui->txtCodigo->text().append("0"));
@@ -788,11 +907,11 @@ void FrmTPV::on_btnCobrar_clicked()
 {
     this->teclado_height = ui->frameTeclado->height();
     QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
-    animation->setDuration(1000);
+    animation->setDuration(600);
     animation->setStartValue(QSize(ui->frameTeclado->width(),ui->frameTeclado->height()));
     animation->setEndValue(QSize(ui->frameTeclado->width(),0));
 
-    animation->setEasingCurve(QEasingCurve::OutBounce);
+    //animation->setEasingCurve(QEasingCurve::OutBounce);
     connect(animation,SIGNAL(finished()),this,SLOT(final_anim_teclado()));
     animation->start();
 }
@@ -800,7 +919,7 @@ void FrmTPV::on_btnCobrar_clicked()
 void FrmTPV::final_anim_teclado()
 {
     QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
-    animation->setDuration(1000);
+    animation->setDuration(800);
     animation->setStartValue(QSize(ui->frameTeclado->width(),0));
     animation->setEndValue(QSize(ui->frameTeclado->width(),this->teclado_height));
 
@@ -816,11 +935,11 @@ void FrmTPV::on_btnTeclado_clicked()
 {
     this->teclado_height = ui->frameTeclado->height();
     QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
-    animation->setDuration(1000);
+    animation->setDuration(600);
     animation->setStartValue(QSize(ui->frameTeclado->width(),ui->frameTeclado->height()));
     animation->setEndValue(QSize(ui->frameTeclado->width(),0));
 
-    animation->setEasingCurve(QEasingCurve::OutBounce);
+   // animation->setEasingCurve(QEasingCurve::OutBounce);
     connect(animation,SIGNAL(finished()),this,SLOT(final_anim_cobro()));
     animation->start();
 }
@@ -828,7 +947,7 @@ void FrmTPV::on_btnTeclado_clicked()
 void FrmTPV::final_anim_cobro()
 {
     QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
-    animation->setDuration(1000);
+    animation->setDuration(800);
     animation->setStartValue(QSize(ui->frameTeclado->width(),0));
     animation->setEndValue(QSize(ui->frameTeclado->width(),this->teclado_height));
 
@@ -914,4 +1033,20 @@ void FrmTPV::on_btnAnadir_ticket_clicked()
 {
 
 
+}
+
+void FrmTPV::on_lista_tickets_doubleClicked(const QModelIndex &index)
+{
+    int id = ui->lista_tickets->model()->data(ui->lista_tickets->model()->index(index.row(),0)).toInt();
+    //int id = ui->lista_tickets->model()->data(ui->table2->model()->index(index.row(),0),Qt::EditRole).toInt();
+    oTpv->recuperar(id);
+
+}
+
+void FrmTPV::on_btnDesglose_clicked()
+{
+    emit mostrar_desglose(oTpv->subtotal1,oTpv->subtotal2,oTpv->subtotal3,oTpv->subtotal4,oTpv->dto1,oTpv->dto2,oTpv->dto3,
+                          oTpv->dto4,oTpv->base1,oTpv->base2,oTpv->base3, oTpv->base4,oTpv->porc_iva1,oTpv->porc_iva2,
+                          oTpv->porc_iva3,oTpv->porc_iva4,oTpv->iva1,oTpv->iva2,oTpv->iva3,oTpv->iva4,oTpv->total1,
+                          oTpv->total2,oTpv->total3,oTpv->total4);
 }

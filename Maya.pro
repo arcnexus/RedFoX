@@ -189,7 +189,8 @@ SOURCES += main.cpp\
     TPV/frmabrircaja.cpp \
     TPV/frmtpv.cpp \
     TPV/tpv.cpp \
-    barraavisos.cpp
+    barraavisos.cpp \
+    Auxiliares/refresca_ofertas.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -343,7 +344,8 @@ HEADERS  += mainwindow.h \
     TPV/frmabrircaja.h \
     TPV/frmtpv.h \
     TPV/tpv.h \
-    barraavisos.h
+    barraavisos.h \
+    Auxiliares/refresca_ofertas.h
 
 
 

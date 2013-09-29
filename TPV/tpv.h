@@ -26,6 +26,8 @@ public:
     QString tipo_targeta;
     bool impreso;
     double importe;
+    double subtotal1, subtotal2,subtotal3,subtotal4;
+    double dto1,dto2,dto3,dto4;
     double base1, base2, base3, base4;
     float porc_iva1, porc_iva2, porc_iva3, porc_iva4;
     double iva1, iva2, iva3, iva4;

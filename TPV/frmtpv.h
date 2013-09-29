@@ -13,6 +13,8 @@ class FrmTPV : public MayaModule
 {
     Q_OBJECT
 
+
+
 public:
     explicit FrmTPV(QWidget *parent = 0);
     ~FrmTPV();
@@ -25,6 +27,10 @@ public:
     void cargar_ticket(int id);
     void cargar_lineas(int id_cab);
     tpv *oTpv;
+
+
+public slots:
+    void cargar_ofertas();
 
 private slots:
     void on_btnClientes_clicked();
@@ -39,6 +45,7 @@ private slots:
 
     void on_btnticket_clicked();
     void fin_fade_ticket();
+    void fin_fade_ticket2();
 
     void fin_fade_buttons();
     void on_btnlista_clicked();
@@ -114,6 +121,10 @@ private slots:
 
     void on_btnAnadir_ticket_clicked();
 
+    void on_lista_tickets_doubleClicked(const QModelIndex &index);
+
+    void on_btnDesglose_clicked();
+
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;
@@ -126,7 +137,17 @@ private:
     int id,row_tabla;
     bool eventFilter(QObject *obj, QEvent *event);
     int teclado_height;
+    QSqlQueryModel *model_lista_tpv;
+    QSqlQueryModel *model_ofertas;
 
+
+    void estructura_lista();
+    void llenar_campos();
+signals:
+    void mostrar_desglose(double subtotal1,double subtotal2, double subtotal3,double subtotal4,double dto1,double dto2,
+                          double dto3,double dto4,double base1, double base2, double base3, double base4, float porc_iva1,
+                          float porc_iva2, float porc_iva3, float porc_iva4, double iva1, double iva2, double iva3, double iva4,
+                          double total1,double total2,double total3,double total4);
 
 };
 

@@ -182,5 +182,8 @@
         <file>PNG/undo2.png</file>
         <file>PNG/botones.png</file>
         <file>PNG/back.png</file>
+        <file>PNG/desglose.png</file>
+        <file>PNG/ofertas.png</file>
+        <file>PNG/Mail.png</file>
     </qresource>
 </RCC>

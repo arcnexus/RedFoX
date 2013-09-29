@@ -356,6 +356,7 @@ void FrmArticulos::LLenarCampos()
       ui->lbl_en_promocion->setVisible(true);
   else
       ui->lbl_en_promocion->setVisible(false);
+  ui->chkMostrar_en_cuadro->setChecked(oArticulo->mostrar_en_cuadro);
   ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',Configuracion_global->decimales)));
   //ui->spin_dto1->setValue(oArticulo->);
 
@@ -395,6 +396,7 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->comentario=ui->txtcomentario->toPlainText();
     oArticulo->stock_maximo=ui->txtstock_maximo->text().toInt();
     oArticulo->stock_minimo=ui->txtstock_minimo->text().toInt();
+
   //  oArticulo->stock_real=ui->txtstock_real->text().toInt();
 
     if (ui->chkcontrolar_stock->isChecked())
@@ -440,6 +442,7 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().replace(".","").replace(",",".").toDouble();
     oArticulo->comentario_oferta = ui->txcomentarios_promocion->toPlainText();
     oArticulo->coste_real = ui->txtCoste_real->text().replace(".","").replace(",",".").toDouble();
+    oArticulo->mostrar_en_cuadro = ui->chkMostrar_en_cuadro->isChecked();
    // oArticulo->margen = ui->txtMargen->value();
    // oArticulo->margen_min = ui->txtMargen_min->value();
 

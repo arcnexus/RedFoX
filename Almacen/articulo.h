@@ -64,6 +64,7 @@ public:
     bool articulo_promocionado;
     QString descripcion_promocion;
     int tipo_oferta;
+    bool mostrar_en_cuadro;
     int por_cada;
     int regalo_de;
     float porc_dto_web;
