@@ -6,6 +6,8 @@ MayaModule::MayaModule(module_zone zone , QString name , QWidget *parent) :
     _zone = zone;
     _name = name;
     _user_level = SinAcceso;
+    _b_reducida = true;
+
     tryRegisterModule(zone,name);
 }
 
@@ -28,6 +30,73 @@ bool MayaModule::userHaveAcces(int id_user)
         }
     }
     return (_user_level != SinAcceso);
+}
+
+void MayaModule::mouseMoveEvent(QMouseEvent * mouse)
+{
+    int x = mouse->pos().x();
+
+    if(x > this->width()-6 && _b_reducida)
+    {
+        emit showBusqueda();
+        _b_reducida = false;
+    }
+    if(x < this->width()-300 && !_b_reducida)
+    {
+        emit hideBusqueda();
+        _b_reducida = true;
+    }
+}
+
+void MayaModule::_showBarraBusqueda(BarraBusqueda *b)
+{
+    b->setGeometry(0,0,0,this->height()-80);
+    b->show();
+    QPropertyAnimation* animation0 = new QPropertyAnimation(b, "size",this);
+    connect(animation0,SIGNAL(finished()),animation0,SLOT(deleteLater()));
+    animation0->setDuration(1000);
+    animation0->setEasingCurve(QEasingCurve::OutElastic);
+
+    animation0->setStartValue(QSize(0,b->height()));
+    animation0->setEndValue(QSize(250,b->height()));
+
+    QPropertyAnimation* animation = new QPropertyAnimation(b, "pos",this);
+    animation->setDuration(1000);
+    animation->setEasingCurve(QEasingCurve::OutElastic);
+    animation->setStartValue(QPoint(this->width(),b->pos().y()));
+    animation->setEndValue(QPoint(this->width()-250,b->pos().y()));
+
+    QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
+    group->addAnimation(animation);
+    group->addAnimation(animation0);
+
+    connect(group,SIGNAL(finished()),group,SLOT(deleteLater()));
+    group->start();
+}
+
+void MayaModule::_hideBarraBusqueda(BarraBusqueda *b)
+{
+    QPropertyAnimation* animation0 = new QPropertyAnimation(b, "size",this);
+    connect(animation0,SIGNAL(finished()),animation0,SLOT(deleteLater()));
+    animation0->setDuration(1000);
+    animation0->setEasingCurve(QEasingCurve::OutElastic);
+
+    animation0->setStartValue(QSize(250,b->height()));
+    animation0->setEndValue(QSize(0,b->height()));
+
+    QPropertyAnimation* animation = new QPropertyAnimation(b, "pos",this);
+    animation->setDuration(1000);
+    animation->setEasingCurve(QEasingCurve::OutElastic);
+    animation->setStartValue(QPoint(this->width()-250,b->pos().y()));
+    animation->setEndValue(QPoint(this->width(),b->pos().y()));
+
+    QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
+    group->addAnimation(animation);
+    group->addAnimation(animation0);
+
+    connect(group,SIGNAL(finished()),group,SLOT(deleteLater()));
+    connect(group,SIGNAL(finished()),b,SLOT(hide()));
+    group->start();
 }
 
 void MayaModule::tryRegisterModule(module_zone zone, QString name)

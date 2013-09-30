@@ -93,6 +93,8 @@ private slots:
 
     void on_spinPorc_dto_pp_editingFinished();
 
+    void mostrarBusqueda();
+    void ocultarBusqueda();
 private:
     Ui::FrmAlbaran *ui;
     QSqlQueryModel *ModelLin_alb;
@@ -109,6 +111,7 @@ private:
     QSqlQueryModel *series;
     bool eventFilter(QObject *obj, QEvent *event);
 
+    BarraBusqueda* m_busqueda;
 };
 
 #endif // FRMALBARAN_H

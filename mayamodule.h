@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QPushButton>
 #include "Auxiliares/Globlal_Include.h"
-
+#include "Auxiliares/barrabusqueda.h"
 class MayaModule : public QDialog
 {
     Q_OBJECT
@@ -38,7 +38,13 @@ public:
 signals:
     void block();
     void unblock();
+    void showBusqueda();
+    void hideBusqueda();
 public slots:
+protected:
+    void mouseMoveEvent(QMouseEvent *);
+    void _showBarraBusqueda(BarraBusqueda* b);
+    void _hideBarraBusqueda(BarraBusqueda* b);
 
 private:
     void tryRegisterModule(module_zone zone , QString name);
@@ -47,6 +53,7 @@ private:
     QString _name;
     int _id_modulo;
     accessLevel _user_level;
+    bool _b_reducida;
 };
 
 #endif // MAYAMODULE_H

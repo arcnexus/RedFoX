@@ -22,6 +22,8 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     push(new QPushButton(QIcon(":/Icons/PNG/albaran.png"),"",this))
 {
     ui->setupUi(this);
+    this->setMouseTracking(true);
+
     // Pongo valores por defecto
     ui->lbfacturado->setVisible(false);
     ui->lbimpreso->setVisible(false);
@@ -139,6 +141,9 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->txtcp->installEventFilter(this);
     ui->txtCp_entrega->installEventFilter(this);
 
+    m_busqueda = new BarraBusqueda(this);
+    connect(this,&MayaModule::showBusqueda,this,&FrmAlbaran::mostrarBusqueda);
+    connect(m_busqueda,&BarraBusqueda::closeME,this,&FrmAlbaran::ocultarBusqueda);
 }
 
 FrmAlbaran::~FrmAlbaran()
@@ -1555,6 +1560,7 @@ void FrmAlbaran::on_spinporc_Dto_editingFinished()
     QString filter = QString("id_cab = '%1'").arg(oAlbaran->id);
     helper.fillTable("empresa","lin_alb",filter);
 
+
 }
 
 void FrmAlbaran::on_spinPorc_dto_pp_editingFinished()
@@ -1565,4 +1571,14 @@ void FrmAlbaran::on_spinPorc_dto_pp_editingFinished()
     oAlbaran->dto_pp = dto_pp;
     QString filter = QString("id_cab = '%1'").arg(oAlbaran->id);
     helper.fillTable("empresa","lin_alb",filter);
+}
+
+void FrmAlbaran::mostrarBusqueda()
+{
+    _showBarraBusqueda(m_busqueda);
+}
+
+void FrmAlbaran::ocultarBusqueda()
+{
+    _hideBarraBusqueda(m_busqueda);
 }

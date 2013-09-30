@@ -190,7 +190,8 @@ SOURCES += main.cpp\
     TPV/frmtpv.cpp \
     TPV/tpv.cpp \
     barraavisos.cpp \
-    Auxiliares/refresca_ofertas.cpp
+    Auxiliares/refresca_ofertas.cpp \
+    Auxiliares/barrabusqueda.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -345,7 +346,8 @@ HEADERS  += mainwindow.h \
     TPV/frmtpv.h \
     TPV/tpv.h \
     barraavisos.h \
-    Auxiliares/refresca_ofertas.h
+    Auxiliares/refresca_ofertas.h \
+    Auxiliares/barrabusqueda.h
 
 
 
@@ -422,7 +424,8 @@ FORMS    += mainwindow.ui \
     Zona_Maestros/frmformas_pago.ui \
     TPV/frmabrircaja.ui \
     TPV/frmtpv.ui \
-    barraavisos.ui
+    barraavisos.ui \
+    Auxiliares/barrabusqueda.ui
 
 RESOURCES += \
     maya.qrc \
