@@ -26,7 +26,7 @@ FrmTPV::FrmTPV(QWidget *parent) :
 
     oTpv = new tpv(this);
     oRefresca = new refresca_ofertas(this);
-    oRefresca->start();
+
 
     //---------------
     // Eventos
@@ -49,12 +49,12 @@ FrmTPV::FrmTPV(QWidget *parent) :
     // Ofertas
     //----------------
     model_ofertas = new QSqlQueryModel(this);
-    model_ofertas = oRefresca->model;
+    oRefresca->model = model_ofertas; //Esto estaba al reves
     ui->tabla_ofertas->setModel(model_ofertas);
     ui->tabla_ofertas->setColumnHidden(0,true);
    // model_ofertas->setHeaderData(1,Qt::Horizontal,tr("Artículo"));
 
-
+    oRefresca->start(); //no empieces el thread hasta que no hayas puesto las variables
 }
 
 FrmTPV::~FrmTPV()

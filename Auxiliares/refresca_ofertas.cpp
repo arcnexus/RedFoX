@@ -10,7 +10,7 @@ void refresca_ofertas::run()
 {
     while(true)
     {
-        this->modelo->setQuery("select id,descripcion from articulos where mostrar_en_cuadro = 1",Configuracion_global->groupDB);
-                sleep(1);
+        this->model->setQuery("select id,descripcion from articulos where mostrar_en_cuadro = 1",Configuracion_global->groupDB);
+        sleep(1);
     }
 }
