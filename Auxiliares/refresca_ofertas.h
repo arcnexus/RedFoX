@@ -14,6 +14,8 @@ protected:
 
 signals:
 
+public:
+    QSqlQueryModel * model;
 public slots:
 
 };
