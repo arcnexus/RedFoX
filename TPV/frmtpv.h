@@ -4,7 +4,7 @@
 #include "../Auxiliares/Globlal_Include.h"
 #include "../mayamodule.h"
 #include "../TPV/tpv.h"
-
+# include "../Auxiliares/refresca_ofertas.h"
 namespace Ui {
 class FrmTPV;
 }
@@ -139,7 +139,7 @@ private:
     int teclado_height;
     QSqlQueryModel *model_lista_tpv;
     QSqlQueryModel *model_ofertas;
-
+    refresca_ofertas *oRefresca;
 
     void estructura_lista();
     void llenar_campos();

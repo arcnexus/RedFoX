@@ -5,6 +5,7 @@
 #include <QColor>
 #include "../Auxiliares/datedelegate.h"
 #include "../Auxiliares/monetarydelegate_totals.h"
+#include "../Auxiliares/refresca_ofertas.h"
 
 
 
@@ -24,7 +25,8 @@ FrmTPV::FrmTPV(QWidget *parent) :
     this->tipo_dto_tarifa = 0;
 
     oTpv = new tpv(this);
-
+    oRefresca = new refresca_ofertas(this);
+    oRefresca->start();
 
     //---------------
     // Eventos
@@ -47,10 +49,10 @@ FrmTPV::FrmTPV(QWidget *parent) :
     // Ofertas
     //----------------
     model_ofertas = new QSqlQueryModel(this);
-    model_ofertas->setQuery("select id,descripcion from articulos where mostrar_en_cuadro = 1",Configuracion_global->groupDB);
+    model_ofertas = oRefresca->model;
     ui->tabla_ofertas->setModel(model_ofertas);
     ui->tabla_ofertas->setColumnHidden(0,true);
-    model_ofertas->setHeaderData(1,Qt::Horizontal,tr("Artículo"));
+   // model_ofertas->setHeaderData(1,Qt::Horizontal,tr("Artículo"));
 
 
 }
