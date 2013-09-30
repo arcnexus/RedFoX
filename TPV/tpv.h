@@ -39,8 +39,7 @@ public:
     double importe_efectivo;
     double importe_tarjeta;
     double importe_cheque, importe_credito, importe_vale, importe_dto_redondeo, importe_cambio, entregado_a_cuenta;
-    bool pasado_a_albaran_factura;
-    int numero_albaran, numero_factura, id_cierre, ejercicio;
+    int numero_pedido, numero_albaran, numero_factura, id_cierre, ejercicio;
     bool editable;
 
 

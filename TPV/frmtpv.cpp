@@ -103,12 +103,30 @@ void FrmTPV::cargar_lineas(int id_cab)
     int id;
     float cantidad;
     float porc_iva;
-    double precio,importe,total_ticket;
-    double subtotal1,subtotal2,subtotal3,subtotal4;
-    double base1,base2,base3,base4;
-    double dto1,dto2,dto3,dto4;
-    double iva1,iva2,iva3,iva4;
-    double total1,total2,total3,total4;
+    double precio= 0;
+    double importe = 0;
+    double total_ticket = 0;
+    double subtotal1 = 0;
+    double subtotal2 = 0;
+    double subtotal3 = 0;
+    double subtotal4 = 0;
+    double base1 = 0;
+    double base2 = 0;
+    double base3 = 0;
+    double base4 = 0;
+    double dto1 = 0;
+    double dto2 = 0;
+    double dto3 = 0;
+    double dto4 = 0;
+    double iva1 = 0;
+    double iva2 = 0;
+    double iva3 = 0;
+    double iva4 = 0;
+    double total1 = 0;
+    double total2 = 0;
+    double total3 = 0;
+    double total4 = 0;
+
 
     int pos = -1;
     int lin =0;
@@ -140,6 +158,10 @@ void FrmTPV::cargar_lineas(int id_cab)
         // totales
         //---------------------
         total_ticket += importe;
+
+        //---------------------
+        // Desglose
+        //---------------------
         if(porc_iva == oTpv->porc_iva1)
         {
             subtotal1 += importe;
@@ -169,15 +191,7 @@ void FrmTPV::cargar_lineas(int id_cab)
             total4 += importe;
         }
 
-        oTpv->base1 = base1;
-        oTpv->base2 = base2;
-        oTpv->base3 = base3;
-        oTpv->base4 = base4;
 
-        oTpv->iva1 = iva1;
-        oTpv->iva2 = iva2;
-        oTpv->iva3 = iva3;
-        oTpv->iva4 = iva4;
 
 
         //--------------------------------
@@ -310,6 +324,39 @@ void FrmTPV::cargar_lineas(int id_cab)
 
                 total_ticket += valor_esp;
 
+                //-----------------------------
+                // Desglose a TPV lineas extra
+                //-----------------------------
+                if(porc_iva == oTpv->porc_iva1)
+                {
+                    dto1 += valor_esp;
+                    base1 += valor_esp;
+                    iva1 += (base1 *(porc_iva/100));
+                    total1 += base1+iva1;
+                }
+                if(porc_iva == oTpv->porc_iva2)
+                {
+                    dto2 += valor_esp;
+                    base2 += valor_esp;
+                    iva2 += (base2 *(porc_iva/100));
+                    total2 += base2 + iva2;
+                }
+                if(porc_iva == oTpv->porc_iva3)
+                {
+                    dto3 += valor_esp;
+                    base3 += importe;
+                    iva3 += (base3 *(porc_iva/100));
+                    total3 += importe;
+                }
+                if(porc_iva == oTpv->porc_iva4)
+                {
+                    dto4 += valor_esp;
+                    base4 += importe;
+                    iva4 += (base4 *(porc_iva/100));
+                    total4 += importe;
+                }
+
+
             }
 
         }else
@@ -322,6 +369,33 @@ void FrmTPV::cargar_lineas(int id_cab)
     ui->lbl_total_ticket->setText(Configuracion_global->toFormatoMoneda(QString::number(total_ticket,'f',
                                                         Configuracion_global->decimales_campos_totales)));
 
+    //-----------------------------
+    // Desglose a TPV
+    //-----------------------------
+    oTpv->subtotal1 = subtotal1;
+    oTpv->subtotal2 = subtotal2;
+    oTpv->subtotal3 = subtotal3;
+    oTpv->subtotal4 = subtotal4;
+
+    oTpv->dto1 = dto1;
+    oTpv->dto2 = dto2;
+    oTpv->dto3 = dto3;
+    oTpv->dto4 = dto4;
+
+    oTpv->base1 = base1;
+    oTpv->base2 = base2;
+    oTpv->base3 = base3;
+    oTpv->base4 = base4;
+
+    oTpv->iva1 = iva1;
+    oTpv->iva2 = iva2;
+    oTpv->iva3 = iva3;
+    oTpv->iva4 = iva4;
+
+    oTpv->total1 = base1 + iva1;
+    oTpv->total2 = base2 + iva2;
+    oTpv->total3 = base3 + iva3;
+    oTpv->total4 = base4 + iva4;
 
 }
 

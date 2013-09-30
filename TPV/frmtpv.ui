@@ -1707,7 +1707,7 @@ font: 75 16pt &quot;Garuda&quot;;</string>
              <item row="3" column="0" colspan="2">
               <widget class="QPushButton" name="btnDesglose">
                <property name="text">
-                <string>Desglose</string>
+                <string>Ver Desglose</string>
                </property>
                <property name="icon">
                 <iconset resource="../maya.qrc">

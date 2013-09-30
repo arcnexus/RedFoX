@@ -54,10 +54,11 @@ void BarraAvisos::set_tpv_desgloses(double subtotal1, double subtotal2, double s
                                                                                 Configuracion_global->decimales_campos_totales)));
     ui->txtBase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base4,'f',
                                                                                 Configuracion_global->decimales_campos_totales)));
-    ui->lblIva1->setText(QString::number(porc_iva1,'f',2));
-    ui->lblIva1_2->setText(QString::number(porc_iva2,'f',2));
-    ui->lblIva1_3->setText(QString::number(porc_iva3,'f',2));
-    ui->lblIva1_4->setText(QString::number(porc_iva4,'f',2));
+    ui->lblIva1->setText(tr("IVA: %1").arg(QString::number(porc_iva1,'f',2)));
+    ui->lblIva1_2->setText(tr("IVA: %1").arg(QString::number(porc_iva2,'f',2)));
+    ui->lblIva1_3->setText(tr("IVA: %1").arg(QString::number(porc_iva3,'f',2)));
+    ui->lblIva1_4->setText(tr("IVA: %1").arg(QString::number(porc_iva4,'f',2)));
+
     ui->lbldesglose1->setText(tr("Desglose IVA %1").arg(QString::number(porc_iva1,'f',2)));
     ui->lbldesglose2->setText(tr("Desglose IVA %1").arg(QString::number(porc_iva2,'f',2)));
     ui->lbldesglose3->setText(tr("Desglose IVA %1").arg(QString::number(porc_iva3,'f',2)));

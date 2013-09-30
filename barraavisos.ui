@@ -60,7 +60,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="main_avisos">
       <layout class="QGridLayout" name="gridLayout">
@@ -128,7 +128,7 @@ color: rgb(255, 255, 255);</string>
         </widget>
        </item>
        <item row="1" column="3">
-        <widget class="QLineEdit" name="txtSubtotal2">
+        <widget class="QLineEdit" name="txtSubtotal3">
          <property name="text">
           <string>0,00</string>
          </property>
@@ -223,14 +223,14 @@ color: rgb(255, 255, 255);</string>
         </widget>
        </item>
        <item row="4" column="2">
-        <widget class="QLabel" name="lblIva1_4">
+        <widget class="QLabel" name="lblIva1_3">
          <property name="text">
           <string>Iva:</string>
          </property>
         </widget>
        </item>
        <item row="4" column="3">
-        <widget class="QLineEdit" name="txtIva2">
+        <widget class="QLineEdit" name="txtIva3">
          <property name="text">
           <string>0,00</string>
          </property>
@@ -264,7 +264,7 @@ color: rgb(255, 255, 255);</string>
         </widget>
        </item>
        <item row="5" column="3">
-        <widget class="QLineEdit" name="txtTotal2">
+        <widget class="QLineEdit" name="txtTotal3">
          <property name="text">
           <string>0,00</string>
          </property>
@@ -309,7 +309,7 @@ color: rgb(255, 255, 255);</string>
         </widget>
        </item>
        <item row="7" column="1">
-        <widget class="QLineEdit" name="txtSubtotal3">
+        <widget class="QLineEdit" name="txtSubtotal2">
          <property name="text">
           <string>0,00</string>
          </property>
@@ -411,7 +411,7 @@ color: rgb(255, 255, 255);</string>
         </widget>
        </item>
        <item row="10" column="1">
-        <widget class="QLineEdit" name="txtIva3">
+        <widget class="QLineEdit" name="txtIva2">
          <property name="text">
           <string>0,00</string>
          </property>
@@ -421,7 +421,7 @@ color: rgb(255, 255, 255);</string>
         </widget>
        </item>
        <item row="10" column="2">
-        <widget class="QLabel" name="lblIva1_3">
+        <widget class="QLabel" name="lblIva1_4">
          <property name="text">
           <string>Iva:</string>
          </property>
@@ -445,7 +445,7 @@ color: rgb(255, 255, 255);</string>
         </widget>
        </item>
        <item row="11" column="1">
-        <widget class="QLineEdit" name="txtTotal3">
+        <widget class="QLineEdit" name="txtTotal2">
          <property name="text">
           <string>0,00</string>
          </property>
