@@ -1198,6 +1198,64 @@ font: 12pt &quot;Sans Serif&quot;;</string>
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="page_6">
+         <layout class="QGridLayout" name="gridLayout_16">
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="txtbuscar_art">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_31">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="text">
+             <string>Buscar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QTableWidget" name="tabla_buscar_art">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 241, 190);
+alternate-background-color: rgb(255, 248, 216);</string>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QPushButton" name="rt">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="text">
+             <string>Teclado</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/teclado.png</normaloff>:/Icons/PNG/teclado.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>41</width>
+              <height>41</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
      </layout>
@@ -1691,10 +1749,10 @@ font: 75 10pt &quot;Garuda&quot;;</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_13">
              <item row="2" column="1">
-              <widget class="QLabel" name="lbl_total_ticket">
+              <widget class="QLabel" name="lbl_base_ticket">
                <property name="styleSheet">
                 <string notr="true">color: rgb(134, 134, 134);
-font: 75 16pt &quot;Garuda&quot;;</string>
+font: 75 10pt &quot;Garuda&quot;;</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1704,7 +1762,7 @@ font: 75 16pt &quot;Garuda&quot;;</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="0" colspan="2">
+             <item row="5" column="0" colspan="2">
               <widget class="QPushButton" name="btnDesglose">
                <property name="text">
                 <string>Ver Desglose</string>
@@ -1725,10 +1783,60 @@ font: 75 16pt &quot;Garuda&quot;;</string>
               <widget class="QLabel" name="label_20">
                <property name="styleSheet">
                 <string notr="true">color: rgb(134, 134, 134);
+font: 75 10pt &quot;Garuda&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Base:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_8">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(134, 134, 134);
+font: 75 10pt &quot;Garuda&quot;;</string>
+               </property>
+               <property name="text">
+                <string>IVA:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLabel" name="lbl_iva_ticket">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(134, 134, 134);
+font: 75 10pt &quot;Garuda&quot;;</string>
+               </property>
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_32">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(134, 134, 134);
 font: 75 12pt &quot;Garuda&quot;;</string>
                </property>
                <property name="text">
-                <string>Total ticket:</string>
+                <string>TOTAL:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLabel" name="lbl_total_ticket">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(134, 134, 134);
+font: 75 12pt &quot;Garuda&quot;;</string>
+               </property>
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -1972,7 +2080,7 @@ font: oblique 12pt &quot;Sans Serif&quot;;</string>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 202, 203);
 color: rgb(0, 0, 0);
-alternate-background-color: rgb(255, 255, 255);</string>
+alternate-background-color: rgb(255, 225, 245);</string>
             </property>
             <property name="alternatingRowColors">
              <bool>true</bool>

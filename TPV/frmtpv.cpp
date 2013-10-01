@@ -51,10 +51,11 @@ FrmTPV::FrmTPV(QWidget *parent) :
     model_ofertas = new QSqlQueryModel(this);
     oRefresca->model = model_ofertas; //Esto estaba al reves
     ui->tabla_ofertas->setModel(model_ofertas);
-    ui->tabla_ofertas->setColumnHidden(0,true);
-   // model_ofertas->setHeaderData(1,Qt::Horizontal,tr("Artículo"));
 
     oRefresca->start(); //no empieces el thread hasta que no hayas puesto las variables
+
+    ui->tabla_ofertas->setColumnHidden(0,true);
+    model_ofertas->setHeaderData(1,Qt::Horizontal,tr("Artículo"));
 }
 
 FrmTPV::~FrmTPV()
@@ -108,6 +109,8 @@ void FrmTPV::cargar_lineas(int id_cab)
     double precio= 0;
     double importe = 0;
     double total_ticket = 0;
+    double base_ticket = 0;
+    double iva_ticket = 0;
     double subtotal1 = 0;
     double subtotal2 = 0;
     double subtotal3 = 0;
@@ -159,7 +162,7 @@ void FrmTPV::cargar_lineas(int id_cab)
         //---------------------
         // totales
         //---------------------
-        total_ticket += importe;
+        base_ticket += importe;
 
         //---------------------
         // Desglose
@@ -398,6 +401,17 @@ void FrmTPV::cargar_lineas(int id_cab)
     oTpv->total2 = base2 + iva2;
     oTpv->total3 = base3 + iva3;
     oTpv->total4 = base4 + iva4;
+
+    base_ticket = base1+base2+base3+base4;
+    iva_ticket = iva1 + iva2 + iva3 + iva4;
+    total_ticket  = base_ticket + iva_ticket;
+
+    ui->lbl_base_ticket->setText(Configuracion_global->toFormatoMoneda(QString::number(base_ticket,'f',
+                                                                      Configuracion_global->decimales_campos_totales)));
+    ui->lbl_iva_ticket->setText(Configuracion_global->toFormatoMoneda(QString::number(iva_ticket,'f',
+                                                                      Configuracion_global->decimales_campos_totales)));
+    ui->lbl_total_ticket->setText(Configuracion_global->toFormatoMoneda(QString::number(total_ticket,'f',
+                                                                      Configuracion_global->decimales_campos_totales)));
 
 }
 
@@ -1125,4 +1139,45 @@ void FrmTPV::on_btnDesglose_clicked()
                           oTpv->dto4,oTpv->base1,oTpv->base2,oTpv->base3, oTpv->base4,oTpv->porc_iva1,oTpv->porc_iva2,
                           oTpv->porc_iva3,oTpv->porc_iva4,oTpv->iva1,oTpv->iva2,oTpv->iva3,oTpv->iva4,oTpv->total1,
                           oTpv->total2,oTpv->total3,oTpv->total4);
+}
+
+void FrmTPV::on_btnBuscarArt_clicked()
+{
+    this->teclado_height = ui->frameTeclado->height();
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frameTeclado->width(),ui->frameTeclado->height()));
+    animation->setEndValue(QSize(ui->frameTeclado->width(),0));
+
+   // animation->setEasingCurve(QEasingCurve::OutBounce);
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_busqueda()));
+    animation->start();
+}
+
+void FrmTPV::final_anim_busqueda()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
+    animation->setDuration(800);
+    animation->setStartValue(QSize(ui->frameTeclado->width(),0));
+    animation->setEndValue(QSize(ui->frameTeclado->width(),this->teclado_height));
+
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    ui->frameTeclado->setCurrentIndex(2);
+    animation->start();
+    calcularcambio();
+    ui->txtEfectivo->setSelection(0,100);
+    ui->txtEfectivo->setFocus();
+}
+
+void FrmTPV::on_rt_clicked()
+{
+    this->teclado_height = ui->frameTeclado->height();
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frameTeclado->width(),ui->frameTeclado->height()));
+    animation->setEndValue(QSize(ui->frameTeclado->width(),0));
+
+   // animation->setEasingCurve(QEasingCurve::OutBounce);
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_cobro()));
+    animation->start();
 }

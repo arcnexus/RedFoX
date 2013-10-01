@@ -125,6 +125,11 @@ private slots:
 
     void on_btnDesglose_clicked();
 
+    void on_btnBuscarArt_clicked();
+    void final_anim_busqueda();
+
+    void on_rt_clicked();
+
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;
