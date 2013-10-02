@@ -87,8 +87,6 @@ private slots:
 
     void on_btn0_clicked();
 
-    void on_btnScanear_clicked();
-
     void on_lblDependiente_linkActivated(const QString &link);
 
     void on_btnDto_clicked(bool checked);
@@ -130,6 +128,40 @@ private slots:
 
     void on_rt_clicked();
 
+    void on_txtbuscar_art_textEdited(const QString &arg1);
+
+    void on_btnAbrirCaja_clicked();
+
+    void on_btnContinuarEdicionTicket_clicked();
+
+    void on_btnEfectivo_clicked(bool checked);
+
+    void on_btnTarjeta_clicked(bool checked);
+
+    void on_btnCheque_clicked(bool checked);
+
+    void on_btnCredito_clicked(bool checked);
+
+    void on_btnVales_clicked(bool checked);
+
+    void on_btnInternet_clicked(bool checked);
+
+    void on_btnPunto_decimal_clicked();
+
+    void on_btnPoner_en_espera_clicked();
+
+    void on_btnCobrar__clicked();
+
+    void on_btnCobrar_imprimir_nuevo_clicked();
+
+    void on_btnComprar_imprimir_clicked();
+
+    void on_btnCobrar_nuevo_clicked();
+
+    void on_btnTraspasar_clicked();
+
+    void on_btnAsignarCliente_clicked();
+
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;
@@ -142,6 +174,7 @@ private:
     int id,row_tabla;
     bool eventFilter(QObject *obj, QEvent *event);
     int teclado_height;
+    int ticket_height;
     QSqlQueryModel *model_lista_tpv;
     QSqlQueryModel *model_ofertas;
     refresca_ofertas *oRefresca;
@@ -154,6 +187,8 @@ signals:
                           float porc_iva2, float porc_iva3, float porc_iva4, double iva1, double iva2, double iva3, double iva4,
                           double total1,double total2,double total3,double total4);
 
+protected slots:
+    void final_anim_edicion_ticket();
 };
 
 #endif // FRMTPV_H

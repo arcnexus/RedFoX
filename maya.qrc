@@ -185,5 +185,7 @@
         <file>PNG/desglose.png</file>
         <file>PNG/ofertas.png</file>
         <file>PNG/Mail.png</file>
+        <file>PNG/close.png</file>
+        <file>PNG/mostrar.png</file>
     </qresource>
 </RCC>

@@ -10,7 +10,12 @@ void refresca_ofertas::run()
 {
     while(true)
     {
+        sleep(2);
         this->model->setQuery("select id,descripcion from articulos where mostrar_en_cuadro = 1",Configuracion_global->groupDB);
-        sleep(30);
+        this->model->setHeaderData(1,Qt::Horizontal,tr("Artículo"));
+        tabla->setModel(model);
+        tabla->setColumnHidden(0,true);
+        sleep(28);
+
     }
 }

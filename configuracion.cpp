@@ -66,73 +66,77 @@ Configuracion::Configuracion(QObject* parent) :
 QString Configuracion::
 toFormatoMoneda(QString cTexto)
 {
-    QString aux = cTexto;
-    int decimals = Configuracion_global->decimales;
-    aux.remove(",");
-    aux.remove(".");
-    aux.remove("-");
-    aux.remove("$");
-    aux.remove("€");
-    aux.remove("£");
-    bool is_num;
-    aux.toDouble(&is_num);
-    if(is_num)
-    {
-        int last_dot = cTexto.lastIndexOf(".");
-        int last_comma = cTexto.lastIndexOf(",");
-        int pos = qMax(last_dot,last_comma);
-
-        QString ret = "";
-
-        int inicio = -1;
-        if(cTexto.contains("-"))
-            inicio++;
-
-        if(pos!=-1)
-        {
-            ret.prepend(cTexto.mid(pos));
-            if(ret.left(1)==".")
-                ret =ret.replace(".",",");
-            pos--;
-        }
-
-        int b = 0;
-        for (int i = pos;i>inicio;i--)
-        {
-            if(!((cTexto.at(i)!='.') && (cTexto.at(i)!= ',')))
-                continue;
-
-            ret.prepend(cTexto.at(i));
-
-            if((((b+1)%3) == 0)&& (i!=inicio+1))
-                ret.prepend(".");
-            b++;
-        }
-        if(cTexto.contains("-"))
-            ret.prepend("-");
-
-        if(!ret.contains(","))
-            ret = cTexto+",00";
-//        if(ret.right(2)==",1" || ret.right(2)==",2" || ret.right(2)==",3" || ret.right(2)==",4" || ret.right(2)==",5"
-//                || ret.right(2)==",6" || ret.right(2)==",7" || ret.right(2)==",8" || ret.right(2)==",9")
-//            ret = ret+"0";
-        if(ret.right(decimals)==",1" || ret.right(decimals)==",2" || ret.right(decimals)==",3" || ret.right(decimals)==",4"
-                || ret.right(decimals)==",5" || ret.right(decimals)==",6" || ret.right(decimals)==",7"
-                || ret.right(decimals)==",8" || ret.right(decimals)==",9")
-            ret = ret+"0";
-        if(!mostrar_siempre){
-            if (ret.right(decimals-2) == "0" || ret.right(decimals-2) == "00" || ret.right(decimals-2) == "000")
-                ret = ret.left(ret.size()-(decimals -2));
-            if (ret == "0,")
-                ret = "0,00";
-            if (ret.right(1) == ",")
-                ret.append("00");
-        }
-        return ret;
-    }
+    if(cTexto.isEmpty())
+        return "0,00";
     else
-        return "";
+    {
+        QString aux = cTexto;
+        int decimals = Configuracion_global->decimales;
+        aux.remove(",");
+        aux.remove(".");
+        aux.remove("-");
+        aux.remove("$");
+        aux.remove("€");
+        aux.remove("£");
+        bool is_num;
+        aux.toDouble(&is_num);
+        if(is_num)
+        {
+            int last_dot = cTexto.lastIndexOf(".");
+            int last_comma = cTexto.lastIndexOf(",");
+            int pos = qMax(last_dot,last_comma);
 
+            QString ret = "";
+
+            int inicio = -1;
+            if(cTexto.contains("-"))
+                inicio++;
+
+            if(pos!=-1)
+            {
+                ret.prepend(cTexto.mid(pos));
+                if(ret.left(1)==".")
+                    ret =ret.replace(".",",");
+                pos--;
+            }
+
+            int b = 0;
+            for (int i = pos;i>inicio;i--)
+            {
+                if(!((cTexto.at(i)!='.') && (cTexto.at(i)!= ',')))
+                    continue;
+
+                ret.prepend(cTexto.at(i));
+
+                if((((b+1)%3) == 0)&& (i!=inicio+1))
+                    ret.prepend(".");
+                b++;
+            }
+            if(cTexto.contains("-"))
+                ret.prepend("-");
+
+            if(!ret.contains(","))
+                ret = cTexto+",00";
+    //        if(ret.right(2)==",1" || ret.right(2)==",2" || ret.right(2)==",3" || ret.right(2)==",4" || ret.right(2)==",5"
+    //                || ret.right(2)==",6" || ret.right(2)==",7" || ret.right(2)==",8" || ret.right(2)==",9")
+    //            ret = ret+"0";
+            if(ret.right(decimals)==",1" || ret.right(decimals)==",2" || ret.right(decimals)==",3" || ret.right(decimals)==",4"
+                    || ret.right(decimals)==",5" || ret.right(decimals)==",6" || ret.right(decimals)==",7"
+                    || ret.right(decimals)==",8" || ret.right(decimals)==",9")
+                ret = ret+"0";
+            if(!mostrar_siempre){
+                if (ret.right(decimals-2) == "0" || ret.right(decimals-2) == "00" || ret.right(decimals-2) == "000")
+                    ret = ret.left(ret.size()-(decimals -2));
+                if (ret == "0,")
+                    ret = "0,00";
+                if (ret.right(1) == ",")
+                    ret.append("00");
+            }
+            return ret;
+        }
+        else
+            return "";
+    }
 }
 
 double Configuracion::MonedatoDouble(QString moneda)
