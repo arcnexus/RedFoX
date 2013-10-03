@@ -162,6 +162,12 @@ private slots:
 
     void on_btnAsignarCliente_clicked();
 
+    void final_anim_edicion_ticket();
+
+    void final_anim_abrir_caja();
+    void on_btnCancelar_caja_clicked();
+
+    void final_anim_abrir_caja_cancelado();
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;
@@ -175,6 +181,8 @@ private:
     bool eventFilter(QObject *obj, QEvent *event);
     int teclado_height;
     int ticket_height;
+    int control_width;
+
     QSqlQueryModel *model_lista_tpv;
     QSqlQueryModel *model_ofertas;
     refresca_ofertas *oRefresca;
@@ -187,8 +195,8 @@ signals:
                           float porc_iva2, float porc_iva3, float porc_iva4, double iva1, double iva2, double iva3, double iva4,
                           double total1,double total2,double total3,double total4);
 
-protected slots:
-    void final_anim_edicion_ticket();
+
+
 };
 
 #endif // FRMTPV_H

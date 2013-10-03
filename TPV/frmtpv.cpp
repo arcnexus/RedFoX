@@ -31,13 +31,6 @@ FrmTPV::FrmTPV(QWidget *parent) :
 
 
 
-    //---------------
-    // Eventos
-    //---------------
-    ui->txtCodigo->installEventFilter(this);
-    ui->frame_ticket->installEventFilter(this);
-    ui->frameTeclado->installEventFilter(this);
-    ui->frmextras->installEventFilter(this);
 
     cargar_ticket(1);
 
@@ -60,6 +53,18 @@ FrmTPV::FrmTPV(QWidget *parent) :
 
 
     oRefresca->start(); //no empieces el thread hasta que no hayas puesto las variables
+
+
+    //---------------
+    // Eventos
+    //---------------
+    this->installEventFilter(this);
+
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
 
 }
 
@@ -120,22 +125,12 @@ void FrmTPV::cargar_lineas(int id_cab)
     double subtotal2 = 0;
     double subtotal3 = 0;
     double subtotal4 = 0;
-    double base1 = 0;
-    double base2 = 0;
-    double base3 = 0;
-    double base4 = 0;
+
     double dto1 = 0;
     double dto2 = 0;
     double dto3 = 0;
     double dto4 = 0;
-    double iva1 = 0;
-    double iva2 = 0;
-    double iva3 = 0;
-    double iva4 = 0;
-    double total1 = 0;
-    double total2 = 0;
-    double total3 = 0;
-    double total4 = 0;
+
 
 
     int pos = -1;
@@ -175,30 +170,21 @@ void FrmTPV::cargar_lineas(int id_cab)
         if(porc_iva == oTpv->porc_iva1)
         {
             subtotal1 += importe;
-            base1 += importe;
-            iva1 += (base1 *(porc_iva/100));
-            total1 += importe;
         }
         if(porc_iva == oTpv->porc_iva2)
         {
             subtotal2 += importe;
-            base2 += importe;
-            iva2 += (base2 *(porc_iva/100));
-            total2 += importe;
+
         }
         if(porc_iva == oTpv->porc_iva3)
         {
             subtotal3 += importe;
-            base3 += importe;
-            iva3 += (base3 *(porc_iva/100));
-            total3 += importe;
+
         }
         if(porc_iva == oTpv->porc_iva4)
         {
             subtotal4 += importe;
-            base4 += importe;
-            iva4 += (base4 *(porc_iva/100));
-            total4 += importe;
+
         }
 
 
@@ -340,30 +326,19 @@ void FrmTPV::cargar_lineas(int id_cab)
                 if(porc_iva == oTpv->porc_iva1)
                 {
                     dto1 += valor_esp;
-                    base1 += valor_esp;
-                    iva1 += (valor_esp *(porc_iva/100));
-                    total1 += base1+iva1;
                 }
                 if(porc_iva == oTpv->porc_iva2)
                 {
                     dto2 += valor_esp;
-                    base2 += valor_esp;
-                    iva2 += (valor_esp *(porc_iva/100));
-                    total2 += base2 + iva2;
+
                 }
                 if(porc_iva == oTpv->porc_iva3)
                 {
                     dto3 += valor_esp;
-                    base3 += valor_esp;
-                    iva3 += (valor_esp *(porc_iva/100));
-                    total3 += importe;
                 }
                 if(porc_iva == oTpv->porc_iva4)
                 {
                     dto4 += valor_esp;
-                    base4 += valor_esp;
-                    iva4 += (valor_esp *(porc_iva/100));
-                    total4 += importe;
                 }
 
 
@@ -392,23 +367,24 @@ void FrmTPV::cargar_lineas(int id_cab)
     oTpv->dto3 = dto3;
     oTpv->dto4 = dto4;
 
-    oTpv->base1 = base1;
-    oTpv->base2 = base2;
-    oTpv->base3 = base3;
-    oTpv->base4 = base4;
+    oTpv->base1 = subtotal1 - dto1;
+    oTpv->base2 = subtotal2 - dto2;
+    oTpv->base3 = subtotal3 - dto3;
+    oTpv->base4 = subtotal4 - dto3;
 
-    oTpv->iva1 = iva1;
-    oTpv->iva2 = iva2;
-    oTpv->iva3 = iva3;
-    oTpv->iva4 = iva4;
+    oTpv->iva1 = oTpv->base1 *(oTpv->porc_iva1 /100);
+    oTpv->iva2 = oTpv->base2 * (oTpv->porc_iva2 /100);
+    oTpv->iva3 = oTpv->base3 * (oTpv->porc_iva3 /100);
+    oTpv->iva4 = oTpv->base4 * (oTpv->porc_iva4 /100);
 
-    oTpv->total1 = base1 + iva1;
-    oTpv->total2 = base2 + iva2;
-    oTpv->total3 = base3 + iva3;
-    oTpv->total4 = base4 + iva4;
+    oTpv->total1 = oTpv->base1 + oTpv->iva1;
+    oTpv->total2 = oTpv->base2 + oTpv->iva2;
+    oTpv->total3 = oTpv->base3 + oTpv->iva3;
+    oTpv->total4 = oTpv->base4 + oTpv->iva4;
 
-    base_ticket = base1+base2+base3+base4;
-    iva_ticket = iva1 + iva2 + iva3 + iva4;
+    base_ticket = oTpv->base1+oTpv->base2+oTpv->base3+oTpv->base4;
+
+    iva_ticket = oTpv->iva1 + oTpv->iva2 + oTpv->iva3 + oTpv->iva4;
     total_ticket  = base_ticket + iva_ticket;
 
     ui->lbl_base_ticket->setText(Configuracion_global->toFormatoMoneda(QString::number(base_ticket,'f',
@@ -616,7 +592,7 @@ void FrmTPV::on_btnbotones_clicked()
     ui->frame_ticket->setGraphicsEffect(fade_effect);
     QPropertyAnimation *animationOp = new QPropertyAnimation(fade_effect, "opacity");
     animationOp->setEasingCurve(QEasingCurve::Linear);
-    animationOp->setDuration(1000);
+    animationOp->setDuration(500);
     animationOp->setStartValue(1.0);
     animationOp->setEndValue(0.0);
     connect(animationOp,SIGNAL(finished()),this,SLOT(fin_fade_buttons()));
@@ -1009,133 +985,181 @@ bool FrmTPV::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if(keyEvent->key() ==Qt::Key_Escape)
+            return true;
+        if(keyEvent->key() ==Qt::Key_E && ui->frame_ticket->currentIndex() ==3)
+        {
+            ui->btnEfectivo->setChecked(true);
+            on_btnEfectivo_clicked(true);
+            ui->txtEfectivo->setSelection(0,100);
+            return true;
+        }
+
+        if(keyEvent->key() == Qt::Key_T && ui->frame_ticket->currentIndex()==3)
+        {
+            ui->btnTarjeta->setChecked(true);
+            on_btnTarjeta_clicked(true);
+            ui->txtTarjeta->setSelection(0,100);
+            return true;
+        }
+        if (keyEvent->key() ==Qt::Key_H && ui->frame_ticket->currentIndex()==3)
+        {
+            ui->btnCheque->setChecked(true);
+            on_btnCheque_clicked(true);
+            ui->txtCheque->setSelection(0,100);
+            return true;
+        }
+        if( keyEvent->key() == Qt::Key_C && ui->frame_ticket->currentIndex()==3)
+        {
+            ui->btnCredito->setChecked(true);
+            on_btnCredito_clicked(true);
+            ui->txtCredito->setSelection(0,100);
+            return  true;
+        }
+
+        if(keyEvent->key() == Qt::Key_V && ui->frame_ticket->currentIndex() == 3)
+        {
+            ui->btnVales->setChecked(true);
+            on_btnVales_clicked(true);
+            ui->txtVales->setSelection(0,100);
+            return true;
+        }
+
+        if(keyEvent->key() == Qt::Key_I && ui->frame_ticket->currentIndex() ==3)
+        {
+            ui->btnInternet->setChecked(true);
+            on_btnInternet_clicked(true);
+            ui->txtInternet->setSelection(0,100);
+            return true;
+        }
+
+        if(keyEvent->key() == Qt::Key_O && ui->frame_ticket->currentIndex() == 3)
+        {
+            on_btnContinuarEdicionTicket_clicked();
+        }
+
+        if(keyEvent->key() == Qt::Key_B  && ui->frame_ticket->currentIndex() == 3)
+        {
+            on_btnCobrar__clicked(); // cobrar una vez entrados los datos btnCobrar_
+        }
+
+        if(keyEvent->key() == Qt::Key_N && ui->frame_ticket->currentIndex() ==3)
+        {
+            on_btnCobrar_imprimir_nuevo_clicked();
+        }
+
+        if(keyEvent->key() == Qt::Key_A && ui->frame_ticket->currentIndex() == 3)
+        {
+            on_btnComprar_imprimir_clicked();
+        }
+
+        if(keyEvent->key() == Qt::Key_U && ui->frame_ticket->currentIndex() == 3)
+        {
+            on_btnCobrar_nuevo_clicked();
+        }
+
         if(keyEvent->key() == Qt::Key_F1)
         {
-            if(ui->frame_ticket->currentIndex() ==3)
+            if(ui->frame_ticket->currentIndex() == 3)
             {
-                ui->btnEfectivo->setChecked(true);
-                on_btnEfectivo_clicked(true);
-                ui->txtEfectivo->clear();
-            } else
-            {
-                ui->btnCantidad->setChecked(true);
-                on_btnCantidad_clicked(true);
+               on_btnContinuarEdicionTicket_clicked();
             }
+            ui->btnCantidad->setChecked(true);
+            on_btnCantidad_clicked(true);
+            ui->txtCodigo->setFocus();
         }
         if(keyEvent->key() == Qt::Key_F2)
         {
-            if(ui->frame_ticket->currentIndex()==3)
+            if(ui->frame_ticket->currentIndex() == 3)
             {
-                ui->btnTarjeta->setChecked(true);
-                on_btnTarjeta_clicked(true);
-
-            } else
-            {
-                ui->btnDto->setChecked(true);
-                on_btnDto_clicked(true);
+               on_btnContinuarEdicionTicket_clicked();
             }
+            ui->btnDto->setChecked(true);
+            on_btnDto_clicked(true);
         }
         if(keyEvent->key() == Qt::Key_F3)
         {
-            if(ui->frame_ticket->currentIndex()==3)
+            if(ui->frame_ticket->currentIndex() == 3)
             {
-                ui->btnCheque->setChecked(true);
-                on_btnCheque_clicked(true);
-                ui->txtCheque->clear();
-            } else
-            {
-                ui->btnScanear->setChecked(true);
-                on_btnScanear_clicked(true);
+               on_btnContinuarEdicionTicket_clicked();
             }
+            ui->btnScanear->setChecked(true);
+            on_btnScanear_clicked(true);
+
         }
         if(keyEvent->key() == Qt::Key_F4)
         {
-            if(ui->frame_ticket->currentIndex()==3)
+            if(ui->frame_ticket->currentIndex() == 3)
             {
-                ui->btnCredito->setChecked(true);
-                on_btnCredito_clicked(true);
-                ui->txtCredito->clear();
-            } else
-            {
-                ui->btnPrecio->setChecked(true);
-                on_btnPrecio_clicked(true);
+               on_btnContinuarEdicionTicket_clicked();
             }
+            ui->btnPrecio->setChecked(true);
+            on_btnPrecio_clicked(true);
+
         }
         if(keyEvent->key() == Qt::Key_F5)
         {
             if(ui->frame_ticket->currentIndex() == 3)
             {
-                ui->btnVales->setChecked(true);
-                on_btnVales_clicked(true);
-                ui->txtVales->clear();
-            } else
-            {
-                on_btnBuscarArt_clicked();
+               on_btnContinuarEdicionTicket_clicked();
             }
+            on_btnBuscarArt_clicked();
         }
+
         if(keyEvent->key() == Qt::Key_F6)
         {
-            if(ui->frame_ticket->currentIndex() ==3)
+            if(ui->frame_ticket->currentIndex() == 3)
             {
-                ui->btnInternet->setChecked(true);
-                on_btnInternet_clicked(true);
-                ui->txtInternet->clear();
-
-            } else
-            {
-                on_btnAnadir_ticket_clicked();
+               on_btnContinuarEdicionTicket_clicked();
             }
+            on_btnAnadir_ticket_clicked();
         }
+
         if(keyEvent->key() == Qt::Key_F7)
         {
             if(ui->frame_ticket->currentIndex() == 3)
             {
-                on_btnContinuarEdicionTicket_clicked();
-            } else
-            {
-                on_btnPoner_en_espera_clicked();
+               on_btnContinuarEdicionTicket_clicked();
             }
+            on_btnPoner_en_espera_clicked();
         }
+
         if(keyEvent->key() == Qt::Key_F8)
         {
             if(ui->frame_ticket->currentIndex() == 3)
             {
-                on_btnCobrar__clicked(); // cobrar una vez entrados los datos btnCobrar_
-            } else
-            {
-                on_btnCobrar_clicked(); // entrar los datos de cobro btncobrar
+               on_btnContinuarEdicionTicket_clicked();
             }
+            on_btnCobrar_clicked(); // entrar los datos de cobro btncobrar
         }
+
         if(keyEvent->key() == Qt::Key_F9)
         {
-            if(ui->frame_ticket->currentIndex() ==3)
+            if(ui->frame_ticket->currentIndex() == 3)
             {
-                on_btnCobrar_imprimir_nuevo_clicked();
-            } else
-            {
-                on_btnTraspasar_clicked();
+               on_btnContinuarEdicionTicket_clicked();
             }
+            on_btnTraspasar_clicked();
         }
+
         if(keyEvent->key() == Qt::Key_F10)
         {
             if(ui->frame_ticket->currentIndex() == 3)
             {
-                on_btnComprar_imprimir_clicked();
-            } else
-            {
-                on_btnAsignarCliente_clicked();
+               on_btnContinuarEdicionTicket_clicked();
             }
+            on_btnAsignarCliente_clicked();
         }
+
         if(keyEvent->key() == Qt::Key_F11)
         {
             if(ui->frame_ticket->currentIndex() == 3)
             {
-                on_btnCobrar_nuevo_clicked();
-            } else
-            {
-                on_btnBorrar_linea_clicked();
+               on_btnContinuarEdicionTicket_clicked();
             }
+            on_btnBorrar_linea_clicked();
         }
+
         if(obj == ui->txtCodigo)
             {
             if (ui->btnCalculadora->isChecked())
@@ -1518,14 +1542,26 @@ void FrmTPV::on_txtbuscar_art_textEdited(const QString &arg1)
 
 void FrmTPV::on_btnAbrirCaja_clicked()
 {
-    this->ticket_height = ui->frame_ticket->height();
+    this->control_width = ui->frmcontrol->width();
     QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
     animation->setDuration(600);
     animation->setStartValue(QSize(ui->frmcontrol->width(),ui->frmcontrol->height()));
-    animation->setEndValue(QSize(800,ui->frmcontrol->height()));
+    animation->setEndValue(QSize(0,ui->frmcontrol->height()));
 
    // animation->setEasingCurve(QEasingCurve::OutBounce);
-    //connect(animation,SIGNAL(finished()),this,SLOT(final_anim_cobro()));
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_abrir_caja()));
+    animation->start();
+}
+
+void FrmTPV::final_anim_abrir_caja()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(0,ui->frmcontrol->height()));
+    animation->setEndValue(QSize(520,ui->frmcontrol->height()));
+    ui->frmcontrol->setCurrentIndex(1);
+    ui->spinHorarioAbertura->setTime(QTime::currentTime());
+    animation->setEasingCurve(QEasingCurve::OutBounce);
     animation->start();
 }
 
@@ -1706,4 +1742,27 @@ void FrmTPV::on_btnTraspasar_clicked()
 void FrmTPV::on_btnAsignarCliente_clicked()
 {
 
+}
+
+void FrmTPV::on_btnCancelar_caja_clicked()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frmcontrol->width(),ui->frmcontrol->height()));
+    animation->setEndValue(QSize(0,ui->frmcontrol->height()));
+
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_abrir_caja_cancelado()));
+    animation->start();
+}
+
+void FrmTPV::final_anim_abrir_caja_cancelado()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frmcontrol->width(),ui->frmcontrol->height()));
+    animation->setEndValue(QSize(this->control_width,ui->frmcontrol->height()));
+
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    ui->frmcontrol->setCurrentIndex(0);
+    animation->start();
 }
