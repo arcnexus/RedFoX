@@ -541,8 +541,10 @@ COLLATE = utf8_unicode_ci;
 
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`cierrecaja` (
   `id` INT(11) NOT NULL ,
-  `fecha_hora_abertura` DATETIME NULL DEFAULT NULL ,
-  `fecha_hora_cierre` DATETIME NULL DEFAULT NULL ,
+  `fecha_abertura` DATE NULL DEFAULT NULL ,
+  `fecha_cierre` DATE NULL DEFAULT NULL ,
+  `hora_abertura` TIME NULL DEFAULT NULL ,
+  `hora_cierre` TIME NULL DEFAULT NULL ,
   `vales_emitidos` DOUBLE NULL DEFAULT NULL ,
   `entregas_a_cuenta` DOUBLE NULL DEFAULT NULL ,
   `intresos_efectivo` DOUBLE NULL DEFAULT NULL ,
@@ -553,6 +555,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cierrecaja` (
   `importe_abertura_dia` DOUBLE NULL DEFAULT NULL ,
   `importe_cierre` DOUBLE NULL DEFAULT NULL ,
   `id_usuario` INT(11) NULL DEFAULT NULL ,
+  `id_usuario_cierre` INT(11) NULL DEFAULT NULL ,
   `importe_real_caja` DOUBLE NULL DEFAULT NULL ,
   `descuadre` DOUBLE NULL DEFAULT NULL ,
   `descuentos` DOUBLE NULL DEFAULT NULL ,

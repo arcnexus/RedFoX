@@ -2164,9 +2164,9 @@ alternate-background-color: rgb(255, 248, 216);</string>
       <enum>QFrame::Raised</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
-     <widget class="QWidget" name="frmcontrolPage1" native="true">
+     <widget class="QWidget" name="frmcontrolPage1">
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
         <widget class="QFrame" name="frame">
@@ -2455,7 +2455,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
            </widget>
           </item>
           <item row="2" column="1" colspan="2">
-           <widget class="QComboBox" name="comboBox"/>
+           <widget class="QComboBox" name="cboCajas"/>
           </item>
          </layout>
         </widget>

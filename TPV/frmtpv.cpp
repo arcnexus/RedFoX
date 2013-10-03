@@ -28,6 +28,7 @@ FrmTPV::FrmTPV(QWidget *parent) :
     oRefresca = new refresca_ofertas(this);
     ui->frame_ticket->setCurrentIndex(0);
     ui->frameTeclado->setCurrentIndex(0);
+    ui->frmcontrol->setCurrentIndex(0);
 
 
 
@@ -65,6 +66,14 @@ FrmTPV::FrmTPV(QWidget *parent) :
 
     for( it = l.begin() ;it!= l.end();++it )
         (*it)->installEventFilter(this);
+
+
+    //--------------------
+    // Carga de objetos
+    //--------------------
+    QSqlQueryModel * model_cajas = new QSqlQueryModel(this);
+    model_cajas->setQuery("select desc_caja from cajas",Configuracion_global->empresaDB);
+    ui->cboCajas->setModel(model_cajas);
 
 }
 
@@ -418,89 +427,7 @@ void FrmTPV::on_btnBuscar_clicked()
 void FrmTPV::on_txtCodigo_editingFinished()
 {
     ui->txtCodigo->blockSignals(true);
-    if(ui->btnScanear->isChecked()){
-        Articulo oArt;
-        QMap <int,QSqlRecord> art;
-        QString error,clausula;
-        clausula = QString("codigo ='%1'").arg(ui->txtCodigo->text());
-        art = SqlCalls::SelectRecord("vistaart_tarifa",clausula,Configuracion_global->groupDB,error);
-        int id_articulo = 0;
-        QMapIterator <int,QSqlRecord> iter(art);
-        while(iter.hasNext()){
-            iter.next();
-            id_articulo = iter.value().value("id").toInt();
-        }
-
-        if(id_articulo > 0)
-        {
-            //-----------------------
-            // Inserto lineas venta
-            //-----------------------
-            // CAPTURO DATOS
-            //-----------------------
-
-            QString codigo,descripcion;
-            double precio;
-            codigo = art.value(id_articulo).value("codigo").toString();
-            descripcion = art.value(id_articulo).value("descripcion_reducida").toString();
-
-            if(this->tipo_dto_tarifa == 1)
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
-                                                                         *(art.value(id_articulo).value("porc_dto1").toDouble()/100));
-            else if (this->tipo_dto_tarifa == 2)
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
-                                                                         *(art.value(id_articulo).value("porc_dto2").toDouble()/100));
-            else if (this->tipo_dto_tarifa == 3)
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
-                                                                         *(art.value(id_articulo).value("porc_dto3").toDouble()/100));
-            else if (this->tipo_dto_tarifa == 4)
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
-                                                                        *(art.value(id_articulo).value("porc_dto4").toDouble()/100));
-            else if (this->tipo_dto_tarifa == 5)
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
-                                                                         *(art.value(id_articulo).value("porc_dto5").toDouble()/100));
-            else if (this->tipo_dto_tarifa == 6)
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
-                                                                         *(art.value(id_articulo).value("porc_dto6").toDouble()/100));
-            else
-                precio = art.value(id_articulo).value("pvp").toDouble();
-
-            //--------------
-            // IVA
-            //--------------
-            double iva_art = art.value(id_articulo).value("tipo_iva").toDouble();
-
-            //--------------------
-            // INSERCIÓN DE DATOS
-            //--------------------
-            QHash <QString,QVariant> h;
-            h["id_cab"] = this->id;
-            h["id_articulo"] = id_articulo;
-            h["codigo"] = codigo;
-            h["descripcion"] = descripcion;
-            h["precio"] = precio;
-            h["porc_iva"] = iva_art;
-            h["cantidad"] = 1;
-            h["importe"] = precio;
-            h["total"] = precio;
-
-            int new_id = SqlCalls::SqlInsert(h,"lin_tpv",Configuracion_global->empresaDB,error);
-            if(new_id == -1)
-                QMessageBox::warning(this,tr("Gestión de TPV"),tr("Ocurrió un error al insertar: %1").arg(error),tr("Aceptar"));
-            else
-            {
-                cargar_lineas(this->id);
-                ui->tablaLineas_tiquet_actual->selectRow(this->row_tabla);
-                ui->txtCodigo->clear();
-            }
-
-        } else{
-            if(!ui->txtCodigo->text().isEmpty()) {
-                QMessageBox::warning(this,tr("Gestión de artículos"),tr("No se encuentra el artículo"),tr("Aceptar"));
-                ui->txtCodigo->clear();
-            }
-        }
-    } else if(ui->btnDto->isChecked())
+    if(ui->btnDto->isChecked())
     {
        ui->btnDto->setChecked(false);
        int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
@@ -524,7 +451,8 @@ void FrmTPV::on_txtCodigo_editingFinished()
        }
        ui->txtCodigo->clear();
        cargar_lineas(this->id);
-       ui->btnScanear->setChecked(true);
+      // ui->btnScanear->setChecked(true);
+
 
     } else if(ui->btnCantidad->isChecked())
     {
@@ -541,7 +469,8 @@ void FrmTPV::on_txtCodigo_editingFinished()
 
 
         cargar_lineas(this->id);
-        ui->btnScanear->setChecked(true);
+//        if(this->scanning)
+//            ui->btnScanear->setChecked(true);
     } else if(ui->btnPrecio->isChecked())
     {
         int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
@@ -557,17 +486,20 @@ void FrmTPV::on_txtCodigo_editingFinished()
         if(ui->frame_ticket->currentIndex() == 0)
         {
             cargar_lineas(this->id);
-            ui->btnScanear->setChecked(true);
+           // ui->btnScanear->setChecked(true);
         }
-    } else if(!ui->btnScanear->isChecked())
-        if(ui->frame_ticket->currentIndex() ==0)
-            ui->btnScanear->setChecked(true);
+//    } else if(!ui->btnScanear->isChecked())
+//        if(ui->frame_ticket->currentIndex() ==0)
+//            ui->btnScanear->setChecked(true);
+    }
     ui->txtCodigo->blockSignals(false);
-    if(ui->frame_ticket->currentIndex() == 0)
-        on_btnScanear_clicked(true);
+    //if(ui->frame_ticket->currentIndex() == 0)
+       // on_btnScanear_clicked(true);
+//    if(this->scanning)
+//        on_btnIntro_clicked();
 }
 
-void FrmTPV::on_btnScanear_clicked(bool checked)
+void FrmTPV::on_btnScanear_toggled(bool checked)
 {
     if(checked)
     {
@@ -900,6 +832,92 @@ void FrmTPV::on_btnIntro_clicked()
     {
         calcularcambio();
     }
+
+    if(ui->btnScanear->isChecked()){
+        QMap <int,QSqlRecord> art;
+        QString error,clausula;
+        clausula = QString("codigo ='%1'").arg(ui->txtCodigo->text());
+        art = SqlCalls::SelectRecord("vistaart_tarifa",clausula,Configuracion_global->groupDB,error);
+        int id_articulo = 0;
+        QMapIterator <int,QSqlRecord> iter(art);
+        while(iter.hasNext()){
+            iter.next();
+            id_articulo = iter.value().value("id").toInt();
+        }
+
+        if(id_articulo > 0)
+        {
+            //-----------------------
+            // Inserto lineas venta
+            //-----------------------
+            // CAPTURO DATOS
+            //-----------------------
+
+            QString codigo,descripcion;
+            double precio;
+            codigo = art.value(id_articulo).value("codigo").toString();
+            descripcion = art.value(id_articulo).value("descripcion_reducida").toString();
+
+            if(this->tipo_dto_tarifa == 1)
+                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
+                                                                         *(art.value(id_articulo).value("porc_dto1").toDouble()/100));
+            else if (this->tipo_dto_tarifa == 2)
+                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
+                                                                         *(art.value(id_articulo).value("porc_dto2").toDouble()/100));
+            else if (this->tipo_dto_tarifa == 3)
+                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
+                                                                         *(art.value(id_articulo).value("porc_dto3").toDouble()/100));
+            else if (this->tipo_dto_tarifa == 4)
+                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
+                                                                        *(art.value(id_articulo).value("porc_dto4").toDouble()/100));
+            else if (this->tipo_dto_tarifa == 5)
+                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
+                                                                         *(art.value(id_articulo).value("porc_dto5").toDouble()/100));
+            else if (this->tipo_dto_tarifa == 6)
+                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
+                                                                         *(art.value(id_articulo).value("porc_dto6").toDouble()/100));
+            else
+                precio = art.value(id_articulo).value("pvp").toDouble();
+
+            //--------------
+            // IVA
+            //--------------
+            double iva_art = art.value(id_articulo).value("tipo_iva").toDouble();
+
+            //--------------------
+            // INSERCIÓN DE DATOS
+            //--------------------
+            QHash <QString,QVariant> h;
+            h["id_cab"] = this->id;
+            h["id_articulo"] = id_articulo;
+            h["codigo"] = codigo;
+            h["descripcion"] = descripcion;
+            h["precio"] = precio;
+            h["porc_iva"] = iva_art;
+            h["cantidad"] = 1;
+            h["importe"] = precio;
+            h["total"] = precio;
+
+            int new_id = SqlCalls::SqlInsert(h,"lin_tpv",Configuracion_global->empresaDB,error);
+            if(new_id == -1)
+                QMessageBox::warning(this,tr("Gestión de TPV"),tr("Ocurrió un error al insertar: %1").arg(error),tr("Aceptar"));
+            else
+            {
+                cargar_lineas(this->id);
+                ui->tablaLineas_tiquet_actual->selectRow(this->row_tabla);
+                ui->txtCodigo->clear();
+            }
+
+        } else{
+            if(!ui->txtCodigo->text().isEmpty()) {
+                QMessageBox::warning(this,tr("Gestión de artículos"),tr("No se encuentra el artículo"),tr("Aceptar"));
+                ui->txtCodigo->clear();
+            }
+        }
+        ui->btnScanear->setChecked(true);
+        ui->txtCodigo->setFocus();
+    }
+
 }
 
 void FrmTPV::on_btnSumar_clicked()
@@ -972,10 +990,11 @@ void FrmTPV::on_btnPorc_clicked()
 
 void FrmTPV::on_btnCalculadora_clicked(bool checked)
 {
-    ui->btnPorc->setEnabled(checked);
+    ui->btnPorc->setEnabled(false);
     ui->btnMultiplicar->setEnabled(checked);
     ui->btnDividir->setEnabled(checked);
     ui->btnPrecio->setChecked(!checked);
+    ui->btnScanear->setChecked(false);
     ui->txtCodigo->setEnabled(true);
     ui->txtCodigo->clear();
     ui->txtCodigo->setFocus();
@@ -1084,7 +1103,7 @@ bool FrmTPV::eventFilter(QObject *obj, QEvent *event)
                on_btnContinuarEdicionTicket_clicked();
             }
             ui->btnScanear->setChecked(true);
-            on_btnScanear_clicked(true);
+            //on_btnScanear_clicked(true);
 
         }
         if(keyEvent->key() == Qt::Key_F4)
@@ -1162,6 +1181,9 @@ bool FrmTPV::eventFilter(QObject *obj, QEvent *event)
 
         if(obj == ui->txtCodigo)
             {
+            if(keyEvent->key() == Qt::Key_Enter)
+                    on_btnIntro_clicked();
+
             if (ui->btnCalculadora->isChecked())
             {
                 if(keyEvent->key() == 42) // *
@@ -1249,7 +1271,7 @@ void FrmTPV::on_lblDependiente_linkActivated(const QString &link)
 
 void FrmTPV::on_btnDto_clicked(bool checked)
 {
-
+    this->scanning = false;
     if(checked)
    {
         ui->btnScanear->setChecked(false);
@@ -1266,7 +1288,7 @@ void FrmTPV::on_btnDto_clicked(bool checked)
 
 void FrmTPV::on_btnCantidad_clicked(bool checked)
 {
-
+    this->scanning = false;
     if(checked)
     {
         ui->btnScanear->setChecked(false);
@@ -1765,4 +1787,27 @@ void FrmTPV::final_anim_abrir_caja_cancelado()
     animation->setEasingCurve(QEasingCurve::OutBounce);
     ui->frmcontrol->setCurrentIndex(0);
     animation->start();
+}
+
+void FrmTPV::on_btnConfirmarAbertura_caja_clicked()
+{
+    QHash <QString, QVariant> caja;
+    QString error;
+    caja["fecha_abertura"] = ui->calendarioAbertura->selectedDate();
+    caja["hora_abertura"] = ui->spinHorarioAbertura->text();
+    caja["id_usuario"] = Configuracion_global->id_usuario_activo;
+    caja["importe_abertura_dia"] = Configuracion_global->MonedatoDouble(ui->txtImporteAbertura->text());
+    caja["id_caja"] = SqlCalls::SelectOneField("cajas","id",QString("desc_caja= '%1'").arg(ui->cboCajas->currentText()),
+                                               Configuracion_global->empresaDB,error).toInt();
+    if(SqlCalls::SelectOneField("cierre_caja","id",
+                          QString("fecha_abertura = %1").arg(ui->calendarioAbertura->selectedDate().toString("yyyyMMdd")),
+                          Configuracion_global->empresaDB,error).toInt() > -1)
+        QMessageBox::warning(this,tr("Gestión de Caja"),tr("La caja ya está abierta para este día"),tr("Aceptar"));
+    else
+    {
+        int new_id = SqlCalls::SqlInsert(caja,"cierre_caja",Configuracion_global->empresaDB,error);
+        if(new_id == -1)
+            QMessageBox::warning(this,tr("Gestión de Caja"),tr("Ocurrió un error al abrir_caja : %1").arg(error),
+                                 tr("Aceptar"));
+    }
 }

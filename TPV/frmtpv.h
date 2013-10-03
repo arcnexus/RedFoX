@@ -39,7 +39,7 @@ private slots:
 
     void on_txtCodigo_editingFinished();
 
-    void on_btnScanear_clicked(bool checked);
+    void on_btnScanear_toggled(bool checked);
 
     void on_btnbotones_clicked();
 
@@ -168,6 +168,8 @@ private slots:
     void on_btnCancelar_caja_clicked();
 
     void final_anim_abrir_caja_cancelado();
+    void on_btnConfirmarAbertura_caja_clicked();
+
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;
@@ -182,6 +184,7 @@ private:
     int teclado_height;
     int ticket_height;
     int control_width;
+    bool scanning;
 
     QSqlQueryModel *model_lista_tpv;
     QSqlQueryModel *model_ofertas;
