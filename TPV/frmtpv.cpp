@@ -1799,15 +1799,22 @@ void FrmTPV::on_btnConfirmarAbertura_caja_clicked()
     caja["importe_abertura_dia"] = Configuracion_global->MonedatoDouble(ui->txtImporteAbertura->text());
     caja["id_caja"] = SqlCalls::SelectOneField("cajas","id",QString("desc_caja= '%1'").arg(ui->cboCajas->currentText()),
                                                Configuracion_global->empresaDB,error).toInt();
-    if(SqlCalls::SelectOneField("cierre_caja","id",
-                          QString("fecha_abertura = %1").arg(ui->calendarioAbertura->selectedDate().toString("yyyyMMdd")),
-                          Configuracion_global->empresaDB,error).toInt() > -1)
+    QStringList clausulas;
+    clausulas << QString("fecha_abertura = %1").arg(ui->calendarioAbertura->selectedDate().toString("yyyyMMdd"))
+              << QString("id_caja = %1").arg(caja.value("id_caja").toInt());
+    int id_val = SqlCalls::SelectOneField("cierrecaja","id",clausulas,Configuracion_global->empresaDB,error).toInt();
+    if(id_val > 0)
         QMessageBox::warning(this,tr("Gestión de Caja"),tr("La caja ya está abierta para este día"),tr("Aceptar"));
     else
     {
-        int new_id = SqlCalls::SqlInsert(caja,"cierre_caja",Configuracion_global->empresaDB,error);
+        int new_id = SqlCalls::SqlInsert(caja,"cierrecaja",Configuracion_global->empresaDB,error);
         if(new_id == -1)
             QMessageBox::warning(this,tr("Gestión de Caja"),tr("Ocurrió un error al abrir_caja : %1").arg(error),
                                  tr("Aceptar"));
+        else
+        {
+            TimedMessageBox * t;
+            t = new TimedMessageBox(this,"Se ha abierto la caja.");
+        }
     }
 }
