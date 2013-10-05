@@ -105,6 +105,8 @@ private slots:
 
     void on_btnGuardar_clicked();
 
+    void on_cboDireccionesEntrega_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;

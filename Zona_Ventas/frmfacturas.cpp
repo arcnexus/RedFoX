@@ -35,6 +35,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
     }
 
     ui->comboPais->setModel(Configuracion_global->paises_model);
+    ui->cboPais_entrega->setModel(Configuracion_global->paises_model);
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de facturas a clientes"));
     //--------------------------
@@ -313,6 +314,39 @@ void frmFacturas::LLenarCampos() {
     ui->spin_iva_gasto1->setValue(oFactura->iva_gasto1);
     ui->spin_iva_gasto2->setValue(oFactura->iva_gasto2);
     ui->spin_iva_gasto3->setValue(oFactura->iva_gasto3);
+    //------------------------------
+    // DIRECCION ALTERNATIVA
+    //------------------------------
+    ui->txtDireccion1_entrega->setText(oFactura->direccion1_entrega);
+    ui->txtDireccion2_entrega->setText(oFactura->direccion2_entrega);
+    ui->txtCp_entrega->setText(oFactura->cp_entrega);
+    ui->txtPoblacion_entrega->setText(oFactura->poblacion_entrega);
+    ui->txtProvincia_entrega->setText(oFactura->poblacion_entrega);
+    index = ui->cboPais_entrega->findText(Configuracion_global->Devolver_pais(oFactura->id_pais_entrega));
+
+    //------------------------------
+    // CBO DIRECCIONES ALTERNATIVAS
+    //------------------------------
+    ui->cboDireccionesEntrega->clear();
+    QMap <int, QSqlRecord> di;
+    QString error;
+    di = SqlCalls::SelectRecord("cliente_direcciones",QString("id_cliente = %1").arg(oCliente1->id),Configuracion_global->groupDB,
+                                error);
+
+    if(error.isEmpty())
+    {
+        QMapIterator <int,QSqlRecord> i(di);
+        while (i.hasNext()) {
+            i.next();
+            ui->cboDireccionesEntrega->addItem(i.value().value("descripcion").toString());
+        }
+    } else
+    {
+        QMessageBox::warning(this,tr("Facturas a clientes"),
+                             tr("Ocurrió un error al recuperar las direcciones alternativas: %1").arg(error));
+
+    }
+    // FIN DIRECCIONES ALTERNATIVAS
 
     QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
     helper.fillTable("empresa","lin_fac",filter);
@@ -862,32 +896,32 @@ void frmFacturas::lineaReady(lineaDetalle * ld)
             queryArticulos.next();
         else
             ok_Maya = false;
-        QSqlQuery q_lin_fac(Configuracion_global->empresaDB);
-        q_lin_fac.prepare("INSERT INTO lin_fac (id_Cab, id_articulo, codigo, cantidad,"
-                                  "descripcion, precio, subtotal, porc_dto,"
-                                  " dto, porc_iva,iva,porc_rec,rec,total)"
-                                  "VALUES (:id_cab,:id_articulo,:codigo,:cantidad,"
-                                  ":descripcion,:precio,:subtotal,:porc_dto,"
-                                  ":dto,:porc_iva,:iva,:porc_rec,:rec,:total);");
-        q_lin_fac.bindValue(":id_cab", oFactura->id);
-        q_lin_fac.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        q_lin_fac.bindValue(":codigo",ld->codigo);
-        q_lin_fac.bindValue(":descripcion",ld->descripcion);
-        q_lin_fac.bindValue(":cantidad",ld->cantidad);
-        q_lin_fac.bindValue(":precio",ld->precio);
-        q_lin_fac.bindValue(":subtotal",ld->subtotal);
-        q_lin_fac.bindValue(":porc_dto",ld->dto_perc);
-        q_lin_fac.bindValue(":porc_iva",ld->iva_perc);
+        QHash <QString, QVariant> lin_fac;
+        QString error;
+        lin_fac["id_cab"] =  oFactura->id;
+        lin_fac["id_articulo"] =  queryArticulos.record().value("id").toInt();
+        lin_fac["codigo"] = ld->codigo;
+        lin_fac["descripcion"] = ld->descripcion;
+        lin_fac["cantidad"] = ld->cantidad;
+        lin_fac["precio"] = ld->precio;
+        lin_fac["subtotal"] = ld->subtotal;
+        lin_fac["porc_dto"] = ld->dto_perc;
+        lin_fac["porc_iva"] = ld->iva_perc;
         double base = ld->subtotal - (ld->subtotal*ld->dto);
-        q_lin_fac.bindValue(":iva",base * ld->iva_perc/100);
-        q_lin_fac.bindValue(":porc_rec",ld->rec_perc);
-        q_lin_fac.bindValue(":rec",base *ld->rec_perc/100);
-        q_lin_fac.bindValue(":dto",ld->dto);
-        q_lin_fac.bindValue(":total",ld->total);
-        if (!q_lin_fac.exec()){
+        lin_fac["iva"] = base * ld->iva_perc/100;
+        lin_fac["porc_rec"] = ld->rec_perc;
+        lin_fac["rec"] = base *ld->rec_perc/100;
+        lin_fac["dto"] = ld->dto;
+        lin_fac["total"] = ld->total;
+        lin_fac["promocion"] = SqlCalls::SelectOneField("articulos","articulo_promocionado",
+                                                        QString("id = %1").arg(lin_fac.value("id_articulo").toInt()),
+                                                        Configuracion_global->groupDB,error);
+        int new_id = SqlCalls::SqlInsert(lin_fac,"lin_fac",Configuracion_global->empresaDB,error);
+
+        if (new_id ==-1){
             ok_empresa = false;
             QMessageBox::warning(this,tr("Gestión de albaranes"),
-                                 tr("Ocurrió un error al insertar la nueva línea: %1").arg(q_lin_fac.lastError().text()),
+                                 tr("Ocurrió un error al insertar la nueva línea: %1").arg(error),
                                  tr("Aceptar"));
         } else{
             double pendiente = ui->txtimporte_pendiente->text().replace(".","").replace(",",".").toDouble();
@@ -906,7 +940,7 @@ void frmFacturas::lineaReady(lineaDetalle * ld)
             Configuracion_global->groupDB.rollback();
         }
 
-        ld->idLinea = q_lin_fac.lastInsertId().toInt();
+        ld->idLinea = new_id;
 
     } else // Editando linea
     {
@@ -1501,10 +1535,37 @@ void frmFacturas::on_btnGuardar_clicked()
     {
         QMessageBox::critical(this,tr("Error"),
                               tr("Error al guardar la factura.\n")+Configuracion_global->empresaDB.lastError().text(),
-                              tr("&Aceptar"));
+                              tr("Aceptar"));
         Configuracion_global->empresaDB.rollback();
         if(Configuracion_global->contabilidad)
             Configuracion_global->contaDB.rollback();
     }
 
+}
+
+void frmFacturas::on_cboDireccionesEntrega_currentIndexChanged(const QString &arg1)
+{
+    QMap <int,QSqlRecord> di;
+    QString error;
+    di = SqlCalls::SelectRecord("cliente_direcciones",QString("descripcion ='%1'").arg(arg1),
+                                Configuracion_global->groupDB,error);
+    if(!error.isEmpty())
+    {
+        QMessageBox::warning(this,tr("Facturas a clientes"),tr("No se puede cargar la direccion alternativa:%1").arg(error),
+                             tr("Aceptar"));
+    } else
+    {
+        QMapIterator <int,QSqlRecord> i(di);
+        while (i.hasNext()) {
+            i.next();
+            ui->txtDireccion1_entrega->setText(i.value().value("direccion1").toString());
+            ui->txtDireccion2_entrega->setText(i.value().value("direccion2").toString());
+            ui->txtCp_entrega->setText(i.value().value("cp").toString());
+            ui->txtPoblacion_entrega->setText(i.value().value("poblacion").toString());
+            ui->txtProvincia_entrega->setText(i.value().value("provincia").toString());
+            int index = ui->cboPais_entrega->findText(i.value().value("pais").toString());
+            ui->cboPais_entrega->setCurrentIndex(index);
+        }
+
+    }
 }

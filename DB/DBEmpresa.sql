@@ -764,6 +764,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_alb` (
   `porc_rec` FLOAT NULL  DEFAULT '0' ,
   `rec` DOUBLE NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
+  `promocion` TINYINT(1) NULL DEFAULT '0' ,
 
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
@@ -810,8 +811,8 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_fac` (
   `iva` DOUBLE NULL DEFAULT '0' ,	
   `porc_rec` FLOAT NULL  DEFAULT '0' ,
   `rec` DOUBLE NULL DEFAULT '0' ,
-
   `total` DOUBLE NULL DEFAULT '0' ,
+  `promocion` TINYINT(1) NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -860,6 +861,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_ped` (
   `rec` DOUBLE NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
   `cantidad_a_servir` FLOAT NULL DEFAULT '0' ,
+  `promocion` TINYINT(1) NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -908,7 +910,8 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_pre` (
   `porc_rec` FLOAT NULL  DEFAULT '0' ,
   `rec` DOUBLE NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
-  PRIMARY KEY (`id`) )
+  `promocion` TINYINT(1) NULL DEFAULT '0' ,  
+PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
@@ -926,6 +929,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_res` (
   `fecha_reserva` DATE NULL DEFAULT NULL ,
   `reservado_hasta` DATE NULL DEFAULT NULL ,
   `importe_dto` DOUBLE NULL DEFAULT '0' ,
+  `promocion` TINYINT(1) NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -948,6 +952,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_tpv` (
   `total` DOUBLE NULL DEFAULT '0' ,
   `subtotal` DOUBLE NULL DEFAULT '0' ,
   `fecha_linea` DATE NULL DEFAULT NULL ,
+  `promocion` TINYINT(1) NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) ,
   INDEX `id_Articulo` (`id_articulo` ASC) )
 ENGINE = InnoDB
