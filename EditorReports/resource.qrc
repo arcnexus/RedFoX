@@ -23,6 +23,20 @@
         <file>icons/text_underline.png</file>
         <file>icons/text_align_up.png</file>
         <file>icons/cross.png</file>
+        <file>icons/line.png</file>
+        <file>icons/field.png</file>
+        <file>icons/field_rel.png</file>
+        <file>icons/barcode.png</file>
+        <file>icons/picture.png</file>
+        <file>icons/rounded-rectangle.png</file>
+        <file>icons/open.png</file>
+        <file>icons/document-save.png</file>
+        <file>icons/save_db.png</file>
+        <file>icons/upload_db.png</file>
+        <file>icons/config.png</file>
+        <file>icons/text-shadow.png</file>
+        <file>icons/Delete.png</file>
+        <file>icons/print-preview.png</file>
     </qresource>
     <qresource prefix="/codeBar">
         <file>codebar/FRE3OF9X.TTF</file>

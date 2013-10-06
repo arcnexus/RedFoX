@@ -24,6 +24,7 @@ public:
     QSqlQueryModel *modelProv;
     QSqlQueryModel *modelTrazabilidad1;
     QSqlQueryModel *modelTrazabilidad2;
+    QSqlQueryModel * model_ofertas;
 
     module_zone module_zone(){return Almacen;}
     QString module_name(){return "Articulos";}
@@ -118,6 +119,8 @@ private slots:
     void on_btnExcepciones_clicked();
 
     void on_pushButton_clicked();
+
+    void on_btnAnadir_oferta_clicked();
 
 public slots:
     void AnadirSeccion();

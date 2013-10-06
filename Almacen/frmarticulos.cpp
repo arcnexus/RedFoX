@@ -6,6 +6,7 @@
 #include "../db_table_view.h"
 
 #include "../Auxiliares/monetarydelegate.h"
+#include "../Auxiliares/datedelegate.h"
 
 #include "../Auxiliares/readonlydelegate.h"
 #include "frmlistadosarticulo.h"
@@ -25,6 +26,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     oArticulo = new Articulo();
     modArt = new QSqlQueryModel();
     ui->setupUi(this);
+    ui->stackedWidget->setCurrentIndex(1);
     // Cargar valores IVA
     //Configuracion_global->CargarDatos();
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
@@ -110,6 +112,22 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
 
     this->installEventFilter(this);
     ui->btn_cerrar->setVisible(closeBtn);
+    model_ofertas = new QSqlQueryModel(this);
+    model_ofertas->setQuery(QString("select id,descripcion,fecha_inicio,fecha_fin from articulos_ofertas where id_articulo =0"),
+                            Configuracion_global->empresaDB);
+    ui->tabla_ofertas->setModel(model_ofertas);
+    QVariantList sizes;
+    headers.clear();
+    sizes << 0 << 330 <<100 <<100;
+    headers << tr("id") << tr("Oferta") <<tr("Fecha Ini") << tr("Fecha Fin");
+    for(int i=0; i <sizes.size();i++)
+    {
+        ui->tabla_ofertas->setColumnWidth(i,sizes.at(i).toInt());
+        model_ofertas->setHeaderData(i,Qt::Horizontal,headers.at(i));
+    }
+    ui->tabla_ofertas->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tabla_ofertas->setItemDelegateForColumn(3,new DateDelegate);
+    ui->tabla_ofertas->setColumnHidden(0,true);
 }
 
 FrmArticulos::~FrmArticulos()
@@ -332,33 +350,20 @@ void FrmArticulos::LLenarCampos()
   ui->chkArticulo_promocionado->setChecked(oArticulo->articulo_promocionado);
   ui->framePromocion->setEnabled(false);
   ui->txtDescripcion_promocion->setText(oArticulo->descripcion_promocion);
-  switch (oArticulo->tipo_oferta) {
-  case 1:
-      ui->radOferta1->setChecked(true);
-      break;
-  case 2:
-      ui->radOferta2->setChecked(true);
-      break;
-  case 3:
-      ui->radOferta3->setChecked(true);
-      break;
-  case 4:
-      ui->radOferta4->setChecked(true);
-      break;
-  }
 
-  ui->txtpor_cada->setText(QString::number(oArticulo->por_cada));
-  ui->txtregalo_de->setText(QString::number(oArticulo->regalo_de));
-  ui->txt_dto_web->setText(QString::number(oArticulo->porc_dto_web,'f',Configuracion_global->decimales));
-  ui->txtoferta_pvp_fijo->setText(QString::number(oArticulo->oferta_pvp_fijo,'f',Configuracion_global->decimales));
-  ui->txcomentarios_promocion->setPlainText(oArticulo->comentario_oferta);
   if (oArticulo->articulo_promocionado)
       ui->lbl_en_promocion->setVisible(true);
   else
       ui->lbl_en_promocion->setVisible(false);
   ui->chkMostrar_en_cuadro->setChecked(oArticulo->mostrar_en_cuadro);
   ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',Configuracion_global->decimales)));
-  //ui->spin_dto1->setValue(oArticulo->);
+
+  //--------------------------
+  // LLENO TABLA OFERTAS
+  //--------------------------
+  model_ofertas->setQuery(QString("select id,descripcion,fecha_inicio,"
+                                  " fecha_fin from articulos_ofertas where id_articulo = %1 order by id desc").arg(oArticulo->id),
+                          Configuracion_global->empresaDB);
 
 
   // ------------------
@@ -2048,4 +2053,9 @@ void FrmArticulos::on_pushButton_clicked()
     FrmKit kit(this);
     kit.set_articulo(oArticulo->codigo);
     kit.exec();
+}
+
+void FrmArticulos::on_btnAnadir_oferta_clicked()
+{
+    // TODO AÑADIR OFERTAS.
 }

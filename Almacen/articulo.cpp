@@ -263,119 +263,61 @@ void Articulo::Guardar()
         }
 
     }
-    QSqlQuery query(Configuracion_global->groupDB);
-    query.prepare( "UPDATE articulos SET "
-                   "`codigo`=:codigo,"
-                   "`codigo_barras` =:codigo_barras,"
-                   "`codigo_fabricante` =:codigo_fabricante,"
-                   "`descripcion` =:descripcion,"
-                   "`descripcion_reducida` =:descripcion_reducida,"
-                   "`id_proveedor` =:id_proveedor,"
-                   "`id_familia` =:id_familia,"
-                   "`id_seccion` =:id_seccion,"
-                   "`id_subfamilia` =:id_subfamilia,"
-                   "`tipo_iva` =:tipo_iva,"
-                   "`coste` =:coste,"
-                   "`porc_dto` =:porc_dto,"
-                   "`dto_proveedor` =:dto_proveedor,"
-                   "`fecha_ultima_compra` =:fecha_ultima_compra,"
-                   "`fecha_ultima_venta` =:fecha_ultima_venta,"
-                   "`unidades_compradas` =:unidades_compradas,"
-                   "`unidades_vendidas` =:unidades_vendidas,"
-                   "`importe_acumulado_compras` =:importe_acumulado_compras,"
-                   "`importe_acumulado_ventas` =:importe_acumulado_ventas,"
-                   "`comentario` =:comentario,"
-                   "`stock_maximo` =:stock_maximo,"
-                   "`stock_minimo` =:stock_minimo,"
-                   "`stock_real` =:stock_real,"
-                   "`stock_fisico_almacen` = :stock_fisico_almacen,"
-                   "`tipo_unidad` =:tipo_unidad,"
-                   "`controlar_stock` =:controlar_stock,"
-                   "`pvp_incluye_iva` =:pvp_incluye_iva,"
-                   "`fecha_prevista_recepcion` =:fecha_prevista_recepcion,"
-                   "`cantidad_pendiente_recibir` =:cantidad_pendiente_recibir,"
-                   "`unidades_reservadas` =:unidades_reservadas,"
-                   "`mostrar_web` =:mostrar_web,"
-                   "`etiquetas` =:etiquetas,"
-                   "`paquetes` =:paquetes,"
-                   "`localizacion_en_almacen` =:localizacion_en_almacen,"
-                   "`id_tipos_iva` =:id_tipos_iva,"
-                   "`id_subsub_familia` =:id_subsub_familia,"
-                   "`id_grupo_art` =:id_grupo_art,"
-                   "`id_web` =:id_web,"
-                   "`stock_fisico_almacen` =:stock_fisico_almacen,"
-                   "`articulo_promocionado` =:articulo_promocionado,"
-                   "`descripcion_promocion` =:descripcion_promocion,"
-                   "`tipo_oferta` =:tipo_oferta,"
-                   "`mostrar_en_cuadro` =:mostrar_en_cuadro,"
-                   "`por_cada` =:por_cada,"
-                   "`regalo_de` =:regalo_de,"
-                   "`porc_dto_web` =:porc_dto_web,"
-                   "`oferta_pvp_fijo` =:oferta_pvp_fijo,"
-                   "`margen` =:margen,"
-                   "`margen_min` =:margen_min,"
-                   "`coste_real` =:coste_real,"
-                   "`comentario_oferta` =:comentario_oferta"
-                   " WHERE id =:id");
+    QHash <QString, QVariant> articulo;
+    QString error;
 
+    articulo["codigo"] = this->codigo;
+    articulo["codigo_barras"] = this->codigo_barras;
+    articulo["codigo_fabricante"] = this->codigo_fabricante;
+    articulo["descripcion"] = this->descripcion;
+    articulo["descripcion_reducida"] = this->descripcion_reducida;
+    articulo["id_proveedor"] = this->id_proveedor;
+    articulo["id_familia"] = this->id_familia;
+    articulo["familia"] = this->familia;
+    articulo["id_seccion"] = this->id_seccion;
+    articulo["seccion"] = this->seccion;
+    articulo["id_subfamilia"] = this->id_subfamilia;
+    articulo["subfamilia"] = this->subfamilia;
+    articulo["tipo_iva"] = this->tipo_iva;
+    articulo["porc_dto"] = this->porc_dto;
+    articulo["fecha_ultima_compra"] = this->fecha_ultima_compra;
+    articulo["fecha_ultima_venta"] = this->fecha_ultima_venta;
+    articulo["unidades_compradas"] = this->unidades_compradas;
+    articulo["unidades_vendidas"] = this->unidades_vendidas;
+    articulo["importe_acumulado_compras"] = this->importe_acumulado_compras;
+    articulo["importe_acumulado_ventas"] = this->importe_acumulado_ventas;
+    articulo["comentario"] = this->comentario;
+    articulo["stock_maximo"] = this->stock_maximo;
+    articulo["stock_minimo"] = this->stock_minimo;
+    articulo["stock_real"] = this->stock_real;
+    articulo["stock_fisico_almacen"] = this->nstock_fisico_almacen;
+    articulo["controlar_stock"] = this->controlar_stock;
+    articulo["composicion"] = this->composicion;
+    articulo["pvp_incluye_iva"] = this->pvp_incluye_iva;
+    articulo["fecha_prevista_recepcion"],fecha_prevista_recepcion;
+    articulo["cantidad_pendiente_recibir"] = this->cantidad_pendiente_recibir;
+    articulo["unidades_reservadas"] = this->unidades_reservadas;
+    articulo["mostrar_web"] = this->mostrar_web;
+    articulo["etiquetas"] = this->etiquetas;
+    articulo["localizacion_en_almacen"] = this->localizacion_en_almacen;
+    articulo["id"] = this->id;
+    articulo["id_tipos_iva"] = this->id_tipos_iva;
+    articulo["id_subsub_familia"] = this->id_subsub_familia;
+    articulo["id_grupo_art"] = this->id_grupo_art;
+    articulo["id_web"] = this->id_web;
+    articulo["stock_fisico_almacen"] = this->nstock_fisico_almacen;
+    articulo["coste"] = this->coste;
+    articulo["articulo_promocionado"] = this->articulo_promocionado;
+    articulo["mostrar_en_cuadro"] = this->mostrar_en_cuadro;
+    articulo["margen"] = this->margen;
+    articulo["margen_min"] = this->margen_min;
+    articulo["coste_real"] = this->coste_real;
 
-    query.bindValue(":codigo",this->codigo);
-    query.bindValue(":codigo_barras",this->codigo_barras);
-    query.bindValue(":codigo_fabricante",this->codigo_fabricante);
-    query.bindValue(":descripcion",this->descripcion);
-    query.bindValue(":descripcion_reducida",this->descripcion_reducida);
-    query.bindValue(":id_proveedor",this->id_proveedor);
-    query.bindValue(":id_familia",this->id_familia);
-    query.bindValue(":familia",this->familia);
-    query.bindValue(":id_seccion",this->id_seccion);
-    query.bindValue(":seccion",this->seccion);
-    query.bindValue(":id_subfamilia",this->id_subfamilia);
-    query.bindValue(":subfamilia",this->subfamilia);
-    query.bindValue(":tipo_iva",this->tipo_iva);
-    query.bindValue(":porc_dto",this->porc_dto);
-    query.bindValue(":fecha_ultima_compra",this->fecha_ultima_compra);
-    query.bindValue(":fecha_ultima_venta",this->fecha_ultima_venta);
-    query.bindValue(":unidades_compradas",this->unidades_compradas);
-    query.bindValue(":unidades_vendidas",this->unidades_vendidas);
-    query.bindValue(":importe_acumulado_compras",this->importe_acumulado_compras);
-    query.bindValue(":importe_acumulado_ventas",this->importe_acumulado_ventas);
-    query.bindValue(":comentario",this->comentario);
-    query.bindValue(":stock_maximo",this->stock_maximo);
-    query.bindValue(":stock_minimo",this->stock_minimo);
-    query.bindValue(":stock_real",this->stock_real);
-    query.bindValue(":stock_fisico_almacen",this->nstock_fisico_almacen);
-    query.bindValue(":controlar_stock",this->controlar_stock);
-    query.bindValue(":composicion",this->composicion);
-    query.bindValue(":pvp_incluye_iva",this->pvp_incluye_iva);
-    query.bindValue(":fecha_prevista_recepcion",fecha_prevista_recepcion);
-    query.bindValue(":cantidad_pendiente_recibir",this->cantidad_pendiente_recibir);
-    query.bindValue(":unidades_reservadas",this->unidades_reservadas);
-    query.bindValue(":mostrar_web",this->mostrar_web);
-    query.bindValue(":etiquetas",this->etiquetas);
-    query.bindValue(":localizacion_en_almacen",this->localizacion_en_almacen);
-    query.bindValue(":id",this->id);
-    query.bindValue(":id_tipos_iva",this->id_tipos_iva);
-    query.bindValue(":id_subsub_familia",this->id_subsub_familia);
-    query.bindValue(":id_grupo_art",this->id_grupo_art);
-    query.bindValue(":id_web",this->id_web);
-    query.bindValue(":stock_fisico_almacen",this->nstock_fisico_almacen);
-    query.bindValue(":coste",this->coste);
-    query.bindValue(":articulo_promocionado",this->articulo_promocionado);
-    query.bindValue(":descripcion_promocion",this->descripcion_promocion);
-    query.bindValue(":tipo_oferta",this->tipo_oferta);
-    query.bindValue(":mostrar_en_cuadro",this->mostrar_en_cuadro);
-    query.bindValue(":por_cada",this->por_cada);
-    query.bindValue(":regalo_de",this->regalo_de);
-    query.bindValue(":porc_dto_web",this->porc_dto_web);
-    query.bindValue(":oferta_pvp_fijo",this->oferta_pvp_fijo);
-    query.bindValue(":comentario_oferta",this->comentario_oferta);
-    query.bindValue(":margen",this->margen);
-    query.bindValue(":margen_min",this->margen_min);
-    query.bindValue(":coste_real",this->coste_real);
-
-    if(!query.exec()) {
+    bool success = SqlCalls::SqlUpdate(articulo,"articulos",Configuracion_global->groupDB,
+                                       QString("id = %1").arg(this->id),error);
+    if(!success) {
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Guardar Artículo"),
-                             QObject::tr("No se puede guardar el artículo ERROR: %1 ").arg(query.lastError().text()),
+                             QObject::tr("No se puede guardar el artículo ERROR: %1 ").arg(error),
                              QObject::tr("Ok"));
 
     } else {

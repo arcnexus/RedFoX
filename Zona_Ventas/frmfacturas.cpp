@@ -38,6 +38,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->cboPais_entrega->setModel(Configuracion_global->paises_model);
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de facturas a clientes"));
+    ui->tabWidget_2->setCurrentIndex(0);
     //--------------------------
     // Pongo valores por defecto
     //--------------------------

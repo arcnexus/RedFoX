@@ -53,7 +53,7 @@ FrmTPV::FrmTPV(QWidget *parent) :
     oRefresca->tabla = ui->tabla_ofertas;
 
 
-    oRefresca->start(); //no empieces el thread hasta que no hayas puesto las variables
+//    oRefresca->start(); //no empieces el thread hasta que no hayas puesto las variables
 
 
     //---------------

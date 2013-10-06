@@ -25,7 +25,7 @@ EditImageDlg::~EditImageDlg()
 
 void EditImageDlg::on_btnRuta_clicked()
 {
-    QString ruta = QFileDialog::getOpenFileName(this,"Imagen",QString(),"Imagenes (*.png *.jpg);");
+    QString ruta = QFileDialog::getOpenFileName(this,"Imagen",QString(),"Images (*.png *.xpm *.jpg)");
     if(!ruta.isEmpty())
     {
         ui->txtRuta->setText(ruta);

@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>1061</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMenu">
@@ -75,7 +75,7 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/shape_square.png</normaloff>:/icons/shape_square.png</iconset>
+     <normaloff>:/icons/rounded-rectangle.png</normaloff>:/icons/rounded-rectangle.png</iconset>
    </property>
    <property name="text">
     <string>Rectangulo redondeado</string>
@@ -84,7 +84,7 @@
   <action name="actionGuardar">
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/report_disk.png</normaloff>:/icons/report_disk.png</iconset>
+     <normaloff>:/icons/document-save.png</normaloff>:/icons/document-save.png</iconset>
    </property>
    <property name="text">
     <string>Guardar Archivo</string>
@@ -96,7 +96,7 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/font.png</normaloff>:/icons/font.png</iconset>
+     <normaloff>:/icons/text-shadow.png</normaloff>:/icons/text-shadow.png</iconset>
    </property>
    <property name="text">
     <string>Texto</string>
@@ -105,7 +105,7 @@
   <action name="actionAbrir">
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/report_disk.png</normaloff>:/icons/report_disk.png</iconset>
+     <normaloff>:/icons/open.png</normaloff>:/icons/open.png</iconset>
    </property>
    <property name="text">
     <string>Abrir Archivo</string>
@@ -117,7 +117,7 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/font.png</normaloff>:/icons/font.png</iconset>
+     <normaloff>:/icons/line.png</normaloff>:/icons/line.png</iconset>
    </property>
    <property name="text">
     <string>Linea</string>
@@ -129,7 +129,7 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/shape_square.png</normaloff>:/icons/shape_square.png</iconset>
+     <normaloff>:/icons/barcode.png</normaloff>:/icons/barcode.png</iconset>
    </property>
    <property name="text">
     <string>Codigo de Barras</string>
@@ -141,7 +141,7 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/shape_square.png</normaloff>:/icons/shape_square.png</iconset>
+     <normaloff>:/icons/picture.png</normaloff>:/icons/picture.png</iconset>
    </property>
    <property name="text">
     <string>Imagen</string>
@@ -150,13 +150,17 @@
   <action name="actionBorrar">
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/cross.png</normaloff>:/icons/cross.png</iconset>
+     <normaloff>:/icons/Delete.png</normaloff>:/icons/Delete.png</iconset>
    </property>
    <property name="text">
     <string>Borrar</string>
    </property>
   </action>
   <action name="actionConfigurar_pagina">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/config.png</normaloff>:/icons/config.png</iconset>
+   </property>
    <property name="text">
     <string>Configurar pagina</string>
    </property>
@@ -167,7 +171,7 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/font.png</normaloff>:/icons/font.png</iconset>
+     <normaloff>:/icons/field.png</normaloff>:/icons/field.png</iconset>
    </property>
    <property name="text">
     <string>Campo</string>
@@ -179,7 +183,7 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/font.png</normaloff>:/icons/font.png</iconset>
+     <normaloff>:/icons/field_rel.png</normaloff>:/icons/field_rel.png</iconset>
    </property>
    <property name="text">
     <string>Campo Relacional</string>
@@ -188,7 +192,7 @@
   <action name="actionVista_Previa">
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/printer.png</normaloff>:/icons/printer.png</iconset>
+     <normaloff>:/icons/print-preview.png</normaloff>:/icons/print-preview.png</iconset>
    </property>
    <property name="text">
     <string>Vista Previa</string>
@@ -197,7 +201,7 @@
   <action name="actionAbrir_desde_BD">
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/report_disk.png</normaloff>:/icons/report_disk.png</iconset>
+     <normaloff>:/icons/upload_db.png</normaloff>:/icons/upload_db.png</iconset>
    </property>
    <property name="text">
     <string>Abrir desde BD</string>
@@ -206,7 +210,7 @@
   <action name="actionGuardar_en_BD">
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/icons/report_disk.png</normaloff>:/icons/report_disk.png</iconset>
+     <normaloff>:/icons/save_db.png</normaloff>:/icons/save_db.png</iconset>
    </property>
    <property name="text">
     <string>Guardar en BD</string>

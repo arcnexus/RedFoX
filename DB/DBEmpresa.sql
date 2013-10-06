@@ -190,6 +190,30 @@ AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
+
+CREATE TABLE IF NOT EXISTS `@empresa@`.`articulos_ofertas` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_articulo` INT NULL,
+  `descripcion` VARCHAR(100) NULL,
+  `oferta_32` TINYINT NULL,
+  `oferta_dto` TINYINT NULL,
+  `oferta_precio_final` TINYINT NULL,
+  `oferta_web` TINYINT NULL,
+  `unidades` FLOAT NULL,
+  `regalo` FLOAT NULL,
+  `dto_local` FLOAT NULL,
+  `dto_web` FLOAT NULL,
+  `precio_final` DOUBLE NULL,
+  `comentarios` TEXT NULL,
+  `fecha_inicio` DATE NULL,
+  `fecha_fin` DATE NULL,
+  `activa` TINYINT(1) NULL DEFAULT '0',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARACTER SET = utf8
+  COLLATE = utf8_unicode_ci;
+
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_alb` (
   `id` INT(11) NOT NULL AUTO_INCREMENT , 
   `serie` CHAR(1) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,

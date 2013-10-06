@@ -46,6 +46,7 @@ public:
     QString global_routeLite;
 
     QSqlDatabase groupDB;
+    QSqlDatabase groupDB2;
     QString group_DBName;
     QString group_host;
     QString group_user;
