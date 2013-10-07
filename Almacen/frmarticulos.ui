@@ -386,6 +386,29 @@ font: 12pt &quot;Sans Serif&quot;;</string>
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="btnExcepciones_3">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Excepciones</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/excepciones.png</normaloff>:/Icons/PNG/excepciones.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btn_cerrar">
             <property name="minimumSize">
              <size>
@@ -1738,18 +1761,18 @@ color: rbg(0,0,0);</string>
                  <string notr="true">background-color: rgb(254, 255, 205);
 color: rbg(0,0,0);</string>
                 </property>
-                <property name="displayFormat">
-                 <string>dd/MM/yyyy</string>
-                </property>
-                <property name="calendarPopup">
-                 <bool>true</bool>
-                </property>
                 <property name="date">
                  <date>
                   <year>1752</year>
                   <month>9</month>
                   <day>14</day>
                  </date>
+                </property>
+                <property name="displayFormat">
+                 <string>dd/MM/yyyy</string>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -2255,7 +2278,7 @@ color: rbg(0,0,0);</string>
             </widget>
            </item>
            <item row="6" column="0" colspan="2">
-            <widget class="QFrame" name="frame_21">
+            <widget class="QFrame" name="frame_pvp_fijo">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -2347,7 +2370,7 @@ color: rgb(255, 255, 255);</string>
             </widget>
            </item>
            <item row="3" column="0" colspan="2">
-            <widget class="QFrame" name="frame_19">
+            <widget class="QFrame" name="frame_tipo_32">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -2385,7 +2408,7 @@ color: rgb(255, 255, 255);</string>
                </widget>
               </item>
               <item row="1" column="2" rowspan="2">
-               <widget class="QLineEdit" name="txtpor_cada">
+               <widget class="QLineEdit" name="txtOferta_por_cada">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -2437,7 +2460,7 @@ color: rgb(255, 255, 255);</string>
                </widget>
               </item>
               <item row="3" column="2">
-               <widget class="QLineEdit" name="txtregalo_de">
+               <widget class="QLineEdit" name="txtOfertaregalo_de">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -2479,7 +2502,7 @@ color: rgb(255, 255, 255);</string>
             </widget>
            </item>
            <item row="0" column="5">
-            <widget class="QDateEdit" name="txtFecha_fin">
+            <widget class="QDateEdit" name="txtOferta_Fecha_fin">
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
@@ -2509,7 +2532,7 @@ color: rgb(255, 255, 255);</string>
             </spacer>
            </item>
            <item row="0" column="3">
-            <widget class="QDateEdit" name="txtFecha_ini">
+            <widget class="QDateEdit" name="txtOferta_Fecha_ini">
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
@@ -2519,9 +2542,9 @@ color: rgb(255, 255, 255);</string>
             </widget>
            </item>
            <item row="4" column="0" colspan="2">
-            <widget class="QFrame" name="frame_20">
+            <widget class="QFrame" name="frame_dto">
              <property name="enabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -2577,7 +2600,7 @@ color: rgb(255, 255, 255);</string>
                </widget>
               </item>
               <item row="1" column="2">
-               <widget class="QLineEdit" name="txtDtoOferta">
+               <widget class="QLineEdit" name="txtOfertaDtoOferta">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -2605,7 +2628,7 @@ color: rgb(255, 255, 255);</string>
             </widget>
            </item>
            <item row="5" column="0" colspan="2">
-            <widget class="QFrame" name="frame_23">
+            <widget class="QFrame" name="frame_ofertaweb">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -2650,7 +2673,7 @@ color: rgb(255, 255, 255);</string>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="txt_dto_web">
+               <widget class="QLineEdit" name="txtOferta_dto_web">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -2730,7 +2753,7 @@ color: rgb(255, 255, 255);</string>
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QLineEdit" name="txtDescripcion_promocion">
+               <widget class="QLineEdit" name="txtOferta_Descripcion_promocion">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
@@ -2740,7 +2763,7 @@ color: rgb(255, 255, 255);</string>
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QCheckBox" name="radOferta1">
+               <widget class="QCheckBox" name="chkOferta_32">
                 <property name="styleSheet">
                  <string notr="true"/>
                 </property>
@@ -2750,7 +2773,10 @@ color: rgb(255, 255, 255);</string>
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QCheckBox" name="radOferta2">
+               <widget class="QCheckBox" name="chkOferta_dto">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="styleSheet">
                  <string notr="true"/>
                 </property>
@@ -2758,12 +2784,12 @@ color: rgb(255, 255, 255);</string>
                  <string>Oferta % dto</string>
                 </property>
                 <property name="checked">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
-              <item row="3" column="0" colspan="2">
-               <widget class="QCheckBox" name="radOferta3">
+              <item row="4" column="0">
+               <widget class="QCheckBox" name="chkOferta_pvp">
                 <property name="styleSheet">
                  <string notr="true"/>
                 </property>
@@ -2772,8 +2798,8 @@ color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="0" colspan="2">
-               <widget class="QCheckBox" name="radOferta4">
+              <item row="3" column="0">
+               <widget class="QCheckBox" name="chkOferta_web">
                 <property name="styleSheet">
                  <string notr="true"/>
                 </property>
@@ -2786,7 +2812,7 @@ color: rgb(255, 255, 255);</string>
             </widget>
            </item>
            <item row="4" column="2" rowspan="3" colspan="5">
-            <widget class="QFrame" name="frame_22">
+            <widget class="QFrame" name="frame_comentarios">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -2798,7 +2824,7 @@ color: rgb(255, 255, 255);</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_27">
               <item row="2" column="0">
-               <widget class="QTextEdit" name="txcomentarios_promocion">
+               <widget class="QTextEdit" name="txtOferta_comentarios_promocion">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
@@ -2828,7 +2854,7 @@ color: rgb(255, 255, 255);</string>
             </widget>
            </item>
            <item row="1" column="2" rowspan="3" colspan="5">
-            <widget class="QFrame" name="frame_3">
+            <widget class="QFrame" name="frame_tabla_ofertas">
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -2838,16 +2864,22 @@ color: rgb(255, 255, 255);</string>
              <layout class="QGridLayout" name="gridLayout_9">
               <item row="0" column="0">
                <layout class="QGridLayout" name="gridLayout_6">
-                <item row="1" column="0" colspan="4">
+                <item row="1" column="0" colspan="5">
                  <widget class="QTableView" name="tabla_ofertas">
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(213, 218, 255);
 alternate-background-color: rgb(255, 255, 255);</string>
                   </property>
+                  <property name="alternatingRowColors">
+                   <bool>true</bool>
+                  </property>
                  </widget>
                 </item>
-                <item row="2" column="3">
+                <item row="2" column="4">
                  <widget class="QPushButton" name="btnBorrar_oferta">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -2865,6 +2897,9 @@ alternate-background-color: rgb(255, 255, 255);</string>
                 </item>
                 <item row="2" column="0">
                  <widget class="QPushButton" name="btnAnadir_oferta">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -2882,6 +2917,9 @@ alternate-background-color: rgb(255, 255, 255);</string>
                 </item>
                 <item row="2" column="1">
                  <widget class="QPushButton" name="btnEditarOferta">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -2897,7 +2935,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="0" colspan="4">
+                <item row="0" column="0" colspan="5">
                  <widget class="QLabel" name="label_72">
                   <property name="minimumSize">
                    <size>
@@ -2919,12 +2957,29 @@ color: rgb(255, 255, 255);</string>
                 </item>
                 <item row="2" column="2">
                  <widget class="QPushButton" name="btnguardar_oferta">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="text">
                    <string>Guardar</string>
                   </property>
                   <property name="icon">
                    <iconset resource="../maya.qrc">
                     <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="3">
+                 <widget class="QPushButton" name="btnDeshacer_oferta">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Deshacer</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../maya.qrc">
+                    <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -3112,16 +3167,7 @@ Imagen.</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -4384,16 +4430,7 @@ background-color: rgb(239, 239, 239);</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="layout_grafica_comparativas">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -6036,17 +6073,15 @@ color: rgb(255, 255, 255);</string>
   <tabstop>txtfecha_fecha_ultima_compra</tabstop>
   <tabstop>txtfechaUltimaVenta</tabstop>
   <tabstop>chkArticulo_promocionado</tabstop>
-  <tabstop>txtDescripcion_promocion</tabstop>
-  <tabstop>radOferta1</tabstop>
-  <tabstop>radOferta2</tabstop>
-  <tabstop>radOferta3</tabstop>
-  <tabstop>radOferta4</tabstop>
-  <tabstop>txtpor_cada</tabstop>
-  <tabstop>txtregalo_de</tabstop>
-  <tabstop>txtDtoOferta</tabstop>
-  <tabstop>txt_dto_web</tabstop>
+  <tabstop>txtOferta_Descripcion_promocion</tabstop>
+  <tabstop>chkOferta_32</tabstop>
+  <tabstop>chkOferta_dto</tabstop>
+  <tabstop>txtOferta_por_cada</tabstop>
+  <tabstop>txtOfertaregalo_de</tabstop>
+  <tabstop>txtOfertaDtoOferta</tabstop>
+  <tabstop>txtOferta_dto_web</tabstop>
   <tabstop>txtoferta_pvp_fijo</tabstop>
-  <tabstop>txcomentarios_promocion</tabstop>
+  <tabstop>txtOferta_comentarios_promocion</tabstop>
   <tabstop>botCambiarImagen</tabstop>
   <tabstop>botCambiarImagen_2</tabstop>
   <tabstop>botCambiarImagen_3</tabstop>
@@ -6191,54 +6226,6 @@ color: rgb(255, 255, 255);</string>
     <hint type="destinationlabel">
      <x>141</x>
      <y>698</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>chkArticulo_promocionado</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>framePromocion</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>116</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>171</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>chkArticulo_promocionado</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>frame_22</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>116</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>684</x>
-     <y>338</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>chkArticulo_promocionado</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lbl_en_promocion</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>116</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1121</x>
-     <y>28</y>
     </hint>
    </hints>
   </connection>

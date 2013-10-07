@@ -172,14 +172,6 @@ void Articulo::Cargar(QSqlRecord registro)
     this->id_grupo_art = registro.field("id_grupo_art").value().toInt();
     this->id_web = registro.field("id_web").value().toInt();
     this->articulo_promocionado = registro.field("articulo_promocionado").value().toBool();
-    this->descripcion_promocion = registro.field("descripcion_promocion").value().toString();
-    this->tipo_oferta = registro.field("tipo_oferta").value().toInt();
-    this->mostrar_en_cuadro = registro.field("mostrar_en_cuadro").value().toBool();
-    this->por_cada = registro.field("por_cada").value().toInt();
-    this->regalo_de= registro.field("regalo_de").value().toInt();
-    this->porc_dto_web = registro.field("porc_dto_web").value().toDouble();
-    this->oferta_pvp_fijo = registro.field("oferta_pvp_fijo").value().toDouble();
-    this->comentario_oferta =registro.field("comentario_oferta").value().toString();
     this->margen = registro.field("margen").value().toDouble();
     this->margen_min = registro.field("margen_min").value().toDouble();
     this->coste_real = registro.field("coste_real").value().toDouble();
@@ -273,11 +265,11 @@ void Articulo::Guardar()
     articulo["descripcion_reducida"] = this->descripcion_reducida;
     articulo["id_proveedor"] = this->id_proveedor;
     articulo["id_familia"] = this->id_familia;
-    articulo["familia"] = this->familia;
+   // articulo["familia"] = this->familia;
     articulo["id_seccion"] = this->id_seccion;
-    articulo["seccion"] = this->seccion;
+   // articulo["seccion"] = this->seccion;
     articulo["id_subfamilia"] = this->id_subfamilia;
-    articulo["subfamilia"] = this->subfamilia;
+  //  articulo["subfamilia"] = this->subfamilia;
     articulo["tipo_iva"] = this->tipo_iva;
     articulo["porc_dto"] = this->porc_dto;
     articulo["fecha_ultima_compra"] = this->fecha_ultima_compra;
@@ -292,7 +284,7 @@ void Articulo::Guardar()
     articulo["stock_real"] = this->stock_real;
     articulo["stock_fisico_almacen"] = this->nstock_fisico_almacen;
     articulo["controlar_stock"] = this->controlar_stock;
-    articulo["composicion"] = this->composicion;
+   // articulo["composicion"] = this->composicion;
     articulo["pvp_incluye_iva"] = this->pvp_incluye_iva;
     articulo["fecha_prevista_recepcion"],fecha_prevista_recepcion;
     articulo["cantidad_pendiente_recibir"] = this->cantidad_pendiente_recibir;

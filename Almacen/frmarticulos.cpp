@@ -64,16 +64,13 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
 
     ui->tablaProveedores->setEditTriggers(QAbstractItemView::NoEditTriggers);
     bloquearCampos(true);
-    ui->botEditar->setEnabled(false);
-    ui->botAnterior->setEnabled(false);
-    ui->botBorrar->setEnabled(false);
-
     reformateado = false;
     //--------------------------
     // llenar tabla artículos
     //--------------------------
     m = new QSqlQueryModel(this);
-    QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa ";
+    QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa "
+            "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
     m->setQuery(cSQL, Configuracion_global->groupDB);
     ui->tabla->setModel(m);
     formato_tabla();
@@ -349,7 +346,6 @@ void FrmArticulos::LLenarCampos()
 
   ui->chkArticulo_promocionado->setChecked(oArticulo->articulo_promocionado);
   ui->framePromocion->setEnabled(false);
-  ui->txtDescripcion_promocion->setText(oArticulo->descripcion_promocion);
 
   if (oArticulo->articulo_promocionado)
       ui->lbl_en_promocion->setVisible(true);
@@ -359,13 +355,16 @@ void FrmArticulos::LLenarCampos()
   ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',Configuracion_global->decimales)));
 
   //--------------------------
-  // LLENO TABLA OFERTAS
+  // LLENO  OFERTAS
   //--------------------------
   model_ofertas->setQuery(QString("select id,descripcion,fecha_inicio,"
                                   " fecha_fin from articulos_ofertas where id_articulo = %1 order by id desc").arg(oArticulo->id),
                           Configuracion_global->empresaDB);
 
-
+  ui->chkOferta_32->setChecked(false);
+  ui->chkOferta_dto->setChecked(false);
+  ui->chkOferta_pvp->setChecked(false);
+  ui->chkOferta_web->setChecked(false);
   // ------------------
   // LLENO TABLAS DATOS
   //-------------------
@@ -428,24 +427,8 @@ void FrmArticulos::CargarCamposEnArticulo()
 //    this->id_web = registro.field("id_web").value().toInt();
   //  oArticulo->stock_fisico_almacen = ui->txtstock_fisico_almacen->text().toInt();
     oArticulo->articulo_promocionado = ui->chkArticulo_promocionado->isChecked();
-    oArticulo->descripcion_promocion = ui->txtDescripcion_promocion->text();
 
-    if(ui->radOferta1->isChecked())
-            oArticulo->tipo_oferta = 1;
-    if(ui->radOferta2->isChecked())
-            oArticulo->tipo_oferta = 2;
-    if(ui->radOferta3->isChecked())
-            oArticulo->tipo_oferta = 3;
-    if(ui->radOferta4->isChecked())
-            oArticulo->tipo_oferta = 4;
-
-
-    oArticulo->por_cada = ui->txtpor_cada->text().toInt();
-    oArticulo->regalo_de = ui->txtregalo_de->text().toInt();
     oArticulo->porc_dto = ui->txtdto->text().toFloat();
-    oArticulo->porc_dto_web = ui->txt_dto_web->text().replace(".","").replace(",",".").toDouble();
-    oArticulo->oferta_pvp_fijo = ui->txtoferta_pvp_fijo->text().replace(".","").replace(",",".").toDouble();
-    oArticulo->comentario_oferta = ui->txcomentarios_promocion->toPlainText();
     oArticulo->coste_real = ui->txtCoste_real->text().replace(".","").replace(",",".").toDouble();
     oArticulo->mostrar_en_cuadro = ui->chkMostrar_en_cuadro->isChecked();
    // oArticulo->margen = ui->txtMargen->value();
@@ -487,16 +470,7 @@ void FrmArticulos::VaciarCampos()
    ui->chkmostrar_web->setChecked(false);
    ui->txtcodigo_proveedor->setText("");
    ui->chkArticulo_promocionado->setChecked(false);
-   ui->txtDescripcion_promocion->setText("");
-   ui->radOferta1->setChecked(false);
-   ui->radOferta2->setChecked(false);
-   ui->radOferta3->setChecked(false);
-   ui->radOferta4->setChecked(false);
-   ui->txtpor_cada->setText("0");
-   ui->txtregalo_de->setText("0");
-   ui->txt_dto_web->setText("0");
    ui->txtoferta_pvp_fijo->setText("0");
-   ui->txcomentarios_promocion->setPlainText("");
    ui->txtCoste_real->setText("0,00");
    //ui->txtMargen->setValue(0);
    //ui->txtMargen_min->setValue(0);
@@ -556,7 +530,8 @@ else
 QString arg1 = ui->txtBuscar->text();
 
 QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa where "+
-        campo+" like '%"+arg1.trimmed()+"%'  order by "+campo +" "+mode;
+        campo+" like '%"+arg1.trimmed()+"%' and tarifa ="+
+        QString::number(Configuracion_global->id_tarifa_predeterminada)+" order by "+campo +" "+mode;
 
 m->setQuery(cSQL,Configuracion_global->groupDB);
 ui->tabla->setModel(m);
@@ -590,10 +565,14 @@ void FrmArticulos::on_botEditar_clicked()
 {
     bloquearCampos(false);
     ui->txtcodigo->setFocus();
-    if (ui->chkArticulo_promocionado->isChecked())
-        ui->framePromocion->setEnabled(true);
-    else
-        ui->framePromocion->setEnabled(false);
+
+
+    //-------------------
+    // OFERTAS
+    //-------------------
+    ui->btnAnadir_oferta->setEnabled(ui->chkArticulo_promocionado->isChecked());
+    ui->btnEditarOferta->setEnabled(ui->chkArticulo_promocionado->isChecked());
+    ui->btnBorrar_oferta->setEnabled(ui->chkArticulo_promocionado->isChecked());
 }
 
 void FrmArticulos::on_botBorrar_clicked()
@@ -2057,5 +2036,155 @@ void FrmArticulos::on_pushButton_clicked()
 
 void FrmArticulos::on_btnAnadir_oferta_clicked()
 {
-    // TODO AÑADIR OFERTAS.
+    nueva_oferta = true;
+    ui->chkArticulo_promocionado->setChecked(true);
+    ui->chkOferta_32->setChecked(false);
+    ui->chkOferta_dto->setChecked(false);
+    ui->chkOferta_pvp->setChecked(false);
+    ui->chkOferta_web->setChecked(false);
+
+    ui->txtOfertaDtoOferta->setText("0");
+    ui->txtOfertaregalo_de->setText("0");
+    ui->txtOferta_Descripcion_promocion->clear();
+    ui->txtOferta_Fecha_fin->setDate(QDate::currentDate().addMonths(1));
+    ui->txtOferta_Fecha_ini->setDate(QDate::currentDate());
+    ui->txtOferta_por_cada->setText("0");
+    ui->txtoferta_pvp_fijo->setText("0,00");
+    ui->chkOfertaActiva->setEnabled(true);
+    ui->btnguardar_oferta->setEnabled(true);
+    ui->btnDeshacer_oferta->setEnabled(true);
+    ui->btnAnadir_oferta->setEnabled(false);
+    ui->btnEditarOferta->setEnabled(false);
+    ui->botGuardar->setEnabled(false);
+    ui->botDeshacer->setEnabled(false);
+    ui->framePromocion->setEnabled(true);
+    ui->frame_comentarios->setEnabled(true);
+}
+
+void FrmArticulos::on_btnguardar_oferta_clicked()
+{
+    ui->btnguardar_oferta->setEnabled(false);
+    ui->btnDeshacer_oferta->setEnabled(false);
+    ui->btnAnadir_oferta->setEnabled(true);
+    ui->btnEditarOferta->setEnabled(true);
+    ui->botGuardar->setEnabled(true);
+    ui->botDeshacer->setEnabled(true);
+
+    QHash <QString, QVariant> oferta;
+
+    oferta["id_articulo"] = oArticulo->id;
+    oferta["descripcion"] = ui->txtOferta_Descripcion_promocion->text();
+    oferta["oferta_32"] =ui->chkOferta_32->isChecked();
+    oferta["oferta_dto"] = ui->chkOferta_dto->isChecked();
+    oferta["oferta_precio_final"] = ui->chkOferta_pvp->isChecked();
+    oferta["oferta_web"] = ui->chkOferta_web->isChecked();
+    oferta["unidades"] = ui->txtOferta_por_cada->text().toFloat();
+    oferta["regalo"] = ui->txtOfertaregalo_de->text().toFloat();
+    oferta["dto_local"] = ui->txtOfertaDtoOferta->text().toFloat();
+    oferta["dto_web"] =ui->txtOferta_dto_web->text().toFloat();
+    oferta["precio_final"] = ui->txtoferta_pvp_fijo->text().toDouble();
+    oferta["comentarios"] = ui->txtOferta_comentarios_promocion->toPlainText();
+    oferta["fecha_inicio"] =ui->txtOferta_Fecha_ini->date();
+    oferta["fecha_fin"] = ui->txtOferta_Fecha_fin->date();
+    oferta["activa"] = ui->chkOfertaActiva->isChecked();
+    int new_id;
+    bool success;
+    QString error;
+    if(nueva_oferta)
+    {
+        nueva_oferta = false;
+        new_id = SqlCalls::SqlInsert(oferta,"articulos_ofertas",Configuracion_global->empresaDB,error);
+        if(new_id>-1)
+            TimedMessageBox *t = new TimedMessageBox(this,tr("Se ha creado la oferta"));
+    } else
+    {
+        success = SqlCalls::SqlUpdate(oferta,"articulos_ofertas",Configuracion_global->empresaDB,QString("id =%1").arg(this->id_oferta),
+                                      error);
+        if(!success)
+            QMessageBox::warning(this,tr("Gestión de artículos"),tr("Se ha producido un error al actualizar la oferta: %1").arg(error));
+
+    }
+    model_ofertas->setQuery(QString("select id,descripcion,fecha_inicio,"
+                                    " fecha_fin from articulos_ofertas where id_articulo = %1 order by id desc").arg(oArticulo->id),
+                            Configuracion_global->empresaDB);
+}
+
+void FrmArticulos::on_chkArticulo_promocionado_toggled(bool checked)
+{
+    if(ui->botGuardar->isEnabled())
+    {
+        ui->btnAnadir_oferta->setChecked(checked);
+        ui->btnEditarOferta->setChecked(checked);
+        ui->btnBorrar_oferta->setChecked(checked);
+    }
+}
+
+void FrmArticulos::on_btnDeshacer_oferta_clicked()
+{
+    
+}
+
+void FrmArticulos::on_tabla_ofertas_clicked(const QModelIndex &index)
+{
+    int id = ui->tabla_ofertas->model()->data(ui->tabla_ofertas->model()->index(index.row(),0),Qt::EditRole).toInt();
+    QMap <int,QSqlRecord> oferta;
+    QString error;
+    oferta = SqlCalls::SelectRecord("articulos_ofertas",QString("id = %1").arg(id),Configuracion_global->empresaDB,error);
+    if(error.isEmpty())
+    {
+        ui->chkOferta_32->setChecked(oferta.value(id).value("oferta_32").toBool());
+        ui->chkOferta_dto->setChecked(oferta.value(id).value("oferta_dto").toBool());
+        ui->chkOferta_pvp->setChecked(oferta.value(id).value("oferta_precio_final").toBool());
+        ui->chkOferta_web->setChecked(oferta.value(id).value("oferta_web").toBool());
+        ui->txtOferta_por_cada->setText(QString::number(oferta.value(id).value("unidades").toFloat(),'f',2));
+        ui->txtOfertaregalo_de->setText(QString::number(oferta.value(id).value("regalo").toFloat(),'f',2));
+        ui->txtOfertaDtoOferta->setText(oferta.value(id).value("dto_local").toString());
+        ui->txtOferta_dto_web->setText(oferta.value(id).value("dto_web").toString());
+        ui->txtoferta_pvp_fijo->setText(Configuracion_global->toFormatoMoneda(QString::number(
+                                                                    oferta.value(id).value("precio_final").toFloat(),
+                                                                    'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtOferta_comentarios_promocion->setText(oferta.value(id).value("comentarios").toString());
+        ui->txtOferta_Fecha_ini->setDate(oferta.value(id).value("fecha_inicio").toDate());
+        ui->txtOferta_Fecha_fin->setDate(oferta.value(id).value("fecha_fin").toDate());
+        ui->chkOfertaActiva->setChecked(oferta.value(id).value("activa").toBool());
+    }
+}
+
+void FrmArticulos::on_chkOferta_32_toggled(bool checked)
+{
+    if(ui->btnguardar_oferta->isEnabled())
+        ui->frame_tipo_32->setEnabled(checked);
+    else
+        ui->frame_tipo_32->setEnabled(false);
+}
+
+void FrmArticulos::on_chkOferta_dto_toggled(bool checked)
+{
+    if(ui->btnguardar_oferta->isEnabled())
+        ui->frame_dto->setEnabled(checked);
+    else
+        ui->frame_dto->setEnabled(false);
+}
+
+void FrmArticulos::on_chkOferta_pvp_toggled(bool checked)
+{
+    if(ui->btnguardar_oferta->isEnabled())
+        ui->frame_pvp_fijo->setEnabled(checked);
+    else
+        ui->frame_pvp_fijo->setEnabled(false);
+}
+
+
+
+void FrmArticulos::on_chkOferta_web_toggled(bool checked)
+{
+    if(ui->btnguardar_oferta->isEnabled())
+        ui->frame_ofertaweb->setEnabled(checked);
+    else
+        ui->frame_ofertaweb->setEnabled(false);
+}
+
+void FrmArticulos::on_btnExcepciones_3_clicked()
+{
+    on_btnExcepciones_clicked();
 }

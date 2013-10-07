@@ -23,6 +23,8 @@ private slots:
     void on_txt_codigo_articulo_editingFinished();
 
 
+    void on_btnAnadir_clicked();
+
 private:
     Ui::FrmExcepciones *ui;
     QSqlQueryModel *m;
@@ -31,6 +33,9 @@ private:
     bool eventFilter(QObject *obj, QEvent *event);
     void consultar_articulo();
     void consultar_cliente();
+    void clear();
+    void setControlsReadOnly(bool state);
+    void setButtonsEditMode(bool state);
 };
 
 #endif // FRMEXCEPCIONES_H

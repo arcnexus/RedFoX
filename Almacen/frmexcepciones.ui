@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>770</width>
+    <width>842</width>
     <height>484</height>
    </rect>
   </property>
@@ -18,18 +18,21 @@
     <normaloff>:/Icons/PNG/Neux.png</normaloff>:/Icons/PNG/Neux.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_4">
-   <item row="2" column="0">
-    <widget class="QPushButton" name="btnAnadir">
+   <item row="2" column="2">
+    <widget class="QPushButton" name="btnGuardar">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="text">
-      <string>Añadir</string>
+      <string>Guardar</string>
      </property>
      <property name="icon">
       <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+       <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="4">
+   <item row="1" column="0" colspan="6">
     <widget class="QTableView" name="tabla">
      <property name="styleSheet">
       <string notr="true">alternate-background-color: rgb(255, 255, 255);
@@ -47,18 +50,40 @@ background-color: rgb(248, 245, 194);</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="btnEditar">
+   <item row="2" column="0">
+    <widget class="QPushButton" name="btnAnadir">
      <property name="text">
-      <string>Editar</string>
+      <string>Añadir</string>
      </property>
      <property name="icon">
       <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+       <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="4">
+   <item row="2" column="4">
+    <widget class="QPushButton" name="btnBorrar">
+     <property name="text">
+      <string>Borrar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="5">
+    <widget class="QPushButton" name="btnCerrar">
+     <property name="text">
+      <string>Cerrar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="6">
     <widget class="QFrame" name="frame">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -67,129 +92,91 @@ background-color: rgb(248, 245, 194);</string>
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="0" column="0" colspan="7">
-       <widget class="QFrame" name="frame_2">
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+      <item row="4" column="6">
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>93</width>
+          <height>20</height>
+         </size>
         </property>
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="1">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Articulo:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="txt_codigo_articulo">
-           <property name="maximumSize">
-            <size>
-             <width>120</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QLineEdit" name="txt_descripcion_articulo">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_5">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Familia:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLineEdit" name="txt_codigo_familia">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>120</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QLineEdit" name="txtDescFamilia">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QRadioButton" name="radArticulo">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QRadioButton" name="radFamilia">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QLineEdit" name="txtPVP">
-           <property name="maximumSize">
-            <size>
-             <width>110</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-           <property name="text">
-            <string>0,00</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="4">
-          <widget class="QLabel" name="label_12">
-           <property name="styleSheet">
-            <string notr="true">color: rgb(43, 24, 141);</string>
-           </property>
-           <property name="text">
-            <string>(PVP con IVA (T1))</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
+       </spacer>
+      </item>
+      <item row="4" column="4">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Variación:</string>
+        </property>
        </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Variación %:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QLineEdit" name="txt_variacion_porc">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLineEdit" name="txt_pvp_fijo">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Dto Fijo:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="5">
+       <widget class="QLineEdit" name="txt_dto_fijo">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>93</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item row="1" column="0" colspan="7">
        <widget class="QFrame" name="frame_3">
@@ -326,153 +313,14 @@ background-color: rgb(248, 245, 194);</string>
         </layout>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Importe Fijo:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QLineEdit" name="txt_pvp_fijo">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="4">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>Dto Fijo:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="5">
-       <widget class="QLineEdit" name="txt_dto_fijo">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>93</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="label_7">
-        <property name="text">
-         <string>Variación:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QLineEdit" name="txt_variacion_pvp">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="3">
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>93</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="3" column="4">
-       <widget class="QLabel" name="label_11">
-        <property name="text">
-         <string>Variación:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="5">
-       <widget class="QLineEdit" name="txt_variacion_dto">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="6">
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>93</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLabel" name="label_8">
-        <property name="text">
-         <string>Variación %:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2">
-       <widget class="QLineEdit" name="txt_variacion_porc">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="4">
+      <item row="5" column="4">
        <widget class="QLabel" name="label_10">
         <property name="text">
          <string>Variación %:</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="5">
+      <item row="5" column="5">
        <widget class="QLineEdit" name="txt_variacion_porc_dto">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -485,28 +333,242 @@ background-color: rgb(248, 245, 194);</string>
         </property>
        </widget>
       </item>
+      <item row="4" column="5">
+       <widget class="QLineEdit" name="txt_variacion_dto">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="7">
+       <widget class="QFrame" name="frame_2">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="2" column="0">
+          <widget class="QRadioButton" name="radFamilia">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Articulo:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QLineEdit" name="txtPVP">
+           <property name="maximumSize">
+            <size>
+             <width>110</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>0,00</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="4">
+          <widget class="QLabel" name="label_12">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(43, 24, 141);</string>
+           </property>
+           <property name="text">
+            <string>(PVP con IVA (T1))</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QLineEdit" name="txtDescFamilia">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QRadioButton" name="radArticulo">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QLineEdit" name="txt_descripcion_articulo">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QLineEdit" name="txt_codigo_familia">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>120</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="label_5">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Familia:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLineEdit" name="txt_codigo_articulo">
+           <property name="maximumSize">
+            <size>
+             <width>120</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Importe Fijo:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Variación:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLineEdit" name="txt_variacion_pvp">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>93</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="label_13">
+        <property name="text">
+         <string>Valido desde:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QDateEdit" name="txtDesde">
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="displayFormat">
+         <string>dd/MM/yyyy</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QLabel" name="label_14">
+        <property name="text">
+         <string>Hasta:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QDateEdit" name="txtHasta">
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="displayFormat">
+         <string>dd/MM/yyyy</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="btnBorrar">
+   <item row="2" column="1">
+    <widget class="QPushButton" name="btnEditar">
      <property name="text">
-      <string>Borrar</string>
+      <string>Editar</string>
      </property>
      <property name="icon">
       <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+       <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
      </property>
     </widget>
    </item>
    <item row="2" column="3">
-    <widget class="QPushButton" name="btnCerrar">
+    <widget class="QPushButton" name="btnDeshacer">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="text">
-      <string>Cerrar</string>
+      <string>Deshacer</string>
      </property>
      <property name="icon">
       <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+       <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
      </property>
     </widget>
    </item>
@@ -514,20 +576,23 @@ background-color: rgb(248, 245, 194);</string>
  </widget>
  <tabstops>
   <tabstop>radArticulo</tabstop>
-  <tabstop>radFamilia</tabstop>
   <tabstop>txt_codigo_articulo</tabstop>
   <tabstop>txt_descripcion_articulo</tabstop>
+  <tabstop>txtPVP</tabstop>
+  <tabstop>radFamilia</tabstop>
   <tabstop>txt_codigo_familia</tabstop>
   <tabstop>txtDescFamilia</tabstop>
   <tabstop>radCliente</tabstop>
-  <tabstop>radProveedor</tabstop>
-  <tabstop>radAgente</tabstop>
   <tabstop>txt_codigo_cliente</tabstop>
   <tabstop>txt_nombre_cliente</tabstop>
+  <tabstop>radProveedor</tabstop>
   <tabstop>txt_codigo_proveedor</tabstop>
   <tabstop>txt_nombre_proveedor</tabstop>
+  <tabstop>radAgente</tabstop>
   <tabstop>txt_codigo_agente</tabstop>
   <tabstop>txt_nombre_agente</tabstop>
+  <tabstop>txtDesde</tabstop>
+  <tabstop>txtHasta</tabstop>
   <tabstop>txt_pvp_fijo</tabstop>
   <tabstop>txt_variacion_pvp</tabstop>
   <tabstop>txt_variacion_porc</tabstop>
@@ -537,6 +602,8 @@ background-color: rgb(248, 245, 194);</string>
   <tabstop>tabla</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnEditar</tabstop>
+  <tabstop>btnGuardar</tabstop>
+  <tabstop>btnDeshacer</tabstop>
   <tabstop>btnBorrar</tabstop>
   <tabstop>btnCerrar</tabstop>
  </tabstops>
@@ -557,246 +624,6 @@ background-color: rgb(248, 245, 194);</string>
     <hint type="destinationlabel">
      <x>765</x>
      <y>412</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radArticulo</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>45</x>
-     <y>42</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>85</x>
-     <y>41</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radArticulo</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>txt_codigo_articulo</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>39</x>
-     <y>42</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>197</x>
-     <y>42</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radArticulo</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>txt_descripcion_articulo</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>45</x>
-     <y>41</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>297</x>
-     <y>40</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radFamilia</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_5</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>42</x>
-     <y>74</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>85</x>
-     <y>72</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radFamilia</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>txt_codigo_familia</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>48</x>
-     <y>74</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>204</x>
-     <y>74</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radFamilia</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>txtDescFamilia</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>32</x>
-     <y>76</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>267</x>
-     <y>71</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radCliente</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_2</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>42</x>
-     <y>127</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>85</x>
-     <y>123</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radCliente</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>txt_codigo_cliente</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>41</x>
-     <y>121</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>202</x>
-     <y>123</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radCliente</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>txt_nombre_cliente</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>40</x>
-     <y>130</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>299</x>
-     <y>120</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radProveedor</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_3</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>41</x>
-     <y>154</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>76</x>
-     <y>155</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radProveedor</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>txt_codigo_proveedor</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>48</x>
-     <y>156</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>206</x>
-     <y>156</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radProveedor</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>txt_nombre_proveedor</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>38</x>
-     <y>157</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>317</x>
-     <y>150</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radAgente</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_4</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>42</x>
-     <y>183</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>98</x>
-     <y>186</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radAgente</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>txt_codigo_agente</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>32</x>
-     <y>186</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>173</x>
-     <y>187</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radAgente</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>txt_nombre_agente</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>40</x>
-     <y>178</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>304</x>
-     <y>179</y>
     </hint>
    </hints>
   </connection>

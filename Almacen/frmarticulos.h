@@ -122,6 +122,26 @@ private slots:
 
     void on_btnAnadir_oferta_clicked();
 
+    void on_btnguardar_oferta_clicked();
+
+    void on_chkArticulo_promocionado_toggled(bool checked);
+
+    void on_tabla_ofertas_clicked(const QModelIndex &index);
+
+    void on_btnDeshacer_oferta_clicked();
+    
+
+    
+    void on_chkOferta_32_toggled(bool checked);
+
+    void on_chkOferta_dto_toggled(bool checked);
+
+    void on_chkOferta_pvp_toggled(bool checked);
+
+    void on_chkOferta_web_toggled(bool checked);
+
+    void on_btnExcepciones_3_clicked();
+
 public slots:
     void AnadirSeccion();
 
@@ -149,6 +169,8 @@ private:
     QAction menuButton;
     QPushButton* shortCut;
     QSqlQueryModel *m;
+    bool nueva_oferta;
+    int id_oferta = 0;
 };
 
 #endif // FRMARTICULOS_H

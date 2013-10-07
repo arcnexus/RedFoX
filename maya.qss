@@ -2,7 +2,7 @@ QLabel , QStatusBar, QLineEdit, QDateEdit, QTextEdit,QTableWidget,QTableView, QS
 QDoubleSpinBox, QComboBox, QHeaderView, QGroupBox, QListView, QRadioButton
 {
     font: normal;
-    color: black;
+    /*color: black;*/
 }
 
 QStackedWidget

@@ -11,6 +11,7 @@ FrmExcepciones::FrmExcepciones(QWidget *parent) :
     m->setQuery("select id,");
     ui->txt_codigo_articulo->installEventFilter(this);
     ui->txt_codigo_cliente->installEventFilter(this);
+    setControlsReadOnly(true);
 }
 
 FrmExcepciones::~FrmExcepciones()
@@ -155,6 +156,48 @@ void FrmExcepciones::consultar_cliente()
     }
 }
 
+void FrmExcepciones::clear()
+{
+    ui->txtDesde->setDate(QDate::currentDate());
+    ui->txtHasta->setDate(QDate::currentDate().addYears(1));
+    ui->txtDescFamilia->clear();
+    ui->txtPVP->setText("0,00");
+    ui->txt_codigo_agente->clear();
+    ui->txt_codigo_articulo->clear();
+    ui->txt_codigo_cliente->clear();
+    ui->txt_codigo_familia->clear();
+    ui->txt_codigo_proveedor->clear();
+    ui->txt_descripcion_articulo->clear();
+    ui->txt_dto_fijo->setText(0);
+    ui->txt_nombre_agente->clear();
+    ui->txt_nombre_proveedor->clear();
+    ui->txt_pvp_fijo->setText("0,00");
+    ui->txt_variacion_dto->setText("0");
+    ui->txt_variacion_porc->setText("0");
+    ui->txt_variacion_porc_dto->setText("0");
+    ui->txt_variacion_pvp->setText("0,00");
+}
+
+void FrmExcepciones::setControlsReadOnly(bool state)
+{
+    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
+    QLineEdit *lineEdit;
+    foreach (lineEdit, lineEditList) {
+        lineEdit->setReadOnly(state);
+    }
+    ui->txtDesde->setReadOnly(state);
+    ui->txtHasta->setReadOnly(state);
+}
+
+void FrmExcepciones::setButtonsEditMode(bool state)
+{
+    ui->btnAnadir->setEnabled(!state);
+    ui->btnEditar->setEnabled(!state);
+    ui->btnBorrar->setEnabled(!state);
+    ui->btnGuardar->setEnabled(state);
+    ui->btnDeshacer->setEnabled(state);
+}
+
 void FrmExcepciones::on_txt_codigo_articulo_editingFinished()
 {
     blockSignals(true);
@@ -163,3 +206,13 @@ void FrmExcepciones::on_txt_codigo_articulo_editingFinished()
 }
 
 
+
+void FrmExcepciones::on_btnAnadir_clicked()
+{
+    clear();
+    setControlsReadOnly(false);
+    setButtonsEditMode(true);
+    ui->radArticulo->setFocus();
+
+
+}
